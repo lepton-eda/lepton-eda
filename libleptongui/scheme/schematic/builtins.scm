@@ -1010,39 +1010,40 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (define *window (*current-window))
 
-  (let ((components (filter component? (page-selection (active-page)))))
-    ;; Only allow going into symbols.
-    (unless (null? components)
-      ;; Get pointer to the first selected component.
-      (let ((name (component-basename (car components))))
-        (log! 'message (G_ "Searching for symbol: ~S") name)
-        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
-          (unless (null-pointer? *sym)
-            (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
-                   (*parent (schematic_window_get_active_page *window))
-                   (*page (hierarchy-down-symbol *window *toplevel *sym *parent)))
-              (when *page
+  (match (filter component? (page-selection (active-page)))
+    ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
+    ((component)
+     ;; Get pointer to the first selected component.
+     (let ((name (component-basename component)))
+       (log! 'message (G_ "Searching for symbol: ~S") name)
+       (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
+         (unless (null-pointer? *sym)
+           (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
+                  (*parent (schematic_window_get_active_page *window))
+                  (*page (hierarchy-down-symbol *window *toplevel *sym *parent)))
+             (when *page
 
-                ;; Change link to parent page since we can come here
-                ;; from any parent and must come back to the same page.
-                (lepton_page_set_up *page (lepton_page_get_pid *parent))
-                (lepton_toplevel_goto_page *toplevel *page)
+               ;; Change link to parent page since we can come here
+               ;; from any parent and must come back to the same page.
+               (lepton_page_set_up *page (lepton_page_get_pid *parent))
+               (lepton_toplevel_goto_page *toplevel *page)
 
-                (gschem_toplevel_page_changed *window)
+               (gschem_toplevel_page_changed *window)
 
-                ;; Get active page once again, it should now be the symbol
-                ;; page.
-                (x_window_set_current_page *window
-                                           (schematic_window_get_active_page *window))
+               ;; Get active page once again, it should now be the symbol
+               ;; page.
+               (x_window_set_current_page *window
+                                          (schematic_window_get_active_page *window))
 
-                ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-                ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
-                (unless (true? (x_tabs_enabled))
-                  (gschem_page_view_zoom_extents
-                   (gschem_toplevel_get_current_page_view *window)
-                   %null-pointer))
+               ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+               ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+               (unless (true? (x_tabs_enabled))
+                 (gschem_page_view_zoom_extents
+                  (gschem_toplevel_get_current_page_view *window)
+                  %null-pointer))
 
-                (undo-save-state)))))))))
+               (undo-save-state)))))))
+    (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
 ;;; Go to the upper hierarchy level page, that is, return to the
