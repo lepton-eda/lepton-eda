@@ -266,7 +266,9 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--verbose" one.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "Processing PCBLIBPATH")))
+    (test-assert (string-contains <stdout> "Processing PCBLIBPATH"))
+    (test-assert (string-contains <stdout> "pcblib-newlib")))
+
   (test-teardown))
 
 (test-end)
