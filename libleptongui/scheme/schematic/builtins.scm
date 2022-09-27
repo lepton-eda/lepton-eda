@@ -949,36 +949,32 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
                                                  #:icon "gtk-go-down")
   (define *window (*current-window))
-  (define selected-components (filter component? (page-selection (active-page))))
-  (define component
-    (and (not (null? selected-components))
-         (car selected-components)))
 
-  (if component
-    ;; Get component's "source=" attributes.  First look into
-    ;; attached attribs and return the list if it is not empty.  If
-    ;; the list of attached "source=" attribs is empty, look into
-    ;; the list of inherited attribs.  The resulting list is
-    ;; transformed into the list of files by splitting up the
-    ;; attributes of the form "source=filename1,filename2,..." by
-    ;; comma and appending the resulting lists.
-      (let ((pages
-             (hierarchy-filenames->pages
-              (append-map split-attrib-value
-                          (let ((attached-attribs (filter source-attrib?
-                                                          (object-attribs component))))
-                            (if (null? attached-attribs)
-                                (filter source-attrib? (inherited-attribs component))
-                                attached-attribs)))
-              *window
-              (schematic_window_get_active_page *window))))
-      (unless (null? pages)
-        ;; If the list of resulting pages is not empty, make the
-        ;; first page active.
-        (x_window_set_current_page *window (car pages))))
-    ;; No component selected.
-    (generic_error_dialog (string->pointer (G_ "Select a component first."))
-                          %null-pointer)))
+  (match (filter component? (page-selection (active-page)))
+    ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
+    ((component)
+     ;; Get component's "source=" attributes.  First look into
+     ;; attached attribs and return the list if it is not empty.  If
+     ;; the list of attached "source=" attribs is empty, look into
+     ;; the list of inherited attribs.  The resulting list is
+     ;; transformed into the list of files by splitting up the
+     ;; attributes of the form "source=filename1,filename2,..." by
+     ;; comma and appending the resulting lists.
+     (let ((pages
+            (hierarchy-filenames->pages
+             (append-map split-attrib-value
+                         (let ((attached-attribs (filter source-attrib?
+                                                         (object-attribs component))))
+                           (if (null? attached-attribs)
+                               (filter source-attrib? (inherited-attribs component))
+                               attached-attribs)))
+             *window
+             (schematic_window_get_active_page *window))))
+       (unless (null? pages)
+         ;; If the list of resulting pages is not empty, make the
+         ;; first page active.
+         (x_window_set_current_page *window (car pages)))))
+    (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
 (define (hierarchy-down-symbol *window *toplevel *symbol *parent)
