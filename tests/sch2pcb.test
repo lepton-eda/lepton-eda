@@ -808,3 +808,30 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb backup filenames")
+
+(test-group-with-cleanup "sch2pcb backup filenames"
+  (prepare-test-directory)
+
+  (let ((mock-pcb (string-append tests/one.pcb ".remove-R101-value")))
+    (copy-file mock-pcb one.pcb)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "one.pcb is backed up as one.pcb.bak.")))
+    (copy-file mock-pcb one.pcb)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "one.pcb is backed up as one.pcb.bak0.")))
+    (copy-file mock-pcb one.pcb)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "one.pcb is backed up as one.pcb.bak1."))))
+
+  (test-teardown))
+
+(test-end)
