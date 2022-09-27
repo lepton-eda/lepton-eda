@@ -62,6 +62,19 @@
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
 
+;;; Produces a backup file name given that BASE is an initial
+;;; name.  If BASE exists, adds a numerical index as a suffix to
+;;; it starting with 0 and checks if the file exists incrementing
+;;; the index until a non-existing file is found.
+(define (next-backup-name base)
+  (let loop ((name base)
+             (i 0))
+    (if (file-exists? name)
+        (let ((newname (format #f "~A~A" base i)))
+          (loop newname (1+ i)))
+        name)))
+
+
 (let ((number-of-args (length (program-arguments))))
   (if (= 1 number-of-args)
       (sch2pcb_usage)
@@ -90,7 +103,8 @@
                      (pins-filename (string-append schematic-basename ".cmd"))
                      (net-filename (string-append schematic-basename ".net"))
                      (pcb-filename (string-append schematic-basename ".pcb"))
-                     (bak-filename (string-append schematic-basename ".pcb.bak")))
+                     (bak-filename (next-backup-name (string-append schematic-basename
+                                                                    ".pcb.bak"))))
                 (sch2pcb_main (string->pointer pcb-filename)
                               (string->pointer bak-filename)
                               (string->pointer pins-filename)

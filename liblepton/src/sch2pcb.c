@@ -1547,18 +1547,9 @@ sch2pcb_main (char *pcb_file_name,
               char *pins_file_name,
               char *net_file_name)
 {
-  gchar *pcb_new_file_name, *tmp;
-  gint i;
+  gchar *pcb_new_file_name;
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
-
-  tmp = g_strdup (bak_file_name);
-
-  for (i = 0; g_file_test (bak_file_name, G_FILE_TEST_EXISTS); ++i) {
-    g_free (bak_file_name);
-    bak_file_name = g_strdup_printf ("%s%d", tmp, i);
-  }
-  g_free (tmp);
 
   if (g_file_test (pcb_file_name, G_FILE_TEST_EXISTS)) {
     initial_pcb = FALSE;
