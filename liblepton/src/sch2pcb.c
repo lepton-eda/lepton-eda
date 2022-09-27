@@ -1542,18 +1542,16 @@ sch2pcb_get_args (gint argc,
 }
 
 gint
-sch2pcb_main ()
+sch2pcb_main (char *pcb_file_name,
+              char *bak_file_name,
+              char *pins_file_name,
+              char *net_file_name)
 {
-  gchar *pcb_file_name,
-    *pcb_new_file_name, *bak_file_name, *pins_file_name, *net_file_name, *tmp;
+  gchar *pcb_new_file_name, *tmp;
   gint i;
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
 
-  pins_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".cmd", NULL);
-  net_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".net", NULL);
-  pcb_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".pcb", NULL);
-  bak_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".pcb.bak", NULL);
   tmp = g_strdup (bak_file_name);
 
   for (i = 0; g_file_test (bak_file_name, G_FILE_TEST_EXISTS); ++i) {
@@ -1680,11 +1678,6 @@ sch2pcb_main ()
       printf ("    to update the pin names of all footprints.\n\n");
     }
   }
-
-  g_free (net_file_name);
-  g_free (pins_file_name);
-  g_free (pcb_file_name);
-  g_free (bak_file_name);
 
   g_free (backend_mkfile_cmd);
   g_free (backend_mkfile_net);

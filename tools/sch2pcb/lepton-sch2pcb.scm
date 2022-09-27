@@ -83,4 +83,15 @@
                (filter-map
                 (lambda (x) (false-if-exception (canonicalize-path x)))
                 (cons "packages" (parse-path %pcb-lib-path))))
-              (sch2pcb_main))))))
+              (let* ((*schematic-basename (sch2pcb_get_sch_basename))
+                     (schematic-basename (if (null-pointer? *schematic-basename)
+                                             ""
+                                             (pointer->string *schematic-basename)))
+                     (pins-filename (string-append schematic-basename ".cmd"))
+                     (net-filename (string-append schematic-basename ".net"))
+                     (pcb-filename (string-append schematic-basename ".pcb"))
+                     (bak-filename (string-append schematic-basename ".pcb.bak")))
+                (sch2pcb_main (string->pointer pcb-filename)
+                              (string->pointer bak-filename)
+                              (string->pointer pins-filename)
+                              (string->pointer net-filename))))))))
