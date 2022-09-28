@@ -1543,20 +1543,13 @@ sch2pcb_get_args (gint argc,
 
 gint
 sch2pcb_main (char *pcb_file_name,
+              char *pcb_new_file_name,
               char *bak_file_name,
               char *pins_file_name,
-              char *net_file_name)
+              char *net_file_name,
+              gboolean initial_pcb)
 {
-  gchar *pcb_new_file_name;
-  gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
-
-  if (g_file_test (pcb_file_name, G_FILE_TEST_EXISTS)) {
-    initial_pcb = FALSE;
-    pcb_new_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".new.pcb", NULL);
-    sch2pcb_get_pcb_element_list (pcb_file_name);
-  } else
-    pcb_new_file_name = g_strdup (pcb_file_name);
 
   if (!run_gnetlist (pins_file_name,
                      net_file_name,

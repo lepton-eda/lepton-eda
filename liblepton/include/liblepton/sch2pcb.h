@@ -25,9 +25,11 @@ G_BEGIN_DECLS
 
 gint
 sch2pcb_main (char *pcb_file_name,
+              char *pcb_new_file_name,
               char *bak_file_name,
               char *pins_file_name,
-              char *net_file_name);
+              char *net_file_name,
+              gboolean initial_pcb);
 void
 sch2pcb_get_args (gint argc,
                   gchar **argv);

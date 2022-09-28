@@ -20,6 +20,7 @@
 (use-modules (rnrs bytevectors)
              (srfi srfi-1)
              (system foreign)
+             (lepton ffi boolean)
              (lepton ffi sch2pcb)
              (lepton m4))
 
@@ -104,8 +105,17 @@
                      (net-filename (string-append schematic-basename ".net"))
                      (pcb-filename (string-append schematic-basename ".pcb"))
                      (bak-filename (next-backup-name (string-append schematic-basename
-                                                                    ".pcb.bak"))))
+                                                                    ".pcb.bak")))
+                     (pcb-file-exists? (file-exists? pcb-filename))
+                     (initial-pcb? (not pcb-file-exists?))
+                     (pcb-new-filename (if pcb-file-exists?
+                                           (string-append schematic-basename ".new.pcb")
+                                           pcb-filename)))
+                (when pcb-file-exists?
+                  (sch2pcb_get_pcb_element_list (string->pointer pcb-filename)))
                 (sch2pcb_main (string->pointer pcb-filename)
+                              (string->pointer pcb-new-filename)
                               (string->pointer bak-filename)
                               (string->pointer pins-filename)
-                              (string->pointer net-filename))))))))
+                              (string->pointer net-filename)
+                              (if initial-pcb? TRUE FALSE))))))))
