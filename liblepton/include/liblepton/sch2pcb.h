@@ -90,6 +90,12 @@ sch2pcb_load_project (const gchar * path);
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);
+gboolean
+sch2pcb_run_netlister (gchar *pins_file,
+                       gchar *net_file,
+                       gchar *pcb_file,
+                       gchar *basename,
+                       GList *largs);
 gint
 sch2pcb_get_verbose_mode ();
 

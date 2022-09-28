@@ -324,9 +324,12 @@ build_and_run_command (const gchar *format, ...)
  * stat() hoops to decide if gnetlist successfully generated the PCB
  * board file (only gnetlist >= 20030901 recognizes -m).
  */
-static gboolean
-run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
-              gchar * basename, GList * largs)
+gboolean
+sch2pcb_run_netlister (gchar *pins_file,
+                       gchar *net_file,
+                       gchar *pcb_file,
+                       gchar *basename,
+                       GList *largs)
 {
   struct stat st;
   time_t mtime;
@@ -1551,11 +1554,11 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  if (!run_gnetlist (pins_file_name,
-                     net_file_name,
-                     pcb_new_file_name,
-                     sch2pcb_get_sch_basename (),
-                     sch2pcb_get_schematics ()))
+  if (!sch2pcb_run_netlister (pins_file_name,
+                              net_file_name,
+                              pcb_new_file_name,
+                              sch2pcb_get_sch_basename (),
+                              sch2pcb_get_schematics ()))
   {
     fprintf(stderr, "Failed to run netlister\n");
     exit (1);
