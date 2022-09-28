@@ -54,25 +54,21 @@
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
 
 
-(define %loading-done? #f)
-
 (define (load-project-file path)
   (sch2pcb_load_project (string->pointer path)))
 
 (define (load-extra-project-files)
-  (unless %loading-done?
-    ;; TODO: rename project files ("gsch2pcb")
-    ;; TODO: consider linking sch2pcb with liblepton and
-    ;;       using eda_get_system_config_dirs() here:
+  ;; TODO: rename project files ("gsch2pcb")
+  ;; TODO: consider linking sch2pcb with liblepton and
+  ;;       using eda_get_system_config_dirs() here:
 
-    (load-project-file "/etc/gsch2pcb")
-    (load-project-file "/usr/local/etc/gsch2pcb")
+  (load-project-file "/etc/gsch2pcb")
+  (load-project-file "/usr/local/etc/gsch2pcb")
 
-    (let ((path (string-append (user-config-dir)
-                               file-name-separator-string
-                               "gsch2pcb")))
-      (load-project-file path))
-    (set! %loading-done? #t)))
+  (let ((path (string-append (user-config-dir)
+                             file-name-separator-string
+                             "gsch2pcb")))
+    (load-project-file path)))
 
 
 (define (usage)
@@ -288,7 +284,6 @@ Lepton EDA homepage: <~A>
             (sch2pcb_add_schematic (string->pointer op))
             (cons op seeds))
           (begin
-            (load-extra-project-files)
             (load-project-file op)
             seeds)))
     '())))
@@ -433,6 +428,9 @@ Lepton EDA homepage: <~A>
           (format #t "    to update the pin names of all footprints.\n\n")))))
 
 
+;;; Load system and user config files once.
+(load-extra-project-files)
+
 (let ((number-of-args (length (program-arguments))))
   (if (= 1 number-of-args)
       (usage)
@@ -440,7 +438,6 @@ Lepton EDA homepage: <~A>
         ;; Parse command line arguments and set up internal
         ;; variables.
         (parse-command-line)
-        (load-extra-project-files)
         (sch2pcb_add_default_m4_files)
         (if (null-pointer? (sch2pcb_get_schematics))
             (usage)
