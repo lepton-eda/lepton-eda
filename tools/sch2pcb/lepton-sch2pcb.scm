@@ -227,10 +227,6 @@ Lepton EDA homepage: <~A>
              (lambda (opt name arg seeds)
                (sch2pcb_set_sch_basename (string->pointer arg))
                seeds))
-     (option '("schematics") #t #f
-             (lambda (opt name arg seeds)
-               (sch2pcb_add_multiple_schematics (string->pointer arg))
-               seeds))
      (option '("m4-pcbdir") #t #f
              (lambda (opt name arg seeds)
                (sch2pcb_set_m4_pcbdir (string->pointer arg))
