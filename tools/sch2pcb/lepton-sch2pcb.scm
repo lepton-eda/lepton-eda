@@ -56,19 +56,22 @@
 
 (define %loading-done? #f)
 
+(define (load-project-file path)
+  (sch2pcb_load_project (string->pointer path)))
+
 (define (load-extra-project-files)
   (unless %loading-done?
     ;; TODO: rename project files ("gsch2pcb")
     ;; TODO: consider linking sch2pcb with liblepton and
     ;;       using eda_get_system_config_dirs() here:
 
-    (sch2pcb_load_project (string->pointer "/etc/gsch2pcb"))
-    (sch2pcb_load_project (string->pointer "/usr/local/etc/gsch2pcb"))
+    (load-project-file "/etc/gsch2pcb")
+    (load-project-file "/usr/local/etc/gsch2pcb")
 
     (let ((path (string-append (user-config-dir)
                                file-name-separator-string
                                "gsch2pcb")))
-      (sch2pcb_load_project (string->pointer path)))
+      (load-project-file path))
     (set! %loading-done? #t)))
 
 
@@ -286,7 +289,7 @@ Lepton EDA homepage: <~A>
             (cons op seeds))
           (begin
             (load-extra-project-files)
-            (sch2pcb_load_project (string->pointer op))
+            (load-project-file op)
             seeds)))
     '())))
 
