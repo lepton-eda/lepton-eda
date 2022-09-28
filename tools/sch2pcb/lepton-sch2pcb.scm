@@ -18,6 +18,7 @@
 
 
 (use-modules (srfi srfi-1)
+             (srfi srfi-26)
              (system foreign)
              (lepton ffi boolean)
              (lepton ffi sch2pcb)
@@ -58,17 +59,14 @@
   (sch2pcb_load_project (string->pointer path)))
 
 (define (load-extra-project-files)
+  (define (build-filename dir filename)
+    (string-append dir file-name-separator-string filename))
+
   ;; TODO: rename project files ("gsch2pcb")
-  ;; TODO: consider linking sch2pcb with liblepton and
-  ;;       using eda_get_system_config_dirs() here:
 
-  (load-project-file "/etc/gsch2pcb")
-  (load-project-file "/usr/local/etc/gsch2pcb")
-
-  (let ((path (string-append (user-config-dir)
-                             file-name-separator-string
-                             "gsch2pcb")))
-    (load-project-file path)))
+  (for-each load-project-file
+            (map (cut build-filename <> "gsch2pcb")
+                 (append (sys-config-dirs) (list (user-config-dir))))))
 
 
 (define (usage)
