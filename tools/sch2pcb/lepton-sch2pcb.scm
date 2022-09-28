@@ -23,6 +23,7 @@
              (lepton ffi sch2pcb)
              (lepton gettext)
              (lepton m4)
+             (lepton os)
              (lepton srfi-37)
              (lepton version))
 
@@ -51,6 +52,24 @@
 (define *%pcb-m4-path (string->pointer %pcb-m4-path))
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
+
+
+(define %loading-done? #f)
+
+(define (load-extra-project-files)
+  (unless %loading-done?
+    ;; TODO: rename project files ("gsch2pcb")
+    ;; TODO: consider linking sch2pcb with liblepton and
+    ;;       using eda_get_system_config_dirs() here:
+
+    (sch2pcb_load_project (string->pointer "/etc/gsch2pcb"))
+    (sch2pcb_load_project (string->pointer "/usr/local/etc/gsch2pcb"))
+
+    (let ((path (string-append (user-config-dir)
+                               file-name-separator-string
+                               "gsch2pcb")))
+      (sch2pcb_load_project (string->pointer path)))
+    (set! %loading-done? #t)))
 
 
 (define (usage)
@@ -266,7 +285,7 @@ Lepton EDA homepage: <~A>
             (sch2pcb_add_schematic (string->pointer op))
             (cons op seeds))
           (begin
-            (sch2pcb_load_extra_project_files)
+            (load-extra-project-files)
             (sch2pcb_load_project (string->pointer op))
             seeds)))
     '())))
@@ -418,7 +437,7 @@ Lepton EDA homepage: <~A>
         ;; Parse command line arguments and set up internal
         ;; variables.
         (parse-command-line)
-        (sch2pcb_load_extra_project_files)
+        (load-extra-project-files)
         (sch2pcb_add_default_m4_files)
         (if (null-pointer? (sch2pcb_get_schematics))
             (usage)

@@ -147,9 +147,6 @@ void
 sch2pcb_extra_gnetlist_list_append (char *arg);
 
 void
-sch2pcb_load_extra_project_files (void);
-
-void
 sch2pcb_load_project (const gchar * path);
 
 int

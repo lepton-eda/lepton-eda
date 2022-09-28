@@ -42,7 +42,6 @@
             sch2pcb_set_fix_elements
             sch2pcb_set_force_element_files
             sch2pcb_increment_verbose_mode
-            sch2pcb_load_extra_project_files
             sch2pcb_load_project
             sch2pcb_set_m4_pcbdir
             sch2pcb_make_pcb_element_list
@@ -98,7 +97,6 @@
 (define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_set_force_element_files void (list int))
 (define-lff sch2pcb_increment_verbose_mode void '())
-(define-lff sch2pcb_load_extra_project_files void '())
 (define-lff sch2pcb_load_project void '(*))
 (define-lff sch2pcb_set_m4_pcbdir void '(*))
 (define-lff sch2pcb_make_pcb_element_list void '(*))
