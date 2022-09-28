@@ -743,6 +743,16 @@
 
   (test-assert (file-exists? "x.geda"))
 
+  ;; Test run with unknown backend.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--m4-pcbdir" m4-pcbdir
+                      one.sch two.sch
+                      "--gnetlist" "unknown-backend")
+
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "Failed to run netlister")))
+
   (test-teardown))
 
 (test-end)
