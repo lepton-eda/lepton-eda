@@ -324,6 +324,32 @@
   (test-run-success lepton-sch2pcb one.sch two.sch)
   (test-run-success "diff" one.pcb (string-append tests/one.pcb ".remove-R101-value"))
 
+  ;; Check that the second run with the same arguments does
+  ;; not trigger creating one.new.pcb.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--m4-pcbdir" m4-pcbdir
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "No elements to add so not creating one.new.pcb")))
+
+  ;; Now, remove one.pcb and try to create the file in two stages.
+  (delete-file one.pcb)
+  ;; Use one schematic file to create an initial pcb file.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--m4-pcbdir" m4-pcbdir
+                      one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "0 file elements and 4 m4 elements added to one.pcb.")))
+  ;; The second pass creates one.new.pcb.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--m4-pcbdir" m4-pcbdir
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "0 file elements and 3 m4 elements added to one.new.pcb.")))
+
   (test-teardown))
 
 (test-end)
