@@ -64,6 +64,9 @@ sch2pcb_set_m4_pcbdir (const gchar *dir);
 void
 sch2pcb_load_extra_project_files (void);
 
+void
+sch2pcb_get_pcb_element_list (gchar *pcb_file);
+
 char*
 sch2pcb_get_sch_basename ();
 

@@ -576,8 +576,8 @@ pcb_element_free (PcbElement * el)
   g_free (el);
 }
 
-static void
-get_pcb_element_list (gchar * pcb_file)
+void
+sch2pcb_get_pcb_element_list (gchar *pcb_file)
 {
   FILE *f;
   PcbElement *el;
@@ -1554,7 +1554,7 @@ sch2pcb_main (char *pcb_file_name,
   if (g_file_test (pcb_file_name, G_FILE_TEST_EXISTS)) {
     initial_pcb = FALSE;
     pcb_new_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".new.pcb", NULL);
-    get_pcb_element_list (pcb_file_name);
+    sch2pcb_get_pcb_element_list (pcb_file_name);
   } else
     pcb_new_file_name = g_strdup (pcb_file_name);
 
