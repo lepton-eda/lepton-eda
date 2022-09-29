@@ -45,6 +45,18 @@
            (test-eq EXIT_SUCCESS
              (status:exit-val (system command))))))))
 
+(define-syntax test-grep-file
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <str> <filename>)
+       #'(begin
+           (format (current-error-port)
+                   "Test command: ~A\n"
+                   (string-join "grep" <str> <filename>))
+           (test-eq EXIT_SUCCESS
+             (status:exit-val (system* "grep" <str> <filename>))))))))
+
+
 ;;; Get the exit status of COMMAND, its stdout and stderr output,
 ;;; and return the three values.
 (define (command-values . command)
