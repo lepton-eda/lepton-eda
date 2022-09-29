@@ -871,3 +871,41 @@
   (test-teardown))
 
 (test-end)
+
+
+(define empty-project-contents
+  "# Comment starting with a hash symbol.
+/ Comment starting with a slash.
+; Comment starting with a semicolon.
+\t ;  Line starting with a tab symbol
+  \t\t # Line starting with spaces and tabs.
+# The next four lines consist only of whitespaces.
+
+  \t
+\t
+\t\t\t\t
+#schematics one.sch two.sch
+/schematics one.sch two.sch
+;schematics one.sch two.sch
+   #schematics one.sch two.sch
+
+;; A couple of empty lines.
+
+")
+
+(test-begin "sch2pcb empty project file")
+
+(test-group-with-cleanup "sch2pcb empty project file"
+  (prepare-test-directory)
+
+  (with-output-to-file "sch2pcb-project"
+    (lambda () (display empty-project-contents)))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "sch2pcb-project")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+
+  (test-teardown))
+
+(test-end)
