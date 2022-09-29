@@ -909,3 +909,33 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key schematics")
+
+(test-group-with-cleanup "sch2pcb project key schematics"
+  (prepare-test-directory)
+
+  (let ((project-contents
+         "schematics one.sch two.sch"))
+
+    (with-output-to-file "sch2pcb-project"
+      (lambda () (display project-contents)))
+
+    ;; No m4 elements directory is specified.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "sch2pcb-project")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
+
+    ;; m4 elements directory is specified.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "sch2pcb-project" "--m4-pcbdir" m4-pcbdir)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout>
+                           "0 file elements and 7 m4 elements added to one.pcb."))))
+
+  (test-teardown))
+
+(test-end)
