@@ -48,13 +48,19 @@
 (define-syntax test-grep-file
   (lambda (x)
     (syntax-case x ()
-      ((_ <str> <filename>)
+      ((_ <str> <filename> <result>)
        #'(begin
            (format (current-error-port)
                    "Test command: ~A\n"
-                   (string-join "grep" <str> <filename>))
-           (test-eq EXIT_SUCCESS
+                   (string-join (list "grep" <str> <filename>)))
+           (test-eq <result>
              (status:exit-val (system* "grep" <str> <filename>))))))))
+
+(define-syntax-rule (test-grep-file-success <str> <filename>)
+  (test-grep-file <str> <filename> EXIT_SUCCESS))
+
+(define-syntax-rule (test-grep-file-failure <str> <filename>)
+  (test-grep-file <str> <filename> EXIT_FAILURE))
 
 
 ;;; Get the exit status of COMMAND, its stdout and stderr output,
