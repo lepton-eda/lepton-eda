@@ -281,7 +281,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "No elements found, so nothing to do.")
+    (test-assert (string-contains <stdout> "No elements found, so nothing to do."))
     (test-assert (file-exists? "one.cmd"))
     (test-assert (file-exists? "one.net"))
     ;; one.pcb is missing at this point.
@@ -293,7 +293,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "Done processing."))
+    (test-assert (string-contains <stdout> "Done processing.")))
 
   ;; Check that all necessary files exist.
   (test-assert (file-exists? tests/one.pcb))
@@ -652,7 +652,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--output-name" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "Done processing."))
+    (test-assert (string-contains <stdout> "Done processing.")))
 
   ;; Check that new files have been created.
   (test-assert (file-exists? "OUT.pcb"))
@@ -676,7 +676,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "-o" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "Done processing."))
+    (test-assert (string-contains <stdout> "Done processing.")))
 
   ;; Check that new files have been created.
   (test-assert (file-exists? "OUT.pcb"))
@@ -700,7 +700,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--gnetlist" "geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "Done processing."))
+    (test-assert (string-contains <stdout> "Done processing.")))
 
   ;; Check that new files have been created.
   (test-assert (file-exists? "one.pcb"))
@@ -711,7 +711,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--gnetlist" "geda -o x.geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "Done processing."))
+    (test-assert (string-contains <stdout> "Done processing.")))
 
   (test-assert (file-exists? "x.geda"))
 
@@ -743,8 +743,8 @@
                       "missing"
                       "missing-footprint.sch")
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stderr> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout.")
-    (string-contains <stdout> "R2: has the empty footprint attribute \"missing\" so won't be in the layout."))
+    (test-assert (string-contains <stderr> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout."))
+    (test-assert (string-contains <stdout> "R2: has the empty footprint attribute \"missing\" so won't be in the layout.")))
 
   (test-teardown))
 
