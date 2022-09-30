@@ -758,7 +758,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "-v" "--backend-cmd" "geda" one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "lepton-netlist -v -g geda -o one.cmd one.sch two.sch"))
+    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.cmd one.sch two.sch")))
 
   (test-teardown))
 
@@ -772,7 +772,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "-v" "--backend-net" "geda" one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "lepton-netlist -v -g geda -o one.net one.sch two.sch"))
+    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.net one.sch two.sch")))
 
   (test-teardown))
 
@@ -786,7 +786,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "-v" "--backend-pcb" "geda" one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "lepton-netlist -v -g geda -o one.pcb one.sch two.sch"))
+    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch")))
 
   (test-teardown))
 
