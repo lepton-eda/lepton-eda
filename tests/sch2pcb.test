@@ -972,3 +972,113 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --keep-unfound and --remove-unfound with missing elements")
+
+(test-group-with-cleanup "sch2pcb --keep-unfound and --remove-unfound with missing elements"
+  (prepare-test-directory)
+
+  (test-assert (not (file-exists? one.pcb)))
+
+  ;; Check simple command when all elements are missing.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; one.pcb is still missing.
+    (test-assert (not (file-exists? one.pcb)))
+    ;; No backup.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    (test-assert
+        (string-contains <stdout> "No elements found, so nothing to do.")))
+
+  ;; Same as above but with --remove-unfound.  Nothing should
+  ;; change since the default value of the option is true.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--remove-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; one.cmd and one.net were created.
+    (test-assert (file-exists? "one.cmd"))
+    (test-assert (file-exists? "one.net"))
+    ;; one.pcb is still missing.
+    (test-assert (not (file-exists? one.pcb)))
+    ;; No backup.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
+
+  ;; Now, test with --keep-unfound.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--keep-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; one.pcb was created.
+    (test-assert (file-exists? one.pcb))
+    ;; No backup.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    ;; No one.new.pcb.
+    (test-assert (not (file-exists? "one.new.pcb")))
+    ;; Program reports not found or omitted elements.
+    (test-assert (string-contains <stdout> "7 not found elements added to one.pcb."))
+    ;; Test one.pcb contents.
+    (test-grep-file-success "PKG_CONNECTOR(CONNECTOR-2-1,CONN201,unknown,2,1)" one.pcb)
+    (test-grep-file-success "PKG_TO92(TO92,Q201,2N3904)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R101,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R102,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R103,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R201,10K)" one.pcb)
+    (test-grep-file-success "PKG_DIL(DIL-8-300,U101,TL072,8,300)" one.pcb))
+
+  ;; Replace one.sch with its modified version.
+  (delete-file one.sch)
+  ;; The same as one.sch but with "footprint=unknown" for R101.
+  (copy-file (build-filename tests/ "one.sch.R101.footprint.unknown")
+             one.sch)
+
+  ;; Test with --keep-unfound after component change.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--keep-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; one.pcb had been created before.
+    (test-assert (file-exists? one.pcb))
+    ;; No backup.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    ;; one.new.pcb has been created.
+    (test-assert (file-exists? "one.new.pcb"))
+    ;; Program reports not found or omitted elements.
+    (test-assert (string-contains <stderr> "WARNING: R101 has no footprint attribute so won't be in the layout."))
+    (test-assert (string-contains <stdout> "6 not found elements added to one.new.pcb."))
+    (test-assert (string-contains <stdout> "1 components had no footprint attribute and are omitted."))
+    ;; Test one.pcb contents.
+    (test-grep-file-success "PKG_CONNECTOR(CONNECTOR-2-1,CONN201,unknown,2,1)" one.pcb)
+    (test-grep-file-success "PKG_TO92(TO92,Q201,2N3904)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R101,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R102,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R103,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R201,10K)" one.pcb)
+    (test-grep-file-success "PKG_DIL(DIL-8-300,U101,TL072,8,300)" one.pcb))
+
+  ;; Test with --remove-unfound once again.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--remove-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; BUG: Backup was not created while reported it was created.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    ;; one.new.pcb has been renamed to one.pcb and thus removed.
+    (test-assert (not (file-exists? "one.new.pcb")))
+    ;; Program reports misc things.
+    (test-assert (string-contains <stderr> "WARNING: R101 has no footprint attribute so won't be in the layout."))
+    (test-assert (string-contains <stdout> "one.pcb is backed up as one.pcb.bak."))
+    (test-assert (string-contains <stdout> "No elements to add so not creating one.new.pcb"))
+    (test-assert (string-contains <stdout> "1 components had no footprint attribute and are omitted."))
+    (test-assert (string-contains <stdout> "6 elements could not be found."))
+    ;; Test one.pcb contents.  onew.new.pcb has been renamed to one.pcb.  Strange.
+    (test-grep-file-success "PKG_CONNECTOR(CONNECTOR-2-1,CONN201,unknown,2,1)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R101,10K)" one.pcb)
+    (test-grep-file-success "PKG_TO92(TO92,Q201,2N3904)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R102,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R103,10K)" one.pcb)
+    (test-grep-file-success "PKG_R025(R025,R201,10K)" one.pcb)
+    (test-grep-file-success "PKG_DIL(DIL-8-300,U101,TL072,8,300)" one.pcb))
+
+  (test-teardown))
+
+(test-end)

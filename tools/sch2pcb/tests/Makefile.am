@@ -6,6 +6,7 @@ EXTRA_DIST = \
 	one.pcb \
 	one.pcb.remove-R101-value \
 	one.sch \
+	one.sch.R101.footprint.unknown \
 	two.sch \
 	sym/2N3904-1.sym \
 	sym/BNC-1.sym \
