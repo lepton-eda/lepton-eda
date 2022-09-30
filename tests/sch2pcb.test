@@ -743,7 +743,7 @@
                       "missing"
                       "missing-footprint.sch")
     (test-eq EXIT_SUCCESS <status>)
-    (string-contains <stdout> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout.")
+    (string-contains <stderr> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout.")
     (string-contains <stdout> "R2: has the empty footprint attribute \"missing\" so won't be in the layout."))
 
   (test-teardown))
