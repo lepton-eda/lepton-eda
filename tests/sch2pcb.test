@@ -1313,3 +1313,40 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key preserve")
+(test-group-with-cleanup "sch2pcb project key preserve"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "preserve
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    ;; Produce an initial pcb file.
+    (test-run-success lepton-sch2pcb project one.sch two.sch)
+    (test-assert (file-exists? one.pcb))
+    (test-run-success "diff" one.pcb tests/one.pcb)
+    (test-run-success "diff" one.cmd tests/one.cmd)
+    (test-run-success "diff" one.net tests/one.net)
+
+    ;; Now, elements in the one.pcb should be preserved.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb project one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "3 elements not in the schematic preserved in one.pcb.")))
+    ;; Pcb file should not have changed.
+    (test-run-success "diff" one.pcb tests/one.pcb)
+    ;; However .cmd and .net files have changed.
+    (test-run-failure "diff" one.cmd tests/one.cmd)
+    (test-run-failure "diff" one.net tests/one.net))
+
+  (test-teardown))
+
+(test-end)
