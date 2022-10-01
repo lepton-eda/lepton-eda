@@ -1283,3 +1283,33 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key quiet")
+
+(test-group-with-cleanup "sch2pcb project key quiet"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "quiet
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    ;; In order to simulate adding elements, use one schematic file
+    ;; to make an initial .pcb file.
+    (test-run-success lepton-sch2pcb one.sch)
+    ;; Check, if no next steps advertised when 'quiet' is specified.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb project one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (file-exists? one.pcb))
+      (test-assert (not (string-contains <stdout> "Next steps")))))
+
+  (test-teardown))
+
+(test-end)
