@@ -1350,3 +1350,28 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key use-files")
+(test-group-with-cleanup "sch2pcb project key use-files"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "use-files
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "trying to replace with a file element"))))
+
+  (test-teardown))
+
+(test-end)
