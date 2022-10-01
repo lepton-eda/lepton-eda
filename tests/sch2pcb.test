@@ -1082,3 +1082,85 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --keep-unfound and --remove-unfound with elements")
+
+(test-group-with-cleanup "sch2pcb --keep-unfound and --remove-unfound with elements"
+  (prepare-test-directory)
+
+  (test-assert (not (file-exists? one.pcb)))
+
+  ;; Create initial PCB file.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (file-exists? one.pcb))
+    (test-run-success "diff" one.pcb tests/one.pcb)
+    ;; No backup.
+    (test-assert (not (file-exists? "one.pcb.bak")))
+    (test-assert (string-contains <stdout> "0 file elements and 7 m4 elements added to one.pcb.")))
+
+  ;; Replace one.sch with its modified version.
+  (delete-file one.sch)
+  ;; The same as one.sch but with "footprint=unknown" for R101.
+  (copy-file (build-filename tests/ "one.sch.R101.footprint.unknown")
+             one.sch)
+
+  ;; Test with --keep-unfound after component change.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir "--keep-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (file-exists? one.pcb))
+    (test-assert (file-exists? "one.pcb.bak"))
+    ;; No one.new.pcb.
+    (test-assert (not (file-exists? "one.new.pcb")))
+    ;; Program reports not found or omitted elements.
+    (test-assert (string-contains <stderr> "WARNING: R101 has no footprint attribute so won't be in the layout."))
+    (test-assert (string-contains <stdout> "1 elements deleted from one.pcb."))
+    (test-assert (string-contains <stdout> "1 components had no footprint attribute and are omitted."))
+    ;; Test one.pcb contents.
+    (test-expect-fail 1)
+    ;; BUG: --keep-unfound does not preserve elements.  It does
+    ;; nothing but reporting something to stderr.
+    (test-grep-file-success "R101" one.pcb)
+    (test-grep-file-success "CONN201" one.pcb)
+    (test-grep-file-success "Q201" one.pcb)
+    (test-grep-file-success "R102" one.pcb)
+    (test-grep-file-success "R103" one.pcb)
+    (test-grep-file-success "R201" one.pcb)
+    (test-grep-file-success "U101" one.pcb))
+
+  ;; Test with --remove-unfound.
+
+  ;; First, restore one.pcb as there is a bug in processing
+  ;; --keep-unfound, see above.
+  (delete-file one.pcb)
+  (copy-file tests/one.pcb one.pcb)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir "--remove-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; Test that backup file is intact.
+    (test-assert (file-exists? "one.pcb.bak"))
+    (test-assert (file-exists? "one.pcb.bak0"))
+    (test-run-success "diff" "one.pcb.bak" tests/one.pcb)
+    ;; one.new.pcb has been renamed to one.pcb and thus removed.
+    (test-assert (not (file-exists? "one.new.pcb")))
+    ;; Program reports misc things.
+    (test-assert (string-contains <stderr> "WARNING: R101 has no footprint attribute so won't be in the layout."))
+    (test-assert (string-contains <stdout> "one.pcb is backed up as one.pcb.bak0."))
+    (test-assert (string-contains <stdout> "1 elements deleted from one.pcb."))
+    (test-assert (string-contains <stdout> "No elements to add so not creating one.new.pcb"))
+    (test-assert (string-contains <stdout> "1 components had no footprint attribute and are omitted."))
+    ;; Test one.pcb contents.  Only R101 is missing.
+    (test-grep-file-failure "R101" one.pcb)
+    (test-grep-file-success "CONN201" one.pcb)
+    (test-grep-file-success "Q201" one.pcb)
+    (test-grep-file-success "R102" one.pcb)
+    (test-grep-file-success "R103" one.pcb)
+    (test-grep-file-success "R201" one.pcb)
+    (test-grep-file-success "U101" one.pcb))
+
+  (test-teardown))
+
+(test-end)
