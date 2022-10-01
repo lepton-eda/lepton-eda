@@ -104,8 +104,9 @@ generic_error_dialog (const char *primary_message,
                                               GTK_DIALOG_MODAL,
                                               GTK_MESSAGE_ERROR,
                                               GTK_BUTTONS_OK,
-                                              primary_message);
+                                              NULL);
   g_object_set (G_OBJECT (dialog),
+                "text", primary_message,
                 "secondary-text", secondary_message,
                 NULL);
   gtk_dialog_run (GTK_DIALOG (dialog));
