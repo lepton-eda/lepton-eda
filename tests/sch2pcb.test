@@ -1164,3 +1164,62 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key keep-unfound")
+
+(test-group-with-cleanup "sch2pcb project key keep-unfound"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "keep-unfound
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (test-assert (not (file-exists? one.pcb)))
+
+    ;; Create initial PCB file.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (file-exists? one.pcb))
+      (test-run-success "diff" one.pcb tests/one.pcb)
+      (test-assert (string-contains <stdout> "0 file elements and 7 m4 elements added to one.pcb.")))
+
+    ;; Replace one.sch with its modified version.
+    (delete-file one.sch)
+    ;; The same as one.sch but with "footprint=unknown" for R101.
+    (copy-file (build-filename tests/ "one.sch.R101.footprint.unknown")
+               one.sch)
+
+    ;; Test after component change.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (file-exists? one.pcb))
+      (test-assert (file-exists? "one.pcb.bak"))
+      ;; Program reports not found or omitted elements.
+      (test-assert (string-contains <stderr> "WARNING: R101 has no footprint attribute so won't be in the layout."))
+      (test-assert (string-contains <stdout> "1 elements deleted from one.pcb."))
+      (test-assert (string-contains <stdout> "1 components had no footprint attribute and are omitted."))
+      ;; Test one.pcb contents.
+      (test-expect-fail 1)
+      ;; BUG: --keep-unfound does not preserve elements.  It does
+      ;; nothing but reporting something to stderr.
+      (test-grep-file-success "R101" one.pcb)
+      (test-grep-file-success "CONN201" one.pcb)
+      (test-grep-file-success "Q201" one.pcb)
+      (test-grep-file-success "R102" one.pcb)
+      (test-grep-file-success "R103" one.pcb)
+      (test-grep-file-success "R201" one.pcb)
+      (test-grep-file-success "U101" one.pcb)))
+
+  (test-teardown))
+
+(test-end)
