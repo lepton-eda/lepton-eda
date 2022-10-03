@@ -610,14 +610,17 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--skip-m4" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb "-v" "--skip-m4" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "(define gsch2pcb:use-m4 #f)"))
     (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
 
   ;; Without the option --skip-m4 everything should work OK.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb "-v" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
+    ;; By default, gsch2pcb:use-m4 is #t.
+    (test-assert (string-contains <stdout> "(define gsch2pcb:use-m4 #t)"))
     (test-assert (string-contains <stdout> "Done processing.")))
 
   (test-teardown))
