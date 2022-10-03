@@ -146,9 +146,6 @@ sch2pcb_get_schematics ();
 void
 sch2pcb_extra_gnetlist_list_append (char *arg);
 
-void
-sch2pcb_load_project (const gchar * path);
-
 int
 sch2pcb_get_n_added_ef ();
 

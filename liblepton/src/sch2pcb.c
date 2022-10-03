@@ -1688,25 +1688,3 @@ sch2pcb_parse_config (gchar *config,
 
   return 1;
 }
-
-void
-sch2pcb_load_project (const gchar * path)
-{
-  FILE *f;
-  gchar *s, buf[1024], config[32], arg[768];
-
-  f = fopen (path, "r");
-  if (!f)
-    return;
-  if (sch2pcb_get_verbose_mode () != 0)
-    printf ("Reading project file: %s\n", path);
-  while (fgets (buf, sizeof (buf), f)) {
-    for (s = buf; *s == ' ' || *s == '\t' || *s == '\n'; ++s);
-    if (!*s || *s == '#' || *s == '/' || *s == ';')
-      continue;
-    arg[0] = '\0';
-    sscanf (s, "%31s %767[^\n]", config, arg);
-    sch2pcb_parse_config (config, arg);
-  }
-  fclose (f);
-}

@@ -17,16 +17,22 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (srfi srfi-1)
+(use-modules (ice-9 rdelim)
+             (srfi srfi-1)
              (srfi srfi-26)
              (system foreign)
              (lepton ffi boolean)
              (lepton ffi sch2pcb)
+             (lepton file-system)
              (lepton gettext)
              (lepton m4)
              (lepton os)
              (lepton srfi-37)
              (lepton version))
+
+(define-syntax-rule (verbose-format arg ...)
+  (when (> (sch2pcb_get_verbose_mode) 0)
+    (format (current-output-port) arg ...)))
 
 (define %sch2pcb (basename (car (program-arguments))))
 
@@ -55,8 +61,47 @@
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
 
 
+(define (string->pair str)
+  (define s (string-trim-both str char-set:whitespace))
+  (define break-pos (string-index s char-set:whitespace))
+  (if break-pos
+      (cons (string-take s break-pos)
+            (string-trim (string-drop s break-pos)
+                         char-set:whitespace))
+      (cons s #f)))
+
+
 (define (load-project-file path)
-  (sch2pcb_load_project (string->pointer path)))
+  (if (file-readable? path)
+      (with-input-from-file path
+        (lambda ()
+          (verbose-format (G_ "Reading project file: ~A\n") path)
+          (let loop ((s (read-line)))
+            (and (not (eof-object? s))
+                 (let ((s (string-trim-both s char-set:whitespace)))
+                   ;; Skip empty lines or lines consisting only of
+                   ;; whitespaces.
+                   (and (not (string-null? s))
+                        (let ((first-char (string-ref s 0)))
+                          ;; Skip comments started with #, ;, or /.
+                          (and (not (char=? first-char #\#))
+                               (not (char=? first-char #\/))
+                               (not (char=? first-char #\;))
+                               (let* ((args (string->pair s))
+                                      (key (car args))
+                                      (value (cdr args))
+                                      (*key (string->pointer key))
+                                      (*value (if value
+                                                  (string->pointer value)
+                                                  (string->pointer ""))))
+                                 (or (sch2pcb_parse_config *key *value)
+                                     (format (current-error-port)
+                                             (G_ "Wrong line in ~S: ~S\n")
+                                             path
+                                             s))))))
+                   (loop (read-line)))))))
+      (when (> (sch2pcb_get_verbose_mode) 0)
+        (format (current-error-port) (G_ "Skip missing or unreadable file: ~A\n") path))))
 
 (define (load-extra-project-files)
   (define (build-filename dir filename)
