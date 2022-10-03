@@ -57,7 +57,6 @@
             sch2pcb_get_n_preserved
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
-            sch2pcb_parse_config
             sch2pcb_get_pcb_element_list
             sch2pcb_set_preserve
             sch2pcb_prune_elements
@@ -112,7 +111,6 @@
 (define-lff sch2pcb_get_n_preserved int '())
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
-(define-lff sch2pcb_parse_config int '(* *))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))

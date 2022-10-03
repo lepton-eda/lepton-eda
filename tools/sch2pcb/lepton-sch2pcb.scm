@@ -17,7 +17,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (ice-9 rdelim)
+(use-modules (ice-9 match)
+             (ice-9 rdelim)
              (srfi srfi-1)
              (srfi srfi-26)
              (system foreign)
@@ -71,16 +72,46 @@
       (cons s #f)))
 
 
+(define (parse-config key value)
+  (verbose-format "    ~A ~A\n" key value)
+  (let ((*value (if value
+                    (string->pointer value)
+                    (string->pointer ""))))
+    (match key
+      ;; This is default behaviour.
+      ("remove-unfound" (sch2pcb_set_remove_unfound_elements TRUE))
+      ("keep-unfound" (sch2pcb_set_remove_unfound_elements FALSE))
+      ("quiet" (sch2pcb_set_quiet_mode TRUE))
+      ("preserve" (sch2pcb_set_preserve TRUE))
+      ("use-files" (sch2pcb_set_force_element_files TRUE))
+      ("skip-m4" (sch2pcb_set_use_m4 FALSE))
+      ("elements-dir"
+       (let ((*elements-dir (sch2pcb_expand_dir *value)))
+         (when (> (sch2pcb_get_verbose_mode) 1)
+           (format #t
+                   "\tAdding directory to file element directory list: ~A\n"
+                   (pointer->string *elements-dir)))
+         (sch2pcb_element_directory_list_prepend *elements-dir)))
+      ("output-name" (sch2pcb_set_sch_basename *value))
+      ("schematics" (sch2pcb_add_multiple_schematics *value))
+      ("m4-pcbdir" (sch2pcb_set_m4_pcbdir *value))
+      ("m4-file" (sch2pcb_add_m4_file *value))
+      ("gnetlist" (sch2pcb_extra_gnetlist_list_append *value))
+      ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
+      ("backend-cmd" (sch2pcb_set_backend_mkfile_cmd *value))
+      ("backend-net" (sch2pcb_set_backend_mkfile_net *value))
+      ("backend-pcb" (sch2pcb_set_backend_mkfile_pcb *value))
+      (_ (format (current-error-port)
+                 (G_ "Unknown config key: ~S\n")
+                 (pointer->string *value))))))
+
+
 (define (load-project-file path)
   (define (parse-line line)
     (let* ((args (string->pair line))
            (key (car args))
-           (value (cdr args))
-           (*key (string->pointer key))
-           (*value (if value
-                       (string->pointer value)
-                       (string->pointer ""))))
-      (unless (sch2pcb_parse_config *key *value)
+           (value (cdr args)))
+      (unless (parse-config key value)
         (format (current-error-port)
                 (G_ "Wrong line in ~S: ~S\n")
                 path

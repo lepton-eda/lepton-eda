@@ -224,9 +224,6 @@ sch2pcb_get_need_PKG_purge ();
 void
 sch2pcb_set_need_PKG_purge (gboolean val);
 
-gint
-sch2pcb_parse_config (gchar *config,
-                      gchar *arg);
 void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
