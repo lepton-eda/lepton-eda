@@ -77,6 +77,13 @@ static gchar *sch_basename;
 
 static GList *schematics;
 
+GList*
+sch2pcb_get_schematics ()
+{
+  return schematics;
+}
+
+
 static const gchar* m4_override_file;
 static gchar *m4_files;
 
