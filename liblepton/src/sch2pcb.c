@@ -926,8 +926,8 @@ pkg_to_element (FILE * f, gchar * pkg_line)
  * strip out any elements if they are already present so that the new
  * pcb file will only have new elements.
  */
-static gint
-add_elements (gchar * pcb_file)
+gint
+sch2pcb_add_elements (gchar *pcb_file)
 {
   FILE *f_in, *f_out;
   PcbElement *el = NULL;
@@ -1554,7 +1554,7 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  if (add_elements (pcb_new_file_name) == 0) {
+  if (sch2pcb_add_elements (pcb_new_file_name) == 0) {
     build_and_run_command ("rm %s", pcb_new_file_name);
     if (initial_pcb) {
       printf ("No elements found, so nothing to do.\n");

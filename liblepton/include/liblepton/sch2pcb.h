@@ -36,6 +36,9 @@ sch2pcb_get_args (gint argc,
 void
 sch2pcb_add_default_m4_files (void);
 
+gint
+sch2pcb_add_elements (gchar *pcb_file);
+
 char*
 sch2pcb_get_default_m4_pcbdir ();
 
