@@ -22,6 +22,7 @@
              (system foreign)
              (lepton ffi boolean)
              (lepton ffi sch2pcb)
+             (lepton gettext)
              (lepton m4))
 
 ;;; FIXME: this is a function from (lepton config).  Probably it
@@ -113,6 +114,13 @@
                                            pcb-filename)))
                 (when pcb-file-exists?
                   (sch2pcb_get_pcb_element_list (string->pointer pcb-filename)))
+                (unless (true? (sch2pcb_run_netlister (string->pointer pins-filename)
+                                                      (string->pointer net-filename)
+                                                      (string->pointer pcb-new-filename)
+                                                      (sch2pcb_get_sch_basename)
+                                                      (sch2pcb_get_schematics)))
+                  (format (current-error-port) (G_ "Failed to run netlister\n"))
+                  (exit 1))
                 (sch2pcb_main (string->pointer pcb-filename)
                               (string->pointer pcb-new-filename)
                               (string->pointer bak-filename)
