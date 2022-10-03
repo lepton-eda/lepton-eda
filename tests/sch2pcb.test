@@ -1516,3 +1516,34 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --empty-footprint")
+(test-group-with-cleanup "sch2pcb --empty-footprint"
+  (prepare-missing-footprint)
+
+  (test-assert (file-exists? "missing-footprint.sch"))
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "empty-footprint none
+                  empty-footprint missing
+                  schematics missing-footprint.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stderr> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout."))
+      ;; Only the last value of 'empty-footprint' in the project
+      ;; file is significant.
+      (test-assert (string-contains <stdout> "R2: has the empty footprint attribute \"missing\" so won't be in the layout."))))
+
+  (test-teardown))
+
+(test-end)
