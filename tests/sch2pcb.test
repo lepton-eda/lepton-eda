@@ -1430,3 +1430,35 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb output-name")
+(test-group-with-cleanup "sch2pcb output-name"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "output-name OUT
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (test-run-success lepton-sch2pcb project)
+
+    ;; Check that new files have been created.
+    (test-assert (file-exists? "OUT.pcb"))
+    (test-assert (file-exists? "OUT.cmd"))
+    (test-assert (file-exists? "OUT.net"))
+    ;; Check that there is no difference with new and "golden"
+    ;; files.
+    (test-run-success "diff" "OUT.pcb" tests/one.pcb)
+    (test-run-success "diff" "OUT.cmd" tests/one.cmd)
+    (test-run-success "diff" "OUT.net" tests/one.net))
+
+  (test-teardown))
+
+(test-end)
