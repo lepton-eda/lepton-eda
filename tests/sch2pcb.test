@@ -1378,3 +1378,30 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key skip-m4")
+(test-group-with-cleanup "sch2pcb project key skip-m4"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "skip-m4
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    ;; No elements found despite of m4-pcbdir setting.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "(define gsch2pcb:use-m4 #f)"))
+      (test-assert (string-contains <stdout> "No elements found, so nothing to do."))))
+
+  (test-teardown))
+
+(test-end)
