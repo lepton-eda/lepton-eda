@@ -890,7 +890,8 @@ the snap grid size should be set to 100")))
 (define (hierarchy-down-error-dialog filename *error)
   (let ((secondary-message
          (failed-to-descend-error filename
-                                  (if (null-pointer? *error)
+                                  (if (or (null-pointer? *error)
+                                          (null-pointer? (dereference-pointer *error)))
                                       (G_ "Unknown error.")
                                       (gerror-message (dereference-pointer *error))))))
 
