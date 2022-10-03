@@ -1405,3 +1405,28 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project key elements-dir")
+(test-group-with-cleanup "sch2pcb project key elements-dir"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "elements-dir pcb-elements
+                  schematics one.sch two.sch
+                  ")))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+    (mkdir "pcb-elements")
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "Adding directory to file element directory list: pcb-elements"))))
+
+  (test-teardown))
+
+(test-end)
