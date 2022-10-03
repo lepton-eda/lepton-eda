@@ -1487,3 +1487,32 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb gnetlist")
+(test-group-with-cleanup "sch2pcb gnetlist"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "gnetlist partslist1
+                  gnetlist partslist3 -o board.parts
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "lepton-netlist -g partslist1 -o one.partslist1 one.sch two.sch"))
+      (test-assert (string-contains <stdout> "lepton-netlist -g partslist3 -o board.parts one.sch two.sch")))
+    ;; Check that new files have been created.
+    (test-assert (file-exists? "one.partslist1")))
+
+  (test-teardown))
+
+(test-end)
