@@ -1547,3 +1547,32 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb project keys backend-cmd, backend-net, backend-pcb")
+(test-group-with-cleanup "sch2pcb project key backend-cmd, backend-net, backend-pcb"
+  (prepare-test-directory)
+
+  (let ((project "sch2pcb-project")
+        (project-contents
+         (format #f
+                 "backend-cmd partslist1
+                  backend-net partslist2
+                  backend-pcb partslist3
+                  schematics one.sch two.sch
+                  m4-pcbdir ~A"
+                 m4-pcbdir)))
+
+    (with-output-to-file project
+      (lambda () (display project-contents)))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" project)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "lepton-netlist -g partslist1 -o one.cmd one.sch two.sch"))
+      (test-assert (string-contains <stdout> "lepton-netlist -g partslist2 -o one.net one.sch two.sch"))
+      (test-assert (string-contains <stdout> "lepton-netlist -g partslist3 -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch"))))
+
+  (test-teardown))
+
+(test-end)
