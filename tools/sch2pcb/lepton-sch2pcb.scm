@@ -128,7 +128,7 @@
                                            (string-append schematic-basename ".new.pcb")
                                            pcb-filename)))
                 (when pcb-file-exists?
-                  (sch2pcb_get_pcb_element_list (string->pointer pcb-filename)))
+                  (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
                 (unless (true? (sch2pcb_run_netlister (string->pointer pins-filename)
                                                       (string->pointer net-filename)
                                                       (string->pointer pcb-new-filename)

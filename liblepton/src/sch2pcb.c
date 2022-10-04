@@ -809,7 +809,7 @@ pcb_element_free (PcbElement * el)
 }
 
 void
-sch2pcb_get_pcb_element_list (gchar *pcb_file)
+sch2pcb_make_pcb_element_list (gchar *pcb_file)
 {
   FILE *f;
   PcbElement *el;
