@@ -100,6 +100,7 @@
                         net-filename
                         initial-pcb?)
 
+  (define non-zero? (negate zero?))
   (define pcb-file-created? #t)
 
   ;; Report work done during processing.
@@ -108,19 +109,19 @@
 
   (format #t "\n----------------------------------\n")
   (format #t "Done processing.  Work performed:\n")
-  (when (or (not (zero? (sch2pcb_get_n_deleted)))
-            (not (zero? (sch2pcb_get_n_fixed)))
+  (when (or (non-zero? (sch2pcb_get_n_deleted))
+            (non-zero? (sch2pcb_get_n_fixed))
             (true? (sch2pcb_get_need_PKG_purge))
-            (not (zero? (sch2pcb_get_n_changed_value))))
+            (non-zero? (sch2pcb_get_n_changed_value)))
     (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
   (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))
-             (not (zero? (sch2pcb_get_n_deleted))))
+             (non-zero? (sch2pcb_get_n_deleted)))
     (format #t "~A elements deleted from ~A.\n"
             (sch2pcb_get_n_deleted)
             pcb-filename))
 
-  (if (not (zero? (+ (sch2pcb_get_n_added_ef)
-                     (sch2pcb_get_n_added_m4))))
+  (if (non-zero? (+ (sch2pcb_get_n_added_ef)
+                    (sch2pcb_get_n_added_m4)))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
               (sch2pcb_get_n_added_ef)
               (sch2pcb_get_n_added_m4)
