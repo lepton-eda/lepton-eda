@@ -101,7 +101,9 @@
                         initial-pcb?)
 
   (define non-zero? (negate zero?))
-  (define pcb-file-created? #t)
+  (define pcb-file-created? (not (and (zero? (sch2pcb_get_n_added_ef))
+                                      (zero? (sch2pcb_get_n_added_m4))
+                                      (zero? (sch2pcb_get_n_not_found)))))
 
   ;; Report work done during processing.
   (unless (zero? (sch2pcb_get_verbose_mode))
@@ -123,8 +125,7 @@
   (if (zero? (+ (sch2pcb_get_n_added_ef)
                 (sch2pcb_get_n_added_m4)))
       (when (zero? (sch2pcb_get_n_not_found))
-        (format #t "No elements to add so not creating ~A\n" pcb-new-filename)
-        (set! pcb-file-created? #f))
+        (format #t "No elements to add so not creating ~A\n" pcb-new-filename))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
               (sch2pcb_get_n_added_ef)
               (sch2pcb_get_n_added_m4)
