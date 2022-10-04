@@ -124,7 +124,7 @@ static gint
   n_added_ef,
   n_PKG_removed_new,
   n_PKG_removed_old,
-  n_preserved, n_changed_value, n_not_found, n_unknown, n_none, n_empty;
+  n_preserved, n_not_found, n_unknown, n_none, n_empty;
 
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
@@ -174,6 +174,21 @@ void
 sch2pcb_set_fix_elements (gboolean val)
 {
   fix_elements = val;
+}
+
+
+static int n_changed_value;
+
+int
+sch2pcb_get_n_changed_value ()
+{
+  return n_changed_value;
+}
+
+void
+sch2pcb_set_n_changed_value (int val)
+{
+  n_changed_value = val;
 }
 
 

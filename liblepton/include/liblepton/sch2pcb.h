@@ -97,6 +97,12 @@ void
 sch2pcb_load_project (const gchar * path);
 
 int
+sch2pcb_get_n_changed_value ();
+
+void
+sch2pcb_set_n_changed_value (int val);
+
+int
 sch2pcb_get_n_deleted ();
 
 void
