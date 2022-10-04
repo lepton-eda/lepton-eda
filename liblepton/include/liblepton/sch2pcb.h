@@ -145,6 +145,12 @@ void
 sch2pcb_set_n_not_found (int val);
 
 int
+sch2pcb_get_n_PKG_removed_new ();
+
+void
+sch2pcb_set_n_PKG_removed_new (int val);
+
+int
 sch2pcb_get_n_PKG_removed_old ();
 
 void

@@ -119,9 +119,7 @@ static gboolean use_m4 = TRUE;
 
 static gchar *empty_footprint_name;
 
-static gint
-  n_PKG_removed_new,
-  n_preserved;
+static gint n_preserved;
 
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
@@ -306,6 +304,21 @@ void
 sch2pcb_set_n_PKG_removed_old (int val)
 {
   n_PKG_removed_old = val;
+}
+
+
+static int n_PKG_removed_new;
+
+int
+sch2pcb_get_n_PKG_removed_new ()
+{
+  return n_PKG_removed_new;
+}
+
+void
+sch2pcb_set_n_PKG_removed_new (int val)
+{
+  n_PKG_removed_new = val;
 }
 
 
