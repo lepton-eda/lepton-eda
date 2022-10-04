@@ -120,15 +120,15 @@
             (sch2pcb_get_n_deleted)
             pcb-filename))
 
-  (if (non-zero? (+ (sch2pcb_get_n_added_ef)
-                    (sch2pcb_get_n_added_m4)))
+  (if (zero? (+ (sch2pcb_get_n_added_ef)
+                (sch2pcb_get_n_added_m4)))
+      (when (zero? (sch2pcb_get_n_not_found))
+        (format #t "No elements to add so not creating ~A\n" pcb-new-filename)
+        (set! pcb-file-created? #f))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
               (sch2pcb_get_n_added_ef)
               (sch2pcb_get_n_added_m4)
-              pcb-new-filename)
-      (when (zero? (sch2pcb_get_n_not_found))
-        (format #t "No elements to add so not creating ~A\n" pcb-new-filename)
-        (set! pcb-file-created? #f)))
+              pcb-new-filename))
 
   (unless (zero? (sch2pcb_get_n_not_found))
     (format #t "~A not found elements added to ~A.\n"
