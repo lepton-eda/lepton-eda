@@ -96,6 +96,12 @@ sch2pcb_load_extra_project_files (void);
 void
 sch2pcb_load_project (const gchar * path);
 
+int
+sch2pcb_get_n_deleted ();
+
+void
+sch2pcb_set_n_deleted (int val);
+
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);

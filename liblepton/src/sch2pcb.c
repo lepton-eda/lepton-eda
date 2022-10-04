@@ -120,7 +120,6 @@ static gboolean use_m4 = TRUE;
 static gchar *empty_footprint_name;
 
 static gint
-  n_deleted,
   n_added_m4,
   n_added_ef,
   n_fixed,
@@ -176,6 +175,21 @@ void
 sch2pcb_set_fix_elements (gboolean val)
 {
   fix_elements = val;
+}
+
+
+static int n_deleted;
+
+int
+sch2pcb_get_n_deleted ()
+{
+  return n_deleted;
+}
+
+void
+sch2pcb_set_n_deleted (int val)
+{
+  n_deleted = val;
 }
 
 
