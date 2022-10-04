@@ -60,8 +60,6 @@
             sch2pcb_get_pcb_element_list
             sch2pcb_set_preserve
             sch2pcb_prune_elements
-            sch2pcb_get_quiet_mode
-            sch2pcb_set_quiet_mode
             sch2pcb_set_remove_unfound_elements
             sch2pcb_run_netlister
             sch2pcb_get_sch_basename
@@ -114,8 +112,6 @@
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
-(define-lff sch2pcb_get_quiet_mode int '())
-(define-lff sch2pcb_set_quiet_mode void (list int))
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_run_netlister int '(* * * * *))
 (define-lff sch2pcb_get_sch_basename '* '())

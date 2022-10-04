@@ -62,6 +62,9 @@
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
 
 
+(define %quiet-mode #f)
+
+
 (define (string->pair str)
   (define s (string-trim-both str char-set:whitespace))
   (define break-pos (string-index s char-set:whitespace))
@@ -81,7 +84,7 @@
       ;; This is default behaviour.
       ("remove-unfound" (sch2pcb_set_remove_unfound_elements TRUE))
       ("keep-unfound" (sch2pcb_set_remove_unfound_elements FALSE))
-      ("quiet" (sch2pcb_set_quiet_mode TRUE))
+      ("quiet" (set! %quiet-mode #t))
       ("preserve" (sch2pcb_set_preserve TRUE))
       ("use-files" (sch2pcb_set_force_element_files TRUE))
       ("skip-m4" (sch2pcb_set_use_m4 FALSE))
@@ -283,7 +286,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '(#\q "quiet") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_quiet_mode TRUE)
+               (set! %quiet-mode #t)
                seeds))
      (option '(#\p "preserve") #f #f
              (lambda (opt name arg seeds)
@@ -490,7 +493,7 @@ Lepton EDA homepage: <~A>
           (format #t "3.  From within PCB, enter\n\n")
           (format #t "           :ExecuteFile(~A)\n\n" pins-filename)
           (format #t "    to propagate the pin names of all footprints to the layout.\n\n"))
-        (when (= (sch2pcb_get_quiet_mode) FALSE)
+        (unless %quiet-mode
           (format #t "\nNext steps:\n")
           (format #t "1.  Run pcb on your file ~A.\n" pcb-filename)
           (format #t "2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n")

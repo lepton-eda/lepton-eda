@@ -123,12 +123,6 @@ void
 sch2pcb_set_preserve (gboolean val);
 
 gboolean
-sch2pcb_get_quiet_mode ();
-
-void
-sch2pcb_set_quiet_mode (gboolean mode);
-
-gboolean
 sch2pcb_get_remove_unfound_elements ();
 
 void

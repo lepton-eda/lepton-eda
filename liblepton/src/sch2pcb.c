@@ -471,21 +471,6 @@ sch2pcb_set_preserve (gboolean val)
 }
 
 
-static gboolean quiet_mode = FALSE;
-
-gboolean
-sch2pcb_get_quiet_mode ()
-{
-  return quiet_mode;
-}
-
-void
-sch2pcb_set_quiet_mode (gboolean mode)
-{
-  quiet_mode = mode;
-}
-
-
 static gboolean remove_unfound_elements = TRUE;
 
 gboolean
