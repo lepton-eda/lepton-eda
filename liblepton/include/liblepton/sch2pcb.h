@@ -127,6 +127,12 @@ void
 sch2pcb_set_n_fixed (int val);
 
 int
+sch2pcb_get_n_none ();
+
+void
+sch2pcb_set_n_none (int val);
+
+int
 sch2pcb_get_n_not_found ();
 
 void
