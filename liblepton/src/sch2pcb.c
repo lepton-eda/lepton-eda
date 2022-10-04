@@ -50,8 +50,7 @@ typedef struct
 }
 ElementMap;
 
-static GList *pcb_element_list,
-  *extra_gnetlist_list, *extra_gnetlist_arg_list;
+static GList *extra_gnetlist_list, *extra_gnetlist_arg_list;
 
 
 /* --backend-cmd:
@@ -71,6 +70,15 @@ static const gchar* backend_mkfile_net_default = "PCB";
 */
 static gchar*       backend_mkfile_pcb         = NULL;
 static const gchar* backend_mkfile_pcb_default = "gsch2pcb";
+
+
+static GList *pcb_element_list = NULL;
+
+GList*
+sch2pcb_get_pcb_element_list ()
+{
+  return pcb_element_list;
+}
 
 
 static GList *schematics;

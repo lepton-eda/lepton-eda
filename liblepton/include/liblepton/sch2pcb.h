@@ -84,6 +84,9 @@ sch2pcb_load_extra_project_files (void);
 void
 sch2pcb_make_pcb_element_list (gchar *pcb_file);
 
+GList*
+sch2pcb_get_pcb_element_list ();
+
 gboolean
 sch2pcb_get_quiet_mode ();
 
