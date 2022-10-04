@@ -99,6 +99,9 @@ sch2pcb_load_project (const gchar * path);
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);
+void
+sch2pcb_prune_elements (gchar *pcb_file,
+                        gchar *bak);
 gboolean
 sch2pcb_run_netlister (gchar *pins_file,
                        gchar *net_file,

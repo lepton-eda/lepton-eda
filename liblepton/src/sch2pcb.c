@@ -1100,8 +1100,9 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
   g_free (tmp);
 }
 
-static void
-prune_elements (gchar * pcb_file, gchar * bak)
+void
+sch2pcb_prune_elements (gchar *pcb_file,
+                        gchar *bak)
 {
   FILE *f_in, *f_out;
   GList *list;
@@ -1572,7 +1573,7 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  prune_elements (pcb_file_name, bak_file_name);
+  sch2pcb_prune_elements (pcb_file_name, bak_file_name);
 
   /* Report work done during processing */
   if (sch2pcb_get_verbose_mode () != 0)
