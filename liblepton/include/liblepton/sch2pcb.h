@@ -126,6 +126,12 @@ sch2pcb_get_n_fixed ();
 void
 sch2pcb_set_n_fixed (int val);
 
+int
+sch2pcb_get_n_not_found ();
+
+void
+sch2pcb_set_n_not_found (int val);
+
 gboolean
 sch2pcb_get_need_PKG_purge ();
 
