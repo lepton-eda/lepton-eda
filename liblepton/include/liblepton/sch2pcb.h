@@ -41,24 +41,6 @@ sch2pcb_add_multiple_schematics (gchar * sch);
 void
 sch2pcb_add_schematic (gchar *sch);
 
-char*
-sch2pcb_get_backend_mkfile_cmd ();
-
-void
-sch2pcb_set_backend_mkfile_cmd (char *val);
-
-char*
-sch2pcb_get_backend_mkfile_net ();
-
-void
-sch2pcb_set_backend_mkfile_net (char *val);
-
-char*
-sch2pcb_get_backend_mkfile_pcb ();
-
-void
-sch2pcb_set_backend_mkfile_pcb (char *val);
-
 void
 sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
@@ -222,7 +204,10 @@ void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
 gboolean
-sch2pcb_run_netlister (gchar *pins_file,
+sch2pcb_run_netlister (char *backend_cmd,
+                       char *backend_net,
+                       char *backend_pcb,
+                       gchar *pins_file,
                        gchar *net_file,
                        gchar *pcb_file,
                        gchar *basename,

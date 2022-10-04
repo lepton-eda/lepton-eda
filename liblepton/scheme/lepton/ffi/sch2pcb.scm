@@ -27,9 +27,6 @@
             sch2pcb_add_m4_file
             sch2pcb_add_multiple_schematics
             sch2pcb_add_schematic
-            sch2pcb_set_backend_mkfile_cmd
-            sch2pcb_set_backend_mkfile_net
-            sch2pcb_set_backend_mkfile_pcb
             sch2pcb_set_default_m4_pcbdir
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
@@ -79,9 +76,6 @@
 (define-lff sch2pcb_add_m4_file void '(*))
 (define-lff sch2pcb_add_multiple_schematics void '(*))
 (define-lff sch2pcb_add_schematic void '(*))
-(define-lff sch2pcb_set_backend_mkfile_cmd void '(*))
-(define-lff sch2pcb_set_backend_mkfile_net void '(*))
-(define-lff sch2pcb_set_backend_mkfile_pcb void '(*))
 (define-lff sch2pcb_set_default_m4_pcbdir void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
@@ -113,7 +107,7 @@
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
-(define-lff sch2pcb_run_netlister int '(* * * * *))
+(define-lff sch2pcb_run_netlister int '(* * * * * * * *))
 (define-lff sch2pcb_get_sch_basename '* '())
 (define-lff sch2pcb_set_sch_basename void '(*))
 (define-lff sch2pcb_get_schematics '* '())

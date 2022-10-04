@@ -50,64 +50,6 @@ typedef struct
 }
 ElementMap;
 
-/* --backend-cmd:
-*  backend that generates .cmd file:
-*/
-static gchar*       backend_mkfile_cmd         = NULL;
-static const gchar* backend_mkfile_cmd_default = "pcbpins";
-
-char*
-sch2pcb_get_backend_mkfile_cmd ()
-{
-  return backend_mkfile_cmd;
-}
-
-void
-sch2pcb_set_backend_mkfile_cmd (char *val)
-{
-  g_free (backend_mkfile_cmd);
-  backend_mkfile_cmd = g_strdup (val);
-}
-
-
-/* --backend-net:
-*  backend that generates .net file:
-*/
-static gchar*       backend_mkfile_net         = NULL;
-static const gchar* backend_mkfile_net_default = "PCB";
-
-char*
-sch2pcb_get_backend_mkfile_net ()
-{
-  return backend_mkfile_net;
-}
-
-void
-sch2pcb_set_backend_mkfile_net (char *val)
-{
-  g_free (backend_mkfile_net);
-  backend_mkfile_net = g_strdup (val);
-}
-
-
-/* --backend-pcb:
- * backend that generates .pcb, .pcb.new files:
-*/
-static gchar*       backend_mkfile_pcb         = NULL;
-static const gchar* backend_mkfile_pcb_default = "gsch2pcb";
-
-char*
-sch2pcb_get_backend_mkfile_pcb ()
-{
-  return backend_mkfile_pcb;
-}
-
-void
-sch2pcb_set_backend_mkfile_pcb (char *val)
-{
-  g_free (backend_mkfile_pcb);
-  backend_mkfile_pcb = g_strdup (val);
-}
 
 
 static GList *pcb_element_list = NULL;
@@ -668,7 +610,10 @@ build_and_run_command (const gchar *format, ...)
  * board file (only gnetlist >= 20030901 recognizes -m).
  */
 gboolean
-sch2pcb_run_netlister (gchar *pins_file,
+sch2pcb_run_netlister (char *backend_cmd,
+                       char *backend_net,
+                       char *backend_pcb,
+                       gchar *pins_file,
                        gchar *net_file,
                        gchar *pcb_file,
                        gchar *basename,
@@ -696,7 +641,7 @@ sch2pcb_run_netlister (gchar *pins_file,
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
                               gnetlist,
                               verboseList,
-                              sch2pcb_get_backend_mkfile_cmd () ? sch2pcb_get_backend_mkfile_cmd () : backend_mkfile_cmd_default,
+                              backend_cmd,
                               pins_file,
                               extra_gnetlist_arg_list,
                               largs))
@@ -705,7 +650,7 @@ sch2pcb_run_netlister (gchar *pins_file,
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
                               gnetlist,
                               verboseList,
-                              sch2pcb_get_backend_mkfile_net () ? sch2pcb_get_backend_mkfile_net () : backend_mkfile_net_default,
+                              backend_net,
                               net_file,
                               extra_gnetlist_arg_list,
                               largs))
@@ -722,7 +667,7 @@ sch2pcb_run_netlister (gchar *pins_file,
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l %l",
                               gnetlist,
                               verboseList,
-                              sch2pcb_get_backend_mkfile_pcb () ? sch2pcb_get_backend_mkfile_pcb () : backend_mkfile_pcb_default,
+                              backend_pcb,
                               pcb_file,
                               args1,
                               extra_gnetlist_arg_list,

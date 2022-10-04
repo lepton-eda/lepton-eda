@@ -62,6 +62,17 @@
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
 
 
+;;; Default backend names that can be overridden by command line
+;;; options or settings in project files.
+
+;;; Backend that generates .cmd file (--backend-cmd).
+(define %backend-cmd "pcbpins")
+;;; Backend that generates .net file (--backend-net).
+(define %backend-net "PCB")
+;;; Backend that generates .pcb and .pcb.new files (--backend-pcb).
+(define %backend-pcb "gsch2pcb")
+
+
 (define %quiet-mode #f)
 
 
@@ -101,9 +112,9 @@
       ("m4-file" (sch2pcb_add_m4_file *value))
       ("gnetlist" (sch2pcb_extra_gnetlist_list_append *value))
       ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
-      ("backend-cmd" (sch2pcb_set_backend_mkfile_cmd *value))
-      ("backend-net" (sch2pcb_set_backend_mkfile_net *value))
-      ("backend-pcb" (sch2pcb_set_backend_mkfile_pcb *value))
+      ("backend-cmd" (set! %backend-cmd value))
+      ("backend-net" (set! %backend-net value))
+      ("backend-pcb" (set! %backend-pcb value))
       (_ (format (current-error-port)
                  (G_ "Unknown config key: ~S\n")
                  (pointer->string *value))))))
@@ -336,15 +347,15 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("backend-cmd") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_backend_mkfile_cmd (string->pointer arg))
+               (set! %backend-cmd arg)
                seeds))
      (option '("backend-net") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_backend_mkfile_net (string->pointer arg))
+               (set! %backend-net arg)
                seeds))
      (option '("backend-pcb") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_backend_mkfile_pcb (string->pointer arg))
+               (set! %backend-pcb arg)
                seeds))
      (option '(#\V "version") #f #f
              (lambda (opt name arg seeds)
@@ -547,7 +558,10 @@ Lepton EDA homepage: <~A>
                                            pcb-filename)))
                 (when pcb-file-exists?
                   (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
-                (unless (true? (sch2pcb_run_netlister (string->pointer pins-filename)
+                (unless (true? (sch2pcb_run_netlister (string->pointer %backend-cmd)
+                                                      (string->pointer %backend-net)
+                                                      (string->pointer %backend-pcb)
+                                                      (string->pointer pins-filename)
                                                       (string->pointer net-filename)
                                                       (string->pointer pcb-new-filename)
                                                       (sch2pcb_get_sch_basename)
@@ -570,10 +584,6 @@ Lepton EDA homepage: <~A>
                                 pins-filename
                                 net-filename
                                 initial-pcb?)
-
-                (sch2pcb_set_backend_mkfile_cmd %null-pointer)
-                (sch2pcb_set_backend_mkfile_net %null-pointer)
-                (sch2pcb_set_backend_mkfile_pcb %null-pointer)
 
                 (sch2pcb_set_default_m4_pcbdir %null-pointer)
                 (sch2pcb_set_m4_pcbdir %null-pointer)))))))
