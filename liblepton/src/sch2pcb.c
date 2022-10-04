@@ -122,7 +122,7 @@ static gchar *empty_footprint_name;
 static gint
   n_PKG_removed_new,
   n_PKG_removed_old,
-  n_preserved, n_empty;
+  n_preserved;
 
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
@@ -232,6 +232,21 @@ void
 sch2pcb_set_n_deleted (int val)
 {
   n_deleted = val;
+}
+
+
+static int n_empty;
+
+int
+sch2pcb_get_n_empty ()
+{
+  return n_empty;
+}
+
+void
+sch2pcb_set_n_empty (int val)
+{
+  n_empty = val;
 }
 
 
