@@ -108,6 +108,12 @@ sch2pcb_get_n_fixed ();
 void
 sch2pcb_set_n_fixed (int val);
 
+gboolean
+sch2pcb_get_need_PKG_purge ();
+
+void
+sch2pcb_set_need_PKG_purge (gboolean val);
+
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);

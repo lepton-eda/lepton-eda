@@ -128,7 +128,7 @@ static gint
 
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
-  force_element_files, preserve, bak_done, need_PKG_purge;
+  force_element_files, preserve, bak_done;
 
 static gchar *default_m4_pcbdir;
 
@@ -204,6 +204,21 @@ void
 sch2pcb_set_n_fixed (int val)
 {
   n_fixed = val;
+}
+
+
+static gboolean need_PKG_purge;
+
+gboolean
+sch2pcb_get_need_PKG_purge ()
+{
+  return need_PKG_purge;
+}
+
+void
+sch2pcb_set_need_PKG_purge (gboolean val)
+{
+  need_PKG_purge = val;
 }
 
 
