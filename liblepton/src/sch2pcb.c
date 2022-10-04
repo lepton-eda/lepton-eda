@@ -120,7 +120,6 @@ static gboolean use_m4 = TRUE;
 static gchar *empty_footprint_name;
 
 static gint
-  n_added_m4,
   n_PKG_removed_new,
   n_PKG_removed_old,
   n_preserved, n_not_found, n_unknown, n_none, n_empty;
@@ -188,6 +187,21 @@ void
 sch2pcb_set_n_added_ef (int val)
 {
   n_added_ef = val;
+}
+
+
+static int n_added_m4;
+
+int
+sch2pcb_get_n_added_m4 ()
+{
+  return n_added_m4;
+}
+
+void
+sch2pcb_set_n_added_m4 (int val)
+{
+  n_added_m4 = val;
 }
 
 
