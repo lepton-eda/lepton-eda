@@ -1573,8 +1573,6 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  sch2pcb_prune_elements (pcb_file_name, bak_file_name);
-
   /* Report work done during processing */
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("\n");

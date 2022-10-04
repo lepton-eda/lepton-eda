@@ -34,6 +34,7 @@
             sch2pcb_get_sch_basename
             sch2pcb_get_schematics
             sch2pcb_main
+            sch2pcb_prune_elements
             sch2pcb_run_netlister
             sch2pcb_update_element_descriptions
             sch2pcb_usage
@@ -56,6 +57,7 @@
 (define-lff sch2pcb_get_sch_basename '* '())
 (define-lff sch2pcb_get_schematics '* '())
 (define-lff sch2pcb_main int (list '* '* '* '* '* int))
+(define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_run_netlister int '(* * * * *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_usage int '())
