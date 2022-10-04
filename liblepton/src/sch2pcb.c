@@ -121,7 +121,6 @@ static gchar *empty_footprint_name;
 
 static gint
   n_added_m4,
-  n_added_ef,
   n_PKG_removed_new,
   n_PKG_removed_old,
   n_preserved, n_not_found, n_unknown, n_none, n_empty;
@@ -174,6 +173,21 @@ void
 sch2pcb_set_fix_elements (gboolean val)
 {
   fix_elements = val;
+}
+
+
+static int n_added_ef;
+
+int
+sch2pcb_get_n_added_ef ()
+{
+  return n_added_ef;
+}
+
+void
+sch2pcb_set_n_added_ef (int val)
+{
+  n_added_ef = val;
 }
 
 
