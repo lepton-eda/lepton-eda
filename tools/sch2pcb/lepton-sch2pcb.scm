@@ -121,6 +121,11 @@
                                                       (sch2pcb_get_schematics)))
                   (format (current-error-port) (G_ "Failed to run netlister\n"))
                   (exit 1))
+                (when (zero? (sch2pcb_add_elements (string->pointer pcb-new-filename)))
+                  (delete-file pcb-new-filename)
+                  (when initial-pcb?
+                    (format #t "No elements found, so nothing to do.\n")
+                    (exit 0)))
                 (sch2pcb_main (string->pointer pcb-filename)
                               (string->pointer pcb-new-filename)
                               (string->pointer bak-filename)

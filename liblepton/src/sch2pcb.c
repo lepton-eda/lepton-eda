@@ -1554,14 +1554,6 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  if (sch2pcb_add_elements (pcb_new_file_name) == 0) {
-    build_and_run_command ("rm %s", pcb_new_file_name);
-    if (initial_pcb) {
-      printf ("No elements found, so nothing to do.\n");
-      exit (0);
-    }
-  }
-
   if (fix_elements)
     update_element_descriptions (pcb_file_name, bak_file_name);
   prune_elements (pcb_file_name, bak_file_name);
