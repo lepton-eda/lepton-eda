@@ -119,8 +119,6 @@ static gboolean use_m4 = TRUE;
 
 static gchar *empty_footprint_name;
 
-static gint n_preserved;
-
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
   force_element_files, preserve, bak_done;
@@ -319,6 +317,21 @@ void
 sch2pcb_set_n_PKG_removed_new (int val)
 {
   n_PKG_removed_new = val;
+}
+
+
+static gint n_preserved;
+
+int
+sch2pcb_get_n_preserved ()
+{
+  return n_preserved;
+}
+
+void
+sch2pcb_set_n_preserved (int val)
+{
+  n_preserved = val;
 }
 
 
