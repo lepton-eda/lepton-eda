@@ -1572,10 +1572,6 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  if (sch2pcb_get_fix_elements())
-  {
-    sch2pcb_update_element_descriptions (pcb_file_name, bak_file_name);
-  }
   prune_elements (pcb_file_name, bak_file_name);
 
   /* Report work done during processing */

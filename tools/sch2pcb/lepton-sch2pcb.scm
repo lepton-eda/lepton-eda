@@ -141,6 +141,9 @@
                   (when initial-pcb?
                     (format #t "No elements found, so nothing to do.\n")
                     (exit 0)))
+                (when (true? (sch2pcb_get_fix_elements))
+                  (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
+                                                       (string->pointer bak-filename)))
                 (sch2pcb_main (string->pointer pcb-filename)
                               (string->pointer pcb-new-filename)
                               (string->pointer bak-filename)
