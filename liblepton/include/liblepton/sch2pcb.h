@@ -109,6 +109,9 @@ gint
 sch2pcb_get_verbose_mode ();
 
 void
+sch2pcb_update_element_descriptions (gchar *pcb_file,
+                                     gchar *bak);
+void
 sch2pcb_version ();
 
 G_END_DECLS

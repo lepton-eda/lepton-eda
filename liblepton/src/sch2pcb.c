@@ -1044,8 +1044,9 @@ sch2pcb_add_elements (gchar *pcb_file)
   return total;
 }
 
-static void
-update_element_descriptions (gchar * pcb_file, gchar * bak)
+void
+sch2pcb_update_element_descriptions (gchar *pcb_file,
+                                     gchar *bak)
 {
   FILE *f_in, *f_out;
   GList *list;
@@ -1573,7 +1574,7 @@ sch2pcb_main (char *pcb_file_name,
 
   if (sch2pcb_get_fix_elements())
   {
-    update_element_descriptions (pcb_file_name, bak_file_name);
+    sch2pcb_update_element_descriptions (pcb_file_name, bak_file_name);
   }
   prune_elements (pcb_file_name, bak_file_name);
 
