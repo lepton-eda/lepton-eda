@@ -1807,7 +1807,7 @@ sch2pcb_main (char *pcb_file_name,
   {
     printf ("%s is backed up as %s.\n", pcb_file_name, bak_file_name);
   }
-  if (pcb_element_list
+  if (sch2pcb_get_pcb_element_list () != NULL
       && sch2pcb_get_n_deleted () > 0)
   {
     printf ("%d elements deleted from %s.\n",
