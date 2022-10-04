@@ -132,6 +132,12 @@ sch2pcb_get_n_not_found ();
 void
 sch2pcb_set_n_not_found (int val);
 
+int
+sch2pcb_get_n_unknown ();
+
+void
+sch2pcb_set_n_unknown (int val);
+
 gboolean
 sch2pcb_get_need_PKG_purge ();
 
