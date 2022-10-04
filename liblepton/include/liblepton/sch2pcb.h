@@ -102,6 +102,12 @@ sch2pcb_get_n_deleted ();
 void
 sch2pcb_set_n_deleted (int val);
 
+int
+sch2pcb_get_n_fixed ();
+
+void
+sch2pcb_set_n_fixed (int val);
+
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);

@@ -122,7 +122,6 @@ static gchar *empty_footprint_name;
 static gint
   n_added_m4,
   n_added_ef,
-  n_fixed,
   n_PKG_removed_new,
   n_PKG_removed_old,
   n_preserved, n_changed_value, n_not_found, n_unknown, n_none, n_empty;
@@ -190,6 +189,21 @@ void
 sch2pcb_set_n_deleted (int val)
 {
   n_deleted = val;
+}
+
+
+static int n_fixed;
+
+int
+sch2pcb_get_n_fixed ()
+{
+  return n_fixed;
+}
+
+void
+sch2pcb_set_n_fixed (int val)
+{
+  n_fixed = val;
 }
 
 
