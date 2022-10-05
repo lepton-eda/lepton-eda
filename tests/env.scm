@@ -102,6 +102,10 @@
     (lambda () (display str)))
   filename)
 
+(define (touch filename)
+  (string->file "" filename))
+
+
 (define *abs-top-builddir* (getenv "abs_top_builddir"))
 (define *abs-top-srcdir* (getenv "abs_top_srcdir"))
 

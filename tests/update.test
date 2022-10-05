@@ -47,8 +47,6 @@
   (system* "rm" "-rf" testdir))
 
 (define file-does-not-exist? (negate file-exists?))
-(define (touch file)
-  (with-output-to-file file (lambda () (display ""))))
 
 (test-begin "update-files")
 (test-group-with-cleanup "update-files"
