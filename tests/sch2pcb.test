@@ -944,6 +944,72 @@
 (test-end)
 
 
+(test-begin "sch2pcb project key schematics advanced")
+
+(test-group-with-cleanup "sch2pcb project key schematics advanced"
+  (test-setup)
+
+  ;; Test wrong values of the 'schematics' key.
+  (string->file "schematics \" " "double-quote")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "double-quote")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
+  (string->file "schematics \" contents " "double-quote-with-contents")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "double-quote-with-contents")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
+  (string->file "schematics ' " "single-quote")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "single-quote")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
+  (string->file "schematics ' contents " "single-quote-with-contents")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "single-quote-with-contents")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
+  ;; Test quoted names with or without special symbols.
+
+  ;; File contents to test
+  ;; ------------------8<--------------------
+;;   "schematics a\ b.sch
+
+  ;; ------------------>8--------------------
+
+
+  (string->file (string-join
+                 '("schematics"
+                   "'a.sch'"
+                   "  \"b.sch\""
+                   " 'c.sch d.sch' "
+                   " \"e.sch f.sch\" "))
+                ;; File name.
+                "special")
+  ;; ;; Make sure files specified in the 'schematic' option exist.
+  (touch "a.sch")
+  (touch "b.sch")
+  (touch "c.sch d.sch")
+  (touch "e.sch f.sch")
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "special")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "'a.sch'"))
+    (test-assert (string-contains <stdout> "\"b.sch\""))
+    (test-assert (string-contains <stdout> "'c.sch d.sch'"))
+    (test-assert (string-contains <stdout> "\"e.sch f.sch\"")))
+
+  (test-teardown))
+
+(test-end)
+
+
 (test-begin "sch2pcb project key m4-pcbdir")
 
 (test-group-with-cleanup "sch2pcb project key m4-pcbdir"
