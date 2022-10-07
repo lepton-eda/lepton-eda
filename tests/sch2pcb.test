@@ -974,6 +974,13 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stderr> "invalid `schematics' option")))
 
+  ;; Test empty 'schematics' key value.
+  (string->file "schematics" "empty")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "empty")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
   ;; Test quoted names with or without special symbols.
 
   ;; File contents to test
