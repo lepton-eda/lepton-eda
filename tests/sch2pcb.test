@@ -1019,6 +1019,13 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "\"\\\".sch\"")))
 
+  (string->file "schematics ';.sch'" "semicolon-within-quotes")
+  (touch ";.sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "semicolon-within-quotes")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "';.sch'")))
+
   (test-teardown))
 
 (test-end)
