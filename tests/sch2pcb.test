@@ -1034,6 +1034,15 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stderr> "invalid `schematics' option")))
 
+  ;; Files within other directories.
+  (string->file "schematics \"dir/x.sch\" " "slash")
+  (mkdir "dir")
+  (touch "dir/x.sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "slash")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "\"dir/x.sch\"")))
+
   (test-teardown))
 
 (test-end)
