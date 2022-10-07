@@ -1043,6 +1043,12 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "\"dir/x.sch\"")))
 
+  ;; Filenames with newlines are not supported.
+  (touch "x\ny.sch")
+  (string->file "schematics \"x\\ny.sch\"" "newline")
+  (test-expect-fail 1)
+  (test-run-success lepton-sch2pcb "-v" "newline")
+
   (test-teardown))
 
 (test-end)
