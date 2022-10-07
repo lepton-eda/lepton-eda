@@ -1043,6 +1043,15 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "\"dir/x.sch\"")))
 
+  ;; Filenames with backslashes.  May be considered as filenames
+  ;; in other directories in some OSes.
+  (string->file "schematics \"\\.sch\" " "backslash")
+  (touch "\\.sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "backslash")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "\"\\.sch\"")))
+
   ;; Filenames with newlines are not supported.
   (touch "x\ny.sch")
   (string->file "schematics \"x\\ny.sch\"" "newline")
