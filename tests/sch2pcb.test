@@ -1052,6 +1052,14 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "\"\\.sch\"")))
 
+  ;; Escaped spaces.
+  (string->file "schematics x\\ .sch" "escaped-space")
+  (touch "x .sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "escaped-space")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "x\\ .sch")))
+
   ;; Filenames with newlines are not supported.
   (touch "x\ny.sch")
   (string->file "schematics \"x\\ny.sch\"" "newline")
