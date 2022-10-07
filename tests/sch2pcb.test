@@ -1026,6 +1026,14 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "';.sch'")))
 
+  ;; This file name has issues with quoting in shell.
+  (string->file "schematics '\\'.sch'" "quote-within-quotes")
+  (touch "'.sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "quote-within-quotes")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "invalid `schematics' option")))
+
   (test-teardown))
 
 (test-end)
