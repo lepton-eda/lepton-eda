@@ -1012,6 +1012,13 @@
     (test-assert (string-contains <stdout> "'c.sch d.sch'"))
     (test-assert (string-contains <stdout> "\"e.sch f.sch\"")))
 
+  (string->file "schematics \"\\\".sch\"" "double-quote-within-double-quotes")
+  (touch "\".sch")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "double-quote-within-double-quotes")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "\"\\\".sch\"")))
+
   (test-teardown))
 
 (test-end)
