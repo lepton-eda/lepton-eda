@@ -217,6 +217,7 @@
             about_dialog
 
             x_dialog_close_changed_page
+            x_dialog_close_window
 
             coord_dialog
 
@@ -421,6 +422,7 @@
 
 ;;; gschem_close_confirmation_dialog.c
 (define-lff x_dialog_close_changed_page int '(* *))
+(define-lff x_dialog_close_window int '(*))
 
 ;;; gschem_coord_dialog.c
 (define-lff coord_dialog void (list '* int int))

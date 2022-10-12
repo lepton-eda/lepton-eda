@@ -559,19 +559,6 @@ void
 x_window_close (GschemToplevel *w_current,
                 gboolean last_window)
 {
-  /* If we're closing whilst inside an action, re-wind the
-   * page contents back to their state before we started */
-  if (schematic_window_get_inside_action (w_current))
-  {
-    i_callback_cancel (NULL, w_current);
-  }
-
-  /* last chance to save possible unsaved pages */
-  if (!x_dialog_close_window (w_current)) {
-    /* user somehow cancelled the close */
-    return;
-  }
-
   x_clipboard_finish (w_current);
 
   w_current->dont_invalidate = TRUE;

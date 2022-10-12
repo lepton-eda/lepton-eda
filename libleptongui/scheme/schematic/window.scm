@@ -71,26 +71,34 @@
 (define (close-window! *window)
   "Closes *WINDOW."
   (let ((last-window? (= (schematic_window_list_length) 1)))
-    (x_window_close *window
-                    ;; Check if the window is the last one.
-                    (if last-window? TRUE FALSE))
+    ;; If we're closing whilst inside an action, re-wind the page
+    ;; contents back to their state before we started.
+    (when (true? (schematic_window_get_inside_action *window))
+      (i_callback_cancel %null-pointer *window))
 
-    ;; Just closed last window, so quit.
-    (when (zero? (schematic_window_list_length))
-      ;; Clean up all memory objects allocated during the
-      ;; lepton-schematic runtime.
+    ;; Last chance to save possible unsaved pages.
+    (when (true? (x_dialog_close_window *window))
+      ;; Close the window if the user didn't cancel the close.
+      (x_window_close *window
+                      ;; Check if the window is the last one.
+                      (if last-window? TRUE FALSE))
 
-      ;; Save cache config on exit.
-      (config-save! (cache-config-context))
-      (s_clib_free)
-      (s_attrib_free)
-      (x_stroke_free)
-      (o_undo_cleanup)
+      ;; Just closed last window, so quit.
+      (when (zero? (schematic_window_list_length))
+        ;; Clean up all memory objects allocated during the
+        ;; lepton-schematic runtime.
 
-      ;; Check whether the main loop is running.
-      (if (zero? (gtk_main_level))
-          (primitive-exit 0)
-          (gtk_main_quit)))))
+        ;; Save cache config on exit.
+        (config-save! (cache-config-context))
+        (s_clib_free)
+        (s_attrib_free)
+        (x_stroke_free)
+        (o_undo_cleanup)
+
+        ;; Check whether the main loop is running.
+        (if (zero? (gtk_main_level))
+            (primitive-exit 0)
+            (gtk_main_quit))))))
 
 
 (define (callback-close-schematic-window *widget *event *window)
