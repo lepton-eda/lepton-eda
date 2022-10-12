@@ -82,6 +82,7 @@
     ;; Last chance to save possible unsaved pages.
     (when (true? (x_dialog_close_window *window))
       ;; Close the window if the user didn't cancel the close.
+      (x_clipboard_finish *window)
       (x_window_close *window)
       ;; Check if the window is the last one and do jobs that have
       ;; to be done before freeing its memory.

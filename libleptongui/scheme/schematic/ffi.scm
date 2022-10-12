@@ -122,6 +122,7 @@
 
             autonumber_text_dialog
 
+            x_clipboard_finish
             x_clipboard_init
 
             x_show_uri
@@ -660,6 +661,7 @@
 (define-lff autonumber_text_dialog void '(*))
 
 ;;; x_clipboard.c
+(define-lff x_clipboard_finish void '(*))
 (define-lff x_clipboard_init void '(*))
 
 ;;; x_misc.c

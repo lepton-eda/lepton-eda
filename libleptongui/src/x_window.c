@@ -569,8 +569,6 @@ schematic_window_set_main_window (GschemToplevel *w_current,
 void
 x_window_close (GschemToplevel *w_current)
 {
-  x_clipboard_finish (w_current);
-
   w_current->dont_invalidate = TRUE;
 
   x_widgets_destroy_dialogs (w_current);
