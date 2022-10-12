@@ -501,7 +501,11 @@ void o_invalidate_rect (GschemToplevel *w_current,
  */
 void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
 {
-  if (w_current == NULL || w_current->dont_invalidate) return;
+  if (w_current == NULL
+      || schematic_window_get_dont_invalidate (w_current))
+  {
+    return;
+  }
 
   int left, top, bottom, right;
 

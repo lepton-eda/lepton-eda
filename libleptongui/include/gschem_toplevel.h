@@ -386,6 +386,12 @@ schematic_window_get_keyboardpan_gain (GschemToplevel *w_current);
 void
 schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
                                        int keyboardpan_gain);
+gboolean
+schematic_window_get_dont_invalidate (GschemToplevel *w_current);
+
+void
+schematic_window_set_dont_invalidate (GschemToplevel *w_current,
+                                      gboolean val);
 int
 schematic_window_get_enforce_hierarchy (GschemToplevel *w_current);
 

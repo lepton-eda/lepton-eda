@@ -153,7 +153,7 @@ GschemToplevel *gschem_toplevel_new ()
 
   w_current->toplevel = NULL;
 
-  w_current->dont_invalidate = FALSE;
+  schematic_window_set_dont_invalidate (w_current, FALSE);
 
   /* ------------------- */
   /* main window widgets */
@@ -1272,6 +1272,35 @@ schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
 
   w_current->keyboardpan_gain = keyboardpan_gain;
+}
+
+
+/*! \brief Get the field 'dont_invalidate' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'dont_invalidate'.
+ */
+gboolean
+schematic_window_get_dont_invalidate (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  return w_current->dont_invalidate;
+}
+
+
+/*! \brief Set the field 'dont_invalidate' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value for the field 'dont_invalidate'.
+ */
+void
+schematic_window_set_dont_invalidate (GschemToplevel *w_current,
+                                      gboolean val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->dont_invalidate = val;
 }
 
 
