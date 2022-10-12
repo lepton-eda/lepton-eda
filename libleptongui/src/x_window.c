@@ -561,7 +561,8 @@ x_window_close (GschemToplevel *w_current,
 {
   /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     i_callback_cancel (NULL, w_current);
   }
 
