@@ -1477,3 +1477,32 @@ schematic_window_set_arc_edit_widget (GschemToplevel *w_current,
 
   w_current->aawindow = widget;
 }
+
+
+/*! \brief Get attrib edit widget of this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The Attrib edit widget.
+ */
+GtkWidget*
+schematic_window_get_attrib_edit_widget (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->aewindow;
+}
+
+
+/*! \brief Set attrib edit widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_attrib_edit_widget (GschemToplevel *w_current,
+                                         GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->aewindow = widget;
+}
