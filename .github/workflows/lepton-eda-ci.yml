@@ -46,4 +46,4 @@ jobs:
           ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
 
       - name: make distcheck
-        run:  make -sj4 distcheck
+        run:  make -sj1 distcheck
