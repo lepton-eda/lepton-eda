@@ -1506,3 +1506,32 @@ schematic_window_set_attrib_edit_widget (GschemToplevel *w_current,
 
   w_current->aewindow = widget;
 }
+
+
+/*! \brief Get hotkey widget of this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The Hotkey widget.
+ */
+GtkWidget*
+schematic_window_get_hotkey_widget (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->hkwindow;
+}
+
+
+/*! \brief Set hotkey widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_hotkey_widget (GschemToplevel *w_current,
+                                    GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->hkwindow = widget;
+}
