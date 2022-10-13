@@ -575,6 +575,7 @@ x_window_close (GschemToplevel *w_current)
   GtkWidget *aewindow = schematic_window_get_attrib_edit_widget (w_current);
   GtkWidget *hkwindow = schematic_window_get_hotkey_widget (w_current);
   GtkWidget *cowindow = schematic_window_get_coord_widget (w_current);
+  GtkWidget *sewindow = schematic_window_get_slot_edit_widget (w_current);
 
   schematic_window_set_dont_invalidate (w_current, TRUE);
 
@@ -595,8 +596,7 @@ x_window_close (GschemToplevel *w_current)
 
   if (cowindow) gtk_widget_destroy (cowindow);
 
-  if (w_current->sewindow)
-  gtk_widget_destroy(w_current->sewindow);
+  if (sewindow) gtk_widget_destroy(sewindow);
 }
 
 
