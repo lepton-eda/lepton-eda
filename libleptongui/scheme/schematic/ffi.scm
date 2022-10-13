@@ -152,7 +152,7 @@
 
             x_window_close
             x_window_close_all
-            x_window_close_page_impl
+            x_window_close_page
             x_window_new
             x_window_open_page
             x_window_save_page
@@ -501,7 +501,7 @@
 (define-lff x_window_untitled_page int '(*))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
-(define-lff x_window_close_page_impl '* '(* *))
+(define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())

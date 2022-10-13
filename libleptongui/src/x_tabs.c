@@ -1576,7 +1576,7 @@ x_tabs_page_close (GschemToplevel* w_current,
 
   /* page to be set as current after the [page] is closed:
   */
-  LeptonPage* new_cur_page = x_window_close_page_impl (w_current, nfo_cur->page_);
+  LeptonPage* new_cur_page = x_window_close_page (w_current, nfo_cur->page_);
 
   x_tabs_nbook_page_close (w_current, nfo_cur->page_);
 

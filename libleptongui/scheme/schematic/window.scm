@@ -166,7 +166,7 @@ window to PAGE.  Returns PAGE."
   (define tabs-enabled? (true? (x_tabs_enabled)))
   (if tabs-enabled?
       (x_tabs_page_close *window *page)
-      (x_window_close_page_impl *window *page)))
+      (x_window_close_page *window *page)))
 
 
 (define (close-page! page)

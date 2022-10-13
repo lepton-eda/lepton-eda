@@ -639,8 +639,8 @@ x_window_save_page (GschemToplevel *w_current,
                     LeptonPage *page,
                     const gchar *filename);
 LeptonPage*
-x_window_close_page_impl (GschemToplevel *w_current,
-                          LeptonPage *page);
+x_window_close_page (GschemToplevel *w_current,
+                     LeptonPage *page);
 GschemToplevel*
 x_window_new (LeptonToplevel *toplevel);
 

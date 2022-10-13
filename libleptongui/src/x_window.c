@@ -890,8 +890,8 @@ x_window_save_page (GschemToplevel *w_current,
  *  \return               Pointer to a new current LeptonPage object.
  */
 LeptonPage*
-x_window_close_page_impl (GschemToplevel *w_current,
-                          LeptonPage *page)
+x_window_close_page (GschemToplevel *w_current,
+                     LeptonPage *page)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *new_current = NULL;
@@ -957,7 +957,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
 
   return new_current;
 
-} /* x_window_close_page_impl() */
+} /* x_window_close_page() */
 
 
 /*! \brief Creates and initializes a new lepton-schematic window.
