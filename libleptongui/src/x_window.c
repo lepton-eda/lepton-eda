@@ -560,46 +560,6 @@ schematic_window_set_main_window (GschemToplevel *w_current,
 }
 
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-x_window_close (GschemToplevel *w_current)
-{
-  GtkWidget *cswindow = schematic_window_get_compselect_widget (w_current);
-  GtkWidget *tiwindow = schematic_window_get_text_input_widget (w_current);
-  GtkWidget *aawindow = schematic_window_get_arc_edit_widget (w_current);
-  GtkWidget *aewindow = schematic_window_get_attrib_edit_widget (w_current);
-  GtkWidget *hkwindow = schematic_window_get_hotkey_widget (w_current);
-  GtkWidget *cowindow = schematic_window_get_coord_widget (w_current);
-  GtkWidget *sewindow = schematic_window_get_slot_edit_widget (w_current);
-
-  schematic_window_set_dont_invalidate (w_current, TRUE);
-
-  x_widgets_destroy_dialogs (w_current);
-
-  /* close all the dialog boxes */
-  if (cswindow) gtk_widget_destroy (cswindow);
-
-  if (tiwindow) gtk_widget_destroy (tiwindow);
-
-  if (aawindow) gtk_widget_destroy (aawindow);
-
-  x_multiattrib_close (w_current);
-
-  if (aewindow) gtk_widget_destroy (aewindow);
-
-  if (hkwindow) gtk_widget_destroy (hkwindow);
-
-  if (cowindow) gtk_widget_destroy (cowindow);
-
-  if (sewindow) gtk_widget_destroy(sewindow);
-}
-
-
 /*! \brief Opens a new page from a file.
  *  \private
  *  \par Function Description

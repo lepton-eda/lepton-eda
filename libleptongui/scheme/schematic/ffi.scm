@@ -149,6 +149,7 @@
             x_compselect_open
 
             x_widgets_create
+            x_widgets_destroy_dialogs
             x_widgets_init
             x_widgets_show_color_edit
             x_widgets_show_find_text_state
@@ -159,7 +160,6 @@
             x_widgets_show_page_select
             x_widgets_toggle_widget_visibility
 
-            x_window_close
             x_window_close_page
             x_window_new
             x_window_open_page
@@ -275,6 +275,14 @@
             schematic_window_get_keyaccel_string_source_id
             schematic_window_set_keyaccel_string_source_id
             schematic_window_get_shift_key_pressed
+            schematic_window_get_arc_edit_widget
+            schematic_window_get_attrib_edit_widget
+            schematic_window_get_compselect_widget
+            schematic_window_get_coord_widget
+            schematic_window_get_hotkey_widget
+            schematic_window_get_slot_edit_widget
+            schematic_window_get_text_input_widget
+            schematic_window_set_dont_invalidate
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -312,6 +320,8 @@
             schematic_file_open
 
             x_image_setup
+
+            x_multiattrib_close
 
             x_print
 
@@ -397,6 +407,7 @@
 
 ;;; x_widgets.c
 (define-lff x_widgets_create void '(*))
+(define-lff x_widgets_destroy_dialogs void '(*))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_show_color_edit void '(*))
 (define-lff x_widgets_show_find_text_state void '(*))
@@ -494,6 +505,14 @@
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
+(define-lff schematic_window_get_arc_edit_widget '* '(*))
+(define-lff schematic_window_get_attrib_edit_widget '* '(*))
+(define-lff schematic_window_get_compselect_widget '* '(*))
+(define-lff schematic_window_get_coord_widget '* '(*))
+(define-lff schematic_window_get_hotkey_widget '* '(*))
+(define-lff schematic_window_get_slot_edit_widget '* '(*))
+(define-lff schematic_window_get_text_input_widget '* '(*))
+(define-lff schematic_window_set_dont_invalidate void (list '* int))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))
@@ -528,7 +547,6 @@
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
-(define-lff x_window_close void '(*))
 (define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
@@ -680,6 +698,9 @@
 
 ;;; x_image.c
 (define-lff x_image_setup void '(*))
+
+;;; x_multiattrib.c
+(define-lff x_multiattrib_close void '(*))
 
 ;;; x_newtext.c
 (define-lff text_input_dialog void '(*))

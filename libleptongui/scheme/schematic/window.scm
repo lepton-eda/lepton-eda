@@ -83,16 +83,38 @@
     (when (true? (x_dialog_close_window *window))
       ;; Close the window if the user didn't cancel the close.
       (x_clipboard_finish *window)
-      (x_window_close *window)
-      ;; Check if the window is the last one and do jobs that have
-      ;; to be done before freeing its memory.
-      (when last-window?
-        ;; Save window geometry.
-        (schematic_window_save_geometry *window)
-        ;; Close the log file.
-        (s_log_close)
-        ;; free the buffers.
-        (o_buffer_free *window))
+      (let ((*cswindow (schematic_window_get_compselect_widget *window))
+            (*tiwindow (schematic_window_get_text_input_widget *window))
+            (*aawindow (schematic_window_get_arc_edit_widget *window))
+            (*aewindow (schematic_window_get_attrib_edit_widget *window))
+            (*hkwindow (schematic_window_get_hotkey_widget *window))
+            (*cowindow (schematic_window_get_coord_widget *window))
+            (*sewindow (schematic_window_get_slot_edit_widget *window)))
+
+        (schematic_window_set_dont_invalidate *window TRUE)
+
+        (x_widgets_destroy_dialogs *window)
+
+        ;; Close all the dialog boxes.
+        (unless (null-pointer? *cswindow) (gtk_widget_destroy *cswindow))
+        (unless (null-pointer? *tiwindow) (gtk_widget_destroy *tiwindow))
+        (unless (null-pointer? *aawindow) (gtk_widget_destroy *aawindow))
+        (x_multiattrib_close *window)
+        (unless (null-pointer? *aewindow) (gtk_widget_destroy *aewindow))
+        (unless (null-pointer? *hkwindow) (gtk_widget_destroy *hkwindow))
+        (unless (null-pointer? *cowindow) (gtk_widget_destroy *cowindow))
+        (unless (null-pointer? *sewindow) (gtk_widget_destroy *sewindow))
+
+
+        ;; Check if the window is the last one and do jobs that have
+        ;; to be done before freeing its memory.
+        (when last-window?
+          ;; Save window geometry.
+          (schematic_window_save_geometry *window)
+          ;; Close the log file.
+          (s_log_close)
+          ;; free the buffers.
+          (o_buffer_free *window)))
 
       ;; Destroy main widget of the window.
       (gtk_widget_destroy (schematic_window_get_main_window *window))
