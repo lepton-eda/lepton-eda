@@ -570,6 +570,7 @@ void
 x_window_close (GschemToplevel *w_current)
 {
   GtkWidget *cswindow = schematic_window_get_compselect_widget (w_current);
+  GtkWidget *tiwindow = schematic_window_get_text_input_widget (w_current);
 
   schematic_window_set_dont_invalidate (w_current, TRUE);
 
@@ -578,8 +579,7 @@ x_window_close (GschemToplevel *w_current)
   /* close all the dialog boxes */
   if (cswindow) gtk_widget_destroy (cswindow);
 
-  if (w_current->tiwindow)
-  gtk_widget_destroy(w_current->tiwindow);
+  if (tiwindow) gtk_widget_destroy (tiwindow);
 
   if (w_current->aawindow)
   gtk_widget_destroy(w_current->aawindow);
