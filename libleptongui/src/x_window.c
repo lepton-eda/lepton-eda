@@ -569,13 +569,14 @@ schematic_window_set_main_window (GschemToplevel *w_current,
 void
 x_window_close (GschemToplevel *w_current)
 {
+  GtkWidget *cswindow = schematic_window_get_compselect_widget (w_current);
+
   schematic_window_set_dont_invalidate (w_current, TRUE);
 
   x_widgets_destroy_dialogs (w_current);
 
   /* close all the dialog boxes */
-  if (w_current->cswindow)
-  gtk_widget_destroy(w_current->cswindow);
+  if (cswindow) gtk_widget_destroy (cswindow);
 
   if (w_current->tiwindow)
   gtk_widget_destroy(w_current->tiwindow);

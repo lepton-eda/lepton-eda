@@ -411,9 +411,9 @@ void
 schematic_window_set_keyaccel_string (GschemToplevel *w_current,
                                       char *str);
 GtkWidget*
-schematic_window_get_compselect (GschemToplevel *w_current);
+schematic_window_get_compselect_widget (GschemToplevel *w_current);
 
 void
-schematic_window_set_compselect (GschemToplevel *w_current,
-                                 GtkWidget *widget);
+schematic_window_set_compselect_widget (GschemToplevel *w_current,
+                                        GtkWidget *widget);
 G_END_DECLS

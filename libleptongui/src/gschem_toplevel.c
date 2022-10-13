@@ -1398,7 +1398,7 @@ schematic_window_set_keyaccel_string (GschemToplevel *w_current,
  *  \return The Compselect widget.
  */
 GtkWidget*
-schematic_window_get_compselect (GschemToplevel *w_current)
+schematic_window_get_compselect_widget (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1412,8 +1412,8 @@ schematic_window_get_compselect (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_compselect (GschemToplevel *w_current,
-                                 GtkWidget *widget)
+schematic_window_set_compselect_widget (GschemToplevel *w_current,
+                                        GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
 
