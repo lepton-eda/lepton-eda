@@ -572,6 +572,7 @@ x_window_close (GschemToplevel *w_current)
   GtkWidget *cswindow = schematic_window_get_compselect_widget (w_current);
   GtkWidget *tiwindow = schematic_window_get_text_input_widget (w_current);
   GtkWidget *aawindow = schematic_window_get_arc_edit_widget (w_current);
+  GtkWidget *aewindow = schematic_window_get_attrib_edit_widget (w_current);
 
   schematic_window_set_dont_invalidate (w_current, TRUE);
 
@@ -586,8 +587,7 @@ x_window_close (GschemToplevel *w_current)
 
   x_multiattrib_close (w_current);
 
-  if (w_current->aewindow)
-  gtk_widget_destroy(w_current->aewindow);
+  if (aewindow) gtk_widget_destroy (aewindow);
 
   if (w_current->hkwindow)
   gtk_widget_destroy(w_current->hkwindow);
