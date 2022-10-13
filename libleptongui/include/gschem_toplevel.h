@@ -416,4 +416,10 @@ schematic_window_get_compselect_widget (GschemToplevel *w_current);
 void
 schematic_window_set_compselect_widget (GschemToplevel *w_current,
                                         GtkWidget *widget);
+GtkWidget*
+schematic_window_get_text_input_widget (GschemToplevel *w_current);
+
+void
+schematic_window_set_text_input_widget (GschemToplevel *w_current,
+                                        GtkWidget *widget);
 G_END_DECLS
