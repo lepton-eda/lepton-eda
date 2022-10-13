@@ -440,4 +440,10 @@ schematic_window_get_hotkey_widget (GschemToplevel *w_current);
 void
 schematic_window_set_hotkey_widget (GschemToplevel *w_current,
                                     GtkWidget *widget);
+GtkWidget*
+schematic_window_get_coord_widget (GschemToplevel *w_current);
+
+void
+schematic_window_set_coord_widget (GschemToplevel *w_current,
+                                   GtkWidget *widget);
 G_END_DECLS
