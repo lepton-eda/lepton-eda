@@ -28,6 +28,7 @@
 
   #:export (schematic-message-dialog
             schematic-confirm-dialog
+            schematic-error-dialog
             schematic-fileselect-dialog))
 
 (define (schematic-message-dialog message)
@@ -39,6 +40,19 @@
 NO.  Returns #t if the button YES was pressed.  Otherwise returns
 #f."
   (not (zero? (generic_confirm_dialog (string->pointer message)))))
+
+(define* (schematic-error-dialog text
+                                 #:key
+                                 (secondary-text #f)
+                                 (title #f))
+  "Opens GTK message dialog with TEXT as a primary text message,
+and SECONDARY-TEXT as a secondary message.  The dialog title text
+is set to the optional TITLE parameter."
+  (generic_error_dialog (string->pointer text)
+                        (or (and=> secondary-text string->pointer)
+                            %null-pointer)
+                        (or (and=> title string->pointer)
+                            %null-pointer)))
 
 (define (schematic-fileselect-dialog message template . flags)
   "Opens GTK file selection dialog with MESSAGE as dialog's title.
