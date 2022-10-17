@@ -95,10 +95,12 @@ int generic_confirm_dialog (const char *msg)
  *
  * \param [in] primary_message The main error message.
  * \param [in] secondary_message The additional or detail message.
+ * \param [in] title The optional dialog title.
  */
 void
 generic_error_dialog (const char *primary_message,
-                      const char *secondary_message)
+                      const char *secondary_message,
+                      const char *title)
 {
   GtkWidget *dialog = gtk_message_dialog_new (NULL,
                                               GTK_DIALOG_MODAL,
@@ -109,6 +111,10 @@ generic_error_dialog (const char *primary_message,
                 "text", primary_message,
                 "secondary-text", secondary_message,
                 NULL);
+  if (title != NULL)
+  {
+    gtk_window_set_title (GTK_WINDOW (dialog), title);
+  }
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 }

@@ -602,7 +602,7 @@
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
-(define-lff generic_error_dialog void '(* *))
+(define-lff generic_error_dialog void '(* * *))
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 

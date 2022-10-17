@@ -416,7 +416,8 @@ int generic_confirm_dialog(const char *);
 
 void
 generic_error_dialog (const char *primary_message,
-                      const char *secondary_message);
+                      const char *secondary_message,
+                      const char *title);
 
 char * generic_filesel_dialog(const char *, const char *, gint);
 
