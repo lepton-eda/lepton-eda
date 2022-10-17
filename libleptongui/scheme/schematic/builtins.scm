@@ -1107,7 +1107,8 @@ the snap grid size should be set to 100")))
                                       (gerror-message (dereference-pointer *error))))))
 
     (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
-                          (string->pointer secondary-message))
+                          (string->pointer secondary-message)
+                          %null-pointer)
 
     (g_clear_error *error)))
 
