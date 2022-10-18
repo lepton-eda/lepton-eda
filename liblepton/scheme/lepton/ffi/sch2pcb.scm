@@ -35,6 +35,7 @@
             sch2pcb_expand_dir
             sch2pcb_extra_gnetlist_arg_list_append
             sch2pcb_extra_gnetlist_list_append
+            sch2pcb_get_extra_gnetlist_arg_list
             sch2pcb_get_fix_elements
             sch2pcb_set_fix_elements
             sch2pcb_set_force_element_files
@@ -84,6 +85,7 @@
 (define-lff sch2pcb_expand_dir '* '(*))
 (define-lff sch2pcb_extra_gnetlist_arg_list_append void '(*))
 (define-lff sch2pcb_extra_gnetlist_list_append void '(*))
+(define-lff sch2pcb_get_extra_gnetlist_arg_list '* '())
 (define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_set_force_element_files void (list int))
@@ -107,7 +109,7 @@
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
-(define-lff sch2pcb_run_netlister int '(* * * * * * * * *))
+(define-lff sch2pcb_run_netlister int '(* * * * * * *))
 (define-lff sch2pcb_get_sch_basename '* '())
 (define-lff sch2pcb_set_sch_basename void '(*))
 (define-lff sch2pcb_get_schematics '* '())

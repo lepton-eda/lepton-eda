@@ -618,10 +618,8 @@ build_and_run_command (const gchar *format, ...)
  */
 gboolean
 sch2pcb_run_netlister (const char *gnetlist,
-                       char *backend_cmd,
                        char *backend_net,
                        char *backend_pcb,
-                       gchar *pins_file,
                        gchar *net_file,
                        gchar *pcb_file,
                        gchar *basename,
@@ -635,15 +633,6 @@ sch2pcb_run_netlister (const char *gnetlist,
 
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
-
-  if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
-                              gnetlist,
-                              verboseList,
-                              backend_cmd,
-                              pins_file,
-                              sch2pcb_get_extra_gnetlist_arg_list (),
-                              largs))
-    return FALSE;
 
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
                               gnetlist,

@@ -23,6 +23,7 @@
              (srfi srfi-26)
              (system foreign)
              (lepton ffi boolean)
+             (lepton ffi glib)
              (lepton ffi sch2pcb)
              (lepton file-system)
              (lepton gettext)
@@ -79,16 +80,38 @@
 ;;; the netlister command.
 (define %netlister (or (getenv "NETLISTER") "lepton-netlist"))
 
-(define (run-netlister pins-filename net-filename pcb-new-filename)
-  (true? (sch2pcb_run_netlister (string->pointer %netlister)
-                                (string->pointer %backend-cmd)
-                                (string->pointer %backend-net)
-                                (string->pointer %backend-pcb)
-                                (string->pointer pins-filename)
-                                (string->pointer net-filename)
-                                (string->pointer pcb-new-filename)
-                                (sch2pcb_get_sch_basename)
-                                (sch2pcb_get_schematics))))
+(define (run-netlister pins-filename net-filename pcb-filename)
+  (define (custom-system* ls)
+    (verbose-format "Running command:\n\t~A\n" (string-join ls " "))
+    (let ((result (eq? EXIT_SUCCESS (status:exit-val (apply system* ls)))))
+      (unless result
+        (format (current-error-port) "Failed to execute external program.\n"))
+      (verbose-format "\n--------\n")
+      ;; return
+      result))
+
+  (define verbose-list
+    (if (zero? (sch2pcb_get_verbose_mode)) '("-q") '()))
+
+  (define extra-netlister-argument-list
+    (glist->list (sch2pcb_get_extra_gnetlist_arg_list) pointer->string))
+
+  (define schematics
+    (glist->list (sch2pcb_get_schematics) pointer->string))
+
+  (and (custom-system* (append (list %netlister)
+                               verbose-list
+                               (list "-g" %backend-cmd "-o" pins-filename)
+                               extra-netlister-argument-list
+                               schematics))
+
+       (true? (sch2pcb_run_netlister (string->pointer %netlister)
+                                     (string->pointer %backend-net)
+                                     (string->pointer %backend-pcb)
+                                     (string->pointer net-filename)
+                                     (string->pointer pcb-filename)
+                                     (sch2pcb_get_sch_basename)
+                                     (sch2pcb_get_schematics)))))
 
 
 (define (string->pair str)
