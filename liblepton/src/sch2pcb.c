@@ -115,6 +115,13 @@ sch2pcb_extra_gnetlist_arg_list_append (char *arg)
 }
 
 
+GList*
+sch2pcb_get_extra_gnetlist_arg_list ()
+{
+  return extra_gnetlist_arg_list;
+}
+
+
 static GList *extra_gnetlist_list;
 
 void
