@@ -76,6 +76,17 @@
 (define %quiet-mode #f)
 
 
+(define (run-netlister pins-filename net-filename pcb-new-filename)
+  (true? (sch2pcb_run_netlister (string->pointer %backend-cmd)
+                                (string->pointer %backend-net)
+                                (string->pointer %backend-pcb)
+                                (string->pointer pins-filename)
+                                (string->pointer net-filename)
+                                (string->pointer pcb-new-filename)
+                                (sch2pcb_get_sch_basename)
+                                (sch2pcb_get_schematics))))
+
+
 (define (string->pair str)
   (define s (string-trim-both str char-set:whitespace))
   (define break-pos (string-index s char-set:whitespace))
@@ -558,14 +569,7 @@ Lepton EDA homepage: <~A>
                                            pcb-filename)))
                 (when pcb-file-exists?
                   (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
-                (unless (true? (sch2pcb_run_netlister (string->pointer %backend-cmd)
-                                                      (string->pointer %backend-net)
-                                                      (string->pointer %backend-pcb)
-                                                      (string->pointer pins-filename)
-                                                      (string->pointer net-filename)
-                                                      (string->pointer pcb-new-filename)
-                                                      (sch2pcb_get_sch_basename)
-                                                      (sch2pcb_get_schematics)))
+                (unless (run-netlister pins-filename net-filename pcb-new-filename)
                   (format (current-error-port) (G_ "Failed to run netlister\n"))
                   (exit 1))
                 (when (zero? (sch2pcb_add_elements (string->pointer pcb-new-filename)))
