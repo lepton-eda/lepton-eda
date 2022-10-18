@@ -610,7 +610,8 @@ build_and_run_command (const gchar *format, ...)
  * board file (only gnetlist >= 20030901 recognizes -m).
  */
 gboolean
-sch2pcb_run_netlister (char *backend_cmd,
+sch2pcb_run_netlister (const char *gnetlist,
+                       char *backend_cmd,
                        char *backend_net,
                        char *backend_pcb,
                        gchar *pins_file,
@@ -621,19 +622,9 @@ sch2pcb_run_netlister (char *backend_cmd,
 {
   struct stat st;
   time_t mtime;
-  static const gchar *gnetlist = NULL;
   GList *list = NULL;
   GList *verboseList = NULL;
   GList *args1 = NULL;
-
-  /* Allow the user to specify a full path or a different name for
-   * the gnetlist command.  Especially useful if multiple copies
-   * are installed at once.
-   */
-  if (gnetlist == NULL)
-    gnetlist = g_getenv ("NETLISTER");
-  if (gnetlist == NULL)
-    gnetlist = "lepton-netlist";
 
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");

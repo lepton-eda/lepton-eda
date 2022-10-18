@@ -204,7 +204,8 @@ void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
 gboolean
-sch2pcb_run_netlister (char *backend_cmd,
+sch2pcb_run_netlister (const char *gnetlist,
+                       char *backend_cmd,
                        char *backend_net,
                        char *backend_pcb,
                        gchar *pins_file,

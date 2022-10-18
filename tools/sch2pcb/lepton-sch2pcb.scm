@@ -75,9 +75,13 @@
 
 (define %quiet-mode #f)
 
+;;; Allow the user to specify a full path or a different name for
+;;; the netlister command.
+(define %netlister (or (getenv "NETLISTER") "lepton-netlist"))
 
 (define (run-netlister pins-filename net-filename pcb-new-filename)
-  (true? (sch2pcb_run_netlister (string->pointer %backend-cmd)
+  (true? (sch2pcb_run_netlister (string->pointer %netlister)
+                                (string->pointer %backend-cmd)
                                 (string->pointer %backend-net)
                                 (string->pointer %backend-pcb)
                                 (string->pointer pins-filename)
