@@ -1106,9 +1106,9 @@ the snap grid size should be set to 100")))
                                       (G_ "Unknown error.")
                                       (gerror-message (dereference-pointer *error))))))
 
-    (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
-                          (string->pointer secondary-message)
-                          %null-pointer)
+    (schematic-error-dialog (G_ "Failed to descend hierarchy.")
+                            secondary-message
+                            %null-pointer)
 
     (g_clear_error *error)))
 
