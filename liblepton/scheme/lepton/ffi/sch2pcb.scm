@@ -27,8 +27,6 @@
             sch2pcb_add_m4_file
             sch2pcb_add_multiple_schematics
             sch2pcb_add_schematic
-            sch2pcb_get_default_m4_pcbdir
-            sch2pcb_set_default_m4_pcbdir
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -77,8 +75,6 @@
 (define-lff sch2pcb_add_m4_file void '(*))
 (define-lff sch2pcb_add_multiple_schematics void '(*))
 (define-lff sch2pcb_add_schematic void '(*))
-(define-lff sch2pcb_get_default_m4_pcbdir '* '())
-(define-lff sch2pcb_set_default_m4_pcbdir void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())

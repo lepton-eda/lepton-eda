@@ -61,12 +61,18 @@
 ;;; elements.
 (define %use-m4 #t)
 
-;;; The directory where 'pcb' stores its m4 files is initially not
-;;; set.
+
+;;; The directory where 'pcb' stores its m4 files.
+
+;;; This variable holds its default value to inform the user about
+;;; initial settings.
+(define %default-m4-pcb-dir #f)
+;;; This value can be changed in a command line option or in a
+;;; project file and it will be really used for processing instead
+;;; of the above.
 (define %m4-pcb-dir #f)
 
-(define *%pcb-m4-path (string->pointer %pcb-m4-path))
-(sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
+(set! %default-m4-pcb-dir %pcb-m4-path)
 (set! %m4-pcb-dir %pcb-m4-path)
 
 
@@ -111,9 +117,7 @@
 
     (and result
          (unless (zero? (sch2pcb_get_verbose_mode))
-           (format #t
-                   "Default m4-pcbdir: ~A\n"
-                   (pointer->string (sch2pcb_get_default_m4_pcbdir)))
+           (format #t "Default m4-pcbdir: ~A\n" %default-m4-pcb-dir)
            (format #t "--------\ngnet-gsch2pcb-tmp.scm override file:\n")
            (display file-contents))
          result)))
@@ -661,6 +665,4 @@ Lepton EDA homepage: <~A>
                                 bak-filename
                                 pins-filename
                                 net-filename
-                                initial-pcb?)
-
-                (sch2pcb_set_default_m4_pcbdir %null-pointer)))))))
+                                initial-pcb?)))))))

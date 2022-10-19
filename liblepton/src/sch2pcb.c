@@ -138,22 +138,6 @@ sch2pcb_extra_gnetlist_list_append (char *arg)
 }
 
 
-static gchar *default_m4_pcbdir;
-
-char*
-sch2pcb_get_default_m4_pcbdir ()
-{
-  return default_m4_pcbdir;
-}
-
-void
-sch2pcb_set_default_m4_pcbdir (const gchar *dir)
-{
-  g_free (default_m4_pcbdir);
-  default_m4_pcbdir = g_strdup (dir);
-}
-
-
 static gchar *empty_footprint_name;
 
 char*

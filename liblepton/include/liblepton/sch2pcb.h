@@ -29,9 +29,6 @@ sch2pcb_add_default_m4_files (void);
 gint
 sch2pcb_add_elements (gchar *pcb_file);
 
-char*
-sch2pcb_get_default_m4_pcbdir ();
-
 void
 sch2pcb_add_m4_file (const gchar *arg);
 
@@ -40,9 +37,6 @@ sch2pcb_add_multiple_schematics (gchar * sch);
 
 void
 sch2pcb_add_schematic (gchar *sch);
-
-void
-sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
 GList*
 sch2pcb_get_element_directory_list ();
