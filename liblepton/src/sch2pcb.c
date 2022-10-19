@@ -1321,21 +1321,3 @@ sch2pcb_parse_schematics (char *str)
 
   return result;
 }
-
-
-void
-sch2pcb_add_multiple_schematics (gchar * sch)
-{
-  GList *list = NULL;
-  GList *names = sch2pcb_parse_schematics (sch);
-
-  for (list = names;
-       list;
-       list = g_list_next (list))
-  {
-    char *name = (char *) list->data;
-    sch2pcb_add_schematic (name);
-  }
-
-  g_list_free (names);
-}

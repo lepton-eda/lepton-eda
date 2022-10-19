@@ -209,6 +209,14 @@
                            (loop (cdr ls))))))))))
 
 
+(define (add-multiple-schematics *str)
+  (for-each sch2pcb_add_schematic
+            (glist->list (sch2pcb_parse_schematics *str)
+                         identity
+                         ;; The list must be freed.
+                         'free)))
+
+
 (define (string->pair str)
   (define s (string-trim-both str char-set:whitespace))
   (define break-pos (string-index s char-set:whitespace))
@@ -240,7 +248,7 @@
                    elements-dir))
          (sch2pcb_element_directory_list_prepend (string->pointer elements-dir))))
       ("output-name" (sch2pcb_set_sch_basename *value))
-      ("schematics" (sch2pcb_add_multiple_schematics *value))
+      ("schematics" (add-multiple-schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
       ("m4-file" (sch2pcb_add_m4_file *value))
       ("gnetlist" (set! %extra-gnetlist-list
