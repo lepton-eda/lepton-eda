@@ -968,6 +968,42 @@
 (test-end)
 
 
+(test-begin "sch2pcb --backend-pcb=unknown-backend")
+(test-group-with-cleanup "sch2pcb --backend-pcb=unknown-backend"
+  (prepare-test-directory)
+
+  ;; Test that the program informs the user if something went
+  ;; wrong and the output file is not updated.
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--backend-pcb" "=" "unknown-backend")
+                      one.sch)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (not (file-exists? one.pcb)))
+    (test-assert (string-contains <stderr> "lepton-sch2pcb: netlister command failed, `one.pcb' not updated")))
+
+  ;; Now, do the same though the output file should exist.
+  ;; This file has to exist.
+  (touch one.pcb)
+  ;; This file is a subject to update.
+  (touch "one.new.pcb")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--backend-pcb" "=" "unknown-backend")
+                      one.sch)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (file-exists? one.pcb))
+    (test-assert (file-exists? "one.new.pcb"))
+    (test-assert (string-contains <stderr> "lepton-sch2pcb: netlister command failed, `one.new.pcb' not updated")))
+
+  (test-teardown))
+
+(test-end)
+
+
 (test-begin "sch2pcb --m4-file")
 
 (test-group-with-cleanup "sch2pcb --m4-file"
