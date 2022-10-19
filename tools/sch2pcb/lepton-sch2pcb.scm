@@ -49,11 +49,10 @@
         ;; If PCBDATA is set, use the value.
         (string-append %pcb-data-path file-name-separator-string "m4")
 
-        (if pcb-configure-m4-directory
-            ;; Use the default value passed in from the configure
-            ;; script instead of trying to hard code a value which
-            ;; is very likely wrong.
-            pcb-configure-m4-directory
+        ;; Use the default value passed in from the configure
+        ;; script instead of trying to hard code a value which
+        ;; is very likely wrong.
+        (or pcb-configure-m4-directory
             ;; Neither PCBDATA was set nor PCBM4DIR has been
             ;; configured.  Fall back to using the "m4" subdirectory
             ;; in the current directory.
