@@ -61,10 +61,13 @@
 ;;; elements.
 (define %use-m4 #t)
 
+;;; The directory where 'pcb' stores its m4 files is initially not
+;;; set.
+(define %m4-pcb-dir #f)
 
 (define *%pcb-m4-path (string->pointer %pcb-m4-path))
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
-(sch2pcb_set_m4_pcbdir *%pcb-m4-path)
+(set! %m4-pcb-dir %pcb-m4-path)
 
 
 ;;; Default backend names that can be overridden by command line
@@ -90,10 +93,8 @@
   (define file-contents
     (with-output-to-string
       (lambda ()
-        (unless (null-pointer? (sch2pcb_get_m4_pcbdir))
-          (format #t
-                  "(define gsch2pcb:pcb-m4-dir ~S)\n"
-                  (pointer->string (sch2pcb_get_m4_pcbdir))))
+        (when %m4-pcb-dir
+          (format #t "(define gsch2pcb:pcb-m4-dir ~S)\n" %m4-pcb-dir))
         (unless (null-pointer? (sch2pcb_get_m4_files))
           (format #t
                   "(define gsch2pcb:m4-files ~S)\n"
@@ -192,7 +193,7 @@
          (sch2pcb_element_directory_list_prepend *elements-dir)))
       ("output-name" (sch2pcb_set_sch_basename *value))
       ("schematics" (sch2pcb_add_multiple_schematics *value))
-      ("m4-pcbdir" (sch2pcb_set_m4_pcbdir *value))
+      ("m4-pcbdir" (set! %m4-pcb-dir value))
       ("m4-file" (sch2pcb_add_m4_file *value))
       ("gnetlist" (sch2pcb_extra_gnetlist_list_append *value))
       ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
@@ -409,7 +410,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("m4-pcbdir") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_m4_pcbdir (string->pointer arg))
+               (set! %m4-pcb-dir arg)
                seeds))
      (option '("m4-file") #t #f
              (lambda (opt name arg seeds)
@@ -662,5 +663,4 @@ Lepton EDA homepage: <~A>
                                 net-filename
                                 initial-pcb?)
 
-                (sch2pcb_set_default_m4_pcbdir %null-pointer)
-                (sch2pcb_set_m4_pcbdir %null-pointer)))))))
+                (sch2pcb_set_default_m4_pcbdir %null-pointer)))))))

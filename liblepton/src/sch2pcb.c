@@ -153,22 +153,6 @@ sch2pcb_set_default_m4_pcbdir (const gchar *dir)
   default_m4_pcbdir = g_strdup (dir);
 }
 
-static gchar *m4_pcbdir;
-
-char*
-sch2pcb_get_m4_pcbdir ()
-{
-  return m4_pcbdir;
-}
-
-
-void
-sch2pcb_set_m4_pcbdir (const gchar *dir)
-{
-  g_free (m4_pcbdir);
-  m4_pcbdir = g_strdup (dir);
-}
-
 
 static gchar *empty_footprint_name;
 

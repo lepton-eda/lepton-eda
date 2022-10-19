@@ -80,12 +80,6 @@ sch2pcb_get_force_element_files ();
 void
 sch2pcb_set_force_element_files (gboolean val);
 
-char*
-sch2pcb_get_m4_pcbdir ();
-
-void
-sch2pcb_set_m4_pcbdir (const gchar *dir);
-
 void
 sch2pcb_increment_verbose_mode ();
 
