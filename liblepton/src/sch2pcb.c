@@ -481,8 +481,8 @@ sch2pcb_increment_verbose_mode ()
 }
 
 
-static void
-create_m4_override_file ()
+void
+sch2pcb_create_m4_override_file ()
 {
   FILE *f;
 
@@ -632,7 +632,7 @@ sch2pcb_run_netlister (const char *gnetlist,
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
 
-  create_m4_override_file ();
+  sch2pcb_create_m4_override_file ();
 
   if (m4_override_file) {
     args1 = g_list_append (args1, (gpointer) "-m");
