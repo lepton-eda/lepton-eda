@@ -222,10 +222,4 @@ sch2pcb_get_verbose_mode ();
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak);
-gboolean
-sch2pcb_get_use_m4 ();
-
-void
-sch2pcb_set_use_m4 (gboolean val);
-
 G_END_DECLS

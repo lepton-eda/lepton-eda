@@ -67,8 +67,6 @@
             sch2pcb_set_sch_basename
             sch2pcb_get_schematics
             sch2pcb_update_element_descriptions
-            sch2pcb_get_use_m4
-            sch2pcb_set_use_m4
             sch2pcb_get_verbose_mode))
 
 ;;; Simplify definition of functions by omitting the library
@@ -121,6 +119,4 @@
 (define-lff sch2pcb_set_sch_basename void '(*))
 (define-lff sch2pcb_get_schematics '* '())
 (define-lff sch2pcb_update_element_descriptions void '(* *))
-(define-lff sch2pcb_get_use_m4 int '())
-(define-lff sch2pcb_set_use_m4 void (list int))
 (define-lff sch2pcb_get_verbose_mode int '())

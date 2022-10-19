@@ -457,21 +457,6 @@ sch2pcb_set_sch_basename (char *arg)
 }
 
 
-static gboolean use_m4 = TRUE;
-
-gboolean
-sch2pcb_get_use_m4 ()
-{
-  return use_m4;
-}
-
-void
-sch2pcb_set_use_m4 (gboolean val)
-{
-  use_m4 = val;
-}
-
-
 static gint verbose;
 
 gint

@@ -57,6 +57,10 @@
             ;; in the current directory.
             (string-append (getcwd) file-name-separator-string "m4")))))
 
+;;; Determines if the m4 processor can be used to create pcb
+;;; elements.
+(define %use-m4 #t)
+
 
 (define *%pcb-m4-path (string->pointer %pcb-m4-path))
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
@@ -96,7 +100,7 @@
                   (pointer->string (sch2pcb_get_m4_files))))
         (format #t
                 "(define gsch2pcb:use-m4 ~A)\n"
-                (if (true? (sch2pcb_get_use_m4)) "#t" "#f")))))
+                (if %use-m4 "#t" "#f")))))
 
   (let ((result
          (and (false-if-exception
@@ -178,7 +182,7 @@
       ("quiet" (set! %quiet-mode #t))
       ("preserve" (sch2pcb_set_preserve TRUE))
       ("use-files" (sch2pcb_set_force_element_files TRUE))
-      ("skip-m4" (sch2pcb_set_use_m4 FALSE))
+      ("skip-m4" (set! %use-m4 #f))
       ("elements-dir"
        (let ((*elements-dir (sch2pcb_expand_dir *value)))
          (when (> (sch2pcb_get_verbose_mode) 1)
@@ -389,7 +393,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '(#\s "skip-m4") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_use_m4 FALSE)
+               (set! %use-m4 #f)
                seeds))
      (option '(#\d "elements-dir") #t #f
              (lambda (opt name arg seeds)
