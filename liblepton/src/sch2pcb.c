@@ -583,9 +583,6 @@ sch2pcb_run_netlister (const char *gnetlist,
                    "lepton-sch2pcb: netlister command failed, `%s' not updated\n",
                    pcb_file
                    );
-          if (m4_override_file)
-              fprintf (stderr,
-                       "    At least gnetlist 20030901 is required for m4-xxx options.\n");
           return FALSE;
       }
       return FALSE;
