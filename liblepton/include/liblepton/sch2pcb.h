@@ -200,8 +200,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
 gboolean
 sch2pcb_run_netlister (const char *gnetlist,
                        gchar *basename,
-                       GList *largs,
-                       const char *m4_override_file);
+                       GList *largs);
 gint
 sch2pcb_get_verbose_mode ();
 

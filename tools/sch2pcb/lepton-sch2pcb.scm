@@ -177,12 +177,13 @@
                         (format (current-error-port) "lepton-sch2pcb: netlister command failed.\n"))
                     ;; Stop processing.
                     #f))
+              ;; Delete no longer necessary m4 override file.
+              (when m4-override-filename
+                (delete-file m4-override-filename))
+
               (true? (sch2pcb_run_netlister (string->pointer %netlister)
                                             (sch2pcb_get_sch_basename)
-                                            (sch2pcb_get_schematics)
-                                            (if m4-override-filename
-                                                (string->pointer m4-override-filename)
-                                                %null-pointer)))))))
+                                            (sch2pcb_get_schematics)))))))
 
 
 (define (string->pair str)

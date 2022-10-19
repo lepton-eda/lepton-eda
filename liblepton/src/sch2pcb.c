@@ -549,17 +549,13 @@ build_and_run_command (const gchar *format, ...)
 gboolean
 sch2pcb_run_netlister (const char *gnetlist,
                        gchar *basename,
-                       GList *largs,
-                       const char *m4_override_file)
+                       GList *largs)
 {
   GList *list = NULL;
   GList *verboseList = NULL;
 
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
-
-  if (m4_override_file)
-    unlink (m4_override_file);
 
   for (list = extra_gnetlist_list; list; list = g_list_next (list)) {
     const gchar *s = (gchar *) list->data;
