@@ -111,6 +111,8 @@
                                extra-netlister-argument-list
                                schematics))
 
+       (sch2pcb_create_m4_override_file)
+
        (true? (sch2pcb_run_netlister (string->pointer %netlister)
                                      (string->pointer %backend-pcb)
                                      (string->pointer pcb-filename)
