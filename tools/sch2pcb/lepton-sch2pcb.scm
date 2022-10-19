@@ -114,6 +114,8 @@
            (display file-contents))
          result)))
 
+;;; List of extra backends to run netlister command for.
+(define %extra-gnetlist-list '())
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
@@ -185,7 +187,7 @@
               (when m4-override-filename
                 (delete-file m4-override-filename))
 
-              (let loop ((ls (glist->list (sch2pcb_get_extra_gnetlist_list) pointer->string)))
+              (let loop ((ls %extra-gnetlist-list))
                 ;; If the list is empty, we are done, return #t.
                 (or (null? ls)
                     (let* ((s (car ls))
@@ -244,7 +246,8 @@
       ("schematics" (sch2pcb_add_multiple_schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
       ("m4-file" (sch2pcb_add_m4_file *value))
-      ("gnetlist" (sch2pcb_extra_gnetlist_list_append *value))
+      ("gnetlist" (set! %extra-gnetlist-list
+                        (append %extra-gnetlist-list (list value))))
       ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
       ("backend-cmd" (set! %backend-cmd value))
       ("backend-net" (set! %backend-net value))
@@ -473,7 +476,8 @@ Lepton EDA homepage: <~A>
                                        (string-suffix? "\"" arg))
                                   (string-drop-right (string-drop arg 1) 1)
                                   arg)))
-                 (sch2pcb_extra_gnetlist_list_append (string->pointer command)))
+                 (set! %extra-gnetlist-list
+                       (append %extra-gnetlist-list (list command))))
                seeds))
      (option '("empty-footprint") #t #f
              (lambda (opt name arg seeds)
