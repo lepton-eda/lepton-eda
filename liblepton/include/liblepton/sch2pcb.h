@@ -107,9 +107,6 @@ sch2pcb_set_sch_basename (char *arg);
 GList*
 sch2pcb_get_schematics ();
 
-GList*
-sch2pcb_get_extra_gnetlist_arg_list ();
-
 char*
 sch2pcb_get_m4_files ();
 

@@ -111,22 +111,6 @@ sch2pcb_get_m4_files ()
 
 static gboolean bak_done;
 
-static GList *extra_gnetlist_arg_list;
-
-void
-sch2pcb_extra_gnetlist_arg_list_append (char *arg)
-{
-  extra_gnetlist_arg_list =
-    g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
-}
-
-
-GList*
-sch2pcb_get_extra_gnetlist_arg_list ()
-{
-  return extra_gnetlist_arg_list;
-}
-
 
 static gchar *empty_footprint_name;
 

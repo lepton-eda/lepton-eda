@@ -116,6 +116,8 @@
 
 ;;; List of extra backends to run netlister command for.
 (define %extra-gnetlist-list '())
+;;; List of additional arguments for netlister.
+(define %extra-gnetlist-arg-list '())
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
@@ -134,22 +136,19 @@
   (define verbose-list
     (if (zero? (sch2pcb_get_verbose_mode)) '("-q") '()))
 
-  (define extra-netlister-argument-list
-    (glist->list (sch2pcb_get_extra_gnetlist_arg_list) pointer->string))
-
   (define schematics
     (glist->list (sch2pcb_get_schematics) pointer->string))
 
   (and (custom-system* (append (list %netlister)
                                verbose-list
                                (list "-g" %backend-cmd "-o" pins-filename)
-                               extra-netlister-argument-list
+                               %extra-gnetlist-arg-list
                                schematics))
 
        (custom-system* (append (list %netlister)
                                verbose-list
                                (list "-g" %backend-net "-o" net-filename)
-                               extra-netlister-argument-list
+                               %extra-gnetlist-arg-list
                                schematics))
 
        (let* ((m4-override-filename (create-m4-override-file))
@@ -163,7 +162,7 @@
                                                verbose-list
                                                (list "-g" %backend-pcb "-o" pcb-filename)
                                                optional-args
-                                               extra-netlister-argument-list
+                                               %extra-gnetlist-arg-list
                                                schematics))))
          (and (or success
                   ;; If the netlister command failed, report this
@@ -207,7 +206,7 @@
                       (and (custom-system* (append (list %netlister)
                                                    verbose-list
                                                    (list "-g" backend-filename "-o" output-filename)
-                                                   extra-netlister-argument-list
+                                                   %extra-gnetlist-arg-list
                                                    schematics))
                            (loop (cdr ls))))))))))
 
@@ -418,7 +417,8 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("gnetlist-arg") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_extra_gnetlist_arg_list_append (string->pointer arg))
+               (set! %extra-gnetlist-arg-list
+                     (append %extra-gnetlist-arg-list (list arg)))
                seeds))
      (option '(#\h #\? "help") #f #f
              (lambda (opt name arg seeds)
