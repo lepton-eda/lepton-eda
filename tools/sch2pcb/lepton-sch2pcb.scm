@@ -64,13 +64,10 @@
 (define %use-m4 #t)
 
 
-;;; The directory where 'pcb' stores its m4 files.
-;;; This value can be changed in a command line option or in a
-;;; project file and it will be really used for processing instead
-;;; of the above.
-(define %m4-pcb-dir #f)
-
-(set! %m4-pcb-dir %default-m4-pcb-dir)
+;;; The m4 directory where 'pcb' stores its m4 files.  This value
+;;; can be overridden by a command line option or in project
+;;; files.
+(define %m4-pcb-dir %default-m4-pcb-dir)
 
 
 ;;; Default backend names that can be overridden by command line
