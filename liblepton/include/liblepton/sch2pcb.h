@@ -208,9 +208,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
 gboolean
 sch2pcb_run_netlister (const char *gnetlist,
-                       char *backend_net,
                        char *backend_pcb,
-                       gchar *net_file,
                        gchar *pcb_file,
                        gchar *basename,
                        GList *largs);

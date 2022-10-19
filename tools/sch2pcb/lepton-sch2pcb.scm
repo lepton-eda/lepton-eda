@@ -105,10 +105,14 @@
                                extra-netlister-argument-list
                                schematics))
 
+       (custom-system* (append (list %netlister)
+                               verbose-list
+                               (list "-g" %backend-net "-o" net-filename)
+                               extra-netlister-argument-list
+                               schematics))
+
        (true? (sch2pcb_run_netlister (string->pointer %netlister)
-                                     (string->pointer %backend-net)
                                      (string->pointer %backend-pcb)
-                                     (string->pointer net-filename)
                                      (string->pointer pcb-filename)
                                      (sch2pcb_get_sch_basename)
                                      (sch2pcb_get_schematics)))))
