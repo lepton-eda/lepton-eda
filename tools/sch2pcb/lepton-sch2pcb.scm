@@ -123,7 +123,7 @@
 ;;; lepton-netlist has exit status of 0 even if it's given an
 ;;; invalid arg, so do some stat() hoops to decide if
 ;;; lepton-netlist successfully generated the PCB board file.
-(define (run-netlister pins-filename net-filename pcb-filename)
+(define (run-netlister schematic-basename pins-filename net-filename pcb-filename)
   (define (custom-system* ls)
     (verbose-format "Running command:\n\t~A\n" (string-join ls " "))
     (let ((result (eq? EXIT_SUCCESS (status:exit-val (apply system* ls)))))
@@ -196,9 +196,7 @@
                            (pos (string-contains s " -o "))
                            (output-filename (if pos
                                                 (string-drop s (+ pos 4))
-                                                (string-append (pointer->string (sch2pcb_get_sch_basename))
-                                                               "."
-                                                               s)))
+                                                (string-append schematic-basename "." s)))
                            (backend-filename (if pos
                                                  (string-take s pos)
                                                  s)))
@@ -696,7 +694,10 @@ Lepton EDA homepage: <~A>
                                            pcb-filename)))
                 (when pcb-file-exists?
                   (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
-                (unless (run-netlister pins-filename net-filename pcb-new-filename)
+                (unless (run-netlister schematic-basename
+                                       pins-filename
+                                       net-filename
+                                       pcb-new-filename)
                   (format (current-error-port) (G_ "Failed to run netlister\n"))
                   (exit 1))
                 (when (zero? (sch2pcb_add_elements (string->pointer pcb-new-filename)))
