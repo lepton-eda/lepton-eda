@@ -40,7 +40,9 @@
 
 (define %pcb-data-path (getenv "PCBDATA"))
 
-(define %pcb-m4-path
+;;; Default directory where 'pcb' stores its m4 files.  This
+;;; variable is used to inform the user about initial settings.
+(define %default-m4-pcb-dir
   (let ((pcb-configure-m4-directory (and (not (string-null? %pcb-m4-dir))
                                          %pcb-m4-dir)))
     (if %pcb-data-path
@@ -63,17 +65,12 @@
 
 
 ;;; The directory where 'pcb' stores its m4 files.
-
-;;; This variable holds its default value to inform the user about
-;;; initial settings.
-(define %default-m4-pcb-dir #f)
 ;;; This value can be changed in a command line option or in a
 ;;; project file and it will be really used for processing instead
 ;;; of the above.
 (define %m4-pcb-dir #f)
 
-(set! %default-m4-pcb-dir %pcb-m4-path)
-(set! %m4-pcb-dir %pcb-m4-path)
+(set! %m4-pcb-dir %default-m4-pcb-dir)
 
 
 ;;; Default backend names that can be overridden by command line
@@ -348,7 +345,7 @@ Report bugs at <~A>
 Lepton EDA homepage: <~A>
 ")
           %sch2pcb
-          %pcb-m4-path
+          %default-m4-pcb-dir
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
   (exit 0))
