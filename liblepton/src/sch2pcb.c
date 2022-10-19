@@ -1268,18 +1268,6 @@ sch2pcb_add_m4_file (const gchar *arg)
   }
 }
 
-gchar*
-sch2pcb_expand_dir (gchar *dir)
-{
-  gchar *s;
-  if (dir == NULL)
-    return NULL;
-  if (*dir == '~')
-    s = g_build_filename ((gchar *) g_get_home_dir (), dir + 1, NULL);
-  else
-    s = g_strdup (dir);
-  return s;
-}
 
 void
 sch2pcb_add_default_m4_files (void)
