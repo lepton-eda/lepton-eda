@@ -138,6 +138,14 @@ sch2pcb_extra_gnetlist_list_append (char *arg)
 }
 
 
+GList*
+sch2pcb_get_extra_gnetlist_list ()
+{
+  return extra_gnetlist_list;
+}
+
+
+
 static gchar *empty_footprint_name;
 
 char*
