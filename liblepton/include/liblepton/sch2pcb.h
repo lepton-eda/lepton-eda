@@ -128,6 +128,9 @@ sch2pcb_extra_gnetlist_list_append (char *arg);
 GList*
 sch2pcb_get_extra_gnetlist_arg_list ();
 
+char*
+sch2pcb_get_m4_files ();
+
 int
 sch2pcb_get_n_added_ef ();
 

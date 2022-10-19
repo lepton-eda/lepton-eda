@@ -103,6 +103,13 @@ sch2pcb_element_directory_list_prepend (char *dir)
 static const gchar* m4_override_file;
 static gchar *m4_files;
 
+char*
+sch2pcb_get_m4_files ()
+{
+  return m4_files;
+}
+
+
 static gboolean bak_done;
 
 static GList *extra_gnetlist_arg_list;
