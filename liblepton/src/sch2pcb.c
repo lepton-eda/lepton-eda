@@ -1306,19 +1306,22 @@ sch2pcb_add_schematic (gchar *sch)
     sch_basename = g_strndup (sch, s - sch);
 }
 
-void
-sch2pcb_add_multiple_schematics (gchar * sch)
+
+GList*
+sch2pcb_parse_schematics (char *str)
 {
   /* parse the string using shell semantics */
   gint count;
   gchar** args = NULL;
   GError* error = NULL;
+  GList *result = NULL;
 
-  if (g_shell_parse_argv (sch, &count, &args, &error)) {
+  if (g_shell_parse_argv (str, &count, &args, &error))
+  {
     int i;
     for (i = 0; i < count; ++i)
     {
-      sch2pcb_add_schematic (args[i]);
+      result = g_list_append (result, g_strdup (args[i]));
     }
     g_strfreev (args);
   } else {
@@ -1327,4 +1330,24 @@ sch2pcb_add_multiple_schematics (gchar * sch)
              error->message);
     g_error_free (error);
   }
+
+  return result;
+}
+
+
+void
+sch2pcb_add_multiple_schematics (gchar * sch)
+{
+  GList *list = NULL;
+  GList *names = sch2pcb_parse_schematics (sch);
+
+  for (list = names;
+       list;
+       list = g_list_next (list))
+  {
+    char *name = (char *) list->data;
+    sch2pcb_add_schematic (name);
+  }
+
+  g_list_free (names);
 }
