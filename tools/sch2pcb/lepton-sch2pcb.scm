@@ -146,15 +146,43 @@
                                extra-netlister-argument-list
                                schematics))
 
-       (let ((m4-override-filename (create-m4-override-file)))
-         (true? (sch2pcb_run_netlister (string->pointer %netlister)
-                                       (string->pointer %backend-pcb)
-                                       (string->pointer pcb-filename)
-                                       (sch2pcb_get_sch_basename)
-                                       (sch2pcb_get_schematics)
-                                       (if m4-override-filename
-                                           (string->pointer m4-override-filename)
-                                           %null-pointer))))))
+       (let* ((m4-override-filename (create-m4-override-file))
+              (mtime (if (file-exists? pcb-filename)
+                         (stat:mtime (stat pcb-filename))
+                         0))
+              (optional-args (if m4-override-filename
+                                 (list "-m" m4-override-filename)
+                                 '()))
+              (success (custom-system* (append (list %netlister)
+                                               verbose-list
+                                               (list "-g" %backend-pcb "-o" pcb-filename)
+                                               optional-args
+                                               extra-netlister-argument-list
+                                               schematics))))
+         (and (or success
+                  ;; If the netlister command failed, report this
+                  ;; and stop processing.
+                  (begin
+                    (if (or
+                         ;; Either file does not exist,
+                         (not (file-exists? pcb-filename))
+                         ;; or it has not changed.
+                         (= mtime (stat:mtime (stat pcb-filename))))
+                        (format (current-error-port)
+                                "lepton-sch2pcb: netlister command failed, `~A' not updated.\n"
+                                pcb-filename)
+
+                        ;; Report the issue anyways, even if the
+                        ;; output file has been created.
+                        (format (current-error-port) "lepton-sch2pcb: netlister command failed.\n"))
+                    ;; Stop processing.
+                    #f))
+              (true? (sch2pcb_run_netlister (string->pointer %netlister)
+                                            (sch2pcb_get_sch_basename)
+                                            (sch2pcb_get_schematics)
+                                            (if m4-override-filename
+                                                (string->pointer m4-override-filename)
+                                                %null-pointer)))))))
 
 
 (define (string->pair str)

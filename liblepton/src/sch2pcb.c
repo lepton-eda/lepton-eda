@@ -548,44 +548,15 @@ build_and_run_command (const gchar *format, ...)
  */
 gboolean
 sch2pcb_run_netlister (const char *gnetlist,
-                       char *backend_pcb,
-                       gchar *pcb_file,
                        gchar *basename,
                        GList *largs,
                        const char *m4_override_file)
 {
-  struct stat st;
-  time_t mtime;
   GList *list = NULL;
   GList *verboseList = NULL;
-  GList *args1 = NULL;
 
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
-
-  if (m4_override_file) {
-    args1 = g_list_append (args1, (gpointer) "-m");
-    args1 = g_list_append (args1, (gpointer) m4_override_file);
-  }
-
-  mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
-
-  if (!build_and_run_command ("%s %l -g %s -o %s %l %l %l",
-                              gnetlist,
-                              verboseList,
-                              backend_pcb,
-                              pcb_file,
-                              args1,
-                              sch2pcb_get_extra_gnetlist_arg_list (),
-                  largs)) {
-      if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
-          fprintf (stderr,
-                   "lepton-sch2pcb: netlister command failed, `%s' not updated\n",
-                   pcb_file
-                   );
-      }
-      return FALSE;
-  }
 
   if (m4_override_file)
     unlink (m4_override_file);
@@ -615,7 +586,6 @@ sch2pcb_run_netlister (const char *gnetlist,
     g_free (backend);
   }
 
-  g_list_free (args1);
   g_list_free (verboseList);
 
   return TRUE;
