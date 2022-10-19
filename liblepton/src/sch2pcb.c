@@ -549,54 +549,6 @@ build_and_run_command (const gchar *format, ...)
   return result;
 }
 
-/* Run gnetlist to generate a netlist and a PCB board file.  gnetlist
- * has exit status of 0 even if it's given an invalid arg, so do some
- * stat() hoops to decide if gnetlist successfully generated the PCB
- * board file (only gnetlist >= 20030901 recognizes -m).
- */
-gboolean
-sch2pcb_run_netlister (const char *gnetlist,
-                       gchar *basename,
-                       GList *largs)
-{
-  GList *list = NULL;
-  GList *verboseList = NULL;
-
-  if (sch2pcb_get_verbose_mode () == 0)
-    verboseList = g_list_append (verboseList, (gpointer) "-q");
-
-  for (list = sch2pcb_get_extra_gnetlist_list ();
-       list;
-       list = g_list_next (list))
-  {
-    const gchar *s = (gchar *) list->data;
-    const gchar *s2 = strstr (s, " -o ");
-    gchar *out_file;
-    gchar *backend;
-    if (!s2) {
-      out_file = g_strconcat (basename, ".", s, NULL);
-      backend = g_strdup (s);
-    } else {
-      out_file = g_strdup (s2 + 4);
-      backend = g_strndup (s, s2 - s);
-    }
-
-    if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
-                                gnetlist,
-                                verboseList,
-                                backend,
-                                out_file,
-                                sch2pcb_get_extra_gnetlist_arg_list (),
-                                largs))
-      return FALSE;
-    g_free (out_file);
-    g_free (backend);
-  }
-
-  g_list_free (verboseList);
-
-  return TRUE;
-}
 
 static gchar *
 token (gchar * string, gchar ** next, gboolean * quoted_ret)

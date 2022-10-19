@@ -200,10 +200,6 @@ sch2pcb_set_need_PKG_purge (gboolean val);
 void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
-gboolean
-sch2pcb_run_netlister (const char *gnetlist,
-                       gchar *basename,
-                       GList *largs);
 gint
 sch2pcb_get_verbose_mode ();
 

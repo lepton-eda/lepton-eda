@@ -115,6 +115,10 @@
          result)))
 
 
+;;; Run lepton-netlist to generate a netlist and a PCB board file.
+;;; lepton-netlist has exit status of 0 even if it's given an
+;;; invalid arg, so do some stat() hoops to decide if
+;;; lepton-netlist successfully generated the PCB board file.
 (define (run-netlister pins-filename net-filename pcb-filename)
   (define (custom-system* ls)
     (verbose-format "Running command:\n\t~A\n" (string-join ls " "))
@@ -181,9 +185,29 @@
               (when m4-override-filename
                 (delete-file m4-override-filename))
 
-              (true? (sch2pcb_run_netlister (string->pointer %netlister)
-                                            (sch2pcb_get_sch_basename)
-                                            (sch2pcb_get_schematics)))))))
+              (let loop ((ls (glist->list (sch2pcb_get_extra_gnetlist_list) pointer->string)))
+                ;; If the list is empty, we are done, return #t.
+                (or (null? ls)
+                    (let* ((s (car ls))
+                           ;; This code emulates its C prototype
+                           ;; code.  Splitting args would be
+                           ;; better done with string-split().
+                           (pos (string-contains s " -o "))
+                           (output-filename (if pos
+                                                (string-drop s (+ pos 4))
+                                                (string-append (pointer->string (sch2pcb_get_sch_basename))
+                                                               "."
+                                                               s)))
+                           (backend-filename (if pos
+                                                 (string-take s pos)
+                                                 s)))
+
+                      (and (custom-system* (append (list %netlister)
+                                                   verbose-list
+                                                   (list "-g" backend-filename "-o" output-filename)
+                                                   extra-netlister-argument-list
+                                                   schematics))
+                           (loop (cdr ls))))))))))
 
 
 (define (string->pair str)
