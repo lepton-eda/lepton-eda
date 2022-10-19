@@ -119,6 +119,9 @@
 ;;; List of additional arguments for netlister.
 (define %extra-gnetlist-arg-list '())
 
+;;; List of schematic names to process.
+(define %schematics '())
+
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
 ;;; invalid arg, so do some stat() hoops to decide if
@@ -136,20 +139,17 @@
   (define verbose-list
     (if (zero? (sch2pcb_get_verbose_mode)) '("-q") '()))
 
-  (define schematics
-    (glist->list (sch2pcb_get_schematics) pointer->string))
-
   (and (custom-system* (append (list %netlister)
                                verbose-list
                                (list "-g" %backend-cmd "-o" pins-filename)
                                %extra-gnetlist-arg-list
-                               schematics))
+                               %schematics))
 
        (custom-system* (append (list %netlister)
                                verbose-list
                                (list "-g" %backend-net "-o" net-filename)
                                %extra-gnetlist-arg-list
-                               schematics))
+                               %schematics))
 
        (let* ((m4-override-filename (create-m4-override-file))
               (mtime (if (file-exists? pcb-filename)
@@ -163,7 +163,7 @@
                                                (list "-g" %backend-pcb "-o" pcb-filename)
                                                optional-args
                                                %extra-gnetlist-arg-list
-                                               schematics))))
+                                               %schematics))))
          (and (or success
                   ;; If the netlister command failed, report this
                   ;; and stop processing.
@@ -205,14 +205,22 @@
                                                    verbose-list
                                                    (list "-g" backend-filename "-o" output-filename)
                                                    %extra-gnetlist-arg-list
-                                                   schematics))
+                                                   %schematics))
                            (loop (cdr ls))))))))))
 
 
+(define (add-schematic schematic-name)
+  (set! %schematics (append %schematics (list schematic-name)))
+
+  (when (and (null-pointer? (sch2pcb_get_sch_basename))
+             (string-suffix? ".sch" schematic-name))
+    (sch2pcb_set_sch_basename (string->pointer (basename schematic-name ".sch")))))
+
+
 (define (add-multiple-schematics *str)
-  (for-each sch2pcb_add_schematic
+  (for-each add-schematic
             (glist->list (sch2pcb_parse_schematics *str)
-                         identity
+                         pointer->string
                          ;; The list must be freed.
                          'free)))
 
@@ -516,7 +524,7 @@ Lepton EDA homepage: <~A>
     (lambda (op seeds)
       (if (string-suffix? ".sch" op)
           (begin
-            (sch2pcb_add_schematic (string->pointer op))
+            (add-schematic op)
             (cons op seeds))
           (begin
             (load-project-file op)
@@ -674,7 +682,7 @@ Lepton EDA homepage: <~A>
         ;; variables.
         (parse-command-line)
         (sch2pcb_add_default_m4_files)
-        (if (null-pointer? (sch2pcb_get_schematics))
+        (if (null? %schematics)
             (usage)
             (begin
               ;; Defaults for the newlib element directory search path

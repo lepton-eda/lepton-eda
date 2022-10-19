@@ -25,7 +25,6 @@
   #:export (sch2pcb_add_default_m4_files
             sch2pcb_add_elements
             sch2pcb_add_m4_file
-            sch2pcb_add_schematic
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -56,7 +55,6 @@
             sch2pcb_set_remove_unfound_elements
             sch2pcb_get_sch_basename
             sch2pcb_set_sch_basename
-            sch2pcb_get_schematics
             sch2pcb_update_element_descriptions
             sch2pcb_get_verbose_mode))
 
@@ -68,7 +66,6 @@
 (define-lff sch2pcb_add_default_m4_files void '())
 (define-lff sch2pcb_add_elements int '(*))
 (define-lff sch2pcb_add_m4_file void '(*))
-(define-lff sch2pcb_add_schematic void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
@@ -99,6 +96,5 @@
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_get_sch_basename '* '())
 (define-lff sch2pcb_set_sch_basename void '(*))
-(define-lff sch2pcb_get_schematics '* '())
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())

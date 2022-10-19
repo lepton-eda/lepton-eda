@@ -32,9 +32,6 @@ sch2pcb_add_elements (gchar *pcb_file);
 void
 sch2pcb_add_m4_file (const gchar *arg);
 
-void
-sch2pcb_add_schematic (gchar *sch);
-
 GList*
 sch2pcb_get_element_directory_list ();
 
