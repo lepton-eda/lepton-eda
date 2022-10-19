@@ -583,7 +583,6 @@ sch2pcb_run_netlister (const char *gnetlist,
                    "lepton-sch2pcb: netlister command failed, `%s' not updated\n",
                    pcb_file
                    );
-          return FALSE;
       }
       return FALSE;
   }
