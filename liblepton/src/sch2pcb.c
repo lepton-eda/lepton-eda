@@ -100,7 +100,6 @@ sch2pcb_element_directory_list_prepend (char *dir)
 }
 
 
-static const gchar* m4_override_file;
 static gchar *m4_files;
 
 char*
@@ -488,36 +487,6 @@ sch2pcb_increment_verbose_mode ()
 }
 
 
-void
-sch2pcb_create_m4_override_file ()
-{
-  FILE *f;
-
-  m4_override_file = "gnet-gsch2pcb-tmp.scm";
-  f = fopen (m4_override_file, "wb");
-  if (!f) {
-    m4_override_file = NULL;
-    return;
-  }
-  if (sch2pcb_get_m4_pcbdir ())
-    fprintf (f, "(define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
-  if (m4_files)
-    fprintf (f, "(define gsch2pcb:m4-files \"%s\")\n", m4_files);
-  fprintf (f, "(define gsch2pcb:use-m4 %s)\n", sch2pcb_get_use_m4 () == TRUE ? "#t" : "#f");
-
-  fclose (f);
-  if (sch2pcb_get_verbose_mode () != 0)
-  {
-    printf ("Default m4-pcbdir: %s\n", sch2pcb_get_default_m4_pcbdir ());
-    printf ("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
-    if (sch2pcb_get_m4_pcbdir ())
-      printf ("    (define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
-    if (m4_files)
-      printf ("    (define gsch2pcb:m4-files \"%s\")\n", m4_files);
-    printf ("    (define gsch2pcb:use-m4 %s)\n", sch2pcb_get_use_m4 () == TRUE ? "#t" : "#f");
-  }
-}
-
 /**
  * Build and run a command. No redirection or error handling is
  * done.  Format string is split on whitespace. Specifiers %l and %s
@@ -629,7 +598,8 @@ sch2pcb_run_netlister (const char *gnetlist,
                        char *backend_pcb,
                        gchar *pcb_file,
                        gchar *basename,
-                       GList *largs)
+                       GList *largs,
+                       const char *m4_override_file)
 {
   struct stat st;
   time_t mtime;

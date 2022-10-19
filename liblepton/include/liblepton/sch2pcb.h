@@ -42,9 +42,6 @@ void
 sch2pcb_add_schematic (gchar *sch);
 
 void
-sch2pcb_create_m4_override_file ();
-
-void
 sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
 GList*
@@ -217,7 +214,8 @@ sch2pcb_run_netlister (const char *gnetlist,
                        char *backend_pcb,
                        gchar *pcb_file,
                        gchar *basename,
-                       GList *largs);
+                       GList *largs,
+                       const char *m4_override_file);
 gint
 sch2pcb_get_verbose_mode ();
 

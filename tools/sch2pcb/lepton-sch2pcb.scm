@@ -80,6 +80,40 @@
 ;;; the netlister command.
 (define %netlister (or (getenv "NETLISTER") "lepton-netlist"))
 
+(define (create-m4-override-file)
+  (define m4-override-filename "gnet-gsch2pcb-tmp.scm")
+
+  (define file-contents
+    (with-output-to-string
+      (lambda ()
+        (unless (null-pointer? (sch2pcb_get_m4_pcbdir))
+          (format #t
+                  "(define gsch2pcb:pcb-m4-dir ~S)\n"
+                  (pointer->string (sch2pcb_get_m4_pcbdir))))
+        (unless (null-pointer? (sch2pcb_get_m4_files))
+          (format #t
+                  "(define gsch2pcb:m4-files ~S)\n"
+                  (pointer->string (sch2pcb_get_m4_files))))
+        (format #t
+                "(define gsch2pcb:use-m4 ~A)\n"
+                (if (true? (sch2pcb_get_use_m4)) "#t" "#f")))))
+
+  (let ((result
+         (and (false-if-exception
+               (with-output-to-file m4-override-filename
+                 (lambda () (display file-contents))))
+              m4-override-filename)))
+
+    (and result
+         (unless (zero? (sch2pcb_get_verbose_mode))
+           (format #t
+                   "Default m4-pcbdir: ~A\n"
+                   (pointer->string (sch2pcb_get_default_m4_pcbdir)))
+           (format #t "--------\ngnet-gsch2pcb-tmp.scm override file:\n")
+           (display file-contents))
+         result)))
+
+
 (define (run-netlister pins-filename net-filename pcb-filename)
   (define (custom-system* ls)
     (verbose-format "Running command:\n\t~A\n" (string-join ls " "))
@@ -111,13 +145,15 @@
                                extra-netlister-argument-list
                                schematics))
 
-       (sch2pcb_create_m4_override_file)
-
-       (true? (sch2pcb_run_netlister (string->pointer %netlister)
-                                     (string->pointer %backend-pcb)
-                                     (string->pointer pcb-filename)
-                                     (sch2pcb_get_sch_basename)
-                                     (sch2pcb_get_schematics)))))
+       (let ((m4-override-filename (create-m4-override-file)))
+         (true? (sch2pcb_run_netlister (string->pointer %netlister)
+                                       (string->pointer %backend-pcb)
+                                       (string->pointer pcb-filename)
+                                       (sch2pcb_get_sch_basename)
+                                       (sch2pcb_get_schematics)
+                                       (if m4-override-filename
+                                           (string->pointer m4-override-filename)
+                                           %null-pointer))))))
 
 
 (define (string->pair str)
