@@ -92,8 +92,7 @@
   (define file-contents
     (with-output-to-string
       (lambda ()
-        (when %m4-pcb-dir
-          (format #t "(define gsch2pcb:pcb-m4-dir ~S)\n" %m4-pcb-dir))
+        (format #t "(define gsch2pcb:pcb-m4-dir ~S)\n" %m4-pcb-dir)
         (unless (null-pointer? (sch2pcb_get_m4_files))
           (format #t
                   "(define gsch2pcb:m4-files ~S)\n"
