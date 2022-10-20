@@ -213,16 +213,25 @@
   (define (build-filename . args)
     (string-join args file-name-separator-string))
 
+  (define (readable-regular-file? filename)
+    (and (regular-file? filename)
+         (file-readable? filename)))
+
+  ;; To get the user home directory, the recommended approach is
+  ;; to first check the $HOME environment variable and use
+  ;; getpwuid() as a last resort only.
+  (define /home/user
+    (or (getenv "HOME")
+        (passwd:dir (getpwuid (getuid)))))
+
   (define pcb.inc "pcb.inc")
 
   ;; Add "pcb.inc" residing in "~/.pcb/".
   (let ((home/user/.pcb/pcb.inc (build-filename (user-home-dir) ".pcb" pcb.inc)))
-    (when (and (regular-file? home/user/.pcb/pcb.inc)
-               (file-readable? home/user/.pcb/pcb.inc))
+    (when (readable-regular-file? home/user/.pcb/pcb.inc)
       (sch2pcb_add_m4_file (string->pointer home/user/.pcb/pcb.inc))))
   ;; Add "pcb.inc" in the current directory.
-  (when (and (regular-file? pcb.inc)
-             (file-readable? pcb.inc))
+  (when (readable-regular-file? pcb.inc)
     (sch2pcb_add_m4_file (string->pointer pcb.inc))))
 
 
