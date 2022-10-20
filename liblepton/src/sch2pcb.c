@@ -89,15 +89,6 @@ sch2pcb_element_directory_list_prepend (char *dir)
 }
 
 
-static gchar *m4_files;
-
-char*
-sch2pcb_get_m4_files ()
-{
-  return m4_files;
-}
-
-
 static gboolean bak_done;
 
 
@@ -1241,20 +1232,6 @@ sch2pcb_prune_elements (gchar *pcb_file,
 
   build_and_run_command ("mv %s %s", tmp, pcb_file);
   g_free (tmp);
-}
-
-void
-sch2pcb_add_m4_file (const gchar *arg)
-{
-  gchar *s;
-
-  if (!m4_files)
-    m4_files = g_strdup (arg);
-  else {
-    s = m4_files;
-    m4_files = g_strconcat (m4_files, " ", arg, NULL);
-    g_free (s);
-  }
 }
 
 

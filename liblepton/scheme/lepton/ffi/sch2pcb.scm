@@ -23,7 +23,6 @@
   #:use-module (lepton ffi lff)
 
   #:export (sch2pcb_add_elements
-            sch2pcb_add_m4_file
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -32,7 +31,6 @@
             sch2pcb_set_fix_elements
             sch2pcb_set_force_element_files
             sch2pcb_increment_verbose_mode
-            sch2pcb_get_m4_files
             sch2pcb_make_pcb_element_list
             sch2pcb_get_n_PKG_removed_new
             sch2pcb_get_n_PKG_removed_old
@@ -63,7 +61,6 @@
   (define-lff-lib arg ... liblepton))
 
 (define-lff sch2pcb_add_elements int '(*))
-(define-lff sch2pcb_add_m4_file void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
@@ -72,7 +69,6 @@
 (define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_set_force_element_files void (list int))
 (define-lff sch2pcb_increment_verbose_mode void '())
-(define-lff sch2pcb_get_m4_files '* '())
 (define-lff sch2pcb_make_pcb_element_list void '(*))
 (define-lff sch2pcb_get_n_PKG_removed_new int '())
 (define-lff sch2pcb_get_n_PKG_removed_old int '())

@@ -26,9 +26,6 @@ G_BEGIN_DECLS
 gint
 sch2pcb_add_elements (gchar *pcb_file);
 
-void
-sch2pcb_add_m4_file (const gchar *arg);
-
 GList*
 sch2pcb_get_element_directory_list ();
 
@@ -97,9 +94,6 @@ sch2pcb_set_sch_basename (char *arg);
 
 GList*
 sch2pcb_get_schematics ();
-
-char*
-sch2pcb_get_m4_files ();
 
 int
 sch2pcb_get_n_added_ef ();

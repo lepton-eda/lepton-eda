@@ -93,10 +93,8 @@
     (with-output-to-string
       (lambda ()
         (format #t "(define gsch2pcb:pcb-m4-dir ~S)\n" %m4-pcb-dir)
-        (unless (null-pointer? (sch2pcb_get_m4_files))
-          (format #t
-                  "(define gsch2pcb:m4-files ~S)\n"
-                  (pointer->string (sch2pcb_get_m4_files))))
+        (when %m4-files
+          (format #t "(define gsch2pcb:m4-files ~S)\n" %m4-files))
         (format #t
                 "(define gsch2pcb:use-m4 ~A)\n"
                 (if %use-m4 "#t" "#f")))))
@@ -209,19 +207,26 @@
                            (loop (cdr ls))))))))))
 
 
+(define %m4-files #f)
+
+(define (add-m4-file filename)
+  (if %m4-files
+      (set! %m4-files (string-append %m4-files " " filename))
+      (set! %m4-files filename)))
+
 (define (add-default-m4-files)
   (define (build-filename . args)
     (string-join args file-name-separator-string))
 
-  (define (add-m4-file filename)
+  (define (add-file filename)
     (when (and (regular-file? filename)
                (file-readable? filename))
-      (sch2pcb_add_m4_file (string->pointer filename))))
+      (add-m4-file filename)))
 
   ;; Add "pcb.inc" residing in "~/.pcb/".
-  (add-m4-file (expand-env-variables (build-filename "~" ".pcb" "pcb.inc")))
+  (add-file (expand-env-variables (build-filename "~" ".pcb" "pcb.inc")))
   ;; Add "pcb.inc" in the current directory.
-  (add-m4-file "pcb.inc"))
+  (add-file "pcb.inc"))
 
 
 (define (add-schematic schematic-name)
@@ -273,7 +278,7 @@
       ("output-name" (sch2pcb_set_sch_basename *value))
       ("schematics" (add-multiple-schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
-      ("m4-file" (sch2pcb_add_m4_file *value))
+      ("m4-file" (add-m4-file value))
       ("gnetlist" (set! %extra-gnetlist-list
                         (append %extra-gnetlist-list (list value))))
       ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
@@ -496,7 +501,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("m4-file") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_add_m4_file (string->pointer arg))
+               (add-m4-file arg)
                seeds))
      (option '("gnetlist") #t #f
              (lambda (opt name arg seeds)
