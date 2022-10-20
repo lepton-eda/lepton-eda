@@ -217,10 +217,12 @@
 
   ;; Add "pcb.inc" residing in "~/.pcb/".
   (let ((home/user/.pcb/pcb.inc (build-filename (user-home-dir) ".pcb" pcb.inc)))
-    (when (regular-file? home/user/.pcb/pcb.inc)
+    (when (and (regular-file? home/user/.pcb/pcb.inc)
+               (file-readable? home/user/.pcb/pcb.inc))
       (sch2pcb_add_m4_file (string->pointer home/user/.pcb/pcb.inc))))
   ;; Add "pcb.inc" in the current directory.
-  (when (regular-file? pcb.inc)
+  (when (and (regular-file? pcb.inc)
+             (file-readable? pcb.inc))
     (sch2pcb_add_m4_file (string->pointer pcb.inc))))
 
 
