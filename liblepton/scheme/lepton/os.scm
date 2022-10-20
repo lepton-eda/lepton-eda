@@ -105,12 +105,18 @@ is stored."
       ;; set.
       (passwd:dir (getpwuid (getuid)))))
 
+
 (define expand-env-variables
   ;; Only compile regular expression once
   (let ((rx (make-regexp "\\$\\{(\\w*)\\}")))
     ;; This is the actual expand-env-variables function -- it's a
     ;; closure around rx.
     (lambda (str)
+      "Expands environment variables in STR usually representing a
+path and returns the result of expansion.  To be expanded, a
+variable must be enclosed in curly braces and prefixed with the
+dollar sign (e.g. ${HOME}).  Additionally, the function replaces
+tilda prefix (~) with the user home directory."
       ;; Returns result of expanding the environment variable name
       ;; found in match, or "".
       (define (match-getenv m)
