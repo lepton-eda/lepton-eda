@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
-;;; Copyright (C) 2019-2021 Lepton EDA Contributors
+;;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -95,6 +95,16 @@ is stored."
   "Returns the directory where per-user cache data are stored."
   (pointer->string (eda_get_user_cache_dir)))
 
+
+;;; To get the user home directory, the recommended approach is
+;;; to first check the $HOME environment variable and use
+;;; getpwuid() as a last resort only.
+(define (user-home-dir)
+  (or (getenv "HOME")
+      ;; Fall back to using low level functions if $HOME is not
+      ;; set.
+      (passwd:dir (getpwuid (getuid)))))
+
 (define expand-env-variables
   ;; Only compile regular expression once
   (let ((rx (make-regexp "\\$\\{(\\w*)\\}")))
@@ -114,7 +124,7 @@ is stored."
       (define (tilda-prefix->home-prefix s)
         (if (and (char=? (string-ref s 0) #\~)
                  (file-name-separator? (string-ref s 1)))
-            (string-append "${HOME}"
+            (string-append (user-home-dir)
                            file-name-separator-string
                            (substring s 2))
             s))
