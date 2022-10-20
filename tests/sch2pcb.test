@@ -928,14 +928,40 @@
 (test-group-with-cleanup "sch2pcb --m4-file"
   (prepare-test-directory)
 
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb
-                      "-v"
-                      (string-append "--m4-file" "=" "m4.inc")
-                      one.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
-    (test-assert (string-contains <stdout> "m4.inc")))
+  ;; Change $HOME to avoid processing of ~/.pcb/pcb.inc.
+  (let ((HOME (getenv "HOME"))
+        (homedir (build-filename *testdir* "home" "user")))
+    ;; Make necessary directories in the current work tree.
+    (system* "mkdir" "-p" (build-filename homedir ".pcb"))
+    ;; Set $HOME to another directory.
+    (putenv (string-append "HOME=" homedir))
+
+    ;; If "m4.inc" does not exist, it does not appear in the verbose
+    ;; output of the program.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        (string-append "--m4-file" "=" "m4.inc")
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (not (string-contains <stdout> "define gsch2pcb:m4-files")))
+      (test-assert (not (string-contains <stdout> "m4.inc"))))
+
+    ;; Create "m4.inc" and try again.
+    (touch "m4.inc")
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        (string-append "--m4-file" "=" "m4.inc")
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
+      (test-assert (string-contains <stdout> "m4.inc")))
+
+    ;; Restore environment variables.
+    (if HOME
+        (putenv (string-append "HOME=" HOME))
+        (putenv "HOME")))
 
   (test-teardown))
 
@@ -1782,11 +1808,35 @@
     (with-output-to-file project
       (lambda () (display project-contents)))
 
-    (receive (<status> <stdout> <stderr>)
-        (command-values lepton-sch2pcb "-v" project)
-      (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
-      (test-assert (string-contains <stdout> "m4-1.inc m4-2.inc m4-3.inc"))))
+    ;; Change $HOME to avoid processing of ~/.pcb/pcb.inc.
+    (let ((HOME (getenv "HOME"))
+          (homedir (build-filename *testdir* "home" "user")))
+      ;; Make necessary directories in the current work tree.
+      (system* "mkdir" "-p" (build-filename homedir ".pcb"))
+      ;; Set $HOME to another directory.
+      (putenv (string-append "HOME=" homedir))
+
+      ;; If .inc files do not exist, it do not appear in the verbose
+      ;; program output.
+      (receive (<status> <stdout> <stderr>)
+          (command-values lepton-sch2pcb "-v" project)
+        (test-eq EXIT_SUCCESS <status>)
+        (test-assert (not (string-contains <stdout> "define gsch2pcb:m4-files")))
+        (test-assert (not (string-contains <stdout> "m4-1.inc m4-2.inc m4-3.inc"))))
+
+      ;; Create .inc files and try again.
+      (for-each touch '("m4-1.inc" "m4-2.inc" "m4-3.inc"))
+
+      (receive (<status> <stdout> <stderr>)
+          (command-values lepton-sch2pcb "-v" project)
+        (test-eq EXIT_SUCCESS <status>)
+        (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
+        (test-assert (string-contains <stdout> "m4-1.inc m4-2.inc m4-3.inc")))
+
+      ;; Restore environment variables.
+      (if HOME
+          (putenv (string-append "HOME=" HOME))
+          (putenv "HOME"))))
 
   (test-teardown))
 

@@ -93,8 +93,8 @@
     (with-output-to-string
       (lambda ()
         (format #t "(define gsch2pcb:pcb-m4-dir ~S)\n" %m4-pcb-dir)
-        (when %m4-files
-          (format #t "(define gsch2pcb:m4-files ~S)\n" %m4-files))
+        (unless (null? %m4-files)
+          (format #t "(define gsch2pcb:m4-files ~S)\n" (string-join %m4-files)))
         (format #t
                 "(define gsch2pcb:use-m4 ~A)\n"
                 (if %use-m4 "#t" "#f")))))
@@ -207,26 +207,21 @@
                            (loop (cdr ls))))))))))
 
 
-(define %m4-files #f)
+(define %m4-files '())
 
 (define (add-m4-file filename)
-  (if %m4-files
-      (set! %m4-files (string-append %m4-files " " filename))
-      (set! %m4-files filename)))
+  (when (and (regular-file? filename)
+             (file-readable? filename))
+    (set! %m4-files (append %m4-files (list filename)))))
 
 (define (add-default-m4-files)
   (define (build-filename . args)
     (string-join args file-name-separator-string))
 
-  (define (add-file filename)
-    (when (and (regular-file? filename)
-               (file-readable? filename))
-      (add-m4-file filename)))
-
   ;; Add "pcb.inc" residing in "~/.pcb/".
-  (add-file (expand-env-variables (build-filename "~" ".pcb" "pcb.inc")))
+  (add-m4-file (expand-env-variables (build-filename "~" ".pcb" "pcb.inc")))
   ;; Add "pcb.inc" in the current directory.
-  (add-file "pcb.inc"))
+  (add-m4-file "pcb.inc"))
 
 
 (define (add-schematic schematic-name)
@@ -278,7 +273,13 @@
       ("output-name" (sch2pcb_set_sch_basename *value))
       ("schematics" (add-multiple-schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
-      ("m4-file" (add-m4-file value))
+      ("m4-file"
+       ;; For backward compatibility with previous C code, here we
+       ;; have to pre-process the value, that is, to split files
+       ;; by whitespaces.
+       (for-each add-m4-file
+                 (filter (negate string-null?)
+                         (string-split value char-set:whitespace))))
       ("gnetlist" (set! %extra-gnetlist-list
                         (append %extra-gnetlist-list (list value))))
       ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
