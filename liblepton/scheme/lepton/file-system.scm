@@ -25,8 +25,12 @@
             file-readable?))
 
 (define (regular-file? path)
-  "Returns #t if the given path exists and is a regular file, otherwise #f."
+  "Returns #t if the given path exists and is a regular file,
+otherwise #f.  Symlinks to regular files are considered regular
+files as well."
   (and (file-exists? path)
+       ;; Use stat() here instead of lstat() to let symlinks to
+       ;; regular files be treated as plain regular files.
        (eqv? (stat:type (stat path)) 'regular)))
 
 (define (directory? path)
