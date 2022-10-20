@@ -213,21 +213,15 @@
   (define (build-filename . args)
     (string-join args file-name-separator-string))
 
-  (define (readable-regular-file? filename)
-    (and (regular-file? filename)
-         (file-readable? filename)))
-
-  (define pcb.inc "pcb.inc")
-
-  (define home/user/.pcb/pcb.inc
-    (expand-env-variables (build-filename "~" ".pcb" pcb.inc)))
+  (define (add-m4-file filename)
+    (when (and (regular-file? filename)
+               (file-readable? filename))
+      (sch2pcb_add_m4_file (string->pointer filename))))
 
   ;; Add "pcb.inc" residing in "~/.pcb/".
-  (when (readable-regular-file? home/user/.pcb/pcb.inc)
-    (sch2pcb_add_m4_file (string->pointer home/user/.pcb/pcb.inc)))
+  (add-m4-file (expand-env-variables (build-filename "~" ".pcb" "pcb.inc")))
   ;; Add "pcb.inc" in the current directory.
-  (when (readable-regular-file? pcb.inc)
-    (sch2pcb_add_m4_file (string->pointer pcb.inc))))
+  (add-m4-file "pcb.inc"))
 
 
 (define (add-schematic schematic-name)
