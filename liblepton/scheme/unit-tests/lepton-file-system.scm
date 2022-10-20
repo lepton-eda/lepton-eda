@@ -10,4 +10,4 @@
 (test-begin "directory?" 1)
 (test-assert (directory? "."))
 (test-assert (not (directory? "Makefile")))
-(test-end "regular-file?")
+(test-end "directory?")
