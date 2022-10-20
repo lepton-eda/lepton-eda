@@ -22,8 +22,7 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (sch2pcb_add_default_m4_files
-            sch2pcb_add_elements
+  #:export (sch2pcb_add_elements
             sch2pcb_add_m4_file
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
@@ -63,7 +62,6 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-(define-lff sch2pcb_add_default_m4_files void '())
 (define-lff sch2pcb_add_elements int '(*))
 (define-lff sch2pcb_add_m4_file void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))

@@ -23,9 +23,6 @@
 
 G_BEGIN_DECLS
 
-void
-sch2pcb_add_default_m4_files (void);
-
 gint
 sch2pcb_add_elements (gchar *pcb_file);
 

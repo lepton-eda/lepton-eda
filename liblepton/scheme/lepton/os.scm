@@ -30,6 +30,7 @@
             user-cache-dir
             user-config-dir
             user-data-dir
+            user-home-dir
             ;; Deprecated functions.
             path-separator
             path-separator-char

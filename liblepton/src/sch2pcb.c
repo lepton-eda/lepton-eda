@@ -27,8 +27,6 @@
 
 #include "liblepton_priv.h"
 
-#define DEFAULT_PCB_INC "pcb.inc"
-
 #define SEP_STRING "--------\n"
 
 typedef struct
@@ -1257,23 +1255,6 @@ sch2pcb_add_m4_file (const gchar *arg)
     m4_files = g_strconcat (m4_files, " ", arg, NULL);
     g_free (s);
   }
-}
-
-
-void
-sch2pcb_add_default_m4_files (void)
-{
-  gchar *path;
-
-  path = g_build_filename ((gchar *) g_get_home_dir (),
-                           ".pcb", DEFAULT_PCB_INC, NULL);
-  if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
-    sch2pcb_add_m4_file (path);
-  g_free (path);
-
-  if (g_file_test (DEFAULT_PCB_INC, G_FILE_TEST_IS_REGULAR))
-    sch2pcb_add_m4_file (DEFAULT_PCB_INC);
-
 }
 
 

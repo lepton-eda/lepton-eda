@@ -209,6 +209,21 @@
                            (loop (cdr ls))))))))))
 
 
+(define (add-default-m4-files)
+  (define (build-filename . args)
+    (string-join args file-name-separator-string))
+
+  (define pcb.inc "pcb.inc")
+
+  ;; Add "pcb.inc" residing in "~/.pcb/".
+  (let ((home/user/.pcb/pcb.inc (build-filename (user-home-dir) ".pcb" pcb.inc)))
+    (when (regular-file? home/user/.pcb/pcb.inc)
+      (sch2pcb_add_m4_file (string->pointer home/user/.pcb/pcb.inc))))
+  ;; Add "pcb.inc" in the current directory.
+  (when (regular-file? pcb.inc)
+    (sch2pcb_add_m4_file (string->pointer pcb.inc))))
+
+
 (define (add-schematic schematic-name)
   (set! %schematics (append %schematics (list schematic-name)))
 
@@ -681,7 +696,7 @@ Lepton EDA homepage: <~A>
         ;; Parse command line arguments and set up internal
         ;; variables.
         (parse-command-line)
-        (sch2pcb_add_default_m4_files)
+        (add-default-m4-files)
         (if (null? %schematics)
             (usage)
             (begin
