@@ -585,7 +585,7 @@ sch2pcb_insert_element (FILE *f_out,
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
 
       fprintf (f_out, fmt,
-               el->res_char, el->flags, footprint, refdes, value,
+               el->res_char, pcb_element_get_flags (el), footprint, refdes, value,
                el->x, el->y, el->tail);
       retval = TRUE;
     } else if (*s != '#')
