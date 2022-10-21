@@ -92,6 +92,13 @@ void
 pcb_element_set_flags (PcbElement *element,
                        gchar *val);
 
+gchar*
+pcb_element_get_tail (PcbElement *element);
+
+void
+pcb_element_set_tail (PcbElement *element,
+                      gchar *val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint

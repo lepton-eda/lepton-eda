@@ -121,6 +121,21 @@ pcb_element_set_flags (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_tail (PcbElement *element)
+{
+  return element->tail;
+}
+
+void
+pcb_element_set_tail (PcbElement *element,
+                      gchar *val)
+{
+  g_free (element->tail);
+  element->tail = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
