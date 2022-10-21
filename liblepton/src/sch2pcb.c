@@ -928,7 +928,9 @@ sch2pcb_search_element_directories (PcbElement *el)
       printf ("Warning: argument passing may have been confused by\n");
       printf ("         a comma in a component value:\n");
       printf ("         Check %s %s %s\n",
-              el->refdes, el->description, el->value);
+              pcb_element_get_refdes (el),
+              el->description,
+              el->value);
       printf ("         Maybe just use a space instead of a comma?\n");
     }
   }
