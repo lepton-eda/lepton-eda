@@ -691,8 +691,8 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   el = pcb_element_new ();
   el->description = g_strdup (args[0]);
   pcb_element_set_refdes (el, g_strdup (args[1]));
-  el->value = g_strdup (args[2]);
-  if ((s = strchr (el->value, (gint) ')')) != NULL)
+  pcb_element_set_value (el, g_strdup (args[2]));
+  if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
     *s = '\0';
 
   /* If the component value has a comma, eg "1k, 1%", the gnetlist generated
@@ -716,10 +716,10 @@ pcb_element_pkg_to_element (gchar *pkg_line)
 
   n = 3;
   if (n_extra_args == n_dashes + 1) { /* Assume there was a comma in the value, eg "1K, 1%" */
-    s = el->value;
-    el->value = g_strconcat (s, ",", fix_spaces (args[n]), NULL);
+    s = g_strdup (pcb_element_get_value (el));
+    pcb_element_set_value (el, g_strconcat (s, ",", fix_spaces (args[n]), NULL));
     g_free (s);
-    if ((s = strchr (el->value, (gint) ')')) != NULL)
+    if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
       *s = '\0';
     n = 4;
   }
