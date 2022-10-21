@@ -432,14 +432,14 @@ pcb_element_line_parse (gchar * line)
     ++s;
 
   if (*s == '[')
-    el->hi_res_format = TRUE;
+    pcb_element_set_hi_res_format (el, TRUE);
   else if (*s != '(') {
     g_free (el);
     return NULL;
   }
 
-  pcb_element_set_res_char (el, el->hi_res_format ? '[' : '(');
-  close_char = el->hi_res_format ? ']' : ')';
+  pcb_element_set_res_char (el, pcb_element_get_hi_res_format (el) ? '[' : '(');
+  close_char = pcb_element_get_hi_res_format (el) ? ']' : ')';
 
   pcb_element_set_flags (el, token (s + 1, NULL, &el->quoted_flags));
   pcb_element_set_description (el, token (NULL, NULL, NULL));
