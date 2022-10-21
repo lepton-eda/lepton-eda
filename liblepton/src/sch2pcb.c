@@ -449,14 +449,14 @@ pcb_element_line_parse (gchar * line)
   el->x = token (NULL, NULL, NULL);
   el->y = token (NULL, &t, NULL);
 
-  el->tail = g_strdup (t ? t : "");
-  if ((s = strrchr (el->tail, (gint) '\n')) != NULL)
+  pcb_element_set_tail (el, g_strdup (t ? t : ""));
+  if ((s = strrchr (pcb_element_get_tail (el), (gint) '\n')) != NULL)
     *s = '\0';
 
   /* Count the tokens in tail to decide if it's new or old format.
    * Old format will have 3 tokens, new format will have 5 tokens.
    */
-  for (s = el->tail; *s && *s != close_char; ++s) {
+  for (s = pcb_element_get_tail (el); *s && *s != close_char; ++s) {
     if (*s != ' ') {
       if (state == 0)
         ++elcount;
