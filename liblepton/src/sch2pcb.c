@@ -447,7 +447,7 @@ pcb_element_line_parse (gchar * line)
   pcb_element_set_value (el, token (NULL, NULL, NULL));
 
   pcb_element_set_x (el, token (NULL, NULL, NULL));
-  el->y = token (NULL, &t, NULL);
+  pcb_element_set_y (el, token (NULL, &t, NULL));
 
   pcb_element_set_tail (el, g_strdup (t ? t : ""));
   if ((s = strrchr (pcb_element_get_tail (el), (gint) '\n')) != NULL)
