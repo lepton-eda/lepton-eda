@@ -99,6 +99,13 @@ void
 pcb_element_set_tail (PcbElement *element,
                       gchar *val);
 
+gchar*
+pcb_element_get_x (PcbElement *element);
+
+void
+pcb_element_set_x (PcbElement *element,
+                   gchar *val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint
