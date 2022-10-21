@@ -443,7 +443,7 @@ pcb_element_line_parse (gchar * line)
 
   el->flags = token (s + 1, NULL, &el->quoted_flags);
   el->description = token (NULL, NULL, NULL);
-  el->refdes = token (NULL, NULL, NULL);
+  pcb_element_set_refdes (el, token (NULL, NULL, NULL));
   el->value = token (NULL, NULL, NULL);
 
   el->x = token (NULL, NULL, NULL);
@@ -468,7 +468,7 @@ pcb_element_line_parse (gchar * line)
     el->new_format = TRUE;
 
   fix_spaces (el->description);
-  fix_spaces (el->refdes);
+  fix_spaces (pcb_element_get_refdes (el));
   fix_spaces (el->value);
 
   /* Don't allow elements with no refdes to ever be deleted because
@@ -476,7 +476,8 @@ pcb_element_line_parse (gchar * line)
    * initialize still_exists to TRUE if empty or non-alphanumeric
    * refdes.
    */
-  if (!*el->refdes || !isalnum ((gint) (*el->refdes)))
+  if (!*pcb_element_get_refdes (el)
+      || !isalnum ((gint) (*pcb_element_get_refdes (el))))
     el->still_exists = TRUE;
 
   return el;
