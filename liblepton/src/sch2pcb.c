@@ -465,7 +465,7 @@ pcb_element_line_parse (gchar * line)
       state = 0;
   }
   if (elcount > 4)
-    el->new_format = TRUE;
+    pcb_element_set_new_format (el, TRUE);
 
   fix_spaces (pcb_element_get_description (el));
   fix_spaces (pcb_element_get_refdes (el));
