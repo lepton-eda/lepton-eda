@@ -724,13 +724,12 @@ pcb_element_pkg_to_element (gchar *pkg_line)
     n = 4;
   }
   if (args[n]) {
-    el->pkg_name_fix = g_strdup (args[n]);
+    pcb_element_set_pkg_name_fix (el, g_strdup (args[n]));
     for (n += 1; args[n] != NULL; ++n) {
-      s = el->pkg_name_fix;
-      el->pkg_name_fix = g_strconcat (s, " ", args[n], NULL);
-      g_free (s);
+      s = pcb_element_get_pkg_name_fix (el);
+      pcb_element_set_pkg_name_fix (el, g_strconcat (s, " ", args[n], NULL));
     }
-    if ((s = strchr (el->pkg_name_fix, (gint) ')')) != NULL)
+    if ((s = strchr (pcb_element_get_pkg_name_fix (el), (gint) ')')) != NULL)
       *s = '\0';
   }
   g_strfreev (args);
