@@ -1077,7 +1077,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                el->tail);
       printf ("%s: updating element Description: %s -> %s\n",
               pcb_element_get_refdes (el),
-              el->description,
+              pcb_element_get_description (el),
               el_exists->changed_description);
       el_exists->still_exists = TRUE;
     } else
