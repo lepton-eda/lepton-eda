@@ -1040,7 +1040,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
 
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
-    if (el->changed_description)
+    if (pcb_element_get_changed_description (el))
     {
       sch2pcb_set_n_fixed (1 + sch2pcb_get_n_fixed ());
     }
@@ -1062,14 +1062,14 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
-        && el_exists->changed_description) {
+        && pcb_element_get_changed_description (el_exists)) {
       fmt = (gchar*) (el->quoted_flags ?
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char,
                el->flags,
-               el_exists->changed_description,
+               pcb_element_get_changed_description (el_exists),
                pcb_element_get_refdes (el),
                pcb_element_get_value (el),
                el->x,
@@ -1078,7 +1078,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
       printf ("%s: updating element Description: %s -> %s\n",
               pcb_element_get_refdes (el),
               pcb_element_get_description (el),
-              el_exists->changed_description);
+              pcb_element_get_changed_description (el_exists));
       el_exists->still_exists = TRUE;
     } else
       fputs (buf, f_out);
