@@ -181,6 +181,20 @@ pcb_element_set_pkg_name_fix (PcbElement *element,
 }
 
 
+gchar
+pcb_element_get_res_char (PcbElement *element)
+{
+  return element->res_char;
+}
+
+void
+pcb_element_set_res_char (PcbElement *element,
+                          gchar val)
+{
+  element->res_char = val;
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
