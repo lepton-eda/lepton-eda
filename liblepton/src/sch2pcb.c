@@ -1228,13 +1228,18 @@ sch2pcb_add_elements (gchar *pcb_file)
       if ((sch2pcb_get_verbose_mode () != 0)
           && !is_m4)
         printf ("%s: need new file element for footprint  %s (value=%s)\n",
-                el->refdes, el->description, el->value);
+                pcb_element_get_refdes (el),
+                el->description,
+                el->value);
       if ((sch2pcb_get_verbose_mode () != 0)
           && is_m4
           && sch2pcb_get_force_element_files ())
+      {
         printf
           ("%s: have m4 element %s, but trying to replace with a file element.\n",
-           el->refdes, el->description);
+           pcb_element_get_refdes (el),
+           el->description);
+      }
       p = search_element_directories (el);
       if (!p
           && (sch2pcb_get_verbose_mode () != 0)
@@ -1243,22 +1248,30 @@ sch2pcb_add_elements (gchar *pcb_file)
         printf ("\tNo file element found.\n");
 
       if (p && insert_element (f_out, p,
-                               el->description, el->refdes, el->value)) {
+                               el->description,
+                               pcb_element_get_refdes (el),
+                               el->value))
+      {
         skipping = is_m4;
         is_m4 = FALSE;
         sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
         if (sch2pcb_get_verbose_mode () != 0)
           printf ("%s: added new file element for footprint %s (value=%s)\n",
-                  el->refdes, el->description, el->value);
+                  pcb_element_get_refdes (el),
+                  el->description,
+                  el->value);
       } else if (!is_m4) {
         fprintf (stderr,
                  "%s: can't find PCB element for footprint %s (value=%s)\n",
-                 el->refdes, el->description, el->value);
+                 pcb_element_get_refdes (el),
+                 el->description,
+                 el->value);
         if (sch2pcb_get_remove_unfound_elements ()
             && !sch2pcb_get_fix_elements())
         {
           fprintf (stderr,
-                   "So device %s will not be in the layout.\n", el->refdes);
+                   "So device %s will not be in the layout.\n",
+                   pcb_element_get_refdes (el));
           sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
         } else {
           sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
@@ -1272,7 +1285,9 @@ sch2pcb_add_elements (gchar *pcb_file)
       sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
-                el->refdes, el->description, el->value);
+                pcb_element_get_refdes (el),
+                el->description,
+                el->value);
     }
     pcb_element_free (el);
     if (sch2pcb_get_verbose_mode () != 0)
