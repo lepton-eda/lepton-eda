@@ -151,6 +151,21 @@ pcb_element_set_x (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_y (PcbElement *element)
+{
+  return element->y;
+}
+
+void
+pcb_element_set_y (PcbElement *element,
+                   gchar *val)
+{
+  g_free (element->y);
+  element->y = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
