@@ -1074,7 +1074,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                pcb_element_get_value (el),
                el->x,
                el->y,
-               el->tail);
+               pcb_element_get_tail (el));
       printf ("%s: updating element Description: %s -> %s\n",
               pcb_element_get_refdes (el),
               pcb_element_get_description (el),
