@@ -113,6 +113,13 @@ void
 pcb_element_set_y (PcbElement *element,
                    gchar *val);
 
+gchar*
+pcb_element_get_pkg_name_fix (PcbElement *element);
+
+void
+pcb_element_set_pkg_name_fix (PcbElement *element,
+                              gchar *val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint

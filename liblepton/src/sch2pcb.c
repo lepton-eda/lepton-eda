@@ -166,6 +166,21 @@ pcb_element_set_y (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_pkg_name_fix (PcbElement *element)
+{
+  return element->pkg_name_fix;
+}
+
+void
+pcb_element_set_pkg_name_fix (PcbElement *element,
+                              gchar *val)
+{
+  g_free (element->pkg_name_fix);
+  element->pkg_name_fix = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
