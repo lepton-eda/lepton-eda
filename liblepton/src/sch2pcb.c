@@ -1079,7 +1079,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
               pcb_element_get_refdes (el),
               pcb_element_get_description (el),
               pcb_element_get_changed_description (el_exists));
-      el_exists->still_exists = TRUE;
+      pcb_element_set_still_exists (el_exists, TRUE);
     } else
       fputs (buf, f_out);
     pcb_element_free (el);
