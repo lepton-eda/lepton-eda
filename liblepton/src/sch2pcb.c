@@ -442,7 +442,7 @@ pcb_element_line_parse (gchar * line)
   close_char = el->hi_res_format ? ']' : ')';
 
   el->flags = token (s + 1, NULL, &el->quoted_flags);
-  el->description = token (NULL, NULL, NULL);
+  pcb_element_set_description (el, token (NULL, NULL, NULL));
   pcb_element_set_refdes (el, token (NULL, NULL, NULL));
   pcb_element_set_value (el, token (NULL, NULL, NULL));
 
@@ -467,7 +467,7 @@ pcb_element_line_parse (gchar * line)
   if (elcount > 4)
     el->new_format = TRUE;
 
-  fix_spaces (el->description);
+  fix_spaces (pcb_element_get_description (el));
   fix_spaces (pcb_element_get_refdes (el));
   fix_spaces (pcb_element_get_value (el));
 
