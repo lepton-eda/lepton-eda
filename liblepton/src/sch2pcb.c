@@ -106,6 +106,21 @@ pcb_element_set_changed_value (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_flags (PcbElement *element)
+{
+  return element->flags;
+}
+
+void
+pcb_element_set_flags (PcbElement *element,
+                       gchar *val)
+{
+  g_free (element->flags);
+  element->flags = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 

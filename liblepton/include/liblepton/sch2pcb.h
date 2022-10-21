@@ -85,6 +85,13 @@ void
 pcb_element_set_changed_value (PcbElement *element,
                                gchar *val);
 
+gchar*
+pcb_element_get_flags (PcbElement *element);
+
+void
+pcb_element_set_flags (PcbElement *element,
+                       gchar *val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint
