@@ -134,6 +134,13 @@ void
 pcb_element_set_still_exists (PcbElement *element,
                               gboolean val);
 
+gboolean
+pcb_element_get_new_format (PcbElement *element);
+
+void
+pcb_element_set_new_format (PcbElement *element,
+                            gboolean val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint
