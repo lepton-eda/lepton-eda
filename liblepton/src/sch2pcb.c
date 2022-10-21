@@ -46,6 +46,21 @@ pcb_element_set_refdes (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_value (PcbElement *element)
+{
+  return element->value;
+}
+
+void
+pcb_element_set_value (PcbElement *element,
+                       gchar *val)
+{
+  g_free (element->value);
+  element->value = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
