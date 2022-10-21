@@ -195,6 +195,20 @@ pcb_element_set_res_char (PcbElement *element,
 }
 
 
+gboolean
+pcb_element_get_still_exists (PcbElement *element)
+{
+  return element->still_exists;
+}
+
+void
+pcb_element_set_still_exists (PcbElement *element,
+                              gboolean val)
+{
+  element->still_exists = val;
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
