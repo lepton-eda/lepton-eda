@@ -1043,7 +1043,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
 
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
-    if (!el->still_exists) {
+    if (!pcb_element_get_still_exists (el)) {
       if (sch2pcb_get_preserve ())
       {
         sch2pcb_set_n_preserved (1 + sch2pcb_get_n_preserved ());
@@ -1088,7 +1088,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
     el_exists = NULL;
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
-        && !el_exists->still_exists
+        && !pcb_element_get_still_exists (el_exists)
         && !sch2pcb_get_preserve ())
       {
       skipping = TRUE;
