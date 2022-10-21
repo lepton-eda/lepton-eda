@@ -441,7 +441,7 @@ pcb_element_line_parse (gchar * line)
   el->res_char = el->hi_res_format ? '[' : '(';
   close_char = el->hi_res_format ? ']' : ')';
 
-  el->flags = token (s + 1, NULL, &el->quoted_flags);
+  pcb_element_set_flags (el, token (s + 1, NULL, &el->quoted_flags));
   pcb_element_set_description (el, token (NULL, NULL, NULL));
   pcb_element_set_refdes (el, token (NULL, NULL, NULL));
   pcb_element_set_value (el, token (NULL, NULL, NULL));
