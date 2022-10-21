@@ -441,7 +441,9 @@ pcb_element_line_parse (gchar * line)
   pcb_element_set_res_char (el, pcb_element_get_hi_res_format (el) ? '[' : '(');
   close_char = pcb_element_get_hi_res_format (el) ? ']' : ')';
 
-  pcb_element_set_flags (el, token (s + 1, NULL, &el->quoted_flags));
+  gboolean quoted_flags;
+  pcb_element_set_flags (el, token (s + 1, NULL, &quoted_flags));
+  pcb_element_set_quoted_flags (el, quoted_flags);
   pcb_element_set_description (el, token (NULL, NULL, NULL));
   pcb_element_set_refdes (el, token (NULL, NULL, NULL));
   pcb_element_set_value (el, token (NULL, NULL, NULL));
