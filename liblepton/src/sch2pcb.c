@@ -438,7 +438,7 @@ pcb_element_line_parse (gchar * line)
     return NULL;
   }
 
-  el->res_char = el->hi_res_format ? '[' : '(';
+  pcb_element_set_res_char (el, el->hi_res_format ? '[' : '(');
   close_char = el->hi_res_format ? ']' : ')';
 
   pcb_element_set_flags (el, token (s + 1, NULL, &el->quoted_flags));
