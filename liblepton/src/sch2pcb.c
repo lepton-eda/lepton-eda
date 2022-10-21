@@ -42,14 +42,6 @@ typedef struct
 PcbElement;
 
 
-typedef struct
-{
-  gchar *part_number, *element_name;
-}
-ElementMap;
-
-
-
 static GList *pcb_element_list = NULL;
 
 GList*
