@@ -930,7 +930,7 @@ sch2pcb_search_element_directories (PcbElement *el)
       printf ("         Check %s %s %s\n",
               pcb_element_get_refdes (el),
               el->description,
-              el->value);
+              pcb_element_get_value (el));
       printf ("         Maybe just use a space instead of a comma?\n");
     }
   }
