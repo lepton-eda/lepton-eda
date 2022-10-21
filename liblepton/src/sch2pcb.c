@@ -446,7 +446,7 @@ pcb_element_line_parse (gchar * line)
   pcb_element_set_refdes (el, token (NULL, NULL, NULL));
   pcb_element_set_value (el, token (NULL, NULL, NULL));
 
-  el->x = token (NULL, NULL, NULL);
+  pcb_element_set_x (el, token (NULL, NULL, NULL));
   el->y = token (NULL, &t, NULL);
 
   pcb_element_set_tail (el, g_strdup (t ? t : ""));
