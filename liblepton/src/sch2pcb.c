@@ -743,20 +743,20 @@ pcb_element_pkg_to_element (gchar *pkg_line)
          pcb_element_get_refdes (el),
          pcb_element_get_description (el));
     sch2pcb_set_n_empty (1 + sch2pcb_get_n_empty ());
-    el->omit_PKG = TRUE;
+    pcb_element_set_omit_PKG (el, TRUE);
   } else if (!strcmp (pcb_element_get_description (el), "none")) {
     fprintf (stderr,
              "WARNING: %s has a footprint attribute \"%s\" so won't be in the layout.\n",
              pcb_element_get_refdes (el),
              pcb_element_get_description (el));
     sch2pcb_set_n_none (1 + sch2pcb_get_n_none ());
-    el->omit_PKG = TRUE;
+    pcb_element_set_omit_PKG (el, TRUE);
   } else if (!strcmp (pcb_element_get_description (el), "unknown")) {
     fprintf (stderr,
              "WARNING: %s has no footprint attribute so won't be in the layout.\n",
              pcb_element_get_refdes (el));
     sch2pcb_set_n_unknown (1 + sch2pcb_get_n_unknown ());
-    el->omit_PKG = TRUE;
+    pcb_element_set_omit_PKG (el, TRUE);
   }
   return el;
 }
