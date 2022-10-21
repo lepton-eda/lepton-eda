@@ -580,7 +580,7 @@ sch2pcb_insert_element (FILE *f_out,
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if ((el = pcb_element_line_parse (s)) != NULL) {
       simple_translate (el);
-      fmt = (gchar*) (el->quoted_flags ?
+      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
 
