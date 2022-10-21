@@ -522,7 +522,7 @@ pcb_element_exists (PcbElement *el_test,
       continue;
     if (strcmp (pcb_element_get_description (el_test), pcb_element_get_description (el))) { /* footprint */
       if (record)
-        el->changed_description = g_strdup (pcb_element_get_description (el_test));
+        pcb_element_set_changed_description (el, g_strdup (pcb_element_get_description (el_test)));
     } else {
       if (record) {
         if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
