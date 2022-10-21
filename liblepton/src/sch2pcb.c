@@ -909,18 +909,19 @@ sch2pcb_search_element_directories (PcbElement *el)
   gint n1, n2;
 
   /* See comment before pcb_element_pkg_to_element() */
-  if (el->pkg_name_fix) {
+  if (pcb_element_get_pkg_name_fix (el))
+  {
     if (strchr (pcb_element_get_description (el), '-')) {
       n1 = strlen (pcb_element_get_description (el));
-      n2 = strlen (el->pkg_name_fix);
+      n2 = strlen (pcb_element_get_pkg_name_fix (el));
       s = pcb_element_get_description (el) + n1 - n2 - 1;
 
 // printf("n1=%d n2=%d desc:%s fix:%s s:%s\n",
-//  n1, n2, pcb_element_get_description (el), el->pkg_name_fix, s);
+//  n1, n2, pcb_element_get_description (el), pcb_element_get_pkg_name_fix (el), s);
 
-      if (n1 > 0 && n2 < n1 && *s == '-' && *(s + 1) == *el->pkg_name_fix) {
+      if (n1 > 0 && n2 < n1 && *s == '-' && *(s + 1) == *pcb_element_get_pkg_name_fix (el)) {
         s = g_strndup (pcb_element_get_description (el), n1 - n2 - 1);
-        elname = g_strconcat (s, " ", el->pkg_name_fix, NULL);
+        elname = g_strconcat (s, " ", pcb_element_get_pkg_name_fix (el), NULL);
         g_free (s);
       }
     }
