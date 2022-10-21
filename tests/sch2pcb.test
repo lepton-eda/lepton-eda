@@ -849,6 +849,79 @@
 (test-end)
 
 
+(test-begin "sch2pcb default m4 files")
+
+(test-group-with-cleanup "sch2pcb default m4 files"
+  (prepare-test-directory)
+
+  ;; Test that default "pcb.inc" files are included in the output
+  ;; only if they exists.
+
+  (let ((HOME (getenv "HOME"))
+        (homedir (build-filename *testdir* "home" "user")))
+    ;; Make necessary directories in the current work tree.
+    (system* "mkdir" "-p" (build-filename homedir ".pcb"))
+    ;; Set $HOME to another directory.
+    (putenv (string-append "HOME=" homedir))
+
+    ;; First test with absent "pcb.inc".
+    (test-assert (not (file-exists? "pcb.inc")))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (not (string-contains <stdout> "define gsch2pcb:m4-files")))
+      (test-assert (not (string-contains <stdout> "pcb.inc"))))
+
+    ;; Now create "pcb.inc" and test once again.
+    (touch "pcb.inc")
+    (test-assert (file-exists? "pcb.inc"))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
+      (test-assert (string-contains <stdout> "pcb.inc")))
+
+    ;; The same tests for "pcb.inc" in "~/.pcb/".
+
+    ;; Delete "pcb.inc" as otherwise it will conflict with the
+    ;; next tests.
+    (delete-file "pcb.inc")
+
+    ;; First test with absent "pcb.inc".
+    (test-assert (not (file-exists? (build-filename homedir ".pcb" "pcb.inc"))))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (not (string-contains <stdout> "define gsch2pcb:m4-files")))
+      (test-assert (not (string-contains <stdout> "/home/user/.pcb/pcb.inc"))))
+
+    ;; Now create "pcb.inc" and test once again.
+    (touch (build-filename homedir ".pcb" "pcb.inc"))
+    (test-assert (file-exists? (build-filename homedir ".pcb" "pcb.inc")))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "-v"
+                        one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
+      (test-assert (string-contains <stdout> "/home/user/.pcb/pcb.inc")))
+
+    ;; Restore environment variables.
+    (if HOME
+        (putenv (string-append "HOME=" HOME))
+        (putenv "HOME")))
+
+  (test-teardown))
+
+(test-end)
+
+
 (test-begin "sch2pcb backup filenames")
 
 (test-group-with-cleanup "sch2pcb backup filenames"
