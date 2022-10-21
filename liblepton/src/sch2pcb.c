@@ -495,7 +495,7 @@ pcb_element_free (PcbElement * el)
   g_free (pcb_element_get_value (el));
   g_free (el->x);
   g_free (el->y);
-  g_free (el->tail);
+  g_free (pcb_element_get_tail (el));
   g_free (el->pkg_name_fix);
   g_free (el);
 }
