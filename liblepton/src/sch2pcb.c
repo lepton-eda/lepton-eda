@@ -630,8 +630,8 @@ pcb_element_exists (PcbElement *el_test,
         el->changed_description = g_strdup (el_test->description);
     } else {
       if (record) {
-        if (strcmp (el_test->value, el->value))
-          el->changed_value = g_strdup (el_test->value);
+        if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
+          el->changed_value = g_strdup (pcb_element_get_value (el_test));
         el->still_exists = TRUE;
       }
       return el;
