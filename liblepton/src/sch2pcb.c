@@ -444,7 +444,7 @@ pcb_element_line_parse (gchar * line)
   el->flags = token (s + 1, NULL, &el->quoted_flags);
   el->description = token (NULL, NULL, NULL);
   pcb_element_set_refdes (el, token (NULL, NULL, NULL));
-  el->value = token (NULL, NULL, NULL);
+  pcb_element_set_value (el, token (NULL, NULL, NULL));
 
   el->x = token (NULL, NULL, NULL);
   el->y = token (NULL, &t, NULL);
@@ -469,7 +469,7 @@ pcb_element_line_parse (gchar * line)
 
   fix_spaces (el->description);
   fix_spaces (pcb_element_get_refdes (el));
-  fix_spaces (el->value);
+  fix_spaces (pcb_element_get_value (el));
 
   /* Don't allow elements with no refdes to ever be deleted because
    * they may be desired pc board elements not in schematics.  So
