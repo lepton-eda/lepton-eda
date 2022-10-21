@@ -1229,7 +1229,7 @@ sch2pcb_add_elements (gchar *pcb_file)
           && !is_m4)
         printf ("%s: need new file element for footprint  %s (value=%s)\n",
                 pcb_element_get_refdes (el),
-                el->description,
+                pcb_element_get_description (el),
                 pcb_element_get_value (el));
       if ((sch2pcb_get_verbose_mode () != 0)
           && is_m4
@@ -1238,7 +1238,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         printf
           ("%s: have m4 element %s, but trying to replace with a file element.\n",
            pcb_element_get_refdes (el),
-           el->description);
+           pcb_element_get_description (el));
       }
       p = search_element_directories (el);
       if (!p
@@ -1248,7 +1248,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         printf ("\tNo file element found.\n");
 
       if (p && insert_element (f_out, p,
-                               el->description,
+                               pcb_element_get_description (el),
                                pcb_element_get_refdes (el),
                                pcb_element_get_value (el)))
       {
@@ -1258,13 +1258,13 @@ sch2pcb_add_elements (gchar *pcb_file)
         if (sch2pcb_get_verbose_mode () != 0)
           printf ("%s: added new file element for footprint %s (value=%s)\n",
                   pcb_element_get_refdes (el),
-                  el->description,
+                  pcb_element_get_description (el),
                   pcb_element_get_value (el));
       } else if (!is_m4) {
         fprintf (stderr,
                  "%s: can't find PCB element for footprint %s (value=%s)\n",
                  pcb_element_get_refdes (el),
-                 el->description,
+                 pcb_element_get_description (el),
                  pcb_element_get_value (el));
         if (sch2pcb_get_remove_unfound_elements ()
             && !sch2pcb_get_fix_elements())
@@ -1286,7 +1286,7 @@ sch2pcb_add_elements (gchar *pcb_file)
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
                 pcb_element_get_refdes (el),
-                el->description,
+                pcb_element_get_description (el),
                 pcb_element_get_value (el));
     }
     pcb_element_free (el);
