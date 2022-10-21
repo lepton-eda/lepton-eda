@@ -209,6 +209,20 @@ pcb_element_set_still_exists (PcbElement *element,
 }
 
 
+gboolean
+pcb_element_get_new_format (PcbElement *element)
+{
+  return element->new_format;
+}
+
+void
+pcb_element_set_new_format (PcbElement *element,
+                            gboolean val)
+{
+  element->new_format = val;
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
