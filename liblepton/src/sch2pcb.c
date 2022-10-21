@@ -61,6 +61,21 @@ pcb_element_set_value (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_description (PcbElement *element)
+{
+  return element->description;
+}
+
+void
+pcb_element_set_description (PcbElement *element,
+                             gchar *val)
+{
+  g_free (element->description);
+  element->description = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
