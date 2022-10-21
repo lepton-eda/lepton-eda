@@ -1101,7 +1101,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
       continue;
     }
     if (el_exists && pcb_element_get_changed_value (el_exists)) {
-      fmt = (gchar*) (el->quoted_flags ?
+      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
