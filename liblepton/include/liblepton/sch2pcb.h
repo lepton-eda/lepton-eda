@@ -48,6 +48,17 @@ PcbElement;
 
 G_BEGIN_DECLS
 
+/* PcbElement accessors */
+
+gchar*
+pcb_element_get_refdes (PcbElement *element);
+
+void
+pcb_element_set_refdes (PcbElement *element,
+                        gchar *val);
+
+/* lepton-sch2pcb's toplevel functions */
+
 gint
 sch2pcb_add_elements (gchar *pcb_file);
 
