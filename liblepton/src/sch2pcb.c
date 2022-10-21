@@ -527,7 +527,7 @@ pcb_element_exists (PcbElement *el_test,
       if (record) {
         if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
           pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
-        el->still_exists = TRUE;
+        pcb_element_set_still_exists (el, TRUE);
       }
       return el;
     }
