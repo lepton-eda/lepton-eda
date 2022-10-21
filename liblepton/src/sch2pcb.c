@@ -1230,7 +1230,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         printf ("%s: need new file element for footprint  %s (value=%s)\n",
                 pcb_element_get_refdes (el),
                 el->description,
-                el->value);
+                pcb_element_get_value (el));
       if ((sch2pcb_get_verbose_mode () != 0)
           && is_m4
           && sch2pcb_get_force_element_files ())
@@ -1250,7 +1250,7 @@ sch2pcb_add_elements (gchar *pcb_file)
       if (p && insert_element (f_out, p,
                                el->description,
                                pcb_element_get_refdes (el),
-                               el->value))
+                               pcb_element_get_value (el)))
       {
         skipping = is_m4;
         is_m4 = FALSE;
@@ -1259,13 +1259,13 @@ sch2pcb_add_elements (gchar *pcb_file)
           printf ("%s: added new file element for footprint %s (value=%s)\n",
                   pcb_element_get_refdes (el),
                   el->description,
-                  el->value);
+                  pcb_element_get_value (el));
       } else if (!is_m4) {
         fprintf (stderr,
                  "%s: can't find PCB element for footprint %s (value=%s)\n",
                  pcb_element_get_refdes (el),
                  el->description,
-                 el->value);
+                 pcb_element_get_value (el));
         if (sch2pcb_get_remove_unfound_elements ()
             && !sch2pcb_get_fix_elements())
         {
@@ -1287,7 +1287,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
                 pcb_element_get_refdes (el),
                 el->description,
-                el->value);
+                pcb_element_get_value (el));
     }
     pcb_element_free (el);
     if (sch2pcb_get_verbose_mode () != 0)
