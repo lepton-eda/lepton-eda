@@ -1071,7 +1071,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                el->flags,
                el_exists->changed_description,
                pcb_element_get_refdes (el),
-               el->value,
+               pcb_element_get_value (el),
                el->x,
                el->y,
                el->tail);
