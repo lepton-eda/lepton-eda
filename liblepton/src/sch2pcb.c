@@ -1050,7 +1050,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
         fprintf (stderr,
                  "Preserving PCB element not in the schematic:    %s (element   %s)\n",
                  pcb_element_get_refdes (el),
-                 el->description);
+                 pcb_element_get_description (el));
       }
       else
       {
@@ -1095,7 +1095,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: deleted element %s (value=%s)\n",
                 pcb_element_get_refdes (el),
-                el->description,
+                pcb_element_get_description (el),
                 pcb_element_get_value (el));
       pcb_element_free (el);
       continue;
@@ -1105,12 +1105,12 @@ sch2pcb_prune_elements (gchar *pcb_file,
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
-               el->res_char, el->flags, el->description, pcb_element_get_refdes (el),
+               el->res_char, el->flags, pcb_element_get_description (el), pcb_element_get_refdes (el),
                el_exists->changed_value, el->x, el->y, el->tail);
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: changed element %s value: %s -> %s\n",
                 pcb_element_get_refdes (el),
-                el->description,
+                pcb_element_get_description (el),
                 pcb_element_get_value (el),
                 el_exists->changed_value);
     } else
