@@ -1801,7 +1801,7 @@
   (let ((project "sch2pcb-project")
         (project-contents
          (format #f
-                 "m4-file m4-1.inc m4-2.inc
+                 "m4-file m4-1.inc   \tm4-2.inc
                   m4-file m4-3.inc
                   schematics one.sch two.sch")))
 
