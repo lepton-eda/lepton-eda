@@ -478,7 +478,7 @@ pcb_element_line_parse (gchar * line)
    */
   if (!*pcb_element_get_refdes (el)
       || !isalnum ((gint) (*pcb_element_get_refdes (el))))
-    el->still_exists = TRUE;
+    pcb_element_set_still_exists (el, TRUE);
 
   return el;
 }
