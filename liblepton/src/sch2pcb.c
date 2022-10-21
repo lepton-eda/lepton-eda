@@ -910,16 +910,16 @@ sch2pcb_search_element_directories (PcbElement *el)
 
   /* See comment before pcb_element_pkg_to_element() */
   if (el->pkg_name_fix) {
-    if (strchr (el->description, '-')) {
-      n1 = strlen (el->description);
+    if (strchr (pcb_element_get_description (el), '-')) {
+      n1 = strlen (pcb_element_get_description (el));
       n2 = strlen (el->pkg_name_fix);
-      s = el->description + n1 - n2 - 1;
+      s = pcb_element_get_description (el) + n1 - n2 - 1;
 
 // printf("n1=%d n2=%d desc:%s fix:%s s:%s\n",
-//  n1, n2, el->description, el->pkg_name_fix, s);
+//  n1, n2, pcb_element_get_description (el), el->pkg_name_fix, s);
 
       if (n1 > 0 && n2 < n1 && *s == '-' && *(s + 1) == *el->pkg_name_fix) {
-        s = g_strndup (el->description, n1 - n2 - 1);
+        s = g_strndup (pcb_element_get_description (el), n1 - n2 - 1);
         elname = g_strconcat (s, " ", el->pkg_name_fix, NULL);
         g_free (s);
       }
@@ -929,13 +929,13 @@ sch2pcb_search_element_directories (PcbElement *el)
       printf ("         a comma in a component value:\n");
       printf ("         Check %s %s %s\n",
               pcb_element_get_refdes (el),
-              el->description,
+              pcb_element_get_description (el),
               pcb_element_get_value (el));
       printf ("         Maybe just use a space instead of a comma?\n");
     }
   }
   if (!elname)
-    elname = g_strdup (el->description);
+    elname = g_strdup (pcb_element_get_description (el));
 
   if (!strcmp (elname, "unknown")) {
     g_free (elname);
