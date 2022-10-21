@@ -155,6 +155,13 @@ void
 pcb_element_set_quoted_flags (PcbElement *element,
                               gboolean val);
 
+gboolean
+pcb_element_get_omit_PKG (PcbElement *element);
+
+void
+pcb_element_set_omit_PKG (PcbElement *element,
+                          gboolean val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint

@@ -252,6 +252,21 @@ pcb_element_set_quoted_flags (PcbElement *element,
 }
 
 
+gboolean
+pcb_element_get_omit_PKG (PcbElement *element)
+{
+  return element->omit_PKG;
+}
+
+void
+pcb_element_set_omit_PKG (PcbElement *element,
+                          gboolean val)
+{
+  element->omit_PKG = val;
+}
+
+
+
 static GList *pcb_element_list = NULL;
 
 GList*
