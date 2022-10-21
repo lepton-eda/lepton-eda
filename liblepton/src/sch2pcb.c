@@ -586,7 +586,7 @@ sch2pcb_insert_element (FILE *f_out,
 
       fprintf (f_out, fmt,
                el->res_char, pcb_element_get_flags (el), footprint, refdes, value,
-               pcb_element_get_x (el), el->y, pcb_element_get_tail (el));
+               pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
       retval = TRUE;
     } else if (*s != '#')
       fputs (buf, f_out);
