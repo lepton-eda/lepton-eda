@@ -1058,7 +1058,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
       }
     }
     else
-      if (el->changed_value)
+      if (pcb_element_get_changed_value (el))
       {
         sch2pcb_set_n_changed_value (1 + sch2pcb_get_n_changed_value ());
       }
@@ -1100,19 +1100,19 @@ sch2pcb_prune_elements (gchar *pcb_file,
       pcb_element_free (el);
       continue;
     }
-    if (el_exists && el_exists->changed_value) {
+    if (el_exists && pcb_element_get_changed_value (el_exists)) {
       fmt = (gchar*) (el->quoted_flags ?
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char, el->flags, pcb_element_get_description (el), pcb_element_get_refdes (el),
-               el_exists->changed_value, el->x, el->y, el->tail);
+               pcb_element_get_changed_value (el_exists), el->x, el->y, el->tail);
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: changed element %s value: %s -> %s\n",
                 pcb_element_get_refdes (el),
                 pcb_element_get_description (el),
                 pcb_element_get_value (el),
-                el_exists->changed_value);
+                pcb_element_get_changed_value (el_exists));
     } else
       if (!strncmp (s, "PKG_", 4))
       {
