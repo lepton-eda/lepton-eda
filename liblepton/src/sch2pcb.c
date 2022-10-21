@@ -223,6 +223,20 @@ pcb_element_set_new_format (PcbElement *element,
 }
 
 
+gboolean
+pcb_element_get_hi_res_format (PcbElement *element)
+{
+  return element->hi_res_format;
+}
+
+void
+pcb_element_set_hi_res_format (PcbElement *element,
+                              gboolean val)
+{
+  element->hi_res_format = val;
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
