@@ -488,7 +488,7 @@ pcb_element_free (PcbElement * el)
   if (!el)
     return;
   g_free (el->flags);
-  g_free (el->description);
+  g_free (pcb_element_get_description (el));
   g_free (el->changed_description);
   g_free (el->changed_value);
   g_free (pcb_element_get_refdes (el));
