@@ -1068,7 +1068,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char,
-               el->flags,
+               pcb_element_get_flags (el),
                pcb_element_get_changed_description (el_exists),
                pcb_element_get_refdes (el),
                pcb_element_get_value (el),
