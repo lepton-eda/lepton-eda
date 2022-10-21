@@ -690,7 +690,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
 
   el = pcb_element_new ();
   el->description = g_strdup (args[0]);
-  el->refdes = g_strdup (args[1]);
+  pcb_element_set_refdes (el, g_strdup (args[1]));
   el->value = g_strdup (args[2]);
   if ((s = strchr (el->value, (gint) ')')) != NULL)
     *s = '\0';
@@ -739,19 +739,21 @@ pcb_element_pkg_to_element (gchar *pkg_line)
     if (sch2pcb_get_verbose_mode () != 0)
       printf
         ("%s: has the empty footprint attribute \"%s\" so won't be in the layout.\n",
-         el->refdes, el->description);
+         pcb_element_get_refdes (el),
+         el->description);
     sch2pcb_set_n_empty (1 + sch2pcb_get_n_empty ());
     el->omit_PKG = TRUE;
   } else if (!strcmp (el->description, "none")) {
     fprintf (stderr,
              "WARNING: %s has a footprint attribute \"%s\" so won't be in the layout.\n",
-             el->refdes, el->description);
+             pcb_element_get_refdes (el),
+             el->description);
     sch2pcb_set_n_none (1 + sch2pcb_get_n_none ());
     el->omit_PKG = TRUE;
   } else if (!strcmp (el->description, "unknown")) {
     fprintf (stderr,
              "WARNING: %s has no footprint attribute so won't be in the layout.\n",
-             el->refdes);
+             pcb_element_get_refdes (el));
     sch2pcb_set_n_unknown (1 + sch2pcb_get_n_unknown ());
     el->omit_PKG = TRUE;
   }
