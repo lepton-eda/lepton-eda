@@ -689,7 +689,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   fix_spaces (args[2]);
 
   el = pcb_element_new ();
-  el->description = g_strdup (args[0]);
+  pcb_element_set_description (el, g_strdup (args[0]));
   pcb_element_set_refdes (el, g_strdup (args[1]));
   pcb_element_set_value (el, g_strdup (args[2]));
   if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
@@ -711,7 +711,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
    * description with '-' when there are extra args.
    */
   for (n_extra_args = 0; args[3 + n_extra_args] != NULL; ++n_extra_args);
-  s = el->description;
+  s = pcb_element_get_description (el);
   for (n_dashes = 0; (s = strchr (s + 1, '-')) != NULL; ++n_dashes);
 
   n = 3;
@@ -735,22 +735,24 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   }
   g_strfreev (args);
 
-  if (empty_footprint_name && !strcmp (el->description, empty_footprint_name)) {
+  if (empty_footprint_name
+      && !strcmp (pcb_element_get_description (el), empty_footprint_name))
+  {
     if (sch2pcb_get_verbose_mode () != 0)
       printf
         ("%s: has the empty footprint attribute \"%s\" so won't be in the layout.\n",
          pcb_element_get_refdes (el),
-         el->description);
+         pcb_element_get_description (el));
     sch2pcb_set_n_empty (1 + sch2pcb_get_n_empty ());
     el->omit_PKG = TRUE;
-  } else if (!strcmp (el->description, "none")) {
+  } else if (!strcmp (pcb_element_get_description (el), "none")) {
     fprintf (stderr,
              "WARNING: %s has a footprint attribute \"%s\" so won't be in the layout.\n",
              pcb_element_get_refdes (el),
-             el->description);
+             pcb_element_get_description (el));
     sch2pcb_set_n_none (1 + sch2pcb_get_n_none ());
     el->omit_PKG = TRUE;
-  } else if (!strcmp (el->description, "unknown")) {
+  } else if (!strcmp (pcb_element_get_description (el), "unknown")) {
     fprintf (stderr,
              "WARNING: %s has no footprint attribute so won't be in the layout.\n",
              pcb_element_get_refdes (el));
