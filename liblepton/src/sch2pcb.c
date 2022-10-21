@@ -31,6 +31,22 @@
 #define SEP_STRING "--------\n"
 
 
+gchar*
+pcb_element_get_refdes (PcbElement *element)
+{
+  return element->refdes;
+}
+
+void
+pcb_element_set_refdes (PcbElement *element,
+                        gchar *val)
+{
+  g_free (element->refdes);
+  element->refdes = g_strdup (val);
+}
+
+
+
 static GList *pcb_element_list = NULL;
 
 GList*
