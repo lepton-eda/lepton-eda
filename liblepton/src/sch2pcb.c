@@ -537,7 +537,7 @@ simple_translate (PcbElement * el)
 {
 
   pcb_element_set_x (el, strdup ("0"));
-  el->y=strdup("0");
+  pcb_element_set_y (el, strdup ("0"));
 }
 
 
