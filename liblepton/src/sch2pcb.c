@@ -1094,7 +1094,9 @@ sch2pcb_prune_elements (gchar *pcb_file,
       skipping = TRUE;
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: deleted element %s (value=%s)\n",
-                pcb_element_get_refdes (el), el->description, el->value);
+                pcb_element_get_refdes (el),
+                el->description,
+                pcb_element_get_value (el));
       pcb_element_free (el);
       continue;
     }
@@ -1107,8 +1109,10 @@ sch2pcb_prune_elements (gchar *pcb_file,
                el_exists->changed_value, el->x, el->y, el->tail);
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: changed element %s value: %s -> %s\n",
-                pcb_element_get_refdes (el), el->description,
-                el->value, el_exists->changed_value);
+                pcb_element_get_refdes (el),
+                el->description,
+                pcb_element_get_value (el),
+                el_exists->changed_value);
     } else
       if (!strncmp (s, "PKG_", 4))
       {
