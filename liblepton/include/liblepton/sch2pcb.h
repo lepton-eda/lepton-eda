@@ -148,6 +148,13 @@ void
 pcb_element_set_hi_res_format (PcbElement *element,
                                gboolean val);
 
+gboolean
+pcb_element_get_quoted_flags (PcbElement *element);
+
+void
+pcb_element_set_quoted_flags (PcbElement *element,
+                              gboolean val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint

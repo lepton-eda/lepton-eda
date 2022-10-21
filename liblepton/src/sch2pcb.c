@@ -238,6 +238,20 @@ pcb_element_set_hi_res_format (PcbElement *element,
 
 
 
+gboolean
+pcb_element_get_quoted_flags (PcbElement *element)
+{
+  return element->quoted_flags;
+}
+
+void
+pcb_element_set_quoted_flags (PcbElement *element,
+                              gboolean val)
+{
+  element->quoted_flags = val;
+}
+
+
 static GList *pcb_element_list = NULL;
 
 GList*
