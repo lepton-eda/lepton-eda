@@ -76,6 +76,21 @@ pcb_element_set_description (PcbElement *element,
 }
 
 
+gchar*
+pcb_element_get_changed_description (PcbElement *element)
+{
+  return element->changed_description;
+}
+
+void
+pcb_element_set_changed_description (PcbElement *element,
+                                     gchar *val)
+{
+  g_free (element->changed_description);
+  element->changed_description = g_strdup (val);
+}
+
+
 
 static GList *pcb_element_list = NULL;
 
