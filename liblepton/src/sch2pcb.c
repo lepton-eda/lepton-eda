@@ -1106,7 +1106,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char, pcb_element_get_flags (el), pcb_element_get_description (el), pcb_element_get_refdes (el),
-               pcb_element_get_changed_value (el_exists), el->x, el->y, el->tail);
+               pcb_element_get_changed_value (el_exists), el->x, el->y, pcb_element_get_tail (el));
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: changed element %s value: %s -> %s\n",
                 pcb_element_get_refdes (el),
