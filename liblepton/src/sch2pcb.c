@@ -1063,7 +1063,7 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
         && pcb_element_get_changed_description (el_exists)) {
-      fmt = (gchar*) (el->quoted_flags ?
+      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                       "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
