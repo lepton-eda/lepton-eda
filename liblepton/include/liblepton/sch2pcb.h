@@ -71,6 +71,13 @@ void
 pcb_element_set_description (PcbElement *element,
                              gchar *val);
 
+gchar*
+pcb_element_get_changed_description (PcbElement *element);
+
+void
+pcb_element_set_changed_description (PcbElement *element,
+                                     gchar *val);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint
