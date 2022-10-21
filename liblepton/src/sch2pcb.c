@@ -1214,7 +1214,7 @@ sch2pcb_add_elements (gchar *pcb_file)
       pcb_element_free (el);
       continue;
     }
-    if (!el || el->omit_PKG) {
+    if (!el || pcb_element_get_omit_PKG (el)) {
       if (el) {
 
       } else
