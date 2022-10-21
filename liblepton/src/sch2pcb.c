@@ -492,7 +492,7 @@ pcb_element_free (PcbElement * el)
   g_free (el->changed_description);
   g_free (el->changed_value);
   g_free (pcb_element_get_refdes (el));
-  g_free (el->value);
+  g_free (pcb_element_get_value (el));
   g_free (el->x);
   g_free (el->y);
   g_free (el->tail);
