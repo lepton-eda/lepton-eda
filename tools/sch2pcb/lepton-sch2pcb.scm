@@ -119,6 +119,8 @@
 
 ;;; List of schematic names to process.
 (define %schematics '())
+;;; Variable that will be used to form output file names.
+(define %schematic-basename #f)
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
@@ -227,9 +229,9 @@
 (define (add-schematic schematic-name)
   (set! %schematics (append %schematics (list schematic-name)))
 
-  (when (and (null-pointer? (sch2pcb_get_sch_basename))
+  (when (and (not %schematic-basename)
              (string-suffix? ".sch" schematic-name))
-    (sch2pcb_set_sch_basename (string->pointer (basename schematic-name ".sch")))))
+    (set! %schematic-basename (basename schematic-name ".sch"))))
 
 
 (define (add-multiple-schematics *str)
@@ -270,7 +272,7 @@
                    "\tAdding directory to file element directory list: ~A\n"
                    elements-dir))
          (sch2pcb_element_directory_list_prepend (string->pointer elements-dir))))
-      ("output-name" (sch2pcb_set_sch_basename *value))
+      ("output-name" (set! %schematic-basename value))
       ("schematics" (add-multiple-schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
       ("m4-file"
@@ -494,7 +496,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '(#\o "output-name") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_sch_basename (string->pointer arg))
+               (set! %schematic-basename arg)
                seeds))
      (option '("m4-pcbdir") #t #f
              (lambda (opt name arg seeds)
@@ -716,23 +718,19 @@ Lepton EDA homepage: <~A>
                (filter-map
                 (lambda (x) (false-if-exception (canonicalize-path x)))
                 (cons "packages" (parse-path %pcb-lib-path))))
-              (let* ((*schematic-basename (sch2pcb_get_sch_basename))
-                     (schematic-basename (if (null-pointer? *schematic-basename)
-                                             ""
-                                             (pointer->string *schematic-basename)))
-                     (pins-filename (string-append schematic-basename ".cmd"))
-                     (net-filename (string-append schematic-basename ".net"))
-                     (pcb-filename (string-append schematic-basename ".pcb"))
-                     (bak-filename (next-backup-name (string-append schematic-basename
+              (let* ((pins-filename (string-append %schematic-basename ".cmd"))
+                     (net-filename (string-append %schematic-basename ".net"))
+                     (pcb-filename (string-append %schematic-basename ".pcb"))
+                     (bak-filename (next-backup-name (string-append %schematic-basename
                                                                     ".pcb.bak")))
                      (pcb-file-exists? (file-exists? pcb-filename))
                      (initial-pcb? (not pcb-file-exists?))
                      (pcb-new-filename (if pcb-file-exists?
-                                           (string-append schematic-basename ".new.pcb")
+                                           (string-append %schematic-basename ".new.pcb")
                                            pcb-filename)))
                 (when pcb-file-exists?
                   (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
-                (unless (run-netlister schematic-basename
+                (unless (run-netlister %schematic-basename
                                        pins-filename
                                        net-filename
                                        pcb-new-filename)

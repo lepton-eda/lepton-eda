@@ -363,22 +363,6 @@ sch2pcb_set_remove_unfound_elements (gboolean val)
 }
 
 
-static gchar *sch_basename;
-
-char*
-sch2pcb_get_sch_basename ()
-{
-  return sch_basename;
-}
-
-void
-sch2pcb_set_sch_basename (char *arg)
-{
-  g_free (sch_basename);
-  sch_basename = g_strdup (arg);
-}
-
-
 static gint verbose;
 
 gint

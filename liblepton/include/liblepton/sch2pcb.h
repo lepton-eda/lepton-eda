@@ -86,12 +86,6 @@ sch2pcb_get_remove_unfound_elements ();
 void
 sch2pcb_set_remove_unfound_elements (gboolean val);
 
-char*
-sch2pcb_get_sch_basename ();
-
-void
-sch2pcb_set_sch_basename (char *arg);
-
 GList*
 sch2pcb_get_schematics ();
 
