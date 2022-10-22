@@ -853,28 +853,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-void
-sch2pcb_make_pcb_element_list (gchar *pcb_file)
-{
-  FILE *f;
-  PcbElement *el;
-  gchar *s, buf[1024];
-
-  if ((f = fopen (pcb_file, "r")) == NULL)
-    return;
-  while ((fgets (buf, sizeof (buf), f)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if (!strncmp (s, "PKG_", 4)) {
-      sch2pcb_set_need_PKG_purge (TRUE);
-      continue;
-    }
-    if ((el = pcb_element_line_parse (s)) == NULL)
-      continue;
-    sch2pcb_pcb_element_list_append (el);
-  }
-  fclose (f);
-}
-
 static PcbElement *
 pcb_element_exists (PcbElement * el_test, gboolean record)
 {
