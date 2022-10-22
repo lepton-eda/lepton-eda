@@ -234,9 +234,14 @@
 
   (set! %schematics (append %schematics (list schematic-name)))
 
-  (when (and (not %schematic-basename)
-             (string-suffix-ci? ".sch" schematic-name))
-    (set! %schematic-basename (basename-ci schematic-name))))
+  (if (and (regular-file? schematic-name)
+           (file-readable? schematic-name))
+      (when (and (not %schematic-basename)
+                 (string-suffix-ci? ".sch" schematic-name))
+        (set! %schematic-basename (basename-ci schematic-name)))
+      (format (current-error-port)
+              "Could not add schematic: ~A\nFile is not regular or not readable.\n"
+              schematic-name)))
 
 
 (define (add-multiple-schematics *str)
