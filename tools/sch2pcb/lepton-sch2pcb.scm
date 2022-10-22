@@ -227,11 +227,16 @@
 
 
 (define (add-schematic schematic-name)
+  (define (basename-ci name)
+    ;; basename() is not case-insensitive, so just drop last 4
+    ;; chars (.sch).
+    (string-drop-right name 4))
+
   (set! %schematics (append %schematics (list schematic-name)))
 
   (when (and (not %schematic-basename)
-             (string-suffix? ".sch" schematic-name))
-    (set! %schematic-basename (basename schematic-name ".sch"))))
+             (string-suffix-ci? ".sch" schematic-name))
+    (set! %schematic-basename (basename-ci schematic-name))))
 
 
 (define (add-multiple-schematics *str)
