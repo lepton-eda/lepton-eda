@@ -162,6 +162,11 @@ void
 pcb_element_set_omit_PKG (PcbElement *element,
                           gboolean val);
 
+/* PcbElement functions */
+
+PcbElement*
+pcb_element_line_parse (gchar *line);
+
 /* lepton-sch2pcb's toplevel functions */
 
 gint
