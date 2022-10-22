@@ -312,6 +312,9 @@ GList*
 sch2pcb_parse_schematics (char *str);
 
 void
+sch2pcb_pcb_element_list_append (PcbElement *element);
+
+void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
 gint
