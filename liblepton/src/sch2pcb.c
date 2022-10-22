@@ -845,6 +845,14 @@ pcb_element_free (PcbElement * el)
   g_free (el);
 }
 
+
+void
+sch2pcb_pcb_element_list_append (PcbElement *element)
+{
+  pcb_element_list = g_list_append (pcb_element_list, element);
+}
+
+
 void
 sch2pcb_make_pcb_element_list (gchar *pcb_file)
 {
