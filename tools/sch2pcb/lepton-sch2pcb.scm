@@ -122,6 +122,23 @@
 ;;; Variable that will be used to form output file names.
 (define %schematic-basename #f)
 
+
+(define (make-pcb-element-list pcb-filename)
+  (when (and (regular-file? pcb-filename)
+             (file-readable? pcb-filename))
+    (with-input-from-file pcb-filename
+      (lambda ()
+        (let loop ((line (read-line)))
+          (unless (eof-object? line)
+            (let ((s (string-trim line char-set:whitespace)))
+              (if (string-prefix? "PKG_" s)
+                  (sch2pcb_set_need_PKG_purge TRUE)
+                  (let ((*element (pcb_element_line_parse (string->pointer s))))
+                    (unless (null-pointer? *element)
+                      (sch2pcb_pcb_element_list_append *element))))
+              (loop (read-line)))))))))
+
+
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
 ;;; invalid arg, so do some stat() hoops to decide if
@@ -739,7 +756,7 @@ Lepton EDA homepage: <~A>
                                            (string-append %schematic-basename ".new.pcb")
                                            pcb-filename)))
                 (when pcb-file-exists?
-                  (sch2pcb_make_pcb_element_list (string->pointer pcb-filename)))
+                  (make-pcb-element-list pcb-filename))
                 (unless (run-netlister %schematic-basename
                                        pins-filename
                                        net-filename
