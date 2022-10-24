@@ -107,7 +107,7 @@
               (error (G_ "The value of \"max-recent-files\" must be a positive integer"))
               num)))
       (lambda (key subr message args rest)
-        (log! 'warning (G_ "ERROR: ~?.\n") message args)
+        (log! 'warning (G_ "ERROR: ~?.") message args)
         ;; Default value.
         10)))
 
