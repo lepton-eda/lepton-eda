@@ -98,11 +98,14 @@
   (define RECENT_MENU_ITEM_NAME "Open Recen_t")
 
   (define (get-max-recent-files)
-    (catch 'config-error
+    (catch #t
       (lambda ()
-        (config-int (path-config-context (getcwd))
-                    "schematic.gui"
-                    "max-recent-files"))
+        (let ((num (config-int (path-config-context (getcwd))
+                               "schematic.gui"
+                               "max-recent-files")))
+          (if (<= num 0)
+              (error (G_ "The value of \"max-recent-files\" must be a positive integer"))
+              num)))
       (lambda (key subr message args rest)
         (log! 'warning (G_ "ERROR: ~?.\n") message args)
         ;; Default value.
