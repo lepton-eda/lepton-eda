@@ -1246,7 +1246,7 @@ sch2pcb_add_elements (gchar *pcb_file)
                                el->description, el->refdes, el->value)) {
         skipping = is_m4;
         is_m4 = FALSE;
-        ++n_added_ef;
+        sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
         if (sch2pcb_get_verbose_mode () != 0)
           printf ("%s: added new file element for footprint %s (value=%s)\n",
                   el->refdes, el->description, el->value);
