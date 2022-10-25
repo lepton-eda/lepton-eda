@@ -25,21 +25,10 @@
 
 #include <ctype.h>
 
+#include "sch2pcb.h"
 #include "liblepton_priv.h"
 
 #define SEP_STRING "--------\n"
-
-typedef struct
-{
-  gchar *refdes, *value, *description, *changed_description, *changed_value;
-  gchar *flags, *tail;
-  gchar *x, *y;
-  gchar *pkg_name_fix;
-  gchar res_char;
-
-  gboolean still_exists, new_format, hi_res_format, quoted_flags, omit_PKG;
-}
-PcbElement;
 
 
 static GList *pcb_element_list = NULL;
