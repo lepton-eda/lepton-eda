@@ -1108,8 +1108,11 @@ sch2pcb_prune_elements (gchar *pcb_file,
         printf ("%s: changed element %s value: %s -> %s\n",
                 el->refdes, el->description,
                 el->value, el_exists->changed_value);
-    } else if (!strncmp (s, "PKG_", 4))
-      ++n_PKG_removed_old;
+    } else
+      if (!strncmp (s, "PKG_", 4))
+      {
+        sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
+      }
     else
       fputs (buf, f_out);
     pcb_element_free (el);
