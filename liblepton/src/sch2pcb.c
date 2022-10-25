@@ -1269,7 +1269,7 @@ sch2pcb_add_elements (gchar *pcb_file)
     }
     if (is_m4) {
       fputs (buf, f_out);
-      ++n_added_m4;
+      sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
                 el->refdes, el->description, el->value);
