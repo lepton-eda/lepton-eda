@@ -165,6 +165,9 @@ pcb_element_set_omit_PKG (PcbElement *element,
 
 /* PcbElement functions */
 
+void
+pcb_element_free (PcbElement *el);
+
 PcbElement*
 pcb_element_line_parse (gchar *line);
 
