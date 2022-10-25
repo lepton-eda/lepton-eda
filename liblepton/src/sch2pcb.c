@@ -1046,7 +1046,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
     if (!el->still_exists) {
       if (sch2pcb_get_preserve ())
       {
-        ++n_preserved;
+        sch2pcb_set_n_preserved (1 + sch2pcb_get_n_preserved ());
         fprintf (stderr,
                  "Preserving PCB element not in the schematic:    %s (element   %s)\n",
                  el->refdes, el->description);
