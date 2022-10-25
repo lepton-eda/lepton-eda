@@ -207,6 +207,12 @@ void
 sch2pcb_set_fix_elements (gboolean val);
 
 gboolean
+sch2pcb_insert_element (FILE *f_out,
+                        gchar *element_file,
+                        gchar *footprint,
+                        gchar *refdes,
+                        gchar *value);
+gboolean
 sch2pcb_get_force_element_files ();
 
 void

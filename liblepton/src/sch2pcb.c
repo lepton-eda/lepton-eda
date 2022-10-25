@@ -901,9 +901,13 @@ simple_translate (PcbElement * el)
   el->y=strdup("0");
 }
 
-static gboolean
-insert_element (FILE * f_out, gchar * element_file,
-                gchar * footprint, gchar * refdes, gchar * value)
+
+gboolean
+sch2pcb_insert_element (FILE *f_out,
+                        gchar *element_file,
+                        gchar *footprint,
+                        gchar *refdes,
+                        gchar *value)
 {
   FILE *f_in;
   PcbElement *el;
@@ -1247,10 +1251,11 @@ sch2pcb_add_elements (gchar *pcb_file)
           && sch2pcb_get_force_element_files ())
         printf ("\tNo file element found.\n");
 
-      if (p && insert_element (f_out, p,
-                               pcb_element_get_description (el),
-                               pcb_element_get_refdes (el),
-                               pcb_element_get_value (el)))
+      if (p && sch2pcb_insert_element (f_out,
+                                       p,
+                                       pcb_element_get_description (el),
+                                       pcb_element_get_refdes (el),
+                                       pcb_element_get_value (el)))
       {
         skipping = is_m4;
         is_m4 = FALSE;
