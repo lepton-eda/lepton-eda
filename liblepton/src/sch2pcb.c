@@ -1005,8 +1005,8 @@ find_element (gchar * dir_path, gchar * element)
   return found;
 }
 
-gchar *
-search_element_directories (PcbElement * el)
+gchar*
+sch2pcb_search_element_directories (PcbElement *el)
 {
   GList *list;
   gchar *s, *elname = NULL, *dir_path, *path = NULL;
@@ -1245,7 +1245,7 @@ sch2pcb_add_elements (gchar *pcb_file)
            pcb_element_get_refdes (el),
            pcb_element_get_description (el));
       }
-      p = search_element_directories (el);
+      p = sch2pcb_search_element_directories (el);
       if (!p
           && (sch2pcb_get_verbose_mode () != 0)
           && is_m4
