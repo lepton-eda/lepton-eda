@@ -21,6 +21,31 @@
  *  \brief Structures and functions for lepton-sch2pcb.
  */
 
+#include <glib.h>
+
+typedef struct
+{
+  gchar *refdes;
+  gchar *value;
+  gchar *description;
+  gchar *changed_description;
+  gchar *changed_value;
+  gchar *flags;
+  gchar *tail;
+  gchar *x;
+  gchar *y;
+  gchar *pkg_name_fix;
+
+  gchar res_char;
+
+  gboolean still_exists;
+  gboolean new_format;
+  gboolean hi_res_format;
+  gboolean quoted_flags;
+  gboolean omit_PKG;
+}
+PcbElement;
+
 G_BEGIN_DECLS
 
 gint
