@@ -1055,8 +1055,12 @@ sch2pcb_prune_elements (gchar *pcb_file,
       {
         sch2pcb_set_n_deleted (1 + sch2pcb_get_n_deleted ());
       }
-    } else if (el->changed_value)
-      ++n_changed_value;
+    }
+    else
+      if (el->changed_value)
+      {
+        sch2pcb_set_n_changed_value (1 + sch2pcb_get_n_changed_value ());
+      }
   }
   if (!pcb_element_list
       || (sch2pcb_get_n_deleted () == 0
