@@ -22,6 +22,7 @@
  */
 
 #include <glib.h>
+#include <stdio.h>
 
 typedef struct
 {
@@ -166,6 +167,10 @@ pcb_element_set_omit_PKG (PcbElement *element,
 
 PcbElement*
 pcb_element_line_parse (gchar *line);
+
+PcbElement*
+pcb_element_pkg_to_element (FILE *f,
+                            gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
