@@ -853,8 +853,9 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-static PcbElement *
-pcb_element_exists (PcbElement * el_test, gboolean record)
+PcbElement*
+pcb_element_exists (PcbElement *el_test,
+                    gboolean record)
 {
   GList *list;
   PcbElement *el;
