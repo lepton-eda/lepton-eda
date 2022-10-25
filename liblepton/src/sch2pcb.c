@@ -1261,7 +1261,7 @@ sch2pcb_add_elements (gchar *pcb_file)
                    "So device %s will not be in the layout.\n", el->refdes);
           ++n_PKG_removed_new;
         } else {
-          ++n_not_found;
+          sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
           fputs (buf, f_out);   /* Copy PKG_ line */
         }
       }
