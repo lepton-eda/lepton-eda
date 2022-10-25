@@ -827,7 +827,7 @@ pcb_element_line_parse (gchar * line)
   return el;
 }
 
-static void
+void
 pcb_element_free (PcbElement * el)
 {
   if (!el)
