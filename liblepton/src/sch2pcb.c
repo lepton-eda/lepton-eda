@@ -1029,7 +1029,9 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
     if (el->changed_description)
-      ++n_fixed;
+    {
+      sch2pcb_set_n_fixed (1 + sch2pcb_get_n_fixed ());
+    }
   }
   if (!pcb_element_list
       || sch2pcb_get_n_fixed () == 0)
