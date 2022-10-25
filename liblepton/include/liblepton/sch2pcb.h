@@ -169,8 +169,7 @@ PcbElement*
 pcb_element_line_parse (gchar *line);
 
 PcbElement*
-pcb_element_pkg_to_element (FILE *f,
-                            gchar *pkg_line);
+pcb_element_pkg_to_element (gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
