@@ -1007,7 +1007,7 @@ search_element_directories (PcbElement * el)
   gchar *s, *elname = NULL, *dir_path, *path = NULL;
   gint n1, n2;
 
-  /* See comment before pkg_to_element() */
+  /* See comment before pcb_element_pkg_to_element() */
   if (el->pkg_name_fix) {
     if (strchr (el->description, '-')) {
       n1 = strlen (el->description);
@@ -1079,8 +1079,9 @@ search_element_directories (PcbElement * el)
  *
  *      100-Pin-jack -> 100 Pin jack
  */
-static PcbElement *
-pkg_to_element (FILE * f, gchar * pkg_line)
+PcbElement*
+pcb_element_pkg_to_element (FILE *f,
+                            gchar *pkg_line)
 {
   PcbElement *el;
   gchar **args, *s;
@@ -1208,7 +1209,7 @@ sch2pcb_add_elements (gchar *pcb_file)
     if ((el = pcb_element_line_parse (s)) != NULL)
       is_m4 = TRUE;
     else
-      el = pkg_to_element (f_out, s);
+      el = pcb_element_pkg_to_element (f_out, s);
     if (el && pcb_element_exists (el, TRUE)) {
       skipping = is_m4;
       pcb_element_free (el);
