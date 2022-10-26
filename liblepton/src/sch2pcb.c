@@ -1215,6 +1215,14 @@ sch2pcb_close_file (FILE *file)
 }
 
 
+void
+sch2pcb_buffer_to_file (char *buffer,
+                        FILE *file)
+{
+  fputs (buffer, file);
+}
+
+
 /* Process the newly created pcb file which is the output from
  *     gnetlist -g gsch2pcb ...
  *

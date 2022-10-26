@@ -338,6 +338,9 @@ sch2pcb_open_file_to_write (char *filename);
 void
 sch2pcb_close_file (FILE *file);
 
+void
+sch2pcb_buffer_to_file (char *buffer,
+                        FILE *file);
 GList*
 sch2pcb_parse_schematics (char *str);
 
