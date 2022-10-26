@@ -1240,8 +1240,9 @@ sch2pcb_add_elements (FILE *f_in,
         ++paren_level;
       else if (*s == ')' && --paren_level <= 0)
         skipping = FALSE;
-      continue;
     }
+    else
+    {
     is_m4 = FALSE;
     if ((el = pcb_element_line_parse (s)) != NULL)
       is_m4 = TRUE;
@@ -1333,6 +1334,7 @@ sch2pcb_add_elements (FILE *f_in,
     pcb_element_free (el);
     if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
+    }
     }
     }
   }
