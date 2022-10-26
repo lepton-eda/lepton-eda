@@ -1190,7 +1190,7 @@ sch2pcb_add_elements (gchar *pcb_file,
   FILE *f_in, *f_out;
   PcbElement *el = NULL;
   gchar *p, *s, buf[1024];
-  gint total, paren_level = 0;
+  gint paren_level = 0;
   gboolean is_m4, skipping = FALSE;
 
   if ((f_in = fopen (pcb_file, "r")) == NULL)
@@ -1302,9 +1302,7 @@ sch2pcb_add_elements (gchar *pcb_file,
   fclose (f_in);
   fclose (f_out);
 
-  total = sch2pcb_get_n_added_ef () + sch2pcb_get_n_added_m4 () + sch2pcb_get_n_not_found ();
-
-  return total;
+  return 0;
 }
 
 void

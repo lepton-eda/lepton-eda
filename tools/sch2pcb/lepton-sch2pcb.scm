@@ -142,9 +142,11 @@
 (define (add-elements pcb-filename)
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
-  (let ((total
-         (sch2pcb_add_elements (string->pointer pcb-filename)
-                               (string->pointer tmp-filename))))
+  (sch2pcb_add_elements (string->pointer pcb-filename)
+                        (string->pointer tmp-filename))
+  (let ((total (+ (sch2pcb_get_n_added_ef)
+                  (sch2pcb_get_n_added_m4)
+                  (sch2pcb_get_n_not_found))))
     (if (zero? total)
         (system* "rm" tmp-filename)
         (system* "mv" tmp-filename pcb-filename))
