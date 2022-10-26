@@ -1250,8 +1250,9 @@ sch2pcb_add_elements (FILE *f_in,
     if (el && pcb_element_exists (el, TRUE)) {
       skipping = is_m4;
       pcb_element_free (el);
-      continue;
     }
+    else
+    {
     if (!el || pcb_element_get_omit_PKG (el)) {
       if (el) {
 
@@ -1332,6 +1333,7 @@ sch2pcb_add_elements (FILE *f_in,
     pcb_element_free (el);
     if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
+    }
     }
   }
 }
