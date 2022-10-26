@@ -1243,99 +1243,98 @@ sch2pcb_add_elements (FILE *f_in,
     }
     else
     {
-    is_m4 = FALSE;
-    if ((el = pcb_element_line_parse (s)) != NULL)
-      is_m4 = TRUE;
-    else
-      el = pcb_element_pkg_to_element (s);
-    if (el && pcb_element_exists (el, TRUE)) {
-      skipping = is_m4;
-      pcb_element_free (el);
-    }
-    else
-    {
-    if (!el || pcb_element_get_omit_PKG (el)) {
-      if (el) {
-
-      } else
-        fputs (buf, f_out);
-    }
-    else
-    {
-    if (!is_m4
-        || (is_m4
-            && sch2pcb_get_force_element_files ()))
-    {
-      if ((sch2pcb_get_verbose_mode () != 0)
-          && !is_m4)
-        printf ("%s: need new file element for footprint  %s (value=%s)\n",
-                pcb_element_get_refdes (el),
-                pcb_element_get_description (el),
-                pcb_element_get_value (el));
-      if ((sch2pcb_get_verbose_mode () != 0)
-          && is_m4
-          && sch2pcb_get_force_element_files ())
-      {
-        printf
-          ("%s: have m4 element %s, but trying to replace with a file element.\n",
-           pcb_element_get_refdes (el),
-           pcb_element_get_description (el));
-      }
-      p = sch2pcb_search_element_directories (el);
-      if (!p
-          && (sch2pcb_get_verbose_mode () != 0)
-          && is_m4
-          && sch2pcb_get_force_element_files ())
-        printf ("\tNo file element found.\n");
-
-      if (p && sch2pcb_insert_element (f_out,
-                                       p,
-                                       pcb_element_get_description (el),
-                                       pcb_element_get_refdes (el),
-                                       pcb_element_get_value (el)))
-      {
+      is_m4 = FALSE;
+      if ((el = pcb_element_line_parse (s)) != NULL)
+        is_m4 = TRUE;
+      else
+        el = pcb_element_pkg_to_element (s);
+      if (el && pcb_element_exists (el, TRUE)) {
         skipping = is_m4;
-        is_m4 = FALSE;
-        sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
-        if (sch2pcb_get_verbose_mode () != 0)
-          printf ("%s: added new file element for footprint %s (value=%s)\n",
-                  pcb_element_get_refdes (el),
-                  pcb_element_get_description (el),
-                  pcb_element_get_value (el));
-      } else if (!is_m4) {
-        fprintf (stderr,
-                 "%s: can't find PCB element for footprint %s (value=%s)\n",
-                 pcb_element_get_refdes (el),
-                 pcb_element_get_description (el),
-                 pcb_element_get_value (el));
-        if (sch2pcb_get_remove_unfound_elements ()
-            && !sch2pcb_get_fix_elements())
+        pcb_element_free (el);
+      }
+      else
+      {
+        if (!el || pcb_element_get_omit_PKG (el)) {
+          if (el) {
+
+          } else
+            fputs (buf, f_out);
+        }
+        else
         {
-          fprintf (stderr,
-                   "So device %s will not be in the layout.\n",
-                   pcb_element_get_refdes (el));
-          sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
-        } else {
-          sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
-          fputs (buf, f_out);   /* Copy PKG_ line */
+          if (!is_m4
+              || (is_m4
+                  && sch2pcb_get_force_element_files ()))
+          {
+            if ((sch2pcb_get_verbose_mode () != 0)
+                && !is_m4)
+              printf ("%s: need new file element for footprint  %s (value=%s)\n",
+                      pcb_element_get_refdes (el),
+                      pcb_element_get_description (el),
+                      pcb_element_get_value (el));
+            if ((sch2pcb_get_verbose_mode () != 0)
+                && is_m4
+                && sch2pcb_get_force_element_files ())
+            {
+              printf ("%s: have m4 element %s, but trying to replace with a file element.\n",
+                      pcb_element_get_refdes (el),
+                      pcb_element_get_description (el));
+            }
+            p = sch2pcb_search_element_directories (el);
+            if (!p
+                && (sch2pcb_get_verbose_mode () != 0)
+                && is_m4
+                && sch2pcb_get_force_element_files ())
+              printf ("\tNo file element found.\n");
+
+            if (p && sch2pcb_insert_element (f_out,
+                                             p,
+                                             pcb_element_get_description (el),
+                                             pcb_element_get_refdes (el),
+                                             pcb_element_get_value (el)))
+            {
+              skipping = is_m4;
+              is_m4 = FALSE;
+              sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
+              if (sch2pcb_get_verbose_mode () != 0)
+                printf ("%s: added new file element for footprint %s (value=%s)\n",
+                        pcb_element_get_refdes (el),
+                        pcb_element_get_description (el),
+                        pcb_element_get_value (el));
+            } else if (!is_m4) {
+              fprintf (stderr,
+                       "%s: can't find PCB element for footprint %s (value=%s)\n",
+                       pcb_element_get_refdes (el),
+                       pcb_element_get_description (el),
+                       pcb_element_get_value (el));
+              if (sch2pcb_get_remove_unfound_elements ()
+                  && !sch2pcb_get_fix_elements ())
+              {
+                fprintf (stderr,
+                         "So device %s will not be in the layout.\n",
+                         pcb_element_get_refdes (el));
+                sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
+              } else {
+                sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
+                fputs (buf, f_out);   /* Copy PKG_ line */
+              }
+            }
+            g_free (p);
+          }
+          if (is_m4) {
+            fputs (buf, f_out);
+            sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
+            if (sch2pcb_get_verbose_mode () != 0)
+              printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
+                      pcb_element_get_refdes (el),
+                      pcb_element_get_description (el),
+                      pcb_element_get_value (el));
+          }
+          pcb_element_free (el);
+          if (sch2pcb_get_verbose_mode () != 0)
+            printf ("----\n");
         }
       }
-      g_free (p);
-    }
-    if (is_m4) {
-      fputs (buf, f_out);
-      sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
-      if (sch2pcb_get_verbose_mode () != 0)
-        printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
-                pcb_element_get_refdes (el),
-                pcb_element_get_description (el),
-                pcb_element_get_value (el));
-    }
-    pcb_element_free (el);
-    if (sch2pcb_get_verbose_mode () != 0)
-      printf ("----\n");
-    }
-    }
     }
   }
 }
