@@ -1234,11 +1234,13 @@ sch2pcb_add_elements (gchar *pcb_file,
   gint paren_level = 0;
   gboolean is_m4, skipping = FALSE;
 
-  if ((f_in = fopen (pcb_file, "r")) == NULL)
+  if ((f_in = sch2pcb_open_file_to_read (pcb_file)) == NULL)
+  {
     return 0;
+  }
 
-  if ((f_out = fopen (tmp_file, "wb")) == NULL) {
-    fclose (f_in);
+  if ((f_out = sch2pcb_open_file_to_write (tmp_file)) == NULL)
+  {
     return 0;
   }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
@@ -1340,8 +1342,8 @@ sch2pcb_add_elements (gchar *pcb_file,
     if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
   }
-  fclose (f_in);
-  fclose (f_out);
+  sch2pcb_close_file (f_in);
+  sch2pcb_close_file (f_out);
 
   return 0;
 }
