@@ -1257,8 +1257,9 @@ sch2pcb_add_elements (FILE *f_in,
 
       } else
         fputs (buf, f_out);
-      continue;
     }
+    else
+    {
     if (!is_m4
         || (is_m4
             && sch2pcb_get_force_element_files ()))
@@ -1331,6 +1332,7 @@ sch2pcb_add_elements (FILE *f_in,
     pcb_element_free (el);
     if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
+    }
   }
 }
 
