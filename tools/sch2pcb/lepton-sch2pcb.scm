@@ -162,7 +162,11 @@
   (if (or (null-pointer? *pcb-file)
           (null-pointer? *tmp-file))
       0
-      (process-files)))
+      (catch #t
+        process-files
+        (lambda (key subr message args rest)
+          (format (current-error-port) (G_ "ERROR: ~?.") message args)
+          0))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
