@@ -139,6 +139,10 @@
               (loop (read-line)))))))))
 
 
+(define (add-elements pcb-filename)
+  (sch2pcb_add_elements (string->pointer pcb-filename)))
+
+
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
 ;;; invalid arg, so do some stat() hoops to decide if
@@ -763,7 +767,7 @@ Lepton EDA homepage: <~A>
                                        pcb-new-filename)
                   (format (current-error-port) (G_ "Failed to run netlister\n"))
                   (exit 1))
-                (when (zero? (sch2pcb_add_elements (string->pointer pcb-new-filename)))
+                (when (zero? (add-elements pcb-new-filename))
                   (delete-file* pcb-new-filename)
                   (when initial-pcb?
                     (format #t "No elements found, so nothing to do.\n")
