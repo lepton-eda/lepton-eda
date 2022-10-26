@@ -1265,8 +1265,11 @@ sch2pcb_add_elements (FILE *f_in,
         if (!el || pcb_element_get_omit_PKG (el)) {
           if (el) {
 
-          } else
-            fputs (buf, f_out);
+          }
+          else
+          {
+            sch2pcb_buffer_to_file (buf, f_out);
+          }
         }
         else
         {
@@ -1324,13 +1327,14 @@ sch2pcb_add_elements (FILE *f_in,
                 sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
               } else {
                 sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
-                fputs (buf, f_out);   /* Copy PKG_ line */
+                sch2pcb_buffer_to_file (buf, f_out);   /* Copy PKG_ line */
               }
             }
             g_free (p);
           }
-          if (is_m4) {
-            fputs (buf, f_out);
+          if (is_m4)
+          {
+            sch2pcb_buffer_to_file (buf, f_out);
             sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
             if (sch2pcb_get_verbose_mode () != 0)
               printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
