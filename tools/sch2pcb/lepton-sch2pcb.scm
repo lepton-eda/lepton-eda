@@ -140,7 +140,10 @@
 
 
 (define (add-elements pcb-filename)
-  (sch2pcb_add_elements (string->pointer pcb-filename)))
+  (define tmp-filename (string-append pcb-filename ".tmp"))
+
+  (sch2pcb_add_elements (string->pointer pcb-filename)
+                        (string->pointer tmp-filename)))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.

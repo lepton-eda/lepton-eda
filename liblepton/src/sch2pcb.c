@@ -1184,20 +1184,20 @@ pcb_element_pkg_to_element (gchar *pkg_line)
  * pcb file will only have new elements.
  */
 gint
-sch2pcb_add_elements (gchar *pcb_file)
+sch2pcb_add_elements (gchar *pcb_file,
+                      gchar *tmp_file)
 {
   FILE *f_in, *f_out;
   PcbElement *el = NULL;
-  gchar *p, *tmp_file, *s, buf[1024];
+  gchar *p, *s, buf[1024];
   gint total, paren_level = 0;
   gboolean is_m4, skipping = FALSE;
 
   if ((f_in = fopen (pcb_file, "r")) == NULL)
     return 0;
-  tmp_file = g_strconcat (pcb_file, ".tmp", NULL);
+
   if ((f_out = fopen (tmp_file, "wb")) == NULL) {
     fclose (f_in);
-    g_free (tmp_file);
     return 0;
   }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
@@ -1307,7 +1307,6 @@ sch2pcb_add_elements (gchar *pcb_file)
     build_and_run_command ("rm %s", tmp_file);
   else
     build_and_run_command ("mv %s %s", tmp_file, pcb_file);
-  g_free (tmp_file);
   return total;
 }
 

@@ -62,7 +62,7 @@
 
 (define-lff pcb_element_line_parse '* '(*))
 
-(define-lff sch2pcb_add_elements int '(*))
+(define-lff sch2pcb_add_elements int '(* *))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
