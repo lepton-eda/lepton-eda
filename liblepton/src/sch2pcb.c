@@ -1303,10 +1303,7 @@ sch2pcb_add_elements (gchar *pcb_file,
   fclose (f_out);
 
   total = sch2pcb_get_n_added_ef () + sch2pcb_get_n_added_m4 () + sch2pcb_get_n_not_found ();
-  if (total == 0)
-    build_and_run_command ("rm %s", tmp_file);
-  else
-    build_and_run_command ("mv %s %s", tmp_file, pcb_file);
+
   return total;
 }
 
