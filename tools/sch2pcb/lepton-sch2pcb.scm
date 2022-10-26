@@ -145,24 +145,24 @@
   (define *pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename)))
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (process-files)
+    (sch2pcb_add_elements *pcb-file
+                          *tmp-file)
+    (sch2pcb_close_file *pcb-file)
+    (sch2pcb_close_file *tmp-file)
+
+    (let ((total (+ (sch2pcb_get_n_added_ef)
+                    (sch2pcb_get_n_added_m4)
+                    (sch2pcb_get_n_not_found))))
+      (if (zero? total)
+          (system* "rm" tmp-filename)
+          (system* "mv" tmp-filename pcb-filename))
+      total))
+
   (if (or (null-pointer? *pcb-file)
           (null-pointer? *tmp-file))
       0
-
-      (begin
-        (sch2pcb_add_elements *pcb-file
-                              *tmp-file)
-
-        (sch2pcb_close_file *pcb-file)
-        (sch2pcb_close_file *tmp-file)
-
-        (let ((total (+ (sch2pcb_get_n_added_ef)
-                        (sch2pcb_get_n_added_m4)
-                        (sch2pcb_get_n_not_found))))
-          (if (zero? total)
-              (system* "rm" tmp-filename)
-              (system* "mv" tmp-filename pcb-filename))
-          total))))
+      (process-files)))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
