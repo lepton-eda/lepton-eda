@@ -1174,6 +1174,47 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   return el;
 }
 
+
+FILE*
+sch2pcb_open_file_to_read (char *filename)
+{
+  FILE *f_in;
+
+  if ((f_in = fopen (filename, "r")) == NULL)
+  {
+    return NULL;
+  }
+  else
+  {
+    return f_in;
+  }
+}
+
+
+FILE*
+sch2pcb_open_file_to_write (char *filename)
+{
+  FILE *f_out;
+
+  if ((f_out = fopen (filename, "wb")) == NULL)
+  {
+    fclose (f_out);
+    return NULL;
+  }
+  else
+  {
+    return f_out;
+  }
+}
+
+
+void
+sch2pcb_close_file (FILE *file)
+{
+  fclose (file);
+}
+
+
 /* Process the newly created pcb file which is the output from
  *     gnetlist -g gsch2pcb ...
  *
