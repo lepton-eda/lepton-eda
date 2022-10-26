@@ -53,7 +53,10 @@
             sch2pcb_prune_elements
             sch2pcb_set_remove_unfound_elements
             sch2pcb_update_element_descriptions
-            sch2pcb_get_verbose_mode))
+            sch2pcb_get_verbose_mode
+            sch2pcb_open_file_to_read
+            sch2pcb_open_file_to_write
+            sch2pcb_close_file))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -62,7 +65,7 @@
 
 (define-lff pcb_element_line_parse '* '(*))
 
-(define-lff sch2pcb_add_elements int '(* *))
+(define-lff sch2pcb_add_elements void '(* *))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
@@ -93,3 +96,6 @@
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
+(define-lff sch2pcb_open_file_to_read '* '(*))
+(define-lff sch2pcb_open_file_to_write '* '(*))
+(define-lff sch2pcb_close_file void '(*))

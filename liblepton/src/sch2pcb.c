@@ -1224,25 +1224,15 @@ sch2pcb_close_file (FILE *file)
  * strip out any elements if they are already present so that the new
  * pcb file will only have new elements.
  */
-gint
-sch2pcb_add_elements (gchar *pcb_file,
-                      gchar *tmp_file)
+void
+sch2pcb_add_elements (FILE *f_in,
+                      FILE *f_out)
 {
-  FILE *f_in, *f_out;
   PcbElement *el = NULL;
   gchar *p, *s, buf[1024];
   gint paren_level = 0;
   gboolean is_m4, skipping = FALSE;
 
-  if ((f_in = sch2pcb_open_file_to_read (pcb_file)) == NULL)
-  {
-    return 0;
-  }
-
-  if ((f_out = sch2pcb_open_file_to_write (tmp_file)) == NULL)
-  {
-    return 0;
-  }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if (skipping) {
@@ -1342,10 +1332,6 @@ sch2pcb_add_elements (gchar *pcb_file,
     if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
   }
-  sch2pcb_close_file (f_in);
-  sch2pcb_close_file (f_out);
-
-  return 0;
 }
 
 void

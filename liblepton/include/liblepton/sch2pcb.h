@@ -179,10 +179,9 @@ pcb_element_pkg_to_element (gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
-gint
-sch2pcb_add_elements (gchar *pcb_file,
-                      gchar *tmp_file);
-
+void
+sch2pcb_add_elements (FILE *f_in,
+                      FILE *f_out);
 GList*
 sch2pcb_get_element_directory_list ();
 
