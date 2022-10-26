@@ -123,6 +123,11 @@
 (define %schematic-basename #f)
 
 
+;;; Whether using file elements should be forced over m4 PCB
+;;; elements for new footprints even though m4 elements are
+;;; searched for first and may have been found.
+(define %force-file-elements? #f)
+
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
              (file-readable? pcb-filename))
@@ -153,7 +158,7 @@
 
   (define (verbose-file-element-report *element is-m4-element?)
     (if is-m4-element?
-        (when (true? (sch2pcb_get_force_element_files))
+        (when %force-file-elements?
           (verbose-format "~A: have m4 element ~S, but trying to replace with a file element.\n"
                           (element-refdes *element)
                           (element-description *element)))
@@ -166,7 +171,7 @@
   (define (verbose-report-no-file-element-found *path is_m4_element)
     (when (and (null-pointer? *path)
                (true? is_m4_element)
-               (true? (sch2pcb_get_force_element_files)))
+               %force-file-elements?)
       (verbose-format "\tNo file element found.\n")))
 
   (define (verbose-increment-added-file-element *element)
@@ -252,7 +257,7 @@
     (let ((result
            (if (or (false? is_m4_element)
                    (and (true? is_m4_element)
-                        (true? (sch2pcb_get_force_element_files))))
+                        %force-file-elements?))
                (process-file-element *mline
                                      *tmp-file
                                      *element
@@ -543,7 +548,7 @@
       ("keep-unfound" (sch2pcb_set_remove_unfound_elements FALSE))
       ("quiet" (set! %quiet-mode #t))
       ("preserve" (sch2pcb_set_preserve TRUE))
-      ("use-files" (sch2pcb_set_force_element_files TRUE))
+      ("use-files" (set! %force-file-elements? #t))
       ("skip-m4" (set! %use-m4 #f))
       ("elements-dir"
        (let ((elements-dir (expand-env-variables value)))
@@ -759,7 +764,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '(#\f "use-files") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_force_element_files TRUE)
+               (set! %force-file-elements? #t)
                seeds))
      (option '(#\s "skip-m4") #f #f
              (lambda (opt name arg seeds)

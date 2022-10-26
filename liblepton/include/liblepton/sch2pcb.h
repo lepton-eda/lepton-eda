@@ -215,11 +215,6 @@ sch2pcb_insert_element (FILE *f_out,
                         gchar *footprint,
                         gchar *refdes,
                         gchar *value);
-gboolean
-sch2pcb_get_force_element_files ();
-
-void
-sch2pcb_set_force_element_files (gboolean val);
 
 void
 sch2pcb_increment_verbose_mode ();

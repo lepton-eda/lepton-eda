@@ -340,21 +340,6 @@ sch2pcb_set_fix_elements (gboolean val)
 }
 
 
-static gboolean force_element_files;
-
-gboolean
-sch2pcb_get_force_element_files ()
-{
-  return force_element_files;
-}
-
-void
-sch2pcb_set_force_element_files (gboolean val)
-{
-  force_element_files = val;
-}
-
-
 static int n_added_ef;
 
 int
