@@ -854,14 +854,15 @@ sch2pcb_insert_element (FILE *f_out,
 }
 
 
-gchar *
-find_element (gchar * dir_path, gchar * element)
+gchar*
+sch2pcb_find_element (gchar *dir_path,
+                      gchar *element)
 {
   GDir *dir;
   gchar *path, *name, *s, *found = NULL;
 
   if ((dir = g_dir_open (dir_path, 0, NULL)) == NULL) {
-    s = g_strdup_printf ("find_element can't open dir \"%s\"", dir_path);
+    s = g_strdup_printf ("sch2pcb_find_element can't open dir \"%s\"", dir_path);
     perror (s);
     g_free (s);
     return NULL;
@@ -874,7 +875,7 @@ find_element (gchar * dir_path, gchar * element)
 
     /* if we got a directory name, then recurse down into it */
     if (g_file_test (path, G_FILE_TEST_IS_DIR))
-      found = find_element (path, element);
+      found = sch2pcb_find_element (path, element);
 
     /* otherwise assume it is a file and see if it is the one we want */
     else {
@@ -944,7 +945,7 @@ sch2pcb_search_element_directories (PcbElement *el)
     dir_path = (gchar *) list->data;
     if (verbose > 1)
       printf ("\tLooking in directory: \"%s\"\n", dir_path);
-    path = find_element (dir_path, elname);
+    path = sch2pcb_find_element (dir_path, elname);
     if (path) {
       if (verbose)
         printf ("\tFound: %s\n", path);

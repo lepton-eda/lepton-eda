@@ -203,6 +203,9 @@ sch2pcb_expand_dir (gchar *dir);
 void
 sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 
+gchar*
+sch2pcb_find_element (gchar *dir_path,
+                      gchar *element);
 gboolean
 sch2pcb_insert_element (FILE *f_out,
                         gchar *element_file,
