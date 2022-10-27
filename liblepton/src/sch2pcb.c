@@ -276,36 +276,6 @@ sch2pcb_get_pcb_element_list ()
 }
 
 
-static GList *element_directory_list;
-
-GList*
-sch2pcb_get_element_directory_list ()
-{
-  return element_directory_list;
-}
-
-void
-sch2pcb_set_element_directory_list (GList *list)
-{
-  element_directory_list = list;
-}
-
-
-void
-sch2pcb_element_directory_list_append (char *dir)
-{
-  sch2pcb_set_element_directory_list (
-    g_list_append (sch2pcb_get_element_directory_list (), dir));
-}
-
-void
-sch2pcb_element_directory_list_prepend (char *dir)
-{
-  sch2pcb_set_element_directory_list (
-    g_list_prepend (sch2pcb_get_element_directory_list (), dir));
-}
-
-
 static gboolean bak_done;
 
 

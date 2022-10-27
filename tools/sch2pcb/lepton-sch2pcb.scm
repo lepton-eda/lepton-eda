@@ -179,6 +179,24 @@
               (loop (read-line)))))))))
 
 
+(define %element-directory-list '())
+
+
+(define* (add-element-directory path #:optional prepend)
+  (when (and (file-exists? path)
+             (directory? path))
+    (set! %element-directory-list
+          (if prepend
+              (cons path %element-directory-list)
+              (append %element-directory-list (list path))))))
+
+(define (append-element-directory dir)
+  (add-element-directory dir))
+
+(define (prepend-element-directory dir)
+  (add-element-directory dir 'prepend))
+
+
 (define (search-element-directories element-directories *element)
   (define *package-name-fix (pcb_element_get_pkg_name_fix *element))
   (define package-name-fix (and (not (null-pointer? *package-name-fix))
@@ -263,10 +281,6 @@
 ;;; existing pcb file, strip out any elements if they are already
 ;;; present so that the new pcb file will only have new elements.
 (define (add-elements pcb-filename)
-  (define element-directories
-    (glist->list (sch2pcb_get_element_directory_list)
-                 pointer->string))
-
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
@@ -339,7 +353,7 @@
                                 *element
                                 m4-element?
                                 skip-next?)
-    (let ((path (search-element-directories element-directories *element)))
+    (let ((path (search-element-directories %element-directory-list *element)))
       (verbose-file-element-report *element m4-element?)
       (verbose-report-no-file-element-found path m4-element?)
 
@@ -665,7 +679,7 @@
            (format #t
                    "\tAdding directory to file element directory list: ~A\n"
                    elements-dir))
-         (sch2pcb_element_directory_list_prepend (string->pointer elements-dir))))
+         (prepend-element-directory elements-dir)))
       ("output-name" (set! %schematic-basename value))
       ("schematics" (add-multiple-schematics *value))
       ("m4-pcbdir" (set! %m4-pcb-dir value))
@@ -886,7 +900,7 @@ Lepton EDA homepage: <~A>
                    (format #t
                            "\tAdding directory to file element directory list: ~S\n"
                            elements-dir))
-                 (sch2pcb_element_directory_list_prepend (string->pointer elements-dir)))
+                 (prepend-element-directory elements-dir))
                seeds))
      (option '(#\o "output-name") #t #f
              (lambda (opt name arg seeds)
@@ -1107,8 +1121,7 @@ Lepton EDA homepage: <~A>
               (when (not (zero? (sch2pcb_get_verbose_mode)))
                 (format #t "Processing PCBLIBPATH=~S\n" %pcb-lib-path))
               (for-each
-               (lambda (x)
-                 (sch2pcb_element_directory_list_append (string->pointer x)))
+               (lambda (x) (append-element-directory x))
                (filter-map
                 (lambda (x) (false-if-exception (canonicalize-path x)))
                 (cons "packages" (parse-path %pcb-lib-path))))
