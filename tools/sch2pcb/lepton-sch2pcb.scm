@@ -130,6 +130,8 @@
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
+;;; The number of m4 elements added.
+(define %added-m4-element-count 0)
 
 
 (define (make-pcb-element-list pcb-filename)
@@ -187,7 +189,7 @@
 
   (define (m4-element->file *element *mline *tmp-file)
     (sch2pcb_buffer_to_file *mline *tmp-file)
-    (sch2pcb_set_n_added_m4 (1+ (sch2pcb_get_n_added_m4)))
+    (set! %added-m4-element-count (1+ %added-m4-element-count))
     (verbose-format "~A: added new m4 element for footprint ~S (value=~A)\n"
                     (element-refdes *element)
                     (element-description *element)
@@ -385,7 +387,7 @@
     (sch2pcb_close_file *tmp-file)
 
     (let ((total (+ %added-file-element-count
-                    (sch2pcb_get_n_added_m4)
+                    %added-m4-element-count
                     (sch2pcb_get_n_not_found))))
       (if (zero? total)
           (system* "rm" tmp-filename)
@@ -882,7 +884,7 @@ Lepton EDA homepage: <~A>
 
   (define non-zero? (negate zero?))
   (define pcb-file-created? (not (and (zero? %added-file-element-count)
-                                      (zero? (sch2pcb_get_n_added_m4))
+                                      (zero? %added-m4-element-count)
                                       (zero? (sch2pcb_get_n_not_found)))))
 
   ;; Report work done during processing.
@@ -903,12 +905,12 @@ Lepton EDA homepage: <~A>
             pcb-filename))
 
   (if (zero? (+ %added-file-element-count
-                (sch2pcb_get_n_added_m4)))
+                %added-m4-element-count))
       (when (zero? (sch2pcb_get_n_not_found))
         (format #t "No elements to add so not creating ~A\n" pcb-new-filename))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
               %added-file-element-count
-              (sch2pcb_get_n_added_m4)
+              %added-m4-element-count
               pcb-new-filename))
 
   (unless (zero? (sch2pcb_get_n_not_found))
@@ -957,7 +959,7 @@ Lepton EDA homepage: <~A>
     (format #t "\n"))
 
   (unless (zero? (+ %added-file-element-count
-                    (sch2pcb_get_n_added_m4)))
+                    %added-m4-element-count))
     (if initial-pcb?
         (begin
           (format #t "\nNext step:\n")

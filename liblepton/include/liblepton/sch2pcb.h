@@ -244,12 +244,6 @@ GList*
 sch2pcb_get_schematics ();
 
 int
-sch2pcb_get_n_added_m4 ();
-
-void
-sch2pcb_set_n_added_m4 (int val);
-
-int
 sch2pcb_get_n_changed_value ();
 
 void

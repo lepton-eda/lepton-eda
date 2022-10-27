@@ -340,21 +340,6 @@ sch2pcb_set_fix_elements (gboolean val)
 }
 
 
-static int n_added_m4;
-
-int
-sch2pcb_get_n_added_m4 ()
-{
-  return n_added_m4;
-}
-
-void
-sch2pcb_set_n_added_m4 (int val)
-{
-  n_added_m4 = val;
-}
-
-
 static int n_changed_value;
 
 int
