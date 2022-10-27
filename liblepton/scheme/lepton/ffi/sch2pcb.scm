@@ -35,8 +35,6 @@
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
             sch2pcb_set_empty_footprint_name
-            sch2pcb_get_fix_elements
-            sch2pcb_set_fix_elements
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
             sch2pcb_get_n_PKG_removed_old
@@ -81,8 +79,6 @@
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
 (define-lff sch2pcb_set_empty_footprint_name void '(*))
-(define-lff sch2pcb_get_fix_elements int '())
-(define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_get_n_PKG_removed_old int '())

@@ -127,6 +127,8 @@
 ;;; elements for new footprints even though m4 elements are
 ;;; searched for first and may have been found.
 (define %force-file-elements? #f)
+;;; See description of the '--fix-element' option.
+(define %fix-elements? #f)
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
@@ -214,7 +216,7 @@
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)
     (if (and (true? (sch2pcb_get_remove_unfound_elements))
-             (false? (sch2pcb_get_fix_elements)))
+             (not %fix-elements?))
         ;; If removing unfound elements is enabled while fixing
         ;; them is disabled, we just increment the counter of new
         ;; packages that won't be in the layout.
@@ -744,7 +746,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("fix-elements") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_fix_elements TRUE)
+               (set! %fix-elements? #t)
                seeds))
      (option '("gnetlist-arg") #t #f
              (lambda (opt name arg seeds)
@@ -1035,7 +1037,7 @@ Lepton EDA homepage: <~A>
                   (when initial-pcb?
                     (format #t "No elements found, so nothing to do.\n")
                     (exit 0)))
-                (when (true? (sch2pcb_get_fix_elements))
+                (when %fix-elements?
                   (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
                                                        (string->pointer bak-filename)))
                 (sch2pcb_prune_elements (string->pointer pcb-filename)

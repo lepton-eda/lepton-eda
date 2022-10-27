@@ -204,12 +204,6 @@ void
 sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 
 gboolean
-sch2pcb_get_fix_elements ();
-
-void
-sch2pcb_set_fix_elements (gboolean val);
-
-gboolean
 sch2pcb_insert_element (FILE *f_out,
                         gchar *element_file,
                         gchar *footprint,

@@ -325,21 +325,6 @@ sch2pcb_set_empty_footprint_name (char *val)
 }
 
 
-static gboolean fix_elements = FALSE;
-
-gboolean
-sch2pcb_get_fix_elements ()
-{
-  return fix_elements;
-}
-
-void
-sch2pcb_set_fix_elements (gboolean val)
-{
-  fix_elements = val;
-}
-
-
 static int n_changed_value;
 
 int
