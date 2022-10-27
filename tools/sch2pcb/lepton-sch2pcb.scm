@@ -128,6 +128,10 @@
 ;;; searched for first and may have been found.
 (define %force-file-elements? #f)
 
+;;; The number of file elements added.
+(define %added-file-element-count 0)
+
+
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
              (file-readable? pcb-filename))
@@ -175,7 +179,7 @@
       (verbose-format "\tNo file element found.\n")))
 
   (define (verbose-increment-added-file-element *element)
-    (sch2pcb_set_n_added_ef (1+ (sch2pcb_get_n_added_ef)))
+    (set! %added-file-element-count (1+ %added-file-element-count))
     (verbose-format "~A: added new file element for footprint ~S (value=~A)\n"
                     (element-refdes *element)
                     (element-description *element)
@@ -380,7 +384,7 @@
     (add-elements-from-file)
     (sch2pcb_close_file *tmp-file)
 
-    (let ((total (+ (sch2pcb_get_n_added_ef)
+    (let ((total (+ %added-file-element-count
                     (sch2pcb_get_n_added_m4)
                     (sch2pcb_get_n_not_found))))
       (if (zero? total)
@@ -877,7 +881,7 @@ Lepton EDA homepage: <~A>
                         initial-pcb?)
 
   (define non-zero? (negate zero?))
-  (define pcb-file-created? (not (and (zero? (sch2pcb_get_n_added_ef))
+  (define pcb-file-created? (not (and (zero? %added-file-element-count)
                                       (zero? (sch2pcb_get_n_added_m4))
                                       (zero? (sch2pcb_get_n_not_found)))))
 
@@ -898,12 +902,12 @@ Lepton EDA homepage: <~A>
             (sch2pcb_get_n_deleted)
             pcb-filename))
 
-  (if (zero? (+ (sch2pcb_get_n_added_ef)
+  (if (zero? (+ %added-file-element-count
                 (sch2pcb_get_n_added_m4)))
       (when (zero? (sch2pcb_get_n_not_found))
         (format #t "No elements to add so not creating ~A\n" pcb-new-filename))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
-              (sch2pcb_get_n_added_ef)
+              %added-file-element-count
               (sch2pcb_get_n_added_m4)
               pcb-new-filename))
 
@@ -952,7 +956,7 @@ Lepton EDA homepage: <~A>
   (unless (zero? (sch2pcb_get_verbose_mode))
     (format #t "\n"))
 
-  (unless (zero? (+ (sch2pcb_get_n_added_ef)
+  (unless (zero? (+ %added-file-element-count
                     (sch2pcb_get_n_added_m4)))
     (if initial-pcb?
         (begin

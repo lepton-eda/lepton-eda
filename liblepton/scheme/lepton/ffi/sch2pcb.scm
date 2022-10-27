@@ -42,8 +42,6 @@
             sch2pcb_get_n_PKG_removed_new
             sch2pcb_set_n_PKG_removed_new
             sch2pcb_get_n_PKG_removed_old
-            sch2pcb_get_n_added_ef
-            sch2pcb_set_n_added_ef
             sch2pcb_get_n_added_m4
             sch2pcb_set_n_added_m4
             sch2pcb_get_n_changed_value
@@ -96,8 +94,6 @@
 (define-lff sch2pcb_set_n_PKG_removed_new void (list int))
 (define-lff sch2pcb_get_n_PKG_removed_new int '())
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
-(define-lff sch2pcb_get_n_added_ef int '())
-(define-lff sch2pcb_set_n_added_ef void (list int))
 (define-lff sch2pcb_get_n_added_m4 int '())
 (define-lff sch2pcb_set_n_added_m4 void (list int))
 (define-lff sch2pcb_get_n_changed_value int '())
