@@ -415,21 +415,6 @@ sch2pcb_set_n_none (int val)
 }
 
 
-static int n_not_found;
-
-int
-sch2pcb_get_n_not_found ()
-{
-  return n_not_found;
-}
-
-void
-sch2pcb_set_n_not_found (int val)
-{
-  n_not_found = val;
-}
-
-
 static int n_PKG_removed_old;
 
 int

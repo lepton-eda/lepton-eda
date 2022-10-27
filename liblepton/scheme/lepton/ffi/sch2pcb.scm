@@ -47,8 +47,6 @@
             sch2pcb_get_n_empty
             sch2pcb_get_n_fixed
             sch2pcb_get_n_none
-            sch2pcb_get_n_not_found
-            sch2pcb_set_n_not_found
             sch2pcb_get_n_preserved
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
@@ -97,8 +95,6 @@
 (define-lff sch2pcb_get_n_empty int '())
 (define-lff sch2pcb_get_n_fixed int '())
 (define-lff sch2pcb_get_n_none int '())
-(define-lff sch2pcb_get_n_not_found int '())
-(define-lff sch2pcb_set_n_not_found void (list int))
 (define-lff sch2pcb_get_n_preserved int '())
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())

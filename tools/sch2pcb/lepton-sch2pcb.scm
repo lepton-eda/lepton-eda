@@ -132,7 +132,8 @@
 (define %added-file-element-count 0)
 ;;; The number of m4 elements added.
 (define %added-m4-element-count 0)
-
+;;; The number of not found packages.
+(define %not-found-packages-count 0)
 
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
@@ -221,7 +222,7 @@
         ;; that will be replaced with the PKG_ placeholder, and
         ;; insert the placeholder.
         (begin
-          (sch2pcb_set_n_not_found (1+ (sch2pcb_get_n_not_found)))
+          (set! %not-found-packages-count (1+ %not-found-packages-count))
           ;; Copy PKG_ line.
           (sch2pcb_buffer_to_file *mline *tmp-file))))
 
@@ -388,7 +389,7 @@
 
     (let ((total (+ %added-file-element-count
                     %added-m4-element-count
-                    (sch2pcb_get_n_not_found))))
+                    %not-found-packages-count)))
       (if (zero? total)
           (system* "rm" tmp-filename)
           (system* "mv" tmp-filename pcb-filename))
@@ -885,7 +886,7 @@ Lepton EDA homepage: <~A>
   (define non-zero? (negate zero?))
   (define pcb-file-created? (not (and (zero? %added-file-element-count)
                                       (zero? %added-m4-element-count)
-                                      (zero? (sch2pcb_get_n_not_found)))))
+                                      (zero? %not-found-packages-count))))
 
   ;; Report work done during processing.
   (unless (zero? (sch2pcb_get_verbose_mode))
@@ -906,16 +907,16 @@ Lepton EDA homepage: <~A>
 
   (if (zero? (+ %added-file-element-count
                 %added-m4-element-count))
-      (when (zero? (sch2pcb_get_n_not_found))
+      (when (zero? %not-found-packages-count)
         (format #t "No elements to add so not creating ~A\n" pcb-new-filename))
       (format #t "~A file elements and ~A m4 elements added to ~A.\n"
               %added-file-element-count
               %added-m4-element-count
               pcb-new-filename))
 
-  (unless (zero? (sch2pcb_get_n_not_found))
+  (unless (zero? %not-found-packages-count)
     (format #t "~A not found elements added to ~A.\n"
-            (sch2pcb_get_n_not_found)
+            %not-found-packages-count
             pcb-new-filename))
   (unless (zero? (sch2pcb_get_n_unknown))
     (format #t "~A components had no footprint attribute and are omitted.\n"

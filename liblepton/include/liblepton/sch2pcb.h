@@ -274,12 +274,6 @@ void
 sch2pcb_set_n_none (int val);
 
 int
-sch2pcb_get_n_not_found ();
-
-void
-sch2pcb_set_n_not_found (int val);
-
-int
 sch2pcb_get_n_PKG_removed_new ();
 
 void
