@@ -52,8 +52,6 @@
             sch2pcb_pcb_element_list_append
             sch2pcb_set_preserve
             sch2pcb_prune_elements
-            sch2pcb_get_remove_unfound_elements
-            sch2pcb_set_remove_unfound_elements
             sch2pcb_search_element_directories
             sch2pcb_update_element_descriptions
             sch2pcb_get_verbose_mode
@@ -96,8 +94,6 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
-(define-lff sch2pcb_get_remove_unfound_elements int '())
-(define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_search_element_directories '* '(*))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())

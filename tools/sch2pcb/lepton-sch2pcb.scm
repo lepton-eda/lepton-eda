@@ -129,6 +129,8 @@
 (define %force-file-elements? #f)
 ;;; See description of the '--fix-element' option.
 (define %fix-elements? #f)
+;;; Whether unfound pcb elements have to be removed.
+(define %remove-unfound-elements? #t)
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
@@ -215,7 +217,7 @@
 
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)
-    (if (and (true? (sch2pcb_get_remove_unfound_elements))
+    (if (and %remove-unfound-elements?
              (not %fix-elements?))
         ;; If removing unfound elements is enabled while fixing
         ;; them is disabled, we just increment the counter of new
@@ -555,8 +557,8 @@
                     (string->pointer ""))))
     (match key
       ;; This is default behaviour.
-      ("remove-unfound" (sch2pcb_set_remove_unfound_elements TRUE))
-      ("keep-unfound" (sch2pcb_set_remove_unfound_elements FALSE))
+      ("remove-unfound" (set! %remove-unfound-elements? #t))
+      ("keep-unfound" (set! %remove-unfound-elements? #f))
       ("quiet" (set! %quiet-mode #t))
       ("preserve" (sch2pcb_set_preserve TRUE))
       ("use-files" (set! %force-file-elements? #t))
@@ -759,11 +761,11 @@ Lepton EDA homepage: <~A>
      (option '(#\r "remove-unfound") #f #f
              (lambda (opt name arg seeds)
                ;; This is default behavior.
-               (sch2pcb_set_remove_unfound_elements TRUE)
+               (set! %remove-unfound-elements? #t)
                seeds))
      (option '(#\k "keep-unfound") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_remove_unfound_elements FALSE)
+               (set! %remove-unfound-elements? #f)
                seeds))
      (option '(#\q "quiet") #f #f
              (lambda (opt name arg seeds)

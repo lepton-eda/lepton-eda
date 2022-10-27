@@ -475,21 +475,6 @@ sch2pcb_set_preserve (gboolean val)
 }
 
 
-static gboolean remove_unfound_elements = TRUE;
-
-gboolean
-sch2pcb_get_remove_unfound_elements ()
-{
-  return remove_unfound_elements;
-}
-
-void
-sch2pcb_set_remove_unfound_elements (gboolean val)
-{
-  remove_unfound_elements = val;
-}
-
-
 static gint verbose;
 
 gint

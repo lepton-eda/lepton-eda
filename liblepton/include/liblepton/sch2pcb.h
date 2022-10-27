@@ -228,12 +228,6 @@ sch2pcb_get_preserve ();
 void
 sch2pcb_set_preserve (gboolean val);
 
-gboolean
-sch2pcb_get_remove_unfound_elements ();
-
-void
-sch2pcb_set_remove_unfound_elements (gboolean val);
-
 GList*
 sch2pcb_get_schematics ();
 
