@@ -134,6 +134,8 @@
 (define %added-m4-element-count 0)
 ;;; The number of not found packages.
 (define %not-found-packages-count 0)
+;;; The number of new packages mentioned but not found.
+(define %removed-new-packages-count 0)
 
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
@@ -204,7 +206,7 @@
             (element-value *element)))
 
   (define (error-report-element-removed *element)
-    (sch2pcb_set_n_PKG_removed_new (1+ (sch2pcb_get_n_PKG_removed_new)))
+    (set! %removed-new-packages-count (1+ %removed-new-packages-count))
     (format (current-error-port)
             (G_ "So device ~S will not be in the layout.\n")
             (element-refdes *element)))
@@ -944,9 +946,9 @@ Lepton EDA homepage: <~A>
     (if pcb-file-created?
         (format #t "  So ~A is incomplete.\n" pcb-filename)
         (format #t "\n")))
-  (unless (zero? (sch2pcb_get_n_PKG_removed_new))
+  (unless (zero? %removed-new-packages-count)
     (format #t "~A elements could not be found."
-            (sch2pcb_get_n_PKG_removed_new))
+            %removed-new-packages-count)
     (if pcb-file-created?
         (format #t "  So ~A is incomplete.\n" pcb-new-filename)
         (format #t "\n")))

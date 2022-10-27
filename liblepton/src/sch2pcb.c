@@ -430,21 +430,6 @@ sch2pcb_set_n_PKG_removed_old (int val)
 }
 
 
-static int n_PKG_removed_new;
-
-int
-sch2pcb_get_n_PKG_removed_new ()
-{
-  return n_PKG_removed_new;
-}
-
-void
-sch2pcb_set_n_PKG_removed_new (int val)
-{
-  n_PKG_removed_new = val;
-}
-
-
 static gint n_preserved;
 
 int
