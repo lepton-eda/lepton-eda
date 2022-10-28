@@ -1677,5 +1677,8 @@ sch2pcb_main (gint argc, gchar ** argv)
   g_free (backend_mkfile_net);
   g_free (backend_mkfile_pcb);
 
+  sch2pcb_set_default_m4_pcbdir (NULL);
+  sch2pcb_set_m4_pcbdir (NULL);
+
   return 0;
 }
