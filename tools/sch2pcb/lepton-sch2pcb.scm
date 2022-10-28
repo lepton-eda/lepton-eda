@@ -17,7 +17,7 @@
 
 (use-modules (rnrs bytevectors)
              (system foreign)
-             (lepton ffi))
+             (lepton ffi sch2pcb))
 
 ;;; FIXME: this is a function from (lepton config).  Probably it
 ;;; has to be moved to some dedicated FFI module.

@@ -360,9 +360,7 @@
 
             o_read_buffer
 
-            lepton_coord_snap
-
-            sch2pcb_main))
+            lepton_coord_snap))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -725,8 +723,6 @@
 
 (define-lff lepton_coord_snap int (list int int))
 
-;;; sch2pcb.c
-(define-lff sch2pcb_main int (list int '*))
 
 (define (reference-pointer pointer)
   "Returns a newly created pointer to POINTER.  Thus, the action is
