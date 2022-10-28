@@ -29,6 +29,7 @@ libleptoninclude_HEADERS = \
 	liblepton/path.h \
 	liblepton/picture.h \
 	liblepton/point.h \
+	liblepton/sch2pcb.h \
 	liblepton/str.h \
 	liblepton/stroke.h \
 	liblepton/text.h \
