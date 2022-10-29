@@ -72,6 +72,9 @@ sch2pcb_load_project (const gchar * path);
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);
+gint
+sch2pcb_get_verbose_mode ();
+
 void
 sch2pcb_version ();
 

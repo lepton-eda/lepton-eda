@@ -106,7 +106,7 @@ static gboolean use_m4 = TRUE;
 
 static gchar *empty_footprint_name;
 
-static gint verbose,
+static gint
   n_deleted,
   n_added_m4,
   n_added_ef,
@@ -148,6 +148,15 @@ sch2pcb_set_m4_pcbdir (const gchar *dir)
 {
   g_free (m4_pcbdir);
   m4_pcbdir = g_strdup (dir);
+}
+
+
+static gint verbose;
+
+gint
+sch2pcb_get_verbose_mode ()
+{
+  return verbose;
 }
 
 
