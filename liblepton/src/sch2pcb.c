@@ -1510,9 +1510,10 @@ sch2pcb_main (gint argc,
   sch2pcb_load_extra_project_files ();
   sch2pcb_add_default_m4_files ();
 
-  if (!schematics)
+  if (sch2pcb_get_schematics () == NULL)
+  {
     sch2pcb_usage ();
-
+  }
 
   /* Defaults for the search path if not configured in the project file */
   if (g_file_test ("packages", G_FILE_TEST_IS_DIR))
@@ -1553,8 +1554,12 @@ sch2pcb_main (gint argc,
   } else
     pcb_new_file_name = g_strdup (pcb_file_name);
 
-  if (!run_gnetlist (pins_file_name, net_file_name, pcb_new_file_name,
-                     sch_basename, schematics)) {
+  if (!run_gnetlist (pins_file_name,
+                     net_file_name,
+                     pcb_new_file_name,
+                     sch_basename,
+                     sch2pcb_get_schematics ()))
+  {
     fprintf(stderr, "Failed to run netlister\n");
     exit (1);
   }
