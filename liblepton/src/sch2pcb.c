@@ -1914,7 +1914,7 @@ sch2pcb_get_args (gint argc,
       else if (!strcmp (opt, "elements-dir") || !strcmp (opt, "d"))
       {
         gchar *elements_dir = sch2pcb_expand_dir (arg);
-        if (verbose > 1)
+        if (sch2pcb_get_verbose_mode () > 1)
           printf ("\tAdding directory to file element directory list: %s\n",
                   elements_dir);
         element_directory_list =
