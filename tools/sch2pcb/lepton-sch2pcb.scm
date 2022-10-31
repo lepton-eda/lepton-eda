@@ -77,6 +77,21 @@
         name)))
 
 
+;;; Runs THUNK reporting errors to the current error port without
+;;; backtrace.
+(define (call-protected thunk)
+  (catch #t
+    thunk
+    (lambda (key subr message args rest)
+      (format (current-error-port) (G_ "ERROR: ~?.\n") message args))))
+
+
+;;; A convenience function for deleting FILENAME with reporting
+;;; possible errors without backtrace.
+(define (delete-file* filename)
+  (call-protected (lambda () (delete-file filename))))
+
+
 (let ((number-of-args (length (program-arguments))))
   (if (= 1 number-of-args)
       (sch2pcb_usage)
@@ -122,7 +137,7 @@
                   (format (current-error-port) (G_ "Failed to run netlister\n"))
                   (exit 1))
                 (when (zero? (sch2pcb_add_elements (string->pointer pcb-new-filename)))
-                  (delete-file pcb-new-filename)
+                  (delete-file* pcb-new-filename)
                   (when initial-pcb?
                     (format #t "No elements found, so nothing to do.\n")
                     (exit 0)))
