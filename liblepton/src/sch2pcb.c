@@ -1550,10 +1550,10 @@ sch2pcb_main ()
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
 
-  pins_file_name = g_strconcat (sch_basename, ".cmd", NULL);
-  net_file_name = g_strconcat (sch_basename, ".net", NULL);
-  pcb_file_name = g_strconcat (sch_basename, ".pcb", NULL);
-  bak_file_name = g_strconcat (sch_basename, ".pcb.bak", NULL);
+  pins_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".cmd", NULL);
+  net_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".net", NULL);
+  pcb_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".pcb", NULL);
+  bak_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".pcb.bak", NULL);
   tmp = g_strdup (bak_file_name);
 
   for (i = 0; g_file_test (bak_file_name, G_FILE_TEST_EXISTS); ++i) {
@@ -1564,7 +1564,7 @@ sch2pcb_main ()
 
   if (g_file_test (pcb_file_name, G_FILE_TEST_EXISTS)) {
     initial_pcb = FALSE;
-    pcb_new_file_name = g_strconcat (sch_basename, ".new.pcb", NULL);
+    pcb_new_file_name = g_strconcat (sch2pcb_get_sch_basename (), ".new.pcb", NULL);
     get_pcb_element_list (pcb_file_name);
   } else
     pcb_new_file_name = g_strdup (pcb_file_name);
@@ -1572,7 +1572,7 @@ sch2pcb_main ()
   if (!run_gnetlist (pins_file_name,
                      net_file_name,
                      pcb_new_file_name,
-                     sch_basename,
+                     sch2pcb_get_sch_basename (),
                      sch2pcb_get_schematics ()))
   {
     fprintf(stderr, "Failed to run netlister\n");
