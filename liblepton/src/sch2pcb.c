@@ -1764,10 +1764,20 @@ sch2pcb_main (char *pcb_file_name,
     printf ("\n");
   printf ("\n----------------------------------\n");
   printf ("Done processing.  Work performed:\n");
-  if (n_deleted > 0 || n_fixed > 0 || need_PKG_purge || n_changed_value > 0)
+  if (sch2pcb_get_n_deleted () > 0
+      || n_fixed > 0
+      || need_PKG_purge
+      || n_changed_value > 0)
+  {
     printf ("%s is backed up as %s.\n", pcb_file_name, bak_file_name);
-  if (pcb_element_list && n_deleted > 0)
-    printf ("%d elements deleted from %s.\n", n_deleted, pcb_file_name);
+  }
+  if (pcb_element_list
+      && sch2pcb_get_n_deleted () > 0)
+  {
+    printf ("%d elements deleted from %s.\n",
+            sch2pcb_get_n_deleted (),
+            pcb_file_name);
+  }
 
   if (n_added_ef + n_added_m4 > 0)
     printf ("%d file elements and %d m4 elements added to %s.\n",
