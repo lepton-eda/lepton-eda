@@ -69,4 +69,6 @@
                           (string-list->bv-pointer (program-arguments)))
         (sch2pcb_load_extra_project_files)
         (sch2pcb_add_default_m4_files)
-        (sch2pcb_main))))
+        (if (null-pointer? (sch2pcb_get_schematics))
+            (sch2pcb_usage)
+            (sch2pcb_main)))))

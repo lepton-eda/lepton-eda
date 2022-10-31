@@ -1537,11 +1537,6 @@ sch2pcb_main ()
   gboolean created_pcb_file = TRUE;
   char *path, *p;
 
-  if (sch2pcb_get_schematics () == NULL)
-  {
-    sch2pcb_usage ();
-  }
-
   /* Defaults for the search path if not configured in the project file */
   if (g_file_test ("packages", G_FILE_TEST_IS_DIR))
     sch2pcb_element_directory_list_append ((char *) "packages");
