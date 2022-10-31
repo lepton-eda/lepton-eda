@@ -1765,7 +1765,7 @@ sch2pcb_main (char *pcb_file_name,
   printf ("\n----------------------------------\n");
   printf ("Done processing.  Work performed:\n");
   if (sch2pcb_get_n_deleted () > 0
-      || n_fixed > 0
+      || sch2pcb_get_n_fixed () > 0
       || need_PKG_purge
       || n_changed_value > 0)
   {
@@ -1803,8 +1803,12 @@ sch2pcb_main (char *pcb_file_name,
   if (n_changed_value > 0)
     printf ("%d elements had a value change in %s.\n",
             n_changed_value, pcb_file_name);
-  if (n_fixed > 0)
-    printf ("%d elements fixed in %s.\n", n_fixed, pcb_file_name);
+  if (sch2pcb_get_n_fixed () > 0)
+  {
+    printf ("%d elements fixed in %s.\n",
+            sch2pcb_get_n_fixed (),
+            pcb_file_name);
+  }
   if (n_PKG_removed_old > 0) {
     printf ("%d elements could not be found.", n_PKG_removed_old);
     if (created_pcb_file)
