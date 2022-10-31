@@ -25,6 +25,7 @@
   #:export (sch2pcb_get_args
             sch2pcb_set_default_m4_pcbdir
             sch2pcb_set_m4_pcbdir
+            sch2pcb_load_extra_project_files
             sch2pcb_main
             sch2pcb_usage))
 
@@ -36,5 +37,6 @@
 (define-lff sch2pcb_get_args void (list int '*))
 (define-lff sch2pcb_set_default_m4_pcbdir void '(*))
 (define-lff sch2pcb_set_m4_pcbdir void '(*))
+(define-lff sch2pcb_load_extra_project_files void '())
 (define-lff sch2pcb_main int '())
 (define-lff sch2pcb_usage int '())
