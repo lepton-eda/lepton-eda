@@ -1557,8 +1557,7 @@ sch2pcb_main (gint argc,
 
   /* Defaults for the search path if not configured in the project file */
   if (g_file_test ("packages", G_FILE_TEST_IS_DIR))
-    sch2pcb_set_element_directory_list (
-      g_list_append (sch2pcb_get_element_directory_list (), (gpointer) "packages"));
+    sch2pcb_element_directory_list_append ((char *) "packages");
 
 #define PCB_PATH_DELIMETER ":"
   if (sch2pcb_get_verbose_mode () != 0)
@@ -1570,8 +1569,7 @@ sch2pcb_main (gint argc,
     if (g_file_test (p, G_FILE_TEST_IS_DIR)) {
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("Adding %s to the newlib search path\n", p);
-      sch2pcb_set_element_directory_list (
-        g_list_append (sch2pcb_get_element_directory_list (), g_strdup (p)));
+      sch2pcb_element_directory_list_append (g_strdup (p));
     }
   }
   g_free (path);
