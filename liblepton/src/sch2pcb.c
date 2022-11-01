@@ -1779,11 +1779,11 @@ sch2pcb_main (char *pcb_file_name,
             pcb_file_name);
   }
 
-  if (sch2pcb_get_n_added_ef () + n_added_m4 > 0)
+  if (sch2pcb_get_n_added_ef () + sch2pcb_get_n_added_m4 () > 0)
   {
     printf ("%d file elements and %d m4 elements added to %s.\n",
             sch2pcb_get_n_added_ef (),
-            n_added_m4,
+            sch2pcb_get_n_added_m4 (),
             pcb_new_file_name);
   }
   else if (n_not_found == 0) {
@@ -1838,7 +1838,7 @@ sch2pcb_main (char *pcb_file_name,
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("\n");
 
-  if (sch2pcb_get_n_added_ef () + n_added_m4 > 0)
+  if (sch2pcb_get_n_added_ef () + sch2pcb_get_n_added_m4 () > 0)
   {
     if (initial_pcb) {
       printf ("\nNext step:\n");
