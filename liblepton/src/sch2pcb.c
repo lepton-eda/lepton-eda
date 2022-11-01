@@ -1847,9 +1847,12 @@ sch2pcb_main (char *pcb_file_name,
     else
       printf ("\n");
   }
-  if (n_preserved > 0)
+  if (sch2pcb_get_n_preserved () > 0)
+  {
     printf ("%d elements not in the schematic preserved in %s.\n",
-            n_preserved, pcb_file_name);
+            sch2pcb_get_n_preserved (),
+            pcb_file_name);
+  }
 
   /* Tell user what to do next */
   if (sch2pcb_get_verbose_mode () != 0)
