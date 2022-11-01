@@ -499,18 +499,18 @@ sch2pcb_create_m4_override_file ()
     m4_override_file = NULL;
     return;
   }
-  if (m4_pcbdir)
-    fprintf (f, "(define gsch2pcb:pcb-m4-dir \"%s\")\n", m4_pcbdir);
+  if (sch2pcb_get_m4_pcbdir ())
+    fprintf (f, "(define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
   if (m4_files)
     fprintf (f, "(define gsch2pcb:m4-files \"%s\")\n", m4_files);
   fprintf (f, "(define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
 
   fclose (f);
   if (verbose) {
-    printf ("Default m4-pcbdir: %s\n", default_m4_pcbdir);
+    printf ("Default m4-pcbdir: %s\n", sch2pcb_get_default_m4_pcbdir ());
     printf ("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
-    if (m4_pcbdir)
-      printf ("    (define gsch2pcb:pcb-m4-dir \"%s\")\n", m4_pcbdir);
+    if (sch2pcb_get_m4_pcbdir ())
+      printf ("    (define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
     if (m4_files)
       printf ("    (define gsch2pcb:m4-files \"%s\")\n", m4_files);
     printf ("    (define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
