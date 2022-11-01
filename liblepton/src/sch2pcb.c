@@ -1225,10 +1225,11 @@ sch2pcb_add_elements (gchar *pcb_file)
         || (is_m4
             && sch2pcb_get_force_element_files ()))
     {
-      if (verbose && !is_m4)
+      if ((sch2pcb_get_verbose_mode () != 0)
+          && !is_m4)
         printf ("%s: need new file element for footprint  %s (value=%s)\n",
                 el->refdes, el->description, el->value);
-      if (verbose
+      if ((sch2pcb_get_verbose_mode () != 0)
           && is_m4
           && sch2pcb_get_force_element_files ())
         printf
@@ -1236,7 +1237,7 @@ sch2pcb_add_elements (gchar *pcb_file)
            el->refdes, el->description);
       p = search_element_directories (el);
       if (!p
-          && verbose
+          && (sch2pcb_get_verbose_mode () != 0)
           && is_m4
           && sch2pcb_get_force_element_files ())
         printf ("\tNo file element found.\n");
@@ -1246,7 +1247,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         skipping = is_m4;
         is_m4 = FALSE;
         ++n_added_ef;
-        if (verbose)
+        if (sch2pcb_get_verbose_mode () != 0)
           printf ("%s: added new file element for footprint %s (value=%s)\n",
                   el->refdes, el->description, el->value);
       } else if (!is_m4) {
@@ -1269,12 +1270,12 @@ sch2pcb_add_elements (gchar *pcb_file)
     if (is_m4) {
       fputs (buf, f_out);
       ++n_added_m4;
-      if (verbose)
+      if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
                 el->refdes, el->description, el->value);
     }
     pcb_element_free (el);
-    if (verbose)
+    if (sch2pcb_get_verbose_mode () != 0)
       printf ("----\n");
   }
   fclose (f_in);
