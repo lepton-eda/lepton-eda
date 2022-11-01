@@ -1804,9 +1804,12 @@ sch2pcb_main (char *pcb_file_name,
     printf ("%d components had no footprint attribute and are omitted.\n",
             sch2pcb_get_n_unknown ());
   }
-  if (n_none > 0)
+  if (sch2pcb_get_n_none () > 0)
+  {
     printf ("%d components with footprint \"none\" omitted from %s.\n",
-            n_none, pcb_new_file_name);
+            sch2pcb_get_n_none (),
+            pcb_new_file_name);
+  }
   if (n_empty > 0)
     printf ("%d components with empty footprint \"%s\" omitted from %s.\n",
             n_empty, empty_footprint_name, pcb_new_file_name);
