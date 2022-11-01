@@ -1767,7 +1767,7 @@ sch2pcb_main (char *pcb_file_name,
   if (sch2pcb_get_n_deleted () > 0
       || sch2pcb_get_n_fixed () > 0
       || sch2pcb_get_need_PKG_purge ()
-      || n_changed_value > 0)
+      || sch2pcb_get_n_changed_value () > 0)
   {
     printf ("%s is backed up as %s.\n", pcb_file_name, bak_file_name);
   }
@@ -1800,9 +1800,12 @@ sch2pcb_main (char *pcb_file_name,
   if (n_empty > 0)
     printf ("%d components with empty footprint \"%s\" omitted from %s.\n",
             n_empty, empty_footprint_name, pcb_new_file_name);
-  if (n_changed_value > 0)
+  if (sch2pcb_get_n_changed_value () > 0)
+  {
     printf ("%d elements had a value change in %s.\n",
-            n_changed_value, pcb_file_name);
+            sch2pcb_get_n_changed_value (),
+            pcb_file_name);
+  }
   if (sch2pcb_get_n_fixed () > 0)
   {
     printf ("%d elements fixed in %s.\n",
