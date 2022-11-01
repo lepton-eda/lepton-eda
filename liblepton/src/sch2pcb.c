@@ -506,7 +506,8 @@ sch2pcb_create_m4_override_file ()
   fprintf (f, "(define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
 
   fclose (f);
-  if (verbose) {
+  if (sch2pcb_get_verbose_mode () != 0)
+  {
     printf ("Default m4-pcbdir: %s\n", sch2pcb_get_default_m4_pcbdir ());
     printf ("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
     if (sch2pcb_get_m4_pcbdir ())
