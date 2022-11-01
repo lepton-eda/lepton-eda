@@ -1698,7 +1698,7 @@ sch2pcb_load_project (const gchar * path)
   f = fopen (path, "r");
   if (!f)
     return;
-  if (verbose)
+  if (sch2pcb_get_verbose_mode () != 0)
     printf ("Reading project file: %s\n", path);
   while (fgets (buf, sizeof (buf), f)) {
     for (s = buf; *s == ' ' || *s == '\t' || *s == '\n'; ++s);
