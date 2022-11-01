@@ -1629,7 +1629,7 @@ sch2pcb_parse_config (gchar *config,
     return 0;
   }
   if (!strcmp (config, "quiet") || !strcmp (config, "q")) {
-    quiet_mode = TRUE;
+    sch2pcb_set_quiet_mode (TRUE);
     return 0;
   }
   if (!strcmp (config, "preserve") || !strcmp (config, "p")) {
