@@ -610,7 +610,7 @@ sch2pcb_find_element (gchar *dir_path,
     g_free (s);
     return NULL;
   }
-  if (verbose > 1)
+  if (sch2pcb_get_verbose_mode () > 1)
     printf ("\t  Searching: \"%s\" for \"%s\"\n", dir_path, element);
   while ((name = (gchar *) g_dir_read_name (dir)) != NULL) {
     path = g_strconcat (dir_path, "/", name, NULL);
@@ -622,7 +622,7 @@ sch2pcb_find_element (gchar *dir_path,
 
     /* otherwise assume it is a file and see if it is the one we want */
     else {
-      if (verbose > 1)
+      if (sch2pcb_get_verbose_mode () > 1)
         printf ("\t           : %s\t", name);
       if (!strcmp (name, element))
         found = g_strdup (path);
@@ -633,7 +633,7 @@ sch2pcb_find_element (gchar *dir_path,
           found = g_strdup (path);
         g_free (tmps);
       }
-      if (verbose > 1)
+      if (sch2pcb_get_verbose_mode () > 1)
         printf ("%s\n", found ? "Yes" : "No");
     }
     g_free (path);
