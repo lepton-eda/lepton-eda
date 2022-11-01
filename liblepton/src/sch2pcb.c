@@ -1649,8 +1649,8 @@ sch2pcb_parse_config (gchar *config,
     if (sch2pcb_get_verbose_mode () > 1)
       printf ("\tAdding directory to file element directory list: %s\n",
               elements_dir);
-    element_directory_list =
-      g_list_prepend (element_directory_list, elements_dir);
+    sch2pcb_set_element_directory_list (
+      g_list_prepend (sch2pcb_get_element_directory_list (), elements_dir));
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
