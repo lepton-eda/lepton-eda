@@ -939,18 +939,18 @@ sch2pcb_search_element_directories (PcbElement *el)
     g_free (elname);
     return NULL;
   }
-  if (verbose > 1)
+  if (sch2pcb_get_verbose_mode () > 1)
     printf ("\tSearching directories looking for file element: %s\n", elname);
   for (list = sch2pcb_get_element_directory_list ();
        list;
        list = g_list_next (list))
   {
     dir_path = (gchar *) list->data;
-    if (verbose > 1)
+    if (sch2pcb_get_verbose_mode () > 1)
       printf ("\tLooking in directory: \"%s\"\n", dir_path);
     path = sch2pcb_find_element (dir_path, elname);
     if (path) {
-      if (verbose)
+      if (sch2pcb_get_verbose_mode () != 0)
         printf ("\tFound: %s\n", path);
       break;
     }
