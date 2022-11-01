@@ -1290,8 +1290,9 @@ sch2pcb_add_schematic (gchar *sch)
 {
   const gchar* s;
   schematics = g_list_append (schematics, g_strdup (sch));
-  if (!sch_basename && (s = g_strrstr (sch, ".sch")) != NULL && strlen(s) == 4)
-    sch_basename = g_strndup (sch, s - sch);
+  if (!sch2pcb_get_sch_basename () &&
+      (s = g_strrstr (sch, ".sch")) != NULL && strlen(s) == 4)
+    sch2pcb_set_sch_basename (g_strndup (sch, s - sch));
 }
 
 
