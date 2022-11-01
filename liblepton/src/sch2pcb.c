@@ -1786,14 +1786,18 @@ sch2pcb_main (char *pcb_file_name,
             sch2pcb_get_n_added_m4 (),
             pcb_new_file_name);
   }
-  else if (n_not_found == 0) {
-    printf ("No elements to add so not creating %s\n", pcb_new_file_name);
-    created_pcb_file = FALSE;
-  }
+  else
+    if (sch2pcb_get_n_not_found () == 0)
+    {
+      printf ("No elements to add so not creating %s\n", pcb_new_file_name);
+      created_pcb_file = FALSE;
+    }
 
-  if (n_not_found > 0) {
+  if (sch2pcb_get_n_not_found () > 0)
+  {
     printf ("%d not found elements added to %s.\n",
-            n_not_found, pcb_new_file_name);
+            sch2pcb_get_n_not_found (),
+            pcb_new_file_name);
   }
   if (n_unknown > 0)
     printf ("%d components had no footprint attribute and are omitted.\n",
