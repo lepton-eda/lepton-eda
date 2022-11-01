@@ -1655,8 +1655,7 @@ sch2pcb_parse_config (gchar *config,
   else if (!strcmp (config, "schematics"))
     sch2pcb_add_multiple_schematics (arg);
   else if (!strcmp (config, "m4-pcbdir")) {
-    g_free (m4_pcbdir);
-    m4_pcbdir = g_strdup (arg);
+    sch2pcb_set_m4_pcbdir (arg);
   } else if (!strcmp (config, "m4-file"))
     sch2pcb_add_m4_file (arg);
   else if (!strcmp (config, "gnetlist"))
