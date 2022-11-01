@@ -1779,9 +1779,13 @@ sch2pcb_main (char *pcb_file_name,
             pcb_file_name);
   }
 
-  if (n_added_ef + n_added_m4 > 0)
+  if (sch2pcb_get_n_added_ef () + n_added_m4 > 0)
+  {
     printf ("%d file elements and %d m4 elements added to %s.\n",
-            n_added_ef, n_added_m4, pcb_new_file_name);
+            sch2pcb_get_n_added_ef (),
+            n_added_m4,
+            pcb_new_file_name);
+  }
   else if (n_not_found == 0) {
     printf ("No elements to add so not creating %s\n", pcb_new_file_name);
     created_pcb_file = FALSE;
@@ -1834,7 +1838,8 @@ sch2pcb_main (char *pcb_file_name,
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("\n");
 
-  if (n_added_ef + n_added_m4 > 0) {
+  if (sch2pcb_get_n_added_ef () + n_added_m4 > 0)
+  {
     if (initial_pcb) {
       printf ("\nNext step:\n");
       printf ("1.  Run pcb on your file %s.\n", pcb_file_name);
