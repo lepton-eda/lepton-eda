@@ -690,7 +690,7 @@ sch2pcb_run_netlister (gchar *pins_file,
   if (gnetlist == NULL)
     gnetlist = "lepton-netlist";
 
-  if (!verbose)
+  if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
 
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
