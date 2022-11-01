@@ -857,7 +857,7 @@ sch2pcb_make_pcb_element_list (gchar *pcb_file)
   while ((fgets (buf, sizeof (buf), f)) != NULL) {
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if (!strncmp (s, "PKG_", 4)) {
-      need_PKG_purge = TRUE;
+      sch2pcb_set_need_PKG_purge (TRUE);
       continue;
     }
     if ((el = pcb_element_line_parse (s)) == NULL)
