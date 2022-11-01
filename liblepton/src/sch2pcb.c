@@ -1079,7 +1079,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
         && !el_exists->still_exists && !preserve) {
       skipping = TRUE;
-      if (verbose)
+      if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: deleted element %s (value=%s)\n",
                 el->refdes, el->description, el->value);
       pcb_element_free (el);
@@ -1092,7 +1092,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
       fprintf (f_out, fmt,
                el->res_char, el->flags, el->description, el->refdes,
                el_exists->changed_value, el->x, el->y, el->tail);
-      if (verbose)
+      if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: changed element %s value: %s -> %s\n",
                 el->refdes, el->description,
                 el->value, el_exists->changed_value);
