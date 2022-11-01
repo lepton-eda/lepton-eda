@@ -1888,7 +1888,9 @@ sch2pcb_main (char *pcb_file_name,
       printf ("           :ExecuteFile(%s)\n\n", pins_file_name);
       printf
         ("    to propagate the pin names of all footprints to the layout.\n\n");
-    } else if (quiet_mode == FALSE) {
+    }
+    else if (sch2pcb_get_quiet_mode () == FALSE)
+    {
       printf ("\nNext steps:\n");
       printf ("1.  Run pcb on your file %s.\n", pcb_file_name);
       printf
