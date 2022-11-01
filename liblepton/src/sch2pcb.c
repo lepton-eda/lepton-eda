@@ -1829,8 +1829,10 @@ sch2pcb_main (char *pcb_file_name,
             sch2pcb_get_n_fixed (),
             pcb_file_name);
   }
-  if (n_PKG_removed_old > 0) {
-    printf ("%d elements could not be found.", n_PKG_removed_old);
+  if (sch2pcb_get_n_PKG_removed_old () > 0)
+  {
+    printf ("%d elements could not be found.",
+            sch2pcb_get_n_PKG_removed_old ());
     if (created_pcb_file)
       printf ("  So %s is incomplete.\n", pcb_file_name);
     else
