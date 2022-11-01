@@ -1061,7 +1061,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
   if (!pcb_element_list
       || (sch2pcb_get_n_deleted () == 0
           && !sch2pcb_get_need_PKG_purge ()
-          && n_changed_value == 0)
+          && sch2pcb_get_n_changed_value () == 0)
     )
     return;
   if ((f_in = fopen (pcb_file, "r")) == NULL)
