@@ -1031,7 +1031,9 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
     if (el->changed_description)
       ++n_fixed;
   }
-  if (!pcb_element_list || n_fixed == 0) {
+  if (!pcb_element_list
+      || sch2pcb_get_n_fixed () == 0)
+  {
     fprintf (stderr, "Could not find any elements to fix.\n");
     return;
   }
