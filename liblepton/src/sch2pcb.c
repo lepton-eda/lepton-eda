@@ -752,7 +752,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
     fprintf (stderr,
              "WARNING: %s has no footprint attribute so won't be in the layout.\n",
              el->refdes);
-    n_unknown += 1;
+    sch2pcb_set_n_unknown (1 + sch2pcb_get_n_unknown ());
     el->omit_PKG = TRUE;
   }
   return el;
