@@ -1766,7 +1766,7 @@ sch2pcb_main (char *pcb_file_name,
   printf ("Done processing.  Work performed:\n");
   if (sch2pcb_get_n_deleted () > 0
       || sch2pcb_get_n_fixed () > 0
-      || need_PKG_purge
+      || sch2pcb_get_need_PKG_purge ()
       || n_changed_value > 0)
   {
     printf ("%s is backed up as %s.\n", pcb_file_name, bak_file_name);
