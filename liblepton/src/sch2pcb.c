@@ -1651,7 +1651,7 @@ sch2pcb_parse_config (gchar *config,
               elements_dir);
     sch2pcb_element_directory_list_prepend (elements_dir);
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
-    sch_basename = g_strdup (arg);
+    sch2pcb_set_sch_basename (arg);
   else if (!strcmp (config, "schematics"))
     sch2pcb_add_multiple_schematics (arg);
   else if (!strcmp (config, "m4-pcbdir")) {
