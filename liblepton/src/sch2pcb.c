@@ -1,6 +1,6 @@
 /* gsch2pcb
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  *  Bill Wilson    billw@wt.net
  *
@@ -736,7 +736,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   g_strfreev (args);
 
   if (empty_footprint_name && !strcmp (el->description, empty_footprint_name)) {
-    if (verbose)
+    if (sch2pcb_get_verbose_mode () != 0)
       printf
         ("%s: has the empty footprint attribute \"%s\" so won't be in the layout.\n",
          el->refdes, el->description);
