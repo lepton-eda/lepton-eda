@@ -1616,7 +1616,7 @@ sch2pcb_parse_config (gchar *config,
     s++;
     *s = '\0';
   }
-  if (verbose)
+  if (sch2pcb_get_verbose_mode () != 0)
     printf ("    %s \"%s\"\n", config, arg ? arg : "");
 
   if (!strcmp (config, "remove-unfound") || !strcmp (config, "r")) {
@@ -1646,7 +1646,7 @@ sch2pcb_parse_config (gchar *config,
   }
   if (!strcmp (config, "elements-dir") || !strcmp (config, "d")) {
     gchar *elements_dir = sch2pcb_expand_dir (arg);
-    if (verbose > 1)
+    if (sch2pcb_get_verbose_mode () > 1)
       printf ("\tAdding directory to file element directory list: %s\n",
               elements_dir);
     element_directory_list =
