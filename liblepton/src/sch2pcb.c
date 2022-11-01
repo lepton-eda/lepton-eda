@@ -1050,13 +1050,18 @@ sch2pcb_prune_elements (gchar *pcb_file,
         fprintf (stderr,
                  "Preserving PCB element not in the schematic:    %s (element   %s)\n",
                  el->refdes, el->description);
-      } else
-        ++n_deleted;
+      }
+      else
+      {
+        sch2pcb_set_n_deleted (1 + sch2pcb_get_n_deleted ());
+      }
     } else if (el->changed_value)
       ++n_changed_value;
   }
   if (!pcb_element_list
-      || (n_deleted == 0 && !need_PKG_purge && n_changed_value == 0)
+      || (sch2pcb_get_n_deleted () == 0
+          && !need_PKG_purge
+          && n_changed_value == 0)
     )
     return;
   if ((f_in = fopen (pcb_file, "r")) == NULL)
