@@ -1672,7 +1672,7 @@ sch2pcb_parse_config (gchar *config,
   else
   if (strcmp (config, "backend-net") == 0)
   {
-    backend_mkfile_net = g_strdup (arg);
+    sch2pcb_set_backend_mkfile_net (arg);
   }
 
   else
