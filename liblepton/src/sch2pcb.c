@@ -696,7 +696,7 @@ sch2pcb_run_netlister (gchar *pins_file,
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
                               gnetlist,
                               verboseList,
-                              backend_mkfile_cmd ? backend_mkfile_cmd : backend_mkfile_cmd_default,
+                              sch2pcb_get_backend_mkfile_cmd () ? sch2pcb_get_backend_mkfile_cmd () : backend_mkfile_cmd_default,
                               pins_file,
                               extra_gnetlist_arg_list,
                               largs))
