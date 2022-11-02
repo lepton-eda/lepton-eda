@@ -1842,7 +1842,7 @@ sch2pcb_main (char *pcb_file_name,
   {
     printf ("%d components with empty footprint \"%s\" omitted from %s.\n",
             sch2pcb_get_n_empty (),
-            empty_footprint_name,
+            sch2pcb_get_empty_footprint_name (),
             pcb_new_file_name);
   }
   if (sch2pcb_get_n_changed_value () > 0)
