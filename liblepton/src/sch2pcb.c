@@ -1972,7 +1972,7 @@ sch2pcb_main (char *pcb_file_name,
 
   sch2pcb_set_backend_mkfile_cmd (NULL);
   sch2pcb_set_backend_mkfile_net (NULL);
-  g_free (backend_mkfile_pcb);
+  sch2pcb_set_backend_mkfile_pcb (NULL);
 
   sch2pcb_set_default_m4_pcbdir (NULL);
   sch2pcb_set_m4_pcbdir (NULL);
