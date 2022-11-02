@@ -1666,7 +1666,7 @@ sch2pcb_parse_config (gchar *config,
   else
   if (strcmp (config, "backend-cmd") == 0)
   {
-    backend_mkfile_cmd = g_strdup (arg);
+    sch2pcb_set_backend_mkfile_cmd (arg);
   }
 
   else
