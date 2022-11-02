@@ -1943,7 +1943,7 @@ sch2pcb_main (char *pcb_file_name,
     }
   }
 
-  g_free (backend_mkfile_cmd);
+  sch2pcb_set_backend_mkfile_cmd (NULL);
   g_free (backend_mkfile_net);
   g_free (backend_mkfile_pcb);
 
