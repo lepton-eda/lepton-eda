@@ -1221,16 +1221,24 @@ sch2pcb_add_elements (gchar *pcb_file)
         fputs (buf, f_out);
       continue;
     }
-    if (!is_m4 || (is_m4 && force_element_files)) {
+    if (!is_m4
+        || (is_m4
+            && sch2pcb_get_force_element_files ()))
+    {
       if (verbose && !is_m4)
         printf ("%s: need new file element for footprint  %s (value=%s)\n",
                 el->refdes, el->description, el->value);
-      if (verbose && is_m4 && force_element_files)
+      if (verbose
+          && is_m4
+          && sch2pcb_get_force_element_files ())
         printf
           ("%s: have m4 element %s, but trying to replace with a file element.\n",
            el->refdes, el->description);
       p = search_element_directories (el);
-      if (!p && verbose && is_m4 && force_element_files)
+      if (!p
+          && verbose
+          && is_m4
+          && sch2pcb_get_force_element_files ())
         printf ("\tNo file element found.\n");
 
       if (p && insert_element (f_out, p,
