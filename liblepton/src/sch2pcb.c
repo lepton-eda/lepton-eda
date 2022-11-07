@@ -1621,11 +1621,11 @@ sch2pcb_parse_config (gchar *config,
 
   if (!strcmp (config, "remove-unfound") || !strcmp (config, "r")) {
     /* This is default behavior set in header section */
-    remove_unfound_elements = TRUE;
+    sch2pcb_set_remove_unfound_elements (TRUE);
     return 0;
   }
   if (!strcmp (config, "keep-unfound") || !strcmp (config, "k")) {
-    remove_unfound_elements = FALSE;
+    sch2pcb_set_remove_unfound_elements (FALSE);
     return 0;
   }
   if (!strcmp (config, "quiet") || !strcmp (config, "q")) {
