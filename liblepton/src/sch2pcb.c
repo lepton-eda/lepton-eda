@@ -1908,7 +1908,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "skip-m4") || !strcmp (opt, "s"))
       {
-        use_m4 = FALSE;
+        sch2pcb_set_use_m4 (FALSE);
         continue;
       }
       else if (!strcmp (opt, "elements-dir") || !strcmp (opt, "d"))
