@@ -1659,7 +1659,7 @@ sch2pcb_parse_config (gchar *config,
   } else if (!strcmp (config, "m4-file"))
     sch2pcb_add_m4_file (arg);
   else if (!strcmp (config, "gnetlist"))
-    extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
+    sch2pcb_extra_gnetlist_list_append (arg);
   else if (!strcmp (config, "empty-footprint"))
     empty_footprint_name = g_strdup (arg);
 
