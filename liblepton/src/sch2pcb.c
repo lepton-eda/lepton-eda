@@ -1870,7 +1870,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "preserve") || !strcmp (opt, "p"))
       {
-        preserve = TRUE;
+        sch2pcb_set_preserve (TRUE);
         continue;
       }
       else if (!strcmp (opt, "use-files") || !strcmp (opt, "f"))
