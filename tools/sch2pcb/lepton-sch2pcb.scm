@@ -99,12 +99,106 @@
                         pins-filename
                         net-filename
                         initial-pcb?)
-  (sch2pcb_main (string->pointer pcb-filename)
-                (string->pointer pcb-new-filename)
-                (string->pointer bak-filename)
-                (string->pointer pins-filename)
-                (string->pointer net-filename)
-                (if initial-pcb? TRUE FALSE)))
+
+  (define pcb-file-created? #t)
+
+  ;; Report work done during processing.
+  (unless (zero? (sch2pcb_get_verbose_mode))
+    (format #t "\n"))
+
+  (format #t "\n----------------------------------\n")
+  (format #t "Done processing.  Work performed:\n")
+  (when (or (not (zero? (sch2pcb_get_n_deleted)))
+            (not (zero? (sch2pcb_get_n_fixed)))
+            (true? (sch2pcb_get_need_PKG_purge))
+            (not (zero? (sch2pcb_get_n_changed_value))))
+    (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
+  (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))
+             (not (zero? (sch2pcb_get_n_deleted))))
+    (format #t "~A elements deleted from ~A.\n"
+            (sch2pcb_get_n_deleted)
+            pcb-filename))
+
+  (if (not (zero? (+ (sch2pcb_get_n_added_ef)
+                     (sch2pcb_get_n_added_m4))))
+      (format #t "~A file elements and ~A m4 elements added to ~A.\n"
+              (sch2pcb_get_n_added_ef)
+              (sch2pcb_get_n_added_m4)
+              pcb-new-filename)
+      (when (zero? (sch2pcb_get_n_not_found))
+        (format #t "No elements to add so not creating ~A\n" pcb-new-filename)
+        (set! pcb-file-created? #f)))
+
+  (unless (zero? (sch2pcb_get_n_not_found))
+    (format #t "~A not found elements added to ~A.\n"
+            (sch2pcb_get_n_not_found)
+            pcb-new-filename))
+  (unless (zero? (sch2pcb_get_n_unknown))
+    (format #t "~A components had no footprint attribute and are omitted.\n"
+            (sch2pcb_get_n_unknown)))
+  (unless (zero? (sch2pcb_get_n_none))
+    (format #t "~A components with footprint \"none\" omitted from ~A.\n"
+            (sch2pcb_get_n_none)
+            pcb-new-filename))
+  (unless (zero? (sch2pcb_get_n_empty))
+    (format #t "~A components with empty footprint \"~A\" omitted from ~A.\n"
+            (sch2pcb_get_n_empty)
+            (sch2pcb_get_empty_footprint_name)
+            pcb-new-filename))
+  (unless (zero? (sch2pcb_get_n_changed_value))
+    (format #t "~A elements had a value change in ~A.\n"
+            (sch2pcb_get_n_changed_value)
+            pcb-filename))
+  (unless (zero? (sch2pcb_get_n_fixed))
+    (format #t "~A elements fixed in ~A.\n"
+            (sch2pcb_get_n_fixed)
+            pcb-filename))
+  (unless (zero? (sch2pcb_get_n_PKG_removed_old))
+    (format #t "~A elements could not be found."
+            (sch2pcb_get_n_PKG_removed_old))
+    (if pcb-file-created?
+        (format #t "  So ~A is incomplete.\n" pcb-filename)
+        (format #t "\n")))
+  (unless (zero? (sch2pcb_get_n_PKG_removed_new))
+    (format #t "~A elements could not be found."
+            (sch2pcb_get_n_PKG_removed_new))
+    (if pcb-file-created?
+        (format #t "  So ~A is incomplete.\n" pcb-new-filename)
+        (format #t "\n")))
+  (unless (zero? (sch2pcb_get_n_preserved))
+    (format #t "~A elements not in the schematic preserved in ~A.\n"
+            (sch2pcb_get_n_preserved)
+            pcb-filename))
+
+  ;; Tell user what to do next.
+  (unless (zero? (sch2pcb_get_verbose_mode))
+    (format #t "\n"))
+
+  (unless (zero? (+ (sch2pcb_get_n_added_ef)
+                    (sch2pcb_get_n_added_m4)))
+    (if initial-pcb?
+        (begin
+          (format #t "\nNext step:\n")
+          (format #t "1.  Run pcb on your file ~A.\n" pcb-filename)
+          (format #t "    You will find all your footprints in a bundle ready for you to place\n")
+          (format #t "    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n")
+          (format #t "2.  From within PCB, select \"File -> Load netlist file\" and select \n")
+          (format #t "    ~A to load the netlist.\n\n" net-filename)
+          (format #t "3.  From within PCB, enter\n\n")
+          (format #t "           :ExecuteFile(~A)\n\n" pins-filename)
+          (format #t "    to propagate the pin names of all footprints to the layout.\n\n"))
+        (when (= (sch2pcb_get_quiet_mode) FALSE)
+          (format #t "\nNext steps:\n")
+          (format #t "1.  Run pcb on your file ~A.\n" pcb-filename)
+          (format #t "2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n")
+          (format #t
+                  "    and select ~A to load the new footprints into your existing layout.\n"
+                  pcb-new-filename)
+          (format #t "3.  From within PCB, select \"File -> Load netlist file\" and select \n")
+          (format #t "    ~A to load the updated netlist.\n\n" net-filename)
+          (format #t "4.  From within PCB, enter\n\n")
+          (format #t "           :ExecuteFile(~A)\n\n" pins-filename)
+          (format #t "    to update the pin names of all footprints.\n\n")))))
 
 
 (let ((number-of-args (length (program-arguments))))

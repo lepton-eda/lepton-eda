@@ -36,8 +36,23 @@
             sch2pcb_make_pcb_element_list
             sch2pcb_get_sch_basename
             sch2pcb_get_schematics
-            sch2pcb_main
+            sch2pcb_get_empty_footprint_name
+            sch2pcb_get_n_PKG_removed_new
+            sch2pcb_get_n_PKG_removed_old
+            sch2pcb_get_n_added_ef
+            sch2pcb_get_n_added_m4
+            sch2pcb_get_n_changed_value
+            sch2pcb_get_n_deleted
+            sch2pcb_get_n_empty
+            sch2pcb_get_n_fixed
+            sch2pcb_get_n_none
+            sch2pcb_get_n_not_found
+            sch2pcb_get_n_preserved
+            sch2pcb_get_n_unknown
+            sch2pcb_get_need_PKG_purge
+            sch2pcb_get_pcb_element_list
             sch2pcb_prune_elements
+            sch2pcb_get_quiet_mode
             sch2pcb_run_netlister
             sch2pcb_update_element_descriptions
             sch2pcb_usage
@@ -62,8 +77,23 @@
 (define-lff sch2pcb_make_pcb_element_list void '(*))
 (define-lff sch2pcb_get_sch_basename '* '())
 (define-lff sch2pcb_get_schematics '* '())
-(define-lff sch2pcb_main int (list '* '* '* '* '* int))
+(define-lff sch2pcb_get_empty_footprint_name '* '())
+(define-lff sch2pcb_get_n_PKG_removed_new int '())
+(define-lff sch2pcb_get_n_PKG_removed_old int '())
+(define-lff sch2pcb_get_n_added_ef int '())
+(define-lff sch2pcb_get_n_added_m4 int '())
+(define-lff sch2pcb_get_n_changed_value int '())
+(define-lff sch2pcb_get_n_deleted int '())
+(define-lff sch2pcb_get_n_empty int '())
+(define-lff sch2pcb_get_n_fixed int '())
+(define-lff sch2pcb_get_n_none int '())
+(define-lff sch2pcb_get_n_not_found int '())
+(define-lff sch2pcb_get_n_preserved int '())
+(define-lff sch2pcb_get_n_unknown int '())
+(define-lff sch2pcb_get_need_PKG_purge int '())
+(define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_prune_elements void '(* *))
+(define-lff sch2pcb_get_quiet_mode int '())
 (define-lff sch2pcb_run_netlister int '(* * * * *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_usage int '())
