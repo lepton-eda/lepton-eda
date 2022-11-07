@@ -1955,7 +1955,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "gnetlist"))
       {
-        extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
+        sch2pcb_extra_gnetlist_list_append (arg);
         i++;
         continue;
       }
