@@ -1840,12 +1840,12 @@ sch2pcb_get_args (gint argc,
       else if (!strcmp (opt, "remove-unfound") || !strcmp (opt, "r"))
       {
         /* This is default behavior set in header section */
-        remove_unfound_elements = TRUE;
+        sch2pcb_set_remove_unfound_elements (TRUE);
         continue;
       }
       else if (!strcmp (opt, "keep-unfound") || !strcmp (opt, "k"))
       {
-        remove_unfound_elements = FALSE;
+        sch2pcb_set_remove_unfound_elements (FALSE);
         continue;
       }
       else if (!strcmp (opt, "quiet") || !strcmp (opt, "q"))
