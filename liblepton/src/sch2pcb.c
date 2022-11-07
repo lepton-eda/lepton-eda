@@ -1890,7 +1890,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "use-files") || !strcmp (opt, "f"))
       {
-        force_element_files = TRUE;
+        sch2pcb_set_force_element_files (TRUE);
         continue;
       }
       else if (!strcmp (opt, "skip-m4") || !strcmp (opt, "s"))
