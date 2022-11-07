@@ -166,4 +166,11 @@
                                 bak-filename
                                 pins-filename
                                 net-filename
-                                initial-pcb?)))))))
+                                initial-pcb?)
+
+                (sch2pcb_set_backend_mkfile_cmd %null-pointer)
+                (sch2pcb_set_backend_mkfile_net %null-pointer)
+                (sch2pcb_set_backend_mkfile_pcb %null-pointer)
+
+                (sch2pcb_set_default_m4_pcbdir %null-pointer)
+                (sch2pcb_set_m4_pcbdir %null-pointer)))))))

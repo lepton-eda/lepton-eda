@@ -25,6 +25,9 @@
   #:export (sch2pcb_add_default_m4_files
             sch2pcb_add_elements
             sch2pcb_get_args
+            sch2pcb_set_backend_mkfile_cmd
+            sch2pcb_set_backend_mkfile_net
+            sch2pcb_set_backend_mkfile_pcb
             sch2pcb_element_directory_list_append
             sch2pcb_get_fix_elements
             sch2pcb_set_default_m4_pcbdir
@@ -48,6 +51,9 @@
 (define-lff sch2pcb_add_default_m4_files void '())
 (define-lff sch2pcb_add_elements int '(*))
 (define-lff sch2pcb_get_args void (list int '*))
+(define-lff sch2pcb_set_backend_mkfile_cmd void '(*))
+(define-lff sch2pcb_set_backend_mkfile_net void '(*))
+(define-lff sch2pcb_set_backend_mkfile_pcb void '(*))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_default_m4_pcbdir void '(*))
