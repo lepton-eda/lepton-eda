@@ -1044,7 +1044,8 @@ sch2pcb_prune_elements (gchar *pcb_file,
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
     if (!el->still_exists) {
-      if (preserve) {
+      if (sch2pcb_get_preserve ())
+      {
         ++n_preserved;
         fprintf (stderr,
                  "Preserving PCB element not in the schematic:    %s (element   %s)\n",
@@ -1077,7 +1078,9 @@ sch2pcb_prune_elements (gchar *pcb_file,
     el_exists = NULL;
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
-        && !el_exists->still_exists && !preserve) {
+        && !el_exists->still_exists
+        && !sch2pcb_get_preserve ())
+      {
       skipping = TRUE;
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: deleted element %s (value=%s)\n",
