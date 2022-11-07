@@ -503,7 +503,7 @@ sch2pcb_create_m4_override_file ()
     fprintf (f, "(define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
   if (m4_files)
     fprintf (f, "(define gsch2pcb:m4-files \"%s\")\n", m4_files);
-  fprintf (f, "(define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
+  fprintf (f, "(define gsch2pcb:use-m4 %s)\n", sch2pcb_get_use_m4 () == TRUE ? "#t" : "#f");
 
   fclose (f);
   if (sch2pcb_get_verbose_mode () != 0)
@@ -514,7 +514,7 @@ sch2pcb_create_m4_override_file ()
       printf ("    (define gsch2pcb:pcb-m4-dir \"%s\")\n", sch2pcb_get_m4_pcbdir ());
     if (m4_files)
       printf ("    (define gsch2pcb:m4-files \"%s\")\n", m4_files);
-    printf ("    (define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
+    printf ("    (define gsch2pcb:use-m4 %s)\n", sch2pcb_get_use_m4 () == TRUE ? "#t" : "#f");
   }
 }
 
