@@ -92,6 +92,21 @@
   (call-protected (lambda () (delete-file filename))))
 
 
+;;; Report processing results.
+(define (report-results pcb-filename
+                        pcb-new-filename
+                        bak-filename
+                        pins-filename
+                        net-filename
+                        initial-pcb?)
+  (sch2pcb_main (string->pointer pcb-filename)
+                (string->pointer pcb-new-filename)
+                (string->pointer bak-filename)
+                (string->pointer pins-filename)
+                (string->pointer net-filename)
+                (if initial-pcb? TRUE FALSE)))
+
+
 (let ((number-of-args (length (program-arguments))))
   (if (= 1 number-of-args)
       (sch2pcb_usage)
@@ -146,9 +161,9 @@
                                                        (string->pointer bak-filename)))
                 (sch2pcb_prune_elements (string->pointer pcb-filename)
                                         (string->pointer bak-filename))
-                (sch2pcb_main (string->pointer pcb-filename)
-                              (string->pointer pcb-new-filename)
-                              (string->pointer bak-filename)
-                              (string->pointer pins-filename)
-                              (string->pointer net-filename)
-                              (if initial-pcb? TRUE FALSE))))))))
+                (report-results pcb-filename
+                                pcb-new-filename
+                                bak-filename
+                                pins-filename
+                                net-filename
+                                initial-pcb?)))))))
