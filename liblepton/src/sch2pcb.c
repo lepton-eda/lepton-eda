@@ -1633,7 +1633,7 @@ sch2pcb_parse_config (gchar *config,
     return 0;
   }
   if (!strcmp (config, "preserve") || !strcmp (config, "p")) {
-    preserve = TRUE;
+    sch2pcb_set_preserve (TRUE);
     return 0;
   }
   if (!strcmp (config, "use-files") || !strcmp (config, "f")) {
