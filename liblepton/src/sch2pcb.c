@@ -1637,7 +1637,7 @@ sch2pcb_parse_config (gchar *config,
     return 0;
   }
   if (!strcmp (config, "use-files") || !strcmp (config, "f")) {
-    force_element_files = TRUE;
+    sch2pcb_set_force_element_files (TRUE);
     return 0;
   }
   if (!strcmp (config, "skip-m4") || !strcmp (config, "s")) {
