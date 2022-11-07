@@ -1961,7 +1961,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "empty-footprint"))
       {
-        empty_footprint_name = g_strdup (arg);
+        sch2pcb_set_empty_footprint_name (arg);
         i++;
         continue;
       }
