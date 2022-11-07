@@ -1253,7 +1253,7 @@ sch2pcb_add_elements (gchar *pcb_file)
         fprintf (stderr,
                  "%s: can't find PCB element for footprint %s (value=%s)\n",
                  el->refdes, el->description, el->value);
-        if (remove_unfound_elements
+        if (sch2pcb_get_remove_unfound_elements ()
             && !sch2pcb_get_fix_elements())
         {
           fprintf (stderr,
