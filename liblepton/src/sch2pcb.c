@@ -565,7 +565,10 @@ sch2pcb_run_netlister (const char *gnetlist,
   if (sch2pcb_get_verbose_mode () == 0)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
 
-  for (list = extra_gnetlist_list; list; list = g_list_next (list)) {
+  for (list = sch2pcb_get_extra_gnetlist_list ();
+       list;
+       list = g_list_next (list))
+  {
     const gchar *s = (gchar *) list->data;
     const gchar *s2 = strstr (s, " -o ");
     gchar *out_file;
