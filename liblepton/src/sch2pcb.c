@@ -641,7 +641,7 @@ sch2pcb_run_netlister (const char *gnetlist,
                               verboseList,
                               backend_cmd,
                               pins_file,
-                              extra_gnetlist_arg_list,
+                              sch2pcb_get_extra_gnetlist_arg_list (),
                               largs))
     return FALSE;
 
@@ -650,7 +650,7 @@ sch2pcb_run_netlister (const char *gnetlist,
                               verboseList,
                               backend_net,
                               net_file,
-                              extra_gnetlist_arg_list,
+                              sch2pcb_get_extra_gnetlist_arg_list (),
                               largs))
     return FALSE;
   create_m4_override_file ();
@@ -668,7 +668,7 @@ sch2pcb_run_netlister (const char *gnetlist,
                               backend_pcb,
                               pcb_file,
                               args1,
-                              extra_gnetlist_arg_list,
+                              sch2pcb_get_extra_gnetlist_arg_list (),
                   largs)) {
       if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
           fprintf (stderr,
@@ -704,7 +704,7 @@ sch2pcb_run_netlister (const char *gnetlist,
                                 verboseList,
                                 backend,
                                 out_file,
-                                extra_gnetlist_arg_list,
+                                sch2pcb_get_extra_gnetlist_arg_list (),
                                 largs))
       return FALSE;
     g_free (out_file);
