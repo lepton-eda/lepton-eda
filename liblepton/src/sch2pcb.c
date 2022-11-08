@@ -1661,7 +1661,7 @@ sch2pcb_parse_config (gchar *config,
   else if (!strcmp (config, "gnetlist"))
     sch2pcb_extra_gnetlist_list_append (arg);
   else if (!strcmp (config, "empty-footprint"))
-    empty_footprint_name = g_strdup (arg);
+    sch2pcb_set_empty_footprint_name (arg);
 
   else
   if (strcmp (config, "backend-cmd") == 0)
