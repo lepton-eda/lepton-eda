@@ -870,7 +870,7 @@ sch2pcb_make_pcb_element_list (gchar *pcb_file)
     }
     if ((el = pcb_element_line_parse (s)) == NULL)
       continue;
-    pcb_element_list = g_list_append (pcb_element_list, el);
+    sch2pcb_pcb_element_list_append (el);
   }
   fclose (f);
 }
