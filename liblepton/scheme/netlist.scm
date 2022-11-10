@@ -157,8 +157,8 @@ code should use `gnetlist:get-backend-arguments' directly."
            (or (every (lambda (x) (equal? x value)) values)
                (format (current-error-port) (G_ "\
 Possible attribute conflict for refdes: ~A
-name: ~A
-values: ~A
+  name: ~A
+  values: ~S
 ") refdes name values))
            value))))
 
