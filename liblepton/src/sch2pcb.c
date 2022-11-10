@@ -1068,10 +1068,17 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                       "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char,
-               el->flags, el_exists->changed_description,
-               el->refdes, el->value, el->x, el->y, el->tail);
+               el->flags,
+               el_exists->changed_description,
+               pcb_element_get_refdes (el),
+               el->value,
+               el->x,
+               el->y,
+               el->tail);
       printf ("%s: updating element Description: %s -> %s\n",
-              el->refdes, el->description, el_exists->changed_description);
+              pcb_element_get_refdes (el),
+              el->description,
+              el_exists->changed_description);
       el_exists->still_exists = TRUE;
     } else
       fputs (buf, f_out);
