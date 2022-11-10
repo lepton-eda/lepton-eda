@@ -623,7 +623,7 @@ pcb_element_exists (PcbElement *el_test,
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
 
-    if (strcmp (el_test->refdes, el->refdes))
+    if (strcmp (pcb_element_get_refdes (el_test), pcb_element_get_refdes (el)))
       continue;
     if (strcmp (el_test->description, el->description)) { /* footprint */
       if (record)
