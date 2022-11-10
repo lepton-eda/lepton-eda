@@ -179,6 +179,12 @@ pcb_element_pkg_to_element (gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
+gboolean
+sch2pcb_get_bak_done ();
+
+void
+sch2pcb_set_bak_done (gboolean val);
+
 char*
 sch2pcb_get_empty_footprint_name ();
 
