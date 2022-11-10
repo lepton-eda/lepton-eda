@@ -12,6 +12,7 @@ EXTRA_DIST = \
 	one.sch.R101.footprint.unknown \
 	one.sch.R101.deleted \
 	two.sch \
+	packages/DIP8.fp \
 	sym/2N3904-1.sym \
 	sym/BNC-1.sym \
 	sym/dual-opamp-1.sym \
