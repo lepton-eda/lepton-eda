@@ -278,6 +278,18 @@ sch2pcb_get_pcb_element_list ()
 
 static gboolean bak_done;
 
+gboolean
+sch2pcb_get_bak_done ()
+{
+  return bak_done;
+}
+
+void
+sch2pcb_set_bak_done (gboolean val)
+{
+  bak_done = val;
+}
+
 
 static gchar *empty_footprint_name;
 
