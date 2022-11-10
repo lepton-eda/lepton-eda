@@ -1,4 +1,5 @@
 (use-modules (srfi srfi-64)
+             (ice-9 rdelim)
              (ice-9 receive))
 
 (load-from-path "env.scm")
@@ -358,6 +359,22 @@
 
 (test-end)
 
+;;; Copy IN-FILE to OUT-FILE replacing IN-STRING with OUT-STRING.
+(define (replace-one-line in-file out-file in-string out-string)
+  (with-input-from-file in-file
+    (lambda ()
+      (with-output-to-file out-file
+        (lambda ()
+          (let loop ((s (read-line))
+                     (done? #f))
+            (unless (eof-object? s)
+              (loop (read-line)
+                    (let ((replace? (and (not done?)
+                                         (string= s in-string))))
+                      (display (if replace? out-string s))
+                      (newline)
+                      (or replace? done?))))))))))
+
 
 (test-begin "sch2pcb --fix-elements")
 
@@ -384,6 +401,63 @@
 
     ;; Now the files are the same.
     (test-run-success "diff" tests/one.pcb "one-wrong-footprint.pcb"))
+
+  ;; Prepare files.
+  (replace-one-line one.sch "a.sch" "footprint=DIL 8 300" "footprint=SOME-FOOTPRINT")
+  (replace-one-line one.sch "b.sch" "footprint=DIL 8 300" "footprint=DIP8")
+  (mkdir "packages")
+  (copy-file (build-filename tests/ "packages" "DIP8.fp")
+             (build-filename "packages" "DIP8.fp"))
+
+  ;; Create one.pcb anew.
+  (delete-file one.pcb)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (file-exists? one.pcb)))
+
+  ;; First, change footprint= of U101.1 so it contains a value
+  ;; unknown for netlister.
+  (delete-file one.sch)
+  (rename-file "a.sch" one.sch)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      "--fix-elements"
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; The lepton-netlist output should contain lines as follows.
+    (test-assert (string-contains <stderr> "Possible attribute conflict for refdes: U101"))
+    (test-assert (string-contains <stderr> "name: footprint"))
+    (test-assert (string-contains <stderr> "values: (\"SOME-FOOTPRINT\" \"DIL 8 300\")"))
+    ;; The footprint is not found.
+    (test-assert (string-contains <stderr> "can't find PCB element for footprint \"SOME-FOOTPRINT\" (value=TL072)"))
+    (test-assert (string-contains <stdout> "U101: updating element Description: DIL-8-300 -> SOME-FOOTPRINT"))
+    (test-assert (file-exists? one.pcb))
+    (test-grep-file-success "Element(0x00 \"SOME-FOOTPRINT\" \"U101\" \"TL072\" 220 100 3 100 0x00)" one.pcb))
+
+
+  ;; Next, try the same with an existing footprint.
+  (delete-file one.sch)
+  (rename-file "b.sch" one.sch)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      "--fix-elements"
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    ;; The lepton-netlist output should contain lines as follows.
+    (test-assert (string-contains <stderr> "Possible attribute conflict for refdes: U101"))
+    (test-assert (string-contains <stderr> "name: footprint"))
+    (test-assert (string-contains <stderr> "values: (\"DIP8\" \"DIL 8 300\")"))
+    ;; The footprint should be found.
+    (test-assert (string-contains <stdout> "U101: updating element Description: SOME-FOOTPRINT -> DIP8"))
+    (test-assert (file-exists? one.pcb))
+    (test-grep-file-success "Element(0x00 \"DIP8\" \"U101\" \"TL072\" 220 100 3 100 0x00)" one.pcb))
 
   (test-teardown))
 
