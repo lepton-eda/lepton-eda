@@ -436,6 +436,8 @@
     ;; The footprint is not found.
     (test-assert (string-contains <stderr> "can't find PCB element for footprint \"SOME-FOOTPRINT\" (value=TL072)"))
     (test-assert (string-contains <stdout> "U101: updating element Description: DIL-8-300 -> SOME-FOOTPRINT"))
+    (test-assert (string-contains <stdout> "1 not found elements added to one.new.pcb."))
+    (test-assert (string-contains <stdout> "1 elements fixed in one.pcb."))
     (test-assert (file-exists? one.pcb))
     (test-grep-file-success "Element(0x00 \"SOME-FOOTPRINT\" \"U101\" \"TL072\" 220 100 3 100 0x00)" one.pcb))
 
@@ -443,6 +445,8 @@
   ;; Next, try the same with an existing footprint.
   (delete-file one.sch)
   (rename-file "b.sch" one.sch)
+  ;; Back up one.pcb.
+  (copy-file one.pcb "one.pcb.backup")
 
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
@@ -456,8 +460,30 @@
     (test-assert (string-contains <stderr> "values: (\"DIP8\" \"DIL 8 300\")"))
     ;; The footprint should be found.
     (test-assert (string-contains <stdout> "U101: updating element Description: SOME-FOOTPRINT -> DIP8"))
+    (test-assert (string-contains <stdout> "1 file elements and 0 m4 elements added to one.new.pcb."))
+    ;; One element is fixed.
+    (test-assert (string-contains <stdout> "1 elements fixed in one.pcb."))
+    ;; Nothing is deleted.
+    (test-assert (not (string-contains <stdout> "1 elements deleted from one.pcb.")))
     (test-assert (file-exists? one.pcb))
     (test-grep-file-success "Element(0x00 \"DIP8\" \"U101\" \"TL072\" 220 100 3 100 0x00)" one.pcb))
+
+  ;; The same test as the above only without '--fix-elements' just
+  ;; to make sure the program behaves otherwise.
+
+  ;; Restore one.pcb
+  (delete-file one.pcb)
+  (rename-file "one.pcb.backup" one.pcb)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "1 file elements and 0 m4 elements added to one.new.pcb."))
+    ;; One element is deleted.
+    (test-assert (string-contains <stdout> "1 elements deleted from one.pcb."))
+    ;; Nothing is fixed.
+    (test-assert (not (string-contains <stdout> "1 elements fixed in one.pcb."))))
 
   (test-teardown))
 
