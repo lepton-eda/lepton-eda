@@ -37,6 +37,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton library)
   #:use-module (lepton log)
+  #:use-module (lepton file-system)
   #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (lepton rc)
@@ -878,6 +879,21 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
         (backend-proc output-filename))))
 
 
+(define (load-scheme-script filename)
+  (define (load-and-log name)
+    (log! 'message (G_ "Loading ~S") name)
+    (primitive-load name))
+
+  ;; If the file exists in the current directory, or its name is
+  ;; absolute, just load it.
+  (if (file-readable? filename)
+      (load-and-log filename)
+      ;; Otherwise, try to find it in %load-path.
+      (let ((file (%search-load-path filename)))
+        (if file
+            (load-and-log file)
+            (log! 'warning (G_ "Could not find file ~S in %load-path.") filename)))))
+
 
 ;;; Main program
 ;;;
@@ -1017,7 +1033,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( catch #t
     ( lambda()
-      ( for-each primitive-load opt-pre-load )
+      (for-each load-scheme-script opt-pre-load)
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
@@ -1059,7 +1075,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( catch #t
     ( lambda()
-      ( for-each primitive-load opt-post-load )
+      (for-each load-scheme-script opt-post-load)
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
