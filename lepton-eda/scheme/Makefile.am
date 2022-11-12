@@ -133,6 +133,7 @@ nobase_dist_scmdata_DATA = \
 	sch2pcb/element.scm \
 	sch2pcb/format.scm \
 	sch2pcb/insert.scm \
+	sch2pcb/lookup.scm \
 	schematic/action.scm \
 	schematic/action-mode.scm \
 	schematic/action/copy.scm \
