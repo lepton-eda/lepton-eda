@@ -115,13 +115,6 @@
                         "src"
                         "liblepton"))
 
-;;; Test if netlister exists :-)
-(define *netlister*
-  (build-filename *abs-top-builddir*
-                  "tools"
-                  "netlist"
-                  "lepton-netlist"))
-
 ;;; For FreeBSD, where non-existing variables are not set by
 ;;; setenv() without putenv().
 (putenv (string-append "LIBLEPTON" "=" *liblepton*))
@@ -173,6 +166,12 @@
                   "cli"
                   "scheme"
                   "lepton-export"))
+
+(define lepton-netlist
+  (build-filename *abs-top-builddir*
+                  "tools"
+                  "netlist"
+                  "lepton-netlist"))
 
 (define lepton-shell
   (build-filename *abs-top-builddir*

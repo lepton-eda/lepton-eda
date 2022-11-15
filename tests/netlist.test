@@ -47,7 +47,7 @@
     (test-eq EXIT_SUCCESS
       (status:exit-val
        (apply system*
-              *netlister*
+              lepton-netlist
               "-L" backend-directory
               "-c" (string-append "(component-library \""
                                   (or complib default-symbol-directory)
@@ -75,9 +75,9 @@
 
 (test-begin "netlister")
 
-(test-assert (file-exists? *netlister*))
+(test-assert (file-exists? lepton-netlist))
 (test-eq EXIT_SUCCESS
-  (status:exit-val (system* *netlister* "--help")))
+  (status:exit-val (system* lepton-netlist "--help")))
 
 (test-end "netlister")
 
