@@ -1,4 +1,5 @@
-(use-modules (srfi srfi-64)
+(use-modules (ice-9 receive)
+             (srfi srfi-64)
              (srfi srfi-26))
 
 (load-from-path "env.scm")
@@ -103,3 +104,55 @@
                 #:complib switcap-example-symbol-dir)
 
 (test-schematic "utf8.sch" "geda")
+
+
+
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "netlist-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
+(test-begin "lepton-netlist -L")
+
+(test-group-with-cleanup "lepton-netlist -L"
+  (test-setup)
+  ;; Make a dummy schematic.
+  (touch "schematic.sch")
+  ;; Make a directory for a new backend.
+  (mkdir "backend")
+
+  ;; Make a backend file.
+  (string->file
+   "(define (test output-filename)
+(if (defined? 'l-option)
+    (display \"-l option\")
+    (display \"test backend\")))"
+   "backend/gnet-test.scm")
+  ;; Make a script for pre-loading.
+  (string->file "(define l-option 'l-option)" "l.scm")
+
+  ;; Test -L option.
+  (receive (<status> <stdout> <stderr>)
+      (command-values "lepton-netlist" "-L" "backend" "-g" "test" "-o" "-" "schematic.sch")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "test backend"))
+    (test-assert (not (string-contains <stdout> "-l option"))))
+
+  ;; Test -l option.
+  (receive (<status> <stdout> <stderr>)
+      (command-values "lepton-netlist" "-l" "l.scm" "-L" "backend" "-g" "test" "-o" "-" "schematic.sch")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stdout> "test backend")))
+    (test-assert (string-contains <stdout> "-l option")))
+
+  (test-teardown))
+
+(test-end)
