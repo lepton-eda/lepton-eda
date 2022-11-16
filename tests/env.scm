@@ -109,6 +109,39 @@
         (values exit-status out-string err-string)))))
 
 
+;;; This syntax uses the above procedure though does not require
+;;; quoting arguments.  Thus, the command of the form
+;;;   (command-values* a "b" c)
+;;; is equivalent to
+;;;   (command-values "a" "b" "c")
+;;;
+;;; For running a program using the function system() which uses
+;;; shell expansion, we would need to escape quotes in order to
+;;; get "\"b\"" for the second argument and then string-join() the
+;;; result.  Escaping may be done just by using (format #f "~S" s)
+;;; for strings.  The function system*() doesn't require this so
+;;; we just feed it strings as is.
+;;;
+;;; If a symbol argument starts with '$HOME/', the resulting
+;;; string is constructed from the $HOME environment variable
+;;; value and the second part of the symbol.  This does not apply
+;;; to string arguments in order to allow for arbitrary strings.
+(define-syntax command-values*
+  (syntax-rules ... ()
+      ((_ cmd args ...)
+       (apply command-values
+              cmd
+              (map
+               (lambda (s)
+                 (if (symbol? s)
+                     (let ((s (symbol->string s)))
+                       (if (string-prefix? "$HOME/" s)
+                           (string-append ($HOME) (string-drop s 5))
+                           s))
+                     s))
+               (quote (args ...)))))))
+
+
 (define (build-filename . ls)
   (string-join ls file-name-separator-string))
 
