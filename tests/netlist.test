@@ -178,6 +178,25 @@
     (test-assert (not (string-contains <stdout> "test backend")))
     (test-assert (string-contains <stdout> "-l and -m")))
 
+  ;; Tests for absolute and relative file names.
+
+  ;; Set $HOME to the test directory.
+  (with-home *testdir*
+
+    ;; Test -L option with relative path.
+    (receive (<status> <stdout> <stderr>)
+        (command-values* lepton-netlist -L ./backend -g test -o - schematic.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "test backend"))
+      (test-assert (not (string-contains <stdout> "-l option"))))
+
+    ;; Test -L option with absolute path.
+    (receive (<status> <stdout> <stderr>)
+        (command-values* lepton-netlist -L $HOME/backend -g test -o - schematic.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "test backend"))
+      (test-assert (not (string-contains <stdout> "-l option")))))
+
   (test-teardown))
 
 (test-end)
