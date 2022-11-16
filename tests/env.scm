@@ -63,6 +63,21 @@
   (test-grep-file <str> <filename> EXIT_FAILURE))
 
 
+;;; Save the environment variable to ensure it can be restored
+;;; later.
+(define $HOME (make-parameter (getenv "HOME")))
+
+;;; Set the $HOME environment variable to given PATH.
+(define-syntax-rule (with-home path form form* ...)
+  (let ((homedir ($HOME)))
+    (putenv (string-append "HOME=" path))
+    ;; Make sure $HOME is defined for other forms.
+    (parameterize (($HOME path)) form form* ...)
+    ;; Restore $HOME.
+    (if homedir
+        (putenv (string-append "HOME=" homedir))
+        (putenv "HOME"))))
+
 ;;; Get the exit status of COMMAND, its stdout and stderr output,
 ;;; and return the three values.
 (define (command-values . command)
