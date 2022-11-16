@@ -143,14 +143,14 @@
 
   ;; Test -L option.
   (receive (<status> <stdout> <stderr>)
-      (command-values "lepton-netlist" "-L" "backend" "-g" "test" "-o" "-" "schematic.sch")
+      (command-values* lepton-netlist -L backend -g test -o - schematic.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "test backend"))
     (test-assert (not (string-contains <stdout> "-l option"))))
 
   ;; Test -l option.
   (receive (<status> <stdout> <stderr>)
-      (command-values "lepton-netlist" "-l" "l.scm" "-L" "backend" "-g" "test" "-o" "-" "schematic.sch")
+      (command-values* lepton-netlist -l l.scm -L backend -g test -o - schematic.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (not (string-contains <stdout> "test backend")))
     (test-assert (string-contains <stdout> "-l option")))
