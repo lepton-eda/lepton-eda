@@ -129,14 +129,17 @@
   (mkdir "backend")
 
   ;; Make a backend file.
-  (string->file
-   "(define (test output-filename)
-(if (defined? 'l-option)
-    (display \"-l option\")
-    (display \"test backend\")))"
+  (sexp->file
+   ;; The main backend function displays "-l option" if the option
+   ;; was really used in command line used, otherways it displays
+   ;; "test backend".
+   '(define (test output-filename)
+      (if (defined? 'l-option)
+          (display "-l option")
+          (display "test backend")))
    "backend/gnet-test.scm")
   ;; Make a script for pre-loading.
-  (string->file "(define l-option 'l-option)" "l.scm")
+  (sexp->file '(define l-option 'l-option) "l.scm")
 
   ;; Test -L option.
   (receive (<status> <stdout> <stderr>)
