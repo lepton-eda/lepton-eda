@@ -141,6 +141,15 @@
   ;; Make a script for pre-loading.
   (sexp->file '(define l-option 'l-option) "l.scm")
 
+  ;; Make a script for post-loading.
+  (sexp->file
+   ;; Redefine the test() function defined in the test backend.
+   '(define (test output-filename)
+      (if (defined? 'l-option)
+          (display "-l and -m")
+          (display "only -m")))
+   "m.scm")
+
   ;; Test -L option.
   (receive (<status> <stdout> <stderr>)
       (command-values* lepton-netlist -L backend -g test -o - schematic.sch)
@@ -154,6 +163,20 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (not (string-contains <stdout> "test backend")))
     (test-assert (string-contains <stdout> "-l option")))
+
+  ;; Test -m option.
+  (receive (<status> <stdout> <stderr>)
+      (command-values* lepton-netlist -m m.scm -L backend -g test -o - schematic.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stdout> "test backend")))
+    (test-assert (string-contains <stdout> "only -m")))
+
+  ;; Test -l and -m options together.
+  (receive (<status> <stdout> <stderr>)
+      (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stdout> "test backend")))
+    (test-assert (string-contains <stdout> "-l and -m")))
 
   (test-teardown))
 
