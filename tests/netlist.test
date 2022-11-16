@@ -1,5 +1,4 @@
 (use-modules (ice-9 receive)
-             (srfi srfi-64)
              (srfi srfi-26))
 
 (load-from-path "env.scm")
