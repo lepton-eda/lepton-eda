@@ -150,52 +150,79 @@
           (display "only -m")))
    "m.scm")
 
-  ;; Test -L option.
-  (receive (<status> <stdout> <stderr>)
-      (command-values* lepton-netlist -L backend -g test -o - schematic.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "test backend"))
-    (test-assert (not (string-contains <stdout> "-l option"))))
-
-  ;; Test -l option.
-  (receive (<status> <stdout> <stderr>)
-      (command-values* lepton-netlist -l l.scm -L backend -g test -o - schematic.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (not (string-contains <stdout> "test backend")))
-    (test-assert (string-contains <stdout> "-l option")))
-
-  ;; Test -m option.
-  (receive (<status> <stdout> <stderr>)
-      (command-values* lepton-netlist -m m.scm -L backend -g test -o - schematic.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (not (string-contains <stdout> "test backend")))
-    (test-assert (string-contains <stdout> "only -m")))
-
-  ;; Test -l and -m options together.
-  (receive (<status> <stdout> <stderr>)
-      (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (not (string-contains <stdout> "test backend")))
-    (test-assert (string-contains <stdout> "-l and -m")))
-
-  ;; Tests for absolute and relative file names.
-
   ;; Set $HOME to the test directory.
-  (with-home *testdir*
+  (with-home
+   *testdir*
 
-    ;; Test -L option with relative path.
-    (receive (<status> <stdout> <stderr>)
-        (command-values* lepton-netlist -L ./backend -g test -o - schematic.sch)
-      (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "test backend"))
-      (test-assert (not (string-contains <stdout> "-l option"))))
+   ;; Test -L option.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (string-contains <stdout> "test backend"))
+     (test-assert (not (string-contains <stdout> "-l option"))))
 
-    ;; Test -L option with absolute path.
-    (receive (<status> <stdout> <stderr>)
-        (command-values* lepton-netlist -L $HOME/backend -g test -o - schematic.sch)
-      (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "test backend"))
-      (test-assert (not (string-contains <stdout> "-l option")))))
+   ;; Test -L option with relative path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -L ./backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (string-contains <stdout> "test backend"))
+     (test-assert (not (string-contains <stdout> "-l option"))))
+
+   ;; Test -L option with absolute path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -L $HOME/backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (string-contains <stdout> "test backend"))
+     (test-assert (not (string-contains <stdout> "-l option"))))
+
+   ;; Test -l option.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -l l.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "-l option")))
+
+   ;; Test -l option with relative path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -l ./l.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "-l option")))
+
+   ;; Test -l option with absolute path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -l $HOME/l.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "-l option")))
+
+   ;; Test -m option.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -m m.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "only -m")))
+
+   ;; Test -m option with relative path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -m ./m.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "only -m")))
+
+   ;; Test -m option with absolute path.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -m $HOME/m.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "only -m")))
+
+   ;; Test -l and -m options together.
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
+     (test-eq EXIT_SUCCESS <status>)
+     (test-assert (not (string-contains <stdout> "test backend")))
+     (test-assert (string-contains <stdout> "-l and -m"))))
 
   (test-teardown))
 
