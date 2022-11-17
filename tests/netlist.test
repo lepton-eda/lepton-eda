@@ -119,6 +119,23 @@
   (system* "rm" "-rf" *testdir*))
 
 
+;;; The same function as exists in (lepton os).
+(define (user-home-dir)
+  (or (getenv "HOME")
+      (passwd:dir (getpwuid (getuid)))))
+
+
+;;; Get the user data directory relative path in $HOME.
+(define *user-data-dir*
+  (string-drop
+   ;; Use lepton-netlist's stdout to get the value of
+   ;; (user-data-dir).
+   (receive (<status> <stdout> <stderr>)
+       (command-values* lepton-netlist -c "(use-modules (lepton os))(display (user-data-dir))")
+     <stdout>)
+   (1+ (string-length (user-home-dir)))))
+
+
 (test-begin "lepton-netlist -L")
 
 (test-group-with-cleanup "lepton-netlist -L"
@@ -222,7 +239,35 @@
        (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
      (test-eq EXIT_SUCCESS <status>)
      (test-assert (not (string-contains <stdout> "test backend")))
-     (test-assert (string-contains <stdout> "-l and -m"))))
+     (test-assert (string-contains <stdout> "-l and -m")))
+
+   ;; Test loading files from the user Scheme data directory.
+   ;; Create a directory for user data in current $HOME.
+   (let ((scheme-dir (build-filename ($HOME) *user-data-dir* "scheme"))
+         (new-l.scm (build-filename ($HOME) *user-data-dir* "scheme" "l.scm"))
+         (new-m.scm (build-filename ($HOME) *user-data-dir* "scheme" "m.scm"))
+         (inhibit-rc? (getenv "LEPTON_INHIBIT_RC_FILES")))
+     (system* "mkdir" "-p" scheme-dir)
+     (rename-file "l.scm" new-l.scm)
+     (rename-file "m.scm" new-m.scm)
+
+     (unsetenv "LEPTON_INHIBIT_RC_FILES")
+
+     ;; Assure the Scheme files are removed from the current
+     ;; directory.
+     (test-assert (not (file-exists? "l.scm")))
+     (test-assert (not (file-exists? "m.scm")))
+
+     ;; The command should still work with short file names.
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
+       (test-eq EXIT_SUCCESS <status>)
+       (test-assert (not (string-contains <stdout> "test backend")))
+       (test-assert (string-contains <stdout> "-l and -m")))
+
+     (when inhibit-rc?
+       (putenv (string-append "LEPTON_INHIBIT_RC_FILES=" inhibit-rc?)))))
+
 
   (test-teardown))
 
