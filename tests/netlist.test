@@ -271,6 +271,22 @@
        (test-assert (not (string-contains <stdout> "test backend")))
        (test-assert (string-contains <stdout> "-l and -m")))
 
+     ;; Now, same named local files in cwd and test that they have
+     ;; precedence over those in the user Scheme load path.
+     (sexp->file '(exit 1) "l.scm")
+     (mkdir "m")
+     (sexp->file '(exit 1) "m/m.scm")
+
+     ;; Test with -l only.
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist -l l.scm -g test -o - schematic.sch)
+       (test-eq EXIT_FAILURE <status>))
+
+     ;; Test with -m only.
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist -m m/m.scm -g test -o - schematic.sch)
+       (test-eq EXIT_FAILURE <status>))
+
      (when inhibit-rc?
        (putenv (string-append "LEPTON_INHIBIT_RC_FILES=" inhibit-rc?)))))
 
