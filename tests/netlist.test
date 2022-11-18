@@ -252,6 +252,9 @@
      (system* "mkdir" "-p" m-dir)
      (rename-file "l.scm" new-l.scm)
      (rename-file "m.scm" new-m.scm)
+     ;; Move backend file to the user Scheme directory.  Thus, the
+     ;; command below may omit '-L backend'.
+     (rename-file "backend/gnet-test.scm" (build-filename scheme-dir "gnet-test.scm"))
 
      (unsetenv "LEPTON_INHIBIT_RC_FILES")
 
@@ -260,9 +263,10 @@
      (test-assert (not (file-exists? "l.scm")))
      (test-assert (not (file-exists? "m.scm")))
 
-     ;; The command should still work with short file names.
+     ;; The command should still work with relative file names and
+     ;; without '-L backend'.
      (receive (<status> <stdout> <stderr>)
-         (command-values* lepton-netlist -l l.scm -m m/m.scm -L backend -g test -o - schematic.sch)
+         (command-values* lepton-netlist -l l.scm -m m/m.scm -g test -o - schematic.sch)
        (test-eq EXIT_SUCCESS <status>)
        (test-assert (not (string-contains <stdout> "test backend")))
        (test-assert (string-contains <stdout> "-l and -m")))
