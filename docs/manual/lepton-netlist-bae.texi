@@ -1,0 +1,13 @@
+@node BAE backend
+@section BAE netlister backend
+
+The BAE netlister backend by Rolf Fiedler
+@email{Rolf.Fiedler@@Ferrari.DE} is a backend generating netlists for
+the @url{https://bartels.de/bae/, Bartels AutoEngineer} program.
+
+It doesn't require any additional configuration.
+
+Example of netlist creation:
+@example
+lepton-netlist -g bae -o schematic.out schematic.sch
+@end example
