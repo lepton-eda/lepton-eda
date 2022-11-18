@@ -243,11 +243,13 @@
 
    ;; Test loading files from the user Scheme data directory.
    ;; Create a directory for user data in current $HOME.
-   (let ((scheme-dir (build-filename ($HOME) *user-data-dir* "scheme"))
-         (new-l.scm (build-filename ($HOME) *user-data-dir* "scheme" "l.scm"))
-         (new-m.scm (build-filename ($HOME) *user-data-dir* "scheme" "m.scm"))
-         (inhibit-rc? (getenv "LEPTON_INHIBIT_RC_FILES")))
-     (system* "mkdir" "-p" scheme-dir)
+   (let* ((scheme-dir (build-filename ($HOME) *user-data-dir* "scheme"))
+          (new-l.scm (build-filename scheme-dir "l.scm"))
+          (m-dir (build-filename scheme-dir "m"))
+          (new-m.scm (build-filename m-dir "m.scm"))
+          (inhibit-rc? (getenv "LEPTON_INHIBIT_RC_FILES")))
+     ;; Create user Scheme directory and a directory "m" within it.
+     (system* "mkdir" "-p" m-dir)
      (rename-file "l.scm" new-l.scm)
      (rename-file "m.scm" new-m.scm)
 
@@ -260,7 +262,7 @@
 
      ;; The command should still work with short file names.
      (receive (<status> <stdout> <stderr>)
-         (command-values* lepton-netlist -l l.scm -m m.scm -L backend -g test -o - schematic.sch)
+         (command-values* lepton-netlist -l l.scm -m m/m.scm -L backend -g test -o - schematic.sch)
        (test-eq EXIT_SUCCESS <status>)
        (test-assert (not (string-contains <stdout> "test backend")))
        (test-assert (string-contains <stdout> "-l and -m")))
