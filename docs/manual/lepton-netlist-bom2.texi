@@ -1,0 +1,30 @@
+@node BOM2 backend
+@section BOM2 netlister backend
+
+The @acronym{BOM, Bill of Material} netlister backend by Matthew Ettus
+@email{matt@@ettus.com} is a @emph{Bill Of Materials} generator.
+
+It takes a configuration file which tells what component information
+should be output in the resulting netlist for a schematic
+(i.e. vendor, part number).  The config file must be named
+@file{attribs} and be in the current working directory.  The user has
+to specify what @emph{attributes} should be output.
+
+Sample config file contents:
+@example
+footprint
+device
+@end example
+
+To make BOM, just do:
+@example
+lepton-netlist -g bom2 -o schematic.out schematic.sch
+@end example
+
+Sample output file contents:
+
+@example
+refdes:footprint:device:qty
+S1/C2:sm1206:CAPACITOR:1
+S2/R1:sm0805:RESISTOR:1
+@end example
