@@ -1,0 +1,11 @@
+@node Calay backend
+@section Calay netlister backend
+
+The netlister backend by John P. Doty.
+
+@emph{If you know what it is for, please let us know...}
+
+To make the netlist, do:
+@example
+lepton-netlist -g calay -o schematic.out schematic.sch
+@end example

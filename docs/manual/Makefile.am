@@ -19,6 +19,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist-bae.texi \
 	lepton-netlist-bom.texi \
 	lepton-netlist-bom2.texi \
+	lepton-netlist-calay.texi \
 	lepton-netlist-cascade.texi \
 	lepton-netlist-pads.texi \
 	lepton-netlist-protelii.texi \

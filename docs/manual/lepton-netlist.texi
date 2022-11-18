@@ -100,6 +100,7 @@ vipec
 * BAE backend::
 * BOM backend::
 * BOM2 backend::
+* Calay backend::
 * Cascade backend::
 * PADS backend::
 * ProtelII backend::
@@ -110,6 +111,7 @@ vipec
 @include lepton-netlist-bae.texi
 @include lepton-netlist-bom.texi
 @include lepton-netlist-bom2.texi
+@include lepton-netlist-calay.texi
 @include lepton-netlist-cascade.texi
 @include lepton-netlist-pads.texi
 @include lepton-netlist-protelii.texi
