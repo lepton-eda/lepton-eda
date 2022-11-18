@@ -101,6 +101,7 @@ vipec
 * BOM backend::
 * Cascade backend::
 * PADS backend::
+* ProtelII backend::
 * Switcap backend::
 @end menu
 
@@ -109,4 +110,5 @@ vipec
 @include lepton-netlist-bom.texi
 @include lepton-netlist-cascade.texi
 @include lepton-netlist-pads.texi
+@include lepton-netlist-protelii.texi
 @include lepton-netlist-switcap.texi

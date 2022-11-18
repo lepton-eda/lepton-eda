@@ -1,0 +1,13 @@
+@node ProtelII backend
+@section ProtelII netlister backend
+
+The ProtelII netlister backend by Rolf Fiedler
+@email{Rolf.Fiedler@@Ferrari.DE} is a backend generating netlists for
+the Protel program.
+
+It doesn't require any additional configuration.
+
+Example of netlist creation:
+@example
+lepton-netlist -g protelII -o schematic.out schematic.sch
+@end example
