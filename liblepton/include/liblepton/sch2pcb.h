@@ -24,9 +24,6 @@
 G_BEGIN_DECLS
 
 void
-sch2pcb_get_args (gint argc,
-                  gchar **argv);
-void
 sch2pcb_add_default_m4_files (void);
 
 gint
