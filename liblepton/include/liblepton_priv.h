@@ -30,6 +30,7 @@
 #include "line.h"
 #include "path.h"
 #include "picture.h"
+#include "sch2pcb.h"
 #include "text.h"
 #include "transform.h"
 
