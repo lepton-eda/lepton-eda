@@ -57,7 +57,7 @@
     (if (null-pointer? *page)
         (error (G_ "Could not create a new page."))
         (begin
-          (set-window-page! *window *page)
+          (*window-set-current-page! *window *page)
           (log! 'message
                 (G_ "New page created: ~S")
                 (pointer->string (lepton_page_get_filename *page)))))))

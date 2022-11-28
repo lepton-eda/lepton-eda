@@ -57,8 +57,8 @@
             snap-point
             window-close-page!
             window-open-page!
-            set-window-page!
-            window-set-current-page!)
+            window-set-current-page!
+            *window-set-current-page!)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -331,13 +331,6 @@ the new or found page."
             (x_tabs_page_set_cur *window *new-current-page))))))
 
 
-(define (set-window-page! *window *page)
-  "Changes page in the active page view of *WINDOW to *PAGE."
-  (if (true? (x_tabs_enabled))
-      (x_tabs_page_set_cur *window *page)
-      (x_window_set_current_page *window *page)))
-
-
 (define (callback-tab-button-close *button *tab-info)
   (if (null-pointer? *tab-info)
       (error "NULL TabInfo pointer.")
@@ -396,11 +389,18 @@ the new or found page."
   (procedure->pointer void callback-tab-button-up '(* *)))
 
 
+(define (*window-set-current-page! *window *page)
+  "Sets current page of *WINDOW to *PAGE."
+  (if (true? (x_tabs_enabled))
+      (x_tabs_page_set_cur *window *page)
+      (x_window_set_current_page *window *page)))
+
+
 (define (callback-page-manager-selection-changed *selection *widget)
   (define *page
     (pagesel_callback_selection_changed *selection *widget))
 
-  (set-window-page!
+  (*window-set-current-page!
    (schematic_page_select_widget_get_window *widget) *page))
 
 
@@ -555,7 +555,7 @@ window to PAGE.  Returns PAGE."
 
   (define *page (check-page page 1))
 
-  (set-window-page! *window *page)
+  (*window-set-current-page! *window *page)
   page)
 
 
@@ -585,10 +585,10 @@ window to PAGE.  Returns PAGE."
       ;; If the page is not active, make it active and close, then
       ;; switch back to the previously active page.
       (begin
-        (set-window-page! *window *page)
+        (*window-set-current-page! *window *page)
         (window-close-page! (current-window)
                              (pointer->page (schematic_window_get_active_page *window)))
-        (set-window-page! *window *active_page)))
+        (*window-set-current-page! *window *active_page)))
 
   ;; Return value is unspecified.
   (if #f #f))
@@ -622,8 +622,7 @@ window to PAGE.  Returns PAGE."
   "Sets current page of WINDOW to PAGE."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
-
-  (set-window-page! *window *page))
+  (*window-set-current-page! *window *page))
 
 
 (define (pointer-position)
