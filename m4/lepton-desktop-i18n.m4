@@ -55,7 +55,7 @@ gettext is correctly installed, and rerun configure.])
     --localedir=$(DESKTOP_I18N_LOCALE_DIR)/share/locale $(DESKTOP_I18N_LANGS)'
 
   DESKTOP_I18N_LANGS_RULE='DESKTOP_I18N_LANGS = $[$](echo "{ printf \"--lang=%s \", \$[$]1 }" \
-    | awk -f - $(abs_top_builddir)/$(DOMAIN)/po/LINGUAS)'
+    | awk -f - $(abs_top_srcdir)/$(DOMAIN)/po/LINGUAS)'
 
   DESKTOP_I18N_DESKTOP_RULE='.SUFFIXES: .desktop.in .desktop
 .desktop.in.desktop: ; $(DESKTOP_I18N_CREATE) $< [$]@'
