@@ -205,6 +205,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   no component is selected or when the selection contains more
   than one component.
 
+- The action *Edit* → *Select All* (<kbd>Control</kbd>+<kbd>A</kbd>)
+  has been improved in that it now runs the `select-objects-hook`
+  as expected once for each object on the active page.
+  Previously, the function first ran the hook for each set of
+  attributes, which was obviously wrong, as in the end, it ran the
+  same hook again for all objects on the page including those
+  attributes.
+
 - Toggling of magnetic and rubberband net modes is no longer
   logged.  The modes are pretty well visible for the user in the
   status bar.  Moreover, logging the events of toggling just
