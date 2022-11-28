@@ -244,6 +244,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   processed file was missing.  Now it just reports the issue
   without outputting backtrace.
 
+### Changes in `lepton-netlist`:
+
+- A number of tests for the program has been added to the
+  integration test suite.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
