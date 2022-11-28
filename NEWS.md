@@ -41,6 +41,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   were previously defined in C code.  Now, when this is no longer
   the case, the prefix has been dropped.
 
+- A new Scheme procedure has been introduced in the module
+  `(lepton object)`: `set-text-attribute-mode!()`.  The procedure
+  allows for setting the attribute show mode.
+
 - Log rotation has been moved from `geda.scm` to the config file
   `system-gafrc` in which system administrators can disable or
   enable it.
