@@ -80,11 +80,11 @@
            (*value (if value
                        (string->pointer value)
                        (string->pointer ""))))
-      (or (sch2pcb_parse_config *key *value)
-          (format (current-error-port)
-                  (G_ "Wrong line in ~S: ~S\n")
-                  path
-                  line))))
+      (unless (sch2pcb_parse_config *key *value)
+        (format (current-error-port)
+                (G_ "Wrong line in ~S: ~S\n")
+                path
+                line))))
 
   (define (skip-line? line)
     (or (string-null? line)
