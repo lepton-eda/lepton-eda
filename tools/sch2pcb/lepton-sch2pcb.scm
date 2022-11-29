@@ -78,24 +78,22 @@
         (let ((s (string-trim-both s char-set:whitespace)))
           ;; Skip empty lines or lines consisting only of
           ;; whitespaces.
-          (unless (string-null? s)
-            (let ((first-char (string-ref s 0)))
-              ;; Skip comments started with #, ;, or /.
-              (and (not (char=? first-char #\#))
-                   (not (char=? first-char #\/))
-                   (not (char=? first-char #\;))
-                   (let* ((args (string->pair s))
-                          (key (car args))
-                          (value (cdr args))
-                          (*key (string->pointer key))
-                          (*value (if value
-                                      (string->pointer value)
-                                      (string->pointer ""))))
-                     (or (sch2pcb_parse_config *key *value)
-                         (format (current-error-port)
-                                 (G_ "Wrong line in ~S: ~S\n")
-                                 path
-                                 s))))))
+          (unless (or (string-null? s)
+                      ;; Skip comments started with #, ;, or /.
+                      (char-set-contains? (char-set #\# #\/ #\;)
+                                          (string-ref s 0)))
+            (let* ((args (string->pair s))
+                   (key (car args))
+                   (value (cdr args))
+                   (*key (string->pointer key))
+                   (*value (if value
+                               (string->pointer value)
+                               (string->pointer ""))))
+              (or (sch2pcb_parse_config *key *value)
+                  (format (current-error-port)
+                          (G_ "Wrong line in ~S: ~S\n")
+                          path
+                          s))))
           (loop (read-line))))))
 
   (if (file-readable? path)
