@@ -89,10 +89,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new Scheme module, `(schematic window foreign)`, has been
   introduced.  It contains foreign wrappers and functions for
   toplevel schematic window structure similar to what we have in
-  `(lepton toplevel foreign)` for `<toplevel>` structure.
+  `(lepton toplevel foreign)` for `<toplevel>` structure.  The new
+  Scheme window type is called `<window>`.  Its instances wrap
+  foreign C pointers to structures of the type `GschemToplevel`.
 
-- `current-window()` now returns a Scheme wrapped pointer to an
-  instance of C type `GschemToplevel`.
+- The function `current-window()` now returns an instance of the
+  type `<window>`.
 
 - A syntax rule has been added to check the result of
   `current-window()` in the module `(schematic builtins)`.
@@ -125,9 +127,24 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   window of the program destroying and freeing all its widgets and
   resources.
 
-- A separate Scheme module for Slot edit dialog code, `(schematic
-  dialog edit-slot)`, has been added to localize the functionality
-  of the dialog.
+- A new procedure, `window-open-page!()`, has been introduced in
+  the module `(schematic window)`.  It opens a page for given file
+  name.
+
+- A new Scheme function, `schematic-error-dialog()`, has been
+  introduced in the module `(schematic dialog)`.  It launches a
+  generic error dialog box with given parameters.  The user can
+  set two messages, primary and secondary, and the title of the
+  dialog.
+
+- A new module for **File select** dialog code, `(schematic dialog
+  file-select)`, has been created.  Currently, it contains an only
+  function, `file-select-dialog()`, which runs the dialog and
+  returns the results of file selection.
+
+- A separate Scheme module for **Slot edit** dialog code,
+  `(schematic dialog edit-slot)`, has been added to localize the
+  functionality of the dialog.
 
 - Several actions in the module `(schematic builtins)` have been
   simplified so that a few intermediate `i_callback_*()` functions
