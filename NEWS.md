@@ -101,11 +101,24 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - Key event processing callback is now assigned in Scheme.
 
+- Global window list of `lepton-schematic` is now processed in
+  Scheme.  A new Scheme module, `(schematic window list)`, has
+  been introduced to deal with it.  It contains new procedures for
+  working with program windows in Scheme: `schematic-windows()`,
+  `window-exists?()`, `add-window!()`, and `remove-window!()`.
+  The functions allow for introspecting and modifying the list of
+  currently open windows.
+
 - A new Scheme function, `make-schematic-window()`, has been
   factored out for creating a new main `lepton-schematic`
   window. The function now lives in the module `(schematic
   window)`. Many top level widgets are now also set up in Scheme
   and their pointers are available for processing in Scheme.
+
+- A new Scheme function, `close-window!()`, has been introduced in
+  the module `(schematic window)`.  It closes currently active
+  window of the program destroying and freeing all its widgets and
+  resources.
 
 - A separate Scheme module for Slot edit dialog code, `(schematic
   dialog edit-slot)`, has been added to localize the functionality
