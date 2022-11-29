@@ -104,7 +104,9 @@
       (begin (verbose-format (G_ "Reading project file: ~A\n") path)
              (with-input-from-file path read-file))
       (when (> (sch2pcb_get_verbose_mode) 0)
-        (format (current-error-port) (G_ "Skip missing or unreadable file: ~A\n") path))))
+        (format (current-error-port)
+                (G_ "Skip missing or unreadable file: ~A\n")
+                path))))
 
 
 (define (load-extra-project-files)
