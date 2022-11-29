@@ -76,6 +76,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   functions now just test if a given file is missing and report
   that.
 
+- Determining the user home directory has been improved in the
+  function `expand-env-variable()`.  The function will now fall
+  back to lower level functions to determine the path if the
+  `$HOME` environment variable is not set.
+
 ### Changes in `libleptongui`:
 
 - The module `(schematic core gettext)` has been renamed to
