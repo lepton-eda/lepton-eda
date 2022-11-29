@@ -73,36 +73,34 @@
 
 (define (load-project-file path)
   (define (read-file)
-    (with-input-from-file path
-      (lambda ()
-        (verbose-format (G_ "Reading project file: ~A\n") path)
-        (let loop ((s (read-line)))
-          (and (not (eof-object? s))
-               (let ((s (string-trim-both s char-set:whitespace)))
-                 ;; Skip empty lines or lines consisting only of
-                 ;; whitespaces.
-                 (and (not (string-null? s))
-                      (let ((first-char (string-ref s 0)))
-                        ;; Skip comments started with #, ;, or /.
-                        (and (not (char=? first-char #\#))
-                             (not (char=? first-char #\/))
-                             (not (char=? first-char #\;))
-                             (let* ((args (string->pair s))
-                                    (key (car args))
-                                    (value (cdr args))
-                                    (*key (string->pointer key))
-                                    (*value (if value
-                                                (string->pointer value)
-                                                (string->pointer ""))))
-                               (or (sch2pcb_parse_config *key *value)
-                                   (format (current-error-port)
-                                           (G_ "Wrong line in ~S: ~S\n")
-                                           path
-                                           s))))))
-                 (loop (read-line))))))))
+    (let loop ((s (read-line)))
+      (and (not (eof-object? s))
+           (let ((s (string-trim-both s char-set:whitespace)))
+             ;; Skip empty lines or lines consisting only of
+             ;; whitespaces.
+             (and (not (string-null? s))
+                  (let ((first-char (string-ref s 0)))
+                    ;; Skip comments started with #, ;, or /.
+                    (and (not (char=? first-char #\#))
+                         (not (char=? first-char #\/))
+                         (not (char=? first-char #\;))
+                         (let* ((args (string->pair s))
+                                (key (car args))
+                                (value (cdr args))
+                                (*key (string->pointer key))
+                                (*value (if value
+                                            (string->pointer value)
+                                            (string->pointer ""))))
+                           (or (sch2pcb_parse_config *key *value)
+                               (format (current-error-port)
+                                       (G_ "Wrong line in ~S: ~S\n")
+                                       path
+                                       s))))))
+             (loop (read-line))))))
 
   (if (file-readable? path)
-      (read-file)
+      (begin (verbose-format (G_ "Reading project file: ~A\n") path)
+             (with-input-from-file path read-file))
       (when (> (sch2pcb_get_verbose_mode) 0)
         (format (current-error-port) (G_ "Skip missing or unreadable file: ~A\n") path))))
 
