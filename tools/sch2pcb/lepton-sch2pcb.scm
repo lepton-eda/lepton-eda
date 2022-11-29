@@ -91,13 +91,13 @@
         (char-set-contains? (char-set #\# #\/ #\;)
                             (string-ref line 0))))
   (define (read-file)
-    (let loop ((s (read-line)))
-      (unless (eof-object? s)
-        (let ((s (string-trim-both s char-set:whitespace)))
+    (let loop ((line (read-line)))
+      (unless (eof-object? line)
+        (let ((trimmed-line (string-trim-both line char-set:whitespace)))
           ;; Skip empty lines or lines consisting only of
           ;; whitespaces, and comments started with #, ;, or /.
-          (unless (skip-line? s)
-            (parse-line s))
+          (unless (skip-line? trimmed-line)
+            (parse-line trimmed-line))
           (loop (read-line))))))
 
   (if (file-readable? path)
