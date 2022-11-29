@@ -72,16 +72,17 @@
 
 
 (define (load-project-file path)
+  (define (skip-line? line)
+    (or (string-null? line)
+        (char-set-contains? (char-set #\# #\/ #\;)
+                            (string-ref line 0))))
   (define (read-file)
     (let loop ((s (read-line)))
       (unless (eof-object? s)
         (let ((s (string-trim-both s char-set:whitespace)))
           ;; Skip empty lines or lines consisting only of
-          ;; whitespaces.
-          (unless (or (string-null? s)
-                      ;; Skip comments started with #, ;, or /.
-                      (char-set-contains? (char-set #\# #\/ #\;)
-                                          (string-ref s 0)))
+          ;; whitespaces, and comments started with #, ;, or /.
+          (unless (skip-line? s)
             (let* ((args (string->pair s))
                    (key (car args))
                    (value (cdr args))
