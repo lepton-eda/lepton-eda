@@ -72,6 +72,20 @@
 
 
 (define (load-project-file path)
+  (define (parse-line line)
+    (let* ((args (string->pair line))
+           (key (car args))
+           (value (cdr args))
+           (*key (string->pointer key))
+           (*value (if value
+                       (string->pointer value)
+                       (string->pointer ""))))
+      (or (sch2pcb_parse_config *key *value)
+          (format (current-error-port)
+                  (G_ "Wrong line in ~S: ~S\n")
+                  path
+                  line))))
+
   (define (skip-line? line)
     (or (string-null? line)
         (char-set-contains? (char-set #\# #\/ #\;)
@@ -83,18 +97,7 @@
           ;; Skip empty lines or lines consisting only of
           ;; whitespaces, and comments started with #, ;, or /.
           (unless (skip-line? s)
-            (let* ((args (string->pair s))
-                   (key (car args))
-                   (value (cdr args))
-                   (*key (string->pointer key))
-                   (*value (if value
-                               (string->pointer value)
-                               (string->pointer ""))))
-              (or (sch2pcb_parse_config *key *value)
-                  (format (current-error-port)
-                          (G_ "Wrong line in ~S: ~S\n")
-                          path
-                          s))))
+            (parse-line s))
           (loop (read-line))))))
 
   (if (file-readable? path)
