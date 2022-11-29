@@ -163,6 +163,27 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Two new Scheme functions, `undo!()` and `redo!()`, have been
   introduced in the module `(schematic undo)`.
 
+- A not so obvious bug in the code of hierarchy traversing actions
+  has been fixed.  The code wrongly incremented an attribute
+  counter variable for `source=` attributes after processing
+  attached symbol attributes, which led to starting with wrong
+  inherited attribute after that if the inherited attributes were
+  to be processed.  In some cases, it might seem that the code
+  just rejected the inherited attributes of a symbol.  The bug has
+  been fixed by rewriting the code in Scheme and making it behave
+  like `lepton-netlist` does in such cases: if there are attached
+  `source=` attributes, only they are processed; if the list of
+  attached `source=` attributes is empty, the inherited attributes
+  are processed.
+
+- A bug with relative symbol names in the action
+  `&hierarchy-down-symbol()` has been fixed.  Previously, if a
+  symbol name was relative, searching the name amongst the names
+  of active pages would fail as they are stored as "normalized",
+  that is, absolute file names.  The issue has been fixed by
+  "canonicalizing" symbol names in Scheme before searching for
+  them.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
@@ -224,6 +245,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - The function `gtk_rc_parse()` deprecated in GTK3 is no longer
   called in Scheme for GTK3 port.
+
+- The behaviour of hierarchy traversing actions has been improved.
+  Previously, if no component were selected, or if the first
+  selected object was not a component, the actions silently
+  returned without any visual effect.  Now the actions behave as
+  follows:
+  - Page selection is filtered to ignore non-component objects
+    before processing components.
+  - If no component is selected, or several components are
+    selected, the action warns the user by displaying an error
+    dialog box with an appropriate message.
 
 ### Changes in `lepton-archive`:
 
