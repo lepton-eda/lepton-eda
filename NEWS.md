@@ -190,6 +190,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   callbacks of the Page manager widget have been rewritten in
   Scheme using the module.
 
+- Callbacks and signals related to the tab notebook widget and tab
+  buttons have been rewritten and are now assigned in Scheme.
+
 - The fluid `%lepton-window` and functions related to it have been
   moved to a new module, `(schematic window global)`, in order to
   avoid circular dependencies between modules in the `schematic`
