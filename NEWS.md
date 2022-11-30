@@ -57,6 +57,33 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   functionality have been created: `(lepton toplevel foreign)`,
   `(lepton page foreign)`, and `(lepton object foreign)`
 
+- A new module, `(lepton ffi boolean)`, has been created.  It
+  contains variables and procedures for working with foreign C
+  boolean values.
+
+- A new module, `(lepton ffi lff)`, has been introduced.  The
+  syntax `define-lff()` has been moved to it and renamed to
+  `define-lff-lib()`.  The macro name means *define lazy foreign
+  function*.  The syntax has been splitted up and renamed in order
+  to re-use it in different places for different goals without
+  many changes in the code.  This allowed for simplifying several
+  definitions in the module `(schematic ffi gtk)`, and in the
+  tools `lepton-schematic` and `lepton-attrib`.
+
+- Two new modules, `(lepton ffi gobject)` and `(lepton ffi glib)`,
+  have been introduced to localize `libgobject` and `libglib`
+  functions and separate their definitions from Lepton functions.
+
+- A new module, `(lepton ffi check-args)`, now contains functions
+  for checking arguments of foreign functions.
+
+- Scheme accessors for `GSList` lists and foreign functions for
+  freeing all memory of `GSList`s and `GList`s have been
+  introduced in the module `(lepton ffi glib)`.  Along with a new
+  optional argument that enables or disables memory freeing this
+  allowed for simplifying some Scheme procedures working with
+  lists in `lepton-attrib`.
+
 - Functions dealing with C `GList` lists in Scheme have been
   unified.
 
@@ -162,33 +189,6 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   for calling the callbacks from both Scheme and C.  Several C
   callbacks of the Page manager widget have been rewritten in
   Scheme using the module.
-
-- A new module, `(lepton ffi boolean)`, has been created.  It
-  contains variables and procedures for working with foreign C
-  boolean values.
-
-- A new module, `(lepton ffi lff)`, has been introduced.  The
-  syntax `define-lff()` has been moved to it and renamed to
-  `define-lff-lib()`.  The macro name means *define lazy foreign
-  function*.  The syntax has been splitted up and renamed in order
-  to re-use it in different places for different goals without
-  many changes in the code.  This allowed for simplifying several
-  definitions in the module `(schematic ffi gtk)`, and in the
-  tools `lepton-schematic` and `lepton-attrib`.
-
-- Two new modules, `(lepton ffi gobject)` and `(lepton ffi glib)`,
-  have been introduced to localize `libgobject` and `libglib`
-  functions and separate their definitions from Lepton functions.
-
-- A new module, `(lepton ffi check-args)`, now contains functions
-  for checking arguments of foreign functions.
-
-- Scheme accessors for `GSList` lists and foreign functions for
-  freeing all memory of `GSList`s and `GList`s have been
-  introduced in the module `(lepton ffi glib)`.  Along with a new
-  optional argument that enables or disables memory freeing this
-  allowed for simplifying some Scheme procedures working with
-  lists in `lepton-attrib`.
 
 - The fluid `%lepton-window` and functions related to it have been
   moved to a new module, `(schematic window global)`, in order to
