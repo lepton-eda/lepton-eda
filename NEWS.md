@@ -331,6 +331,28 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A number of tests for the program has been added to the
   integration test suite.
 
+### Changes in `lepton-sch2pcb`:
+
+- The program has been partially rewritten in Scheme.  The rest C
+  code of the program has been merged into `liblepton`.
+
+- A new module, `(lepton ffi sch2pcb)`, has been created.  It is
+  going to contain foreign function definitions for the program.
+
+- Processing of long program options has been amended so they now
+  conform to POSIX and GNU guidelines.  Basically, that means that
+  the arguments of long options have now to be separated from
+  the options by equal signs, not by spaces.
+
+- So named extra project files are now loaded from Lepton system
+  and user configuration directories that include standard XDG
+  config directories.  The files are now loaded once at a
+  predetermined point of time: just before loading any other files
+  and before processing the options.  Paths previously defined in
+  the program source code for looking up for extra project files,
+  `/etc/gsch2pcb` and `/usr/local/etc/gsch2pcb`, are no longer
+  used for this purpose.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
