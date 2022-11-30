@@ -234,9 +234,13 @@ Component library setup
 Netlister
 
 * Allegro backend::
+* BAE backend::
 * BOM backend::
+* BOM2 backend::
+* Calay backend::
 * Cascade backend::
 * PADS backend::
+* ProtelII backend::
 * Switcap backend::
 
 lepton-cli - Lepton command-line utility
