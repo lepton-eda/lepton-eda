@@ -10,3 +10,53 @@ so that the schematics are always in sync with the layout created from
 them.  Additions and deletions of elements in the design layout as
 well as changes in their interconnections are automatically driven by
 changes in the design schematics.
+
+@node Attributes for PCB layout
+@section Attributes for PCB layout
+@cindex attributes for PCB layout
+@cindex PCB layout, attributes
+
+Historically, the following schematic symbol attributes are used for
+PCB layout:
+
+@table @samp
+@item footprint
+attached to a symbol, defines a PCB element file name to be placed on
+the layout for that instance of the symbol.  PCB element is a visible
+pattern, the footprint, corresponding to a physical electronic
+component in PCB layout.
+
+@item refdes
+attached to a symbol is its reference designator on the schematic.  In
+PCB layout programs, it can appear as the displayed @emph{element
+name}.
+
+@item value
+usually is used to store the type of the electronic component
+representing by a symbol, e.g. @strong{7400}, or its value,
+e.g. @strong{1K} for resistor.  In PCB layout programs, it can also be
+shown as @emph{element name} depending on their settings.
+
+@end table
+
+All the above attributes are used to propagate the changes in your
+schematics to the corresponding PCB layout.
+
+@node Two types of PCB elements
+@section Two types of PCB elements
+@cindex PCB element type
+@cindex type of PCB element
+
+Historically, there are two types of PCB elements: @emph{file element}
+and @emph{m4 element}.  The former are files containing all the info
+required to represent fixed footprints of the components corresponding
+to them.  The latter are files that should be processed by
+@command{m4} command to obtain the footprint data.  An @emph{m4
+element} may generate several footprint definitions.  Those @emph{m4
+elements} are supported only by the program @command{pcb} and it is
+not recommended to use them as all @emph{m4 elements} in @command{pcb}
+have corresponding @emph{file elements}.  However, the @emph{m4
+elements} are still supported by @schpcb.  To deal with them, the
+program uses @netlist{} which, in turn, needs to know the name of a
+directory of the @command{pcb} package containing the file
+@file{common.m4}.
