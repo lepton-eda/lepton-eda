@@ -326,6 +326,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   processed file was missing.  Now it just reports the issue
   without outputting backtrace.
 
+- Previously, scripts specified by the options `-m` and `-l` had
+  to be absolute file names or names of files in the current
+  directory.  It is no longer required and now the user can simply
+  set the basename of a file to be loaded, possibly along with its
+  relative path, and the name will be searched for first in the
+  current working directory, and then, if nothing found, in all
+  Lepton user and system data directories listed in the output of
+  the functions `user-data-dir()` and `sys-data-dirs()`.  The
+  program loads only the first file found and reports its name to
+  log.  If nothing found, it is also logged.
+
 ### Changes in `lepton-netlist`:
 
 - A number of tests for the program has been added to the
