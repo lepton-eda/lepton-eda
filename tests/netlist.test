@@ -334,3 +334,52 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "module-backend")
+
+(test-group-with-cleanup "module-backend"
+  (test-setup)
+  ;; Make a dummy schematic.
+  (touch "schematic.sch")
+
+  ;; Set $HOME to the test directory.
+  (with-home
+   *testdir*
+
+   ;; Create a directory for user data in current $HOME.
+   (let* ((backend-dir (build-filename ($HOME) *user-data-dir* "scheme" "backend"))
+          (backend-file (build-filename backend-dir "test-module-backend.scm"))
+          (inhibit-rc? (getenv "LEPTON_INHIBIT_RC_FILES")))
+     ;; Create user Scheme directory and a directory "m" within it.
+     (system* "mkdir" "-p" backend-dir)
+
+     ;; Make backend file.
+     (sexp->file
+      backend-file
+      ;; Simple test backend.
+      '(define-module (backend test-module-backend)
+         #:export (test-module-backend))
+      ;; This is the exported function.
+      '(define (test-module-backend out)
+         (display "It works!\n")))
+
+     (unsetenv "LEPTON_INHIBIT_RC_FILES")
+
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist --list-backends)
+       (test-eq EXIT_SUCCESS <status>)
+       (test-assert (string-contains <stdout> "test-module-backend")))
+
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist -g test-module-backend -o - schematic.sch)
+       (test-eq EXIT_SUCCESS <status>)
+       (test-assert (string-contains <stdout> "It works!")))
+
+     (when inhibit-rc?
+       (putenv (string-append "LEPTON_INHIBIT_RC_FILES=" inhibit-rc?)))))
+
+
+  (test-teardown))
+
+(test-end "module-backend")
