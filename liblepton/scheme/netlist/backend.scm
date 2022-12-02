@@ -60,7 +60,7 @@
                  backend (car (program-arguments))))
 
 
-(define (backend-filename? filename)
+(define (legacy-backend-filename? filename)
   "Return #t if FILENAME is a backend filename, otherwise return
 #f."
   (and (string-prefix? %backend-prefix filename)
@@ -74,7 +74,7 @@ formed by dropping the prefix \"gnet-\" and the extenstion
 \".scm\".  Returns the resulting string or #f if FILENAME does not
 meet the specified requirements."
   (let ((base (basename filename)))
-    (and (backend-filename? base)
+    (and (legacy-backend-filename? base)
          (string-drop-right (string-drop base %backend-prefix-length)
                             %backend-suffix-length))))
 
@@ -122,7 +122,7 @@ returns the resulting list of filenames.  A file is considered to
 be a backend if its basename begins with \"gnet-\" and ends with
 \".scm\"."
   (define (path-backends path)
-    (or (scandir path backend-filename?)
+    (or (scandir path legacy-backend-filename?)
         (begin
           (log! 'warning (G_ "Can't open directory ~S.\n") path)
           '())))
