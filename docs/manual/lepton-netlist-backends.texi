@@ -12,3 +12,69 @@ using functions provided by @netlist{} Scheme API.  As you may now
 guess, there are several backends in Lepton and each of them uses its
 own way to transform the schematic model.  In the command-line, the
 user may specify only one backend at a time.
+
+
+
+@node Backend types
+@subsection Backend types
+@cindex backend types
+@cindex lepton-netlist backend types
+
+Backend system has been inherited from gEDA @command{gnetlist} and
+currently, there is only one type of backends for @netlist{}:
+@dfn{backend} is a simple Scheme @emph{script} containing a
+@emph{definition} of its main function.
+
+In order @netlist{} to understand a file is a backend, it must
+meet the following requirements:
+@itemize
+@item
+Its filename must have the @file{gnet-} prefix.
+@item
+The filename must have the extension @file{.scm}.
+@item
+It should export a function named the same as backend itself.
+@end itemize
+
+The name of the backend is defined by removing the prefix @file{gnet-}
+and the suffix @file{.scm} from its file basename.  For example, if
+backend file name is @file{gnet-custom-backend.scm}, its name is
+@code{custom-backend} and its code has to contain a definition of a
+function named @code{custom-backend}.  The function must take one
+argument which is the output file name.  Really, it is not necessary
+to use this argument in the code as @netlist{} automatically redirects
+the standard output of the function into a file if it is specified by
+its command-line arguments.
+
+
+
+@node Backend launching
+@subsection Backend launching
+@cindex backend launching
+@cindex launch a backend
+
+To simply run @netlist{} and get the output of a backend, use the
+option @option{-g @var{backend-name}}.  For example:
+
+@example
+lepton-netlist -g custom-backend schematic1.sch ...
+@end example
+
+By default, @netlist{} outputs the result to a file named
+@file{output.net}.
+
+Output file name may be changed by the option @option{-o
+@var{filename}}.  If the option argument is @file{-} (dash), the
+output is redirected to the standard output of your terminal.
+
+To output your netlist to, say, @file{schematic.net}, type:
+
+@example
+lepton-netlist -g custom-backend -o schematic.net schematic1.sch ...
+@end example
+
+To display the output of the backend in your terminal, type:
+
+@example
+lepton-netlist -g custom-backend -o - schematic1.sch ...
+@end example
