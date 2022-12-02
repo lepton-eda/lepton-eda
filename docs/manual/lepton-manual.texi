@@ -236,6 +236,7 @@ Netlister
 
 * Running lepton-netlist::
 * lepton-netlist command-line arguments::
+* Backends::
 * Allegro backend::
 * BAE backend::
 * BOM backend::

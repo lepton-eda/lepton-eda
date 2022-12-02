@@ -16,6 +16,7 @@ lepton_manual_TEXINFOS = \
 	lepton-eda-fonts.texi \
 	lepton-netlist.texi \
 	lepton-netlist-allegro.texi \
+	lepton-netlist-backends.texi \
 	lepton-netlist-bae.texi \
 	lepton-netlist-bom.texi \
 	lepton-netlist-bom2.texi \

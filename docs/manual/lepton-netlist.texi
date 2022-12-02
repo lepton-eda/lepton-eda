@@ -98,6 +98,7 @@ vipec
 @menu
 * Running lepton-netlist::
 * lepton-netlist command-line arguments::
+* Backends::
 * Allegro backend::
 * BAE backend::
 * BOM backend::
@@ -112,6 +113,7 @@ vipec
 
 @include lepton-netlist-running.texi
 @include lepton-netlist-command-line.texi
+@include lepton-netlist-backends.texi
 @include lepton-netlist-allegro.texi
 @include lepton-netlist-bae.texi
 @include lepton-netlist-bom.texi
