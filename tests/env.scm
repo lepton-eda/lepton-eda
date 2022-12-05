@@ -153,10 +153,10 @@
 (define (touch filename)
   (string->file "" filename))
 
-;;; Write s-expression to file.
-(define (sexp->file sexp filename)
+;;; Write s-expressions to file.
+(define* (sexp->file filename . sexp)
   (with-output-to-file filename
-    (lambda () (write sexp))))
+    (lambda () (for-each write sexp))))
 
 
 (define *abs-top-builddir* (getenv "abs_top_builddir"))

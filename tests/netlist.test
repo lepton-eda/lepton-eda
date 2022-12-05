@@ -146,26 +146,24 @@
   (mkdir "backend")
 
   ;; Make a backend file.
-  (sexp->file
+  (sexp->file "backend/gnet-test.scm"
    ;; The main backend function displays "-l option" if the option
    ;; was really used in command line used, otherways it displays
    ;; "test backend".
    '(define (test output-filename)
       (if (defined? 'l-option)
           (display "-l option")
-          (display "test backend")))
-   "backend/gnet-test.scm")
+          (display "test backend"))))
   ;; Make a script for pre-loading.
-  (sexp->file '(define l-option 'l-option) "l.scm")
+  (sexp->file "l.scm" '(define l-option 'l-option))
 
   ;; Make a script for post-loading.
-  (sexp->file
+  (sexp->file  "m.scm"
    ;; Redefine the test() function defined in the test backend.
    '(define (test output-filename)
       (if (defined? 'l-option)
           (display "-l and -m")
-          (display "only -m")))
-   "m.scm")
+          (display "only -m"))))
 
   ;; Set $HOME to the test directory.
   (with-home
@@ -273,9 +271,9 @@
 
      ;; Now, same named local files in cwd and test that they have
      ;; precedence over those in the user Scheme load path.
-     (sexp->file '(exit 1) "l.scm")
+     (sexp->file "l.scm" '(exit 1))
      (mkdir "m")
-     (sexp->file '(exit 1) "m/m.scm")
+     (sexp->file "m/m.scm" '(exit 1))
 
      ;; Test with -l only.
      (receive (<status> <stdout> <stderr>)
