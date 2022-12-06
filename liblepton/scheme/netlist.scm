@@ -782,12 +782,10 @@ other limitations imposed by this netlist format.
          name)))
 
 
-;;; Prints a list of available backends.
-(define (gnetlist-backends)
-  "Prints a list of available gnetlist backends by searching for
-files in each of the directories in the current Guile %load-path.
-A file is considered to be a gnetlist backend if its basename
-begins with \"gnet-\" and ends with \".scm\"."
+(define (lookup-backends)
+  "Searches %load-path for available lepton-netlist backends and
+prints the resulting list.  A file is considered to be a backend
+if its basename begins with \"gnet-\" and ends with \".scm\"."
   (define (path-backends path)
     (or (scandir path backend-filename?)
         (begin
@@ -988,7 +986,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ( when opt-list-backends
-    ( gnetlist-backends )
+    ( lookup-backends )
     ( primitive-exit 0 )
   )
 
