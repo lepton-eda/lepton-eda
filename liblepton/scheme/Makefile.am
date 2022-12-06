@@ -52,6 +52,7 @@ nobase_dist_scmdata_DATA = \
 	netlist/attrib/compare.scm \
 	netlist/attrib/refdes.scm \
 	netlist/backend-getopt.scm \
+	netlist/backend.scm \
 	netlist/config.scm \
 	netlist/deprecated.scm \
 	netlist/duplicate.scm \

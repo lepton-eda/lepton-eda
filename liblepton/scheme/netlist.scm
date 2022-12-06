@@ -37,6 +37,7 @@
   #:use-module (lepton version)
   #:use-module (netlist attrib compare)
   #:use-module (netlist attrib refdes)
+  #:use-module (netlist backend)
   #:use-module (netlist config)
   #:use-module (netlist deprecated)
   #:use-module (netlist duplicate)
@@ -868,15 +869,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
           tag
           args)
   #f)
-
-(define (run-backend backend output-filename)
-  (let ((backend-proc (primitive-eval (string->symbol backend))))
-    (if output-filename
-        ;; output-filename is defined, output to it.
-        (with-output-to-file output-filename
-          (lambda () (backend-proc output-filename)))
-        ;; output-filename is #f, output to stdout.
-        (backend-proc output-filename))))
 
 
 (define (load-scheme-script filename)
