@@ -788,27 +788,15 @@ other limitations imposed by this netlist format.
 files in each of the directories in the current Guile %load-path.
 A file is considered to be a gnetlist backend if its basename
 begins with \"gnet-\" and ends with \".scm\"."
-  (define backend-prefix "gnet-")
-  (define backend-suffix ".scm")
-  (define prefix-length (string-length backend-prefix))
-  (define suffix-length (string-length backend-suffix))
-
-  (define (backend? filename)
-    (and (string-prefix? backend-prefix filename)
-         (string-suffix? backend-suffix filename)))
-
-  (define (backend-name filename)
-    (string-drop-right (string-drop filename prefix-length) suffix-length))
-
   (define (path-backends path)
-    (or (scandir path backend?)
+    (or (scandir path backend-filename?)
         (begin
           (log! 'warning (G_ "Can't open directory ~S.\n") path)
           '())))
 
   (let ((backend-files (append-map path-backends (delete-duplicates %load-path))))
     (display (string-join
-              (sort! (map backend-name backend-files) string-locale<?)
+              (sort! (map backend-filename->proc-name backend-files) string-locale<?)
               "\n"
               'suffix))))
 

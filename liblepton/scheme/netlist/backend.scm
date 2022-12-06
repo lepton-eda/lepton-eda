@@ -17,23 +17,32 @@
 
 
 (define-module (netlist backend)
-  #:use-module (ice-9 regex)
-
   #:export (backend-filename->proc-name
             run-backend))
 
+(define %backend-prefix "gnet-")
+(define %backend-suffix ".scm")
+(define %backend-prefix-length (string-length %backend-prefix))
+(define %backend-suffix-length (string-length %backend-suffix))
+
+
+(define (backend-filename? filename)
+  "Return #t if FILENAME is a backend filename, otherwise return
+#f."
+  (and (string-prefix? %backend-prefix filename)
+       (string-suffix? %backend-suffix filename)))
+
 
 (define (backend-filename->proc-name filename)
-  ( let*
-    (
-    ( bname (basename filename) )
-    ( re    (string-match "^gnet-(.*).scm$" bname) )
-    )
-
-    ;; Return the function name if the file name matched the above
-    ;; regexp, otherwise return #f.
-    (and re
-         (match:substring re 1))))
+  "Transforms FILENAME to a backend name which is also the name of
+the procedure the backend runs.  For legacy backends, the name is
+formed by dropping the prefix \"gnet-\" and the extenstion
+\".scm\".  Returns the resulting string or #f if FILENAME does not
+meet the specified requirements."
+  (let ((base (basename filename)))
+    (and (backend-filename? base)
+         (string-drop-right (string-drop base %backend-prefix-length)
+                            %backend-suffix-length))))
 
 
 (define (run-backend backend output-filename)
