@@ -956,7 +956,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Backend specified by name:
   ;
   ( when opt-backend
-    ( set! backend-path ( %search-load-path (format #f "gnet-~A.scm" opt-backend) ) )
+    ( set! backend-path (search-backend opt-backend) )
     ( set! backend-proc-name opt-backend )
   )
 

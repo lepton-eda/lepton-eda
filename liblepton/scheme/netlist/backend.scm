@@ -30,7 +30,8 @@
   #:export (backend-filename->proc-name
             lookup-backends
             query-backend-mode
-            run-backend))
+            run-backend
+            search-backend))
 
 (define %backend-prefix "gnet-")
 (define %backend-suffix ".scm")
@@ -68,6 +69,11 @@ redirection is carried out."
           (lambda () (backend-proc output-filename)))
         ;; output-filename is #f, output to stdout.
         (backend-proc output-filename))))
+
+
+(define (search-backend name)
+  "Searches for backend by its NAME."
+  (%search-load-path (format #f "gnet-~A.scm" name)))
 
 
 (define (lookup-backends)
