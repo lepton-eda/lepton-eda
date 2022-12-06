@@ -17,7 +17,23 @@
 
 
 (define-module (netlist backend)
-  #:export (run-backend))
+  #:use-module (ice-9 regex)
+
+  #:export (backend-filename->proc-name
+            run-backend))
+
+
+(define (backend-filename->proc-name filename)
+  ( let*
+    (
+    ( bname (basename filename) )
+    ( re    (string-match "^gnet-(.*).scm$" bname) )
+    )
+
+    ;; Return the function name if the file name matched the above
+    ;; regexp, otherwise return #f.
+    (and re
+         (match:substring re 1))))
 
 
 (define (run-backend backend output-filename)

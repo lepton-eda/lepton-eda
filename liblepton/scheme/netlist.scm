@@ -22,7 +22,6 @@
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
   #:use-module (ice-9 match)
-  #:use-module (ice-9 regex)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
 
@@ -937,18 +936,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( define ( error-backend-mode mode )
     (netlist-error 1 (G_ "Netlist mode requested by backend is not supported: ~A\n") mode)
   )
-
-  (define (backend-filename->proc-name filename )
-  ( let*
-    (
-    ( bname (basename filename) )
-    ( re    (string-match "^gnet-(.*).scm$" bname) )
-    )
-
-    ;; Return the function name if the file name matched the above
-    ;; regexp, otherwise return #f.
-    (and re
-         (match:substring re 1))))
 
   ; Backend can request what netlist mode should be used
   ; by providing request-netlist-mode() function, that
