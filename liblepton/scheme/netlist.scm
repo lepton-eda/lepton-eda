@@ -938,7 +938,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     (netlist-error 1 (G_ "Netlist mode requested by backend is not supported: ~A\n") mode)
   )
 
-  ( define ( get-backend-proc-name filename )
+  (define (backend-filename->proc-name filename )
   ( let*
     (
     ( bname (basename filename) )
@@ -1044,7 +1044,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( when opt-file-backend
     ( set! backend-path opt-file-backend )
-    ( set! backend-proc-name (get-backend-proc-name backend-path) )
+    ( set! backend-proc-name (backend-filename->proc-name backend-path) )
   )
 
 
