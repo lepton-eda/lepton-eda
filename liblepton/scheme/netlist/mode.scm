@@ -39,4 +39,4 @@
   %default-netlist-mode)
 
 (define (netlist-mode? mode)
-  (member mode (netlist-modes)))
+  (memq mode (netlist-modes)))
