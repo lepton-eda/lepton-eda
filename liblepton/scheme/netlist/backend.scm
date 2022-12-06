@@ -58,6 +58,9 @@ meet the specified requirements."
 
 
 (define (run-backend backend output-filename)
+  "Runs backend's function BACKEND with redirection of its
+standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
+redirection is carried out."
   (let ((backend-proc (primitive-eval (string->symbol backend))))
     (if output-filename
         ;; output-filename is defined, output to it.
