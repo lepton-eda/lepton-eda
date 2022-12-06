@@ -102,14 +102,14 @@ available netlisting modes."
      mode))
 
   (define proc-name 'request-netlist-mode)
+  (define proc-binding
+    (false-if-exception
+     (module-symbol-binding (current-module) proc-name)))
 
-  (let ((proc (module-variable (current-module) proc-name))
-        (mode #f))
-
-    (when proc
-      (set! proc (primitive-eval proc-name))
-      (set! mode (proc))
-
+  ;; If the procedure binding exists, and it is really a
+  ;; procedure, eval it to get the new netlisting mode.
+  (when (procedure? proc-binding)
+    (let ((mode (proc-binding)))
       (if (netlist-mode? mode)
-        (set-netlist-mode! mode)
-        (error-backend-mode mode)))))
+          (set-netlist-mode! mode)
+          (error-backend-mode mode)))))
