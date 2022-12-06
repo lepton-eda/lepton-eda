@@ -945,13 +945,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     ( re    (string-match "^gnet-(.*).scm$" bname) )
     )
 
-    ; return:
-    ( if re
-        ( match:substring re 1 )          ; if
-        ( error-backend-file-name bname ) ; else
-    )
-  )
-  )
+    ;; Return the function name if the file name matched the above
+    ;; regexp, otherwise return #f.
+    (and re
+         (match:substring re 1))))
 
   ; Backend can request what netlist mode should be used
   ; by providing request-netlist-mode() function, that
@@ -1044,8 +1041,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( when opt-file-backend
     ( set! backend-path opt-file-backend )
-    ( set! backend-proc-name (backend-filename->proc-name backend-path) )
-  )
+    (let ((proc-name (backend-filename->proc-name backend-path)))
+      (if proc-name
+          (set! backend-proc-name proc-name)
+          (error-backend-file-name (basename backend-path)))))
 
 
   ; Load backend file:
