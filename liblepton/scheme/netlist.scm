@@ -854,6 +854,18 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
             (log! 'warning (G_ "Could not find file ~S in %load-path.") filename)))))
 
 
+;;; Loads the list of Scheme scripts LS reporting ERROR-MSG if
+;;; something went wrong.  In the latter case, the program exits
+;;; with exit status 1.
+(define (load-scheme-scripts ls error-msg)
+  (catch #t
+    (lambda ()
+      (for-each load-scheme-script ls))
+    (lambda (tag . args)
+      (catch-handler tag args)
+      (netlist-error 1 error-msg))))
+
+
 ;;; Main program
 ;;;
 ( define ( main )
@@ -974,16 +986,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
   ; Load Scheme FILE before loading backend (-l FILE):
-  ;
-  ( catch #t
-    ( lambda()
-      (for-each load-scheme-script opt-pre-load)
-    )
-    ( lambda( tag . args )
-      ( catch-handler tag args )
-      ( netlist-error 1 (G_ "Failed to load Scheme file before loading backend.\n") )
-    )
-  )
+  (load-scheme-scripts opt-pre-load
+                       (G_ "Failed to load Scheme file before loading backend.\n"))
 
   ; Backend specified by name:
   ;
@@ -1018,16 +1022,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ; Load Scheme FILE after loading backend (-m FILE):
-  ;
-  ( catch #t
-    ( lambda()
-      (for-each load-scheme-script opt-post-load)
-    )
-    ( lambda( tag . args )
-      ( catch-handler tag args )
-      ( netlist-error 1 (G_ "Failed to load Scheme file after loading backend.\n") )
-    )
-  )
+  (load-scheme-scripts opt-post-load
+                       (G_ "Failed to load Scheme file after loading backend.\n"))
 
   ; Verbose mode (-v): print configuration:
   ;
