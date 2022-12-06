@@ -19,8 +19,6 @@
 
 (define-module (netlist)
   #:use-module (ice-9 format)
-  #:use-module (ice-9 ftw)
-  #:use-module (ice-9 i18n)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
@@ -780,28 +778,6 @@ other limitations imposed by this netlist format.
   (let ((name (netlist-option-ref 'output)))
     (and (not (string=? name "-"))
          name)))
-
-
-(define (lookup-backends)
-  "Searches %load-path for available lepton-netlist backends and
-prints the resulting list.  A file is considered to be a backend
-if its basename begins with \"gnet-\" and ends with \".scm\"."
-  (define (path-backends path)
-    (or (scandir path backend-filename?)
-        (begin
-          (log! 'warning (G_ "Can't open directory ~S.\n") path)
-          '())))
-
-  (define backend-files
-    (append-map path-backends (delete-duplicates %load-path)))
-
-  (define backend-names
-    (map backend-filename->proc-name backend-files))
-
-  (display (string-join
-            (sort! backend-names string-locale<?)
-            "\n"
-            'suffix)))
 
 
 (define (usage)

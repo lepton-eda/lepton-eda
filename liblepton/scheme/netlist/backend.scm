@@ -17,7 +17,15 @@
 
 
 (define-module (netlist backend)
+  #:use-module (ice-9 ftw)
+  #:use-module (ice-9 i18n)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
+
   #:export (backend-filename->proc-name
+            lookup-backends
             run-backend))
 
 (define %backend-prefix "gnet-")
@@ -53,3 +61,25 @@ meet the specified requirements."
           (lambda () (backend-proc output-filename)))
         ;; output-filename is #f, output to stdout.
         (backend-proc output-filename))))
+
+
+(define (lookup-backends)
+  "Searches %load-path for available lepton-netlist backends and
+prints the resulting list.  A file is considered to be a backend
+if its basename begins with \"gnet-\" and ends with \".scm\"."
+  (define (path-backends path)
+    (or (scandir path backend-filename?)
+        (begin
+          (log! 'warning (G_ "Can't open directory ~S.\n") path)
+          '())))
+
+  (define backend-files
+    (append-map path-backends (delete-duplicates %load-path)))
+
+  (define backend-names
+    (map backend-filename->proc-name backend-files))
+
+  (display (string-join
+            (sort! backend-names string-locale<?)
+            "\n"
+            'suffix)))
