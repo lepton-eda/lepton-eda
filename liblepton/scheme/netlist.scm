@@ -794,11 +794,17 @@ begins with \"gnet-\" and ends with \".scm\"."
           (log! 'warning (G_ "Can't open directory ~S.\n") path)
           '())))
 
-  (let ((backend-files (append-map path-backends (delete-duplicates %load-path))))
-    (display (string-join
-              (sort! (map backend-filename->proc-name backend-files) string-locale<?)
-              "\n"
-              'suffix))))
+  (define backend-files
+    (append-map path-backends (delete-duplicates %load-path)))
+
+  (define backend-names
+    (map backend-filename->proc-name backend-files))
+
+  (display (string-join
+            (sort! backend-names string-locale<?)
+            "\n"
+            'suffix)))
+
 
 (define (usage)
   (format #t (G_
