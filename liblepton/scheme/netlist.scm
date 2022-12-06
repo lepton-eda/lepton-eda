@@ -927,11 +927,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                      backend (car (program-arguments)))
   )
 
-  ( define ( error-backend-file-name bname )
+  ( define ( error-backend-file-name name )
     (netlist-error 1 (G_ "Can't load backend file ~S.\n~
                          Backend files are expected to have names like \"gnet-NAME.scm\"\n~
                          and contain entry point function NAME (where NAME is the backend's name).\n")
-                     bname)
+                     name)
   )
 
   ( define ( error-backend-mode mode )
@@ -1044,7 +1044,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     (let ((proc-name (backend-filename->proc-name backend-path)))
       (if proc-name
           (set! backend-proc-name proc-name)
-          (error-backend-file-name (basename backend-path)))))
+          (error-backend-file-name backend-path))))
 
 
   ; Load backend file:
