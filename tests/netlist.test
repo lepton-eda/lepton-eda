@@ -292,3 +292,45 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "lepton-netlist -f")
+
+(test-group-with-cleanup "lepton-netlist -f"
+  (test-setup)
+  ;; Make a dummy schematic.
+  (touch "schematic.sch")
+  ;; Make backends with wrong names.  By convention, backends must
+  ;; have the prefix "gnet-" and the extension ".scm".
+  (touch "wrong1.scm")
+  (touch "gnet-wrong2.xxx")
+  ;; Make a good backend file.
+  (sexp->file
+   "gnet-good-backend.scm"
+   ;; Simple test backend.
+   '(define-module (backend good-backend)
+      #:export (good-backend))
+   ;; This is the exported function.
+   '(define (good-backend filename)
+      (display "It works!\n")))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values* lepton-netlist -f wrong1.scm -o - schematic.sch)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "Can't load backend file \"wrong1.scm\"."))
+    (test-assert (string-contains <stderr> "Backend files are expected to have names like \"gnet-NAME.scm\"")))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values* lepton-netlist -f gnet-wrong2.xxx -o - schematic.sch)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "Can't load backend file \"gnet-wrong2.xxx\"."))
+    (test-assert (string-contains <stderr> "Backend files are expected to have names like \"gnet-NAME.scm\"")))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values* lepton-netlist -f gnet-good-backend.scm -o - schematic.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "It works!")))
+
+  (test-teardown))
+
+(test-end)
