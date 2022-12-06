@@ -913,34 +913,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                      name)
   )
 
-  ( define ( error-backend-mode mode )
-    (netlist-error 1 (G_ "Netlist mode requested by backend is not supported: ~A\n") mode)
-  )
-
-  ; Backend can request what netlist mode should be used
-  ; by providing request-netlist-mode() function, that
-  ; returns the desired mode:
-  ;
-  ( define ( query-backend-mode )
-  ( let*
-    (
-    ( proc-name 'request-netlist-mode )
-    ( proc      (module-variable (current-module) proc-name) )
-    ( mode      #f )
-    )
-
-    ( when proc
-      ( set! proc ( primitive-eval proc-name ) )
-      ( set! mode ( proc ) )
-
-      ( if ( netlist-mode? mode )
-        ( set-netlist-mode!  mode ) ; if
-        ( error-backend-mode mode ) ; else
-      )
-    )
-  )
-  )
-
 
   ; Parse configuration:
   ;

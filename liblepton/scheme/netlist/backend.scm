@@ -24,8 +24,12 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
 
+  #:use-module (netlist error)
+  #:use-module (netlist mode)
+
   #:export (backend-filename->proc-name
             lookup-backends
+            query-backend-mode
             run-backend))
 
 (define %backend-prefix "gnet-")
@@ -83,3 +87,29 @@ if its basename begins with \"gnet-\" and ends with \".scm\"."
             (sort! backend-names string-locale<?)
             "\n"
             'suffix)))
+
+
+(define (query-backend-mode)
+  "Queries and sets the current netlisting mode.  Backends can
+request what netlist mode should be used by providing the function
+request-netlist-mode() that should return the desired mode symbol.
+The procedure netlist-mode() can be used to find out currently
+available netlisting modes."
+  (define (error-backend-mode mode)
+    (netlist-error
+     1
+     (G_ "Netlist mode requested by backend is not supported: ~A\n")
+     mode))
+
+  (define proc-name 'request-netlist-mode)
+
+  (let ((proc (module-variable (current-module) proc-name))
+        (mode #f))
+
+    (when proc
+      (set! proc (primitive-eval proc-name))
+      (set! mode (proc))
+
+      (if (netlist-mode? mode)
+        (set-netlist-mode! mode)
+        (error-backend-mode mode)))))
