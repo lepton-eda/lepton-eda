@@ -936,26 +936,18 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     )
   )
 
-  ( when opt-help
-    ( usage )
-  )
-
-  ( when opt-version
-    ( display-lepton-version #:print-name #t #:copyright #t )
-    ( primitive-exit 0 )
-  )
-
-  ( when opt-list-backends
-    ( lookup-backends )
-    ( primitive-exit 0 )
-  )
-
-  ; Check input schematics:
-  ;
-  ( when ( and (null? files) (not opt-interactive) )
-    ( error-no-sch )
-  )
-
+  (cond
+   (opt-help (usage))
+   (opt-version
+    (display-lepton-version #:print-name #t #:copyright #t)
+    (primitive-exit 0))
+   (opt-list-backends
+    (lookup-backends)
+    (primitive-exit 0))
+   ;; Check input schematics.
+   ((and (null? files)
+         (not opt-interactive))
+    (error-no-sch)))
 
   ; Load Scheme FILE before loading backend (-l FILE):
   (load-scheme-scripts opt-pre-load
