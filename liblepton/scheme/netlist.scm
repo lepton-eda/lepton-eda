@@ -811,6 +811,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
+(define (version)
+  (display-lepton-version #:print-name #t #:copyright #t)
+  (primitive-exit 0))
+
+
 ;;; Set lepton-netlist toplevel schematic based on schematic FILES
 ;;; and current netlist mode specified somewhere else.  Currently,
 ;;; the netlist mode can be either "'geda", or "'spice".
@@ -923,9 +928,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   (cond
    (opt-help (usage))
-   (opt-version
-    (display-lepton-version #:print-name #t #:copyright #t)
-    (primitive-exit 0))
+   (opt-version (version))
    (opt-list-backends
     (lookup-backends)
     (primitive-exit 0))
