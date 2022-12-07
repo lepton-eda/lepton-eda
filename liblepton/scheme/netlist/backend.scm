@@ -28,8 +28,7 @@
   #:use-module (netlist error)
   #:use-module (netlist mode)
 
-  #:export (%backend-name
-            load-backend-file
+  #:export (load-backend-file
             lookup-backends
             run-backend
             set-backend-data!))
@@ -91,11 +90,11 @@ meet the specified requirements."
    (else #f)))
 
 
-(define (run-backend backend output-filename)
+(define (run-backend output-filename)
   "Runs backend's function BACKEND with redirection of its
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
 redirection is carried out."
-  (let ((backend-proc (primitive-eval (string->symbol backend))))
+  (let ((backend-proc (primitive-eval (string->symbol %backend-name))))
     (if output-filename
         ;; output-filename is defined, output to it.
         (with-output-to-file output-filename

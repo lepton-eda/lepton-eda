@@ -966,7 +966,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( if opt-interactive
     ( lepton-repl )
-    ( run-backend %backend-name output-filename )
+    ( run-backend output-filename )
   )
 
 ) ; let
