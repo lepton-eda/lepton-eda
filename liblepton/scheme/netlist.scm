@@ -874,21 +874,18 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ;;; Main program
 ;;;
 ( define ( main )
-( let
-  (
-  ( output-filename   (get-output-filename) )
-  ( files             (netlist-option-ref '()) )            ; schematics
-  ( opt-backend       (netlist-option-ref 'backend) )       ; -g
-  ( opt-file-backend  (netlist-option-ref 'file-backend) )  ; -f
-  ( opt-interactive   (netlist-option-ref 'interactive) )   ; -i
-  ( opt-verbose       (netlist-option-ref 'verbose) )       ; --verbose (-v)
-  ( opt-code-to-eval  (netlist-option-ref 'eval-code) )     ; -c
-  ( opt-help          (netlist-option-ref 'help) )          ; --help (-h)
-  ( opt-version       (netlist-option-ref 'version) )       ; --version (-V)
-  ( opt-list-backends (netlist-option-ref 'list-backends) ) ; --list-backends
-  ( opt-pre-load      (netlist-option-ref 'pre-load) )      ; -l
-  ( opt-post-load     (netlist-option-ref 'post-load) )     ; -m
-  )
+  (define output-filename   (get-output-filename))
+  (define files             (netlist-option-ref '()))            ; schematics
+  (define opt-backend       (netlist-option-ref 'backend))       ; -g
+  (define opt-file-backend  (netlist-option-ref 'file-backend))  ; -f
+  (define opt-interactive   (netlist-option-ref 'interactive))   ; -i
+  (define opt-verbose       (netlist-option-ref 'verbose))       ; --verbose (-v)
+  (define opt-code-to-eval  (netlist-option-ref 'eval-code))     ; -c
+  (define opt-help          (netlist-option-ref 'help))          ; --help (-h)
+  (define opt-version       (netlist-option-ref 'version))       ; --version (-V)
+  (define opt-list-backends (netlist-option-ref 'list-backends)) ; --list-backends
+  (define opt-pre-load      (netlist-option-ref 'pre-load))      ; -l
+  (define opt-post-load     (netlist-option-ref 'post-load))     ; -m
 
   ; local functions:
 
@@ -968,7 +965,4 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( if opt-interactive
     ( lepton-repl )
     ( run-backend output-filename )
-  )
-
-) ; let
-) ; main()
+  ))
