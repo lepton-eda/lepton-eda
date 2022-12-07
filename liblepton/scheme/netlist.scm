@@ -885,7 +885,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( opt-pre-load      (netlist-option-ref 'pre-load) )      ; -l
   ( opt-post-load     (netlist-option-ref 'post-load) )     ; -m
   ( backend-path      #f )
-  ( schematic         #f )
   ( backend-proc-name #f )
   )
 
@@ -995,16 +994,14 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (load-scheme-scripts opt-post-load
                        (G_ "Failed to load Scheme file after loading backend.\n"))
 
-  ; This sets [toplevel-schematic] global variable:
-  ;
-  (set! schematic (set-ln-toplevel-schematic! files))
-
-  ;; Verbose mode (-v).
-  (when opt-verbose
-    ;; Print configuration.
-    (print-netlist-config)
-    ;; Print internal netlist representation.
-    (verbose-print-netlist (schematic-components schematic)))
+  ;; This sets [toplevel-schematic] global variable.
+  (let ((schematic (set-ln-toplevel-schematic! files)))
+    ;; Verbose mode (-v).
+    (when opt-verbose
+      ;; Print configuration.
+      (print-netlist-config)
+      ;; Print internal netlist representation.
+      (verbose-print-netlist (schematic-components schematic))))
 
   ; Do actual work:
   ;
