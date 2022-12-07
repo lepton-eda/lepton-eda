@@ -19,7 +19,6 @@
 (define-module (netlist backend)
   #:use-module (ice-9 format)
   #:use-module (ice-9 ftw)
-  #:use-module (ice-9 i18n)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
 
@@ -130,13 +129,7 @@ be a backend if its basename begins with \"gnet-\" and ends with
   (define backend-files
     (append-map path-backends (delete-duplicates %load-path)))
 
-  (define backend-names
-    (map backend-filename->proc-name backend-files))
-
-  (display (string-join
-            (sort! backend-names string-locale<?)
-            "\n"
-            'suffix)))
+  (map backend-filename->proc-name backend-files))
 
 
 (define (query-backend-mode)

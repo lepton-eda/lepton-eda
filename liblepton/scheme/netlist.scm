@@ -19,6 +19,7 @@
 
 (define-module (netlist)
   #:use-module (ice-9 format)
+  #:use-module (ice-9 i18n)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
@@ -811,6 +812,14 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
+(define (display-backend-list)
+  (display (string-join
+            (sort! (lookup-backends) string-locale<?)
+            "\n"
+            'suffix))
+  (primitive-exit 0))
+
+
 (define (version)
   (display-lepton-version #:print-name #t #:copyright #t)
   (primitive-exit 0))
@@ -927,9 +936,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (cond
    (opt-help (usage))
    (opt-version (version))
-   (opt-list-backends
-    (lookup-backends)
-    (primitive-exit 0))
+   (opt-list-backends (display-backend-list))
    ;; Check input schematics.
    ((and (null? files)
          (not opt-interactive))
