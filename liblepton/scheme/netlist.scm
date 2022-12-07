@@ -902,16 +902,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                      (car (program-arguments)))
   )
 
-  (define (load-backend-file filename)
-    (when filename
-      (catch #t
-        (lambda ()
-          (primitive-load filename)
-          (query-backend-mode))
-        (lambda (tag . args)
-          (catch-handler tag args)
-          (netlist-error 1 (G_ "Failed to load backend file.\n"))))))
-
   ; Parse configuration:
   ;
   (parse-rc "lepton-netlist" "gnetlistrc")

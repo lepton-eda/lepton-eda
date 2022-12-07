@@ -17,6 +17,7 @@
 
 
 (define-module (netlist backend)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
   #:use-module (srfi srfi-1)
@@ -29,8 +30,8 @@
 
   #:export (%backend-name
             %backend-path
+            load-backend-file
             lookup-backends
-            query-backend-mode
             run-backend
             set-backend-data!))
 
@@ -155,3 +156,14 @@ available netlisting modes."
       (if (netlist-mode? mode)
           (set-netlist-mode! mode)
           (error-backend-mode mode)))))
+
+
+(define (load-backend-file filename)
+  (when filename
+    (catch #t
+      (lambda ()
+        (primitive-load filename)
+        (query-backend-mode))
+      (lambda (key subr message args rest)
+        (format (current-error-port) (G_ "ERROR: ~?\n") message args)
+        (netlist-error 1 (G_ "Failed to load backend file.\n"))))))
