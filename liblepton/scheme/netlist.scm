@@ -917,6 +917,12 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                      name)
   )
 
+  (define (get-backend-path)
+    (or
+     ;; If backend is specified by file name, use it as is.
+     opt-file-backend
+     ;; If it is specified by name, search for its file.
+     (and=> opt-backend search-backend)))
 
   ; Parse configuration:
   ;
@@ -961,17 +967,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Load Scheme FILE before loading backend (-l FILE):
   (load-scheme-scripts opt-pre-load)
 
+  (set! backend-path (get-backend-path))
   ; Backend specified by name:
   ;
   ( when opt-backend
-    ( set! backend-path (search-backend opt-backend) )
     ( set! backend-proc-name opt-backend )
   )
 
   ; Backend specified by file name:
   ;
   ( when opt-file-backend
-    ( set! backend-path opt-file-backend )
     (let ((proc-name (backend-filename->proc-name backend-path)))
       (if proc-name
           (set! backend-proc-name proc-name)
