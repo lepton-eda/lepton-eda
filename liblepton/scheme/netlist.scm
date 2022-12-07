@@ -994,22 +994,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (load-scheme-scripts opt-post-load
                        (G_ "Failed to load Scheme file after loading backend.\n"))
 
-  ; Verbose mode (-v): print configuration:
-  ;
-  ( when opt-verbose
-    ( print-netlist-config )
-  )
-
   ; This sets [toplevel-schematic] global variable:
   ;
   (set! schematic (set-ln-toplevel-schematic! files))
 
-  ; Verbose mode (-v): print internal netlist representation:
-  ;
-  ( when opt-verbose
-    ( verbose-print-netlist (schematic-components schematic) )
-  )
-
+  ;; Verbose mode (-v).
+  (when opt-verbose
+    ;; Print configuration.
+    (print-netlist-config)
+    ;; Print internal netlist representation.
+    (verbose-print-netlist (schematic-components schematic)))
 
   ; Do actual work:
   ;
