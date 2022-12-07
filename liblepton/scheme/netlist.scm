@@ -876,6 +876,15 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
       (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
 
 
+(define (eval-startup-expressions string-ls)
+  (unless (null? string-ls)
+    (catch #t
+      (lambda () (for-each eval-string string-ls))
+      (lambda (tag . args)
+        (catch-handler tag args)
+        (netlist-error 1 (G_ "Failed to evaluate Scheme expression at startup.\n"))))))
+
+
 ;;; Main program
 ;;;
 ( define ( main )
@@ -912,19 +921,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( set-netlist-mode! (default-netlist-mode) )
 
-  ; Evaluate Scheme expression at startup (-c EXPR):
-  ;
-  ( unless ( null? opt-code-to-eval )
-    ( catch #t
-      ( lambda()
-        (for-each eval-string opt-code-to-eval)
-      )
-      ( lambda( tag . args )
-        ( catch-handler tag args )
-        ( netlist-error 1 (G_ "Failed to evaluate Scheme expression at startup.\n") )
-      )
-    )
-  )
+  ;; Evaluate Scheme expression at startup (-c EXPR):
+  (eval-startup-expressions opt-code-to-eval)
 
   (cond
    (opt-help (usage))
