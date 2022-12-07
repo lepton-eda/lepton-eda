@@ -118,8 +118,9 @@ redirection is carried out."
 
 (define (lookup-backends)
   "Searches %load-path for available lepton-netlist backends and
-prints the resulting list.  A file is considered to be a backend
-if its basename begins with \"gnet-\" and ends with \".scm\"."
+returns the resulting list of filenames.  A file is considered to
+be a backend if its basename begins with \"gnet-\" and ends with
+\".scm\"."
   (define (path-backends path)
     (or (scandir path backend-filename?)
         (begin
