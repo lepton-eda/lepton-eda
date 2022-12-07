@@ -812,7 +812,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
 ;;; Set lepton-netlist toplevel schematic based on schematic FILES
-;;; and NETLIST-MODE which must be either "'geda", or "'spice".
+;;; and current netlist mode specified somewhere else.  Currently,
+;;; the netlist mode can be either "'geda", or "'spice".
 (define (set-ln-toplevel-schematic! files)
   (define (process-gafrc* name)
     (process-gafrc "lepton-netlist" name))
