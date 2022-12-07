@@ -924,6 +924,15 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
      ;; If it is specified by name, search for its file.
      (and=> opt-backend search-backend)))
 
+  (define (get-backend-proc-name)
+    (cond
+     (opt-file-backend
+      (let ((proc-name (backend-filename->proc-name opt-file-backend)))
+        (or proc-name
+            (error-backend-file-name opt-file-backend))))
+     (opt-backend opt-backend)
+     (else #f)))
+
   ; Parse configuration:
   ;
   (parse-rc "lepton-netlist" "gnetlistrc")
@@ -968,20 +977,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (load-scheme-scripts opt-pre-load)
 
   (set! backend-path (get-backend-path))
-  ; Backend specified by name:
-  ;
-  ( when opt-backend
-    ( set! backend-proc-name opt-backend )
-  )
-
-  ; Backend specified by file name:
-  ;
-  ( when opt-file-backend
-    (let ((proc-name (backend-filename->proc-name backend-path)))
-      (if proc-name
-          (set! backend-proc-name proc-name)
-          (error-backend-file-name backend-path))))
-
+  (set! backend-proc-name (get-backend-proc-name))
 
   ; Load backend file:
   ;
