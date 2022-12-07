@@ -888,8 +888,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( opt-list-backends (netlist-option-ref 'list-backends) ) ; --list-backends
   ( opt-pre-load      (netlist-option-ref 'pre-load) )      ; -l
   ( opt-post-load     (netlist-option-ref 'post-load) )     ; -m
-  ( backend-path      #f )
-  ( backend-proc-name #f )
   )
 
   ; local functions:
@@ -903,35 +901,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                          Run `~A --help' for more information.\n")
                      (car (program-arguments)))
   )
-
-  ( define ( error-backend-not-found backend )
-    (netlist-error 1 (G_ "Could not find backend `~A' in load path.\n~
-                         Run `~A --list-backends' for a full list of available backends.\n")
-                     backend (car (program-arguments)))
-  )
-
-  ( define ( error-backend-file-name name )
-    (netlist-error 1 (G_ "Can't load backend file ~S.\n~
-                         Backend files are expected to have names like \"gnet-NAME.scm\"\n~
-                         and contain entry point function NAME (where NAME is the backend's name).\n")
-                     name)
-  )
-
-  (define (get-backend-path)
-    (or
-     ;; If backend is specified by file name, use it as is.
-     opt-file-backend
-     ;; If it is specified by name, search for its file.
-     (and=> opt-backend search-backend)))
-
-  (define (get-backend-proc-name)
-    (cond
-     (opt-file-backend
-      (let ((proc-name (backend-filename->proc-name opt-file-backend)))
-        (or proc-name
-            (error-backend-file-name opt-file-backend))))
-     (opt-backend opt-backend)
-     (else #f)))
 
   (define (load-backend-file filename)
     (when filename
@@ -986,11 +955,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Load Scheme FILE before loading backend (-l FILE):
   (load-scheme-scripts opt-pre-load)
 
-  (set! backend-path (get-backend-path))
-  (set! backend-proc-name (get-backend-proc-name))
+  (set-backend-data! #:path opt-file-backend #:name opt-backend)
 
   ;; Load backend file.
-  (load-backend-file backend-path)
+  (load-backend-file %backend-path)
 
   ; Load Scheme FILE after loading backend (-m FILE):
   (load-scheme-scripts opt-post-load 'post-load)
@@ -1007,11 +975,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Do actual work:
   ;
   ( if opt-interactive
-    ( lepton-repl )                             ; if
-    ( if ( and backend-path backend-proc-name ) ; else
-      ( run-backend backend-proc-name output-filename ) ; if
-      ( error-backend-not-found opt-backend )           ; else
-    )
+    ( lepton-repl )
+    ( run-backend %backend-name output-filename )
   )
 
 ) ; let

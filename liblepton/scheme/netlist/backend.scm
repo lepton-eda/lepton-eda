@@ -27,16 +27,33 @@
   #:use-module (netlist error)
   #:use-module (netlist mode)
 
-  #:export (backend-filename->proc-name
+  #:export (%backend-name
+            %backend-path
             lookup-backends
             query-backend-mode
             run-backend
-            search-backend))
+            set-backend-data!))
+
+(define %backend-path #f)
+(define %backend-name #f)
 
 (define %backend-prefix "gnet-")
 (define %backend-suffix ".scm")
 (define %backend-prefix-length (string-length %backend-prefix))
 (define %backend-suffix-length (string-length %backend-suffix))
+
+
+(define (error-backend-wrong-file-name name)
+  (netlist-error 1 (G_ "Can't load backend file ~S.\n~
+                        Backend files are expected to have names like \"gnet-NAME.scm\"\n~
+                        and contain entry point function NAME (where NAME is the backend's name).\n")
+                 name))
+
+
+(define (error-backend-not-found-by-name backend )
+  (netlist-error 1 (G_ "Could not find backend `~A' in load path.\n~
+                        Run `~A --list-backends' for a full list of available backends.\n")
+                 backend (car (program-arguments))))
 
 
 (define (backend-filename? filename)
@@ -56,6 +73,22 @@ meet the specified requirements."
     (and (backend-filename? base)
          (string-drop-right (string-drop base %backend-prefix-length)
                             %backend-suffix-length))))
+
+
+(define* (set-backend-data! #:key (path #f) (name #f))
+  ;; Path set by '-f' has preference over name set by '-g'.
+  (cond
+   (path (set! %backend-path path)
+         (let ((name (backend-filename->proc-name path)))
+           (if name
+               (set! %backend-name name)
+               (error-backend-wrong-file-name path))))
+   (name (set! %backend-name name)
+         (let ((path (search-backend name)))
+           (if path
+               (set! %backend-path path)
+               (error-backend-not-found-by-name name))))
+   (else #f)))
 
 
 (define (run-backend backend output-filename)
