@@ -933,6 +933,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
      (opt-backend opt-backend)
      (else #f)))
 
+  (define (load-backend-file filename)
+    (when filename
+      (catch #t
+        (lambda ()
+          (primitive-load filename)
+          (query-backend-mode))
+        (lambda (tag . args)
+          (catch-handler tag args)
+          (netlist-error 1 (G_ "Failed to load backend file.\n"))))))
+
   ; Parse configuration:
   ;
   (parse-rc "lepton-netlist" "gnetlistrc")
@@ -979,20 +989,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (set! backend-path (get-backend-path))
   (set! backend-proc-name (get-backend-proc-name))
 
-  ; Load backend file:
-  ;
-  ( when backend-path
-    ( catch #t
-      ( lambda()
-        ( primitive-load backend-path )
-        ( query-backend-mode )
-      )
-      ( lambda( tag . args )
-        ( catch-handler tag args )
-        ( netlist-error 1 (G_ "Failed to load backend file.\n") )
-      )
-    )
-  )
+  ;; Load backend file.
+  (load-backend-file backend-path)
 
   ; Load Scheme FILE after loading backend (-m FILE):
   (load-scheme-scripts opt-post-load 'post-load)
