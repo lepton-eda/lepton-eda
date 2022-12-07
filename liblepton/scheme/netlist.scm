@@ -858,13 +858,17 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ;;; Loads the list of Scheme scripts LS reporting ERROR-MSG if
 ;;; something went wrong.  In the latter case, the program exits
 ;;; with exit status 1.
-(define (load-scheme-scripts ls error-msg)
+(define* (load-scheme-scripts ls #:optional (post-load? #f))
+  (define pre-load-error
+    (G_ "Failed to load Scheme file before loading backend.\n"))
+  (define post-load-error
+    (G_ "Failed to load Scheme file after loading backend.\n"))
   (catch #t
     (lambda ()
       (for-each load-scheme-script ls))
     (lambda (tag . args)
       (catch-handler tag args)
-      (netlist-error 1 error-msg))))
+      (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
 
 
 ;;; Main program
@@ -955,8 +959,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
   ; Load Scheme FILE before loading backend (-l FILE):
-  (load-scheme-scripts opt-pre-load
-                       (G_ "Failed to load Scheme file before loading backend.\n"))
+  (load-scheme-scripts opt-pre-load)
 
   ; Backend specified by name:
   ;
@@ -991,8 +994,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ; Load Scheme FILE after loading backend (-m FILE):
-  (load-scheme-scripts opt-post-load
-                       (G_ "Failed to load Scheme file after loading backend.\n"))
+  (load-scheme-scripts opt-post-load 'post-load)
 
   ;; This sets [toplevel-schematic] global variable.
   (let ((schematic (set-ln-toplevel-schematic! files)))
