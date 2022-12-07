@@ -947,7 +947,12 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
    ;; Check input schematics.
    ((and (null? files)
          (not opt-interactive))
-    (error-no-sch)))
+    (error-no-sch))
+   ;; Neither backend (-g or -f), nor interactive mode (-i)
+   ;; specified.
+   ((not (or opt-backend opt-file-backend opt-interactive))
+    (error-no-backend)))
+
 
   ; Load Scheme FILE before loading backend (-l FILE):
   (load-scheme-scripts opt-pre-load
@@ -993,12 +998,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( when opt-verbose
     ( print-netlist-config )
-  )
-
-  ; Neither backend (-g or -f), nor interactive mode (-i) specified:
-  ;
-  ( unless ( or opt-backend opt-file-backend opt-interactive )
-    ( error-no-backend )
   )
 
   ; This sets [toplevel-schematic] global variable:
