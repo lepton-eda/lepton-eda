@@ -21,6 +21,7 @@
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-9)
 
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -28,13 +29,17 @@
   #:use-module (netlist error)
   #:use-module (netlist mode)
 
-  #:export (load-backend-file
+  #:export (load-backend
             lookup-backends
             run-backend
-            set-backend-data!))
+            make-backend))
 
-(define %backend-path #f)
-(define %backend-name #f)
+(define-record-type <backend>
+  (backend path name)
+  backend?
+  (path backend-path set-backend-path!)
+  (name backend-name set-backend-name!))
+
 
 (define %backend-prefix "gnet-")
 (define %backend-suffix ".scm")
@@ -74,27 +79,30 @@ meet the specified requirements."
                             %backend-suffix-length))))
 
 
-(define* (set-backend-data! #:key (path #f) (name #f))
-  ;; Path set by '-f' has preference over name set by '-g'.
+(define (backend-name-by-path path)
+  (or (backend-filename->proc-name path)
+      (error-backend-wrong-file-name path)))
+
+
+(define (backend-path-by-name name)
+  (or (search-backend name)
+      (error-backend-not-found-by-name name)))
+
+
+(define* (make-backend #:key (path #f) (name #f))
   (cond
-   (path (set! %backend-path path)
-         (let ((name (backend-filename->proc-name path)))
-           (if name
-               (set! %backend-name name)
-               (error-backend-wrong-file-name path))))
-   (name (set! %backend-name name)
-         (let ((path (search-backend name)))
-           (if path
-               (set! %backend-path path)
-               (error-backend-not-found-by-name name))))
+   ((and path name) (backend path name))
+   ;; Path set by '-f' has priority over name set by '-g'.
+   (path (backend path (backend-name-by-path path)))
+   (name (backend (backend-path-by-name name) name))
    (else #f)))
 
 
-(define (run-backend output-filename)
+(define (run-backend backend output-filename)
   "Runs backend's function BACKEND with redirection of its
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
 redirection is carried out."
-  (let ((backend-proc (primitive-eval (string->symbol %backend-name))))
+  (let ((backend-proc (primitive-eval (string->symbol (backend-name backend)))))
     (if output-filename
         ;; output-filename is defined, output to it.
         (with-output-to-file output-filename
@@ -156,12 +164,11 @@ available netlisting modes."
           (error-backend-mode mode)))))
 
 
-(define (load-backend-file)
-  (when %backend-path
-    (catch #t
-      (lambda ()
-        (primitive-load %backend-path)
-        (query-backend-mode))
-      (lambda (key subr message args rest)
-        (format (current-error-port) (G_ "ERROR: ~?\n") message args)
-        (netlist-error 1 (G_ "Failed to load backend file.\n"))))))
+(define (load-backend backend)
+  (catch #t
+    (lambda ()
+      (primitive-load (backend-path backend))
+      (query-backend-mode))
+    (lambda (key subr message args rest)
+      (format (current-error-port) (G_ "ERROR: ~?\n") message args)
+      (netlist-error 1 (G_ "Failed to load backend file.\n")))))

@@ -942,27 +942,26 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Load Scheme FILE before loading backend (-l FILE):
   (load-scheme-scripts opt-pre-load)
 
-  (set-backend-data! #:path opt-file-backend #:name opt-backend)
+  ;; '-f' has priority over '-g'.
+  (let ((backend (or (make-backend #:path opt-file-backend)
+                     (make-backend #:name opt-backend))))
+    ;; Load backend.
+    (load-backend backend)
 
-  ;; Load backend file.
-  (load-backend-file)
+    ;; Load Scheme FILE after loading backend (-m FILE):
+    (load-scheme-scripts opt-post-load 'post-load)
 
-  ; Load Scheme FILE after loading backend (-m FILE):
-  (load-scheme-scripts opt-post-load 'post-load)
+    ;; This sets [toplevel-schematic] global variable.
+    (set-ln-toplevel-schematic! files)
 
-  ;; This sets [toplevel-schematic] global variable.
-  (set-ln-toplevel-schematic! files)
+    ;; Verbose mode (-v).
+    (when opt-verbose
+      ;; Print configuration.
+      (print-netlist-config)
+      ;; Print internal netlist representation.
+      (verbose-print-netlist (schematic-components (toplevel-schematic))))
 
-  ;; Verbose mode (-v).
-  (when opt-verbose
-    ;; Print configuration.
-    (print-netlist-config)
-    ;; Print internal netlist representation.
-    (verbose-print-netlist (schematic-components (toplevel-schematic))))
-
-  ; Do actual work:
-  ;
-  ( if opt-interactive
-    ( lepton-repl )
-    ( run-backend output-filename )
-  ))
+    ;; Do actual work.
+    (if opt-interactive
+        (lepton-repl)
+        (run-backend backend output-filename))))
