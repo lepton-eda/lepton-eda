@@ -29,7 +29,6 @@
   #:use-module (netlist mode)
 
   #:export (%backend-name
-            %backend-path
             load-backend-file
             lookup-backends
             run-backend
@@ -158,11 +157,11 @@ available netlisting modes."
           (error-backend-mode mode)))))
 
 
-(define (load-backend-file filename)
-  (when filename
+(define (load-backend-file)
+  (when %backend-path
     (catch #t
       (lambda ()
-        (primitive-load filename)
+        (primitive-load %backend-path)
         (query-backend-mode))
       (lambda (key subr message args rest)
         (format (current-error-port) (G_ "ERROR: ~?\n") message args)

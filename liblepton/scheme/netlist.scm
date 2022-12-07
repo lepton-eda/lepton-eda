@@ -948,7 +948,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (set-backend-data! #:path opt-file-backend #:name opt-backend)
 
   ;; Load backend file.
-  (load-backend-file %backend-path)
+  (load-backend-file)
 
   ; Load Scheme FILE after loading backend (-m FILE):
   (load-scheme-scripts opt-post-load 'post-load)
