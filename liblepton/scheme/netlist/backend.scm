@@ -79,6 +79,11 @@ meet the specified requirements."
                             %backend-suffix-length))))
 
 
+(define (search-backend name)
+  "Searches for backend by its NAME."
+  (%search-load-path (format #f "gnet-~A.scm" name)))
+
+
 (define (backend-name-by-path path)
   (or (backend-filename->proc-name path)
       (error-backend-wrong-file-name path)))
@@ -109,11 +114,6 @@ redirection is carried out."
           (lambda () (backend-proc output-filename)))
         ;; output-filename is #f, output to stdout.
         (backend-proc output-filename))))
-
-
-(define (search-backend name)
-  "Searches for backend by its NAME."
-  (%search-load-path (format #f "gnet-~A.scm" name)))
 
 
 (define (lookup-backends)
