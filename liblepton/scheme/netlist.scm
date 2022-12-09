@@ -813,12 +813,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
 (define (display-backend-list)
-  (display (string-join
-            (sort! (append (lookup-module-backends)
-                           (lookup-legacy-backends))
-                   string-locale<?)
-            "\n"
-            'suffix))
+  (define (display-list ls)
+    (display (string-join (sort! ls string-locale<?) "\n" 'suffix)))
+
+  (display-list (lookup-module-backends))
+  (display-list (lookup-legacy-backends))
   (primitive-exit 0))
 
 
