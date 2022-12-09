@@ -814,7 +814,9 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 (define (display-backend-list)
   (display (string-join
-            (sort! (lookup-backends) string-locale<?)
+            (sort! (append (lookup-module-backends)
+                           (lookup-legacy-backends))
+                   string-locale<?)
             "\n"
             'suffix))
   (primitive-exit 0))
@@ -917,12 +919,17 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;; Make and load backend.
   (let ((backend (cond
                   ;; '-f' has priority over '-g'.
-                  (opt-file-backend (make-backend #:path opt-file-backend
-                                                  #:pre-load opt-pre-load
-                                                  #:post-load opt-post-load))
-                  (opt-backend (make-backend #:name opt-backend
-                                             #:pre-load opt-pre-load
-                                             #:post-load opt-post-load))
+                  (opt-file-backend (make-legacy-backend #:path opt-file-backend
+                                                         #:pre-load opt-pre-load
+                                                         #:post-load opt-post-load))
+                  ;; Load module backend first if it is available.
+                  (opt-backend (or (make-module-backend #:name opt-backend
+                                                        #:pre-load opt-pre-load
+                                                        #:post-load opt-post-load)
+                                   ;; Fallback to legacy backend.
+                                   (make-legacy-backend #:name opt-backend
+                                                        #:pre-load opt-pre-load
+                                                        #:post-load opt-post-load)))
                   (else #f))))
 
     ;; This sets [toplevel-schematic] global variable.

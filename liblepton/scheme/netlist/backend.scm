@@ -21,6 +21,7 @@
   #:use-module (ice-9 ftw)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-26)
 
   #:use-module (lepton file-system)
   #:use-module (lepton gettext)
@@ -29,9 +30,11 @@
   #:use-module (netlist error)
   #:use-module (netlist mode)
 
-  #:export (lookup-backends
+  #:export (lookup-legacy-backends
+            lookup-module-backends
             run-backend
-            make-backend))
+            make-legacy-backend
+            make-module-backend))
 
 (define-record-type <backend>
   (backend path name runner)
@@ -69,6 +72,11 @@
 #f."
   (and (string-prefix? %backend-prefix filename)
        (string-suffix? %backend-suffix filename)))
+
+
+(define (module-backend-filename? filename)
+  (and (string-suffix? %backend-suffix filename)
+       (not (legacy-backend-filename? (basename filename)))))
 
 
 (define (backend-filename->proc-name filename)
@@ -130,11 +138,11 @@ meet the specified requirements."
       (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
 
 
-(define* (make-backend #:key
-                       (path #f)
-                       (name #f)
-                       (pre-load '())
-                       (post-load '()))
+(define* (make-legacy-backend #:key
+                              (path #f)
+                              (name #f)
+                              (pre-load '())
+                              (post-load '()))
   ;; Path set by '-f' has priority over name set by '-g'.
   (define filename (or path (backend-path-by-name name)))
   (define func-name (or name (backend-name-by-path path)))
@@ -153,6 +161,47 @@ meet the specified requirements."
         (error-backend-proc-not-found func-name filename))))
 
 
+;;; Checks that the module file exists, exports the NAME binding,
+;;; and the binding is a procedure.
+(define* (make-module-backend #:key
+                              (name #f)
+                              (pre-load '())
+                              (post-load '()))
+  (define (warn-module-backend-not-found)
+    (begin
+      (log! 'message
+            (G_ "Could not find ~S in the module ~S.\n~
+                 Fall back to looking up for legacy backend ~S.")
+            name
+            module-sym
+            name))
+    #f)
+  (define backend-sym (string->symbol name))
+  (define module-sym (list 'backend backend-sym))
+  ;; Ensure that module file exists.
+  (define module (resolve-module module-sym #:ensure #f))
+  ;; Resolve interface of the module to process only its exported
+  ;; bindings.
+  (define interface (and module (resolve-interface module-sym)))
+  ;; Test if the variable NAME exists in the module.
+  (define var (and interface (module-variable interface backend-sym)))
+  ;; Get the value of the variable.
+  (define proc (and var (module-ref interface backend-sym)))
+
+  ;; Ignore pre-loading for now.
+  ;; (load-scheme-scripts pre-load)
+
+  ;; Check that the variable is a procedure.
+  (if (procedure? proc)
+      (backend (module-filename module) name proc)
+      ;; Returns #f.
+      (warn-module-backend-not-found))
+
+  ;; Ignore post-loading.
+  ;; (load-scheme-scripts post-load 'post-load)
+  )
+
+
 (define (run-backend backend output-filename)
   "Runs backend's function BACKEND with redirection of its
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
@@ -167,7 +216,33 @@ redirection is carried out."
       (backend-proc output-filename)))
 
 
-(define (lookup-backends)
+(define (lookup-module-backends)
+  (define (build-filename path filename)
+    (string-append path file-name-separator-string filename))
+
+  (define (path->backend-path path)
+    (false-if-exception
+     (canonicalize-path (build-filename path "backend"))))
+
+  (define backend-dirs (filter-map path->backend-path %load-path))
+
+  (define (regular-file-in-dir? path filename)
+    (and (regular-file? (build-filename path filename)) filename))
+
+  (define (scm-files path)
+    (filter-map (cut regular-file-in-dir? path <>) (scandir path)))
+
+  (define backend-basenames
+    (filter module-backend-filename? (append-map scm-files backend-dirs)))
+
+  (define (backend-name filename)
+    (basename filename %backend-suffix))
+
+  (map backend-name backend-basenames))
+
+
+
+(define (lookup-legacy-backends)
   "Searches %load-path for available lepton-netlist backends and
 returns the resulting list of filenames.  A file is considered to
 be a backend if its basename begins with \"gnet-\" and ends with
