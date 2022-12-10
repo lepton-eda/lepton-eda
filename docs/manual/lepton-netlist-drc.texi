@@ -1,0 +1,44 @@
+@node DRC backend
+@section DRC netlister backend
+
+The DRC netlister backend is a simple design rule checking backend by
+Matt Ettus.
+
+The backend reads the file @file{attribs} in the current working
+directory and makes some simple checks in the schematics specified in
+the command line:
+
+@itemize
+@item
+If each of components in the schematics has the attributes specified
+in the file.
+@item
+If there are nets that have no connected pins.
+@item
+If there are nets that have only one connected pin.
+@end itemize
+
+If the @file{attribs} file is missing, @netlist{} warns the user and
+exits with the status code 1.
+
+Example of the file @file{attribs} contents:
+
+@example
+refdes
+footprint
+value
+@end example
+
+Example of netlist creation:
+
+@example
+lepton-netlist -g drc -o schematic.drc schematic.sch
+@end example
+
+Output example:
+
+@example
+S1/U1 Does not have attribute: value
+S3/A2 Does not have attribute: footprint
+Net S1/unnamed_net4 has only 1 connected pin
+@end example

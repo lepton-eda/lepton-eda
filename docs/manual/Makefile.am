@@ -21,6 +21,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist-bom2.texi \
 	lepton-netlist-calay.texi \
 	lepton-netlist-cascade.texi \
+	lepton-netlist-drc.texi \
 	lepton-netlist-pads.texi \
 	lepton-netlist-protelii.texi \
 	lepton-netlist-switcap.texi \

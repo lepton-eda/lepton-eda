@@ -102,6 +102,7 @@ vipec
 * BOM2 backend::
 * Calay backend::
 * Cascade backend::
+* DRC backend::
 * PADS backend::
 * ProtelII backend::
 * Switcap backend::
@@ -113,6 +114,7 @@ vipec
 @include lepton-netlist-bom2.texi
 @include lepton-netlist-calay.texi
 @include lepton-netlist-cascade.texi
+@include lepton-netlist-drc.texi
 @include lepton-netlist-pads.texi
 @include lepton-netlist-protelii.texi
 @include lepton-netlist-switcap.texi
