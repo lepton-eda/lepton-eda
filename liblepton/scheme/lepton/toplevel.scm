@@ -30,21 +30,21 @@
             make-toplevel
             with-toplevel))
 
+;;; Initialize %lepton-toplevel with a new fluid variable for
+;;; Scheme and C code.
 ;;; This fluid is used for setting or getting the <toplevel>
 ;;; instance associated with the current dynamic context.
-(define %lepton-toplevel #f)
+(define %lepton-toplevel
+  (let ((toplevel-fluid (make-fluid)))
+    (lepton_init_toplevel_fluid (scm->pointer toplevel-fluid))
+    toplevel-fluid))
+
 
 (define (toplevel? toplevel)
   "Returns #t if TOPLEVEL is a <toplevel> instance, otherwise
 returns #f."
   (is-toplevel? toplevel))
 
-
-;;; Initialize %lepton-toplevel with a new fluid variable for
-;;; Scheme and C code.  Do it once.
-(when (not %lepton-toplevel)
-  (set! %lepton-toplevel (make-fluid))
-  (lepton_init_toplevel_fluid (scm->pointer %lepton-toplevel)))
 
 
 (define (make-toplevel)
