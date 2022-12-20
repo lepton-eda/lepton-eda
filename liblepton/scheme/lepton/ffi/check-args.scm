@@ -20,6 +20,8 @@
 
 
 (define-module (lepton ffi check-args)
+  #:use-module (srfi srfi-1)
+
   #:export (error-wrong-type-arg
             check-boolean
             check-coord
