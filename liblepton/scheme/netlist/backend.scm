@@ -106,13 +106,15 @@ meet the specified requirements."
   "Runs backend's function BACKEND with redirection of its
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
 redirection is carried out."
-  (let ((backend-proc (primitive-eval (string->symbol (backend-name backend)))))
-    (if output-filename
-        ;; output-filename is defined, output to it.
-        (with-output-to-file output-filename
-          (lambda () (backend-proc output-filename)))
-        ;; output-filename is #f, output to stdout.
-        (backend-proc output-filename))))
+  (define backend-proc
+    (primitive-eval (string->symbol (backend-name backend))))
+
+  (if output-filename
+      ;; output-filename is defined, output to it.
+      (with-output-to-file output-filename
+        (lambda () (backend-proc output-filename)))
+      ;; output-filename is #f, output to stdout.
+      (backend-proc output-filename)))
 
 
 (define (lookup-backends)
