@@ -34,10 +34,11 @@
             make-backend))
 
 (define-record-type <backend>
-  (backend path name)
+  (backend path name runner)
   backend?
   (path backend-path set-backend-path!)
-  (name backend-name set-backend-name!))
+  (name backend-name set-backend-name!)
+  (runner backend-runner set-backend-runner!))
 
 
 (define %backend-prefix "gnet-")
@@ -57,6 +58,10 @@
   (netlist-error 1 (G_ "Could not find backend `~A' in load path.\n~
                         Run `~A --list-backends' for a full list of available backends.\n")
                  backend (car (program-arguments))))
+
+(define (error-backend-proc-not-found func-name backend-path)
+  (netlist-error 1 (G_ "Could not find function ~S in backend ~S.\n")
+                 func-name backend-path))
 
 
 (define (legacy-backend-filename? filename)
@@ -130,34 +135,29 @@ meet the specified requirements."
                        (name #f)
                        (pre-load '())
                        (post-load '()))
+  ;; Path set by '-f' has priority over name set by '-g'.
+  (define filename (or path (backend-path-by-name name)))
+  (define func-name (or name (backend-name-by-path path)))
 
   ;; Load Scheme FILE before loading backend (-l FILE).
   (load-scheme-scripts pre-load)
 
-  (let ((backend
-         (cond
-          ((and path name) (backend path name))
-          ;; Path set by '-f' has priority over name set by '-g'.
-          (path (backend path (backend-name-by-path path)))
-          (name (backend (backend-path-by-name name) name))
-          (else #f))))
+  (load-backend-file filename)
 
-    ;; Load backend.
-    (load-backend backend)
+  ;; Load Scheme FILE after loading backend (-m FILE).
+  (load-scheme-scripts post-load 'post-load)
 
-    ;; Load Scheme FILE after loading backend (-m FILE).
-    (load-scheme-scripts post-load)
-
-    ;; Return backend.
-    backend))
+  (let ((proc (primitive-eval (string->symbol func-name))))
+    (if proc
+        (backend path name proc)
+        (error-backend-proc-not-found func-name filename))))
 
 
 (define (run-backend backend output-filename)
   "Runs backend's function BACKEND with redirection of its
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
 redirection is carried out."
-  (define backend-proc
-    (primitive-eval (string->symbol (backend-name backend))))
+  (define backend-proc (backend-runner backend))
 
   (if output-filename
       ;; output-filename is defined, output to it.
@@ -210,10 +210,10 @@ available netlisting modes."
           (error-backend-mode mode)))))
 
 
-(define (load-backend backend)
+(define (load-backend-file filename)
   (catch #t
     (lambda ()
-      (primitive-load (backend-path backend))
+      (primitive-load filename)
       (query-backend-mode))
     (lambda (key subr message args rest)
       (format (current-error-port) (G_ "ERROR: ~?\n") message args)
