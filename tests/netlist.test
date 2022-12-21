@@ -364,6 +364,10 @@
       '(define (test-module-backend out)
          (display "It works!\n")))
 
+     ;; We have to allow for registering data directories so that
+     ;; the user data directory gets into %load-path.  Well, this
+     ;; is a little buggy as scripts in the system data directory
+     ;; may affect the tests, though here we go.
      (unsetenv "LEPTON_INHIBIT_RC_FILES")
 
      (receive (<status> <stdout> <stderr>)
