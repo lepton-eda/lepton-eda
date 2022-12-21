@@ -853,38 +853,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   #f)
 
 
-(define (load-scheme-script filename)
-  (define (load-and-log name)
-    (log! 'message (G_ "Loading ~S") name)
-    (primitive-load name))
-
-  ;; If the file exists in the current directory, or its name is
-  ;; absolute, just load it.
-  (if (file-readable? filename)
-      (load-and-log filename)
-      ;; Otherwise, try to find it in %load-path.
-      (let ((file (%search-load-path filename)))
-        (if file
-            (load-and-log file)
-            (log! 'warning (G_ "Could not find file ~S in %load-path.") filename)))))
-
-
-;;; Loads the list of Scheme scripts LS reporting ERROR-MSG if
-;;; something went wrong.  In the latter case, the program exits
-;;; with exit status 1.
-(define* (load-scheme-scripts ls #:optional (post-load? #f))
-  (define pre-load-error
-    (G_ "Failed to load Scheme file before loading backend.\n"))
-  (define post-load-error
-    (G_ "Failed to load Scheme file after loading backend.\n"))
-  (catch #t
-    (lambda ()
-      (for-each load-scheme-script ls))
-    (lambda (tag . args)
-      (catch-handler tag args)
-      (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
-
-
 (define (eval-startup-expressions string-ls)
   (unless (null? string-ls)
     (catch #t
@@ -946,18 +914,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
    ((not (or opt-backend opt-file-backend opt-interactive))
     (error-no-backend)))
 
-
-  ; Load Scheme FILE before loading backend (-l FILE):
-  (load-scheme-scripts opt-pre-load)
-
-  ;; '-f' has priority over '-g'.
-  (let ((backend (or (make-backend #:path opt-file-backend)
-                     (make-backend #:name opt-backend))))
-    ;; Load backend.
-    (load-backend backend)
-
-    ;; Load Scheme FILE after loading backend (-m FILE):
-    (load-scheme-scripts opt-post-load 'post-load)
+  ;; Make and load backend.
+  (let ((backend (cond
+                  ;; '-f' has priority over '-g'.
+                  (opt-file-backend (make-backend #:path opt-file-backend
+                                                  #:pre-load opt-pre-load
+                                                  #:post-load opt-post-load))
+                  (opt-backend (make-backend #:name opt-backend
+                                             #:pre-load opt-pre-load
+                                             #:post-load opt-post-load))
+                  (else #f))))
 
     ;; This sets [toplevel-schematic] global variable.
     (set-ln-toplevel-schematic! files)

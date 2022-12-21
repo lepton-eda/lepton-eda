@@ -22,14 +22,14 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
 
+  #:use-module (lepton file-system)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
 
   #:use-module (netlist error)
   #:use-module (netlist mode)
 
-  #:export (load-backend
-            lookup-backends
+  #:export (lookup-backends
             run-backend
             make-backend))
 
@@ -93,13 +93,63 @@ meet the specified requirements."
       (error-backend-not-found-by-name name)))
 
 
-(define* (make-backend #:key (path #f) (name #f))
-  (cond
-   ((and path name) (backend path name))
-   ;; Path set by '-f' has priority over name set by '-g'.
-   (path (backend path (backend-name-by-path path)))
-   (name (backend (backend-path-by-name name) name))
-   (else #f)))
+(define (load-scheme-script filename)
+  (define (load-and-log name)
+    (log! 'message (G_ "Loading ~S") name)
+    (primitive-load name))
+
+  ;; If the file exists in the current directory, or its name is
+  ;; absolute, just load it.
+  (if (file-readable? filename)
+      (load-and-log filename)
+      ;; Otherwise, try to find it in %load-path.
+      (let ((file (%search-load-path filename)))
+        (if file
+            (load-and-log file)
+            (log! 'warning (G_ "Could not find file ~S in %load-path.") filename)))))
+
+
+;;; Loads the list of Scheme scripts LS reporting ERROR-MSG if
+;;; something went wrong.  In the latter case, the program exits
+;;; with exit status 1.
+(define* (load-scheme-scripts ls #:optional (post-load? #f))
+  (define pre-load-error
+    (G_ "Failed to load Scheme file before loading backend.\n"))
+  (define post-load-error
+    (G_ "Failed to load Scheme file after loading backend.\n"))
+  (catch #t
+    (lambda ()
+      (for-each load-scheme-script ls))
+    (lambda (key subr message args rest)
+      (format (current-error-port) (G_ "ERROR: ~?\n") message args)
+      (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
+
+
+(define* (make-backend #:key
+                       (path #f)
+                       (name #f)
+                       (pre-load '())
+                       (post-load '()))
+
+  ;; Load Scheme FILE before loading backend (-l FILE).
+  (load-scheme-scripts pre-load)
+
+  (let ((backend
+         (cond
+          ((and path name) (backend path name))
+          ;; Path set by '-f' has priority over name set by '-g'.
+          (path (backend path (backend-name-by-path path)))
+          (name (backend (backend-path-by-name name) name))
+          (else #f))))
+
+    ;; Load backend.
+    (load-backend backend)
+
+    ;; Load Scheme FILE after loading backend (-m FILE).
+    (load-scheme-scripts post-load)
+
+    ;; Return backend.
+    backend))
 
 
 (define (run-backend backend output-filename)
