@@ -37,11 +37,12 @@
             make-module-backend))
 
 (define-record-type <backend>
-  (backend path name runner)
+  (backend path name runner legacy)
   backend?
   (path backend-path set-backend-path!)
   (name backend-name set-backend-name!)
-  (runner backend-runner set-backend-runner!))
+  (runner backend-runner set-backend-runner!)
+  (legacy backend-legacy set-backend-legacy!))
 
 
 (define %backend-prefix "gnet-")
@@ -157,7 +158,7 @@ meet the specified requirements."
 
   (let ((proc (primitive-eval (string->symbol func-name))))
     (if proc
-        (backend path name proc)
+        (backend path name proc #t)
         (error-backend-proc-not-found func-name filename))))
 
 
@@ -193,7 +194,7 @@ meet the specified requirements."
 
   ;; Check that the variable is a procedure.
   (if (procedure? proc)
-      (backend (module-filename module) name proc)
+      (backend (module-filename module) name proc #f)
       ;; Returns #f.
       (warn-module-backend-not-found))
 
