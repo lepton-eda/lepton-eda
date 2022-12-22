@@ -361,7 +361,7 @@
       '(define-module (backend test-module-backend)
          #:export (test-module-backend))
       ;; This is the exported function.
-      '(define (test-module-backend out)
+      '(define (test-module-backend)
          (display "It works!\n")))
 
      ;; We have to allow for registering data directories so that

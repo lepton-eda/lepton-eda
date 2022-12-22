@@ -208,13 +208,18 @@ meet the specified requirements."
 standard output to OUTPUT-FILENAME.  If OUTPUT-FILENAME is #f, no
 redirection is carried out."
   (define backend-proc (backend-runner backend))
+  (define thunk
+    (if (backend-legacy backend)
+        ;; Legacy backends require one argument.
+        (lambda () (backend-proc output-filename))
+        ;; Module backends do not require arguments.
+        backend-proc))
 
   (if output-filename
       ;; output-filename is defined, output to it.
-      (with-output-to-file output-filename
-        (lambda () (backend-proc output-filename)))
+      (with-output-to-file output-filename thunk)
       ;; output-filename is #f, output to stdout.
-      (backend-proc output-filename)))
+      (thunk)))
 
 
 (define (lookup-module-backends)
