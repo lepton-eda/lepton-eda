@@ -11,7 +11,12 @@ them.  Additions and deletions of elements in the design layout as
 well as changes in their interconnections are automatically driven by
 changes in the design schematics.
 
-@node Attributes for PCB layout
+@menu
+* Attributes for PCB layout::
+* Two types of PCB elements::
+@end menu
+
+@node Attributes for PCB layout, Two types of PCB elements, lepton-sch2pcb, lepton-sch2pcb
 @section Attributes for PCB layout
 @cindex attributes for PCB layout
 @cindex PCB layout, attributes
@@ -42,7 +47,7 @@ shown as @emph{element name} depending on their settings.
 All the above attributes are used to propagate the changes in your
 schematics to the corresponding PCB layout.
 
-@node Two types of PCB elements
+@node Two types of PCB elements,  , Attributes for PCB layout, lepton-sch2pcb
 @section Two types of PCB elements
 @cindex PCB element type
 @cindex type of PCB element

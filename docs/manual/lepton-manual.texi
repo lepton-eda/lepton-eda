@@ -257,6 +257,11 @@ Introduction to lepton-attrib
 * Installation of lepton-attrib::
 * Credits and history of lepton-attrib::
 
+lepton-sch2pcb - interface to PCB layout programs
+
+* Attributes for PCB layout::
+* Two types of PCB elements::
+
 Development
 
 * Debugging::                   Debugging the tools
