@@ -1,0 +1,88 @@
+@node lepton-netlist command-line arguments
+@section lepton-netlist command-line arguments
+@cindex lepton-netlist command-line arguments
+
+Running @netlist{} without arguments yields a prompt for the user how
+to run it properly or how to get help.
+
+By running it with the option @option{-h} or @option{--help} you can
+get the actual list of optional arguments accepted on the
+command-line.  @url{../man/lepton-netlist.html, lepton-netlist(1) man
+page} also lists all of them, type @code{man lepton-netlist} in your
+terminal to open the page.
+
+
+The basic usage is:
+@example
+lepton-netlist [@var{option} ...] [-g @var{backend}] [--] @var{file} ...
+@end example
+
+Message output and diagnostics options:
+
+@table @code
+@item -q
+@itemx --quiet
+Quiet mode. Turn off all warnings/notes/messages.
+@item -v
+@itemx --verbose
+Verbose mode.  Output extra diagnostic information.
+@item -h
+@itemx --help
+Print a help message.
+@item -V
+@itemx --version
+Print @netlist{} version information.
+@item -b
+@itemx --list-backends
+Print a list of available netlist backends.
+@end table
+
+Netlist processing options:
+
+@table @code
+@item -o @var{file}
+@itemx --output=@var{file}
+Output the generated netlist to @var{file}.  The default output name
+is @file{output.net}.  If @var{file} is @samp{-} (dash), the output is
+directed to the standard output.
+@item -g @var{backend}
+@itemx --backend=@var{backend}
+Specify backend name @var{backend} which will be used to generate
+netlist data.
+@item -f @var{backend-file}
+@itemx --file-backend=@var{backend-file}
+Specify path to netlist backend file @var{backend-file} which will be
+used to generate netlist data.
+@item -O @var{string}
+@itemx --backend-option=@var{string}
+Pass an option @var{string} to the netlist backend.
+@item -i
+@item --interactive
+Enter the interactive mode.  Run Scheme REPL instead of running a
+backend.
+@item --
+Treat all remaining arguments as schematic or symbol filenames.  This
+may be useful if any of the filenames begins with @samp{-}.
+@end table
+
+Scheme extensibility options:
+
+@table @code
+@item -L @var{directory}
+@itemx --load-path=@var{directory}
+Prepend @var{directory} to the list of directories to be searched for
+Scheme files (Scheme @code{%load-path}).  This option can be specified
+multiple times.
+@item -c @var{expr}
+@itemx --eval-code=@var{expr}
+Specify a Scheme expression to be evaluated at startup.  This option
+can be specified multiple times.
+@item -l @var{file}
+@itemx --pre-load=@var{file}
+Specify a Scheme script to be executed before loading a backend.  This
+option can be specified multiple times.
+@item -m @var{file}
+@itemx --post-load=@var{file}
+Specify a Scheme script to be executed after loading a backend.  This
+option can be specified multiple times.
+@end table
