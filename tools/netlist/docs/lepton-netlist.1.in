@@ -26,49 +26,49 @@ to one of many supported netlist formats.
 
 .SH GENERAL OPTIONS
 .TP 8
-\fB-q\fR
+\fB-q\fR, \fB--quiet\fR
 Quiet mode. Turns off all warnings/notes/messages.
 .TP 8
 \fB-v\fR, \fB--verbose\fR
 Verbose mode.  Output all diagnostic information.
 .TP 8
-\fB-L\fR \fIDIRECTORY\fR
+\fB-L\fR, \fB--lepton-path\fR=\fIDIRECTORY\fR
 Prepend \fIDIRECTORY\fR to the list of directories to be searched for
 Scheme files.
 .TP 8
-\fB-g\fR \fIBACKEND\fR
+\fB-g\fR, \fB--backend\fR=\fIBACKEND\fR
 Specify the netlist backend to be used.
 .TP 8
-\fB-f\fR \fIFILE\fR
+\fB-f\fR, \fB--file-backend\fR=\fIFILE\fR
 Load and use netlist backend from \fIFILE\fR.
 \fIFILE\fR is expected to have name like "gnet-NAME.scm" and contain entry
 point function NAME (where NAME is the backend's name).
 .TP 8
-\fB-O\fR \fISTRING\fR
+\fB-O\fR, \fB--backend-option\fR=\fISTRING\fR
 Pass an option string to the backend.
 .TP 8
 \fB-b\fR, \fB--list-backends\fR
 Print a list of available netlist backends.
 .TP 8
-\fB-o\fR \fIFILE\fR
+\fB-o\fR, \fB--output\fR=\fIFILE\fR
 Specify the filename for the generated netlist.  By default, output is
 directed to `output.net'.
 If `-' is given instead of a filename, the output is directed to the
 standard output.
 .TP 8
-\fB-l\fR \fIFILE\fR
+\fB-l\fR, \fB--pre-load\fR=\fIFILE\fR
 Specify a Scheme file to be loaded before the backend is loaded or
 executed.  This option can be specified multiple times.
 .TP 8
-\fB-m\fR \fIFILE\fR
+\fB-m\fR, \fB--post-load\fR=\fIFILE\fR
 Specify a Scheme file to be loaded between loading the backend and
 executing it.  This option can be specified multiple times.
 .TP 8
-\fB-c\fR \fIEXPR\fR
+\fB-c\fR, \fB--eval-code\fR=\fIEXPR\fR
 Specify a Scheme expression to be executed during \fBlepton-netlist\fR
 startup.  This option can be specified multiple times.
 .TP 8
-\fB-i\fR
+\fB-i\fR, \fB--interactive\fR
 After the schematic files have been loaded and compiled, and after all
 Scheme files have been loaded, but before running the backend, enter a
 Scheme read-eval-print loop.
