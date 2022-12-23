@@ -33,8 +33,9 @@ Quiet mode. Turns off all warnings/notes/messages.
 Verbose mode.  Output all diagnostic information.
 .TP 8
 \fB-L\fR, \fB--lepton-path\fR=\fIDIRECTORY\fR
-Prepend \fIDIRECTORY\fR to the list of directories to be searched for
-Scheme files.
+Prepend \fIDIRECTORY\fR to the list of directories to be searched
+for Scheme files.  It is done before loading and/or evaluating any
+Scheme code.  This option can be specified multiple times.
 .TP 8
 \fB-g\fR, \fB--backend\fR=\fIBACKEND\fR
 Specify the netlist backend to be used.
