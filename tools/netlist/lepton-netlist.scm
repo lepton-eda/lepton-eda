@@ -65,8 +65,9 @@
 ;;; Initialize netlister options.
 (init-netlist-options! %options)
 
-;;; Evaluate Scheme expressions that need to be run before rc
-;;; files are loaded.
+;;; Prepend directories specified by -L (--load-path) to Scheme
+;;; %load-path.  Do it before evaluating and/or loading any other
+;;; code.
 (for-each (cut add-to-load-path <>)
           (netlist-option-ref/toplevel %options 'load-path '()))
 
