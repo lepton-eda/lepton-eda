@@ -240,6 +240,7 @@ Netlister
 * BOM2 backend::
 * Calay backend::
 * Cascade backend::
+* DRC backend::
 * PADS backend::
 * ProtelII backend::
 * Switcap backend::
