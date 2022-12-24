@@ -24,3 +24,21 @@ Design Rule Checking} report in the file @file{report.drc} for your
 design consisting of two schematic files, @file{power-supply.sch} and
 @file{test-board.sch}.
 
+To automate your work on netlist creation, you could use the
+@command{make} command.  Create a file named @file{Makefile} and write
+down dependencies between input and output file in it.  For the above
+example the file contents would look like this:
+
+@verbatim
+schematics = power-supply.sch test-board.sch
+drc-netlist = report.drc
+
+.PHONY: all
+all: $(netlist)
+
+$(drc-netlist): $(schematics)
+	lepton-netlist -g drc2 -o $@ $<
+@end verbatim
+
+To update your netlist after editing your schematics, just run
+@command{make} and you're done!
