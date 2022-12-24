@@ -42,3 +42,6 @@ $(drc-netlist): $(schematics)
 
 To update your netlist after editing your schematics, just run
 @command{make} and you're done!
+
+There are several other @ref{lepton-netlist command-line arguments,
+lepton-netlist options} that can be used for more advanced tasks.
