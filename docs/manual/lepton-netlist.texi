@@ -96,6 +96,7 @@ vipec
 @end itemize
 
 @menu
+* Running lepton-netlist::
 * lepton-netlist command-line arguments::
 * Allegro backend::
 * BAE backend::
@@ -109,6 +110,7 @@ vipec
 * Switcap backend::
 @end menu
 
+@include lepton-netlist-running.texi
 @include lepton-netlist-command-line.texi
 @include lepton-netlist-allegro.texi
 @include lepton-netlist-bae.texi

@@ -1,0 +1,26 @@
+@node Running lepton-netlist
+@section Running lepton-netlist
+
+@netlist{} has a command-line interface and can be run as any
+@acronym{CLI, Command Line Interface} utility in a terminal window,
+from @file{Makefile} or shell script and in a variety of other ways.
+To get a useful result you at least need to specify:
+@itemize
+@item
+schematic files to process,
+@item
+backend to generate the result,
+@item
+output file name in which to save the resulting netlist.
+@end itemize
+
+A simple command to run @netlist{} might look like this:
+@example
+lepton-netlist -g drc2 -o report.drc power-supply.sch test-board.sch
+@end example
+
+Here, you use the backend @samp{drc2} for generating a @acronym{DRC,
+Design Rule Checking} report in the file @file{report.drc} for your
+design consisting of two schematic files, @file{power-supply.sch} and
+@file{test-board.sch}.
+

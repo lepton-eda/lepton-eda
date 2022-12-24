@@ -25,6 +25,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist-drc.texi \
 	lepton-netlist-pads.texi \
 	lepton-netlist-protelii.texi \
+	lepton-netlist-running.texi \
 	lepton-netlist-switcap.texi \
 	lepton-sch2pcb.texi \
 	lepton-schematic.texi \

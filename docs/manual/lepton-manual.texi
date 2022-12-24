@@ -234,6 +234,7 @@ Component library setup
 
 Netlister
 
+* Running lepton-netlist::
 * lepton-netlist command-line arguments::
 * Allegro backend::
 * BAE backend::
