@@ -2,3 +2,13 @@
 @section Backends
 @cindex backends
 @cindex lepton-netlist backends
+
+Under the hood, @netlist{} consists of two parts and thus processes
+schematic files in two steps.  The first part called @dfn{frontend}
+transforms all given schematics into an intermediate schematic model.
+The second part called @dfn{backend} is a Scheme script that takes
+that model and transforms its contents into a human readable output
+using functions provided by @netlist{} Scheme API.  As you may now
+guess, there are several backends in Lepton and each of them uses its
+own way to transform the schematic model.  In the command-line, the
+user may specify only one backend at a time.
