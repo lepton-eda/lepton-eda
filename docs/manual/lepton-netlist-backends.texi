@@ -78,3 +78,27 @@ To display the output of the backend in your terminal, type:
 @example
 lepton-netlist -g custom-backend -o - schematic1.sch ...
 @end example
+
+
+@node Backend kinds
+@subsection Backend kinds
+@cindex backend kinds
+@cindex lepton-netlist backend kinds
+
+@netlist{} backends are different by their destination.  Currently,
+there are following kinds of backends in Lepton:
+
+@itemize
+@item
+Backends for creating @acronym{BOM, Bill Of Materials} or list of parts.
+@item
+Backends for @acronym{DRC, Design Rule Checking}.
+@item
+Backends for simulation.
+@item
+Backends for PCB creation.
+@item
+Backends for automation.
+@item
+Backends for testing contents of a schematic.
+@end itemize
