@@ -189,18 +189,11 @@ meet the specified requirements."
   ;; Get the value of the variable.
   (define proc (and var (module-ref interface backend-sym)))
 
-  ;; Ignore pre-loading for now.
-  ;; (load-scheme-scripts pre-load)
-
   ;; Check that the variable is a procedure.
   (if (procedure? proc)
       (backend (module-filename module) name proc #f)
       ;; Returns #f.
-      (warn-module-backend-not-found))
-
-  ;; Ignore post-loading.
-  ;; (load-scheme-scripts post-load 'post-load)
-  )
+      (warn-module-backend-not-found)))
 
 
 (define (run-backend backend output-filename)
