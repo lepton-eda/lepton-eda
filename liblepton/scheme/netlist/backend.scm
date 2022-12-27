@@ -139,6 +139,42 @@ meet the specified requirements."
       (netlist-error 1 (if post-load? post-load-error pre-load-error)))))
 
 
+(define (query-backend-mode)
+  "Queries and sets the current netlisting mode.  Backends can
+request what netlist mode should be used by providing the function
+request-netlist-mode() that should return the desired mode symbol.
+The procedure netlist-mode() can be used to find out currently
+available netlisting modes."
+  (define (error-backend-mode mode)
+    (netlist-error
+     1
+     (G_ "Netlist mode requested by backend is not supported: ~A\n")
+     mode))
+
+  (define proc-name 'request-netlist-mode)
+  (define proc-binding
+    (false-if-exception
+     (module-symbol-binding (current-module) proc-name)))
+
+  ;; If the procedure binding exists, and it is really a
+  ;; procedure, eval it to get the new netlisting mode.
+  (when (procedure? proc-binding)
+    (let ((mode (proc-binding)))
+      (if (netlist-mode? mode)
+          (set-netlist-mode! mode)
+          (error-backend-mode mode)))))
+
+
+(define (load-backend-file filename)
+  (catch #t
+    (lambda ()
+      (primitive-load filename)
+      (query-backend-mode))
+    (lambda (key subr message args rest)
+      (format (current-error-port) (G_ "ERROR: ~?\n") message args)
+      (netlist-error 1 (G_ "Failed to load backend file.\n")))))
+
+
 (define* (make-legacy-backend #:key
                               (path #f)
                               (name #f)
@@ -240,7 +276,6 @@ redirection is carried out."
   (map backend-name backend-basenames))
 
 
-
 (define (lookup-legacy-backends)
   "Searches %load-path for available lepton-netlist backends and
 returns the resulting list of filenames.  A file is considered to
@@ -256,39 +291,3 @@ be a backend if its basename begins with \"gnet-\" and ends with
     (append-map path-backends (delete-duplicates %load-path)))
 
   (map backend-filename->proc-name backend-files))
-
-
-(define (query-backend-mode)
-  "Queries and sets the current netlisting mode.  Backends can
-request what netlist mode should be used by providing the function
-request-netlist-mode() that should return the desired mode symbol.
-The procedure netlist-mode() can be used to find out currently
-available netlisting modes."
-  (define (error-backend-mode mode)
-    (netlist-error
-     1
-     (G_ "Netlist mode requested by backend is not supported: ~A\n")
-     mode))
-
-  (define proc-name 'request-netlist-mode)
-  (define proc-binding
-    (false-if-exception
-     (module-symbol-binding (current-module) proc-name)))
-
-  ;; If the procedure binding exists, and it is really a
-  ;; procedure, eval it to get the new netlisting mode.
-  (when (procedure? proc-binding)
-    (let ((mode (proc-binding)))
-      (if (netlist-mode? mode)
-          (set-netlist-mode! mode)
-          (error-backend-mode mode)))))
-
-
-(define (load-backend-file filename)
-  (catch #t
-    (lambda ()
-      (primitive-load filename)
-      (query-backend-mode))
-    (lambda (key subr message args rest)
-      (format (current-error-port) (G_ "ERROR: ~?\n") message args)
-      (netlist-error 1 (G_ "Failed to load backend file.\n")))))
