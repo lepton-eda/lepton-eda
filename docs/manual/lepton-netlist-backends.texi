@@ -75,12 +75,38 @@ Backends for testing contents of a schematic.
 @cindex backend types
 @cindex lepton-netlist backend types
 
-Backend system has been inherited from gEDA @command{gnetlist} and
-currently, there is only one type of backends for @netlist{}:
-@dfn{backend} is a simple Scheme @emph{script} containing a
-@emph{definition} of its main function.
+Currently, there are two types of backends for @netlist{}:
 
-In order @netlist{} to understand a file is a backend, it must
+@itemize
+@item
+@dfn{Legacy backend} is a simple Scheme @emph{script} containing a
+@emph{definition} of its main function.
+@item
+@dfn{Module backend} is a Scheme @emph{module} that apart from
+definition should @emph{export} its main function.
+@end itemize
+
+Initially, legacy backend system had been inherited from gEDA
+@command{gnetlist}, and since its invention, file names of legacy
+backends had to have, and must now have, the prefix @file{gnet-}.  As
+both types of backends are Scheme files, they should have the
+extension @file{.scm}.  A backend of any type should define a main
+function named the same as the backend itself.  Please note that the
+name of a backend is not the same as of its file name.  Subtle
+differences in naming will be revealed in the next sections.
+
+In both cases @netlist{} loads and evaluates the main backend function
+at a certain stage of its execution.
+
+
+@node Legacy backends
+@subsubsection Legacy backends
+@cindex legacy backends
+@cindex lepton-netlist legacy backends
+
+Legacy backend system has been inherited from gEDA @command{gnetlist}.
+
+In order @netlist{} to understand a file is a legacy backend, it must
 meet the following requirements:
 @itemize
 @item
@@ -100,3 +126,9 @@ argument which is the output file name.  Really, it is not necessary
 to use this argument in the code as @netlist{} automatically redirects
 the standard output of the function into a file if it is specified by
 its command-line arguments.
+
+
+@node Module backends
+@subsubsection Module backends
+@cindex module backends
+@cindex lepton-netlist module backends
