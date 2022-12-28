@@ -195,3 +195,168 @@ $ lepton-shell -c '(use-modules (lepton os)) (display (user-data-dir))'
 /home/vzh/.local/share/lepton-eda
 $ cp my-backend.scm /home/vzh/.local/share/lepton-eda/scheme/backend
 @end example
+
+
+@node Custom backends
+@subsection Writing custom backends
+@cindex custom backend example
+@cindex custom backends
+@cindex writing custom backends
+
+
+@node Custom legacy backends
+@subsubsection Custom legacy backends
+@cindex custom legacy backends
+@cindex writing custom legacy backend
+
+
+@node Custom module backends
+@subsubsection Custom module backends
+@cindex custom module backends
+@cindex writing custom module backend
+
+Let's create some new custom backends. Here is how you can do it.
+
+Create a file named @file{custom-backend.scm} with the following
+contents:
+
+@lisp
+(define-module (backend custom-backend)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic toplevel)
+  #:export (custom-backend))
+
+(define (custom-backend)
+  (display (schematic-components (toplevel-schematic))))
+@end lisp
+
+Put the file into the directory
+@file{~/.local/share/lepton-eda/scheme/backend}.  Now, @netlist{}
+should report its name if you launch it with the option
+@option{--list-backends}:
+@example
+$ lepton-netlist --list-backends
+...
+custom-backend
+...
+@end example
+
+Run it:
+@example
+$ lepton-netlist -g custom-backend my-schematic.sch
+@end example
+
+The output in the file @file{output.net} in the current working
+directory may look as follows:
+@example
+(#<geda-schematic-component 54> #<geda-schematic-component 90>)
+@end example
+
+You can use pre-load (@option{-l}) and post-load (@option{-m}) scripts
+along with legacy backends to maybe redefine some code or re-use it.
+Pre- and post-loading functionality is not used for module backends.
+Instead of loading a backend and then redefining its functions using
+@option{-m}, you can define a new module backend and redefine or
+re-use the functions in it.  Pre-loading by the option @option{-l} can
+be changed the same way, just define a module and use its functions in
+another module.  If you want to use the code from a legacy backend,
+just @code{primitive-load} its file.  Here are several examples.
+
+Let's suppose that you have a legacy backend named
+@file{gnet-legacy.scm} and want to re-use its main function
+@code{legacy()} in your code.  It may live in any directory defined in
+@netlist{}'s @code{%load-path}.  To check the contents of
+@code{%load-path} you can issue the following command:
+
+@example
+lepton-netlist -c '(display %load-path)'
+@end example
+
+or just open @netlist in interactive-mode
+
+@example
+@end example
+
+enter @code{%load-path} and hit @kbd{@key{RET}}.
+
+The contents of your backend can then be changed to something like
+this:
+
+@lisp
+(define-module (backend custom-backend)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic toplevel)
+  #:export (custom-backend))
+
+(primitive-load "gnet-legacy.scm")  ; <= new line
+
+(define (custom-backend)
+  (display (legacy))  ; <= new line
+  (display (schematic-components (toplevel-schematic))))
+@end lisp
+
+You don't have to put the file into a load path known for @netlist{}.
+To use your file from any other directory, just specify its absolute
+path in @code{primitive-load}, e.g. @code{(primitive-load
+"/tmp/gnet-legacy.scm")}.
+
+If you want to pre-load a module backend and use its contents, just
+import it in the code and use its exported function.
+
+Supposed you have a backend file @file{print-config.scm} in your user
+backend directory with the following contents:
+
+@lisp
+(define-module (backend print-config)
+  #:use-module (netlist config)
+  #:export (print-config))
+
+(define (print-config)
+  (print-netlist-config))
+@end lisp
+
+and want to use it in the above custom backend, you just edit the
+custom backend as follows:
+
+@lisp
+(define-module (backend custom-backend)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (backend print-config)  ; <= new line
+  #:export (custom-backend))
+
+(define (custom-backend)
+  (print-config)  ; <= new line
+  (display (schematic-components (toplevel-schematic))))
+@end lisp
+
+Post-loading function is no longer necessary, either.  If you want to
+add some functionality without modifying an original backend code,
+just add a new backend.
+
+For instance, you want to output some additional, maybe debugging,
+information before and after the output of the function
+@code{custom-backend()}.  What you need is just a new backend module
+in your user backend directory which re-uses the function.  To
+accomplish that, you could make a backend file with the following
+contents:
+
+@lisp
+(define-module (backend add-headers-and-footers)
+  #:use-module (backend custom-backend)
+  #:export (add-headers-and-footers))
+
+(define (add-headers-and-footers)
+  (display "Those are schematic components:\n")  ; <= header
+  (custom-backend)  ; <= main backend output
+  (display "That's all folks!")  ; <= footer)
+@end lisp
+
+Name the file @file{add-headers-and-footers.scm} and put it into one
+of your backend directories, then run:
+
+@example
+$ lepton-netlist -g add-headers-and-footers my-schematic.sch
+@end example
+
+and you're done, congrats!
