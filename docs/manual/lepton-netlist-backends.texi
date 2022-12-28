@@ -214,6 +214,33 @@ Writing a custom legacy backend is simple.  Create a file named
 @var{backend-name} in it.  Then put the file into one of the
 directories @netlist{} searches for Scheme files.
 
+For instance, create a file @file{gnet-my-backend.scm} in the directory
+@file{~/.local/share/lepton-eda/scheme} with the following contens:
+
+@lisp
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
+
+(define (my-backend output-filename)
+  (display (schematic-nets (toplevel-schematic)))
+  (newline))
+@end lisp
+
+Check that @netlist{} outputs its name in the list of known backend names:
+@example
+$ lepton-netlist --list-backends
+...
+my-backend
+...
+@end example
+
+And you can already try it:
+@example
+$ lepton-netlist -o - -g my-backend my-schematic.sch
+(GND 1 2 unnamed_net1)
+@end example
+
+That's all!
 @node Custom module backends
 @subsubsection Custom module backends
 @cindex custom module backends
