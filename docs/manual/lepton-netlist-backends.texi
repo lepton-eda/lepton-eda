@@ -209,6 +209,10 @@ $ cp my-backend.scm /home/vzh/.local/share/lepton-eda/scheme/backend
 @cindex custom legacy backends
 @cindex writing custom legacy backend
 
+Writing a custom legacy backend is simple.  Create a file named
+@file{gnet-@var{backend-name}.scm} and define a function
+@var{backend-name} in it.  Then put the file into one of the
+directories @netlist{} searches for Scheme files.
 
 @node Custom module backends
 @subsubsection Custom module backends
