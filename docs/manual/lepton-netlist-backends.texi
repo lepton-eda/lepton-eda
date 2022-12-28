@@ -132,3 +132,66 @@ its command-line arguments.
 @subsubsection Module backends
 @cindex module backends
 @cindex lepton-netlist module backends
+
+Unlike legacy backends, a module backend is simply a Scheme module.
+In order @netlist{} to understand a file is a module backend, it must
+meet the following requirements:
+
+@itemize
+@item
+The filename must have the extension @file{.scm}.
+@item
+It must define the module in the @samp{backend} namespace and export
+the same named function.
+@item
+It must live in one of Lepton's user or system data directories.
+@end itemize
+
+For example, the name of your backend is @file{my-backend.scm}.  In
+the code, you have to add module definition as follows:
+
+@lisp
+(define-module (backend my-backend)
+  #:export (my-backend))
+@end lisp
+
+The exported function has take no arguments.  What it outputs to the
+standard output port is redirected by @netlist{} to the specified
+output file or standard output, or to the default output name if no
+output file name is specified.
+
+The function may be defined as follows:
+@lisp
+(define (my-backend)
+  (some-code-follows) ...)
+@end lisp
+
+To make the function take an arbitrary list of arguments, it can be
+defined as follows:
+@lisp
+(define (my-backend . args)
+  (some-code-that-use-args args) ...)
+@end lisp
+
+So, if you want the backend to be available system-wide, put it in the
+@file{scheme/backend} subdirectory of one of the directories reported
+by the function @code{sys-data-dirs}, e.g. @file{/etc/lepton-eda}.  To
+find out the paths, you can use @command{lepton-shell}.  For example:
+
+@example
+$ lepton-shell -c '(use-modules (lepton os)) (display (sys-data-dirs))'
+(/usr/local/share/lepton-eda /usr/share/lepton-eda)
+$ sudo cp my-backend.scm /usr/local/share/lepton-eda/scheme/backend
+@end example
+
+If you want the backend to be available only for you, e.g. when you're
+just developing it, put it into the @file{scheme/backend/}
+subdirectory of your Lepton user data directory which can be found
+using the function @code{user-data-dir}, typically
+@file{~/.local/share/lepton-eda}.  For example:
+
+@example
+$ lepton-shell -c '(use-modules (lepton os)) (display (user-data-dir))'
+/home/vzh/.local/share/lepton-eda
+$ cp my-backend.scm /home/vzh/.local/share/lepton-eda/scheme/backend
+@end example
