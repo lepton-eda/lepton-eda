@@ -14,40 +14,6 @@ own way to transform the schematic model.  In the command-line, the
 user may specify only one backend at a time.
 
 
-
-@node Backend types
-@subsection Backend types
-@cindex backend types
-@cindex lepton-netlist backend types
-
-Backend system has been inherited from gEDA @command{gnetlist} and
-currently, there is only one type of backends for @netlist{}:
-@dfn{backend} is a simple Scheme @emph{script} containing a
-@emph{definition} of its main function.
-
-In order @netlist{} to understand a file is a backend, it must
-meet the following requirements:
-@itemize
-@item
-Its filename must have the @file{gnet-} prefix.
-@item
-The filename must have the extension @file{.scm}.
-@item
-It should export a function named the same as backend itself.
-@end itemize
-
-The name of the backend is defined by removing the prefix @file{gnet-}
-and the suffix @file{.scm} from its file basename.  For example, if
-backend file name is @file{gnet-custom-backend.scm}, its name is
-@code{custom-backend} and its code has to contain a definition of a
-function named @code{custom-backend}.  The function must take one
-argument which is the output file name.  Really, it is not necessary
-to use this argument in the code as @netlist{} automatically redirects
-the standard output of the function into a file if it is specified by
-its command-line arguments.
-
-
-
 @node Backend launching
 @subsection Backend launching
 @cindex backend launching
@@ -102,3 +68,35 @@ Backends for automation.
 @item
 Backends for testing contents of a schematic.
 @end itemize
+
+
+@node Backend types
+@subsection Backend types
+@cindex backend types
+@cindex lepton-netlist backend types
+
+Backend system has been inherited from gEDA @command{gnetlist} and
+currently, there is only one type of backends for @netlist{}:
+@dfn{backend} is a simple Scheme @emph{script} containing a
+@emph{definition} of its main function.
+
+In order @netlist{} to understand a file is a backend, it must
+meet the following requirements:
+@itemize
+@item
+Its filename must have the @file{gnet-} prefix.
+@item
+The filename must have the extension @file{.scm}.
+@item
+It should export a function named the same as backend itself.
+@end itemize
+
+The name of the backend is defined by removing the prefix @file{gnet-}
+and the suffix @file{.scm} from its file basename.  For example, if
+backend file name is @file{gnet-custom-backend.scm}, its name is
+@code{custom-backend} and its code has to contain a definition of a
+function named @code{custom-backend}.  The function must take one
+argument which is the output file name.  Really, it is not necessary
+to use this argument in the code as @netlist{} automatically redirects
+the standard output of the function into a file if it is specified by
+its command-line arguments.
