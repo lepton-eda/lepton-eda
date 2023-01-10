@@ -45,6 +45,9 @@ struct st_undo
   LeptonUndo *next;
 };
 
+char*
+lepton_undo_get_filename (LeptonUndo *undo);
+
 LeptonUndo*
 lepton_undo_get_next (LeptonUndo *undo);
 
