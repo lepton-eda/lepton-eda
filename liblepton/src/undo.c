@@ -76,6 +76,19 @@ lepton_undo_get_object_list (LeptonUndo *undo)
   return undo->object_list;
 }
 
+/*! \brief Set undo structure's \a object_list field value.
+ *
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
+ *  \param [in] object_list The new value of the \a object_list field.
+ */
+void
+lepton_undo_set_object_list (LeptonUndo *undo,
+                             GList *object_list)
+{
+  g_return_if_fail (undo != NULL);
+  undo->object_list = object_list;
+}
+
 
 /*! \brief Get undo structure's \a next field value.
  *
