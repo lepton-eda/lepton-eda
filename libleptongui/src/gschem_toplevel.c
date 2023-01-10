@@ -1336,6 +1336,20 @@ schematic_window_set_undo_panzoom (GschemToplevel *w_current,
 }
 
 
+/*! \brief Get the field 'undo_type' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'undo_type'.
+ */
+int
+schematic_window_get_undo_type (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, UNDO_DISK);
+
+  return w_current->undo_type;
+}
+
+
 /*! \brief Get the field 'keyboardpan_gain' for this schematic window.
  *
  *  \param [in] w_current The schematic window.
