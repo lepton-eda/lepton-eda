@@ -54,6 +54,9 @@ lepton_undo_set_filename (LeptonUndo *undo,
 GList*
 lepton_undo_get_object_list (LeptonUndo *undo);
 
+void
+lepton_undo_set_object_list (LeptonUndo *undo,
+                             GList *object_list);
 LeptonUndo*
 lepton_undo_get_next (LeptonUndo *undo);
 
