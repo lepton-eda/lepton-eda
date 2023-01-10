@@ -1038,7 +1038,7 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* int))
+(define-lff o_undo_callback void (list '* '* '* int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))
