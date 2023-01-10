@@ -48,6 +48,9 @@ struct st_undo
 char*
 lepton_undo_get_filename (LeptonUndo *undo);
 
+void
+lepton_undo_set_filename (LeptonUndo *undo,
+                          const char *filename);
 GList*
 lepton_undo_get_object_list (LeptonUndo *undo);
 
