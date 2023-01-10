@@ -403,7 +403,6 @@ o_undo_callback (GschemToplevel *w_current,
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonUndo *undo_to_do;
-  LeptonUndo *current_undo;
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
   LeptonUndo *save_current;
@@ -415,7 +414,9 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  if (lepton_page_get_undo_current (page) == NULL)
+  LeptonUndo *current_undo = lepton_page_get_undo_current (page);
+
+  if (current_undo == NULL)
   {
     return;
   }
@@ -423,15 +424,13 @@ o_undo_callback (GschemToplevel *w_current,
   if (!redo)
   {
     /* Undo action. */
-    undo_to_do = page->undo_current->prev;
+    undo_to_do = current_undo->prev;
   }
   else
   {
     /* Redo action. */
-    undo_to_do = page->undo_current->next;
+    undo_to_do = current_undo->next;
   }
-
-  current_undo = page->undo_current;
 
   if (undo_to_do == NULL)
   {
@@ -460,7 +459,7 @@ o_undo_callback (GschemToplevel *w_current,
   /* save structure so it's not nuked */
   save_bottom = page->undo_bottom;
   save_tos = page->undo_tos;
-  save_current = page->undo_current;
+  save_current = current_undo;
   page->undo_bottom = NULL;
   page->undo_tos = NULL;
   page->undo_current = NULL;
