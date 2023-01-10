@@ -33,6 +33,22 @@
 
 #include "liblepton_priv.h"
 
+
+
+/*! \brief Get undo structure's \a prev field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a prev field.
+ */
+LeptonUndo*
+lepton_undo_get_prev (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, NULL);
+
+  return undo->prev;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
