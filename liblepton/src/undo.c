@@ -34,6 +34,19 @@
 #include "liblepton_priv.h"
 
 
+/*! \brief Get undo structure's \a filename field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a filename field.
+ */
+char*
+lepton_undo_get_filename (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, NULL);
+
+  return undo->filename;
+}
+
 
 /*! \brief Get undo structure's \a next field value.
  *
