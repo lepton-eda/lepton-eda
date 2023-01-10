@@ -437,11 +437,11 @@ o_undo_callback (GschemToplevel *w_current,
     return;
   }
 
-  if (current_undo->type == UNDO_ALL
-      && undo_to_do->type == UNDO_VIEWPORT_ONLY)
+  if (lepton_undo_get_type (current_undo) == UNDO_ALL
+      && lepton_undo_get_type (undo_to_do) == UNDO_VIEWPORT_ONLY)
   {
 #if DEBUG
-    printf("Type: %d\n", undo_to_do->type);
+    printf("Type: %d\n", lepton_undo_get_type (undo_to_do));
     printf("Current is an undo all, next is viewport only!\n");
 #endif
     find_prev_data = TRUE;
