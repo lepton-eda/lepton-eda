@@ -35,6 +35,20 @@
 
 
 
+/*! \brief Get undo structure's \a next field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a next field.
+ */
+LeptonUndo*
+lepton_undo_get_next (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, NULL);
+
+  return undo->next;
+}
+
+
 /*! \brief Get undo structure's \a prev field value.
  *
  *  \param [in] undo The undo structure to obtain the field of.
