@@ -403,7 +403,7 @@ o_undo_callback (GschemToplevel *w_current,
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonUndo *undo_to_do;
-  LeptonUndo *u_next;
+  LeptonUndo *current_undo;
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
   LeptonUndo *save_current;
@@ -431,14 +431,14 @@ o_undo_callback (GschemToplevel *w_current,
     undo_to_do = page->undo_current->next;
   }
 
-  u_next = page->undo_current;
+  current_undo = page->undo_current;
 
   if (undo_to_do == NULL)
   {
     return;
   }
 
-  if (u_next->type == UNDO_ALL
+  if (current_undo->type == UNDO_ALL
       && undo_to_do->type == UNDO_VIEWPORT_ONLY)
   {
 #if DEBUG
