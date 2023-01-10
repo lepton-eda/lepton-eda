@@ -63,6 +63,20 @@ lepton_undo_get_prev (LeptonUndo *undo)
 }
 
 
+/*! \brief Get undo structure's \a type field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a type field.
+ */
+int
+lepton_undo_get_type (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, UNDO_ALL);
+
+  return undo->type;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

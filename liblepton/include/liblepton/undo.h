@@ -51,6 +51,9 @@ lepton_undo_get_next (LeptonUndo *undo);
 LeptonUndo*
 lepton_undo_get_prev (LeptonUndo *undo);
 
+int
+lepton_undo_get_type (LeptonUndo *undo);
+
 LeptonUndo*
 lepton_undo_return_tail (LeptonUndo *head);
 
