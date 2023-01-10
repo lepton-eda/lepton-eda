@@ -46,6 +46,9 @@ struct st_undo
 };
 
 LeptonUndo*
+lepton_undo_get_prev (LeptonUndo *undo);
+
+LeptonUndo*
 lepton_undo_return_tail (LeptonUndo *head);
 
 LeptonUndo*
