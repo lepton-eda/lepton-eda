@@ -402,7 +402,7 @@ o_undo_callback (GschemToplevel *w_current,
                  gboolean redo)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonUndo *u_current;
+  LeptonUndo *undo_to_do;
   LeptonUndo *u_next;
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
@@ -423,31 +423,34 @@ o_undo_callback (GschemToplevel *w_current,
   if (!redo)
   {
     /* Undo action. */
-    u_current = page->undo_current->prev;
+    undo_to_do = page->undo_current->prev;
   }
   else
   {
     /* Redo action. */
-    u_current = page->undo_current->next;
+    undo_to_do = page->undo_current->next;
   }
 
   u_next = page->undo_current;
 
-  if (u_current == NULL) {
+  if (undo_to_do == NULL)
+  {
     return;
   }
 
-  if (u_next->type == UNDO_ALL && u_current->type == UNDO_VIEWPORT_ONLY) {
+  if (u_next->type == UNDO_ALL
+      && undo_to_do->type == UNDO_VIEWPORT_ONLY)
+  {
 #if DEBUG
-    printf("Type: %d\n", u_current->type);
+    printf("Type: %d\n", undo_to_do->type);
     printf("Current is an undo all, next is viewport only!\n");
 #endif
     find_prev_data = TRUE;
 
     if (w_current->undo_type == UNDO_DISK) {
-      u_current->filename = o_undo_find_prev_filename(u_current);
+      undo_to_do->filename = o_undo_find_prev_filename (undo_to_do);
     } else {
-      u_current->object_list = o_undo_find_prev_object_head (u_current);
+      undo_to_do->object_list = o_undo_find_prev_object_head (undo_to_do);
     }
   }
 
@@ -464,8 +467,9 @@ o_undo_callback (GschemToplevel *w_current,
 
   o_select_unselect_all (w_current);
 
-  if ((w_current->undo_type == UNDO_DISK && u_current->filename) ||
-      (w_current->undo_type == UNDO_MEMORY && u_current->object_list)) {
+  if ((w_current->undo_type == UNDO_DISK && undo_to_do->filename) ||
+      (w_current->undo_type == UNDO_MEMORY && undo_to_do->object_list))
+  {
     /* delete objects of page */
     lepton_page_delete_objects (page);
 
@@ -479,23 +483,24 @@ o_undo_callback (GschemToplevel *w_current,
   save_logging = do_logging;
   do_logging = FALSE;
 
-  if (w_current->undo_type == UNDO_DISK && u_current->filename) {
-
+  if (w_current->undo_type == UNDO_DISK && undo_to_do->filename)
+  {
     /*
      * F_OPEN_RESTORE_CWD: go back from tmp directory,
      * so that local config files can be read:
     */
-    f_open (toplevel, page, u_current->filename, F_OPEN_RESTORE_CWD, NULL);
-
-  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
-
+    f_open (toplevel, page, undo_to_do->filename, F_OPEN_RESTORE_CWD, NULL);
+  }
+  else if (w_current->undo_type == UNDO_MEMORY
+           && undo_to_do->object_list)
+  {
     lepton_page_append_list (page,
-                             o_glist_copy_all (u_current->object_list,
+                             o_glist_copy_all (undo_to_do->object_list,
                                                NULL));
   }
 
-  page->page_control = u_current->page_control;
-  page->up = u_current->up;
+  page->page_control = undo_to_do->page_control;
+  page->up = undo_to_do->up;
   gschem_toplevel_page_content_changed (w_current, page);
 
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
@@ -505,14 +510,15 @@ o_undo_callback (GschemToplevel *w_current,
 
   if (schematic_window_get_undo_panzoom (w_current) || o_undo_modify_viewport())
   {
-    if (u_current->scale != 0) {
+    if (undo_to_do->scale != 0)
+    {
       gschem_page_geometry_set_viewport (geometry,
-                                         u_current->x,
-                                         u_current->y,
-                                         u_current->scale);
+                                         undo_to_do->x,
+                                         undo_to_do->y,
+                                         undo_to_do->scale);
       gschem_page_view_invalidate_all (view);
     } else {
-      gschem_page_view_zoom_extents (view, u_current->object_list);
+      gschem_page_view_zoom_extents (view, undo_to_do->object_list);
     }
   }
 
@@ -557,8 +563,8 @@ o_undo_callback (GschemToplevel *w_current,
   /* don't have to free data here since filename, object_list are */
   /* just pointers to the real data (lower in the stack) */
   if (find_prev_data) {
-    u_current->filename = NULL;
-    u_current->object_list = NULL;
+    undo_to_do->filename = NULL;
+    undo_to_do->object_list = NULL;
   }
 
 #if DEBUG
