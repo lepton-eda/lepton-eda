@@ -47,6 +47,21 @@ lepton_undo_get_filename (LeptonUndo *undo)
   return undo->filename;
 }
 
+/*! \brief Set undo structure's \a filename field value.
+ *
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
+ *  \param [in] filename The new value of the \a filename field.
+ */
+void
+lepton_undo_set_filename (LeptonUndo *undo,
+                          const char *filename)
+{
+  g_return_if_fail (undo);
+
+  g_free (undo->filename);
+  undo->filename = g_strdup (filename);
+}
+
 
 /*! \brief Get undo structure's \a object_list field value.
  *
