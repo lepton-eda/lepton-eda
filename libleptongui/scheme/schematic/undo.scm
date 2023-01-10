@@ -22,6 +22,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi undo)
   #:use-module (lepton ffi)
   #:use-module (lepton config)
   #:use-module (lepton log)
@@ -71,7 +72,13 @@ success, #f on failure."
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
         (unless (null-pointer? *current-undo)
-          (o_undo_callback *window *page *current-undo redo?)))))
+          (let ((*undo-to-do (if (true? redo?)
+                                 ;; Redo action.
+                                 (lepton_undo_get_next *current-undo)
+                                 ;; Undo action.
+                                 (lepton_undo_get_prev *current-undo))))
+            (unless (null-pointer? *undo-to-do)
+              (o_undo_callback *window *page *current-undo *undo-to-do redo?)))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

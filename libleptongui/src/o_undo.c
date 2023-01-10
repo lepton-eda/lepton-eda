@@ -400,10 +400,10 @@ void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
                  LeptonUndo *current_undo,
+                 LeptonUndo *undo_to_do,
                  gboolean redo)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonUndo *undo_to_do;
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
   LeptonUndo *save_current;
@@ -414,22 +414,6 @@ o_undo_callback (GschemToplevel *w_current,
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  if (!redo)
-  {
-    /* Undo action. */
-    undo_to_do = lepton_undo_get_prev (current_undo);
-  }
-  else
-  {
-    /* Redo action. */
-    undo_to_do = lepton_undo_get_next (current_undo);
-  }
-
-  if (undo_to_do == NULL)
-  {
-    return;
-  }
 
   if (lepton_undo_get_type (current_undo) == UNDO_ALL
       && lepton_undo_get_type (undo_to_do) == UNDO_VIEWPORT_ONLY)
