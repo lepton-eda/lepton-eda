@@ -446,7 +446,8 @@ o_undo_callback (GschemToplevel *w_current,
 #endif
     find_prev_data = TRUE;
 
-    if (w_current->undo_type == UNDO_DISK) {
+    if (schematic_window_get_undo_type (w_current) == UNDO_DISK)
+    {
       undo_to_do->filename = o_undo_find_prev_filename (undo_to_do);
     } else {
       undo_to_do->object_list = o_undo_find_prev_object_head (undo_to_do);
