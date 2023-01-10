@@ -415,7 +415,8 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  if (page->undo_current == NULL) {
+  if (lepton_page_get_undo_current (page) == NULL)
+  {
     return;
   }
 
