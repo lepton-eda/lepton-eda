@@ -70,7 +70,8 @@ success, #f on failure."
   (define (page-undo-callback *window *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
-        (o_undo_callback *window *page *current-undo redo?))))
+        (unless (null-pointer? *current-undo)
+          (o_undo_callback *window *page *current-undo redo?)))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

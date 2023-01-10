@@ -415,11 +415,6 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  if (current_undo == NULL)
-  {
-    return;
-  }
-
   if (!redo)
   {
     /* Undo action. */
