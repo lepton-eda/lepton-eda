@@ -424,12 +424,12 @@ o_undo_callback (GschemToplevel *w_current,
   if (!redo)
   {
     /* Undo action. */
-    undo_to_do = current_undo->prev;
+    undo_to_do = lepton_undo_get_prev (current_undo);
   }
   else
   {
     /* Redo action. */
-    undo_to_do = current_undo->next;
+    undo_to_do = lepton_undo_get_next (current_undo);
   }
 
   if (undo_to_do == NULL)
