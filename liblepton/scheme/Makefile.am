@@ -27,6 +27,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/ffi/lff.scm \
 	lepton/ffi/lib.scm \
 	lepton/ffi/sch2pcb.scm \
+	lepton/ffi/undo.scm \
 	lepton/file-system.scm \
 	lepton/gerror.scm \
 	lepton/library.scm \
