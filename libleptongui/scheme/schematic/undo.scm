@@ -48,6 +48,10 @@
 ;;; Variables defined in defines.h for C code.
 (define UNDO_ALL 0)
 (define UNDO_VIEWPORT_ONLY 1)
+;;; Variables defined in gschem_defines.h.
+(define UNDO_DISK 0)
+(define UNDO_MEMORY 1)
+
 
 (define (undo-save-state)
   "Saves current state onto the undo stack.  Returns #t on
@@ -78,7 +82,39 @@ success, #f on failure."
                                  ;; Undo action.
                                  (lepton_undo_get_prev *current-undo))))
             (unless (null-pointer? *undo-to-do)
-              (o_undo_callback *window *page *current-undo *undo-to-do redo?)))))))
+              (let* ((undo-viewport?
+                      (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
+                           (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY)))
+                     ;; This C boolean variable indicates that for
+                     ;; only viewport changes, undo 'filename' or
+                     ;; 'object_list' fields have to be set to
+                     ;; NULL in o_undo_callback().  This needs to
+                     ;; be so since the functions
+                     ;; o_undo_find_prev_filename() and
+                     ;; o_undo_find_prev_object_head() omit such
+                     ;; <undo> data when searching for list of
+                     ;; objects to resurrect, or the filename to
+                     ;; resurrect them from.  The data can be just
+                     ;; retrieved from some previous non-viewport
+                     ;; undo list item.
+                     (search-for-previous-data? (if undo-viewport? TRUE FALSE)))
+                (when undo-viewport?
+                  ;; Debugging stuff.
+                  (log! 'debug "Type: ~A\n" (lepton_undo_get_type *undo-to-do))
+                  (log! 'debug "Current is an undo all, next is viewport only!\n")
+
+                  (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
+                      (lepton_undo_set_filename *undo-to-do
+                                                (o_undo_find_prev_filename *undo-to-do))
+                      (lepton_undo_set_object_list *undo-to-do
+                                                   (o_undo_find_prev_object_head *undo-to-do))))
+                (o_undo_callback *window
+                                 *page
+                                 *current-undo
+                                 *undo-to-do
+                                 redo?
+                                 ;; See comments above.
+                                 search-for-previous-data?))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

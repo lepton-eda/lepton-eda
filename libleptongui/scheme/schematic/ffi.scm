@@ -382,6 +382,7 @@
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
             schematic_window_get_undo_panzoom
+            schematic_window_get_undo_type
             schematic_window_get_keyaccel_string
             schematic_window_set_keyaccel_string
             schematic_window_get_keyaccel_string_source_id
@@ -441,6 +442,8 @@
 
             o_undo_callback
             o_undo_cleanup
+            o_undo_find_prev_filename
+            o_undo_find_prev_object_head
             o_undo_init
             o_undo_savestate
             o_undo_savestate_old
@@ -694,6 +697,7 @@
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
+(define-lff schematic_window_get_undo_type int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
 (define-lff schematic_window_set_keyaccel_string void '(* *))
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
@@ -1038,8 +1042,10 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* '* '* int))
+(define-lff o_undo_callback void (list '* '* '* '* int int))
 (define-lff o_undo_cleanup void '())
+(define-lff o_undo_find_prev_filename '* '(*))
+(define-lff o_undo_find_prev_object_head '* '(*))
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))
 (define-lff o_undo_savestate_viewport void '(*))

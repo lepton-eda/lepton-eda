@@ -401,37 +401,19 @@ o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
                  LeptonUndo *current_undo,
                  LeptonUndo *undo_to_do,
-                 gboolean redo)
+                 gboolean redo,
+                 gboolean find_prev_data)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
   LeptonUndo *save_current;
   int save_logging;
-  int find_prev_data=FALSE;
 
   char *save_filename;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  if (lepton_undo_get_type (current_undo) == UNDO_ALL
-      && lepton_undo_get_type (undo_to_do) == UNDO_VIEWPORT_ONLY)
-  {
-#if DEBUG
-    printf("Type: %d\n", lepton_undo_get_type (undo_to_do));
-    printf("Current is an undo all, next is viewport only!\n");
-#endif
-    find_prev_data = TRUE;
-
-    if (schematic_window_get_undo_type (w_current) == UNDO_DISK)
-    {
-      lepton_undo_set_filename (undo_to_do, o_undo_find_prev_filename (undo_to_do));
-    } else {
-      lepton_undo_set_object_list (undo_to_do,
-                                   o_undo_find_prev_object_head (undo_to_do));
-    }
-  }
 
   /* save filename */
   save_filename = g_strdup (lepton_page_get_filename (page));

@@ -18,16 +18,23 @@
 ;;; This module provides FFI for Lepton undo system.
 
 (define-module (lepton ffi undo)
+  #:use-module (system foreign)
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (lepton_undo_get_next
-            lepton_undo_get_prev))
+  #:export (lepton_undo_set_filename
+            lepton_undo_set_object_list
+            lepton_undo_get_next
+            lepton_undo_get_prev
+            lepton_undo_get_type))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
+(define-lff lepton_undo_set_filename void '(* *))
+(define-lff lepton_undo_set_object_list void '(* *))
 (define-lff lepton_undo_get_next '* '(*))
 (define-lff lepton_undo_get_prev '* '(*))
+(define-lff lepton_undo_get_type int '(*))
