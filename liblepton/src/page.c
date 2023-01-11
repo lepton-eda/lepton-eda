@@ -167,6 +167,20 @@ lepton_page_get_undo_current (LeptonPage *page)
 }
 
 
+/*! \brief Get page's \a undo_tos field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a undo_tos field.
+ */
+LeptonUndo*
+lepton_page_get_undo_tos (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->undo_tos;
+}
+
+
 /*! \brief Get page's \a up field value.
  *
  *  \param [in] page The page to obtain the field of.

@@ -91,6 +91,9 @@ lepton_page_get_undo_bottom (LeptonPage *page);
 LeptonUndo*
 lepton_page_get_undo_current (LeptonPage *page);
 
+LeptonUndo*
+lepton_page_get_undo_tos (LeptonPage *page);
+
 int
 lepton_page_get_up (LeptonPage *page);
 
