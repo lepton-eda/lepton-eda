@@ -547,7 +547,7 @@ o_undo_callback (GschemToplevel *w_current,
   {
     /* Undo action. */
     if (page->undo_current) {
-      page->undo_current = page->undo_current->prev;
+      page->undo_current = lepton_undo_get_prev (page->undo_current);
       if (page->undo_current == NULL) {
         page->undo_current = lepton_page_get_undo_bottom (page);
       }
