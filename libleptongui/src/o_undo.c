@@ -460,7 +460,7 @@ o_undo_callback (GschemToplevel *w_current,
 
   /* save structure so it's not nuked */
   save_bottom = lepton_page_get_undo_bottom (page);
-  save_tos = page->undo_tos;
+  save_tos = lepton_page_get_undo_tos (page);
   save_current = current_undo;
   page->undo_bottom = NULL;
   page->undo_tos = NULL;
@@ -556,7 +556,7 @@ o_undo_callback (GschemToplevel *w_current,
     if (page->undo_current) {
       page->undo_current = page->undo_current->next;
       if (page->undo_current == NULL) {
-        page->undo_current = page->undo_tos;
+        page->undo_current = lepton_page_get_undo_tos (page);
       }
     }
   }
