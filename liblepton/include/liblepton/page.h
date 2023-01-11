@@ -86,6 +86,9 @@ void
 lepton_page_set_page_control (LeptonPage *page,
                               int page_control);
 LeptonUndo*
+lepton_page_get_undo_bottom (LeptonPage *page);
+
+LeptonUndo*
 lepton_page_get_undo_current (LeptonPage *page);
 
 int

@@ -139,6 +139,20 @@ lepton_page_set_page_control (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a undo_bottom field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a undo_bottom field.
+ */
+LeptonUndo*
+lepton_page_get_undo_bottom (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->undo_bottom;
+}
+
+
 /*! \brief Get page's \a undo_current field value.
  *
  *  \param [in] page The page to obtain the field of.
