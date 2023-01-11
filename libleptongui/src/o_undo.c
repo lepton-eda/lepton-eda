@@ -459,7 +459,7 @@ o_undo_callback (GschemToplevel *w_current,
   save_filename = g_strdup (lepton_page_get_filename (page));
 
   /* save structure so it's not nuked */
-  save_bottom = page->undo_bottom;
+  save_bottom = lepton_page_get_undo_bottom (page);
   save_tos = page->undo_tos;
   save_current = current_undo;
   page->undo_bottom = NULL;
@@ -546,7 +546,7 @@ o_undo_callback (GschemToplevel *w_current,
     if (page->undo_current) {
       page->undo_current = page->undo_current->prev;
       if (page->undo_current == NULL) {
-        page->undo_current = page->undo_bottom;
+        page->undo_current = lepton_page_get_undo_bottom (page);
       }
     }
   }
@@ -570,7 +570,7 @@ o_undo_callback (GschemToplevel *w_current,
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  lepton_undo_print_all (page->undo_bottom);
+  lepton_undo_print_all (lepton_page_get_undo_bottom (page));
   printf("TOS: %s\n", page->undo_tos->filename);
   printf("CURRENT: %s\n", page->undo_current->filename);
   printf("----\n");
