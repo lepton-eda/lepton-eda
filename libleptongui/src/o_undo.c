@@ -464,7 +464,7 @@ o_undo_callback (GschemToplevel *w_current,
   save_current = current_undo;
   lepton_page_set_undo_bottom (page, NULL);
   lepton_page_set_undo_tos (page, NULL);
-  page->undo_current = NULL;
+  lepton_page_set_undo_current (page, NULL);
 
   o_select_unselect_all (w_current);
 
