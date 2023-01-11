@@ -399,7 +399,7 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
 void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
-                 LeptonUndo *current_undo,
+                 LeptonUndo *save_current,
                  LeptonUndo *undo_to_do,
                  char *save_filename,
                  gboolean redo,
@@ -408,7 +408,6 @@ o_undo_callback (GschemToplevel *w_current,
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonUndo *save_bottom;
   LeptonUndo *save_tos;
-  LeptonUndo *save_current;
   int save_logging;
 
   g_return_if_fail (w_current != NULL);
@@ -417,7 +416,6 @@ o_undo_callback (GschemToplevel *w_current,
   /* save structure so it's not nuked */
   save_bottom = lepton_page_get_undo_bottom (page);
   save_tos = lepton_page_get_undo_tos (page);
-  save_current = current_undo;
   lepton_page_set_undo_bottom (page, NULL);
   lepton_page_set_undo_tos (page, NULL);
   lepton_page_set_undo_current (page, NULL);
