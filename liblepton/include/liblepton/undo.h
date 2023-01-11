@@ -48,6 +48,9 @@ struct st_undo
 char*
 lepton_undo_get_filename (LeptonUndo *undo);
 
+GList*
+lepton_undo_get_object_list (LeptonUndo *undo);
+
 LeptonUndo*
 lepton_undo_get_next (LeptonUndo *undo);
 

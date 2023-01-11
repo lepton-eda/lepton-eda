@@ -48,6 +48,20 @@ lepton_undo_get_filename (LeptonUndo *undo)
 }
 
 
+/*! \brief Get undo structure's \a object_list field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a object_list field.
+ */
+GList*
+lepton_undo_get_object_list (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, NULL);
+
+  return undo->object_list;
+}
+
+
 /*! \brief Get undo structure's \a next field value.
  *
  *  \param [in] undo The undo structure to obtain the field of.
