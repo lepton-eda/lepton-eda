@@ -567,7 +567,7 @@ o_undo_callback (GschemToplevel *w_current,
   /* don't have to free data here since filename, object_list are */
   /* just pointers to the real data (lower in the stack) */
   if (find_prev_data) {
-    undo_to_do->filename = NULL;
+    lepton_undo_set_filename (undo_to_do, NULL);
     undo_to_do->object_list = NULL;
   }
 
