@@ -578,7 +578,7 @@ o_undo_callback (GschemToplevel *w_current,
 #if DEBUG
   printf("\n\n---Undo----\n");
   lepton_undo_print_all (lepton_page_get_undo_bottom (page));
-  printf("TOS: %s\n", lepton_undo_get_filename (page->undo_tos));
+  printf("TOS: %s\n", lepton_undo_get_filename (lepton_page_get_undo_tos (page)));
   printf("CURRENT: %s\n", lepton_undo_get_filename (lepton_page_get_undo_current (page)));
   printf("----\n");
 #endif
