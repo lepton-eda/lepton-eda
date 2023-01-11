@@ -450,7 +450,8 @@ o_undo_callback (GschemToplevel *w_current,
     {
       lepton_undo_set_filename (undo_to_do, o_undo_find_prev_filename (undo_to_do));
     } else {
-      undo_to_do->object_list = o_undo_find_prev_object_head (undo_to_do);
+      lepton_undo_set_object_list (undo_to_do,
+                                   o_undo_find_prev_object_head (undo_to_do));
     }
   }
 
