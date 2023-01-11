@@ -208,6 +208,20 @@ lepton_page_get_undo_tos (LeptonPage *page)
   return page->undo_tos;
 }
 
+/*! \brief Set page's \a undo_tos field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] undo The new \a undo_tos value.
+ */
+void
+lepton_page_set_undo_tos (LeptonPage *page,
+                          LeptonUndo* undo)
+{
+  g_return_if_fail (page != NULL);
+
+  page->undo_tos = undo;
+}
+
 
 /*! \brief Get page's \a up field value.
  *
