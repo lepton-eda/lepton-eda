@@ -180,6 +180,20 @@ lepton_page_get_undo_current (LeptonPage *page)
   return page->undo_current;
 }
 
+/*! \brief Set page's \a undo_current field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] undo The new \a undo_current value.
+ */
+void
+lepton_page_set_undo_current (LeptonPage *page,
+                              LeptonUndo* undo)
+{
+  g_return_if_fail (page != NULL);
+
+  page->undo_current = undo;
+}
+
 
 /*! \brief Get page's \a undo_tos field value.
  *
