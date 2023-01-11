@@ -470,7 +470,8 @@ o_undo_callback (GschemToplevel *w_current,
 
   if ((schematic_window_get_undo_type (w_current) == UNDO_DISK
        && lepton_undo_get_filename (undo_to_do)) ||
-      (schematic_window_get_undo_type (w_current) == UNDO_MEMORY && undo_to_do->object_list))
+      (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
+       && lepton_undo_get_object_list (undo_to_do)))
   {
     /* delete objects of page */
     lepton_page_delete_objects (page);
@@ -495,10 +496,10 @@ o_undo_callback (GschemToplevel *w_current,
     f_open (toplevel, page, lepton_undo_get_filename (undo_to_do), F_OPEN_RESTORE_CWD, NULL);
   }
   else if (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
-           && undo_to_do->object_list)
+           && lepton_undo_get_object_list (undo_to_do))
   {
     lepton_page_append_list (page,
-                             o_glist_copy_all (undo_to_do->object_list,
+                             o_glist_copy_all (lepton_undo_get_object_list (undo_to_do),
                                                NULL));
   }
 
@@ -521,7 +522,7 @@ o_undo_callback (GschemToplevel *w_current,
                                          undo_to_do->scale);
       gschem_page_view_invalidate_all (view);
     } else {
-      gschem_page_view_zoom_extents (view, undo_to_do->object_list);
+      gschem_page_view_zoom_extents (view, lepton_undo_get_object_list (undo_to_do));
     }
   }
 
