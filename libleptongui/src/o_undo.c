@@ -468,7 +468,8 @@ o_undo_callback (GschemToplevel *w_current,
 
   o_select_unselect_all (w_current);
 
-  if ((schematic_window_get_undo_type (w_current) == UNDO_DISK && undo_to_do->filename) ||
+  if ((schematic_window_get_undo_type (w_current) == UNDO_DISK
+       && lepton_undo_get_filename (undo_to_do)) ||
       (schematic_window_get_undo_type (w_current) == UNDO_MEMORY && undo_to_do->object_list))
   {
     /* delete objects of page */
@@ -484,13 +485,14 @@ o_undo_callback (GschemToplevel *w_current,
   save_logging = do_logging;
   do_logging = FALSE;
 
-  if (schematic_window_get_undo_type (w_current) == UNDO_DISK && undo_to_do->filename)
+  if (schematic_window_get_undo_type (w_current) == UNDO_DISK
+      && lepton_undo_get_filename (undo_to_do))
   {
     /*
      * F_OPEN_RESTORE_CWD: go back from tmp directory,
      * so that local config files can be read:
     */
-    f_open (toplevel, page, undo_to_do->filename, F_OPEN_RESTORE_CWD, NULL);
+    f_open (toplevel, page, lepton_undo_get_filename (undo_to_do), F_OPEN_RESTORE_CWD, NULL);
   }
   else if (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
            && undo_to_do->object_list)
@@ -571,8 +573,8 @@ o_undo_callback (GschemToplevel *w_current,
 #if DEBUG
   printf("\n\n---Undo----\n");
   lepton_undo_print_all (lepton_page_get_undo_bottom (page));
-  printf("TOS: %s\n", page->undo_tos->filename);
-  printf("CURRENT: %s\n", page->undo_current->filename);
+  printf("TOS: %s\n", lepton_undo_get_filename (page->undo_tos));
+  printf("CURRENT: %s\n", lepton_undo_get_filename (page->undo_current));
   printf("----\n");
 #endif
 }
