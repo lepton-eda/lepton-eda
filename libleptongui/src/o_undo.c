@@ -546,9 +546,11 @@ o_undo_callback (GschemToplevel *w_current,
   if (!redo)
   {
     /* Undo action. */
-    if (page->undo_current) {
-      page->undo_current = lepton_undo_get_prev (page->undo_current);
-      if (page->undo_current == NULL) {
+    if (lepton_page_get_undo_current (page))
+    {
+      page->undo_current = lepton_undo_get_prev (lepton_page_get_undo_current (page));
+      if (lepton_page_get_undo_current (page) == NULL)
+      {
         page->undo_current = lepton_page_get_undo_bottom (page);
       }
     }
@@ -556,9 +558,11 @@ o_undo_callback (GschemToplevel *w_current,
   else
   {
     /* Redo action. */
-    if (page->undo_current) {
-      page->undo_current = lepton_undo_get_next (page->undo_current);
-      if (page->undo_current == NULL) {
+    if (lepton_page_get_undo_current (page))
+    {
+      page->undo_current = lepton_undo_get_next (lepton_page_get_undo_current (page));
+      if (lepton_page_get_undo_current (page) == NULL)
+      {
         page->undo_current = lepton_page_get_undo_tos (page);
       }
     }
@@ -575,7 +579,7 @@ o_undo_callback (GschemToplevel *w_current,
   printf("\n\n---Undo----\n");
   lepton_undo_print_all (lepton_page_get_undo_bottom (page));
   printf("TOS: %s\n", lepton_undo_get_filename (page->undo_tos));
-  printf("CURRENT: %s\n", lepton_undo_get_filename (page->undo_current));
+  printf("CURRENT: %s\n", lepton_undo_get_filename (lepton_page_get_undo_current (page)));
   printf("----\n");
 #endif
 }
