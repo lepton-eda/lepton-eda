@@ -462,7 +462,7 @@ o_undo_callback (GschemToplevel *w_current,
   save_bottom = lepton_page_get_undo_bottom (page);
   save_tos = lepton_page_get_undo_tos (page);
   save_current = current_undo;
-  page->undo_bottom = NULL;
+  lepton_page_set_undo_bottom (page, NULL);
   page->undo_tos = NULL;
   page->undo_current = NULL;
 
@@ -536,7 +536,7 @@ o_undo_callback (GschemToplevel *w_current,
   i_update_menus(w_current);
 
   /* restore saved undo structures */
-  page->undo_bottom = save_bottom;
+  lepton_page_set_undo_bottom (page, save_bottom);
   page->undo_tos = save_tos;
   page->undo_current = save_current;
 
