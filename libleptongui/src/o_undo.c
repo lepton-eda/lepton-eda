@@ -468,8 +468,8 @@ o_undo_callback (GschemToplevel *w_current,
 
   o_select_unselect_all (w_current);
 
-  if ((w_current->undo_type == UNDO_DISK && undo_to_do->filename) ||
-      (w_current->undo_type == UNDO_MEMORY && undo_to_do->object_list))
+  if ((schematic_window_get_undo_type (w_current) == UNDO_DISK && undo_to_do->filename) ||
+      (schematic_window_get_undo_type (w_current) == UNDO_MEMORY && undo_to_do->object_list))
   {
     /* delete objects of page */
     lepton_page_delete_objects (page);
@@ -484,7 +484,7 @@ o_undo_callback (GschemToplevel *w_current,
   save_logging = do_logging;
   do_logging = FALSE;
 
-  if (w_current->undo_type == UNDO_DISK && undo_to_do->filename)
+  if (schematic_window_get_undo_type (w_current) == UNDO_DISK && undo_to_do->filename)
   {
     /*
      * F_OPEN_RESTORE_CWD: go back from tmp directory,
@@ -492,7 +492,7 @@ o_undo_callback (GschemToplevel *w_current,
     */
     f_open (toplevel, page, undo_to_do->filename, F_OPEN_RESTORE_CWD, NULL);
   }
-  else if (w_current->undo_type == UNDO_MEMORY
+  else if (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
            && undo_to_do->object_list)
   {
     lepton_page_append_list (page,
