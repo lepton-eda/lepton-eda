@@ -541,17 +541,17 @@ o_undo_callback (GschemToplevel *w_current,
   /* restore saved undo structures */
   lepton_page_set_undo_bottom (page, save_bottom);
   lepton_page_set_undo_tos (page, save_tos);
-  page->undo_current = save_current;
+  lepton_page_set_undo_current (page, save_current);
 
   if (!redo)
   {
     /* Undo action. */
     if (lepton_page_get_undo_current (page))
     {
-      page->undo_current = lepton_undo_get_prev (lepton_page_get_undo_current (page));
+      lepton_page_set_undo_current (page, lepton_undo_get_prev (lepton_page_get_undo_current (page)));
       if (lepton_page_get_undo_current (page) == NULL)
       {
-        page->undo_current = lepton_page_get_undo_bottom (page);
+        lepton_page_set_undo_current (page, lepton_page_get_undo_bottom (page));
       }
     }
   }
@@ -560,10 +560,10 @@ o_undo_callback (GschemToplevel *w_current,
     /* Redo action. */
     if (lepton_page_get_undo_current (page))
     {
-      page->undo_current = lepton_undo_get_next (lepton_page_get_undo_current (page));
+      lepton_page_set_undo_current (page, lepton_undo_get_next (lepton_page_get_undo_current (page)));
       if (lepton_page_get_undo_current (page) == NULL)
       {
-        page->undo_current = lepton_page_get_undo_tos (page);
+        lepton_page_set_undo_current (page, lepton_page_get_undo_tos (page));
       }
     }
   }
