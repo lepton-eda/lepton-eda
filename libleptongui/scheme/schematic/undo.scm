@@ -108,13 +108,23 @@ success, #f on failure."
                                                 (o_undo_find_prev_filename *undo-to-do))
                       (lepton_undo_set_object_list *undo-to-do
                                                    (o_undo_find_prev_object_head *undo-to-do))))
-                (o_undo_callback *window
-                                 *page
-                                 *current-undo
-                                 *undo-to-do
-                                 redo?
-                                 ;; See comments above.
-                                 search-for-previous-data?))))))))
+                ;; Save page filename to restore it later in case
+                ;; a temporary file is opened for undo.  The
+                ;; filename is stored as a Scheme string as the
+                ;; data pointed to by pointer returned by
+                ;; lepton_page_get_filename() is freed in between
+                ;; by lepton_page_set_filename() in
+                ;; o_undo_callback(), so we could get corrupted
+                ;; data otherwise.
+                (let ((save-filename (pointer->string (lepton_page_get_filename *page))))
+                  (o_undo_callback *window
+                                   *page
+                                   *current-undo
+                                   *undo-to-do
+                                   (string->pointer save-filename)
+                                   redo?
+                                   ;; See comments above.
+                                   search-for-previous-data?)))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

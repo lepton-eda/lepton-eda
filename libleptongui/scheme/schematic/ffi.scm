@@ -1042,7 +1042,7 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* '* '* int int))
+(define-lff o_undo_callback void (list '* '* '* '* '* int int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))

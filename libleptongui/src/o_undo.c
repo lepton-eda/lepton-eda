@@ -401,6 +401,7 @@ o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
                  LeptonUndo *current_undo,
                  LeptonUndo *undo_to_do,
+                 char *save_filename,
                  gboolean redo,
                  gboolean find_prev_data)
 {
@@ -410,13 +411,8 @@ o_undo_callback (GschemToplevel *w_current,
   LeptonUndo *save_current;
   int save_logging;
 
-  char *save_filename;
-
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  /* save filename */
-  save_filename = g_strdup (lepton_page_get_filename (page));
 
   /* save structure so it's not nuked */
   save_bottom = lepton_page_get_undo_bottom (page);
@@ -491,7 +487,6 @@ o_undo_callback (GschemToplevel *w_current,
 
   /* set filename right */
   lepton_page_set_filename (page, save_filename);
-  g_free(save_filename);
 
   /* final redraw */
   page_select_widget_update (w_current);
