@@ -405,17 +405,13 @@ o_undo_callback (GschemToplevel *w_current,
                  LeptonUndo *undo_to_do,
                  char *save_filename,
                  gboolean redo,
-                 gboolean find_prev_data)
+                 gboolean find_prev_data,
+                 int save_logging)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int save_logging;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  /* temporarily disable logging */
-  save_logging = lepton_log_get_logging_enabled ();
-  lepton_log_set_logging_enabled (FALSE);
 
   if (schematic_window_get_undo_type (w_current) == UNDO_DISK
       && lepton_undo_get_filename (undo_to_do))

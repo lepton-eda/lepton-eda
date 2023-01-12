@@ -139,16 +139,23 @@ success, #f on failure."
                     ;; Mark active page as changed.
                     (schematic_window_active_page_changed *window))
 
-                  (o_undo_callback *window
-                                   *page
-                                   *current-undo
-                                   *save-undo-bottom
-                                   *save-undo-top
-                                   *undo-to-do
-                                   (string->pointer save-filename)
-                                   redo?
-                                   ;; See comments above.
-                                   search-for-previous-data?)))))))))
+                  (let ((save-logging? (lepton_log_get_logging_enabled)))
+                    ;; Temporarily disable logging.  It will be
+                    ;; enabled in o_undo_callback() after undo is
+                    ;; accomplished.
+                    (lepton_log_set_logging_enabled FALSE)
+
+                    (o_undo_callback *window
+                                     *page
+                                     *current-undo
+                                     *save-undo-bottom
+                                     *save-undo-top
+                                     *undo-to-do
+                                     (string->pointer save-filename)
+                                     redo?
+                                     ;; See comments above.
+                                     search-for-previous-data?
+                                     save-logging?))))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

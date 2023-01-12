@@ -449,6 +449,8 @@
             o_undo_savestate_old
             o_undo_savestate_viewport
 
+            lepton_log_get_logging_enabled
+            lepton_log_set_logging_enabled
             s_log_close
 
             x_event_get_pointer_position
@@ -1042,7 +1044,7 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* '* '* '* '* '* int int))
+(define-lff o_undo_callback void (list '* '* '* '* '* '* '* int int int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))
@@ -1051,6 +1053,8 @@
 (define-lff o_undo_savestate_viewport void '(*))
 
 ;;; s_log.c
+(define-lff lepton_log_get_logging_enabled int '())
+(define-lff lepton_log_set_logging_enabled void (list int))
 (define-lff s_log_close void '())
 
 ;;; a_zoom.c

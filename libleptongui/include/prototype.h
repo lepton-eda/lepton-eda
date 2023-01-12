@@ -345,7 +345,8 @@ o_undo_callback (GschemToplevel *w_current,
                  LeptonUndo *undo_to_do,
                  char *save_filename,
                  gboolean redo,
-                 gboolean find_prev_data);
+                 gboolean find_prev_data,
+                 int save_logging);
 
 void o_undo_cleanup(void);
 /* s_stretch.c */
