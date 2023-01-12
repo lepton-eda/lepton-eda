@@ -517,8 +517,8 @@ o_undo_callback (GschemToplevel *w_current,
     if (lepton_undo_get_scale (undo_to_do) != 0)
     {
       gschem_page_geometry_set_viewport (geometry,
-                                         undo_to_do->x,
-                                         undo_to_do->y,
+                                         lepton_undo_get_x (undo_to_do),
+                                         lepton_undo_get_y (undo_to_do),
                                          lepton_undo_get_scale (undo_to_do));
       gschem_page_view_invalidate_all (view);
     } else {
