@@ -414,8 +414,8 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (page != NULL);
 
   /* temporarily disable logging */
-  save_logging = do_logging;
-  do_logging = FALSE;
+  save_logging = lepton_log_get_logging_enabled ();
+  lepton_log_set_logging_enabled (FALSE);
 
   if (schematic_window_get_undo_type (w_current) == UNDO_DISK
       && lepton_undo_get_filename (undo_to_do))
@@ -458,7 +458,7 @@ o_undo_callback (GschemToplevel *w_current,
   }
 
   /* restore logging */
-  do_logging = save_logging;
+  lepton_log_set_logging_enabled (save_logging);
 
   /* set filename right */
   lepton_page_set_filename (page, save_filename);
