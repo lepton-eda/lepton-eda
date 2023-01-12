@@ -349,6 +349,7 @@
             lepton_page_append
             lepton_page_append_list
             lepton_page_delete
+            lepton_page_delete_objects
             lepton_page_get_filename
             lepton_page_set_filename
             lepton_page_get_page_control
@@ -697,6 +698,7 @@
 (define-lff lepton_page_append void '(* *))
 (define-lff lepton_page_append_list void '(* *))
 (define-lff lepton_page_delete void '(* *))
+(define-lff lepton_page_delete_objects void '(*))
 (define-lff lepton_page_get_filename '* '(*))
 (define-lff lepton_page_set_filename void '(* *))
 (define-lff lepton_page_get_page_control int '(*))

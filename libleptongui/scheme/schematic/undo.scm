@@ -128,6 +128,17 @@ success, #f on failure."
                   ;; Unselect all objects.
                   (o_select_unselect_all *window)
 
+                  (when (or (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+                                 (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
+                            (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+                                 (not (null-pointer? (lepton_undo_get_object_list *undo-to-do)))))
+                    ;; Delete page objects.
+                    (lepton_page_delete_objects *page)
+                    ;; Free the objects in the place list.
+                    (schematic_window_delete_place_list *window)
+                    ;; Mark active page as changed.
+                    (schematic_window_active_page_changed *window))
+
                   (o_undo_callback *window
                                    *page
                                    *current-undo

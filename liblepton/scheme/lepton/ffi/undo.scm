@@ -22,7 +22,9 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (lepton_undo_set_filename
+  #:export (lepton_undo_get_filename
+            lepton_undo_set_filename
+            lepton_undo_get_object_list
             lepton_undo_set_object_list
             lepton_undo_get_next
             lepton_undo_get_prev
@@ -33,7 +35,9 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
+(define-lff lepton_undo_get_filename '* '(*))
 (define-lff lepton_undo_set_filename void '(* *))
+(define-lff lepton_undo_get_object_list '* '(*))
 (define-lff lepton_undo_set_object_list void '(* *))
 (define-lff lepton_undo_get_next '* '(*))
 (define-lff lepton_undo_get_prev '* '(*))

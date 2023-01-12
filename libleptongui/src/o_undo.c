@@ -413,20 +413,6 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  if ((schematic_window_get_undo_type (w_current) == UNDO_DISK
-       && lepton_undo_get_filename (undo_to_do)) ||
-      (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
-       && lepton_undo_get_object_list (undo_to_do)))
-  {
-    /* delete objects of page */
-    lepton_page_delete_objects (page);
-
-    /* Free the objects in the place list. */
-    schematic_window_delete_place_list (w_current);
-
-    schematic_window_active_page_changed (w_current);
-  }
-
   /* temporarily disable logging */
   save_logging = do_logging;
   do_logging = FALSE;
