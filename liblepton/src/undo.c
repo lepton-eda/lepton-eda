@@ -76,6 +76,20 @@ lepton_undo_get_next (LeptonUndo *undo)
 }
 
 
+/*! \brief Get undo structure's \a page_control field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a page_control field.
+ */
+int
+lepton_undo_get_page_control (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, 0);
+
+  return undo->page_control;
+}
+
+
 /*! \brief Get undo structure's \a prev field value.
  *
  *  \param [in] undo The undo structure to obtain the field of.

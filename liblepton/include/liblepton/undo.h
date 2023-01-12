@@ -54,6 +54,9 @@ lepton_undo_get_object_list (LeptonUndo *undo);
 LeptonUndo*
 lepton_undo_get_next (LeptonUndo *undo);
 
+int
+lepton_undo_get_page_control (LeptonUndo *undo);
+
 LeptonUndo*
 lepton_undo_get_prev (LeptonUndo *undo);
 
