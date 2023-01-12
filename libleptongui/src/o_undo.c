@@ -413,8 +413,6 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  o_select_unselect_all (w_current);
-
   if ((schematic_window_get_undo_type (w_current) == UNDO_DISK
        && lepton_undo_get_filename (undo_to_do)) ||
       (schematic_window_get_undo_type (w_current) == UNDO_MEMORY

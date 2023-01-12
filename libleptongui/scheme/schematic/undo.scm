@@ -125,6 +125,9 @@ success, #f on failure."
                   (lepton_page_set_undo_tos *page %null-pointer)
                   (lepton_page_set_undo_current *page %null-pointer)
 
+                  ;; Unselect all objects.
+                  (o_select_unselect_all *window)
+
                   (o_undo_callback *window
                                    *page
                                    *current-undo
