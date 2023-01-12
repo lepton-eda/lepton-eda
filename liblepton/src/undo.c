@@ -174,6 +174,34 @@ lepton_undo_get_up (LeptonUndo *undo)
 }
 
 
+/*! \brief Get undo structure's \a x field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a x field.
+ */
+int
+lepton_undo_get_x (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, 0);
+
+  return undo->x;
+}
+
+
+/*! \brief Get undo structure's \a y field value.
+ *
+ *  \param [in] undo The undo structure to obtain the field of.
+ *  \return The value of the \a y field.
+ */
+int
+lepton_undo_get_y (LeptonUndo *undo)
+{
+  g_return_val_if_fail (undo != NULL, 0);
+
+  return undo->y;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
