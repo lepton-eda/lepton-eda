@@ -514,12 +514,12 @@ o_undo_callback (GschemToplevel *w_current,
 
   if (schematic_window_get_undo_panzoom (w_current) || o_undo_modify_viewport())
   {
-    if (undo_to_do->scale != 0)
+    if (lepton_undo_get_scale (undo_to_do) != 0)
     {
       gschem_page_geometry_set_viewport (geometry,
                                          undo_to_do->x,
                                          undo_to_do->y,
-                                         undo_to_do->scale);
+                                         lepton_undo_get_scale (undo_to_do));
       gschem_page_view_invalidate_all (view);
     } else {
       gschem_page_view_zoom_extents (view, lepton_undo_get_object_list (undo_to_do));
