@@ -194,6 +194,12 @@ int s_conn_net_search(LeptonObject* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, LeptonObject *object);
 
 /* s_log.c */
+int
+lepton_log_get_logging_enabled ();
+
+void
+lepton_log_set_logging_enabled (int enable);
+
 void s_log_init (const gchar *filename);
 void s_log_close (void);
 gchar *s_log_read (void);

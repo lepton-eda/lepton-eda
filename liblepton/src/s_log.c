@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,29 @@ static void s_log_handler (const gchar *log_domain,
 static int logfile_fd = -1;
 
 static guint log_handler_id;
+
+
+/*! \brief Test if logging is enabled.
+ *
+ *  \return Return 1 if logging is enabled, 0 otherwise.
+ */
+int
+lepton_log_get_logging_enabled ()
+{
+  return do_logging;
+}
+
+/*! \brief Enable or disable logging.
+ *
+ *  \param [in] enable Disable logging if the value is 0,
+ *  otherwise enable it.
+ */
+void
+lepton_log_set_logging_enabled (int enable)
+{
+  do_logging = enable;
+}
+
 
 /*! \brief Initialize libgeda logging feature.
  *  \par Function Description
