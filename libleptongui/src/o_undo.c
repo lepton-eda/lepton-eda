@@ -504,7 +504,7 @@ o_undo_callback (GschemToplevel *w_current,
   }
 
   lepton_page_set_page_control (page, undo_to_do->page_control);
-  page->up = undo_to_do->up;
+  lepton_page_set_up (page, undo_to_do->up);
   gschem_toplevel_page_content_changed (w_current, page);
 
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
