@@ -340,6 +340,8 @@ void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
                  LeptonUndo *current_undo,
+                 LeptonUndo *save_bottom,
+                 LeptonUndo *save_tos,
                  LeptonUndo *undo_to_do,
                  char *save_filename,
                  gboolean redo,

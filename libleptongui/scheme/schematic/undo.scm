@@ -116,10 +116,20 @@ success, #f on failure."
                 ;; by lepton_page_set_filename() in
                 ;; o_undo_callback(), so we could get corrupted
                 ;; data otherwise.
-                (let ((save-filename (pointer->string (lepton_page_get_filename *page))))
+                (let ((save-filename (pointer->string (lepton_page_get_filename *page)))
+                      ;; Save undo structure so it's not nuked.
+                      (*save-undo-bottom (lepton_page_get_undo_bottom *page))
+                      (*save-undo-top (lepton_page_get_undo_tos *page)))
+                  ;; Initialize a new undo structure.
+                  (lepton_page_set_undo_bottom *page %null-pointer)
+                  (lepton_page_set_undo_tos *page %null-pointer)
+                  (lepton_page_set_undo_current *page %null-pointer)
+
                   (o_undo_callback *window
                                    *page
                                    *current-undo
+                                   *save-undo-bottom
+                                   *save-undo-top
                                    *undo-to-do
                                    (string->pointer save-filename)
                                    redo?
