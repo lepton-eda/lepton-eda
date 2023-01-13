@@ -406,8 +406,9 @@ lepton_undo_print_all (LeptonUndo *head)
       printf("%s\n", lepton_undo_get_filename (u_current));
     }
 
-    if (u_current->object_list) {
-      lepton_object_list_print (u_current->object_list);
+    if (lepton_undo_get_object_list (u_current))
+    {
+      lepton_object_list_print (lepton_undo_get_object_list (u_current));
     }
 
     printf("\t%d %d %f\n", u_current->x, u_current->y, u_current->scale);
