@@ -349,6 +349,10 @@ o_undo_callback (GschemToplevel *w_current,
                  int save_logging);
 
 void o_undo_cleanup(void);
+
+gboolean
+o_undo_modify_viewport ();
+
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
 GList *s_stretch_remove(GList *list, LeptonObject *object);

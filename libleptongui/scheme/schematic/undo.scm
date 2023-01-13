@@ -77,7 +77,7 @@ success, #f on failure."
                     "schematic.undo"
                     "undo-control"))
 
-  (define (page-undo-callback *window *page redo?)
+  (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
         (unless (null-pointer? *current-undo)
@@ -173,6 +173,19 @@ success, #f on failure."
                     (lepton_page_set_up *page (lepton_undo_get_up *undo-to-do))
                     (gschem_toplevel_page_content_changed *window *page)
 
+                    (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
+                      (when (or (true? (schematic_window_get_undo_panzoom *window))
+                                (true? (o_undo_modify_viewport)))
+                        (if (not (zero? (lepton_undo_get_scale *undo-to-do)))
+                            (begin
+                              (gschem_page_geometry_set_viewport *geometry
+                                                                 (lepton_undo_get_x *undo-to-do)
+                                                                 (lepton_undo_get_y *undo-to-do)
+                                                                 (lepton_undo_get_scale *undo-to-do))
+                              (gschem_page_view_invalidate_all *page-view))
+                            (gschem_page_view_zoom_extents *page-view
+                                                           (lepton_undo_get_object_list *undo-to-do)))))
+
                     (o_undo_callback *window
                                      *page
                                      *current-undo
@@ -190,6 +203,7 @@ success, #f on failure."
         (if (null-pointer? *page-view)
             (log! 'warning "undo-callback: NULL page view.")
             (page-undo-callback *window
+                                *page-view
                                 (gschem_page_view_get_page *page-view)
                                 redo?)))
       (log! 'message (G_ "Undo/Redo is disabled in configuration"))))

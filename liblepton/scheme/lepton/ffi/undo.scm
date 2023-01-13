@@ -29,8 +29,11 @@
             lepton_undo_get_next
             lepton_undo_get_prev
             lepton_undo_get_page_control
+            lepton_undo_get_scale
             lepton_undo_get_type
-            lepton_undo_get_up))
+            lepton_undo_get_up
+            lepton_undo_get_x
+            lepton_undo_get_y))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -45,4 +48,7 @@
 (define-lff lepton_undo_get_prev '* '(*))
 (define-lff lepton_undo_get_page_control int '(*))
 (define-lff lepton_undo_get_type int '(*))
+(define-lff lepton_undo_get_scale double '(*))
 (define-lff lepton_undo_get_up int '(*))
+(define-lff lepton_undo_get_x int '(*))
+(define-lff lepton_undo_get_y int '(*))

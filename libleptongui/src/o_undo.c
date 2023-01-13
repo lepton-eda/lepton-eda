@@ -79,7 +79,7 @@ void o_undo_init(void)
  * \return TRUE if undo/redo can modify viewport, FALSE otherwise.
  */
 
-static gboolean
+gboolean
 o_undo_modify_viewport()
 {
   gboolean result = FALSE; /* option's default value */
@@ -410,25 +410,6 @@ o_undo_callback (GschemToplevel *w_current,
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (view != NULL);
-
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-
-  if (schematic_window_get_undo_panzoom (w_current) || o_undo_modify_viewport())
-  {
-    if (lepton_undo_get_scale (undo_to_do) != 0)
-    {
-      gschem_page_geometry_set_viewport (geometry,
-                                         lepton_undo_get_x (undo_to_do),
-                                         lepton_undo_get_y (undo_to_do),
-                                         lepton_undo_get_scale (undo_to_do));
-      gschem_page_view_invalidate_all (view);
-    } else {
-      gschem_page_view_zoom_extents (view, lepton_undo_get_object_list (undo_to_do));
-    }
-  }
 
   /* restore logging */
   lepton_log_set_logging_enabled (save_logging);

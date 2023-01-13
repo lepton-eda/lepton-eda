@@ -319,6 +319,7 @@
             lepton_menu_set_action_data
 
             gschem_page_view_get_page
+            gschem_page_view_get_page_geometry
             gschem_page_view_invalidate_all
             gschem_page_view_new_with_page
             gschem_page_view_pan
@@ -423,6 +424,8 @@
 
             gschem_options_widget_new
 
+            gschem_page_geometry_set_viewport
+
             gschem_text_properties_widget_new
             text_edit_dialog
 
@@ -445,6 +448,7 @@
             o_undo_find_prev_filename
             o_undo_find_prev_object_head
             o_undo_init
+            o_undo_modify_viewport
             o_undo_savestate
             o_undo_savestate_old
             o_undo_savestate_viewport
@@ -617,6 +621,7 @@
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
+(define-lff gschem_page_view_get_page_geometry '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
 (define-lff gschem_page_view_new_with_page '* '(*))
 (define-lff gschem_page_view_pan void (list '* int int))
@@ -744,6 +749,9 @@
 
 ;;; gschem_options_widget.c
 (define-lff gschem_options_widget_new '* '(*))
+
+;;; gschem_page_geometry.c
+(define-lff gschem_page_geometry_set_viewport void (list '* int int double))
 
 ;;; gschem_text_properties_widget.c
 (define-lff gschem_text_properties_widget_new '* '(*))
@@ -1048,6 +1056,7 @@
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))
+(define-lff o_undo_modify_viewport int '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))
 (define-lff o_undo_savestate_viewport void '(*))
