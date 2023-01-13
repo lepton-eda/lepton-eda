@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -312,7 +312,7 @@ lepton_page_new (LeptonToplevel *toplevel,
   lepton_page_set_place_list (page, NULL);
 
   /* init undo struct pointers */
-  s_undo_init(page);
+  lepton_undo_init (page);
 
   page->object_lastplace = NULL;
 

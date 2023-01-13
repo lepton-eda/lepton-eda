@@ -220,7 +220,8 @@ lepton_undo_levels (LeptonUndo *head)
  *  \par Function Description
  *
  */
-void s_undo_init (LeptonPage *p_current)
+void
+lepton_undo_init (LeptonPage *p_current)
 {
   p_current->undo_tos = p_current->undo_bottom = NULL;
   p_current->undo_current = NULL;
