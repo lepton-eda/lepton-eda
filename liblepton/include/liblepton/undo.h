@@ -65,7 +65,7 @@ void
 lepton_undo_destroy_all (LeptonUndo *head);
 
 void
-s_undo_remove_rest (LeptonUndo *head);
+lepton_undo_remove_rest (LeptonUndo *head);
 
 int
 s_undo_levels (LeptonUndo *head);

@@ -184,10 +184,10 @@ o_undo_savestate (GschemToplevel *w_current,
 
   /* Clear Anything above current */
   if (page->undo_current) {
-    s_undo_remove_rest (page->undo_current->next);
+    lepton_undo_remove_rest (page->undo_current->next);
     page->undo_current->next = NULL;
   } else { /* undo current is NULL */
-    s_undo_remove_rest (page->undo_bottom);
+    lepton_undo_remove_rest (page->undo_bottom);
     page->undo_bottom = NULL;
   }
 
