@@ -87,27 +87,19 @@ success, #f on failure."
                                  ;; Undo action.
                                  (lepton_undo_get_prev *current-undo))))
             (unless (null-pointer? *undo-to-do)
-              (let* ((undo-viewport?
-                      (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
-                           (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY)))
-                     ;; This C boolean variable indicates that for
-                     ;; only viewport changes, undo 'filename' or
-                     ;; 'object_list' fields have to be set to
-                     ;; NULL in o_undo_callback().  This needs to
-                     ;; be so since the functions
-                     ;; o_undo_find_prev_filename() and
-                     ;; o_undo_find_prev_object_head() omit such
-                     ;; <undo> data when searching for list of
-                     ;; objects to resurrect, or the filename to
-                     ;; resurrect them from.  The data can be just
-                     ;; retrieved from some previous non-viewport
-                     ;; undo list item.
-                     (search-for-previous-data? (if undo-viewport? TRUE FALSE)))
+              (let ((undo-viewport?
+                     (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
+                          (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY))))
                 (when undo-viewport?
                   ;; Debugging stuff.
                   (log! 'debug "Type: ~A\n" (lepton_undo_get_type *undo-to-do))
                   (log! 'debug "Current is an undo all, next is viewport only!\n")
 
+                  ;; For only viewport changes, <undo> data omits
+                  ;; 'filename' or 'object_list' as they are
+                  ;; retrieved from previous list items.  Hence,
+                  ;; 'filename' and 'object_list' are not freed
+                  ;; and just set to NULL below.
                   (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
                       (lepton_undo_set_filename *undo-to-do
                                                 (o_undo_find_prev_filename *undo-to-do))
@@ -117,10 +109,9 @@ success, #f on failure."
                 ;; a temporary file is opened for undo.  The
                 ;; filename is stored as a Scheme string as the
                 ;; data pointed to by pointer returned by
-                ;; lepton_page_get_filename() is freed in between
-                ;; by lepton_page_set_filename() in
-                ;; o_undo_callback(), so we could get corrupted
-                ;; data otherwise.
+                ;; lepton_page_get_filename() is freed inside
+                ;; lepton_page_set_filename() below, so we could
+                ;; get corrupted data otherwise.
                 (let ((save-filename (pointer->string (lepton_page_get_filename *page)))
                       ;; Save undo structure so it's not nuked.
                       (*save-undo-bottom (lepton_page_get_undo_bottom *page))
@@ -145,9 +136,7 @@ success, #f on failure."
                     (schematic_window_active_page_changed *window))
 
                   (let ((save-logging? (lepton_log_get_logging_enabled)))
-                    ;; Temporarily disable logging.  It will be
-                    ;; enabled in o_undo_callback() after undo is
-                    ;; accomplished.
+                    ;; Temporarily disable logging.
                     (lepton_log_set_logging_enabled FALSE)
 
                     (if (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
@@ -218,7 +207,7 @@ success, #f on failure."
                                                           (lepton_page_get_undo_tos *page)))))
                     ;; Don't have to free data here since 'filename' or 'object_list' are
                     ;; just pointers to the real data (lower in the stack).
-                    (when (true? search-for-previous-data?)
+                    (when undo-viewport?
                       (lepton_undo_set_filename *undo-to-do %null-pointer)
                       (lepton_undo_set_object_list *undo-to-do %null-pointer))
 
