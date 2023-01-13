@@ -393,41 +393,13 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- *  If \a redo is TRUE, do "redo" instead of "undo".
  */
 void
 o_undo_callback (LeptonPage *page,
                  LeptonUndo *undo_to_do,
-                 gboolean redo,
                  gboolean find_prev_data)
 {
   g_return_if_fail (page != NULL);
-
-  if (!redo)
-  {
-    /* Undo action. */
-    if (lepton_page_get_undo_current (page))
-    {
-      lepton_page_set_undo_current (page, lepton_undo_get_prev (lepton_page_get_undo_current (page)));
-      if (lepton_page_get_undo_current (page) == NULL)
-      {
-        lepton_page_set_undo_current (page, lepton_page_get_undo_bottom (page));
-      }
-    }
-  }
-  else
-  {
-    /* Redo action. */
-    if (lepton_page_get_undo_current (page))
-    {
-      lepton_page_set_undo_current (page, lepton_undo_get_next (lepton_page_get_undo_current (page)));
-      if (lepton_page_get_undo_current (page) == NULL)
-      {
-        lepton_page_set_undo_current (page, lepton_page_get_undo_tos (page));
-      }
-    }
-  }
 
   /* don't have to free data here since filename, object_list are */
   /* just pointers to the real data (lower in the stack) */

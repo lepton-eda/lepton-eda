@@ -339,7 +339,6 @@ o_undo_find_prev_object_head (LeptonUndo *start);
 void
 o_undo_callback (LeptonPage *page,
                  LeptonUndo *undo_to_do,
-                 gboolean redo,
                  gboolean find_prev_data);
 
 void o_undo_cleanup(void);
