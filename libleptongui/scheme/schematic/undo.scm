@@ -216,10 +216,18 @@ success, #f on failure."
                           (when (null-pointer? (lepton_page_get_undo_current *page))
                             (lepton_page_set_undo_current *page
                                                           (lepton_page_get_undo_tos *page)))))
-                    (o_undo_callback *page
-                                     *undo-to-do
-                                     ;; See comments above.
-                                     search-for-previous-data?))))))))))
+                    ;; Don't have to free data here since 'filename' or 'object_list' are
+                    ;; just pointers to the real data (lower in the stack).
+                    (when (true? search-for-previous-data?)
+                      (lepton_undo_set_filename *undo-to-do %null-pointer)
+                      (lepton_undo_set_object_list *undo-to-do %null-pointer))
+
+                    ;; Debugging stuff.
+                    (log! 'debug "\n\n---Undo----\n")
+                    (lepton_undo_print_all (lepton_page_get_undo_bottom *page))
+                    (log! 'debug "TOS: ~A\n" (lepton_undo_get_filename (lepton_page_get_undo_tos *page)))
+                    (log! 'debug "CURRENT: ~A\n" (lepton_undo_get_filename (lepton_page_get_undo_current *page)))
+                    (log! 'debug "----\n"))))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

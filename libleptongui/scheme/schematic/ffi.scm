@@ -443,7 +443,6 @@
 
             s_slot_update_object
 
-            o_undo_callback
             o_undo_cleanup
             o_undo_find_prev_filename
             o_undo_find_prev_object_head
@@ -1054,7 +1053,6 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))

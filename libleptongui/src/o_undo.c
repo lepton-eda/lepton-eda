@@ -390,32 +390,6 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
   return(NULL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- */
-void
-o_undo_callback (LeptonPage *page,
-                 LeptonUndo *undo_to_do,
-                 gboolean find_prev_data)
-{
-  g_return_if_fail (page != NULL);
-
-  /* don't have to free data here since filename, object_list are */
-  /* just pointers to the real data (lower in the stack) */
-  if (find_prev_data) {
-    lepton_undo_set_filename (undo_to_do, NULL);
-    lepton_undo_set_object_list (undo_to_do, NULL);
-  }
-
-#if DEBUG
-  printf("\n\n---Undo----\n");
-  lepton_undo_print_all (lepton_page_get_undo_bottom (page));
-  printf("TOS: %s\n", lepton_undo_get_filename (lepton_page_get_undo_tos (page)));
-  printf("CURRENT: %s\n", lepton_undo_get_filename (lepton_page_get_undo_current (page)));
-  printf("----\n");
-#endif
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

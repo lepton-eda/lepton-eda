@@ -33,7 +33,9 @@
             lepton_undo_get_type
             lepton_undo_get_up
             lepton_undo_get_x
-            lepton_undo_get_y))
+            lepton_undo_get_y
+
+            lepton_undo_print_all))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -52,3 +54,5 @@
 (define-lff lepton_undo_get_up int '(*))
 (define-lff lepton_undo_get_x int '(*))
 (define-lff lepton_undo_get_y int '(*))
+
+(define-lff lepton_undo_print_all void '(*))
