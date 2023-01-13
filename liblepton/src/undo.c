@@ -415,7 +415,7 @@ lepton_undo_print_all (LeptonUndo *head)
             lepton_undo_get_x (u_current),
             lepton_undo_get_y (u_current),
             lepton_undo_get_scale (u_current));
-    u_current = u_current->next;
+    u_current = lepton_undo_get_next (u_current);
   }
   printf("TOS\n");
   printf("Number of levels: %d\n", lepton_undo_levels (head));
