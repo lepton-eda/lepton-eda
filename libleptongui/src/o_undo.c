@@ -408,27 +408,8 @@ o_undo_callback (GschemToplevel *w_current,
                  gboolean find_prev_data,
                  int save_logging)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  if (schematic_window_get_undo_type (w_current) == UNDO_DISK
-      && lepton_undo_get_filename (undo_to_do))
-  {
-    /*
-     * F_OPEN_RESTORE_CWD: go back from tmp directory,
-     * so that local config files can be read:
-    */
-    f_open (toplevel, page, lepton_undo_get_filename (undo_to_do), F_OPEN_RESTORE_CWD, NULL);
-  }
-  else if (schematic_window_get_undo_type (w_current) == UNDO_MEMORY
-           && lepton_undo_get_object_list (undo_to_do))
-  {
-    lepton_page_append_list (page,
-                             o_glist_copy_all (lepton_undo_get_object_list (undo_to_do),
-                                               NULL));
-  }
 
   lepton_page_set_page_control (page, lepton_undo_get_page_control (undo_to_do));
   lepton_page_set_up (page, lepton_undo_get_up (undo_to_do));

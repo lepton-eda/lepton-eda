@@ -51,6 +51,11 @@
 ;;; Variables defined in gschem_defines.h.
 (define UNDO_DISK 0)
 (define UNDO_MEMORY 1)
+;;; Flags defined in struct.h.
+(define F_OPEN_RC 1)
+(define F_OPEN_CHECK_BACKUP 2)
+(define F_OPEN_FORCE_BACKUP 4)
+(define F_OPEN_RESTORE_CWD 8)
 
 
 (define (undo-save-state)
@@ -145,6 +150,24 @@ success, #f on failure."
                     ;; accomplished.
                     (lepton_log_set_logging_enabled FALSE)
 
+                    (if (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+                             (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
+                        ;; F_OPEN_RESTORE_CWD: go back from
+                        ;; temporary directory, so that local
+                        ;; config files can be read.
+                        (f_open (gschem_toplevel_get_toplevel *window)
+                                *page
+                                (lepton_undo_get_filename *undo-to-do)
+                                F_OPEN_RESTORE_CWD
+                                %null-pointer)
+
+                        ;; Otherwise objects are restored from
+                        ;; memory.
+                        (when (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+                                   (not (null-pointer? (lepton_undo_get_object_list *undo-to-do))))
+                          (lepton_page_append_list *page
+                                                   (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
+                                                                     %null-pointer))))
                     (o_undo_callback *window
                                      *page
                                      *current-undo

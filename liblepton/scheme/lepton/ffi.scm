@@ -372,6 +372,8 @@
 
             o_read_buffer
 
+            f_open
+
             lepton_coord_snap))
 
 ;;; Simplify definition of functions by omitting the library
@@ -722,6 +724,9 @@
 
 ;;; a_basic.c
 (define-lff o_read_buffer '* (list '* '* '* int '* '*))
+
+;;; f_basic.c
+(define-lff f_open int (list '* '* '* int '*))
 
 ;;; export.c
 (define-lff export_config void '())
