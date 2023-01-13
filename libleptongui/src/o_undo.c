@@ -224,7 +224,7 @@ o_undo_savestate (GschemToplevel *w_current,
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(page->undo_bottom);
+  lepton_undo_print_all (page->undo_bottom);
   printf("BOTTOM: %s\n", page->undo_bottom->filename);
   printf("TOS: %s\n", page->undo_tos->filename);
   printf("CURRENT: %s\n", page->undo_current->filename);
@@ -295,7 +295,7 @@ o_undo_savestate (GschemToplevel *w_current,
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(page->undo_bottom);
+  lepton_undo_print_all (page->undo_bottom);
   printf("BOTTOM: %s\n", page->undo_bottom->filename);
   printf("TOS: %s\n", page->undo_tos->filename);
   printf("CURRENT: %s\n", page->undo_current->filename);
@@ -563,7 +563,7 @@ o_undo_callback (GschemToplevel *w_current,
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(page->undo_bottom);
+  lepton_undo_print_all (page->undo_bottom);
   printf("TOS: %s\n", page->undo_tos->filename);
   printf("CURRENT: %s\n", page->undo_current->filename);
   printf("----\n");
