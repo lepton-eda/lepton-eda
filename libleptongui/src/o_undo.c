@@ -241,7 +241,7 @@ o_undo_savestate (GschemToplevel *w_current,
     return;
   }
 
-  levels = s_undo_levels(page->undo_bottom);
+  levels = lepton_undo_levels (page->undo_bottom);
 
 #if DEBUG
   printf("levels: %d\n", levels);
