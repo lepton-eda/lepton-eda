@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
  *
  */
 LeptonUndo*
-s_undo_return_tail (LeptonUndo *head)
+lepton_undo_return_tail (LeptonUndo *head)
 {
   LeptonUndo *u_current=NULL;
   LeptonUndo *ret_struct=NULL;
@@ -149,7 +149,7 @@ s_undo_add (LeptonUndo *head,
     u_new->next = NULL;
     return(u_new);
   } else {
-    tail = s_undo_return_tail(head);
+    tail = lepton_undo_return_tail (head);
     u_new->prev = tail; /* setup previous link */
     u_new->next = NULL;
     tail->next = u_new;
@@ -200,7 +200,7 @@ s_undo_destroy_all (LeptonUndo *head)
   LeptonUndo *u_current;
   LeptonUndo *u_prev;
 
-  u_current = s_undo_return_tail(head);
+  u_current = lepton_undo_return_tail (head);
 
   while (u_current != NULL) {
     u_prev = u_current->prev;
