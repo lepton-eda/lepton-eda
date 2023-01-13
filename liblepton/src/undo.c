@@ -411,7 +411,10 @@ lepton_undo_print_all (LeptonUndo *head)
       lepton_object_list_print (lepton_undo_get_object_list (u_current));
     }
 
-    printf("\t%d %d %f\n", u_current->x, u_current->y, u_current->scale);
+    printf ("\t%d %d %f\n",
+            lepton_undo_get_x (u_current),
+            lepton_undo_get_y (u_current),
+            lepton_undo_get_scale (u_current));
     u_current = u_current->next;
   }
   printf("TOS\n");
