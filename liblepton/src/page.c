@@ -414,7 +414,7 @@ lepton_page_delete (LeptonToplevel *toplevel,
   page->connectible_list = NULL;
 
   /* free current page undo structs */
-  s_undo_free_all (page);
+  lepton_undo_free_all (page);
 
   /* ouch, deal with parents going away and the children still around */
   page->up = -2;
