@@ -167,7 +167,7 @@ lepton_undo_destroy_all (LeptonUndo *head)
  *
  */
 void
-s_undo_remove_rest (LeptonUndo *head)
+lepton_undo_remove_rest (LeptonUndo *head)
 {
   LeptonUndo *u_current;
   LeptonUndo *u_next;
