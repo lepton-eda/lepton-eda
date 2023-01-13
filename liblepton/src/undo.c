@@ -53,25 +53,6 @@ lepton_undo_return_tail (LeptonUndo *head)
   return(ret_struct);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-LeptonUndo*
-s_undo_return_head(LeptonUndo *tail)
-{
-  LeptonUndo *u_current=NULL;
-  LeptonUndo *ret_struct=NULL;
-
-  u_current = tail;
-  while ( u_current != NULL ) { /* goto end of list */
-    ret_struct = u_current;
-    u_current = u_current->prev;
-  }
-
-  return(ret_struct);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

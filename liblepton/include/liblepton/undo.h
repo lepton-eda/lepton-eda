@@ -49,9 +49,6 @@ LeptonUndo*
 lepton_undo_return_tail (LeptonUndo *head);
 
 LeptonUndo*
-s_undo_return_head (LeptonUndo *tail);
-
-LeptonUndo*
 s_undo_new_head (void);
 
 void
