@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -194,23 +194,24 @@ o_undo_savestate (GschemToplevel *w_current,
   page->undo_tos = page->undo_current;
 
   if (geometry != NULL) {
-    page->undo_tos = s_undo_add(page->undo_tos,
-                                flag, filename, object_list,
-                                (geometry->viewport_left + geometry->viewport_right) / 2,
-                                (geometry->viewport_top + geometry->viewport_bottom) / 2,
-                                /* scale */
-                                MAX (((double) abs (geometry->viewport_right - geometry->viewport_left) / geometry->screen_width),
-                                  ((double) abs (geometry->viewport_top - geometry->viewport_bottom) / geometry->screen_height)),
-                                page->page_control,
-                                page->up);
+    page->undo_tos =
+      lepton_undo_add (page->undo_tos,
+                       flag, filename, object_list,
+                       (geometry->viewport_left + geometry->viewport_right) / 2,
+                       (geometry->viewport_top + geometry->viewport_bottom) / 2,
+                       /* scale */
+                       MAX (((double) abs (geometry->viewport_right - geometry->viewport_left) / geometry->screen_width),
+                            ((double) abs (geometry->viewport_top - geometry->viewport_bottom) / geometry->screen_height)),
+                       page->page_control,
+                       page->up);
   } else {
-    page->undo_tos = s_undo_add(page->undo_tos,
-                                flag, filename, object_list,
-                                0, /* center x */
-                                0, /* center y */
-                                0, /* scale */
-                                page->page_control,
-                                page->up);
+    page->undo_tos = lepton_undo_add (page->undo_tos,
+                                      flag, filename, object_list,
+                                      0, /* center x */
+                                      0, /* center y */
+                                      0, /* scale */
+                                      page->page_control,
+                                      page->up);
   }
 
   page->undo_current =

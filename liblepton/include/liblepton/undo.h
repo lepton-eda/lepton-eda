@@ -49,15 +49,15 @@ LeptonUndo*
 lepton_undo_return_tail (LeptonUndo *head);
 
 LeptonUndo*
-s_undo_add (LeptonUndo *head,
-            int type,
-            char *filename,
-            GList *object_list,
-            int x,
-            int y,
-            double scale,
-            int page_control,
-            int up);
+lepton_undo_add (LeptonUndo *head,
+                 int type,
+                 char *filename,
+                 GList *object_list,
+                 int x,
+                 int y,
+                 double scale,
+                 int page_control,
+                 int up);
 void
 s_undo_print_all (LeptonUndo *head);
 
