@@ -68,7 +68,7 @@ void
 lepton_undo_remove_rest (LeptonUndo *head);
 
 int
-s_undo_levels (LeptonUndo *head);
+lepton_undo_levels (LeptonUndo *head);
 
 void
 s_undo_init (LeptonPage *p_current);

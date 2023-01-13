@@ -127,7 +127,7 @@ lepton_undo_print_all (LeptonUndo *head)
     u_current = u_current->next;
   }
   printf("TOS\n");
-  printf("Number of levels: %d\n", s_undo_levels(head));
+  printf("Number of levels: %d\n", lepton_undo_levels (head));
   printf("DONE printing undo ********************\n");
   printf("\n");
 
@@ -198,7 +198,7 @@ lepton_undo_remove_rest (LeptonUndo *head)
  *
  */
 int
-s_undo_levels (LeptonUndo *head)
+lepton_undo_levels (LeptonUndo *head)
 {
   LeptonUndo *u_current;
   int count = 0;
