@@ -168,6 +168,11 @@ success, #f on failure."
                           (lepton_page_append_list *page
                                                    (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
                                                                      %null-pointer))))
+                    (lepton_page_set_page_control *page
+                                                  (lepton_undo_get_page_control *undo-to-do))
+                    (lepton_page_set_up *page (lepton_undo_get_up *undo-to-do))
+                    (gschem_toplevel_page_content_changed *window *page)
+
                     (o_undo_callback *window
                                      *page
                                      *current-undo

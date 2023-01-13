@@ -28,7 +28,9 @@
             lepton_undo_set_object_list
             lepton_undo_get_next
             lepton_undo_get_prev
-            lepton_undo_get_type))
+            lepton_undo_get_page_control
+            lepton_undo_get_type
+            lepton_undo_get_up))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -41,4 +43,6 @@
 (define-lff lepton_undo_set_object_list void '(* *))
 (define-lff lepton_undo_get_next '* '(*))
 (define-lff lepton_undo_get_prev '* '(*))
+(define-lff lepton_undo_get_page_control int '(*))
 (define-lff lepton_undo_get_type int '(*))
+(define-lff lepton_undo_get_up int '(*))
