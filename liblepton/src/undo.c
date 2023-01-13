@@ -139,7 +139,7 @@ lepton_undo_print_all (LeptonUndo *head)
  *
  */
 void
-s_undo_destroy_all (LeptonUndo *head)
+lepton_undo_destroy_all (LeptonUndo *head)
 {
   LeptonUndo *u_current;
   LeptonUndo *u_prev;
@@ -234,7 +234,7 @@ void s_undo_init (LeptonPage *p_current)
 void
 s_undo_free_all (LeptonPage *p_current)
 {
-  s_undo_destroy_all (p_current->undo_bottom);
+  lepton_undo_destroy_all (p_current->undo_bottom);
   p_current->undo_bottom = NULL;
   p_current->undo_tos = NULL;
   p_current->undo_current = NULL;
