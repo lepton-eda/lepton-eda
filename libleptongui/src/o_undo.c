@@ -397,35 +397,12 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
  *  If \a redo is TRUE, do "redo" instead of "undo".
  */
 void
-o_undo_callback (GschemToplevel *w_current,
-                 LeptonPage *page,
-                 LeptonUndo *save_current,
-                 LeptonUndo *save_bottom,
-                 LeptonUndo *save_tos,
+o_undo_callback (LeptonPage *page,
                  LeptonUndo *undo_to_do,
-                 char *save_filename,
                  gboolean redo,
-                 gboolean find_prev_data,
-                 int save_logging)
+                 gboolean find_prev_data)
 {
-  g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
-
-  /* restore logging */
-  lepton_log_set_logging_enabled (save_logging);
-
-  /* set filename right */
-  lepton_page_set_filename (page, save_filename);
-
-  /* final redraw */
-  page_select_widget_update (w_current);
-  x_multiattrib_update (w_current);
-  i_update_menus(w_current);
-
-  /* restore saved undo structures */
-  lepton_page_set_undo_bottom (page, save_bottom);
-  lepton_page_set_undo_tos (page, save_tos);
-  lepton_page_set_undo_current (page, save_current);
 
   if (!redo)
   {

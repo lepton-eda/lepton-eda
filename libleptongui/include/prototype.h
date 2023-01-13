@@ -337,16 +337,10 @@ GList*
 o_undo_find_prev_object_head (LeptonUndo *start);
 
 void
-o_undo_callback (GschemToplevel *w_current,
-                 LeptonPage *page,
-                 LeptonUndo *current_undo,
-                 LeptonUndo *save_bottom,
-                 LeptonUndo *save_tos,
+o_undo_callback (LeptonPage *page,
                  LeptonUndo *undo_to_do,
-                 char *save_filename,
                  gboolean redo,
-                 gboolean find_prev_data,
-                 int save_logging);
+                 gboolean find_prev_data);
 
 void o_undo_cleanup(void);
 

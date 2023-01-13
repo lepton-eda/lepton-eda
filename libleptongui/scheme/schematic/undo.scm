@@ -186,17 +186,26 @@ success, #f on failure."
                             (gschem_page_view_zoom_extents *page-view
                                                            (lepton_undo_get_object_list *undo-to-do)))))
 
-                    (o_undo_callback *window
-                                     *page
-                                     *current-undo
-                                     *save-undo-bottom
-                                     *save-undo-top
+                    ;; Restore logging.
+                    (lepton_log_set_logging_enabled save-logging?)
+                    ;; Set filename right.
+                    (lepton_page_set_filename *page
+                                              (string->pointer save-filename))
+                    ;; Final redraw.
+                    (page_select_widget_update *window)
+                    (x_multiattrib_update *window)
+                    (i_update_menus *window)
+
+                    ;; Restore saved undo structures.
+                    (lepton_page_set_undo_bottom *page *save-undo-bottom)
+                    (lepton_page_set_undo_tos *page *save-undo-top)
+                    (lepton_page_set_undo_current *page *current-undo)
+
+                    (o_undo_callback *page
                                      *undo-to-do
-                                     (string->pointer save-filename)
                                      redo?
                                      ;; See comments above.
-                                     search-for-previous-data?
-                                     save-logging?))))))))))
+                                     search-for-previous-data?))))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))

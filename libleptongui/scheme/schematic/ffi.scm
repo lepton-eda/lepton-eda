@@ -481,6 +481,7 @@
 
             x_multiattrib_close
             x_multiattrib_open
+            x_multiattrib_update
 
             x_print
 
@@ -1021,6 +1022,7 @@
 ;;; x_multiattrib.c
 (define-lff x_multiattrib_close void '(*))
 (define-lff x_multiattrib_open void '(*))
+(define-lff x_multiattrib_update void '(*))
 
 ;;; x_newtext.c
 (define-lff text_input_dialog void '(*))
@@ -1052,7 +1054,7 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_callback void (list '* '* '* '* '* '* '* int int int))
+(define-lff o_undo_callback void (list '* '* int int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))
