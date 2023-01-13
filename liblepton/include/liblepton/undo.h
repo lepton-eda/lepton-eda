@@ -59,7 +59,7 @@ lepton_undo_add (LeptonUndo *head,
                  int page_control,
                  int up);
 void
-s_undo_print_all (LeptonUndo *head);
+lepton_undo_print_all (LeptonUndo *head);
 
 void
 s_undo_destroy_all (LeptonUndo *head);

@@ -107,7 +107,7 @@ lepton_undo_add (LeptonUndo *head,
  *
  */
 void
-s_undo_print_all (LeptonUndo *head)
+lepton_undo_print_all (LeptonUndo *head)
 {
   LeptonUndo *u_current;
 
