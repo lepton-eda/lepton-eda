@@ -401,7 +401,10 @@ lepton_undo_print_all (LeptonUndo *head)
   printf("BOTTOM\n");
   while(u_current != NULL) {
 
-    if (u_current->filename) printf("%s\n", u_current->filename);
+    if (lepton_undo_get_filename (u_current))
+    {
+      printf("%s\n", lepton_undo_get_filename (u_current));
+    }
 
     if (u_current->object_list) {
       lepton_object_list_print (u_current->object_list);
