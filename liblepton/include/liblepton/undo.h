@@ -48,9 +48,6 @@ struct st_undo
 LeptonUndo*
 lepton_undo_return_tail (LeptonUndo *head);
 
-LeptonUndo*
-s_undo_new_head (void);
-
 void
 s_undo_destroy_head (LeptonUndo *u_head);
 
