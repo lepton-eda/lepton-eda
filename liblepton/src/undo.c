@@ -59,32 +59,6 @@ lepton_undo_return_tail (LeptonUndo *head)
  *  \par Function Description
  *
  */
-LeptonUndo*
-s_undo_new_head(void)
-{
-  LeptonUndo *u_new;
-
-  u_new = (LeptonUndo *) g_malloc (sizeof (LeptonUndo));
-  u_new->type = -1;
-  u_new->filename = NULL;
-  u_new->object_list = NULL;
-  u_new->x = u_new->y = 0;
-  u_new->scale = 0;
-
-  u_new->page_control = 0;
-  u_new->up = -2;
-
-  u_new->prev = NULL;
-  u_new->next = NULL;
-
-  return(u_new);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void
 s_undo_destroy_head (LeptonUndo *u_head)
 {
