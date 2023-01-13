@@ -59,17 +59,6 @@ lepton_undo_return_tail (LeptonUndo *head)
  *  \par Function Description
  *
  */
-void
-s_undo_destroy_head (LeptonUndo *u_head)
-{
-  g_free(u_head);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 LeptonUndo*
 s_undo_add (LeptonUndo *head,
             int type,
