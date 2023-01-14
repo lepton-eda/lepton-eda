@@ -266,8 +266,10 @@ session."
   (define max-id (schematic_undo_get_file_index))
 
   (define (unlink-by-id id)
-    (let ((*filename (schematic_undo_index_to_filename id)))
-      (delete-file (pointer->string *filename))
+    (let* ((*filename (schematic_undo_index_to_filename id))
+           (filename (pointer->string *filename)))
+      (when (file-exists? filename)
+        (delete-file filename))
       (g_free *filename)))
 
   (for-each unlink-by-id (iota max-id))
