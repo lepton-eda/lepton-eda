@@ -432,25 +432,3 @@ o_undo_find_prev_filename (LeptonUndo *start)
 
   return(NULL);
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-GList *o_undo_find_prev_object_head (LeptonUndo *start)
-{
-  LeptonUndo *u_current;
-
-  u_current = lepton_undo_get_prev (start);
-
-  while(u_current) {
-    if (lepton_undo_get_object_list (u_current) != NULL)
-    {
-      return lepton_undo_get_object_list (u_current);
-    }
-    u_current = lepton_undo_get_prev (u_current);
-  }
-
-  return(NULL);
-}

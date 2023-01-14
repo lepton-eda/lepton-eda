@@ -333,9 +333,6 @@ o_undo_savestate_viewport (GschemToplevel *w_current);
 char*
 o_undo_find_prev_filename (LeptonUndo *start);
 
-GList*
-o_undo_find_prev_object_head (LeptonUndo *start);
-
 gboolean
 o_undo_modify_viewport ();
 

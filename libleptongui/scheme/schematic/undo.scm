@@ -74,6 +74,18 @@ success, #f on failure."
                 #t)))))
 
 
+;;; Recursively search backwards in the undo list for an undo item
+;;; having non-NULL object list.
+(define (*find-previous-object-list *undo)
+  (let loop ((*undo-item (lepton_undo_get_prev *undo)))
+    (if (null-pointer? *undo-item)
+        %null-pointer
+        (let ((*object-list (lepton_undo_get_object_list *undo-item)))
+          (if (null-pointer? *object-list)
+              (loop (lepton_undo_get_prev *undo-item))
+              *object-list)))))
+
+
 (define (undo-callback *window redo?)
   (define undo-enabled?
     (config-boolean (path-config-context (getcwd))
@@ -107,7 +119,7 @@ success, #f on failure."
                       (lepton_undo_set_filename *undo-to-do
                                                 (o_undo_find_prev_filename *undo-to-do))
                       (lepton_undo_set_object_list *undo-to-do
-                                                   (o_undo_find_prev_object_head *undo-to-do))))
+                                                   (*find-previous-object-list *undo-to-do))))
                 ;; Save page filename to restore it later in case
                 ;; a temporary file is opened for undo.  The
                 ;; filename is stored as a Scheme string as the
