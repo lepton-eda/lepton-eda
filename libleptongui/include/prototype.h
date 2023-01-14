@@ -320,7 +320,6 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size);
 void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string, int visibility, int show);
 /* o_undo.c */
-void o_undo_init(void);
 void
 o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,

@@ -38,6 +38,7 @@
     ; public:
     ;
   #:export (undo-cleanup-backup-files!
+            undo-init-backup-path
             undo-save-state
             undo!
             redo!
@@ -59,6 +60,13 @@
 (define F_OPEN_CHECK_BACKUP 2)
 (define F_OPEN_FORCE_BACKUP 4)
 (define F_OPEN_RESTORE_CWD 8)
+
+
+(define (undo-init-backup-path)
+  (define undo-tmp-path (or (getenv "TMP") "/tmp"))
+
+  (schematic_undo_set_tmp_path (string->pointer undo-tmp-path))
+  (log! 'debug "UNDO backup path: ~S" undo-tmp-path))
 
 
 (define (undo-save-state)

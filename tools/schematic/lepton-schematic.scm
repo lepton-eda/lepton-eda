@@ -288,7 +288,7 @@ Run `~A --help' for more information.\n")
 ;;; Initialise color map (need to do this before reading rc
 ;;; files).
 (x_color_init)
-(o_undo_init)
+(undo-init-backup-path)
 
 ;;; Parse custom GTK resource files.  Used only for GTK2.
 (parse-gtkrc)

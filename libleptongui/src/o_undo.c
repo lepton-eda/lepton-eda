@@ -108,25 +108,6 @@ schematic_undo_index_to_filename (int index)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_undo_init(void)
-{
-  schematic_undo_set_tmp_path (getenv ("TMP"));
-  if (schematic_undo_get_tmp_path () == NULL)
-  {
-    schematic_undo_set_tmp_path ((char*) "/tmp");
-  }
-#if DEBUG
-  printf ("%s\n", schematic_undo_get_tmp_path ());
-#endif
-}
-
-
-
 /*! \brief Return the value of "modify-viewport" configuration key.
  *
  * \par Function Description
