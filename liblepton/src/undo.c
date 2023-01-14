@@ -397,13 +397,13 @@ lepton_undo_print_all (LeptonUndo *head)
 
   u_current = head;
 
-  printf("START printing undo ********************\n");
-  printf("BOTTOM\n");
+  g_debug ("START printing undo ********************\n");
+  g_debug ("BOTTOM\n");
   while(u_current != NULL) {
 
     if (lepton_undo_get_filename (u_current))
     {
-      printf("%s\n", lepton_undo_get_filename (u_current));
+      g_debug ("%s\n", lepton_undo_get_filename (u_current));
     }
 
     if (lepton_undo_get_object_list (u_current))
@@ -411,16 +411,16 @@ lepton_undo_print_all (LeptonUndo *head)
       lepton_object_list_print (lepton_undo_get_object_list (u_current));
     }
 
-    printf ("\t%d %d %f\n",
+    g_debug ("\t%d %d %f\n",
             lepton_undo_get_x (u_current),
             lepton_undo_get_y (u_current),
             lepton_undo_get_scale (u_current));
     u_current = lepton_undo_get_next (u_current);
   }
-  printf("TOS\n");
-  printf("Number of levels: %d\n", lepton_undo_levels (head));
-  printf("DONE printing undo ********************\n");
-  printf("\n");
+  g_debug ("TOS\n");
+  g_debug ("Number of levels: %d\n", lepton_undo_levels (head));
+  g_debug ("DONE printing undo ********************\n");
+  g_debug ("\n");
 
 }
 
