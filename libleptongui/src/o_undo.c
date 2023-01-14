@@ -52,6 +52,34 @@ schematic_undo_get_file_index ()
 }
 
 
+/*! \brief Return temp directory for undo.
+ *
+ * \return The temp directory name.
+ */
+char*
+schematic_undo_get_tmp_path ()
+{
+  return tmp_path;
+}
+
+
+/*! \brief Set temp directory path for undo.
+ *
+ * \par Function Description
+ *
+ * The function sets temp directory for undo to \a path.  Use
+ * NULL to unset the value.
+ *
+ * \param [in] path A new temp path value.
+ */
+void
+schematic_undo_set_tmp_path (char* path)
+{
+  g_free (tmp_path);
+  tmp_path = g_strdup (path);
+}
+
+
 /*! \brief Return undo backup file name by index.
  *
  * \par Function Description
