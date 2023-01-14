@@ -108,56 +108,6 @@ schematic_undo_index_to_filename (int index)
 }
 
 
-/*! \brief Return the value of "modify-viewport" configuration key.
- *
- * \par Function Description
- *
- * This function reads the value of "modify-viewport" configuration
- * setting in "schematic.undo" group, which determines
- * if undo/redo operations are allowed to change pan and zoom (i.e. viewport)
- * when "undo-panzoom" option (in gschemrc) is set to "disabled".
- *
- * Configuration setting description:
- * key:   modify-viewport
- * group: schematic.undo
- * type:  boolean
- * default value: false
- *
- * \return TRUE if undo/redo can modify viewport, FALSE otherwise.
- */
-
-gboolean
-o_undo_modify_viewport()
-{
-  gboolean result = FALSE; /* option's default value */
-  gchar* cwd = g_get_current_dir();
-
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-
-  g_free (cwd);
-
-  if (cfg == NULL)
-  {
-    return result;
-  }
-
-  GError* err = NULL;
-  gboolean val = eda_config_get_boolean (cfg,
-                                         "schematic.undo",
-                                         "modify-viewport",
-                                         &err);
-  if (err == NULL)
-  {
-    result = val;
-  }
-
-  g_clear_error (&err);
-
-  return result;
-}
-
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

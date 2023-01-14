@@ -111,6 +111,11 @@ success, #f on failure."
     (config-boolean (path-config-context (getcwd))
                     "schematic.undo"
                     "undo-control"))
+  ;; Test if viewport only changes can be undone/redone.
+  (define modify-viewport?
+    (config-boolean (path-config-context (getcwd))
+                    "schematic.undo"
+                    "modify-viewport"))
 
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
@@ -199,7 +204,7 @@ success, #f on failure."
 
                     (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
                       (when (or (true? (schematic_window_get_undo_panzoom *window))
-                                (true? (o_undo_modify_viewport)))
+                                modify-viewport?)
                         (if (not (zero? (lepton_undo_get_scale *undo-to-do)))
                             (begin
                               (gschem_page_geometry_set_viewport *geometry

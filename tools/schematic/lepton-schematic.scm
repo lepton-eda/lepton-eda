@@ -35,6 +35,7 @@
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
+             (schematic undo)
              (schematic window foreign)
              (schematic window))
 

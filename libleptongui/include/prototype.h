@@ -329,9 +329,6 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag);
 void
 o_undo_savestate_viewport (GschemToplevel *w_current);
 
-gboolean
-o_undo_modify_viewport ();
-
 int
 schematic_undo_get_file_index ();
 

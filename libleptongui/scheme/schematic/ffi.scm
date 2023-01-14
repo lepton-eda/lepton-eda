@@ -443,7 +443,6 @@
 
             s_slot_update_object
 
-            o_undo_modify_viewport
             o_undo_savestate
             o_undo_savestate_old
             o_undo_savestate_viewport
@@ -1051,7 +1050,6 @@
 (define-lff x_tabs_prev void '(*))
 
 ;;; o_undo.c
-(define-lff o_undo_modify_viewport int '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))
 (define-lff o_undo_savestate_viewport void '(*))
