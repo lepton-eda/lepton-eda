@@ -345,6 +345,12 @@ int
 schematic_undo_get_file_index ();
 
 char*
+schematic_undo_get_tmp_path ();
+
+void
+schematic_undo_set_tmp_path (char* path);
+
+char*
 schematic_undo_index_to_filename (int index);
 
 /* s_stretch.c */
