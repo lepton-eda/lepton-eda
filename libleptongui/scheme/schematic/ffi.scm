@@ -443,7 +443,6 @@
 
             s_slot_update_object
 
-            o_undo_find_prev_filename
             o_undo_init
             o_undo_modify_viewport
             o_undo_savestate
@@ -1054,7 +1053,6 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_modify_viewport int '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))

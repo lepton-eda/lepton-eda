@@ -75,6 +75,18 @@ success, #f on failure."
 
 
 ;;; Recursively search backwards in the undo list for an undo item
+;;; having non-NULL filename.
+(define (*find-previous-filename *undo)
+  (let loop ((*undo-item (lepton_undo_get_prev *undo)))
+    (if (null-pointer? *undo-item)
+        %null-pointer
+        (let ((*filename (lepton_undo_get_filename *undo-item)))
+          (if (null-pointer? *filename)
+              (loop (lepton_undo_get_prev *undo-item))
+              *filename)))))
+
+
+;;; Recursively search backwards in the undo list for an undo item
 ;;; having non-NULL object list.
 (define (*find-previous-object-list *undo)
   (let loop ((*undo-item (lepton_undo_get_prev *undo)))
@@ -117,7 +129,7 @@ success, #f on failure."
                   ;; and just set to NULL below.
                   (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
                       (lepton_undo_set_filename *undo-to-do
-                                                (o_undo_find_prev_filename *undo-to-do))
+                                                (*find-previous-filename *undo-to-do))
                       (lepton_undo_set_object_list *undo-to-do
                                                    (*find-previous-object-list *undo-to-do))))
                 ;; Save page filename to restore it later in case

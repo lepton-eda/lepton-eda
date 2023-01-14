@@ -409,27 +409,3 @@ o_undo_savestate_viewport (GschemToplevel *w_current)
 
   o_undo_savestate (w_current, page, UNDO_VIEWPORT_ONLY);
 }
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-char*
-o_undo_find_prev_filename (LeptonUndo *start)
-{
-  LeptonUndo *u_current;
-
-  u_current = lepton_undo_get_prev (start);
-
-  while(u_current) {
-    if (lepton_undo_get_filename (u_current) != NULL)
-    {
-      return (lepton_undo_get_filename (u_current));
-    }
-    u_current = lepton_undo_get_prev (u_current);
-  }
-
-  return(NULL);
-}
