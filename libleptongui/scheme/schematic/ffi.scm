@@ -443,7 +443,6 @@
 
             s_slot_update_object
 
-            o_undo_cleanup
             o_undo_find_prev_filename
             o_undo_find_prev_object_head
             o_undo_init
@@ -451,6 +450,9 @@
             o_undo_savestate
             o_undo_savestate_old
             o_undo_savestate_viewport
+            schematic_undo_get_file_index
+            schematic_undo_index_to_filename
+            schematic_undo_set_tmp_path
 
             lepton_log_get_logging_enabled
             lepton_log_set_logging_enabled
@@ -1053,13 +1055,15 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
-(define-lff o_undo_cleanup void '())
 (define-lff o_undo_find_prev_filename '* '(*))
 (define-lff o_undo_find_prev_object_head '* '(*))
 (define-lff o_undo_modify_viewport int '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void (list '* int))
 (define-lff o_undo_savestate_viewport void '(*))
+(define-lff schematic_undo_get_file_index int '())
+(define-lff schematic_undo_index_to_filename '* (list int))
+(define-lff schematic_undo_set_tmp_path void '(*))
 
 ;;; s_log.c
 (define-lff lepton_log_get_logging_enabled int '())
