@@ -42,6 +42,17 @@ static char* tmp_path = NULL;
 #define UNDO_PADDING  5
 
 
+/*! \brief Return current undo file index for backup names.
+ *
+ * \return The current file index.
+ */
+int
+schematic_undo_get_file_index ()
+{
+  return undo_file_index;
+}
+
+
 /*! \brief Return undo backup file name by index.
  *
  * \par Function Description
