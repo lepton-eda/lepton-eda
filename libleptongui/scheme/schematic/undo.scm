@@ -74,28 +74,28 @@ success, #f on failure."
                 #t)))))
 
 
-;;; Recursively search backwards in the undo list for an undo item
-;;; having non-NULL filename.
+;;; Recursively search in the undo list *UNDO for an undo item
+;;; having non-NULL structure field retrieved by C *GETTER.
+(define (*undo-lookup-non-null-field *undo *getter)
+  (let loop ((*undo-item (lepton_undo_get_prev *undo)))
+    (if (null-pointer? *undo-item)
+        %null-pointer
+        (let ((*field-value (*getter *undo-item)))
+          (if (null-pointer? *field-value)
+              (loop (lepton_undo_get_prev *undo-item))
+              *field-value)))))
+
+
+;;; Recursively search in the undo list *UNDO for the first item
+;;; having non-NULL field 'filename'.
 (define (*find-previous-filename *undo)
-  (let loop ((*undo-item (lepton_undo_get_prev *undo)))
-    (if (null-pointer? *undo-item)
-        %null-pointer
-        (let ((*filename (lepton_undo_get_filename *undo-item)))
-          (if (null-pointer? *filename)
-              (loop (lepton_undo_get_prev *undo-item))
-              *filename)))))
+  (*undo-lookup-non-null-field *undo lepton_undo_get_filename))
 
 
-;;; Recursively search backwards in the undo list for an undo item
-;;; having non-NULL object list.
+;;; Recursively search in the undo list *UNDO for the first item
+;;; having non-NULL field 'object_list'.
 (define (*find-previous-object-list *undo)
-  (let loop ((*undo-item (lepton_undo_get_prev *undo)))
-    (if (null-pointer? *undo-item)
-        %null-pointer
-        (let ((*object-list (lepton_undo_get_object_list *undo-item)))
-          (if (null-pointer? *object-list)
-              (loop (lepton_undo_get_prev *undo-item))
-              *object-list)))))
+  (*undo-lookup-non-null-field *undo lepton_undo_get_object_list))
 
 
 (define (undo-callback *window redo?)
