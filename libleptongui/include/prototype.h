@@ -341,6 +341,9 @@ void o_undo_cleanup(void);
 gboolean
 o_undo_modify_viewport ();
 
+int
+schematic_undo_get_file_index ();
+
 char*
 schematic_undo_index_to_filename (int index);
 
