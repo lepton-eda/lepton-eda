@@ -453,24 +453,3 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
 
   return(NULL);
 }
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_undo_cleanup(void)
-{
-  int i;
-  char *filename;
-
-  for (i = 0 ; i < schematic_undo_get_file_index (); i++)
-  {
-    filename = schematic_undo_index_to_filename (i);
-    unlink(filename);
-    g_free(filename);
-  }
-
-  schematic_undo_set_tmp_path (NULL);
-}

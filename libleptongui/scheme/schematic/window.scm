@@ -49,6 +49,7 @@
   #:use-module (schematic gui stroke)
   #:use-module (schematic menu)
   #:use-module (schematic toolbar)
+  #:use-module (schematic undo)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
   #:use-module (schematic window list)
@@ -143,7 +144,7 @@
         (s_clib_free)
         (s_attrib_free)
         (x_stroke_free)
-        (o_undo_cleanup)
+        (undo-cleanup-backup-files!)
 
         ;; Check whether the main loop is running.
         (if (zero? (gtk_main_level))

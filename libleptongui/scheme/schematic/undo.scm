@@ -19,9 +19,11 @@
 ;;
 
 ( define-module  ( schematic undo )
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi undo)
   #:use-module (lepton ffi)
   #:use-module (lepton config)
@@ -35,7 +37,8 @@
 
     ; public:
     ;
-  #:export (undo-save-state
+  #:export (undo-cleanup-backup-files!
+            undo-save-state
             undo!
             redo!
             ;; Toolbar callbacks.
@@ -255,3 +258,17 @@ success, #f on failure."
 (define (redo!)
   "Redo the last action undone in the current window."
   (callback-edit-redo %null-pointer (*current-window)))
+
+
+(define (undo-cleanup-backup-files!)
+  "Removes undo backup files created during schematic editing
+session."
+  (define max-id (schematic_undo_get_file_index))
+
+  (define (unlink-by-id id)
+    (let ((*filename (schematic_undo_index_to_filename id)))
+      (delete-file (pointer->string *filename))
+      (g_free *filename)))
+
+  (for-each unlink-by-id (iota max-id))
+  (schematic_undo_set_tmp_path %null-pointer))
