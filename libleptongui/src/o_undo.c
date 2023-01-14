@@ -442,13 +442,14 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
 {
   LeptonUndo *u_current;
 
-  u_current = start->prev;
+  u_current = lepton_undo_get_prev (start);
 
   while(u_current) {
-    if (u_current->object_list) {
-      return u_current->object_list;
+    if (lepton_undo_get_object_list (u_current) != NULL)
+    {
+      return lepton_undo_get_object_list (u_current);
     }
-    u_current = u_current->prev;
+    u_current = lepton_undo_get_prev (u_current);
   }
 
   return(NULL);
