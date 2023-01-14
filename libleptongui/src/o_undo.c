@@ -100,7 +100,7 @@ schematic_undo_index_to_filename (int index)
 {
   char *filename =
     g_strdup_printf ("%s%clepton-schematic.save%d_%d.sch",
-                     tmp_path,
+                     schematic_undo_get_tmp_path (),
                      G_DIR_SEPARATOR,
                      getpid (),
                      index);
@@ -115,12 +115,13 @@ schematic_undo_index_to_filename (int index)
  */
 void o_undo_init(void)
 {
-  tmp_path = g_strdup (getenv("TMP"));
-  if (tmp_path == NULL) {
-     tmp_path = g_strdup ("/tmp");
+  schematic_undo_set_tmp_path (getenv ("TMP"));
+  if (schematic_undo_get_tmp_path () == NULL)
+  {
+    schematic_undo_set_tmp_path ((char*) "/tmp");
   }
 #if DEBUG
-  printf("%s\n", tmp_path);
+  printf ("%s\n", schematic_undo_get_tmp_path ());
 #endif
 }
 
@@ -471,6 +472,5 @@ void o_undo_cleanup(void)
     g_free(filename);
   }
 
-  g_free(tmp_path);
-  tmp_path = NULL;
+  schematic_undo_set_tmp_path (NULL);
 }
