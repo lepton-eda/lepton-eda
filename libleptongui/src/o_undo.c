@@ -41,6 +41,35 @@ static char* tmp_path = NULL;
 /* of entries to free */
 #define UNDO_PADDING  5
 
+
+/*! \brief Return undo backup file name by index.
+ *
+ * \par Function Description
+ *
+ * This function returns an undo backup copy file name by given \a
+ * index.  The name is absolute and is formed from the path to a
+ * temporary directory, program file name, the PID of the running
+ * program, and the index.
+ *
+ * \param [in] index An integer to create file name for.
+ * \return A new undo backup file name string.
+ *
+ * \note
+ * Caller must g_free returned character string.
+ */
+char*
+schematic_undo_index_to_filename (int index)
+{
+  char *filename =
+    g_strdup_printf ("%s%clepton-schematic.save%d_%d.sch",
+                     tmp_path,
+                     G_DIR_SEPARATOR,
+                     prog_pid,
+                     index);
+  return filename;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -167,9 +196,7 @@ o_undo_savestate (GschemToplevel *w_current,
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
 
-    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch",
-                               tmp_path, G_DIR_SEPARATOR,
-                               prog_pid, undo_file_index++);
+    filename = schematic_undo_index_to_filename (undo_file_index++);
 
     /* Changed from f_save to o_save when adding backup copy creation. */
     /* f_save manages the creaton of backup copies.
@@ -402,8 +429,7 @@ void o_undo_cleanup(void)
   char *filename;
 
   for (i = 0 ; i < undo_file_index; i++) {
-    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch", tmp_path,
-                               G_DIR_SEPARATOR, prog_pid, i);
+    filename = schematic_undo_index_to_filename (i);
     unlink(filename);
     g_free(filename);
   }

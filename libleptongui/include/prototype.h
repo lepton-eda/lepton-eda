@@ -341,6 +341,9 @@ void o_undo_cleanup(void);
 gboolean
 o_undo_modify_viewport ();
 
+char*
+schematic_undo_index_to_filename (int index);
+
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
 GList *s_stretch_remove(GList *list, LeptonObject *object);
