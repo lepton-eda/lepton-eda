@@ -31,7 +31,6 @@
 #include "gschem.h"
 
 static int undo_file_index=0;
-static int prog_pid=0;
 
 static char* tmp_path = NULL;
 
@@ -75,7 +74,7 @@ schematic_undo_index_to_filename (int index)
     g_strdup_printf ("%s%clepton-schematic.save%d_%d.sch",
                      tmp_path,
                      G_DIR_SEPARATOR,
-                     prog_pid,
+                     getpid (),
                      index);
   return filename;
 }
@@ -88,8 +87,6 @@ schematic_undo_index_to_filename (int index)
  */
 void o_undo_init(void)
 {
-  prog_pid = getpid();
-
   tmp_path = g_strdup (getenv("TMP"));
   if (tmp_path == NULL) {
      tmp_path = g_strdup ("/tmp");
