@@ -439,7 +439,8 @@ void o_undo_cleanup(void)
   int i;
   char *filename;
 
-  for (i = 0 ; i < undo_file_index; i++) {
+  for (i = 0 ; i < schematic_undo_get_file_index (); i++)
+  {
     filename = schematic_undo_index_to_filename (i);
     unlink(filename);
     g_free(filename);
