@@ -117,6 +117,17 @@ success, #f on failure."
                     "schematic.undo"
                     "modify-viewport"))
 
+  (define (debug-print-undo-info *page)
+    (log! 'debug "\n\n---Undo----\n")
+    (lepton_undo_print_all (lepton_page_get_undo_bottom *page))
+    (log! 'debug
+          "TOS: ~A\n"
+          (lepton_undo_get_filename (lepton_page_get_undo_tos *page)))
+    (log! 'debug
+          "CURRENT: ~A\n"
+          (lepton_undo_get_filename (lepton_page_get_undo_current *page)))
+    (log! 'debug "----\n"))
+
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
@@ -252,11 +263,7 @@ success, #f on failure."
                       (lepton_undo_set_object_list *undo-to-do %null-pointer))
 
                     ;; Debugging stuff.
-                    (log! 'debug "\n\n---Undo----\n")
-                    (lepton_undo_print_all (lepton_page_get_undo_bottom *page))
-                    (log! 'debug "TOS: ~A\n" (lepton_undo_get_filename (lepton_page_get_undo_tos *page)))
-                    (log! 'debug "CURRENT: ~A\n" (lepton_undo_get_filename (lepton_page_get_undo_current *page)))
-                    (log! 'debug "----\n"))))))))))
+                    (debug-print-undo-info *page))))))))))
 
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
