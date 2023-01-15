@@ -134,20 +134,22 @@ success, #f on failure."
     (log! 'debug "----\n"))
 
   (define (redo-action *page)
-    (unless (null-pointer? (lepton_page_get_undo_current *page))
-      (lepton_page_set_undo_current *page
-                                    (lepton_undo_get_next (lepton_page_get_undo_current *page)))
-      (when (null-pointer? (lepton_page_get_undo_current *page))
+    (let ((*undo-item (lepton_page_get_undo_current *page)))
+      (unless (null-pointer? *undo-item)
         (lepton_page_set_undo_current *page
-                                      (lepton_page_get_undo_tos *page)))))
+                                      (lepton_undo_get_next *undo-item))
+        (when (null-pointer? (lepton_page_get_undo_current *page))
+          (lepton_page_set_undo_current *page
+                                        (lepton_page_get_undo_tos *page))))))
 
   (define (undo-action *page)
-    (unless (null-pointer? (lepton_page_get_undo_current *page))
-      (lepton_page_set_undo_current *page
-                                    (lepton_undo_get_prev (lepton_page_get_undo_current *page)))
-      (when (null-pointer? (lepton_page_get_undo_current *page))
+    (let ((*undo-item (lepton_page_get_undo_current *page)))
+      (unless (null-pointer? *undo-item)
         (lepton_page_set_undo_current *page
-                                      (lepton_page_get_undo_bottom *page)))))
+                                      (lepton_undo_get_prev *undo-item))
+        (when (null-pointer? (lepton_page_get_undo_current *page))
+          (lepton_page_set_undo_current *page
+                                        (lepton_page_get_undo_bottom *page))))))
 
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
