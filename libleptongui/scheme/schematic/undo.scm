@@ -133,6 +133,22 @@ success, #f on failure."
           (lepton_undo_get_filename (lepton_page_get_undo_current *page)))
     (log! 'debug "----\n"))
 
+  (define (redo-action *page)
+    (unless (null-pointer? (lepton_page_get_undo_current *page))
+      (lepton_page_set_undo_current *page
+                                    (lepton_undo_get_next (lepton_page_get_undo_current *page)))
+      (when (null-pointer? (lepton_page_get_undo_current *page))
+        (lepton_page_set_undo_current *page
+                                      (lepton_page_get_undo_tos *page)))))
+
+  (define (undo-action *page)
+    (unless (null-pointer? (lepton_page_get_undo_current *page))
+      (lepton_page_set_undo_current *page
+                                    (lepton_undo_get_prev (lepton_page_get_undo_current *page)))
+      (when (null-pointer? (lepton_page_get_undo_current *page))
+        (lepton_page_set_undo_current *page
+                                      (lepton_page_get_undo_bottom *page)))))
+
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
@@ -245,20 +261,8 @@ success, #f on failure."
                     (lepton_page_set_undo_current *page *current-undo)
 
                     (if (true? redo?)
-                        ;; Redo action.
-                        (unless (null-pointer? (lepton_page_get_undo_current *page))
-                          (lepton_page_set_undo_current *page
-                                                        (lepton_undo_get_next (lepton_page_get_undo_current *page)))
-                          (when (null-pointer? (lepton_page_get_undo_current *page))
-                            (lepton_page_set_undo_current *page
-                                                          (lepton_page_get_undo_tos *page))))
-                        ;; Undo action.
-                        (unless (null-pointer? (lepton_page_get_undo_current *page))
-                          (lepton_page_set_undo_current *page
-                                                        (lepton_undo_get_prev (lepton_page_get_undo_current *page)))
-                          (when (null-pointer? (lepton_page_get_undo_current *page))
-                            (lepton_page_set_undo_current *page
-                                                          (lepton_page_get_undo_bottom *page)))))
+                        (redo-action *page)
+                        (undo-action *page))
 
                     ;; Don't have to free data here since 'filename' or 'object_list' are
                     ;; just pointers to the real data (lower in the stack).
