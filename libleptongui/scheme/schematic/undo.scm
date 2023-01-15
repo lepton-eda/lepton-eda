@@ -241,21 +241,22 @@ success, #f on failure."
                     (lepton_page_set_undo_tos *page *save-undo-top)
                     (lepton_page_set_undo_current *page *current-undo)
 
-                    (if (not (true? redo?))
-                        ;; Undo action.
-                        (unless (null-pointer? (lepton_page_get_undo_current *page))
-                          (lepton_page_set_undo_current *page
-                                                        (lepton_undo_get_prev (lepton_page_get_undo_current *page)))
-                          (when (null-pointer? (lepton_page_get_undo_current *page))
-                            (lepton_page_set_undo_current *page
-                                                          (lepton_page_get_undo_bottom *page))))
+                    (if (true? redo?)
                         ;; Redo action.
                         (unless (null-pointer? (lepton_page_get_undo_current *page))
                           (lepton_page_set_undo_current *page
                                                         (lepton_undo_get_next (lepton_page_get_undo_current *page)))
                           (when (null-pointer? (lepton_page_get_undo_current *page))
                             (lepton_page_set_undo_current *page
-                                                          (lepton_page_get_undo_tos *page)))))
+                                                          (lepton_page_get_undo_tos *page))))
+                        ;; Undo action.
+                        (unless (null-pointer? (lepton_page_get_undo_current *page))
+                          (lepton_page_set_undo_current *page
+                                                        (lepton_undo_get_prev (lepton_page_get_undo_current *page)))
+                          (when (null-pointer? (lepton_page_get_undo_current *page))
+                            (lepton_page_set_undo_current *page
+                                                          (lepton_page_get_undo_bottom *page)))))
+
                     ;; Don't have to free data here since 'filename' or 'object_list' are
                     ;; just pointers to the real data (lower in the stack).
                     (when undo-viewport?
