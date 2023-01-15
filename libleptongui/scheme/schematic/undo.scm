@@ -159,6 +159,11 @@ success, #f on failure."
     (lepton_page_set_undo_tos *page *top)
     (lepton_page_set_undo_current *page *current))
 
+  (define (restore-hierarchy-by-undo *page *undo-item)
+    (lepton_page_set_page_control *page
+                                  (lepton_undo_get_page_control *undo-item))
+    (lepton_page_set_up *page (lepton_undo_get_up *undo-item)))
+
   (define (restore-viewport-by-undo *page-view *undo-item)
     (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
       (when (or undo-panzoom?
@@ -253,9 +258,9 @@ success, #f on failure."
                           (lepton_page_append_list *page
                                                    (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
                                                                      %null-pointer))))
-                    (lepton_page_set_page_control *page
-                                                  (lepton_undo_get_page_control *undo-to-do))
-                    (lepton_page_set_up *page (lepton_undo_get_up *undo-to-do))
+                    ;; Restore hierarchy.
+                    (restore-hierarchy-by-undo *page *undo-to-do)
+
                     (gschem_toplevel_page_content_changed *window *page)
 
                     ;; Restore viewport size if necessary.
