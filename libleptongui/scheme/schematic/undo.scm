@@ -154,6 +154,11 @@ success, #f on failure."
           (lepton_page_set_undo_current *page
                                         (lepton_page_get_undo_bottom *page))))))
 
+  (define (set-page-undo-structure! *page *bottom *top *current)
+    (lepton_page_set_undo_bottom *page *bottom)
+    (lepton_page_set_undo_tos *page *top)
+    (lepton_page_set_undo_current *page *current))
+
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
@@ -194,10 +199,10 @@ success, #f on failure."
                       (*save-undo-bottom (lepton_page_get_undo_bottom *page))
                       (*save-undo-top (lepton_page_get_undo_tos *page)))
                   ;; Initialize a new undo structure.
-                  (lepton_page_set_undo_bottom *page %null-pointer)
-                  (lepton_page_set_undo_tos *page %null-pointer)
-                  (lepton_page_set_undo_current *page %null-pointer)
-
+                  (set-page-undo-structure! *page
+                                            %null-pointer
+                                            %null-pointer
+                                            %null-pointer)
                   ;; Unselect all objects.
                   (o_select_unselect_all *window)
 
@@ -261,10 +266,10 @@ success, #f on failure."
                     (update-window *window)
 
                     ;; Restore saved undo structures.
-                    (lepton_page_set_undo_bottom *page *save-undo-bottom)
-                    (lepton_page_set_undo_tos *page *save-undo-top)
-                    (lepton_page_set_undo_current *page *current-undo)
-
+                    (set-page-undo-structure! *page
+                                              *save-undo-bottom
+                                              *save-undo-top
+                                              *current-undo)
                     (if (true? redo?)
                         (redo-action *page)
                         (undo-action *page))
