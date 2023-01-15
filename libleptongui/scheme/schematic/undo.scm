@@ -159,6 +159,20 @@ success, #f on failure."
     (lepton_page_set_undo_tos *page *top)
     (lepton_page_set_undo_current *page *current))
 
+  (define (restore-viewport-by-undo *page-view *undo-item)
+    (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
+      (when (or undo-panzoom?
+                modify-viewport?)
+        (if (not (zero? (lepton_undo_get_scale *undo-item)))
+            (begin
+              (gschem_page_geometry_set_viewport *geometry
+                                                 (lepton_undo_get_x *undo-item)
+                                                 (lepton_undo_get_y *undo-item)
+                                                 (lepton_undo_get_scale *undo-item))
+              (gschem_page_view_invalidate_all *page-view))
+            (gschem_page_view_zoom_extents *page-view
+                                           (lepton_undo_get_object_list *undo-item))))))
+
   (define (page-undo-callback *window *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
@@ -244,18 +258,8 @@ success, #f on failure."
                     (lepton_page_set_up *page (lepton_undo_get_up *undo-to-do))
                     (gschem_toplevel_page_content_changed *window *page)
 
-                    (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
-                      (when (or undo-panzoom?
-                                modify-viewport?)
-                        (if (not (zero? (lepton_undo_get_scale *undo-to-do)))
-                            (begin
-                              (gschem_page_geometry_set_viewport *geometry
-                                                                 (lepton_undo_get_x *undo-to-do)
-                                                                 (lepton_undo_get_y *undo-to-do)
-                                                                 (lepton_undo_get_scale *undo-to-do))
-                              (gschem_page_view_invalidate_all *page-view))
-                            (gschem_page_view_zoom_extents *page-view
-                                                           (lepton_undo_get_object_list *undo-to-do)))))
+                    ;; Restore viewport size if necessary.
+                    (restore-viewport-by-undo *page-view *undo-to-do)
 
                     ;; Restore logging.
                     (lepton_log_set_logging_enabled save-logging?)
