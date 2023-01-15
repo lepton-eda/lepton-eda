@@ -178,6 +178,110 @@ success, #f on failure."
             (gschem_page_view_zoom_extents *page-view
                                            (lepton_undo_get_object_list *undo-item))))))
 
+  (define (page-undo *page-view *page *current-undo *undo-to-do)
+    (let ((undo-viewport?
+           (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
+                (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY))))
+      (when undo-viewport?
+        ;; Debugging stuff.
+        (log! 'debug "Type: ~A\n" (lepton_undo_get_type *undo-to-do))
+        (log! 'debug "Current is an undo all, next is viewport only!\n")
+
+        ;; For only viewport changes, <undo> data omits 'filename'
+        ;; or 'object_list' as they are retrieved from previous
+        ;; list items.  Hence, 'filename' and 'object_list' are
+        ;; not freed and just set to NULL below.
+        (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
+            (lepton_undo_set_filename *undo-to-do
+                                      (*find-previous-filename *undo-to-do))
+            (lepton_undo_set_object_list *undo-to-do
+                                         (*find-previous-object-list *undo-to-do))))
+      ;; Save page filename to restore it later in case a
+      ;; temporary file is opened for undo.  The filename is
+      ;; stored as a Scheme string as the data pointed to by
+      ;; pointer returned by lepton_page_get_filename() is freed
+      ;; inside lepton_page_set_filename() below, so we could get
+      ;; corrupted data otherwise.
+      (let ((save-filename (pointer->string (lepton_page_get_filename *page)))
+            ;; Save undo structure so it's not nuked.
+            (*save-undo-bottom (lepton_page_get_undo_bottom *page))
+            (*save-undo-top (lepton_page_get_undo_tos *page)))
+        ;; Initialize a new undo structure.
+        (set-page-undo-structure! *page
+                                  %null-pointer
+                                  %null-pointer
+                                  %null-pointer)
+        ;; Unselect all objects.
+        (o_select_unselect_all *window)
+
+        (when (or (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+                       (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
+                  (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+                       (not (null-pointer? (lepton_undo_get_object_list *undo-to-do)))))
+          ;; Delete page objects.
+          (lepton_page_delete_objects *page)
+          ;; Free the objects in the place list.
+          (schematic_window_delete_place_list *window)
+          ;; Mark active page as changed.
+          (schematic_window_active_page_changed *window))
+
+        (let ((save-logging? (lepton_log_get_logging_enabled)))
+          ;; Temporarily disable logging.
+          (lepton_log_set_logging_enabled FALSE)
+
+          (if (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+                   (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
+              ;; F_OPEN_RESTORE_CWD: go back from temporary
+              ;; directory, so that local config files can be
+              ;; read.
+              (f_open (gschem_toplevel_get_toplevel *window)
+                      *page
+                      (lepton_undo_get_filename *undo-to-do)
+                      F_OPEN_RESTORE_CWD
+                      %null-pointer)
+
+              ;; Otherwise objects are restored from memory.
+              (when (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+                         (not (null-pointer? (lepton_undo_get_object_list *undo-to-do))))
+                (lepton_page_append_list *page
+                                         (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
+                                                           %null-pointer))))
+
+          ;; Restore hierarchy.
+          (restore-hierarchy-by-undo *page *undo-to-do)
+
+          (gschem_toplevel_page_content_changed *window *page)
+
+          ;; Restore viewport size if necessary.
+          (restore-viewport-by-undo *page-view *undo-to-do)
+
+          ;; Restore logging.
+          (lepton_log_set_logging_enabled save-logging?)
+          ;; Set filename right.
+          (lepton_page_set_filename *page
+                                    (string->pointer save-filename))
+          ;; Final redraw.
+          (update-window *window)
+
+          ;; Restore saved undo structures.
+          (set-page-undo-structure! *page
+                                    *save-undo-bottom
+                                    *save-undo-top
+                                    *current-undo)
+          (if (true? redo?)
+              (redo-action *page)
+              (undo-action *page))
+
+          ;; Don't have to free data here since 'filename' or
+          ;; 'object_list' are just pointers to the real data
+          ;; (lower in the stack).
+          (when undo-viewport?
+            (lepton_undo_set_filename *undo-to-do %null-pointer)
+            (lepton_undo_set_object_list *undo-to-do %null-pointer))
+
+          ;; Debugging stuff.
+          (debug-print-undo-info *page)))))
+
   (define (page-undo-callback *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
@@ -188,109 +292,7 @@ success, #f on failure."
                                  ;; Undo action.
                                  (lepton_undo_get_prev *current-undo))))
             (unless (null-pointer? *undo-to-do)
-              (let ((undo-viewport?
-                     (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
-                          (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY))))
-                (when undo-viewport?
-                  ;; Debugging stuff.
-                  (log! 'debug "Type: ~A\n" (lepton_undo_get_type *undo-to-do))
-                  (log! 'debug "Current is an undo all, next is viewport only!\n")
-
-                  ;; For only viewport changes, <undo> data omits
-                  ;; 'filename' or 'object_list' as they are
-                  ;; retrieved from previous list items.  Hence,
-                  ;; 'filename' and 'object_list' are not freed
-                  ;; and just set to NULL below.
-                  (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
-                      (lepton_undo_set_filename *undo-to-do
-                                                (*find-previous-filename *undo-to-do))
-                      (lepton_undo_set_object_list *undo-to-do
-                                                   (*find-previous-object-list *undo-to-do))))
-                ;; Save page filename to restore it later in case
-                ;; a temporary file is opened for undo.  The
-                ;; filename is stored as a Scheme string as the
-                ;; data pointed to by pointer returned by
-                ;; lepton_page_get_filename() is freed inside
-                ;; lepton_page_set_filename() below, so we could
-                ;; get corrupted data otherwise.
-                (let ((save-filename (pointer->string (lepton_page_get_filename *page)))
-                      ;; Save undo structure so it's not nuked.
-                      (*save-undo-bottom (lepton_page_get_undo_bottom *page))
-                      (*save-undo-top (lepton_page_get_undo_tos *page)))
-                  ;; Initialize a new undo structure.
-                  (set-page-undo-structure! *page
-                                            %null-pointer
-                                            %null-pointer
-                                            %null-pointer)
-                  ;; Unselect all objects.
-                  (o_select_unselect_all *window)
-
-                  (when (or (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
-                                 (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
-                            (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
-                                 (not (null-pointer? (lepton_undo_get_object_list *undo-to-do)))))
-                    ;; Delete page objects.
-                    (lepton_page_delete_objects *page)
-                    ;; Free the objects in the place list.
-                    (schematic_window_delete_place_list *window)
-                    ;; Mark active page as changed.
-                    (schematic_window_active_page_changed *window))
-
-                  (let ((save-logging? (lepton_log_get_logging_enabled)))
-                    ;; Temporarily disable logging.
-                    (lepton_log_set_logging_enabled FALSE)
-
-                    (if (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
-                             (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
-                        ;; F_OPEN_RESTORE_CWD: go back from
-                        ;; temporary directory, so that local
-                        ;; config files can be read.
-                        (f_open (gschem_toplevel_get_toplevel *window)
-                                *page
-                                (lepton_undo_get_filename *undo-to-do)
-                                F_OPEN_RESTORE_CWD
-                                %null-pointer)
-
-                        ;; Otherwise objects are restored from
-                        ;; memory.
-                        (when (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
-                                   (not (null-pointer? (lepton_undo_get_object_list *undo-to-do))))
-                          (lepton_page_append_list *page
-                                                   (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
-                                                                     %null-pointer))))
-                    ;; Restore hierarchy.
-                    (restore-hierarchy-by-undo *page *undo-to-do)
-
-                    (gschem_toplevel_page_content_changed *window *page)
-
-                    ;; Restore viewport size if necessary.
-                    (restore-viewport-by-undo *page-view *undo-to-do)
-
-                    ;; Restore logging.
-                    (lepton_log_set_logging_enabled save-logging?)
-                    ;; Set filename right.
-                    (lepton_page_set_filename *page
-                                              (string->pointer save-filename))
-                    ;; Final redraw.
-                    (update-window *window)
-
-                    ;; Restore saved undo structures.
-                    (set-page-undo-structure! *page
-                                              *save-undo-bottom
-                                              *save-undo-top
-                                              *current-undo)
-                    (if (true? redo?)
-                        (redo-action *page)
-                        (undo-action *page))
-
-                    ;; Don't have to free data here since 'filename' or 'object_list' are
-                    ;; just pointers to the real data (lower in the stack).
-                    (when undo-viewport?
-                      (lepton_undo_set_filename *undo-to-do %null-pointer)
-                      (lepton_undo_set_object_list *undo-to-do %null-pointer))
-
-                    ;; Debugging stuff.
-                    (debug-print-undo-info *page))))))))))
+              (page-undo *page-view *page *current-undo *undo-to-do)))))))
 
   (define (page-view-undo *page-view)
     (page-undo-callback *page-view
