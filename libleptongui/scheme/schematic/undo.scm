@@ -292,14 +292,17 @@ success, #f on failure."
                     ;; Debugging stuff.
                     (debug-print-undo-info *page))))))))))
 
+  (define (window-undo)
+    (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+      (if (null-pointer? *page-view)
+          (log! 'warning "undo-callback: NULL page view.")
+          (page-undo-callback *window
+                              *page-view
+                              (gschem_page_view_get_page *page-view)
+                              redo?))))
+
   (if undo-enabled?
-      (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
-        (if (null-pointer? *page-view)
-            (log! 'warning "undo-callback: NULL page view.")
-            (page-undo-callback *window
-                                *page-view
-                                (gschem_page_view_get_page *page-view)
-                                redo?)))
+      (window-undo)
       (log! 'message (G_ "Undo/Redo is disabled in configuration"))))
 
 
