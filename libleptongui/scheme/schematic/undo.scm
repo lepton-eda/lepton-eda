@@ -178,7 +178,7 @@ success, #f on failure."
             (gschem_page_view_zoom_extents *page-view
                                            (lepton_undo_get_object_list *undo-item))))))
 
-  (define (page-undo-callback *window *page-view *page redo?)
+  (define (page-undo-callback *page-view *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
         (unless (null-pointer? *current-undo)
@@ -292,14 +292,16 @@ success, #f on failure."
                     ;; Debugging stuff.
                     (debug-print-undo-info *page))))))))))
 
+  (define (page-view-undo *page-view)
+    (page-undo-callback *page-view
+                        (gschem_page_view_get_page *page-view)
+                        redo?))
+
   (define (window-undo)
     (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
       (if (null-pointer? *page-view)
           (log! 'warning "undo-callback: NULL page view.")
-          (page-undo-callback *window
-                              *page-view
-                              (gschem_page_view_get_page *page-view)
-                              redo?))))
+          (page-view-undo *page-view))))
 
   (if undo-enabled?
       (window-undo)
