@@ -117,6 +117,11 @@ success, #f on failure."
                     "schematic.undo"
                     "modify-viewport"))
 
+  (define (update-window *window)
+    (page_select_widget_update *window)
+    (x_multiattrib_update *window)
+    (i_update_menus *window))
+
   (define (debug-print-undo-info *page)
     (log! 'debug "\n\n---Undo----\n")
     (lepton_undo_print_all (lepton_page_get_undo_bottom *page))
@@ -232,9 +237,7 @@ success, #f on failure."
                     (lepton_page_set_filename *page
                                               (string->pointer save-filename))
                     ;; Final redraw.
-                    (page_select_widget_update *window)
-                    (x_multiattrib_update *window)
-                    (i_update_menus *window)
+                    (update-window *window)
 
                     ;; Restore saved undo structures.
                     (lepton_page_set_undo_bottom *page *save-undo-bottom)
