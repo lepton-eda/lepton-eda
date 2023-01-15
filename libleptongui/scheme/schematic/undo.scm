@@ -117,6 +117,9 @@ success, #f on failure."
                     "schematic.undo"
                     "modify-viewport"))
 
+  (define undo-panzoom?
+    (true? (schematic_window_get_undo_panzoom *window)))
+
   (define (update-window *window)
     (page_select_widget_update *window)
     (x_multiattrib_update *window)
@@ -237,7 +240,7 @@ success, #f on failure."
                     (gschem_toplevel_page_content_changed *window *page)
 
                     (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
-                      (when (or (true? (schematic_window_get_undo_panzoom *window))
+                      (when (or undo-panzoom?
                                 modify-viewport?)
                         (if (not (zero? (lepton_undo_get_scale *undo-to-do)))
                             (begin
