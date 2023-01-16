@@ -786,10 +786,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
                     int flag);
 
-/* autonumber_dialog.c */
-void
-autonumber_text_dialog (SchematicWindow *w_current);
-
 /* x_basic.c */
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 

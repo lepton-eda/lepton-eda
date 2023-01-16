@@ -95,6 +95,9 @@ struct autonumber_slot_t {
   gint slotnr;      /* just the number of the free slot */
 };
 
+void
+autonumber_text_dialog (SchematicWindow *w_current);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
