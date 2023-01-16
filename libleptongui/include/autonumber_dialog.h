@@ -98,6 +98,12 @@ struct autonumber_slot_t {
 void
 autonumber_text_dialog (SchematicWindow *w_current);
 
+AUTONUMBER_TEXT*
+schematic_autonumber_get_autotext ();
+
+void
+schematic_autonumber_set_autotext (AUTONUMBER_TEXT *val);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
