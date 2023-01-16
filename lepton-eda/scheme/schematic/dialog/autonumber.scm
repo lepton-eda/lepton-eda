@@ -18,6 +18,8 @@
 
 
 (define-module (schematic dialog autonumber)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi boolean)
 
   #:use-module (schematic ffi)
@@ -29,4 +31,7 @@
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
 
+  (when (null-pointer? (schematic_autonumber_get_autotext))
+    ;; If 'autotext' structure is NULL, let's init it.
+    (schematic_autonumber_set_autotext (schematic_autonumber_new)))
   (schematic_autonumber_dialog *window))
