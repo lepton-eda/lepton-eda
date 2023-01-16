@@ -115,6 +115,28 @@ struct autonumber_slot_t {
 
 static AUTONUMBER_TEXT *autotext = NULL;
 
+/* Accessors */
+
+/*! \brief Get the value of \a autotext variable.
+ *
+ *  \return The current value of \a autotext variable.
+ */
+AUTONUMBER_TEXT*
+schematic_autonumber_get_autotext ()
+{
+  return autotext;
+}
+
+/*! \brief Set the value of \a autotext variable.
+ *
+ *  \param [in] val The new value of \a autotext variable.
+ */
+void
+schematic_autonumber_set_autotext (AUTONUMBER_TEXT *val)
+{
+  autotext = val;
+}
+
 
 /* ***** BACK-END CODE ***************************************************** */
 
