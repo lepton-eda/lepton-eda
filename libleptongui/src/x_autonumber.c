@@ -1538,9 +1538,10 @@ void autonumber_text_dialog(GschemToplevel *w_current)
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
-  if(autotext == NULL) {
+  if (schematic_autonumber_get_autotext () == NULL)
+  {
     /* first call of this function, init dialog structure */
-    autotext=autonumber_init_state();
+    schematic_autonumber_set_autotext (autonumber_init_state ());
   }
 
   /* set the GschemToplevel always. Can it be changed between the calls??? */
