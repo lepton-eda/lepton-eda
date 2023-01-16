@@ -48,6 +48,7 @@
   #:use-module (schematic canvas)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
+  #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
@@ -1478,7 +1479,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
   (unless (in-action?)
-    (schematic_autonumber_dialog (*current-window))))
+    (autonumber-dialog (current-window))))
 
 
 ;; -------------------------------------------------------------------

@@ -143,6 +143,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/canvas.scm \
 	schematic/canvas/foreign.scm \
 	schematic/dialog.scm \
+	schematic/dialog/autonumber.scm \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/multiattrib.scm \
 	schematic/dialog/new-text.scm \
