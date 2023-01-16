@@ -113,6 +113,8 @@ struct autonumber_slot_t {
 };
 
 
+static AUTONUMBER_TEXT *autotext = NULL;
+
 
 /* ***** BACK-END CODE ***************************************************** */
 
@@ -1511,8 +1513,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
  */
 void autonumber_text_dialog(GschemToplevel *w_current)
 {
-  static AUTONUMBER_TEXT *autotext = NULL;
-
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
