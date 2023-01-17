@@ -44,4 +44,12 @@
   ;; autonumber widget, which is not yet implemented.
   (schematic_autonumber_set_autotext_window *autotext *window)
 
-  (schematic_autonumber_dialog *autotext *window))
+  ;; If the function is called the first time the dialog is
+  ;; created.  If the dialog is only in background it is moved to
+  ;; the foreground.
+  (when (null-pointer? (schematic_autonumber_get_autotext_dialog
+                        *autotext))
+    ;; Create a new dialog.
+    (schematic_autonumber_dialog_init *autotext *window))
+
+  (schematic_autonumber_dialog_show *autotext))

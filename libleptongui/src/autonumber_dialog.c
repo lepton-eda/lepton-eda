@@ -2250,28 +2250,3 @@ schematic_autonumber_dialog_show (SchematicAutonumber *autotext)
 {
   gtk_window_present (GTK_WINDOW (schematic_autonumber_get_autotext_dialog (autotext)));
 }
-
-
-/*! \brief Display the Autonumber text dialog.
- *
- *  \par Function Description
- *  Displays the Autonumber dialog of the \p autotext structure.
- *
- *  If the function is called the first time the dialog is created.
- *  If the dialog is only in background it is moved to the foreground.
- *
- *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] w_current Pointer to the top level struct
- */
-void
-schematic_autonumber_dialog (SchematicAutonumber *autotext,
-                             SchematicWindow *w_current)
-{
-  if (schematic_autonumber_get_autotext_dialog (autotext) == NULL)
-  {
-    /* Dialog is not currently displayed - create it */
-    schematic_autonumber_dialog_init (autotext, w_current);
-  }
-
-  schematic_autonumber_dialog_show (autotext);
-}
