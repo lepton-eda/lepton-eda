@@ -2237,6 +2237,21 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Show the Autonumber dialog.
+ *
+ *  \par Function Description
+ *  Shows the Autonumber dialog of a #SchematicAutonumber instance
+ *  if it is in the background or minimized.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ */
+void
+schematic_autonumber_dialog_show (SchematicAutonumber *autotext)
+{
+  gtk_window_present (GTK_WINDOW (schematic_autonumber_get_autotext_dialog (autotext)));
+}
+
+
 /*! \brief Display the Autonumber text dialog.
  *
  *  \par Function Description
@@ -2258,6 +2273,5 @@ schematic_autonumber_dialog (SchematicAutonumber *autotext,
     schematic_autonumber_dialog_init (autotext, w_current);
   }
 
-  /* if the dialog is in the background or minimized: show it */
-  gtk_window_present (GTK_WINDOW (schematic_autonumber_get_autotext_dialog (autotext)));
+  schematic_autonumber_dialog_show (autotext);
 }
