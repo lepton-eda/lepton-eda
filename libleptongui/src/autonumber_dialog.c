@@ -1435,7 +1435,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   schematic_autonumber_set_autotext_current_searchtext (autotext, NULL);
   schematic_autonumber_set_autotext_root_page (autotext, 1);
-  autotext->used_numbers = NULL;
+  schematic_autonumber_set_autotext_used_numbers (autotext, NULL);
   autotext->free_slots = NULL;
   autotext->used_slots = NULL;
 
