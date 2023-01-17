@@ -104,6 +104,10 @@ schematic_autonumber_get_autotext ();
 void
 schematic_autonumber_set_autotext (SchematicAutonumber *val);
 
+void
+schematic_autonumber_set_autotext_window (SchematicAutonumber *autotext,
+                                          SchematicWindow *w_current);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */

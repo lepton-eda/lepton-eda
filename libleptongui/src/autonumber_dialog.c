@@ -66,6 +66,23 @@ schematic_autonumber_set_autotext (SchematicAutonumber *val)
 }
 
 
+/*! \brief Set the window field of a #SchematicAutonumber instance.
+ *  \par Function Description
+ *  Sets the window field value of \p autotext to \p w_current.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current The new value of the window field.
+ */
+void
+schematic_autonumber_set_autotext_window (SchematicAutonumber *autotext,
+                                          SchematicWindow *w_current)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->w_current = w_current;
+}
+
+
 /* ***** BACK-END CODE ***************************************************** */
 
 /********** compare functions for g_list_sort, ... ***********************/
