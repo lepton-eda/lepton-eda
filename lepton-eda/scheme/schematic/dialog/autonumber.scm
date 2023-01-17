@@ -30,6 +30,10 @@
   #:export (autonumber-dialog))
 
 
+(define (run-autonumbering *autotext)
+  (schematic_autonumber_run *autotext))
+
+
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
 ;;; object.
 (define (start-autonumbering *autotext)
@@ -39,10 +43,10 @@
       (begin
         ;; Temporarily set the overwrite flag.
         (schematic_autonumber_set_autotext_scope_overwrite *autotext TRUE)
-        (schematic_autonumber_run *autotext)
+        (run-autonumbering *autotext)
         (schematic_autonumber_set_autotext_scope_overwrite *autotext FALSE))
 
-      (schematic_autonumber_run *autotext)))
+      (run-autonumbering *autotext)))
 
 
 ;;; Destroy the Autonumber dialog.
