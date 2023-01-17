@@ -181,6 +181,45 @@ schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the \c root_page field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the \c root_page field value of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the \c root_page field.
+ */
+int
+schematic_autonumber_get_autotext_root_page (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, TRUE);
+
+  return autotext->root_page;
+}
+
+
+/*! \brief Set the \c root_page field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the \c root_page field value of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_autonumber_set_autotext_root_page (SchematicAutonumber *autotext,
+                                             int val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->root_page = val;
+}
+
+
 /*! \brief Get the \c scope_overwrite field of a
  *  #SchematicAutonumber instance.
  *

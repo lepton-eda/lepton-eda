@@ -122,6 +122,12 @@ schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
                                              gboolean val);
+int
+schematic_autonumber_get_autotext_root_page (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_set_autotext_root_page (SchematicAutonumber *autotext,
+                                             int val);
 gboolean
 schematic_autonumber_get_autotext_scope_overwrite (SchematicAutonumber *autotext);
 
