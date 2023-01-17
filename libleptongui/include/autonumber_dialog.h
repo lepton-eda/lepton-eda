@@ -116,6 +116,9 @@ schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
                                              gboolean val);
+gboolean
+schematic_autonumber_get_autotext_scope_overwrite (SchematicAutonumber *autotext);
+
 SchematicWindow*
 schematic_autonumber_get_autotext_window (SchematicAutonumber *autotext);
 

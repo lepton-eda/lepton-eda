@@ -142,6 +142,25 @@ schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the \c scope_overwrite field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c scope_overwrite field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the field.
+ */
+gboolean
+schematic_autonumber_get_autotext_scope_overwrite (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, FALSE);
+
+  return autotext->scope_overwrite;
+}
+
+
 /*! \brief Get the window field of a #SchematicAutonumber instance.
  *
  *  \par Function Description
