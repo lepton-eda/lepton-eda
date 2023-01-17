@@ -2202,32 +2202,36 @@ schematic_autonumber_dialog (SchematicWindow *w_current)
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
-  if(autotext->dialog == NULL) {
+  if (schematic_autonumber_get_autotext_dialog (autotext) == NULL)
+  {
     /* Dialog is not currently displayed - create it */
+    GtkWidget *dialog = schematic_autonumber_dialog_new (w_current);
 
-    autotext->dialog = schematic_autonumber_dialog_new (w_current);
+    schematic_autonumber_set_autotext_dialog (autotext, dialog);
 
-    opt_removenum = lookup_widget(autotext->dialog, "opt_removenum");
-    sort_order = lookup_widget(autotext->dialog, "sort_order");
+    opt_removenum = lookup_widget (dialog, "opt_removenum");
+    sort_order = lookup_widget (dialog, "sort_order");
 
     autonumber_sortorder_create(w_current, sort_order);
 
-    gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog),
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                      GTK_RESPONSE_ACCEPT);
 
-    g_signal_connect (G_OBJECT (autotext->dialog), "response",
+    g_signal_connect (G_OBJECT (dialog),
+                      "response",
                       G_CALLBACK (autonumber_text_response),
                       autotext);
 
-    g_signal_connect (G_OBJECT (opt_removenum), "clicked",
+    g_signal_connect (G_OBJECT (opt_removenum),
+                      "clicked",
                       G_CALLBACK (autonumber_removenum_toggled),
                       autotext);
 
     autonumber_set_state(autotext);
 
-    gtk_widget_show_all(autotext->dialog);
+    gtk_widget_show_all (dialog);
   }
 
   /* if the dialog is in the background or minimized: show it */
-  gtk_window_present(GTK_WINDOW(autotext->dialog));
+  gtk_window_present (GTK_WINDOW (schematic_autonumber_get_autotext_dialog (autotext)));
 }
