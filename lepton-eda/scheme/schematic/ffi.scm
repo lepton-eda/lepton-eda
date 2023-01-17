@@ -186,6 +186,7 @@
             schematic_autonumber_dialog_destroy
             schematic_autonumber_dialog_init
             schematic_autonumber_dialog_response
+            schematic_autonumber_dialog_save_state
             schematic_autonumber_dialog_show
             schematic_autonumber_start_autonumber
 
@@ -1093,6 +1094,7 @@
 (define-lff schematic_autonumber_dialog_destroy void '(*))
 (define-lff schematic_autonumber_dialog_init '* '(* *))
 (define-lff schematic_autonumber_dialog_response int (list int))
+(define-lff schematic_autonumber_dialog_save_state void '(*))
 (define-lff schematic_autonumber_dialog_show void '(*))
 (define-lff schematic_autonumber_start_autonumber void '(*))
 

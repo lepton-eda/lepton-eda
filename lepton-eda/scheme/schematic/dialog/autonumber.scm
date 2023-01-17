@@ -28,11 +28,16 @@
   #:export (autonumber-dialog))
 
 
+(define (start-autonumbering *autotext)
+  (schematic_autonumber_dialog_save_state *autotext)
+  (schematic_autonumber_start_autonumber *autotext))
+
+
 (define (autonumber-response *widget response *autotext)
   (if (true? (schematic_autonumber_dialog_response response))
       ;; Triggering the apply button will call the autonumber
       ;; action functions.
-      (schematic_autonumber_start_autonumber *autotext)
+      (start-autonumbering *autotext)
       ;; Close the dialog if the close button is pressed or the
       ;; user closes the dialog window.
       (schematic_autonumber_dialog_destroy *autotext)))

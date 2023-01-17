@@ -1825,7 +1825,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 void
 schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
 {
-  schematic_autonumber_dialog_save_state (autotext);
   if (autotext->removenum == TRUE
       && autotext->scope_overwrite == FALSE)
   {
