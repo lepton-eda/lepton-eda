@@ -1433,7 +1433,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  autotext->current_searchtext = NULL;
+  schematic_autonumber_set_autotext_current_searchtext (autotext, NULL);
   autotext->root_page = 1;
   autotext->used_numbers = NULL;
   autotext->free_slots = NULL;
