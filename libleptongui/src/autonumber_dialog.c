@@ -259,6 +259,45 @@ schematic_autonumber_set_autotext_scope_overwrite (SchematicAutonumber *autotext
 }
 
 
+/*! \brief Get the \c used_numbers field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c used_numbers field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the field.
+ */
+GList*
+schematic_autonumber_get_autotext_used_numbers (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, NULL);
+
+  return autotext->used_numbers;
+}
+
+
+/*! \brief Set the \c used_numbers field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the \c used_numbers field value of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_autonumber_set_autotext_used_numbers (SchematicAutonumber *autotext,
+                                                GList *val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->used_numbers = val;
+}
+
+
 /*! \brief Get the window field of a #SchematicAutonumber instance.
  *
  *  \par Function Description

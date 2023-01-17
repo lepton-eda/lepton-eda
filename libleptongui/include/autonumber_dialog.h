@@ -134,6 +134,12 @@ schematic_autonumber_get_autotext_scope_overwrite (SchematicAutonumber *autotext
 void
 schematic_autonumber_set_autotext_scope_overwrite (SchematicAutonumber *autotext,
                                                    gboolean val);
+GList*
+schematic_autonumber_get_autotext_used_numbers (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_set_autotext_used_numbers (SchematicAutonumber *autotext,
+                                                GList *val);
 SchematicWindow*
 schematic_autonumber_get_autotext_window (SchematicAutonumber *autotext);
 
