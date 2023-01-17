@@ -1429,7 +1429,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext)
   LeptonPage *active_page = NULL;
   LeptonToplevel *toplevel = NULL;
 
-  w_current = autotext->w_current;
+  w_current = schematic_autonumber_get_autotext_window (autotext);
   toplevel = schematic_window_get_toplevel (w_current);
   active_page = schematic_window_get_active_page (w_current);
   autotext->current_searchtext = NULL;
