@@ -1433,12 +1433,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  schematic_autonumber_set_autotext_current_searchtext (autotext, NULL);
-  schematic_autonumber_set_autotext_root_page (autotext, 1);
-  schematic_autonumber_set_autotext_used_numbers (autotext, NULL);
-  schematic_autonumber_set_autotext_free_slots (autotext, NULL);
-  schematic_autonumber_set_autotext_used_slots (autotext, NULL);
-
   scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
 
   /* Step1: get all pages of the hierarchy */
