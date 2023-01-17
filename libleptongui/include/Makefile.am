@@ -1,6 +1,7 @@
 noinst_HEADERS = \
 	action.h \
 	action_mode.h \
+	autonumber_dialog.h \
 	canvas.h \
 	globals.h \
 	grid_mode.h \

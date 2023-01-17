@@ -17,6 +17,7 @@ typedef struct st_schematic_window SchematicWindow;
 /* libleptongui headers */
 #include "action.h"
 #include "action_mode.h"
+#include "autonumber_dialog.h"
 #include "grid_mode.h"
 #include "gtk_helper.h"
 #include "snap_mode.h"

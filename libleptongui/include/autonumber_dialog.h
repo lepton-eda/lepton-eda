@@ -1,0 +1,100 @@
+/* Lepton EDA Schematic Capture
+ * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
+#ifndef AUTONUMBER_DIALOG_H
+#define AUTONUMBER_DIALOG_H
+
+G_BEGIN_DECLS
+
+/* Autonumber widget structs and enums. */
+enum {
+  AUTONUMBER_SORT_DIAGONAL,
+  AUTONUMBER_SORT_YX,
+  AUTONUMBER_SORT_YX_REV,
+  AUTONUMBER_SORT_XY,
+  AUTONUMBER_SORT_XY_REV,
+  AUTONUMBER_SORT_FILE
+};
+
+enum {
+  AUTONUMBER_IGNORE,
+  AUTONUMBER_RENUMBER,
+  AUTONUMBER_RESPECT
+};
+
+enum {
+  SCOPE_SELECTED,
+  SCOPE_PAGE,
+  SCOPE_HIERARCHY
+};
+
+typedef struct autonumber_text_t AUTONUMBER_TEXT;
+
+/** @brief Stored state of the autonumber text dialog */
+struct autonumber_text_t {
+  /** @brief Search text history */
+  GList *scope_text;
+
+  /** @brief Scope for searching existing numbers */
+  gint scope_skip;
+
+  /** @brief Scope for autonumbering text */
+  gint scope_number;
+
+  /** @brief Overwrite existing numbers in scope */
+  gboolean scope_overwrite;
+
+  /** @brief Sort order */
+  gint order;
+
+  /** @brief Starting number for automatic numbering */
+  gint startnum;
+
+  /** @brief Remove numbers instead of automatic numbering */
+  gboolean removenum;
+
+  /** @brief Automatic assignments of slots */
+  gboolean slotting;
+
+  /** @brief Pointer to the dialog */
+  GtkWidget *dialog;
+
+  /** @brief Pointer to the SchematicWindow struct */
+  SchematicWindow *w_current;
+
+  /* variables used while autonumbering */
+  gchar * current_searchtext;
+  gint root_page;      /* flag whether its the root page or not */
+  GList *used_numbers; /* list of used numbers */
+  GList *free_slots;   /* list of FREE_SLOT objects */
+  GList *used_slots;   /* list of USED_SLOT objects */
+};
+
+typedef struct autonumber_slot_t AUTONUMBER_SLOT;
+
+struct autonumber_slot_t {
+  gchar *symbolname;     /* or should I use the device name? (Werner) */
+  gint number;           /* usually this is the refdes number */
+  gint slotnr;      /* just the number of the free slot */
+};
+
+G_END_DECLS
+
+#endif /* AUTONUMBER_DIALOG_H */
