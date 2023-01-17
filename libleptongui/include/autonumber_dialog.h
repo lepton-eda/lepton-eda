@@ -110,6 +110,9 @@ schematic_autonumber_get_autotext_dialog (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_dialog (SchematicAutonumber *autotext,
                                           GtkWidget *widget);
+gboolean
+schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext);
+
 SchematicWindow*
 schematic_autonumber_get_autotext_window (SchematicAutonumber *autotext);
 
