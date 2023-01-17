@@ -116,6 +116,12 @@ schematic_autonumber_get_autotext_dialog (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_dialog (SchematicAutonumber *autotext,
                                           GtkWidget *widget);
+GList*
+schematic_autonumber_get_autotext_free_slots (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_set_autotext_free_slots (SchematicAutonumber *autotext,
+                                              GList *val);
 gboolean
 schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext);
 

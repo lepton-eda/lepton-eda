@@ -143,6 +143,45 @@ schematic_autonumber_set_autotext_dialog (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the \c free_slots field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the \c free_slots field value of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the \c free_slots field.
+ */
+GList*
+schematic_autonumber_get_autotext_free_slots (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, NULL);
+
+  return autotext->free_slots;
+}
+
+
+/*! \brief Set the \c free_slots field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the value of the \c free_slots field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_autonumber_set_autotext_free_slots (SchematicAutonumber *autotext,
+                                              GList *val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->free_slots = val;
+}
+
+
 /*! \brief Get the \c removenum field of a #SchematicAutonumber
  *  instance.
  *
