@@ -34,7 +34,10 @@
 
 
 (define (run-autonumbering *autotext)
-  (schematic_autonumber_run *autotext))
+  (define *window (schematic_autonumber_get_autotext_window *autotext))
+  (define *active-page (schematic_window_get_active_page *window))
+
+  (schematic_autonumber_run *autotext *window *active-page))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a

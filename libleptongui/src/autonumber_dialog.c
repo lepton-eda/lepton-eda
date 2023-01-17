@@ -1410,15 +1410,18 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] active_page The current page of the window.
  */
 void
-schematic_autonumber_run (SchematicAutonumber *autotext)
+schematic_autonumber_run (SchematicAutonumber *autotext,
+                          SchematicWindow *w_current,
+                          LeptonPage *active_page)
 {
   GList *pages;
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
-  SchematicWindow *w_current;
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
@@ -1426,12 +1429,10 @@ schematic_autonumber_run (SchematicAutonumber *autotext)
   size_t i;
   GList *o_list = NULL;
   const GList *iter;
-  LeptonPage *active_page = NULL;
   LeptonToplevel *toplevel = NULL;
 
-  w_current = schematic_autonumber_get_autotext_window (autotext);
   toplevel = schematic_window_get_toplevel (w_current);
-  active_page = schematic_window_get_active_page (w_current);
+
   autotext->current_searchtext = NULL;
   autotext->root_page = 1;
   autotext->used_numbers = NULL;
