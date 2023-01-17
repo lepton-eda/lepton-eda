@@ -181,6 +181,7 @@
             schematic_autonumber_new
             schematic_autonumber_get_autotext
             schematic_autonumber_set_autotext
+            schematic_autonumber_set_autotext_window
             schematic_autonumber_dialog
 
             x_clipboard_finish
@@ -1082,6 +1083,7 @@
 (define-lff schematic_autonumber_new '* '())
 (define-lff schematic_autonumber_get_autotext '* '())
 (define-lff schematic_autonumber_set_autotext void '(*))
+(define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_dialog void '(*))
 
 ;;; x_clipboard.c

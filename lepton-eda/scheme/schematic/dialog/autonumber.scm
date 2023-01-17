@@ -30,8 +30,18 @@
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
+  (define *autotext
+    (let ((*current-autotext (schematic_autonumber_get_autotext)))
+      (if (null-pointer? *current-autotext)
+          ;; If 'autotext' structure is NULL, let's init it.
+          (let ((*new-autotext (schematic_autonumber_new)))
+            (schematic_autonumber_set_autotext *new-autotext)
+            *new-autotext)
+          *current-autotext)))
 
-  (when (null-pointer? (schematic_autonumber_get_autotext))
-    ;; If 'autotext' structure is NULL, let's init it.
-    (schematic_autonumber_set_autotext (schematic_autonumber_new)))
+  ;; Remember the parent window in *autotext.  To make the
+  ;; widget dockable each window has to have an individual
+  ;; autonumber widget, which is not yet implemented.
+  (schematic_autonumber_set_autotext_window *autotext *window)
+
   (schematic_autonumber_dialog *window))

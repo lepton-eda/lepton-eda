@@ -2202,9 +2202,6 @@ schematic_autonumber_dialog (SchematicWindow *w_current)
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
-  /* set the SchematicWindow always. Can it be changed between the calls??? */
-  schematic_autonumber_set_autotext_window (autotext, w_current);
-
   if(autotext->dialog == NULL) {
     /* Dialog is not currently displayed - create it */
 
