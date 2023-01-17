@@ -1825,13 +1825,13 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 void
 schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
 {
-  if (autotext->removenum == TRUE
-      && autotext->scope_overwrite == FALSE)
+  if (schematic_autonumber_get_autotext_removenum (autotext) == TRUE
+      && schematic_autonumber_get_autotext_scope_overwrite (autotext) == FALSE)
   {
     /* Temporarily set the overwrite flag. */
-    autotext->scope_overwrite = TRUE;
+    schematic_autonumber_set_autotext_scope_overwrite (autotext, TRUE);
     autonumber_text_autonumber (autotext);
-    autotext->scope_overwrite = FALSE;
+    schematic_autonumber_set_autotext_scope_overwrite (autotext, FALSE);
   }
   else
   {
