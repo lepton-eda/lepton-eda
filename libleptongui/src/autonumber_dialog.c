@@ -66,6 +66,45 @@ schematic_autonumber_set_autotext (SchematicAutonumber *val)
 }
 
 
+/*! \brief Get the \c current_searchtext field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c current_searchtext field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the field.
+ */
+char*
+schematic_autonumber_get_autotext_current_searchtext (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, NULL);
+
+  return autotext->current_searchtext;
+}
+
+
+/*! \brief Set the \c current_searchtext field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \par Function Description
+ *  Sets the value of the \c current_searchtext field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_autonumber_set_autotext_current_searchtext (SchematicAutonumber *autotext,
+                                                      char *val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->current_searchtext = val;
+}
+
+
 /*! \brief Get the dialog widget of a #SchematicAutonumber
  *  instance.
  *

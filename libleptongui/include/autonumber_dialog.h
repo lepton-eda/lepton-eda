@@ -104,6 +104,12 @@ schematic_autonumber_get_autotext ();
 void
 schematic_autonumber_set_autotext (SchematicAutonumber *val);
 
+char*
+schematic_autonumber_get_autotext_current_searchtext (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_set_autotext_current_searchtext (SchematicAutonumber *autotext,
+                                                      char *val);
 GtkWidget*
 schematic_autonumber_get_autotext_dialog (SchematicAutonumber *autotext);
 
