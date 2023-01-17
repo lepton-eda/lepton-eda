@@ -66,6 +66,44 @@ schematic_autonumber_set_autotext (SchematicAutonumber *val)
 }
 
 
+/*! \brief Get the dialog widget of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c dialog field of a
+ *  #SchematicAutonumber object.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The dialog widget of the instance.
+ */
+GtkWidget*
+schematic_autonumber_get_autotext_dialog (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, NULL);
+
+  return autotext->dialog;
+}
+
+/*! \brief Set the dialog widget of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the value of the \c dialog field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] widget The dialog widget.
+ */
+void
+schematic_autonumber_set_autotext_dialog (SchematicAutonumber *autotext,
+                                          GtkWidget *widget)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->dialog = widget;
+}
+
+
 /*! \brief Get the window field of a #SchematicAutonumber instance.
  *
  *  \par Function Description
