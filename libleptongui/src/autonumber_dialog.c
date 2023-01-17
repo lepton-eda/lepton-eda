@@ -1437,7 +1437,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   schematic_autonumber_set_autotext_root_page (autotext, 1);
   schematic_autonumber_set_autotext_used_numbers (autotext, NULL);
   schematic_autonumber_set_autotext_free_slots (autotext, NULL);
-  autotext->used_slots = NULL;
+  schematic_autonumber_set_autotext_used_slots (autotext, NULL);
 
   scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
 
