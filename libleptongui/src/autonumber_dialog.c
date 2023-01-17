@@ -1812,6 +1812,23 @@ autonumber_get_state (SchematicAutonumber *autotext)
   autotext->slotting = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 }
 
+
+/*! \brief Destroy the Autonumber dialog.
+ *
+ *  \par Function Description
+ *  Destroys the Autonumber dialog widget.
+ *
+ * \param [in] autotext The #SchematicAutonumber structure storing the
+ *                      dialog.
+ */
+void
+schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext)
+{
+  gtk_widget_destroy (autotext->dialog);
+  autotext->dialog = NULL;
+}
+
+
 /* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
 
 /*! \brief response  callback for the autonumber text dialog
@@ -1840,8 +1857,7 @@ schematic_autonumber_dialog_response (GtkWidget *widget,
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
-    gtk_widget_destroy(autotext->dialog);
-    autotext->dialog = NULL;
+    schematic_autonumber_dialog_destroy (autotext);
     break;
   default:
     printf ("ERROR: schematic_autonumber_dialog_response(): strange signal %d\n",
