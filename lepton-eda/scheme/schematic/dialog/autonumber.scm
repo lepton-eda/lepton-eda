@@ -28,9 +28,19 @@
   #:export (autonumber-dialog))
 
 
+;;; Start autonumbering based on settings stored in the *AUTOTEXT
+;;; object.
 (define (start-autonumbering *autotext)
   (schematic_autonumber_dialog_save_state *autotext)
-  (schematic_autonumber_start_autonumber *autotext))
+  (if (and (true? (schematic_autonumber_get_autotext_removenum *autotext))
+           (false? (schematic_autonumber_get_autotext_scope_overwrite *autotext)))
+      (begin
+        ;; Temporarily set the overwrite flag.
+        (schematic_autonumber_set_autotext_scope_overwrite *autotext TRUE)
+        (schematic_autonumber_run *autotext)
+        (schematic_autonumber_set_autotext_scope_overwrite *autotext FALSE))
+
+      (schematic_autonumber_run *autotext)))
 
 
 (define (autonumber-response *widget response *autotext)

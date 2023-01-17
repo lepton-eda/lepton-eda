@@ -1815,33 +1815,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 }
 
 
-/*! \brief Actually start autonumbering.
- *
- *  \par Function Description
- *  Starts autonumbering based on settings stored in the \p
- *  autotext object.
- *
- *  \param [in] autotext The #SchematicAutonumber structure storing
- *                       autonumbering settings.
- */
-void
-schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
-{
-  if (schematic_autonumber_get_autotext_removenum (autotext) == TRUE
-      && schematic_autonumber_get_autotext_scope_overwrite (autotext) == FALSE)
-  {
-    /* Temporarily set the overwrite flag. */
-    schematic_autonumber_set_autotext_scope_overwrite (autotext, TRUE);
-    schematic_autonumber_run (autotext);
-    schematic_autonumber_set_autotext_scope_overwrite (autotext, FALSE);
-  }
-  else
-  {
-    schematic_autonumber_run (autotext);
-  }
-}
-
-
 /*! \brief Destroy the Autonumber dialog.
  *
  *  \par Function Description
