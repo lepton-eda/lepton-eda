@@ -1774,7 +1774,7 @@ autonumber_set_state (SchematicAutonumber *autotext)
  * @param autotext Pointer to the state struct.
  */
 void
-autonumber_get_state (SchematicAutonumber *autotext)
+schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   gchar *text;
@@ -1825,7 +1825,7 @@ autonumber_get_state (SchematicAutonumber *autotext)
 void
 schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
 {
-  autonumber_get_state (autotext);
+  schematic_autonumber_dialog_save_state (autotext);
   if (autotext->removenum == TRUE
       && autotext->scope_overwrite == FALSE)
   {

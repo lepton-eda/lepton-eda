@@ -232,6 +232,9 @@ gboolean
 schematic_autonumber_dialog_response (int response);
 
 void
+schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext);
+
+void
 schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
 
 void
