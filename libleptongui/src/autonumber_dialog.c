@@ -1822,7 +1822,7 @@ autonumber_get_state (SchematicAutonumber *autotext)
  */
 void
 schematic_autonumber_dialog_response (GtkWidget *widget,
-                                      gint response,
+                                      int response,
                                       SchematicAutonumber *autotext)
 {
   switch (response) {
@@ -2219,11 +2219,6 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                    GTK_RESPONSE_ACCEPT);
-
-  g_signal_connect (G_OBJECT (dialog),
-                    "response",
-                    G_CALLBACK (schematic_autonumber_dialog_response),
-                    autotext);
 
   g_signal_connect (G_OBJECT (opt_removenum),
                     "clicked",
