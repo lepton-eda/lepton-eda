@@ -102,7 +102,6 @@
 
 /* hierarchy traversing flags */
 #define HIERARCHY_NODUPS (1<<0)
-#define HIERARCHY_POSTORDER (1<<1)
 #define HIERARCHY_INNERLOOP (1<<7)
 
 /* for pin_type */
