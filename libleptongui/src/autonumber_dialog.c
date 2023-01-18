@@ -336,6 +336,25 @@ schematic_autonumber_set_autotext_scope_overwrite (SchematicAutonumber *autotext
 }
 
 
+/*! \brief Get the \c scope_skip field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c scope_skip field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the \c scope_skip field.
+ */
+int
+schematic_autonumber_get_autotext_scope_skip (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, SCOPE_PAGE);
+
+  return autotext->scope_skip;
+}
+
+
 /*! \brief Get the \c scope_text field of a #SchematicAutonumber
  *  instance.
  *
