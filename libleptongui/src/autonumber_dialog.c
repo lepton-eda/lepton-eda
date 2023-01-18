@@ -649,6 +649,34 @@ schematic_autonumber_set_autotext_window (SchematicAutonumber *autotext,
 }
 
 
+
+/*! \brief Convert an autonumbering scope enum value into a
+ *  string.
+ *
+ *  \par Function Description
+ *  Returns a string corresponding to the given autonumbering
+ *  scope enum value.
+ *
+ *  \param [in] scope The scope integer value.
+ *  \return The string corresponding to the scope.
+ */
+const char*
+schematic_autonumber_scope_to_string (int scope)
+{
+  const char *result = NULL;
+
+  switch (scope)
+  {
+  case SCOPE_SELECTED: result = "scope-selected"; break;
+  case SCOPE_PAGE: result = "scope-page"; break;
+  case SCOPE_HIERARCHY: result = "scope-hierarchy"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
 /* ***** BACK-END CODE ***************************************************** */
 
 /********** compare functions for g_list_sort, ... ***********************/

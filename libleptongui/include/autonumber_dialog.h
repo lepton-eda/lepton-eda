@@ -234,6 +234,9 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext);
 
+const char*
+schematic_autonumber_scope_to_string (int scope);
+
 void
 schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
 
