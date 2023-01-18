@@ -1516,7 +1516,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
 
-    if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
+    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
+    {
       /* renumbering all means that no db is required */
       if (!((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_HIERARCHY)
             && autotext->scope_overwrite)) {
@@ -1535,7 +1536,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       schematic_window_page_changed (w_current);
       autotext->root_page = (pages->data == page_item->data);
       /* build a page database if we're numbering pagebypage or selection only*/
-      if (autotext->scope_skip == SCOPE_PAGE || autotext->scope_skip == SCOPE_SELECTED) {
+      if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+          || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+      {
         autonumber_get_used(w_current, autotext);
       }
 
@@ -1588,8 +1591,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       o_list = NULL;
 
       /* destroy the page database */
-      if (autotext->scope_skip == SCOPE_PAGE
-          || autotext->scope_skip == SCOPE_SELECTED)
+      if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+          || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
         autonumber_clear_database(autotext);
 
       if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
