@@ -1399,6 +1399,42 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Drop wildcard string suffix
+ *  \par Function Description
+ *  Given that \a searchtext is a prefix for \a str, the function
+ *  drops all the suffix characters of \a str consisting of only
+ *  digits and question marks until its length is not less than
+ *  the length of \a searchtext.
+ *
+ *  \param [in] str The string to drop suffix of.
+ *  \param [in] searchtext The prefix string.
+ *  \return The copy of the resulting string without suffix.
+ *
+ *  \note Caller must g_free returned character string.
+ */
+gchar*
+schematic_autonumber_drop_string_suffix (const gchar *str,
+                                         gchar *searchtext)
+{
+  size_t i;
+  if (g_str_has_prefix (str, searchtext))
+  {
+    for (i = strlen (str) - 1;
+         (i >= strlen (searchtext))
+           && (str[i] == '?'
+               || isdigit ((int) (str[i])));
+         i--)
+      ; /* void */
+
+    return g_strndup (str, i + 1);
+  }
+  else
+  {
+    return NULL;
+  }
+}
+
+
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It
@@ -1428,7 +1464,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   LeptonObject *o_current;
   gchar *new_searchtext;
   gint number, slot;
-  size_t i;
   GList *o_list = NULL;
   const GList *iter;
   LeptonToplevel *toplevel = NULL;
@@ -1468,24 +1503,17 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
                   && (lepton_object_get_selected (o_current))))
           {
             const gchar *str = lepton_text_object_get_string (o_current);
-            if (g_str_has_prefix (str, searchtext)) {
-              /* the beginnig of the current text matches with the searchtext now */
-              /* strip of the trailing [0-9?] chars and add it too the searchtext */
-              for (i = strlen (str)-1;
-                   (i >= strlen(searchtext))
-                     && (str[i] == '?'
-                         || isdigit( (int) (str[i]) ));
-                   i--)
-                ; /* void */
-
-              new_searchtext = g_strndup (str, i+1);
-              if (g_list_find_custom(searchtext_list, new_searchtext,
-                                     (GCompareFunc) strcmp) == NULL ) {
-                searchtext_list = g_list_append(searchtext_list, new_searchtext);
-              }
-              else {
-                g_free(new_searchtext);
-              }
+            /* the beginnig of the current text matches with the searchtext now */
+            /* strip of the trailing [0-9?] chars and add it too the searchtext */
+            new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
+            if ((new_searchtext != NULL)
+                && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
+            {
+              searchtext_list = g_list_append (searchtext_list, new_searchtext);
+            }
+            else
+            {
+              g_free(new_searchtext);
             }
           }
         }
