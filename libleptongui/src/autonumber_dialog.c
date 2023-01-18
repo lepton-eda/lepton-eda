@@ -1471,9 +1471,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         o_current = (LeptonObject*) iter->data;
         if (lepton_object_is_text (o_current))
         {
-          if (autotext->scope_number == SCOPE_HIERARCHY
-              || autotext->scope_number == SCOPE_PAGE
-              || ((autotext->scope_number == SCOPE_SELECTED)
+          if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_HIERARCHY)
+              || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE)
+              || ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
                   && (lepton_object_get_selected (o_current))))
           {
             const gchar *str = lepton_text_object_get_string (o_current);
@@ -1499,7 +1499,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
           }
         }
       }
-      if (autotext->scope_number == SCOPE_SELECTED || autotext->scope_number == SCOPE_PAGE)
+      if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
+          || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE))
         break; /* search only in the first page */
     }
     g_free(searchtext);
@@ -1517,7 +1518,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
       /* renumbering all means that no db is required */
-      if (!(autotext->scope_number == SCOPE_HIERARCHY
+      if (!((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_HIERARCHY)
             && autotext->scope_overwrite)) {
         for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
           autotext->root_page = (pages->data == page_item->data);
@@ -1591,8 +1592,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
           || autotext->scope_skip == SCOPE_SELECTED)
         autonumber_clear_database(autotext);
 
-      if (autotext->scope_number == SCOPE_SELECTED
-          || autotext->scope_number == SCOPE_PAGE)
+      if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
+          || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE))
         break; /* only renumber the parent page (the first page) */
     }
     autonumber_clear_database(autotext);   /* cleanup */
