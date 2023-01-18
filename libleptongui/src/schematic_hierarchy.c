@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -236,11 +236,10 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
 /*! \brief Find page hierarchy below a page.
  *  \par Function Description
  *  This function traverses the hierarchy tree of pages and returns a
- *  flat list of pages that are below \a p_current. There are two \a
- *  flags that can be used to control the way that the return value is
+ *  flat list of pages that are below \a p_current. The following \a
+ *  flags can be used to control the way that the return value is
  *  constructed: <B>HIERARCHY_NODUPS</B> returns a list without
- *  duplicate pages, and <B>HIERARCHY_POSTORDER</B> traverses the
- *  hierarchy tree and returns a postorder list instead of preorder.
+ *  duplicate pages.
  *
  *  \param w_current The SchematicWindow structure.
  *  \param p_current The LeptonPage to traverse hierarchy for.
@@ -269,14 +268,13 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
   }
 
   /* preorder traversing */
-  if (!(flags & HIERARCHY_POSTORDER)) {
-    /* check whether we already visited this page */
-    if ((flags & HIERARCHY_NODUPS)
-        && (g_list_find (pages, p_current) != NULL)) {
-      return pages;  /* drop the page subtree */
-      }
-    pages = g_list_append (pages, p_current);
+  /* check whether we already visited this page */
+  if ((flags & HIERARCHY_NODUPS)
+      && (g_list_find (pages, p_current) != NULL))
+  {
+    return pages;  /* drop the page subtree */
   }
+  pages = g_list_append (pages, p_current);
 
   /* walk throught the page objects and search for underlaying schematics */
   for (iter = lepton_page_objects (p_current);
@@ -314,16 +312,6 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
 
     g_free (filename);
     filename = NULL;
-  }
-
-  /* postorder traversing */
-  if (flags & HIERARCHY_POSTORDER) {
-    /* check whether we already visited this page */
-    if ((flags & HIERARCHY_NODUPS)
-        && (g_list_find (pages, p_current) != NULL)) {
-      return pages;  /* don't append it */
-    }
-    pages = g_list_append (pages, p_current);
   }
 
   return pages;
