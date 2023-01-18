@@ -46,15 +46,30 @@
      (g_list_first
       (schematic_autonumber_get_autotext_scope_text *autotext))))
 
+  (define scope-text (pointer->string *scope-text))
+
+  (define search-text
+    (and (or (string-suffix? "?" scope-text)
+             (string-suffix? "*" scope-text))
+         ;; Drop suffix "?" or "*".
+         (string-drop-right scope-text 1)))
+
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
   (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
-  (if (string-null? (pointer->string *scope-text))
+  (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
-      (schematic_autonumber_run *autotext *window *active-page *pages *scope-text)))
+      (if search-text
+          (schematic_autonumber_run *autotext
+                                    *window
+                                    *active-page
+                                    *pages
+                                    *scope-text
+                                    (string->pointer search-text))
+          (log! 'message (G_ "No '*' or '?' given at the end of the autonumber text.")))))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a

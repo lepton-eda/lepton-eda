@@ -1414,18 +1414,20 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  \param [in] active_page The current page of the window.
  *  \param [in] pages The whole list of pages of the window.
  *  \param [in] scope_text The attribute text to search for.
+ *  \param [in] searchtext The base of the above text without
+ *                         wildcards.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           LeptonPage *active_page,
                           GList *pages,
-                          gchar *scope_text)
+                          gchar *scope_text,
+                          gchar *searchtext)
 {
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
-  gchar *searchtext;
   gchar *new_searchtext;
   gint number, slot;
   size_t i;
@@ -1446,13 +1448,10 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
      in the searchtext list */
 
   if (g_str_has_suffix(scope_text,"?") == TRUE) {
-    /* single searchtext, strip of the "?" */
-    searchtext = g_strndup(scope_text, strlen(scope_text)-1);
+    /* single searchtext */
     searchtext_list=g_list_append (searchtext_list, searchtext);
   }
   else if (g_str_has_suffix(scope_text,"*") == TRUE) {
-    /* strip of the "*" */
-    searchtext = g_strndup(scope_text, strlen(scope_text)-1);
 
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
@@ -1497,10 +1496,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
           || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE))
         break; /* search only in the first page */
     }
-    g_free(searchtext);
   }
-  else {
-    g_message (_("No '*' or '?' given at the end of the autonumber text."));
+  else
+  {
     return;
   }
 

@@ -233,7 +233,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           LeptonPage *active_page,
                           GList *pages,
-                          gchar *scope_text);
+                          gchar *scope_text,
+                          gchar *searchtext);
 int
 schematic_autonumber_scope_from_string (char *s);
 
