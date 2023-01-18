@@ -1436,8 +1436,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
 
-  /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
-
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes.
 

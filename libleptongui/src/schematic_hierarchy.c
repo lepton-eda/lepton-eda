@@ -314,20 +314,3 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
 
   return pages;
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  Test function which only prints the name of a page and its number.
- */
-gint
-s_hierarchy_print_page (LeptonPage *p_current,
-                        void * data)
-{
-  printf("pagefilename: %s pageid: %d\n",
-         lepton_page_get_filename (p_current),
-         lepton_page_get_pid (p_current));
-  return 0;
-}
