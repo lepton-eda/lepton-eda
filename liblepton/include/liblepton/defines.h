@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1999-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -116,8 +116,6 @@
 #define HIERARCHY_NODUPS (1<<0)
 #define HIERARCHY_POSTORDER (1<<1)
 #define HIERARCHY_INNERLOOP (1<<7)
-
-#define MILS_PER_INCH		1000
 
 /* for print dialog box */
 #define EXTENTS			0
