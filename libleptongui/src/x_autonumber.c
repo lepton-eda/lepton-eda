@@ -723,9 +723,11 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   else if (g_str_has_suffix(scope_text,"*") == TRUE) {
     /* strip of the "*" */
     searchtext = g_strndup(scope_text, strlen(scope_text)-1);
+
+    LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      lepton_toplevel_goto_page (w_current->toplevel, (LeptonPage*) page_item->data);
+      lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
       schematic_window_page_changed (w_current);
       /* iterate over all objects an look for matching searchtext's */
       for (iter = lepton_page_objects (active_page);
