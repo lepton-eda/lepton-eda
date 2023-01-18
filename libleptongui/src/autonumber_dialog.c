@@ -1413,18 +1413,19 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  \param [in] w_current The #SchematicWindow instance.
  *  \param [in] active_page The current page of the window.
  *  \param [in] pages The whole list of pages of the window.
+ *  \param [in] scope_text The attribute text to search for.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           LeptonPage *active_page,
-                          GList *pages)
+                          GList *pages,
+                          gchar *scope_text)
 {
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
   gchar *searchtext;
-  gchar *scope_text;
   gchar *new_searchtext;
   gint number, slot;
   size_t i;
@@ -1433,9 +1434,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   LeptonToplevel *toplevel = NULL;
 
   toplevel = schematic_window_get_toplevel (w_current);
-
-  scope_text =
-    (gchar*) g_list_first (schematic_autonumber_get_autotext_scope_text (autotext))->data;
 
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes.

@@ -39,13 +39,18 @@
   ;; Get all pages of the hierarchy.
   (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
 
+  (define *scope-text
+    (glist-data
+     (g_list_first
+      (schematic_autonumber_get_autotext_scope_text *autotext))))
+
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
   (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
-  (schematic_autonumber_run *autotext *window *active-page *pages))
+  (schematic_autonumber_run *autotext *window *active-page *pages *scope-text))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a
