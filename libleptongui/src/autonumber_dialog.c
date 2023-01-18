@@ -259,6 +259,25 @@ schematic_autonumber_set_autotext_root_page (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the \c scope_number field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the \c scope_number field value of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the \c scope_number field.
+ */
+int
+schematic_autonumber_get_autotext_scope_number (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, SCOPE_SELECTED);
+
+  return autotext->scope_number;
+}
+
+
 /*! \brief Get the \c scope_overwrite field of a
  *  #SchematicAutonumber instance.
  *

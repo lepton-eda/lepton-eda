@@ -134,6 +134,9 @@ schematic_autonumber_get_autotext_root_page (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_root_page (SchematicAutonumber *autotext,
                                              int val);
+int
+schematic_autonumber_get_autotext_scope_number (SchematicAutonumber *autotext);
+
 gboolean
 schematic_autonumber_get_autotext_scope_overwrite (SchematicAutonumber *autotext);
 
