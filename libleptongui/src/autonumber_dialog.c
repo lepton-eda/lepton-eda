@@ -1412,13 +1412,14 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
  *  \param [in] active_page The current page of the window.
+ *  \param [in] pages The whole list of pages of the window.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
-                          LeptonPage *active_page)
+                          LeptonPage *active_page,
+                          GList *pages)
 {
-  GList *pages;
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
@@ -1434,11 +1435,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   toplevel = schematic_window_get_toplevel (w_current);
 
   scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
-
-  /* Step1: get all pages of the hierarchy */
-  pages = s_hierarchy_traversepages (w_current,
-                                     active_page,
-                                     HIERARCHY_NODUPS);
 
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 

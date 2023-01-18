@@ -32,10 +32,14 @@
 
   #:export (autonumber-dialog))
 
+;;; Defined in defines.h.
+(define HIERARCHY_NODUPS 1) ; (1<<0)
 
 (define (run-autonumbering *autotext)
   (define *window (schematic_autonumber_get_autotext_window *autotext))
   (define *active-page (schematic_window_get_active_page *window))
+  ;; Get all pages of the hierarchy.
+  (define *pages (s_hierarchy_traversepages *window *active-page HIERARCHY_NODUPS))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
@@ -43,7 +47,7 @@
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
-  (schematic_autonumber_run *autotext *window *active-page))
+  (schematic_autonumber_run *autotext *window *active-page *pages))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a
