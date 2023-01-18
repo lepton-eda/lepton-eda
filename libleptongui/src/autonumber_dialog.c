@@ -1434,7 +1434,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
+  scope_text =
+    (gchar*) g_list_first (schematic_autonumber_get_autotext_scope_text (autotext))->data;
 
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes.
