@@ -101,7 +101,6 @@
 #define CONN_MIDPOINT 2
 
 /* hierarchy traversing flags */
-#define HIERARCHY_NODUPS (1<<0)
 #define HIERARCHY_INNERLOOP (1<<7)
 
 /* for pin_type */

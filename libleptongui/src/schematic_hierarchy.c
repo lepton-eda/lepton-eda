@@ -236,10 +236,7 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
 /*! \brief Find page hierarchy below a page.
  *  \par Function Description
  *  This function traverses the hierarchy tree of pages and returns a
- *  flat list of pages that are below \a p_current. The following \a
- *  flags can be used to control the way that the return value is
- *  constructed: <B>HIERARCHY_NODUPS</B> returns a list without
- *  duplicate pages.
+ *  flat list of pages that are below \a p_current.
  *
  *  \param w_current The SchematicWindow structure.
  *  \param p_current The LeptonPage to traverse hierarchy for.
@@ -269,8 +266,7 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
 
   /* preorder traversing */
   /* check whether we already visited this page */
-  if ((flags & HIERARCHY_NODUPS)
-      && (g_list_find (pages, p_current) != NULL))
+  if (g_list_find (pages, p_current) != NULL)
   {
     return pages;  /* drop the page subtree */
   }
