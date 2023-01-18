@@ -240,7 +240,8 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
  *
  *  \param w_current The SchematicWindow structure.
  *  \param p_current The LeptonPage to traverse hierarchy for.
- *  \param flags Flags controlling form of return value.
+ *  \param inner_loop TRUE if the function is called for a
+ *                    subpage, FALSE otherwise.
  *  \return A GList of LeptonPage pointers.
  *
  *  \warning
@@ -249,7 +250,7 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
 GList *
 s_hierarchy_traversepages (SchematicWindow *w_current,
                            LeptonPage *p_current,
-                           gint flags)
+                           gboolean inner_loop)
 {
   LeptonObject *o_current;
   LeptonPage *child_page;
@@ -260,7 +261,8 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
   g_return_val_if_fail ((p_current != NULL), NULL);
 
   /* init static variables the first time*/
-  if (!(flags & HIERARCHY_INNERLOOP)) {
+  if (!inner_loop)
+  {
     pages = NULL;
   }
 
@@ -299,7 +301,7 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
       s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
     if (child_page != NULL) {
       /* call the recursive function */
-      s_hierarchy_traversepages (w_current, child_page, flags | HIERARCHY_INNERLOOP);
+      s_hierarchy_traversepages (w_current, child_page, TRUE);
     } else {
       g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
                  filename, err->message);

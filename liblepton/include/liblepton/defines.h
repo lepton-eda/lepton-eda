@@ -100,9 +100,6 @@
 #define CONN_ENDPOINT 1
 #define CONN_MIDPOINT 2
 
-/* hierarchy traversing flags */
-#define HIERARCHY_INNERLOOP (1<<7)
-
 /* for pin_type */
 #define PIN_TYPE_NET 0
 #define PIN_TYPE_BUS 1
