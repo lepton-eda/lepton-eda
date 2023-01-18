@@ -37,7 +37,7 @@
   (define *window (schematic_autonumber_get_autotext_window *autotext))
   (define *active-page (schematic_window_get_active_page *window))
   ;; Get all pages of the hierarchy.
-  (define *pages (s_hierarchy_traversepages *window *active-page 0))
+  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
