@@ -1367,9 +1367,6 @@ GList*
 s_hierarchy_traversepages (SchematicWindow *w_current,
                            LeptonPage *p_current,
                            gboolean inner_loop);
-gint
-s_hierarchy_print_page (LeptonPage *p_current,
-                        void * data);
 G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */
