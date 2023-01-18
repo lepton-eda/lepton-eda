@@ -231,7 +231,6 @@ schematic_autonumber_history_add (GList *history,
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
-                          LeptonPage *active_page,
                           GList *pages,
                           gchar *scope_text,
                           gchar *searchtext);

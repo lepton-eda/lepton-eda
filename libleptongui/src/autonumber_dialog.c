@@ -1411,7 +1411,6 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
- *  \param [in] active_page The current page of the window.
  *  \param [in] pages The whole list of pages of the window.
  *  \param [in] scope_text The attribute text to search for.
  *  \param [in] searchtext The base of the above text without
@@ -1420,7 +1419,6 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
-                          LeptonPage *active_page,
                           GList *pages,
                           gchar *scope_text,
                           gchar *searchtext)
@@ -1458,7 +1456,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
       schematic_window_page_changed (w_current);
       /* iterate over all objects an look for matching searchtext's */
-      for (iter = lepton_page_objects (active_page);
+      for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
@@ -1536,7 +1534,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
-      for (iter = lepton_page_objects (active_page);
+      for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;

@@ -67,7 +67,6 @@
       (if search-text
           (schematic_autonumber_run *autotext
                                     *window
-                                    *active-page
                                     *pages
                                     *scope-text
                                     (string->pointer search-text))
