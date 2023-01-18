@@ -24,6 +24,8 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -50,7 +52,9 @@
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
-  (schematic_autonumber_run *autotext *window *active-page *pages *scope-text))
+  (if (string-null? (pointer->string *scope-text))
+      (log! 'message (G_ "No search string given in autonumber text."))
+      (schematic_autonumber_run *autotext *window *active-page *pages *scope-text)))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a

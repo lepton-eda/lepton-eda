@@ -41,6 +41,7 @@ lepton-eda/scheme/conf/schematic/menu.scm
 lepton-eda/scheme/schematic/action.scm
 lepton-eda/scheme/schematic/buffer.scm
 lepton-eda/scheme/schematic/builtins.scm
+lepton-eda/scheme/schematic/dialog/autonumber.scm
 lepton-eda/scheme/schematic/doc.scm
 lepton-eda/scheme/schematic/keymap.scm
 lepton-eda/scheme/gschem/deprecated.scm

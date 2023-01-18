@@ -1445,11 +1445,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  if (strlen(scope_text) == 0) {
-    g_message (_("No search string given in autonumber text."));
-    return; /* error */
-  }
-  else if (g_str_has_suffix(scope_text,"?") == TRUE) {
+  if (g_str_has_suffix(scope_text,"?") == TRUE) {
     /* single searchtext, strip of the "?" */
     searchtext = g_strndup(scope_text, strlen(scope_text)-1);
     searchtext_list=g_list_append (searchtext_list, searchtext);
