@@ -86,7 +86,8 @@
 (define* (gslist->list gsls convert-func #:optional (free? #f))
   "Convert C GSList GSLS into Scheme list of objects using the
 function CONVERT-FUNC to transform foreign pointers to Scheme
-objects."
+objects.  If the optional argument FREE? is #t, GSLS is freed
+after conversion with g_slist_free_full()."
   (let loop ((gsls gsls)
              (ls '()))
     (if (null-pointer? gsls)
@@ -126,7 +127,8 @@ objects."
 (define* (glist->list gls convert-func #:optional (free? #f))
   "Convert C GList GLS into Scheme list of objects using the
 function CONVERT-FUNC to transform foreign pointers to Scheme
-objects."
+objects.  If the optional argument FREE? is #t, GLS is freed after
+conversion with g_list_free_full()."
   (let loop ((gls gls)
              (ls '()))
     (if (null-pointer? gls)
