@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 
 (define-module (schematic window global)
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
@@ -26,7 +27,8 @@
   #:export (%lepton-window
             current-window
             *current-window
-            with-window))
+            with-window
+            in-action?))
 
 
 ;;; This is a fluid that is initialized with pointer to a new
@@ -64,3 +66,10 @@ dynamic context."
      (let ((*window (and=> (current-window) window->pointer)))
        (or *window
            (error "Current window is unavailable."))))))
+
+
+(define* (in-action? #:optional (window #f))
+  (define (window-in-action? win)
+    (true? (schematic_window_get_inside_action (window->pointer win))))
+
+  (window-in-action? (or window (current-window))))
