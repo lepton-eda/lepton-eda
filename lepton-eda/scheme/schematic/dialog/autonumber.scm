@@ -73,10 +73,7 @@
          ;; Drop suffix "?" or "*".
          (string-drop-right scope-text 1)))
 
-  (define *search-text
-    (and search-text (string->pointer search-text)))
-
-  (define (create-search-text-list *page *search-text current-template-list)
+  (define (create-search-text-list *page search-text current-template-list)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
     (schematic_window_page_changed *window)
     ;; Guard to check if the page has already got active.
@@ -104,15 +101,13 @@
                              ;; matches with the searchtext now.
                              ;; Strip of the trailing [0-9?] chars
                              ;; and add it to the searchtext.
-                             (*new-search-text (autonumber-string->template *str *search-text)))
-
-                        (if (null-pointer? *new-search-text)
+                             (trimmed-s (autonumber-string->template (pointer->string *str)
+                                                                     search-text)))
+                        (if (not trimmed-s)
                             ls
-                            (if (member (pointer->string *new-search-text) ls)
-                                (begin
-                                  (g_free *new-search-text)
-                                  ls)
-                                (cons *new-search-text ls))))
+                            (if (member trimmed-s ls)
+                                ls
+                                (cons trimmed-s ls))))
                       ;; Otherwise return the list as is.
                       ls))))))
 
@@ -140,7 +135,7 @@
       (if search-text
           (let ((template-list
                  (if single-search?
-                     (list *search-text)
+                     (list search-text)
                      (if multi-search?
                          ;; Collect all the possible searchtexts
                          ;; in all pages of the hierarchy.
@@ -150,17 +145,17 @@
                                current-template-list
                                (loop (cdr ls)
                                      (create-search-text-list (car ls)
-                                                              *search-text
+                                                              search-text
                                                               current-template-list))))
                          '()))))
             ;; Step3: iterate over the search items in the list.
             (for-each
-             (lambda (*template)
+             (lambda (template)
                (schematic_autonumber_run *autotext
                                          *window
                                          *pages
                                          *scope-text
-                                         *template
+                                         (string->pointer template)
                                          scope-number))
              template-list)
             ;; Cleanup and redraw all.

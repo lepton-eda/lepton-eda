@@ -11,7 +11,6 @@ liblepton_la_SOURCES = \
 	angle.c \
 	arc.c \
 	arc_object.c \
-	autonumber.c \
 	bounds.c \
 	box_object.c \
 	bus_object.c \

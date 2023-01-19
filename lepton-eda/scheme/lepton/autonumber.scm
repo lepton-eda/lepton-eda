@@ -22,5 +22,19 @@
 
   #:export (autonumber-string->template))
 
-(define (autonumber-string->template *str *search-text)
-  (lepton_autonumber_drop_string_suffix *str *search-text))
+
+;;; If BASE is a prefix of STR, the suffix of STR consisting of
+;;; digits and question marks is dropped to make an additional
+;;; template for renumbering.  If the resulting template length
+;;; is less than the length of the base, return the base string,
+;;; otherwise return the template.  If BASE is not a prefix of
+;;; STR, return #f.
+(define (autonumber-string->template str base)
+  (define cs (string->char-set "0123456789?"))
+
+  (and (string-prefix? base str)
+       (let ((trimmed-str (string-trim-right str cs)))
+         (if (> (string-length trimmed-str)
+                (string-length base))
+             trimmed-str
+             base))))
