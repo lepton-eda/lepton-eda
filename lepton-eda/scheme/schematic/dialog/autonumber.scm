@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton autonumber)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
@@ -103,7 +104,7 @@
                              ;; matches with the searchtext now.
                              ;; Strip of the trailing [0-9?] chars
                              ;; and add it to the searchtext.
-                             (*new-search-text (lepton_autonumber_drop_string_suffix *str *search-text)))
+                             (*new-search-text (autonumber-string->template *str *search-text)))
 
                         (if (null-pointer? *new-search-text)
                             ls

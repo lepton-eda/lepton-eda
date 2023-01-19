@@ -68,6 +68,7 @@ nobase_dist_scmdata_DATA = \
 	gschem/window.scm \
 	gschem/deprecated.scm \
 	lepton/attrib.scm \
+	lepton/autonumber.scm \
 	lepton/autoplace.scm \
 	lepton/bounds.scm \
 	lepton/color-map.scm \
