@@ -1442,7 +1442,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     {
       for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
       {
-        autotext->root_page = (pages->data == page_item->data);
+        schematic_autonumber_set_autotext_root_page (autotext,
+                                                     (pages->data == page_item->data));
         lepton_toplevel_goto_page (toplevel,
                                    (LeptonPage*) page_item->data);
         schematic_window_page_changed (w_current);
@@ -1456,7 +1457,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   {
     lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
     schematic_window_page_changed (w_current);
-    autotext->root_page = (pages->data == page_item->data);
+    schematic_autonumber_set_autotext_root_page (autotext,
+                                                 (pages->data == page_item->data));
     /* build a page database if we're numbering pagebypage or selection only*/
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
         || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
