@@ -867,8 +867,10 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* cleanup and redraw all*/
   g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
   g_list_free(searchtext_list);
-  lepton_toplevel_goto_page (w_current->toplevel,
-                             (LeptonPage*) pages->data); /* go back to the root page */
+
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
+  /* Go back to the root page. */
+  lepton_toplevel_goto_page (toplevel, (LeptonPage*) pages->data);
   schematic_window_page_changed (w_current);
   schematic_canvas_invalidate_all (schematic_window_get_current_canvas (w_current));
   g_list_free(pages);
