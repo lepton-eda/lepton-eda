@@ -179,5 +179,4 @@
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window))
 
-  (get-newtext-widget *window)
-  (schematic_newtext_dialog_run *window))
+  (schematic_newtext_dialog_run (get-newtext-widget *window)))

@@ -508,14 +508,14 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
  *  \par Function Description
  *  This function creates or raises the modal text entry dialog
  *
- *  \param [in] w_current The gschem toplevel
+ *  \param [in] widget The dialog widget.
  */
 void
-schematic_newtext_dialog_run (SchematicWindow *w_current)
+schematic_newtext_dialog_run (GtkWidget *widget)
 {
-  gtk_window_present (GTK_WINDOW(w_current->tiwindow));
+  gtk_window_present (GTK_WINDOW (widget));
 
   /* always select the text in the entry */
-  select_all_text_in_textview (GTK_TEXT_VIEW (SCHEMATIC_NEWTEXT (w_current->tiwindow)->text_view));
-  gtk_widget_grab_focus (SCHEMATIC_NEWTEXT (w_current->tiwindow)->text_view);
+  select_all_text_in_textview (GTK_TEXT_VIEW (SCHEMATIC_NEWTEXT (widget)->text_view));
+  gtk_widget_grab_focus (SCHEMATIC_NEWTEXT (widget)->text_view);
 }
