@@ -69,6 +69,10 @@ dynamic context."
 
 
 (define* (in-action? #:optional (window #f))
+  "Return #t if an object editing action is underway in the
+current window, and #f otherwise.  If optional WINDOW argument is
+specified, the result corresponds to the state of that window
+instead of the current one."
   (define (window-in-action? win)
     (true? (schematic_window_get_inside_action (window->pointer win))))
 
