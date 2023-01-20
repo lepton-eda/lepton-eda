@@ -513,17 +513,6 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
 void
 schematic_newtext_dialog (SchematicWindow *w_current)
 {
-  /* If the dialog is not yet created, create it. */
-  if (schematic_window_get_newtext_dialog (w_current) == NULL)
-  {
-    GtkWidget *dialog = schematic_newtext_dialog_new (w_current);
-    g_signal_connect (G_OBJECT (dialog),
-                      "response", G_CALLBACK (schematic_newtext_dialog_response),
-                      NULL);
-    schematic_window_set_newtext_dialog (w_current, dialog);
-  }
-
-  /* Raise the dialog and make it visible for the user. */
   gtk_window_present (GTK_WINDOW(w_current->tiwindow));
 
   /* always select the text in the entry */

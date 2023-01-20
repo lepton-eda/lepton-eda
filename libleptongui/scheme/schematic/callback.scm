@@ -155,10 +155,29 @@
 
 
 (define (callback-add-text *widget *window)
+  (define *newtext-widget
+    (schematic_window_get_newtext_dialog *window))
+
+  (define (get-newtext-widget *window)
+    (if (null-pointer? *newtext-widget)
+        ;; Widget not created yet, create it.
+        (let ((*widget (schematic_newtext_dialog_new *window)))
+          ;; Store pointer to the widget in the *window structure.
+          (schematic_window_set_newtext_dialog *window *widget)
+          ;; Connect callback to the widget's "response" signal.
+          (schematic_signal_connect *widget
+                                    (string->pointer "response")
+                                    *schematic_newtext_dialog_response
+                                    %null-pointer)
+          *widget)
+        ;; Otherwise just return the widget.
+        *newtext-widget))
+
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window))
 
+  (get-newtext-widget *window)
   (schematic_newtext_dialog *window))

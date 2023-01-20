@@ -408,6 +408,7 @@
             schematic_window_get_hotkey_widget
             schematic_window_get_slot_edit_widget
             schematic_window_get_newtext_dialog
+            schematic_window_set_newtext_dialog
             schematic_window_set_dont_invalidate
             schematic_window_set_log_widget
             schematic_window_set_object_properties_widget
@@ -451,6 +452,8 @@
             text_edit_dialog
 
             schematic_newtext_dialog
+            schematic_newtext_dialog_new
+            *schematic_newtext_dialog_response
 
             o_select_box_end
             o_select_box_motion
@@ -744,6 +747,7 @@
 (define-lff schematic_window_get_hotkey_widget '* '(*))
 (define-lff schematic_window_get_slot_edit_widget '* '(*))
 (define-lff schematic_window_get_newtext_dialog '* '(*))
+(define-lff schematic_window_set_newtext_dialog void '(* *))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
 (define-lff schematic_window_set_log_widget void '(* *))
 (define-lff schematic_window_set_object_properties_widget void '(* *))
@@ -1063,6 +1067,8 @@
 
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog void '(*))
+(define-lff schematic_newtext_dialog_new '* '(*))
+(define-lfc *schematic_newtext_dialog_response)
 
 ;;; x_print.c
 (define-lff x_print void '(*))
