@@ -513,13 +513,14 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
 void
 schematic_newtext_dialog (SchematicWindow *w_current)
 {
-  if (w_current->tiwindow == NULL) {
+  if (schematic_window_get_text_input_widget (w_current) == NULL)
+  {
     /* dialog not created yet */
-    w_current->tiwindow = schematic_newtext_dialog_new (w_current);
-
-    g_signal_connect (G_OBJECT (w_current->tiwindow),
+    GtkWidget *dialog = schematic_newtext_dialog_new (w_current);
+    g_signal_connect (G_OBJECT (dialog),
                       "response", G_CALLBACK (schematic_newtext_dialog_response),
                       NULL);
+    schematic_window_set_text_input_widget (w_current, dialog);
   }
   else {
     /* dialog already created */
