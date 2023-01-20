@@ -736,13 +736,15 @@ x_window_close_page (GschemToplevel *w_current,
 
   if (page == lepton_toplevel_get_page_current (toplevel))
   {
+    LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
+
     /* as it will delete current page, select new current page */
     /* first look up in page hierarchy */
-    new_current = lepton_toplevel_search_page_by_id (toplevel->pages, page->up);
+    new_current = lepton_toplevel_search_page_by_id (pages, page->up);
 
     if (new_current == NULL) {
       /* no up in hierarchy, choice is prev, next, new page */
-      iter = g_list_find( lepton_list_get_glist( toplevel->pages ), page );
+      iter = g_list_find (lepton_list_get_glist (pages), page);
 
       if ( g_list_previous( iter ) ) {
         new_current = (LeptonPage *)g_list_previous( iter )->data;
