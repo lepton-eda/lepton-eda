@@ -180,7 +180,7 @@ schematic_newtext_dialog_response_cancel (SchematicNewText *dialog,
   SchematicWindow *w_current = (SchematicWindow*) data;
   i_callback_cancel (NULL, w_current);
   gtk_widget_destroy (GTK_WIDGET (dialog));
-  w_current->tiwindow = NULL;
+  schematic_window_set_newtext_dialog (w_current, NULL);
 }
 
 
