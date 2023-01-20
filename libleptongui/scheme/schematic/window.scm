@@ -358,6 +358,7 @@
 
 
 (define (callback-button-pressed *page-view *event *window)
+  (define window (pointer->window *window))
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
@@ -414,7 +415,7 @@
               (match button-number
                 ;; First mouse button.
                 (1
-                 (if (true? (schematic_window_get_inside_action *window))
+                 (if (in-action? window)
                      ;; End action.
                      (if (not (null-pointer? (schematic_window_get_place_list *window)))
                          (match action-mode
@@ -469,7 +470,7 @@
 
                 ;; Second mouse button.
                 (2
-                 (if (true? (schematic_window_get_inside_action *window))
+                 (if (in-action? window)
                      (when (not (or (eq? action-mode 'component-mode)
                                     (eq? action-mode 'text-mode)
                                     (eq? action-mode 'move-mode)
@@ -525,7 +526,7 @@
 
                 ;; Third mouse button.
                 (3
-                 (if (not (true? (schematic_window_get_inside_action *window)))
+                 (if (not (in-action? window))
                      (if (eq? (schematic_window_get_third_button *window)
                               MOUSEBTN_DO_POPUP)
                          (begin
