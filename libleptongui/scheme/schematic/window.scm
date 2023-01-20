@@ -583,6 +583,7 @@
 
 
 (define (callback-motion *page-view *event *window)
+  (define window (pointer->window *window))
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
@@ -633,7 +634,7 @@
                   ;; Evaluate state transitions.
                   (let ((action-mode (action-mode->symbol (schematic_window_get_action_mode *window))))
 
-                    (if (true? (schematic_window_get_inside_action *window))
+                    (if (in-action? window)
                         (if (not (null-pointer? (schematic_window_get_place_list *window)))
                             (match action-mode
                               ((or 'copy-mode
