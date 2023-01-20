@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -212,8 +212,8 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
   gtk_text_view_set_editable (GTK_TEXT_VIEW (widget->text_view), TRUE);
 
   /*! \bug FIXME: Set tab's width in the textview widget. */
-  /* See first the code in text_input_dialog and get it working before adding
-   * it here.
+  /* See first the code in newtext_init() and get it
+   * working before adding it here.
    */
 
   gtk_container_add (GTK_CONTAINER (scrolled), widget->text_view);
