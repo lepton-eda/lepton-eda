@@ -945,6 +945,10 @@ for *PAGE page will be created and set active."
                                            %null-pointer))))))
 
 
+(define (close-window-page! *window *page)
+  (x_window_close_page *window *page))
+
+
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
 ;;; tab is closed, a new tab with blank page will be opened.
 (define (close-tab! *window *page)
@@ -965,7 +969,7 @@ for *PAGE page will be created and set active."
 
       (let* ((*current-page (schematic_tab_info_get_page *current-tab-info))
              ;; Page to be set as current after the current page is closed.
-             (*new-current-page (x_window_close_page *window *current-page)))
+             (*new-current-page (close-window-page! *window *current-page)))
 
         (x_tabs_nbook_page_close *window *current-page)
 
@@ -1212,7 +1216,7 @@ window to PAGE.  Returns PAGE."
   (define tabs-enabled? (true? (x_tabs_enabled)))
   (if tabs-enabled?
       (close-tab! *window *page)
-      (x_window_close_page *window *page)))
+      (close-window-page! *window *page)))
 
 
 (define (close-page! page)
