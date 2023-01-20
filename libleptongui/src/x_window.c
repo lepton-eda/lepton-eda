@@ -727,8 +727,6 @@ x_window_close_page (GschemToplevel *w_current,
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (page     != NULL, NULL);
 
-  g_assert (page->pid != -1);
-
   /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action) {
