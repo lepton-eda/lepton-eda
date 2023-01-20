@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@
   (let ((last-window? (= (length (schematic-windows)) 1)))
     ;; If we're closing whilst inside an action, re-wind the page
     ;; contents back to their state before we started.
-    (when (true? (schematic_window_get_inside_action *window))
+    (when (in-action? window)
       (i_callback_cancel %null-pointer *window))
 
     ;; Last chance to save possible unsaved pages.
