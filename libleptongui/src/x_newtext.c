@@ -280,10 +280,6 @@ static void newtext_init(NewText *dialog)
 
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_NONE);
 
-  g_signal_connect (G_OBJECT (dialog), "response",
-                    G_CALLBACK (text_input_dialog_response),
-                    NULL);
-
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
                                   GTK_RESPONSE_ACCEPT);
 
@@ -518,6 +514,10 @@ text_input_dialog (SchematicWindow *w_current)
                                 "settings-name",    "text-entry",
                                 "schematic-window",  w_current,
                                 NULL));
+
+    g_signal_connect (G_OBJECT (w_current->tiwindow),
+                      "response", G_CALLBACK (text_input_dialog_response),
+                      NULL);
 
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
                                   GTK_WINDOW (w_current->main_window));
