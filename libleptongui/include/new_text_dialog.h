@@ -55,6 +55,12 @@ struct _SchematicNewText {
 G_BEGIN_DECLS
 
 void
+schematic_newtext_dialog_response_apply (SchematicNewText *dialog);
+
+void
+schematic_newtext_dialog_response_cancel (SchematicNewText *dialog);
+
+void
 schematic_newtext_dialog_run (GtkWidget *widget);
 
 void

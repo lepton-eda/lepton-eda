@@ -85,8 +85,8 @@ select_all_text_in_textview (GtkTextView *textview)
  *
  *  \param [in] dialog The new text dialog
  */
-static void
-dialog_response_apply (SchematicNewText *dialog)
+void
+schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -172,8 +172,8 @@ dialog_response_apply (SchematicNewText *dialog)
  *
  *  \param [in,out] dialog The new text dialog
  */
-static void
-dialog_response_cancel (SchematicNewText *dialog)
+void
+schematic_newtext_dialog_response_cancel (SchematicNewText *dialog)
 {
   i_callback_cancel (NULL, dialog->parent.w_current);
   gtk_widget_destroy(dialog->parent.w_current->tiwindow);
@@ -198,11 +198,11 @@ schematic_newtext_dialog_response (SchematicNewText *dialog,
 {
   switch(response) {
     case GTK_RESPONSE_APPLY:
-      dialog_response_apply(dialog);
+      schematic_newtext_dialog_response_apply (dialog);
       break;
     case GTK_RESPONSE_CLOSE:
     case GTK_RESPONSE_DELETE_EVENT:
-      dialog_response_cancel(dialog);
+      schematic_newtext_dialog_response_cancel (dialog);
       break;
     default:
       printf ("schematic_newtext_dialog_response(): strange signal %d\n", response);
