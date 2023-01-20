@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -727,13 +727,6 @@ x_window_close_page (SchematicWindow *w_current,
 
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (page     != NULL, NULL);
-
-  /* If we're closing whilst inside an action, re-wind the
-   * page contents back to their state before we started */
-  if (schematic_window_get_inside_action (w_current))
-  {
-    i_callback_cancel (NULL, w_current);
-  }
 
   if (page == lepton_toplevel_get_page_current (toplevel))
   {

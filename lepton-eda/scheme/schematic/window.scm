@@ -946,6 +946,11 @@ for *PAGE page will be created and set active."
 
 
 (define (close-window-page! *window *page)
+  ;; If we're closing whilst inside an action, re-wind the page
+  ;; contents back to their state before we started.
+  (when (in-action? (pointer->window *window))
+    (i_callback_cancel %null-pointer *window))
+
   (x_window_close_page *window *page))
 
 
