@@ -17,6 +17,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 /* gschem headers */
 #include "action_mode.h"
 #include "grid_mode.h"
+#include "gtk_helper.h"
 #include "snap_mode.h"
 #include "gschem_defines.h"
 #include "gschem_bin.h"

@@ -2,6 +2,7 @@ noinst_HEADERS = \
 	action_mode.h \
 	globals.h \
 	grid_mode.h \
+	gtk_helper.h \
 	i_vars.h \
 	prototype.h \
 	x_dialog.h \
