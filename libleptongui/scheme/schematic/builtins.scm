@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -315,7 +315,7 @@
   (define *page (and=> (active-page) page->pointer))
 
   (when *page
-    (if (and (true? (schematic_window_get_inside_action *window))
+    (if (and (in-action?)
              (not (null-pointer? (schematic_window_get_place_list *window))))
         ;; If there are objects to place, rotate them.
         (o_place_rotate *window)
@@ -342,7 +342,7 @@
   (define *page (and=> (active-page) page->pointer))
 
   (when *page
-    (if (and (true? (schematic_window_get_inside_action *window))
+    (if (and (in-action?)
              (not (null-pointer? (schematic_window_get_place_list *window))))
         ;; If there are objects to place, mirror them.
         (o_place_mirror *window)
@@ -1417,17 +1417,17 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
-  (unless (true? (schematic_window_get_inside_action (*current-window)))
+  (unless (in-action?)
     (set-selected-attribs-show-mode! 'value (*current-window))))
 
 
 (define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
-  (unless (true? (schematic_window_get_inside_action (*current-window)))
+  (unless (in-action?)
     (set-selected-attribs-show-mode! 'name (*current-window))))
 
 
 (define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
-  (unless (true? (schematic_window_get_inside_action (*current-window)))
+  (unless (in-action?)
     (set-selected-attribs-show-mode! 'both (*current-window))))
 
 
@@ -1435,7 +1435,7 @@ the snap grid size should be set to 100")))
   (define (toggle-visibility! object)
     (set-text-visibility! object (not (text-visible? object))))
 
-  (unless (true? (schematic_window_get_inside_action (*current-window)))
+  (unless (in-action?)
     (let ((attribs (filter attribute? (page-selection (active-page)))))
       (unless (null? attribs)
         (for-each toggle-visibility! attribs)
@@ -1446,27 +1446,23 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
-  (define *window (*current-window))
-  (unless (true? (schematic_window_get_inside_action *window))
-    (find_text_dialog *window)))
+  (unless (in-action?)
+    (find_text_dialog (*current-window))))
 
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
-  (define *window (*current-window))
-  (unless (true? (schematic_window_get_inside_action *window))
-    (hide_text_dialog *window)))
+  (unless (in-action?)
+    (hide_text_dialog (*current-window))))
 
 
 (define-action-public (&edit-show-text #:label (G_ "Show Specific Text"))
-  (define *window (*current-window))
-  (unless (true? (schematic_window_get_inside_action *window))
-    (show_text_dialog *window)))
+  (unless (in-action?)
+    (show_text_dialog (*current-window))))
 
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
-  (define *window (*current-window))
-  (unless (true? (schematic_window_get_inside_action *window))
-    (autonumber_text_dialog *window)))
+  (unless (in-action?)
+    (autonumber_text_dialog (*current-window))))
 
 
 ;; -------------------------------------------------------------------
@@ -1543,7 +1539,7 @@ the snap grid size should be set to 100")))
         (schematic_window_set_actionfeedback_mode *window BOUNDINGBOX)
         (log! 'message (G_ "Action feedback mode set to BOUNDINGBOX"))))
 
-  (when (and (true? (schematic_window_get_inside_action *window))
+  (when (and (in-action?)
              (not (null-pointer? (schematic_window_get_place_list *window))))
     (o_place_invalidate_rubber *window FALSE)))
 
