@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ success, #f on failure."
   ;; hits lepton_page_delete(), the place list objects are free'd.
   ;; Since they are also contained in the schematic page, a
   ;; crash occurs when the page objects are free'd.
-  (if (true? (schematic_window_get_inside_action *window))
+  (if (in-action?)
       (i_callback_cancel *widget *window)
       (undo-callback *window FALSE)))
 
