@@ -193,8 +193,9 @@ static void text_input_dialog_response(NewText *dialog, gint response, gpointer 
  *
  *  \par Function Description
  *
- *  GType class initialiser for Multiattrib. We override our parent
- *  virtual class methods as needed and register our GObject properties.
+ *  GType class initialiser for NewText. We override our parent
+ *  virtual class methods as needed and register our GObject
+ *  properties.
  *
  *  \param [in] klass
  */
