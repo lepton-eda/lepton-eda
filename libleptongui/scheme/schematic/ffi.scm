@@ -1069,7 +1069,7 @@
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog_new '* '(*))
 (define-lff schematic_newtext_dialog_response_apply void '(*))
-(define-lff schematic_newtext_dialog_response_cancel void '(*))
+(define-lff schematic_newtext_dialog_response_cancel void '(* *))
 (define-lff schematic_newtext_dialog_run void '(*))
 
 ;;; x_print.c

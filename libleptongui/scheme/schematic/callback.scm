@@ -156,7 +156,7 @@
 
 ;;; Callback function for the text entry dialog that handles user
 ;;; responses.
-(define (newtext-dialog-response *dialog response *unused)
+(define (newtext-dialog-response *dialog response *window)
   (define (log-warning)
     (log! 'warning
           "newtext-dialog-response(): strange signal: ~A" response)
@@ -167,7 +167,8 @@
 
   (case response-sym
     ((apply) (schematic_newtext_dialog_response_apply *dialog))
-    ((close delete-event) (schematic_newtext_dialog_response_cancel *dialog))
+    ((close delete-event)
+     (schematic_newtext_dialog_response_cancel *dialog *window))
     (else (log-warning))))
 
 
@@ -188,7 +189,7 @@
           (schematic_signal_connect *widget
                                     (string->pointer "response")
                                     *newtext-dialog-response
-                                    %null-pointer)
+                                    *window)
           *widget)
         ;; Otherwise just return the widget.
         *newtext-widget))

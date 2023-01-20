@@ -171,13 +171,16 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
  *
  *
  *  \param [in,out] dialog The new text dialog
+ *  \param [in] data The pointer to parent #SchematicWindow.
  */
 void
-schematic_newtext_dialog_response_cancel (SchematicNewText *dialog)
+schematic_newtext_dialog_response_cancel (SchematicNewText *dialog,
+                                          gpointer data)
 {
-  i_callback_cancel (NULL, dialog->parent.w_current);
-  gtk_widget_destroy(dialog->parent.w_current->tiwindow);
-  dialog->parent.w_current->tiwindow=NULL;
+  SchematicWindow *w_current = (SchematicWindow*) data;
+  i_callback_cancel (NULL, w_current);
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+  w_current->tiwindow = NULL;
 }
 
 
