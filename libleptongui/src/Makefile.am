@@ -9,6 +9,7 @@ libleptongui_la_SOURCES = \
 	g_window.c \
 	globals.c \
 	grid_mode.c \
+	gtk_helper.c \
 	lepton-schematic.c \
 	gschemhotkeystore.c \
 	gschem_about_dialog.c \
