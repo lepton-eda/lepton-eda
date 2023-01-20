@@ -178,7 +178,7 @@
   (define *newtext-widget
     (schematic_window_get_newtext_dialog *window))
 
-  (define (get-newtext-widget *window)
+  (define (get-newtext-widget)
     (if (null-pointer? *newtext-widget)
         ;; Widget not created yet, create it.
         (let ((*widget (schematic_newtext_dialog_new *window)))
@@ -199,4 +199,4 @@
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window))
 
-  (schematic_newtext_dialog_run (get-newtext-widget *window)))
+  (schematic_newtext_dialog_run (get-newtext-widget)))
