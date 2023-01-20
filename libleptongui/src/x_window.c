@@ -740,7 +740,8 @@ x_window_close_page (GschemToplevel *w_current,
 
     /* as it will delete current page, select new current page */
     /* first look up in page hierarchy */
-    new_current = lepton_toplevel_search_page_by_id (pages, page->up);
+    int id = lepton_page_get_up (page);
+    new_current = lepton_toplevel_search_page_by_id (pages, id);
 
     if (new_current == NULL) {
       /* no up in hierarchy, choice is prev, next, new page */
