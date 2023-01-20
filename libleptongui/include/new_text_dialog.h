@@ -58,8 +58,8 @@ void
 schematic_newtext_dialog_response_apply (SchematicNewText *dialog);
 
 void
-schematic_newtext_dialog_response_cancel (SchematicNewText *dialog,
-                                          gpointer data);
+schematic_newtext_dialog_destroy (SchematicNewText *dialog);
+
 void
 schematic_newtext_dialog_run (GtkWidget *widget);
 

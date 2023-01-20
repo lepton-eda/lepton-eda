@@ -165,10 +165,14 @@
   (define response-sym
     (string->symbol (pointer->string *response-string)))
 
+  (define (close-dialog!)
+    (i_callback_cancel %null-pointer *window)
+    (schematic_newtext_dialog_destroy *dialog)
+    (schematic_window_set_newtext_dialog *window %null-pointer))
+
   (case response-sym
     ((apply) (schematic_newtext_dialog_response_apply *dialog))
-    ((close delete-event)
-     (schematic_newtext_dialog_response_cancel *dialog *window))
+    ((close delete-event) (close-dialog!))
     (else (log-warning))))
 
 

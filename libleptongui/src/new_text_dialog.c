@@ -166,21 +166,14 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
 
 
 
-/*! \brief Handles the user response when cancel is selected
- *
- *
+/*! \brief Destroy the New text dialog.
  *
  *  \param [in,out] dialog The new text dialog
- *  \param [in] data The pointer to parent #SchematicWindow.
  */
 void
-schematic_newtext_dialog_response_cancel (SchematicNewText *dialog,
-                                          gpointer data)
+schematic_newtext_dialog_destroy (SchematicNewText *dialog)
 {
-  SchematicWindow *w_current = (SchematicWindow*) data;
-  i_callback_cancel (NULL, w_current);
   gtk_widget_destroy (GTK_WIDGET (dialog));
-  schematic_window_set_newtext_dialog (w_current, NULL);
 }
 
 
