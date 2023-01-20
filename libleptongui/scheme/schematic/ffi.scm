@@ -452,7 +452,8 @@
             text_edit_dialog
 
             schematic_newtext_dialog_new
-            *schematic_newtext_dialog_response
+            schematic_newtext_dialog_response_apply
+            schematic_newtext_dialog_response_cancel
             schematic_newtext_dialog_run
 
             o_select_box_end
@@ -1067,7 +1068,8 @@
 
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog_new '* '(*))
-(define-lfc *schematic_newtext_dialog_response)
+(define-lff schematic_newtext_dialog_response_apply void '(*))
+(define-lff schematic_newtext_dialog_response_cancel void '(*))
 (define-lff schematic_newtext_dialog_run void '(*))
 
 ;;; x_print.c

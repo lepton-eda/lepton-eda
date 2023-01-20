@@ -154,6 +154,26 @@
   (set-action-mode! 'select-mode #:window window))
 
 
+;;; Callback function for the text entry dialog that handles user
+;;; responses.
+(define (newtext-dialog-response *dialog response *unused)
+  (define (log-warning)
+    (log! 'warning
+          "newtext-dialog-response(): strange signal: ~A" response)
+    #f)
+  (define *response-string (gtk_response_to_string response))
+  (define response-sym
+    (string->symbol (pointer->string *response-string)))
+
+  (case response-sym
+    ((apply) (schematic_newtext_dialog_response_apply *dialog))
+    ((close delete-event) (schematic_newtext_dialog_response_cancel *dialog))
+    (else (log-warning))))
+
+
+(define *newtext-dialog-response
+  (procedure->pointer void newtext-dialog-response (list '* int '*)))
+
 (define (callback-add-text *widget *window)
   (define *newtext-widget
     (schematic_window_get_newtext_dialog *window))
@@ -167,7 +187,7 @@
           ;; Connect callback to the widget's "response" signal.
           (schematic_signal_connect *widget
                                     (string->pointer "response")
-                                    *schematic_newtext_dialog_response
+                                    *newtext-dialog-response
                                     %null-pointer)
           *widget)
         ;; Otherwise just return the widget.

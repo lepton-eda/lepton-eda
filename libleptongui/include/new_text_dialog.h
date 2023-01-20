@@ -63,10 +63,6 @@ schematic_newtext_dialog_response_cancel (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_run (GtkWidget *widget);
 
-void
-schematic_newtext_dialog_response (SchematicNewText *dialog,
-                                   gint response,
-                                   gpointer unused);
 GtkWidget*
 schematic_newtext_dialog_new (SchematicWindow *w_current);
 

@@ -182,34 +182,6 @@ schematic_newtext_dialog_response_cancel (SchematicNewText *dialog)
 
 
 
-/*! \brief Handles user responses from the new text dialog box
-
- *  \par Function Description
- *  Callback function for the text entry dialog.
- *
- *  \param [in,out] dialog The new text dialog.
- *  \param [in] response The Gtk response integer value.
- *  \param unused Unused parameter.
- */
-void
-schematic_newtext_dialog_response (SchematicNewText *dialog,
-                                   gint response,
-                                   gpointer unused)
-{
-  switch(response) {
-    case GTK_RESPONSE_APPLY:
-      schematic_newtext_dialog_response_apply (dialog);
-      break;
-    case GTK_RESPONSE_CLOSE:
-    case GTK_RESPONSE_DELETE_EVENT:
-      schematic_newtext_dialog_response_cancel (dialog);
-      break;
-    default:
-      printf ("schematic_newtext_dialog_response(): strange signal %d\n", response);
-  }
-}
-
-
 /*! \brief Initialize SchematicNewText class
  *
  *  \par Function Description
