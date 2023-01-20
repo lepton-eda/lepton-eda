@@ -55,7 +55,7 @@ struct _SchematicNewText {
 G_BEGIN_DECLS
 
 void
-schematic_newtext_dialog (SchematicWindow *w_current);
+schematic_newtext_dialog_run (SchematicWindow *w_current);
 
 void
 schematic_newtext_dialog_response (SchematicNewText *dialog,

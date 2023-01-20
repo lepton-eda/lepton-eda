@@ -180,4 +180,4 @@
   (set-action-mode! 'select-mode #:window (pointer->window *window))
 
   (get-newtext-widget *window)
-  (schematic_newtext_dialog *window))
+  (schematic_newtext_dialog_run *window))

@@ -511,7 +511,7 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
  *  \param [in] w_current The gschem toplevel
  */
 void
-schematic_newtext_dialog (SchematicWindow *w_current)
+schematic_newtext_dialog_run (SchematicWindow *w_current)
 {
   gtk_window_present (GTK_WINDOW(w_current->tiwindow));
 
