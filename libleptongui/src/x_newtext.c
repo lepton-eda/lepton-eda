@@ -437,7 +437,7 @@ static void newtext_init(NewText *dialog)
                             tab_array);
   }
   else {
-    g_warning ("text_input_dialog: Impossible to set tab width.\n");
+    g_warning ("newtext_init: Impossible to set tab width.\n");
   }
 
   pango_tab_array_free (tab_array);
