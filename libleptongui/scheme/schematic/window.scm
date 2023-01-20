@@ -262,7 +262,7 @@
         ;; Evaluate state transitions.
         (match button-number
           (1
-           (when (true? (schematic_window_get_inside_action *window))
+           (when (in-action? window)
              (if (not (null-pointer? (schematic_window_get_place_list *window)))
                  (match action-mode
                    ((or 'copy-mode 'multiple-copy-mode) (o_copy_end *window))
@@ -278,7 +278,7 @@
                    (_ FALSE)))))
 
           (2
-           (when (true? (schematic_window_get_inside_action *window))
+           (when (in-action? window)
              (when (or (eq? action-mode 'component-mode)
                      (eq? action-mode 'text-mode)
                      (eq? action-mode 'move-mode)
@@ -300,7 +300,7 @@
                      (o_place_invalidate_rubber *window TRUE))
 
                  (schematic_window_set_rubber_visible *window 1)))
-           (unless (and (true? (schematic_window_get_inside_action *window))
+           (unless (and (in-action? window)
                         (or (eq? action-mode 'component-mode)
                             (eq? action-mode 'text-mode)
                             (eq? action-mode 'move-mode)
@@ -310,7 +310,7 @@
              (let ((middle-button (schematic_window_get_middle_button *window)))
                (cond
                 ((= middle-button MOUSEBTN_DO_ACTION)
-                 (when (and (true? (schematic_window_get_inside_action *window))
+                 (when (and (in-action? window)
                             (not (null-pointer? (schematic_window_get_place_list *window))))
                    (match action-mode
                      ('copy-mode (o_copy_end *window))
