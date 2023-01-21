@@ -167,10 +167,6 @@ x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
 static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
-static TabInfo*
-x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
-
-
 
 /* SchematicWindow accessors: */
 
@@ -368,7 +364,7 @@ x_tabs_info_find_by_pview (GList* nfos,
 
 
 
-static TabInfo*
+TabInfo*
 x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
 {
   GList* ptr = g_list_find_custom (nfos,
