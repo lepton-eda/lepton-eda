@@ -1048,6 +1048,13 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-tab-button-up '(* *)))
 
 
+(define (callback-tabs-switch-page *notebook *wtab id *window)
+  (x_tabs_page_on_sel *notebook *wtab id *window))
+
+(define *callback-tabs-switch-page
+  (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))
+
+
 (define (*window-set-current-page! *window *page)
   "Sets current page of *WINDOW to *PAGE."
   (if (true? (x_tabs_enabled))
@@ -1123,7 +1130,7 @@ GtkApplication structure of the program (when compiled with
                                          *callback-tab-button-up)
             (g_signal_connect *notebook
                               (string->pointer "switch-page")
-                              *x_tabs_page_on_sel
+                              *callback-tabs-switch-page
                               *window)
             (g_signal_connect *notebook
                               (string->pointer "page-reordered")
