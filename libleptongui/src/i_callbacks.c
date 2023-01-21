@@ -73,7 +73,6 @@ void
 i_callback_cancel (GtkWidget *widget, gpointer data)
 {
   SchematicWindow *w_current = SCHEMATIC_WINDOW (data);
-  GValue value = { 0, };
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   g_return_if_fail (w_current != NULL);
@@ -95,9 +94,7 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
     x_compselect_deselect (w_current);
 
     /* Present the component selector again */
-    g_value_init (&value, G_TYPE_BOOLEAN);
-    g_value_set_boolean (&value, FALSE);
-    g_object_set_property (G_OBJECT (compselect), "hidden", &value);
+    gtk_widget_set_visible (GTK_WIDGET (compselect), TRUE);
   }
 
   if (schematic_window_get_inside_action (w_current))
