@@ -31,6 +31,7 @@
   #:use-module (lepton log)
 
   #:use-module (schematic action-mode)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
@@ -340,7 +341,7 @@ success, #f on failure."
   ;; Since they are also contained in the schematic page, a
   ;; crash occurs when the page objects are free'd.
   (if (in-action?)
-      (i_callback_cancel *widget *window)
+      (callback-cancel *window)
       (undo-callback *window FALSE)))
 
 
