@@ -1278,11 +1278,6 @@ void
 x_tabs_nbook_page_close (SchematicWindow* w_current,
                          LeptonPage* page);
 void
-x_tabs_page_on_sel (GtkNotebook* nbook,
-                    GtkWidget*   wtab,
-                    guint        ndx,
-                    gpointer     data);
-void
 x_tabs_page_on_reordered (GtkNotebook* nbook,
                           GtkWidget*   wtab,
                           guint        newindex,

@@ -1048,8 +1048,30 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-tab-button-up '(* *)))
 
 
+;;; GtkNotebook "switch-page" signal handler.
 (define (callback-tabs-switch-page *notebook *wtab id *window)
-  (x_tabs_page_on_sel *notebook *wtab id *window))
+  (define *current-page (x_tabs_tl_page_cur *window))
+  (define *current-canvas (x_tabs_tl_pview_cur *window) )
+
+  (unless (and (null-pointer? *current-page)
+               (null-pointer? *current-canvas))
+
+    (let* ((*info-list (schematic_window_get_tab_info_list *window))
+           (*tab-info (x_tabs_info_find_by_wtab *info-list *wtab)))
+
+      (unless (null-pointer? *tab-info)
+
+        (log! 'debug "callback-tabs-switch-page()")
+
+        ;; Before changing toplevel's current page and page view,
+        ;; cancel all actions that may be in progress on previous
+        ;; page.
+        (x_tabs_cancel_all *window)
+
+        (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
+        (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))
+
+        (x_window_set_current_page *window (schematic_tab_info_get_page *tab-info))))))
 
 (define *callback-tabs-switch-page
   (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))

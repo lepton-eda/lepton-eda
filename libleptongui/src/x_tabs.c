@@ -1017,54 +1017,6 @@ x_tabs_prev (SchematicWindow* w_current)
 
 
 
-/*! \brief GtkNotebook "switch-page" signal handler.
- *
- *  \param [in] nbook  Notebook widget.
- *  \param [in] wtab   Tab widget.
- *  \param [in] ndx    Tab index.
- *  \param [in] data   SchematicWindow*.
- *
- */
-void
-x_tabs_page_on_sel (GtkNotebook* nbook,
-                    GtkWidget*   wtab,
-                    guint        ndx,
-                    gpointer     data)
-{
-  SchematicWindow* w_current = (SchematicWindow*) data;
-
-  LeptonPage*     p_cur  = x_tabs_tl_page_cur  (w_current);
-  SchematicCanvas* pv_cur = x_tabs_tl_pview_cur (w_current);
-
-  if (p_cur == NULL && pv_cur == NULL)
-    return;
-
-  GList *info_list =
-    schematic_window_get_tab_info_list (w_current);
-
-  TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
-
-  if (nfo == NULL)
-    return;
-
-#ifdef DEBUG
-  printf( "x_tabs_page_on_sel()\n" );
-#endif
-
-  /* before changing toplevel's current page and page view,
-  *  cancel all actions that may be in progress on previous page:
-  */
-  x_tabs_cancel_all (w_current);
-
-  x_tabs_tl_pview_cur_set (w_current, schematic_tab_info_get_canvas (nfo));
-  x_tabs_tl_page_cur_set (w_current, schematic_tab_info_get_page (nfo));
-
-  x_window_set_current_page (w_current, schematic_tab_info_get_page (nfo));
-
-} /* x_tabs_page_on_sel() */
-
-
-
 /*! \brief GtkNotebook "page-reordered" signal handler.
  */
 void

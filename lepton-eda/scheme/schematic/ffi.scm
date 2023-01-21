@@ -318,12 +318,14 @@
             x_tabs_info_add
             x_tabs_info_cur
             x_tabs_info_find_by_page
+            x_tabs_info_find_by_wtab
             x_tabs_info_rm
             x_tabs_nbook_create
             x_tabs_nbook_page_add
             x_tabs_nbook_page_close
             x_tabs_page_on_reordered
-            x_tabs_page_on_sel
+            x_tabs_tl_page_cur
+            x_tabs_tl_page_cur_set
             x_tabs_tl_page_find
             x_tabs_tl_pview_cur
             x_tabs_tl_pview_cur_set
@@ -964,13 +966,15 @@
 (define-lff x_tabs_info_add '* (list '* int '* '* '*))
 (define-lff x_tabs_info_cur '* '(*))
 (define-lff x_tabs_info_find_by_page '* '(* *))
+(define-lff x_tabs_info_find_by_wtab '* '(* *))
 (define-lff x_tabs_info_rm void '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_nbook_page_add int '(* * * *))
 (define-lff x_tabs_nbook_page_close void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
-(define-lff x_tabs_page_on_sel void (list '* '* int '*))
 (define-lff schematic_tabs_add_canvas void '(* *))
+(define-lff x_tabs_tl_page_cur '* '(*))
+(define-lff x_tabs_tl_page_cur_set void '(* *))
 (define-lff x_tabs_tl_page_find int '(* *))
 (define-lff x_tabs_tl_pview_cur '* '(*))
 (define-lff x_tabs_tl_pview_cur_set void '(* *))
