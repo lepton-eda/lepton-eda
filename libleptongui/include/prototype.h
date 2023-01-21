@@ -1290,6 +1290,9 @@ schematic_tabs_add_canvas (SchematicCanvas *pview,
 gboolean
 x_tabs_tl_page_find (SchematicWindow* w_current,
                      LeptonPage* page);
+LeptonPage*
+x_tabs_tl_page_cur (SchematicWindow *w_current);
+
 SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current);
 

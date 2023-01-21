@@ -174,9 +174,6 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
 
 /* SchematicWindow accessors: */
 
-static LeptonPage*
-x_tabs_tl_page_cur (SchematicWindow* w_current);
-
 static void
 x_tabs_tl_page_cur_set (SchematicWindow* w_current,
                         LeptonPage* page);
@@ -389,7 +386,7 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
  *
  */
 
-static LeptonPage*
+LeptonPage*
 x_tabs_tl_page_cur (SchematicWindow* w_current)
 {
   return schematic_window_get_active_page (w_current);
