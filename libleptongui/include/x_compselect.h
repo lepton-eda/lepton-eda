@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -70,8 +70,6 @@ struct _Compselect {
   GtkButton   *button_clear;
   guint        filter_timeout;
   GtkComboBox *combobox_behaviors;
-
-  gboolean hidden;
 };
 
 

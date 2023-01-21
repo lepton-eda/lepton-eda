@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         }
 
         /* Hide the component selector */
-        g_object_set (G_OBJECT (compselect), "hidden", TRUE, NULL);
+        gtk_widget_set_visible (GTK_WIDGET (compselect), FALSE);
         break;
 
       case GTK_RESPONSE_CLOSE:
@@ -286,8 +286,7 @@ x_compselect_deselect (SchematicWindow *w_current)
 
 enum {
   PROP_SYMBOL=1,
-  PROP_BEHAVIOR,
-  PROP_HIDDEN
+  PROP_BEHAVIOR
 };
 
 
@@ -1458,14 +1457,6 @@ compselect_class_init (CompselectClass *klass)
                        COMPSELECT_TYPE_BEHAVIOR,
                        COMPSELECT_BEHAVIOR_REFERENCE,
                        G_PARAM_READWRITE));
-  g_object_class_install_property (
-    gobject_class, PROP_HIDDEN,
-    g_param_spec_boolean ("hidden",
-                          "",
-                          "",
-                          FALSE,
-                          G_PARAM_READWRITE));
-
 }
 
 static GObject*
@@ -1609,9 +1600,6 @@ compselect_constructor (GType type,
                                           -1);
 #endif
 
-  /* Initialize the hidden property */
-  compselect->hidden = FALSE;
-
   return object;
 }
 
@@ -1640,13 +1628,6 @@ compselect_set_property (GObject *object,
     case PROP_BEHAVIOR:
       gtk_combo_box_set_active (compselect->combobox_behaviors,
                                 g_value_get_enum (value));
-      break;
-    case PROP_HIDDEN:
-      compselect->hidden = g_value_get_boolean (value);
-      if (compselect->hidden)
-        gtk_widget_hide (GTK_WIDGET (compselect));
-      else
-        gtk_window_present (GTK_WINDOW (compselect));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1698,9 +1679,6 @@ compselect_get_property (GObject *object,
         g_value_set_enum (value,
                           gtk_combo_box_get_active (
                             compselect->combobox_behaviors));
-        break;
-      case PROP_HIDDEN:
-        g_value_set_boolean (value, compselect->hidden);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
