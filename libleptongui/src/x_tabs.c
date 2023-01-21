@@ -1057,9 +1057,9 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
   x_tabs_cancel_all (w_current);
 
   x_tabs_tl_pview_cur_set (w_current, schematic_tab_info_get_canvas (nfo));
-  x_tabs_tl_page_cur_set (w_current, nfo->page_);
+  x_tabs_tl_page_cur_set (w_current, schematic_tab_info_get_page (nfo));
 
-  x_window_set_current_page (w_current, nfo->page_);
+  x_window_set_current_page (w_current, schematic_tab_info_get_page (nfo));
 
 } /* x_tabs_page_on_sel() */
 
