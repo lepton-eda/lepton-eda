@@ -168,12 +168,6 @@ static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
 
-/* SchematicWindow accessors: */
-
-static void
-x_tabs_tl_page_cur_set (SchematicWindow* w_current,
-                        LeptonPage* page);
-
 
 /* notebook: */
 
@@ -390,7 +384,7 @@ x_tabs_tl_page_cur (SchematicWindow* w_current)
 
 
 
-static void
+void
 x_tabs_tl_page_cur_set (SchematicWindow* w_current,
                         LeptonPage* page)
 {
