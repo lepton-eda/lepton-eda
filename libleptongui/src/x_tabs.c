@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2024 Lepton EDA Contributors
+ * Copyright (C) 2018-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -949,10 +949,7 @@ x_tabs_cancel_all (SchematicWindow* w_current)
 
     x_compselect_deselect (w_current);
 
-    GValue value = G_VALUE_INIT;
-    g_value_init (&value, G_TYPE_BOOLEAN);
-    g_value_set_boolean (&value, FALSE);
-    g_object_set_property (G_OBJECT (compselect_widget), "hidden", &value);
+    gtk_widget_set_visible (compselect_widget, TRUE);
   }
 
   if (schematic_window_get_inside_action (w_current))
