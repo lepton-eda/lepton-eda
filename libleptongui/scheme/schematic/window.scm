@@ -211,6 +211,7 @@
 
 
 (define (callback-button-released *page-view *event *window)
+  (define window (pointer->window *window))
   ;; Defines from gschem_defines.h.
   (define MOUSEBTN_DO_STROKE 0)
   (define MOUSEBTN_DO_REPEAT 1)
