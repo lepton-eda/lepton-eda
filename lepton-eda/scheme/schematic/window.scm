@@ -952,6 +952,7 @@ for *PAGE page will be created and set active."
 ;;; that case).
 (define (close-window-page! *window *page)
   (define *toplevel (schematic_window_get_toplevel *window))
+  (define tabs-enabled? (true? (x_tabs_enabled)))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
@@ -982,7 +983,7 @@ for *PAGE page will be created and set active."
 
     ;; Switch to a different page if we just removed the current.
     (if (null-pointer? (lepton_toplevel_get_page_current *toplevel))
-        (if (true? (x_tabs_enabled))
+        (if tabs-enabled?
             ;; If tabs are enabled, return the page as is, even if
             ;; it is NULL.
             *new-current-page
