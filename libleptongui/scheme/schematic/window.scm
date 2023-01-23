@@ -471,12 +471,12 @@
                 ;; Second mouse button.
                 (2
                  (if (in-action? window)
-                     (when (not (or (eq? action-mode 'component-mode)
-                                    (eq? action-mode 'text-mode)
-                                    (eq? action-mode 'move-mode)
-                                    (eq? action-mode 'copy-mode)
-                                    (eq? action-mode 'multiple-copy-mode)
-                                    (eq? action-mode 'paste-mode) ))
+                     (unless (or (eq? action-mode 'component-mode)
+                                 (eq? action-mode 'text-mode)
+                                 (eq? action-mode 'move-mode)
+                                 (eq? action-mode 'copy-mode)
+                                 (eq? action-mode 'multiple-copy-mode)
+                                 (eq? action-mode 'paste-mode))
                        (i_callback_cancel %null-pointer *window))
 
                      (let ((middle-button (schematic_window_get_middle_button *window)))
