@@ -25,6 +25,7 @@
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gui keymap)
   #:use-module (schematic window foreign)
 
   #:export (callback-cancel))
@@ -70,8 +71,13 @@ placement, etc.) and return to default \"select\" mode."
   ;; Set the 'select' mode.
   (set-action-mode! 'select-mode #:window window)
 
-  ;; Clear the key command-sequence.
-  (schematic_keys_reset *window)
+  ;; Reset the status bar.
+  (schematic_window_set_keyaccel_string *window %null-pointer)
+  (i_show_state *window %null-pointer)
+
+  ;; If any prefix keys are stored in the current key sequence,
+  ;; clear them.
+  (reset-keys)
 
   (schematic_canvas_invalidate_all
    (schematic_window_get_current_canvas *window))
