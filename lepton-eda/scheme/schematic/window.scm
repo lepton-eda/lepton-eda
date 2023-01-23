@@ -966,6 +966,16 @@ for *PAGE page will be created and set active."
              (schematic_window_find_new_current_page *toplevel *page)
              %null-pointer)))
 
+    (log! 'message
+          (if (true? (lepton_page_get_changed *page))
+              (G_ "Discarding page ~S")
+              (G_ "Closing ~S"))
+          (pointer->string (lepton_page_get_filename *page)))
+
+    ;; Remove the page from toplevel list of pages.
+    (lepton_page_delete *toplevel *page)
+    (schematic_window_page_changed *window)
+
     (x_window_close_page *window *toplevel *page *new-current-page)))
 
 

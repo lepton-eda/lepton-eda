@@ -754,13 +754,6 @@ x_window_close_page (SchematicWindow *w_current,
                      LeptonPage *page,
                      LeptonPage *new_current)
 {
-  g_message (lepton_page_get_changed (page) ?
-             _("Discarding page [%1$s]") : _("Closing [%1$s]"),
-             lepton_page_get_filename (page));
-  /* remove page from toplevel list of page and free */
-  lepton_page_delete (toplevel, page);
-  schematic_window_page_changed (w_current);
-
   /* Switch to a different page if we just removed the current */
   if (lepton_toplevel_get_page_current (toplevel) == NULL)
   {
