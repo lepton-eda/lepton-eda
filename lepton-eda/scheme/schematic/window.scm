@@ -987,10 +987,12 @@ for *PAGE page will be created and set active."
             ;; If tabs are enabled, return the page as is, even if
             ;; it is NULL.
             *new-current-page
-            ;; If tabs are disabled, create a new page.
+            ;; Tabs are disabled.
             (let ((*really-new-current-page
                    (if (null-pointer? *new-current-page)
+                       ;; Page wasn't found, create a new page.
                        (x_window_open_page *window %null-pointer)
+                       ;; Use found page.
                        *new-current-page)))
               ;; Change to the new current page and update display.
               (x_window_set_current_page *window *really-new-current-page)
