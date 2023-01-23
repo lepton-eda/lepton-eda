@@ -731,52 +731,6 @@ schematic_window_find_new_current_page (LeptonToplevel *toplevel,
 }
 
 
-/*! \brief Closes a page.
- *  \private
- *  \par Function Description
- *  This function closes the page <B>page</B> of toplevel
- *  <B>toplevel</B>.
- *
- *  The current page of <B>toplevel</B> is changed to
- *  the next valid page.
- *  If necessary, a new untitled page is created
- *  (unless tabbed GUI is enabled: return NULL in that case).
- *
- *  \param [in] w_current The toplevel window environment.
- *  \param [in] toplevel  The LeptonToplevel structure of the window.
- *  \param [in] page      The page to close.
- *  \param [in] new_current The page to open or NULL.
- *  \return               Pointer to a new current LeptonPage object.
- */
-LeptonPage*
-x_window_close_page (SchematicWindow *w_current,
-                     LeptonToplevel *toplevel,
-                     LeptonPage *page,
-                     LeptonPage *new_current)
-{
-  /* Switch to a different page if we just removed the current */
-  if (lepton_toplevel_get_page_current (toplevel) == NULL)
-  {
-
-    /* Create a new page if there wasn't another to switch to */
-    if (new_current == NULL && !x_tabs_enabled())
-    {
-      new_current = x_window_open_page (w_current, NULL);
-    }
-
-    /* change to new_current and update display */
-    if (!x_tabs_enabled())
-    {
-      x_window_set_current_page (w_current, new_current);
-    }
-
-  }
-
-  return new_current;
-
-} /* x_window_close_page() */
-
-
 /*! \brief Creates and initializes a new lepton-schematic window.
  *
  * \return Pointer to the new SchematicWindow object.
