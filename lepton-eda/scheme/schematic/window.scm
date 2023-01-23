@@ -946,6 +946,10 @@ for *PAGE page will be created and set active."
                                            %null-pointer))))))
 
 
+;;; Closes *PAGE in *WINDOW.  The current page in *WINDOW is
+;;; changed to the next valid page.  If necessary, a new untitled
+;;; page is created (unless tabbed GUI is enabled: return NULL in
+;;; that case).
 (define (close-window-page! *window *page)
   (define *toplevel (schematic_window_get_toplevel *window))
 
@@ -976,7 +980,23 @@ for *PAGE page will be created and set active."
     (lepton_page_delete *toplevel *page)
     (schematic_window_page_changed *window)
 
-    (x_window_close_page *window *toplevel *page *new-current-page)))
+    ;; Switch to a different page if we just removed the current.
+    (if (null-pointer? (lepton_toplevel_get_page_current *toplevel))
+        ;; Create a new page if there wasn't another one to
+        ;; switch to.
+        (let ((*really-new-current-page
+               (if (and (null-pointer? *new-current-page)
+                        (not (true? (x_tabs_enabled))))
+                   (x_window_open_page *window %null-pointer)
+                   *new-current-page)))
+
+          ;; Change to the new current page and update display.
+          (when (not (true? (x_tabs_enabled)))
+            (x_window_set_current_page *window *really-new-current-page))
+          ;; Return the page anyways, even if it is NULL.
+          *really-new-current-page)
+        ;; Return the page if it is not NULL.
+        *new-current-page)))
 
 
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last

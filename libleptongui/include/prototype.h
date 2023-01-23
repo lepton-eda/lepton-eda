@@ -1186,11 +1186,6 @@ x_window_save_page (SchematicWindow *w_current,
 LeptonPage*
 schematic_window_find_new_current_page (LeptonToplevel *toplevel,
                                         LeptonPage *page);
-LeptonPage*
-x_window_close_page (SchematicWindow *w_current,
-                     LeptonToplevel *toplevel,
-                     LeptonPage *page,
-                     LeptonPage *new_current);
 SchematicWindow*
 x_window_new (LeptonToplevel *toplevel);
 
