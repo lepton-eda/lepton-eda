@@ -745,21 +745,15 @@ schematic_window_find_new_current_page (LeptonToplevel *toplevel,
  *  \param [in] w_current The toplevel window environment.
  *  \param [in] toplevel  The LeptonToplevel structure of the window.
  *  \param [in] page      The page to close.
+ *  \param [in] new_current The page to open or NULL.
  *  \return               Pointer to a new current LeptonPage object.
  */
 LeptonPage*
 x_window_close_page (SchematicWindow *w_current,
                      LeptonToplevel *toplevel,
-                     LeptonPage *page)
+                     LeptonPage *page,
+                     LeptonPage *new_current)
 {
-  LeptonPage *new_current = NULL;
-
-  if (page == lepton_toplevel_get_page_current (toplevel))
-  {
-    new_current = schematic_window_find_new_current_page (toplevel, page);
-    /* new_current will be the new current page at the end of the function */
-  }
-
   g_message (lepton_page_get_changed (page) ?
              _("Discarding page [%1$s]") : _("Closing [%1$s]"),
              lepton_page_get_filename (page));
