@@ -79,8 +79,8 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
 
-  Compselect *compselect =
-    COMPSELECT (schematic_window_get_compselect_widget (w_current));
+  GtkWidget *compselect =
+    schematic_window_get_compselect_widget (w_current);
   if ((action_mode == COMPMODE) && (compselect != NULL))
   {
     /* user hit escape key when placing components */
@@ -93,7 +93,7 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
     x_compselect_deselect (w_current);
 
     /* Present the component selector again */
-    gtk_widget_set_visible (GTK_WIDGET (compselect), TRUE);
+    gtk_widget_set_visible (compselect, TRUE);
   }
 
   if (schematic_window_get_inside_action (w_current))
