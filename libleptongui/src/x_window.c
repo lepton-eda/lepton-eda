@@ -754,8 +754,6 @@ x_window_close_page (SchematicWindow *w_current,
 {
   LeptonPage *new_current = NULL;
 
-  g_return_val_if_fail (page     != NULL, NULL);
-
   if (page == lepton_toplevel_get_page_current (toplevel))
   {
     new_current = schematic_window_find_new_current_page (toplevel, page);

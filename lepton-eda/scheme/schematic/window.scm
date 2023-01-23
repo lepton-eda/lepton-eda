@@ -951,6 +951,8 @@ for *PAGE page will be created and set active."
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
 
   ;; If we're closing whilst inside an action, re-wind the page
   ;; contents back to their state before we started.
