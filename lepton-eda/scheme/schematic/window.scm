@@ -982,19 +982,19 @@ for *PAGE page will be created and set active."
 
     ;; Switch to a different page if we just removed the current.
     (if (null-pointer? (lepton_toplevel_get_page_current *toplevel))
-        ;; Create a new page if there wasn't another one to
-        ;; switch to.
-        (let ((*really-new-current-page
-               (if (and (null-pointer? *new-current-page)
-                        (not (true? (x_tabs_enabled))))
-                   (x_window_open_page *window %null-pointer)
-                   *new-current-page)))
-
-          ;; Change to the new current page and update display.
-          (when (not (true? (x_tabs_enabled)))
-            (x_window_set_current_page *window *really-new-current-page))
-          ;; Return the page anyways, even if it is NULL.
-          *really-new-current-page)
+        (if (true? (x_tabs_enabled))
+            ;; If tabs are enabled, return the page as is, even if
+            ;; it is NULL.
+            *new-current-page
+            ;; If tabs are disabled, create a new page.
+            (let ((*really-new-current-page
+                   (if (null-pointer? *new-current-page)
+                       (x_window_open_page *window %null-pointer)
+                       *new-current-page)))
+              ;; Change to the new current page and update display.
+              (x_window_set_current_page *window *really-new-current-page)
+              ;; Return the page.
+              *really-new-current-page))
         ;; Return the page if it is not NULL.
         *new-current-page)))
 
