@@ -69,9 +69,6 @@ schematic_keys_get_event_modifiers (GdkEventKey *event);
 guint
 schematic_keys_verify_keyval (guint keyval);
 
-void
-schematic_keys_reset (SchematicWindow *w_current);
-
 /* g_window.c */
 void
 g_dynwind_window (SchematicWindow *w_current);

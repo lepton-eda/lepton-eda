@@ -366,7 +366,6 @@
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
-            schematic_keys_reset
             schematic_keys_verify_keyval
 
             lepton_action_create_menu_item
@@ -705,7 +704,6 @@
 ;;; keys.c
 (define-lff schematic_keys_get_event_keyval int '(*))
 (define-lff schematic_keys_get_event_modifiers int '(*))
-(define-lff schematic_keys_reset void '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
 
 ;;; about_dialog.c

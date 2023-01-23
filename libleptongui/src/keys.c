@@ -70,30 +70,6 @@ schematic_keys_verify_keyval (guint keyval)
 }
 
 
-/*! \brief Reset the current key sequence.
- * \par Function Description
- * If any prefix keys are stored in the current key sequence, clears
- * them.
- *
- * \param w_current  The active #SchematicWindow context.
- */
-void
-schematic_keys_reset (SchematicWindow *w_current)
-{
-  SCM s_expr = scm_list_1 (scm_from_utf8_symbol ("reset-keys"));
-
-  /* Reset the status bar */
-  schematic_window_set_keyaccel_string (w_current, NULL);
-  i_show_state(w_current, NULL);
-
-  /* Reset the Scheme keybinding state */
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-  g_scm_eval_protected (s_expr, scm_interaction_environment ());
-  scm_dynwind_end ();
-}
-
-
 /*! \brief Obtain key value of a \c GdkEventKey event.
  * \par Function Description
  * Returns the key value specified by \a event always translated
