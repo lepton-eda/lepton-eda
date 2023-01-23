@@ -959,7 +959,14 @@ for *PAGE page will be created and set active."
   (when (in-action? (pointer->window *window))
     (callback-cancel *window))
 
-  (x_window_close_page *window *toplevel *page))
+  ;; *new-current-page will be the new current page at the end of
+  ;; the function.
+  (let ((*new-current-page
+         (if (equal? *page (lepton_toplevel_get_page_current *toplevel))
+             (schematic_window_find_new_current_page *toplevel *page)
+             %null-pointer)))
+
+    (x_window_close_page *window *toplevel *page *new-current-page)))
 
 
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
