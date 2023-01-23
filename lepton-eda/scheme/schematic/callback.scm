@@ -37,6 +37,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic preview-widget)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
   #:use-module (schematic window)
 
   #:export (callback-add-bus

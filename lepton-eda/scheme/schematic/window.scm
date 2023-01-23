@@ -875,7 +875,7 @@ the new or found page."
                   ;; o_place_invalidate_rubber() if File->New is
                   ;; invoked while component selection mode is
                   ;; active.
-                  (x_tabs_cancel_all *window)
+                  (callback-cancel *window)
 
                   ;; Create a new tab with a new page.
                   (open-new-page (tab-add-page! *window %null-pointer)))
@@ -1066,7 +1066,7 @@ for *PAGE page will be created and set active."
         ;; Before changing toplevel's current page and page view,
         ;; cancel all actions that may be in progress on previous
         ;; page.
-        (x_tabs_cancel_all *window)
+        (callback-cancel *window)
 
         (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
         (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))

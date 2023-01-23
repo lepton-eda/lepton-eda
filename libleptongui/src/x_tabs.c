@@ -902,68 +902,6 @@ schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 
 
 
-
-/* --------------------------------------------------------
- *
- * implementation: helpers:
- *
- */
-
-/*! \brief Cancels all actions.
- *
- * \par Function Description
- * Cancel all actions that may be in progress
- * (e.g. move, component placement, etc.)
- * and return to default "SELECT" state.
- *
- * \note
- * Code taken from i_callback_cancel()
- *
-*/
-void
-x_tabs_cancel_all (SchematicWindow* w_current)
-{
-  SchematicActionMode action_mode =
-    schematic_window_get_action_mode (w_current);
-
-  GtkWidget *compselect_widget =
-    schematic_window_get_compselect_widget (w_current);
-
-  if ((action_mode == COMPMODE) && (compselect_widget != NULL))
-  {
-    o_place_invalidate_rubber (w_current, FALSE);
-    schematic_window_set_rubber_visible (w_current, 0);
-
-    x_compselect_deselect (w_current);
-
-    gtk_widget_set_visible (compselect_widget, TRUE);
-  }
-
-  if (schematic_window_get_inside_action (w_current))
-  {
-    o_move_cancel (w_current);
-  }
-
-  if (action_mode == GRIPS)
-  {
-    o_grips_cancel (w_current);
-  }
-
-  schematic_window_delete_place_list (w_current);
-
-  i_set_state (w_current, SELECT);
-
-  schematic_keys_reset (w_current);
-
-  SchematicCanvas* pview = schematic_window_get_current_canvas (w_current);
-  schematic_canvas_invalidate_all (pview);
-
-  i_action_stop (w_current);
-
-} /* x_tabs_cancel_all() */
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: core and public functions:

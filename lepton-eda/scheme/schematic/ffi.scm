@@ -50,7 +50,6 @@
 
             schematic_execute_script
 
-            i_callback_cancel
             i_callback_file_save
             *i_callback_file_save
 
@@ -105,6 +104,7 @@
 
             o_find_object
 
+            o_grips_cancel
             o_grips_end
             o_grips_motion
 
@@ -249,6 +249,7 @@
             slot_edit_dialog_quit
 
             *x_compselect_callback_response
+            x_compselect_deselect
             x_compselect_open
             schematic_compselect_new
             schematic_compselect_get_preview
@@ -311,7 +312,6 @@
             schematic_toolbar_insert_button
             schematic_toolbar_insert_separator
 
-            x_tabs_cancel_all
             x_tabs_enabled
             x_tabs_hdr_set
             x_tabs_hdr_update
@@ -365,6 +365,7 @@
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
+            schematic_keys_reset
             schematic_keys_verify_keyval
 
             lepton_action_create_menu_item
@@ -671,6 +672,7 @@
 
 ;;; x_compselect.c
 (define-lfc *x_compselect_callback_response)
+(define-lff x_compselect_deselect void '(*))
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
 (define-lff schematic_compselect_get_preview '* '(*))
@@ -702,6 +704,7 @@
 ;;; keys.c
 (define-lff schematic_keys_get_event_keyval int '(*))
 (define-lff schematic_keys_get_event_modifiers int '(*))
+(define-lff schematic_keys_reset void '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
 
 ;;; about_dialog.c
@@ -959,7 +962,6 @@
 (define-lff schematic_toolbar_radio_button_set_group void '(* *))
 
 ;;; x_tabs.c
-(define-lff x_tabs_cancel_all void '(*))
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_set void '(* *))
 (define-lff x_tabs_hdr_update void '(* *))
@@ -1006,7 +1008,6 @@
 (define-lff schematic_execute_script '* '(*))
 
 ;;; i_callbacks.c
-(define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 
@@ -1064,6 +1065,7 @@
 (define-lff o_find_object int (list '* int int int))
 
 ;;; o_grips.c
+(define-lff o_grips_cancel void '(*))
 (define-lff o_grips_end void '(*))
 (define-lff o_grips_motion void (list '* int int))
 

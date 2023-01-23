@@ -20,10 +20,61 @@
 (define-module (schematic callback cancel)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
+
+  #:use-module (schematic action-mode)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (callback-cancel))
 
 
 (define (callback-cancel *window)
-  (i_callback_cancel %null-pointer *window))
+  "Cancel all actions that may be in progress (e.g. move, component
+placement, etc.) and return to default \"select\" mode."
+  (define window (pointer->window *window))
+  (define action-mode
+    (action-mode->symbol (schematic_window_get_action_mode *window)))
+  (define *compselect (schematic_window_get_compselect_widget *window))
+
+  (when (and (eq? action-mode 'component-mode)
+             (not (null-pointer? *compselect)))
+    ;; User hit escape key when placing components.
+
+    ;; Undraw any outline of the place list.
+    (o_place_invalidate_rubber *window FALSE)
+    (schematic_window_set_rubber_visible *window 0)
+
+    ;; De-select the lists in the component selector.
+    (x_compselect_deselect *window)
+
+    ;; Present the component selector again.
+    (gtk_widget_set_visible *compselect TRUE))
+
+  (when (in-action? window)
+    ;; If we're cancelling from a move action, re-wind the page
+    ;; contents back to their state before we started.
+    (o_move_cancel *window))
+
+  ;; If we're cancelling from a grip action, call the specific
+  ;; cancel routine to reset the visibility of the object being
+  ;; modified.
+  (when (eq? action-mode 'grips-mode)
+    (o_grips_cancel *window))
+
+  ;; Free the place list and its contents. If we were in a move
+  ;; action, the list (refering to objects on the page) would
+  ;; already have been cleared in o_move_cancel(), so this is OK.
+  (schematic_window_delete_place_list *window)
+
+  ;; Set the 'select' mode.
+  (i_set_state *window (symbol->action-mode 'select-mode))
+
+  ;; Clear the key command-sequence.
+  (schematic_keys_reset *window)
+
+  (schematic_canvas_invalidate_all
+   (schematic_window_get_current_canvas *window))
+
+  (i_action_stop *window))

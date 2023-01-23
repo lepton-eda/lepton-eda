@@ -134,9 +134,6 @@ i_update_net_options_status (SchematicWindow* w_current);
 void
 i_callback_file_save (GtkWidget *widget,
                       gpointer data);
-void
-i_callback_cancel (GtkWidget *widget,
-                   gpointer data);
 
 /* i_vars.c */
 void
@@ -1240,9 +1237,6 @@ void
 x_widgets_toggle_widget_visibility (GtkWidget *widget);
 
 /* x_tabs.c */
-void
-x_tabs_cancel_all (SchematicWindow* w_current);
-
 gboolean x_tabs_enabled();
 
 TabInfo*

@@ -446,7 +446,7 @@ o_redraw_cleanstates (SchematicWindow *w_current)
       /* touch the select state */
       i_set_state(w_current, SELECT);
 
-      /* from i_callback_cancel() */
+      /* Invalidate canvas. */
       schematic_canvas_invalidate_all (schematic_window_get_current_canvas (w_current));
       return TRUE;
 
