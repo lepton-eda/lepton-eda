@@ -494,14 +494,8 @@ x_window_open_page (SchematicWindow *w_current,
                     LeptonToplevel *toplevel,
                     const gchar *filename)
 {
-  /* Return existing page if it is already loaded: */
-  LeptonPage* page = lepton_toplevel_search_page (toplevel, filename);
-  if (page != NULL)
-    return page;
-
-
   /* Create a new page: */
-  page = lepton_page_new (toplevel, filename);
+  LeptonPage* page = lepton_page_new (toplevel, filename);
 
   /* Switch to a new page: */
   lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets current active page of toplevel */

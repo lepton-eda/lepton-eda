@@ -845,7 +845,12 @@ tab notebook.  Returns a C TabInfo structure."
       ;; New blank page requested.
       (x_window_new_page *window)
       ;; Try to open page for filename.
-      (x_window_open_page *window *toplevel *filename)))
+      (let ((*page (lepton_toplevel_search_page *toplevel *filename)))
+        (if (null-pointer? *page)
+            ;; There is no open page for filename, open a new one.
+            (x_window_open_page *window *toplevel *filename)
+            ;; Return existing page if it is already loaded.
+            *page))))
 
 
 (define (open-tab! *window *filename)
