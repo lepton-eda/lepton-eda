@@ -1166,6 +1166,10 @@ schematic_window_show_all (SchematicWindow *w_current,
 LeptonPage*
 x_window_new_page (SchematicWindow *w_current);
 
+void
+open_page_error_dialog (SchematicWindow *w_current,
+                        const gchar *filename,
+                        GError *err);
 LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
                     LeptonToplevel *toplevel,

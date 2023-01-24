@@ -31,11 +31,6 @@ create_notebook_bottom (SchematicWindow *w_current);
 
 
 static void
-open_page_error_dialog (SchematicWindow* w_current,
-                        const gchar*    filename,
-                        GError*         err);
-
-static void
 recent_manager_add (SchematicWindow* w_current,
                     const gchar*    filename);
 
@@ -1076,7 +1071,7 @@ x_window_new_page (SchematicWindow* w_current)
  *  \param filename  File path that failed to load.
  *  \param err       Associated GError.
  */
-static void
+void
 open_page_error_dialog (SchematicWindow* w_current,
                         const gchar*    filename,
                         GError*         err)
