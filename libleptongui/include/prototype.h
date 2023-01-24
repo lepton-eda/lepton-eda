@@ -1168,6 +1168,7 @@ x_window_new_page (SchematicWindow *w_current);
 
 LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
+                    LeptonToplevel *toplevel,
                     const gchar *filename);
 void
 x_window_set_current_page (SchematicWindow *w_current,

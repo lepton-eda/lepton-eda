@@ -480,7 +480,10 @@ schematic_window_show_all (SchematicWindow *w_current,
  *  The opened page becomes the current page of <B>toplevel</B>.
  *
  *  \param [in] w_current The toplevel environment.
- *  \param [in] filename The name of the file to open or NULL for a blank page.
+ *  \param [in] toplevel The \c LeptonToplevel instance the page
+ *              belongs to.
+ *  \param [in] filename The name of the file to open or NULL for
+ *              a blank page.
  *  \returns A pointer on the new page.
  *
  *  \bug This code should check to make sure any untitled filename
@@ -488,11 +491,9 @@ schematic_window_show_all (SchematicWindow *w_current,
  */
 LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
+                    LeptonToplevel *toplevel,
                     const gchar *filename)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  g_return_val_if_fail (toplevel != NULL, NULL);
-
   /* New blank page requested: */
   if (filename == NULL)
     return x_window_new_page (w_current);

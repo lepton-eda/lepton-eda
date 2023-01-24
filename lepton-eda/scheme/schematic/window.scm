@@ -837,7 +837,11 @@ tab notebook.  Returns a C TabInfo structure."
 
 ;;; Opens a new page for *FILENAME in *WINDOW.
 (define (window-open-file! *window *filename)
-  (x_window_open_page *window *filename))
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
+
+  (x_window_open_page *window *toplevel *filename))
 
 
 (define (open-tab! *window *filename)
