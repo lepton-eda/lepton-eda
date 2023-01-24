@@ -1075,7 +1075,7 @@ x_window_new_page (SchematicWindow* w_current)
   lepton_toplevel_goto_page (toplevel, page);
   schematic_window_page_changed (w_current);
 
-  if (!quiet_mode)
+  if (!get_quiet_mode ())
     g_message (_("New file [%s]"), filename);
 
   g_free (filename);
