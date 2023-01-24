@@ -835,6 +835,11 @@ tab notebook.  Returns a C TabInfo structure."
       (x_tabs_info_add *window page-index *page *canvas *wtab))))
 
 
+;;; Opens a new page for *FILENAME in *WINDOW.
+(define (window-open-file! *window *filename)
+  (x_window_open_page *window *filename))
+
+
 (define (open-tab! *window *filename)
   "Creates a new page, page view and tab for *FILENAME in *WINDOW.
 If *FILENAME is %null-pointer, the page will be blank.  If there
@@ -845,7 +850,7 @@ the new or found page."
                     *tab-info))
 
   (define (open-new-page *tab-info)
-    (let ((*page (x_window_open_page *window *filename)))
+    (let ((*page (window-open-file! *window *filename)))
       (schematic_tab_info_set_page *tab-info *page)
       (x_window_set_current_page *window *page)
 
@@ -1012,7 +1017,7 @@ for *PAGE page will be created and set active."
             (let ((*really-new-current-page
                    (if (null-pointer? *new-current-page)
                        ;; Page wasn't found, create a new page.
-                       (x_window_open_page *window %null-pointer)
+                       (window-open-file! *window %null-pointer)
                        ;; Use found page.
                        *new-current-page)))
               ;; Change to the new current page and update display.
@@ -1360,7 +1365,7 @@ window to PAGE.  Returns PAGE."
   (define *page
     (if (true? (x_tabs_enabled))
         (open-tab! *window *filename)
-        (x_window_open_page *window *filename)))
+        (window-open-file! *window *filename)))
 
   (unless (or (null-pointer? *filename)
               (null-pointer? *page))

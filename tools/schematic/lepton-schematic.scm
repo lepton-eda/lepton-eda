@@ -234,8 +234,8 @@ Run `~A --help' for more information.\n")
         filename
         ;; Get absolute path.  At this point the filename might be
         ;; unnormalized, like /path/to/foo/../bar/baz.sch.  Bad
-        ;; filenames will be normalized in f_open (called by
-        ;; x_window_open_page). This works for Linux and MINGW32.
+        ;; filenames will be normalized in f_open().  This works
+        ;; for Linux and MINGW32.
         (string-append cwd
                        file-name-separator-string
                        filename)))
