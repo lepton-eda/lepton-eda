@@ -514,7 +514,7 @@ x_window_open_page (SchematicWindow *w_current,
   lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets current active page of toplevel */
   schematic_window_page_changed (w_current);
 
-  if (!quiet_mode)
+  if (!get_quiet_mode ())
     g_message (_("Loading schematic [%1$s]"), filename);
 
 
