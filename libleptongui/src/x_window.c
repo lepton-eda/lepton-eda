@@ -29,11 +29,6 @@ create_notebook_right (SchematicWindow *w_current);
 static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
-
-static void
-recent_manager_add (SchematicWindow* w_current,
-                    const gchar*    filename);
-
 static int
 untitled_next_index (SchematicWindow* w_current);
 
@@ -1108,7 +1103,7 @@ open_page_error_dialog (SchematicWindow* w_current,
  *  \param w_current The toplevel environment.
  *  \param filename  File name to add.
  */
-static void
+void
 recent_manager_add (SchematicWindow* w_current,
                     const gchar*    filename)
 {

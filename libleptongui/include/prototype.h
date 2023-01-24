@@ -1167,6 +1167,9 @@ LeptonPage*
 x_window_new_page (SchematicWindow *w_current);
 
 void
+recent_manager_add (SchematicWindow *w_current,
+                    const gchar *filename);
+void
 open_page_error_dialog (SchematicWindow *w_current,
                         const gchar *filename,
                         GError *err);
