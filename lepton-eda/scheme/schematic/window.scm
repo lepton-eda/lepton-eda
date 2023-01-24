@@ -841,7 +841,11 @@ tab notebook.  Returns a C TabInfo structure."
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
 
-  (x_window_open_page *window *toplevel *filename))
+  (if (null-pointer? *filename)
+      ;; New blank page requested.
+      (x_window_new_page *window)
+      ;; Try to open page for filename.
+      (x_window_open_page *window *toplevel *filename)))
 
 
 (define (open-tab! *window *filename)

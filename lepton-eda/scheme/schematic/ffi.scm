@@ -266,6 +266,7 @@
             x_widgets_toggle_widget_visibility
 
             x_window_new
+            x_window_new_page
             x_window_open_page
             x_window_save_page
             *x_window_select_object
@@ -910,6 +911,7 @@
 
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
+(define-lff x_window_new_page '* '(*))
 (define-lff x_window_open_page '* '(* * *))
 (define-lff x_window_save_page int '(* * *))
 (define-lfc *x_window_select_object)
