@@ -847,8 +847,13 @@ tab notebook.  Returns a C TabInfo structure."
       ;; Try to open page for filename.
       (let ((*page (lepton_toplevel_search_page *toplevel *filename)))
         (if (null-pointer? *page)
-            ;; There is no open page for filename, open a new one.
-            (x_window_open_page *window *toplevel *filename)
+            ;; There is no open page for filename, create a new page.
+            (let ((*new-page (lepton_page_new *toplevel *filename)))
+              ;; Switch to the new page.  NOTE: the call sets
+              ;; the current active page of toplevel.
+              (lepton_toplevel_goto_page *toplevel *new-page)
+              (schematic_window_page_changed *window)
+              (x_window_open_page *window *toplevel *new-page *filename))
             ;; Return existing page if it is already loaded.
             *page))))
 

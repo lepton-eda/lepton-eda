@@ -482,6 +482,7 @@ schematic_window_show_all (SchematicWindow *w_current,
  *  \param [in] w_current The toplevel environment.
  *  \param [in] toplevel The \c LeptonToplevel instance the page
  *              belongs to.
+ *  \param [in] page The \c LeptonPage instance.
  *  \param [in] filename The name of the file to open or NULL for
  *              a blank page.
  *  \returns A pointer on the new page.
@@ -492,15 +493,9 @@ schematic_window_show_all (SchematicWindow *w_current,
 LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
                     LeptonToplevel *toplevel,
+                    LeptonPage *page,
                     const gchar *filename)
 {
-  /* Create a new page: */
-  LeptonPage* page = lepton_page_new (toplevel, filename);
-
-  /* Switch to a new page: */
-  lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets current active page of toplevel */
-  schematic_window_page_changed (w_current);
-
   if (!get_quiet_mode ())
     g_message (_("Loading schematic [%1$s]"), filename);
 
