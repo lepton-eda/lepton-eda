@@ -533,8 +533,11 @@
 (define-lff schematic_page_select_widget_set_callback void '(* *))
 (define-lff pagesel_callback_selection_changed '* '(* *))
 
+;;; lepton-schematic.c
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
+
+;;; x_color.c
 (define-lff x_color_init void '())
 
 ;;; s_attrib.c
