@@ -45,9 +45,6 @@ untitled_next_index (SchematicWindow* w_current);
 static gchar*
 untitled_filename (SchematicWindow* w_current, gboolean log_skipped);
 
-static LeptonPage*
-x_window_new_page (SchematicWindow* w_current);
-
 
 /*! \brief Create a schematic drawing canvas.
  *  \par Function Description
@@ -1057,7 +1054,7 @@ create_notebook_bottom (SchematicWindow* w_current)
  *
  *  \param w_current The toplevel environment.
  */
-static LeptonPage*
+LeptonPage*
 x_window_new_page (SchematicWindow* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);

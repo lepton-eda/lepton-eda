@@ -1164,6 +1164,9 @@ void
 schematic_window_show_all (SchematicWindow *w_current,
                            GtkWidget *main_window);
 LeptonPage*
+x_window_new_page (SchematicWindow *w_current);
+
+LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
                     const gchar *filename);
 void
