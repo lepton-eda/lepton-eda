@@ -53,6 +53,7 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic gui keymap)
   #:use-module (schematic gui stroke)
+  #:use-module (schematic hook)
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic rc)
@@ -835,7 +836,15 @@ tab notebook.  Returns a C TabInfo structure."
       (x_tabs_info_add *window page-index *page *canvas *wtab))))
 
 
-;;; Opens a new page for *FILENAME in *WINDOW.
+;;; Opens a new page for *FILENAME in *WINDOW.  If there is no
+;;; page for *FILENAME in toplevel's list of pages, it creates a
+;;; new page, loads the file in it and returns a pointer to the
+;;; new page. Otherwise it returns a pointer to the existing page.
+;;; If the filename passed is %null-pointer, this function creates
+;;; an empty, untitled page.  The name of the untitled page is
+;;; built from configuration data ("default-filename" in the
+;;; "schematic" config group) and an incrementing counter for
+;;; uniqueness.  The opened page becomes the current page.
 (define (window-open-file! *window *filename)
   (define *toplevel (schematic_window_get_toplevel *window))
   (define quiet-mode? (true? (get_quiet_mode)))
@@ -865,7 +874,15 @@ tab notebook.  Returns a C TabInfo structure."
               (lepton_page_delete *toplevel *new-page)
               (x_window_new_page *window))
 
-            (x_window_open_page *window *toplevel *new-page *filename)))))
+            (begin
+              ;; Run hook.
+              (run-hook open-page-hook (pointer->page *new-page))
+              ;; Add page file name to the recent file list.
+              (recent_manager_add *window (lepton_page_get_filename *new-page))
+              ;; Save current state of the page.
+              (o_undo_savestate *window *new-page FALSE)
+              ;; Return new page.
+              *new-page)))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))

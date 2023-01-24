@@ -452,55 +452,6 @@ schematic_window_show_all (SchematicWindow *w_current,
 }
 
 
-/*! \brief Opens a new page from a file.
- *  \private
- *  \par Function Description
- *  This function opens the file whose name is <B>filename</B> in a
- *  new LeptonPage of <B>toplevel</B>.
- *
- *  If there is no page for <B>filename</B> in <B>toplevel</B>'s
- *  list of pages, it creates a new LeptonPage, loads the file in
- *  it and returns a pointer on the new page. Otherwise it returns
- *  a pointer on the existing page.
- *
- *  If the filename passed is NULL, this function creates an empty,
- *  untitled page.  The name of the untitled page is build from
- *  configuration data ('untitled-name') and a counter for uniqueness.
- *
- *  The opened page becomes the current page of <B>toplevel</B>.
- *
- *  \param [in] w_current The toplevel environment.
- *  \param [in] toplevel The \c LeptonToplevel instance the page
- *              belongs to.
- *  \param [in] page The \c LeptonPage instance.
- *  \param [in] filename The name of the file to open or NULL for
- *              a blank page.
- *  \returns A pointer on the new page.
- *
- *  \bug This code should check to make sure any untitled filename
- *  does not conflict with a file on disk.
- */
-LeptonPage*
-x_window_open_page (SchematicWindow *w_current,
-                    LeptonToplevel *toplevel,
-                    LeptonPage *page,
-                    const gchar *filename)
-{
-  /* Run hook: */
-  g_run_hook_page (w_current, "open-page-hook", page);
-
-  /* Add page file name to the recent file list: */
-  recent_manager_add (w_current, filename);
-
-  /* Save current state of the page: */
-  o_undo_savestate (w_current, page, FALSE);
-
-  return page;
-
-} /* x_window_open_page() */
-
-
-
 /*! \brief Changes the current page.
  *  \private
  *  \par Function Description
