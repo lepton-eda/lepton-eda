@@ -165,6 +165,7 @@
             s_clib_refresh
             s_clib_free
 
+            get_quiet_mode
             set_quiet_mode
             set_verbose_mode
             x_color_init
@@ -647,6 +648,7 @@
 (define-lff pagesel_callback_selection_changed '* '(* *))
 
 ;;; lepton-schematic.c
+(define-lff get_quiet_mode int '())
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 

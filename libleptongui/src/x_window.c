@@ -496,10 +496,6 @@ x_window_open_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename)
 {
-  if (!get_quiet_mode ())
-    g_message (_("Loading schematic [%1$s]"), filename);
-
-
   /* Try to load [filename]: */
   GError* err = NULL;
   if (!schematic_file_open (w_current, page, filename, &err))

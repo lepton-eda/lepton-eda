@@ -838,12 +838,21 @@ tab notebook.  Returns a C TabInfo structure."
 ;;; Opens a new page for *FILENAME in *WINDOW.
 (define (window-open-file! *window *filename)
   (define *toplevel (schematic_window_get_toplevel *window))
+  (define quiet-mode? (true? (get_quiet_mode)))
+  (define (load-schematic-message)
+    (unless quiet-mode?
+      (log! 'message
+            (G_ "Loading schematic ~S")
+            (pointer->string *filename))))
+
   (define (*make-new-page)
     (let ((*new-page (lepton_page_new *toplevel *filename)))
       ;; Switch to the new page.  NOTE: the call sets
       ;; the current active page of toplevel.
       (lepton_toplevel_goto_page *toplevel *new-page)
       (schematic_window_page_changed *window)
+
+      (load-schematic-message)
       (x_window_open_page *window *toplevel *new-page *filename)))
 
   (when (null-pointer? *toplevel)
