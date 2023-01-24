@@ -51,6 +51,13 @@ set_quiet_mode () {
 }
 
 
+gboolean
+get_quiet_mode ()
+{
+  return quiet_mode;
+}
+
+
 #ifdef ENABLE_GTK3
 static GtkApplication *app = NULL;
 #endif

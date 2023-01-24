@@ -82,6 +82,9 @@ set_verbose_mode ();
 void
 set_quiet_mode ();
 
+gboolean
+get_quiet_mode ();
+
 int
 lepton_schematic_run (gpointer activate);
 
