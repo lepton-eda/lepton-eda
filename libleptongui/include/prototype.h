@@ -1167,8 +1167,8 @@ open_page_error_dialog (SchematicWindow *w_current,
                         const gchar *filename,
                         char *error_message);
 gchar*
-untitled_filename (SchematicWindow *w_current,
-                   gboolean log_skipped);
+untitled_filename (SchematicWindow *w_current);
+
 void
 x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page);

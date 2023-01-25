@@ -849,7 +849,7 @@ tab notebook.  Returns a C TabInfo structure."
       (error "NULL toplevel."))
 
     ;; New page file name.
-    (let* ((*filename (untitled_filename *window TRUE))
+    (let* ((*filename (untitled_filename *window))
            ;; Create a new page.
            (*page (lepton_page_new *toplevel *filename)))
 

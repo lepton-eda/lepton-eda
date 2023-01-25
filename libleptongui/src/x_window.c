@@ -1037,18 +1037,16 @@ untitled_next_index (SchematicWindow* w_current)
  *  \par Function Description
  *
  * Determine "untitled" schematic file name (used for new pages)
- * and build full path from this name and current working directory.
- * When constructing this name, avoid reusing names of already opened
- * files and existing files in current directory; if \a log_skipped
- * is TRUE, report such (avoided) names to the log.
+ * and build full path from this name and current working
+ * directory.  When constructing this name, avoid reusing names of
+ * already opened files and existing files in current directory.
+ * Such (avoided) names are reported to the log.
  *
  *  \param  w_current   The toplevel environment.
- *  \param  log_skipped Print skipped file names to the log.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
-untitled_filename (SchematicWindow* w_current,
-                   gboolean log_skipped)
+untitled_filename (SchematicWindow* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1086,10 +1084,7 @@ untitled_filename (SchematicWindow* w_current,
     if ( lepton_toplevel_search_page_by_basename (toplevel, fname) ||
          g_file_test (fpath, G_FILE_TEST_EXISTS) )
     {
-      if (log_skipped)
-      {
-        g_message (_("Skipping existing file [%s]"), fname);
-      }
+      g_message (_("Skipping existing file [%s]"), fname);
 
       g_free (fname);
       g_free (fpath);

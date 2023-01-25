@@ -915,7 +915,7 @@
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
 (define-lff open_page_error_dialog void '(* * *))
-(define-lff untitled_filename '* (list '* int))
+(define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lfc *x_window_select_object)
