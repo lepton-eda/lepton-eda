@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -813,7 +813,8 @@ x_dialog_close_window (GschemToplevel *w_current)
 
   keep_page = schematic_window_get_active_page (w_current);
 
-  for ( iter = lepton_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
+  for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)),
+         unsaved_pages = NULL;
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
