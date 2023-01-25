@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -98,6 +98,12 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
+(define (close-window-dialog window)
+  (define *window (check-window window 1))
+
+  (true? (x_dialog_close_window *window)))
+
+
 (define (close-window! window)
   "Closes WINDOW."
   (define *window (window->pointer window))
@@ -109,7 +115,7 @@
       (callback-cancel *window))
 
     ;; Last chance to save possible unsaved pages.
-    (when (true? (x_dialog_close_window *window))
+    (when (close-window-dialog window)
       ;; Close the window if the user didn't cancel the close.
       (x_clipboard_finish *window)
       (let ((*cswindow (schematic_window_get_compselect_widget *window))
