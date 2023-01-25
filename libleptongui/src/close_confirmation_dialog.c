@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -799,20 +799,19 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
  *  must not be closed.
  *
  *  \param [in] w_current The toplevel environment.
+ *  \param [in] keep_page The currently active page to restore thereafter.
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (SchematicWindow *w_current)
+x_dialog_close_window (SchematicWindow *w_current,
+                       LeptonPage *keep_page)
 {
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GList *iter;
   GtkWidget *dialog;
   LeptonPage *p_current;
-  LeptonPage *keep_page;
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
-
-  keep_page = schematic_window_get_active_page (w_current);
 
   for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)),
          unsaved_pages = NULL;
