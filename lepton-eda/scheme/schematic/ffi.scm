@@ -267,8 +267,8 @@
             x_widgets_toggle_widget_visibility
 
             x_window_new
-            x_window_new_page
             open_page_error_dialog
+            untitled_filename
             recent_manager_add
             x_window_save_page
             *x_window_select_object
@@ -914,8 +914,8 @@
 
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
-(define-lff x_window_new_page '* '(*))
 (define-lff open_page_error_dialog void '(* * *))
+(define-lff untitled_filename '* (list '* int))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lfc *x_window_select_object)

@@ -837,6 +837,43 @@ tab notebook.  Returns a C TabInfo structure."
       (x_tabs_info_add *window page-index *page *canvas *wtab))))
 
 
+;;; Creates and returns a new untitled page in *WINDOW.
+;;; TODO: Do further refactoring: this function should be used
+;;; instead of x_window_open_page() when a new page is requested.
+(define (window-make-untitled-page *window)
+  (define quiet-mode? (true? (get_quiet_mode)))
+
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*toplevel (schematic_window_get_toplevel *window)))
+    (when (null-pointer? *toplevel)
+      (error "NULL toplevel."))
+
+    ;; New page file name.
+    (let* ((*filename (untitled_filename *window TRUE))
+           ;; Create a new page.
+           (*page (lepton_page_new *toplevel *filename)))
+
+      ;; Switch to the new page.
+      (lepton_toplevel_goto_page *toplevel *page)
+      (schematic_window_page_changed *window)
+
+      (unless quiet-mode?
+        (log! 'message (G_ "New file ~S") (pointer->string *filename)))
+
+      (g_free *filename)
+
+      ;; Run new page hook.
+      (with-window *window
+        (run-hook new-page-hook (pointer->page *page)))
+
+      ;; Save current state of the page.
+      (o_undo_savestate *window *page FALSE)
+
+      *page)))
+
+
 ;;; Opens a new page for *FILENAME in *WINDOW.  If there is no
 ;;; page for *FILENAME in toplevel's list of pages, it creates a
 ;;; new page, loads the file in it and returns a pointer to the
@@ -884,7 +921,8 @@ tab notebook.  Returns a C TabInfo structure."
               ;; Loading failed.  Delete the page and open a new
               ;; blank one.
               (lepton_page_delete *toplevel *new-page)
-              (x_window_new_page *window))
+              ;; Open and return a new blank page.
+              (window-make-untitled-page *window))
 
             (begin
               ;; Run hook.
@@ -901,7 +939,7 @@ tab notebook.  Returns a C TabInfo structure."
 
   (if (null-pointer? *filename)
       ;; New blank page requested.
-      (x_window_new_page *window)
+      (window-make-untitled-page *window)
       ;; Try to open page for filename.
       (let ((*page (lepton_toplevel_search_page *toplevel *filename)))
         (if (null-pointer? *page)

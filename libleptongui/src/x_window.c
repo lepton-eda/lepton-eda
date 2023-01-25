@@ -952,48 +952,6 @@ create_notebook_bottom (SchematicWindow* w_current)
 
 
 
-/*! \brief Create new blank page.
- *
- * \todo Do further refactoring: this function should be used
- *       instead of x_window_open_page() when a new page is reqested.
- *
- *  \param w_current The toplevel environment.
- */
-LeptonPage*
-x_window_new_page (SchematicWindow* w_current)
-{
-  g_return_val_if_fail (w_current != NULL, NULL);
-
-  LeptonToplevel* toplevel = schematic_window_get_toplevel (w_current);
-  g_return_val_if_fail (toplevel != NULL, NULL);
-
-  /* New page file name: */
-  gchar* filename = untitled_filename (w_current, TRUE);
-
-  /* Create a new page: */
-  LeptonPage* page = lepton_page_new (toplevel, filename);
-
-  /* Switch to a new page: */
-  lepton_toplevel_goto_page (toplevel, page);
-  schematic_window_page_changed (w_current);
-
-  if (!get_quiet_mode ())
-    g_message (_("New file [%s]"), filename);
-
-  g_free (filename);
-
-  /* Run hook: */
-  g_run_hook_page (w_current, "new-page-hook", page);
-
-  /* Save current state of the page: */
-  o_undo_savestate (w_current, page, FALSE);
-
-  return page;
-
-} /* x_window_new_page() */
-
-
-
 /*! \brief Show "Failed to load file" dialog.
  *
  *  \param w_current The toplevel environment.
