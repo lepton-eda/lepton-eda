@@ -32,10 +32,6 @@ g_run_hook_object_list (SchematicWindow *w_current,
                         const char *name,
                         GList *obj_lst);
 void
-g_run_hook_page (SchematicWindow *w_current,
-                 const char *name,
-                 LeptonPage *page);
-void
 g_run_hook_action_mode (SchematicWindow *w_current,
                         const char *name,
                         const gchar *action_mode);

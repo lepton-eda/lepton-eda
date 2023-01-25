@@ -114,33 +114,6 @@ g_run_hook_object (SchematicWindow *w_current,
   scm_remember_upto_here_1 (expr);
 }
 
-/*! \brief Runs a page hook.
- * \par Function Description
- * Runs a hook called \a name, which should expect the single
- * \c LeptonPage \a page as its argument.
- *
- * \param w_current The current #SchematicWindow object.
- * \param name name of hook to run
- * \param page \c LeptonPage argument for hook.
- */
-void
-g_run_hook_page (SchematicWindow *w_current,
-                 const char *name,
-                 LeptonPage *page)
-{
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-
-  SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
-                         g_get_hook_by_name (name),
-                         scm_list_2 (scm_from_utf8_symbol ("pointer->page"),
-                                     scm_from_pointer (page, NULL)));
-
-  g_scm_eval_protected (expr, scm_interaction_environment ());
-  scm_dynwind_end ();
-  scm_remember_upto_here_1 (expr);
-}
-
 /*! \brief Runs a change action mode hook.
  * \par Function Description
  * Runs a hook called \a name, which should expect the single \a
