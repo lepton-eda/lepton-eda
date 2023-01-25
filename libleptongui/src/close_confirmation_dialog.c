@@ -836,6 +836,13 @@ schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
 }
 
 
+int
+schematic_close_confirmation_dialog_run (GtkWidget *dialog)
+{
+  return gtk_dialog_run (GTK_DIALOG (dialog));
+}
+
+
 /*! \brief Asks for confirmation before closing a window.
  *  \par Function Description
  *  This function asks the user to confirm its closing order for
@@ -871,7 +878,8 @@ x_dialog_close_window (SchematicWindow *w_current,
                                 GTK_WINDOW (main_window));
 
   g_list_free (unsaved_pages);
-  switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
+  switch (schematic_close_confirmation_dialog_run (dialog))
+  {
       case GTK_RESPONSE_NO:
         /* action selected: close without saving */
         /* discard changes, ok to close window */
