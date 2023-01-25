@@ -869,6 +869,10 @@ gboolean
 x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page);
 gboolean
+schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
+                                                   SchematicWindow *w_current,
+                                                   LeptonToplevel *toplevel);
+gboolean
 x_dialog_close_window (SchematicWindow *w_current);
 
 /* x_event.c */

@@ -786,6 +786,53 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
   return result;
 }
 
+
+/*! \brief Save pages selected in the Close confirmation dialog.
+ *
+ *  \par Function Description
+ *  The function gets the list of pages to save from the Close
+ *  confirmation dialog and calls an appropriate callback to save
+ *  them all.
+ *
+ *  \param [in] dialog The Close confirmation dialog widget.
+ *  \param [in] w_current The toplevel #SchematicWindow instance.
+ *  \param [in] toplevel The \c LeptonToplevel instance of the
+ *                       schematic window.
+ *
+ *  \retval TRUE if all the pages have been successfully saved,
+ *  \retval FALSE otherwise.
+ */
+gboolean
+schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
+                                                   SchematicWindow *w_current,
+                                                   LeptonToplevel *toplevel)
+{
+  gboolean ret = FALSE;
+  LeptonPage *p_current;
+  GList *p_unsaved;
+  GList *selected_pages = NULL;
+
+  g_object_get (dialog,
+                "selected-pages", &selected_pages,
+                NULL);
+  for (p_unsaved = selected_pages, ret = TRUE;
+       p_unsaved != NULL;
+       p_unsaved = g_list_next (p_unsaved)) {
+    p_current = (LeptonPage*) p_unsaved->data;
+
+    lepton_toplevel_goto_page (toplevel, p_current);
+    schematic_window_page_changed (w_current);
+
+    i_callback_file_save (NULL, w_current);
+    /* if user cancelled previous, do not close window */
+    ret &= !lepton_page_get_changed (p_current);
+  }
+  g_list_free (selected_pages);
+
+  return ret;
+}
+
+
 /*! \brief Asks for confirmation before closing a window.
  *  \par Function Description
  *  This function asks the user to confirm its closing order for
@@ -808,8 +855,7 @@ x_dialog_close_window (SchematicWindow *w_current)
   GList *iter;
   GtkWidget *dialog;
   LeptonPage *p_current;
-  GList *unsaved_pages, *p_unsaved;
-  GList *selected_pages = NULL;
+  GList *unsaved_pages;
   gboolean ret = FALSE;
 
   for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)),
@@ -849,22 +895,9 @@ x_dialog_close_window (SchematicWindow *w_current)
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        g_object_get (dialog,
-                      "selected-pages", &selected_pages,
-                      NULL);
-        for (p_unsaved = selected_pages, ret = TRUE;
-             p_unsaved != NULL;
-             p_unsaved = g_list_next (p_unsaved)) {
-          p_current = (LeptonPage*) p_unsaved->data;
-
-          lepton_toplevel_goto_page (toplevel, p_current);
-          schematic_window_page_changed (w_current);
-
-          i_callback_file_save (NULL, w_current);
-          /* if user cancelled previous, do not close window */
-          ret &= !lepton_page_get_changed (p_current);
-        }
-        g_list_free (selected_pages);
+        ret = schematic_close_confirmation_dialog_save_selected (dialog,
+                                                                 w_current,
+                                                                 toplevel);
         break;
 
       case GTK_RESPONSE_CANCEL:
