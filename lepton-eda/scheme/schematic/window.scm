@@ -838,8 +838,6 @@ tab notebook.  Returns a C TabInfo structure."
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
-;;; TODO: Do further refactoring: this function should be used
-;;; instead of x_window_open_page() when a new page is requested.
 (define (window-make-untitled-page *window)
   (define quiet-mode? (true? (get_quiet_mode)))
 
@@ -1126,7 +1124,7 @@ for *PAGE page will be created and set active."
             (let ((*really-new-current-page
                    (if (null-pointer? *new-current-page)
                        ;; Page wasn't found, create a new page.
-                       (window-open-file! *window %null-pointer)
+                       (window-make-untitled-page *window)
                        ;; Use found page.
                        *new-current-page)))
               ;; Change to the new current page and update display.
