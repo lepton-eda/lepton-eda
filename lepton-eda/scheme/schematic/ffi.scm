@@ -355,7 +355,6 @@
             x_tabs_nbook_page_close
             x_tabs_page_on_reordered
             x_tabs_tl_page_cur
-            x_tabs_tl_page_cur_set
             x_tabs_tl_page_find
             x_tabs_tl_pview_cur
             x_tabs_tl_pview_cur_set
@@ -1042,7 +1041,6 @@
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lff schematic_tabs_add_canvas void '(* *))
 (define-lff x_tabs_tl_page_cur '* '(*))
-(define-lff x_tabs_tl_page_cur_set void '(* *))
 (define-lff x_tabs_tl_page_find int '(* *))
 (define-lff x_tabs_tl_pview_cur '* '(*))
 (define-lff x_tabs_tl_pview_cur_set void '(* *))

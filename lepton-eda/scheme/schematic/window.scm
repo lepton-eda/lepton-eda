@@ -1271,7 +1271,8 @@ for *PAGE page will be created and set active."
 
         (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
         (let ((*page (schematic_tab_info_get_page *tab-info)))
-          (x_tabs_tl_page_cur_set *window *page)
+          (window-set-toplevel-page! (pointer->window *window)
+                                     (pointer->page *page))
 
           (x_window_set_current_page *window *page))))))
 

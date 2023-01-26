@@ -1279,9 +1279,6 @@ x_tabs_tl_page_find (SchematicWindow* w_current,
 LeptonPage*
 x_tabs_tl_page_cur (SchematicWindow *w_current);
 
-void
-x_tabs_tl_page_cur_set (SchematicWindow *w_current,
-                        LeptonPage *page);
 SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current);
 
