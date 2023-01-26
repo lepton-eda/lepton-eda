@@ -809,6 +809,7 @@ x_dialog_close_window (SchematicWindow *w_current)
   GtkWidget *dialog;
   LeptonPage *p_current;
   GList *unsaved_pages, *p_unsaved;
+  GList *selected_pages = NULL;
   gboolean ret = FALSE;
 
   for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)),
@@ -849,9 +850,9 @@ x_dialog_close_window (SchematicWindow *w_current)
       case GTK_RESPONSE_YES:
         /* action selected: save */
         g_object_get (dialog,
-                      "selected-pages", &unsaved_pages,
+                      "selected-pages", &selected_pages,
                       NULL);
-        for (p_unsaved = unsaved_pages, ret = TRUE;
+        for (p_unsaved = selected_pages, ret = TRUE;
              p_unsaved != NULL;
              p_unsaved = g_list_next (p_unsaved)) {
           p_current = (LeptonPage*) p_unsaved->data;
@@ -863,7 +864,7 @@ x_dialog_close_window (SchematicWindow *w_current)
           /* if user cancelled previous, do not close window */
           ret &= !lepton_page_get_changed (p_current);
         }
-        g_list_free (unsaved_pages);
+        g_list_free (selected_pages);
         break;
 
       case GTK_RESPONSE_CANCEL:
