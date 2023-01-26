@@ -109,9 +109,14 @@
 
 (define (close-window-dialog window)
   (define *window (check-window window 1))
-  (define *active-page (schematic_window_get_active_page *window))
+  (define active-page
+    (pointer->page (schematic_window_get_active_page *window)))
+  (define result (true? (x_dialog_close_window *window)))
 
-  (true? (x_dialog_close_window *window *active-page)))
+  ;; Switch back to the page we were on.
+  (window-set-toplevel-page! window active-page)
+
+  result)
 
 
 (define (close-window! window)

@@ -799,12 +799,10 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
  *  must not be closed.
  *
  *  \param [in] w_current The toplevel environment.
- *  \param [in] keep_page The currently active page to restore thereafter.
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (SchematicWindow *w_current,
-                       LeptonPage *keep_page)
+x_dialog_close_window (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GList *iter;
@@ -878,11 +876,6 @@ x_dialog_close_window (SchematicWindow *w_current,
         break;
   }
   gtk_widget_destroy (dialog);
-
-  /* Switch back to the page we were on */
-  g_return_val_if_fail (keep_page != NULL, ret);
-  lepton_toplevel_goto_page (toplevel, keep_page);
-  schematic_window_page_changed (w_current);
 
   return ret;
 }

@@ -869,8 +869,7 @@ gboolean
 x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page);
 gboolean
-x_dialog_close_window (SchematicWindow *w_current,
-                       LeptonPage *keep_page);
+x_dialog_close_window (SchematicWindow *w_current);
 
 /* x_event.c */
 gboolean
