@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2025 Lepton EDA Contributors
+ * Copyright (C) 2018-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -380,22 +380,6 @@ LeptonPage*
 x_tabs_tl_page_cur (SchematicWindow* w_current)
 {
   return schematic_window_get_active_page (w_current);
-}
-
-
-
-void
-x_tabs_tl_page_cur_set (SchematicWindow* w_current,
-                        LeptonPage* page)
-{
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-  lepton_toplevel_goto_page (toplevel, page);
-
-  /* NOTE: schematic_window_page_changed() after
-   * lepton_toplevel_goto_page():
-  */
-  schematic_window_page_changed (w_current);
 }
 
 
