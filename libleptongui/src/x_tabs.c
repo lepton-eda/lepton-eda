@@ -376,14 +376,6 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
  *
  */
 
-LeptonPage*
-x_tabs_tl_page_cur (SchematicWindow* w_current)
-{
-  return schematic_window_get_active_page (w_current);
-}
-
-
-
 SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current)
 {
