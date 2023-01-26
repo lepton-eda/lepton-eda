@@ -1251,7 +1251,7 @@ for *PAGE page will be created and set active."
 
 ;;; GtkNotebook "switch-page" signal handler.
 (define (callback-tabs-switch-page *notebook *wtab id *window)
-  (define *current-page (x_tabs_tl_page_cur *window))
+  (define *current-page (schematic_window_get_active_page *window))
   (define *current-canvas (x_tabs_tl_pview_cur *window) )
 
   (unless (and (null-pointer? *current-page)
