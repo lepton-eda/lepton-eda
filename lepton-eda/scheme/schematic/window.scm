@@ -1270,9 +1270,10 @@ for *PAGE page will be created and set active."
         (callback-cancel *window)
 
         (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
-        (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))
+        (let ((*page (schematic_tab_info_get_page *tab-info)))
+          (x_tabs_tl_page_cur_set *window *page)
 
-        (x_window_set_current_page *window (schematic_tab_info_get_page *tab-info))))))
+          (x_window_set_current_page *window *page))))))
 
 (define *callback-tabs-switch-page
   (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))
