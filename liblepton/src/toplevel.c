@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,6 +179,38 @@ lepton_toplevel_set_pages (LeptonToplevel *toplevel,
   g_return_if_fail (toplevel != NULL);
 
   toplevel->pages = pages;
+}
+
+
+/*! \brief Return the list of changed pages of #LeptonToplevel.
+ *
+ *  \par Function Description
+ *  The function creates and returns the list of changed pages for
+ *  the toplevel instance #LeptonToplevel.
+ *
+ *  \param toplevel The LeptonToplevel object.
+ *  \return The list of changed #LeptonPage objects.
+ */
+GList*
+lepton_toplevel_get_changed_pages (LeptonToplevel *toplevel)
+{
+  LeptonPage *p_current;
+  GList *iter;
+  GList *unsaved_pages = NULL;
+
+  for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
+       iter != NULL;
+       iter = g_list_next(iter))
+  {
+    p_current = (LeptonPage*) iter->data;
+
+    if (lepton_page_get_changed (p_current))
+    {
+      unsaved_pages = g_list_append (unsaved_pages, (gpointer) p_current);
+    }
+  }
+
+  return unsaved_pages;
 }
 
 

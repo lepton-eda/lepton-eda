@@ -852,24 +852,11 @@ gboolean
 x_dialog_close_window (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  GList *iter;
   GtkWidget *dialog;
-  LeptonPage *p_current;
   GList *unsaved_pages;
   gboolean ret = FALSE;
 
-  for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)),
-         unsaved_pages = NULL;
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage*)iter->data;
-
-    if (lepton_page_get_changed (p_current))
-    {
-      unsaved_pages = g_list_append (unsaved_pages, (gpointer)p_current);
-    }
-  }
+  unsaved_pages = lepton_toplevel_get_changed_pages (toplevel);
 
   if (unsaved_pages == NULL) {
     /* no page with unsaved changes, close window */
