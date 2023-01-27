@@ -109,6 +109,7 @@
 ;;; Save all opened pages.
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
   (define *window (*current-window))
+  (define tabs-enabled? (true? (x_tabs_enabled)))
 
   (define (untitled? *page)
     (true? (x_window_untitled_page *page)))
@@ -132,7 +133,7 @@
                                      (string->pointer (page-filename page)))))
 
       ;; Update tab view.
-      (when (true? (x_tabs_enabled))
+      (when tabs-enabled?
         (x_tabs_hdr_update *window *page))))
 
   (define (save-all-pages)
