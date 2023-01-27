@@ -114,6 +114,11 @@
   (define (untitled? *page)
     (true? (x_window_untitled_page *page)))
 
+  ;; Update tab view.
+  (define (update-header! *page)
+    (when tabs-enabled?
+      (x_tabs_hdr_update *window *page)))
+
   ;; Returns #t if untitled page has been successfully saved.
   (define (save-untitled-page! *page)
     ;; For untitled pages, open "Save as..." dialog.
@@ -131,10 +136,7 @@
           (true? (x_window_save_page *window
                                      *page
                                      (string->pointer (page-filename page)))))
-
-      ;; Update tab view.
-      (when tabs-enabled?
-        (x_tabs_hdr_update *window *page))))
+      (update-header! *page)))
 
   (define (save-all-pages)
     (map save-page! (active-pages)))
