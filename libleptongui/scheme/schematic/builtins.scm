@@ -110,9 +110,12 @@
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
   (define *window (*current-window))
 
+  (define (untitled? *page)
+    (true? (x_window_untitled_page *page)))
+
   (define (save-page! page)
     (let ((*page (page->pointer page)))
-      (if (true? (x_window_untitled_page *page))
+      (if (untitled? *page)
           ;; For untitled pages, open "Save as..." dialog.
           (let ((bv (make-bytevector (sizeof int) 0)))
             ;; Skip the result if the File save dialog has been cancelled.
