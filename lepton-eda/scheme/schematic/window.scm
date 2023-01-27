@@ -152,13 +152,7 @@
   (define *window (window->pointer window))
   (define last-window? (= (length (schematic-windows)) 1))
 
-  ;; If we're closing whilst inside an action, re-wind the page
-  ;; contents back to their state before we started.
-  (when (in-action? window)
-    (callback-cancel *window))
-
-  ;; Last chance to save possible unsaved pages.
-  (when (close-window-dialog window)
+  (define (close!)
     ;; Close the window if the user didn't cancel the close.
     (x_clipboard_finish *window)
 
@@ -199,7 +193,16 @@
       ;; Check whether the main loop is running.
       (if (zero? (gtk_main_level))
           (primitive-exit 0)
-          (gtk_main_quit)))))
+          (gtk_main_quit))))
+
+  ;; If we're closing whilst inside an action, re-wind the page
+  ;; contents back to their state before we started.
+  (when (in-action? window)
+    (callback-cancel *window))
+
+  ;; Last chance to save possible unsaved pages.
+  (when (close-window-dialog window)
+    (close!)))
 
 
 (define (callback-close-schematic-window *widget *event *window)
