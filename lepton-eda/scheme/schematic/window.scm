@@ -107,7 +107,7 @@
   (schematic_window_page_changed *window))
 
 
-(define (run-close-window-dialog *window *changed-pages)
+(define (close-window-dialog *window *changed-pages)
   (define active-page
     (pointer->page (schematic_window_get_active_page *window)))
   (define window (pointer->window *window))
@@ -196,7 +196,7 @@
   ;; If there is no page with unsaved changes, just close the
   ;; window.  Otherwise, run the close confirmation dialog.
   (when (or (null-pointer? *unsaved-pages)
-            (run-close-window-dialog *window *unsaved-pages))
+            (close-window-dialog *window *unsaved-pages))
     (close!)))
 
 
