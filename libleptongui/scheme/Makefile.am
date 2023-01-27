@@ -28,6 +28,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/ffi/gobject.scm \
 	schematic/ffi/gtk.scm \
 	schematic/doc.scm \
+	schematic/gtk/helper.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
