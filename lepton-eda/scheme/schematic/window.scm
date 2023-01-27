@@ -107,23 +107,27 @@
   (schematic_window_page_changed *window))
 
 
+(define (run-close-window-dialog *window *changed-pages)
+  (define active-page
+    (pointer->page (schematic_window_get_active_page *window)))
+  (define window (pointer->window *window))
+  (define close?
+    (true? (x_dialog_close_window *window *changed-pages)))
+
+  ;; Switch back to the page we were on.
+  (window-set-toplevel-page! window active-page)
+  close?)
+
+
 (define (close-window-dialog window)
   (define *window (check-window window 1))
   (define *toplevel (schematic_window_get_toplevel *window))
   (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
-  (define active-page
-    (pointer->page (schematic_window_get_active_page *window)))
 
   ;; If there is no page with unsaved changes, just close the
   ;; window.  Otherwise, run the close confirmation dialog.
-  (define result (or (null-pointer? *unsaved-pages)
-                     (true? (x_dialog_close_window *window
-                                                   *unsaved-pages))))
-
-  ;; Switch back to the page we were on.
-  (window-set-toplevel-page! window active-page)
-
-  result)
+  (or (null-pointer? *unsaved-pages)
+      (run-close-window-dialog *window *unsaved-pages)))
 
 
 (define (close-window! window)
