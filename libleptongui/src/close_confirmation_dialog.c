@@ -824,7 +824,10 @@ schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
     schematic_window_page_changed (w_current);
 
     i_callback_file_save (NULL, w_current);
-    /* if user cancelled previous, do not close window */
+    /* For untitled pages, the above function starts the file name
+    selection dialog.  If the user cancels it for a page so the
+    page remains changed but unsaved, FALSE is returned and the
+    window won't be closed. */
     ret &= !lepton_page_get_changed (p_current);
   }
   g_list_free (selected_pages);
