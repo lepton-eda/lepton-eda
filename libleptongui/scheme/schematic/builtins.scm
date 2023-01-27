@@ -115,9 +115,9 @@
     (true? (x_window_untitled_page *page)))
 
   ;; Update tab view.
-  (define (update-header! *page)
+  (define (update-header! page)
     (when tabs-enabled?
-      (x_tabs_hdr_update *window *page)))
+      (x_tabs_hdr_update *window (page->pointer page))))
 
   ;; Returns #t if untitled page has been successfully saved or
   ;; saving has been cancelled.
@@ -136,11 +136,15 @@
           ;; Simply save any other page.
           (true? (x_window_save_page *window
                                      *page
-                                     (string->pointer (page-filename page)))))
-      (update-header! *page)))
+                                     (string->pointer (page-filename page)))))))
+
+  (define (save-page-and-update-header! page)
+    (let ((saved? (save-page! page)))
+      (update-header! page)
+      saved?))
 
   (define (save-all-pages)
-    (map save-page! (active-pages)))
+    (map save-page-and-update-header! (active-pages)))
 
   (define all-saved?
     (every identity (save-all-pages)))
