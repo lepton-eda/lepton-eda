@@ -119,17 +119,6 @@
   close?)
 
 
-(define (close-window-dialog window)
-  (define *window (check-window window 1))
-  (define *toplevel (schematic_window_get_toplevel *window))
-  (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
-
-  ;; If there is no page with unsaved changes, just close the
-  ;; window.  Otherwise, run the close confirmation dialog.
-  (or (null-pointer? *unsaved-pages)
-      (run-close-window-dialog *window *unsaved-pages)))
-
-
 (define (destroy-window-widgets! *window)
   (define (destroy-widget! *widget)
     (unless (null-pointer? *widget) (gtk_widget_destroy *widget)))
@@ -151,6 +140,8 @@
   "Closes WINDOW."
   (define *window (window->pointer window))
   (define last-window? (= (length (schematic-windows)) 1))
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
 
   (define (close!)
     ;; Close the window if the user didn't cancel the close.
@@ -201,7 +192,11 @@
     (callback-cancel *window))
 
   ;; Last chance to save possible unsaved pages.
-  (when (close-window-dialog window)
+
+  ;; If there is no page with unsaved changes, just close the
+  ;; window.  Otherwise, run the close confirmation dialog.
+  (when (or (null-pointer? *unsaved-pages)
+            (run-close-window-dialog *window *unsaved-pages))
     (close!)))
 
 
