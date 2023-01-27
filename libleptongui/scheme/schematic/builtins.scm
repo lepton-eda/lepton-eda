@@ -1115,8 +1115,7 @@ the snap grid size should be set to 100")))
                                       (gerror-message (dereference-pointer *error))))))
 
     (schematic-error-dialog (G_ "Failed to descend hierarchy.")
-                            secondary-message
-                            %null-pointer)
+                            #:secondary-text secondary-message)
 
     (g_clear_error *error)))
 
