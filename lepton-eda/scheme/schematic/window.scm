@@ -108,15 +108,7 @@
 
 
 (define (close-window-dialog *window *changed-pages)
-  (define active-page
-    (pointer->page (schematic_window_get_active_page *window)))
-  (define window (pointer->window *window))
-  (define close?
-    (true? (x_dialog_close_window *window *changed-pages)))
-
-  ;; Switch back to the page we were on.
-  (window-set-toplevel-page! window active-page)
-  close?)
+  (true? (x_dialog_close_window *window *changed-pages)))
 
 
 (define (destroy-window-widgets! *window)
@@ -142,6 +134,12 @@
   (define last-window? (= (length (schematic-windows)) 1))
   (define *toplevel (schematic_window_get_toplevel *window))
   (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
+  ;; Remember current active page.  In cases when the user saves
+  ;; some untitled pages but leaves some other ones unsaved, the
+  ;; window won't be closed and we have to restore the active
+  ;; page.
+  (define active-page
+    (pointer->page (schematic_window_get_active_page *window)))
 
   (define (close!)
     ;; Close the window if the user didn't cancel the close.
@@ -195,9 +193,11 @@
 
   ;; If there is no page with unsaved changes, just close the
   ;; window.  Otherwise, run the close confirmation dialog.
-  (when (or (null-pointer? *unsaved-pages)
-            (close-window-dialog *window *unsaved-pages))
-    (close!)))
+  (if (or (null-pointer? *unsaved-pages)
+          (close-window-dialog *window *unsaved-pages))
+      (close!)
+      ;; Switch back to the page we were on.
+      (window-set-toplevel-page! window active-page)))
 
 
 (define (callback-close-schematic-window *widget *event *window)
