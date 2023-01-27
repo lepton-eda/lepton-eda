@@ -113,16 +113,19 @@
   (define (untitled? *page)
     (true? (x_window_untitled_page *page)))
 
+  ;; Returns #t if untitled page has been successfully saved.
+  (define (save-untitled-page! *page)
+    ;; For untitled pages, open "Save as..." dialog.
+    (let ((bv (make-bytevector (sizeof int) 0)))
+      ;; Skip the result if the File save dialog has been cancelled.
+      (or (not (true? (x_fileselect_save *window *page (bytevector->pointer bv))))
+          ;; Otherwise, get the result of the save operation.
+          (true? (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))))
+
   (define (save-page! page)
     (let ((*page (page->pointer page)))
       (if (untitled? *page)
-          ;; For untitled pages, open "Save as..." dialog.
-          (let ((bv (make-bytevector (sizeof int) 0)))
-            ;; Skip the result if the File save dialog has been cancelled.
-            (or (not (true? (x_fileselect_save *window *page (bytevector->pointer bv))))
-                ;; Otherwise, get the result of the save operation.
-                (true? (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))))
-
+          (save-untitled-page! *page)
           ;; Simply save any other page.
           (true? (x_window_save_page *window
                                      *page
