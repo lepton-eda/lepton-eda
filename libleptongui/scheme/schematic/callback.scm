@@ -34,6 +34,7 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic preview-widget)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)
@@ -162,9 +163,6 @@
     (log! 'warning
           "newtext-dialog-response(): strange signal: ~A" response)
     #f)
-  (define *response-string (gtk_response_to_string response))
-  (define response-sym
-    (string->symbol (pointer->string *response-string)))
 
   (define (close-dialog!)
     (i_callback_cancel %null-pointer *window)
@@ -179,7 +177,7 @@
               (error "NULL window")
               (schematic_newtext_dialog_response_apply *dialog *window)))))
 
-  (case response-sym
+  (case (gtk-response->symbol response)
     ((apply) (apply-changes!))
     ((close delete-event) (close-dialog!))
     (else (log-warning))))
