@@ -119,7 +119,8 @@
     (when tabs-enabled?
       (x_tabs_hdr_update *window *page)))
 
-  ;; Returns #t if untitled page has been successfully saved.
+  ;; Returns #t if untitled page has been successfully saved or
+  ;; saving has been cancelled.
   (define (save-untitled-page! *page)
     ;; For untitled pages, open "Save as..." dialog.
     (let ((bv (make-bytevector (sizeof int) 0)))
