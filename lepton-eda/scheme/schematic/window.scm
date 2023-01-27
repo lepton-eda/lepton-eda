@@ -108,7 +108,7 @@
 
 
 (define (make-close-window-dialog *window *changed-pages)
-  (x_dialog_close_window *window *changed-pages))
+  (schematic_close_confirmation_dialog_new *window *changed-pages))
 
 (define (run-close-window-dialog *dialog *window *toplevel)
   (define response

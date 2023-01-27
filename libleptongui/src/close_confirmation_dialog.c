@@ -860,8 +860,8 @@ schematic_close_confirmation_dialog_run (GtkWidget *dialog)
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 GtkWidget*
-x_dialog_close_window (SchematicWindow *w_current,
-                       GList *unsaved_pages)
+schematic_close_confirmation_dialog_new (SchematicWindow *w_current,
+                                         GList *unsaved_pages)
 {
   GtkWidget *dialog;
 

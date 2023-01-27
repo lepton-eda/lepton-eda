@@ -387,7 +387,7 @@
             schematic_close_confirmation_dialog_run
             schematic_close_confirmation_dialog_save_selected
             x_dialog_close_changed_page
-            x_dialog_close_window
+            schematic_close_confirmation_dialog_new
 
             coord_dialog
             coord_display_update
@@ -765,7 +765,7 @@
 (define-lff schematic_close_confirmation_dialog_run int '(*))
 (define-lff schematic_close_confirmation_dialog_save_selected int '(* * *))
 (define-lff x_dialog_close_changed_page int '(* *))
-(define-lff x_dialog_close_window '* '(* *))
+(define-lff schematic_close_confirmation_dialog_new '* '(* *))
 
 ;;; coord_dialog.c
 (define-lff coord_dialog void (list '* int int))
