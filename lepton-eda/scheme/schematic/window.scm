@@ -133,72 +133,72 @@
 (define (close-window! window)
   "Closes WINDOW."
   (define *window (window->pointer window))
+  (define last-window? (= (length (schematic-windows)) 1))
 
-  (let ((last-window? (= (length (schematic-windows)) 1)))
-    ;; If we're closing whilst inside an action, re-wind the page
-    ;; contents back to their state before we started.
-    (when (in-action? window)
-      (callback-cancel *window))
+  ;; If we're closing whilst inside an action, re-wind the page
+  ;; contents back to their state before we started.
+  (when (in-action? window)
+    (callback-cancel *window))
 
-    ;; Last chance to save possible unsaved pages.
-    (when (close-window-dialog window)
-      ;; Close the window if the user didn't cancel the close.
-      (x_clipboard_finish *window)
-      (let ((*cswindow (schematic_window_get_compselect_widget *window))
-            (*tiwindow (schematic_window_get_newtext_dialog *window))
-            (*aawindow (schematic_window_get_arc_edit_widget *window))
-            (*mawindow (schematic_window_get_multiattrib_widget *window))
-            (*aewindow (schematic_window_get_attrib_edit_widget *window))
-            (*hkwindow (schematic_window_get_hotkey_widget *window))
-            (*cowindow (schematic_window_get_coord_widget *window))
-            (*sewindow (schematic_window_get_slot_edit_widget *window)))
+  ;; Last chance to save possible unsaved pages.
+  (when (close-window-dialog window)
+    ;; Close the window if the user didn't cancel the close.
+    (x_clipboard_finish *window)
+    (let ((*cswindow (schematic_window_get_compselect_widget *window))
+          (*tiwindow (schematic_window_get_newtext_dialog *window))
+          (*aawindow (schematic_window_get_arc_edit_widget *window))
+          (*mawindow (schematic_window_get_multiattrib_widget *window))
+          (*aewindow (schematic_window_get_attrib_edit_widget *window))
+          (*hkwindow (schematic_window_get_hotkey_widget *window))
+          (*cowindow (schematic_window_get_coord_widget *window))
+          (*sewindow (schematic_window_get_slot_edit_widget *window)))
 
-        (schematic_window_set_dont_invalidate *window TRUE)
+      (schematic_window_set_dont_invalidate *window TRUE)
 
-        (x_widgets_destroy_dialogs *window)
+      (x_widgets_destroy_dialogs *window)
 
-        ;; Close all the dialog boxes.
-        (unless (null-pointer? *cswindow) (gtk_widget_destroy *cswindow))
-        (unless (null-pointer? *tiwindow) (gtk_widget_destroy *tiwindow))
-        (unless (null-pointer? *aawindow) (gtk_widget_destroy *aawindow))
-        (unless (null-pointer? *mawindow) (gtk_widget_destroy *mawindow))
-        (unless (null-pointer? *aewindow) (gtk_widget_destroy *aewindow))
-        (unless (null-pointer? *hkwindow) (gtk_widget_destroy *hkwindow))
-        (unless (null-pointer? *cowindow) (gtk_widget_destroy *cowindow))
-        (unless (null-pointer? *sewindow) (gtk_widget_destroy *sewindow))
+      ;; Close all the dialog boxes.
+      (unless (null-pointer? *cswindow) (gtk_widget_destroy *cswindow))
+      (unless (null-pointer? *tiwindow) (gtk_widget_destroy *tiwindow))
+      (unless (null-pointer? *aawindow) (gtk_widget_destroy *aawindow))
+      (unless (null-pointer? *mawindow) (gtk_widget_destroy *mawindow))
+      (unless (null-pointer? *aewindow) (gtk_widget_destroy *aewindow))
+      (unless (null-pointer? *hkwindow) (gtk_widget_destroy *hkwindow))
+      (unless (null-pointer? *cowindow) (gtk_widget_destroy *cowindow))
+      (unless (null-pointer? *sewindow) (gtk_widget_destroy *sewindow))
 
 
-        ;; Check if the window is the last one and do jobs that have
-        ;; to be done before freeing its memory.
-        (when last-window?
-          ;; Save window geometry.
-          (schematic_window_save_geometry *window)
-          ;; Close the log file.
-          (s_log_close)
-          ;; free the buffers.
-          (free-buffers)))
+      ;; Check if the window is the last one and do jobs that have
+      ;; to be done before freeing its memory.
+      (when last-window?
+        ;; Save window geometry.
+        (schematic_window_save_geometry *window)
+        ;; Close the log file.
+        (s_log_close)
+        ;; free the buffers.
+        (free-buffers)))
 
-      ;; Destroy main widget of the window.
-      (gtk_widget_destroy (schematic_window_get_main_window *window))
-      (remove-window! (pointer->window *window))
-      (schematic_window_free *window)
+    ;; Destroy main widget of the window.
+    (gtk_widget_destroy (schematic_window_get_main_window *window))
+    (remove-window! (pointer->window *window))
+    (schematic_window_free *window)
 
-      ;; Just closed last window, so quit.
-      (when (zero? (length (schematic-windows)))
-        ;; Clean up all memory objects allocated during the
-        ;; lepton-schematic runtime.
+    ;; Just closed last window, so quit.
+    (when (zero? (length (schematic-windows)))
+      ;; Clean up all memory objects allocated during the
+      ;; lepton-schematic runtime.
 
-        ;; Save cache config on exit.
-        (config-save! (cache-config-context))
-        (s_clib_free)
-        (s_attrib_free)
-        (x_stroke_free)
-        (undo-cleanup-backup-files!)
+      ;; Save cache config on exit.
+      (config-save! (cache-config-context))
+      (s_clib_free)
+      (s_attrib_free)
+      (x_stroke_free)
+      (undo-cleanup-backup-files!)
 
-        ;; Check whether the main loop is running.
-        (if (zero? (gtk_main_level))
-            (primitive-exit 0)
-            (gtk_main_quit))))))
+      ;; Check whether the main loop is running.
+      (if (zero? (gtk_main_level))
+          (primitive-exit 0)
+          (gtk_main_quit)))))
 
 
 (define (callback-close-schematic-window *widget *event *window)
