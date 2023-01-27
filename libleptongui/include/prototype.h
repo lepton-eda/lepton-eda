@@ -875,7 +875,7 @@ gboolean
 schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
                                                    SchematicWindow *w_current,
                                                    LeptonToplevel *toplevel);
-gboolean
+GtkWidget*
 x_dialog_close_window (SchematicWindow *w_current,
                        GList *unsaved_pages);
 

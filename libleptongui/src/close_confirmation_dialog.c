@@ -859,13 +859,11 @@ schematic_close_confirmation_dialog_run (GtkWidget *dialog)
  *  \param [in] unsaved_pages The list of changed pages.
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
-gboolean
+GtkWidget*
 x_dialog_close_window (SchematicWindow *w_current,
                        GList *unsaved_pages)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GtkWidget *dialog;
-  gboolean ret = FALSE;
 
   GtkWidget *main_window;
 
@@ -878,33 +876,8 @@ x_dialog_close_window (SchematicWindow *w_current,
                                 GTK_WINDOW (main_window));
 
   g_list_free (unsaved_pages);
-  switch (schematic_close_confirmation_dialog_run (dialog))
-  {
-      case GTK_RESPONSE_NO:
-        /* action selected: close without saving */
-        /* discard changes, ok to close window */
-        ret = TRUE;
-        break;
 
-      case GTK_RESPONSE_YES:
-        /* action selected: save */
-        ret = schematic_close_confirmation_dialog_save_selected (dialog,
-                                                                 w_current,
-                                                                 toplevel);
-        break;
-
-      case GTK_RESPONSE_CANCEL:
-        /* action selected: cancel */
-        /* fall through */
-      default:
-        /* Hit when the user breaks out of the dialog with the escape key
-         * or otherwise destroys the dialog window without a proper response */
-        ret = FALSE;
-        break;
-  }
-  gtk_widget_destroy (dialog);
-
-  return ret;
+  return dialog;
 }
 
 /***************** End of Close Confirmation dialog box **************/

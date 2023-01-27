@@ -107,8 +107,34 @@
   (schematic_window_page_changed *window))
 
 
-(define (close-window-dialog *window *changed-pages)
-  (true? (x_dialog_close_window *window *changed-pages)))
+(define (make-close-window-dialog *window *changed-pages)
+  (x_dialog_close_window *window *changed-pages))
+
+(define (run-close-window-dialog *dialog *window *toplevel)
+  (define response
+    (gtk-response->symbol
+     (schematic_close_confirmation_dialog_run *dialog)))
+
+  (define (all-pages-saved?)
+    (true? (schematic_close_confirmation_dialog_save_selected *dialog
+                                                              *window
+                                                              *toplevel)))
+  (case response
+    ;; Close without saving.  Just quit discarding changes.
+    ((no) 'close)
+    ;; Save changes and exit if all saved.
+    ((yes)
+     (if (all-pages-saved?)
+         ;; Anything has been saved.  Exit.
+         'close
+         ;; If some untitled page has been not saved yet, the
+         ;; window won't be closed.  Switch back to the page we
+         ;; were on.
+         'restore))
+    ;; When the user hit cancel or did other actions that
+    ;; otherwise destroyed the dialog window without a proper
+    ;; response, there is nothing to do.
+    (else #f)))
 
 
 (define (destroy-window-widgets! *window)
@@ -190,14 +216,22 @@
     (callback-cancel *window))
 
   ;; Last chance to save possible unsaved pages.
-
-  ;; If there is no page with unsaved changes, just close the
-  ;; window.  Otherwise, run the close confirmation dialog.
-  (if (or (null-pointer? *unsaved-pages)
-          (close-window-dialog *window *unsaved-pages))
+  (if (null-pointer? *unsaved-pages)
+      ;; If there is no page with unsaved changes, just close the
+      ;; window.
       (close!)
-      ;; Switch back to the page we were on.
-      (window-set-toplevel-page! window active-page)))
+      ;; Otherwise, run the close confirmation dialog.
+      (let* ((*dialog (make-close-window-dialog *window *unsaved-pages))
+             (result (run-close-window-dialog *dialog *window *toplevel)))
+        ;; First close the dialog.
+        (gtk_widget_destroy *dialog)
+        (case result
+          ;; Close window.
+          ((close) (close!))
+          ;; Restore active page.
+          ((restore) (window-set-toplevel-page! window active-page))
+          ;; Dialog has been cancelled. Do nothing.
+          (else #f)))))
 
 
 (define (callback-close-schematic-window *widget *event *window)
