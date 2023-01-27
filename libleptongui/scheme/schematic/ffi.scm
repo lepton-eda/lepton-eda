@@ -32,6 +32,8 @@
 
             g_read_file
 
+            gtk_response_to_string
+
             generic_confirm_dialog
             generic_error_dialog
             generic_filesel_dialog
@@ -517,6 +519,9 @@
 
 ;;; g_window.c
 (define-lff g_init_window void '(*))
+
+;;; gtk_helper.c
+(define-lff gtk_response_to_string '* (list int))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
