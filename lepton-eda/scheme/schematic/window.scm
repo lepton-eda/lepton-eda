@@ -22,6 +22,7 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 match)
   #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton config)
@@ -115,13 +116,29 @@
     (gtk-response->symbol
      (schematic_close_confirmation_dialog_run *dialog)))
 
+  (define not-changed? (negate page-dirty?))
+
   (define (all-pages-saved?)
-    (let ((*selected-pages
-           (schematic_close_confirmation_dialog_get_selected_pages *dialog)))
-      (true? (schematic_close_confirmation_dialog_save_selected *dialog
-                                                                *window
-                                                                *toplevel
-                                                                *selected-pages))))
+    (let ((selected-pages
+           (glist->list (schematic_close_confirmation_dialog_get_selected_pages *dialog)
+                        pointer->page
+                        'free)))
+      ;; For untitled pages, i_callback_file_save() starts the
+      ;; file name selection dialog.  If the user cancels it for a
+      ;; page, the page remains changed but unsaved.  In such a
+      ;; case #f is returned and the window won't be closed.
+      (every not-changed?
+             (map
+              (lambda (page)
+                (let ((*page (page->pointer page)))
+                  (lepton_toplevel_goto_page *toplevel *page)
+                  (schematic_window_page_changed *window)
+
+                  (i_callback_file_save %null-pointer *window)
+
+                  page))
+              selected-pages))))
+
   (case response
     ;; Close without saving.  Just quit discarding changes.
     ((no) 'close)

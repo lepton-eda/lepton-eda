@@ -874,11 +874,6 @@ schematic_close_confirmation_dialog_run (GtkWidget *dialog);
 GList*
 schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog);
 
-gboolean
-schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
-                                                   SchematicWindow *w_current,
-                                                   LeptonToplevel *toplevel,
-                                                   GList *selected_pages);
 GtkWidget*
 schematic_close_confirmation_dialog_new (SchematicWindow *w_current,
                                          GList *unsaved_pages);
