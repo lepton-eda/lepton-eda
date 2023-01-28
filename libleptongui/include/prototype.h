@@ -871,6 +871,9 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 int
 schematic_close_confirmation_dialog_run (GtkWidget *dialog);
 
+GList*
+schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog);
+
 gboolean
 schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
                                                    SchematicWindow *w_current,

@@ -787,6 +787,18 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 }
 
 
+GList*
+schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog)
+{
+  GList *selected_pages = NULL;
+
+  g_object_get (dialog,
+                "selected-pages", &selected_pages,
+                NULL);
+  return selected_pages;
+}
+
+
 /*! \brief Save pages selected in the Close confirmation dialog.
  *
  *  \par Function Description
@@ -810,11 +822,10 @@ schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
   gboolean ret = FALSE;
   LeptonPage *p_current;
   GList *p_unsaved;
-  GList *selected_pages = NULL;
 
-  g_object_get (dialog,
-                "selected-pages", &selected_pages,
-                NULL);
+  GList *selected_pages =
+    schematic_close_confirmation_dialog_get_selected_pages (dialog);
+
   for (p_unsaved = selected_pages, ret = TRUE;
        p_unsaved != NULL;
        p_unsaved = g_list_next (p_unsaved)) {
