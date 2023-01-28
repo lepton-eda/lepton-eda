@@ -817,14 +817,12 @@ schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog)
 gboolean
 schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
                                                    SchematicWindow *w_current,
-                                                   LeptonToplevel *toplevel)
+                                                   LeptonToplevel *toplevel,
+                                                   GList *selected_pages)
 {
   gboolean ret = FALSE;
   LeptonPage *p_current;
   GList *p_unsaved;
-
-  GList *selected_pages =
-    schematic_close_confirmation_dialog_get_selected_pages (dialog);
 
   for (p_unsaved = selected_pages, ret = TRUE;
        p_unsaved != NULL;

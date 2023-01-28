@@ -116,9 +116,12 @@
      (schematic_close_confirmation_dialog_run *dialog)))
 
   (define (all-pages-saved?)
-    (true? (schematic_close_confirmation_dialog_save_selected *dialog
-                                                              *window
-                                                              *toplevel)))
+    (let ((*selected-pages
+           (schematic_close_confirmation_dialog_get_selected_pages *dialog)))
+      (true? (schematic_close_confirmation_dialog_save_selected *dialog
+                                                                *window
+                                                                *toplevel
+                                                                *selected-pages))))
   (case response
     ;; Close without saving.  Just quit discarding changes.
     ((no) 'close)
