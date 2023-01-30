@@ -47,6 +47,15 @@
 
   (define not-changed? (negate page-dirty?))
 
+  (define (save-page page)
+    (let ((*page (page->pointer page)))
+      (lepton_toplevel_goto_page *toplevel *page)
+      (schematic_window_page_changed *window)
+
+      (i_callback_file_save %null-pointer *window)
+
+      page))
+
   (define (all-pages-saved?)
     (let ((selected-pages
            (glist->list (get-selected-pages *dialog)
@@ -57,16 +66,7 @@
       ;; page, the page remains changed but unsaved.  In such a
       ;; case #f is returned and the window won't be closed.
       (every not-changed?
-             (map
-              (lambda (page)
-                (let ((*page (page->pointer page)))
-                  (lepton_toplevel_goto_page *toplevel *page)
-                  (schematic_window_page_changed *window)
-
-                  (i_callback_file_save %null-pointer *window)
-
-                  page))
-              selected-pages))))
+             (map save-page selected-pages))))
 
   (case response
     ;; Close without saving.  Just quit discarding changes.
