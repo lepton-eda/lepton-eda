@@ -39,6 +39,8 @@
 
 
 (define (run-close-window-dialog *dialog *window *toplevel)
+  (define get-selected-pages
+    schematic_close_confirmation_dialog_get_selected_pages)
   (define response
     (gtk-response->symbol
      (schematic_close_confirmation_dialog_run *dialog)))
@@ -47,7 +49,7 @@
 
   (define (all-pages-saved?)
     (let ((selected-pages
-           (glist->list (schematic_close_confirmation_dialog_get_selected_pages *dialog)
+           (glist->list (get-selected-pages *dialog)
                         pointer->page
                         'free)))
       ;; For untitled pages, i_callback_file_save() starts the
