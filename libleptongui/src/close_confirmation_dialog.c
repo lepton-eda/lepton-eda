@@ -787,6 +787,16 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the list of selected pages of the Close
+ *   confirmation dialog.
+ *
+ *  \par Function Description
+ *  Returns the list of selected pages of the Close confirmation
+ *  dialog as a \c GList.
+ *
+ *  \param [in] dialog The dialog widget.
+ *  \return The list of selected pages.
+ */
 GList*
 schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog)
 {
