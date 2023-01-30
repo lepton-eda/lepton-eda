@@ -799,6 +799,15 @@ schematic_close_confirmation_dialog_get_selected_pages (GtkWidget *dialog)
 }
 
 
+/*! \brief Cast and run the Close confirmation dialog.
+ *
+ *  \par Function Description
+ *  Runs the Close confirmation dialog casting the dialog widget
+ *  to \c GtkDialog before.
+ *
+ *  \param [in] dialog The dialog widget.
+ *  \returns \c GtkResponse enum type value returned by the dialog.
+ */
 int
 schematic_close_confirmation_dialog_run (GtkWidget *dialog)
 {
