@@ -152,6 +152,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/canvas/foreign.scm \
 	schematic/dialog.scm \
 	schematic/dialog/autonumber.scm \
+	schematic/dialog/close-window.scm \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/find-text.scm \
 	schematic/dialog/multiattrib.scm \
