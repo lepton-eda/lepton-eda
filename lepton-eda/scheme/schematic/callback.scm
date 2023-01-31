@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2025 Lepton EDA Contributors
+;;; Copyright (C) 2022-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic callback cancel)
+  #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog new-text)
   #:use-module (schematic ffi)
@@ -79,12 +80,14 @@
 
 
 (define (callback-page-close *widget *window)
-  (let ((*page (schematic_window_get_active_page *window)))
-    (unless (or (null-pointer? *page)
-                (and (true? (lepton_page_get_changed *page))
-                     (not (true? (x_dialog_close_changed_page *window *page)))))
-      (window-close-page! (pointer->window *window)
-                          (pointer->page *page)))))
+  (define window (pointer->window *window))
+  (define *page (schematic_window_get_active_page *window))
+  (define page (pointer->page *page))
+
+  (unless (or (null-pointer? *page)
+              (and (true? (lepton_page_get_changed *page))
+                   (not (close-page-dialog window page))))
+    (window-close-page! window page)))
 
 (define *callback-page-close
   (procedure->pointer void callback-page-close '(* *)))
