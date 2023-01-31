@@ -51,6 +51,7 @@
   #:use-module (schematic callback)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
+  #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog close-window)
   #:use-module (schematic event)
   #:use-module (schematic ffi)
@@ -1206,7 +1207,8 @@ for *PAGE page will be created and set active."
         (set-tab-page! *window *page)
 
         (unless (and (true? (lepton_page_get_changed *page))
-                     (not (true? (x_dialog_close_changed_page *window *page))))
+                     (not (close-page-dialog (pointer->window *window)
+                                             (pointer->page *page))))
           (close-tab! *window *page)))))
 
 (define *callback-tab-button-close
