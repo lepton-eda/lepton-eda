@@ -707,6 +707,26 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
 }
 
 
+GtkWidget*
+schematic_close_page_dialog_new (LeptonPage *page)
+{
+  GtkWidget *dialog = NULL;
+
+  g_return_val_if_fail (page != NULL, NULL);
+
+  dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
+                                     "unsaved-page", page,
+                                     NULL));
+
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
+  /* Set default response signal. This is usually triggered by the
+     "Return" key. */
+  gtk_dialog_set_default_response (GTK_DIALOG(dialog),
+                                   GTK_RESPONSE_YES);
+  return dialog;
+}
+
+
 /*! \brief Asks for confirmation before closing a changed page.
  *  \par Function Description
  *  This function asks the user to confirm its closing order for
@@ -726,20 +746,12 @@ gboolean
 x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page)
 {
-  GtkWidget *dialog;
+  g_return_val_if_fail (w_current != NULL
+                        && page != NULL
+                        && lepton_page_get_changed (page), TRUE);
+
+  GtkWidget *dialog = schematic_close_page_dialog_new (page);
   gboolean result = FALSE;
-
-  g_return_val_if_fail (page != NULL && lepton_page_get_changed (page), TRUE);
-
-  dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
-                                     "unsaved-page", page,
-                                     NULL));
-
-  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
-  /* set default response signal. This is usually triggered by the
-     "Return" key */
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-                                  GTK_RESPONSE_YES);
 
   switch (schematic_close_confirmation_dialog_run (dialog))
   {

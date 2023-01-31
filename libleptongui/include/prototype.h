@@ -865,6 +865,10 @@ hide_text_dialog (SchematicWindow *w_current);
 
 void
 show_text_dialog (SchematicWindow *w_current);
+
+GtkWidget*
+schematic_close_page_dialog_new (LeptonPage *page);
+
 gboolean
 x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page);
