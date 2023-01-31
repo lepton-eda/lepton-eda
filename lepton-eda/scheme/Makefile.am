@@ -188,6 +188,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/window/foreign.scm \
 	schematic/window/global.scm \
 	schematic/window/list.scm \
+	schematic/window/page.scm \
 	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/check/alignment.scm \

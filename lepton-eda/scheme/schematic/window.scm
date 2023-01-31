@@ -69,6 +69,7 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
   #:use-module (schematic window list)
+  #:use-module (schematic window page)
 
   #:re-export (%lepton-window
                current-window
@@ -99,15 +100,6 @@
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
-
-
-(define (window-set-toplevel-page! window page)
-  (define *window (check-window window 1))
-  (define *page (check-page page 2))
-  (define *toplevel (schematic_window_get_toplevel *window))
-
-  (lepton_toplevel_goto_page *toplevel *page)
-  (schematic_window_page_changed *window))
 
 
 (define (destroy-window-widgets! *window)
