@@ -23,11 +23,22 @@
 
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window page)
 
   #:export (close-page-dialog))
 
 (define (close-page-dialog window page)
   (define *window (check-window window 1))
   (define *page (check-page page 2))
+  (define active-page
+    (pointer->page (schematic_window_get_active_page *window)))
+  (define result
+    (true? (x_dialog_close_changed_page *window *page)))
 
-  (true? (x_dialog_close_changed_page *window *page)))
+  ;; Switch back to the page we were on if it wasn't the one being
+  ;; closed.
+  (when (and active-page
+             (not (eq? active-page page)))
+    (window-set-toplevel-page! window active-page))
+
+  result)

@@ -727,12 +727,9 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page)
 {
   GtkWidget *dialog;
-  LeptonPage *keep_page;
   gboolean result = FALSE;
 
   g_return_val_if_fail (page != NULL && lepton_page_get_changed (page), TRUE);
-
-  keep_page = schematic_window_get_active_page (w_current);
 
   dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
                                      "unsaved-page", page,
@@ -777,12 +774,6 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
   }
   gtk_widget_destroy (dialog);
 
-  /* Switch back to the page we were on if it wasn't the one being closed */
-  g_return_val_if_fail (keep_page != NULL, result);
-  if (keep_page != page) {
-    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), keep_page);
-    schematic_window_page_changed (w_current);
-  }
   return result;
 }
 
