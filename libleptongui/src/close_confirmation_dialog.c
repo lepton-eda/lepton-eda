@@ -741,7 +741,8 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
                                   GTK_RESPONSE_YES);
 
-  switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
+  switch (schematic_close_confirmation_dialog_run (dialog))
+  {
       case GTK_RESPONSE_NO:
         /* action selected: close without saving */
         /* close the page, discard changes */
