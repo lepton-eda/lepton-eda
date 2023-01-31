@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
+  #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
   #:use-module (schematic dialog slot-edit)
@@ -1297,7 +1298,7 @@ the snap grid size should be set to 100")))
             (when (or (not changed?)
                       ;; If the page has changed, ask the user to
                       ;; really close it.
-                      (true? (x_dialog_close_changed_page *window *page)))
+                      (close-page-dialog (current-window) (active-page)))
               (window-close-page! (current-window) (active-page))
               (*window-set-current-page! *window *upper-page)))))))
 
