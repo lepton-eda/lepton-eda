@@ -1241,7 +1241,8 @@ for *PAGE page will be created and set active."
           (log! 'message (G_ "Cannot find any schematics above the current one!"))
 
           (unless (and (true? (lepton_page_get_changed *page))
-                       (not (true? (x_dialog_close_changed_page *window *page))))
+                       (not (close-page-dialog (pointer->window *window)
+                                               (pointer->page *page))))
             (close-tab! *window *page)
             (set-tab-page! *window *parent))))))
 
