@@ -34,32 +34,33 @@
 (define (close-page-dialog-run window page)
   (define *window (check-window window 1))
   (define *page (check-page page 2))
-  (define not-changed? (negate page-dirty?))
+  (define *dialog (schematic_close_page_dialog_new *page))
+  (define response
+    (gtk-response->symbol
+     (schematic_close_confirmation_dialog_run *dialog)))
 
   (define (save-page!)
     (window-set-toplevel-page! window page)
     (i_callback_file_save %null-pointer *window)
     ;; Has the page been really saved?
-    (not-changed? page))
+    (not (page-dirty? page)))
 
-  (or (not-changed? page)
-    (let* ((*dialog (schematic_close_page_dialog_new *page))
-           (response (gtk-response->symbol
-                      (schematic_close_confirmation_dialog_run *dialog)))
-           (result
-            (case response
-              ;; Close without saving discarding changes.
-              ((no) #t)
-              ;; Save the page or, if the page is untitled and
-              ;; the user cancels saving it, do not close it.
-              ((yes) (save-page!))
-              ;; When the user hit cancel or did other actions
-              ;; that otherwise destroyed the dialog window
-              ;; without a proper response, there is nothing to
-              ;; do.
-              (else #f))))
-      (gtk_widget_destroy *dialog)
-      result)))
+  (define result
+    (case response
+      ;; Close without saving discarding changes.
+      ((no) #t)
+      ;; Save the page or, if the page is untitled and
+      ;; the user cancels saving it, do not close it.
+      ((yes) (save-page!))
+      ;; When the user hit cancel or did other actions
+      ;; that otherwise destroyed the dialog window
+      ;; without a proper response, there is nothing to
+      ;; do.
+      (else #f)))
+
+  (gtk_widget_destroy *dialog)
+  result)
+
 
 (define (close-page-dialog window page)
   "Runs the dialog that asks the user for confirmation before
@@ -71,13 +72,15 @@ to continue with closing the page, and #f otherwise."
   (define *page (check-page page 2))
   (define active-page
     (pointer->page (schematic_window_get_active_page *window)))
-  (define result
-    (close-page-dialog-run window page))
 
-  ;; Switch back to the page we were on if it wasn't the one being
-  ;; closed.
-  (when (and active-page
-             (not (eq? active-page page)))
-    (window-set-toplevel-page! window active-page))
+  (define (run-dialog)
+    (let ((result (close-page-dialog-run window page)))
+      ;; Switch back to the page we were on if it wasn't the one
+      ;; being closed.
+      (when (and active-page
+                 (not (eq? active-page page)))
+        (window-set-toplevel-page! window active-page))
+      result))
 
-  result)
+  (or (not (page-dirty? page))
+      (run-dialog)))
