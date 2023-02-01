@@ -79,21 +79,6 @@
        (define-action (name . args) . forms)
        (export name)))))
 
-;;; Check if current window is not NULL and run a foreign
-;;; C-CALLBACK.  If it is NULL, inform the user and return
-;;; #f. ACTION-NAME is a string representing the name of action
-;;; the callback is called in.
-(define-syntax run-callback
-  (syntax-rules ()
-    ((_ c-callback action-name)
-     (let ((*window (and=> (current-window) window->pointer)))
-       (if *window
-           (c-callback %null-pointer *window)
-           (begin
-             (log! 'critical "~S: Current window is unavailable." action-name)
-             #f))))))
-
-
 ;; -------------------------------------------------------------------
 ;;;; Special actions
 
