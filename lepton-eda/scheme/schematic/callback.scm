@@ -39,6 +39,7 @@
   #:use-module (schematic preview-widget)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
+  #:use-module (schematic window page)
   #:use-module (schematic window)
 
   #:export (callback-add-bus
@@ -49,6 +50,8 @@
             *callback-file-new
             callback-file-open
             *callback-file-open
+            callback-file-save
+            *callback-file-save
             callback-page-close
             *callback-page-close
             callback-edit-select
@@ -77,6 +80,13 @@
 
 (define *callback-file-open
   (procedure->pointer void callback-file-open '(* *)))
+
+
+(define (callback-file-save *widget *window)
+  (window-save-active-page! (pointer->window *window)))
+
+(define *callback-file-save
+  (procedure->pointer void callback-file-save '(* *)))
 
 
 (define (callback-page-close *widget *window)
