@@ -727,23 +727,6 @@ schematic_close_page_dialog_new (LeptonPage *page)
 }
 
 
-gboolean
-schematic_close_page_dialog_save (SchematicWindow *w_current,
-                                  LeptonPage *page)
-{
-  gboolean result = FALSE;
-  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
-  schematic_window_page_changed (w_current);
-  i_callback_file_save (NULL, w_current);
-  /* Has the page been really saved? */
-  if (!lepton_page_get_changed (page))
-  {
-    result = TRUE;
-  }
-  return result;
-}
-
-
 /*! \brief Get the list of selected pages of the Close
  *   confirmation dialog.
  *

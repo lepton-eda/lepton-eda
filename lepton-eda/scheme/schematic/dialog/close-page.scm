@@ -18,7 +18,8 @@
 
 
 (define-module (schematic dialog close-page)
-  #:use-module (lepton ffi boolean)
+  #:use-module (system foreign)
+
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
 
@@ -35,24 +36,30 @@
   (define *page (check-page page 2))
   (define not-changed? (negate page-dirty?))
 
+  (define (save-page!)
+    (window-set-toplevel-page! window page)
+    (i_callback_file_save %null-pointer *window)
+    ;; Has the page been really saved?
+    (not-changed? page))
+
   (or (not-changed? page)
-      (let* ((*dialog (schematic_close_page_dialog_new *page))
-             (response (gtk-response->symbol
-                        (schematic_close_confirmation_dialog_run *dialog)))
-             (result
-              (case response
-                ;; Close without saving discarding changes.
-                ((no) #t)
-                ;; Save the page or, if the page is untitled and
-                ;; the user cancels saving it, do not close it.
-                ((yes) (true? (schematic_close_page_dialog_save *window *page)))
-                ;; When the user hit cancel or did other actions
-                ;; that otherwise destroyed the dialog window
-                ;; without a proper response, there is nothing to
-                ;; do.
-                (else #f))))
-        (gtk_widget_destroy *dialog)
-        result)))
+    (let* ((*dialog (schematic_close_page_dialog_new *page))
+           (response (gtk-response->symbol
+                      (schematic_close_confirmation_dialog_run *dialog)))
+           (result
+            (case response
+              ;; Close without saving discarding changes.
+              ((no) #t)
+              ;; Save the page or, if the page is untitled and
+              ;; the user cancels saving it, do not close it.
+              ((yes) (save-page!))
+              ;; When the user hit cancel or did other actions
+              ;; that otherwise destroyed the dialog window
+              ;; without a proper response, there is nothing to
+              ;; do.
+              (else #f))))
+      (gtk_widget_destroy *dialog)
+      result)))
 
 (define (close-page-dialog window page)
   "Runs the dialog that asks the user for confirmation before

@@ -869,9 +869,6 @@ show_text_dialog (SchematicWindow *w_current);
 GtkWidget*
 schematic_close_page_dialog_new (LeptonPage *page);
 
-gboolean
-schematic_close_page_dialog_save (SchematicWindow *w_current,
-                                  LeptonPage *page);
 int
 schematic_close_confirmation_dialog_run (GtkWidget *dialog);
 
