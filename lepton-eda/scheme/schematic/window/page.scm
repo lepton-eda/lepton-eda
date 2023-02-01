@@ -17,13 +17,16 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic window page)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (window-set-toplevel-page!))
+  #:export (window-set-toplevel-page!
+            window-save-active-page!))
 
 (define (window-set-toplevel-page! window page)
   (define *window (check-window window 1))
@@ -32,3 +35,9 @@
 
   (lepton_toplevel_goto_page *toplevel *page)
   (schematic_window_page_changed *window))
+
+
+(define (window-save-active-page! window)
+  (define *window (check-window window 1))
+
+  (i_callback_file_save %null-pointer *window))
