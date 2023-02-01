@@ -875,9 +875,8 @@ tab notebook.  Returns a C TabInfo structure."
            (*page (lepton_page_new *toplevel *filename)))
 
       ;; Switch to the new page.
-      (lepton_toplevel_goto_page *toplevel *page)
-      (schematic_window_page_changed *window)
-
+      (window-set-toplevel-page! (pointer->window *window)
+                                 (pointer->page *page))
       (unless quiet-mode?
         (log! 'message (G_ "New file ~S") (pointer->string *filename)))
 
