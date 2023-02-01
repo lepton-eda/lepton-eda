@@ -1622,7 +1622,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_page_select_widget_set_callback (string->pointer "file-open")
                                                  *callback-file-open)
       (schematic_page_select_widget_set_callback (string->pointer "file-save")
-                                                 *i_callback_file_save)
+                                                 *callback-file-save)
       (schematic_page_select_widget_set_callback (string->pointer "page-close")
                                                  *callback-page-close)
       (schematic_page_select_widget_set_callback (string->pointer "selection-changed")
