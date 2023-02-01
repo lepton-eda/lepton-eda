@@ -41,7 +41,7 @@
 
   (define (save-page!)
     (window-set-toplevel-page! window page)
-    (i_callback_file_save %null-pointer *window)
+    (window-save-active-page! window)
     ;; Has the page been really saved?
     (not (page-dirty? page)))
 
