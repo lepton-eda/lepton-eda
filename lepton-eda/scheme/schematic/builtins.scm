@@ -67,6 +67,7 @@
   #:use-module (schematic window global)
   #:use-module (schematic window foreign)
   #:use-module (schematic window list)
+  #:use-module (schematic window page)
   #:use-module (schematic window)
   #:use-module (schematic sellock))
 
@@ -1114,14 +1115,14 @@ the snap grid size should be set to 100")))
   (string-split (attrib-value object) #\,))
 
 (define (zoom-child-page *window *parent *child)
-  (define *toplevel (schematic_window_get_toplevel *window))
+  (define window (pointer->window *window))
   (define *canvas (schematic_window_get_current_canvas *window))
-  (lepton_toplevel_goto_page *toplevel *child)
-  (schematic_window_page_changed *window)
+  (define child (pointer->page *child))
+  (define parent (pointer->page *parent))
+  (window-set-toplevel-page! window child)
   (schematic_canvas_zoom_extents *canvas %null-pointer)
   (undo-save-state)
-  (lepton_toplevel_goto_page *toplevel *parent)
-  (schematic_window_page_changed *window))
+  (window-set-toplevel-page! window parent))
 
 (define (hierarchy-down-error-dialog filename *error)
   (let ((secondary-message
