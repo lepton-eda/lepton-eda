@@ -1264,9 +1264,8 @@ the snap grid size should be set to 100")))
                ;; Change link to parent page since we can come here
                ;; from any parent and must come back to the same page.
                (lepton_page_set_up *page (lepton_page_get_pid *parent))
-               (lepton_toplevel_goto_page *toplevel *page)
 
-               (schematic_window_page_changed *window)
+               (window-set-toplevel-page! (current-window) (pointer->page *page))
 
                ;; Get active page once again, it should now be the symbol
                ;; page.
