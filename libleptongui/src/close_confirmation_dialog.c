@@ -727,6 +727,23 @@ schematic_close_page_dialog_new (LeptonPage *page)
 }
 
 
+gboolean
+schematic_close_page_dialog_save (SchematicWindow *w_current,
+                                  LeptonPage *page)
+{
+  gboolean result = FALSE;
+  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
+  schematic_window_page_changed (w_current);
+  i_callback_file_save (NULL, w_current);
+  /* Has the page been really saved? */
+  if (!lepton_page_get_changed (page))
+  {
+    result = TRUE;
+  }
+  return result;
+}
+
+
 /*! \brief Asks for confirmation before closing a changed page.
  *  \par Function Description
  *  This function asks the user to confirm its closing order for
@@ -764,14 +781,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
-        schematic_window_page_changed (w_current);
-        i_callback_file_save (NULL, w_current);
-        /* has the page been really saved? */
-        if (!lepton_page_get_changed (page))
-        {
-          result = TRUE;
-        }
+        result = schematic_close_page_dialog_save (w_current, page);
         /* no, user has cancelled the save and page has changes */
         /* do not close page */
         break;

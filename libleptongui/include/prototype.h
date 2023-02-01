@@ -870,6 +870,9 @@ GtkWidget*
 schematic_close_page_dialog_new (LeptonPage *page);
 
 gboolean
+schematic_close_page_dialog_save (SchematicWindow *w_current,
+                                  LeptonPage *page);
+gboolean
 x_dialog_close_changed_page (SchematicWindow *w_current,
                              LeptonPage *page);
 int
