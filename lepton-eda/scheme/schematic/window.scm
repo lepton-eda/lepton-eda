@@ -1212,7 +1212,7 @@ for *PAGE page will be created and set active."
         (*page (schematic_tab_info_get_page *tab-info)))
 
     (set-tab-page! *window *page)
-    (i_callback_file_save %null-pointer *window)))
+    (window-save-active-page! (pointer->window *window))))
 
 
 (define *callback-tab-button-save
