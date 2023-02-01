@@ -744,63 +744,6 @@ schematic_close_page_dialog_save (SchematicWindow *w_current,
 }
 
 
-/*! \brief Asks for confirmation before closing a changed page.
- *  \par Function Description
- *  This function asks the user to confirm its closing order for
- *  page <B>page</B> while it still has unsaved changes.
- *
- *  It displays a message dialog inviting the user to cancel the
- *  closing, or to discard the changes or to save the changes to a
- *  file.
- *
- *  \param [in] w_current The toplevel environment.
- *  \param [in] page      The page to close.
- *
- *  \return TRUE if okay to continue with closing page, FALSE
- *  otherwise.
- */
-gboolean
-x_dialog_close_changed_page (SchematicWindow *w_current,
-                             LeptonPage *page)
-{
-  g_return_val_if_fail (w_current != NULL
-                        && page != NULL
-                        && lepton_page_get_changed (page), TRUE);
-
-  GtkWidget *dialog = schematic_close_page_dialog_new (page);
-  gboolean result = FALSE;
-
-  switch (schematic_close_confirmation_dialog_run (dialog))
-  {
-      case GTK_RESPONSE_NO:
-        /* action selected: close without saving */
-        /* close the page, discard changes */
-        result = TRUE;
-        break;
-
-
-      case GTK_RESPONSE_YES:
-        /* action selected: save */
-        result = schematic_close_page_dialog_save (w_current, page);
-        /* no, user has cancelled the save and page has changes */
-        /* do not close page */
-        break;
-
-      case GTK_RESPONSE_CANCEL:
-        /* action selected: cancel */
-        /* fall through */
-      default:
-        /* Hit when the user breaks out of the dialog with the escape key
-         * or otherwise destroys the dialog window without a proper response */
-        /* nothing to do */
-        break;
-  }
-  gtk_widget_destroy (dialog);
-
-  return result;
-}
-
-
 /*! \brief Get the list of selected pages of the Close
  *   confirmation dialog.
  *

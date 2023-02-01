@@ -20,20 +20,52 @@
 (define-module (schematic dialog close-page)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
   #:use-module (schematic window page)
 
   #:export (close-page-dialog))
 
+(define (close-page-dialog-run window page)
+  (define *window (check-window window 1))
+  (define *page (check-page page 2))
+  (define not-changed? (negate page-dirty?))
+
+  (or (not-changed? page)
+      (let* ((*dialog (schematic_close_page_dialog_new *page))
+             (response (gtk-response->symbol
+                        (schematic_close_confirmation_dialog_run *dialog)))
+             (result
+              (case response
+                ;; Close without saving discarding changes.
+                ((no) #t)
+                ;; Save the page or, if the page is untitled and
+                ;; the user cancels saving it, do not close it.
+                ((yes) (true? (schematic_close_page_dialog_save *window *page)))
+                ;; When the user hit cancel or did other actions
+                ;; that otherwise destroyed the dialog window
+                ;; without a proper response, there is nothing to
+                ;; do.
+                (else #f))))
+        (gtk_widget_destroy *dialog)
+        result)))
+
 (define (close-page-dialog window page)
+  "Runs the dialog that asks the user for confirmation before
+closing PAGE in WINDOW if it has unsaved changes.  It displays a
+message inviting the user to cancel the closing, or to discard the
+changes, or to save the changes to a file.  Returns #t if it is OK
+to continue with closing the page, and #f otherwise."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
   (define active-page
     (pointer->page (schematic_window_get_active_page *window)))
   (define result
-    (true? (x_dialog_close_changed_page *window *page)))
+    (close-page-dialog-run window page))
 
   ;; Switch back to the page we were on if it wasn't the one being
   ;; closed.
