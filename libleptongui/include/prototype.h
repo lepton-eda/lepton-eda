@@ -126,11 +126,6 @@ i_update_grid_info_callback (SchematicCanvas *view,
 void
 i_update_net_options_status (SchematicWindow* w_current);
 
-/* i_callbacks.c */
-void
-i_callback_file_save (GtkWidget *widget,
-                      gpointer data);
-
 /* i_vars.c */
 void
 i_vars_set (SchematicWindow *w_current);

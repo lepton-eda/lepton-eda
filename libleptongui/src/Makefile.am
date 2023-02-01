@@ -49,7 +49,6 @@ libleptongui_la_SOURCES = \
 	text_properties_widget.c \
 	translate_widget.c \
 	i_basic.c \
-	i_callbacks.c \
 	i_vars.c \
 	keys.c \
 	m_basic.c \

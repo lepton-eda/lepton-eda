@@ -19,6 +19,7 @@
 (define-module (schematic window page)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
@@ -39,5 +40,11 @@
 
 (define (window-save-active-page! window)
   (define *window (check-window window 1))
+  (define *page (schematic_window_get_active_page *window))
 
-  (i_callback_file_save %null-pointer *window))
+  (unless (null-pointer? *page)
+    (if (true? (x_window_untitled_page *page))
+        ;; Open "Save as..." dialog.
+        (x_fileselect_save *window *page %null-pointer)
+        ;; Save page.
+        (x_window_save_page *window *page (lepton_page_get_filename *page)))))

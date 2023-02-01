@@ -40,7 +40,6 @@ libleptongui/src/swatch_column_renderer.c
 libleptongui/src/text_properties_widget.c
 libleptongui/src/translate_widget.c
 libleptongui/src/i_basic.c
-libleptongui/src/i_callbacks.c
 libleptongui/src/i_vars.c
 libleptongui/src/o_arc.c
 libleptongui/src/o_attrib.c
