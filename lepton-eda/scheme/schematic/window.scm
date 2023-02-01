@@ -924,9 +924,8 @@ tab notebook.  Returns a C TabInfo structure."
     (let ((*new-page (lepton_page_new *toplevel *filename)))
       ;; Switch to the new page.  NOTE: the call sets
       ;; the current active page of toplevel.
-      (lepton_toplevel_goto_page *toplevel *new-page)
-      (schematic_window_page_changed *window)
-
+      (window-set-toplevel-page! (pointer->window *window)
+                                 (pointer->page *new-page))
       (load-schematic-message)
       (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
         ;; Try to load *FILENAME.
