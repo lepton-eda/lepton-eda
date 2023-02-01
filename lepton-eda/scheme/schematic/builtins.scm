@@ -1294,13 +1294,9 @@ the snap grid size should be set to 100")))
     (let ((*upper-page (s_hierarchy_find_up_page *page)))
       (if (null-pointer? *upper-page)
           (log! 'message (G_ "Cannot find any schematics above the current one!"))
-          (let ((changed? (true? (lepton_page_get_changed *page))))
-            (when (or (not changed?)
-                      ;; If the page has changed, ask the user to
-                      ;; really close it.
-                      (close-page-dialog (current-window) (active-page)))
-              (window-close-page! (current-window) (active-page))
-              (*window-set-current-page! *window *upper-page)))))))
+          (when (close-page-dialog (current-window) (active-page))
+            (window-close-page! (current-window) (active-page))
+            (*window-set-current-page! *window *upper-page))))))
 
 
 ;; -------------------------------------------------------------------

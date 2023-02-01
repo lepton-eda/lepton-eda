@@ -81,6 +81,7 @@ to continue with closing the page, and #f otherwise."
                  (not (eq? active-page page)))
         (window-set-toplevel-page! window active-page))
       result))
-
+  ;; Simply quit when the page has not changed.
   (or (not (page-dirty? page))
+      ;; If the page has changed, ask the user to really close it.
       (run-dialog)))

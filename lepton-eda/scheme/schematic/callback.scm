@@ -81,12 +81,10 @@
 
 (define (callback-page-close *widget *window)
   (define window (pointer->window *window))
-  (define *page (schematic_window_get_active_page *window))
-  (define page (pointer->page *page))
+  (define page
+    (pointer->page (schematic_window_get_active_page *window)))
 
-  (unless (or (null-pointer? *page)
-              (and (true? (lepton_page_get_changed *page))
-                   (not (close-page-dialog window page))))
+  (when (close-page-dialog window page)
     (window-close-page! window page)))
 
 (define *callback-page-close

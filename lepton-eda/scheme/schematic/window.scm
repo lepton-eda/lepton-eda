@@ -1198,9 +1198,8 @@ for *PAGE page will be created and set active."
             (*page (schematic_tab_info_get_page *tab-info)))
         (set-tab-page! *window *page)
 
-        (unless (and (true? (lepton_page_get_changed *page))
-                     (not (close-page-dialog (pointer->window *window)
-                                             (pointer->page *page))))
+        (when (close-page-dialog (pointer->window *window)
+                                 (pointer->page *page))
           (close-tab! *window *page)))))
 
 (define *callback-tab-button-close
@@ -1232,9 +1231,8 @@ for *PAGE page will be created and set active."
       (if (null-pointer? *parent)
           (log! 'message (G_ "Cannot find any schematics above the current one!"))
 
-          (unless (and (true? (lepton_page_get_changed *page))
-                       (not (close-page-dialog (pointer->window *window)
-                                               (pointer->page *page))))
+          (when (close-page-dialog (pointer->window *window)
+                                   (pointer->page *page))
             (close-tab! *window *page)
             (set-tab-page! *window *parent))))))
 
