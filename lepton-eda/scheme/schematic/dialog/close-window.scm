@@ -30,6 +30,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window page)
 
   #:export (close-window-dialog))
 
@@ -39,6 +40,7 @@
 
 
 (define (run-close-window-dialog *dialog *window *toplevel)
+  (define window (pointer->window *window))
   (define get-selected-pages
     schematic_close_confirmation_dialog_get_selected_pages)
   (define response
@@ -48,13 +50,10 @@
   (define not-changed? (negate page-dirty?))
 
   (define (save-page page)
-    (let ((*page (page->pointer page)))
-      (lepton_toplevel_goto_page *toplevel *page)
-      (schematic_window_page_changed *window)
+    (window-set-toplevel-page! window page)
+    (i_callback_file_save %null-pointer *window)
 
-      (i_callback_file_save %null-pointer *window)
-
-      page))
+    page)
 
   (define (all-pages-saved?)
     (let ((selected-pages
