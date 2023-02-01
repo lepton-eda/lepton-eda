@@ -51,8 +51,7 @@
 
   (define (save-page page)
     (window-set-toplevel-page! window page)
-    (i_callback_file_save %null-pointer *window)
-
+    (window-save-active-page! window)
     page)
 
   (define (all-pages-saved?)
@@ -60,7 +59,7 @@
            (glist->list (get-selected-pages *dialog)
                         pointer->page
                         'free)))
-      ;; For untitled pages, i_callback_file_save() starts the
+      ;; For untitled pages, window-save-active-page!() starts the
       ;; file name selection dialog.  If the user cancels it for a
       ;; page, the page remains changed but unsaved.  In such a
       ;; case #f is returned and the window won't be closed.
