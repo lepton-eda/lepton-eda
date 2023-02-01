@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2025 Lepton EDA Contributors
+;;; Copyright (C) 2022-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@
                          "document-save"
                          "Save"
                          "Save file"
-                         i_callback_file_save)
+                         callback-file-save)
     (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
