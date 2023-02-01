@@ -51,7 +51,6 @@
             schematic_execute_script
 
             i_callback_file_save
-            *i_callback_file_save
 
             i_action_start
             i_action_stop
@@ -1094,7 +1093,6 @@
 
 ;;; i_callbacks.c
 (define-lff i_callback_file_save void '(* *))
-(define-lfc *i_callback_file_save)
 
 ;;; i_basic.c
 (define-lff i_action_start void '(*))
