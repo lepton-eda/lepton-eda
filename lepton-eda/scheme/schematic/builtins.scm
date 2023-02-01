@@ -110,7 +110,7 @@
   (file-select-dialog (current-window)))
 
 (define-action-public (&file-save #:label (G_ "Save") #:icon "gtk-save")
-  (run-callback i_callback_file_save "&file-save"))
+  (window-save-active-page! (current-window)))
 
 (define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
   (define *window (*current-window))
