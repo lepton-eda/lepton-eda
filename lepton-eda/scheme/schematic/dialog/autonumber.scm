@@ -43,6 +43,10 @@
   #:export (autonumber-dialog))
 
 
+(define (hierarchy-traverse-pages *window *active-page inner-loop?)
+  (s_hierarchy_traversepages *window *active-page inner-loop?))
+
+
 (define (scope-number->symbol scope-number)
   (string->symbol
    (pointer->string
@@ -198,7 +202,7 @@
   (define scope (scope-number->symbol scope-number))
 
   ;; Get all pages of the hierarchy.
-  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
+  (define *pages (hierarchy-traverse-pages *window *active-page FALSE))
   (define page-list
     (if (eq? scope 'scope-hierarchy)
         (glist->list *pages pointer->page)
