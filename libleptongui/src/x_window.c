@@ -1001,12 +1001,12 @@ x_window_new_page (SchematicWindow* w_current)
  *
  *  \param w_current The toplevel environment.
  *  \param filename  File path that failed to load.
- *  \param err       Associated GError.
+ *  \param error_message Associated error message.
  */
 void
 open_page_error_dialog (SchematicWindow* w_current,
-                        const gchar*    filename,
-                        GError*         err)
+                        const gchar *filename,
+                        char *error_message)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -1031,7 +1031,7 @@ open_page_error_dialog (SchematicWindow* w_current,
     GTK_BUTTONS_CLOSE,
     msg,
     filename,
-    err != NULL ? err->message : "");
+    error_message);
 
   gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
 

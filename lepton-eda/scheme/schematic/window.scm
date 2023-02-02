@@ -860,6 +860,11 @@ tab notebook.  Returns a C TabInfo structure."
       (unless (null-pointer? *err)
         (gerror-message *err))))
 
+  (define (gerror-error-message *error)
+    (let ((msg (get-gerror-message *error)))
+      (g_clear_error *error)
+      msg))
+
   (define (*make-new-page)
     (let ((*new-page (lepton_page_new *toplevel *filename)))
       ;; Switch to the new page.  NOTE: the call sets
@@ -871,12 +876,11 @@ tab notebook.  Returns a C TabInfo structure."
       (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
         ;; Try to load *FILENAME.
         (if (false? (schematic_file_open *window *new-page *filename *error))
-            (let ((error-message (get-gerror-message *error)))
+            (let ((error-message (gerror-error-message *error)))
               (log! 'warning "~A" error-message)
               (open_page_error_dialog *window
                                       *filename
-                                      (dereference-pointer *error))
-              (g_clear_error *error)
+                                      (string->pointer error-message))
               ;; Loading failed.  Delete the page and open a new
               ;; blank one.
               (lepton_page_delete *toplevel *new-page)

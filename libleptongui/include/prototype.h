@@ -1172,7 +1172,7 @@ recent_manager_add (SchematicWindow *w_current,
 void
 open_page_error_dialog (SchematicWindow *w_current,
                         const gchar *filename,
-                        GError *err);
+                        char *error_message);
 void
 x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page);
