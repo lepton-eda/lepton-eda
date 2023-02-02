@@ -43,8 +43,11 @@
   #:export (autonumber-dialog))
 
 
-(define (hierarchy-traverse-pages *window *active-page)
-  (s_hierarchy_traversepages *window *active-page %null-pointer))
+(define (hierarchy-traverse-pages window page)
+  (define *window (check-window window 1))
+  (define *page (check-page page 2))
+
+  (s_hierarchy_traversepages *window *page %null-pointer))
 
 
 (define (scope-number->symbol scope-number)
@@ -195,14 +198,16 @@
 
 (define (run-autonumbering *autotext)
   (define *window (schematic_autonumber_get_autotext_window *autotext))
+  (define window (pointer->window *window))
   (define *active-page (schematic_window_get_active_page *window))
 
   (define scope-number
     (schematic_autonumber_get_autotext_scope_number *autotext))
   (define scope (scope-number->symbol scope-number))
 
+  (define active-page (pointer->page *active-page))
   ;; Get all pages of the hierarchy.
-  (define *pages (hierarchy-traverse-pages *window *active-page))
+  (define *pages (hierarchy-traverse-pages window active-page))
   (define page-list
     (if (eq? scope 'scope-hierarchy)
         (glist->list *pages pointer->page)

@@ -256,8 +256,6 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
   char *filename = NULL;
   const GList *iter;
 
-  g_return_val_if_fail ((p_current != NULL), NULL);
-
   /* preorder traversing */
   /* check whether we already visited this page */
   if (g_list_find (pages, p_current) != NULL)
