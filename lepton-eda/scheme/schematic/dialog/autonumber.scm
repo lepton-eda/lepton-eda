@@ -47,12 +47,9 @@
   #:export (autonumber-dialog))
 
 
-;;; This function traverses the hierarchy tree of pages in WINDOW and returns a
-;;; flat list of pages that are below PAGE.
-;;;
-;;; Warning: Currently, the function returns a GList of LeptonPage
-;;; pointers.  Caller must destroy returned GList with
-;;; g_list_free().
+;;; This function traverses the hierarchy tree of schematic pages
+;;; in WINDOW and returns a flat list of pages that are below
+;;; PAGE.
 (define (hierarchy-traverse-pages window page)
   (define *window (check-window window 1))
   (define *page (check-page page 2))
@@ -96,12 +93,12 @@
   (define (traverse-pages *page *pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
-    (if (not (null-pointer? (g_list_find *pages *page)))
+    (if (member *page *pages)
         ;; Drop the page subtree.
         *pages
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
-        (let ((*pages (g_list_append *pages *page))
+        (let ((*pages (append *pages (list *page)))
               ;; Search for the list of underlaying schematic
               ;; names.
               (filenames
@@ -136,7 +133,7 @@
                                 (loop *pages (cdr filenames))))
                           (loop *pages (cdr filenames))))))))))
 
-  (traverse-pages *page %null-pointer))
+  (traverse-pages *page '()))
 
 
 (define (scope-number->symbol scope-number)
@@ -296,10 +293,9 @@
 
   (define active-page (pointer->page *active-page))
   ;; Get all pages of the hierarchy.
-  (define *pages (hierarchy-traverse-pages window active-page))
   (define page-list
     (if (eq? scope 'scope-hierarchy)
-        (glist->list *pages pointer->page)
+        (map pointer->page (hierarchy-traverse-pages window active-page))
         ;; The text will be searched for only in the current page.
         (list active-page)))
 
@@ -400,7 +396,6 @@
             (window-set-toplevel-page! (pointer->window *window)
                                        (pointer->page *active-page))
             (schematic_canvas_invalidate_all (schematic_window_get_current_canvas *window))
-            (g_list_free *pages)
             ;; FIXME: Undo information saving has to be done
             ;; for all changed pages in hierarchy, not only for
             ;; the current one.
