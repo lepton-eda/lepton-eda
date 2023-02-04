@@ -47,7 +47,10 @@
   (define *window (check-window window 1))
   (define *page (check-page page 2))
 
-  (s_hierarchy_traversepages *window *page %null-pointer))
+  (define (traverse-pages *window *page *pages)
+    (s_hierarchy_traversepages *window *page *pages))
+
+  (traverse-pages *window *page %null-pointer))
 
 
 (define (scope-number->symbol scope-number)
