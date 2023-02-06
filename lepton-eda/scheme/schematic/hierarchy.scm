@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton library)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi)
@@ -41,8 +42,14 @@
 
   (check-integer page-control 4)
 
-  (s_hierarchy_down_schematic_single *window
-                                     (string->pointer filename)
-                                     *parent-page
-                                     0
-                                     *error))
+  (let ((source-filename (get-source-library-file filename)))
+    (if source-filename
+        (s_hierarchy_down_schematic_single *window
+                                           (string->pointer source-filename)
+                                           *parent-page
+                                           0
+                                           *error)
+        (begin
+          (schematic_hierarchy_set_error_nolib *error)
+
+          %null-pointer))))

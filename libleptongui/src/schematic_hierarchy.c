@@ -70,12 +70,11 @@ schematic_hierarchy_set_error_nolib (GError **err)
  */
 LeptonPage *
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
-                                   const gchar *filename,
+                                   gchar *filename,
                                    LeptonPage *parent,
                                    int page_control,
                                    GError **err)
 {
-  gchar *string;
   LeptonPage *found = NULL;
   LeptonPage *forbear;
 
@@ -87,19 +86,7 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
   g_return_val_if_fail ((filename != NULL), NULL);
   g_return_val_if_fail ((parent != NULL), NULL);
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
-                                               "get-source-library-file"),
-                             scm_from_utf8_string (filename));
-
-  if (scm_is_false (string_s))
-  {
-    schematic_hierarchy_set_error_nolib (err);
-    return NULL;
-  }
-
-  string = scm_to_utf8_string (string_s);
-
-  gchar *normalized_filename = f_normalize_filename (string, NULL);
+  gchar *normalized_filename = f_normalize_filename (filename, NULL);
   found = lepton_toplevel_search_page (toplevel, normalized_filename);
   g_free (normalized_filename);
 
@@ -125,11 +112,10 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
       lepton_page_set_page_control (found, page_control);
     }
     lepton_page_set_up (found, lepton_page_get_pid (parent));
-    g_free (string);
     return found;
   }
 
-  found = lepton_page_new (toplevel, string);
+  found = lepton_page_new (toplevel, filename);
 
   schematic_file_open (w_current,
                        found,
@@ -145,8 +131,6 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
   }
 
   lepton_page_set_up (found, lepton_page_get_pid (parent));
-
-  g_free (string);
 
   return found;
 }

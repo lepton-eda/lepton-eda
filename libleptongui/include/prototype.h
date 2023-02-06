@@ -1334,7 +1334,7 @@ schematic_hierarchy_set_error_nolib (GError **err);
 
 LeptonPage*
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
-                                   const gchar *filename,
+                                   gchar *filename,
                                    LeptonPage *parent,
                                    int page_control,
                                    GError **err);
