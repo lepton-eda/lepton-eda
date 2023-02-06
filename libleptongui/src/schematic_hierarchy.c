@@ -119,8 +119,9 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                        NULL);
 
   if (page_control == 0) {
-    page_control_counter++;
-    lepton_page_set_page_control (found, page_control_counter);
+    schematic_hierarchy_increment_page_control_counter ();
+    lepton_page_set_page_control (found,
+                                  schematic_hierarchy_get_page_control_counter ());
   } else {
     lepton_page_set_page_control (found, page_control);
   }
