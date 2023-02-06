@@ -90,8 +90,9 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
     for (forbear = parent;
          forbear != NULL
            && lepton_page_get_pid (found) != lepton_page_get_pid (forbear)
-           && forbear->up >= 0;
-         forbear = lepton_toplevel_search_page_by_id (toplevel->pages, forbear->up))
+           && lepton_page_get_up (forbear) >= 0;
+         forbear = lepton_toplevel_search_page_by_id (toplevel->pages,
+                                                      lepton_page_get_up (forbear)))
       ; /* void */
 
     if (forbear != NULL
@@ -105,7 +106,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
     if (page_control != 0) {
       found->page_control = page_control;
     }
-    found->up = lepton_page_get_pid (parent);
+    lepton_page_set_up (found, lepton_page_get_pid (parent));
     g_free (string);
     return found;
   }
@@ -124,7 +125,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
     found->page_control = page_control;
   }
 
-  found->up = lepton_page_get_pid (parent);
+  lepton_page_set_up (found, lepton_page_get_pid (parent));
 
   g_free (string);
 
