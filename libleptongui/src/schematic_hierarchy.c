@@ -88,11 +88,15 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
   if (found) {
     /* check whether this page is in the parents list */
     for (forbear = parent;
-         forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
+         forbear != NULL
+           && lepton_page_get_pid (found) != lepton_page_get_pid (forbear)
+           && forbear->up >= 0;
          forbear = lepton_toplevel_search_page_by_id (toplevel->pages, forbear->up))
       ; /* void */
 
-    if (forbear != NULL && found->pid == forbear->pid) {
+    if (forbear != NULL
+        && lepton_page_get_pid (found) == lepton_page_get_pid (forbear))
+    {
       g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
                    _("Hierarchy contains a circular dependency."));
       return NULL;  /* error signal */
@@ -101,7 +105,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
     if (page_control != 0) {
       found->page_control = page_control;
     }
-    found->up = parent->pid;
+    found->up = lepton_page_get_pid (parent);
     g_free (string);
     return found;
   }
@@ -120,7 +124,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
     found->page_control = page_control;
   }
 
-  found->up = parent->pid;
+  found->up = lepton_page_get_pid (parent);
 
   g_free (string);
 
