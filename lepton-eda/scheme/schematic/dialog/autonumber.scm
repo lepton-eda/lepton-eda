@@ -51,8 +51,6 @@
 ;;; in WINDOW and returns a flat list of pages that are below
 ;;; PAGE.
 (define (hierarchy-traverse-pages window page)
-  (define *window (check-window window 1))
-
   (define *error
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
 
@@ -130,6 +128,8 @@
                           (gerror-handler filename)
                           (loop pages (cdr filenames))))
                     (loop pages (cdr filenames))))))))
+
+  (check-window window 1)
   (check-page page 2)
   (traverse-pages page '()))
 
