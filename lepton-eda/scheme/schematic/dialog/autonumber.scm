@@ -37,6 +37,7 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
+  #:use-module (schematic hierarchy)
   #:use-module (schematic selection)
   #:use-module (schematic window foreign)
   #:use-module (schematic window page)
@@ -90,7 +91,11 @@
                         ;; Let's load the page and dive into it.
                         (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
                                (*child-page
-                                (s_hierarchy_down_schematic_single *window *filename *page 0 *error)))
+                                (hierarchy-down-schematic window
+                                                          (pointer->string *filename)
+                                                          page
+                                                          0
+                                                          *error)))
                           (if (not (null-pointer? *child-page))
                               ;; Call the recursive function.
                               (traverse-pages *window *child-page *pages)

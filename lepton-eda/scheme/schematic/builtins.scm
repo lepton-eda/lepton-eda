@@ -58,6 +58,7 @@
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
+  #:use-module (schematic hierarchy)
   #:use-module (schematic hook)
   #:use-module (schematic menu)
   #:use-module (schematic rc)
@@ -1127,11 +1128,11 @@ the snap grid size should be set to 100")))
 
   (log! 'message (G_ "Searching for source ~S") filename)
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (*child (s_hierarchy_down_schematic_single *window
-                                                    (string->pointer filename)
-                                                    *parent
-                                                    page-control
-                                                    *error)))
+         (*child (hierarchy-down-schematic (pointer->window *window)
+                                           filename
+                                           (pointer->page *parent)
+                                           page-control
+                                           *error)))
     (if (null-pointer? *child)
         ;; Launch the error dialog.
         (begin
@@ -1146,7 +1147,7 @@ the snap grid size should be set to 100")))
               ;; subpage loaded.  Zoom will be set in
               ;; set-tab-page!().
               (*window-set-current-page! *window *child)
-              ;; s_hierarchy_down_schematic_single() does not zoom
+              ;; hierarchy-down-schematic() does not zoom
               ;; the loaded page, so zoom it here.
               (zoom-child-page *window *parent *child))
           *child))))
