@@ -166,6 +166,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/gtk/helper.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
+	schematic/hierarchy.scm \
 	schematic/hook.scm \
 	schematic/keymap.scm \
 	schematic/menu.scm \
