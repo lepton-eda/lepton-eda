@@ -1336,12 +1336,6 @@ void
 schematic_hierarchy_set_error_nolib (GError **err);
 
 LeptonPage*
-s_hierarchy_down_schematic_single (SchematicWindow *w_current,
-                                   LeptonPage *parent,
-                                   LeptonPage *found,
-                                   int page_control,
-                                   GError **err);
-LeptonPage*
 s_hierarchy_find_up_page (LeptonPage *current_page);
 
 LeptonPage*

@@ -268,7 +268,6 @@
             schematic_hierarchy_set_error_loop
             schematic_hierarchy_set_error_nolib
             s_hierarchy_find_up_page
-            s_hierarchy_down_schematic_single
 
             schematic_page_revert_dialog
 
@@ -822,7 +821,6 @@
 (define-lff schematic_hierarchy_set_error_loop void '(*))
 (define-lff schematic_hierarchy_set_error_nolib void '(*))
 (define-lff s_hierarchy_find_up_page '* '(*))
-(define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
 
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))

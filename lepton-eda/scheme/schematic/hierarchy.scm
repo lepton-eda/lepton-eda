@@ -31,6 +31,11 @@
   #:export (hierarchy-down-schematic))
 
 
+;;; The function searches for an associated source file referred
+;;; by FILENAME and loads it if it is not already in the list of
+;;; the currently open pages.  The function returns the found or
+;;; loaded source page, or %NULL-POINTER if it could not find the
+;;; source file.  Any issue is reported to the log.
 (define (*hierarchy-down-schematic window
                                    filename
                                    parent-page
@@ -41,6 +46,17 @@
                          (string->pointer filename)))
   (define *parent-page (check-page parent-page 3))
   (define *toplevel (schematic_window_get_toplevel *window))
+
+  (define (get-forebear *page *found-page)
+    ;; Check whether this page is in the parents list.
+    (let loop ((*forebear *page))
+      (if (and (not (null-pointer? *forebear))
+               (not (= (lepton_page_get_pid *found-page)
+                       (lepton_page_get_pid *forebear)))
+               (>= (lepton_page_get_up *forebear) 0))
+          (loop (lepton_toplevel_search_page_by_id (lepton_toplevel_get_pages *toplevel)
+                                                   (lepton_page_get_up *forebear)))
+          *forebear)))
 
   (check-integer page-control 4)
 
@@ -68,11 +84,7 @@
                 *new-page)
 
               ;; Page has been found.
-              (let ((*forebear-page (s_hierarchy_down_schematic_single *window
-                                                                       *parent-page
-                                                                       *found-page
-                                                                       0
-                                                                       *error)))
+              (let ((*forebear-page (get-forebear *parent-page *found-page)))
                 (if (and (not (null-pointer? *forebear-page))
                          (= (lepton_page_get_pid *found-page)
                             (lepton_page_get_pid *forebear-page)))

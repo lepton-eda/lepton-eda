@@ -350,6 +350,7 @@
             lepton_toplevel_set_rc_list
             lepton_toplevel_rc_list_add
             lepton_toplevel_search_page
+            lepton_toplevel_search_page_by_id
 
             lepton_object_list_bounds
             lepton_object_list_delete
@@ -434,6 +435,7 @@
 (define-lff lepton_toplevel_set_rc_list void '(* *))
 (define-lff lepton_toplevel_rc_list_add void '(* *))
 (define-lff lepton_toplevel_search_page '* '(* *))
+(define-lff lepton_toplevel_search_page_by_id '* (list '* int))
 
 ;;; g_rc.c
 (define-lff g_rc_parse__process_error void '(* *))

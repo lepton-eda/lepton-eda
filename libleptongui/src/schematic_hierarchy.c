@@ -71,45 +71,6 @@ schematic_hierarchy_set_error_loop (GError **err)
 }
 
 
-/*!
- *  \brief Search for schematic associated source files and load them.
- *  \par Function Description
- *  This function searches the associated source file refered by the
- *  <B>filename</B> and loads it.  If the page is already in the list of
- *  pages it will return the <B>pid</B> of that page.
- *
- *  \param [in] w_current     The SchematicWindow object.
- *  \param [in] parent        The parent page of the schematic.
- *  \param [in] found         The parent page of the schematic.
- *  \param [in] page_control  The page found in the list of pages.
- *  \param [out] err         Location to return a GError on failure.
- *  \return The page loaded, or NULL if failed.
- */
-LeptonPage *
-s_hierarchy_down_schematic_single (SchematicWindow *w_current,
-                                   LeptonPage *parent,
-                                   LeptonPage *found,
-                                   int page_control,
-                                   GError **err)
-{
-  LeptonPage *forbear;
-
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-
-  g_return_val_if_fail ((toplevel != NULL), NULL);
-
-  /* check whether this page is in the parents list */
-  for (forbear = parent;
-       forbear != NULL
-         && lepton_page_get_pid (found) != lepton_page_get_pid (forbear)
-         && lepton_page_get_up (forbear) >= 0;
-       forbear = lepton_toplevel_search_page_by_id (lepton_toplevel_get_pages (toplevel),
-                                                    lepton_page_get_up (forbear)))
-    ; /* void */
-  return forbear;
-}
-
-
 /*! \brief Search for the parent page of a page in hierarchy.
  *  \par Function Description
  *  This function searches the parent page of page \a page in the
