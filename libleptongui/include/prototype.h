@@ -1336,6 +1336,7 @@ LeptonPage*
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                                    gchar *filename,
                                    LeptonPage *parent,
+                                   LeptonPage *found,
                                    int page_control,
                                    GError **err);
 LeptonPage*

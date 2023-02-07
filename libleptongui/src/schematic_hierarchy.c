@@ -64,7 +64,8 @@ schematic_hierarchy_set_error_nolib (GError **err)
  *  \param [in] w_current     The SchematicWindow object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
- *  \param [in] page_control
+ *  \param [in] found         The parent page of the schematic.
+ *  \param [in] page_control  The page found in the list of pages.
  *  \param [out] err         Location to return a GError on failure.
  *  \return The page loaded, or NULL if failed.
  */
@@ -72,19 +73,15 @@ LeptonPage *
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                                    gchar *filename,
                                    LeptonPage *parent,
+                                   LeptonPage *found,
                                    int page_control,
                                    GError **err)
 {
-  LeptonPage *found = NULL;
   LeptonPage *forbear;
 
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
-
-  gchar *normalized_filename = f_normalize_filename (filename, NULL);
-  found = lepton_toplevel_search_page (toplevel, normalized_filename);
-  g_free (normalized_filename);
 
   if (found) {
     /* check whether this page is in the parents list */

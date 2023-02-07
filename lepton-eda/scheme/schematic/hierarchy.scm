@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi)
   #:use-module (lepton library)
   #:use-module (lepton page foreign)
 
@@ -39,16 +40,21 @@
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
   (define *parent-page (check-page parent-page 3))
+  (define *toplevel (schematic_window_get_toplevel *window))
 
   (check-integer page-control 4)
 
   (let ((source-filename (get-source-library-file filename)))
     (if source-filename
-        (s_hierarchy_down_schematic_single *window
-                                           (string->pointer source-filename)
-                                           *parent-page
-                                           0
-                                           *error)
+        (let* ((normalized-filename (canonicalize-path source-filename))
+               (*found-page (lepton_toplevel_search_page *toplevel
+                                                         (string->pointer normalized-filename))))
+          (s_hierarchy_down_schematic_single *window
+                                             (string->pointer source-filename)
+                                             *parent-page
+                                             *found-page
+                                             0
+                                             *error))
         (begin
           (schematic_hierarchy_set_error_nolib *error)
 
