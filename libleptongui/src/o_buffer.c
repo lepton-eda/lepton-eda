@@ -105,10 +105,10 @@ o_buffer_copy(GschemToplevel *w_current, int buf_num)
 
   g_run_hook_object_list (w_current,
                           "copy-objects-hook",
-                          object_buffer[buf_num]);
+                          schematic_buffer_get_objects (buf_num));
 
   if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, object_buffer[buf_num]);
+    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
   }
 }
 
