@@ -26,6 +26,18 @@
 GList *object_buffer[MAX_BUFFERS];
 
 
+/*! \brief Get the list of objects of the buffer number \a num.
+ *
+ *  \param [in] num Buffer number.
+ *  \return The GList of objects in the buffer.
+ */
+GList*
+schematic_buffer_get_objects (int num)
+{
+  return object_buffer[num];
+}
+
+
 /*! \brief Copy the contents of the clipboard to a buffer
  *
  *  \param [in] w_current
