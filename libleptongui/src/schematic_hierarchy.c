@@ -106,23 +106,7 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
        forbear = lepton_toplevel_search_page_by_id (lepton_toplevel_get_pages (toplevel),
                                                     lepton_page_get_up (forbear)))
     ; /* void */
-
-  if (forbear != NULL
-      && lepton_page_get_pid (found) == lepton_page_get_pid (forbear))
-  {
-    schematic_hierarchy_set_error_loop (err);
-    return NULL;  /* error signal */
-  }
-  else
-  {
-    lepton_toplevel_goto_page (toplevel, found);
-    if (page_control != 0)
-    {
-      lepton_page_set_page_control (found, page_control);
-    }
-    lepton_page_set_up (found, lepton_page_get_pid (parent));
-    return found;
-  }
+  return forbear;
 }
 
 

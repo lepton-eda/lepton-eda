@@ -66,11 +66,28 @@
 
                 (lepton_page_set_up *new-page (lepton_page_get_pid *parent-page))
                 *new-page)
-              (s_hierarchy_down_schematic_single *window
-                                                 *parent-page
-                                                 *found-page
-                                                 0
-                                                 *error)))
+
+              ;; Page has been found.
+              (let ((*forebear-page (s_hierarchy_down_schematic_single *window
+                                                                       *parent-page
+                                                                       *found-page
+                                                                       0
+                                                                       *error)))
+                (if (and (not (null-pointer? *forebear-page))
+                         (= (lepton_page_get_pid *found-page)
+                            (lepton_page_get_pid *forebear-page)))
+                    (begin
+                      (schematic_hierarchy_set_error_loop *error)
+                      ;; Error signal.
+                      %null-pointer)
+
+                    (begin
+                      (lepton_toplevel_goto_page *toplevel *found-page)
+                      (unless (zero? page-control)
+                        (lepton_page_set_page_control *found-page page-control))
+                      (lepton_page_set_up *found-page (lepton_page_get_pid *parent-page))
+                      ;; return
+                      *found-page)))))
         (begin
           (schematic_hierarchy_set_error_nolib *error)
 
