@@ -67,8 +67,9 @@ clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
  *  \param [in] w_current
  *  \param [in] buf_num
  */
-static void
-selection_to_buffer(GschemToplevel *w_current, int buf_num)
+void
+schematic_buffer_from_selection (GschemToplevel *w_current,
+                                 int buf_num)
 {
   GList *s_current = NULL;
 
@@ -101,7 +102,7 @@ o_buffer_copy(GschemToplevel *w_current, int buf_num)
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
-  selection_to_buffer (w_current, buf_num);
+  schematic_buffer_from_selection (w_current, buf_num);
 
   g_run_hook_object_list (w_current,
                           "copy-objects-hook",
@@ -125,7 +126,7 @@ o_buffer_cut(GschemToplevel *w_current, int buf_num)
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
-  selection_to_buffer (w_current, buf_num);
+  schematic_buffer_from_selection (w_current, buf_num);
   o_delete_selected(w_current);
 
   if (buf_num == CLIPBOARD_BUFFER) {

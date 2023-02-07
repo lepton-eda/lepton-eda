@@ -177,6 +177,10 @@ void o_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 GList*
 schematic_buffer_get_objects (int num);
 
+void
+schematic_buffer_from_selection (GschemToplevel *w_current,
+                                 int buf_num);
+
 void o_buffer_copy(GschemToplevel *w_current, int buf_num);
 void o_buffer_cut(GschemToplevel *w_current, int buf_num);
 int o_buffer_paste_start(GschemToplevel *w_current, int x, int y, int buf_num);
