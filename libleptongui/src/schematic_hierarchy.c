@@ -62,7 +62,6 @@ schematic_hierarchy_set_error_nolib (GError **err)
  *  pages it will return the <B>pid</B> of that page.
  *
  *  \param [in] w_current     The SchematicWindow object.
- *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] found         The parent page of the schematic.
  *  \param [in] page_control  The page found in the list of pages.
@@ -71,7 +70,6 @@ schematic_hierarchy_set_error_nolib (GError **err)
  */
 LeptonPage *
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
-                                   gchar *filename,
                                    LeptonPage *parent,
                                    LeptonPage *found,
                                    int page_control,
@@ -83,48 +81,27 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
 
-  if (found) {
-    /* check whether this page is in the parents list */
-    for (forbear = parent;
-         forbear != NULL
-           && lepton_page_get_pid (found) != lepton_page_get_pid (forbear)
-           && lepton_page_get_up (forbear) >= 0;
-         forbear = lepton_toplevel_search_page_by_id (lepton_toplevel_get_pages (toplevel),
-                                                      lepton_page_get_up (forbear)))
-      ; /* void */
+  /* check whether this page is in the parents list */
+  for (forbear = parent;
+       forbear != NULL
+         && lepton_page_get_pid (found) != lepton_page_get_pid (forbear)
+         && lepton_page_get_up (forbear) >= 0;
+       forbear = lepton_toplevel_search_page_by_id (lepton_toplevel_get_pages (toplevel),
+                                                    lepton_page_get_up (forbear)))
+    ; /* void */
 
-    if (forbear != NULL
-        && lepton_page_get_pid (found) == lepton_page_get_pid (forbear))
-    {
-      g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
-                   _("Hierarchy contains a circular dependency."));
-      return NULL;  /* error signal */
-    }
-    lepton_toplevel_goto_page (toplevel, found);
-    if (page_control != 0) {
-      lepton_page_set_page_control (found, page_control);
-    }
-    lepton_page_set_up (found, lepton_page_get_pid (parent));
-    return found;
+  if (forbear != NULL
+      && lepton_page_get_pid (found) == lepton_page_get_pid (forbear))
+  {
+    g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
+                 _("Hierarchy contains a circular dependency."));
+    return NULL;  /* error signal */
   }
-
-  found = lepton_page_new (toplevel, filename);
-
-  schematic_file_open (w_current,
-                       found,
-                       lepton_page_get_filename (found),
-                       NULL);
-
-  if (page_control == 0) {
-    schematic_hierarchy_increment_page_control_counter ();
-    lepton_page_set_page_control (found,
-                                  schematic_hierarchy_get_page_control_counter ());
-  } else {
+  lepton_toplevel_goto_page (toplevel, found);
+  if (page_control != 0) {
     lepton_page_set_page_control (found, page_control);
   }
-
   lepton_page_set_up (found, lepton_page_get_pid (parent));
-
   return found;
 }
 

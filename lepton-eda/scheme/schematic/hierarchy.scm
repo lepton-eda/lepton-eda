@@ -49,12 +49,28 @@
         (let* ((normalized-filename (canonicalize-path source-filename))
                (*found-page (lepton_toplevel_search_page *toplevel
                                                          (string->pointer normalized-filename))))
-          (s_hierarchy_down_schematic_single *window
-                                             (string->pointer source-filename)
-                                             *parent-page
-                                             *found-page
-                                             0
-                                             *error))
+          (if (null-pointer? *found-page)
+              ;; Subschematic has not been found, let's create a new page.
+              (let ((*new-page (lepton_page_new *toplevel
+                                                (string->pointer source-filename))))
+                (schematic_file_open *window
+                                     *new-page
+                                     (lepton_page_get_filename *new-page)
+                                     %null-pointer)
+                (if (zero? page-control)
+                    (begin
+                      (schematic_hierarchy_increment_page_control_counter)
+                      (lepton_page_set_page_control *new-page
+                                                    (schematic_hierarchy_get_page_control_counter)))
+                    (lepton_page_set_page_control *new-page page-control))
+
+                (lepton_page_set_up *new-page (lepton_page_get_pid *parent-page))
+                *new-page)
+              (s_hierarchy_down_schematic_single *window
+                                                 *parent-page
+                                                 *found-page
+                                                 0
+                                                 *error)))
         (begin
           (schematic_hierarchy_set_error_nolib *error)
 
