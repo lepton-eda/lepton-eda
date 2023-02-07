@@ -97,12 +97,16 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                  _("Hierarchy contains a circular dependency."));
     return NULL;  /* error signal */
   }
-  lepton_toplevel_goto_page (toplevel, found);
-  if (page_control != 0) {
-    lepton_page_set_page_control (found, page_control);
+  else
+  {
+    lepton_toplevel_goto_page (toplevel, found);
+    if (page_control != 0)
+    {
+      lepton_page_set_page_control (found, page_control);
+    }
+    lepton_page_set_up (found, lepton_page_get_pid (parent));
+    return found;
   }
-  lepton_page_set_up (found, lepton_page_get_pid (parent));
-  return found;
 }
 
 
