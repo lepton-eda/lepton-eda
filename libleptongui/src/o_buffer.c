@@ -106,7 +106,7 @@ o_buffer_cut(GschemToplevel *w_current, int buf_num)
   o_delete_selected(w_current);
 
   if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, object_buffer[buf_num]);
+    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
   }
 }
 
