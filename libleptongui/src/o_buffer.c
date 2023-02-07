@@ -90,30 +90,6 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
 }
 
 
-/*! \brief Copy the selection into a buffer
- *
- *  \param [in] w_current
- *  \param [in] buf_num
- */
-void
-o_buffer_copy(GschemToplevel *w_current, int buf_num)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (buf_num >= 0);
-  g_return_if_fail (buf_num < MAX_BUFFERS);
-
-  schematic_buffer_from_selection (w_current, buf_num);
-
-  g_run_hook_object_list (w_current,
-                          "copy-objects-hook",
-                          schematic_buffer_get_objects (buf_num));
-
-  if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
-  }
-}
-
-
 /*! \brief Cut the selection into a buffer
  *
  *  \param [in] w_current

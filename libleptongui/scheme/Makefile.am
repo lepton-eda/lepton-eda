@@ -17,6 +17,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action-mode.scm \
 	schematic/action/copy.scm \
 	schematic/attrib.scm \
+	schematic/buffer.scm \
 	schematic/builtins.scm \
 	schematic/callback.scm \
 	schematic/gettext.scm \

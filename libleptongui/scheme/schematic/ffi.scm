@@ -63,8 +63,9 @@
 
             o_attrib_add_attrib
 
+            schematic_buffer_from_selection
+            schematic_buffer_get_objects
             o_buffer_init
-            o_buffer_copy
             o_buffer_cut
             o_buffer_free
             o_buffer_paste_start
@@ -176,6 +177,7 @@
 
             x_clipboard_finish
             x_clipboard_init
+            x_clipboard_set
 
             x_show_uri
 
@@ -531,8 +533,9 @@
 (define-lff pagesel_callback_selection_changed '* '(* *))
 
 ;;; o_buffer.c
+(define-lff schematic_buffer_from_selection void (list '* int))
+(define-lff schematic_buffer_get_objects '* (list int))
 (define-lff o_buffer_init void '())
-(define-lff o_buffer_copy void (list '* int))
 (define-lff o_buffer_cut void (list '* int))
 (define-lff o_buffer_free void '(*))
 (define-lff o_buffer_paste_start int (list '* int int int))
@@ -966,6 +969,7 @@
 ;;; x_clipboard.c
 (define-lff x_clipboard_finish void '(*))
 (define-lff x_clipboard_init void '(*))
+(define-lff x_clipboard_set int '(* *))
 
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
