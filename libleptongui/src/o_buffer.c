@@ -55,8 +55,9 @@ schematic_buffer_from_clipboard (GschemToplevel *w_current,
 
   object_list = x_clipboard_get (w_current);
 
-  if (object_buffer[buf_num] != NULL) {
-    lepton_object_list_delete (object_buffer[buf_num]);
+  if (schematic_buffer_get_objects (buf_num) != NULL)
+  {
+    lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
   }
 
   object_buffer[buf_num] = object_list;
