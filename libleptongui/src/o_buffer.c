@@ -51,32 +51,6 @@ schematic_buffer_set_objects (int num,
 }
 
 
-/*! \brief Copy the contents of the clipboard to a buffer
- *
- *  \param [in] w_current
- *  \param [in] buf_num
- */
-void
-schematic_buffer_from_clipboard (GschemToplevel *w_current,
-                                 int buf_num)
-{
-  GList *object_list;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (buf_num >= 0);
-  g_return_if_fail (buf_num < MAX_BUFFERS);
-
-  object_list = x_clipboard_get (w_current);
-
-  if (schematic_buffer_get_objects (buf_num) != NULL)
-  {
-    lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
-  }
-
-  schematic_buffer_set_objects (buf_num, object_list);
-}
-
-
 /*! \brief Copy the selection to a buffer
  *
  *  \param [in] w_current

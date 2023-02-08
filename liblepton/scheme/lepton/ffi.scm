@@ -337,6 +337,7 @@
             lepton_toplevel_init_autosave
             lepton_toplevel_search_page
 
+            lepton_object_list_delete
             lepton_object_list_to_buffer
             lepton_object_list_translate
             o_glist_copy_all
@@ -676,6 +677,7 @@
 (define-lff s_conn_update_object void '(* *))
 
 ;;; object_list.c
+(define-lff lepton_object_list_delete void '(*))
 (define-lff lepton_object_list_to_buffer '* '(*))
 (define-lff o_glist_copy_all '* '(* *))
 (define-lff lepton_object_list_translate void  (list '* int int))

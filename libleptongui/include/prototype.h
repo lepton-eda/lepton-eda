@@ -181,9 +181,6 @@ void
 schematic_buffer_set_objects (int num,
                               GList *objects);
 void
-schematic_buffer_from_clipboard (GschemToplevel *w_current,
-                                 int buf_num);
-void
 schematic_buffer_from_selection (GschemToplevel *w_current,
                                  int buf_num);
 void o_buffer_init(void);

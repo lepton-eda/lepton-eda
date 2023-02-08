@@ -84,6 +84,19 @@ BUFFER-NUMBER."
                      (schematic_buffer_get_objects buffer-number))))
 
 
+;;; Copy the contents of the clipboard to buffer.
+(define (clipboard->buffer window buffer-number)
+  (define *window (check-window window 1))
+  (define *objects (x_clipboard_get *window))
+
+  (check-buffer-number buffer-number)
+
+  (unless (null-pointer? (schematic_buffer_get_objects buffer-number))
+    (lepton_object_list_delete (schematic_buffer_get_objects buffer-number)))
+
+  (schematic_buffer_set_objects buffer-number *objects))
+
+
 (define (paste-buffer window anchor buffer-number)
   "Place the contents of the buffer BUFFER-NUMBER in WINDOW into the
 place list at the point ANCHOR."
@@ -99,7 +112,7 @@ place list at the point ANCHOR."
   (check-integer buffer-number 3)
 
   (when (= buffer-number CLIPBOARD_BUFFER)
-    (schematic_buffer_from_clipboard *window buffer-number))
+    (clipboard->buffer window buffer-number))
 
   ;; Cancel the action if there are no objects in the buffer.
   (or (null-pointer? (schematic_buffer_get_objects buffer-number))
