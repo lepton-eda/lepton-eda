@@ -2000,3 +2000,61 @@ schematic_window_set_mousepan_gain (GschemToplevel *w_current,
 
   w_current->mousepan_gain = val;
 }
+
+
+/*! \brief Get schematic window's field 'first_wx'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'first_wx'.
+ */
+int
+schematic_window_get_first_wx (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->first_wx;
+}
+
+
+/*! \brief Set schematic window's field 'first_wx'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'first_wx'.
+ */
+void
+schematic_window_set_first_wx (GschemToplevel *w_current,
+                               int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->first_wx = val;
+}
+
+
+/*! \brief Get schematic window's field 'first_wy'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'first_wy'.
+ */
+int
+schematic_window_get_first_wy (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->first_wy;
+}
+
+
+/*! \brief Set schematic window's field 'first_wy'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'first_wy'.
+ */
+void
+schematic_window_set_first_wy (GschemToplevel *w_current,
+                               int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->first_wy = val;
+}

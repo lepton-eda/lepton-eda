@@ -535,4 +535,16 @@ schematic_window_get_mousepan_gain (GschemToplevel *w_current);
 void
 schematic_window_set_mousepan_gain (GschemToplevel *w_current,
                                     int val);
+int
+schematic_window_get_first_wx (GschemToplevel *w_current);
+
+void
+schematic_window_set_first_wx (GschemToplevel *w_current,
+                               int val);
+int
+schematic_window_get_first_wy (GschemToplevel *w_current);
+
+void
+schematic_window_set_first_wy (GschemToplevel *w_current,
+                               int val);
 G_END_DECLS
