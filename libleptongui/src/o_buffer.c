@@ -111,7 +111,8 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
     gschem_toplevel_get_show_hidden_text (w_current);
 
   /* Cancel current place or draw action if it is being done */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     i_callback_cancel (NULL, w_current);
   }
 
