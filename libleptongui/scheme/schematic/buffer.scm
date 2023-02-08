@@ -19,10 +19,12 @@
 
 (define-module (schematic buffer)
   #:use-module (system foreign)
+  #:use-module (rnrs bytevectors)
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
   #:use-module (schematic ffi)
@@ -83,6 +85,11 @@ BUFFER-NUMBER."
 
 (define (paste-buffer window anchor buffer-number)
   (define *window (check-window window 1))
+  (define xleft (make-bytevector (sizeof int)))
+  (define ytop (make-bytevector (sizeof int)))
+  (define xright (make-bytevector (sizeof int)))
+  (define ybottom (make-bytevector (sizeof int)))
+
   (check-coord anchor 2)
   (check-integer buffer-number 3)
 
@@ -91,7 +98,30 @@ BUFFER-NUMBER."
 
   ;; Cancel the action if there are no objects in the buffer.
   (or (null-pointer? (schematic_buffer_get_objects buffer-number))
-      (true? (o_buffer_paste_start *window
-                                   (car anchor) ; x
-                                   (cdr anchor) ; y
-                                   buffer-number))))
+
+      (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window)))
+        ;; Remove the old place list if it exists.
+        (schematic_window_delete_place_list *window)
+        ;; Replace it with a list from buffer.
+        (schematic_window_set_place_list *window
+                                         (o_glist_copy_all (schematic_buffer_get_objects buffer-number)
+                                                           %null-pointer))
+
+        (let ((result (world_get_object_glist_bounds (schematic_window_get_place_list *window)
+                                                     show-hidden-text?
+                                                     (bytevector->pointer xleft)
+                                                     (bytevector->pointer ytop)
+                                                     (bytevector->pointer xright)
+                                                     (bytevector->pointer ybottom))))
+          ;; If the place buffer doesn't have any objects
+          ;; to define its any bounds we drop out here.
+          (or (false? result)
+              (let ((left-x (bytevector-sint-ref xleft 0 (native-endianness) (sizeof int)))
+                    (top-y (bytevector-sint-ref ytop 0 (native-endianness) (sizeof int))))
+
+                (true? (o_buffer_paste_start *window
+                                             (car anchor) ; x
+                                             (cdr anchor) ; y
+                                             left-x
+                                             top-y
+                                             buffer-number))))))))

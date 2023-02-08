@@ -538,7 +538,7 @@
 (define-lff schematic_buffer_get_objects '* (list int))
 (define-lff o_buffer_init void '())
 (define-lff o_buffer_free void '(*))
-(define-lff o_buffer_paste_start int (list '* int int int))
+(define-lff o_buffer_paste_start int (list '* int int int int int))
 
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())

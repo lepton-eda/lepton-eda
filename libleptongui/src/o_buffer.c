@@ -97,30 +97,14 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
  *  \retval FALSE the clipboard contained objects
  */
 int
-o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
+o_buffer_paste_start (GschemToplevel *w_current,
+                      int w_x,
+                      int w_y,
+                      int rleft,
+                      int rtop,
+                      int buf_num)
 {
-  int rleft, rtop, rbottom, rright;
   int x, y;
-
-  gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
-
-  /* remove the old place list if it exists */
-  schematic_window_delete_place_list (w_current);
-  /* Replace it with a list from buffer. */
-  schematic_window_set_place_list (w_current,
-                                   o_glist_copy_all (schematic_buffer_get_objects (buf_num), NULL));
-
-  if (!world_get_object_glist_bounds (schematic_window_get_place_list (w_current),
-                                      show_hidden_text,
-                                      &rleft,
-                                      &rtop,
-                                      &rright,
-                                      &rbottom)) {
-    /* If the place buffer doesn't have any objects
-     * to define its any bounds, we drop out here */
-    return TRUE;
-  }
 
   /* Place the objects into the buffer at the mouse origin, (w_x, w_y). */
 

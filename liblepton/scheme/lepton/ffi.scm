@@ -156,6 +156,7 @@
             lepton_object_is_pin
             lepton_object_is_text
 
+            world_get_object_glist_bounds
             lepton_object_calculate_visible_bounds
             lepton_object_copy
             lepton_object_emit_change_notify
@@ -517,6 +518,7 @@
 (define-lff lepton_object_is_pin int '(*))
 (define-lff lepton_object_is_text int '(*))
 
+(define-lff world_get_object_glist_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
 (define-lff lepton_object_emit_change_notify void '(*))
