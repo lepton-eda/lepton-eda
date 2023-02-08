@@ -33,37 +33,52 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (paste-buffer
+  #:export (free-buffers
+            paste-buffer
             window-selection->buffer
             window-selection->buffer!))
 
 
-;;; Defined in globals.h.
+(define %schematic-buffer-list
+  ;; 5 buffers plus clipboard buffer that has index 0.
+  (make-list 6 %null-pointer))
+
+(define (buffer-list-ref num)
+  (define buffer
+    (false-if-exception (list-ref %schematic-buffer-list num)))
+
+  (or buffer
+      (error "Wrong buffer number.")))
+
+
+(define (buffer-list-set! num val)
+  (list-set! %schematic-buffer-list num val))
+
+
+(define (free-buffers)
+  (define (delete-buffer *buffer)
+    (lepton_object_list_delete *buffer))
+
+  (for-each delete-buffer %schematic-buffer-list)
+  (set! %schematic-buffer-list '()))
+
+
 (define CLIPBOARD_BUFFER 0)
-(define MAX_BUFFERS 5)
-
-
-(define (check-buffer-number num)
-  (when (or (< num 0)
-            (> num MAX_BUFFERS))
-    (error "Wrong buffer number.")))
 
 
 ;;; Copy current selection to buffer.
 (define (selection->buffer window buffer-number)
   (define *window (check-window window 1))
 
-  (check-buffer-number buffer-number)
-
   (let ((*selection (schematic_window_get_selection_list *window)))
 
-    (unless (null-pointer? (schematic_buffer_get_objects buffer-number))
-      (lepton_object_list_delete (schematic_buffer_get_objects buffer-number))
-      (schematic_buffer_set_objects buffer-number %null-pointer))
+    (unless (null-pointer? (buffer-list-ref buffer-number))
+      (lepton_object_list_delete (buffer-list-ref buffer-number))
+      (buffer-list-set! buffer-number %null-pointer))
 
-    (schematic_buffer_set_objects buffer-number
-                                  (o_glist_copy_all (lepton_list_get_glist *selection)
-                                                    %null-pointer))))
+    (buffer-list-set! buffer-number
+                      (o_glist_copy_all (lepton_list_get_glist *selection)
+                                        %null-pointer))))
 
 
 (define (window-selection->buffer window buffer-number)
@@ -71,18 +86,16 @@
 BUFFER-NUMBER."
   (define *window (check-window window 1))
 
-  (check-buffer-number buffer-number)
-
   (selection->buffer window buffer-number)
 
   (with-window *window
    (run-hook copy-objects-hook
-             (glist->list (schematic_buffer_get_objects buffer-number)
+             (glist->list (buffer-list-ref buffer-number)
                           pointer->object)))
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
-                     (schematic_buffer_get_objects buffer-number))))
+                     (buffer-list-ref buffer-number))))
 
 
 (define (window-selection->buffer! window buffer-number)
@@ -90,15 +103,13 @@ BUFFER-NUMBER."
 BUFFER-NUMBER."
   (define *window (check-window window 1))
 
-  (check-buffer-number buffer-number)
-
   (selection->buffer window buffer-number)
 
   (o_delete_selected *window)
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
-                     (schematic_buffer_get_objects buffer-number))))
+                     (buffer-list-ref buffer-number))))
 
 
 ;;; Copy the contents of the clipboard to buffer.
@@ -106,12 +117,10 @@ BUFFER-NUMBER."
   (define *window (check-window window 1))
   (define *objects (x_clipboard_get *window))
 
-  (check-buffer-number buffer-number)
+  (unless (null-pointer? (buffer-list-ref buffer-number))
+    (lepton_object_list_delete (buffer-list-ref buffer-number)))
 
-  (unless (null-pointer? (schematic_buffer_get_objects buffer-number))
-    (lepton_object_list_delete (schematic_buffer_get_objects buffer-number)))
-
-  (schematic_buffer_set_objects buffer-number *objects))
+  (buffer-list-set! buffer-number *objects))
 
 
 (define (paste-buffer window anchor buffer-number)
@@ -132,14 +141,14 @@ place list at the point ANCHOR."
     (clipboard->buffer window buffer-number))
 
   ;; Cancel the action if there are no objects in the buffer.
-  (or (null-pointer? (schematic_buffer_get_objects buffer-number))
+  (or (null-pointer? (buffer-list-ref buffer-number))
 
       (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window)))
         ;; Remove the old place list if it exists.
         (schematic_window_delete_place_list *window)
         ;; Replace it with a list from buffer.
         (schematic_window_set_place_list *window
-                                         (o_glist_copy_all (schematic_buffer_get_objects buffer-number)
+                                         (o_glist_copy_all (buffer-list-ref buffer-number)
                                                            %null-pointer))
 
         (let ((result (world_get_object_glist_bounds (schematic_window_get_place_list *window)
@@ -174,11 +183,11 @@ place list at the point ANCHOR."
                   ;; these objects.
                   (with-window *window
                    (run-hook copy-objects-hook
-                             (glist->list (schematic_buffer_get_objects buffer-number)
+                             (glist->list (buffer-list-ref buffer-number)
                                           pointer->object)))
 
                   (when (= buffer-number CLIPBOARD_BUFFER)
-                    (x_clipboard_set *window (schematic_buffer_get_objects buffer-number)))
+                    (x_clipboard_set *window (buffer-list-ref buffer-number)))
 
                   ;; Currently, the function returns #f if the
                   ;; buffer contains objects to paste, and #t

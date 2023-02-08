@@ -55,7 +55,6 @@ libleptongui_la_SOURCES = \
 	o_attrib.c \
 	o_basic.c \
 	o_box.c \
-	o_buffer.c \
 	o_bus.c \
 	o_circle.c \
 	o_component.c \

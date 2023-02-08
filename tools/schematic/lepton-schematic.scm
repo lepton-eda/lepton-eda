@@ -1,6 +1,6 @@
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -281,9 +281,6 @@ Run `~A --help' for more information.\n")
 
 ;;; Initialize GTK.
 (gtk_init %null-pointer %null-pointer)
-
-;;; Init global buffers.
-(o_buffer_init)
 
 ;;; Register guile (scheme) functions
 (register-guile-funcs)

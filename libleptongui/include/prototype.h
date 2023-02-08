@@ -173,15 +173,6 @@ void o_box_end(GschemToplevel *w_current, int x, int y);
 void o_box_motion(GschemToplevel *w_current, int x, int y);
 void o_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 
-/* o_buffer.c */
-GList*
-schematic_buffer_get_objects (int num);
-
-void
-schematic_buffer_set_objects (int num,
-                              GList *objects);
-void o_buffer_init(void);
-void o_buffer_free(GschemToplevel *w_current);
 /* o_bus.c */
 void o_bus_start(GschemToplevel *w_current, int x, int y);
 void o_bus_end(GschemToplevel *w_current, int x, int y);

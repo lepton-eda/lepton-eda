@@ -47,7 +47,6 @@ libleptongui/src/o_arc.c
 libleptongui/src/o_attrib.c
 libleptongui/src/o_basic.c
 libleptongui/src/o_box.c
-libleptongui/src/o_buffer.c
 libleptongui/src/o_bus.c
 libleptongui/src/o_circle.c
 libleptongui/src/o_component.c

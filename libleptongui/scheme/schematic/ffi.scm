@@ -63,11 +63,6 @@
 
             o_attrib_add_attrib
 
-            schematic_buffer_get_objects
-            schematic_buffer_set_objects
-            o_buffer_init
-            o_buffer_free
-
             o_redraw_cleanstates
             o_invalidate_rubber
 
@@ -530,12 +525,6 @@
 (define-lff schematic_page_select_widget_get_window '* '(*))
 (define-lff schematic_page_select_widget_set_callback void '(* *))
 (define-lff pagesel_callback_selection_changed '* '(* *))
-
-;;; o_buffer.c
-(define-lff schematic_buffer_get_objects '* (list int))
-(define-lff schematic_buffer_set_objects void (list int '*))
-(define-lff o_buffer_init void '())
-(define-lff o_buffer_free void '(*))
 
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())

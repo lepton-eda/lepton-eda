@@ -39,6 +39,7 @@
 
   #:use-module (schematic action copy)
   #:use-module (schematic action-mode)
+  #:use-module (schematic buffer)
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
@@ -123,7 +124,7 @@
           ;; Close the log file.
           (s_log_close)
           ;; free the buffers.
-          (o_buffer_free *window)))
+          (free-buffers)))
 
       ;; Destroy main widget of the window.
       (gtk_widget_destroy (schematic_window_get_main_window *window))
