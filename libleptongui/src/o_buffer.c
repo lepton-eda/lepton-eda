@@ -137,8 +137,8 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 
   /* Place the objects into the buffer at the mouse origin, (w_x, w_y). */
 
-  w_current->first_wx = w_x;
-  w_current->first_wy = w_y;
+  schematic_window_set_first_wx (w_current, w_x);
+  schematic_window_set_first_wy (w_current, w_y);
 
   /* snap x and y to the grid, pointed out by Martin Benes */
   x = snap_grid (w_current, rleft);
