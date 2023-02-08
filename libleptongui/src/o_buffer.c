@@ -113,7 +113,8 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
     schematic_buffer_from_clipboard (w_current, buf_num);
   }
 
-  if (object_buffer[buf_num] == NULL) {
+  if (schematic_buffer_get_objects (buf_num) == NULL)
+  {
     return TRUE;
   }
 
@@ -121,7 +122,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   schematic_window_delete_place_list (w_current);
   /* Replace it with a list from buffer. */
   schematic_window_set_place_list (w_current,
-                                   o_glist_copy_all (object_buffer[buf_num], NULL));
+                                   o_glist_copy_all (schematic_buffer_get_objects (buf_num), NULL));
 
   if (!world_get_object_glist_bounds (schematic_window_get_place_list (w_current),
                                       show_hidden_text,
@@ -154,10 +155,10 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 
   g_run_hook_object_list (w_current,
                           "copy-objects-hook",
-                          object_buffer[buf_num]);
+                          schematic_buffer_get_objects (buf_num));
 
   if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, object_buffer[buf_num]);
+    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
   }
 
   return FALSE;
