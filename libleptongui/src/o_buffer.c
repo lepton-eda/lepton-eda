@@ -38,6 +38,19 @@ schematic_buffer_get_objects (int num)
 }
 
 
+/*! \brief Set the list of objects of the buffer number \a num.
+ *
+ *  \param [in] num Buffer number.
+ *  \param [in] objects The GList of objects.
+ */
+void
+schematic_buffer_set_objects (int num,
+                              GList *objects)
+{
+  object_buffer[num] = objects;
+}
+
+
 /*! \brief Copy the contents of the clipboard to a buffer
  *
  *  \param [in] w_current

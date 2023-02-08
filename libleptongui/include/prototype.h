@@ -178,6 +178,9 @@ GList*
 schematic_buffer_get_objects (int num);
 
 void
+schematic_buffer_set_objects (int num,
+                              GList *objects);
+void
 schematic_buffer_from_clipboard (GschemToplevel *w_current,
                                  int buf_num);
 void
