@@ -115,7 +115,7 @@ void o_buffer_init(void)
   int i;
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
-    object_buffer[i] = NULL;
+    schematic_buffer_set_objects (i, NULL);
   }
 }
 
