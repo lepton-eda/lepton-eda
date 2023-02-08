@@ -73,7 +73,7 @@ schematic_buffer_from_clipboard (GschemToplevel *w_current,
     lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
   }
 
-  object_buffer[buf_num] = object_list;
+  schematic_buffer_set_objects (buf_num, object_list);
 }
 
 
