@@ -43,8 +43,9 @@ schematic_buffer_get_objects (int num)
  *  \param [in] w_current
  *  \param [in] buf_num
  */
-static void
-clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
+void
+schematic_buffer_from_clipboard (GschemToplevel *w_current,
+                                 int buf_num)
 {
   GList *object_list;
 
@@ -111,7 +112,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
     gschem_toplevel_get_show_hidden_text (w_current);
 
   if (buf_num == CLIPBOARD_BUFFER) {
-    clipboard_to_buffer(w_current, buf_num);
+    schematic_buffer_from_clipboard (w_current, buf_num);
   }
 
   if (object_buffer[buf_num] == NULL) {
