@@ -98,10 +98,10 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
   if (schematic_buffer_get_objects (buf_num) != NULL)
   {
     lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
-    object_buffer[buf_num] = NULL;
+    schematic_buffer_set_objects (buf_num, NULL);
   }
 
-  object_buffer[buf_num] = o_glist_copy_all (s_current, NULL);
+  schematic_buffer_set_objects (buf_num, o_glist_copy_all (s_current, NULL));
 }
 
 
