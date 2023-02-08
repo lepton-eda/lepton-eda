@@ -51,34 +51,6 @@ schematic_buffer_set_objects (int num,
 }
 
 
-/*! \brief Copy the selection to a buffer
- *
- *  \param [in] w_current
- *  \param [in] buf_num
- */
-void
-schematic_buffer_from_selection (GschemToplevel *w_current,
-                                 int buf_num)
-{
-  GList *s_current = NULL;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (buf_num >= 0);
-  g_return_if_fail (buf_num < MAX_BUFFERS);
-
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-  s_current = lepton_list_get_glist (selection);
-
-  if (schematic_buffer_get_objects (buf_num) != NULL)
-  {
-    lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
-    schematic_buffer_set_objects (buf_num, NULL);
-  }
-
-  schematic_buffer_set_objects (buf_num, o_glist_copy_all (s_current, NULL));
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

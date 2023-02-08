@@ -49,6 +49,23 @@
     (error "Wrong buffer number.")))
 
 
+;;; Copy current selection to buffer.
+(define (selection->buffer window buffer-number)
+  (define *window (check-window window 1))
+
+  (check-buffer-number buffer-number)
+
+  (let ((*selection (schematic_window_get_selection_list *window)))
+
+    (unless (null-pointer? (schematic_buffer_get_objects buffer-number))
+      (lepton_object_list_delete (schematic_buffer_get_objects buffer-number))
+      (schematic_buffer_set_objects buffer-number %null-pointer))
+
+    (schematic_buffer_set_objects buffer-number
+                                  (o_glist_copy_all (lepton_list_get_glist *selection)
+                                                    %null-pointer))))
+
+
 (define (window-selection->buffer window buffer-number)
   "Copy the current WINDOW selection into a buffer with given
 BUFFER-NUMBER."
@@ -56,7 +73,7 @@ BUFFER-NUMBER."
 
   (check-buffer-number buffer-number)
 
-  (schematic_buffer_from_selection *window buffer-number)
+  (selection->buffer window buffer-number)
 
   (with-window *window
    (run-hook copy-objects-hook
@@ -75,7 +92,7 @@ BUFFER-NUMBER."
 
   (check-buffer-number buffer-number)
 
-  (schematic_buffer_from_selection *window buffer-number)
+  (selection->buffer window buffer-number)
 
   (o_delete_selected *window)
 
