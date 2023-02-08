@@ -26,7 +26,8 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (window-selection->buffer))
+  #:export (window-selection->buffer
+            window-selection->buffer!))
 
 
 ;;; Defined in globals.h.
@@ -53,6 +54,22 @@ BUFFER-NUMBER."
    (run-hook copy-objects-hook
              (glist->list (schematic_buffer_get_objects buffer-number)
                           pointer->object)))
+
+  (when (= buffer-number CLIPBOARD_BUFFER)
+    (x_clipboard_set *window
+                     (schematic_buffer_get_objects buffer-number))))
+
+
+(define (window-selection->buffer! window buffer-number)
+  "Cut the current WINDOW selection into a buffer with given
+BUFFER-NUMBER."
+  (define *window (check-window window 1))
+
+  (check-buffer-number buffer-number)
+
+  (schematic_buffer_from_selection *window buffer-number)
+
+  (o_delete_selected *window)
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window

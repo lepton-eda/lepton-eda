@@ -181,7 +181,6 @@ void
 schematic_buffer_from_selection (GschemToplevel *w_current,
                                  int buf_num);
 
-void o_buffer_cut(GschemToplevel *w_current, int buf_num);
 int o_buffer_paste_start(GschemToplevel *w_current, int x, int y, int buf_num);
 void o_buffer_init(void);
 void o_buffer_free(GschemToplevel *w_current);

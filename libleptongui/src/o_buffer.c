@@ -90,27 +90,6 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
 }
 
 
-/*! \brief Cut the selection into a buffer
- *
- *  \param [in] w_current
- *  \param [in] buf_num
- */
-void
-o_buffer_cut(GschemToplevel *w_current, int buf_num)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (buf_num >= 0);
-  g_return_if_fail (buf_num < MAX_BUFFERS);
-
-  schematic_buffer_from_selection (w_current, buf_num);
-  o_delete_selected(w_current);
-
-  if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
-  }
-}
-
-
 /*! \brief place the contents of the buffer into the place list
  *
  *  \retval TRUE  the clipboard is empty

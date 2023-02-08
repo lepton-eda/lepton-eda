@@ -66,7 +66,6 @@
             schematic_buffer_from_selection
             schematic_buffer_get_objects
             o_buffer_init
-            o_buffer_cut
             o_buffer_free
             o_buffer_paste_start
 
@@ -536,7 +535,6 @@
 (define-lff schematic_buffer_from_selection void (list '* int))
 (define-lff schematic_buffer_get_objects '* (list int))
 (define-lff o_buffer_init void '())
-(define-lff o_buffer_cut void (list '* int))
 (define-lff o_buffer_free void '(*))
 (define-lff o_buffer_paste_start int (list '* int int int))
 
