@@ -82,8 +82,9 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
   LeptonSelection *selection = schematic_window_get_selection_list (w_current);
   s_current = lepton_list_get_glist (selection);
 
-  if (object_buffer[buf_num] != NULL) {
-    lepton_object_list_delete (object_buffer[buf_num]);
+  if (schematic_buffer_get_objects (buf_num) != NULL)
+  {
+    lepton_object_list_delete (schematic_buffer_get_objects (buf_num));
     object_buffer[buf_num] = NULL;
   }
 
