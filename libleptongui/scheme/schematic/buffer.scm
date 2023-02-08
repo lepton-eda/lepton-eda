@@ -18,6 +18,8 @@
 
 
 (define-module (schematic buffer)
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton object foreign)
 
@@ -26,7 +28,8 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (window-selection->buffer
+  #:export (paste-buffer
+            window-selection->buffer
             window-selection->buffer!))
 
 
@@ -74,3 +77,14 @@ BUFFER-NUMBER."
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
                      (schematic_buffer_get_objects buffer-number))))
+
+
+(define (paste-buffer window anchor buffer-number)
+  (define *window (check-window window 1))
+  (check-coord anchor 2)
+  (check-integer buffer-number 3)
+
+  (true? (o_buffer_paste_start *window
+                               (car anchor) ; x
+                               (cdr anchor) ; y
+                               buffer-number)))

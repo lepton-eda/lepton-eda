@@ -102,10 +102,6 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   int rleft, rtop, rbottom, rright;
   int x, y;
 
-  g_return_val_if_fail (w_current != NULL, TRUE);
-  g_return_val_if_fail (buf_num >= 0, TRUE);
-  g_return_val_if_fail (buf_num < MAX_BUFFERS, TRUE);
-
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 

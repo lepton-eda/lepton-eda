@@ -651,7 +651,9 @@ the snap grid size should be set to 100")))
             ;; done.
             (when (in-action? (pointer->window *window))
               (i_callback_cancel %null-pointer *window))
-            (let ((empty? (true? (o_buffer_paste_start *window x y buffer-number))))
+            (let ((empty? (paste-buffer (pointer->window *window)
+                                        (cons x y)
+                                        buffer-number)))
               (when empty?
                 (i_set_state_msg *window
                                  (symbol->action-mode 'select-mode)
