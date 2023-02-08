@@ -183,15 +183,6 @@ schematic_buffer_from_clipboard (GschemToplevel *w_current,
 void
 schematic_buffer_from_selection (GschemToplevel *w_current,
                                  int buf_num);
-
-int
-o_buffer_paste_start (GschemToplevel *w_current,
-                      int x,
-                      int y,
-                      int rleft,
-                      int rtop,
-                      int buf_num);
-
 void o_buffer_init(void);
 void o_buffer_free(GschemToplevel *w_current);
 /* o_bus.c */

@@ -91,51 +91,6 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
 }
 
 
-/*! \brief place the contents of the buffer into the place list
- *
- *  \retval TRUE  the clipboard is empty
- *  \retval FALSE the clipboard contained objects
- */
-int
-o_buffer_paste_start (GschemToplevel *w_current,
-                      int w_x,
-                      int w_y,
-                      int rleft,
-                      int rtop,
-                      int buf_num)
-{
-  int x, y;
-
-  /* Place the objects into the buffer at the mouse origin, (w_x, w_y). */
-
-  schematic_window_set_first_wx (w_current, w_x);
-  schematic_window_set_first_wy (w_current, w_y);
-
-  /* snap x and y to the grid, pointed out by Martin Benes */
-  x = snap_grid (w_current, rleft);
-  y = snap_grid (w_current, rtop);
-
-  lepton_object_list_translate (schematic_window_get_place_list (w_current),
-                                w_x - x,
-                                w_y - y);
-
-  i_set_state(w_current, PASTEMODE);
-  o_place_start (w_current, w_x, w_y);
-
-  /* the next paste operation will be a copy of these objects */
-
-  g_run_hook_object_list (w_current,
-                          "copy-objects-hook",
-                          schematic_buffer_get_objects (buf_num));
-
-  if (buf_num == CLIPBOARD_BUFFER) {
-    x_clipboard_set (w_current, schematic_buffer_get_objects (buf_num));
-  }
-
-  return FALSE;
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

@@ -338,6 +338,7 @@
             lepton_toplevel_search_page
 
             lepton_object_list_to_buffer
+            lepton_object_list_translate
             o_glist_copy_all
 
             lepton_page_get_changed
@@ -677,6 +678,7 @@
 ;;; object_list.c
 (define-lff lepton_object_list_to_buffer '* '(*))
 (define-lff o_glist_copy_all '* '(* *))
+(define-lff lepton_object_list_translate void  (list '* int int))
 
 ;;; page.c
 (define-lff lepton_page_get_changed int '(*))

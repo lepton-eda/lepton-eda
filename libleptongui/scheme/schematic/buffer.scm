@@ -27,6 +27,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic hook)
   #:use-module (schematic window foreign)
@@ -84,7 +85,11 @@ BUFFER-NUMBER."
 
 
 (define (paste-buffer window anchor buffer-number)
+  "Place the contents of the buffer BUFFER-NUMBER in WINDOW into the
+place list at the point ANCHOR."
   (define *window (check-window window 1))
+  (define mouse-x (car anchor))
+  (define mouse-y (cdr anchor))
   (define xleft (make-bytevector (sizeof int)))
   (define ytop (make-bytevector (sizeof int)))
   (define xright (make-bytevector (sizeof int)))
@@ -119,9 +124,33 @@ BUFFER-NUMBER."
               (let ((left-x (bytevector-sint-ref xleft 0 (native-endianness) (sizeof int)))
                     (top-y (bytevector-sint-ref ytop 0 (native-endianness) (sizeof int))))
 
-                (true? (o_buffer_paste_start *window
-                                             (car anchor) ; x
-                                             (cdr anchor) ; y
-                                             left-x
-                                             top-y
-                                             buffer-number))))))))
+                ;; Place the objects into the buffer at the mouse
+                ;; origin (mouse-x . mouse-y).
+                (schematic_window_set_first_wx *window mouse-x)
+                (schematic_window_set_first_wy *window mouse-y)
+
+                ;; Snap x and y to the grid.
+                (let ((x (snap_grid *window left-x))
+                      (y (snap_grid *window top-y)))
+
+                  (lepton_object_list_translate (schematic_window_get_place_list *window)
+                                                (- mouse-x x)
+                                                (- mouse-y y))
+
+                  (i_set_state *window (symbol->action-mode 'paste-mode))
+                  (o_place_start *window mouse-x mouse-y)
+
+                  ;; The next paste operation will be a copy of
+                  ;; these objects.
+                  (with-window *window
+                   (run-hook copy-objects-hook
+                             (glist->list (schematic_buffer_get_objects buffer-number)
+                                          pointer->object)))
+
+                  (when (= buffer-number CLIPBOARD_BUFFER)
+                    (x_clipboard_set *window (schematic_buffer_get_objects buffer-number)))
+
+                  ;; Currently, the function returns #f if the
+                  ;; buffer contains objects to paste, and #t
+                  ;; otherwise.
+                  #f)))))))
