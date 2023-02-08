@@ -101,8 +101,7 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
     object_buffer[buf_num] = NULL;
   }
 
-  object_buffer[buf_num] = o_glist_copy_all (s_current,
-                                             object_buffer[buf_num]);
+  object_buffer[buf_num] = o_glist_copy_all (s_current, NULL);
 }
 
 
