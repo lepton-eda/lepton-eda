@@ -130,8 +130,8 @@ void o_buffer_free(GschemToplevel *w_current)
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
     if (object_buffer[i]) {
-      lepton_object_list_delete (object_buffer[i]);
-      object_buffer[i] = NULL;
+      lepton_object_list_delete (schematic_buffer_get_objects (i));
+      schematic_buffer_set_objects (i, NULL);
     }
   }
 }
