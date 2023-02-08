@@ -105,15 +105,6 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  if (buf_num == CLIPBOARD_BUFFER) {
-    schematic_buffer_from_clipboard (w_current, buf_num);
-  }
-
-  if (schematic_buffer_get_objects (buf_num) == NULL)
-  {
-    return TRUE;
-  }
-
   /* remove the old place list if it exists */
   schematic_window_delete_place_list (w_current);
   /* Replace it with a list from buffer. */

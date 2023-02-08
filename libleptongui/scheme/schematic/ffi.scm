@@ -63,6 +63,7 @@
 
             o_attrib_add_attrib
 
+            schematic_buffer_from_clipboard
             schematic_buffer_from_selection
             schematic_buffer_get_objects
             o_buffer_init
@@ -532,6 +533,7 @@
 (define-lff pagesel_callback_selection_changed '* '(* *))
 
 ;;; o_buffer.c
+(define-lff schematic_buffer_from_clipboard void (list '* int))
 (define-lff schematic_buffer_from_selection void (list '* int))
 (define-lff schematic_buffer_get_objects '* (list int))
 (define-lff o_buffer_init void '())

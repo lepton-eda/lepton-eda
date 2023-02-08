@@ -18,6 +18,8 @@
 
 
 (define-module (schematic buffer)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
@@ -84,7 +86,12 @@ BUFFER-NUMBER."
   (check-coord anchor 2)
   (check-integer buffer-number 3)
 
-  (true? (o_buffer_paste_start *window
-                               (car anchor) ; x
-                               (cdr anchor) ; y
-                               buffer-number)))
+  (when (= buffer-number CLIPBOARD_BUFFER)
+    (schematic_buffer_from_clipboard *window buffer-number))
+
+  ;; Cancel the action if there are no objects in the buffer.
+  (or (null-pointer? (schematic_buffer_get_objects buffer-number))
+      (true? (o_buffer_paste_start *window
+                                   (car anchor) ; x
+                                   (cdr anchor) ; y
+                                   buffer-number))))
