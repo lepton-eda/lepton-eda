@@ -120,11 +120,9 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 
   /* remove the old place list if it exists */
   lepton_object_list_delete (schematic_window_get_place_list (w_current));
-  toplevel->page_current->place_list = NULL;
-
-  toplevel->page_current->place_list =
-    o_glist_copy_all (object_buffer[buf_num],
-                      schematic_window_get_place_list (w_current));
+  /* Replace it with a list from buffer. */
+  schematic_window_set_place_list (w_current,
+                                   o_glist_copy_all (object_buffer[buf_num], NULL));
 
   if (!world_get_object_glist_bounds (schematic_window_get_place_list (w_current),
                                       show_hidden_text,
