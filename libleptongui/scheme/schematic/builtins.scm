@@ -625,16 +625,6 @@ the snap grid size should be set to 100")))
 
 (define CLIPBOARD_BUFFER 0)
 
-(define (buffer-cut *window buffer-number)
-  (let ((selection (if (active-page) (page-selection (active-page)) '())))
-    (unless (null? selection)
-      (selection->buffer (pointer->window *window) buffer-number 'cut))))
-
-(define (buffer-copy *window buffer-number)
-  (let ((selection (if (active-page) (page-selection (active-page)) '())))
-    (unless (null? selection)
-      (selection->buffer (pointer->window *window) buffer-number))))
-
 (define (buffer-paste-start *window buffer-number)
   ;; Choose a default position to start pasting. This is required to
   ;; make pasting when the cursor is outside the screen or pasting via
@@ -659,11 +649,11 @@ the snap grid size should be set to 100")))
 
 ;;; Cut the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
-  (buffer-cut (*current-window) CLIPBOARD_BUFFER))
+  (selection->buffer (current-window) CLIPBOARD_BUFFER 'cut))
 
 ;;; Copies the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-copy #:label (G_ "Copy") #:icon "gtk-copy")
-  (buffer-copy (*current-window) CLIPBOARD_BUFFER))
+  (selection->buffer (current-window) CLIPBOARD_BUFFER))
 
 ;;; Start pasting the current clipboard contents, via buffer 0.
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")

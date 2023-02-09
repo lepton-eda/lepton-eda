@@ -77,23 +77,24 @@ If the optional argument CUT? is set to non-#f value, the objects
 selected will be cut, not copied.  That means that they will be
 removed from the selection and the hook won't be run."
   (define *window (check-window window 1))
-  (define *selection (schematic_window_get_selection_list *window))
+  (define *selection
+    (lepton_list_get_glist (schematic_window_get_selection_list *window)))
 
-  ;; On cutting, delete place list and invalidate canvas.
-  (when cut? (o_redraw_cleanstates *window))
+  (unless (null-pointer? *selection)
+    ;; On cutting, delete place list and invalidate canvas.
+    (when cut? (o_redraw_cleanstates *window))
 
-  (lepton_object_list_delete (buffer-list-ref buffer-number))
-  (buffer-list-set! buffer-number
-                    (o_glist_copy_all (lepton_list_get_glist *selection)
-                                      %null-pointer))
-  (if cut?
-      (o_delete_selected *window)
-      (run-copy-objects-hook *window (buffer-list-ref buffer-number)))
+    (lepton_object_list_delete (buffer-list-ref buffer-number))
+    (buffer-list-set! buffer-number
+                      (o_glist_copy_all *selection %null-pointer))
+    (if cut?
+        (o_delete_selected *window)
+        (run-copy-objects-hook *window (buffer-list-ref buffer-number)))
 
-  (when (= buffer-number CLIPBOARD_BUFFER)
-    (x_clipboard_set *window
-                     (buffer-list-ref buffer-number)))
-  (i_update_menus *window))
+    (when (= buffer-number CLIPBOARD_BUFFER)
+      (x_clipboard_set *window
+                       (buffer-list-ref buffer-number)))
+    (i_update_menus *window)))
 
 
 ;;; Copy the contents of the clipboard to buffer.
