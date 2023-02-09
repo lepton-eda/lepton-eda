@@ -57,10 +57,7 @@
 
 
 (define (free-buffers)
-  (define (delete-buffer *buffer)
-    (lepton_object_list_delete *buffer))
-
-  (for-each delete-buffer %schematic-buffer-list)
+  (for-each lepton_object_list_delete %schematic-buffer-list)
   (set! %schematic-buffer-list '()))
 
 
