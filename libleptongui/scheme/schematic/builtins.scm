@@ -628,7 +628,6 @@ the snap grid size should be set to 100")))
 (define (buffer-cut *window buffer-number)
   (let ((selection (if (active-page) (page-selection (active-page)) '())))
     (unless (null? selection)
-      (o_redraw_cleanstates *window)
       (selection->buffer (pointer->window *window) buffer-number 'cut))))
 
 (define (buffer-copy *window buffer-number)
