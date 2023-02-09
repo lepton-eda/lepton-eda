@@ -89,7 +89,8 @@ removed from the selection and the hook won't be run."
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
-                     (buffer-list-ref buffer-number))))
+                     (buffer-list-ref buffer-number)))
+  (i_update_menus *window))
 
 
 ;;; Copy the contents of the clipboard to buffer.

@@ -629,14 +629,12 @@ the snap grid size should be set to 100")))
   (let ((selection (if (active-page) (page-selection (active-page)) '())))
     (unless (null? selection)
       (o_redraw_cleanstates *window)
-      (selection->buffer (pointer->window *window) buffer-number 'cut)
-      (i_update_menus *window))))
+      (selection->buffer (pointer->window *window) buffer-number 'cut))))
 
 (define (buffer-copy *window buffer-number)
   (let ((selection (if (active-page) (page-selection (active-page)) '())))
     (unless (null? selection)
-      (selection->buffer (pointer->window *window) buffer-number)
-      (i_update_menus *window))))
+      (selection->buffer (pointer->window *window) buffer-number))))
 
 (define (buffer-paste-start *window buffer-number)
   ;; Choose a default position to start pasting. This is required to
