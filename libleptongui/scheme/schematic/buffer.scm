@@ -84,16 +84,19 @@ removed from the selection and the hook won't be run."
     ;; On cutting, delete place list and invalidate canvas.
     (when cut? (o_redraw_cleanstates *window))
 
+    ;; Remove previous buffer contents.
     (lepton_object_list_delete (buffer-list-ref buffer-number))
-    (buffer-list-set! buffer-number
-                      (o_glist_copy_all *selection %null-pointer))
-    (if cut?
-        (o_delete_selected *window)
-        (run-copy-objects-hook *window (buffer-list-ref buffer-number)))
 
-    (when (= buffer-number CLIPBOARD_BUFFER)
-      (x_clipboard_set *window
-                       (buffer-list-ref buffer-number)))
+    ;; Make a copy of selected objects.
+    (let ((*objects (o_glist_copy_all *selection %null-pointer)))
+      (buffer-list-set! buffer-number *objects)
+      (if cut?
+          (o_delete_selected *window)
+          (run-copy-objects-hook *window *objects))
+
+      (when (= buffer-number CLIPBOARD_BUFFER)
+        (x_clipboard_set *window *objects)))
+
     (i_update_menus *window)))
 
 
