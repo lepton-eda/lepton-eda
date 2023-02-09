@@ -127,19 +127,19 @@ BUFFER-NUMBER."
 (define (object-list-bounds *objects show-hidden-text?)
   (define (get-int bv)
     (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
-  (define xleft (make-bytevector (sizeof int)))
-  (define ytop (make-bytevector (sizeof int)))
-  (define xright (make-bytevector (sizeof int)))
-  (define ybottom (make-bytevector (sizeof int)))
+  (define x1 (make-bytevector (sizeof int)))
+  (define y1 (make-bytevector (sizeof int)))
+  (define x2 (make-bytevector (sizeof int)))
+  (define y2 (make-bytevector (sizeof int)))
   (define result
     (true? (world_get_object_glist_bounds *objects
                                           show-hidden-text?
-                                          (bytevector->pointer xleft)
-                                          (bytevector->pointer ytop)
-                                          (bytevector->pointer xright)
-                                          (bytevector->pointer ybottom))))
+                                          (bytevector->pointer x1)
+                                          (bytevector->pointer y1)
+                                          (bytevector->pointer x2)
+                                          (bytevector->pointer y2))))
   (if result
-      (values (get-int xleft) (get-int ytop) (get-int xright) (get-int ybottom))
+      (values (get-int x1) (get-int y1) (get-int x2) (get-int y2))
       (values #f #f #f #f)))
 
 
