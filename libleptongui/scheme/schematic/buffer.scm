@@ -140,6 +140,32 @@ place list at the point ANCHOR."
     ;; Return the current place list.
     (schematic_window_get_place_list *window))
 
+  (define (place-objects *objects x1 y1)
+    ;; Place the objects into the buffer at the mouse
+    ;; origin (mouse-x . mouse-y).
+    (schematic_window_set_first_wx *window mouse-x)
+    (schematic_window_set_first_wy *window mouse-y)
+
+    ;; Snap x and y to the grid.
+    (let ((x (snap_grid *window x1))
+          (y (snap_grid *window y1)))
+
+      (lepton_object_list_translate *objects
+                                    (- mouse-x x)
+                                    (- mouse-y y))
+
+      (i_set_state *window (symbol->action-mode 'paste-mode))
+      (o_place_start *window mouse-x mouse-y)
+
+      ;; The next paste operation will be a copy of
+      ;; these objects.
+      (run-copy-objects-hook *window (buffer-list-ref buffer-n))
+
+      ;; Currently, the function returns #f if the
+      ;; buffer contains objects to paste, and #t
+      ;; otherwise.
+      #f))
+
   (when (= buffer-n CLIPBOARD_BUFFER)
     (clipboard->buffer window buffer-n))
 
@@ -148,33 +174,9 @@ place list at the point ANCHOR."
 
       (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window))
             (*place-list (buffer->place-list)))
-        (let-values (((objects-x1 objects-y1 objects-x2 objects-y2)
+        (let-values (((x1 y1 x2 y2)
                       (object-list-bounds *place-list show-hidden-text?)))
           ;; If the place buffer doesn't have any objects
           ;; to define its any bounds we drop out here.
-          (or (not objects-x1)
-              (begin
-                ;; Place the objects into the buffer at the mouse
-                ;; origin (mouse-x . mouse-y).
-                (schematic_window_set_first_wx *window mouse-x)
-                (schematic_window_set_first_wy *window mouse-y)
-
-                ;; Snap x and y to the grid.
-                (let ((x (snap_grid *window objects-x1))
-                      (y (snap_grid *window objects-y1)))
-
-                  (lepton_object_list_translate *place-list
-                                                (- mouse-x x)
-                                                (- mouse-y y))
-
-                  (i_set_state *window (symbol->action-mode 'paste-mode))
-                  (o_place_start *window mouse-x mouse-y)
-
-                  ;; The next paste operation will be a copy of
-                  ;; these objects.
-                  (run-copy-objects-hook *window (buffer-list-ref buffer-n))
-
-                  ;; Currently, the function returns #f if the
-                  ;; buffer contains objects to paste, and #t
-                  ;; otherwise.
-                  #f)))))))
+          (or (not x1)
+              (place-objects *place-list x1 y1))))))
