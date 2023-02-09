@@ -659,6 +659,37 @@ the snap grid size should be set to 100")))
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
   (buffer-paste-start (*current-window) CLIPBOARD_BUFFER))
 
+(define-action-public (&buffer-cut-1) (selection->buffer (current-window) 1 'cut))
+(define-action-public (&buffer-cut-2) (selection->buffer (current-window) 2 'cut))
+(define-action-public (&buffer-cut-3) (selection->buffer (current-window) 3 'cut))
+(define-action-public (&buffer-cut-4) (selection->buffer (current-window) 4 'cut))
+(define-action-public (&buffer-cut-5) (selection->buffer (current-window) 5 'cut))
+(define-action-public (&buffer-cut-6) (selection->buffer (current-window) 6 'cut))
+(define-action-public (&buffer-cut-7) (selection->buffer (current-window) 7 'cut))
+(define-action-public (&buffer-cut-8) (selection->buffer (current-window) 8 'cut))
+(define-action-public (&buffer-cut-9) (selection->buffer (current-window) 9 'cut))
+
+(define-action-public (&buffer-copy-1) (selection->buffer (current-window) 1))
+(define-action-public (&buffer-copy-2) (selection->buffer (current-window) 2))
+(define-action-public (&buffer-copy-3) (selection->buffer (current-window) 3))
+(define-action-public (&buffer-copy-4) (selection->buffer (current-window) 4))
+(define-action-public (&buffer-copy-5) (selection->buffer (current-window) 5))
+(define-action-public (&buffer-copy-6) (selection->buffer (current-window) 6))
+(define-action-public (&buffer-copy-7) (selection->buffer (current-window) 7))
+(define-action-public (&buffer-copy-8) (selection->buffer (current-window) 8))
+(define-action-public (&buffer-copy-9) (selection->buffer (current-window) 9))
+
+(define-action-public (&buffer-paste-1) (buffer-paste-start (*current-window) 1))
+(define-action-public (&buffer-paste-2) (buffer-paste-start (*current-window) 2))
+(define-action-public (&buffer-paste-3) (buffer-paste-start (*current-window) 3))
+(define-action-public (&buffer-paste-4) (buffer-paste-start (*current-window) 4))
+(define-action-public (&buffer-paste-5) (buffer-paste-start (*current-window) 5))
+(define-action-public (&buffer-paste-6) (buffer-paste-start (*current-window) 6))
+(define-action-public (&buffer-paste-7) (buffer-paste-start (*current-window) 7))
+(define-action-public (&buffer-paste-8) (buffer-paste-start (*current-window) 8))
+(define-action-public (&buffer-paste-9) (buffer-paste-start (*current-window) 9))
+
+
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 

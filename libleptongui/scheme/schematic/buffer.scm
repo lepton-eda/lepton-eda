@@ -40,8 +40,8 @@
 
 
 (define %schematic-buffer-list
-  ;; 5 buffers plus clipboard buffer that has index 0.
-  (make-list 6 %null-pointer))
+  ;; 10 buffers.  Clipboard buffer has the index 0.
+  (make-list 10 %null-pointer))
 
 (define (buffer-list-ref num)
   (define buffer

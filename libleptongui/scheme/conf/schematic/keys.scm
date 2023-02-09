@@ -31,6 +31,36 @@
 ;;
 ;; Later keybindings override earlier ones.
 
+(global-set-key "1 <Control>X" '&buffer-cut-1)
+(global-set-key "2 <Control>X" '&buffer-cut-2)
+(global-set-key "3 <Control>X" '&buffer-cut-3)
+(global-set-key "4 <Control>X" '&buffer-cut-4)
+(global-set-key "5 <Control>X" '&buffer-cut-5)
+(global-set-key "6 <Control>X" '&buffer-cut-6)
+(global-set-key "7 <Control>X" '&buffer-cut-7)
+(global-set-key "8 <Control>X" '&buffer-cut-8)
+(global-set-key "9 <Control>X" '&buffer-cut-9)
+
+(global-set-key "1 <Control>C" '&buffer-copy-1)
+(global-set-key "2 <Control>C" '&buffer-copy-2)
+(global-set-key "3 <Control>C" '&buffer-copy-3)
+(global-set-key "4 <Control>C" '&buffer-copy-4)
+(global-set-key "5 <Control>C" '&buffer-copy-5)
+(global-set-key "6 <Control>C" '&buffer-copy-6)
+(global-set-key "7 <Control>C" '&buffer-copy-7)
+(global-set-key "8 <Control>C" '&buffer-copy-8)
+(global-set-key "9 <Control>C" '&buffer-copy-9)
+
+(global-set-key "1 <Control>V" '&buffer-paste-1)
+(global-set-key "2 <Control>V" '&buffer-paste-2)
+(global-set-key "3 <Control>V" '&buffer-paste-3)
+(global-set-key "4 <Control>V" '&buffer-paste-4)
+(global-set-key "5 <Control>V" '&buffer-paste-5)
+(global-set-key "6 <Control>V" '&buffer-paste-6)
+(global-set-key "7 <Control>V" '&buffer-paste-7)
+(global-set-key "8 <Control>V" '&buffer-paste-8)
+(global-set-key "9 <Control>V" '&buffer-paste-9)
+
 (global-set-key "A C" '&add-component)
 (global-set-key "A A" '&add-attribute)
 (global-set-key "A N" '&add-net)
@@ -205,4 +235,3 @@
 ;
 ; End of keymapping related keywords
 ;
-
