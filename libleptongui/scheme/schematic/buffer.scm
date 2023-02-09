@@ -150,6 +150,16 @@ place list at the point ANCHOR."
   (define mouse-x (car anchor))
   (define mouse-y (cdr anchor))
 
+  (define (buffer->place-list)
+    ;; Remove the old place list if it exists.
+    (schematic_window_delete_place_list *window)
+    ;; Replace it with a list from buffer.
+    (schematic_window_set_place_list *window
+                                     (o_glist_copy_all (buffer-list-ref buffer-number)
+                                                       %null-pointer))
+    ;; Return the current place list.
+    (schematic_window_get_place_list *window))
+
   (check-coord anchor 2)
   (check-integer buffer-number 3)
 
@@ -159,17 +169,10 @@ place list at the point ANCHOR."
   ;; Cancel the action if there are no objects in the buffer.
   (or (null-pointer? (buffer-list-ref buffer-number))
 
-      (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window)))
-        ;; Remove the old place list if it exists.
-        (schematic_window_delete_place_list *window)
-        ;; Replace it with a list from buffer.
-        (schematic_window_set_place_list *window
-                                         (o_glist_copy_all (buffer-list-ref buffer-number)
-                                                           %null-pointer))
-
+      (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window))
+            (*place-list (buffer->place-list)))
         (let-values (((objects-x1 objects-y1 objects-x2 objects-y2)
-                      (object-list-bounds (schematic_window_get_place_list *window)
-                                          show-hidden-text?)))
+                      (object-list-bounds *place-list show-hidden-text?)))
           ;; If the place buffer doesn't have any objects
           ;; to define its any bounds we drop out here.
           (or (not objects-x1)
@@ -183,7 +186,7 @@ place list at the point ANCHOR."
                 (let ((x (snap_grid *window objects-x1))
                       (y (snap_grid *window objects-y1)))
 
-                  (lepton_object_list_translate (schematic_window_get_place_list *window)
+                  (lepton_object_list_translate *place-list
                                                 (- mouse-x x)
                                                 (- mouse-y y))
 
