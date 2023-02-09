@@ -147,27 +147,27 @@ BUFFER-NUMBER."
   "Place the contents of the buffer BUFFER-NUMBER in WINDOW into the
 place list at the point ANCHOR."
   (define *window (check-window window 1))
-  (define mouse-x (car anchor))
-  (define mouse-y (cdr anchor))
+  (define mouse-coord (and (check-coord anchor 2) anchor))
+  (define buffer-n
+    (and (check-integer buffer-number 3) buffer-number))
+  (define mouse-x (car mouse-coord))
+  (define mouse-y (cdr mouse-coord))
 
   (define (buffer->place-list)
     ;; Remove the old place list if it exists.
     (schematic_window_delete_place_list *window)
     ;; Replace it with a list from buffer.
     (schematic_window_set_place_list *window
-                                     (o_glist_copy_all (buffer-list-ref buffer-number)
+                                     (o_glist_copy_all (buffer-list-ref buffer-n)
                                                        %null-pointer))
     ;; Return the current place list.
     (schematic_window_get_place_list *window))
 
-  (check-coord anchor 2)
-  (check-integer buffer-number 3)
-
-  (when (= buffer-number CLIPBOARD_BUFFER)
-    (clipboard->buffer window buffer-number))
+  (when (= buffer-n CLIPBOARD_BUFFER)
+    (clipboard->buffer window buffer-n))
 
   ;; Cancel the action if there are no objects in the buffer.
-  (or (null-pointer? (buffer-list-ref buffer-number))
+  (or (null-pointer? (buffer-list-ref buffer-n))
 
       (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window))
             (*place-list (buffer->place-list)))
@@ -197,7 +197,7 @@ place list at the point ANCHOR."
                   ;; these objects.
                   (with-window *window
                    (run-hook copy-objects-hook
-                             (glist->list (buffer-list-ref buffer-number)
+                             (glist->list (buffer-list-ref buffer-n)
                                           pointer->object)))
 
                   ;; Currently, the function returns #f if the
