@@ -36,8 +36,7 @@
 
   #:export (free-buffers
             paste-buffer
-            window-selection->buffer
-            window-selection->buffer!))
+            selection->buffer))
 
 
 (define %schematic-buffer-list
@@ -71,39 +70,22 @@
 
 
 ;;; Copy current selection to buffer.
-(define (selection->buffer window buffer-number)
-  (define *window (check-window window 1))
-
-  (let ((*selection (schematic_window_get_selection_list *window)))
-
-    (lepton_object_list_delete (buffer-list-ref buffer-number))
-    (buffer-list-set! buffer-number
-                      (o_glist_copy_all (lepton_list_get_glist *selection)
-                                        %null-pointer))))
-
-
-(define (window-selection->buffer window buffer-number)
+(define* (selection->buffer window buffer-number #:optional (cut? #f))
   "Copy the current WINDOW selection into a buffer with given
-BUFFER-NUMBER."
+BUFFER-NUMBER running the copy-object-hook() on selected objects.
+If the optional argument CUT? is set to non-#f value, the objects
+selected will be cut, not copied.  That means that they will be
+removed from the selection and the hook won't be run."
   (define *window (check-window window 1))
+  (define *selection (schematic_window_get_selection_list *window))
 
-  (selection->buffer window buffer-number)
-
-  (run-copy-objects-hook *window (buffer-list-ref buffer-number))
-
-  (when (= buffer-number CLIPBOARD_BUFFER)
-    (x_clipboard_set *window
-                     (buffer-list-ref buffer-number))))
-
-
-(define (window-selection->buffer! window buffer-number)
-  "Cut the current WINDOW selection into a buffer with given
-BUFFER-NUMBER."
-  (define *window (check-window window 1))
-
-  (selection->buffer window buffer-number)
-
-  (o_delete_selected *window)
+  (lepton_object_list_delete (buffer-list-ref buffer-number))
+  (buffer-list-set! buffer-number
+                    (o_glist_copy_all (lepton_list_get_glist *selection)
+                                      %null-pointer))
+  (if cut?
+      (o_delete_selected *window)
+      (run-copy-objects-hook *window (buffer-list-ref buffer-number)))
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
