@@ -70,10 +70,7 @@
 
   (let ((*selection (schematic_window_get_selection_list *window)))
 
-    (unless (null-pointer? (buffer-list-ref buffer-number))
-      (lepton_object_list_delete (buffer-list-ref buffer-number))
-      (buffer-list-set! buffer-number %null-pointer))
-
+    (lepton_object_list_delete (buffer-list-ref buffer-number))
     (buffer-list-set! buffer-number
                       (o_glist_copy_all (lepton_list_get_glist *selection)
                                         %null-pointer))))
@@ -115,9 +112,7 @@ BUFFER-NUMBER."
   (define *window (check-window window 1))
   (define *objects (x_clipboard_get *window))
 
-  (unless (null-pointer? (buffer-list-ref buffer-number))
-    (lepton_object_list_delete (buffer-list-ref buffer-number)))
-
+  (lepton_object_list_delete (buffer-list-ref buffer-number))
   (buffer-list-set! buffer-number *objects))
 
 
