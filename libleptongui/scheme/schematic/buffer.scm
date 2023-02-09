@@ -197,9 +197,6 @@ place list at the point ANCHOR."
                              (glist->list (buffer-list-ref buffer-number)
                                           pointer->object)))
 
-                  (when (= buffer-number CLIPBOARD_BUFFER)
-                    (x_clipboard_set *window (buffer-list-ref buffer-number)))
-
                   ;; Currently, the function returns #f if the
                   ;; buffer contains objects to paste, and #t
                   ;; otherwise.
