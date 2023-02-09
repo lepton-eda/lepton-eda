@@ -18,8 +18,9 @@
 
 
 (define-module (schematic buffer)
-  #:use-module (system foreign)
   #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-11)
+  #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
@@ -123,16 +124,31 @@ BUFFER-NUMBER."
   (buffer-list-set! buffer-number *objects))
 
 
+(define (object-list-bounds *objects show-hidden-text?)
+  (define (get-int bv)
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
+  (define xleft (make-bytevector (sizeof int)))
+  (define ytop (make-bytevector (sizeof int)))
+  (define xright (make-bytevector (sizeof int)))
+  (define ybottom (make-bytevector (sizeof int)))
+  (define result
+    (true? (world_get_object_glist_bounds *objects
+                                          show-hidden-text?
+                                          (bytevector->pointer xleft)
+                                          (bytevector->pointer ytop)
+                                          (bytevector->pointer xright)
+                                          (bytevector->pointer ybottom))))
+  (if result
+      (values (get-int xleft) (get-int ytop) (get-int xright) (get-int ybottom))
+      (values #f #f #f #f)))
+
+
 (define (paste-buffer window anchor buffer-number)
   "Place the contents of the buffer BUFFER-NUMBER in WINDOW into the
 place list at the point ANCHOR."
   (define *window (check-window window 1))
   (define mouse-x (car anchor))
   (define mouse-y (cdr anchor))
-  (define xleft (make-bytevector (sizeof int)))
-  (define ytop (make-bytevector (sizeof int)))
-  (define xright (make-bytevector (sizeof int)))
-  (define ybottom (make-bytevector (sizeof int)))
 
   (check-coord anchor 2)
   (check-integer buffer-number 3)
@@ -151,26 +167,21 @@ place list at the point ANCHOR."
                                          (o_glist_copy_all (buffer-list-ref buffer-number)
                                                            %null-pointer))
 
-        (let ((result (world_get_object_glist_bounds (schematic_window_get_place_list *window)
-                                                     show-hidden-text?
-                                                     (bytevector->pointer xleft)
-                                                     (bytevector->pointer ytop)
-                                                     (bytevector->pointer xright)
-                                                     (bytevector->pointer ybottom))))
+        (let-values (((objects-x1 objects-y1 objects-x2 objects-y2)
+                      (object-list-bounds (schematic_window_get_place_list *window)
+                                          show-hidden-text?)))
           ;; If the place buffer doesn't have any objects
           ;; to define its any bounds we drop out here.
-          (or (false? result)
-              (let ((left-x (bytevector-sint-ref xleft 0 (native-endianness) (sizeof int)))
-                    (top-y (bytevector-sint-ref ytop 0 (native-endianness) (sizeof int))))
-
+          (or (not objects-x1)
+              (begin
                 ;; Place the objects into the buffer at the mouse
                 ;; origin (mouse-x . mouse-y).
                 (schematic_window_set_first_wx *window mouse-x)
                 (schematic_window_set_first_wy *window mouse-y)
 
                 ;; Snap x and y to the grid.
-                (let ((x (snap_grid *window left-x))
-                      (y (snap_grid *window top-y)))
+                (let ((x (snap_grid *window objects-x1))
+                      (y (snap_grid *window objects-y1)))
 
                   (lepton_object_list_translate (schematic_window_get_place_list *window)
                                                 (- mouse-x x)
