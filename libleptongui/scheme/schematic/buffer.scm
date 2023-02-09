@@ -64,6 +64,12 @@
 (define CLIPBOARD_BUFFER 0)
 
 
+(define (run-copy-objects-hook *window *objects)
+  (with-window *window
+   (run-hook copy-objects-hook
+             (glist->list *objects pointer->object))))
+
+
 ;;; Copy current selection to buffer.
 (define (selection->buffer window buffer-number)
   (define *window (check-window window 1))
@@ -83,10 +89,7 @@ BUFFER-NUMBER."
 
   (selection->buffer window buffer-number)
 
-  (with-window *window
-   (run-hook copy-objects-hook
-             (glist->list (buffer-list-ref buffer-number)
-                          pointer->object)))
+  (run-copy-objects-hook *window (buffer-list-ref buffer-number))
 
   (when (= buffer-number CLIPBOARD_BUFFER)
     (x_clipboard_set *window
@@ -187,10 +190,7 @@ place list at the point ANCHOR."
 
                   ;; The next paste operation will be a copy of
                   ;; these objects.
-                  (with-window *window
-                   (run-hook copy-objects-hook
-                             (glist->list (buffer-list-ref buffer-n)
-                                          pointer->object)))
+                  (run-copy-objects-hook *window (buffer-list-ref buffer-n))
 
                   ;; Currently, the function returns #f if the
                   ;; buffer contains objects to paste, and #t
