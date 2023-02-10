@@ -171,6 +171,12 @@ place list at the point ANCHOR."
     ;; otherwise.
     #f)
 
+  (o_redraw_cleanstates *window)
+  ;; Cancel current place or draw action if it is being
+  ;; done.
+  (when (in-action? window)
+    (i_callback_cancel %null-pointer *window))
+
   (when (= buffer-n CLIPBOARD_BUFFER)
     (clipboard->buffer window buffer-n))
 
