@@ -625,18 +625,14 @@ the snap grid size should be set to 100")))
 
 (define CLIPBOARD_BUFFER 0)
 
-(define (buffer-paste-start *window buffer-number)
+(define (buffer-paste-start window buffer-number)
   ;; Choose a default position to start pasting. This is required to
   ;; make pasting when the cursor is outside the screen or pasting via
   ;; menu work as expected.
-  (let ((position (action-position)))
-    (and position
-         (match (snap-point position)
-           ((x . y)
-            (paste-buffer (pointer->window *window)
-                          (cons x y)
-                          buffer-number))
-           (_ #f)))))
+  (let ((position (and=> (action-position) snap-point)))
+    (match position
+      ((x . y) (paste-buffer window position buffer-number))
+      (_ #f))))
 
 ;;; Cut the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
@@ -648,7 +644,7 @@ the snap grid size should be set to 100")))
 
 ;;; Start pasting the current clipboard contents, via buffer 0.
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
-  (buffer-paste-start (*current-window) CLIPBOARD_BUFFER))
+  (buffer-paste-start (current-window) CLIPBOARD_BUFFER))
 
 (define-action-public (&buffer-cut-1) (selection->buffer (current-window) 1 'cut))
 (define-action-public (&buffer-cut-2) (selection->buffer (current-window) 2 'cut))
@@ -670,15 +666,15 @@ the snap grid size should be set to 100")))
 (define-action-public (&buffer-copy-8) (selection->buffer (current-window) 8))
 (define-action-public (&buffer-copy-9) (selection->buffer (current-window) 9))
 
-(define-action-public (&buffer-paste-1) (buffer-paste-start (*current-window) 1))
-(define-action-public (&buffer-paste-2) (buffer-paste-start (*current-window) 2))
-(define-action-public (&buffer-paste-3) (buffer-paste-start (*current-window) 3))
-(define-action-public (&buffer-paste-4) (buffer-paste-start (*current-window) 4))
-(define-action-public (&buffer-paste-5) (buffer-paste-start (*current-window) 5))
-(define-action-public (&buffer-paste-6) (buffer-paste-start (*current-window) 6))
-(define-action-public (&buffer-paste-7) (buffer-paste-start (*current-window) 7))
-(define-action-public (&buffer-paste-8) (buffer-paste-start (*current-window) 8))
-(define-action-public (&buffer-paste-9) (buffer-paste-start (*current-window) 9))
+(define-action-public (&buffer-paste-1) (buffer-paste-start (current-window) 1))
+(define-action-public (&buffer-paste-2) (buffer-paste-start (current-window) 2))
+(define-action-public (&buffer-paste-3) (buffer-paste-start (current-window) 3))
+(define-action-public (&buffer-paste-4) (buffer-paste-start (current-window) 4))
+(define-action-public (&buffer-paste-5) (buffer-paste-start (current-window) 5))
+(define-action-public (&buffer-paste-6) (buffer-paste-start (current-window) 6))
+(define-action-public (&buffer-paste-7) (buffer-paste-start (current-window) 7))
+(define-action-public (&buffer-paste-8) (buffer-paste-start (current-window) 8))
+(define-action-public (&buffer-paste-9) (buffer-paste-start (current-window) 9))
 
 
 ;; -------------------------------------------------------------------
