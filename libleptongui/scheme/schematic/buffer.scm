@@ -133,11 +133,14 @@ removed from the selection and the hook won't be run."
   "Place the contents of the buffer BUFFER-NUMBER in WINDOW into the
 place list at the point ANCHOR."
   (define *window (check-window window 1))
-  (define mouse-coord (and (check-coord anchor 2) anchor))
+  ;; It may be (x . y) or #f.
+  (define mouse-coord (and anchor
+                           (check-coord anchor 2)
+                           anchor))
   (define buffer-n
     (and (check-integer buffer-number 3) buffer-number))
-  (define mouse-x (car mouse-coord))
-  (define mouse-y (cdr mouse-coord))
+  (define mouse-x (or (and=> mouse-coord car) 0))
+  (define mouse-y (or (and=> mouse-coord cdr) 0))
 
   (define (buffer->place-list)
     ;; Remove the old place list if it exists.

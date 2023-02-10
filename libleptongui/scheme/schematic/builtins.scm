@@ -629,10 +629,7 @@ the snap grid size should be set to 100")))
   ;; Choose a default position to start pasting. This is required to
   ;; make pasting when the cursor is outside the screen or pasting via
   ;; menu work as expected.
-  (let ((position (and=> (action-position) snap-point)))
-    (match position
-      ((x . y) (paste-buffer window position buffer-number))
-      (_ #f))))
+  (paste-buffer window (and=> (action-position) snap-point) buffer-number))
 
 ;;; Cut the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
