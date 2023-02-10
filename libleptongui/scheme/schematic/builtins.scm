@@ -638,13 +638,9 @@ the snap grid size should be set to 100")))
             ;; done.
             (when (in-action? (pointer->window *window))
               (i_callback_cancel %null-pointer *window))
-            (let ((empty? (paste-buffer (pointer->window *window)
-                                        (cons x y)
-                                        buffer-number)))
-              (when empty?
-                (i_set_state_msg *window
-                                 (symbol->action-mode 'select-mode)
-                                 (string->pointer (G_ "Empty clipboard"))))))
+            (paste-buffer (pointer->window *window)
+                          (cons x y)
+                          buffer-number))
            (_ #f)))))
 
 ;;; Cut the current selection to the clipboard, via buffer 0.

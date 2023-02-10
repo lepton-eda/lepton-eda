@@ -30,6 +30,7 @@
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic gettext)
   #:use-module (schematic hook)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
@@ -174,16 +175,25 @@ place list at the point ANCHOR."
     (clipboard->buffer window buffer-n))
 
   ;; Cancel the action if there are no objects in the buffer.
-  (or (null-pointer? (buffer-list-ref buffer-n))
+  (if (null-pointer? (buffer-list-ref buffer-n))
+      ;; Report that the buffer is empty.
+      (i_set_state_msg *window
+                       (symbol->action-mode 'select-mode)
+                       (string->pointer (G_ "Empty clipboard")))
 
       (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window))
             (*place-list (buffer->place-list)))
         (let-values (((x1 y1 x2 y2)
                       (object-list-bounds *place-list show-hidden-text?)))
-          ;; If the place buffer doesn't have any objects
-          ;; to define its any bounds we drop out here.
-          (or (not x1)
+          (if x1
               (place-objects *place-list
                              ;; Snap x and y to the grid.
                              (snap_grid *window x1)
-                             (snap_grid *window y1)))))))
+                             (snap_grid *window y1))
+              ;; If the place buffer doesn't have any objects to
+              ;; define its any bounds we drop out here, reporting
+              ;; this.
+              (i_set_state_msg *window
+                               (symbol->action-mode 'select-mode)
+                               (string->pointer (G_ "Hit E N to insert invisible objects.")))
+              )))))
