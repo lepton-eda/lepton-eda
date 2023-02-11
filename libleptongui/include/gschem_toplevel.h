@@ -170,7 +170,6 @@ struct st_gschem_toplevel {
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
   int drawbounding_action_mode;         /* outline vs bounding box */
-  int last_drawb_mode;                  /* last above mode */
   int CONTROLKEY;                       /* control key pressed? */
   int SHIFTKEY;                         /* shift key pressed? */
   int ALTKEY;                           /* alt key pressed? */

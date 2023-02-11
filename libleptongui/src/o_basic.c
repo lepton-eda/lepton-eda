@@ -262,17 +262,14 @@ void o_redraw_rect (GschemToplevel *w_current,
           }
         break;
         case MOVEMODE:
-          if (w_current->last_drawb_mode != LAST_DRAWB_MODE_NONE)
-          {
-            /* FIXME shouldn't need to save/restore colormap here */
-            cairo_save (cr);
-            eda_renderer_set_color_map (renderer, render_outline_color_map);
+          /* FIXME shouldn't need to save/restore colormap here */
+          cairo_save (cr);
+          eda_renderer_set_color_map (renderer, render_outline_color_map);
 
-            o_move_draw_rubber (w_current, renderer);
+          o_move_draw_rubber (w_current, renderer);
 
-            eda_renderer_set_color_map (renderer, render_color_map);
-            cairo_restore (cr);
-          }
+          eda_renderer_set_color_map (renderer, render_color_map);
+          cairo_restore (cr);
           break;
         default: break;
       }

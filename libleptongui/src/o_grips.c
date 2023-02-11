@@ -560,8 +560,6 @@ LeptonObject *o_grips_search_line_world(GschemToplevel *w_current, LeptonObject 
 static void o_grips_start_arc(GschemToplevel *w_current, LeptonObject *o_current,
                               int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
   /* describe the arc with GschemToplevel variables */
   /* center */
   w_current->first_wx = lepton_arc_object_get_center_x (o_current);
@@ -602,8 +600,6 @@ static void o_grips_start_box(GschemToplevel *w_current, LeptonObject *o_current
                               int x, int y, int whichone)
 {
   int upper_x, upper_y, lower_x, lower_y;
-
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   upper_x = lepton_box_object_get_upper_x (o_current);
   upper_y = lepton_box_object_get_upper_y (o_current);
@@ -677,8 +673,6 @@ static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_curren
   int gx = -1;
   int gy = -1;
 
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
   for (i = 0; i < lepton_path_object_get_num_sections (o_current); i++)
   {
     section = lepton_path_object_get_section (o_current, i);
@@ -749,8 +743,6 @@ static void o_grips_start_picture(GschemToplevel *w_current, LeptonObject *o_cur
   upper_x = lepton_picture_object_get_upper_x (o_current);
   upper_y = lepton_picture_object_get_upper_y (o_current);
 
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
   w_current->current_pixbuf = lepton_picture_object_get_pixbuf (o_current);
   w_current->pixbuf_filename =
     g_strdup (lepton_picture_object_get_filename (o_current));
@@ -817,8 +809,6 @@ static void o_grips_start_circle(GschemToplevel *w_current, LeptonObject *o_curr
                                  int x, int y, int whichone)
 {
 
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
   /* store circle center and radius in GschemToplevel structure */
   w_current->first_wx = lepton_circle_object_get_center_x (o_current);
   w_current->first_wy = lepton_circle_object_get_center_y (o_current);
@@ -849,8 +839,6 @@ static void o_grips_start_circle(GschemToplevel *w_current, LeptonObject *o_curr
 static void o_grips_start_line(GschemToplevel *w_current, LeptonObject *o_current,
                                int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
   /* describe the line with GschemToplevel variables */
   w_current->second_wx = o_current->line->x[whichone];
   w_current->second_wy = o_current->line->y[whichone];

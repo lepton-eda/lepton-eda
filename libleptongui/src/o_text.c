@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,8 +51,6 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
 
   w_current->first_wx = 0;
   w_current->first_wy = 0;
-
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* remove the old place list if it exists */
   lepton_object_list_delete (page->place_list);

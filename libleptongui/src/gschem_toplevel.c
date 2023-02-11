@@ -289,7 +289,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->drawbounding_action_mode = FREE;
-  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
   w_current->CONTROLKEY = 0;
   w_current->SHIFTKEY   = 0;
   w_current->ALTKEY     = 0;

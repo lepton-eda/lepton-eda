@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,8 +48,6 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
     gboolean net_rubber_band_mode;
 
     net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
-
-    w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
