@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -64,11 +64,6 @@
 /* values */
 #define OUTLINE         0
 #define BOUNDINGBOX     1
-
-/* This is an additional mode for last_drawb_mode, to indicate there was no
- * last bounding box drawn. last_drawb_mode also takes actionfeedback_mode
- * constants, so be sure not to clash with those */
-#define LAST_DRAWB_MODE_NONE -1
 
 /* used for undo_type */
 #define UNDO_DISK               0

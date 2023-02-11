@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -222,7 +222,6 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
       schematic_window_get_action_mode (w_current);
     /* Ensure we set this to flag there is "something" supposed to be
      * drawn when the invalidate call below causes an expose event. */
-    w_current->last_drawb_mode = w_current->actionfeedback_mode;
     w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
                                            ! (   (action_mode == PASTEMODE)
                                               || (action_mode == COMPMODE)
@@ -303,7 +302,6 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     schematic_window_get_action_mode (w_current);
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
-  w_current->last_drawb_mode = w_current->actionfeedback_mode;
   w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
                                          ! (   (action_mode == PASTEMODE)
                                             || (action_mode == COMPMODE)
@@ -330,7 +328,8 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   cairo_translate (cr, diff_x, diff_y);
 
   /* Draw with the appropriate mode */
-  if (w_current->last_drawb_mode == BOUNDINGBOX) {
+  if (w_current->actionfeedback_mode == BOUNDINGBOX)
+  {
     GArray *map = eda_renderer_get_color_map (renderer);
     int flags = eda_renderer_get_cairo_flags (renderer);
     int left, top, bottom, right;
