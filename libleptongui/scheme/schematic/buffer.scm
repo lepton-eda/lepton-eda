@@ -167,12 +167,7 @@ place list at the point ANCHOR."
 
     ;; The next paste operation will be a copy of
     ;; these objects.
-    (run-copy-objects-hook *window (buffer-list-ref buffer-n))
-
-    ;; Currently, the function returns #f if the
-    ;; buffer contains objects to paste, and #t
-    ;; otherwise.
-    #f)
+    (run-copy-objects-hook *window (buffer-list-ref buffer-n)))
 
   (o_redraw_cleanstates *window)
   ;; Cancel current place or draw action if it is being
