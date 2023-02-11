@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,7 +262,8 @@ void o_redraw_rect (GschemToplevel *w_current,
           }
         break;
         case MOVEMODE:
-          if (w_current->last_drawb_mode != -1) {
+          if (w_current->last_drawb_mode != LAST_DRAWB_MODE_NONE)
+          {
             /* FIXME shouldn't need to save/restore colormap here */
             cairo_save (cr);
             eda_renderer_set_color_map (renderer, render_outline_color_map);

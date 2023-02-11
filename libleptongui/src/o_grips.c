@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -677,7 +677,7 @@ static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_curren
   int gx = -1;
   int gy = -1;
 
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   for (i = 0; i < lepton_path_object_get_num_sections (o_current); i++)
   {
