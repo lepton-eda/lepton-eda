@@ -58,6 +58,7 @@
 
 
 (define (free-buffers)
+  "Remove and free objects stored in copy-paste buffers."
   (for-each lepton_object_list_delete %schematic-buffer-list)
   (set! %schematic-buffer-list '()))
 
