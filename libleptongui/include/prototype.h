@@ -198,7 +198,6 @@ void o_component_place_changed_run_hook (GschemToplevel *w_current);
 void o_component_translate_all (GschemToplevel *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GschemToplevel *w_current, int x, int y);
-void o_copy_end(GschemToplevel *w_current);
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, LeptonObject *object);
 void o_delete_selected(GschemToplevel *w_current);

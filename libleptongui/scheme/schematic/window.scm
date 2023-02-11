@@ -37,6 +37,7 @@
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
+  #:use-module (schematic action copy)
   #:use-module (schematic action-mode)
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
@@ -287,7 +288,7 @@
            (when (in-action? window)
              (if (not (null-pointer? (schematic_window_get_place_list *window)))
                  (match action-mode
-                   ((or 'copy-mode 'multiple-copy-mode) (o_copy_end *window))
+                   ((or 'copy-mode 'multiple-copy-mode) (finish-copy *window))
                    ('move-mode (o_move_end *window))
                    (_ FALSE))
 
@@ -335,7 +336,7 @@
                  (when (and (in-action? window)
                             (not (null-pointer? (schematic_window_get_place_list *window))))
                    (match action-mode
-                     ('copy-mode (o_copy_end *window))
+                     ('copy-mode (finish-copy *window))
                      ('move-mode (o_move_end *window))
                      (_ FALSE))))
 

@@ -94,7 +94,6 @@
 
             o_component_place_changed_run_hook
 
-            o_copy_end
             o_copy_start
 
             o_delete_selected
@@ -361,6 +360,8 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
+            schematic_window_get_second_wx
+            schematic_window_get_second_wy
             schematic_window_get_find_text_state_widget
             schematic_window_set_find_text_state_widget
             schematic_window_set_font_select_widget
@@ -662,6 +663,8 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
+(define-lff schematic_window_get_second_wx int '(*))
+(define-lff schematic_window_get_second_wy int '(*))
 (define-lff schematic_window_get_find_text_state_widget '* '(*))
 (define-lff schematic_window_set_find_text_state_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
@@ -887,7 +890,6 @@
 (define-lff o_component_place_changed_run_hook void '(*))
 
 ;;; o_copy.c
-(define-lff o_copy_end void '(*))
 (define-lff o_copy_start void (list '* int int))
 
 ;;; o_delete.c

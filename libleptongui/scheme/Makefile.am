@@ -15,6 +15,7 @@ nobase_dist_scmdata_DATA = \
 	gschem/deprecated.scm \
 	schematic/action.scm \
 	schematic/action-mode.scm \
+	schematic/action/copy.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
 	schematic/callback.scm \
