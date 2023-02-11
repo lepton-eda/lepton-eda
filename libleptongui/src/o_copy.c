@@ -73,7 +73,9 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_copy_end(GschemToplevel *w_current)
 {
-  o_place_end (w_current, w_current->second_wx, w_current->second_wy,
+  o_place_end (w_current,
+               schematic_window_get_second_wx (w_current),
+               schematic_window_get_second_wy (w_current),
                (schematic_window_get_action_mode (w_current) == MCOPYMODE),
                "paste-objects-hook");
 }
