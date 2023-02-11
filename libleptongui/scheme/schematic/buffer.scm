@@ -35,7 +35,8 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (free-buffers
+  #:export (%clipboard-buffer-id
+            free-buffers
             paste-buffer
             selection->buffer))
 
@@ -60,8 +61,8 @@
   (for-each lepton_object_list_delete %schematic-buffer-list)
   (set! %schematic-buffer-list '()))
 
-
-(define CLIPBOARD_BUFFER 0)
+;;; The ID of the clipboard buffer.
+(define %clipboard-buffer-id 0)
 
 
 (define (run-copy-objects-hook *window *objects)
@@ -95,7 +96,7 @@ removed from the selection and the hook won't be run."
           (o_delete_selected *window)
           (run-copy-objects-hook *window *objects))
 
-      (when (= buffer-number CLIPBOARD_BUFFER)
+      (when (= buffer-number %clipboard-buffer-id)
         (x_clipboard_set *window *objects)))
 
     (i_update_menus *window)))
@@ -175,7 +176,7 @@ place list at the point ANCHOR."
   (when (in-action? window)
     (i_callback_cancel %null-pointer *window))
 
-  (when (= buffer-n CLIPBOARD_BUFFER)
+  (when (= buffer-n %clipboard-buffer-id)
     (clipboard->buffer window buffer-n))
 
   ;; Cancel the action if there are no objects in the buffer.
