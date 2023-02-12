@@ -27,13 +27,12 @@
 
   #:export (finish-copy))
 
-(define (finish-copy *window)
+(define* (finish-copy *window #:optional keep-on?)
   "Finish copy action in *WINDOW."
+  (define continue-placement? (if keep-on? TRUE FALSE))
+
   (o_place_end *window
                (schematic_window_get_second_wx *window)
                (schematic_window_get_second_wy *window)
-               (if (eq? (action-mode->symbol (schematic_window_get_action_mode *window))
-                        'multiple-copy-mode)
-                   TRUE
-                   FALSE)
+               continue-placement?
                (string->pointer "paste-objects-hook")))

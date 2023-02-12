@@ -288,7 +288,8 @@
            (when (in-action? window)
              (if (not (null-pointer? (schematic_window_get_place_list *window)))
                  (match action-mode
-                   ((or 'copy-mode 'multiple-copy-mode) (finish-copy *window))
+                   ('copy-mode (finish-copy *window))
+                   ('multiple-copy-mode (finish-copy *window 'keep-on))
                    ('move-mode (o_move_end *window))
                    (_ FALSE))
 
