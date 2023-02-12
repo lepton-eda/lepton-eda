@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
   /* Copy the objects into the buffer at their current position,
    * with future motion relative to the mouse origin, (w_x, w_y). */
 
-  w_current->first_wx = w_x;
-  w_current->first_wy = w_y;
+  schematic_window_set_first_wx (w_current, w_x);
+  schematic_window_set_first_wy (w_current, w_y);
 
   if (!o_select_selected (w_current))
     return;
