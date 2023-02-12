@@ -465,7 +465,7 @@
                        ('pin-mode (o_pin_start *window x y))
                        ('zoom-box-mode (a_zoom_box_start *window unsnapped-x unsnapped-y))
                        ('select-mode (o_select_start *window x y))
-                       ((or 'copy-mode 'multiple-copy-mode) (o_copy_start *window x y))
+                       ((or 'copy-mode 'multiple-copy-mode) (start-copy *window x y))
                        ('move-mode (o_move_start *window x y))
                        (_ FALSE)))
 
@@ -512,7 +512,7 @@
                                  ;; Set copy mode and start copying.
                                  (begin
                                    (i_set_state *window (symbol->action-mode 'copy-mode))
-                                   (o_copy_start *window x y))
+                                   (start-copy *window x y))
                                  ;; Start moving objects.
                                  (o_move_start *window x y))))
 

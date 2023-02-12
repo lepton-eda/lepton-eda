@@ -21,11 +21,17 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic hook)
+  #:use-module (schematic window global)
 
-  #:export (finish-copy))
+  #:export (finish-copy
+            start-copy))
 
 (define* (finish-copy *window #:optional keep-on?)
   "Finish copy action in *WINDOW."
@@ -36,3 +42,30 @@
                (schematic_window_get_second_wy *window)
                continue-placement?
                (string->pointer "paste-objects-hook")))
+
+
+(define (start-copy *window x y)
+  "Copy objects in *WINDOW into the buffer at their current
+position, with future motion relative to the mouse origin, (X
+. Y)."
+
+  (schematic_window_set_first_wx *window x)
+  (schematic_window_set_first_wy *window y)
+
+  (when (true? (o_select_selected *window))
+    (let ((*selection
+           (lepton_list_get_glist
+            (schematic_window_get_selection_list *window))))
+      (schematic_window_delete_place_list *window)
+
+      (schematic_window_set_place_list
+       *window
+       (o_glist_copy_all *selection
+                         (schematic_window_get_place_list *window)))
+
+      (let ((objects
+             (glist->list (schematic_window_get_place_list *window)
+                          pointer->object)))
+        (with-window *window (run-hook copy-objects-hook objects)))
+
+      (o_place_start *window x y))))

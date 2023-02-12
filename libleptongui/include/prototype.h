@@ -196,8 +196,7 @@ void o_circle_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 void o_component_prepare_place (GschemToplevel *w_current, const CLibSymbol *sym);
 void o_component_place_changed_run_hook (GschemToplevel *w_current);
 void o_component_translate_all (GschemToplevel *w_current, int offset);
-/* o_copy.c */
-void o_copy_start(GschemToplevel *w_current, int x, int y);
+
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, LeptonObject *object);
 void o_delete_selected(GschemToplevel *w_current);

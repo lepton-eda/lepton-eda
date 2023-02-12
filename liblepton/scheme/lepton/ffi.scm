@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -337,6 +337,7 @@
             lepton_toplevel_search_page
 
             lepton_object_list_to_buffer
+            o_glist_copy_all
 
             lepton_page_get_changed
             lepton_page_set_changed
@@ -673,6 +674,7 @@
 
 ;;; object_list.c
 (define-lff lepton_object_list_to_buffer '* '(*))
+(define-lff o_glist_copy_all '* '(* *))
 
 ;;; page.c
 (define-lff lepton_page_get_changed int '(*))

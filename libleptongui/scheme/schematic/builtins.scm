@@ -37,6 +37,7 @@
   #:use-module (lepton rc)
   #:use-module (lepton repl)
 
+  #:use-module (schematic action copy)
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic callback)
@@ -287,7 +288,7 @@
         (o_redraw_cleanstates *window)
         (and position
              (match (snap-point position)
-               ((x . y) (o_copy_start *window x y))
+               ((x . y) (start-copy *window x y))
                (_ #f)))
         (i_set_state *window (symbol->action-mode 'copy-mode)))))
 
@@ -303,7 +304,7 @@
         (o_redraw_cleanstates *window)
         (and position
              (match (snap-point position)
-               ((x . y) (o_copy_start *window x y))
+               ((x . y) (start-copy *window x y))
                (_ #f)))
         (i_set_state *window (symbol->action-mode 'multiple-copy-mode)))))
 

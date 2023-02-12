@@ -94,8 +94,6 @@
 
             o_component_place_changed_run_hook
 
-            o_copy_start
-
             o_delete_selected
 
             o_edit
@@ -147,6 +145,7 @@
             o_place_mirror
             o_place_motion
             o_place_rotate
+            o_place_start
 
             page_select_widget_new
             page_select_widget_update
@@ -360,6 +359,8 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
+            schematic_window_set_first_wx
+            schematic_window_set_first_wy
             schematic_window_get_second_wx
             schematic_window_get_second_wy
             schematic_window_get_find_text_state_widget
@@ -371,7 +372,9 @@
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
             schematic_window_get_options
+            schematic_window_delete_place_list
             schematic_window_get_place_list
+            schematic_window_set_place_list
             schematic_window_get_right_notebook
             schematic_window_set_right_notebook
             schematic_window_set_rubber_visible
@@ -663,6 +666,8 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
+(define-lff schematic_window_set_first_wx void (list '* int))
+(define-lff schematic_window_set_first_wy void (list '* int))
 (define-lff schematic_window_get_second_wx int '(*))
 (define-lff schematic_window_get_second_wy int '(*))
 (define-lff schematic_window_get_find_text_state_widget '* '(*))
@@ -674,7 +679,9 @@
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_get_options '* '(*))
+(define-lff schematic_window_delete_place_list void '(*))
 (define-lff schematic_window_get_place_list '* '(*))
+(define-lff schematic_window_set_place_list void '(* *))
 (define-lff schematic_window_get_right_notebook '* '(*))
 (define-lff schematic_window_set_right_notebook void '(* *))
 (define-lff schematic_window_set_rubber_visible void (list '* int))
@@ -889,9 +896,6 @@
 ;;; o_component.c
 (define-lff o_component_place_changed_run_hook void '(*))
 
-;;; o_copy.c
-(define-lff o_copy_start void (list '* int int))
-
 ;;; o_delete.c
 (define-lff o_delete_selected void '(*))
 
@@ -953,6 +957,7 @@
 (define-lff o_place_mirror void '(*))
 (define-lff o_place_motion void (list '* int int))
 (define-lff o_place_rotate void '(*))
+(define-lff o_place_start void (list '* int int))
 
 ;;; x_attribedit.c
 (define-lff attrib_edit_dialog void (list '* '* int))

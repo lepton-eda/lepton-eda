@@ -51,7 +51,6 @@ libleptongui/src/o_buffer.c
 libleptongui/src/o_bus.c
 libleptongui/src/o_circle.c
 libleptongui/src/o_component.c
-libleptongui/src/o_copy.c
 libleptongui/src/o_delete.c
 libleptongui/src/o_find.c
 libleptongui/src/o_grips.c
