@@ -194,7 +194,11 @@ void o_component_translate_all (GschemToplevel *w_current, int offset);
 
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, LeptonObject *object);
-void o_delete_selected(GschemToplevel *w_current);
+
+void
+o_delete_selected (GschemToplevel *w_current,
+                   LeptonPage *active_page,
+                   LeptonSelection *selection);
 /* o_find.c */
 gboolean o_find_object(GschemToplevel *w_current, int x, int y,
                        gboolean deselect_afterwards);

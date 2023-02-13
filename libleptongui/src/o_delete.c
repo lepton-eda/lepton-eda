@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,11 +52,14 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
  *  toplevel \a w_current.
  *
  *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] active_page The current page.
+ *  \param [in] selection The list of selected objects.
  */
-void o_delete_selected (GschemToplevel *w_current)
+void
+o_delete_selected (GschemToplevel *w_current,
+                   LeptonPage *active_page,
+                   LeptonSelection *selection)
 {
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
   GList *to_remove;
   GList *iter;
   LeptonObject *obj;

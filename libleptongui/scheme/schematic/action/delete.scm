@@ -24,4 +24,7 @@
 
 (define* (delete-selection *window)
   "Delete selected objects in *WINDOW."
-  (o_delete_selected *window))
+  (define *active-page (schematic_window_get_active_page *window))
+  (define *selection (schematic_window_get_selection_list *window))
+
+  (o_delete_selected *window *active-page *selection))
