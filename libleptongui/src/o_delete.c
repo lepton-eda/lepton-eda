@@ -58,24 +58,19 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
 void
 o_delete_selected (GschemToplevel *w_current,
                    LeptonPage *active_page,
-                   LeptonSelection *selection)
+                   LeptonSelection *selection,
+                   gboolean locked_exist)
 {
   GList *to_remove;
   GList *iter;
   LeptonObject *obj;
-  unsigned int locked_num = 0;
 
   g_return_if_fail (o_select_selected (w_current));
 
   to_remove = g_list_copy (lepton_list_get_glist (selection));
 
-  for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    obj = (LeptonObject *) iter->data;
-    if (lepton_object_get_selectable (obj) == FALSE)
-      locked_num++;
-  }
-
-  if (locked_num > 0) {
+  if (locked_exist)
+  {
     GList *non_locked = NULL;
     gint resp;
     GtkWidget *dialog =
