@@ -28,6 +28,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
+  #:use-module (schematic action delete)
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
@@ -94,7 +95,7 @@ removed from the selection and the hook won't be run."
     (let ((*objects (o_glist_copy_all *selection %null-pointer)))
       (buffer-list-set! buffer-number *objects)
       (if cut?
-          (o_delete_selected *window)
+          (delete-selection *window)
           (run-copy-objects-hook *window *objects))
 
       (when (= buffer-number %clipboard-buffer-id)

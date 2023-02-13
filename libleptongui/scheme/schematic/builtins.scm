@@ -38,6 +38,7 @@
   #:use-module (lepton repl)
 
   #:use-module (schematic action copy)
+  #:use-module (schematic action delete)
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
@@ -269,7 +270,7 @@
 
   (unless (null? (page-selection (active-page)))
     (o_redraw_cleanstates *window)
-    (o_delete_selected *window)
+    (delete-selection *window)
     ;; If you delete the objects you must go into select mode
     ;; after the delete.
     (i_action_stop *window)
