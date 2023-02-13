@@ -18,6 +18,14 @@
 
 
 (define-module (schematic action delete)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
+  #:use-module (lepton object)
+
   #:use-module (schematic ffi)
 
   #:export (delete-selection))
@@ -26,5 +34,12 @@
   "Delete selected objects in *WINDOW."
   (define *active-page (schematic_window_get_active_page *window))
   (define *selection (schematic_window_get_selection_list *window))
+  (define objects-to-remove
+    (glist->list (lepton_list_get_glist *selection) pointer->object))
+  (define locked? (negate object-selectable?))
+  (define locked-exist? (any locked? objects-to-remove))
 
-  (o_delete_selected *window *active-page *selection))
+  (o_delete_selected *window
+                     *active-page
+                     *selection
+                     (if locked-exist? TRUE FALSE)))

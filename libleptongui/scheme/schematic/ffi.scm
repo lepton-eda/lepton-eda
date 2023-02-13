@@ -894,7 +894,7 @@
 (define-lff o_component_place_changed_run_hook void '(*))
 
 ;;; o_delete.c
-(define-lff o_delete_selected void '(* * *))
+(define-lff o_delete_selected void (list '* '* '* int))
 
 ;;; o_find.c
 (define-lff o_find_object int (list '* int int int))
