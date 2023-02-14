@@ -90,7 +90,7 @@
 
             o_component_place_changed_run_hook
 
-            o_delete_selected
+            schematic_delete_dialog
 
             o_edit
             o_edit_show_hidden
@@ -108,6 +108,7 @@
             o_mirror_world_update
             o_rotate_world_update
 
+            o_move_cancel
             o_move_end
             o_move_invalidate_rubber
             o_move_motion
@@ -440,6 +441,7 @@
             o_undo_cleanup
             o_undo_init
             o_undo_savestate
+            o_undo_savestate_old
             o_undo_savestate_viewport
 
             s_log_close
@@ -894,7 +896,7 @@
 (define-lff o_component_place_changed_run_hook void '(*))
 
 ;;; o_delete.c
-(define-lff o_delete_selected void (list '* '* '* int))
+(define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
 (define-lff o_find_object int (list '* int int int))
@@ -916,6 +918,7 @@
 (define-lff o_rotate_world_update void (list '* int int int '*))
 
 ;;; o_move.c
+(define-lff o_move_cancel void '(*))
 (define-lff o_move_end void '(*))
 (define-lff o_move_invalidate_rubber void (list '* int))
 (define-lff o_move_motion void (list '* int int))
@@ -1031,6 +1034,7 @@
 (define-lff o_undo_callback void (list '* '* int))
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_savestate void (list '* '* int))
+(define-lff o_undo_savestate_old void (list '* int))
 (define-lff o_undo_savestate_viewport void '(*))
 
 ;;; s_log.c
