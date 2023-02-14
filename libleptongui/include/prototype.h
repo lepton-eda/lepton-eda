@@ -195,6 +195,9 @@ void o_component_translate_all (GschemToplevel *w_current, int offset);
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, LeptonObject *object);
 
+gint
+schematic_delete_dialog ();
+
 void
 o_delete_selected (GschemToplevel *w_current,
                    LeptonPage *active_page,
