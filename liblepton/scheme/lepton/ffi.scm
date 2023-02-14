@@ -159,6 +159,7 @@
             world_get_object_glist_bounds
             lepton_object_calculate_visible_bounds
             lepton_object_copy
+            lepton_object_delete
             lepton_object_emit_change_notify
             lepton_object_emit_pre_change_notify
             lepton_object_mirror
@@ -523,6 +524,7 @@
 (define-lff world_get_object_glist_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
+(define-lff lepton_object_delete void '(*))
 (define-lff lepton_object_emit_change_notify void '(*))
 (define-lff lepton_object_emit_pre_change_notify void '(*))
 (define-lff lepton_object_mirror void (list int int '*))
