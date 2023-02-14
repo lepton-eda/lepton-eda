@@ -46,6 +46,41 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
   gschem_toplevel_page_content_changed (w_current, page);
 }
 
+
+/*! \brief Run delete selection dialog.
+ *  \par Function Description
+ *  Runs the delete selection dialog providing three buttons that
+ *  enable removing all objects, all except locked ones, and
+ *  cancel deletion.  Returns appropriate GtkResponse constant.
+ *
+ *  \return The resulting GtkResponse value.
+ */
+gint
+schematic_delete_dialog ()
+{
+  GtkWidget *dialog =
+    gtk_message_dialog_new (NULL,
+                            (GtkDialogFlags) (GTK_DIALOG_MODAL
+                                              | GTK_DIALOG_DESTROY_WITH_PARENT),
+                            GTK_MESSAGE_WARNING,
+                            GTK_BUTTONS_NONE,
+                            _("Warning: the selection contains locked objects.\n"
+                              "Please choose what objects you'd like to delete:"));
+
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          _("Delete _all"), GTK_RESPONSE_YES,
+                          _("All, _except locked"), GTK_RESPONSE_NO,
+                          _("_Cancel"), GTK_RESPONSE_CANCEL, NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Delete"));
+
+  gint resp = gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+  return resp;
+}
+
 /*! \brief Delete objects from the selection.
  *  \par Function Description
  *  This function deletes the objects selected on the current page of
@@ -72,26 +107,7 @@ o_delete_selected (GschemToplevel *w_current,
   if (locked_exist)
   {
     GList *non_locked = NULL;
-    gint resp;
-    GtkWidget *dialog =
-      gtk_message_dialog_new (NULL,
-                              (GtkDialogFlags) (GTK_DIALOG_MODAL
-                                                | GTK_DIALOG_DESTROY_WITH_PARENT),
-                              GTK_MESSAGE_WARNING,
-                              GTK_BUTTONS_NONE,
-                              _("Warning: the selection contains locked objects.\n"
-                              "Please choose what objects you'd like to delete:"));
-
-    gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-        _("Delete _all"), GTK_RESPONSE_YES,
-        _("All, _except locked"), GTK_RESPONSE_NO,
-        _("_Cancel"), GTK_RESPONSE_CANCEL, NULL);
-
-    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Delete"));
-
-    resp = gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (dialog);
+    gint resp = schematic_delete_dialog ();
 
     switch (resp) {
     case GTK_RESPONSE_YES:  /* Remove all */
