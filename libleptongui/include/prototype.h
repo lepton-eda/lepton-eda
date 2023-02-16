@@ -229,7 +229,6 @@ o_line_visible (GschemToplevel *w_current,
                 int *x2,
                 int *y2);
 /* o_misc.c */
-void o_edit(GschemToplevel *w_current, GList *list);
 void o_rotate_world_update(GschemToplevel *w_current, int centerx, int centery, int angle, GList *list);
 void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GschemToplevel *w_current, const GList *o_list);

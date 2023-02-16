@@ -39,6 +39,7 @@
 
   #:use-module (schematic action copy)
   #:use-module (schematic action delete)
+  #:use-module (schematic action edit)
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
@@ -381,9 +382,11 @@
 
 
 (define-action-public (&edit-edit #:label (G_ "Edit..."))
-  (define *window (*current-window))
-  (define *selection (schematic_window_get_selection_list *window))
-  (o_edit *window (lepton_list_get_glist *selection)))
+  (define objects
+    (glist->list (lepton_list_get_glist
+                  (schematic_window_get_selection_list (*current-window)))
+                 pointer->object))
+  (edit-objects (current-window) objects))
 
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")

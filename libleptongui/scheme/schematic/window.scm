@@ -32,12 +32,14 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton m4)
+  #:use-module (lepton object foreign)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic action copy)
+  #:use-module (schematic action edit)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
   #:use-module (schematic callback)
@@ -416,13 +418,15 @@
             ;; Process double-click event.
             (begin
               ;; GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
-              ;; leads to setting of the inside_action flag.  If o_edit()
+              ;; leads to setting of the inside_action flag.  If edit-objects()
               ;; brings up a modal window (e.g., the edit attribute dialog),
               ;; it intercepts the release button event and thus doesn't
               ;; allow resetting of the inside_action flag so we do it
               ;; manually here before processing the double-click event.
               (i_action_stop *window)
-              (o_edit *window (lepton_list_get_glist *selection))
+              (edit-objects window
+                            (glist->list (lepton_list_get_glist *selection)
+                                         pointer->object))
               FALSE)
             ;; Process simple one click event.
             (begin

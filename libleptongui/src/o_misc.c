@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,63 +31,6 @@
 #include <unistd.h>
 
 #include "gschem.h"
-
-/* break with the tradition here and input a list */
-/*! \todo probably should go back and do the same for o_copy o_move
- *  o_delete...
- */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_edit(GschemToplevel *w_current, GList *list)
-{
-  LeptonObject *o_current;
-  const gchar *str = NULL;
-
-  if (list == NULL) {
-    return;
-  }
-
-  o_current = (LeptonObject *) list->data;
-  if (o_current == NULL) {
-    fprintf (stderr, "o_edit: ERROR: Got an unexpected NULL\n");
-    exit(-1);
-  }
-
-  /* for now deal with only the first item */
-  switch (lepton_object_get_type (o_current)) {
-
-    /* also add the ability to multi attrib edit: nets, busses, pins */
-    case(OBJ_COMPONENT):
-    case(OBJ_NET):
-    case(OBJ_PIN):
-    case(OBJ_BUS):
-    x_multiattrib_open (w_current);
-    break;
-
-    case(OBJ_PICTURE):
-    picture_change_filename_dialog(w_current);
-    break;
-    case(OBJ_ARC):
-    arc_angle_dialog(w_current, o_current);
-    break;
-    case(OBJ_TEXT):
-      str = lepton_text_object_get_string (o_current);
-      if (lepton_object_is_attrib (o_current) &&
-        /* attribute editor only accept 1-line values for attribute */
-        o_text_num_lines (str) == 1) {
-        attrib_edit_dialog(w_current,o_current, FROM_MENU);
-    } else {
-      text_edit_dialog (w_current);
-    }
-    break;
-  }
-
-  /* has to be more extensive in the future */
-  /* some sort of redrawing? */
-}
 
 
 /*! \brief Rotate all objects in list.

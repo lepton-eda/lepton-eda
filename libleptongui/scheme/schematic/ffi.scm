@@ -92,7 +92,6 @@
 
             schematic_delete_dialog
 
-            o_edit
             o_edit_show_hidden
 
             o_find_object
@@ -126,6 +125,7 @@
             o_path_motion
             o_path_start
 
+            picture_change_filename_dialog
             o_picture_end
             o_picture_invalidate_rubber
             o_picture_motion
@@ -299,6 +299,8 @@
 
             about_dialog
 
+            arc_angle_dialog
+
             x_dialog_close_changed_page
             x_dialog_close_window
 
@@ -469,6 +471,7 @@
             x_image_setup
 
             x_multiattrib_close
+            x_multiattrib_open
 
             x_print
 
@@ -589,6 +592,9 @@
 
 ;;; gschem_about_dialog.c
 (define-lff about_dialog void '(*))
+
+;;; gschem_arc_dialog.c
+(define-lff arc_angle_dialog void '(* *))
 
 ;;; gschem_close_confirmation_dialog.c
 (define-lff x_dialog_close_changed_page int '(* *))
@@ -912,7 +918,6 @@
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
-(define-lff o_edit void '(* *))
 (define-lff o_edit_show_hidden void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
@@ -939,6 +944,7 @@
 (define-lff o_path_start void (list '* int int))
 
 ;;; o_picture.c
+(define-lff picture_change_filename_dialog void '(*))
 (define-lff o_picture_end void (list '* int int))
 (define-lff o_picture_invalidate_rubber void '(*))
 (define-lff o_picture_motion void (list '* int int))
@@ -1000,6 +1006,7 @@
 
 ;;; x_multiattrib.c
 (define-lff x_multiattrib_close void '(*))
+(define-lff x_multiattrib_open void '(*))
 
 ;;; x_newtext.c
 (define-lff text_input_dialog void '(*))
