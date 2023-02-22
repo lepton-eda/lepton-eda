@@ -1,5 +1,5 @@
 ;;; Lepton EDA netlister
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -273,7 +273,16 @@ redirection is carried out."
   (define (backend-name filename)
     (basename filename %backend-suffix))
 
-  (map backend-name backend-basenames))
+  ;; Forms backend name from file basename BASE and tests if a
+  ;; module backend can be created for the name.  Returns the name
+  ;; on success, or #f otherwise.
+  (define (backend-name/test base)
+    (let ((name (backend-name base)))
+      (and name
+           (make-module-backend #:name name)
+           name)))
+
+  (filter-map backend-name/test backend-basenames))
 
 
 (define (lookup-legacy-backends)
