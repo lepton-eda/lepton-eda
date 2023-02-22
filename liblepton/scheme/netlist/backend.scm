@@ -204,14 +204,17 @@ available netlisting modes."
                               (name #f)
                               (pre-load '())
                               (post-load '()))
-  (define (warn-module-backend-not-found)
-    (begin
-      (log! 'message
-            (G_ "Could not find ~S in the module ~S.\n~
-                 Fall back to looking up for legacy backend ~S.")
-            name
-            module-sym
-            name))
+  (define (warn-module-name-not-found module-name)
+    (log! 'message (G_ "Could not find module ~S.") module-name))
+  (define (warn-module-procedure-not-found proc-name module-name)
+    (log! 'message
+          (G_ "Could not find procedure ~S exported in the module ~S.")
+          proc-name
+          module-name))
+  (define (warn-fallback-to-legacy-backend name)
+    (log! 'message
+          (G_ "Fall back to looking up for legacy backend ~S.")
+          name)
     #f)
   (define backend-sym (string->symbol name))
   (define module-sym (list 'backend backend-sym))
@@ -228,8 +231,12 @@ available netlisting modes."
   ;; Check that the variable is a procedure.
   (if (procedure? proc)
       (backend (module-filename module) name proc #f)
-      ;; Returns #f.
-      (warn-module-backend-not-found)))
+      (begin
+        (if module
+            (warn-module-procedure-not-found name module-sym)
+            (warn-module-name-not-found module-sym))
+        ;; Returns #f.
+        (warn-fallback-to-legacy-backend name))))
 
 
 (define (run-backend backend output-filename)
