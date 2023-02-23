@@ -20,8 +20,11 @@
 (define-module (schematic action-mode)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi check-args)
+
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
 
   #:export (action-mode->symbol
             symbol->action-mode
@@ -36,10 +39,50 @@
   (schematic_action_mode_from_string (string->pointer (symbol->string sym))))
 
 
-(define* (set-action-mode! #:window (window #f) mode)
+(define %valid-action-modes
+  '(arc-mode
+    box-mode
+    box-select-mode
+    bus-mode
+    circle-mode
+    component-mode
+    copy-mode
+    grips-mode
+    line-mode
+    mirror-mode
+    move-mode
+    multiple-copy-mode
+    net-mode
+    pan-mode
+    paste-mode
+    path-mode
+    picture-mode
+    pin-mode
+    rotate-mode
+    select-mode
+    text-mode
+    zoom-box-mode))
+
+
+(define-syntax check-action-mode
+  (syntax-rules ()
+    ((_ mode pos)
+     (begin
+       (check-symbol mode pos)
+       (if (memq mode %valid-action-modes)
+           mode
+           (scm-error 'misc-error
+                      (frame-procedure-name (stack-ref (make-stack #t) 1))
+                      "Invalid mode symbol in position ~A: ~A"
+                      (list pos mode)
+                      #f))))))
+
+
+(define* (set-action-mode! mode #:key (window #f))
   "Set action mode to MODE.  If WINDOW is specified, the mode is
 set in it, otherwise it is set in the currently active window as
 returned by the function current-window()."
   (define *window (check-window (or window (current-window)) 1))
+  (define _mode (check-action-mode mode 2))
 
-  (i_set_state *window (symbol->action-mode mode)))
+  (i_set_state *window (symbol->action-mode _mode)))
