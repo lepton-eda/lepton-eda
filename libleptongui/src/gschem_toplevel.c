@@ -322,7 +322,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->file_preview = 0;
   w_current->enforce_hierarchy = 0;
   w_current->fast_mousepan = 0;
-  w_current->continue_component_place = 0;
   w_current->undo_levels = 0;
   w_current->undo_control = 0;
   w_current->undo_type = 0;
@@ -1975,35 +1974,6 @@ schematic_window_set_third_button_cancel (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
 
   w_current->third_button_cancel = val;
-}
-
-
-/*! \brief Get schematic window's field 'continue_component_place'.
- *
- *  \param [in] w_current The schematic window.
- *  \return The value of the field 'continue_component_place'.
- */
-int
-schematic_window_get_continue_component_place (GschemToplevel *w_current)
-{
-  g_return_val_if_fail (w_current != NULL, 0);
-
-  return w_current->continue_component_place;
-}
-
-
-/*! \brief Set schematic window's field 'continue_component_place'.
- *
- *  \param [in] w_current The schematic window.
- *  \param [in] cont The new value of the field 'continue_component_place'.
- */
-void
-schematic_window_set_continue_component_place (GschemToplevel *w_current,
-                                               int cont)
-{
-  g_return_if_fail (w_current != NULL);
-
-  w_current->continue_component_place = cont;
 }
 
 

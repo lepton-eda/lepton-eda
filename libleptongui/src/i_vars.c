@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@ int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_file_preview = TRUE;
 int   default_enforce_hierarchy = TRUE;
 int   default_fast_mousepan = FALSE;
-int   default_continue_component_place = TRUE;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
@@ -274,9 +273,6 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_bool ("schematic.gui", "fast-mousepan",
                  default_fast_mousepan, &w_current->fast_mousepan);
-
-  cfg_read_bool ("schematic.gui", "continue-component-place",
-                 default_continue_component_place, &w_current->continue_component_place);
 
   cfg_read_int_with_check ("schematic.undo", "undo-levels",
                            default_undo_levels, &w_current->undo_levels,

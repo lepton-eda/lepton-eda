@@ -355,7 +355,6 @@
             schematic_window_set_color_edit_widget
             schematic_window_get_compselect
             schematic_window_set_compselect
-            schematic_window_get_continue_component_place
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
@@ -662,7 +661,6 @@
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_compselect '* '(*))
 (define-lff schematic_window_set_compselect void '(* *))
-(define-lff schematic_window_get_continue_component_place int '(*))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))

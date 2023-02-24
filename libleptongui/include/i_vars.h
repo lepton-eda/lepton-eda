@@ -23,7 +23,6 @@ extern int default_scroll_wheel;
 extern int default_file_preview;
 extern int default_enforce_hierarchy;
 extern int default_fast_mousepan;
-extern int default_continue_component_place;
 extern int default_undo_levels;
 extern int default_undo_control;
 extern int default_undo_type;

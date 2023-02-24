@@ -202,9 +202,6 @@ struct st_gschem_toplevel {
   int enforce_hierarchy;  /* controls how much freedom user has when traversing the hierarchy */
   int fast_mousepan;      /* controls if text is completely drawn during mouse pan */
 
-  /* controls if after doing a place the same component can be placed again */
-  int continue_component_place;
-
   int undo_levels;        /* number of undo levels stored on disk */
   int undo_control;       /* sets if undo is enabled or not */
   int undo_type;          /* type of undo (disk/memory) */
@@ -529,12 +526,6 @@ schematic_window_get_third_button_cancel (GschemToplevel *w_current);
 void
 schematic_window_set_third_button_cancel (GschemToplevel *w_current,
                                           int val);
-int
-schematic_window_get_continue_component_place (GschemToplevel *w_current);
-
-void
-schematic_window_set_continue_component_place (GschemToplevel *w_current,
-                                               int cont);
 int
 schematic_window_get_mousepan_gain (GschemToplevel *w_current);
 

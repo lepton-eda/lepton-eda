@@ -389,6 +389,13 @@
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
 
+  (define (continue-placement?)
+    (if (config-boolean (path-config-context (getcwd))
+                        "schematic.gui"
+                        "continue-component-place")
+        TRUE
+        FALSE))
+
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
     (let ((button-number (schematic_event_get_button *event))
@@ -431,9 +438,11 @@
                      (if (not (null-pointer? (schematic_window_get_place_list *window)))
                          (match action-mode
                            ('component-mode
-                            (let ((continue-placement?
-                                   (schematic_window_get_continue_component_place *window)))
-                              (o_place_end *window x y continue-placement? (string->pointer "add-objects-hook"))))
+                            (o_place_end *window
+                                         x
+                                         y
+                                         (continue-placement?)
+                                         (string->pointer "add-objects-hook")))
                            ('text-mode
                             (o_place_end *window x y FALSE (string->pointer "add-objects-hook")))
                            ('paste-mode
