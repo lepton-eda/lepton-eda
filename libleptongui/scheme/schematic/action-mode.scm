@@ -64,25 +64,18 @@
     zoom-box-mode))
 
 
-(define-syntax check-action-mode
-  (syntax-rules ()
-    ((_ mode pos)
-     (begin
-       (check-symbol mode pos)
-       (if (memq mode %valid-action-modes)
-           mode
-           (scm-error 'misc-error
-                      (frame-procedure-name (stack-ref (make-stack #t) 1))
-                      "Invalid mode symbol in position ~A: ~A"
-                      (list pos mode)
-                      #f))))))
-
-
 (define* (set-action-mode! mode #:key (window (current-window)))
   "Set action mode to MODE.  If WINDOW is specified, the mode is
 set in it, otherwise it is set in the currently active window as
 returned by the function current-window()."
-  (define _mode (check-action-mode mode 1))
   (define *window (window->pointer window))
 
-  (i_set_state *window (symbol->action-mode _mode)))
+  (check-symbol mode 1)
+  (unless (memq mode %valid-action-modes)
+    (scm-error 'misc-error
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
+               "Invalid mode symbol in position ~A: ~A"
+               (list 1 mode)
+               #f))
+
+  (i_set_state *window (symbol->action-mode mode)))
