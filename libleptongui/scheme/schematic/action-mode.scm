@@ -82,7 +82,7 @@
   "Set action mode to MODE.  If WINDOW is specified, the mode is
 set in it, otherwise it is set in the currently active window as
 returned by the function current-window()."
-  (define *window (check-window window 1))
-  (define _mode (check-action-mode mode 2))
+  (define _mode (check-action-mode mode 1))
+  (define *window (window->pointer window))
 
   (i_set_state *window (symbol->action-mode _mode)))
