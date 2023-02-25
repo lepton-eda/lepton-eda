@@ -28,6 +28,7 @@
 
   #:export (action-mode->symbol
             symbol->action-mode
+            action-mode
             set-action-mode!))
 
 (define (action-mode->symbol mode)
@@ -62,6 +63,16 @@
     select-mode
     text-mode
     zoom-box-mode))
+
+
+(define* (action-mode #:optional (window (current-window)))
+  "Return symbol corresponding to current action mode of WINDOW.
+The WINDOW argument is optional, if it is not specified, currently
+active window, as returned by the function current-window(), is
+used."
+  (define *window (window->pointer window))
+
+  (action-mode->symbol (schematic_window_get_action_mode *window)))
 
 
 (define* (set-action-mode! mode #:key (window (current-window)))
