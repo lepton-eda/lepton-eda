@@ -175,8 +175,9 @@ defined as follows:
 
 So, if you want the backend to be available system-wide, put it in the
 @file{scheme/backend} subdirectory of one of the directories reported
-by the function @code{sys-data-dirs}, e.g. @file{/etc/lepton-eda}.  To
-find out the paths, you can use @command{lepton-shell}.  For example:
+by the function @code{sys-data-dirs},
+e.g. @file{/usr/share/lepton-eda}.  To find out the paths, you can use
+@command{lepton-shell}.  For example:
 
 @example
 $ lepton-shell -c '(use-modules (lepton os)) (display (sys-data-dirs))'
