@@ -331,7 +331,28 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "It works!")))
 
-  (test-teardown))
+  ;; Test -f option with absolute file name.
+  (with-home
+   *testdir*
+   ;; Create a directory for user data in current $HOME.
+   (let ((inhibit-rc? (getenv "LEPTON_INHIBIT_RC_FILES")))
+     ;; Make a backend file.
+     (sexp->file
+      (build-filename ($HOME) "gnet-test.scm")
+      '(define (test output-filename)
+         (display "test -f with absolute filename")))
+
+     (unsetenv "LEPTON_INHIBIT_RC_FILES")
+
+     (receive (<status> <stdout> <stderr>)
+         (command-values* lepton-netlist -f $HOME/gnet-test.scm -o - schematic.sch)
+       (test-eq EXIT_SUCCESS <status>)
+       (test-assert (string-contains <stdout> "test -f with absolute filename")))
+
+     (when inhibit-rc?
+       (putenv (string-append "LEPTON_INHIBIT_RC_FILES=" inhibit-rc?)))))
+
+   (test-teardown))
 
 (test-end)
 
