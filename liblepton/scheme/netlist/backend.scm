@@ -204,17 +204,23 @@ available netlisting modes."
                               (name #f)
                               (pre-load '())
                               (post-load '()))
+  (define (report-warning! fmt . args)
+    (let* ((log-message (format #f "~?" fmt args))
+           (display-message (format #f "~A\n" log-message)))
+      (log! 'message log-message)
+      (display display-message (current-error-port))))
+
   (define (warn-module-name-not-found module-name)
-    (log! 'message (G_ "Could not find module ~S.") module-name))
+    (report-warning! (G_ "Could not find module ~S.") module-name))
   (define (warn-module-procedure-not-found proc-name module-name)
-    (log! 'message
-          (G_ "Could not find procedure ~S exported in the module ~S.")
-          proc-name
-          module-name))
+    (report-warning!
+     (G_ "Could not find procedure ~S exported in the module ~S.")
+     proc-name
+     module-name))
   (define (warn-fallback-to-legacy-backend name)
-    (log! 'message
-          (G_ "Fall back to looking up for legacy backend ~S.")
-          name)
+    (report-warning!
+     (G_ "Fall back to looking up for legacy backend ~S.")
+     name)
     #f)
   (define backend-sym (string->symbol name))
   (define module-sym (list 'backend backend-sym))
