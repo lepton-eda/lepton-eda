@@ -271,19 +271,19 @@
 
      ;; Now, same named local files in cwd and test that they have
      ;; precedence over those in the user Scheme load path.
-     (sexp->file "l.scm" '(exit 1))
+     (sexp->file "l.scm" '(primitive-exit 100))
      (mkdir "m")
-     (sexp->file "m/m.scm" '(exit 1))
+     (sexp->file "m/m.scm" '(primitive-exit 100))
 
      ;; Test with -l only.
      (receive (<status> <stdout> <stderr>)
          (command-values* lepton-netlist -l l.scm -g test -o - schematic.sch)
-       (test-eq EXIT_FAILURE <status>))
+       (test-eq 100 <status>))
 
      ;; Test with -m only.
      (receive (<status> <stdout> <stderr>)
          (command-values* lepton-netlist -m m/m.scm -g test -o - schematic.sch)
-       (test-eq EXIT_FAILURE <status>))
+       (test-eq 100 <status>))
 
      (when inhibit-rc?
        (putenv (string-append "LEPTON_INHIBIT_RC_FILES=" inhibit-rc?)))))
