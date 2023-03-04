@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@
 (define (callback-add-bus *window)
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
-  (i_set_state *window (symbol->action-mode 'bus-mode))
+  (set-action-mode! 'bus-mode #:window (pointer->window *window))
   (let ((position (action-position)))
     (and position
          (match (snap-point position)
@@ -100,7 +100,7 @@
 
 (define (callback-add-net *window)
   (o_redraw_cleanstates *window)
-  (i_set_state *window (symbol->action-mode 'net-mode))
+  (set-action-mode! 'net-mode #:window (pointer->window *window))
   (let ((position (action-position)))
     (and position
          (match (snap-point position)
@@ -112,7 +112,7 @@
 
 (define (callback-edit-select *window)
   (o_redraw_cleanstates *window)
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode #:window (pointer->window *window))
   (i_action_stop *window))
 
 
@@ -134,6 +134,7 @@
 
 
 (define (callback-add-component *widget *window)
+  (define window (pointer->window *window))
   (define signal-callback-list
     (list
      (if %m4-use-gtk3
@@ -146,7 +147,7 @@
 
   (o_redraw_cleanstates *window)
 
-  (i_set_state *window (symbol->action-mode 'component-mode))
+  (set-action-mode! 'component-mode #:window window)
   (when (null-pointer? (schematic_window_get_compselect *window))
     (let ((*compselect-widget (schematic_compselect_new *window)))
       (schematic_signal_connect *compselect-widget
@@ -164,7 +165,7 @@
       (schematic_window_set_compselect *window *compselect-widget)))
   (x_compselect_open (schematic_window_get_compselect *window))
 
-  (i_set_state *window (symbol->action-mode 'select-mode)))
+  (set-action-mode! 'select-mode #:window window))
 
 
 (define (callback-add-text *widget *window)
@@ -172,6 +173,6 @@
   (o_invalidate_rubber *window)
 
   (i_action_stop *window)
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode #:window (pointer->window *window))
 
   (text_input_dialog *window))
