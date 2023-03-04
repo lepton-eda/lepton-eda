@@ -20,6 +20,7 @@
 (define-module (schematic action-mode)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
 
   #:use-module (schematic ffi)
@@ -28,7 +29,17 @@
 
   #:export (symbol->action-mode
             action-mode
-            set-action-mode!))
+            set-action-mode!
+            in-action?))
+
+
+(define* (in-action? #:optional (window (current-window)))
+  "Return #t if an object editing action is underway in the
+current window, and #f otherwise.  If optional WINDOW argument is
+specified, the result corresponds to the state of that window
+instead of the current one."
+  (true? (schematic_window_get_inside_action (window->pointer window))))
+
 
 (define (action-mode->symbol mode)
   "Returns a Scheme symbol corresponding to integer MODE value."

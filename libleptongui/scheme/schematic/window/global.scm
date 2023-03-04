@@ -18,7 +18,6 @@
 
 
 (define-module (schematic window global)
-  #:use-module (lepton ffi boolean)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
@@ -27,8 +26,7 @@
   #:export (%lepton-window
             current-window
             *current-window
-            with-window
-            in-action?))
+            with-window))
 
 
 ;;; This is a fluid that is initialized with pointer to a new
@@ -66,11 +64,3 @@ dynamic context."
      (let ((*window (and=> (current-window) window->pointer)))
        (or *window
            (error "Current window is unavailable."))))))
-
-
-(define* (in-action? #:optional (window (current-window)))
-  "Return #t if an object editing action is underway in the
-current window, and #f otherwise.  If optional WINDOW argument is
-specified, the result corresponds to the state of that window
-instead of the current one."
-  (true? (schematic_window_get_inside_action (window->pointer window))))

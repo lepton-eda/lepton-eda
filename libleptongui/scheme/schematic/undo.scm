@@ -25,6 +25,7 @@
   #:use-module (lepton config)
   #:use-module (lepton log)
 
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
   #:use-module (schematic window foreign)
