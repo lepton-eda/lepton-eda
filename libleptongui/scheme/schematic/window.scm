@@ -261,8 +261,7 @@
 
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
-  (define current-action-mode
-    (action-mode->symbol (schematic_window_get_action_mode *window)))
+  (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
@@ -384,8 +383,7 @@
 
 (define (callback-button-pressed *page-view *event *window)
   (define window (pointer->window *window))
-  (define current-action-mode
-    (action-mode->symbol (schematic_window_get_action_mode *window)))
+  (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
@@ -598,8 +596,7 @@
 
 (define (callback-motion *page-view *event *window)
   (define window (pointer->window *window))
-  (define current-action-mode
-    (action-mode->symbol (schematic_window_get_action_mode *window)))
+  (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
   ;; Define from arc_object.h.
   (define ARC_RADIUS 1)
