@@ -598,6 +598,8 @@
 
 (define (callback-motion *page-view *event *window)
   (define window (pointer->window *window))
+  (define current-action-mode
+    (action-mode->symbol (schematic_window_get_action_mode *window)))
   (define window-coords (event-coords *event))
   ;; Define from arc_object.h.
   (define ARC_RADIUS 1)
@@ -634,11 +636,10 @@
                                                (inexact->exact (round window-x))
                                                (inexact->exact (round window-y)))
                   ;; Evaluate state transitions.
-                  (let ((action-mode (action-mode->symbol (schematic_window_get_action_mode *window))))
-
+                  (begin
                     (if (in-action? window)
                         (if (not (null-pointer? (schematic_window_get_place_list *window)))
-                            (match action-mode
+                            (match current-action-mode
                               ((or 'copy-mode
                                    'multiple-copy-mode
                                    'component-mode
@@ -648,7 +649,7 @@
                               ('move-mode (o_move_motion *window x y))
                               (_ FALSE))
 
-                            (match action-mode
+                            (match current-action-mode
                               ('arc-mode (o_arc_motion *window x y ARC_RADIUS))
                               ('box-mode (o_box_motion *window x y))
                               ('bus-mode (o_bus_motion *window x y))
@@ -665,7 +666,7 @@
                               (_ FALSE)))
 
                         ;; Not inside action.
-                        (match action-mode
+                        (match current-action-mode
                           ('net-mode (o_net_start_magnetic *window x y))
                           (_ FALSE)))
 
