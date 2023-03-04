@@ -261,7 +261,8 @@
 
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
-
+  (define current-action-mode
+    (action-mode->symbol (schematic_window_get_action_mode *window)))
   (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
@@ -278,22 +279,20 @@
       (let* ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
-             (y (snap_grid *window unsnapped-y))
-             (action-mode
-              (action-mode->symbol (schematic_window_get_action_mode *window))))
+             (y (snap_grid *window unsnapped-y)))
 
         ;; Evaluate state transitions.
         (match button-number
           (1
            (when (in-action? window)
              (if (not (null-pointer? (schematic_window_get_place_list *window)))
-                 (match action-mode
+                 (match current-action-mode
                    ('copy-mode (finish-copy *window))
                    ('multiple-copy-mode (finish-copy *window 'keep-on))
                    ('move-mode (o_move_end *window))
                    (_ FALSE))
 
-                 (match action-mode
+                 (match current-action-mode
                    ('grips-mode (o_grips_end *window))
                    ('path-mode (o_path_end *window x y))
                    ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
@@ -303,40 +302,40 @@
 
           (2
            (when (in-action? window)
-             (when (or (eq? action-mode 'component-mode)
-                     (eq? action-mode 'text-mode)
-                     (eq? action-mode 'move-mode)
-                     (eq? action-mode 'copy-mode)
-                     (eq? action-mode 'multiple-copy-mode)
-                     (eq? action-mode 'paste-mode))
-                 (if (eq? action-mode 'move-mode)
+             (when (or (eq? current-action-mode 'component-mode)
+                       (eq? current-action-mode 'text-mode)
+                       (eq? current-action-mode 'move-mode)
+                       (eq? current-action-mode 'copy-mode)
+                       (eq? current-action-mode 'multiple-copy-mode)
+                       (eq? current-action-mode 'paste-mode))
+                 (if (eq? current-action-mode 'move-mode)
                      (o_move_invalidate_rubber *window FALSE)
                      (o_place_invalidate_rubber *window FALSE))
                  (schematic_window_set_rubber_visible *window 0)
 
                  (o_place_rotate *window)
 
-                 (when (eq? action-mode 'component-mode)
+                 (when (eq? current-action-mode 'component-mode)
                    (o_component_place_changed_run_hook *window))
 
-                 (if (eq? action-mode 'move-mode)
+                 (if (eq? current-action-mode 'move-mode)
                      (o_move_invalidate_rubber *window TRUE)
                      (o_place_invalidate_rubber *window TRUE))
 
                  (schematic_window_set_rubber_visible *window 1)))
            (unless (and (in-action? window)
-                        (or (eq? action-mode 'component-mode)
-                            (eq? action-mode 'text-mode)
-                            (eq? action-mode 'move-mode)
-                            (eq? action-mode 'copy-mode)
-                            (eq? action-mode 'multiple-copy-mode)
-                            (eq? action-mode 'paste-mode)))
+                        (or (eq? current-action-mode 'component-mode)
+                            (eq? current-action-mode 'text-mode)
+                            (eq? current-action-mode 'move-mode)
+                            (eq? current-action-mode 'copy-mode)
+                            (eq? current-action-mode 'multiple-copy-mode)
+                            (eq? current-action-mode 'paste-mode)))
              (let ((middle-button (schematic_window_get_middle_button *window)))
                (cond
                 ((= middle-button MOUSEBTN_DO_ACTION)
                  (when (and (in-action? window)
                             (not (null-pointer? (schematic_window_get_place_list *window))))
-                   (match action-mode
+                   (match current-action-mode
                      ('copy-mode (finish-copy *window))
                      ('move-mode (o_move_end *window))
                      (_ FALSE))))
