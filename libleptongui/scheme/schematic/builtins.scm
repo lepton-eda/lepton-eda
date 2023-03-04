@@ -230,7 +230,7 @@
     (unless (null? new-selection)
       (run-hook select-objects-hook new-selection)))
 
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode)
   (i_action_stop *window)
   (i_update_menus *window))
 
@@ -243,7 +243,7 @@
 
   (o_select_unselect_all *window)
 
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode)
   (i_action_stop *window)
   (i_update_menus *window))
 
@@ -257,7 +257,7 @@
     ;; If you delete the objects you must go into select mode
     ;; after the delete.
     (i_action_stop *window)
-    (i_set_state *window (symbol->action-mode 'select-mode))
+    (set-action-mode! 'select-mode)
     (i_update_menus *window)))
 
 
@@ -274,7 +274,7 @@
              (match (snap-point position)
                ((x . y) (o_move_start *window x y))
                (_ #f)))
-        (i_set_state *window (symbol->action-mode 'move-mode)))))
+        (set-action-mode! 'move-mode))))
 
 
 (define-action-public (&edit-copy #:label (G_ "Copy Mode") #:icon "clone")
@@ -290,7 +290,7 @@
              (match (snap-point position)
                ((x . y) (start-copy *window x y))
                (_ #f)))
-        (i_set_state *window (symbol->action-mode 'copy-mode)))))
+        (set-action-mode! 'copy-mode))))
 
 
 (define-action-public (&edit-mcopy #:label (G_ "Multiple Copy Mode") #:icon "multi-clone")
@@ -306,7 +306,7 @@
              (match (snap-point position)
                ((x . y) (start-copy *window x y))
                (_ #f)))
-        (i_set_state *window (symbol->action-mode 'multiple-copy-mode)))))
+        (set-action-mode! 'multiple-copy-mode))))
 
 
 ;;; Rotate all objects in the place list or in the selection list,
@@ -333,7 +333,7 @@
                     (_ #f))))
               ;; Mouse pointer is out of the canvas: just set the
               ;; rotation mode.
-              (i_set_state *window (symbol->action-mode 'rotate-mode)))))))
+              (set-action-mode! 'rotate-mode))))))
 
 
 ;;; Mirror objects in the place list or in the selection list if
@@ -360,7 +360,7 @@
                     (_ #f))))
               ;; Mouse pointer is out of the canvas: just set the
               ;; mirror mode.
-              (i_set_state *window (symbol->action-mode 'mirror-mode)))))))
+              (set-action-mode! 'mirror-mode))))))
 
 
 (define-action-public (&edit-edit #:label (G_ "Edit..."))
@@ -481,7 +481,7 @@ the snap grid size should be set to 100")))
         (begin
           (o_redraw_cleanstates *window)
           (i_action_stop *window)
-          (i_set_state *window (symbol->action-mode 'select-mode)))
+          (set-action-mode! 'select-mode))
 
         ;; Embed all selected components and pictures.
         (begin
@@ -504,7 +504,7 @@ the snap grid size should be set to 100")))
         (begin
           (o_redraw_cleanstates *window)
           (i_action_stop *window)
-          (i_set_state *window (symbol->action-mode 'select-mode)))
+          (set-action-mode! 'select-mode))
 
         ;; Unembed all selected components and pictures.
         (begin
@@ -605,7 +605,7 @@ the snap grid size should be set to 100")))
         ;; Nothing selected, go back to select state.
         (o_redraw_cleanstates *window)
         (i_action_stop *window)
-        (i_set_state *window (symbol->action-mode 'select-mode)))
+        (set-action-mode! 'select-mode))
       (for-each
        (lambda (component) (update-component *window component))
        selected-components)))
@@ -701,7 +701,7 @@ the snap grid size should be set to 100")))
     (_
      (o_redraw_cleanstates *window)
      (i_action_stop *window)
-     (i_set_state *window (symbol->action-mode 'pan-mode)))))
+     (set-action-mode! 'pan-mode))))
 
 
 ;;; Viewport moving.  The distance can be set with the
@@ -753,7 +753,7 @@ the snap grid size should be set to 100")))
 
   (o_redraw_cleanstates *window)
 
-  (i_set_state *window (symbol->action-mode 'zoom-box-mode))
+  (set-action-mode! 'zoom-box-mode)
 
   (match (action-position)
     ((x . y) (a_zoom_box_start *window x y))
@@ -960,7 +960,7 @@ the snap grid size should be set to 100")))
                         ((x . y) FROM_HOTKEY)
                         (_ FROM_MENU)))
 
-  (i_set_state *window (symbol->action-mode 'select-mode)))
+  (set-action-mode! 'select-mode))
 
 
 (define-action-public (&add-net #:label (G_ "Add Net") #:icon "insert-net")
@@ -978,7 +978,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'line-mode))
+  (set-action-mode! 'line-mode)
 
   (let ((position (action-position)))
     (and position
@@ -993,7 +993,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'path-mode))
+  (set-action-mode! 'path-mode)
 
   ;; Don't start path here since setting of its first point and
   ;; control point requires the left button click and release.
@@ -1006,7 +1006,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'box-mode))
+  (set-action-mode! 'box-mode)
 
   (let ((position (action-position)))
     (and position
@@ -1021,7 +1021,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'circle-mode))
+  (set-action-mode! 'circle-mode)
 
   (let ((position (action-position)))
     (and position
@@ -1036,7 +1036,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'arc-mode))
+  (set-action-mode! 'arc-mode)
 
   (let ((position (action-position)))
     (and position
@@ -1051,7 +1051,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'pin-mode))
+  (set-action-mode! 'pin-mode)
 
   (let ((position (action-position)))
     (and position
@@ -1066,7 +1066,7 @@ the snap grid size should be set to 100")))
   (o_redraw_cleanstates *window)
   (o_invalidate_rubber *window)
 
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode)
 
   (picture_selection_dialog *window))
 
