@@ -26,8 +26,7 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (action-mode->symbol
-            symbol->action-mode
+  #:export (symbol->action-mode
             action-mode
             set-action-mode!))
 
