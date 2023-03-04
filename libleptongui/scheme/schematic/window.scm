@@ -482,7 +482,7 @@
                     (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
                    ('pan-mode
                     (gschem_page_view_pan *page-view x y)
-                    (i_set_state *window (symbol->action-mode 'select-mode)))
+                    (set-action-mode! 'select-mode #:window window))
                    (_ FALSE))
                  ;; Finish event processing.
                  FALSE)
@@ -512,14 +512,14 @@
                                ;; This means the above find did not
                                ;; find anything.
                                (i_action_stop *window)
-                               (i_set_state *window (symbol->action-mode 'select-mode)))
+                               (set-action-mode! 'select-mode #:window window))
 
                              ;; Determine here if copy or move
                              ;; should be started.
                              (if (true? (schematic_window_get_alt_key_pressed *window))
                                  ;; Set copy mode and start copying.
                                  (begin
-                                   (i_set_state *window (symbol->action-mode 'copy-mode))
+                                   (set-action-mode! 'copy-mode #:window window)
                                    (start-copy *window x y))
                                  ;; Start moving objects.
                                  (o_move_start *window x y))))
