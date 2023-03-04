@@ -384,6 +384,8 @@
 
 (define (callback-button-pressed *page-view *event *window)
   (define window (pointer->window *window))
+  (define current-action-mode
+    (action-mode->symbol (schematic_window_get_action_mode *window)))
   (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
@@ -409,11 +411,9 @@
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
              (y (snap_grid *window unsnapped-y))
-             (c-action-mode (schematic_window_get_action_mode *window))
-             (action-mode (action-mode->symbol c-action-mode))
              (*selection (schematic_window_get_selection_list *window)))
         (if (and (true? (schematic_event_is_double_button_press *event))
-                 (eq? action-mode 'select-mode))
+                 (eq? current-action-mode 'select-mode))
             ;; Process double-click event.
             (begin
               ;; GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
@@ -435,7 +435,7 @@
                  (if (in-action? window)
                      ;; End action.
                      (if (not (null-pointer? (schematic_window_get_place_list *window)))
-                         (match action-mode
+                         (match current-action-mode
                            ('component-mode
                             (o_place_end *window
                                          x
@@ -448,7 +448,7 @@
                             (o_place_end *window x y FALSE (string->pointer "paste-objects-hook")))
                            (_ FALSE))
 
-                         (match action-mode
+                         (match current-action-mode
                            ('arc-mode (o_arc_end1 *window x y))
                            ('box-mode (o_box_end *window x y))
                            ('bus-mode (o_bus_end *window x y))
@@ -461,7 +461,7 @@
                            (_ FALSE)))
 
                      ;; Start action
-                     (match action-mode
+                     (match current-action-mode
                        ('arc-mode (o_arc_start *window x y))
                        ('box-mode (o_box_start *window x y))
                        ('bus-mode (o_bus_start *window x y))
@@ -477,7 +477,7 @@
                        ('move-mode (o_move_start *window x y))
                        (_ FALSE)))
 
-                 (match action-mode
+                 (match current-action-mode
                    ('rotate-mode
                     (o_rotate_world_update *window x y 90 (lepton_list_get_glist *selection)))
                    ('mirror-mode
@@ -492,12 +492,12 @@
                 ;; Second mouse button.
                 (2
                  (if (in-action? window)
-                     (unless (or (eq? action-mode 'component-mode)
-                                 (eq? action-mode 'text-mode)
-                                 (eq? action-mode 'move-mode)
-                                 (eq? action-mode 'copy-mode)
-                                 (eq? action-mode 'multiple-copy-mode)
-                                 (eq? action-mode 'paste-mode))
+                     (unless (or (eq? current-action-mode 'component-mode)
+                                 (eq? current-action-mode 'text-mode)
+                                 (eq? current-action-mode 'move-mode)
+                                 (eq? current-action-mode 'copy-mode)
+                                 (eq? current-action-mode 'multiple-copy-mode)
+                                 (eq? current-action-mode 'paste-mode))
                        (i_callback_cancel %null-pointer *window))
 
                      (let ((middle-button (schematic_window_get_middle_button *window)))
@@ -567,7 +567,7 @@
                                                      (inexact->exact (round window-y)))
                          ;; This is the default cancel.
                          ;; Reset all draw and place actions.
-                         (match action-mode
+                         (match current-action-mode
                            ('arc-mode (o_arc_invalidate_rubber *window))
                            ('box-mode (o_box_invalidate_rubber *window))
                            ('bus-mode (o_bus_reset *window))
