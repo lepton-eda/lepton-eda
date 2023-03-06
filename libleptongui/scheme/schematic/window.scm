@@ -486,7 +486,9 @@
                    ('pan-mode
                     (gschem_page_view_pan *page-view x y)
                     (i_set_state *window (symbol->action-mode 'select-mode)))
-                   (_ FALSE)))
+                   (_ FALSE))
+                 ;; Finish event processing.
+                 FALSE)
 
                 ;; Second mouse button.
                 (2
