@@ -60,6 +60,9 @@ lepton_undo_set_object_list (LeptonUndo *undo,
 LeptonUndo*
 lepton_undo_get_next (LeptonUndo *undo);
 
+void
+lepton_undo_set_next (LeptonUndo *undo,
+                      LeptonUndo *next);
 int
 lepton_undo_get_page_control (LeptonUndo *undo);
 

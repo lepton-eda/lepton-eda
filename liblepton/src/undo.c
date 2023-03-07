@@ -103,6 +103,20 @@ lepton_undo_get_next (LeptonUndo *undo)
   return undo->next;
 }
 
+/*! \brief Set undo structure's \a next field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] next The new value of the \a next field.
+ */
+void
+lepton_undo_set_next (LeptonUndo *undo,
+                      LeptonUndo *next)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->next = next;
+}
+
 
 /*! \brief Get undo structure's \a page_control field value.
  *
