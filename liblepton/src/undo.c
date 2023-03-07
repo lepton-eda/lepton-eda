@@ -203,6 +203,21 @@ lepton_undo_get_x (LeptonUndo *undo)
 }
 
 
+/*! \brief Set undo structure's \a x field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] x The new value of the \a x field.
+ */
+void
+lepton_undo_set_x (LeptonUndo *undo,
+                   int x)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->x = x;
+}
+
+
 /*! \brief Get undo structure's \a y field value.
  *
  *  \param [in] undo The undo structure to obtain the field of.
@@ -214,6 +229,21 @@ lepton_undo_get_y (LeptonUndo *undo)
   g_return_val_if_fail (undo != NULL, 0);
 
   return undo->y;
+}
+
+
+/*! \brief Set undo structure's \a y field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] y The new value of the \a y field.
+ */
+void
+lepton_undo_set_y (LeptonUndo *undo,
+                   int y)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->y = y;
 }
 
 
