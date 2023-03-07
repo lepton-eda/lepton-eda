@@ -72,6 +72,9 @@ lepton_undo_set_page_control (LeptonUndo *undo,
 LeptonUndo*
 lepton_undo_get_prev (LeptonUndo *undo);
 
+void
+lepton_undo_set_prev (LeptonUndo *undo,
+                      LeptonUndo *prev);
 double
 lepton_undo_get_scale (LeptonUndo *undo);
 

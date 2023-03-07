@@ -159,6 +159,20 @@ lepton_undo_get_prev (LeptonUndo *undo)
   return undo->prev;
 }
 
+/*! \brief Set undo structure's \a prev field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] prev The new value of the \a prev field.
+ */
+void
+lepton_undo_set_prev (LeptonUndo *undo,
+                      LeptonUndo *prev)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->prev = prev;
+}
+
 
 /*! \brief Get undo structure's \a scale field value.
  *
