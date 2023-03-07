@@ -36,7 +36,7 @@
 
 /*! \brief Get undo structure's \a filename field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a filename field.
  */
 char*
@@ -65,7 +65,7 @@ lepton_undo_set_filename (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a object_list field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a object_list field.
  */
 GList*
@@ -92,7 +92,7 @@ lepton_undo_set_object_list (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a next field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a next field.
  */
 LeptonUndo*
@@ -105,7 +105,7 @@ lepton_undo_get_next (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a next field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] next The new value of the \a next field.
  */
 void
@@ -120,7 +120,7 @@ lepton_undo_set_next (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a page_control field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a page_control field.
  */
 int
@@ -133,7 +133,7 @@ lepton_undo_get_page_control (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a page_control field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] page_control The new value of the \a page_control field.
  */
 void
@@ -148,7 +148,7 @@ lepton_undo_set_page_control (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a prev field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a prev field.
  */
 LeptonUndo*
@@ -161,7 +161,7 @@ lepton_undo_get_prev (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a prev field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] prev The new value of the \a prev field.
  */
 void
@@ -176,7 +176,7 @@ lepton_undo_set_prev (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a scale field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a scale field.
  */
 double
@@ -189,7 +189,7 @@ lepton_undo_get_scale (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a scale field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] scale The new value of the \a scale field.
  */
 void
@@ -204,7 +204,7 @@ lepton_undo_set_scale (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a type field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a type field.
  */
 int
@@ -218,7 +218,7 @@ lepton_undo_get_type (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a type field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] type The new value of the \a type field.
  */
 void
@@ -233,7 +233,7 @@ lepton_undo_set_type (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a up field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a up field.
  */
 int
@@ -246,7 +246,7 @@ lepton_undo_get_up (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a up field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] undo The new value of the \a up field.
  */
 void
@@ -261,7 +261,7 @@ lepton_undo_set_up (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a x field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a x field.
  */
 int
@@ -275,7 +275,7 @@ lepton_undo_get_x (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a x field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] x The new value of the \a x field.
  */
 void
@@ -290,7 +290,7 @@ lepton_undo_set_x (LeptonUndo *undo,
 
 /*! \brief Get undo structure's \a y field value.
  *
- *  \param [in] undo The undo structure to obtain the field of.
+ *  \param [in] undo The #LeptonUndo structure to obtain the field of.
  *  \return The value of the \a y field.
  */
 int
@@ -304,7 +304,7 @@ lepton_undo_get_y (LeptonUndo *undo)
 
 /*! \brief Set undo structure's \a y field value.
  *
- *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The #LeptonUndo structure to set the field of.
  *  \param [in] y The new value of the \a y field.
  */
 void
