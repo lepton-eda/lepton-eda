@@ -187,6 +187,20 @@ lepton_undo_get_scale (LeptonUndo *undo)
   return undo->scale;
 }
 
+/*! \brief Set undo structure's \a scale field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] scale The new value of the \a scale field.
+ */
+void
+lepton_undo_set_scale (LeptonUndo *undo,
+                       double scale)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->scale = scale;
+}
+
 
 /*! \brief Get undo structure's \a type field value.
  *

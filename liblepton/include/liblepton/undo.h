@@ -78,6 +78,9 @@ lepton_undo_set_prev (LeptonUndo *undo,
 double
 lepton_undo_get_scale (LeptonUndo *undo);
 
+void
+lepton_undo_set_scale (LeptonUndo *undo,
+                       double scale);
 int
 lepton_undo_get_type (LeptonUndo *undo);
 
