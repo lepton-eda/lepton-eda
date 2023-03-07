@@ -63,6 +63,9 @@ lepton_undo_get_next (LeptonUndo *undo);
 int
 lepton_undo_get_page_control (LeptonUndo *undo);
 
+void
+lepton_undo_set_page_control (LeptonUndo *undo,
+                              int page_control);
 LeptonUndo*
 lepton_undo_get_prev (LeptonUndo *undo);
 
