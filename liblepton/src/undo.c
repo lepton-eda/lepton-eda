@@ -160,6 +160,21 @@ lepton_undo_get_type (LeptonUndo *undo)
 }
 
 
+/*! \brief Set undo structure's \a type field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] type The new value of the \a type field.
+ */
+void
+lepton_undo_set_type (LeptonUndo *undo,
+                      int type)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->type = type;
+}
+
+
 /*! \brief Get undo structure's \a up field value.
  *
  *  \param [in] undo The undo structure to obtain the field of.
