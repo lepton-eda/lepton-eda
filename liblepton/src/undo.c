@@ -244,6 +244,20 @@ lepton_undo_get_up (LeptonUndo *undo)
   return undo->up;
 }
 
+/*! \brief Set undo structure's \a up field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] undo The new value of the \a up field.
+ */
+void
+lepton_undo_set_up (LeptonUndo *undo,
+                    int up)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->up = up;
+}
+
 
 /*! \brief Get undo structure's \a x field value.
  *
