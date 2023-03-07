@@ -117,6 +117,20 @@ lepton_undo_get_page_control (LeptonUndo *undo)
   return undo->page_control;
 }
 
+/*! \brief Set undo structure's \a page_control field value.
+ *
+ *  \param [in] undo The undo structure to set the field of.
+ *  \param [in] page_control The new value of the \a page_control field.
+ */
+void
+lepton_undo_set_page_control (LeptonUndo *undo,
+                              int page_control)
+{
+  g_return_if_fail (undo != NULL);
+
+  undo->page_control = page_control;
+}
+
 
 /*! \brief Get undo structure's \a prev field value.
  *
