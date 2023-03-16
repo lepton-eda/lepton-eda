@@ -1176,22 +1176,6 @@ pcb_element_pkg_to_element (gchar *pkg_line)
 
 
 FILE*
-sch2pcb_open_file_to_read (char *filename)
-{
-  FILE *f_in;
-
-  if ((f_in = fopen (filename, "r")) == NULL)
-  {
-    return NULL;
-  }
-  else
-  {
-    return f_in;
-  }
-}
-
-
-FILE*
 sch2pcb_open_file_to_write (char *filename)
 {
   FILE *f_out;
@@ -1461,19 +1445,6 @@ sch2pcb_parse_next_line (char *buf,
   return skipping;
 }
 
-
-void
-sch2pcb_add_elements (FILE *f_in,
-                      FILE *f_out)
-{
-  char buf[1024];
-  gboolean skip_next = FALSE;
-
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL)
-  {
-    skip_next = sch2pcb_parse_next_line (buf, f_out, skip_next);
-  }
-}
 
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,

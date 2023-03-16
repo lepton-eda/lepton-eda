@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
   #:use-module (lepton ffi lff)
 
   #:export (pcb_element_line_parse
-            sch2pcb_add_elements
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -46,6 +45,7 @@
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
             sch2pcb_set_need_PKG_purge
+            sch2pcb_parse_next_line
             sch2pcb_parse_schematics
             sch2pcb_get_pcb_element_list
             sch2pcb_pcb_element_list_append
@@ -54,7 +54,6 @@
             sch2pcb_set_remove_unfound_elements
             sch2pcb_update_element_descriptions
             sch2pcb_get_verbose_mode
-            sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
             sch2pcb_close_file))
 
@@ -65,7 +64,6 @@
 
 (define-lff pcb_element_line_parse '* '(*))
 
-(define-lff sch2pcb_add_elements void '(* *))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
@@ -88,6 +86,7 @@
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_set_need_PKG_purge void (list int))
+(define-lff sch2pcb_parse_next_line int (list '* '* int))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))
@@ -96,6 +95,5 @@
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
-(define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))
 (define-lff sch2pcb_close_file void '(*))
