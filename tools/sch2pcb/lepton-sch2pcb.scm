@@ -142,15 +142,24 @@
 (define (add-elements pcb-filename)
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
-  (define *pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename)))
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
   (define (add-elements-from-file)
-    (sch2pcb_add_elements *pcb-file *tmp-file))
+    (with-input-from-file pcb-filename
+      (lambda ()
+        (let loop ((line (read-line))
+                   (skip-next FALSE))
+          (unless (eof-object? line)
+            ;; read-line() drops trailing newlines so we add them
+            ;; again here.
+            (let ((skip (sch2pcb_parse_next_line
+                         (string->pointer (string-append line "\n"))
+                         *tmp-file
+                         skip-next)))
+              (loop (read-line) skip)))))))
 
   (define (process-files)
     (add-elements-from-file)
-    (sch2pcb_close_file *pcb-file)
     (sch2pcb_close_file *tmp-file)
 
     (let ((total (+ (sch2pcb_get_n_added_ef)
@@ -161,8 +170,7 @@
           (system* "mv" tmp-filename pcb-filename))
       total))
 
-  (if (or (null-pointer? *pcb-file)
-          (null-pointer? *tmp-file))
+  (if (null-pointer? *tmp-file)
       0
       (catch #t
         process-files

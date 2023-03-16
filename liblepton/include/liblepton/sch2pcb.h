@@ -1,5 +1,5 @@
 /* Lepton EDA library
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,9 +179,10 @@ pcb_element_pkg_to_element (gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
-void
-sch2pcb_add_elements (FILE *f_in,
-                      FILE *f_out);
+gboolean
+sch2pcb_parse_next_line (char *buf,
+                         FILE *f_out,
+                         gboolean skip_next);
 GList*
 sch2pcb_get_element_directory_list ();
 
@@ -328,9 +329,6 @@ sch2pcb_get_need_PKG_purge ();
 
 void
 sch2pcb_set_need_PKG_purge (gboolean val);
-
-FILE*
-sch2pcb_open_file_to_read (char *filename);
 
 FILE*
 sch2pcb_open_file_to_write (char *filename);
