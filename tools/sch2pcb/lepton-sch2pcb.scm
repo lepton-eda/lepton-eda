@@ -1,6 +1,6 @@
 ;;; lepton-sch2pcb -- transform schematics to PCB
 ;;;
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -145,9 +145,11 @@
   (define *pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename)))
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (add-elements-from-file)
+    (sch2pcb_add_elements *pcb-file *tmp-file))
+
   (define (process-files)
-    (sch2pcb_add_elements *pcb-file
-                          *tmp-file)
+    (add-elements-from-file)
     (sch2pcb_close_file *pcb-file)
     (sch2pcb_close_file *tmp-file)
 
