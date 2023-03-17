@@ -1303,6 +1303,17 @@ sch2pcb_verbose_print_separator ()
 
 
 void
+sch2pcb_error_report_pcb_element_not_found (PcbElement *el)
+{
+  fprintf (stderr,
+           "%s: can't find PCB element for footprint %s (value=%s)\n",
+           pcb_element_get_refdes (el),
+           pcb_element_get_description (el),
+           pcb_element_get_value (el));
+}
+
+
+void
 sch2pcb_add_elements (FILE *f_in,
                       FILE *f_out)
 {
@@ -1363,11 +1374,7 @@ sch2pcb_add_elements (FILE *f_in,
               sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
               sch2pcb_verbose_report_new_file_element_added (el);
             } else if (!is_m4) {
-              fprintf (stderr,
-                       "%s: can't find PCB element for footprint %s (value=%s)\n",
-                       pcb_element_get_refdes (el),
-                       pcb_element_get_description (el),
-                       pcb_element_get_value (el));
+              sch2pcb_error_report_pcb_element_not_found (el);
               if (sch2pcb_get_remove_unfound_elements ()
                   && !sch2pcb_get_fix_elements ())
               {
