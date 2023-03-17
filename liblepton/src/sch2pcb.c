@@ -1232,30 +1232,29 @@ sch2pcb_buffer_to_file (char *buffer,
  * strip out any elements if they are already present so that the new
  * pcb file will only have new elements.
  */
-void
-sch2pcb_verbose_report_new_file_element_required (PcbElement *el,
-                                                  gboolean is_m4)
-{
-  if ((sch2pcb_get_verbose_mode () != 0)
-      && !is_m4)
-    printf ("%s: need new file element for footprint  %s (value=%s)\n",
-            pcb_element_get_refdes (el),
-            pcb_element_get_description (el),
-            pcb_element_get_value (el));
-}
-
 
 void
-sch2pcb_verbose_report_replace_m4_with_file_element (PcbElement *el,
-                                                     gboolean is_m4)
+sch2pcb_verbose_file_element_report (PcbElement *el,
+                                     gboolean is_m4)
 {
-  if ((sch2pcb_get_verbose_mode () != 0)
-      && is_m4
-      && sch2pcb_get_force_element_files ())
+  if (sch2pcb_get_verbose_mode () != 0)
   {
-    printf ("%s: have m4 element %s, but trying to replace with a file element.\n",
-            pcb_element_get_refdes (el),
-            pcb_element_get_description (el));
+    if (is_m4)
+    {
+      if (sch2pcb_get_force_element_files ())
+      {
+        printf ("%s: have m4 element %s, but trying to replace with a file element.\n",
+                pcb_element_get_refdes (el),
+                pcb_element_get_description (el));
+      }
+    }
+    else
+    {
+      printf ("%s: need new file element for footprint  %s (value=%s)\n",
+              pcb_element_get_refdes (el),
+              pcb_element_get_description (el),
+              pcb_element_get_value (el));
+    }
   }
 }
 
@@ -1400,8 +1399,7 @@ sch2pcb_add_elements (FILE *f_in,
               || (is_m4
                   && sch2pcb_get_force_element_files ()))
           {
-            sch2pcb_verbose_report_new_file_element_required (el, is_m4);
-            sch2pcb_verbose_report_replace_m4_with_file_element (el, is_m4);
+            sch2pcb_verbose_file_element_report (el, is_m4);
             p = sch2pcb_search_element_directories (el);
             sch2pcb_verbose_report_no_file_element_found (p, is_m4);
 
