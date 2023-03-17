@@ -1350,109 +1350,128 @@ sch2pcb_unfound_to_file (PcbElement *el,
   }
 }
 
+/* The variable is used in the function below.  Moving it outwards
+ * is required to avoid overcomplicated code which would deal with
+ * several in-out function arguments.  */
+static gint parse_paren_level = 0;
+
+gboolean
+sch2pcb_parse_next_line (char *buf,
+                         FILE *f_out,
+                         gboolean skip_next)
+{
+  PcbElement *el = NULL;
+  gchar *p, *s;
+  gboolean is_m4, skipping;
+
+  skipping = skip_next;
+
+  for (s = buf; *s == ' ' || *s == '\t'; ++s);
+  if (skipping) {
+    if (*s == '(')
+      ++parse_paren_level;
+    else if (*s == ')' && --parse_paren_level <= 0)
+      skipping = FALSE;
+  }
+  else
+  {
+    /* First let's find out what element type we're dealing
+     * with. */
+    is_m4 = FALSE;
+    if ((el = pcb_element_line_parse (s)) != NULL)
+      /* If Element line is present, it was inserted directly
+       * from m4 code and thus it is an m4 element. */
+      is_m4 = TRUE;
+    else
+      /* Otherwise, it's a line starting with PKG_, probably a
+       * file element? */
+      el = pcb_element_pkg_to_element (s);
+
+    /* Next step is to check if element processing can be
+     * skipped as the same element has been processed before. */
+    if (el && pcb_element_exists (el, TRUE)) {
+      /* OK, element has been found in the list of previously
+       * found elements.  For m4 elements, the next line starts
+       * with an opening paren "(", and we have to skip lines
+       * until its closing paren is found.  For file elements,
+       * we don't want to skip any lines.  In the next
+       * iteration, the variable 'skipping' will allow us to
+       * skip parenthesized m4 element body.  Obviously, a new
+       * copy of found element is not needed in the element
+       * list, so it has to be freed. */
+      skipping = is_m4;
+      pcb_element_free (el);
+    }
+    else
+    {
+      /* Well, the element has not been found in the current
+       * element list, let's process it then. */
+      if (!el)
+      {
+        /* Element does not exist.  Output the string 'buf' as
+         * is. */
+        sch2pcb_buffer_to_file (buf, f_out);
+      }
+      else if (pcb_element_get_omit_PKG (el))
+        /* Element exists but its omit_PKG field is true.  Let's
+         * skip it. */
+      {
+
+      }
+      else
+      {
+        /* Actually process or lookup the element. */
+        if (!is_m4
+            || (is_m4
+                && sch2pcb_get_force_element_files ()))
+        {
+          sch2pcb_verbose_file_element_report (el, is_m4);
+          p = sch2pcb_search_element_directories (el);
+          sch2pcb_verbose_report_no_file_element_found (p, is_m4);
+
+          if (p && sch2pcb_insert_element (f_out,
+                                           p,
+                                           pcb_element_get_description (el),
+                                           pcb_element_get_refdes (el),
+                                           pcb_element_get_value (el)))
+          {
+            /* Nice, we found it.  If it is an m4 element, we
+             * have to skip some lines below, see comments
+             * above. */
+            skipping = is_m4;
+            /* Here we're surely dealing with file elements,
+             * right?  Let's prohibit adding an m4 file to
+             * output below. */
+            is_m4 = FALSE;
+            sch2pcb_increment_added_ef (el);
+          } else if (!is_m4) {
+            sch2pcb_unfound_to_file (el, buf, f_out);
+          }
+          g_free (p);
+        }
+        if (is_m4)
+        {
+          sch2pcb_m4_element_to_file (el, buf, f_out);
+        }
+        pcb_element_free (el);
+        sch2pcb_verbose_print_separator ();
+      }
+    }
+  }
+  return skipping;
+}
+
 
 void
 sch2pcb_add_elements (FILE *f_in,
                       FILE *f_out)
 {
-  PcbElement *el = NULL;
-  gchar *p, *s, buf[1024];
-  gint paren_level = 0;
-  gboolean is_m4, skipping = FALSE;
+  char buf[1024];
+  gboolean skip_next = FALSE;
 
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if (skipping) {
-      if (*s == '(')
-        ++paren_level;
-      else if (*s == ')' && --paren_level <= 0)
-        skipping = FALSE;
-    }
-    else
-    {
-      /* First let's find out what element type we're dealing
-       * with. */
-      is_m4 = FALSE;
-      if ((el = pcb_element_line_parse (s)) != NULL)
-        /* If Element line is present, it was inserted directly
-         * from m4 code and thus it is an m4 element. */
-        is_m4 = TRUE;
-      else
-        /* Otherwise, it's a line starting with PKG_, probably a
-         * file element? */
-        el = pcb_element_pkg_to_element (s);
-
-      /* Next step is to check if element processing can be
-       * skipped as the same element has been processed before. */
-      if (el && pcb_element_exists (el, TRUE)) {
-        /* OK, element has been found in the list of previously
-         * found elements.  For m4 elements, the next line starts
-         * with an opening paren "(", and we have to skip lines
-         * until its closing paren is found.  For file elements,
-         * we don't want to skip any lines.  In the next
-         * iteration, the variable 'skipping' will allow us to
-         * skip parenthesized m4 element body.  Obviously, a new
-         * copy of found element is not needed in the element
-         * list, so it has to be freed. */
-        skipping = is_m4;
-        pcb_element_free (el);
-      }
-      else
-      {
-        /* Well, the element has not been found in the current
-         * element list, let's process it then. */
-        if (!el)
-        {
-          /* Element does not exist.  Output the string 'buf' as
-           * is. */
-          sch2pcb_buffer_to_file (buf, f_out);
-        }
-        else if (pcb_element_get_omit_PKG (el))
-          /* Element exists but its omit_PKG field is true.  Let's
-           * skip it. */
-        {
-
-        }
-        else
-        {
-          /* Actually process or lookup the element. */
-          if (!is_m4
-              || (is_m4
-                  && sch2pcb_get_force_element_files ()))
-          {
-            sch2pcb_verbose_file_element_report (el, is_m4);
-            p = sch2pcb_search_element_directories (el);
-            sch2pcb_verbose_report_no_file_element_found (p, is_m4);
-
-            if (p && sch2pcb_insert_element (f_out,
-                                             p,
-                                             pcb_element_get_description (el),
-                                             pcb_element_get_refdes (el),
-                                             pcb_element_get_value (el)))
-            {
-              /* Nice, we found it.  If it is an m4 element, we
-               * have to skip some lines below, see comments
-               * above. */
-              skipping = is_m4;
-              /* Here we're surely dealing with file elements,
-               * right?  Let's prohibit adding an m4 file to
-               * output below. */
-              is_m4 = FALSE;
-              sch2pcb_increment_added_ef (el);
-            } else if (!is_m4) {
-              sch2pcb_unfound_to_file (el, buf, f_out);
-            }
-            g_free (p);
-          }
-          if (is_m4)
-          {
-            sch2pcb_m4_element_to_file (el, buf, f_out);
-          }
-          pcb_element_free (el);
-          sch2pcb_verbose_print_separator ();
-        }
-      }
-    }
+  while ((fgets (buf, sizeof (buf), f_in)) != NULL)
+  {
+    skip_next = sch2pcb_parse_next_line (buf, f_out, skip_next);
   }
 }
 
