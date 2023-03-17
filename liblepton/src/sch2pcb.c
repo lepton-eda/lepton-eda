@@ -1261,6 +1261,18 @@ sch2pcb_verbose_report_replace_m4_with_file_element (PcbElement *el,
 
 
 void
+sch2pcb_verbose_report_no_file_element_found (char *p,
+                                              gboolean is_m4)
+{
+  if (!p
+      && (sch2pcb_get_verbose_mode () != 0)
+      && is_m4
+      && sch2pcb_get_force_element_files ())
+    printf ("\tNo file element found.\n");
+}
+
+
+void
 sch2pcb_add_elements (FILE *f_in,
                       FILE *f_out)
 {
@@ -1308,11 +1320,7 @@ sch2pcb_add_elements (FILE *f_in,
             sch2pcb_verbose_report_new_file_element_required (el, is_m4);
             sch2pcb_verbose_report_replace_m4_with_file_element (el, is_m4);
             p = sch2pcb_search_element_directories (el);
-            if (!p
-                && (sch2pcb_get_verbose_mode () != 0)
-                && is_m4
-                && sch2pcb_get_force_element_files ())
-              printf ("\tNo file element found.\n");
+            sch2pcb_verbose_report_no_file_element_found (p, is_m4);
 
             if (p && sch2pcb_insert_element (f_out,
                                              p,
