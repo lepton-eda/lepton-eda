@@ -1295,6 +1295,14 @@ sch2pcb_verbose_report_new_m4_element_added (PcbElement *el)
 
 
 void
+sch2pcb_verbose_print_separator ()
+{
+  if (sch2pcb_get_verbose_mode () != 0)
+    printf ("----\n");
+}
+
+
+void
 sch2pcb_add_elements (FILE *f_in,
                       FILE *f_out)
 {
@@ -1381,8 +1389,7 @@ sch2pcb_add_elements (FILE *f_in,
             sch2pcb_verbose_report_new_m4_element_added (el);
           }
           pcb_element_free (el);
-          if (sch2pcb_get_verbose_mode () != 0)
-            printf ("----\n");
+          sch2pcb_verbose_print_separator ();
         }
       }
     }
