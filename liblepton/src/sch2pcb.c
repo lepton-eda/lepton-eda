@@ -1317,6 +1317,7 @@ sch2pcb_error_report_pcb_element_not_found (PcbElement *el)
 void
 sch2pcb_error_report_missing_device_in_layout (PcbElement *el)
 {
+  sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
   fprintf (stderr,
            "So device %s will not be in the layout.\n",
            pcb_element_get_refdes (el));
@@ -1388,7 +1389,6 @@ sch2pcb_add_elements (FILE *f_in,
                   && !sch2pcb_get_fix_elements ())
               {
                 sch2pcb_error_report_missing_device_in_layout (el);
-                sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
               } else {
                 sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
                 sch2pcb_buffer_to_file (buf, f_out);   /* Copy PKG_ line */
