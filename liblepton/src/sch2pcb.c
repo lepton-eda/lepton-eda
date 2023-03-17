@@ -1392,8 +1392,15 @@ sch2pcb_add_elements (FILE *f_in,
               if (sch2pcb_get_remove_unfound_elements ()
                   && !sch2pcb_get_fix_elements ())
               {
+                /* If removing unfound elements is enabled while
+                 * fixing them is disabled, we just increment the
+                 * counter of new packages that won't be in the
+                 * layout. */
                 sch2pcb_increment_n_PKG_removed_new (el);
               } else {
+                /* Otherwise we increment the number of not found
+                 * packages that will be replaced with the PKG_
+                 * placeholder, and insert the placeholder. */
                 sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
                 sch2pcb_buffer_to_file (buf, f_out);   /* Copy PKG_ line */
               }
