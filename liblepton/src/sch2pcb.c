@@ -1384,10 +1384,13 @@ sch2pcb_add_elements (FILE *f_in,
       {
         if (!el || pcb_element_get_omit_PKG (el)) {
           if (el) {
-
+            /* Element exists but its omit_PKG field is true.
+             * Let's skip it. */
           }
           else
           {
+            /* Element does not exist.  Output the string 'buf' as
+             * is. */
             sch2pcb_buffer_to_file (buf, f_out);
           }
         }
