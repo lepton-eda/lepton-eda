@@ -1275,6 +1275,7 @@ sch2pcb_verbose_report_no_file_element_found (char *p,
 void
 sch2pcb_verbose_report_new_file_element_added (PcbElement *el)
 {
+  sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("%s: added new file element for footprint %s (value=%s)\n",
             pcb_element_get_refdes (el),
@@ -1380,7 +1381,6 @@ sch2pcb_add_elements (FILE *f_in,
             {
               skipping = is_m4;
               is_m4 = FALSE;
-              sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
               sch2pcb_verbose_report_new_file_element_added (el);
             } else if (!is_m4) {
               sch2pcb_error_report_pcb_element_not_found (el);
