@@ -1,6 +1,6 @@
 /* gsch2pcb
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  *  Bill Wilson    billw@wt.net
  *
@@ -1233,6 +1233,19 @@ sch2pcb_buffer_to_file (char *buffer,
  * pcb file will only have new elements.
  */
 void
+sch2pcb_verbose_report_new_file_element_required (PcbElement *el,
+                                                  gboolean is_m4)
+{
+  if ((sch2pcb_get_verbose_mode () != 0)
+      && !is_m4)
+    printf ("%s: need new file element for footprint  %s (value=%s)\n",
+            pcb_element_get_refdes (el),
+            pcb_element_get_description (el),
+            pcb_element_get_value (el));
+}
+
+
+void
 sch2pcb_add_elements (FILE *f_in,
                       FILE *f_out)
 {
@@ -1277,12 +1290,7 @@ sch2pcb_add_elements (FILE *f_in,
               || (is_m4
                   && sch2pcb_get_force_element_files ()))
           {
-            if ((sch2pcb_get_verbose_mode () != 0)
-                && !is_m4)
-              printf ("%s: need new file element for footprint  %s (value=%s)\n",
-                      pcb_element_get_refdes (el),
-                      pcb_element_get_description (el),
-                      pcb_element_get_value (el));
+            sch2pcb_verbose_report_new_file_element_required (el, is_m4);
             if ((sch2pcb_get_verbose_mode () != 0)
                 && is_m4
                 && sch2pcb_get_force_element_files ())
