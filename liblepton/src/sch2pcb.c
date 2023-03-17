@@ -1287,6 +1287,7 @@ sch2pcb_increment_added_ef (PcbElement *el)
 void
 sch2pcb_verbose_report_new_m4_element_added (PcbElement *el)
 {
+  sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
             pcb_element_get_refdes (el),
@@ -1399,7 +1400,6 @@ sch2pcb_add_elements (FILE *f_in,
           if (is_m4)
           {
             sch2pcb_buffer_to_file (buf, f_out);
-            sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
             sch2pcb_verbose_report_new_m4_element_added (el);
           }
           pcb_element_free (el);
