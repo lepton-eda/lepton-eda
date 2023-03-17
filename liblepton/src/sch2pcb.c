@@ -1285,8 +1285,11 @@ sch2pcb_increment_added_ef (PcbElement *el)
 
 
 void
-sch2pcb_increment_n_added_m4 (PcbElement *el)
+sch2pcb_m4_element_to_file (PcbElement *el,
+                            char *buf,
+                            FILE *f_out)
 {
+  sch2pcb_buffer_to_file (buf, f_out);
   sch2pcb_set_n_added_m4 (1 + sch2pcb_get_n_added_m4 ());
   if (sch2pcb_get_verbose_mode () != 0)
     printf ("%s: added new m4 element for footprint   %s (value=%s)\n",
@@ -1399,8 +1402,7 @@ sch2pcb_add_elements (FILE *f_in,
           }
           if (is_m4)
           {
-            sch2pcb_buffer_to_file (buf, f_out);
-            sch2pcb_increment_n_added_m4 (el);
+            sch2pcb_m4_element_to_file (el, buf, f_out);
           }
           pcb_element_free (el);
           sch2pcb_verbose_print_separator ();
