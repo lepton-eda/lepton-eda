@@ -228,6 +228,8 @@ AX_OPTION_STROKE
 AX_OPTION_ATTRIB
 # contributed software
 AX_OPTION_CONTRIB
+# doc
+AX_OPTION_DOC
 
 #####################################################################
 # Tool-specific setup

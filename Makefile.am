@@ -6,13 +6,17 @@ if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
 
+if ENABLE_DOC
+DOC_DIR=docs
+endif
+
 SUBDIRS = \
 	liblepton \
 	${ATTRIB_DIR} \
 	libleptongui \
 	tools \
 	symbols \
-	docs \
+	${DOC_DIR} \
 	examples \
 	${CONTRIB_DIR}
 
