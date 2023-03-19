@@ -60,6 +60,7 @@
             get-nets
             get-pins-nets
             message
+            netlist-output-filename
             pin-netname
             gnetlist:alias-net
             gnetlist:alias-refdes
