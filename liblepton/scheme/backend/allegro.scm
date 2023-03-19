@@ -17,13 +17,16 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
+(define-module (backend allegro)
+  ;; Allegro netlist format
+  #:use-module (netlist)
+  #:use-module (netlist schematic)
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist package)
 
-;; Allegro netlist format
-(use-modules (netlist)
-             (netlist schematic)
-             (netlist error)
-             (netlist schematic toplevel)
-             (netlist package))
+  #:export (allegro
+            allegro*))
 
 (define (allegro:write-device-files packages done stdout)
   (unless (null? packages)
@@ -131,5 +134,6 @@ PINCOUNT ~A
     (display "$END\n")
     (allegro:write-device-files packages '() use-stdout?)))
 
-(define (allegro filename)
-  (allegro* (toplevel-schematic) #:output-filename filename))
+(define (allegro)
+  (allegro* (toplevel-schematic)
+            #:output-filename (netlist-output-filename)))
