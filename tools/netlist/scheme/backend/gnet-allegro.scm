@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,7 +19,8 @@
 
 
 ;; Allegro netlist format
-(use-modules (netlist schematic)
+(use-modules (netlist)
+             (netlist schematic)
              (netlist error)
              (netlist schematic toplevel)
              (netlist package))
