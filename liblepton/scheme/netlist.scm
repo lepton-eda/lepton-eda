@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -774,7 +774,7 @@ other limitations imposed by this netlist format.
                '()))
          (schematic-graphicals (toplevel-schematic))))))
 
-(define (get-output-filename)
+(define (netlist-output-filename)
   ;; Name is file name or "-" which means stdout.
   (let ((name (netlist-option-ref 'output)))
     (and (not (string=? name "-"))
@@ -866,7 +866,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ;;; Main program
 ;;;
 ( define ( main )
-  (define output-filename   (get-output-filename))
+  (define output-filename   (netlist-output-filename))
   (define files             (netlist-option-ref '()))            ; schematics
   (define opt-backend       (netlist-option-ref 'backend))       ; -g
   (define opt-file-backend  (netlist-option-ref 'file-backend))  ; -f
