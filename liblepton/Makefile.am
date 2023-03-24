@@ -1,4 +1,16 @@
-SUBDIRS = po data docs include lib src scheme tests
+if ENABLE_DOC
+DOC_DIR=docs
+endif
+
+SUBDIRS = \
+	po \
+	data \
+	${DOC_DIR} \
+	include \
+	lib \
+	src \
+	scheme \
+	tests
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = liblepton.pc
