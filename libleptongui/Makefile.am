@@ -1,7 +1,11 @@
+if ENABLE_DOC
+DOC_DIR=docs
+endif
+
 SUBDIRS = \
 	bitmap \
 	data \
-	docs \
+	${DOC_DIR} \
 	examples \
 	include \
 	lib \
