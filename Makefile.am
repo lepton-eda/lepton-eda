@@ -136,10 +136,12 @@ precompile:
 	$(bindir)/lepton-schematic
 
 
+if ENABLE_DOC
 install-data-local:
 	$(MKDIR_P) $(DESTDIR)$(docdir)
 	cp -v $(srcdir)/README.md $(DESTDIR)$(docdir)
 	cp -v $(srcdir)/NEWS.md $(DESTDIR)$(docdir)
+endif
 
 uninstall-local:
 	rm -vfr $(DESTDIR)$(includedir)/liblepton
