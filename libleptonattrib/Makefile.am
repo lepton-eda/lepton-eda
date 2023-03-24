@@ -1,4 +1,13 @@
-SUBDIRS = po src include data docs
+if ENABLE_DOC
+DOC_DIR=docs
+endif
+
+SUBDIRS = \
+	po \
+	src \
+	include \
+	${DOC_DIR} \
+	data
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libleptonattrib.pc
