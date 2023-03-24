@@ -1,5 +1,9 @@
+if ENABLE_DOC
+DOC_DIR=docs
+endif
+
 SUBDIRS = \
-	tests \
-	docs
+	${DOC_DIR} \
+	tests
 
 bin_SCRIPTS = lepton-symcheck
