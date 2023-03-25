@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2011-2014 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2011-2015 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -40,13 +40,9 @@
   #:export (show-component-documentation))
 
 
-; private:
-;
-; Call (schematic util)::show-uri( url ), catching exceptions.
-; Display a message box on error.
-;
 ( define ( doc-show-uri url )
-
+  "Call (schematic util)::show-uri( URL ), catching exceptions.
+Display a message box on error."
   ( catch
     #t
     ( lambda()
@@ -62,33 +58,28 @@
         (schematic-message-dialog ermsg)
       )
     )
-  ) ; catch()
-
+  )
 ) ; doc-show-uri()
 
 
-
-; private:
-;
 ( define ( doc-show-file fpath )
   ( doc-show-uri (format #f "file://~a" fpath) )
 )
 
 
-
 (define (sys-doc-dir)
   "Get the directory where documentation is stored."
-
   ; return:
   %lepton-docdir
 )
 
+
 (define (user-doc-dir)
   "Get the directory where per-user documentation is stored."
-
   (string-join (list (user-data-dir)
                      "doc" "lepton-eda")
                file-name-separator-string))
+
 
 ;; Munge a wiki page name so that it can be used in a filename
 (define (wiki-munge name)
@@ -100,27 +91,41 @@
        (else c)))
    name))
 
-(define* (show-wiki #:optional (page "geda:documentation"))
-  "show-wiki PAGE
 
-Launch a browser to display a page from the offline version of the
+( define* ( show-wiki #:optional (page "geda:documentation") )
+  "Launch a browser to display a page from the offline version of the
 wiki.  The specified PAGE should be a string containing the page
 name as used on the live version of the wiki."
+( let*
+  (
+  ( fnames (list (sys-doc-dir) "wiki") )
+  ( path   (string-join fnames file-name-separator-string 'suffix) )
+  ( fpath  (string-append path (wiki-munge page) ".html") )
+  )
 
-  (doc-show-uri
-   (string-append "file://"
-                  (string-join (list (sys-doc-dir) "wiki")
-                               file-name-separator-string 'suffix)
-                  (wiki-munge page)
-                  ".html")))
+  ( if ( file-exists? fpath )
+    ( doc-show-uri (string-append "file://" fpath) )
+    ( schematic-message-dialog (format #f (G_ "File does not exist:~%~a") fpath) )
+  )
+)
+) ; show-wiki()
 
-(define (show-manual)
+
+( define ( show-manual )
   "Launch a browser to display a main page of the offline version
 of the Lepton EDA Reference manual."
-  (doc-show-uri
-   (string-append "file://"
-                  (string-join (list (sys-doc-dir) "lepton-manual.html" "index.html")
-                               file-name-separator-string))))
+( let*
+  (
+  ( fnames (list (sys-doc-dir) "lepton-manual.html" "index.html") )
+  ( fpath  (string-join fnames file-name-separator-string) )
+  )
+
+  ( if ( file-exists? fpath )
+    ( doc-show-uri (string-append "file://" fpath) )
+    ( schematic-message-dialog (format #f (G_ "File does not exist:~%~a") fpath) )
+  )
+)
+) ; show-manual()
 
 
 ;; Get the value of a named attribute.  Attached attributes are
@@ -133,6 +138,7 @@ of the Lepton EDA Reference manual."
            (and (> (string-length v) 0) v))))
   (or (any any-proc (object-attribs obj))
       (any any-proc (inherited-attribs obj))))
+
 
 ;; For each entry in DIRNAME, PROC is called.  If PROC returns a
 ;; true value, the iteration stops and the result returned by PROC
@@ -153,6 +159,7 @@ of the Lepton EDA Reference manual."
            (lambda () (closedir dir))))
      #f)))
 
+
 ;; Searches for and displays documentation in DIRNAME.  A
 ;; documentation file is expected to start with BASENAME and
 ;; (optionally) end with EXT.  Comparisons are carried out
@@ -167,6 +174,7 @@ of the Lepton EDA Reference manual."
   (let ((filename (false-if-exception (directory-any dirname test-dir-entry))))
     (and filename (begin (doc-show-file filename) #t))))
 
+
 ;; Searches for documentation STRING on the Internet, using PDF
 ;; search template.
 ;;
@@ -179,6 +187,7 @@ of the Lepton EDA Reference manual."
            string))
   #t)
 
+
 ;; Munges a component basename to look more like a device name
 (define (munge-basename basename)
   (let* ((rx (make-regexp "(-[0-9]+)?.sym$" regexp/icase))
@@ -186,6 +195,7 @@ of the Lepton EDA Reference manual."
     (if match
         (regexp-substitute #f match 'pre)
         basename)))
+
 
 (define (show-component-documentation obj)
   "show-component-documentation COMPONENT
