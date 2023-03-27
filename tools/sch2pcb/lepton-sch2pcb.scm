@@ -148,18 +148,44 @@
     (with-input-from-file pcb-filename
       (lambda ()
         (let loop ((line (read-line))
+                   (paren-level 0)
                    (skip-next FALSE))
           (unless (eof-object? line)
             ;; read-line() drops trailing newlines so we add them
             ;; again here.
             (let* ((mline (string-append line "\n"))
                    (tline (string-trim mline))
-                   (skip (sch2pcb_parse_next_line
-                          (string->pointer mline)
-                          (string->pointer tline)
-                          *tmp-file
-                          skip-next)))
-              (loop (read-line) skip)))))))
+                   (first-char (and (not (string-null? tline))
+                                    (string-ref tline 0)))
+                   ;; When we've decided that some next lines
+                   ;; should be skipped, we have to count parens
+                   ;; in order to skip block within toplevel
+                   ;; parens.  What if the first paren is a
+                   ;; closing one?  Should we reset the counter to
+                   ;; zero?
+                   (new-paren-level (if (true? skip-next)
+                                        (case first-char
+                                          ((#\() (1+ paren-level))
+                                          ((#\)) (1- paren-level))
+                                          (else paren-level))
+                                        paren-level))
+                   (skip (if (and (true? skip-next)
+                                  (<= new-paren-level 0))
+                             ;; Stop skipping mode as we found
+                             ;; closing paren matching to the
+                             ;; first one that was starting in
+                             ;; that mode.
+                             FALSE
+                             ;; Parse lines as usual.  The C
+                             ;; function below will decide if next
+                             ;; lines have to be skipped based on
+                             ;; the result of parsing.
+                             (sch2pcb_parse_next_line
+                              (string->pointer mline)
+                              (string->pointer tline)
+                              *tmp-file
+                              skip-next))))
+              (loop (read-line) new-paren-level skip)))))))
 
   (define (process-files)
     (add-elements-from-file)

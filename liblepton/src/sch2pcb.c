@@ -1333,10 +1333,6 @@ sch2pcb_unfound_to_file (PcbElement *el,
   }
 }
 
-/* The variable is used in the function below.  Moving it outwards
- * is required to avoid overcomplicated code which would deal with
- * several in-out function arguments.  */
-static gint parse_paren_level = 0;
 
 gboolean
 sch2pcb_parse_next_line (char *buf,
@@ -1350,13 +1346,7 @@ sch2pcb_parse_next_line (char *buf,
 
   skipping = skip_next;
 
-  if (skipping) {
-    if (*s == '(')
-      ++parse_paren_level;
-    else if (*s == ')' && --parse_paren_level <= 0)
-      skipping = FALSE;
-  }
-  else
+  if (!skipping)
   {
     /* First let's find out what element type we're dealing
      * with. */
