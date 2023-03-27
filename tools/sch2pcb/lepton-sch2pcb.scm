@@ -144,6 +144,13 @@
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (parse-next-line mline tline skip-next)
+    (sch2pcb_parse_next_line
+     (string->pointer mline)
+     (string->pointer tline)
+     *tmp-file
+     skip-next))
+
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
       (lambda ()
@@ -185,11 +192,9 @@
                                  ;; next lines have to be skipped
                                  ;; based on the result of
                                  ;; parsing.
-                                 (sch2pcb_parse_next_line
-                                  (string->pointer mline)
-                                  (string->pointer tline)
-                                  *tmp-file
-                                  skip-next)))))
+                                 (parse-next-line mline
+                                                  tline
+                                                  skip-next)))))
               (loop (read-line) new-paren-level skip)))))))
 
   (define (process-files)
