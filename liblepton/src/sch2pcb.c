@@ -1340,16 +1340,16 @@ static gint parse_paren_level = 0;
 
 gboolean
 sch2pcb_parse_next_line (char *buf,
+                         char *s,
                          FILE *f_out,
                          gboolean skip_next)
 {
   PcbElement *el = NULL;
-  gchar *p, *s;
+  gchar *p;
   gboolean is_m4, skipping;
 
   skipping = skip_next;
 
-  for (s = buf; *s == ' ' || *s == '\t'; ++s);
   if (skipping) {
     if (*s == '(')
       ++parse_paren_level;

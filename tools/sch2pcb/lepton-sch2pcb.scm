@@ -152,10 +152,13 @@
           (unless (eof-object? line)
             ;; read-line() drops trailing newlines so we add them
             ;; again here.
-            (let ((skip (sch2pcb_parse_next_line
-                         (string->pointer (string-append line "\n"))
-                         *tmp-file
-                         skip-next)))
+            (let* ((mline (string-append line "\n"))
+                   (tline (string-trim mline))
+                   (skip (sch2pcb_parse_next_line
+                          (string->pointer mline)
+                          (string->pointer tline)
+                          *tmp-file
+                          skip-next)))
               (loop (read-line) skip)))))))
 
   (define (process-files)

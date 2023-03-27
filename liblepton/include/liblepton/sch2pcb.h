@@ -181,6 +181,7 @@ pcb_element_pkg_to_element (gchar *pkg_line);
 
 gboolean
 sch2pcb_parse_next_line (char *buf,
+                         char *s,
                          FILE *f_out,
                          gboolean skip_next);
 GList*
