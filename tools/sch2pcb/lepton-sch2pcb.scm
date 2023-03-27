@@ -176,15 +176,20 @@
                              ;; first one that was starting in
                              ;; that mode.
                              FALSE
-                             ;; Parse lines as usual.  The C
-                             ;; function below will decide if next
-                             ;; lines have to be skipped based on
-                             ;; the result of parsing.
-                             (sch2pcb_parse_next_line
-                              (string->pointer mline)
-                              (string->pointer tline)
-                              *tmp-file
-                              skip-next))))
+                             (if (true? skip-next)
+                                 ;; Paren level is still greater
+                                 ;; than zero, continue skipping.
+                                 TRUE
+                                 ;; Parse lines as usual.  The C
+                                 ;; function below will decide if
+                                 ;; next lines have to be skipped
+                                 ;; based on the result of
+                                 ;; parsing.
+                                 (sch2pcb_parse_next_line
+                                  (string->pointer mline)
+                                  (string->pointer tline)
+                                  *tmp-file
+                                  skip-next)))))
               (loop (read-line) new-paren-level skip)))))))
 
   (define (process-files)
