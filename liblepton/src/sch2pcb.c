@@ -1182,7 +1182,6 @@ sch2pcb_open_file_to_write (char *filename)
 
   if ((f_out = fopen (filename, "wb")) == NULL)
   {
-    fclose (f_out);
     return NULL;
   }
   else
