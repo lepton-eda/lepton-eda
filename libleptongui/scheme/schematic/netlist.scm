@@ -23,6 +23,7 @@
   #:use-module (lepton page)
   #:use-module (netlist)
   #:use-module (netlist schematic)
+  #:use-module (backend allegro)
 
   #:export (&netlist-allegro))
 
@@ -33,14 +34,6 @@
 (define (%schematic)
   (make-toplevel-schematic (map page-filename (active-pages)))
 )
-
-;;; First load allegro backend code in order to use `allegro*'
-;;; below.
-(let
-  ((fpath (%search-load-path "gnet-allegro.scm")))
-  (if fpath
-    (primitive-load fpath)
-    (log! 'warning "allegro: cannot load backend file")))
 
 ;;; Allegro backend
 (define (&netlist-allegro)
