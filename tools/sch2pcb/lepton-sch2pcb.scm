@@ -181,12 +181,20 @@
 
           ;; Well, the element has not been found in the current
           ;; element list, let's process it then.
-          (sch2pcb_parse_next_line
-           (string->pointer mline)
-           *tmp-file
-           *element
-           is_m4_element
-           skip-next))))
+          (let ((*mline (string->pointer mline)))
+            (if (null-pointer? *element)
+                ;; Element does not exist.  Output not trimmed
+                ;; string to the temp file as is.
+                (begin
+                  (sch2pcb_buffer_to_file *mline *tmp-file)
+                  skip-next)
+                ;; Otherwise, process it further.
+                (sch2pcb_parse_next_line
+                 *mline
+                 *tmp-file
+                 *element
+                 is_m4_element
+                 skip-next))))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename

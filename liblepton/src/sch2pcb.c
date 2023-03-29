@@ -1348,13 +1348,7 @@ sch2pcb_parse_next_line (char *buf,
 
   is_m4 = is_m4_element;
 
-  if (!el)
-  {
-    /* Element does not exist.  Output the string 'buf' as
-     * is. */
-    sch2pcb_buffer_to_file (buf, f_out);
-  }
-  else if (pcb_element_get_omit_PKG (el))
+  if (pcb_element_get_omit_PKG (el))
     /* Element exists but its omit_PKG field is true.  Let's
      * skip it. */
   {

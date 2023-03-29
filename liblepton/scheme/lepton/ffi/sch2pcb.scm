@@ -26,6 +26,7 @@
             pcb_element_free
             pcb_element_line_parse
             pcb_element_pkg_to_element
+            sch2pcb_buffer_to_file
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -70,6 +71,7 @@
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 
+(define-lff sch2pcb_buffer_to_file void '(* *))
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
