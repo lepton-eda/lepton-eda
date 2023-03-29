@@ -1336,28 +1336,15 @@ sch2pcb_unfound_to_file (PcbElement *el,
 
 gboolean
 sch2pcb_parse_next_line (char *buf,
-                         char *s,
                          FILE *f_out,
-                         PcbElement *m4_element,
+                         PcbElement *el,
                          gboolean is_m4_element,
                          gboolean skip_next)
 {
-  PcbElement *el = NULL;
   gchar *p;
   gboolean is_m4, skipping;
 
   skipping = skip_next;
-
-  if (is_m4_element)
-  {
-    el = m4_element;
-  }
-  else
-  {
-    /* Otherwise, it's a line starting with PKG_, probably a
-     * file element? */
-    el = pcb_element_pkg_to_element (s);
-  }
 
   is_m4 = is_m4_element;
 

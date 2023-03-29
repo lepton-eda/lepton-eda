@@ -23,6 +23,7 @@
   #:use-module (lepton ffi lff)
 
   #:export (pcb_element_line_parse
+            pcb_element_pkg_to_element
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
@@ -63,6 +64,7 @@
   (define-lff-lib arg ... liblepton))
 
 (define-lff pcb_element_line_parse '* '(*))
+(define-lff pcb_element_pkg_to_element '* '(*))
 
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
@@ -86,7 +88,7 @@
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_set_need_PKG_purge void (list int))
-(define-lff sch2pcb_parse_next_line int (list '* '* '* '* int int))
+(define-lff sch2pcb_parse_next_line int (list '* '* '* int int))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))

@@ -148,15 +148,20 @@
     ;; First let's find out what element type we're dealing with.
     (let* ((*tline (string->pointer tline))
            (*m4-element (pcb_element_line_parse *tline))
-           ;; If Element line is present (*m4-element is not
-           ;; NULL), it was inserted directly from m4 code and
-           ;; thus it is an m4 element.
-           (is-m4-element? (not (null-pointer? *m4-element))))
+           (is-m4-element? (not (null-pointer? *m4-element)))
+           (*element (if is-m4-element?
+                         ;; If Element line is present
+                         ;; (*m4-element is not NULL), it was
+                         ;; inserted directly from m4 code and
+                         ;; thus it is an m4 element that we use.
+                         *m4-element
+                         ;; Otherwise, it's a line starting with
+                         ;; PKG_, probably a file element?
+                         (pcb_element_pkg_to_element *tline))))
       (sch2pcb_parse_next_line
        (string->pointer mline)
-       (string->pointer tline)
        *tmp-file
-       *m4-element
+       *element
        (if is-m4-element? TRUE FALSE)
        skip-next)))
 
