@@ -1366,18 +1366,17 @@ sch2pcb_parse_next_line (char *buf,
        * have to skip some lines below, see comments
        * above. */
       skipping = is_m4;
-      /* Here we're surely dealing with file elements,
-       * right?  Let's prohibit adding an m4 file to
-       * output below. */
-      is_m4 = FALSE;
       sch2pcb_increment_added_ef (el);
     } else if (!is_m4) {
       sch2pcb_unfound_to_file (el, buf, f_out);
     }
     g_free (p);
   }
-  if (is_m4)
+  else
   {
+    /* Here we're surely dealing with m4 elements as 'is_m4' has
+     * been set to TRUE and no forcing of file elements
+     * requested. */
     sch2pcb_m4_element_to_file (el, buf, f_out);
   }
   pcb_element_free (el);
