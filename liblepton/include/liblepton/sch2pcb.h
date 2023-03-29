@@ -183,7 +183,7 @@ gboolean
 sch2pcb_parse_next_line (char *buf,
                          FILE *f_out,
                          PcbElement *m4_element,
-                         gboolean is_m4_element,
+                         gboolean is_m4,
                          gboolean skip_next);
 GList*
 sch2pcb_get_element_directory_list ();

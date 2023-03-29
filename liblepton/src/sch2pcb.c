@@ -1338,15 +1338,13 @@ gboolean
 sch2pcb_parse_next_line (char *buf,
                          FILE *f_out,
                          PcbElement *el,
-                         gboolean is_m4_element,
+                         gboolean is_m4,
                          gboolean skip_next)
 {
   gchar *p;
-  gboolean is_m4, skipping;
+  gboolean skipping;
 
   skipping = skip_next;
-
-  is_m4 = is_m4_element;
 
   if (!is_m4
       || (is_m4
