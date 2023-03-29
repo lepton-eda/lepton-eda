@@ -22,7 +22,9 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (pcb_element_line_parse
+  #:export (pcb_element_exists
+            pcb_element_free
+            pcb_element_line_parse
             pcb_element_pkg_to_element
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
@@ -63,6 +65,8 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
+(define-lff pcb_element_exists '* (list '* int))
+(define-lff pcb_element_free void '(*))
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 

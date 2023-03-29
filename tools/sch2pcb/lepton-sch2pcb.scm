@@ -149,6 +149,7 @@
     (let* ((*tline (string->pointer tline))
            (*m4-element (pcb_element_line_parse *tline))
            (is-m4-element? (not (null-pointer? *m4-element)))
+           (is_m4_element (if is-m4-element? TRUE FALSE))
            (*element (if is-m4-element?
                          ;; If Element line is present
                          ;; (*m4-element is not NULL), it was
@@ -158,12 +159,34 @@
                          ;; Otherwise, it's a line starting with
                          ;; PKG_, probably a file element?
                          (pcb_element_pkg_to_element *tline))))
-      (sch2pcb_parse_next_line
-       (string->pointer mline)
-       *tmp-file
-       *element
-       (if is-m4-element? TRUE FALSE)
-       skip-next)))
+      ;; Next step is to check if element processing can be
+      ;; skipped as the same element has been processed before.
+      (if (and (not (null-pointer? *element))
+               ;; pcb_element_exists() returns PcbElement.
+               (not (null-pointer? (pcb_element_exists *element
+                                                       TRUE))))
+          ;; OK, element has been found in the list of previously
+          ;; found elements.
+          (begin
+            ;; Obviously, a new copy of the found element is not
+            ;; needed in the element list, so it has to be freed.
+            (pcb_element_free *element)
+            ;; For m4 elements, the next line starts with an
+            ;; opening paren "(", and we have to skip lines until
+            ;; its closing paren is found.  For file elements, we
+            ;; don't want to skip any lines.  In the next
+            ;; iteration, this C value ('skipping') will allow us
+            ;; to skip parenthesized m4 element body.
+            is_m4_element)
+
+          ;; Well, the element has not been found in the current
+          ;; element list, let's process it then.
+          (sch2pcb_parse_next_line
+           (string->pointer mline)
+           *tmp-file
+           *element
+           is_m4_element
+           skip-next))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
