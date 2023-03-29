@@ -86,7 +86,7 @@
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_set_need_PKG_purge void (list int))
-(define-lff sch2pcb_parse_next_line int (list '* '* '* int))
+(define-lff sch2pcb_parse_next_line int (list '* '* '* '* int int))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))

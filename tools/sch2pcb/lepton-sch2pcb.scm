@@ -145,11 +145,20 @@
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
   (define (parse-next-line mline tline skip-next)
-    (sch2pcb_parse_next_line
-     (string->pointer mline)
-     (string->pointer tline)
-     *tmp-file
-     skip-next))
+    ;; First let's find out what element type we're dealing with.
+    (let* ((*tline (string->pointer tline))
+           (*m4-element (pcb_element_line_parse *tline))
+           ;; If Element line is present (*m4-element is not
+           ;; NULL), it was inserted directly from m4 code and
+           ;; thus it is an m4 element.
+           (is-m4-element? (not (null-pointer? *m4-element))))
+      (sch2pcb_parse_next_line
+       (string->pointer mline)
+       (string->pointer tline)
+       *tmp-file
+       *m4-element
+       (if is-m4-element? TRUE FALSE)
+       skip-next)))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename

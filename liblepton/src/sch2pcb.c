@@ -1338,6 +1338,8 @@ gboolean
 sch2pcb_parse_next_line (char *buf,
                          char *s,
                          FILE *f_out,
+                         PcbElement *m4_element,
+                         gboolean is_m4_element,
                          gboolean skip_next)
 {
   PcbElement *el = NULL;
@@ -1346,17 +1348,18 @@ sch2pcb_parse_next_line (char *buf,
 
   skipping = skip_next;
 
-  /* First let's find out what element type we're dealing
-   * with. */
-  is_m4 = FALSE;
-  if ((el = pcb_element_line_parse (s)) != NULL)
-    /* If Element line is present, it was inserted directly
-     * from m4 code and thus it is an m4 element. */
-    is_m4 = TRUE;
+  if (is_m4_element)
+  {
+    el = m4_element;
+  }
   else
+  {
     /* Otherwise, it's a line starting with PKG_, probably a
      * file element? */
     el = pcb_element_pkg_to_element (s);
+  }
+
+  is_m4 = is_m4_element;
 
   /* Next step is to check if element processing can be
    * skipped as the same element has been processed before. */
