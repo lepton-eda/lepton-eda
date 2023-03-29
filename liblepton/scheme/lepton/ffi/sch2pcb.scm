@@ -24,6 +24,7 @@
 
   #:export (pcb_element_exists
             pcb_element_free
+            pcb_element_get_omit_PKG
             pcb_element_line_parse
             pcb_element_pkg_to_element
             sch2pcb_buffer_to_file
@@ -68,6 +69,7 @@
 
 (define-lff pcb_element_exists '* (list '* int))
 (define-lff pcb_element_free void '(*))
+(define-lff pcb_element_get_omit_PKG int '(*))
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 

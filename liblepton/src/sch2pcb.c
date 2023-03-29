@@ -1348,50 +1348,41 @@ sch2pcb_parse_next_line (char *buf,
 
   is_m4 = is_m4_element;
 
-  if (pcb_element_get_omit_PKG (el))
-    /* Element exists but its omit_PKG field is true.  Let's
-     * skip it. */
+  if (!is_m4
+      || (is_m4
+          && sch2pcb_get_force_element_files ()))
   {
+    sch2pcb_verbose_file_element_report (el, is_m4);
+    p = sch2pcb_search_element_directories (el);
+    sch2pcb_verbose_report_no_file_element_found (p, is_m4);
 
+    if (p && sch2pcb_insert_element (f_out,
+                                     p,
+                                     pcb_element_get_description (el),
+                                     pcb_element_get_refdes (el),
+                                     pcb_element_get_value (el)))
+    {
+      /* Nice, we found it.  If it is an m4 element, we
+       * have to skip some lines below, see comments
+       * above. */
+      skipping = is_m4;
+      /* Here we're surely dealing with file elements,
+       * right?  Let's prohibit adding an m4 file to
+       * output below. */
+      is_m4 = FALSE;
+      sch2pcb_increment_added_ef (el);
+    } else if (!is_m4) {
+      sch2pcb_unfound_to_file (el, buf, f_out);
+    }
+    g_free (p);
   }
-  else
+  if (is_m4)
   {
-    /* Actually process or lookup the element. */
-    if (!is_m4
-        || (is_m4
-            && sch2pcb_get_force_element_files ()))
-    {
-      sch2pcb_verbose_file_element_report (el, is_m4);
-      p = sch2pcb_search_element_directories (el);
-      sch2pcb_verbose_report_no_file_element_found (p, is_m4);
-
-      if (p && sch2pcb_insert_element (f_out,
-                                       p,
-                                       pcb_element_get_description (el),
-                                       pcb_element_get_refdes (el),
-                                       pcb_element_get_value (el)))
-      {
-        /* Nice, we found it.  If it is an m4 element, we
-         * have to skip some lines below, see comments
-         * above. */
-        skipping = is_m4;
-        /* Here we're surely dealing with file elements,
-         * right?  Let's prohibit adding an m4 file to
-         * output below. */
-        is_m4 = FALSE;
-        sch2pcb_increment_added_ef (el);
-      } else if (!is_m4) {
-        sch2pcb_unfound_to_file (el, buf, f_out);
-      }
-      g_free (p);
-    }
-    if (is_m4)
-    {
-      sch2pcb_m4_element_to_file (el, buf, f_out);
-    }
-    pcb_element_free (el);
-    sch2pcb_verbose_print_separator ();
+    sch2pcb_m4_element_to_file (el, buf, f_out);
   }
+  pcb_element_free (el);
+  sch2pcb_verbose_print_separator ();
+
   return skipping;
 }
 

@@ -189,12 +189,17 @@
                   (sch2pcb_buffer_to_file *mline *tmp-file)
                   skip-next)
                 ;; Otherwise, process it further.
-                (sch2pcb_parse_next_line
-                 *mline
-                 *tmp-file
-                 *element
-                 is_m4_element
-                 skip-next))))))
+                (if (true? (pcb_element_get_omit_PKG *element))
+                    ;; Element exists but its omit_PKG field is
+                    ;; true.  Let's skip it.
+                    skip-next
+                    ;; Actually process or lookup the element.
+                    (sch2pcb_parse_next_line
+                     *mline
+                     *tmp-file
+                     *element
+                     is_m4_element
+                     skip-next)))))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
