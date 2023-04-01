@@ -1368,35 +1368,6 @@ sch2pcb_process_element (char *buf,
 }
 
 
-gboolean
-sch2pcb_parse_next_line (char *buf,
-                         FILE *f_out,
-                         PcbElement *el,
-                         gboolean is_m4,
-                         gboolean skip_next)
-{
-  gboolean skipping;
-
-  skipping = skip_next;
-
-  if (!is_m4
-      || (is_m4
-          && sch2pcb_get_force_element_files ()))
-  {
-    skipping = sch2pcb_process_element (buf, f_out, el, is_m4, skipping);
-  }
-  else
-  {
-    /* Here we're surely dealing with m4 elements as 'is_m4' has
-     * been set to TRUE and no forcing of file elements
-     * requested. */
-    sch2pcb_m4_element_to_file (el, buf, f_out);
-  }
-
-  return skipping;
-}
-
-
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak)

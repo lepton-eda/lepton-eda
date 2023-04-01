@@ -179,12 +179,6 @@ pcb_element_pkg_to_element (gchar *pkg_line);
 
 /* lepton-sch2pcb's toplevel functions */
 
-gboolean
-sch2pcb_parse_next_line (char *buf,
-                         FILE *f_out,
-                         PcbElement *m4_element,
-                         gboolean is_m4,
-                         gboolean skip_next);
 GList*
 sch2pcb_get_element_directory_list ();
 
@@ -234,6 +228,10 @@ void
 sch2pcb_load_extra_project_files (void);
 
 void
+sch2pcb_m4_element_to_file (PcbElement *el,
+                            char *buf,
+                            FILE *f_out);
+void
 sch2pcb_make_pcb_element_list (gchar *pcb_file);
 
 GList*
@@ -245,6 +243,12 @@ sch2pcb_get_preserve ();
 void
 sch2pcb_set_preserve (gboolean val);
 
+gboolean
+sch2pcb_process_element (char *buf,
+                         FILE *f_out,
+                         PcbElement *el,
+                         gboolean is_m4,
+                         gboolean skip_next);
 gboolean
 sch2pcb_get_remove_unfound_elements ();
 
@@ -359,4 +363,7 @@ sch2pcb_get_verbose_mode ();
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak);
+void
+sch2pcb_verbose_print_separator ();
+
 G_END_DECLS

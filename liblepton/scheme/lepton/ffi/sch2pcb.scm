@@ -34,8 +34,10 @@
             sch2pcb_set_empty_footprint_name
             sch2pcb_get_fix_elements
             sch2pcb_set_fix_elements
+            sch2pcb_get_force_element_files
             sch2pcb_set_force_element_files
             sch2pcb_increment_verbose_mode
+            sch2pcb_m4_element_to_file
             sch2pcb_get_n_PKG_removed_new
             sch2pcb_get_n_PKG_removed_old
             sch2pcb_get_n_added_ef
@@ -50,11 +52,11 @@
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
             sch2pcb_set_need_PKG_purge
-            sch2pcb_parse_next_line
             sch2pcb_parse_schematics
             sch2pcb_get_pcb_element_list
             sch2pcb_pcb_element_list_append
             sch2pcb_set_preserve
+            sch2pcb_process_element
             sch2pcb_prune_elements
             sch2pcb_set_remove_unfound_elements
             sch2pcb_update_element_descriptions
@@ -81,8 +83,10 @@
 (define-lff sch2pcb_set_empty_footprint_name void '(*))
 (define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_fix_elements void (list int))
+(define-lff sch2pcb_get_force_element_files int '())
 (define-lff sch2pcb_set_force_element_files void (list int))
 (define-lff sch2pcb_increment_verbose_mode void '())
+(define-lff sch2pcb_m4_element_to_file void '(* * *))
 (define-lff sch2pcb_get_n_PKG_removed_new int '())
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
 (define-lff sch2pcb_get_n_added_ef int '())
@@ -97,11 +101,11 @@
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_set_need_PKG_purge void (list int))
-(define-lff sch2pcb_parse_next_line int (list '* '* '* int int))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
+(define-lff sch2pcb_process_element int (list '* '* '* int int))
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_update_element_descriptions void '(* *))

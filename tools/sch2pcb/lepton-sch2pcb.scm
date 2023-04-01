@@ -149,11 +149,18 @@
                            *element
                            is_m4_element
                            skip-next)
-    (let ((result (sch2pcb_parse_next_line *mline
-                                           *tmp-file
-                                           *element
-                                           is_m4_element
-                                           skip-next)))
+    (let ((result
+           (if (or (false? is_m4_element)
+                   (and (true? is_m4_element)
+                        (true? (sch2pcb_get_force_element_files))))
+               (sch2pcb_process_element *mline *tmp-file *element is_m4_element skip-next)
+
+               (begin
+                 ;; Here we're surely dealing with m4 elements as 'is_m4_element' has
+                 ;; been set to TRUE and no forcing of file elements
+                 ;; requested.
+                 (sch2pcb_m4_element_to_file *element *mline *tmp-file)
+                 skip-next))))
 
       (pcb_element_free *element)
       (sch2pcb_verbose_print_separator)
