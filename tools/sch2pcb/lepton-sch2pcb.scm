@@ -144,6 +144,17 @@
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (process-element *mline
+                           *tmp-file
+                           *element
+                           is_m4_element
+                           skip-next)
+    (sch2pcb_parse_next_line *mline
+                             *tmp-file
+                             *element
+                             is_m4_element
+                             skip-next))
+
   (define (parse-next-line mline tline skip-next)
     ;; First let's find out what element type we're dealing with.
     (let* ((*tline (string->pointer tline))
@@ -194,12 +205,11 @@
                     ;; true.  Let's skip it.
                     skip-next
                     ;; Actually process or lookup the element.
-                    (sch2pcb_parse_next_line
-                     *mline
-                     *tmp-file
-                     *element
-                     is_m4_element
-                     skip-next)))))))
+                    (process-element *mline
+                                     *tmp-file
+                                     *element
+                                     is_m4_element
+                                     skip-next)))))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
