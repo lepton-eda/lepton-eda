@@ -1335,13 +1335,46 @@ sch2pcb_unfound_to_file (PcbElement *el,
 
 
 gboolean
-sch2pcb_parse_next_line (char *buf,
+sch2pcb_process_element (char *buf,
                          FILE *f_out,
                          PcbElement *el,
                          gboolean is_m4,
                          gboolean skip_next)
 {
   gchar *p;
+  gboolean skipping = skip_next;
+
+  sch2pcb_verbose_file_element_report (el, is_m4);
+  p = sch2pcb_search_element_directories (el);
+  sch2pcb_verbose_report_no_file_element_found (p, is_m4);
+
+  if (p && sch2pcb_insert_element (f_out,
+                                   p,
+                                   pcb_element_get_description (el),
+                                   pcb_element_get_refdes (el),
+                                   pcb_element_get_value (el)))
+  {
+    /* Nice, we found it.  If it is an m4 element, we
+     * have to skip some lines below, see comments
+     * above. */
+    skipping = is_m4;
+    sch2pcb_increment_added_ef (el);
+  } else if (!is_m4) {
+    sch2pcb_unfound_to_file (el, buf, f_out);
+  }
+  g_free (p);
+
+  return skipping;
+}
+
+
+gboolean
+sch2pcb_parse_next_line (char *buf,
+                         FILE *f_out,
+                         PcbElement *el,
+                         gboolean is_m4,
+                         gboolean skip_next)
+{
   gboolean skipping;
 
   skipping = skip_next;
@@ -1350,25 +1383,7 @@ sch2pcb_parse_next_line (char *buf,
       || (is_m4
           && sch2pcb_get_force_element_files ()))
   {
-    sch2pcb_verbose_file_element_report (el, is_m4);
-    p = sch2pcb_search_element_directories (el);
-    sch2pcb_verbose_report_no_file_element_found (p, is_m4);
-
-    if (p && sch2pcb_insert_element (f_out,
-                                     p,
-                                     pcb_element_get_description (el),
-                                     pcb_element_get_refdes (el),
-                                     pcb_element_get_value (el)))
-    {
-      /* Nice, we found it.  If it is an m4 element, we
-       * have to skip some lines below, see comments
-       * above. */
-      skipping = is_m4;
-      sch2pcb_increment_added_ef (el);
-    } else if (!is_m4) {
-      sch2pcb_unfound_to_file (el, buf, f_out);
-    }
-    g_free (p);
+    skipping = sch2pcb_process_element (buf, f_out, el, is_m4, skipping);
   }
   else
   {
