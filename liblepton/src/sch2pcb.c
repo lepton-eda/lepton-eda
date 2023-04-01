@@ -1392,8 +1392,6 @@ sch2pcb_parse_next_line (char *buf,
      * requested. */
     sch2pcb_m4_element_to_file (el, buf, f_out);
   }
-  pcb_element_free (el);
-  sch2pcb_verbose_print_separator ();
 
   return skipping;
 }

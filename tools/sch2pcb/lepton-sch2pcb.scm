@@ -149,11 +149,15 @@
                            *element
                            is_m4_element
                            skip-next)
-    (sch2pcb_parse_next_line *mline
-                             *tmp-file
-                             *element
-                             is_m4_element
-                             skip-next))
+    (let ((result (sch2pcb_parse_next_line *mline
+                                           *tmp-file
+                                           *element
+                                           is_m4_element
+                                           skip-next)))
+
+      (pcb_element_free *element)
+      (sch2pcb_verbose_print_separator)
+      result))
 
   (define (parse-next-line mline tline skip-next)
     ;; First let's find out what element type we're dealing with.

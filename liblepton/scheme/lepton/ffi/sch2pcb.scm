@@ -58,6 +58,7 @@
             sch2pcb_prune_elements
             sch2pcb_set_remove_unfound_elements
             sch2pcb_update_element_descriptions
+            sch2pcb_verbose_print_separator
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_write
             sch2pcb_close_file))
@@ -104,6 +105,7 @@
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
+(define-lff sch2pcb_verbose_print_separator void '())
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_write '* '(*))
 (define-lff sch2pcb_close_file void '(*))
