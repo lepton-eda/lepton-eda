@@ -228,10 +228,6 @@ void
 sch2pcb_load_extra_project_files (void);
 
 void
-sch2pcb_m4_element_to_file (PcbElement *el,
-                            char *buf,
-                            FILE *f_out);
-void
 sch2pcb_make_pcb_element_list (gchar *pcb_file);
 
 GList*

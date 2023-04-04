@@ -170,7 +170,12 @@
                     (pointer->string (pcb_element_get_value *element))))
 
   (define (m4-element->file *element *mline *tmp-file)
-    (sch2pcb_m4_element_to_file *element *mline *tmp-file))
+    (sch2pcb_buffer_to_file *mline *tmp-file)
+    (sch2pcb_set_n_added_m4 (1+ (sch2pcb_get_n_added_m4)))
+    (verbose-format "~A: added new m4 element for footprint ~S (value=~A)\n"
+                    (pointer->string (pcb_element_get_refdes *element))
+                    (pointer->string (pcb_element_get_description *element))
+                    (pointer->string (pcb_element_get_value *element))))
 
   (define (process-file-element *mline
                                 *tmp-file
