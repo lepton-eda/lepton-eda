@@ -162,6 +162,9 @@
                (true? (sch2pcb_get_force_element_files)))
       (verbose-format "\tNo file element found.\n")))
 
+  (define (verbose-increment-added-file-element *element)
+    (sch2pcb_increment_added_ef *element))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
@@ -180,7 +183,7 @@
           (begin
             ;; Nice, we found it.  If it is an m4 element, we have
             ;; to skip some lines below, see comments above.
-            (sch2pcb_increment_added_ef *element)
+            (verbose-increment-added-file-element *element)
             (g_free *path)
             is_m4_element)
           (if (false? is_m4_element)
