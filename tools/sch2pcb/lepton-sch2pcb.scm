@@ -184,6 +184,9 @@
             (pointer->string (pcb_element_get_description *element))
             (pointer->string (pcb_element_get_value *element))))
 
+  (define (error-report-element-removed *element)
+    (sch2pcb_increment_n_PKG_removed_new *element))
+
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)
     (if (and (true? (sch2pcb_get_remove_unfound_elements))
@@ -191,7 +194,7 @@
         ;; If removing unfound elements is enabled while fixing
         ;; them is disabled, we just increment the counter of new
         ;; packages that won't be in the layout.
-        (sch2pcb_increment_n_PKG_removed_new *element)
+        (error-report-element-removed *element)
 
         ;; Otherwise we increment the number of not found packages
         ;; that will be replaced with the PKG_ placeholder, and
