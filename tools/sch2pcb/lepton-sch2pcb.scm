@@ -178,7 +178,11 @@
                     (pointer->string (pcb_element_get_value *element))))
 
   (define (error-report-element-not-found *element)
-    (sch2pcb_error_report_pcb_element_not_found *element))
+    (format (current-error-port)
+            (G_ "~A: can't find PCB element for footprint ~S (value=~A)\n")
+            (pointer->string (pcb_element_get_refdes *element))
+            (pointer->string (pcb_element_get_description *element))
+            (pointer->string (pcb_element_get_value *element))))
 
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)

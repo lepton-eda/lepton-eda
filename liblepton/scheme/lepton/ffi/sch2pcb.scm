@@ -35,7 +35,6 @@
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
             sch2pcb_set_empty_footprint_name
-            sch2pcb_error_report_pcb_element_not_found
             sch2pcb_get_fix_elements
             sch2pcb_set_fix_elements
             sch2pcb_get_force_element_files
@@ -92,7 +91,6 @@
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
 (define-lff sch2pcb_set_empty_footprint_name void '(*))
-(define-lff sch2pcb_error_report_pcb_element_not_found void '(*))
 (define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_get_force_element_files int '())

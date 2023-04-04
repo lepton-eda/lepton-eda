@@ -197,9 +197,6 @@ sch2pcb_get_empty_footprint_name ();
 void
 sch2pcb_set_empty_footprint_name (char *val);
 
-void
-sch2pcb_error_report_pcb_element_not_found (PcbElement *el);
-
 gchar*
 sch2pcb_expand_dir (gchar *dir);
 
