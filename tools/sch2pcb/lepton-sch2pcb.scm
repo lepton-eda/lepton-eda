@@ -144,6 +144,13 @@
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (process-file-element *mline
+                                *tmp-file
+                                *element
+                                is_m4_element
+                                skip-next)
+    (sch2pcb_process_element *mline *tmp-file *element is_m4_element skip-next))
+
   (define (process-element *mline
                            *tmp-file
                            *element
@@ -153,8 +160,11 @@
            (if (or (false? is_m4_element)
                    (and (true? is_m4_element)
                         (true? (sch2pcb_get_force_element_files))))
-               (sch2pcb_process_element *mline *tmp-file *element is_m4_element skip-next)
-
+               (process-file-element *mline
+                                     *tmp-file
+                                     *element
+                                     is_m4_element
+                                     skip-next)
                (begin
                  ;; Here we're surely dealing with m4 elements as 'is_m4_element' has
                  ;; been set to TRUE and no forcing of file elements
