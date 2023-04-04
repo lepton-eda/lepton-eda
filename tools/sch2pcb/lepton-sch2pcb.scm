@@ -177,6 +177,9 @@
                     (pointer->string (pcb_element_get_description *element))
                     (pointer->string (pcb_element_get_value *element))))
 
+  (define (unfound-element->file *element *mline *tmp-file)
+    (sch2pcb_unfound_to_file *element *mline *tmp-file))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
@@ -200,7 +203,7 @@
             is_m4_element)
           (if (false? is_m4_element)
               (begin
-                (sch2pcb_unfound_to_file *element *mline *tmp-file)
+                (unfound-element->file *element *mline *tmp-file)
                 (g_free *path)
                 skip_next)
               (begin
