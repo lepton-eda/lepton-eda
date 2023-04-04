@@ -169,6 +169,9 @@
                     (pointer->string (pcb_element_get_description *element))
                     (pointer->string (pcb_element_get_value *element))))
 
+  (define (m4-element->file *element *mline *tmp-file)
+    (sch2pcb_m4_element_to_file *element *mline *tmp-file))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
@@ -217,7 +220,7 @@
                  ;; Here we're surely dealing with m4 elements as 'is_m4_element' has
                  ;; been set to TRUE and no forcing of file elements
                  ;; requested.
-                 (sch2pcb_m4_element_to_file *element *mline *tmp-file)
+                 (m4-element->file *element *mline *tmp-file)
                  skip-next))))
 
       (pcb_element_free *element)
