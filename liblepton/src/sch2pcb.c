@@ -1101,16 +1101,6 @@ sch2pcb_buffer_to_file (char *buffer,
 }
 
 
-/* Process the newly created pcb file which is the output from
- *     gnetlist -g gsch2pcb ...
- *
- * It will have elements found via the m4 interface and PKG_ lines for
- * elements not found.  Insert pcb file elements for PKG_ lines if
- * file elements can be found.  If there was an existing pcb file,
- * strip out any elements if they are already present so that the new
- * pcb file will only have new elements.
- */
-
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak)

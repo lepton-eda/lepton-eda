@@ -157,6 +157,14 @@
               (loop (read-line)))))))))
 
 
+;;; Process the newly created pcb file which is the output from
+;;;     lepton-netlist -g gsch2pcb ...
+;;;
+;;; It will have elements found via the m4 interface and PKG_
+;;; lines for elements not found.  Insert pcb file elements for
+;;; PKG_ lines if file elements can be found.  If there was an
+;;; existing pcb file, strip out any elements if they are already
+;;; present so that the new pcb file will only have new elements.
 (define (add-elements pcb-filename)
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
