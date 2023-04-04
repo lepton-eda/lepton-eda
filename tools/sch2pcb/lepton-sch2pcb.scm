@@ -144,12 +144,15 @@
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
 
+  (define (verbose-file-element-report *element is_m4_element)
+    (sch2pcb_verbose_file_element_report *element is_m4_element))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
                                 is_m4_element
                                 skip_next)
-    (sch2pcb_verbose_file_element_report *element is_m4_element)
+    (verbose-file-element-report *element is_m4_element)
     (let ((*path (sch2pcb_search_element_directories *element)))
       (sch2pcb_verbose_report_no_file_element_found *path is_m4_element)
 
