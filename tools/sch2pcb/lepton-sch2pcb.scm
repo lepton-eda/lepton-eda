@@ -163,7 +163,11 @@
       (verbose-format "\tNo file element found.\n")))
 
   (define (verbose-increment-added-file-element *element)
-    (sch2pcb_increment_added_ef *element))
+    (sch2pcb_set_n_added_ef (1+ (sch2pcb_get_n_added_ef)))
+    (verbose-format "~A: added new file element for footprint ~S (value=~A)\n"
+                    (pointer->string (pcb_element_get_refdes *element))
+                    (pointer->string (pcb_element_get_description *element))
+                    (pointer->string (pcb_element_get_value *element))))
 
   (define (process-file-element *mline
                                 *tmp-file

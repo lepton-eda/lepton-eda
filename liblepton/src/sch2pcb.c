@@ -1217,18 +1217,6 @@ sch2pcb_buffer_to_file (char *buffer,
  */
 
 void
-sch2pcb_increment_added_ef (PcbElement *el)
-{
-  sch2pcb_set_n_added_ef (1 + sch2pcb_get_n_added_ef ());
-  if (sch2pcb_get_verbose_mode () != 0)
-    printf ("%s: added new file element for footprint %s (value=%s)\n",
-            pcb_element_get_refdes (el),
-            pcb_element_get_description (el),
-            pcb_element_get_value (el));
-}
-
-
-void
 sch2pcb_m4_element_to_file (PcbElement *el,
                             char *buf,
                             FILE *f_out)
