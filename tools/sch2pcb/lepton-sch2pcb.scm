@@ -196,7 +196,7 @@
                  skip-next))))
 
       (pcb_element_free *element)
-      (sch2pcb_verbose_print_separator)
+      (verbose-format "----\n")
       result))
 
   (define (parse-next-line mline tline skip-next)

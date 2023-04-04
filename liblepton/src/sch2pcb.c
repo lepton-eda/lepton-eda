@@ -1282,14 +1282,6 @@ sch2pcb_m4_element_to_file (PcbElement *el,
 
 
 void
-sch2pcb_verbose_print_separator ()
-{
-  if (sch2pcb_get_verbose_mode () != 0)
-    printf ("----\n");
-}
-
-
-void
 sch2pcb_error_report_pcb_element_not_found (PcbElement *el)
 {
   fprintf (stderr,

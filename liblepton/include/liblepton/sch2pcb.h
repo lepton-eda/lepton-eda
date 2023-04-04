@@ -368,9 +368,6 @@ void
 sch2pcb_verbose_file_element_report (PcbElement *el,
                                      gboolean is_m4);
 void
-sch2pcb_verbose_print_separator ();
-
-void
 sch2pcb_verbose_report_no_file_element_found (char *p,
                                               gboolean is_m4);
 G_END_DECLS
