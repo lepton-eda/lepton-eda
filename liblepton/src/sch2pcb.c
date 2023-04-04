@@ -1359,12 +1359,20 @@ sch2pcb_process_element (char *buf,
      * above. */
     skipping = is_m4;
     sch2pcb_increment_added_ef (el);
-  } else if (!is_m4) {
-    sch2pcb_unfound_to_file (el, buf, f_out);
+    g_free (p);
+    return skipping;
   }
-  g_free (p);
-
-  return skipping;
+  else if (!is_m4)
+  {
+    sch2pcb_unfound_to_file (el, buf, f_out);
+    g_free (p);
+    return skipping;
+  }
+  else
+  {
+    g_free (p);
+    return skipping;
+  }
 }
 
 
