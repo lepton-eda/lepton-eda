@@ -156,6 +156,9 @@
                         (pointer->string (pcb_element_get_description *element))
                         (pointer->string (pcb_element_get_value *element)))))
 
+  (define (verbose-report-no-file-element-found *path is_m4_element)
+    (sch2pcb_verbose_report_no_file_element_found *path is_m4_element))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
@@ -163,7 +166,7 @@
                                 skip_next)
     (verbose-file-element-report *element (true? is_m4_element))
     (let ((*path (sch2pcb_search_element_directories *element)))
-      (sch2pcb_verbose_report_no_file_element_found *path is_m4_element)
+      (verbose-report-no-file-element-found *path is_m4_element)
 
       (if (and (not (null-pointer? *path))
                (true? (sch2pcb_insert_element *tmp-file
