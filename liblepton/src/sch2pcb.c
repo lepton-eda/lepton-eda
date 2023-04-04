@@ -1238,30 +1238,6 @@ sch2pcb_increment_n_PKG_removed_new (PcbElement *el)
 
 
 void
-sch2pcb_unfound_to_file (PcbElement *el,
-                         char *buf,
-                         FILE *f_out)
-{
-  sch2pcb_error_report_pcb_element_not_found (el);
-  if (sch2pcb_get_remove_unfound_elements ()
-      && !sch2pcb_get_fix_elements ())
-  {
-    /* If removing unfound elements is enabled while
-     * fixing them is disabled, we just increment the
-     * counter of new packages that won't be in the
-     * layout. */
-    sch2pcb_increment_n_PKG_removed_new (el);
-  } else {
-    /* Otherwise we increment the number of not found
-     * packages that will be replaced with the PKG_
-     * placeholder, and insert the placeholder. */
-    sch2pcb_set_n_not_found (1 + sch2pcb_get_n_not_found ());
-    sch2pcb_buffer_to_file (buf, f_out);   /* Copy PKG_ line */
-  }
-}
-
-
-void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak)
 {

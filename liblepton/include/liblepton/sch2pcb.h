@@ -197,6 +197,9 @@ sch2pcb_get_empty_footprint_name ();
 void
 sch2pcb_set_empty_footprint_name (char *val);
 
+void
+sch2pcb_error_report_pcb_element_not_found (PcbElement *el);
+
 gchar*
 sch2pcb_expand_dir (gchar *dir);
 
@@ -220,6 +223,9 @@ sch2pcb_get_force_element_files ();
 
 void
 sch2pcb_set_force_element_files (gboolean val);
+
+void
+sch2pcb_increment_n_PKG_removed_new (PcbElement *el);
 
 void
 sch2pcb_increment_verbose_mode ();
@@ -350,10 +356,6 @@ sch2pcb_search_element_directories (PcbElement *el);
 gint
 sch2pcb_get_verbose_mode ();
 
-void
-sch2pcb_unfound_to_file (PcbElement *el,
-                         char *buf,
-                         FILE *f_out);
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak);

@@ -35,10 +35,12 @@
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
             sch2pcb_set_empty_footprint_name
+            sch2pcb_error_report_pcb_element_not_found
             sch2pcb_get_fix_elements
             sch2pcb_set_fix_elements
             sch2pcb_get_force_element_files
             sch2pcb_set_force_element_files
+            sch2pcb_increment_n_PKG_removed_new
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
             sch2pcb_get_n_PKG_removed_new
@@ -53,6 +55,7 @@
             sch2pcb_get_n_fixed
             sch2pcb_get_n_none
             sch2pcb_get_n_not_found
+            sch2pcb_set_n_not_found
             sch2pcb_get_n_preserved
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
@@ -62,9 +65,9 @@
             sch2pcb_pcb_element_list_append
             sch2pcb_set_preserve
             sch2pcb_prune_elements
+            sch2pcb_get_remove_unfound_elements
             sch2pcb_set_remove_unfound_elements
             sch2pcb_search_element_directories
-            sch2pcb_unfound_to_file
             sch2pcb_update_element_descriptions
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_write
@@ -89,10 +92,12 @@
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
 (define-lff sch2pcb_set_empty_footprint_name void '(*))
+(define-lff sch2pcb_error_report_pcb_element_not_found void '(*))
 (define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_fix_elements void (list int))
 (define-lff sch2pcb_get_force_element_files int '())
 (define-lff sch2pcb_set_force_element_files void (list int))
+(define-lff sch2pcb_increment_n_PKG_removed_new void '(*))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_get_n_PKG_removed_new int '())
@@ -107,6 +112,7 @@
 (define-lff sch2pcb_get_n_fixed int '())
 (define-lff sch2pcb_get_n_none int '())
 (define-lff sch2pcb_get_n_not_found int '())
+(define-lff sch2pcb_set_n_not_found void (list int))
 (define-lff sch2pcb_get_n_preserved int '())
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
@@ -116,9 +122,9 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
+(define-lff sch2pcb_get_remove_unfound_elements int '())
 (define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_search_element_directories '* '(*))
-(define-lff sch2pcb_unfound_to_file void '(* * *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_write '* '(*))
