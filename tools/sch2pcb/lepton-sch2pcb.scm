@@ -148,8 +148,31 @@
                                 *tmp-file
                                 *element
                                 is_m4_element
-                                skip-next)
-    (sch2pcb_process_element *mline *tmp-file *element is_m4_element skip-next))
+                                skip_next)
+    (sch2pcb_verbose_file_element_report *element is_m4_element)
+    (let ((*path (sch2pcb_search_element_directories *element)))
+      (sch2pcb_verbose_report_no_file_element_found *path is_m4_element)
+
+      (if (and (not (null-pointer? *path))
+               (true? (sch2pcb_insert_element *tmp-file
+                                              *path
+                                              (pcb_element_get_description *element)
+                                              (pcb_element_get_refdes *element)
+                                              (pcb_element_get_value *element))))
+          (begin
+            ;; Nice, we found it.  If it is an m4 element, we have
+            ;; to skip some lines below, see comments above.
+            (sch2pcb_increment_added_ef *element)
+            (g_free *path)
+            is_m4_element)
+          (if (false? is_m4_element)
+              (begin
+                (sch2pcb_unfound_to_file *element *mline *tmp-file)
+                (g_free *path)
+                skip_next)
+              (begin
+                (g_free *path)
+                skip_next)))))
 
   (define (process-element *mline
                            *tmp-file

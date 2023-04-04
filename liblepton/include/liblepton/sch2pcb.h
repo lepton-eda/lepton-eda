@@ -222,6 +222,9 @@ void
 sch2pcb_set_force_element_files (gboolean val);
 
 void
+sch2pcb_increment_added_ef (PcbElement *el);
+
+void
 sch2pcb_increment_verbose_mode ();
 
 void
@@ -243,12 +246,6 @@ sch2pcb_get_preserve ();
 void
 sch2pcb_set_preserve (gboolean val);
 
-gboolean
-sch2pcb_process_element (char *buf,
-                         FILE *f_out,
-                         PcbElement *el,
-                         gboolean is_m4,
-                         gboolean skip_next);
 gboolean
 sch2pcb_get_remove_unfound_elements ();
 
@@ -361,9 +358,19 @@ gint
 sch2pcb_get_verbose_mode ();
 
 void
+sch2pcb_unfound_to_file (PcbElement *el,
+                         char *buf,
+                         FILE *f_out);
+void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak);
 void
+sch2pcb_verbose_file_element_report (PcbElement *el,
+                                     gboolean is_m4);
+void
 sch2pcb_verbose_print_separator ();
 
+void
+sch2pcb_verbose_report_no_file_element_found (char *p,
+                                              gboolean is_m4);
 G_END_DECLS
