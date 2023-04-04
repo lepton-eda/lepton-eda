@@ -185,7 +185,10 @@
             (pointer->string (pcb_element_get_value *element))))
 
   (define (error-report-element-removed *element)
-    (sch2pcb_increment_n_PKG_removed_new *element))
+    (sch2pcb_set_n_PKG_removed_new (1+ (sch2pcb_get_n_PKG_removed_new)))
+    (format (current-error-port)
+            (G_ "So device ~S will not be in the layout.\n")
+            (pointer->string (pcb_element_get_refdes *element))))
 
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)

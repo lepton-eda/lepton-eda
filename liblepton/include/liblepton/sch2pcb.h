@@ -222,9 +222,6 @@ void
 sch2pcb_set_force_element_files (gboolean val);
 
 void
-sch2pcb_increment_n_PKG_removed_new (PcbElement *el);
-
-void
 sch2pcb_increment_verbose_mode ();
 
 void

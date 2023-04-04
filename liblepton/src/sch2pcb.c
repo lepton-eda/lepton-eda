@@ -1217,16 +1217,6 @@ sch2pcb_buffer_to_file (char *buffer,
  */
 
 void
-sch2pcb_increment_n_PKG_removed_new (PcbElement *el)
-{
-  sch2pcb_set_n_PKG_removed_new (1 + sch2pcb_get_n_PKG_removed_new ());
-  fprintf (stderr,
-           "So device %s will not be in the layout.\n",
-           pcb_element_get_refdes (el));
-}
-
-
-void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak)
 {
