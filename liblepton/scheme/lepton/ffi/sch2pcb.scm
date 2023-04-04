@@ -66,7 +66,6 @@
             sch2pcb_search_element_directories
             sch2pcb_unfound_to_file
             sch2pcb_update_element_descriptions
-            sch2pcb_verbose_file_element_report
             sch2pcb_verbose_report_no_file_element_found
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_write
@@ -122,7 +121,6 @@
 (define-lff sch2pcb_search_element_directories '* '(*))
 (define-lff sch2pcb_unfound_to_file void '(* * *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
-(define-lff sch2pcb_verbose_file_element_report void (list '* int))
 (define-lff sch2pcb_verbose_report_no_file_element_found void (list '* int))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_write '* '(*))

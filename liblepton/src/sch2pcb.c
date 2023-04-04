@@ -1217,32 +1217,6 @@ sch2pcb_buffer_to_file (char *buffer,
  */
 
 void
-sch2pcb_verbose_file_element_report (PcbElement *el,
-                                     gboolean is_m4)
-{
-  if (sch2pcb_get_verbose_mode () != 0)
-  {
-    if (is_m4)
-    {
-      if (sch2pcb_get_force_element_files ())
-      {
-        printf ("%s: have m4 element %s, but trying to replace with a file element.\n",
-                pcb_element_get_refdes (el),
-                pcb_element_get_description (el));
-      }
-    }
-    else
-    {
-      printf ("%s: need new file element for footprint  %s (value=%s)\n",
-              pcb_element_get_refdes (el),
-              pcb_element_get_description (el),
-              pcb_element_get_value (el));
-    }
-  }
-}
-
-
-void
 sch2pcb_verbose_report_no_file_element_found (char *p,
                                               gboolean is_m4)
 {
