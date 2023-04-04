@@ -1357,10 +1357,9 @@ sch2pcb_process_element (char *buf,
     /* Nice, we found it.  If it is an m4 element, we
      * have to skip some lines below, see comments
      * above. */
-    skipping = is_m4;
     sch2pcb_increment_added_ef (el);
     g_free (p);
-    return skipping;
+    return is_m4;
   }
   else if (!is_m4)
   {
