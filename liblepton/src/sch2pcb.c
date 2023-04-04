@@ -1342,7 +1342,6 @@ sch2pcb_process_element (char *buf,
                          gboolean skip_next)
 {
   gchar *p;
-  gboolean skipping = skip_next;
 
   sch2pcb_verbose_file_element_report (el, is_m4);
   p = sch2pcb_search_element_directories (el);
@@ -1365,12 +1364,12 @@ sch2pcb_process_element (char *buf,
   {
     sch2pcb_unfound_to_file (el, buf, f_out);
     g_free (p);
-    return skipping;
+    return skip_next;
   }
   else
   {
     g_free (p);
-    return skipping;
+    return skip_next;
   }
 }
 
