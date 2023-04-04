@@ -157,7 +157,10 @@
                         (pointer->string (pcb_element_get_value *element)))))
 
   (define (verbose-report-no-file-element-found *path is_m4_element)
-    (sch2pcb_verbose_report_no_file_element_found *path is_m4_element))
+    (when (and (null-pointer? *path)
+               (true? is_m4_element)
+               (true? (sch2pcb_get_force_element_files)))
+      (verbose-format "\tNo file element found.\n")))
 
   (define (process-file-element *mline
                                 *tmp-file

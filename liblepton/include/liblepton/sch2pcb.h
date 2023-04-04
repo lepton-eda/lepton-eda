@@ -364,7 +364,4 @@ sch2pcb_unfound_to_file (PcbElement *el,
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak);
-void
-sch2pcb_verbose_report_no_file_element_found (char *p,
-                                              gboolean is_m4);
 G_END_DECLS
