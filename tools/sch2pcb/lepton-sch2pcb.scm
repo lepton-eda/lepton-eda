@@ -175,6 +175,10 @@
               (loop (read-line)))))))))
 
 
+(define (search-element-directories *element)
+  (sch2pcb_search_element_directories *element))
+
+
 ;;; Process the newly created pcb file which is the output from
 ;;;     lepton-netlist -g gsch2pcb ...
 ;;;
@@ -257,7 +261,7 @@
                                 is_m4_element
                                 skip_next)
     (verbose-file-element-report *element (true? is_m4_element))
-    (let ((*path (sch2pcb_search_element_directories *element)))
+    (let ((*path (search-element-directories *element)))
       (verbose-report-no-file-element-found *path is_m4_element)
 
       (if (and (not (null-pointer? *path))
