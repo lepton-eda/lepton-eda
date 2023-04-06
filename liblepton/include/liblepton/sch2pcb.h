@@ -308,7 +308,8 @@ sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
 gchar*
 sch2pcb_search_element_directories (PcbElement *el,
-                                    char *pkg_name_fix);
+                                    char *pkg_name_fix,
+                                    char *description);
 
 gint
 sch2pcb_get_verbose_mode ();

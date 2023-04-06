@@ -177,7 +177,8 @@
 
 (define (search-element-directories *element)
   (sch2pcb_search_element_directories *element
-                                      (pcb_element_get_pkg_name_fix *element)))
+                                      (pcb_element_get_pkg_name_fix *element)
+                                      (pcb_element_get_description *element)))
 
 
 ;;; Process the newly created pcb file which is the output from

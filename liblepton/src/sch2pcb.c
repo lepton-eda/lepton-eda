@@ -903,7 +903,8 @@ sch2pcb_find_element (gchar *dir_path,
 
 gchar*
 sch2pcb_search_element_directories (PcbElement *el,
-                                    char *pkg_name_fix)
+                                    char *pkg_name_fix,
+                                    char *description)
 {
   GList *list;
   gchar *s, *elname = NULL, *dir_path, *path = NULL;
@@ -912,16 +913,16 @@ sch2pcb_search_element_directories (PcbElement *el,
   /* See comment before pcb_element_pkg_to_element() */
   if (pkg_name_fix)
   {
-    if (strchr (pcb_element_get_description (el), '-')) {
-      n1 = strlen (pcb_element_get_description (el));
+    if (strchr (description, '-')) {
+      n1 = strlen (description);
       n2 = strlen (pkg_name_fix);
-      s = pcb_element_get_description (el) + n1 - n2 - 1;
+      s = description + n1 - n2 - 1;
 
 // printf("n1=%d n2=%d desc:%s fix:%s s:%s\n",
-//  n1, n2, pcb_element_get_description (el), pkg_name_fix, s);
+//  n1, n2, description, pkg_name_fix, s);
 
       if (n1 > 0 && n2 < n1 && *s == '-' && *(s + 1) == *pkg_name_fix) {
-        s = g_strndup (pcb_element_get_description (el), n1 - n2 - 1);
+        s = g_strndup (description, n1 - n2 - 1);
         elname = g_strconcat (s, " ", pkg_name_fix, NULL);
         g_free (s);
       }
@@ -931,13 +932,13 @@ sch2pcb_search_element_directories (PcbElement *el,
       printf ("         a comma in a component value:\n");
       printf ("         Check %s %s %s\n",
               pcb_element_get_refdes (el),
-              pcb_element_get_description (el),
+              description,
               pcb_element_get_value (el));
       printf ("         Maybe just use a space instead of a comma?\n");
     }
   }
   if (!elname)
-    elname = g_strdup (pcb_element_get_description (el));
+    elname = g_strdup (description);
 
   if (!strcmp (elname, "unknown")) {
     g_free (elname);
