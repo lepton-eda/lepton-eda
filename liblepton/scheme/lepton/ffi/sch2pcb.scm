@@ -26,6 +26,7 @@
             pcb_element_free
             pcb_element_get_description
             pcb_element_get_omit_PKG
+            pcb_element_get_pkg_name_fix
             pcb_element_get_refdes
             pcb_element_get_value
             pcb_element_line_parse
@@ -67,6 +68,7 @@
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_get_omit_PKG int '(*))
+(define-lff pcb_element_get_pkg_name_fix '* '(*))
 (define-lff pcb_element_get_refdes '* '(*))
 (define-lff pcb_element_get_value '* '(*))
 (define-lff pcb_element_line_parse '* '(*))
@@ -94,7 +96,7 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
-(define-lff sch2pcb_search_element_directories '* '(*))
+(define-lff sch2pcb_search_element_directories '* '(* *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_write '* '(*))
