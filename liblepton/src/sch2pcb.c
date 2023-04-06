@@ -904,29 +904,15 @@ sch2pcb_find_element (gchar *dir_path,
 gchar*
 sch2pcb_search_element_directories (PcbElement *el,
                                     char *pkg_name_fix,
-                                    char *description)
+                                    char *description,
+                                    char *elname)
 {
   GList *list;
-  gchar *s, *elname = NULL, *dir_path, *path = NULL;
-  gint n1, n2;
+  gchar *dir_path, *path = NULL;
 
   /* See comment before pcb_element_pkg_to_element() */
   if (pkg_name_fix)
   {
-    if (strchr (description, '-')) {
-      n1 = strlen (description);
-      n2 = strlen (pkg_name_fix);
-      s = description + n1 - n2 - 1;
-
-// printf("n1=%d n2=%d desc:%s fix:%s s:%s\n",
-//  n1, n2, description, pkg_name_fix, s);
-
-      if (n1 > 0 && n2 < n1 && *s == '-' && *(s + 1) == *pkg_name_fix) {
-        s = g_strndup (description, n1 - n2 - 1);
-        elname = g_strconcat (s, " ", pkg_name_fix, NULL);
-        g_free (s);
-      }
-    }
     if (!elname) {
       printf ("Warning: argument passing may have been confused by\n");
       printf ("         a comma in a component value:\n");

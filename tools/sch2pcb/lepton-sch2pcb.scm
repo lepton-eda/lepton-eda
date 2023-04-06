@@ -183,9 +183,39 @@
   (define description (and (not (null-pointer? *description))
                            (pointer->string *description)))
 
+  (define (description+fix->name description fix)
+    (and fix
+         description
+         (let ((description-length (string-length description))
+               (fix-length (string-length fix)))
+           (if (> description-length fix-length)
+               (let ((left-description-part (string-drop-right description fix-length))
+                     (right-description-part (string-take-right description fix-length)))
+                 (and (string-suffix? "-" left-description-part)
+                      ;; This is a very weak test that fixed
+                      ;; package name part matches to the right
+                      ;; description part.  Maybe using
+                      ;; (string-filter (char-set-delete
+                      ;; char-set:full #\space #\,) str) for each
+                      ;; of the strings instead of string-ref
+                      ;; could be better when comparing the
+                      ;; strings?
+                      (char=? (string-ref right-description-part 0)
+                              (string-ref fix 0))
+                      ;; Reconstruct description using space
+                      ;; instead of hyphen as separator.
+                      (string-append (string-drop-right left-description-part 1)
+                                     " "
+                                     fix)))))))
+
+  (define name (description+fix->name description package-name-fix))
+
+  (define *name (if name (string->pointer name) %null-pointer))
+
   (sch2pcb_search_element_directories *element
                                       *package-name-fix
-                                      *description))
+                                      *description
+                                      *name))
 
 
 ;;; Process the newly created pcb file which is the output from
