@@ -903,26 +903,12 @@ sch2pcb_find_element (gchar *dir_path,
 
 gchar*
 sch2pcb_search_element_directories (PcbElement *el,
-                                    char *pkg_name_fix,
                                     char *description,
                                     char *elname)
 {
   GList *list;
   gchar *dir_path, *path = NULL;
 
-  /* See comment before pcb_element_pkg_to_element() */
-  if (pkg_name_fix)
-  {
-    if (!elname) {
-      printf ("Warning: argument passing may have been confused by\n");
-      printf ("         a comma in a component value:\n");
-      printf ("         Check %s %s %s\n",
-              pcb_element_get_refdes (el),
-              description,
-              pcb_element_get_value (el));
-      printf ("         Maybe just use a space instead of a comma?\n");
-    }
-  }
   if (!elname)
     elname = g_strdup (description);
 

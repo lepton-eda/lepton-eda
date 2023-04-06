@@ -212,8 +212,19 @@
 
   (define *name (if name (string->pointer name) %null-pointer))
 
+  ;; See comment before pcb_element_pkg_to_element().
+  (when package-name-fix
+    (unless name
+      (format #t
+              "Warning: argument passing may have been confused by
+         a comma in a component value:\n
+         Check ~A ~A ~A
+         Maybe just use a space instead of a comma?\n"
+              (pointer->string (pcb_element_get_refdes *element))
+              description
+              (pointer->string (pcb_element_get_value *element)))))
+
   (sch2pcb_search_element_directories *element
-                                      *package-name-fix
                                       *description
                                       *name))
 
