@@ -176,9 +176,16 @@
 
 
 (define (search-element-directories *element)
+  (define *package-name-fix (pcb_element_get_pkg_name_fix *element))
+  (define package-name-fix (and (not (null-pointer? *package-name-fix))
+                                (pointer->string *package-name-fix)))
+  (define *description (pcb_element_get_description *element))
+  (define description (and (not (null-pointer? *description))
+                           (pointer->string *description)))
+
   (sch2pcb_search_element_directories *element
-                                      (pcb_element_get_pkg_name_fix *element)
-                                      (pcb_element_get_description *element)))
+                                      *package-name-fix
+                                      *description))
 
 
 ;;; Process the newly created pcb file which is the output from
