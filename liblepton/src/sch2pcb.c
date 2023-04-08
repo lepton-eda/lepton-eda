@@ -909,9 +909,6 @@ sch2pcb_search_element_directories (PcbElement *el,
   GList *list;
   gchar *dir_path, *path = NULL;
 
-  if (!elname)
-    elname = g_strdup (description);
-
   if (!strcmp (elname, "unknown")) {
     g_free (elname);
     return NULL;

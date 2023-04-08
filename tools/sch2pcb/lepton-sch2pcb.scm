@@ -224,9 +224,13 @@
               description
               (pointer->string (pcb_element_get_value *element)))))
 
-  (sch2pcb_search_element_directories *element
-                                      *description
-                                      *name))
+  (let* ((element-name (or name description))
+         (*element-name (if element-name
+                            (string->pointer element-name)
+                            %null-pointer)))
+    (sch2pcb_search_element_directories *element
+                                        *description
+                                        *element-name)))
 
 
 ;;; Process the newly created pcb file which is the output from
