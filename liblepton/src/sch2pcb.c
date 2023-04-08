@@ -909,8 +909,6 @@ sch2pcb_search_element_directories (PcbElement *el,
   GList *list;
   gchar *dir_path, *path = NULL;
 
-  if (sch2pcb_get_verbose_mode () > 1)
-    printf ("\tSearching directories looking for file element: %s\n", elname);
   for (list = sch2pcb_get_element_directory_list ();
        list;
        list = g_list_next (list))

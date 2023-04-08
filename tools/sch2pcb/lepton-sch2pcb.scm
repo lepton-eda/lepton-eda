@@ -230,9 +230,13 @@
                             %null-pointer)))
     (if (string= element-name "unknown")
         %null-pointer
-        (sch2pcb_search_element_directories *element
-                                            *description
-                                            *element-name))))
+        (begin
+          (verbose-format
+           (G_ "\tSearching directories looking for file element: ~A\n")
+           element-name)
+          (sch2pcb_search_element_directories *element
+                                              *description
+                                              *element-name)))))
 
 
 ;;; Process the newly created pcb file which is the output from
