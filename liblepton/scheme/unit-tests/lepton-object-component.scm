@@ -397,13 +397,11 @@
 
 (test-begin "component-library-command")
 (let* ((script-name (tmpnam))
-       (get-command script-name)
-       (list-command (string-append script-name " -l")))
+       (get-command (string-append "sh " script-name))
+       (list-command (string-append "sh " script-name " -l")))
 
-  (with-output-to-file get-command
+  (with-output-to-file script-name
     (lambda () (display script-contents)))
-
-  (chmod get-command #o755)
 
   (component-library-command list-command get-command "make-sym-lib")
 
@@ -415,8 +413,9 @@
       (test-assert (component? C1))
       (test-assert (component? C2))
       ;; Clean up.
-      (delete-file get-command))))
+      (delete-file script-name))))
 (test-end "component-library-command")
+
 
 (test-begin "object-component-wrong-argument")
 
