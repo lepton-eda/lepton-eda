@@ -141,6 +141,18 @@
 ;;; The number of new packages mentioned but not found.
 (define %removed-new-packages-count 0)
 
+
+(define (element-refdes *element)
+  (pointer->string (pcb_element_get_refdes *element)))
+
+(define (element-description *element)
+  (pointer->string (pcb_element_get_description *element)))
+
+(define (element-value *element)
+  (pointer->string (pcb_element_get_value *element)))
+
+
+
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
              (file-readable? pcb-filename))
@@ -169,13 +181,6 @@
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
-
-  (define (element-refdes *element)
-    (pointer->string (pcb_element_get_refdes *element)))
-  (define (element-description *element)
-    (pointer->string (pcb_element_get_description *element)))
-  (define (element-value *element)
-    (pointer->string (pcb_element_get_value *element)))
 
   (define (verbose-file-element-report *element is-m4-element?)
     (if is-m4-element?
