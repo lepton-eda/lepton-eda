@@ -96,35 +96,29 @@ Display a message box on error."
   "Launch a browser to display a page from the offline version of the
 wiki.  The specified PAGE should be a string containing the page
 name as used on the live version of the wiki."
-( let*
-  (
-  ( fnames (list (sys-doc-dir) "wiki") )
-  ( path   (string-join fnames file-name-separator-string 'suffix) )
-  ( fpath  (string-append path (wiki-munge page) ".html") )
-  )
+
+  ( define fnames (list (sys-doc-dir) "wiki") )
+  ( define path   (string-join fnames file-name-separator-string 'suffix) )
+  ( define fpath  (string-append path (wiki-munge page) ".html") )
 
   ( if ( file-exists? fpath )
     ( doc-show-uri (string-append "file://" fpath) )
     ( schematic-message-dialog (format #f (G_ "File does not exist:~%~a") fpath) )
   )
-)
 ) ; show-wiki()
 
 
 ( define ( show-manual )
   "Launch a browser to display a main page of the offline version
 of the Lepton EDA Reference manual."
-( let*
-  (
-  ( fnames (list (sys-doc-dir) "lepton-manual.html" "index.html") )
-  ( fpath  (string-join fnames file-name-separator-string) )
-  )
+
+  ( define fnames (list (sys-doc-dir) "lepton-manual.html" "index.html") )
+  ( define fpath  (string-join fnames file-name-separator-string) )
 
   ( if ( file-exists? fpath )
     ( doc-show-uri (string-append "file://" fpath) )
     ( schematic-message-dialog (format #f (G_ "File does not exist:~%~a") fpath) )
   )
-)
 ) ; show-manual()
 
 
