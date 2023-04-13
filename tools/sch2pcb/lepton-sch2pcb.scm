@@ -212,6 +212,13 @@
 
   (define *name (if name (string->pointer name) %null-pointer))
 
+  (define (search-element-directories *element
+                                      *description
+                                      *element-name)
+    (sch2pcb_search_element_directories *element
+                                        *description
+                                        *element-name))
+
   ;; See comment before pcb_element_pkg_to_element().
   (when package-name-fix
     (unless name
@@ -234,9 +241,9 @@
           (verbose-format
            (G_ "\tSearching directories looking for file element: ~A\n")
            element-name)
-          (sch2pcb_search_element_directories *element
-                                              *description
-                                              *element-name)))))
+          (search-element-directories *element
+                                      *description
+                                      *element-name)))))
 
 
 ;;; Process the newly created pcb file which is the output from
