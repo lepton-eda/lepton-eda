@@ -144,7 +144,10 @@
 
 (define (pcb-element-get-string *element *c-getter)
   (define *s (*c-getter *element))
-  (pointer->string *s))
+  (if (null-pointer? *s)
+      ;; What should the function return if *s is NULL?
+      "<null>"
+      (pointer->string *s)))
 
 (define (pcb-element-refdes *element)
   (pcb-element-get-string *element pcb_element_get_refdes))
