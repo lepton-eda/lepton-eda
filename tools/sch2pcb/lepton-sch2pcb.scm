@@ -142,15 +142,18 @@
 (define %removed-new-packages-count 0)
 
 
+(define (pcb-element-get-string *element *c-getter)
+  (define *s (*c-getter *element))
+  (pointer->string *s))
+
 (define (pcb-element-refdes *element)
-  (pointer->string (pcb_element_get_refdes *element)))
+  (pcb-element-get-string *element pcb_element_get_refdes))
 
 (define (pcb-element-description *element)
-  (pointer->string (pcb_element_get_description *element)))
+  (pcb-element-get-string *element pcb_element_get_description))
 
 (define (pcb-element-value *element)
-  (pointer->string (pcb_element_get_value *element)))
-
+  (pcb-element-get-string *element pcb_element_get_value))
 
 
 (define (make-pcb-element-list pcb-filename)
