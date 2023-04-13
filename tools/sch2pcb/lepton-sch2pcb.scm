@@ -142,13 +142,13 @@
 (define %removed-new-packages-count 0)
 
 
-(define (element-refdes *element)
+(define (pcb-element-refdes *element)
   (pointer->string (pcb_element_get_refdes *element)))
 
-(define (element-description *element)
+(define (pcb-element-description *element)
   (pointer->string (pcb_element_get_description *element)))
 
-(define (element-value *element)
+(define (pcb-element-value *element)
   (pointer->string (pcb_element_get_value *element)))
 
 
@@ -186,13 +186,13 @@
     (if is-m4-element?
         (when %force-file-elements?
           (verbose-format "~A: have m4 element ~S, but trying to replace with a file element.\n"
-                          (element-refdes *element)
-                          (element-description *element)))
+                          (pcb-element-refdes *element)
+                          (pcb-element-description *element)))
 
         (verbose-format "~A: need new file element for footprint ~S (value=~A)\n"
-                        (element-refdes *element)
-                        (element-description *element)
-                        (element-value *element))))
+                        (pcb-element-refdes *element)
+                        (pcb-element-description *element)
+                        (pcb-element-value *element))))
 
   (define (verbose-report-no-file-element-found *path is_m4_element)
     (when (and (null-pointer? *path)
@@ -203,30 +203,30 @@
   (define (verbose-increment-added-file-element *element)
     (set! %added-file-element-count (1+ %added-file-element-count))
     (verbose-format "~A: added new file element for footprint ~S (value=~A)\n"
-                    (element-refdes *element)
-                    (element-description *element)
-                    (element-value *element)))
+                    (pcb-element-refdes *element)
+                    (pcb-element-description *element)
+                    (pcb-element-value *element)))
 
   (define (m4-element->file *element *mline *tmp-file)
     (sch2pcb_buffer_to_file *mline *tmp-file)
     (set! %added-m4-element-count (1+ %added-m4-element-count))
     (verbose-format "~A: added new m4 element for footprint ~S (value=~A)\n"
-                    (element-refdes *element)
-                    (element-description *element)
-                    (element-value *element)))
+                    (pcb-element-refdes *element)
+                    (pcb-element-description *element)
+                    (pcb-element-value *element)))
 
   (define (error-report-element-not-found *element)
     (format (current-error-port)
             (G_ "~A: can't find PCB element for footprint ~S (value=~A)\n")
-            (element-refdes *element)
-            (element-description *element)
-            (element-value *element)))
+            (pcb-element-refdes *element)
+            (pcb-element-description *element)
+            (pcb-element-value *element)))
 
   (define (error-report-element-removed *element)
     (set! %removed-new-packages-count (1+ %removed-new-packages-count))
     (format (current-error-port)
             (G_ "So device ~S will not be in the layout.\n")
-            (element-refdes *element)))
+            (pcb-element-refdes *element)))
 
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)
