@@ -283,9 +283,9 @@
                         (pcb-element-description *element)
                         (pcb-element-value *element))))
 
-  (define (verbose-report-no-file-element-found path is_m4_element)
+  (define (verbose-report-no-file-element-found path m4-element?)
     (when (and (not path)
-               (true? is_m4_element)
+               m4-element?
                %force-file-elements?)
       (verbose-format "\tNo file element found.\n")))
 
@@ -339,9 +339,10 @@
                                 *element
                                 is_m4_element
                                 skip_next)
-    (let ((path (search-element-directories element-directories *element)))
-      (verbose-file-element-report *element (true? is_m4_element))
-      (verbose-report-no-file-element-found path is_m4_element)
+    (let ((path (search-element-directories element-directories *element))
+          (m4-element? (true? is_m4_element)))
+      (verbose-file-element-report *element m4-element?)
+      (verbose-report-no-file-element-found path m4-element?)
 
       (if (and path
                (true? (sch2pcb_insert_element *tmp-file
@@ -354,7 +355,7 @@
             ;; to skip some lines below, see comments above.
             (verbose-increment-added-file-element *element)
             is_m4_element)
-          (if (false? is_m4_element)
+          (if (not m4-element?)
               (begin
                 (unfound-element->file *element *mline *tmp-file)
                 skip_next)
