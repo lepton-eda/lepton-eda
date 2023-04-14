@@ -339,8 +339,8 @@
                                 *element
                                 is_m4_element
                                 skip_next)
-    (verbose-file-element-report *element (true? is_m4_element))
     (let ((path (search-element-directories element-directories *element)))
+      (verbose-file-element-report *element (true? is_m4_element))
       (verbose-report-no-file-element-found path is_m4_element)
 
       (if (and path
