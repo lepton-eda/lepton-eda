@@ -216,20 +216,21 @@
 
   (define *name (if name (string->pointer name) %null-pointer))
 
-  (define (search-element-path *element-name)
+  (define (search-element-path element-name)
     (let loop ((ls element-directories))
       (if (null? ls)
           %null-pointer
           (let ((dir-path (car ls)))
             (extra-verbose-format (G_ "\tLooking in directory: ~S\n") dir-path)
             (let ((*path (sch2pcb_find_element (string->pointer dir-path)
-                                               *element-name)))
+                                               (if element-name
+                                                   (string->pointer element-name)
+                                                   %null-pointer))))
               (if (null-pointer? *path)
                   (loop (cdr ls))
                   (begin
                     (verbose-format (G_ "\tFound: ~A\n")
                                     (pointer->string *path))
-                    (g_free *element-name)
                     *path)))))))
 
   ;; See comment before pcb_element_pkg_to_element().
@@ -244,17 +245,14 @@
               description
               (pointer->string (pcb_element_get_value *element)))))
 
-  (let* ((element-name (or name description))
-         (*element-name (if element-name
-                            (string->pointer element-name)
-                            %null-pointer)))
+  (let* ((element-name (or name description)))
     (if (string= element-name "unknown")
         %null-pointer
         (begin
           (verbose-format
            (G_ "\tSearching directories looking for file element: ~A\n")
                element-name)
-          (search-element-path *element-name)))))
+          (search-element-path element-name)))))
 
 
 ;;; Process the newly created pcb file which is the output from
