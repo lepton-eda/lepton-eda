@@ -179,7 +179,7 @@
               (loop (read-line)))))))))
 
 
-(define (search-element-directories *element)
+(define (search-element-directories element-directories *element)
   (define *package-name-fix (pcb_element_get_pkg_name_fix *element))
   (define package-name-fix (and (not (null-pointer? *package-name-fix))
                                 (pointer->string *package-name-fix)))
@@ -217,8 +217,7 @@
   (define *name (if name (string->pointer name) %null-pointer))
 
   (define (search-element-path *element-name)
-    (let loop ((ls (glist->list (sch2pcb_get_element_directory_list)
-                                pointer->string)))
+    (let loop ((ls element-directories))
       (if (null? ls)
           %null-pointer
           (let ((dir-path (car ls)))
@@ -267,6 +266,10 @@
 ;;; existing pcb file, strip out any elements if they are already
 ;;; present so that the new pcb file will only have new elements.
 (define (add-elements pcb-filename)
+  (define element-directories
+    (glist->list (sch2pcb_get_element_directory_list)
+                 pointer->string))
+
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
@@ -340,7 +343,7 @@
                                 is_m4_element
                                 skip_next)
     (verbose-file-element-report *element (true? is_m4_element))
-    (let ((*path (search-element-directories *element)))
+    (let ((*path (search-element-directories element-directories *element)))
       (verbose-report-no-file-element-found *path is_m4_element)
 
       (if (and (not (null-pointer? *path))
