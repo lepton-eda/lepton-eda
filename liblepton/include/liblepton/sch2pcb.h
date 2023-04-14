@@ -306,11 +306,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element);
 void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak);
-gchar*
-sch2pcb_search_element_directories (PcbElement *el,
-                                    char *description,
-                                    char *elname);
-
 gint
 sch2pcb_get_verbose_mode ();
 

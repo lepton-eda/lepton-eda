@@ -36,6 +36,10 @@
   (when (> (sch2pcb_get_verbose_mode) 0)
     (format (current-output-port) arg ...)))
 
+(define-syntax-rule (extra-verbose-format arg ...)
+  (when (> (sch2pcb_get_verbose_mode) 1)
+    (format (current-output-port) arg ...)))
+
 (define %sch2pcb (basename (car (program-arguments))))
 
 (define %pcb-data-path (getenv "PCBDATA"))
@@ -212,12 +216,22 @@
 
   (define *name (if name (string->pointer name) %null-pointer))
 
-  (define (search-element-directories *element
-                                      *description
-                                      *element-name)
-    (sch2pcb_search_element_directories *element
-                                        *description
-                                        *element-name))
+  (define (search-element-path *element-name)
+    (let loop ((ls (glist->list (sch2pcb_get_element_directory_list)
+                                pointer->string)))
+      (if (null? ls)
+          %null-pointer
+          (let ((dir-path (car ls)))
+            (extra-verbose-format (G_ "\tLooking in directory: ~S\n") dir-path)
+            (let ((*path (sch2pcb_find_element (string->pointer dir-path)
+                                               *element-name)))
+              (if (null-pointer? *path)
+                  (loop (cdr ls))
+                  (begin
+                    (verbose-format (G_ "\tFound: ~A\n")
+                                    (pointer->string *path))
+                    (g_free *element-name)
+                    *path)))))))
 
   ;; See comment before pcb_element_pkg_to_element().
   (when package-name-fix
@@ -240,10 +254,8 @@
         (begin
           (verbose-format
            (G_ "\tSearching directories looking for file element: ~A\n")
-           element-name)
-          (search-element-directories *element
-                                      *description
-                                      *element-name)))))
+               element-name)
+          (search-element-path *element-name)))))
 
 
 ;;; Process the newly created pcb file which is the output from

@@ -901,32 +901,6 @@ sch2pcb_find_element (gchar *dir_path,
   return found;
 }
 
-gchar*
-sch2pcb_search_element_directories (PcbElement *el,
-                                    char *description,
-                                    char *elname)
-{
-  GList *list;
-  gchar *dir_path, *path = NULL;
-
-  for (list = sch2pcb_get_element_directory_list ();
-       list;
-       list = g_list_next (list))
-  {
-    dir_path = (gchar *) list->data;
-    if (sch2pcb_get_verbose_mode () > 1)
-      printf ("\tLooking in directory: \"%s\"\n", dir_path);
-    path = sch2pcb_find_element (dir_path, elname);
-    if (path) {
-      if (sch2pcb_get_verbose_mode () != 0)
-        printf ("\tFound: %s\n", path);
-      break;
-    }
-  }
-  g_free (elname);
-  return path;
-}
-
 /* The gnetlist backend gnet-gsch2pcb.scm generates PKG_ lines:
  *
  *        PKG_footprint(footprint{-fp0-fp1},refdes,value{,fp0,fp1})

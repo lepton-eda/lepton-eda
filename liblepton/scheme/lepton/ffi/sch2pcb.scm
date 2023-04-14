@@ -32,10 +32,12 @@
             pcb_element_line_parse
             pcb_element_pkg_to_element
             sch2pcb_buffer_to_file
+            sch2pcb_get_element_directory_list
             sch2pcb_element_directory_list_append
             sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
             sch2pcb_set_empty_footprint_name
+            sch2pcb_find_element
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
             sch2pcb_get_n_PKG_removed_old
@@ -53,7 +55,6 @@
             sch2pcb_pcb_element_list_append
             sch2pcb_set_preserve
             sch2pcb_prune_elements
-            sch2pcb_search_element_directories
             sch2pcb_update_element_descriptions
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_write
@@ -75,10 +76,12 @@
 (define-lff pcb_element_pkg_to_element '* '(*))
 
 (define-lff sch2pcb_buffer_to_file void '(* *))
+(define-lff sch2pcb_get_element_directory_list '* '())
 (define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
 (define-lff sch2pcb_set_empty_footprint_name void '(*))
+(define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
@@ -96,7 +99,6 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
-(define-lff sch2pcb_search_element_directories '* '(* * *))
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_write '* '(*))
