@@ -471,15 +471,15 @@
                              ;; first one that was starting in
                              ;; that mode.
                              #f
-                             (if skip-next?
-                                 ;; Paren level is still greater
-                                 ;; than zero, continue skipping.
-                                 #t
-                                 ;; Parse lines as usual.  The C
-                                 ;; function below will decide if
-                                 ;; next lines have to be skipped
-                                 ;; based on the result of
-                                 ;; parsing.
+                             ;; If paren level is still greater
+                             ;; than zero, continue skipping.
+                             ;; Otherwise, parse lines as
+                             ;; usual.  The function
+                             ;; parse-next-line() below will
+                             ;; decide if next lines have to
+                             ;; be skipped based on the result
+                             ;; of parsing.
+                             (or skip-next?
                                  (parse-next-line mline
                                                   tline
                                                   skip-next?)))))
