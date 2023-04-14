@@ -337,10 +337,9 @@
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
-                                is_m4_element
-                                skip_next)
-    (let ((path (search-element-directories element-directories *element))
-          (m4-element? (true? is_m4_element)))
+                                m4-element?
+                                skip-next?)
+    (let ((path (search-element-directories element-directories *element)))
       (verbose-file-element-report *element m4-element?)
       (verbose-report-no-file-element-found path m4-element?)
 
@@ -354,30 +353,30 @@
             ;; Nice, we found it.  If it is an m4 element, we have
             ;; to skip some lines below, see comments above.
             (verbose-increment-added-file-element *element)
-            is_m4_element)
+            m4-element?)
           (begin
             (unless m4-element?
               (unfound-element->file *element *mline *tmp-file))
-            skip_next))))
+            skip-next?))))
 
   (define (process-element *mline
                            *tmp-file
                            *element
-                           is_m4_element
+                           m4-element?
                            skip-next)
     (let ((result
-           (if (or (false? is_m4_element)
-                   (and (true? is_m4_element)
+           (if (or (not m4-element?)
+                   (and m4-element?
                         %force-file-elements?))
                (process-file-element *mline
                                      *tmp-file
                                      *element
-                                     is_m4_element
+                                     m4-element?
                                      skip-next)
                (begin
-                 ;; Here we're surely dealing with m4 elements as 'is_m4_element' has
-                 ;; been set to TRUE and no forcing of file elements
-                 ;; requested.
+                 ;; Here we're surely dealing with m4 elements as
+                 ;; 'm4-element?' has been set to #t and no
+                 ;; forcing of file elements requested.
                  (m4-element->file *element *mline *tmp-file)
                  skip-next))))
 
@@ -385,13 +384,12 @@
       (verbose-format "----\n")
       result))
 
-  (define (parse-next-line mline tline skip-next)
+  (define (parse-next-line mline tline skip-next?)
     ;; First let's find out what element type we're dealing with.
     (let* ((*tline (string->pointer tline))
            (*m4-element (pcb_element_line_parse *tline))
-           (is-m4-element? (not (null-pointer? *m4-element)))
-           (is_m4_element (if is-m4-element? TRUE FALSE))
-           (*element (if is-m4-element?
+           (m4-element? (not (null-pointer? *m4-element)))
+           (*element (if m4-element?
                          ;; If Element line is present
                          ;; (*m4-element is not NULL), it was
                          ;; inserted directly from m4 code and
@@ -418,7 +416,7 @@
             ;; don't want to skip any lines.  In the next
             ;; iteration, this C value ('skipping') will allow us
             ;; to skip parenthesized m4 element body.
-            is_m4_element)
+            m4-element?)
 
           ;; Well, the element has not been found in the current
           ;; element list, let's process it then.
@@ -428,25 +426,25 @@
                 ;; string to the temp file as is.
                 (begin
                   (sch2pcb_buffer_to_file *mline *tmp-file)
-                  skip-next)
+                  skip-next?)
                 ;; Otherwise, process it further.
                 (if (true? (pcb_element_get_omit_PKG *element))
                     ;; Element exists but its omit_PKG field is
                     ;; true.  Let's skip it.
-                    skip-next
+                    skip-next?
                     ;; Actually process or lookup the element.
                     (process-element *mline
                                      *tmp-file
                                      *element
-                                     is_m4_element
-                                     skip-next)))))))
+                                     m4-element?
+                                     skip-next?)))))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
       (lambda ()
         (let loop ((line (read-line))
                    (paren-level 0)
-                   (skip-next FALSE))
+                   (skip-next? #f))
           (unless (eof-object? line)
             ;; read-line() drops trailing newlines so we add them
             ;; again here.
@@ -460,23 +458,23 @@
                    ;; parens.  What if the first paren is a
                    ;; closing one?  Should we reset the counter to
                    ;; zero?
-                   (new-paren-level (if (true? skip-next)
+                   (new-paren-level (if skip-next?
                                         (case first-char
                                           ((#\() (1+ paren-level))
                                           ((#\)) (1- paren-level))
                                           (else paren-level))
                                         paren-level))
-                   (skip (if (and (true? skip-next)
+                   (skip (if (and skip-next?
                                   (<= new-paren-level 0))
                              ;; Stop skipping mode as we found
                              ;; closing paren matching to the
                              ;; first one that was starting in
                              ;; that mode.
-                             FALSE
-                             (if (true? skip-next)
+                             #f
+                             (if skip-next?
                                  ;; Paren level is still greater
                                  ;; than zero, continue skipping.
-                                 TRUE
+                                 #t
                                  ;; Parse lines as usual.  The C
                                  ;; function below will decide if
                                  ;; next lines have to be skipped
@@ -484,7 +482,7 @@
                                  ;; parsing.
                                  (parse-next-line mline
                                                   tline
-                                                  skip-next)))))
+                                                  skip-next?)))))
               (loop (read-line) new-paren-level skip)))))))
 
   (define (process-files)
