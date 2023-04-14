@@ -218,20 +218,19 @@
 
   (define (search-element-path element-name)
     (let loop ((ls element-directories))
-      (if (null? ls)
-          %null-pointer
-          (let ((dir-path (car ls)))
-            (extra-verbose-format (G_ "\tLooking in directory: ~S\n") dir-path)
-            (let ((*path (sch2pcb_find_element (string->pointer dir-path)
-                                               (if element-name
-                                                   (string->pointer element-name)
-                                                   %null-pointer))))
-              (if (null-pointer? *path)
-                  (loop (cdr ls))
-                  (begin
-                    (verbose-format (G_ "\tFound: ~A\n")
-                                    (pointer->string *path))
-                    *path)))))))
+      (and (not (null? ls))
+           (let ((dir-path (car ls)))
+             (extra-verbose-format (G_ "\tLooking in directory: ~S\n") dir-path)
+             (let ((*path (sch2pcb_find_element (string->pointer dir-path)
+                                                (if element-name
+                                                    (string->pointer element-name)
+                                                    %null-pointer))))
+               (if (null-pointer? *path)
+                   (loop (cdr ls))
+                   (let ((path (pointer->string *path)))
+                     (g_free *path)
+                     (verbose-format (G_ "\tFound: ~A\n") path)
+                     path)))))))
 
   ;; See comment before pcb_element_pkg_to_element().
   (when package-name-fix
@@ -284,8 +283,8 @@
                         (pcb-element-description *element)
                         (pcb-element-value *element))))
 
-  (define (verbose-report-no-file-element-found *path is_m4_element)
-    (when (and (null-pointer? *path)
+  (define (verbose-report-no-file-element-found path is_m4_element)
+    (when (and (not path)
                (true? is_m4_element)
                %force-file-elements?)
       (verbose-format "\tNo file element found.\n")))
@@ -341,12 +340,12 @@
                                 is_m4_element
                                 skip_next)
     (verbose-file-element-report *element (true? is_m4_element))
-    (let ((*path (search-element-directories element-directories *element)))
-      (verbose-report-no-file-element-found *path is_m4_element)
+    (let ((path (search-element-directories element-directories *element)))
+      (verbose-report-no-file-element-found path is_m4_element)
 
-      (if (and (not (null-pointer? *path))
+      (if (and path
                (true? (sch2pcb_insert_element *tmp-file
-                                              *path
+                                              (string->pointer path)
                                               (pcb_element_get_description *element)
                                               (pcb_element_get_refdes *element)
                                               (pcb_element_get_value *element))))
@@ -354,16 +353,12 @@
             ;; Nice, we found it.  If it is an m4 element, we have
             ;; to skip some lines below, see comments above.
             (verbose-increment-added-file-element *element)
-            (g_free *path)
             is_m4_element)
           (if (false? is_m4_element)
               (begin
                 (unfound-element->file *element *mline *tmp-file)
-                (g_free *path)
                 skip_next)
-              (begin
-                (g_free *path)
-                skip_next)))))
+              skip_next))))
 
   (define (process-element *mline
                            *tmp-file
