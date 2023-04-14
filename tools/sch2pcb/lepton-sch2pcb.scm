@@ -355,11 +355,10 @@
             ;; to skip some lines below, see comments above.
             (verbose-increment-added-file-element *element)
             is_m4_element)
-          (if (not m4-element?)
-              (begin
-                (unfound-element->file *element *mline *tmp-file)
-                skip_next)
-              skip_next))))
+          (begin
+            (unless m4-element?
+              (unfound-element->file *element *mline *tmp-file))
+            skip_next))))
 
   (define (process-element *mline
                            *tmp-file
