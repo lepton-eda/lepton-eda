@@ -34,7 +34,8 @@
              (lepton version)
              (sch2pcb element)
              (sch2pcb format)
-             (sch2pcb insert))
+             (sch2pcb insert)
+             (sch2pcb lookup))
 
 
 (define %sch2pcb (basename (car (program-arguments))))
@@ -261,10 +262,7 @@
       (and (not (null? ls))
            (let ((dir-path (car ls)))
              (extra-verbose-format "\tLooking in directory: ~S\n" dir-path)
-             (let ((*path (sch2pcb_find_element (string->pointer dir-path)
-                                                (if element-name
-                                                    (string->pointer element-name)
-                                                    %null-pointer))))
+             (let ((*path (lookup-footprint dir-path element-name)))
                (if (null-pointer? *path)
                    (loop (cdr ls))
                    (let ((path (pointer->string *path)))
