@@ -520,6 +520,11 @@
           0))))
 
 
+(define (update-element-descriptions pcb-filename bak-filename)
+  (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
+                                       (string->pointer bak-filename)))
+
+
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
 ;;; lepton-netlist has exit status of 0 even if it's given an
 ;;; invalid arg, so do some stat() hoops to decide if
@@ -1149,8 +1154,7 @@ Lepton EDA homepage: <~A>
                     (format #t "No elements found, so nothing to do.\n")
                     (exit 0)))
                 (when %fix-elements?
-                  (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
-                                                       (string->pointer bak-filename)))
+                  (update-element-descriptions pcb-filename bak-filename))
                 (sch2pcb_prune_elements (string->pointer pcb-filename)
                                         (string->pointer bak-filename))
                 (report-results pcb-filename
