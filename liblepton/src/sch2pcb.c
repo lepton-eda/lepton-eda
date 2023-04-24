@@ -352,21 +352,6 @@ sch2pcb_set_n_empty (int val)
 }
 
 
-static int n_fixed;
-
-int
-sch2pcb_get_n_fixed ()
-{
-  return n_fixed;
-}
-
-void
-sch2pcb_set_n_fixed (int val)
-{
-  n_fixed = val;
-}
-
-
 static int n_none;
 
 int

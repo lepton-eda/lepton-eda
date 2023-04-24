@@ -140,6 +140,8 @@
 (define %added-file-element-count 0)
 ;;; The number of m4 elements added.
 (define %added-m4-element-count 0)
+;;; The number of fixed elements.
+(define %fixed-element-count 0)
 ;;; The number of not found packages.
 (define %not-found-packages-count 0)
 ;;; The number of new packages mentioned but not found.
@@ -526,11 +528,11 @@
     (unless (null? *element-list)
       (let ((*element (car *element-list)))
         (unless (null-pointer? (pcb_element_get_changed_description *element))
-          (sch2pcb_set_n_fixed (1+ (sch2pcb_get_n_fixed))))
+          (set! %fixed-element-count (1+ %fixed-element-count)))
         (loop (cdr *element-list)))))
 
   (if (or (null-pointer? (sch2pcb_get_pcb_element_list))
-          (zero? (sch2pcb_get_n_fixed)))
+          (zero? %fixed-element-count))
       (format (current-error-port) "Could not find any elements to fix.\n")
       (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
                                            (string->pointer bak-filename))))
@@ -1027,7 +1029,7 @@ Lepton EDA homepage: <~A>
   (format #t "\n----------------------------------\n")
   (format #t "Done processing.  Work performed:\n")
   (when (or (non-zero? (sch2pcb_get_n_deleted))
-            (non-zero? (sch2pcb_get_n_fixed))
+            (non-zero? %fixed-element-count)
             (true? (sch2pcb_get_need_PKG_purge))
             (non-zero? (sch2pcb_get_n_changed_value)))
     (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
@@ -1066,9 +1068,9 @@ Lepton EDA homepage: <~A>
     (format #t "~A elements had a value change in ~A.\n"
             (sch2pcb_get_n_changed_value)
             pcb-filename))
-  (unless (zero? (sch2pcb_get_n_fixed))
+  (unless (zero? %fixed-element-count)
     (format #t "~A elements fixed in ~A.\n"
-            (sch2pcb_get_n_fixed)
+            %fixed-element-count
             pcb-filename))
   (unless (zero? (sch2pcb_get_n_PKG_removed_old))
     (format #t "~A elements could not be found."
