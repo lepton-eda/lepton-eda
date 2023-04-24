@@ -247,12 +247,6 @@ void
 sch2pcb_set_n_empty (int val);
 
 int
-sch2pcb_get_n_fixed ();
-
-void
-sch2pcb_set_n_fixed (int val);
-
-int
 sch2pcb_get_n_none ();
 
 void
