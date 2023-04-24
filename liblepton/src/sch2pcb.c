@@ -1034,20 +1034,9 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
                                      gchar *bak)
 {
   FILE *f_in, *f_out;
-  GList *list;
   PcbElement *el, *el_exists;
   gchar *fmt, *tmp, *s, buf[1024];
 
-  for (list = sch2pcb_get_pcb_element_list ();
-       list;
-       list = g_list_next (list))
-  {
-    el = (PcbElement *) list->data;
-    if (pcb_element_get_changed_description (el))
-    {
-      sch2pcb_set_n_fixed (1 + sch2pcb_get_n_fixed ());
-    }
-  }
   if ((sch2pcb_get_pcb_element_list () == NULL)
       || sch2pcb_get_n_fixed () == 0)
   {

@@ -521,6 +521,14 @@
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
+  (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
+                                         identity)))
+    (unless (null? *element-list)
+      (let ((*element (car *element-list)))
+        (unless (null-pointer? (pcb_element_get_changed_description *element))
+          (sch2pcb_set_n_fixed (1+ (sch2pcb_get_n_fixed))))
+        (loop (cdr *element-list)))))
+
   (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
                                        (string->pointer bak-filename)))
 

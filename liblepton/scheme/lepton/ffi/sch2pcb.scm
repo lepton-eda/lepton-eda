@@ -24,6 +24,7 @@
 
   #:export (pcb_element_exists
             pcb_element_free
+            pcb_element_get_changed_description
             pcb_element_get_description
             pcb_element_get_omit_PKG
             pcb_element_get_pkg_name_fix
@@ -42,6 +43,7 @@
             sch2pcb_get_n_deleted
             sch2pcb_get_n_empty
             sch2pcb_get_n_fixed
+            sch2pcb_set_n_fixed
             sch2pcb_get_n_none
             sch2pcb_get_n_preserved
             sch2pcb_get_n_unknown
@@ -64,6 +66,7 @@
 
 (define-lff pcb_element_exists '* (list '* int))
 (define-lff pcb_element_free void '(*))
+(define-lff pcb_element_get_changed_description '* '(*))
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_get_omit_PKG int '(*))
 (define-lff pcb_element_get_pkg_name_fix '* '(*))
@@ -83,6 +86,7 @@
 (define-lff sch2pcb_get_n_deleted int '())
 (define-lff sch2pcb_get_n_empty int '())
 (define-lff sch2pcb_get_n_fixed int '())
+(define-lff sch2pcb_set_n_fixed void (list int))
 (define-lff sch2pcb_get_n_none int '())
 (define-lff sch2pcb_get_n_preserved int '())
 (define-lff sch2pcb_get_n_unknown int '())
