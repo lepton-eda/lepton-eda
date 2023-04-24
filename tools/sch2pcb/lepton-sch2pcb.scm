@@ -529,8 +529,11 @@
           (sch2pcb_set_n_fixed (1+ (sch2pcb_get_n_fixed))))
         (loop (cdr *element-list)))))
 
-  (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
-                                       (string->pointer bak-filename)))
+  (if (or (null-pointer? (sch2pcb_get_pcb_element_list))
+          (zero? (sch2pcb_get_n_fixed)))
+      (format (current-error-port) "Could not find any elements to fix.\n")
+      (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
+                                           (string->pointer bak-filename))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.

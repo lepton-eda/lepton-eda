@@ -1037,12 +1037,6 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
   PcbElement *el, *el_exists;
   gchar *fmt, *tmp, *s, buf[1024];
 
-  if ((sch2pcb_get_pcb_element_list () == NULL)
-      || sch2pcb_get_n_fixed () == 0)
-  {
-    fprintf (stderr, "Could not find any elements to fix.\n");
-    return;
-  }
   if ((f_in = fopen (pcb_file, "r")) == NULL)
     return;
   tmp = g_strconcat (pcb_file, ".tmp", NULL);
