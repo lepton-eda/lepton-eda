@@ -1016,15 +1016,15 @@ sch2pcb_buffer_to_file (char *buffer,
 
 void
 sch2pcb_update_element_descriptions (gchar *pcb_file,
-                                     gchar *bak)
+                                     gchar *bak,
+                                     gchar *tmp)
 {
   FILE *f_in, *f_out;
   PcbElement *el, *el_exists;
-  gchar *fmt, *tmp, *s, buf[1024];
+  gchar *fmt, *s, buf[1024];
 
   if ((f_in = fopen (pcb_file, "r")) == NULL)
     return;
-  tmp = g_strconcat (pcb_file, ".tmp", NULL);
   if ((f_out = fopen (tmp, "wb")) == NULL) {
     fclose (f_in);
     return;
@@ -1065,8 +1065,8 @@ sch2pcb_update_element_descriptions (gchar *pcb_file,
   }
 
   build_and_run_command ("mv %s %s", tmp, pcb_file);
-  g_free (tmp);
 }
+
 
 void
 sch2pcb_prune_elements (gchar *pcb_file,
