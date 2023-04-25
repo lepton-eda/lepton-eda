@@ -534,8 +534,10 @@
   (if (or (null-pointer? (sch2pcb_get_pcb_element_list))
           (zero? %fixed-element-count))
       (format (current-error-port) "Could not find any elements to fix.\n")
-      (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
-                                           (string->pointer bak-filename))))
+      (let ((tmp-filename (string-append pcb-filename ".tmp")))
+        (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
+                                             (string->pointer bak-filename)
+                                             (string->pointer tmp-filename)))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
