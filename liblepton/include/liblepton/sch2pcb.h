@@ -277,6 +277,9 @@ void
 sch2pcb_set_need_PKG_purge (gboolean val);
 
 FILE*
+sch2pcb_open_file_to_read (char *filename);
+
+FILE*
 sch2pcb_open_file_to_write (char *filename);
 
 void

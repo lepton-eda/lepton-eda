@@ -984,6 +984,22 @@ pcb_element_pkg_to_element (gchar *pkg_line)
 
 
 FILE*
+sch2pcb_open_file_to_read (char *filename)
+{
+  FILE *f_in;
+
+  if ((f_in = fopen (filename, "r")) == NULL)
+  {
+    return NULL;
+  }
+  else
+  {
+    return f_in;
+  }
+}
+
+
+FILE*
 sch2pcb_open_file_to_write (char *filename)
 {
   FILE *f_out;
