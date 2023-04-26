@@ -301,7 +301,9 @@ gint
 sch2pcb_get_verbose_mode ();
 
 void
-sch2pcb_update_element_descriptions (gchar *pcb_file,
+sch2pcb_update_element_descriptions (FILE *f_in,
+                                     FILE *f_out,
+                                     gchar *pcb_file,
                                      gchar *bak,
                                      gchar *tmp);
 G_END_DECLS

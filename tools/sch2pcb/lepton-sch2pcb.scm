@@ -535,7 +535,9 @@
           (zero? %fixed-element-count))
       (format (current-error-port) "Could not find any elements to fix.\n")
       (let ((tmp-filename (string-append pcb-filename ".tmp")))
-        (sch2pcb_update_element_descriptions (string->pointer pcb-filename)
+        (sch2pcb_update_element_descriptions %null-pointer
+                                             %null-pointer
+                                             (string->pointer pcb-filename)
                                              (string->pointer bak-filename)
                                              (string->pointer tmp-filename)))))
 

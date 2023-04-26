@@ -1031,11 +1031,12 @@ sch2pcb_buffer_to_file (char *buffer,
 
 
 void
-sch2pcb_update_element_descriptions (gchar *pcb_file,
+sch2pcb_update_element_descriptions (FILE *f_in,
+                                     FILE *f_out,
+                                     gchar *pcb_file,
                                      gchar *bak,
                                      gchar *tmp)
 {
-  FILE *f_in, *f_out;
   PcbElement *el, *el_exists;
   gchar *fmt, *s, buf[1024];
 
