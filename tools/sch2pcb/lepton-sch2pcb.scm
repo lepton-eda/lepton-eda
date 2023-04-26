@@ -523,6 +523,9 @@
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
+  (define (update-element-description *output-file *line *trimmed-line)
+    (sch2pcb_update_element_description *output-file *line *trimmed-line))
+
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
     (unless (null? *element-list)
@@ -545,9 +548,9 @@
                     (let loop ((line (read-line)))
                       (unless (eof-object? line)
                         (let ((trimmed-line (string-trim-both line char-set:whitespace)))
-                          (sch2pcb_update_element_description *tmp-file
-                                                              (string->pointer line)
-                                                              (string->pointer trimmed-line))
+                          (update-element-description *tmp-file
+                                                      (string->pointer line)
+                                                      (string->pointer trimmed-line))
                           (loop (read-line)))))))
                 (sch2pcb_close_file *tmp-file)
 
