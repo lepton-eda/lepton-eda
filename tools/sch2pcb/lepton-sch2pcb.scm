@@ -535,14 +535,20 @@
           (zero? %fixed-element-count))
       (format (current-error-port) "Could not find any elements to fix.\n")
       (let* ((tmp-filename (string-append pcb-filename ".tmp"))
-             (*pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename)))
              (*tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename))))
-        (unless (null-pointer? *pcb-file)
+        (when (file-readable? pcb-filename)
           (if (null-pointer? *tmp-file)
               (sch2pcb_close_file *tmp-file)
               (begin
-                (sch2pcb_update_element_descriptions *pcb-file *tmp-file)
-                (sch2pcb_close_file *pcb-file)
+                (with-input-from-file pcb-filename
+                  (lambda ()
+                    (let loop ((line (read-line)))
+                      (unless (eof-object? line)
+                        (let ((trimmed-line (string-trim-both line char-set:whitespace)))
+                          (sch2pcb_update_element_description *tmp-file
+                                                              (string->pointer line)
+                                                              (string->pointer trimmed-line))
+                          (loop (read-line)))))))
                 (sch2pcb_close_file *tmp-file)
 
                 ;; Make backup for pcb file.
