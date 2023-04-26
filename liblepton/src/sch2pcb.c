@@ -1031,38 +1031,36 @@ sch2pcb_buffer_to_file (char *buffer,
 
 
 void
-sch2pcb_update_element_descriptions (FILE *f_in,
-                                     FILE *f_out)
+sch2pcb_update_element_description (FILE *f_out,
+                                    char *buf,
+                                    char *s)
 {
   PcbElement *el, *el_exists;
-  gchar *fmt, *s, buf[1024];
+  gchar *fmt;
 
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if ((el = pcb_element_line_parse (s)) != NULL
-        && (el_exists = pcb_element_exists (el, FALSE)) != NULL
-        && pcb_element_get_changed_description (el_exists)) {
-      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-      fprintf (f_out, fmt,
-               pcb_element_get_res_char (el),
-               pcb_element_get_flags (el),
-               pcb_element_get_changed_description (el_exists),
-               pcb_element_get_refdes (el),
-               pcb_element_get_value (el),
-               pcb_element_get_x (el),
-               pcb_element_get_y (el),
-               pcb_element_get_tail (el));
-      printf ("%s: updating element Description: %s -> %s\n",
-              pcb_element_get_refdes (el),
-              pcb_element_get_description (el),
-              pcb_element_get_changed_description (el_exists));
-      pcb_element_set_still_exists (el_exists, TRUE);
-    } else
-      fputs (buf, f_out);
-    pcb_element_free (el);
-  }
+  if ((el = pcb_element_line_parse (s)) != NULL
+      && (el_exists = pcb_element_exists (el, FALSE)) != NULL
+      && pcb_element_get_changed_description (el_exists)) {
+    fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
+                    "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                    "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
+    fprintf (f_out, fmt,
+             pcb_element_get_res_char (el),
+             pcb_element_get_flags (el),
+             pcb_element_get_changed_description (el_exists),
+             pcb_element_get_refdes (el),
+             pcb_element_get_value (el),
+             pcb_element_get_x (el),
+             pcb_element_get_y (el),
+             pcb_element_get_tail (el));
+    printf ("%s: updating element Description: %s -> %s\n",
+            pcb_element_get_refdes (el),
+            pcb_element_get_description (el),
+            pcb_element_get_changed_description (el_exists));
+    pcb_element_set_still_exists (el_exists, TRUE);
+  } else
+    fputs (buf, f_out);
+  pcb_element_free (el);
 }
 
 
