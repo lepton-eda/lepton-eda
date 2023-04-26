@@ -540,11 +540,19 @@
         (unless (null-pointer? *pcb-file)
           (if (null-pointer? *tmp-file)
               (sch2pcb_close_file *tmp-file)
-              (sch2pcb_update_element_descriptions *pcb-file
-                                                   *tmp-file
-                                                   (string->pointer pcb-filename)
-                                                   (string->pointer bak-filename)
-                                                   (string->pointer tmp-filename)))))))
+              (begin
+                (sch2pcb_update_element_descriptions *pcb-file *tmp-file)
+                (sch2pcb_close_file *pcb-file)
+                (sch2pcb_close_file *tmp-file)
+
+                ;; Make backup for pcb file.
+                (when (false? (sch2pcb_get_bak_done))
+                  (system* "mv" pcb-filename bak-filename)
+                  (sch2pcb_set_bak_done TRUE))
+
+                ;; Replace pcb file with newly created file with
+                ;; updated descriptions.
+                (system* "mv" tmp-filename pcb-filename)))))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.

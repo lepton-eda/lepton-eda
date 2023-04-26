@@ -1032,10 +1032,7 @@ sch2pcb_buffer_to_file (char *buffer,
 
 void
 sch2pcb_update_element_descriptions (FILE *f_in,
-                                     FILE *f_out,
-                                     gchar *pcb_file,
-                                     gchar *bak,
-                                     gchar *tmp)
+                                     FILE *f_out)
 {
   PcbElement *el, *el_exists;
   gchar *fmt, *s, buf[1024];
@@ -1066,16 +1063,6 @@ sch2pcb_update_element_descriptions (FILE *f_in,
       fputs (buf, f_out);
     pcb_element_free (el);
   }
-  sch2pcb_close_file (f_in);
-  sch2pcb_close_file (f_out);
-
-  if (!sch2pcb_get_bak_done ())
-  {
-    build_and_run_command ("mv %s %s", pcb_file, bak);
-    sch2pcb_set_bak_done (TRUE);
-  }
-
-  build_and_run_command ("mv %s %s", tmp, pcb_file);
 }
 
 
