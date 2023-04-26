@@ -1040,11 +1040,6 @@ sch2pcb_update_element_descriptions (FILE *f_in,
   PcbElement *el, *el_exists;
   gchar *fmt, *s, buf[1024];
 
-  if ((f_out = sch2pcb_open_file_to_write (tmp)) == NULL)
-  {
-    sch2pcb_close_file (f_in);
-    return;
-  }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if ((el = pcb_element_line_parse (s)) != NULL
