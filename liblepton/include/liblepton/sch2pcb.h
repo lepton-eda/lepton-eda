@@ -303,5 +303,5 @@ sch2pcb_get_verbose_mode ();
 void
 sch2pcb_update_element_description (FILE *f_out,
                                     char *buf,
-                                    char *s);
+                                    PcbElement *element);
 G_END_DECLS
