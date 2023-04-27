@@ -1060,7 +1060,6 @@ sch2pcb_update_element_description (FILE *f_out,
     pcb_element_set_still_exists (el_exists, TRUE);
   } else
     fputs (buf, f_out);
-  pcb_element_free (el);
 }
 
 
