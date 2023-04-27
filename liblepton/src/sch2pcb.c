@@ -1033,12 +1033,12 @@ sch2pcb_buffer_to_file (char *buffer,
 void
 sch2pcb_update_element_description (FILE *f_out,
                                     char *buf,
-                                    char *s)
+                                    PcbElement *el)
 {
-  PcbElement *el, *el_exists;
+  PcbElement *el_exists;
   gchar *fmt;
 
-  if ((el = pcb_element_line_parse (s)) != NULL
+  if (el != NULL
       && (el_exists = pcb_element_exists (el, FALSE)) != NULL
       && pcb_element_get_changed_description (el_exists)) {
     fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
