@@ -300,9 +300,4 @@ sch2pcb_prune_elements (gchar *pcb_file,
 gint
 sch2pcb_get_verbose_mode ();
 
-void
-sch2pcb_update_element_description (FILE *f_out,
-                                    char *buf,
-                                    PcbElement *element,
-                                    PcbElement *existing_element);
 G_END_DECLS

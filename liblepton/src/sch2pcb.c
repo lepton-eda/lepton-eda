@@ -1031,42 +1031,6 @@ sch2pcb_buffer_to_file (char *buffer,
 
 
 void
-sch2pcb_update_element_description (FILE *f_out,
-                                    char *buf,
-                                    PcbElement *el,
-                                    PcbElement *el_exists)
-{
-  gchar *fmt;
-
-  if (el != NULL
-      && el_exists != NULL
-      && pcb_element_get_changed_description (el_exists)) {
-    fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                    "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                    "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-    fprintf (f_out, fmt,
-             pcb_element_get_res_char (el),
-             pcb_element_get_flags (el),
-             pcb_element_get_changed_description (el_exists),
-             pcb_element_get_refdes (el),
-             pcb_element_get_value (el),
-             pcb_element_get_x (el),
-             pcb_element_get_y (el),
-             pcb_element_get_tail (el));
-    printf ("%s: updating element Description: %s -> %s\n",
-            pcb_element_get_refdes (el),
-            pcb_element_get_description (el),
-            pcb_element_get_changed_description (el_exists));
-    pcb_element_set_still_exists (el_exists, TRUE);
-  }
-  else
-  {
-    sch2pcb_buffer_to_file (buf, f_out);
-  }
-}
-
-
-void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak)
 {
