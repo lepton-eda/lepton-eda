@@ -528,10 +528,46 @@
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
                                   (pcb_element_exists *element FALSE))))
-      (sch2pcb_update_element_description *output-file
-                                          *line
-                                          *element
-                                          *existing-element)
+      (if (and (not (null-pointer? *element))
+               (not (null-pointer? *existing-element))
+               (not (null-pointer? (pcb_element_get_changed_description *existing-element))))
+          ;; If element already exists in the element list, and it
+          ;; has changed description, output its line with this
+          ;; description applied.
+          (let* ((res-char (list->string (list (integer->char (pcb_element_get_res_char *element)))))
+                 (flags (pointer->string (pcb_element_get_flags *element)))
+                 (changed-description
+                  (pointer->string (pcb_element_get_changed_description *existing-element)))
+                 (refdes (pointer->string (pcb_element_get_refdes *element)))
+                 (value (pointer->string (pcb_element_get_value *element)))
+                 (x (pointer->string (pcb_element_get_x *element)))
+                 (y (pointer->string (pcb_element_get_y *element)))
+                 (tail (pointer->string (pcb_element_get_tail *element)))
+                 (*line (string->pointer (format #f
+                                                 (if (true? (pcb_element_get_quoted_flags *element))
+                                                     "Element~A~S ~S ~S ~S ~A ~A~A"
+                                                     "Element~A~A ~S ~S ~S ~A ~A~A")
+                                                 res-char
+                                                 flags
+                                                 changed-description
+                                                 refdes
+                                                 value
+                                                 x
+                                                 y
+                                                 tail))))
+            (sch2pcb_buffer_to_file *line *output-file)
+
+            (format #t "~A: updating element Description: ~A -> ~A\n"
+                    (pointer->string (pcb_element_get_refdes *element))
+                    (pointer->string (pcb_element_get_description *element))
+                    (pointer->string (pcb_element_get_changed_description *existing-element)))
+            (pcb_element_set_still_exists *existing-element TRUE))
+          ;; Otherwise, if the element is new, just output it into
+          ;; the output file.
+          (begin
+            (sch2pcb_buffer_to_file *line *output-file)
+            (sch2pcb_buffer_to_file (string->pointer "\n") *output-file)))
+
       (pcb_element_free *element)))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)

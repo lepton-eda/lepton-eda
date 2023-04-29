@@ -26,10 +26,17 @@
             pcb_element_free
             pcb_element_get_changed_description
             pcb_element_get_description
+            pcb_element_get_flags
             pcb_element_get_omit_PKG
             pcb_element_get_pkg_name_fix
+            pcb_element_get_quoted_flags
             pcb_element_get_refdes
+            pcb_element_get_res_char
+            pcb_element_set_still_exists
+            pcb_element_get_tail
             pcb_element_get_value
+            pcb_element_get_x
+            pcb_element_get_y
             pcb_element_line_parse
             pcb_element_pkg_to_element
 
@@ -55,7 +62,6 @@
             sch2pcb_pcb_element_list_append
             sch2pcb_set_preserve
             sch2pcb_prune_elements
-            sch2pcb_update_element_description
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
@@ -70,10 +76,17 @@
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_changed_description '* '(*))
 (define-lff pcb_element_get_description '* '(*))
+(define-lff pcb_element_get_flags '* '(*))
 (define-lff pcb_element_get_omit_PKG int '(*))
 (define-lff pcb_element_get_pkg_name_fix '* '(*))
+(define-lff pcb_element_get_quoted_flags int '(*))
 (define-lff pcb_element_get_refdes '* '(*))
+(define-lff pcb_element_get_res_char int '(*))
+(define-lff pcb_element_set_still_exists void (list '* int))
+(define-lff pcb_element_get_tail '* '(*))
 (define-lff pcb_element_get_value '* '(*))
+(define-lff pcb_element_get_x '* '(*))
+(define-lff pcb_element_get_y '* '(*))
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 
@@ -99,7 +112,6 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
-(define-lff sch2pcb_update_element_description void '(* * * *))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))
