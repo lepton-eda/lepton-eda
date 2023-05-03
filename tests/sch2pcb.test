@@ -218,13 +218,15 @@
     "vcc-1.sym"
     "vee-1.sym"))
 
-;;; Prepare test directory with necessary schematic files.
+;;; Prepare test directory with necessary schematic and pcb files.
 (define (prepare-test-directory)
   (test-setup)
   (mkdir "sym")
   (copy-file tests/one.sch one.sch)
   (copy-file tests/two.sch two.sch)
   (copy-file tests/gafrc gafrc)
+  (copy-file (build-filename tests/ "one-wrong-footprint.pcb")
+             "one-wrong-footprint.pcb")
   (for-each
    (lambda (symbol-name)
      (copy-file (build-filename tests/ "sym" symbol-name)
@@ -368,6 +370,14 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stderr> "Could not find any elements to fix.")))
 
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-o" "one-wrong-footprint" "--fix-elements" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+
+    (test-assert (string-contains <stdout> "1 not found elements added to one-wrong-footprint.new.pcb."))
+    (test-assert (string-contains <stdout> "1 elements fixed in one-wrong-footprint.pcb."))
+    (test-assert (string-contains <stderr> "U101: can't find PCB element for footprint \"DIL-8-300\" (value=TL072)"))
+    (test-assert (string-contains <stdout> "U101: updating element Description: DIL-8-3000 -> DIL-8-300")))
   (test-teardown))
 
 (test-end)
