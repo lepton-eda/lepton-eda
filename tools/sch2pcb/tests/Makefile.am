@@ -3,6 +3,7 @@ EXTRA_DIST = \
 	missing-footprint.sch \
 	one.cmd \
 	one.net \
+	one-wrong-footprint.pcb \
 	one.pcb \
 	one.pcb.remove-R101-value \
 	one.sch \
