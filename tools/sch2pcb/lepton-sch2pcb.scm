@@ -131,7 +131,7 @@
 ;;; elements for new footprints even though m4 elements are
 ;;; searched for first and may have been found.
 (define %force-file-elements? #f)
-;;; See description of the '--fix-element' option.
+;;; See description of the '--fix-elements' option.
 (define %fix-elements? #f)
 ;;; Whether unfound pcb elements have to be removed.
 (define %remove-unfound-elements? #t)
