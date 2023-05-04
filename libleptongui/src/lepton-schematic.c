@@ -77,8 +77,13 @@ lepton_schematic_run (gpointer activate)
 #ifdef ENABLE_GTK3
   int status;
 
+#if GLIB_CHECK_VERSION(2, 74, 0)
+  app = gtk_application_new ("com.github.lepton_eda.lepton_schematic",
+                             G_APPLICATION_DEFAULT_FLAGS);
+#else
   app = gtk_application_new ("com.github.lepton_eda.lepton_schematic",
                              G_APPLICATION_FLAGS_NONE);
+#endif
 
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
 
