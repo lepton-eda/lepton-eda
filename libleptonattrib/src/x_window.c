@@ -857,8 +857,13 @@ lepton_attrib_window (LeptonToplevel *toplevel)
   GtkApplication *app;
   int status;
 
+#if GLIB_CHECK_VERSION(2, 74, 0)
+  app = gtk_application_new ("com.github.lepton_eda.lepton_attrib",
+                             G_APPLICATION_DEFAULT_FLAGS);
+#else
   app = gtk_application_new ("com.github.lepton_eda.lepton_attrib",
                              G_APPLICATION_FLAGS_NONE);
+#endif
 
   g_action_map_add_action_entries (G_ACTION_MAP (app),
                                    app_entries, G_N_ELEMENTS (app_entries),
