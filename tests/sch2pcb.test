@@ -370,6 +370,9 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stderr> "Could not find any elements to fix.")))
 
+  ;; First ensure the files are different.
+  (test-run-failure "diff" tests/one.pcb "one-wrong-footprint.pcb")
+
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "-o" "one-wrong-footprint" "--fix-elements" one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
@@ -377,7 +380,11 @@
     (test-assert (string-contains <stdout> "1 not found elements added to one-wrong-footprint.new.pcb."))
     (test-assert (string-contains <stdout> "1 elements fixed in one-wrong-footprint.pcb."))
     (test-assert (string-contains <stderr> "U101: can't find PCB element for footprint \"DIL-8-300\" (value=TL072)"))
-    (test-assert (string-contains <stdout> "U101: updating element Description: DIL-8-3000 -> DIL-8-300")))
+    (test-assert (string-contains <stdout> "U101: updating element Description: DIL-8-3000 -> DIL-8-300"))
+
+    ;; Now the files are the same.
+    (test-run-success "diff" tests/one.pcb "one-wrong-footprint.pcb"))
+
   (test-teardown))
 
 (test-end)
