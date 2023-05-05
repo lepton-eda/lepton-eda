@@ -522,6 +522,11 @@
           0))))
 
 
+(define (prune-elements pcb-filename bak-filename)
+  (sch2pcb_prune_elements (string->pointer pcb-filename)
+                          (string->pointer bak-filename)))
+
+
 (define (update-element-descriptions pcb-filename bak-filename)
   (define (update-element-description *output-file *line *trimmed-line)
     (let* ((*element (pcb_element_line_parse *trimmed-line))
@@ -1238,8 +1243,7 @@ Lepton EDA homepage: <~A>
                     (exit 0)))
                 (when %fix-elements?
                   (update-element-descriptions pcb-filename bak-filename))
-                (sch2pcb_prune_elements (string->pointer pcb-filename)
-                                        (string->pointer bak-filename))
+                (prune-elements pcb-filename bak-filename)
                 (report-results pcb-filename
                                 pcb-new-filename
                                 bak-filename
