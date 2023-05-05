@@ -1035,37 +1035,11 @@ sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak)
 {
   FILE *f_in, *f_out;
-  GList *list;
   PcbElement *el, *el_exists;
   gchar *fmt, *tmp, *s, buf[1024];
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
-  for (list = sch2pcb_get_pcb_element_list ();
-       list;
-       list = g_list_next (list))
-  {
-    el = (PcbElement *) list->data;
-    if (!pcb_element_get_still_exists (el)) {
-      if (sch2pcb_get_preserve ())
-      {
-        sch2pcb_set_n_preserved (1 + sch2pcb_get_n_preserved ());
-        fprintf (stderr,
-                 "Preserving PCB element not in the schematic:    %s (element   %s)\n",
-                 pcb_element_get_refdes (el),
-                 pcb_element_get_description (el));
-      }
-      else
-      {
-        sch2pcb_set_n_deleted (1 + sch2pcb_get_n_deleted ());
-      }
-    }
-    else
-      if (pcb_element_get_changed_value (el))
-      {
-        sch2pcb_set_n_changed_value (1 + sch2pcb_get_n_changed_value ());
-      }
-  }
   if (!sch2pcb_get_pcb_element_list ()
       || (sch2pcb_get_n_deleted () == 0
           && !sch2pcb_get_need_PKG_purge ()

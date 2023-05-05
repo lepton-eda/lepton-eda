@@ -523,6 +523,25 @@
 
 
 (define (prune-elements pcb-filename bak-filename)
+  (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
+                                         identity)))
+    (unless (null? *element-list)
+      (let ((*element (car *element-list)))
+        (if (false? (pcb_element_get_still_exists *element))
+            (if (true? (sch2pcb_get_preserve))
+                (begin
+                  (sch2pcb_set_n_preserved (1+ (sch2pcb_get_n_preserved)))
+                  (format (current-error-port)
+                          "Preserving PCB element not in the schematic:    ~A (element   ~A)\n"
+                          (pointer->string (pcb_element_get_refdes *element))
+                          (pointer->string (pcb_element_get_description *element))))
+
+                (sch2pcb_set_n_deleted (1+ (sch2pcb_get_n_deleted))))
+
+            (unless (null-pointer? (pcb_element_get_changed_value *element))
+              (sch2pcb_set_n_changed_value (1+ (sch2pcb_get_n_changed_value)))))
+        (loop (cdr *element-list)))))
+
   (sch2pcb_prune_elements (string->pointer pcb-filename)
                           (string->pointer bak-filename)))
 

@@ -25,6 +25,7 @@
   #:export (pcb_element_exists
             pcb_element_free
             pcb_element_get_changed_description
+            pcb_element_get_changed_value
             pcb_element_get_description
             pcb_element_get_flags
             pcb_element_get_omit_PKG
@@ -32,6 +33,7 @@
             pcb_element_get_quoted_flags
             pcb_element_get_refdes
             pcb_element_get_res_char
+            pcb_element_get_still_exists
             pcb_element_set_still_exists
             pcb_element_get_tail
             pcb_element_get_value
@@ -50,16 +52,20 @@
             sch2pcb_insert_element
             sch2pcb_get_n_PKG_removed_old
             sch2pcb_get_n_changed_value
+            sch2pcb_set_n_changed_value
             sch2pcb_get_n_deleted
+            sch2pcb_set_n_deleted
             sch2pcb_get_n_empty
             sch2pcb_get_n_none
             sch2pcb_get_n_preserved
+            sch2pcb_set_n_preserved
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
             sch2pcb_set_need_PKG_purge
             sch2pcb_parse_schematics
             sch2pcb_get_pcb_element_list
             sch2pcb_pcb_element_list_append
+            sch2pcb_get_preserve
             sch2pcb_set_preserve
             sch2pcb_prune_elements
             sch2pcb_get_verbose_mode
@@ -75,6 +81,7 @@
 (define-lff pcb_element_exists '* (list '* int))
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_changed_description '* '(*))
+(define-lff pcb_element_get_changed_value '* '(*))
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_get_flags '* '(*))
 (define-lff pcb_element_get_omit_PKG int '(*))
@@ -82,6 +89,7 @@
 (define-lff pcb_element_get_quoted_flags int '(*))
 (define-lff pcb_element_get_refdes '* '(*))
 (define-lff pcb_element_get_res_char int '(*))
+(define-lff pcb_element_get_still_exists int '(*))
 (define-lff pcb_element_set_still_exists void (list '* int))
 (define-lff pcb_element_get_tail '* '(*))
 (define-lff pcb_element_get_value '* '(*))
@@ -100,16 +108,20 @@
 (define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
 (define-lff sch2pcb_get_n_changed_value int '())
+(define-lff sch2pcb_set_n_changed_value void (list int))
 (define-lff sch2pcb_get_n_deleted int '())
+(define-lff sch2pcb_set_n_deleted void (list int))
 (define-lff sch2pcb_get_n_empty int '())
 (define-lff sch2pcb_get_n_none int '())
 (define-lff sch2pcb_get_n_preserved int '())
+(define-lff sch2pcb_set_n_preserved void (list int))
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_set_need_PKG_purge void (list int))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))
+(define-lff sch2pcb_get_preserve int '())
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
