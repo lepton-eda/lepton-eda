@@ -1040,12 +1040,6 @@ sch2pcb_prune_elements (gchar *pcb_file,
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
-  if (!sch2pcb_get_pcb_element_list ()
-      || (sch2pcb_get_n_deleted () == 0
-          && !sch2pcb_get_need_PKG_purge ()
-          && sch2pcb_get_n_changed_value () == 0)
-    )
-    return;
   if ((f_in = sch2pcb_open_file_to_read (pcb_file)) == NULL)
     return;
   tmp = g_strconcat (pcb_file, ".tmp", NULL);

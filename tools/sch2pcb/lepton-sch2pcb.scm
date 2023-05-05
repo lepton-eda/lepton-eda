@@ -542,8 +542,12 @@
               (sch2pcb_set_n_changed_value (1+ (sch2pcb_get_n_changed_value)))))
         (loop (cdr *element-list)))))
 
-  (sch2pcb_prune_elements (string->pointer pcb-filename)
-                          (string->pointer bak-filename)))
+  (unless (or (null-pointer? (sch2pcb_get_pcb_element_list))
+              (and (zero? (sch2pcb_get_n_deleted))
+                   (false? (sch2pcb_get_need_PKG_purge))
+                   (zero? (sch2pcb_get_n_changed_value))))
+    (sch2pcb_prune_elements (string->pointer pcb-filename)
+                            (string->pointer bak-filename))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
