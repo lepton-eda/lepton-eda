@@ -1041,7 +1041,10 @@ sch2pcb_prune_elements (gchar *pcb_file,
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
-  for (list = pcb_element_list; list; list = g_list_next (list)) {
+  for (list = sch2pcb_get_pcb_element_list ();
+       list;
+       list = g_list_next (list))
+  {
     el = (PcbElement *) list->data;
     if (!pcb_element_get_still_exists (el)) {
       if (sch2pcb_get_preserve ())
@@ -1063,7 +1066,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
         sch2pcb_set_n_changed_value (1 + sch2pcb_get_n_changed_value ());
       }
   }
-  if (!pcb_element_list
+  if (!sch2pcb_get_pcb_element_list ()
       || (sch2pcb_get_n_deleted () == 0
           && !sch2pcb_get_need_PKG_purge ()
           && sch2pcb_get_n_changed_value () == 0)
