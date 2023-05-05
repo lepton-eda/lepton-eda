@@ -1069,11 +1069,12 @@ sch2pcb_prune_elements (gchar *pcb_file,
           && sch2pcb_get_n_changed_value () == 0)
     )
     return;
-  if ((f_in = fopen (pcb_file, "r")) == NULL)
+  if ((f_in = sch2pcb_open_file_to_read (pcb_file)) == NULL)
     return;
   tmp = g_strconcat (pcb_file, ".tmp", NULL);
-  if ((f_out = fopen (tmp, "wb")) == NULL) {
-    fclose (f_in);
+  if ((f_out = sch2pcb_open_file_to_write (tmp)) == NULL)
+  {
+    sch2pcb_close_file (f_in);
     return;
   }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
@@ -1122,8 +1123,8 @@ sch2pcb_prune_elements (gchar *pcb_file,
       fputs (buf, f_out);
     pcb_element_free (el);
   }
-  fclose (f_in);
-  fclose (f_out);
+  sch2pcb_close_file (f_in);
+  sch2pcb_close_file (f_out);
 
   if (!sch2pcb_get_bak_done ())
   {
