@@ -1120,7 +1120,7 @@ sch2pcb_prune_elements (gchar *pcb_file,
         sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
       }
     else
-      fputs (buf, f_out);
+      sch2pcb_buffer_to_file (buf, f_out);
     pcb_element_free (el);
   }
   sch2pcb_close_file (f_in);
