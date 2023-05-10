@@ -5,11 +5,15 @@
 ;;
 
 ( define-module ( schematic sellock )
+  #:use-module ( srfi srfi-1 )
   #:use-module ( lepton log )
   #:use-module ( lepton page )
   #:use-module ( lepton attrib )
+  #:use-module ( lepton object )
   #:use-module ( schematic window )
   #:use-module ( schematic selection )
+  #:use-module ( schematic dialog )
+  #:use-module ( schematic gettext )
 
   #:export ( select-locked )
 )
@@ -29,8 +33,18 @@
 ; public:
 ;
 ( define ( select-locked )
-    ( log! 'message ".. select-locked()" )
+( let*
+  (
+  ( comps ( filter component? (page-contents (active-page)) ) )
+  ( locked-comps ( remove object-selectable? comps ) )
+  )
 
     ( deselect-all )
-)
+
+    ( if ( null? locked-comps )
+      ( schematic-message-dialog ( G_ "No locked components" ) )
+    )
+
+) ; let
+) ; select-locked()
 
