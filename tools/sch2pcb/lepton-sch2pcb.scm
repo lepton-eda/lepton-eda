@@ -546,8 +546,11 @@
               (and (zero? (sch2pcb_get_n_deleted))
                    (false? (sch2pcb_get_need_PKG_purge))
                    (zero? (sch2pcb_get_n_changed_value))))
-    (sch2pcb_prune_elements (string->pointer pcb-filename)
-                            (string->pointer bak-filename))))
+    (let ((*pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename))))
+      (unless (null-pointer? *pcb-file)
+        (sch2pcb_prune_elements (string->pointer pcb-filename)
+                                (string->pointer bak-filename)
+                                *pcb-file)))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)

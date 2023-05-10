@@ -1032,16 +1032,15 @@ sch2pcb_buffer_to_file (char *buffer,
 
 void
 sch2pcb_prune_elements (gchar *pcb_file,
-                        gchar *bak)
+                        gchar *bak,
+                        FILE *f_in)
 {
-  FILE *f_in, *f_out;
+  FILE *f_out;
   PcbElement *el, *el_exists;
   gchar *fmt, *tmp, *s, buf[1024];
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
-  if ((f_in = sch2pcb_open_file_to_read (pcb_file)) == NULL)
-    return;
   tmp = g_strconcat (pcb_file, ".tmp", NULL);
   if ((f_out = sch2pcb_open_file_to_write (tmp)) == NULL)
   {
