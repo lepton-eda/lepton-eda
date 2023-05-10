@@ -298,7 +298,8 @@ void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak,
                         gchar *tmp,
-                        FILE *f_in);
+                        FILE *f_in,
+                        FILE *f_out);
 gint
 sch2pcb_get_verbose_mode ();
 

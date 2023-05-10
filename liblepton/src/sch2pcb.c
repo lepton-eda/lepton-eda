@@ -1034,19 +1034,14 @@ void
 sch2pcb_prune_elements (gchar *pcb_file,
                         gchar *bak,
                         gchar *tmp,
-                        FILE *f_in)
+                        FILE *f_in,
+                        FILE *f_out)
 {
-  FILE *f_out;
   PcbElement *el, *el_exists;
   gchar *fmt, *s, buf[1024];
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
-  if ((f_out = sch2pcb_open_file_to_write (tmp)) == NULL)
-  {
-    sch2pcb_close_file (f_in);
-    return;
-  }
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if (skipping) {
