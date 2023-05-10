@@ -51,6 +51,11 @@
 )
 
 
+( define ( bind2nd val ) ; returns predicate func taking 1 arg
+  ( lambda( arg ) (eq? arg val) )
+)
+
+
 ; public:
 ;
 ( define ( select-locked )
@@ -59,13 +64,25 @@
   ( define locked-comps ( remove object-selectable? comps ) )
   ( define comp ( selected-locked-comp comps ) )
 
+  ( define ( select-and-report c )
+    ( select-comp c )
+    ( log!
+        'message
+        ( G_ "Select locked: ~a of ~a (~a)~a" )
+        ( 1+ (list-index (bind2nd c) locked-comps) )
+        ( length locked-comps )
+        ( component-basename c )
+        ( G_", press <E E> to edit, <E Shift+L> to unlock" )
+    )
+  )
+
   ( deselect-all )
 
   ( if ( null? locked-comps )
     ( schematic-message-dialog (G_ "No locked components") )
     ( if comp
-      ( select-comp (next-in-list comp locked-comps) )
-      ( select-comp (first locked-comps) )
+      ( select-and-report (next-in-list comp locked-comps) )
+      ( select-and-report (first locked-comps) )
     )
   )
 
