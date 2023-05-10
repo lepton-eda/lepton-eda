@@ -75,6 +75,7 @@
   ( list "SEPARATOR" #f #f )
   ( list (N_ "Lock")                 '&edit-lock              #f )
   ( list (N_ "Unlock")               '&edit-unlock            #f )
+  ( list (N_ "Select Locked")        '&edit-select-locked     #f )
   ( list "SEPARATOR" #f #f )
   ( list (N_ "Embed Component/Picture")   '&edit-embed        #f )
   ( list (N_ "Unembed Component/Picture") '&edit-unembed      #f )
