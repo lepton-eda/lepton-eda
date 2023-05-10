@@ -30,6 +30,18 @@
 )
 
 
+( define ( selected-locked-comp comps )
+  ( define sel ( page-selection (active-page) ) )
+  ( define sel-locked ( remove object-selectable? sel ) )
+  ( define sel-locked-comps ( filter component? sel-locked ) )
+  ; return:
+  ( if ( = (length sel-locked-comps) 1 )
+    ( first sel-locked-comps ) ; if
+    #f                         ; else
+  )
+)
+
+
 ; public:
 ;
 ( define ( select-locked )
@@ -37,12 +49,16 @@
   (
   ( comps ( filter component? (page-contents (active-page)) ) )
   ( locked-comps ( remove object-selectable? comps ) )
+  ( comp ( selected-locked-comp comps ) )
   )
 
     ( deselect-all )
 
     ( if ( null? locked-comps )
       ( schematic-message-dialog ( G_ "No locked components" ) )
+      ( if ( not comp )
+        ( select-comp (first locked-comps) )
+      )
     )
 
 ) ; let
