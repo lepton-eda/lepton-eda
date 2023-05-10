@@ -42,6 +42,15 @@
 )
 
 
+( define ( next-in-list val lst )
+  ; return:
+  ( if ( eq? val (last lst) )
+    ( first lst )             ; if
+    ( cadr (member val lst) ) ; else (cadr: car of cdr)
+  )
+)
+
+
 ; public:
 ;
 ( define ( select-locked )
@@ -56,7 +65,8 @@
 
     ( if ( null? locked-comps )
       ( schematic-message-dialog ( G_ "No locked components" ) )
-      ( if ( not comp )
+      ( if comp
+        ( select-comp (next-in-list comp locked-comps) )
         ( select-comp (first locked-comps) )
       )
     )
