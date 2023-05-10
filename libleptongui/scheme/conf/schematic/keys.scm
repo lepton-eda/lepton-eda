@@ -97,6 +97,7 @@
 (global-set-key "E <Shift>S" '&edit-slot)
 (global-set-key "E L" '&edit-lock)
 (global-set-key "E <Shift>L" '&edit-unlock)
+(global-set-key "E K" '&edit-select-locked)
 (global-set-key "E T" '&edit-translate)
 (global-set-key "E <Shift>colon" '&edit-invoke-macro)
 (global-set-key "E O" '&edit-object-properties )
