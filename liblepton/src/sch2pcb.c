@@ -1125,9 +1125,10 @@ sch2pcb_prune_elements (gchar *pcb_file,
   fclose (f_in);
   fclose (f_out);
 
-  if (!bak_done) {
+  if (!sch2pcb_get_bak_done ())
+  {
     build_and_run_command ("mv %s %s", pcb_file, bak);
-    bak_done = TRUE;
+    sch2pcb_set_bak_done (TRUE);
   }
 
   build_and_run_command ("mv %s %s", tmp, pcb_file);
