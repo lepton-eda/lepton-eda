@@ -548,18 +548,24 @@
                    (zero? (sch2pcb_get_n_changed_value))))
     (let ((*pcb-file (sch2pcb_open_file_to_read (string->pointer pcb-filename))))
       (unless (null-pointer? *pcb-file)
-        (let* ((*tmp-filename (string->pointer (string-append pcb-filename ".tmp")))
-               (*tmp-file (sch2pcb_open_file_to_write *tmp-filename)))
+        (let* ((tmp-filename (string-append pcb-filename ".tmp"))
+               (*tmp-file (sch2pcb_open_file_to_write
+                           (string->pointer tmp-filename))))
           (if (null-pointer? *tmp-file)
               ;; If we could not open an output file for writing,
               ;; let's close the input file as well.
               (sch2pcb_close_file *pcb-file)
               ;; Proceed with opened files.
-              (sch2pcb_prune_elements (string->pointer pcb-filename)
-                                      (string->pointer bak-filename)
-                                      *tmp-filename
-                                      *pcb-file
-                                      *tmp-file)))))))
+              (begin
+                (sch2pcb_prune_elements *pcb-file *tmp-file)
+                (sch2pcb_close_file *pcb-file)
+                (sch2pcb_close_file *tmp-file)
+
+                (when (false? (sch2pcb_get_bak_done))
+                  (system* "mv" pcb-filename bak-filename)
+                  (sch2pcb_set_bak_done TRUE))
+
+                (system* "mv" tmp-filename pcb-filename))))))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)

@@ -457,108 +457,6 @@ sch2pcb_increment_verbose_mode ()
 }
 
 
-/**
- * Build and run a command. No redirection or error handling is
- * done.  Format string is split on whitespace. Specifiers %l and %s
- * are replaced with contents of positional args. To be recognized,
- * specifiers must be separated from other arguments in the format by
- * whitespace.
- *  - %l expects a GList, contents used as separate arguments
- *  - %s expects a gchar*, contents used as a single argument
- * @param[in] format  used to specify command to be executed
- * @param[in] ...     positional parameters
- */
-static gboolean
-build_and_run_command (const gchar *format, ...)
-{
-  va_list vargs;
-  gchar ** split;
-  GList *tmp = NULL;
-  gint num_split;
-  gint i;
-  gint status;
-  gboolean result = FALSE;
-  gchar *standard_output = NULL;
-  gchar *standard_error = NULL;
-  GError * error = NULL;
-
-  va_start (vargs, format);
-  split = g_strsplit_set (format, " \t\n\v", 0);
-  num_split = g_strv_length (split);
-  for (i = 0; i < num_split; ++i) {
-    gchar *chunk = split[i];
-    if (strcmp (chunk, "%l") == 0) {
-      /* append contents of list into command args - shared data */
-      tmp = g_list_concat (tmp, g_list_copy (va_arg (vargs, GList*)));
-    } else if (strcmp (chunk, "%s") == 0) {
-      /* insert contents of string into output */
-      tmp = g_list_append (tmp, va_arg (vargs, gchar*));
-    } else {
-      /* bare string, use as is */
-      tmp = g_list_append (tmp, chunk);
-    }
-  }
-  va_end (vargs);
-
-  if (tmp) {
-    /* we have something in the list, build & call command */
-    GList *p;
-    gint i = 0;
-    gchar ** args = g_new0 (gchar*, g_list_length (tmp) + 1/* NULL terminate the list */);
-
-    if (verbose)
-      printf ("Running command:\n\t");
-
-    for (p = tmp; p; p = g_list_next (p)) {
-      args[i++] = (gchar*) p->data;
-      if (verbose)
-        printf ("%s ", (char*)p->data);
-    }
-
-    if (verbose)
-      printf ("\n%s", SEP_STRING);
-
-    if (g_spawn_sync (".",                  /* Working directory */
-                      args,                 /* argv */
-                      NULL,                 /* envp */
-                      G_SPAWN_SEARCH_PATH,  /* flags */
-                      NULL,                 /* child_setup */
-                      NULL,                 /* user data */
-                      &standard_output,     /* standard output */
-                      &standard_error,      /* standard error */
-                      &status,              /* exit status return */
-                      &error)) {            /* GError return */
-      if (verbose)
-        fputs(standard_output, stdout);
-      if (status == 0)
-        result = TRUE;
-      else {
-        if (standard_error)
-          fputs(standard_error, stderr);
-      }
-    }
-    else {
-      fprintf(stderr, "Failed to execute external program: %s\n", error->message);
-      g_error_free(error);
-    }
-
-    if (verbose)
-      printf ("\n%s", SEP_STRING);
-
-    g_free(standard_error);
-    g_free (standard_output);
-
-    g_free (args);
-    /* free the list, but leave data untouched */
-    g_list_free (tmp);
-  }
-
-  g_strfreev (split);
-
-  return result;
-}
-
-
 static gchar *
 token (gchar * string, gchar ** next, gboolean * quoted_ret)
 {
@@ -1031,10 +929,7 @@ sch2pcb_buffer_to_file (char *buffer,
 
 
 void
-sch2pcb_prune_elements (gchar *pcb_file,
-                        gchar *bak,
-                        gchar *tmp,
-                        FILE *f_in,
+sch2pcb_prune_elements (FILE *f_in,
                         FILE *f_out)
 {
   PcbElement *el, *el_exists;
@@ -1088,16 +983,6 @@ sch2pcb_prune_elements (gchar *pcb_file,
       sch2pcb_buffer_to_file (buf, f_out);
     pcb_element_free (el);
   }
-  sch2pcb_close_file (f_in);
-  sch2pcb_close_file (f_out);
-
-  if (!sch2pcb_get_bak_done ())
-  {
-    build_and_run_command ("mv %s %s", pcb_file, bak);
-    sch2pcb_set_bak_done (TRUE);
-  }
-
-  build_and_run_command ("mv %s %s", tmp, pcb_file);
 }
 
 

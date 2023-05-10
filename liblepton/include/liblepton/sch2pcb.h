@@ -295,10 +295,7 @@ void
 sch2pcb_pcb_element_list_append (PcbElement *element);
 
 void
-sch2pcb_prune_elements (gchar *pcb_file,
-                        gchar *bak,
-                        gchar *tmp,
-                        FILE *f_in,
+sch2pcb_prune_elements (FILE *f_in,
                         FILE *f_out);
 gint
 sch2pcb_get_verbose_mode ();
