@@ -54,23 +54,20 @@
 ; public:
 ;
 ( define ( select-locked )
-( let*
-  (
-  ( comps ( filter component? (page-contents (active-page)) ) )
-  ( locked-comps ( remove object-selectable? comps ) )
-  ( comp ( selected-locked-comp comps ) )
+
+  ( define comps ( filter component? (page-contents (active-page)) ) )
+  ( define locked-comps ( remove object-selectable? comps ) )
+  ( define comp ( selected-locked-comp comps ) )
+
+  ( deselect-all )
+
+  ( if ( null? locked-comps )
+    ( schematic-message-dialog (G_ "No locked components") )
+    ( if comp
+      ( select-comp (next-in-list comp locked-comps) )
+      ( select-comp (first locked-comps) )
+    )
   )
 
-    ( deselect-all )
-
-    ( if ( null? locked-comps )
-      ( schematic-message-dialog ( G_ "No locked components" ) )
-      ( if comp
-        ( select-comp (next-in-list comp locked-comps) )
-        ( select-comp (first locked-comps) )
-      )
-    )
-
-) ; let
 ) ; select-locked()
 
