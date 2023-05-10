@@ -57,7 +57,8 @@
   #:use-module (schematic window global)
   #:use-module (schematic window foreign)
   #:use-module (schematic window list)
-  #:use-module (schematic window))
+  #:use-module (schematic window)
+  #:use-module (schematic sellock))
 
 
 (define-syntax define-action-public
@@ -476,6 +477,10 @@ the snap grid size should be set to 100")))
   ;; Refresh page view to properly restore attributes' colors.
   (gschem_page_view_invalidate_all
    (gschem_toplevel_get_current_page_view *window)))
+
+
+(define-action-public (&edit-select-locked #:label (G_ "Select Locked"))
+  (select-locked))
 
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
