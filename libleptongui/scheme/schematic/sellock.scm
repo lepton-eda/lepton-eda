@@ -6,6 +6,9 @@
 
 ( define-module ( schematic sellock )
   #:use-module ( srfi srfi-1 )
+  #:use-module ( system foreign )
+  #:use-module ( schematic window global )
+  #:use-module ( schematic ffi )
   #:use-module ( lepton log )
   #:use-module ( lepton page )
   #:use-module ( lepton attrib )
@@ -73,6 +76,17 @@
         ( length locked-comps )
         ( component-basename c )
         ( G_", press <E E> to edit, <E Shift+L> to unlock" )
+    )
+    ( i_show_state
+      ( *current-window )
+      ( string->pointer
+        ( format
+          #f
+          ( G_ "Locked: ~a of ~a" )
+          ( 1+ (list-index (bind2nd c) locked-comps) )
+          ( length locked-comps )
+        )
+      )
     )
   )
 
