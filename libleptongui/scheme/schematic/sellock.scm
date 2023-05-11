@@ -5,6 +5,7 @@
 ;;
 
 ( define-module ( schematic sellock )
+  #:use-module ( ice-9 format )
   #:use-module ( srfi srfi-1 )
   #:use-module ( system foreign )
   #:use-module ( schematic window global )
@@ -68,27 +69,17 @@
   ( define comp ( selected-locked-comp comps ) )
 
   ( define ( select-and-report c )
+    ( define ndx ( list-index (bind2nd c) locked-comps ) )
+    ( define len ( length locked-comps ) )
+    ( define msg (G_ "Select locked: ~a of ~a (~a), ~
+                      press <E E> to edit, <E Shift+L> to unlock") )
+    ( define msg2 ( format #f (G_ "Locked: ~a of ~a") (1+ ndx) len ) )
+
     ( select-comp c )
-    ( log!
-        'message
-        ( G_ "Select locked: ~a of ~a (~a)~a" )
-        ( 1+ (list-index (bind2nd c) locked-comps) )
-        ( length locked-comps )
-        ( component-basename c )
-        ( G_", press <E E> to edit, <E Shift+L> to unlock" )
-    )
-    ( i_show_state
-      ( *current-window )
-      ( string->pointer
-        ( format
-          #f
-          ( G_ "Locked: ~a of ~a" )
-          ( 1+ (list-index (bind2nd c) locked-comps) )
-          ( length locked-comps )
-        )
-      )
-    )
+    ( log! 'message msg (1+ ndx) len (component-basename c) )
+    ( i_show_state (*current-window) (string->pointer msg2) )
   )
+
 
   ( deselect-all )
 
