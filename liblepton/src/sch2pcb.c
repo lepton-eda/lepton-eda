@@ -937,12 +937,12 @@ static int paren_level = 0;
 gboolean
 sch2pcb_prune_element (FILE *f_out,
                        char *buf,
+                       char *s,
                        gboolean skipping)
 {
   PcbElement *el, *el_exists;
-  gchar *fmt, *s;
+  gchar *fmt;
 
-  for (s = buf; *s == ' ' || *s == '\t'; ++s);
   if (skipping)
   {
     if (*s == '(')

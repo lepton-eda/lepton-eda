@@ -557,9 +557,11 @@
                 (let loop ((line (read-line))
                            (skip-line? FALSE))
                   (unless (eof-object? line)
-                    (let ((skip-next? (sch2pcb_prune_element *tmp-file
-                                                             (string->pointer (string-append line "\n"))
-                                                             skip-line?)))
+                    (let* ((trimmed-line (string-trim-both line char-set:whitespace))
+                           (skip-next? (sch2pcb_prune_element *tmp-file
+                                                              (string->pointer (string-append line "\n"))
+                                                              (string->pointer trimmed-line)
+                                                              skip-line?)))
                       (loop (read-line) skip-next?))))))
             (sch2pcb_close_file *tmp-file)
 
