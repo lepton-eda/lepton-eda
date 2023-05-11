@@ -525,8 +525,12 @@
 (define (prune-elements pcb-filename bak-filename)
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (let* ((*trimmed-line (string->pointer trimmed-line))
-           (*element (pcb_element_line_parse *trimmed-line)))
+           (*element (pcb_element_line_parse *trimmed-line))
+           (*existing-element (if (null-pointer? *element)
+                                  %null-pointer
+                                  (pcb_element_exists *element FALSE))))
       (sch2pcb_prune_element *element
+                             *existing-element
                              *tmp-file
                              (string->pointer (string-append line "\n"))
                              *trimmed-line
