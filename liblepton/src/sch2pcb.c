@@ -934,29 +934,34 @@ sch2pcb_buffer_to_file (char *buffer,
 static int paren_level = 0;
 
 
-void
-sch2pcb_prune_elements (FILE *f_in,
-                        FILE *f_out)
+gboolean
+sch2pcb_prune_element (FILE *f_out,
+                       char *buf,
+                       gboolean skipping)
 {
   PcbElement *el, *el_exists;
-  gchar *fmt, *s, buf[1024];
-  gboolean skipping = FALSE;
+  gchar *fmt, *s;
 
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if (skipping) {
-      if (*s == '(')
-        ++paren_level;
-      else if (*s == ')' && --paren_level <= 0)
-        skipping = FALSE;
-      continue;
+  for (s = buf; *s == ' ' || *s == '\t'; ++s);
+  if (skipping)
+  {
+    if (*s == '(')
+    {
+      ++paren_level;
     }
+    else if (*s == ')' && --paren_level <= 0)
+    {
+      skipping = FALSE;
+    }
+  }
+  else
+  {
     el_exists = NULL;
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
         && !pcb_element_get_still_exists (el_exists)
         && !sch2pcb_get_preserve ())
-      {
+    {
       skipping = TRUE;
       if (sch2pcb_get_verbose_mode () != 0)
         printf ("%s: deleted element %s (value=%s)\n",
@@ -964,29 +969,58 @@ sch2pcb_prune_elements (FILE *f_in,
                 pcb_element_get_description (el),
                 pcb_element_get_value (el));
       pcb_element_free (el);
-      continue;
     }
-    if (el_exists && pcb_element_get_changed_value (el_exists)) {
-      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-      fprintf (f_out, fmt,
-               pcb_element_get_res_char (el), pcb_element_get_flags (el), pcb_element_get_description (el), pcb_element_get_refdes (el),
-               pcb_element_get_changed_value (el_exists), pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-      if (sch2pcb_get_verbose_mode () != 0)
-        printf ("%s: changed element %s value: %s -> %s\n",
-                pcb_element_get_refdes (el),
-                pcb_element_get_description (el),
-                pcb_element_get_value (el),
-                pcb_element_get_changed_value (el_exists));
-    } else
-      if (!strncmp (s, "PKG_", 4))
+    else
+    {
+      if (el_exists && pcb_element_get_changed_value (el_exists))
+      {
+        fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
+                        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
+        fprintf (f_out,
+                 fmt,
+                 pcb_element_get_res_char (el),
+                 pcb_element_get_flags (el),
+                 pcb_element_get_description (el),
+                 pcb_element_get_refdes (el),
+                 pcb_element_get_changed_value (el_exists),
+                 pcb_element_get_x (el),
+                 pcb_element_get_y (el),
+                 pcb_element_get_tail (el));
+        if (sch2pcb_get_verbose_mode () != 0)
+        {
+          printf ("%s: changed element %s value: %s -> %s\n",
+                  pcb_element_get_refdes (el),
+                  pcb_element_get_description (el),
+                  pcb_element_get_value (el),
+                  pcb_element_get_changed_value (el_exists));
+        }
+      }
+      else if (!strncmp (s, "PKG_", 4))
       {
         sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
       }
-    else
-      sch2pcb_buffer_to_file (buf, f_out);
-    pcb_element_free (el);
+      else
+      {
+        sch2pcb_buffer_to_file (buf, f_out);
+      }
+      pcb_element_free (el);
+    }
+  }
+  return skipping;
+}
+
+
+void
+sch2pcb_prune_elements (FILE *f_in,
+                        FILE *f_out)
+{
+  gchar buf[1024];
+  gboolean skipping = FALSE;
+
+  while ((fgets (buf, sizeof (buf), f_in)) != NULL)
+  {
+    skipping = sch2pcb_prune_element (f_out, buf, skipping);
   }
 }
 

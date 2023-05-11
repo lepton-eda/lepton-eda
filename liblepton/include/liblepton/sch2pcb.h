@@ -294,6 +294,10 @@ sch2pcb_parse_schematics (char *str);
 void
 sch2pcb_pcb_element_list_append (PcbElement *element);
 
+gboolean
+sch2pcb_prune_element (FILE *f_out,
+                       char *buf,
+                       gboolean skipping);
 void
 sch2pcb_prune_elements (FILE *f_in,
                         FILE *f_out);
