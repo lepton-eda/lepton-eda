@@ -929,16 +929,17 @@ sch2pcb_buffer_to_file (char *buffer,
 
 
 gboolean
-sch2pcb_prune_element (FILE *f_out,
+sch2pcb_prune_element (PcbElement *el,
+                       FILE *f_out,
                        char *buf,
                        char *s,
                        gboolean skipping)
 {
-  PcbElement *el, *el_exists;
+  PcbElement *el_exists;
   gchar *fmt;
 
   el_exists = NULL;
-  if ((el = pcb_element_line_parse (s)) != NULL
+  if (el != NULL
       && (el_exists = pcb_element_exists (el, FALSE)) != NULL
       && !pcb_element_get_still_exists (el_exists)
       && !sch2pcb_get_preserve ())
