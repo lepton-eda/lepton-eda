@@ -542,14 +542,31 @@
             ;; false, and we don't want to preserve it.  Let's
             ;; skip it.
             TRUE)
-          (let ((format-changed-element? (and (not (null-pointer? *existing-element))
-                                              (not (null-pointer? (pcb_element_get_changed_value
-                                                                   *existing-element))))))
+          (let* ((format-changed-element? (and (not (null-pointer? *existing-element))
+                                               (not (null-pointer? (pcb_element_get_changed_value
+                                                                    *existing-element)))))
+                 (*output-string
+                  (if format-changed-element?
+                      (string->pointer
+                       (format #f
+                               (if (true? (pcb_element_get_quoted_flags *element))
+                                   "Element~A~S ~S ~S ~S ~A ~A~A\n"
+                                   "Element~A~A ~S ~S ~S ~A ~A~A\n")
+                               (list->string (list (integer->char (pcb_element_get_res_char *element))))
+                               (pointer->string (pcb_element_get_flags *element))
+                               (pointer->string (pcb_element_get_description *element))
+                               (pointer->string (pcb_element_get_refdes *element))
+                               (pointer->string (pcb_element_get_changed_value *existing-element))
+                               (pointer->string (pcb_element_get_x *element))
+                               (pointer->string (pcb_element_get_y *element))
+                               (pointer->string (pcb_element_get_tail *element))))
+                      %null-pointer)))
             (sch2pcb_prune_element *element
                                    *existing-element
                                    *tmp-file
                                    (string->pointer (string-append line "\n"))
                                    *trimmed-line
+                                   *output-string
                                    (if format-changed-element? TRUE FALSE))
             skip-line?))))
 
