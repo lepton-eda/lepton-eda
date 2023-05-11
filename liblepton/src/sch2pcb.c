@@ -928,30 +928,15 @@ sch2pcb_buffer_to_file (char *buffer,
 }
 
 
-gboolean
+void
 sch2pcb_prune_element (PcbElement *el,
                        PcbElement *el_exists,
                        FILE *f_out,
                        char *buf,
-                       char *s,
-                       gboolean skipping)
+                       char *s)
 {
   gchar *fmt;
 
-  if (el_exists != NULL
-      && !pcb_element_get_still_exists (el_exists)
-      && !sch2pcb_get_preserve ())
-  {
-    skipping = TRUE;
-    if (sch2pcb_get_verbose_mode () != 0)
-      printf ("%s: deleted element %s (value=%s)\n",
-              pcb_element_get_refdes (el),
-              pcb_element_get_description (el),
-              pcb_element_get_value (el));
-    pcb_element_free (el);
-  }
-  else
-  {
     if (el_exists && pcb_element_get_changed_value (el_exists))
     {
       fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
@@ -985,8 +970,6 @@ sch2pcb_prune_element (PcbElement *el,
       sch2pcb_buffer_to_file (buf, f_out);
     }
     pcb_element_free (el);
-  }
-  return skipping;
 }
 
 

@@ -294,13 +294,12 @@ sch2pcb_parse_schematics (char *str);
 void
 sch2pcb_pcb_element_list_append (PcbElement *element);
 
-gboolean
+void
 sch2pcb_prune_element (PcbElement *el,
                        PcbElement *el_exists,
                        FILE *f_out,
                        char *buf,
-                       char *s,
-                       gboolean skipping);
+                       char *s);
 gint
 sch2pcb_get_verbose_mode ();
 
