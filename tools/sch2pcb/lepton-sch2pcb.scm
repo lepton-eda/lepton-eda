@@ -542,12 +542,15 @@
             ;; false, and we don't want to preserve it.  Let's
             ;; skip it.
             TRUE)
-          (begin
+          (let ((format-changed-element? (and (not (null-pointer? *existing-element))
+                                              (not (null-pointer? (pcb_element_get_changed_value
+                                                                   *existing-element))))))
             (sch2pcb_prune_element *element
                                    *existing-element
                                    *tmp-file
                                    (string->pointer (string-append line "\n"))
-                                   *trimmed-line)
+                                   *trimmed-line
+                                   (if format-changed-element? TRUE FALSE))
             skip-line?))))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)

@@ -299,7 +299,8 @@ sch2pcb_prune_element (PcbElement *el,
                        PcbElement *el_exists,
                        FILE *f_out,
                        char *buf,
-                       char *s);
+                       char *s,
+                       gboolean format_changed_element);
 gint
 sch2pcb_get_verbose_mode ();
 
