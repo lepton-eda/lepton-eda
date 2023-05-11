@@ -933,11 +933,12 @@ sch2pcb_prune_element (PcbElement *el,
                        PcbElement *el_exists,
                        FILE *f_out,
                        char *buf,
-                       char *s)
+                       char *s,
+                       gboolean format_changed_element)
 {
   gchar *fmt;
 
-  if (el_exists && pcb_element_get_changed_value (el_exists))
+  if (format_changed_element)
   {
     fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                     "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
