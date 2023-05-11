@@ -934,25 +934,12 @@ sch2pcb_prune_element (PcbElement *el,
                        FILE *f_out,
                        char *buf,
                        char *s,
+                       char *formatted_string,
                        gboolean format_changed_element)
 {
-  gchar *fmt;
-
   if (format_changed_element)
   {
-    fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                    "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                    "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-    fprintf (f_out,
-             fmt,
-             pcb_element_get_res_char (el),
-             pcb_element_get_flags (el),
-             pcb_element_get_description (el),
-             pcb_element_get_refdes (el),
-             pcb_element_get_changed_value (el_exists),
-             pcb_element_get_x (el),
-             pcb_element_get_y (el),
-             pcb_element_get_tail (el));
+    sch2pcb_buffer_to_file (formatted_string, f_out);
     if (sch2pcb_get_verbose_mode () != 0)
     {
       printf ("%s: changed element %s value: %s -> %s\n",
