@@ -295,7 +295,8 @@ void
 sch2pcb_pcb_element_list_append (PcbElement *element);
 
 gboolean
-sch2pcb_prune_element (FILE *f_out,
+sch2pcb_prune_element (PcbElement *el,
+                       FILE *f_out,
                        char *buf,
                        char *s,
                        gboolean skipping);
