@@ -529,12 +529,26 @@
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
                                   (pcb_element_exists *element FALSE))))
-      (sch2pcb_prune_element *element
-                             *existing-element
-                             *tmp-file
-                             (string->pointer (string-append line "\n"))
-                             *trimmed-line
-                             skip-line?)))
+      (if (and (not (null-pointer? *existing-element))
+               (false? (pcb_element_get_still_exists *existing-element))
+               (false? (sch2pcb_get_preserve)))
+          (begin
+            (verbose-format "~A: deleted element ~A (value=~A)\n"
+                            (pointer->string (pcb_element_get_refdes *element))
+                            (pointer->string (pcb_element_get_description *element))
+                            (pointer->string (pcb_element_get_value *element)))
+            (pcb_element_free *element)
+            ;; Pcb element exists, and its 'still_exists' is
+            ;; false, and we don't want to preserve it.  Let's
+            ;; skip it.
+            TRUE)
+          (begin
+            (sch2pcb_prune_element *element
+                                   *existing-element
+                                   *tmp-file
+                                   (string->pointer (string-append line "\n"))
+                                   *trimmed-line)
+            skip-line?))))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
