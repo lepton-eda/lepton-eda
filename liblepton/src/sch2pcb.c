@@ -1011,20 +1011,6 @@ sch2pcb_prune_element (FILE *f_out,
 }
 
 
-void
-sch2pcb_prune_elements (FILE *f_in,
-                        FILE *f_out)
-{
-  gchar buf[1024];
-  gboolean skipping = FALSE;
-
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL)
-  {
-    skipping = sch2pcb_prune_element (f_out, buf, skipping);
-  }
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {

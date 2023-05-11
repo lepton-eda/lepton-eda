@@ -298,9 +298,6 @@ gboolean
 sch2pcb_prune_element (FILE *f_out,
                        char *buf,
                        gboolean skipping);
-void
-sch2pcb_prune_elements (FILE *f_in,
-                        FILE *f_out);
 gint
 sch2pcb_get_verbose_mode ();
 

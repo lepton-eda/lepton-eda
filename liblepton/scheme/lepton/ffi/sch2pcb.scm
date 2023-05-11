@@ -68,7 +68,6 @@
             sch2pcb_get_preserve
             sch2pcb_set_preserve
             sch2pcb_prune_element
-            sch2pcb_prune_elements
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
@@ -125,7 +124,6 @@
 (define-lff sch2pcb_get_preserve int '())
 (define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_element int (list '* '* int))
-(define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))
