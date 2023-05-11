@@ -928,13 +928,18 @@ sch2pcb_buffer_to_file (char *buffer,
 }
 
 
+/* The variable is used in the function below.  Moving it outwards
+ * is required to avoid overcomplicated code which would deal with
+ * several in-out function arguments.  */
+static int paren_level = 0;
+
+
 void
 sch2pcb_prune_elements (FILE *f_in,
                         FILE *f_out)
 {
   PcbElement *el, *el_exists;
   gchar *fmt, *s, buf[1024];
-  gint paren_level = 0;
   gboolean skipping = FALSE;
 
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
