@@ -562,19 +562,16 @@
             ;; false, and we don't want to preserve it.  Let's
             ;; skip it.
             TRUE)
-          (begin
-            (if (and (not (null-pointer? *existing-element))
-                     (not (null-pointer? (pcb_element_get_changed_value
-                                          *existing-element))))
+          (let* ((*changed-value (and (not (null-pointer? *existing-element))
+                                      (pcb_element_get_changed_value *existing-element)))
+                 (changed-value (and *changed-value
+                                     (not (null-pointer? *changed-value))
+                                     (pointer->string *changed-value))))
+            (if changed-value
                 (let ((*output-string (string->pointer
-                                       (format-output-string
-                                        *element
-                                        (pointer->string (pcb_element_get_changed_value
-                                                          *existing-element))))))
+                                       (format-output-string *element changed-value))))
                   (sch2pcb_buffer_to_file *output-string *tmp-file)
-                  (verbose-report-changed-value
-                   *element
-                   (pointer->string (pcb_element_get_changed_value *existing-element))))
+                  (verbose-report-changed-value *element changed-value))
                 (if (string-prefix? "PKG_" trimmed-line)
                     (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
                     (sch2pcb_buffer_to_file (string->pointer (string-append line "\n"))
