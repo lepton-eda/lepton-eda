@@ -153,6 +153,8 @@
 (define %preserved-element-count 0)
 ;;; The number of deleted elements.
 (define %deleted-element-count 0)
+;;; The number of elements with changed value.
+(define %changed-value-element-count 0)
 
 
 (define (pcb-element-get-string *element *c-getter)
@@ -611,13 +613,13 @@
                 (set! %deleted-element-count (1+ %deleted-element-count)))
 
             (unless (null-pointer? (pcb_element_get_changed_value *element))
-              (sch2pcb_set_n_changed_value (1+ (sch2pcb_get_n_changed_value)))))
+              (set! %changed-value-element-count (1+ %changed-value-element-count))))
         (loop (cdr *element-list)))))
 
   (unless (or (null-pointer? (sch2pcb_get_pcb_element_list))
               (and (zero? %deleted-element-count)
                    (false? (sch2pcb_get_need_PKG_purge))
-                   (zero? (sch2pcb_get_n_changed_value))))
+                   (zero? %changed-value-element-count)))
     (when (file-readable? pcb-filename)
       (let* ((tmp-filename (string-append pcb-filename ".tmp"))
              (*tmp-file (sch2pcb_open_file_to_write
@@ -1238,7 +1240,7 @@ Lepton EDA homepage: <~A>
   (when (or (non-zero? %deleted-element-count)
             (non-zero? %fixed-element-count)
             (true? (sch2pcb_get_need_PKG_purge))
-            (non-zero? (sch2pcb_get_n_changed_value)))
+            (non-zero? %changed-value-element-count))
     (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
   (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))
              (non-zero? %deleted-element-count))
@@ -1271,9 +1273,9 @@ Lepton EDA homepage: <~A>
             (sch2pcb_get_n_empty)
             (sch2pcb_get_empty_footprint_name)
             pcb-new-filename))
-  (unless (zero? (sch2pcb_get_n_changed_value))
+  (unless (zero? %changed-value-element-count)
     (format #t "~A elements had a value change in ~A.\n"
-            (sch2pcb_get_n_changed_value)
+            %changed-value-element-count
             pcb-filename))
   (unless (zero? %fixed-element-count)
     (format #t "~A elements fixed in ~A.\n"

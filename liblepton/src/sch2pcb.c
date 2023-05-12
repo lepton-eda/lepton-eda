@@ -307,21 +307,6 @@ sch2pcb_set_empty_footprint_name (char *val)
 }
 
 
-static int n_changed_value;
-
-int
-sch2pcb_get_n_changed_value ()
-{
-  return n_changed_value;
-}
-
-void
-sch2pcb_set_n_changed_value (int val)
-{
-  n_changed_value = val;
-}
-
-
 static int n_empty;
 
 int

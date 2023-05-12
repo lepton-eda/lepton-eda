@@ -223,12 +223,6 @@ GList*
 sch2pcb_get_schematics ();
 
 int
-sch2pcb_get_n_changed_value ();
-
-void
-sch2pcb_set_n_changed_value (int val);
-
-int
 sch2pcb_get_n_empty ();
 
 void
