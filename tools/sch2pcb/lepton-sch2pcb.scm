@@ -562,10 +562,10 @@
             ;; false, and we don't want to preserve it.  Let's
             ;; skip it.
             TRUE)
-          (let* ((format-changed-element? (and (not (null-pointer? *existing-element))
-                                               (not (null-pointer? (pcb_element_get_changed_value
-                                                                    *existing-element))))))
-            (if format-changed-element?
+          (begin
+            (if (and (not (null-pointer? *existing-element))
+                     (not (null-pointer? (pcb_element_get_changed_value
+                                          *existing-element))))
                 (let ((*output-string (string->pointer
                                        (format-output-string
                                         *element
