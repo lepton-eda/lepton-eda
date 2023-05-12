@@ -530,6 +530,12 @@
                     (pointer->string (pcb_element_get_value *element))
                     value))
 
+  (define (verbose-report-element-deleted *element)
+    (verbose-format "~A: deleted element ~A (value=~A)\n"
+                    (pointer->string (pcb_element_get_refdes *element))
+                    (pointer->string (pcb_element_get_description *element))
+                    (pointer->string (pcb_element_get_value *element))))
+
   (define (format-output-string *element value)
     (format #f
             (if (true? (pcb_element_get_quoted_flags *element))
@@ -569,10 +575,7 @@
                                  (false? (sch2pcb_get_preserve)))))
       (if delete-element?
           (begin
-            (verbose-format "~A: deleted element ~A (value=~A)\n"
-                            (pointer->string (pcb_element_get_refdes *element))
-                            (pointer->string (pcb_element_get_description *element))
-                            (pointer->string (pcb_element_get_value *element)))
+            (verbose-report-element-deleted *element)
             (pcb_element_free *element)
             ;; Pcb element exists, and its 'still_exists' is
             ;; false, and we don't want to preserve it.  Let's
