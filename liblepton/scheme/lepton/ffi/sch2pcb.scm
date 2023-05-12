@@ -42,8 +42,6 @@
             pcb_element_line_parse
             pcb_element_pkg_to_element
 
-            sch2pcb_get_bak_done
-            sch2pcb_set_bak_done
             sch2pcb_buffer_to_file
             sch2pcb_get_empty_footprint_name
             sch2pcb_set_empty_footprint_name
@@ -86,8 +84,6 @@
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 
-(define-lff sch2pcb_get_bak_done int '())
-(define-lff sch2pcb_set_bak_done void (list int))
 (define-lff sch2pcb_buffer_to_file void '(* *))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
 (define-lff sch2pcb_set_empty_footprint_name void '(*))

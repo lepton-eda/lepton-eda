@@ -140,6 +140,8 @@
 (define %preserve-all-elements? #f)
 ;;; Whether PKG_ lines have been found in pcb files.
 (define %pkg-line-found #f)
+;;; Whether backup has been done.
+(define %backup-done #f)
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
@@ -659,9 +661,9 @@
                       (loop (read-line) skip-next? new-paren-level))))))
             (sch2pcb_close_file *tmp-file)
 
-            (when (false? (sch2pcb_get_bak_done))
+            (unless %backup-done
               (system* "mv" pcb-filename bak-filename)
-              (sch2pcb_set_bak_done TRUE))
+              (set! %backup-done #t))
 
             (system* "mv" tmp-filename pcb-filename)))))))
 
@@ -743,9 +745,9 @@
                 (sch2pcb_close_file *tmp-file)
 
                 ;; Make backup for pcb file.
-                (when (false? (sch2pcb_get_bak_done))
+                (unless %backup-done
                   (system* "mv" pcb-filename bak-filename)
-                  (sch2pcb_set_bak_done TRUE))
+                  (set! %backup-done #t))
 
                 ;; Replace pcb file with newly created file with
                 ;; updated descriptions.
