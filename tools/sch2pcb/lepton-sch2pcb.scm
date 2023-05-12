@@ -297,9 +297,9 @@
   (catch #t
     (lambda ()
       (unless %backup-done
-        (system* "mv" to backup)
+        (rename-file to backup)
         (set! %backup-done #t))
-      (system* "mv" from to))
+      (rename-file from to))
     (lambda (key subr message args rest)
       (format (current-error-port) (G_ "ERROR: ~?.") message args))))
 
