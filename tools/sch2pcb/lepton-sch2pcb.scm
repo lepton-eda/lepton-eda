@@ -561,13 +561,19 @@
                                (pointer->string (pcb_element_get_y *element))
                                (pointer->string (pcb_element_get_tail *element))))
                       %null-pointer)))
-            (sch2pcb_prune_element *element
-                                   *existing-element
-                                   *tmp-file
-                                   (string->pointer (string-append line "\n"))
-                                   *trimmed-line
-                                   *output-string
-                                   (if format-changed-element? TRUE FALSE))
+            (if format-changed-element?
+                (begin
+                  (sch2pcb_buffer_to_file *output-string *tmp-file)
+                  (verbose-format "~A: changed element ~A value: ~A -> ~A\n"
+                                  (pointer->string (pcb_element_get_refdes *element))
+                                  (pointer->string (pcb_element_get_description *element))
+                                  (pointer->string (pcb_element_get_value *element))
+                                  (pointer->string (pcb_element_get_changed_value *existing-element))))
+                (if (string-prefix? "PKG_" (pointer->string *trimmed-line))
+                    (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
+                    (sch2pcb_buffer_to_file (string->pointer (string-append line "\n"))
+                                            *tmp-file)))
+            (pcb_element_free *element)
             skip-line?))))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
