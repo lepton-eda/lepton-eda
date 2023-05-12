@@ -574,21 +574,19 @@
                                  (false? (pcb_element_get_still_exists *existing-element))
                                  (false? (sch2pcb_get_preserve)))))
       (if delete-element?
-          (begin
-            (verbose-report-element-deleted *element)
-            (pcb_element_free *element)
-            ;; Pcb element exists, and its 'still_exists' is
-            ;; false, and we don't want to preserve it.  Let's
-            ;; skip it.
-            TRUE)
-          (begin
-            (element->file *element
-                           *existing-element
-                           *tmp-file
-                           (string-append line "\n")
-                           (string-prefix? "PKG_" trimmed-line))
-            (pcb_element_free *element)
-            skip-line?))))
+          (verbose-report-element-deleted *element)
+          (element->file *element
+                         *existing-element
+                         *tmp-file
+                         (string-append line "\n")
+                         (string-prefix? "PKG_" trimmed-line)))
+
+      (pcb_element_free *element)
+      ;; If pcb element exists, and its 'still_exists' is false,
+      ;; and we don't want to preserve it, then let's skip it.
+      (if delete-element?
+          TRUE
+          skip-line?)))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
