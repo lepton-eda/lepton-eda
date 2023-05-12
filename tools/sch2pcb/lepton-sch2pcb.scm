@@ -564,16 +564,13 @@
             TRUE)
           (let* ((format-changed-element? (and (not (null-pointer? *existing-element))
                                                (not (null-pointer? (pcb_element_get_changed_value
-                                                                    *existing-element)))))
-                 (*output-string
-                  (if format-changed-element?
-                      (string->pointer
-                       (format-output-string
-                        *element
-                        (pointer->string (pcb_element_get_changed_value *existing-element))))
-                      %null-pointer)))
+                                                                    *existing-element))))))
             (if format-changed-element?
-                (begin
+                (let ((*output-string (string->pointer
+                                       (format-output-string
+                                        *element
+                                        (pointer->string (pcb_element_get_changed_value
+                                                          *existing-element))))))
                   (sch2pcb_buffer_to_file *output-string *tmp-file)
                   (verbose-report-changed-value
                    *element
