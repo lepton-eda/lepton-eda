@@ -928,39 +928,6 @@ sch2pcb_buffer_to_file (char *buffer,
 }
 
 
-void
-sch2pcb_prune_element (PcbElement *el,
-                       PcbElement *el_exists,
-                       FILE *f_out,
-                       char *buf,
-                       char *s,
-                       char *formatted_string,
-                       gboolean format_changed_element)
-{
-  if (format_changed_element)
-  {
-    sch2pcb_buffer_to_file (formatted_string, f_out);
-    if (sch2pcb_get_verbose_mode () != 0)
-    {
-      printf ("%s: changed element %s value: %s -> %s\n",
-              pcb_element_get_refdes (el),
-              pcb_element_get_description (el),
-              pcb_element_get_value (el),
-              pcb_element_get_changed_value (el_exists));
-    }
-  }
-  else if (!strncmp (s, "PKG_", 4))
-  {
-    sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
-  }
-  else
-  {
-    sch2pcb_buffer_to_file (buf, f_out);
-  }
-  pcb_element_free (el);
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {

@@ -51,6 +51,7 @@
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
             sch2pcb_get_n_PKG_removed_old
+            sch2pcb_set_n_PKG_removed_old
             sch2pcb_get_n_changed_value
             sch2pcb_set_n_changed_value
             sch2pcb_get_n_deleted
@@ -67,7 +68,6 @@
             sch2pcb_pcb_element_list_append
             sch2pcb_get_preserve
             sch2pcb_set_preserve
-            sch2pcb_prune_element
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
@@ -107,6 +107,7 @@
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
+(define-lff sch2pcb_set_n_PKG_removed_old void (list int))
 (define-lff sch2pcb_get_n_changed_value int '())
 (define-lff sch2pcb_set_n_changed_value void (list int))
 (define-lff sch2pcb_get_n_deleted int '())
@@ -123,7 +124,6 @@
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_get_preserve int '())
 (define-lff sch2pcb_set_preserve void (list int))
-(define-lff sch2pcb_prune_element void (list '* '* '* '* '* '* int))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))

@@ -294,14 +294,6 @@ sch2pcb_parse_schematics (char *str);
 void
 sch2pcb_pcb_element_list_append (PcbElement *element);
 
-void
-sch2pcb_prune_element (PcbElement *el,
-                       PcbElement *el_exists,
-                       FILE *f_out,
-                       char *buf,
-                       char *s,
-                       char *formatted_string,
-                       gboolean format_changed_element);
 gint
 sch2pcb_get_verbose_mode ();
 
