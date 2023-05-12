@@ -149,6 +149,8 @@
 (define %not-found-packages-count 0)
 ;;; The number of new packages mentioned but not found.
 (define %removed-new-packages-count 0)
+;;; The number of elements preserved through the option --preserve.
+(define %preserved-element-count 0)
 
 
 (define (pcb-element-get-string *element *c-getter)
@@ -598,7 +600,7 @@
         (if (false? (pcb_element_get_still_exists *element))
             (if %preserve-all-elements?
                 (begin
-                  (sch2pcb_set_n_preserved (1+ (sch2pcb_get_n_preserved)))
+                  (set! %preserved-element-count (1+ %preserved-element-count))
                   (format (current-error-port)
                           "Preserving PCB element not in the schematic:    ~A (element   ~A)\n"
                           (pointer->string (pcb_element_get_refdes *element))
@@ -1287,9 +1289,9 @@ Lepton EDA homepage: <~A>
     (if pcb-file-created?
         (format #t "  So ~A is incomplete.\n" pcb-new-filename)
         (format #t "\n")))
-  (unless (zero? (sch2pcb_get_n_preserved))
+  (unless (zero? %preserved-element-count)
     (format #t "~A elements not in the schematic preserved in ~A.\n"
-            (sch2pcb_get_n_preserved)
+            %preserved-element-count
             pcb-filename))
 
   ;; Tell user what to do next.
