@@ -530,6 +530,20 @@
                     (pointer->string (pcb_element_get_value *element))
                     value))
 
+  (define (format-output-string *element value)
+    (format #f
+            (if (true? (pcb_element_get_quoted_flags *element))
+                "Element~A~S ~S ~S ~S ~A ~A~A\n"
+                "Element~A~A ~S ~S ~S ~A ~A~A\n")
+            (list->string (list (integer->char (pcb_element_get_res_char *element))))
+            (pointer->string (pcb_element_get_flags *element))
+            (pointer->string (pcb_element_get_description *element))
+            (pointer->string (pcb_element_get_refdes *element))
+            value
+            (pointer->string (pcb_element_get_x *element))
+            (pointer->string (pcb_element_get_y *element))
+            (pointer->string (pcb_element_get_tail *element))))
+
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
@@ -554,18 +568,9 @@
                  (*output-string
                   (if format-changed-element?
                       (string->pointer
-                       (format #f
-                               (if (true? (pcb_element_get_quoted_flags *element))
-                                   "Element~A~S ~S ~S ~S ~A ~A~A\n"
-                                   "Element~A~A ~S ~S ~S ~A ~A~A\n")
-                               (list->string (list (integer->char (pcb_element_get_res_char *element))))
-                               (pointer->string (pcb_element_get_flags *element))
-                               (pointer->string (pcb_element_get_description *element))
-                               (pointer->string (pcb_element_get_refdes *element))
-                               (pointer->string (pcb_element_get_changed_value *existing-element))
-                               (pointer->string (pcb_element_get_x *element))
-                               (pointer->string (pcb_element_get_y *element))
-                               (pointer->string (pcb_element_get_tail *element))))
+                       (format-output-string
+                        *element
+                        (pointer->string (pcb_element_get_changed_value *existing-element))))
                       %null-pointer)))
             (if format-changed-element?
                 (begin
