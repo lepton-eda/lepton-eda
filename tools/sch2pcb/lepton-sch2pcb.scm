@@ -523,6 +523,13 @@
 
 
 (define (prune-elements pcb-filename bak-filename)
+  (define (verbose-report-changed-value *element value)
+    (verbose-format "~A: changed element ~A value: ~A -> ~A\n"
+                    (pointer->string (pcb_element_get_refdes *element))
+                    (pointer->string (pcb_element_get_description *element))
+                    (pointer->string (pcb_element_get_value *element))
+                    value))
+
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
@@ -563,11 +570,9 @@
             (if format-changed-element?
                 (begin
                   (sch2pcb_buffer_to_file *output-string *tmp-file)
-                  (verbose-format "~A: changed element ~A value: ~A -> ~A\n"
-                                  (pointer->string (pcb_element_get_refdes *element))
-                                  (pointer->string (pcb_element_get_description *element))
-                                  (pointer->string (pcb_element_get_value *element))
-                                  (pointer->string (pcb_element_get_changed_value *existing-element))))
+                  (verbose-report-changed-value
+                   *element
+                   (pointer->string (pcb_element_get_changed_value *existing-element))))
                 (if (string-prefix? "PKG_" trimmed-line)
                     (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
                     (sch2pcb_buffer_to_file (string->pointer (string-append line "\n"))
