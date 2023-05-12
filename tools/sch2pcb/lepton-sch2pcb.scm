@@ -19,6 +19,7 @@
 
 (use-modules (ice-9 match)
              (ice-9 rdelim)
+             (ice-9 receive)
              (srfi srfi-1)
              (srfi srfi-26)
              (system foreign)
@@ -701,6 +702,28 @@
           TRUE
           skip-line?)))
 
+  (define (process-line line skip-line? paren-level *tmp-file)
+    (let* ((trimmed-line (string-trim-both line char-set:whitespace))
+           (first-char (and (not (string-null? trimmed-line))
+                            (string-ref trimmed-line 0)))
+           (new-paren-level (if (true? skip-line?)
+                                (case first-char
+                                  ((#\() (1+ paren-level))
+                                  ((#\)) (1- paren-level))
+                                  (else paren-level))
+                                paren-level))
+           (skip-next?
+            (if (true? skip-line?)
+                (if (and (< new-paren-level paren-level)
+                         (<= new-paren-level 0))
+                    FALSE
+                    TRUE)
+                (prune-element *tmp-file
+                               line
+                               trimmed-line
+                               skip-line?))))
+      (values skip-next? new-paren-level)))
+
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
     (unless (null? *element-list)
@@ -735,25 +758,8 @@
                          (skip-line? FALSE)
                          (paren-level 0))
                 (unless (eof-object? line)
-                  (let* ((trimmed-line (string-trim-both line char-set:whitespace))
-                         (first-char (and (not (string-null? trimmed-line))
-                                          (string-ref trimmed-line 0)))
-                         (new-paren-level (if (true? skip-line?)
-                                              (case first-char
-                                                ((#\() (1+ paren-level))
-                                                ((#\)) (1- paren-level))
-                                                (else paren-level))
-                                              paren-level))
-                         (skip-next?
-                          (if (true? skip-line?)
-                              (if (and (< new-paren-level paren-level)
-                                       (<= new-paren-level 0))
-                                  FALSE
-                                  TRUE)
-                              (prune-element *tmp-file
-                                             line
-                                             trimmed-line
-                                             skip-line?))))
+                  (receive (skip-next? new-paren-level)
+                      (process-line line skip-line? paren-level *tmp-file)
                     (loop (read-line) skip-next? new-paren-level))))))
           (sch2pcb_close_file *tmp-file)
           (rename-with-backup tmp-filename pcb-filename bak-filename))))))
