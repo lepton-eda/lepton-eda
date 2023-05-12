@@ -294,10 +294,14 @@
 ;;; Then rename FROM to TO.  The variable %backup-done controls if
 ;;; a backup has already been done.
 (define (rename-with-backup from to backup)
-  (unless %backup-done
-    (system* "mv" to backup)
-    (set! %backup-done #t))
-  (system* "mv" from to))
+  (catch #t
+    (lambda ()
+      (unless %backup-done
+        (system* "mv" to backup)
+        (set! %backup-done #t))
+      (system* "mv" from to))
+    (lambda (key subr message args rest)
+      (format (current-error-port) (G_ "ERROR: ~?.") message args))))
 
 
 ;;; For PcbElement *ELEMENT, the function checks if an element
