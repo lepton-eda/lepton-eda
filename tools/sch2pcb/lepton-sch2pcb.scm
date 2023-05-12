@@ -548,10 +548,11 @@
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
-                                  (pcb_element_exists *element FALSE))))
-      (if (and (not (null-pointer? *existing-element))
-               (false? (pcb_element_get_still_exists *existing-element))
-               (false? (sch2pcb_get_preserve)))
+                                  (pcb_element_exists *element FALSE)))
+           (delete-element? (and (not (null-pointer? *existing-element))
+                                 (false? (pcb_element_get_still_exists *existing-element))
+                                 (false? (sch2pcb_get_preserve)))))
+      (if delete-element?
           (begin
             (verbose-format "~A: deleted element ~A (value=~A)\n"
                             (pointer->string (pcb_element_get_refdes *element))
