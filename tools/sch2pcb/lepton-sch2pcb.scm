@@ -544,6 +544,21 @@
             (pointer->string (pcb_element_get_y *element))
             (pointer->string (pcb_element_get_tail *element))))
 
+  (define (element->file *element *existing-element *tmp-file output-line PKG-line?)
+    (let* ((*changed-value (and (not (null-pointer? *existing-element))
+                                (pcb_element_get_changed_value *existing-element)))
+           (changed-value (and *changed-value
+                               (not (null-pointer? *changed-value))
+                               (pointer->string *changed-value))))
+      (if changed-value
+          (let ((*output-string (string->pointer
+                                 (format-output-string *element changed-value))))
+            (sch2pcb_buffer_to_file *output-string *tmp-file)
+            (verbose-report-changed-value *element changed-value))
+          (if PKG-line?
+              (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
+              (sch2pcb_buffer_to_file (string->pointer output-line) *tmp-file)))))
+
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
@@ -563,20 +578,12 @@
             ;; false, and we don't want to preserve it.  Let's
             ;; skip it.
             TRUE)
-          (let* ((*changed-value (and (not (null-pointer? *existing-element))
-                                      (pcb_element_get_changed_value *existing-element)))
-                 (changed-value (and *changed-value
-                                     (not (null-pointer? *changed-value))
-                                     (pointer->string *changed-value))))
-            (if changed-value
-                (let ((*output-string (string->pointer
-                                       (format-output-string *element changed-value))))
-                  (sch2pcb_buffer_to_file *output-string *tmp-file)
-                  (verbose-report-changed-value *element changed-value))
-                (if (string-prefix? "PKG_" trimmed-line)
-                    (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
-                    (sch2pcb_buffer_to_file (string->pointer (string-append line "\n"))
-                                            *tmp-file)))
+          (begin
+            (element->file *element
+                           *existing-element
+                           *tmp-file
+                           (string-append line "\n")
+                           (string-prefix? "PKG_" trimmed-line))
             (pcb_element_free *element)
             skip-line?))))
 
