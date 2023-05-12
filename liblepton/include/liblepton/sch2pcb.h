@@ -219,12 +219,6 @@ sch2pcb_make_pcb_element_list (gchar *pcb_file);
 GList*
 sch2pcb_get_pcb_element_list ();
 
-gboolean
-sch2pcb_get_preserve ();
-
-void
-sch2pcb_set_preserve (gboolean val);
-
 GList*
 sch2pcb_get_schematics ();
 

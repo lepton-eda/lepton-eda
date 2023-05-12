@@ -135,6 +135,9 @@
 (define %fix-elements? #f)
 ;;; Whether unfound pcb elements have to be removed.
 (define %remove-unfound-elements? #t)
+;;; Whether all elements not found in schematics have to be preserved
+;;; in PCB files.
+(define %preserve-all-elements? #f)
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
@@ -572,7 +575,7 @@
                                   (pcb_element_exists *element FALSE)))
            (delete-element? (and (not (null-pointer? *existing-element))
                                  (false? (pcb_element_get_still_exists *existing-element))
-                                 (false? (sch2pcb_get_preserve)))))
+                                 (not %preserve-all-elements?))))
       (if delete-element?
           (verbose-report-element-deleted *element)
           (element->file *element
@@ -593,7 +596,7 @@
     (unless (null? *element-list)
       (let ((*element (car *element-list)))
         (if (false? (pcb_element_get_still_exists *element))
-            (if (true? (sch2pcb_get_preserve))
+            (if %preserve-all-elements?
                 (begin
                   (sch2pcb_set_n_preserved (1+ (sch2pcb_get_n_preserved)))
                   (format (current-error-port)
@@ -888,7 +891,7 @@
       ("remove-unfound" (set! %remove-unfound-elements? #t))
       ("keep-unfound" (set! %remove-unfound-elements? #f))
       ("quiet" (set! %quiet-mode #t))
-      ("preserve" (sch2pcb_set_preserve TRUE))
+      ("preserve" (set! %preserve-all-elements? #t))
       ("use-files" (set! %force-file-elements? #t))
       ("skip-m4" (set! %use-m4 #f))
       ("elements-dir"
@@ -1101,7 +1104,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '(#\p "preserve") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_preserve TRUE)
+               (set! %preserve-all-elements? #t)
                seeds))
      (option '(#\f "use-files") #f #f
              (lambda (opt name arg seeds)

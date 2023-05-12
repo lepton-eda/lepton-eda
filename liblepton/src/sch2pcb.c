@@ -427,21 +427,6 @@ sch2pcb_set_need_PKG_purge (gboolean val)
 }
 
 
-static gboolean preserve;
-
-gboolean
-sch2pcb_get_preserve ()
-{
-  return preserve;
-}
-
-void
-sch2pcb_set_preserve (gboolean val)
-{
-  preserve = val;
-}
-
-
 static gint verbose;
 
 gint

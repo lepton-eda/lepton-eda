@@ -66,8 +66,6 @@
             sch2pcb_parse_schematics
             sch2pcb_get_pcb_element_list
             sch2pcb_pcb_element_list_append
-            sch2pcb_get_preserve
-            sch2pcb_set_preserve
             sch2pcb_get_verbose_mode
             sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
@@ -122,8 +120,6 @@
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))
-(define-lff sch2pcb_get_preserve int '())
-(define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_get_verbose_mode int '())
 (define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))
