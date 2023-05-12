@@ -138,6 +138,8 @@
 ;;; Whether all elements not found in schematics have to be preserved
 ;;; in PCB files.
 (define %preserve-all-elements? #f)
+;;; Whether PKG_ lines have been found in pcb files.
+(define %pkg-line-found #f)
 
 ;;; The number of file elements added.
 (define %added-file-element-count 0)
@@ -183,7 +185,7 @@
           (unless (eof-object? line)
             (let ((s (string-trim line char-set:whitespace)))
               (if (string-prefix? "PKG_" s)
-                  (sch2pcb_set_need_PKG_purge TRUE)
+                  (set! %pkg-line-found #t)
                   (let ((*element (pcb_element_line_parse (string->pointer s))))
                     (unless (null-pointer? *element)
                       (sch2pcb_pcb_element_list_append *element))))
@@ -618,7 +620,7 @@
 
   (unless (or (null-pointer? (sch2pcb_get_pcb_element_list))
               (and (zero? %deleted-element-count)
-                   (false? (sch2pcb_get_need_PKG_purge))
+                   (not %pkg-line-found)
                    (zero? %changed-value-element-count)))
     (when (file-readable? pcb-filename)
       (let* ((tmp-filename (string-append pcb-filename ".tmp"))
@@ -1239,7 +1241,7 @@ Lepton EDA homepage: <~A>
   (format #t "Done processing.  Work performed:\n")
   (when (or (non-zero? %deleted-element-count)
             (non-zero? %fixed-element-count)
-            (true? (sch2pcb_get_need_PKG_purge))
+            %pkg-line-found
             (non-zero? %changed-value-element-count))
     (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
   (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))

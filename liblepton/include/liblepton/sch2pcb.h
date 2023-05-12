@@ -246,12 +246,6 @@ sch2pcb_get_n_unknown ();
 void
 sch2pcb_set_n_unknown (int val);
 
-gboolean
-sch2pcb_get_need_PKG_purge ();
-
-void
-sch2pcb_set_need_PKG_purge (gboolean val);
-
 FILE*
 sch2pcb_open_file_to_read (char *filename);
 

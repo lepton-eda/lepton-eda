@@ -367,21 +367,6 @@ sch2pcb_set_n_unknown (int val)
 }
 
 
-static gboolean need_PKG_purge;
-
-gboolean
-sch2pcb_get_need_PKG_purge ()
-{
-  return need_PKG_purge;
-}
-
-void
-sch2pcb_set_need_PKG_purge (gboolean val)
-{
-  need_PKG_purge = val;
-}
-
-
 static gint verbose;
 
 gint
