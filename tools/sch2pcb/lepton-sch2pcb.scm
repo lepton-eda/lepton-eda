@@ -151,6 +151,9 @@
 (define %not-found-packages-count 0)
 ;;; The number of new packages mentioned but not found.
 (define %removed-new-packages-count 0)
+;;; The number of PKG_ lines left due to missing (not found)
+;;; elements for them.
+(define %left-old-packages-count 0)
 ;;; The number of elements preserved through the option --preserve.
 (define %preserved-element-count 0)
 ;;; The number of deleted elements.
@@ -573,7 +576,7 @@
             (sch2pcb_buffer_to_file *output-string *tmp-file)
             (verbose-report-changed-value *element changed-value))
           (if PKG-line?
-              (sch2pcb_set_n_PKG_removed_old (1+ (sch2pcb_get_n_PKG_removed_old)))
+              (set! %left-old-packages-count (1+ %left-old-packages-count))
               (sch2pcb_buffer_to_file (string->pointer output-line) *tmp-file)))))
 
   (define (prune-element *tmp-file line trimmed-line skip-line?)
@@ -1283,9 +1286,9 @@ Lepton EDA homepage: <~A>
     (format #t "~A elements fixed in ~A.\n"
             %fixed-element-count
             pcb-filename))
-  (unless (zero? (sch2pcb_get_n_PKG_removed_old))
+  (unless (zero? %left-old-packages-count)
     (format #t "~A elements could not be found."
-            (sch2pcb_get_n_PKG_removed_old))
+            %left-old-packages-count)
     (if pcb-file-created?
         (format #t "  So ~A is incomplete.\n" pcb-filename)
         (format #t "\n")))

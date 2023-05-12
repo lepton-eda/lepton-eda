@@ -50,8 +50,6 @@
             sch2pcb_find_element
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
-            sch2pcb_get_n_PKG_removed_old
-            sch2pcb_set_n_PKG_removed_old
             sch2pcb_get_n_empty
             sch2pcb_get_n_none
             sch2pcb_get_n_unknown
@@ -96,8 +94,6 @@
 (define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
-(define-lff sch2pcb_get_n_PKG_removed_old int '())
-(define-lff sch2pcb_set_n_PKG_removed_old void (list int))
 (define-lff sch2pcb_get_n_empty int '())
 (define-lff sch2pcb_get_n_none int '())
 (define-lff sch2pcb_get_n_unknown int '())
