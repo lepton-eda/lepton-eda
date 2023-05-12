@@ -716,40 +716,39 @@
              (*tmp-file (sch2pcb_open_file_to_write
                          (string->pointer tmp-filename))))
         (unless (null-pointer? *tmp-file)
-          (begin
-            (with-input-from-file pcb-filename
-              (lambda ()
-                (let loop ((line (read-line))
-                           (skip-line? FALSE)
-                           (paren-level 0))
-                  (unless (eof-object? line)
-                    (let* ((trimmed-line (string-trim-both line char-set:whitespace))
-                           (first-char (and (not (string-null? trimmed-line))
-                                            (string-ref trimmed-line 0)))
-                           (new-paren-level (if (true? skip-line?)
-                                                (case first-char
-                                                  ((#\() (1+ paren-level))
-                                                  ((#\)) (1- paren-level))
-                                                  (else paren-level))
-                                                paren-level))
-                           (skip-next?
-                            (if (true? skip-line?)
-                                (if (and (< new-paren-level paren-level)
-                                         (<= new-paren-level 0))
-                                    FALSE
-                                    TRUE)
-                                (prune-element *tmp-file
-                                               line
-                                               trimmed-line
-                                               skip-line?))))
-                      (loop (read-line) skip-next? new-paren-level))))))
-            (sch2pcb_close_file *tmp-file)
+          (with-input-from-file pcb-filename
+            (lambda ()
+              (let loop ((line (read-line))
+                         (skip-line? FALSE)
+                         (paren-level 0))
+                (unless (eof-object? line)
+                  (let* ((trimmed-line (string-trim-both line char-set:whitespace))
+                         (first-char (and (not (string-null? trimmed-line))
+                                          (string-ref trimmed-line 0)))
+                         (new-paren-level (if (true? skip-line?)
+                                              (case first-char
+                                                ((#\() (1+ paren-level))
+                                                ((#\)) (1- paren-level))
+                                                (else paren-level))
+                                              paren-level))
+                         (skip-next?
+                          (if (true? skip-line?)
+                              (if (and (< new-paren-level paren-level)
+                                       (<= new-paren-level 0))
+                                  FALSE
+                                  TRUE)
+                              (prune-element *tmp-file
+                                             line
+                                             trimmed-line
+                                             skip-line?))))
+                    (loop (read-line) skip-next? new-paren-level))))))
+          (sch2pcb_close_file *tmp-file)
 
-            (unless %backup-done
-              (system* "mv" pcb-filename bak-filename)
-              (set! %backup-done #t))
+          (unless %backup-done
+            (system* "mv" pcb-filename bak-filename)
+            (set! %backup-done #t))
 
-            (system* "mv" tmp-filename pcb-filename)))))))
+          (system* "mv" tmp-filename pcb-filename))))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
