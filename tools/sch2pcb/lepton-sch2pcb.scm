@@ -151,6 +151,8 @@
 (define %removed-new-packages-count 0)
 ;;; The number of elements preserved through the option --preserve.
 (define %preserved-element-count 0)
+;;; The number of deleted elements.
+(define %deleted-element-count 0)
 
 
 (define (pcb-element-get-string *element *c-getter)
@@ -606,14 +608,14 @@
                           (pointer->string (pcb_element_get_refdes *element))
                           (pointer->string (pcb_element_get_description *element))))
 
-                (sch2pcb_set_n_deleted (1+ (sch2pcb_get_n_deleted))))
+                (set! %deleted-element-count (1+ %deleted-element-count)))
 
             (unless (null-pointer? (pcb_element_get_changed_value *element))
               (sch2pcb_set_n_changed_value (1+ (sch2pcb_get_n_changed_value)))))
         (loop (cdr *element-list)))))
 
   (unless (or (null-pointer? (sch2pcb_get_pcb_element_list))
-              (and (zero? (sch2pcb_get_n_deleted))
+              (and (zero? %deleted-element-count)
                    (false? (sch2pcb_get_need_PKG_purge))
                    (zero? (sch2pcb_get_n_changed_value))))
     (when (file-readable? pcb-filename)
@@ -1233,15 +1235,15 @@ Lepton EDA homepage: <~A>
 
   (format #t "\n----------------------------------\n")
   (format #t "Done processing.  Work performed:\n")
-  (when (or (non-zero? (sch2pcb_get_n_deleted))
+  (when (or (non-zero? %deleted-element-count)
             (non-zero? %fixed-element-count)
             (true? (sch2pcb_get_need_PKG_purge))
             (non-zero? (sch2pcb_get_n_changed_value)))
     (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
   (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))
-             (non-zero? (sch2pcb_get_n_deleted)))
+             (non-zero? %deleted-element-count))
     (format #t "~A elements deleted from ~A.\n"
-            (sch2pcb_get_n_deleted)
+            %deleted-element-count
             pcb-filename))
 
   (if (zero? (+ %added-file-element-count

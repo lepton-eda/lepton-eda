@@ -229,12 +229,6 @@ void
 sch2pcb_set_n_changed_value (int val);
 
 int
-sch2pcb_get_n_deleted ();
-
-void
-sch2pcb_set_n_deleted (int val);
-
-int
 sch2pcb_get_n_empty ();
 
 void

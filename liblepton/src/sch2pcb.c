@@ -322,21 +322,6 @@ sch2pcb_set_n_changed_value (int val)
 }
 
 
-static int n_deleted;
-
-int
-sch2pcb_get_n_deleted ()
-{
-  return n_deleted;
-}
-
-void
-sch2pcb_set_n_deleted (int val)
-{
-  n_deleted = val;
-}
-
-
 static int n_empty;
 
 int
