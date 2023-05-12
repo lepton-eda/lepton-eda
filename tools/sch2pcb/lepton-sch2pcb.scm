@@ -290,6 +290,16 @@
           (search-element-path element-name)))))
 
 
+;;; Make backup file BACKUP for TO if it has not been done before.
+;;; Then rename FROM to TO.  The variable %backup-done controls if
+;;; a backup has already been done.
+(define (rename-with-backup from to backup)
+  (unless %backup-done
+    (system* "mv" to backup)
+    (set! %backup-done #t))
+  (system* "mv" from to))
+
+
 ;;; For PcbElement *ELEMENT, the function checks if an element
 ;;; with same refdes exists in the current element list.  If
 ;;; RECORD? is TRUE, and such an element has been found in the
@@ -743,12 +753,7 @@
                                              skip-line?))))
                     (loop (read-line) skip-next? new-paren-level))))))
           (sch2pcb_close_file *tmp-file)
-
-          (unless %backup-done
-            (system* "mv" pcb-filename bak-filename)
-            (set! %backup-done #t))
-
-          (system* "mv" tmp-filename pcb-filename))))))
+          (rename-with-backup tmp-filename pcb-filename bak-filename))))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
@@ -824,15 +829,7 @@
                                                       (string->pointer trimmed-line))
                           (loop (read-line)))))))
                 (sch2pcb_close_file *tmp-file)
-
-                ;; Make backup for pcb file.
-                (unless %backup-done
-                  (system* "mv" pcb-filename bak-filename)
-                  (set! %backup-done #t))
-
-                ;; Replace pcb file with newly created file with
-                ;; updated descriptions.
-                (system* "mv" tmp-filename pcb-filename)))))))
+                (rename-with-backup tmp-filename pcb-filename bak-filename)))))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
