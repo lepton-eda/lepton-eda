@@ -16,18 +16,10 @@ Moreover, an unlocked title block would be confusingly selected
 instead of other objects within it every now and then.  A title block
 symbol is inserted any time the user creates a new schematic.  Since
 it is not needed in symbols, you may want to delete it just after new
-page creation.  How to achieve that if you cannot select it?  Just use
-@emph{box selection} (@pxref{Box selection}), left-click and drag the
-selection box to enclose the title block.  Then use the usual deletion
-procedure: hit @kbd{Delete} or @kbd{D}.
-
-What to do if you want to change it after adding some contents to your
-schematic page?  Well, there are some tricks.  First, you can just
-select all page contents excluding locked objects and move it to
-another place, then delete the title block as above.  Another way, if
-the @ref{gEDA file format} is used, is just deleting title block
-definition in the schematic file itself.  It is usually second and
-third lines of the file (the first one is the version specification).
+page creation.  Select it either by using @emph{box selection}
+(@pxref{Box selection}) or @clicksequence{Edit @click{} Select Locked}
+(@kbd{E K}) (@pxref{Selecting locked objects}) and hit @kbd{Delete}
+or @kbd{E D}.
 
 For historical reasons, the default title block symbol is
 @file{title-B.sym}.  In order to set up another symbol as default
