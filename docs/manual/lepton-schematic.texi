@@ -310,6 +310,11 @@ that is, makes them not selectable by just clicking on them.
 @clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L}) unlocks
 selected locked objects.  @xref{Editing schematics}.
 
+@item Select Locked
+@clicksequence{Edit @click{} Select Locked} (@kbd{E K}) cycle selection
+through all locked components on current page.
+@pxref{Selecting locked objects}.
+
 @item Embed Component/Picture
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
 embeds a component or a picture into schematic.  @xref{Editing
@@ -1110,8 +1115,9 @@ L}) to lock them.  (By the way, you rarely need this for title blocks
 as they usually are added as already locked when a new schematic is
 created.  @xref{Title block symbol} for more information.)  In order
 to unlock a symbol, select it using box selection (@pxref{Box
-selection}) and use @clicksequence{Edit @click{} Unlock} (@kbd{E
-Shift-L}).
+selection}) or @clicksequence{Edit @click{} Select Locked} (@kbd{E K})
+(@pxref{Selecting locked objects}) and use @clicksequence{Edit @click{}
+Unlock} (@kbd{E Shift-L}).
 
 @quotation Note
 Locking and unlocking actions affect not only components but also all
@@ -1291,6 +1297,7 @@ ones.
 * Simple object selection::
 * Box selection::
 * Selecting and deselecting all objects::
+* Selecting locked objects::
 @end menu
 
 @node Simple object selection, Box selection, Selecting objects, Selecting objects
@@ -1304,10 +1311,11 @@ primitive object creation, it will be rejected as well.  In the mode
 you may select object by clicking at them using the left mouse button,
 or by selection box.  Selected objects are always rendered in the
 selection color so you can easily distinguish them from all other
-objects.  You cannot select locked objects this way.  They can only be
-selected by selection box.  Hitting @key{Ctrl} will toggle the
+objects.  You cannot select locked objects this way.  They can be
+selected by selection box or @clicksequence{Edit @click{} Select Locked}
+(@kbd{E K}). Holding @key{Ctrl} will toggle the
 selection state of the objects you are clicking at or selecting by
-selection box, while hitting @key{Shift} in the same situation will
+selection box, while holding @key{Shift} in the same situation will
 always add objects to the selection.
 
 @node Box selection, Selecting and deselecting all objects, Simple object selection, Selecting objects
@@ -1319,13 +1327,13 @@ As it is stated in the previous section, sometimes you cannot (or it
 is not easy to) select some object.  That is what box selection is
 convenient for.  Deselect first all selected objects if there are
 any: left-click at some empty place on the canvas.  Zoom your page in
-our out so you see any object you want to select.  Left-click and drag
+or out so you see any object you want to select.  Left-click and drag
 the mouse with the left button depressed so you will see a box that
 starts with the point you clicked first and increases or decreases
 while you drag the mouse.  Drag the mouse so the objects you want are
 within the selection box and release the mouse button.
 
-@node Selecting and deselecting all objects,  , Box selection, Selecting objects
+@node Selecting and deselecting all objects, Selecting locked objects, Box selection, Selecting objects
 @subsection Selecting and deselecting all objects
 @cindex select all
 @cindex deselect all
@@ -1335,6 +1343,17 @@ non-locked objects on a page while @clicksequence{Edit @click{}
 Deselect} (@kbd{Shift-Ctrl-A}) deselects all selected objects, if any.
 The latter can be achieved by just left mouse click at some free
 space of schematic.
+
+@node Selecting locked objects,  , Selecting and deselecting all objects, Selecting objects
+@subsection Selecting locked objects
+@cindex select locked
+
+Locked objects cannot be selected by clicking on them.  You have to use
+@emph{box selection} (@pxref{Box selection}).  For locked @emph{components}
+there is another method: @clicksequence{Edit @click{} Select Locked}
+(@kbd{E K}).  By repeating this action, you select locked components on
+current page one by one.  Information about currently selected component
+is shown in the log and, briefly, in the status bar.
 
 
 @node Searching for text, Check symbols, Selecting objects, lepton-schematic
