@@ -34,7 +34,7 @@
 )
 
 
-( define ( selected-locked-comp comps )
+( define ( selected-locked-comp )
   ( define sel ( page-selection (active-page) ) )
   ( define sel-locked ( remove object-selectable? sel ) )
   ( define sel-locked-comps ( filter component? sel-locked ) )
@@ -66,7 +66,7 @@
 
   ( define comps ( filter component? (page-contents (active-page)) ) )
   ( define locked-comps ( remove object-selectable? comps ) )
-  ( define comp ( selected-locked-comp comps ) )
+  ( define comp ( selected-locked-comp ) )
 
   ( define ( select-and-report c )
     ( define ndx ( list-index (bind2nd c) locked-comps ) )
