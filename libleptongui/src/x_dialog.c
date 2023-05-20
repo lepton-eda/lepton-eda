@@ -117,6 +117,11 @@ generic_error_dialog (const char *primary_message,
   {
     gtk_window_set_title (GTK_WINDOW (dialog), title);
   }
+  else
+  {
+    gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
+  }
+
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 }
