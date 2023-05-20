@@ -48,6 +48,7 @@ void generic_msg_dialog (const char *msg)
                                    GTK_MESSAGE_INFO,
                                    GTK_BUTTONS_OK,
                                    "%s", msg);
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
@@ -74,6 +75,7 @@ int generic_confirm_dialog (const char *msg)
                                    GTK_MESSAGE_INFO,
                                    GTK_BUTTONS_OK_CANCEL,
                                    "%s", msg);
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
 
   r = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
