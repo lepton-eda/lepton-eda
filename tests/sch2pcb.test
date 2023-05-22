@@ -2005,3 +2005,20 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb changed value")
+
+(test-group-with-cleanup "sch2pcb changed value"
+  (prepare-test-directory)
+
+  (let ((mock-pcb (string-append tests/one.pcb ".remove-R101-value")))
+    (copy-file mock-pcb one.pcb)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "1 elements had a value change in one.pcb."))))
+
+  (test-teardown))
+
+(test-end)
