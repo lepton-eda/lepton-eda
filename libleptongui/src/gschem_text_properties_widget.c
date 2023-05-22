@@ -108,7 +108,13 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->colorcb != NULL);
 
   if (gtk_widget_is_sensitive (widget->text_view)) {
-    select_all_text_in_textview (GTK_TEXT_VIEW (widget->text_view));
+    GtkTextBuffer *textbuffer =
+      gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget->text_view));
+
+    GtkTextIter start, end;
+    gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+    gtk_text_buffer_select_range (textbuffer, &start, &end);
+
     gtk_widget_grab_focus (widget->text_view);
   }
   else {

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,42 @@ struct _NewText {
 
 
 G_DEFINE_TYPE (NewText, newtext, GSCHEM_TYPE_DIALOG);
+
+
+static int
+text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
+{
+  if (tab_size <= 0)
+    return -1;
+
+  gchar* tab_string = g_strnfill (tab_size, ' ');
+  PangoLayout* layout =
+    gtk_widget_create_pango_layout (GTK_WIDGET (textview), tab_string);
+  g_free (tab_string);
+
+  gint tab_width = -1;
+  if (layout != NULL)
+  {
+    pango_layout_get_pixel_size (layout, &tab_width, NULL);
+    g_object_unref (G_OBJECT (layout));
+  }
+
+  return tab_width;
+}
+
+
+
+static void
+select_all_text_in_textview (GtkTextView *textview)
+{
+  GtkTextBuffer *textbuffer =
+    gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
+
+  GtkTextIter start, end;
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+  gtk_text_buffer_select_range (textbuffer, &start, &end);
+}
+
 
 
 /*! \brief Handles the user response when apply is selected
