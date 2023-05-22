@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \todo STILL NEED to clean up line lengths in aa and tr */
+
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
 
-
-/***************** Start of generic message dialog box *******************/
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -55,9 +44,7 @@ void generic_msg_dialog (const char *msg)
 
 }
 
-/***************** End of generic message dialog box *********************/
 
-/***************** Start of generic confirm dialog box *******************/
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -86,7 +73,7 @@ int generic_confirm_dialog (const char *msg)
     return 0;
 }
 
-/***************** End of generic confirm dialog box *********************/
+
 
 /*! \brief Launch generic error dialog.
  *  \par Function Description
@@ -127,7 +114,7 @@ generic_error_dialog (const char *primary_message,
 }
 
 
-/***************** Start of generic file select dialog box ***************/
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -197,58 +184,7 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 
 }
 
-/***************** End of generic file select dialog box *****************/
 
-/*********** Start of some Gtk utils  *******/
-
-/*! \brief Selects all text in a TextView widget
- *  \par Function Description
- *  The function selects all the text in a TextView widget.
- */
-void select_all_text_in_textview(GtkTextView *textview)
-{
-  GtkTextBuffer *textbuffer;
-  GtkTextIter start, end;
-
-  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
-  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  gtk_text_buffer_select_range(textbuffer, &start, &end);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
-{
-  PangoLayout *layout;
-  gchar *tab_string;
-  gint tab_width = 0;
-
-  if (tab_size == 0)
-  return -1;
-
-  tab_string = g_strnfill (tab_size, ' ');
-
-  layout = gtk_widget_create_pango_layout (
-                                           GTK_WIDGET (textview),
-                                           tab_string);
-  g_free (tab_string);
-
-  if (layout != NULL) {
-    pango_layout_get_pixel_size (layout, &tab_width, NULL);
-    g_object_unref (G_OBJECT (layout));
-  } else
-  tab_width = -1;
-
-  return tab_width;
-
-}
-
-/*********** End of some Gtk utils *******/
-
-/*********** Start of major symbol changed dialog box *******/
 
 /*! \brief Show the "Symbol version changes" dialog box.
  */
@@ -426,10 +362,8 @@ major_changed_dialog (GschemToplevel* w_current)
 
 } /* major_changed_dialog() */
 
-/*********** End of major symbol changed dialog box *******/
 
 
-/***************** Start of misc helper dialog boxes **************/
 /*! \brief Validate the input attribute
  *  \par Function Description
  *  This function validates the attribute and if it isn't valid
@@ -458,4 +392,4 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
   }
   return TRUE;
 }
-/***************** End of misc helper dialog boxes **************/
+

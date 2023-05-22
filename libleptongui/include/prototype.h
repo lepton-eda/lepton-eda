@@ -393,36 +393,30 @@ void x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color);
 #endif
 
 /* x_dialog.c */
-int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
-void select_all_text_in_textview(GtkTextView *textview);
+void generic_msg_dialog(const char *);
+int generic_confirm_dialog(const char *);
+void
+generic_error_dialog (const char *primary_message,
+                      const char *secondary_message,
+                      const char *title);
+char * generic_filesel_dialog(const char *, const char *, gint);
+void major_changed_dialog(GschemToplevel* w_current);
+int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
+
 void text_input_dialog(GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
 void arc_angle_dialog(GschemToplevel *w_current, LeptonObject *arc_object);
 void about_dialog(GschemToplevel *w_current);
 void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);
-char *index2functionstring(int index);
 void x_dialog_hotkeys(GschemToplevel *w_current);
-
-void generic_msg_dialog(const char *);
-int generic_confirm_dialog(const char *);
-
-void
-generic_error_dialog (const char *primary_message,
-                      const char *secondary_message,
-                      const char *title);
-
-char * generic_filesel_dialog(const char *, const char *, gint);
-
 void find_text_dialog(GschemToplevel *w_current);
 void hide_text_dialog(GschemToplevel *w_current);
 void show_text_dialog(GschemToplevel *w_current);
-void major_changed_dialog(GschemToplevel* w_current);
 gboolean
 x_dialog_close_changed_page (GschemToplevel *w_current,
                              LeptonPage *page);
 gboolean x_dialog_close_window (GschemToplevel *w_current);
-int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 
 /* x_event.c */
 gboolean
