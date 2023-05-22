@@ -1986,6 +1986,22 @@
   ;; R101 still exists in one.pcb.
   (test-grep-file-success "R101" one.pcb)
 
+  ;; The same without the option --preserve.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+
+    ;; Program reports misc things.
+    (test-assert (not (string-contains
+                       <stderr>
+                       "Preserving PCB element not in the schematic:    R101 (element   R025)")))
+    (test-assert (string-contains <stdout> "1 elements deleted from one.pcb.")))
+
+  ;; R101 still exists in one.pcb.
+  (test-grep-file-failure "R101" one.pcb)
+
   (test-teardown))
 
 (test-end)
