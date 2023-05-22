@@ -620,7 +620,10 @@ pcb_element_exists (PcbElement *el_test,
   GList *list;
   PcbElement *el;
 
-  for (list = pcb_element_list; list; list = g_list_next (list)) {
+  for (list = sch2pcb_get_pcb_element_list ();
+       list;
+       list = g_list_next (list))
+  {
     el = (PcbElement *) list->data;
 
     if (strcmp (pcb_element_get_refdes (el_test), pcb_element_get_refdes (el)))
