@@ -1947,3 +1947,45 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --preserve")
+
+(test-group-with-cleanup "sch2pcb --preserve"
+  (prepare-test-directory)
+
+  ;; First just create one.pcb.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>))
+
+  ;; Replace one.sch with its modified version.
+  (delete-file one.sch)
+  ;; The same as one.sch but with R101 removed.
+  (copy-file (build-filename tests/ "one.sch.R101.deleted")
+             one.sch)
+
+  ;; Test after component change.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--preserve"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+
+    ;; Program reports misc things.
+    (test-assert (string-contains
+                  <stderr>
+                  "Preserving PCB element not in the schematic:    R101 (element   R025)"))
+    (test-assert (string-contains
+                  <stdout>
+                  "1 elements not in the schematic preserved in one.pcb.")))
+
+  ;; R101 still exists in one.pcb.
+  (test-grep-file-success "R101" one.pcb)
+
+  (test-teardown))
+
+(test-end)
