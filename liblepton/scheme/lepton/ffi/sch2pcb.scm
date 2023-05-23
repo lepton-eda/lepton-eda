@@ -25,6 +25,7 @@
   #:export (pcb_element_exists
             pcb_element_free
             pcb_element_get_changed_description
+            pcb_element_set_changed_description
             pcb_element_get_changed_value
             pcb_element_get_description
             pcb_element_get_flags
@@ -67,6 +68,7 @@
 (define-lff pcb_element_exists '* (list '* '* int))
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_changed_description '* '(*))
+(define-lff pcb_element_set_changed_description void '(* *))
 (define-lff pcb_element_get_changed_value '* '(*))
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_get_flags '* '(*))
