@@ -307,14 +307,15 @@
 ;;; returns the element.  If nothing found, the function returns
 ;;; NULL.
 (define (pcb-element-exists? *element record?)
+  (define (matches? *other-element)
+    (pcb_element_exists *element *other-element record?))
+
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
     (if (null? *element-list)
         %null-pointer
 
-        (let ((*processed-element (pcb_element_exists *element
-                                                      (car *element-list)
-                                                      record?)))
+        (let ((*processed-element (matches? (car *element-list))))
           (if (null-pointer? *processed-element)
               (loop (cdr *element-list))
               *processed-element)))))
