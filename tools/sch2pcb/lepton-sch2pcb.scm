@@ -342,7 +342,7 @@
     (if (same-refdes? *element *other-element)
         (if (not (same-description? *element *other-element))
             (begin
-              (when (true? record?)
+              (when record?
                 (let ((description (element-description *element)))
                   (pcb_element_set_changed_description *other-element
                                                        (if description
@@ -351,7 +351,7 @@
               %null-pointer)
 
             (begin
-              (when (true? record?)
+              (when record?
                 (unless (same-value? *element *other-element)
                   (let ((val (element-value *element)))
                     (pcb_element_set_changed_value *other-element
@@ -519,8 +519,7 @@
       ;; skipped as the same element has been processed before.
       (if (and (not (null-pointer? *element))
                ;; pcb-element-exists?() returns PcbElement.
-               (not (null-pointer? (pcb-element-exists? *element
-                                                        TRUE))))
+               (not (null-pointer? (pcb-element-exists? *element #t))))
           ;; OK, element has been found in the list of previously
           ;; found elements.
           (begin
@@ -670,7 +669,7 @@
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
-                                  (pcb-element-exists? *element FALSE)))
+                                  (pcb-element-exists? *element #f)))
            (delete-element? (and (not (null-pointer? *existing-element))
                                  (false? (pcb_element_get_still_exists *existing-element))
                                  (not %preserve-all-elements?))))
@@ -758,7 +757,7 @@
     (let* ((*element (pcb_element_line_parse *trimmed-line))
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
-                                  (pcb-element-exists? *element FALSE))))
+                                  (pcb-element-exists? *element #f))))
       (if (and (not (null-pointer? *element))
                (not (null-pointer? *existing-element))
                (not (null-pointer? (pcb_element_get_changed_description *existing-element))))
