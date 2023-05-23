@@ -508,15 +508,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-void
-pcb_element_exists (PcbElement *el_test,
-                    PcbElement *el)
-{
-  if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
-    pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
-  pcb_element_set_still_exists (el, TRUE);
-}
-
 /* A problem is that new PCB 1.7 file elements have the
  * (mark_x,mark_y) value set to wherever the element was created and
  * no equivalent of a gschem translate symbol was done.
