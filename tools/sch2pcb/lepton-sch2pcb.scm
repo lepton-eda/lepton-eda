@@ -328,6 +328,14 @@
                                            (if description
                                                (string->pointer description)
                                                %null-pointer))))
+  (define (update-changed-value *e val)
+    (when record?
+      (pcb_element_set_still_exists *e TRUE)
+      (unless (same-value? *element *e)
+        (pcb_element_set_changed_value *e
+                                       (if val
+                                           (string->pointer val)
+                                           %null-pointer)))))
   (define (matches? *other-element)
     (if (same-refdes? *element *other-element)
         (if (not (same-description? *element *other-element))
@@ -337,15 +345,8 @@
               %null-pointer)
 
             (begin
-              (when record?
-                (unless (same-value? *element *other-element)
-                  (let ((val (element-value *element)))
-                    (pcb_element_set_changed_value *other-element
-                                                   (if val
-                                                       (string->pointer val)
-                                                       %null-pointer))))
-                (pcb_element_set_still_exists *other-element TRUE))
-
+              (update-changed-value *other-element
+                                    (element-value *element))
               *other-element))
 
         %null-pointer))
