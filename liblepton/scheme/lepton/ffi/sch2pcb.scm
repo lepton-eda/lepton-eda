@@ -22,11 +22,11 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (pcb_element_exists
-            pcb_element_free
+  #:export (pcb_element_free
             pcb_element_get_changed_description
             pcb_element_set_changed_description
             pcb_element_get_changed_value
+            pcb_element_set_changed_value
             pcb_element_get_description
             pcb_element_get_flags
             pcb_element_get_omit_PKG
@@ -79,11 +79,11 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-(define-lff pcb_element_exists void '(* *))
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_changed_description '* '(*))
 (define-lff pcb_element_set_changed_description void '(* *))
 (define-lff pcb_element_get_changed_value '* '(*))
+(define-lff pcb_element_set_changed_value void '(* *))
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_get_flags '* '(*))
 (define-lff pcb_element_get_omit_PKG int '(*))

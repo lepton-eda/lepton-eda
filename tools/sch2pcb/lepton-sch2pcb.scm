@@ -317,6 +317,19 @@
            description2
            (string= description1 description2))))
 
+  (define (element-value *e)
+    (and (not (null-pointer? *e))
+         (let ((*value (pcb_element_get_value *e)))
+           (and (not (null-pointer? *value))
+                (pointer->string *value)))))
+
+  (define (same-value? *e1 *e2)
+    (let ((value1 (element-value *e1))
+          (value2 (element-value *e2)))
+      (and value1
+           value2
+           (string= value1 value2))))
+
   (define (matches? *other-element)
     (if (same-refdes? *element *other-element)
         (if (not (same-description? *element *other-element))
@@ -328,10 +341,19 @@
                                                            (string->pointer description)
                                                            %null-pointer))))
               %null-pointer)
+
             (begin
               (when (true? record?)
-                (pcb_element_exists *element *other-element))
+                (unless (same-value? *element *other-element)
+                  (let ((val (element-value *element)))
+                    (pcb_element_set_changed_value *other-element
+                                                   (if val
+                                                       (string->pointer val)
+                                                       %null-pointer))))
+                (pcb_element_set_still_exists *other-element TRUE))
+
               *other-element))
+
         %null-pointer))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
