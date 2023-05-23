@@ -337,19 +337,17 @@
                                            (string->pointer val)
                                            %null-pointer)))))
   (define (matches? *other-element)
-    (if (same-refdes? *element *other-element)
-        (if (same-description? *element *other-element)
-            (begin
-              (update-changed-value *other-element
-                                    (element-value *element))
-              *other-element)
+    (and (same-refdes? *element *other-element)
+         (if (same-description? *element *other-element)
+             (begin
+               (update-changed-value *other-element
+                                     (element-value *element))
+               *other-element)
 
-            (begin
-              (update-changed-description *other-element
-                                          (element-description *element))
-              %null-pointer))
-
-        %null-pointer))
+             (begin
+               (update-changed-description *other-element
+                                           (element-description *element))
+               #f))))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
@@ -357,9 +355,8 @@
         %null-pointer
 
         (let ((*processed-element (matches? (car *element-list))))
-          (if (null-pointer? *processed-element)
-              (loop (cdr *element-list))
-              *processed-element)))))
+          (or *processed-element
+              (loop (cdr *element-list)))))))
 
 
 ;;; Process the newly created pcb file which is the output from
