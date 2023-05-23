@@ -291,6 +291,12 @@
 ;;; returns the element.  If nothing found, the function returns
 ;;; NULL.
 (define (pcb-element-exists? *element record?)
+  (define (get-element-data *e *get-func)
+    (and (not (null-pointer? *e))
+         (let ((*data (*get-func *e)))
+           (and (not (null-pointer? *data))
+                (pointer->string *data)))))
+
   (define (same-data? *e1 *e2 get-data-func)
     (let ((data1 (get-data-func *e1))
           (data2 (get-data-func *e2)))
@@ -299,28 +305,19 @@
            (string= data1 data2))))
 
   (define (element-refdes *e)
-    (and (not (null-pointer? *e))
-         (let ((*refdes (pcb_element_get_refdes *e)))
-           (and (not (null-pointer? *refdes))
-                (pointer->string *refdes)))))
+    (get-element-data *e pcb_element_get_refdes))
 
   (define (same-refdes? *e1 *e2)
     (same-data? *e1 *e2 element-refdes))
 
   (define (element-description *e)
-    (and (not (null-pointer? *e))
-         (let ((*description (pcb_element_get_description *e)))
-           (and (not (null-pointer? *description))
-                (pointer->string *description)))))
+    (get-element-data *e pcb_element_get_description))
 
   (define (same-description? *e1 *e2)
     (same-data? *e1 *e2 element-description))
 
   (define (element-value *e)
-    (and (not (null-pointer? *e))
-         (let ((*value (pcb_element_get_value *e)))
-           (and (not (null-pointer? *value))
-                (pointer->string *value)))))
+    (get-element-data *e pcb_element_get_value))
 
   (define (same-value? *e1 *e2)
     (same-data? *e1 *e2 element-value))
