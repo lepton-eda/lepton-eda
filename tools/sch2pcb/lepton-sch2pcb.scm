@@ -307,6 +307,13 @@
 ;;; returns the element.  If nothing found, the function returns
 ;;; NULL.
 (define (pcb-element-exists? *element record?)
+  (define (same-data? *e1 *e2 get-data-func)
+    (let ((data1 (get-data-func *e1))
+          (data2 (get-data-func *e2)))
+      (and data1
+           data2
+           (string= data1 data2))))
+
   (define (element-refdes *e)
     (and (not (null-pointer? *e))
          (let ((*refdes (pcb_element_get_refdes *e)))
@@ -314,11 +321,7 @@
                 (pointer->string *refdes)))))
 
   (define (same-refdes? *e1 *e2)
-    (let ((refdes1 (element-refdes *e1))
-          (refdes2 (element-refdes *e2)))
-      (and refdes1
-           refdes2
-           (string= refdes1 refdes2))))
+    (same-data? *e1 *e2 element-refdes))
 
   (define (element-description *e)
     (and (not (null-pointer? *e))
@@ -327,11 +330,7 @@
                 (pointer->string *description)))))
 
   (define (same-description? *e1 *e2)
-    (let ((description1 (element-description *e1))
-          (description2 (element-description *e2)))
-      (and description1
-           description2
-           (string= description1 description2))))
+    (same-data? *e1 *e2 element-description))
 
   (define (element-value *e)
     (and (not (null-pointer? *e))
@@ -340,11 +339,7 @@
                 (pointer->string *value)))))
 
   (define (same-value? *e1 *e2)
-    (let ((value1 (element-value *e1))
-          (value2 (element-value *e2)))
-      (and value1
-           value2
-           (string= value1 value2))))
+    (same-data? *e1 *e2 element-value))
 
   (define (matches? *other-element)
     (if (same-refdes? *element *other-element)
