@@ -168,10 +168,9 @@ pcb_element_set_omit_PKG (PcbElement *element,
 void
 pcb_element_free (PcbElement *el);
 
-PcbElement*
+void
 pcb_element_exists (PcbElement *el_test,
-                    PcbElement *el,
-                    gboolean record);
+                    PcbElement *el);
 PcbElement*
 pcb_element_line_parse (gchar *line);
 
