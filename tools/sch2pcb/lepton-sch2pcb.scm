@@ -290,6 +290,10 @@
           (search-element-path element-name)))))
 
 
+(define (pcb-element-exists? *element record?)
+  (pcb_element_exists *element record?))
+
+
 ;;; Process the newly created pcb file which is the output from
 ;;;     lepton-netlist -g gsch2pcb ...
 ;;;
@@ -433,9 +437,9 @@
       ;; Next step is to check if element processing can be
       ;; skipped as the same element has been processed before.
       (if (and (not (null-pointer? *element))
-               ;; pcb_element_exists() returns PcbElement.
-               (not (null-pointer? (pcb_element_exists *element
-                                                       TRUE))))
+               ;; pcb-element-exists?() returns PcbElement.
+               (not (null-pointer? (pcb-element-exists? *element
+                                                        TRUE))))
           ;; OK, element has been found in the list of previously
           ;; found elements.
           (begin
@@ -585,7 +589,7 @@
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
-                                  (pcb_element_exists *element FALSE)))
+                                  (pcb-element-exists? *element FALSE)))
            (delete-element? (and (not (null-pointer? *existing-element))
                                  (false? (pcb_element_get_still_exists *existing-element))
                                  (not %preserve-all-elements?))))
@@ -673,7 +677,7 @@
     (let* ((*element (pcb_element_line_parse *trimmed-line))
            (*existing-element (if (null-pointer? *element)
                                   %null-pointer
-                                  (pcb_element_exists *element FALSE))))
+                                  (pcb-element-exists? *element FALSE))))
       (if (and (not (null-pointer? *element))
                (not (null-pointer? *existing-element))
                (not (null-pointer? (pcb_element_get_changed_description *existing-element))))
