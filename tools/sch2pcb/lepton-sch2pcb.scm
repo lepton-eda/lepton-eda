@@ -370,14 +370,13 @@
              (update-description-and-return-false *other-element
                                                   (element-description *element)))))
 
-  (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
-                                         identity)))
-    (if (null? *element-list)
-        %null-pointer
-
-        (let ((*processed-element (matches? (car *element-list))))
-          (or *processed-element
-              (loop (cdr *element-list)))))))
+  (and (not (null-pointer? *element))
+       (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
+                                              identity)))
+         (and (not (null? *element-list))
+              (let ((*processed-element (matches? (car *element-list))))
+                (or *processed-element
+                    (loop (cdr *element-list))))))))
 
 
 ;;; Process the newly created pcb file which is the output from
@@ -522,9 +521,7 @@
                          (pcb_element_pkg_to_element *tline))))
       ;; Next step is to check if element processing can be
       ;; skipped as the same element has been processed before.
-      (if (and (not (null-pointer? *element))
-               ;; pcb-element-exists?() returns PcbElement.
-               (not (null-pointer? (pcb-element-exists? *element #t))))
+      (if (pcb-element-exists? *element #t)
           ;; OK, element has been found in the list of previously
           ;; found elements.
           (begin
@@ -656,7 +653,7 @@
             (pointer->string (pcb_element_get_tail *element))))
 
   (define (element->file *element *existing-element *tmp-file output-line PKG-line?)
-    (let* ((*changed-value (and (not (null-pointer? *existing-element))
+    (let* ((*changed-value (and *existing-element
                                 (pcb_element_get_changed_value *existing-element)))
            (changed-value (and *changed-value
                                (not (null-pointer? *changed-value))
@@ -672,10 +669,8 @@
 
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
-           (*existing-element (if (null-pointer? *element)
-                                  %null-pointer
-                                  (pcb-element-exists? *element #f)))
-           (delete-element? (and (not (null-pointer? *existing-element))
+           (*existing-element (pcb-element-exists? *element #f))
+           (delete-element? (and *existing-element
                                  (false? (pcb_element_get_still_exists *existing-element))
                                  (not %preserve-all-elements?))))
       (if delete-element?
@@ -760,11 +755,9 @@
 (define (update-element-descriptions pcb-filename bak-filename)
   (define (update-element-description *output-file *line *trimmed-line)
     (let* ((*element (pcb_element_line_parse *trimmed-line))
-           (*existing-element (if (null-pointer? *element)
-                                  %null-pointer
-                                  (pcb-element-exists? *element #f))))
+           (*existing-element (pcb-element-exists? *element #f)))
       (if (and (not (null-pointer? *element))
-               (not (null-pointer? *existing-element))
+               *existing-element
                (not (null-pointer? (pcb_element_get_changed_description *existing-element))))
           ;; If element already exists in the element list, and it
           ;; has changed description, output its line with this
