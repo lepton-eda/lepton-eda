@@ -274,6 +274,22 @@
           (search-element-path element-name)))))
 
 
+;;; For PcbElement *ELEMENT, the function checks if an element
+;;; with same refdes exists in the current element list.  If
+;;; RECORD? is TRUE, and such an element has been found in the
+;;; element list, it checks if the elements have different
+;;; descriptions (footprints), and records this by setting the
+;;; 'description' field of the found element to the description
+;;; value of *ELEMENT.  In such a case, however, the function
+;;; doesn't return the found element and continues searching for
+;;; another instance.  If the descriptions are the same, it
+;;; returns the found element.  In the latter case the function
+;;; sets the value of 'still_exists' field of the found element to
+;;; TRUE and additionally compares the 'value' fields of the
+;;; elements.  If they differ, the function similarly stores
+;;; *ELEMENT's 'value' as 'changed_value' of the found element and
+;;; returns the element.  If nothing found, the function returns
+;;; NULL.
 (define (pcb-element-exists? *element record?)
   (pcb_element_exists *element record?))
 
