@@ -324,18 +324,19 @@
 
   (define (update-changed-description *e description)
     (when record?
-      (pcb_element_set_changed_description *e
-                                           (if description
-                                               (string->pointer description)
-                                               %null-pointer))))
+      (let ((*description (if description
+                              (string->pointer description)
+                              %null-pointer)))
+        (pcb_element_set_changed_description *e *description))))
+
   (define (update-changed-value *e val)
     (when record?
       (pcb_element_set_still_exists *e TRUE)
       (unless (same-value? *element *e)
-        (pcb_element_set_changed_value *e
-                                       (if val
-                                           (string->pointer val)
-                                           %null-pointer)))))
+        (let ((*val (if val
+                        (string->pointer val)
+                        %null-pointer)))
+          (pcb_element_set_changed_value *e *val)))))
 
   (define (update-value-and-return-element *e val)
     (update-changed-value *e val)
