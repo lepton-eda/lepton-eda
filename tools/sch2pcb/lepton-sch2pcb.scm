@@ -354,16 +354,16 @@
                                            %null-pointer)))))
   (define (matches? *other-element)
     (if (same-refdes? *element *other-element)
-        (if (not (same-description? *element *other-element))
-            (begin
-              (update-changed-description *other-element
-                                          (element-description *element))
-              %null-pointer)
-
+        (if (same-description? *element *other-element)
             (begin
               (update-changed-value *other-element
                                     (element-value *element))
-              *other-element))
+              *other-element)
+
+            (begin
+              (update-changed-description *other-element
+                                          (element-description *element))
+              %null-pointer))
 
         %null-pointer))
 
