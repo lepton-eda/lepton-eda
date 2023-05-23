@@ -78,7 +78,7 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-(define-lff pcb_element_exists '* (list '* int))
+(define-lff pcb_element_exists '* (list '* '* int))
 (define-lff pcb_element_free void '(*))
 (define-lff pcb_element_get_changed_description '* '(*))
 (define-lff pcb_element_get_changed_value '* '(*))

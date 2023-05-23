@@ -170,6 +170,7 @@ pcb_element_free (PcbElement *el);
 
 PcbElement*
 pcb_element_exists (PcbElement *el_test,
+                    PcbElement *el,
                     gboolean record);
 PcbElement*
 pcb_element_line_parse (gchar *line);

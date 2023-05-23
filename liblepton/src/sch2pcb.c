@@ -615,33 +615,28 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 
 PcbElement*
 pcb_element_exists (PcbElement *el_test,
+                    PcbElement *el,
                     gboolean record)
 {
-  GList *list;
-  PcbElement *el;
-
-  for (list = sch2pcb_get_pcb_element_list ();
-       list;
-       list = g_list_next (list))
+  if (!strcmp (pcb_element_get_refdes (el_test), pcb_element_get_refdes (el)))
   {
-    el = (PcbElement *) list->data;
-
-    if (!strcmp (pcb_element_get_refdes (el_test), pcb_element_get_refdes (el)))
-    {
-      if (strcmp (pcb_element_get_description (el_test), pcb_element_get_description (el))) { /* footprint */
-        if (record)
-          pcb_element_set_changed_description (el, g_strdup (pcb_element_get_description (el_test)));
-      } else {
-        if (record) {
-          if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
-            pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
-          pcb_element_set_still_exists (el, TRUE);
-        }
-        return el;
+    if (strcmp (pcb_element_get_description (el_test), pcb_element_get_description (el))) { /* footprint */
+      if (record)
+        pcb_element_set_changed_description (el, g_strdup (pcb_element_get_description (el_test)));
+      return NULL;
+    } else {
+      if (record) {
+        if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
+          pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
+        pcb_element_set_still_exists (el, TRUE);
       }
+      return el;
     }
   }
-  return NULL;
+  else
+  {
+    return NULL;
+  }
 }
 
 /* A problem is that new PCB 1.7 file elements have the
