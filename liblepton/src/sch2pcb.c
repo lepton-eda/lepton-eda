@@ -513,24 +513,17 @@ pcb_element_exists (PcbElement *el_test,
                     PcbElement *el,
                     gboolean record)
 {
-  if (!strcmp (pcb_element_get_refdes (el_test), pcb_element_get_refdes (el)))
-  {
-    if (strcmp (pcb_element_get_description (el_test), pcb_element_get_description (el))) { /* footprint */
-      if (record)
-        pcb_element_set_changed_description (el, g_strdup (pcb_element_get_description (el_test)));
-      return NULL;
-    } else {
-      if (record) {
-        if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
-          pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
-        pcb_element_set_still_exists (el, TRUE);
-      }
-      return el;
-    }
-  }
-  else
-  {
+  if (strcmp (pcb_element_get_description (el_test), pcb_element_get_description (el))) { /* footprint */
+    if (record)
+      pcb_element_set_changed_description (el, g_strdup (pcb_element_get_description (el_test)));
     return NULL;
+  } else {
+    if (record) {
+      if (strcmp (pcb_element_get_value (el_test), pcb_element_get_value (el)))
+        pcb_element_set_changed_value (el, g_strdup (pcb_element_get_value (el_test)));
+      pcb_element_set_still_exists (el, TRUE);
+    }
+    return el;
   }
 }
 

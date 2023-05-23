@@ -307,8 +307,23 @@
 ;;; returns the element.  If nothing found, the function returns
 ;;; NULL.
 (define (pcb-element-exists? *element record?)
+  (define (element-refdes *e)
+    (and (not (null-pointer? *e))
+         (let ((*refdes (pcb_element_get_refdes *e)))
+           (and (not (null-pointer? *refdes))
+                (pointer->string *refdes)))))
+
+  (define (same-refdes? *e1 *e2)
+    (let ((refdes1 (element-refdes *e1))
+          (refdes2 (element-refdes *e2)))
+      (and refdes1
+           refdes2
+           (string= refdes1 refdes2))))
+
   (define (matches? *other-element)
-    (pcb_element_exists *element *other-element record?))
+    (if (same-refdes? *element *other-element)
+        (pcb_element_exists *element *other-element record?)
+        %null-pointer))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
