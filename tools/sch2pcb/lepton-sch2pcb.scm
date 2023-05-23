@@ -352,18 +352,22 @@
                                        (if val
                                            (string->pointer val)
                                            %null-pointer)))))
+
+  (define (update-value-and-return-element *e val)
+    (update-changed-value *e val)
+    *e)
+
+  (define (update-description-and-return-false *e description)
+    (update-changed-description *e description)
+    #f)
+
   (define (matches? *other-element)
     (and (same-refdes? *element *other-element)
          (if (same-description? *element *other-element)
-             (begin
-               (update-changed-value *other-element
-                                     (element-value *element))
-               *other-element)
-
-             (begin
-               (update-changed-description *other-element
-                                           (element-description *element))
-               #f))))
+             (update-value-and-return-element *other-element
+                                              (element-value *element))
+             (update-description-and-return-false *other-element
+                                                  (element-description *element)))))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
