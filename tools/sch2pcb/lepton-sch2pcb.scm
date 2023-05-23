@@ -338,16 +338,18 @@
   (define (same-value? *e1 *e2)
     (same-data? *e1 *e2 element-value))
 
+  (define (update-changed-description *e description)
+    (when record?
+      (pcb_element_set_changed_description *e
+                                           (if description
+                                               (string->pointer description)
+                                               %null-pointer))))
   (define (matches? *other-element)
     (if (same-refdes? *element *other-element)
         (if (not (same-description? *element *other-element))
             (begin
-              (when record?
-                (let ((description (element-description *element)))
-                  (pcb_element_set_changed_description *other-element
-                                                       (if description
-                                                           (string->pointer description)
-                                                           %null-pointer))))
+              (update-changed-description *other-element
+                                          (element-description *element))
               %null-pointer)
 
             (begin
