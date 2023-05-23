@@ -328,7 +328,10 @@
                                                            (string->pointer description)
                                                            %null-pointer))))
               %null-pointer)
-            (pcb_element_exists *element *other-element record?))
+            (begin
+              (when (true? record?)
+                (pcb_element_exists *element *other-element))
+              *other-element))
         %null-pointer))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
