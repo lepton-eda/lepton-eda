@@ -390,6 +390,34 @@
 (test-end)
 
 
+(test-begin "sch2pcb wrong footprint deletion")
+
+;;; Test that pcb element with wrong footprint is deleted when the
+;;; new footprint specified in schematics cannot be found.
+(test-group-with-cleanup "sch2pcb wrong footprint deletion"
+  (prepare-test-directory)
+
+  (copy-file "one-wrong-footprint.pcb" one.pcb)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--verbose" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+
+    (test-assert (string-contains <stdout> "U101: need new file element for footprint \"DIL-8-300\" (value=TL072)"))
+    (test-assert (string-contains <stderr> "U101: can't find PCB element for footprint \"DIL-8-300\" (value=TL072)"))
+    (test-assert (string-contains <stdout> "U101: deleted element DIL-8-3000 (value=TL072)"))
+    (test-assert (string-contains <stdout> "1 elements deleted from one.pcb."))
+    (test-assert (string-contains <stdout> "1 elements could not be found."))
+
+    ;; Now the files are the same.
+    (test-run-success "diff"
+                      one.pcb
+                      (build-filename tests/ "one-deleted-wrong-footprint.pcb")))
+
+  (test-teardown))
+
+(test-end)
+
+
 (test-begin "sch2pcb --gnetlist-arg")
 
 (test-group-with-cleanup "sch2pcb --gnetlist-arg"
