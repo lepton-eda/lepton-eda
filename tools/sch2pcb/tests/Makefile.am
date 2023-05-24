@@ -6,6 +6,7 @@ EXTRA_DIST = \
 	one-deleted-wrong-footprint.pcb \
 	one-wrong-footprint.pcb \
 	one.pcb \
+	one.pcb.duplicate-R101-changed-description \
 	one.pcb.remove-R101-value \
 	one.sch \
 	one.sch.R101.footprint.unknown \
