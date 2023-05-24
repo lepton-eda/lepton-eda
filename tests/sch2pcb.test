@@ -2077,6 +2077,27 @@
 
     ;; Test that backup file is intact.
     (test-assert (file-exists? "one.pcb.bak"))
+    (test-run-success "diff" "one.pcb.bak" mock-pcb)
+
+    ;; The same tests as above with --m4-pcbdir applied.
+    (delete-file one.pcb)
+    (delete-file "one.pcb.bak")
+
+    (copy-file mock-pcb one.pcb)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb
+                        "--verbose"
+                        (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                        one.sch two.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "R101: deleted element ACY100 (value=10K)"))
+      (test-assert (string-contains <stdout> "1 elements deleted from one.pcb.")))
+
+    (test-run-failure "diff" one.pcb mock-pcb)
+    (test-grep-file-success "ACY100" mock-pcb)
+    (test-grep-file-failure "ACY100" one.pcb)
+
+    (test-assert (file-exists? "one.pcb.bak"))
     (test-run-success "diff" "one.pcb.bak" mock-pcb))
 
   (test-teardown))
