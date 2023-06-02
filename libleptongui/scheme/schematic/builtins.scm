@@ -1102,12 +1102,10 @@ the snap grid size should be set to 100")))
 
 (define (failed-to-descend-error filename message)
   (log! 'message (G_ "Failed to descend into ~S: ~A") filename message)
-  (format #f (string-append
-              (format #f
-                      (G_ "Failed to descend hierarchy into ~S: ~A\n\n")
-                      filename
-                      message)
-              (G_ "The lepton-schematic log may contain more information."))))
+  (format #f (G_ "Failed to descend hierarchy into ~S:\n~A\n\n~A")
+             filename
+             message
+             (G_ "The lepton-schematic log may contain more information.")))
 
 (define (source-attrib? attrib)
   (string= (attrib-name attrib) "source"))
