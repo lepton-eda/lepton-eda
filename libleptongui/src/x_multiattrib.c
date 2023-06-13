@@ -942,6 +942,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
       GTK_MESSAGE_ERROR,
       GTK_BUTTONS_OK,
       _("Attributes with empty name are not allowed. Please set a name."));
+    gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
 
     gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);

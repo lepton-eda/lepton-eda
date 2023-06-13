@@ -450,6 +450,7 @@ x_print (GschemToplevel *w_current)
                               GTK_BUTTONS_CLOSE,
                               _("Error printing file:\n%1$s"),
                               err->message);
+    gtk_window_set_title (GTK_WINDOW (error_dialog), "lepton-schematic");
     g_signal_connect (error_dialog, "response",
                       G_CALLBACK (gtk_widget_destroy), NULL);
     gtk_widget_show (error_dialog);

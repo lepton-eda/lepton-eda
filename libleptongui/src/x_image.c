@@ -429,6 +429,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
                                          filetype,
                                          filename,
                                          gerror->message);
+        gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
 
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);

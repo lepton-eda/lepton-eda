@@ -215,6 +215,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
                                        GTK_BUTTONS_CLOSE,
                                        _("Failed to load picture: %1$s"),
                                        error->message);
+      gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -422,6 +423,7 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
                                        GTK_BUTTONS_CLOSE,
                                        _("Failed to replace pictures: %s"),
                                        error->message);
+      gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
 
