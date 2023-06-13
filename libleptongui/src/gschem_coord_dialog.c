@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \todo STILL NEED to clean up line lengths in aa and tr */
+
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
 
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    g_object_ref (widget), (GDestroyNotify) g_object_unref)
 
-
-
-/***************** Start of coord dialog box ************************/
 /*! \brief Response function for the coord dialog
  *  \par Function Description
  *  This function destroys the coord dialog box and does some cleanup.
@@ -48,6 +33,7 @@ void coord_dialog_response(GtkWidget *w, gint response, GschemToplevel *w_curren
   w_current->coord_world = NULL;
   w_current->coord_screen = NULL;
 }
+
 
 /*! \brief Update the coordinates in the coord dialog box.
  *  \par Function Description
@@ -73,9 +59,8 @@ void coord_display_update(GschemToplevel *w_current, int x, int y)
   g_free(string);
 }
 
+
 /*! \brief Create the coord dialog
- *  \par Function Description
- *  This function creates the coord dialog box.
  */
 void coord_dialog (GschemToplevel *w_current, int x, int y)
 {
@@ -145,5 +130,3 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
   /* always update the coords when the dialog is requested */
   coord_display_update(w_current, x, y);
 }
-
-/***************** End of coord dialog box **************************/
