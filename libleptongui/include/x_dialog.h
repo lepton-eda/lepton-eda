@@ -16,28 +16,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef __X_DIALOG_H__
 #define __X_DIALOG_H__
 
-/* 
+/*
  * Flags for generic_filesel_dialog()
  */
+#define FSB_MAY_EXIST        1
+#define FSB_MUST_EXIST       2
+#define FSB_SHOULD_NOT_EXIST 4
 
-#define FSB_MAY_EXIST		1
-#define FSB_MUST_EXIST		2
-#define FSB_SHOULD_NOT_EXIST	4
-
-#define FSB_SAVE		256
-#define FSB_LOAD		512
+#define FSB_SAVE 256
+#define FSB_LOAD 512
 
 /*
  * define spacings for dialogs
  */
-
 #define DIALOG_BORDER_SPACING 5
-#define DIALOG_V_SPACING 8
-#define DIALOG_H_SPACING 10
-#define DIALOG_INDENTATION 10
+#define DIALOG_V_SPACING      8
+#define DIALOG_H_SPACING      10
+#define DIALOG_INDENTATION    10
 
 #endif /* __X_DIALOG_H__ */
