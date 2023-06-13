@@ -22,15 +22,14 @@
 #include "gschem.h"
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Show a message box.
  *
+ *  \param msg  The message text.
  */
-void generic_msg_dialog (const char *msg)
+void
+generic_msg_dialog (const char *msg)
 {
   GtkWidget *dialog;
-
   dialog = gtk_message_dialog_new (NULL,
                                    (GtkDialogFlags) (GTK_DIALOG_MODAL |
                                                      GTK_DIALOG_DESTROY_WITH_PARENT),
@@ -41,17 +40,17 @@ void generic_msg_dialog (const char *msg)
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
-
 }
 
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Launch a confirmation dialog.
  *
+ *  \param msg  The message text.
+ *  \return     1 if user clicks the OK button, 0 otherwise.
  */
-int generic_confirm_dialog (const char *msg)
+int
+generic_confirm_dialog (const char *msg)
 {
   GtkWidget *dialog;
   gint r;
@@ -115,14 +114,18 @@ generic_error_dialog (const char *primary_message,
 
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Launch generic file selection dialog.
  *
- *  \warning
- *   Caller must g_free returned character string.
+ *  \param msg    Dialog's title (':Open' or ':Save' will be appended).
+ *  \param templ  Suggested file name and, for open dialog, file path.
+ *  \param flags  Bitwise OR of FSB_* flags defined in x_dialog.h.
+ *  \return       Chosen file path or NULL if dialog is cancelled.
+ *
+ *  \note Flags other than FSB_LOAD and FSB_SAVE are currently not used.
+ *  \note Caller must g_free() returned string.
  */
-char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
+char*
+generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 {
   GtkWidget *dialog;
   gchar *result = NULL;
@@ -164,11 +167,12 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  /* Pick the current template (*.rc) or default file name */
   if (templ && *templ) {
     if (flags & FSB_SAVE)  {
+      /* suggested file name */
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), templ);
     } else {
+      /* changes to specified file's folder */
       gtk_file_chooser_select_filename (GTK_FILE_CHOOSER (dialog), templ);
     }
   }
@@ -176,13 +180,12 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK) {
     result = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   }
+
   gtk_widget_destroy (dialog);
-
   g_free (title);
-
   return result;
 
-}
+} /* generic_filesel_dialog() */
 
 
 
@@ -366,14 +369,17 @@ major_changed_dialog (GschemToplevel* w_current)
 
 /*! \brief Validate the input attribute
  *  \par Function Description
+ *
  *  This function validates the attribute and if it isn't valid
  *  pops up an error message box.
  *
  *  \param parent The parent window which spawned this dialog box.
  *  \param attribute The attribute to be validated.
+ *
  *  \returns TRUE if the attribute is valid, FALSE otherwise.
  */
-int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
+int
+x_dialog_validate_attribute (GtkWindow* parent, char *attribute)
 {
   GtkWidget* message_box;
 
