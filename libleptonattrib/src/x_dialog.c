@@ -238,6 +238,7 @@ void x_dialog_unsaved_data()
                           _("_Cancel"),          GTK_RESPONSE_CANCEL,
                           _("_Save"),            GTK_RESPONSE_YES,
                           NULL);
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-attrib");
 
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
