@@ -65,6 +65,7 @@ x_rc_parse_gschem_error (GError **err)
                                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
                                    _("Cannot load lepton-schematic configuration."));
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
   g_object_set (G_OBJECT (dialog), "secondary-text", msg2, NULL);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
