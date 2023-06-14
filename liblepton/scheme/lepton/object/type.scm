@@ -82,7 +82,7 @@
   (and (is-object? object)
        (true? (lepton_object_is_line (object->pointer object)))))
 
-(define-public (net? object)
+(define (net? object)
   "Returns #t if OBJECT is a net object, otherwise returns #f."
   (and (is-object? object)
        (true? (lepton_object_is_net (object->pointer object)))))
