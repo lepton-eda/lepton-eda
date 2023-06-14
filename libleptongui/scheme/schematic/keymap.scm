@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2011-2013 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -41,10 +41,23 @@
             string->key
             key->display-string
             key?
-            make-key))
+            keys?
+            keys->string
+            string->keys
+            keys->display-string
+            keymap?
+            make-key
+            make-keymap
+            keymap-lookup-key
+            keymap-bind-key!
+            keymap-lookup-binding
+            keymap-for-each
+            lookup-keys
+            bind-keys!
+            lookup-binding))
+
 
 ;;; <schematic-key> record.
-
 (define-record-type <schematic-key>
   (make-schematic-key keyval modifiers name label)
   schematic-key?
@@ -78,6 +91,7 @@
   "Returns #t if KEY is a <schematic-key> record.  Otherwise
 returns #f."
   (schematic-key? key))
+
 
 (define (key->string key)
   "Converts the bindable key object KEY to a string.  Returns a
@@ -127,7 +141,7 @@ does not represent a valid bindable key combination, raises the
 
 ;; -------------------- Key sequences --------------------
 
-(define-public (keys? obj)
+(define (keys? obj)
   (and (vector? obj)
        (> (vector-length obj) 0)
        (let/ec return
@@ -135,16 +149,20 @@ does not represent a valid bindable key combination, raises the
          (lambda (x) (or (key? x) (return #f)))
          obj))))
 
-(define-public (keys->string keys)
+
+(define (keys->string keys)
   (string-join (map key->string (vector->list keys)) " "))
 
-(define-public (string->keys str)
+
+(define (string->keys str)
   (list->vector (map string->key
                      (filter! (lambda (x) (not (string-null? x)))
                               (string-split str #\space)))))
 
-(define-public (keys->display-string keys)
+
+(define (keys->display-string keys)
   (string-join (map key->display-string (vector->list keys)) " "))
+
 
 ;; -------------------- Keymaps --------------------
 
@@ -163,19 +181,24 @@ does not represent a valid bindable key combination, raises the
   )
 )
 
-(define-public (keymap? km) (%keymap? km))
 
-(define*-public (make-keymap)
+(define (keymap? km)
+  (%keymap? km))
+
+
+(define (make-keymap)
   (let ((k (%make-keymap
             '() ;; key-table: This is an empty alist.
             )))
     (add-bind-keys-hook! k)
     k))
 
-(define-public (keymap-lookup-key keymap key)
+
+(define (keymap-lookup-key keymap key)
   (assoc-ref (keymap-key-table keymap) key))
 
-(define*-public (keymap-bind-key! keymap key #:optional (bindable #f))
+
+(define* (keymap-bind-key! keymap key #:optional (bindable #f))
   (let ((alist (keymap-key-table keymap)))
     (set-keymap-key-table! keymap
                            (if bindable
@@ -183,15 +206,18 @@ does not represent a valid bindable key combination, raises the
                                (assoc-remove! alist key))))
     (run-hook bind-keys-hook keymap (make-vector 1 key) bindable))
 
-(define-public (keymap-lookup-binding keymap bindable)
+
+(define (keymap-lookup-binding keymap bindable)
   (let ((entry (find (lambda (x) (eq? bindable (cdr x)))
                      (keymap-key-table keymap))))
     (and entry (car entry))))
 
-(define-public (keymap-for-each proc keymap)
+
+(define (keymap-for-each proc keymap)
   (for-each
    (lambda (x) (proc (car x) (cdr x)))
    (keymap-key-table keymap)))
+
 
 ;; -------------------- Recursive keymaps --------------------
 
@@ -203,6 +229,7 @@ does not represent a valid bindable key combination, raises the
    ((key? keys) (vector keys))
    ((string? keys) (resolve-keys (string->keys keys)))
    (error "~S is not a valid key sequence" keys)))
+
 
 ;; This helper function recursively looks up the prefix of a key
 ;; sequence (i.e. all keystrokes apart from the last one) and returns
@@ -251,21 +278,24 @@ does not represent a valid bindable key combination, raises the
 
   (lookup keymap keys 0))
 
-(define-public (lookup-keys keymap keys)
+
+(define (lookup-keys keymap keys)
   (let* ((keyseq (resolve-keys keys))
          (km (keymap-for-prefix-keys! keymap keyseq)))
     (and km (keymap-lookup-key
              km
              (vector-ref keyseq (1- (vector-length keyseq)))))))
 
-(define*-public (bind-keys! keymap keys #:optional (bindable #f))
+
+(define* (bind-keys! keymap keys #:optional (bindable #f))
   (let* ((keyseq (resolve-keys keys))
          (km (keymap-for-prefix-keys! keymap keyseq #t)))
     (keymap-bind-key! km
                       (vector-ref keyseq (1- (vector-length keyseq)))
                       bindable)))
 
-(define-public (lookup-binding keymap bindable)
+
+(define (lookup-binding keymap bindable)
 
   ;; Recursive function that does the heavy lifting. This ends up
   ;; being a depth-first search, unfortunately. Return is a
@@ -289,6 +319,7 @@ does not represent a valid bindable key combination, raises the
     (lookup-binding-recursive keymap '() return)
     #f))  ;; Return #f if no binding found.
 
+
 ;; -------------------- Bind keys hook --------------------
 
 ;; bind-keys-hook is called whenever a keymap changes.  That means
@@ -308,8 +339,10 @@ does not represent a valid bindable key combination, raises the
 
 (define %bind-keys-hook-keymaps (make-weak-key-hash-table 32))
 
+
 (define (add-bind-keys-hook! keymap)
   (hash-set! %bind-keys-hook-keymaps keymap #t))
+
 
 (define (bind-keys-default-handler keymap keys binding)
 
@@ -335,6 +368,7 @@ does not represent a valid bindable key combination, raises the
    (lambda (k v) (or (eq? k keymap)
                      (bind-keys-recurse k keymap keys binding)))
    %bind-keys-hook-keymaps))
+
 
 ;; Add the default handler to be run *last* in the bind-keys-hook
 (add-hook! bind-keys-hook bind-keys-default-handler #t)
