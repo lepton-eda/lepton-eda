@@ -652,7 +652,7 @@ x_window_save_page (GschemToplevel *w_current,
   ret = (gint)f_save (page, filename, &err);
 
   if (ret != 1) {
-    log_msg   = _("Could NOT save page [%1$s]\n");
+    log_msg   = _("Could NOT save page [%1$s]");
     state_msg = _("Error while trying to save");
 
     GtkWidget *dialog;
