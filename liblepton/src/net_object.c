@@ -625,7 +625,6 @@ o_net_consolidate_segments (LeptonObject *object)
   LeptonConn *conn;
   LeptonObject *other_object;
   LeptonPage *page;
-  int changed = 0;
 
   g_return_val_if_fail (lepton_object_is_net (object), 0);
 
@@ -661,7 +660,6 @@ o_net_consolidate_segments (LeptonObject *object)
 
           o_net_consolidate_lowlevel(object, other_object, other_orient);
 
-          changed++;
           if (lepton_object_get_selected (other_object) == TRUE)
           {
             LeptonSelection *selection = lepton_page_get_selection_list (page);
