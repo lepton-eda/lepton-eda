@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,21 +26,32 @@
   #:use-module (schematic hook)
   #:use-module (schematic window)
 
+  #:export (eval-action!
+            eval-action-at-point!
+            action-position
+            action?
+            make-action
+            set-action-property!
+            action-property
+            &repeat-last-action)
+
   #:export-syntax (define-action))
 
 
 (define last-action (make-fluid))
 (define current-action-position (make-fluid))
 
+
 ;; Define an eval-in-currentmodule procedure
 (define (eval-cm expr) (eval expr (current-module)))
+
 
 ;; Evaluates a lepton-schematic action.  An action is expected to be a
 ;; symbol naming a thunk variable in the current module.
 ;;
 ;; The special-case symbol repeat-last-command causes the last action
 ;; executed to be repeated.
-(define-public (eval-action! action)
+(define (eval-action! action)
   (define (invalid-action-error)
     (log! 'warning (G_ "[~A] is not a valid lepton-schematic action.") action))
   (define (no-last-action-error)
@@ -81,21 +92,24 @@
 
   (eval-action!/recursive action))
 
+
 ;; Evaluate an action at a particular point on the schematic plane.
 ;; If the point is omitted, the action is evaluated at the current
 ;; mouse pointer position.
-(define*-public (eval-action-at-point!
-                 action
-                 #:optional (point (pointer-position)))
+(define* (eval-action-at-point!
+          action
+          #:optional (point (pointer-position)))
 
   (with-fluids ((current-action-position point))
                (eval-action! action)))
 
+
 ;; Return the current action pointer position.  This should be the
 ;; location at which the action was invoked (set via
 ;; eval-action-at-point!).
-(define-public (action-position)
+(define (action-position)
   (fluid-ref current-action-position))
+
 
 ;; -------------------------------------------------------------------
 ;; First-class actions
@@ -103,16 +117,19 @@
 ;; Make a symbol that's guaranteed to be unique in this session.
 (define %cookie (make-symbol "gschem-action-cookie"))
 
-(define-public (action? proc)
+
+(define (action? proc)
   (false-if-exception
    (eq? %cookie (procedure-property proc 'gschem-cookie))))
+
 
 (define-syntax define-action
   (syntax-rules ()
     ((_ (name . args) . forms)
      (define name (make-action (lambda () . forms) . args)))))
 
-(define-public (make-action thunk . props)
+
+(define (make-action thunk . props)
   ;; The action is a magical procedure that does nothing but call
   ;; eval-action! *on itself*.  This allows you to invoke an action
   ;; just by calling it like a normal function.
@@ -141,20 +158,28 @@
 
       action)))
 
+
 (define (action-thunk action)
   (procedure-property action 'gschem-thunk))
 
+
 (define (action-properties action)
   (procedure-property action 'gschem-properties))
+
+
 (define (set-action-properties! action alist)
   (set-procedure-property! action 'gschem-properties alist))
 
-(define-public (set-action-property! action key value)
+
+(define (set-action-property! action key value)
   (set-action-properties! action
    (assq-set! (action-properties action) key value))
   (run-hook action-property-hook action key value))
-(define-public (action-property action key)
+
+
+(define (action-property action key)
   (assq-ref (action-properties action) key))
+
 
 ;; -------------------------------------------------------------------
 ;; Special actions that operate on actions
@@ -163,6 +188,6 @@
 ;; than wrapping the action around an actual procedure.  This is to
 ;; trigger the magical recursive behaviour of eval-action! in such
 ;; away that the previous successfully-evaluated action gets invoked.
-(define-public &repeat-last-action
+(define &repeat-last-action
   (make-action 'repeat-last-command
                #:label (G_ "Repeat Last Action") #:icon "gtk-redo"))
