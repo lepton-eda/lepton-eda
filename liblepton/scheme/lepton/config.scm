@@ -44,11 +44,14 @@
             set-config-parent!
             config-trusted?
             set-config-trusted!
+            config-trusted-context
             config-has-group?
             config-remove-key!
             config-remove-group!
             config-groups
             config-keys
+            config-has-key?
+            config-inherited?
             config-source
             config-string
             config-boolean
@@ -280,7 +283,7 @@ value of TRUSTED?.  Returns CONFIG."
   config)
 
 
-(define-public (config-trusted-context cfg)
+(define (config-trusted-context cfg)
   (cond
    ((not cfg) #f)
    ((config-trusted? cfg) cfg)
@@ -323,12 +326,12 @@ If the GROUP cannot be found, raises a 'config-error error."
         (c-string-array->list *keys))))
 
 
-(define-public (config-has-key? cfg group key)
+(define (config-has-key? cfg group key)
   (false-if-exception
    (begin (config-source cfg group key)
           #t)))
 
-(define-public (config-inherited? cfg group key)
+(define (config-inherited? cfg group key)
   (not (equal? cfg (config-source cfg group key))))
 
 
