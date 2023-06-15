@@ -171,6 +171,3 @@ function in (lepton object)."
 
 (define (scheme-directory dir)
   (add-to-load-path (expand-env-variables dir)))
-
-(define (enabled? x)
-  (string= "enabled" x))
