@@ -264,7 +264,12 @@ color_edit_widget_create (ColorEditWidget* widget)
 
   GtkWidget* label = gtk_label_new (msg);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
+  GtkWidget* frame = gschem_dialog_misc_create_section_widget(
+    _("<b>Help</b>"), label);
+  gtk_expander_set_expanded (GTK_EXPANDER (frame), FALSE);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
 
   g_signal_connect (G_OBJECT (widget->color_cb_),
