@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
 ;; Copyright (C) 2010-2012 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -37,7 +37,39 @@
   #:use-module (schematic dialog)
   #:use-module (schematic hook)
   #:use-module (schematic selection)
-  #:use-module (schematic window))
+  #:use-module (schematic window)
+
+  #:export (add-attribute-to-object
+            set-attribute-text-properties!
+            add-component-at-xy
+            set-attribute-value!
+            get-objects-in-page
+            get-current-page
+            get-object-pins
+            get-object-bounds
+            get-pin-ends
+            get-selected-filename
+            get-selected-component-attributes
+            add-component-hook
+            add-component-object-hook
+            add-attribute-hook
+            add-pin-hook
+            mirror-component-object-hook
+            mirror-pin-hook
+            rotate-component-object-hook
+            rotate-pin-hook
+            copy-component-hook
+            move-component-hook
+            deselect-component-hook
+            deselect-net-hook
+            deselect-all-hook
+            select-component-hook
+            select-net-hook
+            gschem-exit
+            gschem-log
+            gschem-msg
+            gschem-confirm
+            gschem-filesel))
 
 
 (define (deprecation-warning name)
@@ -68,7 +100,7 @@
 ;; both are assumed).
 ;;
 ;; See also add-attrib! in the (schematic attrib) module.
-(define-public (add-attribute-to-object object name value visible show)
+(define (add-attribute-to-object object name value visible show)
   (add-attrib! object name value visible
                (let ((n (member "name" show))
                      (v (member "value" show)))
@@ -102,7 +134,7 @@
 ;;    "Upper Right"
 ;;
 ;; or the empty string "" to leave the alignment unchanged.
-(define-public (set-attribute-text-properties!
+(define (set-attribute-text-properties!
                   attrib color size alignment rotation x y)
   (set-text! attrib
              ;; anchor
@@ -142,7 +174,7 @@
 ;; selectable is false, the component will be locked.  If mirror is
 ;; true, the component will be mirrored.  If the requested basename
 ;; cannot be found in the library, returns #f.
-(define-public (add-component-at-xy page basename x y angle selectable mirror)
+(define (add-component-at-xy page basename x y angle selectable mirror)
   (if (or (null? basename) (not basename) (string=? basename ""))
       #f
       (let ((C (make-component/library basename
@@ -155,7 +187,7 @@
 ;; set-attribute-value! attrib value
 ;;
 ;; Set the value part of the text object attrib.
-(define-public (set-attribute-value! attrib value)
+(define (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
         (name-value (parse-attrib attrib)))
     (list-set! params 3 (simple-format #f "~A=~A" (car name-value) value))
@@ -164,19 +196,19 @@
 ;; get-objects-in-page page
 ;;
 ;; Get the contents of page, in reverse order.
-(define-public (get-objects-in-page page)
+(define (get-objects-in-page page)
   (reverse! (page-contents page)))
 
 ;; get-current-page
 ;;
 ;; Return the page which currently has focus in gschem.
-(define-public get-current-page active-page)
+(define get-current-page active-page)
 
 ;; get-object-pins object
 ;;
 ;; Return the pin objects from a component's contents, in reverse
 ;; order, or the empty list if object is not a component.
-(define-public (get-object-pins object)
+(define (get-object-pins object)
   (if (component? object)
       (reverse! (filter! pin? (component-contents object)))
       '()))
@@ -204,7 +236,7 @@
 ;; N.b. that this is a different form to that returned by
 ;; object-bounds, so you can't use fold-bounds directly with bounds
 ;; returned by this function.
-(define-public (get-object-bounds object exclude-attribs exclude-types)
+(define (get-object-bounds object exclude-attribs exclude-types)
   (define no-attribs (member "all" exclude-attribs))
 
   (define (exclude? object)
@@ -247,7 +279,7 @@
 ;; Return the coordinates of the endpoints of a pin, in the format:
 ;;
 ;;   ((x1 . y1) x2 . y2)
-(define-public (get-pin-ends pin)
+(define (get-pin-ends pin)
   (let ((params (line-info pin)))
     (cons (list-ref params 0) (list-ref params 1))))
 
@@ -255,7 +287,7 @@
 ;;
 ;; Returns the filename associated with the active page in the current
 ;; lepton-schematic window.
-(define-public (get-selected-filename)
+(define (get-selected-filename)
   (page-filename (active-page)))
 
 ;; get-selected-component-attributes
@@ -263,7 +295,7 @@
 ;; Returns a list of all selected text object strings, with duplicate
 ;; values removed (i.e. the name is pretty much unrelated to the
 ;; behaviour).  Really, seriously, just don't use this in new code.
-(define-public (get-selected-component-attributes)
+(define (get-selected-component-attributes)
   (delete-duplicates!
    (map text-string (filter! text? (page-selection (active-page))))))
 
@@ -306,7 +338,7 @@
 ;; component.  Differs from the classic behaviour in that it is *not*
 ;; also called once for each promoted attribute with the empty list as
 ;; the argument.
-(define-public add-component-hook (make-hook 1))
+(define add-component-hook (make-hook 1))
 (add-hook!/full-attribs add-objects-hook add-component-hook component?)
 
 ;; add-component-object-hook:
@@ -314,7 +346,7 @@
 ;; Called when a new component is added to the page (not copied etc).
 ;; Called once with the component itself as the argument, and once for
 ;; each promoted attribute, with the attribute as the argument.
-(define-public add-component-object-hook (make-hook 1))
+(define add-component-object-hook (make-hook 1))
 (add-hook! add-objects-hook
  (lambda (lst)
    (if (not (hook-empty? add-component-object-hook))
@@ -333,7 +365,7 @@
 ;; hook on explicit attribute attachment operations (via
 ;; "Attributes->Attach"), but does run when an individual attribute is
 ;; created and simultaneously attached to something.
-(define-public add-attribute-hook (make-hook 1))
+(define add-attribute-hook (make-hook 1))
 (add-hook! add-objects-hook
   (lambda (lst)
     (if (and (not (hook-empty? add-attribute-hook)) (= 1 (length lst)))
@@ -346,20 +378,20 @@
 ;;
 ;; Called each time a pin is added to the schematic.  Argument is the
 ;; pin itself.
-(define-public add-pin-hook (make-hook 1))
+(define add-pin-hook (make-hook 1))
 (add-hook!/filter add-objects-hook add-pin-hook pin?)
 
 ;; mirror-component-object-hook
 ;;
 ;; Called for each component in the selection when a mirror operation
 ;; is carried out.  The argument is the component itself.
-(define-public mirror-component-object-hook (make-hook 1))
+(define mirror-component-object-hook (make-hook 1))
 (add-hook!/filter mirror-objects-hook mirror-component-object-hook component?)
 
 ;; mirror-pin-hook
 ;;
 ;; Same as mirror-component-object-hook, but for pins.
-(define-public mirror-pin-hook (make-hook 1))
+(define mirror-pin-hook (make-hook 1))
 (add-hook!/filter mirror-objects-hook mirror-pin-hook pin?)
 
 ;; rotate-component-object-hook
@@ -368,13 +400,13 @@
 ;; is carried out (including using the middle mouse button during a
 ;; move operation, but excluding rotations during component
 ;; placement).  The argument is the component itself.
-(define-public rotate-component-object-hook (make-hook 1))
+(define rotate-component-object-hook (make-hook 1))
 (add-hook!/filter rotate-objects-hook rotate-component-object-hook component?)
 
 ;; rotate-pin-hook
 ;;
 ;; Same as rotate-component-object-hook, but for pins.
-(define-public rotate-pin-hook (make-hook 1))
+(define rotate-pin-hook (make-hook 1))
 (add-hook!/filter rotate-objects-hook rotate-pin-hook pin?)
 
 ;; copy-component-hook:
@@ -384,14 +416,14 @@
 ;; component.  Differs from classic behaviour in that it is called on
 ;; pasting from buffers and the clipboard, in addition to "Edit->Copy
 ;; Mode" and "Edit->Multiple Copy Mode".
-(define-public copy-component-hook (make-hook 1))
+(define copy-component-hook (make-hook 1))
 (add-hook!/full-attribs paste-objects-hook copy-component-hook component?)
 
 ;; move-component-hook:
 ;;
 ;; Called each time a component is moved in the schematic.
 ;; Argument is as copy-component-hook.
-(define-public move-component-hook (make-hook 1))
+(define move-component-hook (make-hook 1))
 (add-hook!/full-attribs move-objects-hook move-component-hook component?)
 
 ;; deselect-component-hook:
@@ -399,7 +431,7 @@
 ;; Called each time a component is removed from the selection,
 ;; except if the selection is cleared entirely.  Argument is
 ;; as select-component-hook.
-(define-public deselect-component-hook (make-hook 1))
+(define deselect-component-hook (make-hook 1))
 (add-hook!/full-attribs deselect-objects-hook deselect-component-hook
                         component?)
 
@@ -408,7 +440,7 @@
 ;; Called each time a net segment (n.b. *not* bus segment) is added to
 ;; the selection. Argument is a list of all attributes of the
 ;; net.
-(define-public deselect-net-hook (make-hook 1))
+(define deselect-net-hook (make-hook 1))
 (add-hook!/full-attribs deselect-objects-hook deselect-net-hook net?)
 
 ;; deselect-all-hook:
@@ -416,7 +448,7 @@
 ;; Called with the empty list as the argument each time the
 ;; selection is emptied, even if the selection is already
 ;; empty.
-(define-public deselect-all-hook (make-hook 1))
+(define deselect-all-hook (make-hook 1))
 (add-hook! deselect-objects-hook
   (lambda (arg)
     (if (and (not (null? deselect-all-hook))
@@ -428,7 +460,7 @@
 ;; Called each time a component is added to the selection.
 ;; Argument is a list of all attributes (inherited & promoted)
 ;; of the component.
-(define-public select-component-hook (make-hook 1))
+(define select-component-hook (make-hook 1))
 (add-hook!/full-attribs select-objects-hook select-component-hook
                         component?)
 
@@ -436,7 +468,7 @@
 ;;
 ;; Called each time a net segment (n.b. *not* bus segment) is
 ;; added to the selection.  Argument is the empty list.
-(define-public select-net-hook (make-hook 1))
+(define select-net-hook (make-hook 1))
 (add-hook!/full-attribs select-objects-hook select-net-hook net?)
 
 
@@ -574,10 +606,10 @@
 (define-deprecated cancel)
 
 
-(define-public (gschem-exit) (primitive-exit 0))
-(define-public (gschem-log msg)
+(define (gschem-exit) (primitive-exit 0))
+(define (gschem-log msg)
   (log! 'message msg))
-(define-public gschem-msg schematic-message-dialog)
-(define-public gschem-confirm schematic-confirm-dialog)
-(define-public gschem-filesel schematic-fileselect-dialog)
+(define gschem-msg schematic-message-dialog)
+(define gschem-confirm schematic-confirm-dialog)
+(define gschem-filesel schematic-fileselect-dialog)
 (define-deprecated (gschem-version version))
