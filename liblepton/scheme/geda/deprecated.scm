@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett
 ;;; Copyright (C) 2010-2014 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -44,7 +44,30 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
-           scheme-directory))
+           scheme-directory
+           OBJ_LINE
+           OBJ_PATH
+           OBJ_BOX
+           OBJ_PICTURE
+           OBJ_CIRCLE
+           OBJ_NET
+           OBJ_BUS
+           OBJ_COMPLEX
+           OBJ_TEXT
+           OBJ_PIN
+           OBJ_ARC
+           OBJ_PLACEHOLDER
+           get-line-width
+           get-attribute-name-value
+           get-attribute-angle
+           get-object-attributes
+           get-attrib-value-by-attrib-name
+           get-object-type
+           get-page-filename
+           set-page-filename
+           get-attribute-bounds
+           calcule-new-attrib-bounds))
+
 
 (define* (deprecated-module-log-warning! #:optional (new-modname #f))
   (log! 'warning
@@ -56,6 +79,7 @@
                   new-modname)
           "")))
 
+
 (define (lepton-var->char var-name)
   (integer->char
    (bytevector-uint-ref (pointer->bytevector (dynamic-pointer var-name
@@ -65,21 +89,22 @@
                         (native-endianness)
                         (sizeof uint8))))
 
-(define-public OBJ_LINE (lepton-var->char "_OBJ_LINE"))
-(define-public OBJ_PATH (lepton-var->char "_OBJ_PATH"))
-(define-public OBJ_BOX (lepton-var->char "_OBJ_BOX"))
-(define-public OBJ_PICTURE (lepton-var->char "_OBJ_PICTURE"))
-(define-public OBJ_CIRCLE (lepton-var->char "_OBJ_CIRCLE"))
-(define-public OBJ_NET (lepton-var->char "_OBJ_NET"))
-(define-public OBJ_BUS (lepton-var->char "_OBJ_BUS"))
-(define-public OBJ_COMPLEX (lepton-var->char "_OBJ_COMPONENT"))
-(define-public OBJ_TEXT (lepton-var->char "_OBJ_TEXT"))
-(define-public OBJ_PIN (lepton-var->char "_OBJ_PIN"))
-(define-public OBJ_ARC (lepton-var->char "_OBJ_ARC"))
-(define-public OBJ_PLACEHOLDER (lepton-var->char "_OBJ_PLACEHOLDER"))
+
+(define OBJ_LINE (lepton-var->char "_OBJ_LINE"))
+(define OBJ_PATH (lepton-var->char "_OBJ_PATH"))
+(define OBJ_BOX (lepton-var->char "_OBJ_BOX"))
+(define OBJ_PICTURE (lepton-var->char "_OBJ_PICTURE"))
+(define OBJ_CIRCLE (lepton-var->char "_OBJ_CIRCLE"))
+(define OBJ_NET (lepton-var->char "_OBJ_NET"))
+(define OBJ_BUS (lepton-var->char "_OBJ_BUS"))
+(define OBJ_COMPLEX (lepton-var->char "_OBJ_COMPONENT"))
+(define OBJ_TEXT (lepton-var->char "_OBJ_TEXT"))
+(define OBJ_PIN (lepton-var->char "_OBJ_PIN"))
+(define OBJ_ARC (lepton-var->char "_OBJ_ARC"))
+(define OBJ_PLACEHOLDER (lepton-var->char "_OBJ_PLACEHOLDER"))
 
 
-(define-public (get-line-width object)
+(define (get-line-width object)
   "Returns the line width used to draw OBJECT. Deprecated because it
 doesn't respect type restrictions, unlike the object-stroke
 function in (lepton object)."
@@ -87,14 +112,18 @@ function in (lepton object)."
 
   (lepton_object_get_stroke_width pointer))
 
-(define-public get-attribute-name-value parse-attrib)
 
-(define-public get-attribute-angle text-angle)
+(define get-attribute-name-value parse-attrib)
 
-(define-public (get-object-attributes object)
+
+(define get-attribute-angle text-angle)
+
+
+(define (get-object-attributes object)
   (reverse! (object-attribs object)))
 
-(define-public (get-attrib-value-by-attrib-name object name)
+
+(define (get-attrib-value-by-attrib-name object name)
   (reverse!
    (filter!
     string?
@@ -106,7 +135,7 @@ function in (lepton object)."
          (object-attribs object)))))
 
 
-(define-public (get-object-type object)
+(define (get-object-type object)
   (case (object-type object)
     ((arc) OBJ_ARC)
     ((box) OBJ_BOX)
@@ -121,11 +150,14 @@ function in (lepton object)."
     ((text) OBJ_TEXT)
     (else (error "Unknown object type ~A" (object-type object)))))
 
-(define-public get-page-filename page-filename)
 
-(define-public set-page-filename set-page-filename!)
+(define get-page-filename page-filename)
 
-(define-public (get-attribute-bounds object)
+
+(define set-page-filename set-page-filename!)
+
+
+(define (get-attribute-bounds object)
   ;; object-bounds returns ((left . top) . (right . bottom)).
   ;; Put in form ((left . right) . (top . bottom))
   (let* ((bounds (object-bounds object))
@@ -135,7 +167,8 @@ function in (lepton object)."
     (set-car! (cdr bounds) top)
     bounds))
 
-(define-public (calcule-new-attrib-bounds attrib align angle x y)
+
+(define (calcule-new-attrib-bounds attrib align angle x y)
   (define align-table
     '(("Lower Left" . lower-left)
       ("Middle Left" . middle-left)
@@ -168,6 +201,7 @@ function in (lepton object)."
       (set-car! (cdr bounds) bottom)
       (set-cdr! (cdr bounds) top)
       bounds)))
+
 
 (define (scheme-directory dir)
   (add-to-load-path (expand-env-variables dir)))
