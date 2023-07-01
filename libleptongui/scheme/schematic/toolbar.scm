@@ -153,9 +153,11 @@
                          *toolbar
                          "insert-symbol"
                          "Component"
-                         "Add component...
-Select library and component from list, move the mouse into main window, click to place.
-Right mouse button to cancel"
+                         (format #f
+                         "Add component...\n~
+                          Select library and component from list, move\n~
+                          the mouse into main window, click to place.\n~
+                          Right mouse button to cancel.")
                          callback-add-component
                          7)
 
@@ -165,8 +167,9 @@ Right mouse button to cancel"
                                        *toolbar
                                        "insert-net"
                                        "Nets"
-                                       "Add nets mode
-Right mouse button to cancel"
+                                       (format #f
+                                       "Add nets mode\n~
+                                        Right mouse button to cancel")
                                        callback-toolbar-add-net
                                        8))
            (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
@@ -177,8 +180,9 @@ Right mouse button to cancel"
                                          *toolbar
                                          "insert-bus"
                                          "Bus"
-                                         "Add buses mode
-Right mouse button to cancel"
+                                         (format #f
+                                         "Add buses mode\n~
+                                          Right mouse button to cancel")
                                          callback-toolbar-add-bus
                                          9))
              (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
