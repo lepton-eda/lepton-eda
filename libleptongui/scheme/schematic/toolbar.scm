@@ -84,8 +84,8 @@
 ;;; tooltip that pops up when the mouse cursor is over the button.
 ;;; CALLBACK is a Scheme procedure to run when the user clicks the
 ;;; button.  POSITION is a number defining the place of the button
-;;; in the toolbar it should be insert to.
-(define (make-toolbar-button *window *toolbar icon label tooltip callback position)
+;;; in the toolbar it should be insert to (0: prepend, -1:  append).
+(define* (make-toolbar-button *window *toolbar icon label tooltip callback #:optional (position -1))
   (let ((*button (schematic_toolbar_button_new)))
     (set-button-icon! *button icon)
     (set-button-label! *button label)
@@ -98,7 +98,7 @@
 ;;; Creates and returns a toolbar radio button.  *GROUP is a group
 ;;; to insert the radio button to.  Other parameters are the same
 ;;; with those for make-toolbar-button().
-(define (make-toolbar-radio-button *group *window *toolbar icon label tooltip callback position)
+(define* (make-toolbar-radio-button *group *window *toolbar icon label tooltip callback #:optional (position -1))
   (let ((*button (schematic_toolbar_radio_button_new)))
     (schematic_toolbar_radio_button_set_group *button *group)
     (set-button-icon! *button icon)
@@ -122,36 +122,31 @@
                          "document-new"
                          "New"
                          "New file"
-                         callback-file-new
-                         0)
+                         callback-file-new)
     (make-toolbar-button *window
                          *toolbar
                          "document-open"
                          "Open"
                          "Open file"
-                         callback-file-open
-                         1)
+                         callback-file-open)
     (make-toolbar-button *window *toolbar
                          "document-save"
                          "Save"
                          "Save file"
-                         i_callback_file_save
-                         2)
+                         i_callback_file_save)
     (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
                          "edit-undo"
                          "Undo"
                          "Undo last operation"
-                         callback-edit-undo
-                         4)
+                         callback-edit-undo)
     (make-toolbar-button *window
                          *toolbar
                          "edit-redo"
                          "Redo"
                          "Redo last undo"
-                         callback-edit-redo
-                         5)
+                         callback-edit-redo)
     (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
@@ -162,8 +157,7 @@
                           Select library and component from list, move\n~
                           the mouse into main window, click to place.\n~
                           Right mouse button to cancel.")
-                         callback-add-component
-                         7)
+                         callback-add-component)
 
     (let* ((*radio-button
             (make-toolbar-radio-button %null-pointer
@@ -174,8 +168,7 @@
                                        (format #f
                                        "Add nets mode\n~
                                         Right mouse button to cancel")
-                                       callback-toolbar-add-net
-                                       8))
+                                       callback-toolbar-add-net))
            (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
 
       (let* ((*radio-button
@@ -187,8 +180,7 @@
                                          (format #f
                                          "Add buses mode\n~
                                           Right mouse button to cancel")
-                                         callback-toolbar-add-bus
-                                         9))
+                                         callback-toolbar-add-bus))
              (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
 
         (make-toolbar-button *window
@@ -196,8 +188,7 @@
                              "insert-text"
                              "Text"
                              "Add Text..."
-                             callback-add-text
-                             10)
+                             callback-add-text)
         (make-toolbar-separator *toolbar)
 
 
@@ -208,8 +199,7 @@
                                           "select"
                                           "Select"
                                           "Select mode"
-                                          callback-toolbar-edit-select
-                                          12)))
+                                          callback-toolbar-edit-select)))
 
           (make-toolbar-separator *toolbar)
           ;; Activate 'select' button at start-up.
