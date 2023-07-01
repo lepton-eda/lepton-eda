@@ -157,7 +157,15 @@
                           Select library and component from list, move\n~
                           the mouse into main window, click to place.\n~
                           Right mouse button to cancel.")
-                         callback-add-component)
+                          callback-add-component)
+
+    (make-toolbar-button *window
+                          *toolbar
+                          "insert-text"
+                          "Text"
+                          "Add Text..."
+                          callback-add-text)
+    (make-toolbar-separator *toolbar)
 
     (let* ((*radio-button
             (make-toolbar-radio-button %null-pointer
@@ -183,14 +191,7 @@
                                          callback-toolbar-add-bus))
              (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
 
-        (make-toolbar-button *window
-                             *toolbar
-                             "insert-text"
-                             "Text"
-                             "Add Text..."
-                             callback-add-text)
         (make-toolbar-separator *toolbar)
-
 
         (let ((*radio-button
                (make-toolbar-radio-button *radio-group
@@ -201,7 +202,6 @@
                                           "Select mode"
                                           callback-toolbar-edit-select)))
 
-          (make-toolbar-separator *toolbar)
           ;; Activate 'select' button at start-up.
           (schematic_toolbar_activate_button *radio-button)
 
