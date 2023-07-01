@@ -109,6 +109,10 @@
     *button))
 
 
+(define* (make-toolbar-separator *toolbar #:optional (position -1))
+  (schematic_toolbar_insert_separator *toolbar position))
+
+
 (define (make-toolbar *window *main-box)
   "Creates a new toolbar widget for *WINDOW, inserting it in the
 *MAINBOX widget."
@@ -133,7 +137,7 @@
                          "Save file"
                          i_callback_file_save
                          2)
-    (schematic_toolbar_insert_separator *toolbar 3)
+    (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
                          "edit-undo"
@@ -148,7 +152,7 @@
                          "Redo last undo"
                          callback-edit-redo
                          5)
-    (schematic_toolbar_insert_separator *toolbar 6)
+    (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
                          "insert-symbol"
@@ -194,7 +198,7 @@
                              "Add Text..."
                              callback-add-text
                              10)
-        (schematic_toolbar_insert_separator *toolbar 11)
+        (make-toolbar-separator *toolbar)
 
 
         (let ((*radio-button
@@ -207,7 +211,7 @@
                                           callback-toolbar-edit-select
                                           12)))
 
-          (schematic_toolbar_insert_separator *toolbar 13)
+          (make-toolbar-separator *toolbar)
           ;; Activate 'select' button at start-up.
           (schematic_toolbar_activate_button *radio-button)
 
