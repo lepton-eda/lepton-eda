@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@
 
 
 (define %toolbar-button-callbacks '())
+(define *radio-group %null-pointer)
+(define radio-buttons '())
+
 
 ;;; Prevent garbage collection of callback procedures by storing
 ;;; them in the global variable.
@@ -95,18 +98,28 @@
     *button))
 
 
-;;; Creates and returns a toolbar radio button.  *GROUP is a group
-;;; to insert the radio button to.  Other parameters are the same
+;;; Parameters are the same
 ;;; with those for make-toolbar-button().
-(define* (make-toolbar-radio-button *group *window *toolbar icon label tooltip callback #:optional (position -1))
+(define* (make-toolbar-radio-button *window *toolbar icon label tooltip callback #:optional (position -1))
   (let ((*button (schematic_toolbar_radio_button_new)))
-    (schematic_toolbar_radio_button_set_group *button *group)
+    (schematic_toolbar_radio_button_set_group *button *radio-group)
+    (set! *radio-group (schematic_toolbar_radio_button_get_group *button))
+    (set! radio-buttons (cons *button radio-buttons))
     (set-button-icon! *button icon)
     (set-button-label! *button label)
     (set-button-tooltip! *button tooltip)
     (set-button-callback! *window *button "toggled" callback)
     (toolbar-insert! *toolbar *button position)
     *button))
+
+
+;;; Completes the group of radio buttons added so far with
+;;; make-toolbar-radio-button().
+;;; Sets the active button in the group to ACTIVE-INDEX (0-based).
+(define (radio-group-end active-index)
+  (schematic_toolbar_activate_button (list-ref (reverse radio-buttons) active-index))
+  (set! *radio-group %null-pointer)
+  (set! radio-buttons '()))
 
 
 (define* (make-toolbar-separator *toolbar #:optional (position -1))
@@ -157,8 +170,7 @@
                           Select library and component from list, move\n~
                           the mouse into main window, click to place.\n~
                           Right mouse button to cancel.")
-                          callback-add-component)
-
+                         callback-add-component)
     (make-toolbar-button *window
                           *toolbar
                           "insert-text"
@@ -167,43 +179,29 @@
                           callback-add-text)
     (make-toolbar-separator *toolbar)
 
-    (let* ((*radio-button
-            (make-toolbar-radio-button %null-pointer
-                                       *window
-                                       *toolbar
-                                       "insert-net"
-                                       "Nets"
-                                       (format #f
-                                       "Add nets mode\n~
-                                        Right mouse button to cancel")
-                                       callback-toolbar-add-net))
-           (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
+    (make-toolbar-radio-button *window
+                               *toolbar
+                               "insert-net"
+                               "Nets"
+                               (format #f
+                               "Add nets mode\n~
+                                Right mouse button to cancel")
+                               callback-toolbar-add-net)
+    (make-toolbar-radio-button *window
+                               *toolbar
+                               "insert-bus"
+                               "Bus"
+                               (format #f
+                                "Add buses mode\n~
+                                 Right mouse button to cancel")
+                                callback-toolbar-add-bus)
+    (make-toolbar-radio-button *window
+                               *toolbar
+                               "select"
+                               "Select"
+                               "Select mode"
+                               callback-toolbar-edit-select)
+    (radio-group-end 2)
 
-      (let* ((*radio-button
-              (make-toolbar-radio-button *radio-group
-                                         *window
-                                         *toolbar
-                                         "insert-bus"
-                                         "Bus"
-                                         (format #f
-                                         "Add buses mode\n~
-                                          Right mouse button to cancel")
-                                         callback-toolbar-add-bus))
-             (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
-
-        (make-toolbar-separator *toolbar)
-
-        (let ((*radio-button
-               (make-toolbar-radio-button *radio-group
-                                          *window
-                                          *toolbar
-                                          "select"
-                                          "Select"
-                                          "Select mode"
-                                          callback-toolbar-edit-select)))
-
-          ;; Activate 'select' button at start-up.
-          (schematic_toolbar_activate_button *radio-button)
-
-          ;; Return pointer to the toolbar widget.
-          *toolbar)))))
+    ;; Return pointer to the toolbar widget.
+    *toolbar))
