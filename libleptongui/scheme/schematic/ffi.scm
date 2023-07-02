@@ -476,6 +476,8 @@
             a_zoom_box_motion
             a_zoom_box_start
 
+            g_action_eval_by_name
+
             parse-gschemrc
             ))
 
@@ -1031,6 +1033,9 @@
 (define-lff a_zoom_box_end void (list '* int int))
 (define-lff a_zoom_box_motion void (list '* int int))
 (define-lff a_zoom_box_start void (list '* int int))
+
+;;; x_menus.c
+(define-lff g_action_eval_by_name int (list '* '*))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
