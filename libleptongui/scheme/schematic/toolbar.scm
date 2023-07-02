@@ -202,6 +202,21 @@
                                "Select mode"
                                callback-toolbar-edit-select)
     (radio-group-end 2)
+    (make-toolbar-separator *toolbar)
+
+    (make-toolbar-button *window *toolbar
+                         "gtk-goto-bottom" "Down Symbol" "Down Symbol" ; ico lab tip
+                         (lambda (*widget *window)
+                           (g_action_eval_by_name
+                             *window
+                             (string->pointer "&hierarchy-down-symbol"))))
+
+    (make-toolbar-button *window *toolbar
+                         "gtk-go-down" "Down Schematic" "Down Schematic"
+                         (lambda (*widget *window)
+                           (g_action_eval_by_name
+                             *window
+                             (string->pointer "&hierarchy-down-schematic"))))
 
     ;; Return pointer to the toolbar widget.
     *toolbar))
