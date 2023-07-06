@@ -270,12 +270,17 @@ lepton-sch2pcb - interface to PCB layout programs
 Development
 
 * Debugging::                   Debugging the tools
+* Collaboration::               Working together to make Lepton better
 
 Debugging the tools
 
 * Debug Scheme code::
 * Debuggers::
 * Debug Glib and GTK::
+
+Let's make Lepton better
+
+* Bugs and features::
 
 gEDA/gaf File Format Document
 

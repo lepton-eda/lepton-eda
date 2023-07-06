@@ -9,9 +9,10 @@ with it, edit and run without touching anything else.
 
 @menu
 * Debugging::                   Debugging the tools
+* Collaboration::               Working together to make Lepton better
 @end menu
 
-@node Debugging,  , Development, Development
+@node Debugging, Collaboration, Development, Development
 @section Debugging the tools
 @cindex debug
 @cindex debugging
@@ -130,3 +131,59 @@ Then, you can use the following command to fiddle with them in
 G_DEBUG=fatal_criticals gdb --args \
   guile -s /usr/local/bin/lepton-schematic
 @end example
+
+
+@node Collaboration,  , Debugging, Development
+@section Let's make Lepton better
+
+@menu
+* Bugs and features::
+@end menu
+
+@node Bugs and features,  , Collaboration, Collaboration
+@subsection Working on bug or feature requests
+
+In order to work on Lepton at Github, you have to register there
+first.
+
+If you found a new bug or want to file a feature request, please
+report it.  Any already filed bugs and feature requests must be
+triaged periodically as well to make sure they still exist and not
+solved yet.  Below are some guidance of how to deal with all that.
+
+@subsubsection Triaging bugs
+
+@itemize @bullet
+
+@item
+First look through
+@url{https://github.com/lepton-eda/lepton-eda/issues, Lepton issues}
+and @url{https://github.com/lepton-eda/lepton-eda/pulls, Pull
+requests} to learn if your issue is already known or someone has
+offered a solution for it.
+
+@item
+Grab @code{git HEAD} of the Lepton repository (if you don't have it
+already) and try to confirm whether the bug is still present in it or
+not.  Please report the current status of the issue, if it is still
+present or not.
+
+@item
+If the bug is still present, report the commit or Lepton version you
+found it in.  If the bug is absent, make a comment about this or, if
+you have permissions to do it, close it as resolved.
+
+@item
+If you have a good testcase of how to reproduce the bug, or you can
+triage an already existing testcase, please report this as well.
+
+@item
+For existing issues and PRs, add appropriate labels if you feel like
+they miss ones.  For example, it could be the tool name the bug was
+reported against (e.g. @code{lepton-schematic}), its importance
+(e.g. @code{wishlist} for feature requests, or @code{crash} for bugs),
+validity (e.g. @code{invalid}), part of the project it is related to
+(say, @code{doc} or @code{build}), and any other aspect you think is
+important to emphasize.
+
+@end itemize
