@@ -73,13 +73,13 @@ Documentation License.''
 * Installation::                Installation of the tool suite.
 * Configuration::               Configuration system.
 * Logging::                     Search for important information.
-* Symbols::
+* Symbols::                     Schematic components.
 * lepton-schematic::            Lepton EDA schematic capture program.
 * lepton-netlist::              Lepton EDA netlister.
 * lepton-cli::                  Lepton EDA command line interface.
 * lepton-attrib::               Lepton EDA spreadsheet attribute editor.
 * lepton-sch2pcb::              Lepton EDA interface to PCB layout programs.
-* lepton-update::
+* lepton-update::               Update old designs.
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
