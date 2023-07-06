@@ -219,6 +219,7 @@ Selecting objects
 * Simple object selection::
 * Box selection::
 * Selecting and deselecting all objects::
+* Selecting locked objects::
 
 Component libraries
 
