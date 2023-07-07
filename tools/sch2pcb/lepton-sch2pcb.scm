@@ -86,6 +86,8 @@
 (define %netlister (or (getenv "NETLISTER") "lepton-netlist"))
 
 
+(define %m4-files '())
+
 ;;; Create override file. Return its name if anything went OK,
 ;;; otherwise return #f.
 (define (create-m4-override-file)
@@ -923,8 +925,6 @@
                                                    %schematics))
                            (loop (cdr ls))))))))))
 
-
-(define %m4-files '())
 
 (define (add-m4-file filename)
   (when (and (regular-file? filename)
