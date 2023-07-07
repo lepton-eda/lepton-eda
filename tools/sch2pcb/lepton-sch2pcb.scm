@@ -106,6 +106,12 @@
                 "(define gsch2pcb:use-m4 ~A)\n"
                 (if %use-m4 "#t" "#f")))))
 
+  (define (verbose-output)
+    (verbose-format "Default m4-pcbdir: ~A\n" %default-m4-pcb-dir)
+    (verbose-format "--------\ngnet-gsch2pcb-tmp.scm override file:\n")
+    (verbose-format "~A" file-contents)
+    #t)
+
   (let ((result
          (and (false-if-exception
                (with-output-to-file m4-override-filename
@@ -113,10 +119,7 @@
               m4-override-filename)))
 
     (and result
-         (unless (zero? (sch2pcb_get_verbose_mode))
-           (format #t "Default m4-pcbdir: ~A\n" %default-m4-pcb-dir)
-           (format #t "--------\ngnet-gsch2pcb-tmp.scm override file:\n")
-           (display file-contents))
+         (verbose-output)
          result)))
 
 ;;; List of extra backends to run netlister command for.
