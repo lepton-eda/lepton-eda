@@ -1,6 +1,6 @@
 Lepton Electronic Design Automation
 ===================================
-[![Join the chat at https://gitter.im/Lepton-EDA](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Lepton-EDA)
+[![Join the chat at https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im](https://badges.gitter.im/Join%20Chat.svg)](https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im)
 
 Introduction
 ============
@@ -286,7 +286,7 @@ There are several ways to get help with installing and using Lepton
 and the rest of the gEDA tools:
 
 - Chat with Lepton developers and users at
-  [gitter.im](https://gitter.im/Lepton-EDA/Lobby).
+  [gitter.im](https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im).
   You can sign in there using your Twitter, GitHub or GitLab account
   (no registration is required to read the messages posted there).
   This is probably the fastest way to get in touch with us.
@@ -336,7 +336,7 @@ The programs and associated files are:
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
 
-  Copyright (C) 2017-2022 Lepton Developers.
+  Copyright (C) 2017-2023 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
 Lepton EDA and gEDA.

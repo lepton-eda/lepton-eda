@@ -94,7 +94,7 @@ earn their trust.
 The enforcement policies above apply to all official Lepton venues,
 including:
 
-* the [Lepton-EDA](https://gitter.im/Lepton-EDA) Gitter community
+* the [Lepton-EDA](https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im) Gitter community
 * the [lepton-eda](https://github.com/lepton-eda) GitHub organisation
 
 *Adapted from the
