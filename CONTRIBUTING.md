@@ -4,7 +4,7 @@ Thank you for your interest in helping to make Lepton better!  There
 are many ways that you can make a difference.
 
 If you have any questions, you can jump into the Lepton [Gitter
-channel](https://gitter.im/Lepton-EDA/Lobby) or get in touch via the
+channel](https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im) or get in touch via the
 [geda-user mailing list](http://www.delorie.com/listserv/).
 
 Please remember that all contributors are expected to follow our [Code

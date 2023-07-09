@@ -12,7 +12,7 @@ communication about Lepton EDA and gEDA:
 report and discuss issues, add your patches, join to the project
 
 @item
-@url{https://gitter.im/Lepton-EDA/Lobby, gitter.im chat room}: get in
+@url{https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im, gitter.im chat room}: get in
 touch with Lepton EDA users and developers
 
 @item

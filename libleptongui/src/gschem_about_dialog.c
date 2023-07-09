@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ void about_dialog (GschemToplevel *w_current)
 
   gtk_about_dialog_set_copyright (adlg,
     _("Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-      "Copyright © 2017-2022 Lepton Developers.\n"
+      "Copyright © 2017-2023 Lepton Developers.\n"
       "See AUTHORS, ChangeLog files and consult 'git log' history for details."));
 
   gtk_about_dialog_set_license (adlg,
@@ -110,7 +110,7 @@ void about_dialog (GschemToplevel *w_current)
   gtk_label_set_markup (GTK_LABEL (website3),
     "\n"
     "Have a question? Chat with us at "
-    "<a href='https://gitter.im/Lepton-EDA/Lobby'>gitter.im</a>!" );
+    "<a href='https://app.gitter.im/#/room/#Lepton-EDA_Lobby:gitter.im'>gitter.im</a>!" );
 
   gtk_box_pack_start (GTK_BOX (ca), website1, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (ca), website2, FALSE, FALSE, 0);
