@@ -1319,8 +1319,7 @@ Lepton EDA homepage: <~A>
                                       (zero? %not-found-packages-count))))
 
   ;; Report work done during processing.
-  (unless (zero? (sch2pcb_get_verbose_mode))
-    (format #t "\n"))
+  (verbose-format "\n")
 
   (format #t "\n----------------------------------\n")
   (format #t "Done processing.  Work performed:\n")
@@ -1386,8 +1385,7 @@ Lepton EDA homepage: <~A>
             pcb-filename))
 
   ;; Tell user what to do next.
-  (unless (zero? (sch2pcb_get_verbose_mode))
-    (format #t "\n"))
+  (verbose-format "\n")
 
   (unless (zero? (+ %added-file-element-count
                     %added-m4-element-count))
@@ -1432,8 +1430,7 @@ Lepton EDA homepage: <~A>
             (begin
               ;; Defaults for the newlib element directory search path
               ;; if not configured in the project file.
-              (when (not (zero? (sch2pcb_get_verbose_mode)))
-                (format #t "Processing PCBLIBPATH=~S\n" %pcb-lib-path))
+              (verbose-format "Processing PCBLIBPATH=~S\n" %pcb-lib-path)
               (for-each
                (lambda (x) (append-element-directory x))
                (filter-map
