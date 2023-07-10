@@ -90,6 +90,9 @@
 ;;; the netlister command.
 (define %netlister (or (getenv "NETLISTER") "lepton-netlist"))
 
+
+;;; Create override file. Return its name if anything went OK,
+;;; otherwise return #f.
 (define (create-m4-override-file)
   (define m4-override-filename "gnet-gsch2pcb-tmp.scm")
 
