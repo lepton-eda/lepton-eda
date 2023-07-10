@@ -991,10 +991,9 @@
       ("skip-m4" (set! %use-m4 #f))
       ("elements-dir"
        (let ((elements-dir (expand-env-variables value)))
-         (when (> (sch2pcb_get_verbose_mode) 1)
-           (format #t
-                   "\tAdding directory to file element directory list: ~A\n"
-                   elements-dir))
+         (extra-verbose-format
+          "\tAdding directory to file element directory list: ~A\n"
+          elements-dir)
          (prepend-element-directory elements-dir)))
       ("output-name" (set! %schematic-basename value))
       ("schematics" (add-multiple-schematics *value))
@@ -1212,10 +1211,9 @@ Lepton EDA homepage: <~A>
      (option '(#\d "elements-dir") #t #f
              (lambda (opt name arg seeds)
                (let ((elements-dir (expand-env-variables arg)))
-                 (when (> (sch2pcb_get_verbose_mode) 1)
-                   (format #t
-                           "\tAdding directory to file element directory list: ~S\n"
-                           elements-dir))
+                 (extra-verbose-format
+                  "\tAdding directory to file element directory list: ~S\n"
+                  elements-dir)
                  (prepend-element-directory elements-dir))
                seeds))
      (option '(#\o "output-name") #t #f
