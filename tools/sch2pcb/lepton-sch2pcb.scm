@@ -523,8 +523,6 @@
 
 
 (define (prune-elements pcb-filename bak-filename)
-  (define paren-level 0)
-
   (define (prune-element *tmp-file line trimmed-line skip-line?)
     (sch2pcb_prune_element *tmp-file
                            (string->pointer (string-append line "\n"))
@@ -563,26 +561,28 @@
             (with-input-from-file pcb-filename
               (lambda ()
                 (let loop ((line (read-line))
-                           (skip-line? FALSE))
+                           (skip-line? FALSE)
+                           (paren-level 0))
                   (unless (eof-object? line)
                     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
                            (first-char (and (not (string-null? trimmed-line))
                                             (string-ref trimmed-line 0)))
+                           (new-paren-level (if (true? skip-line?)
+                                                (case first-char
+                                                  ((#\() (1+ paren-level))
+                                                  ((#\)) (1- paren-level))
+                                                  (else paren-level))
+                                                paren-level))
                            (skip-next?
                             (if (true? skip-line?)
-                                (begin
-                                  (case first-char
-                                    ((#\() (set! paren-level (1+ paren-level)))
-                                    ((#\)) (set! paren-level (1- paren-level)))
-                                    (else #f))
-                                  (case first-char
-                                    ((#\)) (if (<= paren-level 0) FALSE TRUE))
-                                    (else TRUE)))
+                                (case first-char
+                                  ((#\)) (if (<= new-paren-level 0) FALSE TRUE))
+                                  (else TRUE))
                                 (prune-element *tmp-file
                                                line
                                                trimmed-line
                                                skip-line?))))
-                      (loop (read-line) skip-next?))))))
+                      (loop (read-line) skip-next? new-paren-level))))))
             (sch2pcb_close_file *tmp-file)
 
             (when (false? (sch2pcb_get_bak_done))
