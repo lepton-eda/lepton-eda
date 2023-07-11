@@ -527,16 +527,16 @@
 
   (define (prune-element *tmp-file line trimmed-line skip-line? first-char)
     (if (true? skip-line?)
-        (if (eq? first-char #\()
-            (begin
-              (set! paren-level (1+ paren-level))
-              skip-line?)
-            ;; else
-            (if (and (eq? first-char #\))
-                     (begin (set! paren-level (1- paren-level))
-                            (<= paren-level 0)))
-                FALSE
-                skip-line?))
+        (case first-char
+          ((#\() (begin
+                   (set! paren-level (1+ paren-level))
+                   skip-line?))
+          ((#\)) (if (begin (set! paren-level (1- paren-level))
+                            (<= paren-level 0))
+                     FALSE
+                     skip-line?))
+          (else skip-line?))
+
         (sch2pcb_prune_element *tmp-file
                                (string->pointer (string-append line "\n"))
                                (string->pointer trimmed-line)
