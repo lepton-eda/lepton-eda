@@ -575,9 +575,10 @@
                                                 paren-level))
                            (skip-next?
                             (if (true? skip-line?)
-                                (case first-char
-                                  ((#\)) (if (<= new-paren-level 0) FALSE TRUE))
-                                  (else TRUE))
+                                (if (and (< new-paren-level paren-level)
+                                         (<= new-paren-level 0))
+                                    FALSE
+                                    TRUE)
                                 (prune-element *tmp-file
                                                line
                                                trimmed-line
