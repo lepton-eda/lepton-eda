@@ -530,12 +530,12 @@
         (case first-char
           ((#\() (begin
                    (set! paren-level (1+ paren-level))
-                   skip-line?))
+                   TRUE))
           ((#\)) (if (begin (set! paren-level (1- paren-level))
                             (<= paren-level 0))
                      FALSE
-                     skip-line?))
-          (else skip-line?))
+                     TRUE))
+          (else TRUE))
 
         (sch2pcb_prune_element *tmp-file
                                (string->pointer (string-append line "\n"))
