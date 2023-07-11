@@ -928,12 +928,6 @@ sch2pcb_buffer_to_file (char *buffer,
 }
 
 
-/* The variable is used in the function below.  Moving it outwards
- * is required to avoid overcomplicated code which would deal with
- * several in-out function arguments.  */
-static int paren_level = 0;
-
-
 gboolean
 sch2pcb_prune_element (FILE *f_out,
                        char *buf,
@@ -943,19 +937,6 @@ sch2pcb_prune_element (FILE *f_out,
   PcbElement *el, *el_exists;
   gchar *fmt;
 
-  if (skipping)
-  {
-    if (*s == '(')
-    {
-      ++paren_level;
-    }
-    else if (*s == ')' && --paren_level <= 0)
-    {
-      skipping = FALSE;
-    }
-  }
-  else
-  {
     el_exists = NULL;
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
@@ -1006,7 +987,6 @@ sch2pcb_prune_element (FILE *f_out,
       }
       pcb_element_free (el);
     }
-  }
   return skipping;
 }
 
