@@ -17,68 +17,51 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 (define-module (sch2pcb lookup)
+  #:use-module (ice-9 ftw)
+
   #:use-module (lepton file-system)
   #:use-module (sch2pcb format)
 
   #:export (lookup-footprint))
 
 
-(define (lookup-footprint path name)
+(define (lookup-footprint dir-path element-name)
   "Searches for a Pcb element (footprint) file by ELEMENT-NAME in
 DIR-PATH recursively.  If an element is found, returns the path to
 it as a string, otherwise returns #f."
-  (define (opendir-protected path)
-    (catch #t
-      (lambda () (opendir path))
-      (lambda (key subr message args rest)
-        (format-error (string-append "Could not open directory ~S: "
-                                     (format #f "~?" message args))
-                      (list path))
-        #f)))
+  (define (fold-files filename path)
+    (define (id name stat result) result)
+    (define (enter? name stat result) result)
+    (define (down name stat result)
+      (extra-verbose-format "\t  Searching: ~S for ~S\n" name filename)
+      result)
+    (define up id)
+    (define skip id)
+    (define (error name stat errno result)
+      (format-warning "Could not open ~S: ~A~%" name (strerror errno))
+      result)
+    (define (leaf-proc name stat result)
+      (if (directory? name)
+          ;; Skip directories here.
+          result
+          ;; Search for "filename" and "filename.fp".
+          (let* ((bname (basename name))
+                 (alt-filename (string-append filename ".fp"))
+                 (found? (or (string= bname filename)
+                             (string= bname alt-filename))))
+            (extra-verbose-format "\t           : ~A\t~A\n"
+                                  bname
+                                  (if found? "Yes\n" "No\n"))
+            (if found?
+                (cons name result)
+                result))))
 
-  ;; readdir() reads filenames from directory stream until #<eof>
-  ;; object is found.  We don't process the dirs "." or ".." as it
-  ;; leads to infinite recursive invocations.
-  (define (readdir* dir)
-    (let ((path (readdir dir)))
-      (and (not (eof-object? path))
-           (if (or (string=? path ".")
-                   (string=? path ".."))
-               (readdir* dir)
-               path))))
+    (file-system-fold enter? leaf-proc down up skip error
+                      '()
+                      path))
 
-  (define (found-filename? name element-name)
-    (let ((found? (or (string= name element-name)
-                      (string= (string-append element-name ".fp")
-                               name))))
-      (extra-verbose-format "\t           : ~A\t~A\n"
-                            name
-                            (if found? "Yes\n" "No\n"))
-      found?))
-
-  (define (process-directory dir-path element-name dir)
-    (let loop ((name (readdir* dir)))
-      (and name
-           (or (let ((path (string-append dir-path
-                                          file-name-separator-string
-                                          name)))
-                 (if (directory? path)
-                     ;; If we got a directory name, then recurse
-                     ;; down into it.
-                     (lookup-footprint path element-name)
-
-                     ;; Otherwise assume it is a file and see if
-                     ;; it is the one we want.
-                     (and (found-filename? name element-name)
-                          path)))
-
-               (loop (readdir* dir))))))
-
-  (let ((dir (opendir-protected path)))
-    (and dir
-         (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                               path
-                               name)
-         (let ((result (process-directory path name dir)))
-           (closedir dir)
-           result))))
+  (let ((files (fold-files element-name dir-path)))
+    ;; Return #f if no files found.
+    (and (not (null? files))
+         ;; Otherwise return the first file found.
+         (car files))))
