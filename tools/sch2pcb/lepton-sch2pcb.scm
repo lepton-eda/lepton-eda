@@ -570,15 +570,14 @@
                                             (string-ref trimmed-line 0)))
                            (skip-next?
                             (if (true? skip-line?)
-                                (case first-char
-                                  ((#\() (begin
-                                           (set! paren-level (1+ paren-level))
-                                           TRUE))
-                                  ((#\)) (if (begin (set! paren-level (1- paren-level))
-                                                    (<= paren-level 0))
-                                             FALSE
-                                             TRUE))
-                                  (else TRUE))
+                                (begin
+                                  (case first-char
+                                    ((#\() (set! paren-level (1+ paren-level)))
+                                    ((#\)) (set! paren-level (1- paren-level)))
+                                    (else #f))
+                                  (case first-char
+                                    ((#\)) (if (<= paren-level 0) FALSE TRUE))
+                                    (else TRUE)))
                                 (prune-element *tmp-file
                                                line
                                                trimmed-line
