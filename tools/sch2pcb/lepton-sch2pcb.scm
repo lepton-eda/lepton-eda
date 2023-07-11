@@ -523,6 +523,12 @@
 
 
 (define (prune-elements pcb-filename bak-filename)
+  (define (prune-element *tmp-file line trimmed-line skip-line?)
+    (sch2pcb_prune_element *tmp-file
+                           (string->pointer (string-append line "\n"))
+                           (string->pointer trimmed-line)
+                           skip-line?))
+
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
     (unless (null? *element-list)
@@ -558,10 +564,10 @@
                            (skip-line? FALSE))
                   (unless (eof-object? line)
                     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
-                           (skip-next? (sch2pcb_prune_element *tmp-file
-                                                              (string->pointer (string-append line "\n"))
-                                                              (string->pointer trimmed-line)
-                                                              skip-line?)))
+                           (skip-next? (prune-element *tmp-file
+                                                      line
+                                                      trimmed-line
+                                                      skip-line?)))
                       (loop (read-line) skip-next?))))))
             (sch2pcb_close_file *tmp-file)
 
