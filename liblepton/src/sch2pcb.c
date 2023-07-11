@@ -937,39 +937,39 @@ sch2pcb_prune_element (PcbElement *el,
 {
   gchar *fmt;
 
-    if (el_exists && pcb_element_get_changed_value (el_exists))
+  if (el_exists && pcb_element_get_changed_value (el_exists))
+  {
+    fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
+                    "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                    "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
+    fprintf (f_out,
+             fmt,
+             pcb_element_get_res_char (el),
+             pcb_element_get_flags (el),
+             pcb_element_get_description (el),
+             pcb_element_get_refdes (el),
+             pcb_element_get_changed_value (el_exists),
+             pcb_element_get_x (el),
+             pcb_element_get_y (el),
+             pcb_element_get_tail (el));
+    if (sch2pcb_get_verbose_mode () != 0)
     {
-      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-      fprintf (f_out,
-               fmt,
-               pcb_element_get_res_char (el),
-               pcb_element_get_flags (el),
-               pcb_element_get_description (el),
-               pcb_element_get_refdes (el),
-               pcb_element_get_changed_value (el_exists),
-               pcb_element_get_x (el),
-               pcb_element_get_y (el),
-               pcb_element_get_tail (el));
-      if (sch2pcb_get_verbose_mode () != 0)
-      {
-        printf ("%s: changed element %s value: %s -> %s\n",
-                pcb_element_get_refdes (el),
-                pcb_element_get_description (el),
-                pcb_element_get_value (el),
-                pcb_element_get_changed_value (el_exists));
-      }
+      printf ("%s: changed element %s value: %s -> %s\n",
+              pcb_element_get_refdes (el),
+              pcb_element_get_description (el),
+              pcb_element_get_value (el),
+              pcb_element_get_changed_value (el_exists));
     }
-    else if (!strncmp (s, "PKG_", 4))
-    {
-      sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
-    }
-    else
-    {
-      sch2pcb_buffer_to_file (buf, f_out);
-    }
-    pcb_element_free (el);
+  }
+  else if (!strncmp (s, "PKG_", 4))
+  {
+    sch2pcb_set_n_PKG_removed_old (1 + sch2pcb_get_n_PKG_removed_old ());
+  }
+  else
+  {
+    sch2pcb_buffer_to_file (buf, f_out);
+  }
+  pcb_element_free (el);
 }
 
 
