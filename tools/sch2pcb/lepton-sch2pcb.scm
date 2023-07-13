@@ -461,17 +461,16 @@
                     (pcb-element-value *element)))
 
   (define (error-report-element-not-found *element)
-    (format (current-error-port)
-            (G_ "~A: can't find PCB element for footprint ~S (value=~A)\n")
-            (pcb-element-refdes *element)
-            (pcb-element-description *element)
-            (pcb-element-value *element)))
+    (format-warning
+     (G_ "~A: can't find PCB element for footprint ~S (value=~A)\n")
+     (pcb-element-refdes *element)
+     (pcb-element-description *element)
+     (pcb-element-value *element)))
 
   (define (error-report-element-removed *element)
     (set! %removed-new-packages-count (1+ %removed-new-packages-count))
-    (format (current-error-port)
-            (G_ "So device ~S will not be in the layout.\n")
-            (pcb-element-refdes *element)))
+    (format-warning (G_ "So device ~S will not be in the layout.\n")
+                    (pcb-element-refdes *element)))
 
   (define (unfound-element->file *element *mline *tmp-file)
     (error-report-element-not-found *element)
@@ -731,10 +730,10 @@
             (if %preserve-all-elements?
                 (begin
                   (set! %preserved-element-count (1+ %preserved-element-count))
-                  (format (current-error-port)
-                          "Preserving PCB element not in the schematic:    ~A (element   ~A)\n"
-                          (pointer->string (pcb_element_get_refdes *element))
-                          (pointer->string (pcb_element_get_description *element))))
+                  (format-warning
+                   "Preserving PCB element not in the schematic:    ~A (element   ~A)\n"
+                   (pointer->string (pcb_element_get_refdes *element))
+                   (pointer->string (pcb_element_get_description *element))))
 
                 (set! %deleted-element-count (1+ %deleted-element-count)))
 
@@ -837,7 +836,7 @@
 
   (if (or (null-pointer? (sch2pcb_get_pcb_element_list))
           (zero? %fixed-element-count))
-      (format (current-error-port) "Could not find any elements to fix.\n")
+      (format-warning "Could not find any elements to fix.\n")
       (let* ((tmp-filename (string-append pcb-filename ".tmp"))
              (*tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename))))
         (when (file-readable? pcb-filename)
@@ -866,7 +865,7 @@
     (verbose-format "Running command:\n\t~A\n" (string-join ls " "))
     (let ((result (eq? EXIT_SUCCESS (status:exit-val (apply system* ls)))))
       (unless result
-        (format (current-error-port) "Failed to execute external program.\n"))
+        (format-warning "Failed to execute external program.\n"))
       (verbose-format "\n--------\n")
       ;; return
       result))
@@ -908,13 +907,13 @@
                          (not (file-exists? pcb-filename))
                          ;; or it has not changed.
                          (= mtime (stat:mtime (stat pcb-filename))))
-                        (format (current-error-port)
-                                "lepton-sch2pcb: netlister command failed, `~A' not updated.\n"
-                                pcb-filename)
+                        (format-warning
+                         "lepton-sch2pcb: netlister command failed, `~A' not updated.\n"
+                         pcb-filename)
 
                         ;; Report the issue anyways, even if the
                         ;; output file has been created.
-                        (format (current-error-port) "lepton-sch2pcb: netlister command failed.\n"))
+                        (format-warning "lepton-sch2pcb: netlister command failed.\n"))
                     ;; Stop processing.
                     #f))
               ;; Delete no longer necessary m4 override file.
@@ -974,9 +973,9 @@
       (when (and (not %schematic-basename)
                  (string-suffix-ci? ".sch" schematic-name))
         (set! %schematic-basename (basename-ci schematic-name)))
-      (format (current-error-port)
-              "Could not add schematic: ~A\nFile is not regular or not readable.\n"
-              schematic-name)))
+      (format-warning
+       "Could not add schematic: ~A\nFile is not regular or not readable.\n"
+       schematic-name)))
 
 
 (define (add-multiple-schematics *str)
@@ -1032,9 +1031,9 @@
       ("backend-cmd" (set! %backend-cmd value))
       ("backend-net" (set! %backend-net value))
       ("backend-pcb" (set! %backend-pcb value))
-      (_ (format (current-error-port)
-                 (G_ "Unknown config key: ~S\n")
-                 (pointer->string *value))))))
+      (_ (format-warning
+          (G_ "Unknown config key: ~S\n")
+          (pointer->string *value))))))
 
 
 (define (load-project-file path)
@@ -1043,10 +1042,9 @@
            (key (car args))
            (value (cdr args)))
       (unless (parse-config key value)
-        (format (current-error-port)
-                (G_ "Wrong line in ~S: ~S\n")
-                path
-                line))))
+        (format-warning (G_ "Wrong line in ~S: ~S\n")
+                        path
+                        line))))
 
   (define (skip-line? line)
     (or (string-null? line)
@@ -1066,9 +1064,8 @@
       (begin (verbose-format (G_ "Reading project file: ~A\n") path)
              (with-input-from-file path read-file))
       (when (> (sch2pcb_get_verbose_mode) 0)
-        (format (current-error-port)
-                (G_ "Skip missing or unreadable file: ~A\n")
-                path))))
+        (format-warning (G_ "Skip missing or unreadable file: ~A\n")
+                        path))))
 
 
 (define (load-extra-project-files)
@@ -1473,7 +1470,7 @@ Lepton EDA homepage: <~A>
                                        pins-filename
                                        net-filename
                                        pcb-new-filename)
-                  (format (current-error-port) (G_ "Failed to run netlister\n"))
+                  (format-warning (G_ "Failed to run netlister\n"))
                   (exit 1))
                 (when (zero? (add-elements pcb-new-filename))
                   (delete-file* pcb-new-filename)
