@@ -443,8 +443,6 @@
 
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
-  (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
-
   (define (verbose-file-element-report *element is-m4-element?)
     (if is-m4-element?
         (when %force-file-elements?
@@ -470,8 +468,8 @@
                     (pcb-element-description *element)
                     (pcb-element-value *element)))
 
-  (define (m4-element->file *element *mline *tmp-file)
-    (sch2pcb_buffer_to_file *mline *tmp-file)
+  (define (m4-element->file *element mline)
+    (display mline)
     (set! %added-m4-element-count (1+ %added-m4-element-count))
     (verbose-format "~A: added new m4 element for footprint ~S (value=~A)\n"
                     (pcb-element-refdes *element)
@@ -490,7 +488,7 @@
     (format-warning "So device ~S will not be in the layout.\n"
                     (pcb-element-refdes *element)))
 
-  (define (unfound-element->file *element *mline *tmp-file)
+  (define (unfound-element->file *element mline)
     (error-report-element-not-found *element)
     (if (and %remove-unfound-elements?
              (not %fix-elements?))
@@ -505,10 +503,9 @@
         (begin
           (set! %not-found-packages-count (1+ %not-found-packages-count))
           ;; Copy PKG_ line.
-          (sch2pcb_buffer_to_file *mline *tmp-file))))
+          (display mline))))
 
-  (define (process-file-element *mline
-                                *tmp-file
+  (define (process-file-element mline
                                 *element
                                 m4-element?
                                 skip-next?)
@@ -517,7 +514,7 @@
       (verbose-report-no-file-element-found path m4-element?)
 
       (if (and path
-               (insert-file-element *tmp-file path *element))
+               (insert-file-element path *element))
           (begin
             ;; Nice, we found it.  If it is an m4 element, we have
             ;; to skip some lines below, see comments above.
@@ -525,28 +522,20 @@
             m4-element?)
           (begin
             (unless m4-element?
-              (unfound-element->file *element *mline *tmp-file))
+              (unfound-element->file *element mline))
             skip-next?))))
 
-  (define (process-element *mline
-                           *tmp-file
-                           *element
-                           m4-element?
-                           skip-next)
+  (define (process-element mline *element m4-element? skip-next)
     (let ((result
            (if (or (not m4-element?)
                    (and m4-element?
                         %force-file-elements?))
-               (process-file-element *mline
-                                     *tmp-file
-                                     *element
-                                     m4-element?
-                                     skip-next)
+               (process-file-element mline *element m4-element? skip-next)
                (begin
                  ;; Here we're surely dealing with m4 elements as
                  ;; 'm4-element?' has been set to #t and no
                  ;; forcing of file elements requested.
-                 (m4-element->file *element *mline *tmp-file)
+                 (m4-element->file *element mline)
                  skip-next))))
 
       (free-element *element)
@@ -588,24 +577,22 @@
 
           ;; Well, the element has not been found in the current
           ;; element list, let's process it then.
-          (let ((*mline (string->pointer mline)))
-            (if (null-pointer? *element)
-                ;; Element does not exist.  Output not trimmed
-                ;; string to the temp file as is.
-                (begin
-                  (sch2pcb_buffer_to_file *mline *tmp-file)
-                  skip-next?)
-                ;; Otherwise, process it further.
-                (if (true? (pcb_element_get_omit_PKG *element))
-                    ;; Element exists but its omit_PKG field is
-                    ;; true.  Let's skip it.
-                    skip-next?
-                    ;; Actually process or lookup the element.
-                    (process-element *mline
-                                     *tmp-file
-                                     *element
-                                     m4-element?
-                                     skip-next?)))))))
+          (if (null-pointer? *element)
+              ;; Element does not exist.  Output not trimmed
+              ;; string as is.
+              (begin
+                (display mline)
+                skip-next?)
+              ;; Otherwise, process it further.
+              (if (true? (pcb_element_get_omit_PKG *element))
+                  ;; Element exists but its omit_PKG field is
+                  ;; true.  Let's skip it.
+                  skip-next?
+                  ;; Actually process or lookup the element.
+                  (process-element mline
+                                   *element
+                                   m4-element?
+                                   skip-next?))))))
 
   (define (add-elements-from-file)
     (with-input-from-file pcb-filename
@@ -653,8 +640,8 @@
               (loop (read-line) new-paren-level skip)))))))
 
   (define (process-files)
-    (add-elements-from-file)
-    (sch2pcb_close_file *tmp-file)
+    (with-output-to-file tmp-filename
+      add-elements-from-file)
 
     (let ((total (+ %added-file-element-count
                     %added-m4-element-count
@@ -664,13 +651,11 @@
           (system* "mv" tmp-filename pcb-filename))
       total))
 
-  (if (null-pointer? *tmp-file)
-      0
-      (catch #t
-        process-files
-        (lambda (key subr message args rest)
-          (format-error message args)
-          0))))
+  (catch #t
+    process-files
+    (lambda (key subr message args rest)
+      (format-error message args)
+      0)))
 
 
 (define (prune-elements pcb-filename bak-filename)
