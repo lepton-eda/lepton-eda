@@ -813,10 +813,11 @@
                                                  tail))))
             (sch2pcb_buffer_to_file *line *output-file)
 
-            (format #t "~A: updating element Description: ~A -> ~A\n"
-                    (pointer->string (pcb_element_get_refdes *element))
-                    (pointer->string (pcb_element_get_description *element))
-                    (pointer->string (pcb_element_get_changed_description *existing-element)))
+            (format-message
+             "~A: updating element Description: ~A -> ~A\n"
+             (pointer->string (pcb_element_get_refdes *element))
+             (pointer->string (pcb_element_get_description *element))
+             (pointer->string (pcb_element_get_changed_description *existing-element)))
             (pcb_element_set_still_exists *existing-element TRUE))
           ;; Otherwise, if the element is new, just output it into
           ;; the output file.
@@ -1079,9 +1080,9 @@
 
 
 (define (usage)
-  (format #t
-          (G_
-"Usage: ~A [options] {project | foo.sch [foo1.sch ...]}
+  (format-message
+   (G_
+    "Usage: ~A [options] {project | foo.sch [foo1.sch ...]}
 
 Generate a PCB layout file from a set of Lepton EDA schematics.
 
@@ -1171,10 +1172,10 @@ Additional Resources:
 Report bugs at <~A>
 Lepton EDA homepage: <~A>
 ")
-          %sch2pcb
-          %default-m4-pcb-dir
-          (lepton-version-ref 'bugs)
-          (lepton-version-ref 'url))
+   %sch2pcb
+   %default-m4-pcb-dir
+   (lepton-version-ref 'bugs)
+   (lepton-version-ref 'url))
   (exit 0))
 
 
@@ -1277,11 +1278,10 @@ Lepton EDA homepage: <~A>
                (display-lepton-version #:print-name #t #:copyright #t)
                (exit 0))))
     (lambda (opt name arg seeds)
-      (format #t
-              "lepton-sch2pcb: bad or incomplete arg: ~S\n"
-              (if (char? name)
-                  (string-append "-" (char-set->string (char-set name)))
-                  (string-append "--" name)))
+      (format-message "lepton-sch2pcb: bad or incomplete arg: ~S\n"
+                      (if (char? name)
+                          (string-append "-" (char-set->string (char-set name)))
+                          (string-append "--" name)))
       (usage))
     (lambda (op seeds)
       (if (string-suffix? ".sch" op)
@@ -1338,68 +1338,68 @@ Lepton EDA homepage: <~A>
   ;; Report work done during processing.
   (verbose-format "\n")
 
-  (format #t "\n----------------------------------\n")
-  (format #t "Done processing.  Work performed:\n")
+  (format-message "\n----------------------------------\n")
+  (format-message "Done processing.  Work performed:\n")
   (when (or (non-zero? %deleted-element-count)
             (non-zero? %fixed-element-count)
             %pkg-line-found
             (non-zero? %changed-value-element-count))
-    (format #t "~A is backed up as ~A.\n" pcb-filename bak-filename))
+    (format-message "~A is backed up as ~A.\n" pcb-filename bak-filename))
   (when (and (not (null-pointer? (sch2pcb_get_pcb_element_list)))
              (non-zero? %deleted-element-count))
-    (format #t "~A elements deleted from ~A.\n"
-            %deleted-element-count
-            pcb-filename))
+    (format-message "~A elements deleted from ~A.\n"
+                    %deleted-element-count
+                    pcb-filename))
 
   (if (zero? (+ %added-file-element-count
                 %added-m4-element-count))
       (when (zero? %not-found-packages-count)
-        (format #t "No elements to add so not creating ~A\n" pcb-new-filename))
-      (format #t "~A file elements and ~A m4 elements added to ~A.\n"
-              %added-file-element-count
-              %added-m4-element-count
-              pcb-new-filename))
+        (format-message "No elements to add so not creating ~A\n" pcb-new-filename))
+      (format-message "~A file elements and ~A m4 elements added to ~A.\n"
+                      %added-file-element-count
+                      %added-m4-element-count
+                      pcb-new-filename))
 
   (unless (zero? %not-found-packages-count)
-    (format #t "~A not found elements added to ~A.\n"
-            %not-found-packages-count
-            pcb-new-filename))
+    (format-message "~A not found elements added to ~A.\n"
+                    %not-found-packages-count
+                    pcb-new-filename))
   (unless (zero? (sch2pcb_get_n_unknown))
-    (format #t "~A components had no footprint attribute and are omitted.\n"
-            (sch2pcb_get_n_unknown)))
+    (format-message "~A components had no footprint attribute and are omitted.\n"
+                    (sch2pcb_get_n_unknown)))
   (unless (zero? (sch2pcb_get_n_none))
-    (format #t "~A components with footprint \"none\" omitted from ~A.\n"
-            (sch2pcb_get_n_none)
-            pcb-new-filename))
+    (format-message "~A components with footprint \"none\" omitted from ~A.\n"
+                    (sch2pcb_get_n_none)
+                    pcb-new-filename))
   (unless (zero? (sch2pcb_get_n_empty))
-    (format #t "~A components with empty footprint \"~A\" omitted from ~A.\n"
-            (sch2pcb_get_n_empty)
-            (sch2pcb_get_empty_footprint_name)
-            pcb-new-filename))
+    (format-message "~A components with empty footprint \"~A\" omitted from ~A.\n"
+                    (sch2pcb_get_n_empty)
+                    (sch2pcb_get_empty_footprint_name)
+                    pcb-new-filename))
   (unless (zero? %changed-value-element-count)
-    (format #t "~A elements had a value change in ~A.\n"
-            %changed-value-element-count
-            pcb-filename))
+    (format-message "~A elements had a value change in ~A.\n"
+                    %changed-value-element-count
+                    pcb-filename))
   (unless (zero? %fixed-element-count)
-    (format #t "~A elements fixed in ~A.\n"
-            %fixed-element-count
-            pcb-filename))
+    (format-message "~A elements fixed in ~A.\n"
+                    %fixed-element-count
+                    pcb-filename))
   (unless (zero? %left-old-packages-count)
-    (format #t "~A elements could not be found."
-            %left-old-packages-count)
+    (format-message "~A elements could not be found."
+                    %left-old-packages-count)
     (if pcb-file-created?
-        (format #t "  So ~A is incomplete.\n" pcb-filename)
-        (format #t "\n")))
+        (format-message "  So ~A is incomplete.\n" pcb-filename)
+        (format-message "\n")))
   (unless (zero? %removed-new-packages-count)
-    (format #t "~A elements could not be found."
-            %removed-new-packages-count)
+    (format-message "~A elements could not be found."
+                    %removed-new-packages-count)
     (if pcb-file-created?
-        (format #t "  So ~A is incomplete.\n" pcb-new-filename)
-        (format #t "\n")))
+        (format-message "  So ~A is incomplete.\n" pcb-new-filename)
+        (format-message "\n")))
   (unless (zero? %preserved-element-count)
-    (format #t "~A elements not in the schematic preserved in ~A.\n"
-            %preserved-element-count
-            pcb-filename))
+    (format-message "~A elements not in the schematic preserved in ~A.\n"
+                    %preserved-element-count
+                    pcb-filename))
 
   ;; Tell user what to do next.
   (verbose-format "\n")
@@ -1408,27 +1408,27 @@ Lepton EDA homepage: <~A>
                     %added-m4-element-count))
     (if initial-pcb?
         (begin
-          (format #t "\nNext step:\n")
-          (format #t "1.  Run pcb on your file ~A.\n" pcb-filename)
-          (format #t "    You will find all your footprints in a bundle ready for you to place\n")
-          (format #t "    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n")
-          (format #t "2.  From within PCB, select \"File -> Load netlist file\" and select \n")
-          (format #t "    ~A to load the netlist.\n\n" net-filename)
-          (format #t "3.  From within PCB, enter\n\n")
-          (format #t "           :ExecuteFile(~A)\n\n" pins-filename)
-          (format #t "    to propagate the pin names of all footprints to the layout.\n\n"))
+          (format-message "\nNext step:\n")
+          (format-message "1.  Run pcb on your file ~A.\n" pcb-filename)
+          (format-message "    You will find all your footprints in a bundle ready for you to place\n")
+          (format-message "    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n")
+          (format-message "2.  From within PCB, select \"File -> Load netlist file\" and select \n")
+          (format-message "    ~A to load the netlist.\n\n" net-filename)
+          (format-message "3.  From within PCB, enter\n\n")
+          (format-message "           :ExecuteFile(~A)\n\n" pins-filename)
+          (format-message "    to propagate the pin names of all footprints to the layout.\n\n"))
         (unless %quiet-mode
-          (format #t "\nNext steps:\n")
-          (format #t "1.  Run pcb on your file ~A.\n" pcb-filename)
-          (format #t "2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n")
-          (format #t
-                  "    and select ~A to load the new footprints into your existing layout.\n"
-                  pcb-new-filename)
-          (format #t "3.  From within PCB, select \"File -> Load netlist file\" and select \n")
-          (format #t "    ~A to load the updated netlist.\n\n" net-filename)
-          (format #t "4.  From within PCB, enter\n\n")
-          (format #t "           :ExecuteFile(~A)\n\n" pins-filename)
-          (format #t "    to update the pin names of all footprints.\n\n")))))
+          (format-message "\nNext steps:\n")
+          (format-message "1.  Run pcb on your file ~A.\n" pcb-filename)
+          (format-message "2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n")
+          (format-message
+           "    and select ~A to load the new footprints into your existing layout.\n"
+           pcb-new-filename)
+          (format-message "3.  From within PCB, select \"File -> Load netlist file\" and select \n")
+          (format-message "    ~A to load the updated netlist.\n\n" net-filename)
+          (format-message "4.  From within PCB, enter\n\n")
+          (format-message "           :ExecuteFile(~A)\n\n" pins-filename)
+          (format-message "    to update the pin names of all footprints.\n\n")))))
 
 
 ;;; Load system and user config files once.
@@ -1474,7 +1474,7 @@ Lepton EDA homepage: <~A>
                 (when (zero? (add-elements pcb-new-filename))
                   (delete-file* pcb-new-filename)
                   (when initial-pcb?
-                    (format #t "No elements found, so nothing to do.\n")
+                    (format-message "No elements found, so nothing to do.\n")
                     (exit 0)))
                 (when %fix-elements?
                   (update-element-descriptions pcb-filename bak-filename))
