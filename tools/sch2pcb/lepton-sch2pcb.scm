@@ -47,9 +47,9 @@
 (define-syntax-rule (format-error arg ...)
   (format %error-port (G_ "ERROR: ~?.\n") arg ...))
 
-(define-syntax-rule (verbose-format arg ...)
+(define-syntax-rule (verbose-format msg arg ...)
   (when (> (sch2pcb_get_verbose_mode) 0)
-    (format %message-port arg ...)))
+    (format %message-port (G_ msg) arg ...)))
 
 (define-syntax-rule (extra-verbose-format arg ...)
   (when (> (sch2pcb_get_verbose_mode) 1)
@@ -286,7 +286,7 @@
                    (loop (cdr ls))
                    (let ((path (pointer->string *path)))
                      (g_free *path)
-                     (verbose-format (G_ "\tFound: ~A\n") path)
+                     (verbose-format "\tFound: ~A\n" path)
                      path)))))))
 
   ;; See comment before pcb_element_pkg_to_element().
@@ -306,8 +306,8 @@
         %null-pointer
         (begin
           (verbose-format
-           (G_ "\tSearching directories looking for file element: ~A\n")
-               element-name)
+           "\tSearching directories looking for file element: ~A\n"
+           element-name)
           (search-element-path element-name)))))
 
 
@@ -1061,7 +1061,7 @@
           (loop (read-line))))))
 
   (if (file-readable? path)
-      (begin (verbose-format (G_ "Reading project file: ~A\n") path)
+      (begin (verbose-format "Reading project file: ~A\n" path)
              (with-input-from-file path read-file))
       (when (> (sch2pcb_get_verbose_mode) 0)
         (format-warning "Skip missing or unreadable file: ~A\n"
