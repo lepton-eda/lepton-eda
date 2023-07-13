@@ -292,8 +292,8 @@
   ;; See comment before pcb_element_pkg_to_element().
   (when package-name-fix
     (unless name
-      (format #t
-              "Warning: argument passing may have been confused by
+      (format-warning
+       "Warning: argument passing may have been confused by
          a comma in a component value:\n
          Check ~A ~A ~A
          Maybe just use a space instead of a comma?\n"
