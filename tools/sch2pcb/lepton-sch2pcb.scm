@@ -38,8 +38,8 @@
 (define %warning-port (current-error-port))
 (define %error-port (current-error-port))
 
-(define-syntax-rule (format-message arg ...)
-  (format %message-port arg ...))
+(define-syntax-rule (format-message msg arg ...)
+  (format %message-port (G_ msg) arg ...))
 
 (define-syntax-rule (format-warning msg arg ...)
   (format %warning-port (G_ msg) arg ...))
@@ -1081,8 +1081,7 @@
 
 (define (usage)
   (format-message
-   (G_
-    "Usage: ~A [options] {project | foo.sch [foo1.sch ...]}
+   "Usage: ~A [options] {project | foo.sch [foo1.sch ...]}
 
 Generate a PCB layout file from a set of Lepton EDA schematics.
 
@@ -1171,7 +1170,7 @@ Additional Resources:
 
 Report bugs at <~A>
 Lepton EDA homepage: <~A>
-")
+"
    %sch2pcb
    %default-m4-pcb-dir
    (lepton-version-ref 'bugs)
