@@ -1405,7 +1405,7 @@ Lepton EDA homepage: <~A>
                     %added-m4-element-count))
     (if initial-pcb?
         (begin
-          (format-message "\nNext step:\n")
+          (format-message "\nNext steps:\n")
           (format-message "1.  Run pcb on your file ~A.\n" pcb-filename)
           (format-message "    You will find all your footprints in a bundle ready for you to place\n")
           (format-message "    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n")

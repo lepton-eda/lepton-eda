@@ -1685,8 +1685,9 @@
         (command-values lepton-sch2pcb project one.sch two.sch)
       (test-eq EXIT_SUCCESS <status>)
       (test-assert (file-exists? one.pcb))
-      (test-assert (not (string-contains <stdout> "Next steps")))))
-
+      (test-assert
+          (string-contains <stdout>
+                           "to propagate the pin names of all footprints"))))
   (test-teardown))
 
 (test-end)
