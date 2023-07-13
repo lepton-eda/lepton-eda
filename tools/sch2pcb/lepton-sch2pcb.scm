@@ -45,7 +45,7 @@
   (format %warning-port arg ...))
 
 (define-syntax-rule (format-error arg ...)
-  (format %error-port arg ...))
+  (format %error-port (G_ "ERROR: ~?.\n") arg ...))
 
 (define-syntax-rule (verbose-format arg ...)
   (when (> (sch2pcb_get_verbose_mode) 0)
