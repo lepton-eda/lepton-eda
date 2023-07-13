@@ -41,8 +41,8 @@
 (define-syntax-rule (format-message arg ...)
   (format %message-port arg ...))
 
-(define-syntax-rule (format-warning arg ...)
-  (format %warning-port arg ...))
+(define-syntax-rule (format-warning msg arg ...)
+  (format %warning-port (G_ msg) arg ...))
 
 (define-syntax-rule (format-error arg ...)
   (format %error-port (G_ "ERROR: ~?.\n") arg ...))
@@ -462,14 +462,14 @@
 
   (define (error-report-element-not-found *element)
     (format-warning
-     (G_ "~A: can't find PCB element for footprint ~S (value=~A)\n")
+     "~A: can't find PCB element for footprint ~S (value=~A)\n"
      (pcb-element-refdes *element)
      (pcb-element-description *element)
      (pcb-element-value *element)))
 
   (define (error-report-element-removed *element)
     (set! %removed-new-packages-count (1+ %removed-new-packages-count))
-    (format-warning (G_ "So device ~S will not be in the layout.\n")
+    (format-warning "So device ~S will not be in the layout.\n"
                     (pcb-element-refdes *element)))
 
   (define (unfound-element->file *element *mline *tmp-file)
@@ -1031,9 +1031,8 @@
       ("backend-cmd" (set! %backend-cmd value))
       ("backend-net" (set! %backend-net value))
       ("backend-pcb" (set! %backend-pcb value))
-      (_ (format-warning
-          (G_ "Unknown config key: ~S\n")
-          (pointer->string *value))))))
+      (_ (format-warning "Unknown config key: ~S\n"
+                         (pointer->string *value))))))
 
 
 (define (load-project-file path)
@@ -1042,7 +1041,7 @@
            (key (car args))
            (value (cdr args)))
       (unless (parse-config key value)
-        (format-warning (G_ "Wrong line in ~S: ~S\n")
+        (format-warning "Wrong line in ~S: ~S\n"
                         path
                         line))))
 
@@ -1064,7 +1063,7 @@
       (begin (verbose-format (G_ "Reading project file: ~A\n") path)
              (with-input-from-file path read-file))
       (when (> (sch2pcb_get_verbose_mode) 0)
-        (format-warning (G_ "Skip missing or unreadable file: ~A\n")
+        (format-warning "Skip missing or unreadable file: ~A\n"
                         path))))
 
 
@@ -1470,7 +1469,7 @@ Lepton EDA homepage: <~A>
                                        pins-filename
                                        net-filename
                                        pcb-new-filename)
-                  (format-warning (G_ "Failed to run netlister\n"))
+                  (format-warning "Failed to run netlister\n")
                   (exit 1))
                 (when (zero? (add-elements pcb-new-filename))
                   (delete-file* pcb-new-filename)
