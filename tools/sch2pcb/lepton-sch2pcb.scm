@@ -1337,8 +1337,8 @@ Lepton EDA homepage: <~A>
   ;; Report work done during processing.
   (verbose-format "\n")
 
-  (format-message "\n----------------------------------\n")
-  (format-message "Done processing.  Work performed:\n")
+  (format-message "\n----------------------------------\n~
+                   Done processing.  Work performed:\n")
   (when (or (non-zero? %deleted-element-count)
             (non-zero? %fixed-element-count)
             %pkg-line-found
@@ -1387,14 +1387,12 @@ Lepton EDA homepage: <~A>
     (format-message "~A elements could not be found."
                     %left-old-packages-count)
     (if pcb-file-created?
-        (format-message "  So ~A is incomplete.\n" pcb-filename)
-        (format-message "\n")))
+        (format-message "  So ~A is incomplete.\n\n" pcb-filename)))
   (unless (zero? %removed-new-packages-count)
     (format-message "~A elements could not be found."
                     %removed-new-packages-count)
     (if pcb-file-created?
-        (format-message "  So ~A is incomplete.\n" pcb-new-filename)
-        (format-message "\n")))
+        (format-message "  So ~A is incomplete.\n\n" pcb-new-filename)))
   (unless (zero? %preserved-element-count)
     (format-message "~A elements not in the schematic preserved in ~A.\n"
                     %preserved-element-count
