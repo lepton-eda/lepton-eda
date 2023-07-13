@@ -322,7 +322,7 @@
         (set! %backup-done #t))
       (rename-file from to))
     (lambda (key subr message args rest)
-      (format (current-error-port) (G_ "ERROR: ~?.") message args))))
+      (format-error message args))))
 
 
 ;;; For PcbElement *ELEMENT, the function checks if an element
@@ -655,7 +655,7 @@
       (catch #t
         process-files
         (lambda (key subr message args rest)
-          (format (current-error-port) (G_ "ERROR: ~?.") message args)
+          (format-error message args)
           0))))
 
 
@@ -1317,7 +1317,7 @@ Lepton EDA homepage: <~A>
   (catch #t
     thunk
     (lambda (key subr message args rest)
-      (format (current-error-port) (G_ "ERROR: ~?.\n") message args))))
+      (format-error message args))))
 
 
 ;;; A convenience function for deleting FILENAME with reporting
