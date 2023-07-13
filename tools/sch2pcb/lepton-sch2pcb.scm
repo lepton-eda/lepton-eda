@@ -1405,27 +1405,43 @@ Lepton EDA homepage: <~A>
                     %added-m4-element-count))
     (if initial-pcb?
         (begin
-          (format-message "\nNext steps:\n")
-          (format-message "1.  Run pcb on your file ~A.\n" pcb-filename)
-          (format-message "    You will find all your footprints in a bundle ready for you to place\n")
-          (format-message "    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n")
-          (format-message "2.  From within PCB, select \"File -> Load netlist file\" and select \n")
-          (format-message "    ~A to load the netlist.\n\n" net-filename)
-          (format-message "3.  From within PCB, enter\n\n")
-          (format-message "           :ExecuteFile(~A)\n\n" pins-filename)
-          (format-message "    to propagate the pin names of all footprints to the layout.\n\n"))
+          (format-message "
+Next steps:
+1.  Run pcb on your file ~A.
+    You will find all your footprints in a bundle ready for you to place
+    or disperse with \"Select -> Disperse all elements\" in PCB.
+
+2.  From within PCB, select \"File -> Load netlist file\" and select
+    ~A to load the netlist.
+
+3.  From within PCB, enter
+
+           :ExecuteFile(~A)
+
+    to propagate the pin names of all footprints to the layout.\n\n"
+                          pcb-filename
+                          net-filename
+                          pins-filename))
         (unless %quiet-mode
-          (format-message "\nNext steps:\n")
-          (format-message "1.  Run pcb on your file ~A.\n" pcb-filename)
-          (format-message "2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n")
-          (format-message
-           "    and select ~A to load the new footprints into your existing layout.\n"
-           pcb-new-filename)
-          (format-message "3.  From within PCB, select \"File -> Load netlist file\" and select \n")
-          (format-message "    ~A to load the updated netlist.\n\n" net-filename)
-          (format-message "4.  From within PCB, enter\n\n")
-          (format-message "           :ExecuteFile(~A)\n\n" pins-filename)
-          (format-message "    to update the pin names of all footprints.\n\n")))))
+          (format-message "
+Next steps:
+1.  Run pcb on your file ~A.
+
+2.  From within PCB, select \"File -> Load layout data to paste buffer\"
+    and select ~A to load the new footprints into your existing layout.
+
+3.  From within PCB, select \"File -> Load netlist file\" and select
+    ~A to load the updated netlist.
+
+4.  From within PCB, enter
+
+           :ExecuteFile(~A)
+
+    to update the pin names of all footprints.\n\n"
+                          pcb-filename
+                          pcb-new-filename
+                          net-filename
+                          pins-filename)))))
 
 
 ;;; Load system and user config files once.
