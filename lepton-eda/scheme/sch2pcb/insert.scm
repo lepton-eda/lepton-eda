@@ -68,14 +68,10 @@
   (pcb_element_set_y *element (string->pointer "0")))
 
 
-(define (insert-file-element *output-file element-filename *element)
-  "Insert the contents of the file ELEMENT-FILENAME into *OUTPUT-FILE
-replacing its fields 'footprint', 'refdes', and 'value' with the
-corresponding fields of *ELEMENT."
-  ;; Check that *OUTPUT-FILE is not NULL.  Otherwise the next call
-  ;; will crash.
-  (when (null-pointer? *output-file)
-    (error "insert-file-element(): NULL output file"))
+(define (insert-file-element element-filename *element)
+  "Output the contents of the file ELEMENT-FILENAME to the current
+output port replacing its fields 'footprint', 'refdes', and
+'value' with the corresponding fields of *ELEMENT."
   (if (call-protected (lambda () (layout-file? element-filename))
                       "insert-file-element(): can't open ~A: "
                       element-filename)
@@ -122,11 +118,9 @@ corresponding fields of *ELEMENT."
                                                       (pointer->string (pcb_element_get_x *new-element))
                                                       (pointer->string (pcb_element_get_y *new-element))
                                                       (pointer->string (pcb_element_get_tail *new-element))))))
-                                    (sch2pcb_buffer_to_file (string->pointer fmt) *output-file)))
+                                    (display fmt)))
                                 (when (not (string-prefix? "#" trimmed-line))
-                                  (sch2pcb_buffer_to_file
-                                   (string->pointer (string-append s "\n"))
-                                   *output-file)))
+                                  (display (string-append s "\n"))))
                             (free-element *new-element)
                             valid-element?)
                           return))))))))
