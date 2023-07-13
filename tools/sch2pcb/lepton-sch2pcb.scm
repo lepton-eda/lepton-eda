@@ -51,9 +51,9 @@
   (when (> (sch2pcb_get_verbose_mode) 0)
     (format %message-port (G_ msg) arg ...)))
 
-(define-syntax-rule (extra-verbose-format arg ...)
+(define-syntax-rule (extra-verbose-format msg arg ...)
   (when (> (sch2pcb_get_verbose_mode) 1)
-    (format %message-port arg ...)))
+    (format %message-port (G_ msg) arg ...)))
 
 (define %sch2pcb (basename (car (program-arguments))))
 
@@ -277,7 +277,7 @@
     (let loop ((ls element-directories))
       (and (not (null? ls))
            (let ((dir-path (car ls)))
-             (extra-verbose-format (G_ "\tLooking in directory: ~S\n") dir-path)
+             (extra-verbose-format "\tLooking in directory: ~S\n" dir-path)
              (let ((*path (sch2pcb_find_element (string->pointer dir-path)
                                                 (if element-name
                                                     (string->pointer element-name)
