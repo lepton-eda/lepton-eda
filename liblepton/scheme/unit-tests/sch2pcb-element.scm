@@ -8,7 +8,7 @@
 
 ;;; Test that *PcbElement is created successfully from a proper
 ;;; string.  Test its fields as well.
-(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown)"))))
+(let ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "DIP14")
   (test-equal (pcb-element-refdes *element) "U100")
@@ -16,7 +16,7 @@
   (free-element *element))
 
 ;;; Element's fields with whitespaces.
-(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14\t, U100,unknown  )"))))
+(let ((*element (pkg-line->element "PKG_DIP14(DIP14\t, U100,unknown  )")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "DIP14_")
   (test-equal (pcb-element-refdes *element) "_U100")
@@ -24,7 +24,7 @@
   (free-element *element))
 
 ;;; Element's fields with several closing parens after the value.
-(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown))))"))))
+(let ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown))))")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "DIP14")
   (test-equal (pcb-element-refdes *element) "U100")
@@ -33,7 +33,7 @@
 
 ;;; Element's fields with several closing parens and text after
 ;;; the value.
-(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown)))text"))))
+(let ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)))text")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "DIP14")
   (test-equal (pcb-element-refdes *element) "U100")
@@ -41,7 +41,7 @@
   (free-element *element))
 
 ;;; Element with extra description arguments.
-(let ((*element (pkg-line->element (string->pointer "PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)"))))
+(let ((*element (pkg-line->element "PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "100-Pin-jack")
   (test-equal (pcb-element-refdes *element) "refdes")
@@ -50,7 +50,7 @@
   (free-element *element))
 
 ;;; Element with value containing a comma.
-(let ((*element (pkg-line->element (string->pointer "PKG_XXX(R0w8,R100,1k, 1%)"))))
+(let ((*element (pkg-line->element "PKG_XXX(R0w8,R100,1k, 1%)")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "R0w8")
   (test-equal (pcb-element-refdes *element) "R100")
@@ -59,7 +59,7 @@
 
 ;;; Element with value containing a comma, a closing paren, and
 ;;; some text after it.
-(let ((*element (pkg-line->element (string->pointer "PKG_XXX(R0w8,R100,1k, 1%)text"))))
+(let ((*element (pkg-line->element "PKG_XXX(R0w8,R100,1k, 1%)text")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "R0w8")
   (test-equal (pcb-element-refdes *element) "R100")
@@ -68,7 +68,7 @@
 
 ;;; Element with value containing a comma and several closing
 ;;; parens.
-(let ((*element (pkg-line->element (string->pointer "PKG_XXX(R0w8,R100,1k, 1%)))))"))))
+(let ((*element (pkg-line->element "PKG_XXX(R0w8,R100,1k, 1%)))))")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "R0w8")
   (test-equal (pcb-element-refdes *element) "R100")
@@ -77,7 +77,7 @@
 
 ;;; Element with multi-word description and value containing a
 ;;; comma.
-(let ((*element (pkg-line->element (string->pointer "PKG_YYY-multi-word(R0w8-multi-word,R100,1k, 1%,multi,word)"))))
+(let ((*element (pkg-line->element "PKG_YYY-multi-word(R0w8-multi-word,R100,1k, 1%,multi,word)")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "R0w8-multi-word")
   (test-equal (pcb-element-refdes *element) "R100")
@@ -87,7 +87,7 @@
 
 ;;; Probably it behaves wrong when two or three closing parens are
 ;;; present?
-(let ((*element (pkg-line->element (string->pointer "PKG_YYY-multi-word-again(R0w8-multi-word-again,R100,1k, 1%,multi,word,again)))"))))
+(let ((*element (pkg-line->element "PKG_YYY-multi-word-again(R0w8-multi-word-again,R100,1k, 1%,multi,word,again)))")))
   (test-assert (not (null-pointer? *element)))
   (test-equal (pcb-element-description *element) "R0w8-multi-word-again")
   (test-equal (pcb-element-refdes *element) "R100")
@@ -98,10 +98,10 @@
 ;;; Wrong PKG_ strings.
 
 ;;; No left paren at all.
-(test-assert (null-pointer? (pkg-line->element (string->pointer "PKG_DIP14"))))
+(test-assert (null-pointer? (pkg-line->element "PKG_DIP14")))
 ;;; Missing "PKG_" prefix.
-(test-assert (null-pointer? (pkg-line->element (string->pointer "DIP14(DIP14,U100,unknown)"))))
+(test-assert (null-pointer? (pkg-line->element "DIP14(DIP14,U100,unknown)")))
 ;;; Wrong amount of arguments in parens (less than 3).
-(test-assert (null-pointer? (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100)"))))
+(test-assert (null-pointer? (pkg-line->element "PKG_DIP14(DIP14,U100)")))
 
 (test-end)

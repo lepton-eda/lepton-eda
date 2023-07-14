@@ -515,8 +515,7 @@
 
   (define (parse-next-line mline tline skip-next?)
     ;; First let's find out what element type we're dealing with.
-    (let* ((*tline (string->pointer tline))
-           (*m4-element (pcb_element_line_parse *tline))
+    (let* ((*m4-element (pcb_element_line_parse (string->pointer tline)))
            (m4-element? (not (null-pointer? *m4-element)))
            (*element (if m4-element?
                          ;; If Element line is present
@@ -526,7 +525,7 @@
                          *m4-element
                          ;; Otherwise, it's a line starting with
                          ;; PKG_, probably a file element?
-                         (pkg-line->element *tline))))
+                         (pkg-line->element tline))))
       ;; Next step is to check if element processing can be
       ;; skipped as the same element has been processed before.
       (if (pcb-element-exists? *element #t)

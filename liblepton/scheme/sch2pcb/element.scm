@@ -77,10 +77,10 @@
                            name-fix))
 
 
-(define (pkg-line->element *line)
-  (if (not (string-prefix? "PKG_" (pointer->string *line)))
+(define (pkg-line->element line)
+  (if (not (string-prefix? "PKG_" line))
       %null-pointer
-      (pcb_element_pkg_to_element *line)))
+      (pcb_element_pkg_to_element (string->pointer line))))
 
 
 (define (free-element *element)
