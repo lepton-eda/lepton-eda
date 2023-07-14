@@ -32,6 +32,7 @@
              (lepton os)
              (lepton srfi-37)
              (lepton version)
+             (sch2pcb element)
              (sch2pcb format))
 
 
@@ -402,10 +403,6 @@
   (let ((trimmed-line (string-trim line char-set:whitespace)))
     (and (not (string-null? trimmed-line))
          (string-ref trimmed-line 0))))
-
-
-(define (pkg-line->element *line)
-  (pcb_element_pkg_to_element *line))
 
 
 ;;; Process the newly created pcb file which is the output from
