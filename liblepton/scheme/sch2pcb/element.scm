@@ -78,10 +78,12 @@
 
 
 (define (pkg-line->element line)
-  (if (or (not (string-prefix? "PKG_" line))
-          (not (string-index line #\()))
+  (if (not (string-prefix? "PKG_" line))
       %null-pointer
-      (pcb_element_pkg_to_element (string->pointer line))))
+      (let ((left-paren-index (string-index line #\()))
+        (if (not left-paren-index)
+            %null-pointer
+            (pcb_element_pkg_to_element (string->pointer line))))))
 
 
 (define (free-element *element)
