@@ -675,8 +675,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   gchar **args, *s;
   gint n, n_extra_args, n_dashes;
 
-  if ((s = strchr (pkg_line, (gint) '(')) == NULL)
-    return NULL;
+  s = strchr (pkg_line, (gint) '(');
 
   args = g_strsplit (s + 1, ",", 12);
   if (!args[0] || !args[1] || !args[2]) {

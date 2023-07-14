@@ -78,7 +78,8 @@
 
 
 (define (pkg-line->element line)
-  (if (not (string-prefix? "PKG_" line))
+  (if (or (not (string-prefix? "PKG_" line))
+          (not (string-index line #\()))
       %null-pointer
       (pcb_element_pkg_to_element (string->pointer line))))
 
