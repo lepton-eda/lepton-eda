@@ -30,6 +30,11 @@
 
 #define SEP_STRING "--------\n"
 
+PcbElement*
+pcb_element_new ()
+{
+  return g_new0 (PcbElement, 1);
+}
 
 gchar*
 pcb_element_get_refdes (PcbElement *element)
@@ -683,7 +688,7 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   fix_spaces (args[1]);
   fix_spaces (args[2]);
 
-  el = g_new0 (PcbElement, 1);
+  el = pcb_element_new ();
   el->description = g_strdup (args[0]);
   el->refdes = g_strdup (args[1]);
   el->value = g_strdup (args[2]);
