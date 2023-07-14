@@ -1,6 +1,6 @@
 ;;; lepton-sch2pcb -- transform schematics to PCB
 ;;;
-;;; Copyright (C) 2022-2023 Lepton EDA Contributors
+;;; Copyright (C) 2022-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -404,6 +404,10 @@
          (string-ref trimmed-line 0))))
 
 
+(define (pkg-line->element *line)
+  (pcb_element_pkg_to_element *line))
+
+
 ;;; Process the newly created pcb file which is the output from
 ;;;     lepton-netlist -g gsch2pcb ...
 ;;;
@@ -542,7 +546,7 @@
                          *m4-element
                          ;; Otherwise, it's a line starting with
                          ;; PKG_, probably a file element?
-                         (pcb_element_pkg_to_element *tline))))
+                         (pkg-line->element *tline))))
       ;; Next step is to check if element processing can be
       ;; skipped as the same element has been processed before.
       (if (pcb-element-exists? *element #t)
