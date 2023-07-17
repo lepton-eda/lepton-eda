@@ -15,6 +15,15 @@
   (test-equal (pcb-element-value *element) "unknown")
   (free-element *element))
 
+;;; Element's fields with whitespaces.
+(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14\t, U100,unknown  )"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "DIP14_")
+  (test-equal (pcb-element-refdes *element) "_U100")
+  (test-equal (pcb-element-value *element) "unknown__")
+  (free-element *element))
+
+
 ;;; Wrong PKG_ strings.
 
 ;;; No left paren at all.
