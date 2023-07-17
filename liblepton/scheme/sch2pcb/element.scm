@@ -17,9 +17,32 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (sch2pcb element)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi sch2pcb)
 
-  #:export (pkg-line->element))
+  #:export (pcb-element-description
+            pcb-element-refdes
+            pcb-element-value
+            pkg-line->element))
+
+
+(define (pcb-element-get-string *element *c-getter)
+  (define *s (*c-getter *element))
+  (if (null-pointer? *s)
+      ;; What should the function return if *s is NULL?
+      "<null>"
+      (pointer->string *s)))
+
+(define (pcb-element-description *element)
+  (pcb-element-get-string *element pcb_element_get_description))
+
+(define (pcb-element-refdes *element)
+  (pcb-element-get-string *element pcb_element_get_refdes))
+
+(define (pcb-element-value *element)
+  (pcb-element-get-string *element pcb_element_get_value))
+
 
 (define (pkg-line->element *line)
   (pcb_element_pkg_to_element *line))

@@ -168,23 +168,6 @@
 (define %changed-value-element-count 0)
 
 
-(define (pcb-element-get-string *element *c-getter)
-  (define *s (*c-getter *element))
-  (if (null-pointer? *s)
-      ;; What should the function return if *s is NULL?
-      "<null>"
-      (pointer->string *s)))
-
-(define (pcb-element-refdes *element)
-  (pcb-element-get-string *element pcb_element_get_refdes))
-
-(define (pcb-element-description *element)
-  (pcb-element-get-string *element pcb_element_get_description))
-
-(define (pcb-element-value *element)
-  (pcb-element-get-string *element pcb_element_get_value))
-
-
 (define (make-pcb-element-list pcb-filename)
   (when (and (regular-file? pcb-filename)
              (file-readable? pcb-filename))
