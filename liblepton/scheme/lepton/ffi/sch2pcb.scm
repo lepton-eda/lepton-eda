@@ -121,7 +121,7 @@
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_line_token '* '(* * *))
 (define-lff pcb_element_new '* '())
-(define-lff pcb_element_pkg_to_element '* '(*))
+(define-lff pcb_element_pkg_to_element '* '(* *))
 
 (define-lff sch2pcb_buffer_to_file void '(* *))
 (define-lff sch2pcb_get_empty_footprint_name '* '())

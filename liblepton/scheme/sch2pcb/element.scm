@@ -93,7 +93,9 @@
                   (begin
                     (format-warning "Bad package line: ~A\n" line)
                     %null-pointer)
-                  (pcb_element_pkg_to_element (string->pointer line))))))))
+                  (let ((*element (pcb_element_new)))
+                    (pcb_element_pkg_to_element *element
+                                                (string->pointer line)))))))))
 
 
 (define (free-element *element)

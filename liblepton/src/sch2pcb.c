@@ -669,9 +669,9 @@ sch2pcb_find_element (gchar *dir_path,
  *      100-Pin-jack -> 100 Pin jack
  */
 PcbElement*
-pcb_element_pkg_to_element (gchar *pkg_line)
+pcb_element_pkg_to_element (PcbElement *el,
+                            gchar *pkg_line)
 {
-  PcbElement *el;
   gchar **args, *s;
   gint n, n_extra_args, n_dashes;
 
@@ -682,7 +682,6 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   fix_spaces (args[1]);
   fix_spaces (args[2]);
 
-  el = pcb_element_new ();
   pcb_element_set_description (el, g_strdup (args[0]));
   pcb_element_set_refdes (el, g_strdup (args[1]));
   pcb_element_set_value (el, g_strdup (args[2]));
