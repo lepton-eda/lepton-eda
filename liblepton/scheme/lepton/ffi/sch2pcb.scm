@@ -57,6 +57,7 @@
             pcb_element_set_y
             pcb_element_line_parse
             pcb_element_line_token
+            pcb_element_new
             pcb_element_pkg_to_element
 
             sch2pcb_buffer_to_file
@@ -119,6 +120,7 @@
 (define-lff pcb_element_set_y void '(* *))
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_line_token '* '(* * *))
+(define-lff pcb_element_new '* '())
 (define-lff pcb_element_pkg_to_element '* '(*))
 
 (define-lff sch2pcb_buffer_to_file void '(* *))
