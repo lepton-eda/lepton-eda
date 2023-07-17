@@ -21,7 +21,8 @@
 
   #:use-module (lepton ffi sch2pcb)
 
-  #:export (pcb-element-description
+  #:export (free-element
+            pcb-element-description
             set-pcb-element-description!
             pcb-element-pkg-name-fix
             set-pcb-element-pkg-name-fix!
@@ -78,3 +79,7 @@
 
 (define (pkg-line->element *line)
   (pcb_element_pkg_to_element *line))
+
+
+(define (free-element *element)
+  (pcb_element_free *element))

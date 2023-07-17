@@ -509,7 +509,7 @@
                  (m4-element->file *element *mline *tmp-file)
                  skip-next))))
 
-      (pcb_element_free *element)
+      (free-element *element)
       (verbose-format "----\n")
       result))
 
@@ -535,7 +535,7 @@
           (begin
             ;; Obviously, a new copy of the found element is not
             ;; needed in the element list, so it has to be freed.
-            (pcb_element_free *element)
+            (free-element *element)
             ;; For m4 elements, the next line starts with an
             ;; opening paren "(", and we have to skip lines until
             ;; its closing paren is found.  For file elements, we
@@ -686,7 +686,7 @@
                          (string-append line "\n")
                          (string-prefix? "PKG_" trimmed-line)))
 
-      (pcb_element_free *element)
+      (free-element *element)
       ;; If pcb element exists, and its 'still_exists' is false,
       ;; and we don't want to preserve it, then let's skip it.
       delete-element?))
@@ -791,7 +791,7 @@
             (sch2pcb_buffer_to_file *line *output-file)
             (sch2pcb_buffer_to_file (string->pointer "\n") *output-file)))
 
-      (pcb_element_free *element)))
+      (free-element *element)))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
                                          identity)))
