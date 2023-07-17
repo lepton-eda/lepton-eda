@@ -75,6 +75,7 @@ nobase_dist_scmdata_DATA = \
 	netlist/subschematic.scm \
 	netlist/subschematic-connection.scm \
 	netlist/verbose.scm \
+	sch2pcb/format.scm \
 	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/check/alignment.scm \

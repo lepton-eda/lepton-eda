@@ -30,30 +30,9 @@
              (lepton m4)
              (lepton os)
              (lepton srfi-37)
-             (lepton version))
+             (lepton version)
+             (sch2pcb format))
 
-;;; Save current ports to put messages, warnings, and errors there
-;;; afterwards.
-(define %message-port (current-output-port))
-(define %warning-port (current-error-port))
-(define %error-port (current-error-port))
-
-(define-syntax-rule (format-message msg arg ...)
-  (format %message-port (G_ msg) arg ...))
-
-(define-syntax-rule (format-warning msg arg ...)
-  (format %warning-port (G_ msg) arg ...))
-
-(define-syntax-rule (format-error arg ...)
-  (format %error-port (G_ "ERROR: ~?.\n") arg ...))
-
-(define-syntax-rule (verbose-format msg arg ...)
-  (when (> (sch2pcb_get_verbose_mode) 0)
-    (format %message-port (G_ msg) arg ...)))
-
-(define-syntax-rule (extra-verbose-format msg arg ...)
-  (when (> (sch2pcb_get_verbose_mode) 1)
-    (format %message-port (G_ msg) arg ...)))
 
 (define %sch2pcb (basename (car (program-arguments))))
 
