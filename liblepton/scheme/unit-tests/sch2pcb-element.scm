@@ -7,9 +7,12 @@
 (test-begin "pkg-line->element")
 
 ;;; Test that *PcbElement is created successfully from a proper
-;;; string.
+;;; string.  Test its fields as well.
 (let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown)"))))
   (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "DIP14")
+  (test-equal (pcb-element-refdes *element) "U100")
+  (test-equal (pcb-element-value *element) "unknown")
   (free-element *element))
 
 ;;; Wrong PKG_ strings.
