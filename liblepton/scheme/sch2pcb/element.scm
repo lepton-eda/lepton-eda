@@ -22,8 +22,11 @@
   #:use-module (lepton ffi sch2pcb)
 
   #:export (pcb-element-description
+            set-pcb-element-description!
             pcb-element-refdes
+            set-pcb-element-refdes!
             pcb-element-value
+            set-pcb-element-value!
             pkg-line->element))
 
 
@@ -34,14 +37,33 @@
       "<null>"
       (pointer->string *s)))
 
+(define (pcb-element-set-string! *element *c-setter s)
+  (define *s (if s (string->pointer s) %null-pointer))
+  (*c-setter *element *s))
+
 (define (pcb-element-description *element)
   (pcb-element-get-string *element pcb_element_get_description))
+
+(define (set-pcb-element-description! *element description)
+  (pcb-element-set-string! *element
+                           pcb_element_set_description
+                           description))
 
 (define (pcb-element-refdes *element)
   (pcb-element-get-string *element pcb_element_get_refdes))
 
+(define (set-pcb-element-refdes! *element refdes)
+  (pcb-element-set-string! *element
+                           pcb_element_set_refdes
+                           refdes))
+
 (define (pcb-element-value *element)
   (pcb-element-get-string *element pcb_element_get_value))
+
+(define (set-pcb-element-value! *element value)
+  (pcb-element-set-string! *element
+                           pcb_element_set_value
+                           value))
 
 
 (define (pkg-line->element *line)
