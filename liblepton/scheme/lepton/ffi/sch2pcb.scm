@@ -28,6 +28,7 @@
             pcb_element_get_changed_value
             pcb_element_set_changed_value
             pcb_element_get_description
+            pcb_element_set_description
             pcb_element_get_flags
             pcb_element_get_hi_res_format
             pcb_element_set_hi_res_format
@@ -35,12 +36,14 @@
             pcb_element_get_pkg_name_fix
             pcb_element_get_quoted_flags
             pcb_element_get_refdes
+            pcb_element_set_refdes
             pcb_element_get_res_char
             pcb_element_set_res_char
             pcb_element_get_still_exists
             pcb_element_set_still_exists
             pcb_element_get_tail
             pcb_element_get_value
+            pcb_element_set_value
             pcb_element_get_x
             pcb_element_get_y
             pcb_element_line_parse
@@ -74,6 +77,7 @@
 (define-lff pcb_element_get_changed_value '* '(*))
 (define-lff pcb_element_set_changed_value void '(* *))
 (define-lff pcb_element_get_description '* '(*))
+(define-lff pcb_element_set_description void '(* *))
 (define-lff pcb_element_get_flags '* '(*))
 (define-lff pcb_element_get_hi_res_format int '(*))
 (define-lff pcb_element_set_hi_res_format void (list '* int))
@@ -81,12 +85,14 @@
 (define-lff pcb_element_get_pkg_name_fix '* '(*))
 (define-lff pcb_element_get_quoted_flags int '(*))
 (define-lff pcb_element_get_refdes '* '(*))
+(define-lff pcb_element_set_refdes void '(* *))
 (define-lff pcb_element_get_res_char int '(*))
 (define-lff pcb_element_set_res_char void (list '* int))
 (define-lff pcb_element_get_still_exists int '(*))
 (define-lff pcb_element_set_still_exists void (list '* int))
 (define-lff pcb_element_get_tail '* '(*))
 (define-lff pcb_element_get_value '* '(*))
+(define-lff pcb_element_set_value void '(* *))
 (define-lff pcb_element_get_x '* '(*))
 (define-lff pcb_element_get_y '* '(*))
 (define-lff pcb_element_line_parse '* '(*))
