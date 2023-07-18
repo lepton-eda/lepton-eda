@@ -679,9 +679,6 @@ pcb_element_pkg_to_element (PcbElement *el,
 
   args = g_strsplit (s + 1, ",", 12);
 
-  if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
-    *s = '\0';
-
   /* If the component value has a comma, eg "1k, 1%", the gnetlist generated
    * PKG line will be
    *
