@@ -19,6 +19,7 @@
 (define-module (sch2pcb element)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi sch2pcb)
   #:use-module (sch2pcb format)
 
@@ -112,7 +113,35 @@
                                           value)))
                       (set-pcb-element-value! *element new-value)
                       (pcb_element_pkg_to_element *element
-                                                  (string->pointer line))))))))))
+                                                  (string->pointer line))
+                      (if (and (not (null-pointer? (sch2pcb_get_empty_footprint_name)))
+                               (string= (pointer->string (pcb_element_get_description *element))
+                                        (pointer->string (sch2pcb_get_empty_footprint_name))))
+                          (begin
+                            (verbose-format
+                             "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
+                             (pointer->string (pcb_element_get_refdes *element))
+                             (pointer->string (pcb_element_get_description *element)))
+                            (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
+                            (pcb_element_set_omit_PKG *element TRUE))
+                          (if (string= (pointer->string (pcb_element_get_description *element))
+                                       "none")
+                              (begin
+                                (format-warning
+                                 "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
+                                 (pointer->string (pcb_element_get_refdes *element))
+                                 (pointer->string (pcb_element_get_description *element)))
+                                (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
+                                (pcb_element_set_omit_PKG *element TRUE))
+                              (when (string= (pointer->string (pcb_element_get_description *element))
+                                             "unknown")
+                                (format-warning
+                                 "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
+                                 (pointer->string (pcb_element_get_refdes *element)))
+                                (sch2pcb_set_n_unknown (1+ (sch2pcb_get_n_unknown)))
+                                (pcb_element_set_omit_PKG *element TRUE))))
+                      ;; Return new element.
+                      *element))))))))
 
 
 (define (free-element *element)

@@ -718,30 +718,6 @@ pcb_element_pkg_to_element (PcbElement *el,
   }
   g_strfreev (args);
 
-  if (sch2pcb_get_empty_footprint_name ()
-      && !strcmp (pcb_element_get_description (el), sch2pcb_get_empty_footprint_name ()))
-  {
-    if (sch2pcb_get_verbose_mode () != 0)
-      printf
-        ("%s: has the empty footprint attribute \"%s\" so won't be in the layout.\n",
-         pcb_element_get_refdes (el),
-         pcb_element_get_description (el));
-    sch2pcb_set_n_empty (1 + sch2pcb_get_n_empty ());
-    pcb_element_set_omit_PKG (el, TRUE);
-  } else if (!strcmp (pcb_element_get_description (el), "none")) {
-    fprintf (stderr,
-             "WARNING: %s has a footprint attribute \"%s\" so won't be in the layout.\n",
-             pcb_element_get_refdes (el),
-             pcb_element_get_description (el));
-    sch2pcb_set_n_none (1 + sch2pcb_get_n_none ());
-    pcb_element_set_omit_PKG (el, TRUE);
-  } else if (!strcmp (pcb_element_get_description (el), "unknown")) {
-    fprintf (stderr,
-             "WARNING: %s has no footprint attribute so won't be in the layout.\n",
-             pcb_element_get_refdes (el));
-    sch2pcb_set_n_unknown (1 + sch2pcb_get_n_unknown ());
-    pcb_element_set_omit_PKG (el, TRUE);
-  }
   return el;
 }
 
