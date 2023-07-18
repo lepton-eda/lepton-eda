@@ -115,26 +115,24 @@
                       (pcb_element_pkg_to_element *element
                                                   (string->pointer line))
                       (if (and (not (null-pointer? (sch2pcb_get_empty_footprint_name)))
-                               (string= (pointer->string (pcb_element_get_description *element))
+                               (string= description
                                         (pointer->string (sch2pcb_get_empty_footprint_name))))
                           (begin
                             (verbose-format
                              "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
                              (pointer->string (pcb_element_get_refdes *element))
-                             (pointer->string (pcb_element_get_description *element)))
+                             description)
                             (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
                             (pcb_element_set_omit_PKG *element TRUE))
-                          (if (string= (pointer->string (pcb_element_get_description *element))
-                                       "none")
+                          (if (string= description "none")
                               (begin
                                 (format-warning
                                  "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
                                  (pointer->string (pcb_element_get_refdes *element))
-                                 (pointer->string (pcb_element_get_description *element)))
+                                 description)
                                 (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
                                 (pcb_element_set_omit_PKG *element TRUE))
-                              (when (string= (pointer->string (pcb_element_get_description *element))
-                                             "unknown")
+                              (when (string= description "unknown")
                                 (format-warning
                                  "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
                                  (pointer->string (pcb_element_get_refdes *element)))
