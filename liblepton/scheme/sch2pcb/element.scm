@@ -26,6 +26,8 @@
   #:export (free-element
             pcb-element-description
             set-pcb-element-description!
+            pcb-element-omit-pkg
+            set-pcb-element-omit-pkg!
             pcb-element-pkg-name-fix
             set-pcb-element-pkg-name-fix!
             pcb-element-refdes
@@ -69,6 +71,13 @@
   (pcb-element-set-string! *element
                            pcb_element_set_value
                            value))
+
+(define (pcb-element-omit-pkg *element)
+  (true? (pcb_element_get_omit_PKG *element)))
+
+(define (set-pcb-element-omit-pkg! *element omit-pkg?)
+  (pcb_element_set_omit_PKG *element
+                            (if omit-pkg? TRUE FALSE)))
 
 (define (pcb-element-pkg-name-fix *element)
   (pcb-element-get-string *element pcb_element_get_pkg_name_fix))
@@ -123,7 +132,7 @@
                              refdes
                              description)
                             (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
-                            (pcb_element_set_omit_PKG *element TRUE))
+                            (set-pcb-element-omit-pkg! *element #t))
                           (if (string= description "none")
                               (begin
                                 (format-warning
@@ -131,13 +140,13 @@
                                  refdes
                                  description)
                                 (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
-                                (pcb_element_set_omit_PKG *element TRUE))
+                                (set-pcb-element-omit-pkg! *element #t))
                               (when (string= description "unknown")
                                 (format-warning
                                  "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
                                  refdes)
                                 (sch2pcb_set_n_unknown (1+ (sch2pcb_get_n_unknown)))
-                                (pcb_element_set_omit_PKG *element TRUE))))
+                                (set-pcb-element-omit-pkg! *element #t))))
                       ;; Return new element.
                       *element))))))))
 
