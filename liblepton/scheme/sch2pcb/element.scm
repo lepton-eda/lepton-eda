@@ -78,6 +78,13 @@
                            name-fix))
 
 
+(define (fix-spaces str)
+  (define (fix c)
+    (if (or (eq? c #\space) (eq? c #\tab)) #\_ c))
+
+  (string-map fix str))
+
+
 (define (pkg-line->element line)
   (if (not (string-prefix? "PKG_" line))
       %null-pointer
@@ -93,7 +100,13 @@
                   (begin
                     (format-warning "Bad package line: ~A\n" line)
                     %null-pointer)
-                  (let ((*element (pcb_element_new)))
+                  (let ((*element (pcb_element_new))
+                        (description (fix-spaces (list-ref args 0)))
+                        (refdes (fix-spaces (list-ref args 1)))
+                        (value (fix-spaces (list-ref args 2))))
+                    (set-pcb-element-description! *element description)
+                    (set-pcb-element-refdes! *element refdes)
+                    (set-pcb-element-value! *element value)
                     (pcb_element_pkg_to_element *element
                                                 (string->pointer line)))))))))
 

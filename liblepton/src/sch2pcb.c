@@ -678,13 +678,7 @@ pcb_element_pkg_to_element (PcbElement *el,
   s = strchr (pkg_line, (gint) '(');
 
   args = g_strsplit (s + 1, ",", 12);
-  fix_spaces (args[0]);
-  fix_spaces (args[1]);
-  fix_spaces (args[2]);
 
-  pcb_element_set_description (el, g_strdup (args[0]));
-  pcb_element_set_refdes (el, g_strdup (args[1]));
-  pcb_element_set_value (el, g_strdup (args[2]));
   if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
     *s = '\0';
 
