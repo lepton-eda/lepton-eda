@@ -96,34 +96,6 @@
 
 
 (define (pkg-line->element line)
-  (define (report-missing-footprint *element)
-    (let ((description (pcb-element-description *element))
-          (refdes (pcb-element-refdes *element)))
-      (if (and (not (null-pointer? (sch2pcb_get_empty_footprint_name)))
-               (string= description
-                        (pointer->string (sch2pcb_get_empty_footprint_name))))
-          (begin
-            (verbose-format
-             "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
-             refdes
-             description)
-            (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
-            (set-pcb-element-omit-pkg! *element #t))
-          (if (string= description "none")
-              (begin
-                (format-warning
-                 "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
-                 refdes
-                 description)
-                (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
-                (set-pcb-element-omit-pkg! *element #t))
-              (when (string= description "unknown")
-                (format-warning
-                 "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
-                 refdes)
-                (sch2pcb_set_n_unknown (1+ (sch2pcb_get_n_unknown)))
-                (set-pcb-element-omit-pkg! *element #t))))))
-
   (if (not (string-prefix? "PKG_" line))
       %null-pointer
       (let ((left-paren-index (string-index line #\()))
@@ -150,10 +122,7 @@
                                           value)))
                       (set-pcb-element-value! *element new-value)
                       (pcb_element_pkg_to_element *element
-                                                  (string->pointer line))
-                      (report-missing-footprint *element)
-                      ;; Return new element.
-                      *element))))))))
+                                                  (string->pointer line))))))))))
 
 
 (define (free-element *element)

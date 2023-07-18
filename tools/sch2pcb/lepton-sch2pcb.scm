@@ -397,6 +397,34 @@
 ;;; existing pcb file, strip out any elements if they are already
 ;;; present so that the new pcb file will only have new elements.
 (define (add-elements pcb-filename)
+  (define (report-missing-footprint *element)
+    (let ((description (pcb-element-description *element))
+          (refdes (pcb-element-refdes *element)))
+      (if (and (not (null-pointer? (sch2pcb_get_empty_footprint_name)))
+               (string= description
+                        (pointer->string (sch2pcb_get_empty_footprint_name))))
+          (begin
+            (verbose-format
+             "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
+             refdes
+             description)
+            (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
+            (set-pcb-element-omit-pkg! *element #t))
+          (if (string= description "none")
+              (begin
+                (format-warning
+                 "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
+                 refdes
+                 description)
+                (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
+                (set-pcb-element-omit-pkg! *element #t))
+              (when (string= description "unknown")
+                (format-warning
+                 "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
+                 refdes)
+                (sch2pcb_set_n_unknown (1+ (sch2pcb_get_n_unknown)))
+                (set-pcb-element-omit-pkg! *element #t))))))
+
   (define tmp-filename (string-append pcb-filename ".tmp"))
 
   (define *tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename)))
@@ -525,7 +553,10 @@
                          *m4-element
                          ;; Otherwise, it's a line starting with
                          ;; PKG_, probably a file element?
-                         (pkg-line->element tline))))
+                         (let ((*pkg-element (pkg-line->element tline)))
+                           (unless (null-pointer? *pkg-element)
+                             (report-missing-footprint *pkg-element))
+                           *pkg-element))))
       ;; Next step is to check if element processing can be
       ;; skipped as the same element has been processed before.
       (if (pcb-element-exists? *element #t)
