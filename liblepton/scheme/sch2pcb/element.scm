@@ -120,7 +120,7 @@
                           (begin
                             (verbose-format
                              "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
-                             (pointer->string (pcb_element_get_refdes *element))
+                             refdes
                              description)
                             (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
                             (pcb_element_set_omit_PKG *element TRUE))
@@ -128,14 +128,14 @@
                               (begin
                                 (format-warning
                                  "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
-                                 (pointer->string (pcb_element_get_refdes *element))
+                                 refdes
                                  description)
                                 (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
                                 (pcb_element_set_omit_PKG *element TRUE))
                               (when (string= description "unknown")
                                 (format-warning
                                  "WARNING: ~A has no footprint attribute so won't be in the layout.\n"
-                                 (pointer->string (pcb_element_get_refdes *element)))
+                                 refdes)
                                 (sch2pcb_set_n_unknown (1+ (sch2pcb_get_n_unknown)))
                                 (pcb_element_set_omit_PKG *element TRUE))))
                       ;; Return new element.
