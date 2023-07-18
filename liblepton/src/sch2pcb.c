@@ -718,8 +718,8 @@ pcb_element_pkg_to_element (PcbElement *el,
   }
   g_strfreev (args);
 
-  if (empty_footprint_name
-      && !strcmp (pcb_element_get_description (el), empty_footprint_name))
+  if (sch2pcb_get_empty_footprint_name ()
+      && !strcmp (pcb_element_get_description (el), sch2pcb_get_empty_footprint_name ()))
   {
     if (sch2pcb_get_verbose_mode () != 0)
       printf
