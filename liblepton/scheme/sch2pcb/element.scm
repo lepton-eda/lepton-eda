@@ -23,6 +23,8 @@
 
   #:export (pcb-element-description
             set-pcb-element-description!
+            pcb-element-pkg-name-fix
+            set-pcb-element-pkg-name-fix!
             pcb-element-refdes
             set-pcb-element-refdes!
             pcb-element-value
@@ -64,6 +66,14 @@
   (pcb-element-set-string! *element
                            pcb_element_set_value
                            value))
+
+(define (pcb-element-pkg-name-fix *element)
+  (pcb-element-get-string *element pcb_element_get_pkg_name_fix))
+
+(define (set-pcb-element-pkg-name-fix! *element name-fix)
+  (pcb-element-set-string! *element
+                           pcb_element_set_pkg_name_fix
+                           name-fix))
 
 
 (define (pkg-line->element *line)
