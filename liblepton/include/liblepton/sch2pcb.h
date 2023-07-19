@@ -215,12 +215,6 @@ sch2pcb_get_pcb_element_list ();
 GList*
 sch2pcb_get_schematics ();
 
-int
-sch2pcb_get_n_unknown ();
-
-void
-sch2pcb_set_n_unknown (int val);
-
 FILE*
 sch2pcb_open_file_to_read (char *filename);
 

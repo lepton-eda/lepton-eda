@@ -281,21 +281,6 @@ sch2pcb_get_pcb_element_list ()
 }
 
 
-static int n_unknown;
-
-int
-sch2pcb_get_n_unknown ()
-{
-  return n_unknown;
-}
-
-void
-sch2pcb_set_n_unknown (int val)
-{
-  n_unknown = val;
-}
-
-
 static gint verbose;
 
 gint
