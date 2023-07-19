@@ -64,8 +64,6 @@
             sch2pcb_find_element
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
-            sch2pcb_get_n_none
-            sch2pcb_set_n_none
             sch2pcb_get_n_unknown
             sch2pcb_set_n_unknown
             sch2pcb_parse_schematics
@@ -123,8 +121,6 @@
 (define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))
-(define-lff sch2pcb_get_n_none int '())
-(define-lff sch2pcb_set_n_none void (list int))
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_set_n_unknown void (list int))
 (define-lff sch2pcb_parse_schematics '* '(*))

@@ -281,21 +281,6 @@ sch2pcb_get_pcb_element_list ()
 }
 
 
-static int n_none;
-
-int
-sch2pcb_get_n_none ()
-{
-  return n_none;
-}
-
-void
-sch2pcb_set_n_none (int val)
-{
-  n_none = val;
-}
-
-
 static int n_unknown;
 
 int

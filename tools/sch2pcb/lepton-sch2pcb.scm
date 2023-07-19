@@ -175,6 +175,9 @@
 ;;; The number of components with specially assigned "footprint="
 ;;; value to omit from the layout.
 (define %empty-footprint-count 0)
+;;; The number of components with the attribute "footprint=none"
+;;; that by default don't go to the layout.
+(define %none-footprint-count 0)
 
 
 (define (make-pcb-element-list pcb-filename)
@@ -424,7 +427,7 @@
                  "WARNING: ~A has a footprint attribute ~S so won't be in the layout.\n"
                  refdes
                  description)
-                (sch2pcb_set_n_none (1+ (sch2pcb_get_n_none)))
+                (set! %none-footprint-count (1+ %none-footprint-count))
                 (set-pcb-element-omit-pkg! *element #t))
               (when (string= description "unknown")
                 (format-warning
@@ -1368,9 +1371,9 @@ Lepton EDA homepage: <~A>
   (unless (zero? (sch2pcb_get_n_unknown))
     (format-message "~A components had no footprint attribute and are omitted.\n"
                     (sch2pcb_get_n_unknown)))
-  (unless (zero? (sch2pcb_get_n_none))
+  (unless (zero? %none-footprint-count)
     (format-message "~A components with footprint \"none\" omitted from ~A.\n"
-                    (sch2pcb_get_n_none)
+                    %none-footprint-count
                     pcb-new-filename))
   (unless (zero? %empty-footprint-count)
     (format-message "~A components with empty footprint ~S omitted from ~A.\n"
