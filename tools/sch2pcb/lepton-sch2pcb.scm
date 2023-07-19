@@ -172,6 +172,9 @@
 (define %deleted-element-count 0)
 ;;; The number of elements with changed value.
 (define %changed-value-element-count 0)
+;;; The number of components with specially assigned "footprint="
+;;; value to omit from the layout.
+(define %empty-footprint-count 0)
 
 
 (define (make-pcb-element-list pcb-filename)
@@ -413,7 +416,7 @@
              "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
              refdes
              description)
-            (sch2pcb_set_n_empty (1+ (sch2pcb_get_n_empty)))
+            (set! %empty-footprint-count (1+ %empty-footprint-count))
             (set-pcb-element-omit-pkg! *element #t))
           (if (string= description "none")
               (begin
@@ -1369,9 +1372,9 @@ Lepton EDA homepage: <~A>
     (format-message "~A components with footprint \"none\" omitted from ~A.\n"
                     (sch2pcb_get_n_none)
                     pcb-new-filename))
-  (unless (zero? (sch2pcb_get_n_empty))
+  (unless (zero? %empty-footprint-count)
     (format-message "~A components with empty footprint ~S omitted from ~A.\n"
-                    (sch2pcb_get_n_empty)
+                    %empty-footprint-count
                     %empty-footprint-name
                     pcb-new-filename))
   (unless (zero? %changed-value-element-count)

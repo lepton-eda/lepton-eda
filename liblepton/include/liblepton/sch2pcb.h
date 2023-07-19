@@ -216,12 +216,6 @@ GList*
 sch2pcb_get_schematics ();
 
 int
-sch2pcb_get_n_empty ();
-
-void
-sch2pcb_set_n_empty (int val);
-
-int
 sch2pcb_get_n_none ();
 
 void

@@ -281,21 +281,6 @@ sch2pcb_get_pcb_element_list ()
 }
 
 
-static int n_empty;
-
-int
-sch2pcb_get_n_empty ()
-{
-  return n_empty;
-}
-
-void
-sch2pcb_set_n_empty (int val)
-{
-  n_empty = val;
-}
-
-
 static int n_none;
 
 int
