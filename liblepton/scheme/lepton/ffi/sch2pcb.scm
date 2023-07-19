@@ -61,8 +61,6 @@
             pcb_element_pkg_to_element
 
             sch2pcb_buffer_to_file
-            sch2pcb_get_empty_footprint_name
-            sch2pcb_set_empty_footprint_name
             sch2pcb_find_element
             sch2pcb_increment_verbose_mode
             sch2pcb_insert_element
@@ -124,8 +122,6 @@
 (define-lff pcb_element_pkg_to_element '* '(* *))
 
 (define-lff sch2pcb_buffer_to_file void '(* *))
-(define-lff sch2pcb_get_empty_footprint_name '* '())
-(define-lff sch2pcb_set_empty_footprint_name void '(*))
 (define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_insert_element int '(* * * * *))

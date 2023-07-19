@@ -281,22 +281,6 @@ sch2pcb_get_pcb_element_list ()
 }
 
 
-static gchar *empty_footprint_name;
-
-char*
-sch2pcb_get_empty_footprint_name ()
-{
-  return empty_footprint_name;
-}
-
-void
-sch2pcb_set_empty_footprint_name (char *val)
-{
-  g_free (empty_footprint_name);
-  empty_footprint_name = g_strdup (val);
-}
-
-
 static int n_empty;
 
 int

@@ -130,6 +130,12 @@
 ;;; Variable that will be used to form output file names.
 (define %schematic-basename #f)
 
+;;; The "footprint=" attribute value for components that should
+;;; not be present in the layout.  This is just a convenience way
+;;; to have components in a schematic which will not be mounted on
+;;; the PCB and to shut up the program warnings about it.
+(define %empty-footprint-name #f)
+
 
 ;;; Whether using file elements should be forced over m4 PCB
 ;;; elements for new footprints even though m4 elements are
@@ -400,9 +406,8 @@
   (define (report-missing-footprint *element)
     (let ((description (pcb-element-description *element))
           (refdes (pcb-element-refdes *element)))
-      (if (and (not (null-pointer? (sch2pcb_get_empty_footprint_name)))
-               (string= description
-                        (pointer->string (sch2pcb_get_empty_footprint_name))))
+      (if (and %empty-footprint-name
+               (string= description %empty-footprint-name))
           (begin
             (verbose-format
              "~A: has the empty footprint attribute ~S so won't be in the layout.\n"
@@ -1022,7 +1027,7 @@
                          (string-split value char-set:whitespace))))
       ("gnetlist" (set! %extra-gnetlist-list
                         (append %extra-gnetlist-list (list value))))
-      ("empty-footprint" (sch2pcb_set_empty_footprint_name *value))
+      ("empty-footprint" (set! %empty-footprint-name value))
       ("backend-cmd" (set! %backend-cmd value))
       ("backend-net" (set! %backend-net value))
       ("backend-pcb" (set! %backend-pcb value))
@@ -1252,7 +1257,7 @@ Lepton EDA homepage: <~A>
                seeds))
      (option '("empty-footprint") #t #f
              (lambda (opt name arg seeds)
-               (sch2pcb_set_empty_footprint_name (string->pointer arg))
+               (set! %empty-footprint-name arg)
                seeds))
      (option '("backend-cmd") #t #f
              (lambda (opt name arg seeds)
@@ -1367,7 +1372,7 @@ Lepton EDA homepage: <~A>
   (unless (zero? (sch2pcb_get_n_empty))
     (format-message "~A components with empty footprint \"~A\" omitted from ~A.\n"
                     (sch2pcb_get_n_empty)
-                    (sch2pcb_get_empty_footprint_name)
+                    %empty-footprint-name
                     pcb-new-filename))
   (unless (zero? %changed-value-element-count)
     (format-message "~A elements had a value change in ~A.\n"

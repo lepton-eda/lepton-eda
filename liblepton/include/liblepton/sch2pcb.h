@@ -184,12 +184,6 @@ pcb_element_line_token (gchar *string,
 
 /* lepton-sch2pcb's toplevel functions */
 
-char*
-sch2pcb_get_empty_footprint_name ();
-
-void
-sch2pcb_set_empty_footprint_name (char *val);
-
 gchar*
 sch2pcb_expand_dir (gchar *dir);
 
