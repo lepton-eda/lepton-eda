@@ -23,6 +23,14 @@
   (test-equal (pcb-element-value *element) "unknown__")
   (free-element *element))
 
+;;; Element with extra description arguments.
+(let ((*element (pkg-line->element (string->pointer "PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "100-Pin-jack")
+  (test-equal (pcb-element-refdes *element) "refdes")
+  (test-equal (pcb-element-value *element) "value")
+  (test-equal (pcb-element-pkg-name-fix *element) "Pin jack")
+  (free-element *element))
 
 ;;; Wrong PKG_ strings.
 
