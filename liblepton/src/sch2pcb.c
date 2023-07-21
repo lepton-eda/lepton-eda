@@ -610,10 +610,9 @@ sch2pcb_find_element (gchar *dir_path,
 PcbElement*
 pcb_element_pkg_to_element (PcbElement *el,
                             gchar *pkg_line,
-                            gboolean value_has_comma)
+                            int n)
 {
   gchar **args, *s;
-  gint n;
 
   s = strchr (pkg_line, (gint) '(');
 
@@ -634,11 +633,6 @@ pcb_element_pkg_to_element (PcbElement *el,
    * value has a comma because gnet-gsch2pcb.scm munges the
    * description with '-' when there are extra args.
    */
-  n = 3;
-  if (value_has_comma)
-  {
-    n = 4;
-  }
   if (args[n]) {
     pcb_element_set_pkg_name_fix (el, g_strdup (args[n]));
     for (n += 1; args[n] != NULL; ++n) {

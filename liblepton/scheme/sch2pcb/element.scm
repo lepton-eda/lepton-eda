@@ -126,9 +126,10 @@
                  (if right-paren-index
                      (string-take revamped-value right-paren-index)
                      revamped-value)))))
-          (pcb_element_pkg_to_element *element
-                                      (string->pointer line)
-                                      (if value-has-comma? TRUE FALSE))))))
+          (let ((n (if value-has-comma? 4 3)))
+            (pcb_element_pkg_to_element *element
+                                        (string->pointer line)
+                                        n))))))
 
   (if (not (string-prefix? "PKG_" line))
       %null-pointer

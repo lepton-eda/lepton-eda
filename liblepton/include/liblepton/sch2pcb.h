@@ -176,7 +176,7 @@ pcb_element_line_parse (gchar *line);
 PcbElement*
 pcb_element_pkg_to_element (PcbElement *el,
                             gchar *pkg_line,
-                            gboolean value_has_comma);
+                            int n);
 
 gchar*
 pcb_element_line_token (gchar *string,
