@@ -96,6 +96,28 @@
 
 
 (define (pkg-line->element line)
+  (define (args->element args)
+    (let ((*element (pcb_element_new))
+          (description (fix-spaces (list-ref args 0)))
+          (refdes (fix-spaces (list-ref args 1)))
+          (value (fix-spaces (list-ref args 2))))
+      (set-pcb-element-description! *element description)
+      (set-pcb-element-refdes! *element refdes)
+      (let* ((right-paren-index (string-index value #\)))
+             (new-value (if right-paren-index
+                            (string-take value right-paren-index)
+                            value)))
+        (set-pcb-element-value! *element new-value)
+        (let* ((extra-args-count (- (length args) 3))
+               (dashes-count (string-count
+                              (pcb-element-description *element) #\-))
+               ;; Assume there was a comma in the value, for
+               ;; instance "1K, 1%".
+               (value-has-comma? (= extra-args-count (1+ dashes-count))))
+          (pcb_element_pkg_to_element *element
+                                      (string->pointer line)
+                                      (if value-has-comma? TRUE FALSE))))))
+
   (if (not (string-prefix? "PKG_" line))
       %null-pointer
       (let ((left-paren-index (string-index line #\()))
@@ -110,25 +132,7 @@
                   (begin
                     (format-warning "Bad package line: ~A\n" line)
                     %null-pointer)
-                  (let ((*element (pcb_element_new))
-                        (description (fix-spaces (list-ref args 0)))
-                        (refdes (fix-spaces (list-ref args 1)))
-                        (value (fix-spaces (list-ref args 2))))
-                    (set-pcb-element-description! *element description)
-                    (set-pcb-element-refdes! *element refdes)
-                    (let* ((right-paren-index (string-index value #\)))
-                           (new-value (if right-paren-index
-                                          (string-take value right-paren-index)
-                                          value)))
-                      (set-pcb-element-value! *element new-value)
-                      (let* ((extra-args-count (- (length args) 3))
-                             (dashes-count (string-count (pcb-element-description *element) #\-))
-                             ;; Assume there was a comma in the
-                             ;; value, eg "1K, 1%".
-                             (value-has-comma? (= extra-args-count (1+ dashes-count))))
-                        (pcb_element_pkg_to_element *element
-                                                    (string->pointer line)
-                                                    (if value-has-comma? TRUE FALSE)))))))))))
+                  (args->element args)))))))
 
 
 (define (free-element *element)
