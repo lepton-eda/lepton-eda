@@ -114,6 +114,12 @@
                ;; Assume there was a comma in the value, for
                ;; instance "1K, 1%".
                (value-has-comma? (= extra-args-count (1+ dashes-count))))
+          (when value-has-comma?
+            (set-pcb-element-value!
+             *element
+             (string-append (pcb-element-value *element)
+                            ","
+                            (fix-spaces (list-ref args 3)))))
           (pcb_element_pkg_to_element *element
                                       (string->pointer line)
                                       (if value-has-comma? TRUE FALSE))))))
