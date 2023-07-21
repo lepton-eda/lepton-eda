@@ -50,6 +50,15 @@
   (test-equal (pcb-element-pkg-name-fix *element) "multi word")
   (free-element *element))
 
+;;; Probably it behaves wrong when two or three closing parens are
+;;; present?
+(let ((*element (pkg-line->element (string->pointer "PKG_YYY-multi-word-again(R0w8-multi-word-again,R100,1k, 1%,multi,word,again)))"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "R0w8-multi-word-again")
+  (test-equal (pcb-element-refdes *element) "R100")
+  (test-equal (pcb-element-value *element) "1k,_1%")
+  (test-equal (pcb-element-pkg-name-fix *element) "multi word again")
+  (free-element *element))
 
 ;;; Wrong PKG_ strings.
 
