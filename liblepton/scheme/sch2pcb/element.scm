@@ -123,7 +123,8 @@
                       (set-pcb-element-value! *element new-value)
                       (pcb_element_pkg_to_element *element
                                                   (string->pointer line)
-                                                  (- (length args) 3))))))))))
+                                                  (- (length args) 3)
+                                                  (string-count (pcb-element-description *element) #\-))))))))))
 
 
 (define (free-element *element)

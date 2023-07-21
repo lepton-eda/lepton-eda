@@ -176,7 +176,8 @@ pcb_element_line_parse (gchar *line);
 PcbElement*
 pcb_element_pkg_to_element (PcbElement *el,
                             gchar *pkg_line,
-                            int n_extra_args);
+                            int n_extra_args,
+                            int n_dashes);
 
 gchar*
 pcb_element_line_token (gchar *string,
