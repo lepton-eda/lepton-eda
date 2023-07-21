@@ -40,6 +40,24 @@
   (test-equal (pcb-element-value *element) "1k,_1%")
   (free-element *element))
 
+;;; Element with value containing a comma, a closing paren, and
+;;; some text after it.
+(let ((*element (pkg-line->element (string->pointer "PKG_XXX(R0w8,R100,1k, 1%)text"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "R0w8")
+  (test-equal (pcb-element-refdes *element) "R100")
+  (test-equal (pcb-element-value *element) "1k,_1%")
+  (free-element *element))
+
+;;; Element with value containing a comma and several closing
+;;; parens.
+(let ((*element (pkg-line->element (string->pointer "PKG_XXX(R0w8,R100,1k, 1%)))))"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "R0w8")
+  (test-equal (pcb-element-refdes *element) "R100")
+  (test-equal (pcb-element-value *element) "1k,_1%")
+  (free-element *element))
+
 ;;; Element with multi-word description and value containing a
 ;;; comma.
 (let ((*element (pkg-line->element (string->pointer "PKG_YYY-multi-word(R0w8-multi-word,R100,1k, 1%,multi,word)"))))
