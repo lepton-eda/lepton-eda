@@ -634,11 +634,6 @@ pcb_element_pkg_to_element (PcbElement *el,
    * description with '-' when there are extra args.
    */
   if (args[n]) {
-    pcb_element_set_pkg_name_fix (el, g_strdup (args[n]));
-    for (n += 1; args[n] != NULL; ++n) {
-      s = pcb_element_get_pkg_name_fix (el);
-      pcb_element_set_pkg_name_fix (el, g_strconcat (s, " ", args[n], NULL));
-    }
     if ((s = strchr (pcb_element_get_pkg_name_fix (el), (gint) ')')) != NULL)
       *s = '\0';
   }

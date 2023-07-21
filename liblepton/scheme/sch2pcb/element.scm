@@ -126,7 +126,10 @@
                  (if right-paren-index
                      (string-take revamped-value right-paren-index)
                      revamped-value)))))
-          (let ((n (if value-has-comma? 4 3)))
+          (let* ((n (if value-has-comma? 4 3))
+                 (fix-args (list-tail args n)))
+            (unless (null? fix-args)
+              (set-pcb-element-pkg-name-fix! *element (string-join fix-args)))
             (pcb_element_pkg_to_element *element
                                         (string->pointer line)
                                         n))))))
