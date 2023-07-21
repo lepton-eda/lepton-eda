@@ -637,8 +637,6 @@ pcb_element_pkg_to_element (PcbElement *el,
   n = 3;
   if (value_has_comma)
   {
-    if ((s = strchr (pcb_element_get_value (el), (gint) ')')) != NULL)
-      *s = '\0';
     n = 4;
   }
   if (args[n]) {

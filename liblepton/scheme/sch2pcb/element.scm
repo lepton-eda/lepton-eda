@@ -115,11 +115,17 @@
                ;; instance "1K, 1%".
                (value-has-comma? (= extra-args-count (1+ dashes-count))))
           (when value-has-comma?
-            (set-pcb-element-value!
-             *element
-             (string-append (pcb-element-value *element)
-                            ","
-                            (fix-spaces (list-ref args 3)))))
+            (let ((revamped-value (string-append (pcb-element-value *element)
+                                                 ","
+                                                 (fix-spaces (list-ref args 3)))))
+              (set-pcb-element-value!
+               *element
+               (let ((right-paren-index (string-index revamped-value #\))))
+                 ;; Drop anything at right starting with a closing
+                 ;; paren.
+                 (if right-paren-index
+                     (string-take revamped-value right-paren-index)
+                     revamped-value)))))
           (pcb_element_pkg_to_element *element
                                       (string->pointer line)
                                       (if value-has-comma? TRUE FALSE))))))
