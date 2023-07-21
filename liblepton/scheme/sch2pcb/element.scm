@@ -95,7 +95,47 @@
   (string-map fix str))
 
 
+;;; The netlister backend gnet-gsch2pcb.scm generates PKG_ lines:
+;;;
+;;;   PKG_footprint(footprint{-fp0-fp1},refdes,value{,fp0,fp1})
+;;;
+;;; where fp1 and fp2 (if they exist) are the extra footprint
+;;; components when specifying footprints like "DIL 14 300".  This
+;;; is needed for m4 macros.
+;;;
+;;; A complication is if the footprint references a file element
+;;; with spaces embedded in the name.  The netlister backend will
+;;; interpret these as fp0, fp1, ... args and the footprint will
+;;; in this case incorrectly have '-' inserted where the spaces
+;;; should be.  So, if there are additional args, reconstruct the
+;;; portion of the name given by the args with spaces for later
+;;; use.  Eg. if the footprint is "100 Pin jack", we will have
+;;;
+;;;   PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)
+;;;
+;;; So put "Pin jack" into pkg_name_fix so if this element is
+;;; searched as a file element we can munge the description to
+;;; what it should be, e.g.:
+;;;
+;;;      100-Pin-jack -> 100 Pin jack
+;;;
 (define (pkg-line->element line)
+  ;; If the component value has a comma, e.g. "1k, 1%", the
+  ;; netlister generated PKG line will be
+  ;;
+  ;;   PKG_XXX(`R0w8',`R100',`1k, 1%'),
+  ;;
+  ;; but after processed by m4, the input to lepton-sch2pcb will
+  ;; be
+  ;;
+  ;;   PKG_XXX(R0w8,R100,1k, 1%).
+  ;;
+  ;; So the quoting info has been lost when processing for file
+  ;; elements.  So here try to detect and fix this.  But I can't
+  ;; handle the situation where the description has a '-' and the
+  ;; value has a comma because gnet-gsch2pcb.scm munges the
+  ;; description with '-' when there are extra args.
+  ;;
   (define (args->element args)
     (let ((*element (pcb_element_new))
           (description (fix-spaces (list-ref args 0)))
@@ -129,10 +169,17 @@
           (let* ((n (if value-has-comma? 4 3))
                  (fix-args (list-tail args n)))
             (unless (null? fix-args)
-              (set-pcb-element-pkg-name-fix! *element (string-join fix-args)))
-            (pcb_element_pkg_to_element *element
-                                        (string->pointer line)
-                                        n))))))
+              (let ((fix (string-join fix-args)))
+                (set-pcb-element-pkg-name-fix!
+                 *element
+                 ;; Drop anything at right starting with a closing
+                 ;; paren once again.  This seems to be
+                 ;; superfluous here.
+                 (let ((right-paren-index (string-index fix #\))))
+                   (if right-paren-index
+                       (string-take fix right-paren-index)
+                       fix)))))
+            *element)))))
 
   (if (not (string-prefix? "PKG_" line))
       %null-pointer

@@ -271,7 +271,7 @@
                      (verbose-format "\tFound: ~A\n" path)
                      path)))))))
 
-  ;; See comment before pcb_element_pkg_to_element().
+  ;; See comment before pkg-line->element().
   (when package-name-fix
     (unless name
       (format-warning

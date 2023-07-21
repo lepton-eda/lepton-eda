@@ -583,65 +583,6 @@ sch2pcb_find_element (gchar *dir_path,
   return found;
 }
 
-/* The gnetlist backend gnet-gsch2pcb.scm generates PKG_ lines:
- *
- *        PKG_footprint(footprint{-fp0-fp1},refdes,value{,fp0,fp1})
- *
- * where fp1 and fp2 (if they exist) are the extra footprint
- * components when specifying footprints like "DIL 14 300".  This is
- * needed for m4 macros.
- *
- * A complication is if the footprint references a file element with
- * spaces embedded in the name.  The gnetlist backend will interpret
- * these as fp0, fp1, ... args and the footprint will in this case
- * incorrectly have '-' inserted where the spaces should be.  So, if
- * there are additional args, reconstruct the portion of the name
- * given by the args with spaces for later use.  Eg. if the footprint
- * is "100 Pin jack", we will have
- *
- *      PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)
- *
- *  So put "Pin jack" into pkg_name_fix so if this element is searched
- *  as a file element we can munge the description to what it should
- *  be, eg:
- *
- *      100-Pin-jack -> 100 Pin jack
- */
-PcbElement*
-pcb_element_pkg_to_element (PcbElement *el,
-                            gchar *pkg_line,
-                            int n)
-{
-  gchar **args, *s;
-
-  s = strchr (pkg_line, (gint) '(');
-
-  args = g_strsplit (s + 1, ",", 12);
-
-  /* If the component value has a comma, eg "1k, 1%", the gnetlist generated
-   * PKG line will be
-   *
-   *   PKG_XXX(`R0w8',`R100',`1k, 1%'),
-   *
-   * but after processed by m4, the input to gsch2pcb will be
-   *
-   *   PKG_XXX(R0w8,R100,1k, 1%).
-   *
-   * So the quoting info has been lost when processing for file
-   * elements.  So here try to detect and fix this.  But I can't
-   * handle the situation where the description has a '-' and the
-   * value has a comma because gnet-gsch2pcb.scm munges the
-   * description with '-' when there are extra args.
-   */
-  if (args[n]) {
-    if ((s = strchr (pcb_element_get_pkg_name_fix (el), (gint) ')')) != NULL)
-      *s = '\0';
-  }
-  g_strfreev (args);
-
-  return el;
-}
-
 
 FILE*
 sch2pcb_open_file_to_read (char *filename)
