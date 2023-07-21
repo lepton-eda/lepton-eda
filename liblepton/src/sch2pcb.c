@@ -610,8 +610,7 @@ sch2pcb_find_element (gchar *dir_path,
 PcbElement*
 pcb_element_pkg_to_element (PcbElement *el,
                             gchar *pkg_line,
-                            int n_extra_args,
-                            int n_dashes)
+                            gboolean value_has_comma)
 {
   gchar **args, *s;
   gint n;
@@ -636,7 +635,8 @@ pcb_element_pkg_to_element (PcbElement *el,
    * description with '-' when there are extra args.
    */
   n = 3;
-  if (n_extra_args == n_dashes + 1) { /* Assume there was a comma in the value, eg "1K, 1%" */
+  if (value_has_comma)
+  {
     s = g_strdup (pcb_element_get_value (el));
     pcb_element_set_value (el, g_strconcat (s, ",", fix_spaces (args[n]), NULL));
     g_free (s);

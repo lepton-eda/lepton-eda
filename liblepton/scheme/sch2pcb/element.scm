@@ -121,10 +121,14 @@
                                           (string-take value right-paren-index)
                                           value)))
                       (set-pcb-element-value! *element new-value)
-                      (pcb_element_pkg_to_element *element
-                                                  (string->pointer line)
-                                                  (- (length args) 3)
-                                                  (string-count (pcb-element-description *element) #\-))))))))))
+                      (let* ((extra-args-count (- (length args) 3))
+                             (dashes-count (string-count (pcb-element-description *element) #\-))
+                             ;; Assume there was a comma in the
+                             ;; value, eg "1K, 1%".
+                             (value-has-comma? (= extra-args-count (1+ dashes-count))))
+                        (pcb_element_pkg_to_element *element
+                                                    (string->pointer line)
+                                                    (if value-has-comma? TRUE FALSE)))))))))))
 
 
 (define (free-element *element)
