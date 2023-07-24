@@ -457,25 +457,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-void
-sch2pcb_insert_element (PcbElement *el,
-                        FILE *f_out,
-                        gchar *footprint,
-                        gchar *refdes,
-                        gchar *value)
-{
-  gchar *fmt;
-
-  fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                  "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                  "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-
-  fprintf (f_out, fmt,
-           pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
-           pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-}
-
-
 gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element)

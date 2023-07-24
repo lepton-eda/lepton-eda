@@ -17,6 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (sch2pcb insert)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 rdelim)
   #:use-module (system foreign)
 
@@ -107,12 +108,21 @@ corresponding fields of *ELEMENT."
                             (if valid-element?
                                 (begin
                                   (simple-translate *new-element)
-                                  (sch2pcb_insert_element
-                                   *new-element
-                                   *output-file
-                                   (pcb_element_get_description *element)
-                                   (pcb_element_get_refdes *element)
-                                   (pcb_element_get_value *element)))
+                                  (let ((fmt (format #f
+                                                     "~?"
+                                                     (if (true? (pcb_element_get_quoted_flags *new-element))
+                                                         "Element~A~S ~S ~S ~S ~A ~A~A\n"
+                                                         "Element~A~A ~S ~S ~S ~A ~A~A\n")
+                                                     (list
+                                                      (list->string (list (integer->char (pcb_element_get_res_char *new-element))))
+                                                      (pointer->string (pcb_element_get_flags *new-element))
+                                                      (pointer->string (pcb_element_get_description *element))
+                                                      (pointer->string (pcb_element_get_refdes *element))
+                                                      (pointer->string (pcb_element_get_value *element))
+                                                      (pointer->string (pcb_element_get_x *new-element))
+                                                      (pointer->string (pcb_element_get_y *new-element))
+                                                      (pointer->string (pcb_element_get_tail *new-element))))))
+                                    (sch2pcb_buffer_to_file (string->pointer fmt) *output-file)))
                                 (when (not (string-prefix? "#" trimmed-line))
                                   (sch2pcb_buffer_to_file
                                    (string->pointer (string-append s "\n"))

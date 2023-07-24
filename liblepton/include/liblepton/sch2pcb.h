@@ -190,13 +190,6 @@ gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element);
 void
-sch2pcb_insert_element (PcbElement *el,
-                        FILE *f_out,
-                        gchar *footprint,
-                        gchar *refdes,
-                        gchar *value);
-
-void
 sch2pcb_increment_verbose_mode ();
 
 void
