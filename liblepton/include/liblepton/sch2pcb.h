@@ -213,9 +213,6 @@ GList*
 sch2pcb_get_schematics ();
 
 FILE*
-sch2pcb_open_file_to_read (char *filename);
-
-FILE*
 sch2pcb_open_file_to_write (char *filename);
 
 void
