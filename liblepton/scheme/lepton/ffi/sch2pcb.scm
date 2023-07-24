@@ -47,7 +47,9 @@
             pcb_element_get_value
             pcb_element_set_value
             pcb_element_get_x
+            pcb_element_set_x
             pcb_element_get_y
+            pcb_element_set_y
             pcb_element_line_parse
             pcb_element_pkg_to_element
 
@@ -101,7 +103,9 @@
 (define-lff pcb_element_get_value '* '(*))
 (define-lff pcb_element_set_value void '(* *))
 (define-lff pcb_element_get_x '* '(*))
+(define-lff pcb_element_set_x void '(* *))
 (define-lff pcb_element_get_y '* '(*))
+(define-lff pcb_element_set_y void '(* *))
 (define-lff pcb_element_line_parse '* '(*))
 (define-lff pcb_element_pkg_to_element '* '(*))
 
