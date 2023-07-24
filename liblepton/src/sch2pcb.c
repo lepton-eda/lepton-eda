@@ -1,6 +1,6 @@
 /* gsch2pcb
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  *  Bill Wilson    billw@wt.net
  *
@@ -492,7 +492,8 @@ sch2pcb_insert_element (FILE *f_out,
   gchar *fmt, *s, buf[1024];
   gboolean retval = FALSE;
 
-  if ((f_in = fopen (element_file, "r")) == NULL) {
+  if ((f_in = sch2pcb_open_file_to_read (element_file)) == NULL)
+  {
     s = g_strdup_printf ("insert_element() can't open %s", element_file);
     perror (s);
     g_free (s);
