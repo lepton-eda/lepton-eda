@@ -21,6 +21,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi sch2pcb)
+  #:use-module (lepton file-system)
 
   #:export (insert-file-element))
 
@@ -32,15 +33,14 @@ corresponding fields of *ELEMENT."
   ;; will crash.
   (when (null-pointer? *output-file)
     (error "insert-file-element(): NULL output file"))
-  (let* ((*element-filename (string->pointer element-filename))
-         (*input-file (sch2pcb_open_file_to_read *element-filename)))
-    (if (null-pointer? *input-file)
+  (let ((*element-filename (string->pointer element-filename)))
+    (if (not (file-readable? element-filename))
         (begin
           (format (current-error-port)
                   "insert-file-element(): can't open ~A\n"
                   element-filename)
           #f)
-        (true? (sch2pcb_insert_element *input-file
+        (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
                                        *output-file
                                        *element-filename
                                        (pcb_element_get_description *element)
