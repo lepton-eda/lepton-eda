@@ -24,6 +24,7 @@
   #:use-module (lepton ffi sch2pcb)
   #:use-module (lepton file-system)
 
+  #:use-module (sch2pcb element)
   #:use-module (sch2pcb format)
 
   #:export (insert-file-element))
@@ -87,5 +88,6 @@ corresponding fields of *ELEMENT."
                              (pcb_element_get_description *element)
                              (pcb_element_get_refdes *element)
                              (pcb_element_get_value *element))
+                            (free-element *new-element)
                             valid-element?)
                           return))))))))
