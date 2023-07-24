@@ -457,29 +457,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-/* A problem is that new PCB 1.7 file elements have the
- * (mark_x,mark_y) value set to wherever the element was created and
- * no equivalent of a gschem translate symbol was done.
- *
- * So, file elements inserted can be scattered over a big area and
- * this is bad when loading a file.new.pcb into an existing PC
- * board.  So, do a simple translate if (mark_x,mark_y) is
- * (arbitrarily) over 1000.  I'll assume that for values < 1000 the
- * element creator was concerned with a sane initial element
- * placement.  Unless someone has a better idea?  Don't bother with
- * pre PCB 1.7 formats as that would require parsing the mark().
- * Current m4 elements use the old format but they seem to have a
- * reasonable initial mark().
- */
-static void
-simple_translate (PcbElement * el)
-{
-
-  pcb_element_set_x (el, strdup ("0"));
-  pcb_element_set_y (el, strdup ("0"));
-}
-
-
 void
 sch2pcb_insert_element (PcbElement *el,
                         FILE *f_out,
@@ -489,7 +466,6 @@ sch2pcb_insert_element (PcbElement *el,
 {
   gchar *fmt;
 
-  simple_translate (el);
   fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                   "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
                   "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
