@@ -17,6 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (sch2pcb insert)
+  #:use-module (ice-9 rdelim)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -24,6 +25,17 @@
   #:use-module (lepton file-system)
 
   #:export (insert-file-element))
+
+;;; Scan file contents to detect whether it's actually a PCB
+;;; layout. Assumes that a PCB layout will have a "PCB" line.
+(define (layout-file? file)
+  (with-input-from-file file
+    (lambda ()
+      (let loop ((s (read-line)))
+        (and (not (eof-object? s))
+             (or (string-prefix? "PCB"
+                                 (string-trim s char-set:whitespace))
+                 (loop (read-line))))))))
 
 (define (insert-file-element *output-file element-filename *element)
   "Insert the contents of the file ELEMENT-FILENAME into *OUTPUT-FILE
@@ -36,12 +48,18 @@ corresponding fields of *ELEMENT."
   (let ((*element-filename (string->pointer element-filename)))
     (if (and (regular-file? element-filename)
              (file-readable? element-filename))
-        (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
-                                       *output-file
-                                       *element-filename
-                                       (pcb_element_get_description *element)
-                                       (pcb_element_get_refdes *element)
-                                       (pcb_element_get_value *element)))
+        (if (layout-file? element-filename)
+            (begin
+              (format (current-error-port)
+                      "Warning: ~A appears to be a PCB layout file. Skipping.\n"
+                      element-filename)
+              #f)
+            (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
+                                           *output-file
+                                           *element-filename
+                                           (pcb_element_get_description *element)
+                                           (pcb_element_get_refdes *element)
+                                           (pcb_element_get_value *element))))
         (begin
           (format (current-error-port)
                   "insert-file-element(): can't open ~A\n"
