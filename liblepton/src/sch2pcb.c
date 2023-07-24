@@ -506,7 +506,7 @@ sch2pcb_insert_element (char *buf,
              pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
     retval = TRUE;
   } else if (*s != '#')
-    fputs (buf, f_out);
+    sch2pcb_buffer_to_file (buf, f_out);
   pcb_element_free (el);
   return retval;
 }
