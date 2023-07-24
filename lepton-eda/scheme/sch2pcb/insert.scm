@@ -75,6 +75,9 @@ corresponding fields of *ELEMENT."
                 (loop (read-line)
                       (or (true? (sch2pcb_insert_element
                                   (string->pointer (string-append s "\n"))
+                                  (string->pointer
+                                   (string-trim (string-append s "\n")
+                                                char-set:whitespace))
                                   *output-file
                                   (pcb_element_get_description *element)
                                   (pcb_element_get_refdes *element)

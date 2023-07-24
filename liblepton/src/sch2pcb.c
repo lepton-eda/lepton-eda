@@ -482,19 +482,19 @@ simple_translate (PcbElement * el)
 
 gboolean
 sch2pcb_insert_element (char *buf,
+                        char *s,
                         FILE *f_out,
                         gchar *footprint,
                         gchar *refdes,
                         gchar *value)
 {
   PcbElement *el;
-  gchar *fmt, *s;
+  gchar *fmt;
   gboolean retval = FALSE;
 
   /* Copy the file element lines.  Substitute new parameters into the
    * Element() or Element[] line and strip comments.
    */
-  for (s = buf; *s == ' ' || *s == '\t'; ++s);
   if ((el = pcb_element_line_parse (s)) != NULL) {
     simple_translate (el);
     fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
