@@ -32,8 +32,17 @@ corresponding fields of *ELEMENT."
   ;; will crash.
   (when (null-pointer? *output-file)
     (error "insert-file-element(): NULL output file"))
-  (true? (sch2pcb_insert_element *output-file
-                                 (string->pointer element-filename)
-                                 (pcb_element_get_description *element)
-                                 (pcb_element_get_refdes *element)
-                                 (pcb_element_get_value *element))))
+  (let* ((*element-filename (string->pointer element-filename))
+         (*input-file (sch2pcb_open_file_to_read *element-filename)))
+    (if (null-pointer? *input-file)
+        (begin
+          (format (current-error-port)
+                  "insert_element() can't open ~A\n"
+                  element-filename)
+          #f)
+        (true? (sch2pcb_insert_element *input-file
+                                       *output-file
+                                       *element-filename
+                                       (pcb_element_get_description *element)
+                                       (pcb_element_get_refdes *element)
+                                       (pcb_element_get_value *element))))))
