@@ -81,17 +81,17 @@ corresponding fields of *ELEMENT."
                                   (pcb_element_line_parse
                                    (string->pointer trimmed-line)))
                                  (valid-element? (not (null-pointer? *new-element))))
-                            (sch2pcb_insert_element
-                             *new-element
-                             *output-file
-                             (pcb_element_get_description *element)
-                             (pcb_element_get_refdes *element)
-                             (pcb_element_get_value *element))
-                            (when (and (not valid-element?)
-                                       (not (string-prefix? "#" trimmed-line)))
-                              (sch2pcb_buffer_to_file
-                               (string->pointer (string-append s "\n"))
-                               *output-file))
+                            (if valid-element?
+                                (sch2pcb_insert_element
+                                 *new-element
+                                 *output-file
+                                 (pcb_element_get_description *element)
+                                 (pcb_element_get_refdes *element)
+                                 (pcb_element_get_value *element))
+                                (when (not (string-prefix? "#" trimmed-line))
+                                  (sch2pcb_buffer_to_file
+                                   (string->pointer (string-append s "\n"))
+                                   *output-file)))
                             (free-element *new-element)
                             valid-element?)
                           return))))))))
