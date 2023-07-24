@@ -506,7 +506,6 @@ sch2pcb_insert_element (PcbElement *el,
              pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
   } else if (*s != '#')
     sch2pcb_buffer_to_file (buf, f_out);
-  pcb_element_free (el);
 }
 
 
