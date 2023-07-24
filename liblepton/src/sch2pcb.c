@@ -481,24 +481,17 @@ simple_translate (PcbElement * el)
 
 
 gboolean
-sch2pcb_insert_element (FILE *f_out,
+sch2pcb_insert_element (FILE *f_in,
+                        FILE *f_out,
                         gchar *element_file,
                         gchar *footprint,
                         gchar *refdes,
                         gchar *value)
 {
-  FILE *f_in;
   PcbElement *el;
   gchar *fmt, *s, buf[1024];
   gboolean retval = FALSE;
 
-  if ((f_in = sch2pcb_open_file_to_read (element_file)) == NULL)
-  {
-    s = g_strdup_printf ("insert_element() can't open %s", element_file);
-    perror (s);
-    g_free (s);
-    return FALSE;
-  }
   /* Scan the file to detect whether it's actually a PCB
    * layout. Assumes that a PCB layout will have a "PCB" line. */
   while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
