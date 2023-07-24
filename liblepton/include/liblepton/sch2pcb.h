@@ -191,8 +191,6 @@ sch2pcb_find_element (gchar *dir_path,
                       gchar *element);
 void
 sch2pcb_insert_element (PcbElement *el,
-                        char *buf,
-                        char *s,
                         FILE *f_out,
                         gchar *footprint,
                         gchar *refdes,
