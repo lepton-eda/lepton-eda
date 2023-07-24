@@ -480,7 +480,7 @@ simple_translate (PcbElement * el)
 }
 
 
-gboolean
+void
 sch2pcb_insert_element (PcbElement *el,
                         char *buf,
                         char *s,
@@ -490,7 +490,6 @@ sch2pcb_insert_element (PcbElement *el,
                         gchar *value)
 {
   gchar *fmt;
-  gboolean retval = FALSE;
 
   /* Copy the file element lines.  Substitute new parameters into the
    * Element() or Element[] line and strip comments.
@@ -505,11 +504,9 @@ sch2pcb_insert_element (PcbElement *el,
     fprintf (f_out, fmt,
              pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
              pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-    retval = TRUE;
   } else if (*s != '#')
     sch2pcb_buffer_to_file (buf, f_out);
   pcb_element_free (el);
-  return retval;
 }
 
 
