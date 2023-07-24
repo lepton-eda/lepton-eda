@@ -1,6 +1,6 @@
 ;;; lepton-sch2pcb -- transform schematics to PCB
 ;;;
-;;; Copyright (C) 2022-2024 Lepton EDA Contributors
+;;; Copyright (C) 2022-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -506,6 +506,13 @@
           ;; Copy PKG_ line.
           (sch2pcb_buffer_to_file *mline *tmp-file))))
 
+  (define (insert-file-element *output-file path *element)
+    (true? (sch2pcb_insert_element *output-file
+                                   (string->pointer path)
+                                   (pcb_element_get_description *element)
+                                   (pcb_element_get_refdes *element)
+                                   (pcb_element_get_value *element))))
+
   (define (process-file-element *mline
                                 *tmp-file
                                 *element
@@ -516,11 +523,7 @@
       (verbose-report-no-file-element-found path m4-element?)
 
       (if (and path
-               (true? (sch2pcb_insert_element *tmp-file
-                                              (string->pointer path)
-                                              (pcb_element_get_description *element)
-                                              (pcb_element_get_refdes *element)
-                                              (pcb_element_get_value *element))))
+               (insert-file-element *tmp-file path *element))
           (begin
             ;; Nice, we found it.  If it is an m4 element, we have
             ;; to skip some lines below, see comments above.
