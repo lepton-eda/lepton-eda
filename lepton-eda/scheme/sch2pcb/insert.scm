@@ -81,6 +81,10 @@ corresponding fields of *ELEMENT."
                                   (pcb_element_line_parse
                                    (string->pointer trimmed-line)))
                                  (valid-element? (not (null-pointer? *new-element))))
+                            ;; Copy the file element lines.
+                            ;; Substitute new parameters into the
+                            ;; Element() or Element[] line and
+                            ;; strip comments.
                             (if valid-element?
                                 (sch2pcb_insert_element
                                  *new-element

@@ -489,9 +489,6 @@ sch2pcb_insert_element (PcbElement *el,
 {
   gchar *fmt;
 
-  /* Copy the file element lines.  Substitute new parameters into the
-   * Element() or Element[] line and strip comments.
-   */
   simple_translate (el);
   fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
                   "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
