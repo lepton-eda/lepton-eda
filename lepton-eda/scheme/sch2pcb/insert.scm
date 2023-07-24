@@ -55,30 +55,28 @@ corresponding fields of *ELEMENT."
   ;; will crash.
   (when (null-pointer? *output-file)
     (error "insert-file-element(): NULL output file"))
-  (let ((*element-filename (string->pointer element-filename)))
-    (if (call-protected (lambda () (layout-file? element-filename))
-                        "insert-file-element(): can't open ~A: "
-                        element-filename)
-        (begin
-          (format (current-error-port)
-                  "Warning: ~A appears to be a PCB layout file. Skipping.\n"
-                  element-filename)
-          #f)
-        ;; File is readable, we've checked this in
-        ;; call-protected() above.  Therefore no additional
-        ;; check is needed here.
-        (with-input-from-file element-filename
-          (lambda ()
-            (let loop ((s (read-line))
-                       (return #f))
-              (if (eof-object? s)
-                  return
-                  (loop (read-line)
-                        (or (true? (sch2pcb_insert_element
-                                    (string->pointer (string-append s "\n"))
-                                    *output-file
-                                    *element-filename
-                                    (pcb_element_get_description *element)
-                                    (pcb_element_get_refdes *element)
-                                    (pcb_element_get_value *element)))
-                            return)))))))))
+  (if (call-protected (lambda () (layout-file? element-filename))
+                      "insert-file-element(): can't open ~A: "
+                      element-filename)
+      (begin
+        (format (current-error-port)
+                "Warning: ~A appears to be a PCB layout file. Skipping.\n"
+                element-filename)
+        #f)
+      ;; File is readable, we've checked this in
+      ;; call-protected() above.  Therefore no additional
+      ;; check is needed here.
+      (with-input-from-file element-filename
+        (lambda ()
+          (let loop ((s (read-line))
+                     (return #f))
+            (if (eof-object? s)
+                return
+                (loop (read-line)
+                      (or (true? (sch2pcb_insert_element
+                                  (string->pointer (string-append s "\n"))
+                                  *output-file
+                                  (pcb_element_get_description *element)
+                                  (pcb_element_get_refdes *element)
+                                  (pcb_element_get_value *element)))
+                          return))))))))
