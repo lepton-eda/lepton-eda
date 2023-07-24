@@ -495,20 +495,20 @@ sch2pcb_insert_element (char *buf,
   /* Copy the file element lines.  Substitute new parameters into the
    * Element() or Element[] line and strip comments.
    */
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if ((el = pcb_element_line_parse (s)) != NULL) {
-      simple_translate (el);
-      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
+  for (s = buf; *s == ' ' || *s == '\t'; ++s);
+  if ((el = pcb_element_line_parse (s)) != NULL) {
+    simple_translate (el);
+    fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
+                    "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                    "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
 
-      fprintf (f_out, fmt,
-               pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
-               pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-      retval = TRUE;
-    } else if (*s != '#')
-      fputs (buf, f_out);
-    pcb_element_free (el);
+    fprintf (f_out, fmt,
+             pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
+             pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
+    retval = TRUE;
+  } else if (*s != '#')
+    fputs (buf, f_out);
+  pcb_element_free (el);
   return retval;
 }
 
