@@ -774,7 +774,7 @@
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
-  (define (update-element-description *output-file *line *trimmed-line)
+  (define (update-element-description line *trimmed-line)
     (let* ((*element (pcb_element_line_parse *trimmed-line))
            (*existing-element (pcb-element-exists? *element #f)))
       (if (and (not (null-pointer? *element))
@@ -792,19 +792,19 @@
                  (x (pointer->string (pcb_element_get_x *element)))
                  (y (pointer->string (pcb_element_get_y *element)))
                  (tail (pointer->string (pcb_element_get_tail *element)))
-                 (*line (string->pointer (format #f
-                                                 (if (true? (pcb_element_get_quoted_flags *element))
-                                                     "Element~A~S ~S ~S ~S ~A ~A~A"
-                                                     "Element~A~A ~S ~S ~S ~A ~A~A")
-                                                 res-char
-                                                 flags
-                                                 changed-description
-                                                 refdes
-                                                 value
-                                                 x
-                                                 y
-                                                 tail))))
-            (sch2pcb_buffer_to_file *line *output-file)
+                 (line (format #f
+                               (if (true? (pcb_element_get_quoted_flags *element))
+                                   "Element~A~S ~S ~S ~S ~A ~A~A"
+                                   "Element~A~A ~S ~S ~S ~A ~A~A")
+                               res-char
+                               flags
+                               changed-description
+                               refdes
+                               value
+                               x
+                               y
+                               tail)))
+            (display line)
 
             (format-message
              "~A: updating element Description: ~A -> ~A\n"
@@ -814,9 +814,7 @@
             (pcb_element_set_still_exists *existing-element TRUE))
           ;; Otherwise, if the element is new, just output it into
           ;; the output file.
-          (begin
-            (sch2pcb_buffer_to_file *line *output-file)
-            (sch2pcb_buffer_to_file (string->pointer "\n") *output-file)))
+          (display (string-append line "\n")))
 
       (free-element *element)))
 
@@ -831,23 +829,19 @@
   (if (or (null-pointer? (sch2pcb_get_pcb_element_list))
           (zero? %fixed-element-count))
       (format-warning "Could not find any elements to fix.\n")
-      (let* ((tmp-filename (string-append pcb-filename ".tmp"))
-             (*tmp-file (sch2pcb_open_file_to_write (string->pointer tmp-filename))))
+      (let ((tmp-filename (string-append pcb-filename ".tmp")))
         (when (file-readable? pcb-filename)
-          (if (null-pointer? *tmp-file)
-              (sch2pcb_close_file *tmp-file)
-              (begin
-                (with-input-from-file pcb-filename
-                  (lambda ()
-                    (let loop ((line (read-line)))
-                      (unless (eof-object? line)
-                        (let ((trimmed-line (string-trim-both line char-set:whitespace)))
-                          (update-element-description *tmp-file
-                                                      (string->pointer line)
-                                                      (string->pointer trimmed-line))
-                          (loop (read-line)))))))
-                (sch2pcb_close_file *tmp-file)
-                (rename-with-backup tmp-filename pcb-filename bak-filename)))))))
+          (with-output-to-file tmp-filename
+            (lambda ()
+              (with-input-from-file pcb-filename
+                (lambda ()
+                  (let loop ((line (read-line)))
+                    (unless (eof-object? line)
+                      (let ((trimmed-line (string-trim-both line char-set:whitespace)))
+                        (update-element-description line
+                                                    (string->pointer trimmed-line))
+                        (loop (read-line)))))))))
+          (rename-with-backup tmp-filename pcb-filename bak-filename)))))
 
 
 ;;; Run lepton-netlist to generate a netlist and a PCB board file.
