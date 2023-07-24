@@ -48,6 +48,25 @@
                                  (string-trim s char-set:whitespace))
                  (loop (read-line))))))))
 
+
+;;; A problem is that new PCB 1.7 file elements have the
+;;; (mark_x,mark_y) value set to wherever the element was created
+;;; and no equivalent of a gschem translate symbol was done.
+;;;
+;;; So, file elements inserted can be scattered over a big area
+;;; and this is bad when loading a file.new.pcb into an existing
+;;; PC board.  So, do a simple translate if (mark_x,mark_y) is
+;;; (arbitrarily) over 1000.  I'll assume that for values < 1000
+;;; the element creator was concerned with a sane initial element
+;;; placement.  Unless someone has a better idea?  Don't bother
+;;; with pre PCB 1.7 formats as that would require parsing the
+;;; mark().  Current m4 elements use the old format but they seem
+;;; to have a reasonable initial mark().
+(define (simple-translate *element)
+  (pcb_element_set_x *element (string->pointer "0"))
+  (pcb_element_set_y *element (string->pointer "0")))
+
+
 (define (insert-file-element *output-file element-filename *element)
   "Insert the contents of the file ELEMENT-FILENAME into *OUTPUT-FILE
 replacing its fields 'footprint', 'refdes', and 'value' with the
@@ -86,12 +105,14 @@ corresponding fields of *ELEMENT."
                             ;; Element() or Element[] line and
                             ;; strip comments.
                             (if valid-element?
-                                (sch2pcb_insert_element
-                                 *new-element
-                                 *output-file
-                                 (pcb_element_get_description *element)
-                                 (pcb_element_get_refdes *element)
-                                 (pcb_element_get_value *element))
+                                (begin
+                                  (simple-translate *new-element)
+                                  (sch2pcb_insert_element
+                                   *new-element
+                                   *output-file
+                                   (pcb_element_get_description *element)
+                                   (pcb_element_get_refdes *element)
+                                   (pcb_element_get_value *element)))
                                 (when (not (string-prefix? "#" trimmed-line))
                                   (sch2pcb_buffer_to_file
                                    (string->pointer (string-append s "\n"))
