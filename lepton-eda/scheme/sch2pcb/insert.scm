@@ -54,12 +54,21 @@ corresponding fields of *ELEMENT."
                       "Warning: ~A appears to be a PCB layout file. Skipping.\n"
                       element-filename)
               #f)
-            (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
-                                           *output-file
-                                           *element-filename
-                                           (pcb_element_get_description *element)
-                                           (pcb_element_get_refdes *element)
-                                           (pcb_element_get_value *element))))
+            (with-input-from-file element-filename
+              (lambda ()
+                (let loop ((s (read-line))
+                           (return #f))
+                  (if (eof-object? s)
+                      return
+                      (loop (read-line)
+                            (or (true? (sch2pcb_insert_element
+                                        (string->pointer (string-append s "\n"))
+                                        *output-file
+                                        *element-filename
+                                        (pcb_element_get_description *element)
+                                        (pcb_element_get_refdes *element)
+                                        (pcb_element_get_value *element)))
+                                return)))))))
         (begin
           (format (current-error-port)
                   "insert-file-element(): can't open ~A\n"
