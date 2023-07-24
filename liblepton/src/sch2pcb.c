@@ -482,8 +482,6 @@ simple_translate (PcbElement * el)
 
 void
 sch2pcb_insert_element (PcbElement *el,
-                        char *buf,
-                        char *s,
                         FILE *f_out,
                         gchar *footprint,
                         gchar *refdes,
@@ -504,8 +502,7 @@ sch2pcb_insert_element (PcbElement *el,
     fprintf (f_out, fmt,
              pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
              pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-  } else if (*s != '#')
-    sch2pcb_buffer_to_file (buf, f_out);
+  }
 }
 
 
