@@ -190,7 +190,8 @@ gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element);
 gboolean
-sch2pcb_insert_element (char *buf,
+sch2pcb_insert_element (PcbElement *el,
+                        char *buf,
                         char *s,
                         FILE *f_out,
                         gchar *footprint,

@@ -73,13 +73,18 @@ corresponding fields of *ELEMENT."
             (if (eof-object? s)
                 return
                 (loop (read-line)
-                      (or (true? (sch2pcb_insert_element
-                                  (string->pointer (string-append s "\n"))
-                                  (string->pointer
-                                   (string-trim (string-append s "\n")
-                                                char-set:whitespace))
-                                  *output-file
-                                  (pcb_element_get_description *element)
-                                  (pcb_element_get_refdes *element)
-                                  (pcb_element_get_value *element)))
+                      (or (true?
+                           (let* ((*trimmed-line
+                                   (string->pointer
+                                    (string-trim
+                                     (string-append s "\n") char-set:whitespace)))
+                                  (*new-element (pcb_element_line_parse *trimmed-line)))
+                             (sch2pcb_insert_element
+                              *new-element
+                              (string->pointer (string-append s "\n"))
+                              *trimmed-line
+                              *output-file
+                              (pcb_element_get_description *element)
+                              (pcb_element_get_refdes *element)
+                              (pcb_element_get_value *element))))
                           return))))))))
