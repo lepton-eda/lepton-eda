@@ -483,7 +483,6 @@ simple_translate (PcbElement * el)
 gboolean
 sch2pcb_insert_element (char *buf,
                         FILE *f_out,
-                        gchar *element_file,
                         gchar *footprint,
                         gchar *refdes,
                         gchar *value)
