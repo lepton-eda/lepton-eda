@@ -666,22 +666,21 @@
             (pointer->string (pcb_element_get_y *element))
             (pointer->string (pcb_element_get_tail *element))))
 
-  (define (element->file *element *existing-element *tmp-file output-line PKG-line?)
+  (define (element->file *element *existing-element output-line PKG-line?)
     (let* ((*changed-value (and *existing-element
                                 (pcb_element_get_changed_value *existing-element)))
            (changed-value (and *changed-value
                                (not (null-pointer? *changed-value))
                                (pointer->string *changed-value))))
       (if changed-value
-          (let ((*output-string (string->pointer
-                                 (format-output-string *element changed-value))))
-            (sch2pcb_buffer_to_file *output-string *tmp-file)
+          (let ((output-string (format-output-string *element changed-value)))
+            (display output-string)
             (verbose-report-changed-value *element changed-value))
           (if PKG-line?
               (set! %left-old-packages-count (1+ %left-old-packages-count))
-              (sch2pcb_buffer_to_file (string->pointer output-line) *tmp-file)))))
+              (display output-line)))))
 
-  (define (prune-element *tmp-file line trimmed-line skip-line?)
+  (define (prune-element line trimmed-line skip-line?)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (pcb-element-exists? *element #f))
            (delete-element? (and *existing-element
@@ -691,7 +690,6 @@
           (verbose-report-element-deleted *element)
           (element->file *element
                          *existing-element
-                         *tmp-file
                          (string-append line "\n")
                          (string-prefix? "PKG_" trimmed-line)))
 
@@ -702,7 +700,7 @@
           TRUE
           skip-line?)))
 
-  (define (process-line line skip-line? paren-level *tmp-file)
+  (define (process-line line skip-line? paren-level)
     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
            (first-char (and (not (string-null? trimmed-line))
                             (string-ref trimmed-line 0)))
@@ -718,8 +716,7 @@
                          (<= new-paren-level 0))
                     FALSE
                     TRUE)
-                (prune-element *tmp-file
-                               line
+                (prune-element line
                                trimmed-line
                                skip-line?))))
       (values skip-next? new-paren-level)))
@@ -748,21 +745,19 @@
                    (not %pkg-line-found)
                    (zero? %changed-value-element-count)))
     (when (file-readable? pcb-filename)
-      (let* ((tmp-filename (string-append pcb-filename ".tmp"))
-             (*tmp-file (sch2pcb_open_file_to_write
-                         (string->pointer tmp-filename))))
-        (unless (null-pointer? *tmp-file)
-          (with-input-from-file pcb-filename
-            (lambda ()
-              (let loop ((line (read-line))
-                         (skip-line? FALSE)
-                         (paren-level 0))
-                (unless (eof-object? line)
-                  (receive (skip-next? new-paren-level)
-                      (process-line line skip-line? paren-level *tmp-file)
-                    (loop (read-line) skip-next? new-paren-level))))))
-          (sch2pcb_close_file *tmp-file)
-          (rename-with-backup tmp-filename pcb-filename bak-filename))))))
+      (let ((tmp-filename (string-append pcb-filename ".tmp")))
+        (with-output-to-file tmp-filename
+          (lambda ()
+            (with-input-from-file pcb-filename
+              (lambda ()
+                (let loop ((line (read-line))
+                           (skip-line? FALSE)
+                           (paren-level 0))
+                  (unless (eof-object? line)
+                    (receive (skip-next? new-paren-level)
+                        (process-line line skip-line? paren-level)
+                      (loop (read-line) skip-next? new-paren-level))))))))
+        (rename-with-backup tmp-filename pcb-filename bak-filename)))))
 
 
 (define (update-element-descriptions pcb-filename bak-filename)
