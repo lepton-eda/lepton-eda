@@ -26,9 +26,12 @@
   "Searches for a Pcb element (footprint) file by NAME in PATH.
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
-  (let ((*dir-path (string->pointer path)))
-    (sch2pcb_find_element *dir-path
-                          (if name
-                              (string->pointer name)
-                              %null-pointer)
-                          (sch2pcb_find_element_open_dir *dir-path))))
+  (let* ((*dir-path (string->pointer path))
+         (*dir (sch2pcb_find_element_open_dir *dir-path)))
+    (if (null-pointer? *dir)
+        %null-pointer
+        (sch2pcb_find_element *dir-path
+                              (if name
+                                  (string->pointer name)
+                                  %null-pointer)
+                              *dir))))
