@@ -53,3 +53,20 @@
 (test-assert (null-pointer? (lookup-footprint "." "x.fp")))
 
 (test-end)
+
+
+(test-begin "lookup-footprint multiple directories")
+(test-group-with-cleanup "lookup-footprint multiple directories"
+  (test-setup)
+
+  (for-each mkdir '("x" "y" "x/a" "x/b" "y/a" "y/b" "y/c" "y/c/z"))
+  (for-each touch '("x/a/X.fp" "y/b/X.fp" "x/b/X.fp" "y/c/z/X.fp" "y/a/X.fp"))
+
+  (let ((footprint-x (lookup-footprint "." "X"))
+        (footprint-x.fp (lookup-footprint "." "X.fp")))
+    (test-equal (pointer->string footprint-x) "./y/c/z/X.fp")
+    (test-equal (pointer->string footprint-x.fp) "./y/c/z/X.fp"))
+
+  ;; Clean up.
+  (test-teardown))
+(test-end)
