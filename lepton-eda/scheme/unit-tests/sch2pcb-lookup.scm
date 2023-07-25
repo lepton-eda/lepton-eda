@@ -1,9 +1,26 @@
 (use-modules (system foreign)
              (sch2pcb lookup))
 
+(define cwd (getcwd))
+(define *testdir*
+  (string-append (getcwd)
+                 file-name-separator-string
+                 "sch2pcb-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
 (define (touch file)
   (with-output-to-file file
     (lambda () (display ""))))
+
 
 (test-begin "lookup-in-missing-directory")
 
