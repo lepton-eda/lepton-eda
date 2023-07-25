@@ -189,6 +189,9 @@ sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 GDir*
 sch2pcb_find_element_open_dir (gchar *dir_path);
 
+void
+sch2pcb_find_element_close_dir (GDir *dir);
+
 gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element,
