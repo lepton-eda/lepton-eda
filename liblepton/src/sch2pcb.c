@@ -485,8 +485,6 @@ sch2pcb_find_element (gchar *dir_path,
 {
   gchar *path, *name, *found = NULL;
 
-  if (sch2pcb_get_verbose_mode () > 1)
-    printf ("\t  Searching: \"%s\" for \"%s\"\n", dir_path, element);
   while ((name = (gchar *) g_dir_read_name (dir)) != NULL) {
     path = g_strconcat (dir_path, "/", name, NULL);
     found = NULL;
@@ -501,6 +499,10 @@ sch2pcb_find_element (gchar *dir_path,
       }
       else
       {
+        if (sch2pcb_get_verbose_mode () > 1)
+        {
+          printf ("\t  Searching: \"%s\" for \"%s\"\n", path, element);
+        }
         found = sch2pcb_find_element (path,
                                       element,
                                       next_dir);

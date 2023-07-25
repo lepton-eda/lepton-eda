@@ -18,7 +18,9 @@
 
 (define-module (sch2pcb lookup)
   #:use-module (system foreign)
+
   #:use-module (lepton ffi sch2pcb)
+  #:use-module (sch2pcb format)
 
   #:export (lookup-footprint))
 
@@ -30,8 +32,12 @@ otherwise returns %null-pointer."
          (*dir (sch2pcb_find_element_open_dir *dir-path)))
     (if (null-pointer? *dir)
         %null-pointer
-        (sch2pcb_find_element *dir-path
-                              (if name
-                                  (string->pointer name)
-                                  %null-pointer)
-                              *dir))))
+        (begin
+          (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                path
+                                name)
+          (sch2pcb_find_element *dir-path
+                                (if name
+                                    (string->pointer name)
+                                    %null-pointer)
+                                *dir)))))
