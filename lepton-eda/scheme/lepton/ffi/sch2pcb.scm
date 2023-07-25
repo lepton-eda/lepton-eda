@@ -59,6 +59,7 @@
             pcb_element_line_token
             pcb_element_new
 
+            sch2pcb_find_element_open_dir
             sch2pcb_find_element
             sch2pcb_increment_verbose_mode
             sch2pcb_parse_schematics
@@ -108,6 +109,7 @@
 (define-lff pcb_element_line_token '* '(* * *))
 (define-lff pcb_element_new '* '())
 
+(define-lff sch2pcb_find_element_open_dir '* '(*))
 (define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_parse_schematics '* '(*))

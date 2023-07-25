@@ -457,19 +457,40 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-gchar*
-sch2pcb_find_element (gchar *dir_path,
-                      gchar *element)
+GDir*
+sch2pcb_find_element_open_dir (gchar *dir_path)
 {
-  GDir *dir;
-  gchar *path, *name, *s, *found = NULL;
+  gchar *s;
 
-  if ((dir = g_dir_open (dir_path, 0, NULL)) == NULL) {
+  GDir *dir = g_dir_open (dir_path, 0, NULL);
+
+  if (dir == NULL)
+  {
     s = g_strdup_printf ("sch2pcb_find_element can't open dir \"%s\"", dir_path);
     perror (s);
     g_free (s);
     return NULL;
   }
+  else
+  {
+    return dir;
+  }
+}
+
+
+gchar*
+sch2pcb_find_element (gchar *dir_path,
+                      gchar *element)
+{
+  gchar *path, *name, *found = NULL;
+
+  GDir *dir = sch2pcb_find_element_open_dir (dir_path);
+
+  if (dir == NULL)
+  {
+    return NULL;
+  }
+
   if (sch2pcb_get_verbose_mode () > 1)
     printf ("\t  Searching: \"%s\" for \"%s\"\n", dir_path, element);
   while ((name = (gchar *) g_dir_read_name (dir)) != NULL) {
