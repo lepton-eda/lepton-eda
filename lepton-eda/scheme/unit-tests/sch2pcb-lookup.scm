@@ -67,6 +67,23 @@
     (test-equal (pointer->string footprint-x) "./y/c/z/X.fp")
     (test-equal (pointer->string footprint-x.fp) "./y/c/z/X.fp"))
 
+  (chmod "y/c/z" #o000)
+  (test-equal (pointer->string (lookup-footprint "." "X.fp")) "./y/b/X.fp")
+  (chmod "y/b" #o000)
+  (test-equal (pointer->string (lookup-footprint "." "X.fp")) "./y/a/X.fp")
+  (chmod "y/a" #o000)
+  (test-equal (pointer->string (lookup-footprint "." "X.fp")) "./x/b/X.fp")
+  (chmod "x/b" #o000)
+  (test-equal (pointer->string (lookup-footprint "." "X.fp")) "./x/a/X.fp")
+  (chmod "x/a" #o000)
+  (test-assert (null-pointer? (lookup-footprint "." "X.fp")))
+
+  (chmod "y/c/z" #o755)
+  (chmod "y/b" #o755)
+  (chmod "y/a" #o755)
+  (chmod "x/b" #o755)
+  (chmod "x/a" #o755)
+
   ;; Clean up.
   (test-teardown))
 (test-end)
