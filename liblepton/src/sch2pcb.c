@@ -478,6 +478,13 @@ sch2pcb_find_element_open_dir (gchar *dir_path)
 }
 
 
+void
+sch2pcb_find_element_close_dir (GDir *dir)
+{
+  g_dir_close (dir);
+}
+
+
 gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element,
@@ -529,7 +536,7 @@ sch2pcb_find_element (gchar *dir_path,
     if (found)
       break;
   }
-  g_dir_close (dir);
+  sch2pcb_find_element_close_dir (dir);
   return found;
 }
 
