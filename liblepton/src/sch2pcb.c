@@ -480,11 +480,10 @@ sch2pcb_find_element_open_dir (gchar *dir_path)
 
 gchar*
 sch2pcb_find_element (gchar *dir_path,
-                      gchar *element)
+                      gchar *element,
+                      GDir *dir)
 {
   gchar *path, *name, *found = NULL;
-
-  GDir *dir = sch2pcb_find_element_open_dir (dir_path);
 
   if (dir == NULL)
   {
@@ -499,7 +498,11 @@ sch2pcb_find_element (gchar *dir_path,
 
     /* if we got a directory name, then recurse down into it */
     if (g_file_test (path, G_FILE_TEST_IS_DIR))
-      found = sch2pcb_find_element (path, element);
+    {
+      found = sch2pcb_find_element (path,
+                                    element,
+                                    sch2pcb_find_element_open_dir (path));
+    }
 
     /* otherwise assume it is a file and see if it is the one we want */
     else {
