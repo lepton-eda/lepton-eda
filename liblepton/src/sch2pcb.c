@@ -493,14 +493,13 @@ sch2pcb_find_element_read_name (GDir *dir)
 
 
 gchar*
-sch2pcb_find_element (gchar *dir_path,
-                      gchar *element,
-                      GDir *dir)
+sch2pcb_find_element_impl (gchar *dir_path,
+                           gchar *element,
+                           gchar* name,
+                           GDir *dir)
 {
-  gchar *path, *name, *found = NULL;
+  gchar *path, *found = NULL;
 
-  while ((name = sch2pcb_find_element_read_name (dir)) != NULL)
-  {
     path = g_strconcat (dir_path, "/", name, NULL);
     found = NULL;
 
@@ -542,6 +541,20 @@ sch2pcb_find_element (gchar *dir_path,
         printf ("%s\n", found ? "Yes" : "No");
     }
     g_free (path);
+    return found;
+}
+
+
+gchar*
+sch2pcb_find_element (gchar *dir_path,
+                      gchar *element,
+                      GDir *dir)
+{
+  gchar *name, *found = NULL;
+
+  while ((name = sch2pcb_find_element_read_name (dir)) != NULL)
+  {
+    found = sch2pcb_find_element_impl (dir_path, element, name, dir);
     if (found)
       break;
   }
