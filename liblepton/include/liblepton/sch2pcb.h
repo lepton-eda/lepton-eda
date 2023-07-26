@@ -193,6 +193,9 @@ void
 sch2pcb_find_element_close_dir (GDir *dir);
 
 gchar*
+sch2pcb_find_element_read_name (GDir *dir);
+
+gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element,
                       GDir *dir);
