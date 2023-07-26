@@ -513,6 +513,7 @@ sch2pcb_find_element (gchar *dir_path,
         found = sch2pcb_find_element (path,
                                       element,
                                       next_dir);
+        sch2pcb_find_element_close_dir (next_dir);
       }
     }
 
@@ -536,7 +537,6 @@ sch2pcb_find_element (gchar *dir_path,
     if (found)
       break;
   }
-  sch2pcb_find_element_close_dir (dir);
   return found;
 }
 
