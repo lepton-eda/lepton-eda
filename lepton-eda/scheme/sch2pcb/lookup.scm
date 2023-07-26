@@ -36,8 +36,10 @@ otherwise returns %null-pointer."
           (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                 path
                                 name)
-          (sch2pcb_find_element *dir-path
-                                (if name
-                                    (string->pointer name)
-                                    %null-pointer)
-                                *dir)))))
+          (let ((result (sch2pcb_find_element *dir-path
+                                              (if name
+                                                  (string->pointer name)
+                                                  %null-pointer)
+                                              *dir)))
+            (sch2pcb_find_element_close_dir *dir)
+            result)))))
