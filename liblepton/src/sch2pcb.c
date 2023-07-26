@@ -496,7 +496,8 @@ gchar*
 sch2pcb_find_element_impl (gchar *dir_path,
                            gchar *element,
                            gchar* name,
-                           GDir *dir)
+                           GDir *dir,
+                           gchar *recurse_func)
 {
   gchar *path, *found = NULL;
 
@@ -517,9 +518,9 @@ sch2pcb_find_element_impl (gchar *dir_path,
       {
         printf ("\t  Searching: \"%s\" for \"%s\"\n", path, element);
       }
-      found = sch2pcb_find_element (path,
-                                    element,
-                                    next_dir);
+      found = ((gchar* (*) (gchar*, gchar*, GDir*)) recurse_func) (path,
+                                                                   element,
+                                                                   next_dir);
       sch2pcb_find_element_close_dir (next_dir);
     }
   }
@@ -554,7 +555,11 @@ sch2pcb_find_element (gchar *dir_path,
 
   while ((name = sch2pcb_find_element_read_name (dir)) != NULL)
   {
-    found = sch2pcb_find_element_impl (dir_path, element, name, dir);
+    found = sch2pcb_find_element_impl (dir_path,
+                                       element,
+                                       name,
+                                       dir,
+                                       (gchar*) sch2pcb_find_element);
     if (found)
       break;
   }
