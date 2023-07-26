@@ -486,13 +486,21 @@ sch2pcb_find_element_close_dir (GDir *dir)
 
 
 gchar*
+sch2pcb_find_element_read_name (GDir *dir)
+{
+  return (gchar *) g_dir_read_name (dir);
+}
+
+
+gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element,
                       GDir *dir)
 {
   gchar *path, *name, *found = NULL;
 
-  while ((name = (gchar *) g_dir_read_name (dir)) != NULL) {
+  while ((name = sch2pcb_find_element_read_name (dir)) != NULL)
+  {
     path = g_strconcat (dir_path, "/", name, NULL);
     found = NULL;
 
