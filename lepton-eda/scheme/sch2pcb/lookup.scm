@@ -29,7 +29,17 @@
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
   (define (process-directory *dir-path *element-name *dir)
-    (sch2pcb_find_element *dir-path *element-name *dir))
+    (let loop ((*name (sch2pcb_find_element_read_name *dir)))
+      (if (null-pointer? *name)
+          %null-pointer
+          (let ((*found (sch2pcb_find_element_impl *dir-path
+                                                   *element-name
+                                                   *name
+                                                   *dir
+                                                   (procedure->pointer '* process-directory '(* * *)))))
+            (if (not (null-pointer? *found))
+                *found
+                (loop (sch2pcb_find_element_read_name *dir)))))))
 
   (let* ((*dir-path (string->pointer path))
          (*dir (sch2pcb_find_element_open_dir *dir-path)))

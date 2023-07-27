@@ -546,27 +546,6 @@ sch2pcb_find_element_impl (gchar *dir_path,
 }
 
 
-gchar*
-sch2pcb_find_element (gchar *dir_path,
-                      gchar *element,
-                      GDir *dir)
-{
-  gchar *name, *found = NULL;
-
-  while ((name = sch2pcb_find_element_read_name (dir)) != NULL)
-  {
-    found = sch2pcb_find_element_impl (dir_path,
-                                       element,
-                                       name,
-                                       dir,
-                                       (gchar*) sch2pcb_find_element);
-    if (found)
-      break;
-  }
-  return found;
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {
