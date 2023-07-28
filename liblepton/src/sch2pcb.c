@@ -493,15 +493,14 @@ sch2pcb_find_element_read_name (GDir *dir)
 
 
 gchar*
-sch2pcb_find_element_impl (gchar *dir_path,
+sch2pcb_find_element_impl (gchar *path,
                            gchar *element,
                            gchar* name,
                            GDir *dir,
                            gchar *recurse_func)
 {
-  gchar *path, *found = NULL;
+  gchar *found = NULL;
 
-  path = g_strconcat (dir_path, "/", name, NULL);
   found = NULL;
 
   /* if we got a directory name, then recurse down into it */
@@ -541,7 +540,6 @@ sch2pcb_find_element_impl (gchar *dir_path,
     if (sch2pcb_get_verbose_mode () > 1)
       printf ("%s\n", found ? "Yes" : "No");
   }
-  g_free (path);
   return found;
 }
 
