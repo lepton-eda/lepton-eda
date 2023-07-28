@@ -32,7 +32,9 @@ otherwise returns %null-pointer."
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
       (if (null-pointer? *name)
           %null-pointer
-          (let ((*found (sch2pcb_find_element_impl *dir-path
+          (let ((*found (sch2pcb_find_element_impl (string->pointer (string-append (pointer->string *dir-path)
+                                                                                   file-name-separator-string
+                                                                                   (pointer->string *name)))
                                                    *element-name
                                                    *name
                                                    *dir
