@@ -114,7 +114,7 @@
 (define-lff sch2pcb_find_element_open_dir '* '(*))
 (define-lff sch2pcb_find_element_close_dir void '(*))
 (define-lff sch2pcb_find_element_read_name '* '(*))
-(define-lff sch2pcb_find_element_impl '* '(* * * * *))
+(define-lff sch2pcb_find_element_impl '* '(* * * *))
 (define-lff sch2pcb_increment_verbose_mode void '())
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())

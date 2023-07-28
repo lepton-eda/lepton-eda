@@ -37,7 +37,6 @@ otherwise returns %null-pointer."
                                                                                    (pointer->string *name)))
                                                    *element-name
                                                    *name
-                                                   *dir
                                                    (procedure->pointer '* process-directory '(* * *)))))
             (if (not (null-pointer? *found))
                 *found
