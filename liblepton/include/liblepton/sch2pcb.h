@@ -199,7 +199,8 @@ gchar*
 sch2pcb_find_element_impl (gchar *path,
                            gchar *element,
                            gchar* name,
-                           gchar *recurse_func);
+                           gchar *recurse_func,
+                           gboolean is_directory);
 void
 sch2pcb_increment_verbose_mode ();
 
