@@ -496,7 +496,6 @@ gchar*
 sch2pcb_find_element_impl (gchar *path,
                            gchar *element,
                            gchar* name,
-                           GDir *dir,
                            gchar *recurse_func)
 {
   gchar *found = NULL;
