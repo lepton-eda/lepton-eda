@@ -19,7 +19,9 @@
 (define-module (sch2pcb lookup)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi sch2pcb)
+  #:use-module (lepton file-system)
   #:use-module (sch2pcb format)
 
   #:export (lookup-footprint))
@@ -32,12 +34,14 @@ otherwise returns %null-pointer."
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
       (if (null-pointer? *name)
           %null-pointer
-          (let ((*found (sch2pcb_find_element_impl (string->pointer (string-append (pointer->string *dir-path)
-                                                                                   file-name-separator-string
-                                                                                   (pointer->string *name)))
-                                                   *element-name
-                                                   *name
-                                                   (procedure->pointer '* process-directory '(* * *)))))
+          (let* ((path (string-append (pointer->string *dir-path)
+                                      file-name-separator-string
+                                      (pointer->string *name)))
+                 (*found (sch2pcb_find_element_impl (string->pointer path)
+                                                    *element-name
+                                                    *name
+                                                    (procedure->pointer '* process-directory '(* * *))
+                                                    (if (directory? path) TRUE FALSE))))
             (if (not (null-pointer? *found))
                 *found
                 (loop (sch2pcb_find_element_read_name *dir)))))))

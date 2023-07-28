@@ -496,14 +496,15 @@ gchar*
 sch2pcb_find_element_impl (gchar *path,
                            gchar *element,
                            gchar* name,
-                           gchar *recurse_func)
+                           gchar *recurse_func,
+                           gboolean is_directory)
 {
   gchar *found = NULL;
 
   found = NULL;
 
   /* if we got a directory name, then recurse down into it */
-  if (g_file_test (path, G_FILE_TEST_IS_DIR))
+  if (is_directory)
   {
     GDir *next_dir = sch2pcb_find_element_open_dir (path);
     if (next_dir == NULL)
