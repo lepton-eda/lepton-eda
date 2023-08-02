@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -282,6 +282,7 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
     gtk_notebook_set_current_page (nbook, page);
     gtk_widget_set_visible (wbook, TRUE);
   }
+  gtk_widget_show_all (widget);
 }
 
 
