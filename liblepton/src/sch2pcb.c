@@ -510,9 +510,6 @@ sch2pcb_find_element_impl (gchar *path,
       found = g_strdup (path);
     g_free (tmps);
   }
-  if (sch2pcb_get_verbose_mode () > 1)
-    printf ("%s\n", found ? "Yes" : "No");
-
   return found;
 }
 

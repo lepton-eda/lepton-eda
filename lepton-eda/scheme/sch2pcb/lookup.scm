@@ -49,7 +49,12 @@ otherwise returns %null-pointer."
         (begin
           (extra-verbose-format "\t           : ~A\t"
                                 (pointer->string *name))
-          (sch2pcb_find_element_impl *path *element-name *name))))
+          (let ((*found
+                 (sch2pcb_find_element_impl *path *element-name *name)))
+            (extra-verbose-format (if (null-pointer? *found)
+                                      "No\n"
+                                      "Yes\n"))
+            *found))))
 
   (define (process-directory *dir-path *element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
