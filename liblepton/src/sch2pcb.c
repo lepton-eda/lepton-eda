@@ -501,8 +501,6 @@ sch2pcb_find_element_impl (gchar *path,
 
   found = NULL;
 
-  if (sch2pcb_get_verbose_mode () > 1)
-    printf ("\t           : %s\t", name);
   if (!strcmp (name, element))
     found = g_strdup (path);
   else {
