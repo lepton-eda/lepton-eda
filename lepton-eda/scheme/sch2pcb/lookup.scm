@@ -50,7 +50,10 @@ otherwise returns %null-pointer."
           (extra-verbose-format "\t           : ~A\t"
                                 (pointer->string *name))
           (let ((*found
-                 (sch2pcb_find_element_impl *path *element-name *name)))
+                 (if (string= (pointer->string *name)
+                              (pointer->string *element-name))
+                     *path
+                     (sch2pcb_find_element_impl *path *element-name *name))))
             (extra-verbose-format (if (null-pointer? *found)
                                       "No\n"
                                       "Yes\n"))

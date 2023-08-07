@@ -499,15 +499,12 @@ sch2pcb_find_element_impl (gchar *path,
 {
   gchar *found = NULL;
 
-  if (!strcmp (name, element))
-    found = g_strdup (path);
-  else {
     gchar *tmps;
     tmps = g_strconcat (element, ".fp", NULL);
     if (!strcmp (name, tmps))
       found = g_strdup (path);
     g_free (tmps);
-  }
+
   return found;
 }
 
