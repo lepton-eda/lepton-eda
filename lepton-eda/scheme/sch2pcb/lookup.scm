@@ -30,6 +30,9 @@
   "Searches for a Pcb element (footprint) file by NAME in PATH.
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
+  (define (find-element *path *element-name *name *process-func dir?)
+    (sch2pcb_find_element_impl *path *element-name *name *process-func dir?))
+
   (define (process-directory *dir-path *element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
       (if (null-pointer? *name)
@@ -37,11 +40,11 @@ otherwise returns %null-pointer."
           (let* ((path (string-append (pointer->string *dir-path)
                                       file-name-separator-string
                                       (pointer->string *name)))
-                 (*found (sch2pcb_find_element_impl (string->pointer path)
-                                                    *element-name
-                                                    *name
-                                                    (procedure->pointer '* process-directory '(* * *))
-                                                    (if (directory? path) TRUE FALSE))))
+                 (*found (find-element (string->pointer path)
+                                       *element-name
+                                       *name
+                                       (procedure->pointer '* process-directory '(* * *))
+                                       (if (directory? path) TRUE FALSE))))
             (if (not (null-pointer? *found))
                 *found
                 (loop (sch2pcb_find_element_read_name *dir)))))))
