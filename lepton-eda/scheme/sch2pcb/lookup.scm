@@ -30,8 +30,23 @@
   "Searches for a Pcb element (footprint) file by NAME in PATH.
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
-  (define (find-element *path *element-name *name *process-func dir?)
-    (sch2pcb_find_element_impl *path *element-name *name *process-func dir?))
+  (define (find-element *path *element-name *name process-func dir?)
+    (if dir?
+        ;; If we got a directory name, then recurse down into it.
+        (let ((*next-dir (sch2pcb_find_element_open_dir *path)))
+          (if (null-pointer? *next-dir)
+              %null-pointer
+              (begin
+                (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                      (pointer->string *path)
+                                      (pointer->string *element-name))
+                (let ((*found (process-func *path *element-name *next-dir)))
+                  (sch2pcb_find_element_close_dir *next-dir)
+                  *found))))
+
+        ;; Otherwise assume it is a file and see if it is the one
+        ;; we want.
+        (sch2pcb_find_element_impl *path *element-name *name)))
 
   (define (process-directory *dir-path *element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
@@ -43,8 +58,8 @@ otherwise returns %null-pointer."
                  (*found (find-element (string->pointer path)
                                        *element-name
                                        *name
-                                       (procedure->pointer '* process-directory '(* * *))
-                                       (if (directory? path) TRUE FALSE))))
+                                       process-directory
+                                       (directory? path))))
             (if (not (null-pointer? *found))
                 *found
                 (loop (sch2pcb_find_element_read_name *dir)))))))
