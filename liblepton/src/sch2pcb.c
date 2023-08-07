@@ -499,8 +499,6 @@ sch2pcb_find_element_impl (gchar *path,
 {
   gchar *found = NULL;
 
-  found = NULL;
-
   if (!strcmp (name, element))
     found = g_strdup (path);
   else {
