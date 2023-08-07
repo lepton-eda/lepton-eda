@@ -46,7 +46,10 @@ otherwise returns %null-pointer."
 
         ;; Otherwise assume it is a file and see if it is the one
         ;; we want.
-        (sch2pcb_find_element_impl *path *element-name *name)))
+        (begin
+          (extra-verbose-format "\t           : ~A\t"
+                                (pointer->string *name))
+          (sch2pcb_find_element_impl *path *element-name *name))))
 
   (define (process-directory *dir-path *element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
