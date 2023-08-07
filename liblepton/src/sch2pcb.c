@@ -495,37 +495,12 @@ sch2pcb_find_element_read_name (GDir *dir)
 gchar*
 sch2pcb_find_element_impl (gchar *path,
                            gchar *element,
-                           gchar* name,
-                           gchar *recurse_func,
-                           gboolean is_directory)
+                           gchar *name)
 {
   gchar *found = NULL;
 
   found = NULL;
 
-  /* if we got a directory name, then recurse down into it */
-  if (is_directory)
-  {
-    GDir *next_dir = sch2pcb_find_element_open_dir (path);
-    if (next_dir == NULL)
-    {
-      found = NULL;
-    }
-    else
-    {
-      if (sch2pcb_get_verbose_mode () > 1)
-      {
-        printf ("\t  Searching: \"%s\" for \"%s\"\n", path, element);
-      }
-      found = ((gchar* (*) (gchar*, gchar*, GDir*)) recurse_func) (path,
-                                                                   element,
-                                                                   next_dir);
-      sch2pcb_find_element_close_dir (next_dir);
-    }
-  }
-
-  /* otherwise assume it is a file and see if it is the one we want */
-  else {
     if (sch2pcb_get_verbose_mode () > 1)
       printf ("\t           : %s\t", name);
     if (!strcmp (name, element))
@@ -539,7 +514,7 @@ sch2pcb_find_element_impl (gchar *path,
     }
     if (sch2pcb_get_verbose_mode () > 1)
       printf ("%s\n", found ? "Yes" : "No");
-  }
+
   return found;
 }
 
