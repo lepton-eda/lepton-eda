@@ -492,23 +492,6 @@ sch2pcb_find_element_read_name (GDir *dir)
 }
 
 
-gchar*
-sch2pcb_find_element_impl (gchar *path,
-                           gchar *element,
-                           gchar *name)
-{
-  gchar *found = NULL;
-
-    gchar *tmps;
-    tmps = g_strconcat (element, ".fp", NULL);
-    if (!strcmp (name, tmps))
-      found = g_strdup (path);
-    g_free (tmps);
-
-  return found;
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {
