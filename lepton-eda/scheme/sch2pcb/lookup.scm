@@ -53,7 +53,10 @@ otherwise returns %null-pointer."
                  (if (string= (pointer->string *name)
                               (pointer->string *element-name))
                      *path
-                     (sch2pcb_find_element_impl *path *element-name *name))))
+                     (if (string= (string-append (pointer->string *element-name) ".fp")
+                                  (pointer->string *name))
+                         *path
+                         %null-pointer))))
             (extra-verbose-format (if (null-pointer? *found)
                                       "No\n"
                                       "Yes\n"))

@@ -266,7 +266,6 @@
                (if (null-pointer? *path)
                    (loop (cdr ls))
                    (let ((path (pointer->string *path)))
-                     (g_free *path)
                      (verbose-format "\tFound: ~A\n" path)
                      path)))))))
 
