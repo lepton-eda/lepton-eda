@@ -40,7 +40,9 @@ otherwise returns %null-pointer."
                 (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                       (pointer->string *path)
                                       (pointer->string *element-name))
-                (let ((*found (process-func *path *element-name *next-dir)))
+                (let ((*found (process-func (pointer->string *path)
+                                            *element-name
+                                            *next-dir)))
                   (sch2pcb_find_element_close_dir *next-dir)
                   *found))))
 
@@ -62,11 +64,11 @@ otherwise returns %null-pointer."
                                       "Yes\n"))
             *found))))
 
-  (define (process-directory *dir-path *element-name *dir)
+  (define (process-directory dir-path *element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
       (if (null-pointer? *name)
           %null-pointer
-          (let* ((path (string-append (pointer->string *dir-path)
+          (let* ((path (string-append dir-path
                                       file-name-separator-string
                                       (pointer->string *name)))
                  (*found (find-element (string->pointer path)
@@ -78,15 +80,14 @@ otherwise returns %null-pointer."
                 *found
                 (loop (sch2pcb_find_element_read_name *dir)))))))
 
-  (let* ((*dir-path (string->pointer path))
-         (*dir (sch2pcb_find_element_open_dir *dir-path)))
+  (let ((*dir (sch2pcb_find_element_open_dir (string->pointer path))))
     (if (null-pointer? *dir)
         %null-pointer
         (begin
           (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                 path
                                 name)
-          (let ((result (process-directory *dir-path
+          (let ((result (process-directory path
                                            (if name
                                                (string->pointer name)
                                                %null-pointer)
