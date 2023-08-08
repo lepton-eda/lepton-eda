@@ -30,7 +30,7 @@
   "Searches for a Pcb element (footprint) file by NAME in PATH.
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
-  (define (find-element *path *element-name *name process-func dir?)
+  (define (find-element *path element-name *name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
         (let ((*next-dir (sch2pcb_find_element_open_dir *path)))
@@ -39,9 +39,9 @@ otherwise returns %null-pointer."
               (begin
                 (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                       (pointer->string *path)
-                                      (pointer->string *element-name))
+                                      element-name)
                 (let ((*found (process-func (pointer->string *path)
-                                            *element-name
+                                            element-name
                                             *next-dir)))
                   (sch2pcb_find_element_close_dir *next-dir)
                   *found))))
@@ -53,9 +53,9 @@ otherwise returns %null-pointer."
                                 (pointer->string *name))
           (let ((*found
                  (if (string= (pointer->string *name)
-                              (pointer->string *element-name))
+                              element-name)
                      *path
-                     (if (string= (string-append (pointer->string *element-name) ".fp")
+                     (if (string= (string-append element-name ".fp")
                                   (pointer->string *name))
                          *path
                          %null-pointer))))
@@ -64,7 +64,7 @@ otherwise returns %null-pointer."
                                       "Yes\n"))
             *found))))
 
-  (define (process-directory dir-path *element-name *dir)
+  (define (process-directory dir-path element-name *dir)
     (let loop ((*name (sch2pcb_find_element_read_name *dir)))
       (if (null-pointer? *name)
           %null-pointer
@@ -72,7 +72,7 @@ otherwise returns %null-pointer."
                                       file-name-separator-string
                                       (pointer->string *name)))
                  (*found (find-element (string->pointer path)
-                                       *element-name
+                                       element-name
                                        *name
                                        process-directory
                                        (directory? path))))
@@ -87,10 +87,6 @@ otherwise returns %null-pointer."
           (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                 path
                                 name)
-          (let ((result (process-directory path
-                                           (if name
-                                               (string->pointer name)
-                                               %null-pointer)
-                                           *dir)))
+          (let ((result (process-directory path name *dir)))
             (sch2pcb_find_element_close_dir *dir)
             result)))))
