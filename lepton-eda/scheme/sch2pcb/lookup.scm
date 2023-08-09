@@ -52,49 +52,45 @@ otherwise returns %null-pointer."
     (if dir?
         ;; If we got a directory name, then recurse down into it.
         (let ((*next-dir (opendir path)))
-          (if (null-pointer? *next-dir)
-              %null-pointer
-              (begin
-                (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                      path
-                                      element-name)
-                (let ((*found (process-func path
+          (and (not (null-pointer? *next-dir))
+               (begin
+                 (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                       path
+                                       element-name)
+                 (let ((found (process-func path
                                             element-name
                                             *next-dir)))
-                  (sch2pcb_find_element_close_dir *next-dir)
-                  *found))))
+                   (sch2pcb_find_element_close_dir *next-dir)
+                   found))))
 
         ;; Otherwise assume it is a file and see if it is the one
         ;; we want.
         (begin
           (extra-verbose-format "\t           : ~A\t" name)
-          (let ((*found
+          (let ((found
                  (if (string= name element-name)
-                     (string->pointer path)
-                     (if (string= (string-append element-name ".fp")
-                                  name)
-                         (string->pointer path)
-                         %null-pointer))))
-            (extra-verbose-format (if (null-pointer? *found)
-                                      "No\n"
-                                      "Yes\n"))
-            *found))))
+                     path
+                     (and (string= (string-append element-name ".fp")
+                                   name)
+                          path))))
+            (extra-verbose-format (if found
+                                      "Yes\n"
+                                      "No\n"))
+            found))))
 
   (define (process-directory dir-path element-name *dir)
     (let loop ((name (readdir *dir)))
-      (if (not name)
-          %null-pointer
-          (let* ((path (string-append dir-path
-                                      file-name-separator-string
-                                      name))
-                 (*found (find-element path
+      (and name
+           (let* ((path (string-append dir-path
+                                       file-name-separator-string
+                                       name))
+                  (found (find-element path
                                        element-name
                                        name
                                        process-directory
                                        (directory? path))))
-            (if (not (null-pointer? *found))
-                *found
-                (loop (readdir *dir)))))))
+             (or found
+                 (loop (readdir *dir)))))))
 
   (let ((*dir (opendir path)))
     (and (not (null-pointer? *dir))
@@ -104,5 +100,4 @@ otherwise returns %null-pointer."
                                  name)
            (let ((result (process-directory path name *dir)))
              (sch2pcb_find_element_close_dir *dir)
-             (and (not (null-pointer? result))
-                  (pointer->string result)))))))
+             result)))))
