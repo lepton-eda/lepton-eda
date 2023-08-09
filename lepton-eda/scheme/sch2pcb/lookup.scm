@@ -26,10 +26,20 @@
 
   #:export (lookup-footprint))
 
+
 (define (lookup-footprint path name)
   "Searches for a Pcb element (footprint) file by NAME in PATH.
 If an element is found, returns a pointer to its C string name,
 otherwise returns %null-pointer."
+  (define (opendir-protected path)
+    (catch #t
+      (lambda () (opendir path))
+      (lambda (key subr message args rest)
+        (format-error (string-append "Could not open directory ~S: "
+                                     (format #f "~?" message args))
+                      (list path))
+        #f)))
+
   (define (find-element *path element-name *name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
