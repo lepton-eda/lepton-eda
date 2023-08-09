@@ -457,41 +457,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-GDir*
-sch2pcb_find_element_open_dir (gchar *dir_path)
-{
-  gchar *s;
-
-  GDir *dir = g_dir_open (dir_path, 0, NULL);
-
-  if (dir == NULL)
-  {
-    s = g_strdup_printf ("sch2pcb_find_element can't open dir \"%s\"", dir_path);
-    perror (s);
-    g_free (s);
-    return NULL;
-  }
-  else
-  {
-    return dir;
-  }
-}
-
-
-void
-sch2pcb_find_element_close_dir (GDir *dir)
-{
-  g_dir_close (dir);
-}
-
-
-gchar*
-sch2pcb_find_element_read_name (GDir *dir)
-{
-  return (gchar *) g_dir_read_name (dir);
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {

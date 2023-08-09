@@ -186,15 +186,6 @@ sch2pcb_expand_dir (gchar *dir);
 void
 sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 
-GDir*
-sch2pcb_find_element_open_dir (gchar *dir_path);
-
-void
-sch2pcb_find_element_close_dir (GDir *dir);
-
-gchar*
-sch2pcb_find_element_read_name (GDir *dir);
-
 void
 sch2pcb_increment_verbose_mode ();
 
