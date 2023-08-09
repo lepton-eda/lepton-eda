@@ -40,30 +40,30 @@ otherwise returns %null-pointer."
                       (list path))
         #f)))
 
-  (define (opendir path)
-    (sch2pcb_find_element_open_dir (string->pointer path)))
-
-  (define (readdir *dir)
-    (let ((name (sch2pcb_find_element_read_name *dir)))
-      (and (not (null-pointer? name))
-           (pointer->string name))))
-
-  (define (closedir *path)
-    (sch2pcb_find_element_close_dir *path))
+  ;; readdir() reads filenames from directory stream until #<eof>
+  ;; object is found.  We don't process the dirs "." or ".." as it
+  ;; leads to infinite recursive invocations.
+  (define (readdir* dir)
+    (let ((path (readdir dir)))
+      (and (not (eof-object? path))
+           (if (or (string=? path ".")
+                   (string=? path ".."))
+               (readdir* dir)
+               path))))
 
   (define (find-element path element-name name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
-        (let ((*next-dir (opendir path)))
-          (and (not (null-pointer? *next-dir))
+        (let ((next-dir (opendir-protected path)))
+          (and next-dir
                (begin
                  (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                        path
                                        element-name)
                  (let ((found (process-func path
                                             element-name
-                                            *next-dir)))
-                   (closedir *next-dir)
+                                            next-dir)))
+                   (closedir next-dir)
                    found))))
 
         ;; Otherwise assume it is a file and see if it is the one
@@ -81,8 +81,8 @@ otherwise returns %null-pointer."
                                       "No\n"))
             found))))
 
-  (define (process-directory dir-path element-name *dir)
-    (let loop ((name (readdir *dir)))
+  (define (process-directory dir-path element-name dir)
+    (let loop ((name (readdir* dir)))
       (and name
            (let* ((path (string-append dir-path
                                        file-name-separator-string
@@ -93,14 +93,14 @@ otherwise returns %null-pointer."
                                        process-directory
                                        (directory? path))))
              (or found
-                 (loop (readdir *dir)))))))
+                 (loop (readdir* dir)))))))
 
-  (let ((*dir (opendir path)))
-    (and (not (null-pointer? *dir))
+  (let ((dir (opendir-protected path)))
+    (and dir
          (begin
            (extra-verbose-format "\t  Searching: ~S for ~S\n"
                                  path
                                  name)
-           (let ((result (process-directory path name *dir)))
-             (closedir *dir)
+           (let ((result (process-directory path name dir)))
+             (closedir dir)
              result)))))
