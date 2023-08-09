@@ -43,7 +43,12 @@ otherwise returns %null-pointer."
   (define (opendir path)
     (sch2pcb_find_element_open_dir (string->pointer path)))
 
-  (define (find-element path element-name *name process-func dir?)
+  (define (readdir *dir)
+    (let ((name (sch2pcb_find_element_read_name *dir)))
+      (and (not (null-pointer? name))
+           (pointer->string name))))
+
+  (define (find-element path element-name name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
         (let ((*next-dir (opendir path)))
@@ -62,14 +67,12 @@ otherwise returns %null-pointer."
         ;; Otherwise assume it is a file and see if it is the one
         ;; we want.
         (begin
-          (extra-verbose-format "\t           : ~A\t"
-                                (pointer->string *name))
+          (extra-verbose-format "\t           : ~A\t" name)
           (let ((*found
-                 (if (string= (pointer->string *name)
-                              element-name)
+                 (if (string= name element-name)
                      (string->pointer path)
                      (if (string= (string-append element-name ".fp")
-                                  (pointer->string *name))
+                                  name)
                          (string->pointer path)
                          %null-pointer))))
             (extra-verbose-format (if (null-pointer? *found)
@@ -78,20 +81,20 @@ otherwise returns %null-pointer."
             *found))))
 
   (define (process-directory dir-path element-name *dir)
-    (let loop ((*name (sch2pcb_find_element_read_name *dir)))
-      (if (null-pointer? *name)
+    (let loop ((name (readdir *dir)))
+      (if (not name)
           %null-pointer
           (let* ((path (string-append dir-path
                                       file-name-separator-string
-                                      (pointer->string *name)))
+                                      name))
                  (*found (find-element path
                                        element-name
-                                       *name
+                                       name
                                        process-directory
                                        (directory? path))))
             (if (not (null-pointer? *found))
                 *found
-                (loop (sch2pcb_find_element_read_name *dir)))))))
+                (loop (readdir *dir)))))))
 
   (let ((*dir (opendir path)))
     (if (null-pointer? *dir)
