@@ -43,17 +43,17 @@ otherwise returns %null-pointer."
   (define (opendir path)
     (sch2pcb_find_element_open_dir (string->pointer path)))
 
-  (define (find-element *path element-name *name process-func dir?)
+  (define (find-element path element-name *name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
-        (let ((*next-dir (opendir (pointer->string *path))))
+        (let ((*next-dir (opendir path)))
           (if (null-pointer? *next-dir)
               %null-pointer
               (begin
                 (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                      (pointer->string *path)
+                                      path
                                       element-name)
-                (let ((*found (process-func (pointer->string *path)
+                (let ((*found (process-func path
                                             element-name
                                             *next-dir)))
                   (sch2pcb_find_element_close_dir *next-dir)
@@ -67,10 +67,10 @@ otherwise returns %null-pointer."
           (let ((*found
                  (if (string= (pointer->string *name)
                               element-name)
-                     *path
+                     (string->pointer path)
                      (if (string= (string-append element-name ".fp")
                                   (pointer->string *name))
-                         *path
+                         (string->pointer path)
                          %null-pointer))))
             (extra-verbose-format (if (null-pointer? *found)
                                       "No\n"
@@ -84,7 +84,7 @@ otherwise returns %null-pointer."
           (let* ((path (string-append dir-path
                                       file-name-separator-string
                                       (pointer->string *name)))
-                 (*found (find-element (string->pointer path)
+                 (*found (find-element path
                                        element-name
                                        *name
                                        process-directory
