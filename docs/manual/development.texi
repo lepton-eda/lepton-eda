@@ -85,6 +85,23 @@ Lepton tools to debug your code.  Load your modules or files with code
 in this mode one by one and see what's wrong with them.
 @command{lepton-netlist} and @command{lepton-symcheck} support this.
 
+If you want to debug some particular module, you could use your
+current Lepton installation.  Say, if your Lepton is installed in
+@file{/usr/local/}, run @command{guile} and in its prompt do:
+
+@lisp
+(add-to-load-path "/usr/local/share/lepton-eda/scheme")
+(use-modules (lepton m4))
+@end lisp
+
+This is how all Lepton tools are initialized internally.  The first
+line adds path to all Lepton modules.  The module @code{(lepton m4)}
+is loaded then for initialization of various @code{liblepton}'s
+variables.  After that, you'll be able to play with Lepton modules.
+
+To automate the above trick, you might want to add the two lines in
+your local @command{guile} configuration file, typically,
+@file{~/.guile}.
 
 @node Debuggers, Debug Glib and GTK, Debug Scheme code, Debugging
 @subsection Debug C code with debugger tools
