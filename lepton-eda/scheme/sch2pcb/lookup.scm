@@ -48,6 +48,9 @@ otherwise returns %null-pointer."
       (and (not (null-pointer? name))
            (pointer->string name))))
 
+  (define (closedir *path)
+    (sch2pcb_find_element_close_dir *path))
+
   (define (find-element path element-name name process-func dir?)
     (if dir?
         ;; If we got a directory name, then recurse down into it.
@@ -60,7 +63,7 @@ otherwise returns %null-pointer."
                  (let ((found (process-func path
                                             element-name
                                             *next-dir)))
-                   (sch2pcb_find_element_close_dir *next-dir)
+                   (closedir *next-dir)
                    found))))
 
         ;; Otherwise assume it is a file and see if it is the one
@@ -99,5 +102,5 @@ otherwise returns %null-pointer."
                                  path
                                  name)
            (let ((result (process-directory path name *dir)))
-             (sch2pcb_find_element_close_dir *dir)
+             (closedir *dir)
              result)))))
