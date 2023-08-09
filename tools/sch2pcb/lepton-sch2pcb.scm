@@ -262,12 +262,12 @@
       (and (not (null? ls))
            (let ((dir-path (car ls)))
              (extra-verbose-format "\tLooking in directory: ~S\n" dir-path)
-             (let ((*path (lookup-footprint dir-path element-name)))
-               (if (null-pointer? *path)
-                   (loop (cdr ls))
-                   (let ((path (pointer->string *path)))
+             (let ((path (lookup-footprint dir-path element-name)))
+               (if path
+                   (begin
                      (verbose-format "\tFound: ~A\n" path)
-                     path)))))))
+                     path)
+                   (loop (cdr ls))))))))
 
   ;; See comment before pkg-line->element().
   (when package-name-fix

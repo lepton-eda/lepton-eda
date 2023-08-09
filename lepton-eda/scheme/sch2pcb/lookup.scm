@@ -97,12 +97,12 @@ otherwise returns %null-pointer."
                 (loop (readdir *dir)))))))
 
   (let ((*dir (opendir path)))
-    (if (null-pointer? *dir)
-        %null-pointer
-        (begin
-          (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                path
-                                name)
-          (let ((result (process-directory path name *dir)))
-            (sch2pcb_find_element_close_dir *dir)
-            result)))))
+    (and (not (null-pointer? *dir))
+         (begin
+           (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                 path
+                                 name)
+           (let ((result (process-directory path name *dir)))
+             (sch2pcb_find_element_close_dir *dir)
+             (and (not (null-pointer? result))
+                  (pointer->string result)))))))
