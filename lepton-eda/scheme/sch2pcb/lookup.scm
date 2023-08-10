@@ -73,16 +73,14 @@ otherwise returns %null-pointer."
 
                      ;; Otherwise assume it is a file and see if it is the one
                      ;; we want.
-                     (begin
-                       (extra-verbose-format "\t           : ~A\t" name)
-                       (let ((found?
-                              (or (string= name element-name)
-                                  (string= (string-append element-name ".fp")
-                                           name))))
-                         (extra-verbose-format (if found?
-                                                   "Yes\n"
-                                                   "No\n"))
-                         (and found? path)))))
+                     (let ((found?
+                            (or (string= name element-name)
+                                (string= (string-append element-name ".fp")
+                                         name))))
+                       (extra-verbose-format "\t           : ~A\t~A\n"
+                                             name
+                                             (if found? "Yes\n" "No\n"))
+                       (and found? path))))
 
                (loop (readdir* dir))))))
 
