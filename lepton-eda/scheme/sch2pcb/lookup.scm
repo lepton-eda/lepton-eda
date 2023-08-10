@@ -51,42 +51,43 @@ otherwise returns %null-pointer."
                (readdir* dir)
                path))))
 
-  (define (find-element path element-name name process-func)
-    (if (directory? path)
-        ;; If we got a directory name, then recurse down into it.
-        (let ((next-dir (opendir-protected path)))
-          (and next-dir
-               (begin
-                 (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                       path
-                                       element-name)
-                 (let ((found (process-func path
-                                            element-name
-                                            next-dir)))
-                   (closedir next-dir)
-                   found))))
+  (define (find-element dir-path element-name name process-func)
+    (let ((path (string-append dir-path
+                               file-name-separator-string
+                               name)))
+      (if (directory? path)
+          ;; If we got a directory name, then recurse down into it.
+          (let ((next-dir (opendir-protected path)))
+            (and next-dir
+                 (begin
+                   (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                         path
+                                         element-name)
+                   (let ((found (process-func path
+                                              element-name
+                                              next-dir)))
+                     (closedir next-dir)
+                     found))))
 
-        ;; Otherwise assume it is a file and see if it is the one
-        ;; we want.
-        (begin
-          (extra-verbose-format "\t           : ~A\t" name)
-          (let ((found
-                 (if (string= name element-name)
-                     path
-                     (and (string= (string-append element-name ".fp")
-                                   name)
-                          path))))
-            (extra-verbose-format (if found
-                                      "Yes\n"
-                                      "No\n"))
-            found))))
+          ;; Otherwise assume it is a file and see if it is the one
+          ;; we want.
+          (begin
+            (extra-verbose-format "\t           : ~A\t" name)
+            (let ((found
+                   (if (string= name element-name)
+                       path
+                       (and (string= (string-append element-name ".fp")
+                                     name)
+                            path))))
+              (extra-verbose-format (if found
+                                        "Yes\n"
+                                        "No\n"))
+              found)))))
 
   (define (process-directory dir-path element-name dir)
     (let loop ((name (readdir* dir)))
       (and name
-           (or (find-element (string-append dir-path
-                                            file-name-separator-string
-                                            name)
+           (or (find-element dir-path
                              element-name
                              name
                              process-directory)
