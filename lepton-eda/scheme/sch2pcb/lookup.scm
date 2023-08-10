@@ -80,10 +80,9 @@ otherwise returns %null-pointer."
 
   (let ((dir (opendir-protected path)))
     (and dir
-         (begin
-           (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                 path
-                                 name)
-           (let ((result (process-directory path name dir)))
-             (closedir dir)
-             result)))))
+         (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                               path
+                               name)
+         (let ((result (process-directory path name dir)))
+           (closedir dir)
+           result))))
