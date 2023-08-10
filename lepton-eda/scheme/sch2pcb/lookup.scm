@@ -76,11 +76,10 @@ otherwise returns %null-pointer."
                      (begin
                        (extra-verbose-format "\t           : ~A\t" name)
                        (let ((found
-                              (if (string= name element-name)
-                                  path
-                                  (and (string= (string-append element-name ".fp")
-                                                name)
-                                       path))))
+                              (and (or (string= name element-name)
+                                       (string= (string-append element-name ".fp")
+                                                name))
+                                   path)))
                          (extra-verbose-format (if found
                                                    "Yes\n"
                                                    "No\n"))
