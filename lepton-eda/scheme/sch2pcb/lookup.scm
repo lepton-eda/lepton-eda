@@ -32,9 +32,7 @@ it as a string, otherwise returns #f."
   (define (fold-files filename path)
     (define (id name stat result) result)
     (define (enter? name stat result) result)
-    (define (down name stat result)
-      (extra-verbose-format "\t  Searching: ~S for ~S\n" name filename)
-      result)
+    (define down id)
     (define up id)
     (define skip id)
     (define (error name stat errno result)
@@ -45,14 +43,10 @@ it as a string, otherwise returns #f."
           ;; Skip directories here.
           result
           ;; Search for "filename" and "filename.fp".
-          (let* ((bname (basename name))
-                 (alt-filename (string-append filename ".fp"))
-                 (found? (or (string= bname filename)
-                             (string= bname alt-filename))))
-            (extra-verbose-format "\t           : ~A\t~A\n"
-                                  bname
-                                  (if found? "Yes\n" "No\n"))
-            (if found?
+          (let ((bname (basename name))
+                (alt-filename (string-append filename ".fp")))
+            (if (or (string= bname filename)
+                    (string= bname alt-filename))
                 (cons name result)
                 result))))
 
