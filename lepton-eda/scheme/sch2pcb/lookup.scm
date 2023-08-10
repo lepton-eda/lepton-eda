@@ -24,9 +24,9 @@
 
 
 (define (lookup-footprint path name)
-  "Searches for a Pcb element (footprint) file by NAME in PATH.
-If an element is found, returns a pointer to its C string name,
-otherwise returns %null-pointer."
+  "Searches for a Pcb element (footprint) file by ELEMENT-NAME in
+DIR-PATH recursively.  If an element is found, returns the path to
+it as a string, otherwise returns #f."
   (define (opendir-protected path)
     (catch #t
       (lambda () (opendir path))
