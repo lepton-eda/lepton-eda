@@ -75,15 +75,14 @@ otherwise returns %null-pointer."
                      ;; we want.
                      (begin
                        (extra-verbose-format "\t           : ~A\t" name)
-                       (let ((found
-                              (and (or (string= name element-name)
-                                       (string= (string-append element-name ".fp")
-                                                name))
-                                   path)))
-                         (extra-verbose-format (if found
+                       (let ((found?
+                              (or (string= name element-name)
+                                  (string= (string-append element-name ".fp")
+                                           name))))
+                         (extra-verbose-format (if found?
                                                    "Yes\n"
                                                    "No\n"))
-                         found))))
+                         (and found? path)))))
 
                (loop (readdir* dir))))))
 
