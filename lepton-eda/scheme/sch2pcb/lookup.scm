@@ -84,15 +84,13 @@ otherwise returns %null-pointer."
   (define (process-directory dir-path element-name dir)
     (let loop ((name (readdir* dir)))
       (and name
-           (let* ((path (string-append dir-path
-                                       file-name-separator-string
-                                       name))
-                  (found (find-element path
-                                       element-name
-                                       name
-                                       process-directory)))
-             (or found
-                 (loop (readdir* dir)))))))
+           (or (find-element (string-append dir-path
+                                            file-name-separator-string
+                                            name)
+                             element-name
+                             name
+                             process-directory)
+               (loop (readdir* dir))))))
 
   (let ((dir (opendir-protected path)))
     (and dir
