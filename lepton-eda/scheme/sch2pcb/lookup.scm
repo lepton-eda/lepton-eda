@@ -17,10 +17,6 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 (define-module (sch2pcb lookup)
-  #:use-module (system foreign)
-
-  #:use-module (lepton ffi boolean)
-  #:use-module (lepton ffi sch2pcb)
   #:use-module (lepton file-system)
   #:use-module (sch2pcb format)
 
