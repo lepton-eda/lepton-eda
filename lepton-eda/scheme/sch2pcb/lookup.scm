@@ -67,8 +67,9 @@ otherwise returns %null-pointer."
                                           file-name-separator-string
                                           name)))
                  (if (directory? path)
-                     ;; If we got a directory name, then recurse down into it.
-                     (process-path path element-name)
+                     ;; If we got a directory name, then recurse
+                     ;; down into it.
+                     (lookup-footprint path element-name)
 
                      ;; Otherwise assume it is a file and see if
                      ;; it is the one we want.
@@ -77,15 +78,12 @@ otherwise returns %null-pointer."
 
                (loop (readdir* dir))))))
 
-  (define (process-path path name)
-    (let ((dir (opendir-protected path)))
-      (and dir
-           (begin
-             (extra-verbose-format "\t  Searching: ~S for ~S\n"
-                                   path
-                                   name)
-             (let ((result (process-directory path name dir)))
-               (closedir dir)
-               result)))))
-
-  (process-path path name))
+  (let ((dir (opendir-protected path)))
+    (and dir
+         (begin
+           (extra-verbose-format "\t  Searching: ~S for ~S\n"
+                                 path
+                                 name)
+           (let ((result (process-directory path name dir)))
+             (closedir dir)
+             result)))))
