@@ -51,6 +51,15 @@ otherwise returns %null-pointer."
                (readdir* dir)
                path))))
 
+  (define (found-filename? name element-name)
+    (let ((found? (or (string= name element-name)
+                      (string= (string-append element-name ".fp")
+                               name))))
+      (extra-verbose-format "\t           : ~A\t~A\n"
+                            name
+                            (if found? "Yes\n" "No\n"))
+      found?))
+
   (define (process-directory dir-path element-name dir)
     (let loop ((name (readdir* dir)))
       (and name
@@ -71,16 +80,10 @@ otherwise returns %null-pointer."
                                 (closedir next-dir)
                                 found))))
 
-                     ;; Otherwise assume it is a file and see if it is the one
-                     ;; we want.
-                     (let ((found?
-                            (or (string= name element-name)
-                                (string= (string-append element-name ".fp")
-                                         name))))
-                       (extra-verbose-format "\t           : ~A\t~A\n"
-                                             name
-                                             (if found? "Yes\n" "No\n"))
-                       (and found? path))))
+                     ;; Otherwise assume it is a file and see if
+                     ;; it is the one we want.
+                     (and (found-filename? name element-name)
+                          path)))
 
                (loop (readdir* dir))))))
 
