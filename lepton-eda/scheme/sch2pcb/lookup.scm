@@ -51,8 +51,8 @@ otherwise returns %null-pointer."
                (readdir* dir)
                path))))
 
-  (define (find-element path element-name name process-func dir?)
-    (if dir?
+  (define (find-element path element-name name process-func)
+    (if (directory? path)
         ;; If we got a directory name, then recurse down into it.
         (let ((next-dir (opendir-protected path)))
           (and next-dir
@@ -90,8 +90,7 @@ otherwise returns %null-pointer."
                   (found (find-element path
                                        element-name
                                        name
-                                       process-directory
-                                       (directory? path))))
+                                       process-directory)))
              (or found
                  (loop (readdir* dir)))))))
 
