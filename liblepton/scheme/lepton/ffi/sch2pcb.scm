@@ -36,6 +36,7 @@
             pcb_element_get_quoted_flags
             pcb_element_get_refdes
             pcb_element_get_res_char
+            pcb_element_set_res_char
             pcb_element_get_still_exists
             pcb_element_set_still_exists
             pcb_element_get_tail
@@ -81,6 +82,7 @@
 (define-lff pcb_element_get_quoted_flags int '(*))
 (define-lff pcb_element_get_refdes '* '(*))
 (define-lff pcb_element_get_res_char int '(*))
+(define-lff pcb_element_set_res_char void (list '* int))
 (define-lff pcb_element_get_still_exists int '(*))
 (define-lff pcb_element_set_still_exists void (list '* int))
 (define-lff pcb_element_get_tail '* '(*))
