@@ -2,7 +2,7 @@
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2022 Lepton EDA Contributors
+;; Copyright (C) 2019-2023 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -13,7 +13,9 @@
              (lepton page)
              (lepton rc)
              (lepton toplevel)
-             (lepton version))
+             (lepton version)
+             (geda deprecated)
+             (lepton color-map))
 
 ;; Initialize liblepton library.
 (liblepton_init)

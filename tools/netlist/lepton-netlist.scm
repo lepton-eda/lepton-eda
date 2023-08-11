@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Scheme API
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2023 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 (use-modules (ice-9 getopt-long)
              (srfi srfi-26)
              (geda deprecated)
+             (lepton color-map)
              (lepton ffi)
              (lepton library)
              (lepton log)
