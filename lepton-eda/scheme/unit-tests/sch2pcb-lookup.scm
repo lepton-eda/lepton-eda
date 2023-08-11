@@ -29,8 +29,6 @@
 ;;; (test-assert-thrown 'system-error
 ;;;                     (lookup-footprint "missing-dir" "any.fp"))
 (let ((element-name (lookup-footprint "missing-dir" "any.fp")))
-  ;; Currently, the function returns %null-pointer if the
-  ;; directory to search in is missing.
   (test-assert (not element-name)))
 
 (test-end)
