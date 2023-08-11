@@ -27,7 +27,9 @@
              (lepton srfi-37)
              (lepton toplevel foreign)
              (lepton toplevel)
-             (lepton version))
+             (lepton version)
+             (geda deprecated)
+             (lepton color-map))
 
 ;;; Initialize liblepton library.
 (liblepton_init)

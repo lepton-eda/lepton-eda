@@ -1,4 +1,4 @@
-;;; Copyright (C) 2019-2022 Lepton EDA Contributors
+;;; Copyright (C) 2019-2023 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Stuart Brorson:
 ;;; Copyright (C) 2003 Stuart Brorson <sdb@cloud9.net>
@@ -78,7 +78,9 @@
              (lepton toplevel)
              (lepton version)
              (netlist schematic)
-             (netlist schematic-component))
+             (netlist schematic-component)
+             (geda deprecated)
+             (lepton color-map))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
