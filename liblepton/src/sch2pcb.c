@@ -352,8 +352,10 @@ sch2pcb_increment_verbose_mode ()
 }
 
 
-static gchar *
-token (gchar * string, gchar ** next, gboolean * quoted_ret)
+gchar*
+pcb_element_line_token (gchar *string,
+                        gchar **next,
+                        gboolean *quoted_ret)
 {
   static gchar *str;
   gchar *s, *ret;
@@ -442,14 +444,14 @@ pcb_element_line_parse (gchar * line)
   close_char = pcb_element_get_hi_res_format (el) ? ']' : ')';
 
   gboolean quoted_flags;
-  pcb_element_set_flags (el, token (s + 1, NULL, &quoted_flags));
+  pcb_element_set_flags (el, pcb_element_line_token (s + 1, NULL, &quoted_flags));
   pcb_element_set_quoted_flags (el, quoted_flags);
-  pcb_element_set_description (el, token (NULL, NULL, NULL));
-  pcb_element_set_refdes (el, token (NULL, NULL, NULL));
-  pcb_element_set_value (el, token (NULL, NULL, NULL));
+  pcb_element_set_description (el, pcb_element_line_token (NULL, NULL, NULL));
+  pcb_element_set_refdes (el, pcb_element_line_token (NULL, NULL, NULL));
+  pcb_element_set_value (el, pcb_element_line_token (NULL, NULL, NULL));
 
-  pcb_element_set_x (el, token (NULL, NULL, NULL));
-  pcb_element_set_y (el, token (NULL, &t, NULL));
+  pcb_element_set_x (el, pcb_element_line_token (NULL, NULL, NULL));
+  pcb_element_set_y (el, pcb_element_line_token (NULL, &t, NULL));
 
   pcb_element_set_tail (el, g_strdup (t ? t : ""));
   if ((s = strrchr (pcb_element_get_tail (el), (gint) '\n')) != NULL)
