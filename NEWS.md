@@ -545,7 +545,7 @@ Notable changes in Lepton EDA 1.9.17 (20211219)
   libraries even if there is no development files for them
   installed on user's system.  This fixes the issue of finding
   libraries by Guile on systems like Debian and its derivatives.
-  Guile requires library names to end up with standard exstensions
+  Guile requires library names to end up with standard extensions
   like `.la` or `.so`.  On Debian, for example, library names may
   have some version numbers appended to them and symlinks with
   canonical names are distributed in separate development
