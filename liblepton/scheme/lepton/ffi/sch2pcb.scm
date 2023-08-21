@@ -30,6 +30,7 @@
             pcb_element_get_description
             pcb_element_set_description
             pcb_element_get_flags
+            pcb_element_set_flags
             pcb_element_get_hi_res_format
             pcb_element_set_hi_res_format
             pcb_element_get_omit_PKG
@@ -87,6 +88,7 @@
 (define-lff pcb_element_get_description '* '(*))
 (define-lff pcb_element_set_description void '(* *))
 (define-lff pcb_element_get_flags '* '(*))
+(define-lff pcb_element_set_flags void '(* *))
 (define-lff pcb_element_get_hi_res_format int '(*))
 (define-lff pcb_element_set_hi_res_format void (list '* int))
 (define-lff pcb_element_get_omit_PKG int '(*))
