@@ -38,6 +38,7 @@
             pcb_element_get_pkg_name_fix
             pcb_element_set_pkg_name_fix
             pcb_element_get_quoted_flags
+            pcb_element_set_quoted_flags
             pcb_element_get_refdes
             pcb_element_set_refdes
             pcb_element_get_res_char
@@ -96,6 +97,7 @@
 (define-lff pcb_element_get_pkg_name_fix '* '(*))
 (define-lff pcb_element_set_pkg_name_fix void '(* *))
 (define-lff pcb_element_get_quoted_flags int '(*))
+(define-lff pcb_element_set_quoted_flags void (list '* int))
 (define-lff pcb_element_get_refdes '* '(*))
 (define-lff pcb_element_set_refdes void '(* *))
 (define-lff pcb_element_get_res_char int '(*))
