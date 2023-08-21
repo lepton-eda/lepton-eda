@@ -46,6 +46,7 @@
             pcb_element_get_still_exists
             pcb_element_set_still_exists
             pcb_element_get_tail
+            pcb_element_set_tail
             pcb_element_get_value
             pcb_element_set_value
             pcb_element_get_x
@@ -105,6 +106,7 @@
 (define-lff pcb_element_get_still_exists int '(*))
 (define-lff pcb_element_set_still_exists void (list '* int))
 (define-lff pcb_element_get_tail '* '(*))
+(define-lff pcb_element_set_tail void '(* *))
 (define-lff pcb_element_get_value '* '(*))
 (define-lff pcb_element_set_value void '(* *))
 (define-lff pcb_element_get_x '* '(*))
