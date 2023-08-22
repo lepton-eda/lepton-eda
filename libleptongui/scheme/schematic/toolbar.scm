@@ -28,6 +28,8 @@
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
   #:use-module (schematic undo)
+  #:use-module (schematic window global)
+  #:use-module (schematic window foreign)
 
   #:export (make-toolbar))
 
@@ -40,7 +42,12 @@
 ;;; Prevent garbage collection of callback procedures by storing
 ;;; them in the global variable.
 (define (set-button-callback! *window *button signal callback)
-  (let ((*callback (procedure->pointer void callback '(* *))))
+  (let ((*callback (procedure->pointer void
+                                       (lambda (*wid *win)
+                                         (with-window
+                                          *window
+                                          (callback *wid *win)))
+                                       '(* *))))
     (set! %toolbar-button-callbacks
           (assq-set! %toolbar-button-callbacks *button *callback))
     (schematic_signal_connect *button
