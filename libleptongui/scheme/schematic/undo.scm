@@ -65,13 +65,18 @@ success, #f on failure."
     (config-boolean (path-config-context (getcwd))
                     "schematic.undo"
                     "undo-control"))
+
+  (define (page-undo-callback *window *page redo?)
+    (unless (null-pointer? *page)
+      (o_undo_callback *window *page redo?)))
+
   (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
         (if (null-pointer? *page-view)
             (log! 'warning "undo-callback: NULL page view.")
-            (let ((*page (gschem_page_view_get_page *page-view)))
-              (unless (null-pointer? *page)
-                (o_undo_callback *window *page redo?)))))
+            (page-undo-callback *window
+                                (gschem_page_view_get_page *page-view)
+                                redo?)))
       (log! 'message (G_ "Undo/Redo is disabled in configuration"))))
 
 
