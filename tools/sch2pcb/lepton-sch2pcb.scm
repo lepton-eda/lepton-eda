@@ -697,25 +697,25 @@
       ;; If pcb element exists, and its 'still_exists' is false,
       ;; and we don't want to preserve it, then let's skip it.
       (if delete-element?
-          TRUE
+          #t
           skip-line?)))
 
   (define (process-line line skip-line? paren-level)
     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
            (first-char (and (not (string-null? trimmed-line))
                             (string-ref trimmed-line 0)))
-           (new-paren-level (if (true? skip-line?)
+           (new-paren-level (if skip-line?
                                 (case first-char
                                   ((#\() (1+ paren-level))
                                   ((#\)) (1- paren-level))
                                   (else paren-level))
                                 paren-level))
            (skip-next?
-            (if (true? skip-line?)
+            (if skip-line?
                 (if (and (< new-paren-level paren-level)
                          (<= new-paren-level 0))
-                    FALSE
-                    TRUE)
+                    #f
+                    #t)
                 (prune-element line
                                trimmed-line
                                skip-line?))))
@@ -751,7 +751,7 @@
             (with-input-from-file pcb-filename
               (lambda ()
                 (let loop ((line (read-line))
-                           (skip-line? FALSE)
+                           (skip-line? #f)
                            (paren-level 0))
                   (unless (eof-object? line)
                     (receive (skip-next? new-paren-level)
