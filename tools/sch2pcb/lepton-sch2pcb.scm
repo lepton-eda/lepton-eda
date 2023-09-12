@@ -680,7 +680,7 @@
               (set! %left-old-packages-count (1+ %left-old-packages-count))
               (display output-line)))))
 
-  (define (prune-element line trimmed-line skip-line?)
+  (define (prune-element line trimmed-line)
     (let* ((*element (pcb_element_line_parse (string->pointer trimmed-line)))
            (*existing-element (pcb-element-exists? *element #f))
            (delete-element? (and *existing-element
@@ -696,8 +696,7 @@
       (pcb_element_free *element)
       ;; If pcb element exists, and its 'still_exists' is false,
       ;; and we don't want to preserve it, then let's skip it.
-      (or delete-element?
-          skip-line?)))
+      delete-element?))
 
   (define (process-line line skip-line? paren-level)
     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
@@ -713,9 +712,7 @@
             (if skip-line?
                 (or (>= new-paren-level paren-level)
                     (> new-paren-level 0))
-                (prune-element line
-                               trimmed-line
-                               skip-line?))))
+                (prune-element line trimmed-line))))
       (values skip-next? new-paren-level)))
 
   (let loop ((*element-list (glist->list (sch2pcb_get_pcb_element_list)
