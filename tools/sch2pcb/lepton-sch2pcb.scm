@@ -696,8 +696,7 @@
       (pcb_element_free *element)
       ;; If pcb element exists, and its 'still_exists' is false,
       ;; and we don't want to preserve it, then let's skip it.
-      (if delete-element?
-          #t
+      (or delete-element?
           skip-line?)))
 
   (define (process-line line skip-line? paren-level)
