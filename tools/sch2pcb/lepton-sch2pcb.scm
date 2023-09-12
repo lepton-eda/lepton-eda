@@ -711,8 +711,8 @@
                                 paren-level))
            (skip-next?
             (if skip-line?
-                (not (and (< new-paren-level paren-level)
-                          (<= new-paren-level 0)))
+                (or (not (< new-paren-level paren-level))
+                    (not (<= new-paren-level 0)))
                 (prune-element line
                                trimmed-line
                                skip-line?))))
