@@ -394,6 +394,14 @@
                     (loop (cdr *element-list))))))))
 
 
+;;; Returns first non-whitespace char in LINE, if any.  Otherwise
+;;; returns #f.
+(define (first-non-ws-char line)
+  (let ((trimmed-line (string-trim line char-set:whitespace)))
+    (and (not (string-null? trimmed-line))
+         (string-ref trimmed-line 0))))
+
+
 ;;; Process the newly created pcb file which is the output from
 ;;;     lepton-netlist -g gsch2pcb ...
 ;;;
@@ -582,8 +590,7 @@
             ;; again here.
             (let* ((mline (string-append line "\n"))
                    (tline (string-trim mline))
-                   (first-char (and (not (string-null? tline))
-                                    (string-ref tline 0)))
+                   (first-char (first-non-ws-char mline))
                    ;; When we've decided that some next lines
                    ;; should be skipped, we have to count parens
                    ;; in order to skip block within toplevel
@@ -700,8 +707,7 @@
 
   (define (process-line line skip-line? paren-level)
     (let* ((trimmed-line (string-trim-both line char-set:whitespace))
-           (first-char (and (not (string-null? trimmed-line))
-                            (string-ref trimmed-line 0)))
+           (first-char (first-non-ws-char line))
            (new-paren-level (if skip-line?
                                 (case first-char
                                   ((#\() (1+ paren-level))
