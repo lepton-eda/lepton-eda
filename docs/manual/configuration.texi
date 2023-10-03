@@ -983,7 +983,13 @@ the X11 @file{rgb.txt} file), or a hex value in the form
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
-Allow undo/redo operations to change pan and zoom.
+@anchor{modify-viewport}
+Allow undo/redo operations to change pan and zoom.  Unlike
+@ref{undo-panzoom}, when the option is set to @samp{true}, it won't
+lead to showing _all_ preserved viewport changes on undo/redo.  Only
+the edits that include changes of any objects in your schematics will
+be undone or redone, and the viewport size recorded at the time of
+those changes will be restored.
 
 @item @cfgkey{undo-control}
 @tab @cfgtype{boolean}
@@ -1014,10 +1020,13 @@ Determines the number of levels of undo.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
-@anchor{undo-panzoom}
-Controls if pan or zoom commands are saved in the undo list. If this
-is enabled, then a pan or zoom will be considered a command and can be
-undone.  @since{1.9.10}
+@anchor{undo-panzoom} Controls if pan or zoom commands are saved in
+the undo list. If this is enabled, then a pan or zoom will be
+considered a command and can be undone.  Unlike @ref{modify-viewport},
+setting the option to @samp{true} will lead to repeating _all_ your
+scrolling or scaling steps you did when editing your schematics if
+you trigger undo or redo, not only those in which you changed their
+objects somehow.  @since{1.9.10}
 
 @end multitable
 
