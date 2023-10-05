@@ -44,7 +44,9 @@
             redo!
             ;; Toolbar callbacks.
             callback-edit-undo
-            callback-edit-redo)
+            callback-edit-redo
+            ;; Config settings.
+            undo-panzoom?)
 
 ) ; define-module
 
@@ -60,6 +62,11 @@
 (define F_OPEN_CHECK_BACKUP 2)
 (define F_OPEN_FORCE_BACKUP 4)
 (define F_OPEN_RESTORE_CWD 8)
+
+
+(define* (undo-panzoom? #:optional (window (current-window)))
+  "Return the value of the config setting 'undo-panzoom'."
+  (true? (schematic_window_get_undo_panzoom (window->pointer window))))
 
 
 (define (undo-init-backup-path)
@@ -117,9 +124,6 @@ success, #f on failure."
                     "schematic.undo"
                     "modify-viewport"))
 
-  (define undo-panzoom?
-    (true? (schematic_window_get_undo_panzoom *window)))
-
   (define (update-window *window)
     (page_select_widget_update *window)
     (x_multiattrib_update *window)
@@ -166,7 +170,7 @@ success, #f on failure."
 
   (define (restore-viewport-by-undo *page-view *undo-item)
     (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
-      (when (or undo-panzoom?
+      (when (or (undo-panzoom? (pointer->window *window))
                 modify-viewport?)
         (if (not (zero? (lepton_undo_get_scale *undo-item)))
             (begin

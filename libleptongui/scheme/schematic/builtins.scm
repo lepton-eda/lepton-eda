@@ -726,7 +726,7 @@ the snap grid size should be set to 100")))
   (match (action-position)
     ((x . y)
      (gschem_page_view_pan (gschem_toplevel_get_current_page_view *window) x y)
-     (when (true? (schematic_window_get_undo_panzoom *window))
+     (when (undo-panzoom?)
        (o_undo_savestate_viewport *window)))
     (_
      (o_redraw_cleanstates *window)
@@ -796,7 +796,7 @@ the snap grid size should be set to 100")))
   (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
                                  %null-pointer)
 
-  (if (true? (schematic_window_get_undo_panzoom *window))
+  (if (undo-panzoom?)
       (o_undo_savestate_viewport *window)))
 
 
@@ -810,7 +810,7 @@ the snap grid size should be set to 100")))
             ((x . y) HOTKEY)
             (_ MENU)))
 
-  (when (true? (schematic_window_get_undo_panzoom *window))
+  (when (undo-panzoom?)
     (o_undo_savestate_viewport *window)))
 
 
@@ -824,7 +824,7 @@ the snap grid size should be set to 100")))
             ((x . y) HOTKEY)
             (_ MENU)))
 
-  (when (true? (schematic_window_get_undo_panzoom *window))
+  (when (undo-panzoom?)
     (o_undo_savestate_viewport *window)))
 
 
@@ -834,7 +834,7 @@ the snap grid size should be set to 100")))
 
   (a_zoom *window *page-view ZOOM_FULL DONTCARE)
 
-  (when (true? (schematic_window_get_undo_panzoom *window))
+  (when (undo-panzoom?)
     (o_undo_savestate_viewport *window)))
 
 
