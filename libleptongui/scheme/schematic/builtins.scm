@@ -796,8 +796,8 @@ the snap grid size should be set to 100")))
   (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
                                  %null-pointer)
 
-  (if (undo-panzoom?)
-      (o_undo_savestate_viewport *window)))
+  (when (undo-panzoom?)
+    (o_undo_savestate_viewport *window)))
 
 
 (define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
