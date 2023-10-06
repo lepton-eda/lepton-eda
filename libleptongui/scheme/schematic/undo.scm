@@ -70,6 +70,14 @@
                   "undo-panzoom"))
 
 
+(define* (undo-type #:optional (window (current-window)))
+  "Return the value of the config setting 'undo-type'."
+  (case (schematic_window_get_undo_type (window->pointer window))
+    ((UNDO_DISK) 'disk)
+    ((UNDO_MEMORY) 'memory)
+    (else #f)))
+
+
 (define (undo-init-backup-path)
   (define undo-tmp-path (or (getenv "TMP") "/tmp"))
 
@@ -123,6 +131,7 @@ success, #f on failure."
 
 
 (define (undo-callback *window redo?)
+  (define window (pointer->window *window))
   (define undo-enabled?
     (config-boolean (path-config-context (getcwd))
                     "schematic.undo"
@@ -204,7 +213,7 @@ success, #f on failure."
         ;; or 'object_list' as they are retrieved from previous
         ;; list items.  Hence, 'filename' and 'object_list' are
         ;; not freed and just set to NULL below.
-        (if (= (schematic_window_get_undo_type *window) UNDO_DISK)
+        (if (eq? (undo-type window) 'disk)
             (lepton_undo_set_filename *undo-to-do
                                       (*find-previous-filename *undo-to-do))
             (lepton_undo_set_object_list *undo-to-do
@@ -227,9 +236,9 @@ success, #f on failure."
         ;; Unselect all objects.
         (o_select_unselect_all *window)
 
-        (when (or (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+        (when (or (and (eq? (undo-type window) 'disk)
                        (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
-                  (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+                  (and (eq? (undo-type window) 'memory)
                        (not (null-pointer? (lepton_undo_get_object_list *undo-to-do)))))
           ;; Delete page objects.
           (lepton_page_delete_objects *page)
@@ -242,7 +251,7 @@ success, #f on failure."
           ;; Temporarily disable logging.
           (lepton_log_set_logging_enabled FALSE)
 
-          (if (and (= (schematic_window_get_undo_type *window) UNDO_DISK)
+          (if (and (eq? (undo-type window) 'disk)
                    (not (null-pointer? (lepton_undo_get_filename *undo-to-do))))
               ;; F_OPEN_RESTORE_CWD: go back from temporary
               ;; directory, so that local config files can be
@@ -254,7 +263,7 @@ success, #f on failure."
                       %null-pointer)
 
               ;; Otherwise objects are restored from memory.
-              (when (and (= (schematic_window_get_undo_type *window) UNDO_MEMORY)
+              (when (and (eq? (undo-type window) 'memory)
                          (not (null-pointer? (lepton_undo_get_object_list *undo-to-do))))
                 (lepton_page_append_list *page
                                          (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
