@@ -64,9 +64,11 @@
 (define F_OPEN_RESTORE_CWD 8)
 
 
-(define* (undo-panzoom? #:optional (window (current-window)))
+(define (undo-panzoom?)
   "Return the value of the config setting 'undo-panzoom'."
-  (true? (schematic_window_get_undo_panzoom (window->pointer window))))
+  (config-boolean (path-config-context (getcwd))
+                  "schematic.undo"
+                  "undo-panzoom"))
 
 
 (define (undo-init-backup-path)
@@ -170,7 +172,7 @@ success, #f on failure."
 
   (define (restore-viewport-by-undo *page-view *undo-item)
     (let ((*geometry (gschem_page_view_get_page_geometry *page-view)))
-      (when (or (undo-panzoom? (pointer->window *window))
+      (when (or (undo-panzoom?)
                 modify-viewport?)
         (if (not (zero? (lepton_undo_get_scale *undo-item)))
             (begin

@@ -358,14 +358,14 @@
 
                 ((= middle-button MOUSEBTN_DO_PAN)
                  (when (and (true? (gschem_page_view_pan_end *page-view))
-                            (undo-panzoom? window))
+                            (undo-panzoom?))
                    (o_undo_savestate_viewport *window)))
                 (else FALSE)))))
 
           (3
            ;; Just for ending a mouse pan.
            (when (and (true? (gschem_page_view_pan_end *page-view))
-                      (undo-panzoom? window))
+                      (undo-panzoom?))
              (o_undo_savestate_viewport *window)))
 
           (_ FALSE))
