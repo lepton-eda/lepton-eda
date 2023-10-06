@@ -726,8 +726,7 @@ the snap grid size should be set to 100")))
   (match (action-position)
     ((x . y)
      (gschem_page_view_pan (gschem_toplevel_get_current_page_view *window) x y)
-     (when (undo-panzoom?)
-       (o_undo_savestate_viewport *window)))
+     (undo-save-viewport))
     (_
      (o_redraw_cleanstates *window)
      (i_action_stop *window)
@@ -795,9 +794,7 @@ the snap grid size should be set to 100")))
 
   (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
                                  %null-pointer)
-
-  (when (undo-panzoom?)
-    (o_undo_savestate_viewport *window)))
+  (undo-save-viewport))
 
 
 (define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
@@ -809,9 +806,7 @@ the snap grid size should be set to 100")))
           (match (action-position)
             ((x . y) HOTKEY)
             (_ MENU)))
-
-  (when (undo-panzoom?)
-    (o_undo_savestate_viewport *window)))
+  (undo-save-viewport))
 
 
 (define-action-public (&view-zoom-out #:label (G_ "Zoom Out") #:icon "gtk-zoom-out")
@@ -823,9 +818,7 @@ the snap grid size should be set to 100")))
           (match (action-position)
             ((x . y) HOTKEY)
             (_ MENU)))
-
-  (when (undo-panzoom?)
-    (o_undo_savestate_viewport *window)))
+  (undo-save-viewport))
 
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
@@ -833,9 +826,7 @@ the snap grid size should be set to 100")))
   (define *page-view (gschem_toplevel_get_current_page_view *window))
 
   (a_zoom *window *page-view ZOOM_FULL DONTCARE)
-
-  (when (undo-panzoom?)
-    (o_undo_savestate_viewport *window)))
+  (undo-save-viewport))
 
 
 (define (load-color-scheme *window color-scheme)

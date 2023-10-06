@@ -40,13 +40,12 @@
   #:export (undo-cleanup-backup-files!
             undo-init-backup-path
             undo-save-state
+            undo-save-viewport
             undo!
             redo!
             ;; Toolbar callbacks.
             callback-edit-undo
-            callback-edit-redo
-            ;; Config settings.
-            undo-panzoom?)
+            callback-edit-redo)
 
 ) ; define-module
 
@@ -89,6 +88,14 @@ success, #f on failure."
            (and (not (null-pointer? *page))
                 (o_undo_savestate *window *page UNDO_ALL)
                 #t)))))
+
+
+(define (undo-save-viewport)
+  "Saves current viewport data onto the undo stack."
+  (define *window (*current-window))
+
+  (when (undo-panzoom?)
+    (o_undo_savestate_viewport *window)))
 
 
 ;;; Recursively search in the undo list *UNDO for an undo item
