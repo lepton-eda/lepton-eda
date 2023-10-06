@@ -274,7 +274,7 @@ C function::
 
 Scheme function::
 
-  load-config! cfg
+  config-load! cfg
 
 Attempt to load configuration parameters for the context ``cfg`` from
 its associated file.  This function may generate a ``GIOError`` (in
