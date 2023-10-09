@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;; Copyright (C) 2017-2024 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -72,10 +72,11 @@
 
 (define* (undo-type #:optional (window (current-window)))
   "Return the value of the config setting 'undo-type'."
-  (case (schematic_window_get_undo_type (window->pointer window))
-    ((UNDO_DISK) 'disk)
-    ((UNDO_MEMORY) 'memory)
-    (else #f)))
+  (let ((type (config-string (path-config-context (getcwd))
+                             "schematic.undo"
+                             "undo-type")))
+    (and (string? type)
+         (string->symbol type))))
 
 
 (define (undo-init-backup-path)
