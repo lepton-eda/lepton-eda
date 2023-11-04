@@ -63,6 +63,7 @@ supported:
 Swap labels if the pin is on the right side and contains space
 between words, that is, looks like this: \*[lq]PB1 (CLK)\*[rq].
 That may be useful for micro controller port labels.
+Default value: on.
 'IP \(bu
 .B rotate_labels
 .RI ( boolean )
@@ -71,12 +72,14 @@ Rotate the \*[lq]pinlabel\*[rq] attribute of the top and bottom pins
 by 90 degrees.
 This may be useful for large symbols like FPGAs with more than 100
 pins.
+Default value: off.
 'IP \(bu
 .B sort_labels
 .RI ( boolean )
 .br
 Sort the pins by their \*[lq]pinlabel\*[rq] attributes, which is
 useful for address ports, busses, etc.
+Default value: on.
 'IP \(bu
 .B generate_pinseq
 .RI ( boolean )
@@ -87,24 +90,28 @@ The generated attribute values are numbers incremented in the
 order the pin description lines appear in the
 .B [pins]
 section except for already existing numbers.
+Default value: on.
 
 'IP \(bu
 .B sym_width
 .RI ( integer )
 .br
 Minimum box width of the resulting symbol.
+Default value: 1400.
 'IP \(bu
 .B pinwidthvertical
 .RI ( integer )
 .br
 The vertical distance between pins on the left or right hand side
 of the symbol.
+Default value: 400.
 'IP \(bu
 .B pinwidthhorizontal
 .RI ( integer )
 .br
 The horizontal distance between pins on the top or bottom of the
 symbol.
+Default value: 400.
 
 The boolean values are specified in the source file by the words
 \*[lq]yes\*[rq] or \*[lq]on\*[rq] meaning TRUE and \*[lq]no\*[rq]
