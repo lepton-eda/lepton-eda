@@ -2,7 +2,9 @@
 
 # run tragesym over all test and example files
 
-exe=../../scripts/lepton-tragesym
+export GUILE_LOAD_PATH=../../../liblepton/scheme
+export LIBLEPTON=../../../liblepton/src/.libs/liblepton.so
+exe=../lepton-tragesym
 
 echo testing 4099.src
 $exe 4099.src 4099.sym
