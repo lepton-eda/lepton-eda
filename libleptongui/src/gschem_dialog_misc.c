@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -232,7 +232,7 @@ gschem_dialog_misc_entry_activate (GtkWidget *widget, GtkDialog *dialog)
  *
  *  \param [in,out] dialog   The non-modal dialog
  *  \param [in]     response The id of the user response
- *  \param [na]     unused   An unused parameter
+ *  \param          unused   An unused parameter
  */
 void
 gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointer unused)
@@ -255,7 +255,7 @@ gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointe
  *
  *  \param [in,out] w_current The toplevel
  *  \param [in]     widget    Where the result dialog pointer is placed
- *  \param [na]     create    A pointer to the function that creates the dialog
+ *  \param          create    A pointer to the function that creates the dialog
  */
 void
 gschem_dialog_misc_show_non_modal (GschemToplevel *w_current, GtkWidget **widget, CreateNonModalDialog create)
