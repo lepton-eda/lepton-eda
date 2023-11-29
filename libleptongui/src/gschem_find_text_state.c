@@ -101,7 +101,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \param [in] pages a list of pages to search
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
- *  \param [in] descend decend the page heirarchy
+ *  \param [in] descend Descend the page hierarchy
  *  \param [in] include_hidden Include hidden objects.
  *  \return the number of objects found
  */
@@ -600,7 +600,7 @@ find_objects_using_check (GSList *pages)
 
 /*! \brief obtain a list of pages for an operation
  *
- *  Descends the heirarchy of pages, if selected, and removes duplicate pages.
+ *  Descends the hierarchy of pages, if selected, and removes duplicate pages.
  *
  *  \param [in] pages the list of pages to begin search
  *  \param [in] descend alose locates subpages
