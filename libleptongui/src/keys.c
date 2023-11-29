@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ schematic_keys_reset (GschemToplevel *w_current)
 }
 
 
-/*! \brief Obtain key value of a #GdkEventKey event.
+/*! \brief Obtain key value of a \c GdkEventKey event.
  * \par Function Description
  * Returns the key value specified by \a event always translated
  * into lower case.
@@ -116,7 +116,7 @@ schematic_keys_get_event_keyval (GdkEventKey *event)
 }
 
 
-/*! \brief Obtain key modifiers of a #GdkEventKey event.
+/*! \brief Obtain key modifiers of a \c GdkEventKey event.
  * \par Function Description
  * Evaluates the key modifiers specified by \a event using the
  * current keymap.  The function acts as follows:
