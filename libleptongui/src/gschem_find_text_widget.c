@@ -437,10 +437,10 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
 
 
 
-/*! \brief Set descend
+/*! \brief Set the "descend into hierarchy" property of GschemFindTextWidget.
  *
  *  \param [in,out] widget This GschemFindTextWidget
- *  \param [in]     text The label text
+ *  \param [in]     descend If the button "descend into hierarchy" has to be active.
  */
 void
 gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
