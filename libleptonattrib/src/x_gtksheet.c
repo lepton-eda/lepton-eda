@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -363,7 +363,7 @@ int x_gtksheet_get_min_col(GtkSheet *sheet) {
 /*! \brief Get the last column selected in the GtkSheet
  *
  * Get the last column selected in the GtkSheet
- * \param GtkSheet to query
+ * \param sheet GtkSheet to query
  * \returns the index of the last column selected, or -1 if
  *         no column is selected.
  */
