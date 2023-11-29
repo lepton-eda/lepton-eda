@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  Finds instances of a given string and displays the result inside this
  *  widget.
  *
- *  \param [in] state
+ *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] state The GschemFindTextState structure.
  *  \param [in] pages a list of pages to search
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
