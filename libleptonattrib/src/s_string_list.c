@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -370,7 +370,7 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
  * Takes the master comp list
  * sheet_head->master_comp_list_head
  * and sorts it in this order:
- * <all refdeses in alphabetical order>
+ * - all refdeses in alphabetical order
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  */
@@ -428,7 +428,7 @@ static struct {
  * Take the master comp attrib list
  * sheet_head->master_comp_attrib_list_head
  * and sort it in this order:
- * <all refdeses in alphabetical order>
+ * - all refdeses in alphabetical order
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  */
@@ -475,7 +475,7 @@ void s_string_list_sort_master_comp_attrib_list() {
  * This fcn takes the master net list
  * sheet_head->master_net_list_head
  * and sorts it in this order:
- * <all nets in alphabetical order>
+ * - all nets in alphabetical order
  */
 void s_string_list_sort_master_net_list() {
   int i = 0;
@@ -501,7 +501,7 @@ void s_string_list_sort_master_net_list() {
  * sheet_head->master_net_attrib_list_head
  * and sort it in this order:
  * value, footprint, model-name, file,
- * <all other attributes in alphabetical order>
+ * - all other attributes in alphabetical order
  */
 /*------------------------------------------------------------------*/
 void s_string_list_sort_master_net_attrib_list() {
@@ -528,7 +528,7 @@ void s_string_list_sort_master_net_attrib_list() {
  * Take the master pin list
  * sheet_head->master_pin_list_head
  * and sorts it in this order:
- * <all refdeses in alphabetical order>
+ * - all refdeses in alphabetical order
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  */
@@ -571,7 +571,7 @@ void s_string_list_sort_master_pin_list() {
  * Takes the master pin attrib list
  * sheet_head->master_pin_attrib_list_head
  * and sorts it in this order:
- * <all pin attribs in alphabetical order>
+ * - all pin attribs in alphabetical order
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  */
