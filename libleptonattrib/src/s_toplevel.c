@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@
  * for missing components, that is, those components for which no
  * corresponding symbol files was found.
  *
- * \param toplevel The #LeptonToplevel object to be verified.
+ * \param toplevel The LeptonToplevel object to be verified.
  */
 void s_toplevel_verify_design (LeptonToplevel *toplevel)
 {
