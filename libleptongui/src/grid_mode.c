@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ schematic_grid_mode_from_string (char *s)
  * representation as a string.  This is mainly intended to be used
  * for value conversion in Scheme FFI functions.
  *
- *  \param [in] code The #SchematicGridMode value.
+ *  \param [in] mode The #SchematicGridMode value.
  *  \return The string representation of the given mode.
  */
 const char*
