@@ -2,7 +2,7 @@
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -639,7 +639,7 @@ x_window_add_items()
  * Setup default icon for GTK windows
  *
  *  Sets the default window icon by name, to be found in the current icon
- *  theme. The name used is #defined above as GATTRIB_THEME_ICON_NAME.
+ *  theme. The name used is \#define'd above as GATTRIB_THEME_ICON_NAME.
  */
 static void
 x_window_set_default_icon( void )
