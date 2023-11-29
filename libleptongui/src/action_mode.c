@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ schematic_action_mode_from_string (char *s)
  * representation as a string.  This is mainly intended to be used
  * for value conversion in Scheme FFI functions.
  *
- *  \param [in] code The #SchematicActionMode value.
+ *  \param [in] mode The #SchematicActionMode value.
  */
 const char*
 schematic_action_mode_to_string (SchematicActionMode mode)
