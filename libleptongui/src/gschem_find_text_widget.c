@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -439,7 +439,7 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
 
 /*! \brief Set descend
  *
- *  \param [in,out] view This GschemFindTextWidget
+ *  \param [in,out] widget This GschemFindTextWidget
  *  \param [in]     text The label text
  */
 void
@@ -456,7 +456,7 @@ gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
 
 /*! \brief Set the type of find to perform
  *
- *  \param [in,out] view This GschemFindTextWidget
+ *  \param [in,out] widget This GschemFindTextWidget
  *  \param [in]     text The label text
  */
 void
@@ -493,7 +493,7 @@ gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
 
 /*! \brief Set the find text string
  *
- *  \param [in,out] view This GschemFindTextWidget
+ *  \param [in,out] widget This GschemFindTextWidget
  *  \param [in]     str  The find text string
  */
 void
