@@ -303,7 +303,7 @@ s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
  * Attach the name=value pair to the LeptonObject "object". This function
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.
- * \param toplevel LeptonToplevel to operate on
+ * \param active_page LeptonPage to operate on.
  * \param text_string
  * \param visibility
  * \param show_name_value
