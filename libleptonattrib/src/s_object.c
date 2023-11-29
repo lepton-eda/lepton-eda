@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -385,8 +385,8 @@ s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
  * Delete the text object pointed to by text_object.  This function
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
- * \param toplevel LeptonToplevel to be operated on
- * \param test_object text object to be deleted
+ * \param toplevel LeptonToplevel to be operated on.
+ * \param text_object Text object to be deleted.
  */
 void
 s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
