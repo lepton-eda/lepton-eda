@@ -17,7 +17,7 @@ all:
 images: $(png_images) $(pdf_images)
 
 .svg.png:
-	if [ -x "`which inkscape`" ]; then inkscape -e $@ $< ; else  convert $< $@; fi
+	if [ -x "`which inkscape`" ]; then inkscape -o $@ $< ; else  convert $< $@; fi
 
 .svg.pdf:
 	if [ -x "`which inkscape`" ]; then inkscape -A $@ $< ; else  convert $< $@; fi
