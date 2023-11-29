@@ -60,7 +60,7 @@ Typical usage
 
 4) Run "pcb foo.pcb".  All the elements will be stacked on top of each other,
    so move them to desired locations.  Load the netlist file foo.net and
-   proceed with using PCB.  
+   proceed with using PCB.
 
 5) Modify foo.sch and again run "gsch2pcb foo.sch".
    * If components were added, PCB elements for them will be placed in the
