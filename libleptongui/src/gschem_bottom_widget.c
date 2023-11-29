@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1061,8 +1061,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 /*! \brief Set the grid mode
  *
- *  \param [in,out] view This GschemBottomWidget
- *  \param [in]     size The grid mode
+ *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in]     mode The grid mode
  */
 void
 gschem_bottom_widget_set_grid_mode (GschemBottomWidget *widget, int mode)
@@ -1078,7 +1078,7 @@ gschem_bottom_widget_set_grid_mode (GschemBottomWidget *widget, int mode)
 
 /*! \brief Set the grid size
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     size The grid size
  */
 void
@@ -1095,7 +1095,7 @@ gschem_bottom_widget_set_grid_size (GschemBottomWidget *widget, int size)
 
 /*! \brief Set the left button text
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     text The text
  */
 void
@@ -1112,7 +1112,7 @@ gschem_bottom_widget_set_left_button_text (GschemBottomWidget *widget, const cha
 
 /*! \brief Set the middle button text
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     text The text
  */
 void
@@ -1129,7 +1129,7 @@ gschem_bottom_widget_set_middle_button_text (GschemBottomWidget *widget, const c
 
 /*! \brief Set the right button text
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     text The text
  */
 void
@@ -1146,8 +1146,8 @@ gschem_bottom_widget_set_right_button_text (GschemBottomWidget *widget, const ch
 
 /*! \brief Set the snap mode
  *
- *  \param [in,out] view This GschemBottomWidget
- *  \param [in]     size The snap mode
+ *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in]     mode The snap mode
  */
 void
 gschem_bottom_widget_set_snap_mode (GschemBottomWidget *widget, int mode)
@@ -1163,7 +1163,7 @@ gschem_bottom_widget_set_snap_mode (GschemBottomWidget *widget, int mode)
 
 /*! \brief Set the snap size
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     size The snap size
  */
 void
@@ -1183,7 +1183,7 @@ gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size)
  *  Changes the status text color to show if the current editing
  *  action is active or not.
  *
- *  \param [in,out] view    This GschemBottomWidget
+ *  \param [in,out] widget  This GschemBottomWidget
  *  \param [in]     active  The state to visualise
  */
 void
@@ -1238,7 +1238,7 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
 
 /*! \brief Set the status text
  *
- *  \param [in,out] view This GschemBottomWidget
+ *  \param [in,out] widget This GschemBottomWidget
  *  \param [in]     text The status text
  */
 void
