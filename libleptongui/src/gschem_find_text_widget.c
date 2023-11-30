@@ -457,7 +457,7 @@ gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
 /*! \brief Set the type of find to perform
  *
  *  \param [in,out] widget This GschemFindTextWidget
- *  \param [in]     text The label text
+ *  \param [in]     type The type of find.
  */
 void
 gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
