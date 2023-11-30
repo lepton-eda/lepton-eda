@@ -825,9 +825,9 @@ gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double rel
 
 /*! \brief Center the view on the given world coordinate
  *
- *  \param [in,out] page_view This GschemPageView
- *  \param [in]     w_x       The world x coordinate of the new center
- *  \param [in]     w_y       The world y coordinate of the new center
+ *  \param [in,out] view This GschemPageView
+ *  \param [in]     w_x  The world x coordinate of the new center
+ *  \param [in]     w_y  The world y coordinate of the new center
  */
 void
 gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
