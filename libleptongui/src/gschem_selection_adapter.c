@@ -959,8 +959,8 @@ gschem_selection_adapter_new ()
 
 /*! \brief Set the first fill angle in the selection
  *
- *  \param [in] selection
- *  \param [in] angle
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] angle The new angle.
  */
 void
 gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int angle)
