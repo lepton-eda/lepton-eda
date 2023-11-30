@@ -331,10 +331,23 @@ gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
 
 
 
-/*! \brief Get page geometry for this view
+/*! \brief Create a new #GschemPageGeometry object.
+ *  \par Function description
+ *  Create a new #GschemPageGeometry object with given values
+ *  including the screen and viewport sizes and the world
+ *  coordinates of the viewport.
  *
- *  \param [in] view The view
- *  \return The page for the view
+ *  \param [in] screen_width    The width of the screen.
+ *  \param [in] screen_height   The height of the screen.
+ *  \param [in] viewport_left   The left \a x coord of the viewport.
+ *  \param [in] viewport_top    The top \a y coord of the viewport.
+ *  \param [in] viewport_right  The right \a x coord of the viewport.
+ *  \param [in] viewport_bottom The bottom \a y coord of the viewport.
+ *  \param [in] world_left      The world left \a x coord.
+ *  \param [in] world_top       The world top \a y coord.
+ *  \param [in] world_right     The world right \a x coord.
+ *  \param [in] world_bottom    The world bottom \a y coord.
+ *  \return The pointer to the new #GschemPageGeometry object.
  */
 GschemPageGeometry*
 gschem_page_geometry_new_with_values (int screen_width,
