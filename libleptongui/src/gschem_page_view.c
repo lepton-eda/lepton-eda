@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1567,7 +1567,13 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
 
 /*! \brief Redraw page on the view
  *
- *  \param [in] view      The GschemPageView object which page to redraw
+ *  \param [in] view The #GschemPageView object to redraw page on.
+ *  \param [in] event The \c GdkEventExpose event (GTK2).
+ *  \param [in] w_current The parent #GschemToplevel object of the view.
+ *
+ *  \@param cr The \c cairo_t object (GTK3).  FIXME: The functions
+ *  for GTK2 and GTK3 have to be separate in the code and have
+ *  different descriptions.
  */
 void
 gschem_page_view_redraw (GschemPageView *view,
