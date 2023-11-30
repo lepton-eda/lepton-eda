@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -258,7 +258,7 @@ gschem_integer_combo_box_set_model (GtkWidget *widget, GtkListStore *store)
 /*! \brief Set the integer value
  *
  *  \param [in,out] widget  The integer combo box
- *  \param [in]     size    The value
+ *  \param [in]     value   The value
  */
 void
 gschem_integer_combo_box_set_value (GtkWidget *widget, int value)
