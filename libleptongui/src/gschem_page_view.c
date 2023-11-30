@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -797,7 +797,7 @@ gschem_page_view_new_with_page (LeptonPage *page)
 
 /*! \brief Pan the view on the given world coordinate using given zoom factor
  *
- *  \param [in,out] page_view This GschemPageView
+ *  \param [in,out] view      This GschemPageView
  *  \param [in]     w_x       The world x coordinate of the new center
  *  \param [in]     w_y       The world y coordinate of the new center
  *  \param [in]     relativ_zoom_factor  The zoom factor
