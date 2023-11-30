@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -267,13 +267,15 @@ gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
 
 
 
-/*! \brief Convert a x coordinate to mils.
+/*! \brief Convert a screen \a x coordinate to world \a x
+ *  coordinate.
  *  \par Function Description
- *  Convert a x coordinate to mils.
+ *  Convert a screen \a x coordinate to world \a x coordinate for
+ *  a screen page \a geometry.
  *
- *  \param [in] w_current  The GschemToplevel object
- *  \param [in] val        The x coordinate to convert
- *  \return The coordinate value in mils.
+ *  \param [in] geometry The #GschemPageGeometry structure.
+ *  \param [in] value    The \a x coordinate to convert.
+ *  \return The world coordinate value.
  */
 int
 gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value)
@@ -296,13 +298,15 @@ gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value)
   return(j);
 }
 
-/*! \brief Convert a y coordinate to mils
+/*! \brief Convert a screen \a y coordinate to world \a y
+ *  coordinate.
  *  \par Function Description
- *  Convert a y coordinate to mils
+ *  Convert a screen \a y coordinate to world \a y coordinate for
+ *  a screen page \a geometry.
  *
- *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] val        The y coordinate to convert.
- *  \return The coordinate value in mils.
+ *  \param [in] geometry The #GschemPageGeometry structure.
+ *  \param [in] value    The \a y coordinate to convert.
+ *  \return The world coordinate value.
  */
 int
 gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
