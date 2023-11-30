@@ -590,11 +590,20 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
 
 
 
-/*! \brief Get page geometry for this view
+/*! \brief Set new geometry values for a #GschemPageGeometry
+ *  object.
+ *  \par Function description
+ *  Set given screen and viewport values for a new
+ *  #GschemPageGeometry object.
  *
- *  \param [in] view   The view
- *  \param [in] scale  This parameter is currently unused
- *  \return The page for the view
+ *  \param [in,out] geometry    The #GschemPageGeometry object.
+ *  \param [in] scale           The new scale (currently unused).
+ *  \param [in] screen_width    The new screen width.
+ *  \param [in] screen_height   The new screen height.
+ *  \param [in] viewport_left   The new viewport left \a x coord.
+ *  \param [in] viewport_top    The new viewport top \a y coord.
+ *  \param [in] viewport_right  The new viewport right \a x coord.
+ *  \param [in] viewport_bottom The new viewport bottom \a y coord.
  */
 void
 gschem_page_geometry_set_values (GschemPageGeometry *geometry,
