@@ -1497,8 +1497,8 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
 
 /*! \brief Set the dash spacing in the selection
  *
- *  \param [in] selection
- *  \param [in] dash_space
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] dash_space The new dash spacing value.
  */
 void
 gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int dash_space)
