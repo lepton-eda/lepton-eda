@@ -1372,7 +1372,7 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
  *  \par Function Description
  *  Get absolute WORLD coordinate.
  *
- *  \param [in,out] view The view
+ *  \param [in,out] page_view  The view
  *  \param [in]     val        The coordinate to convert.
  *  \return The converted WORLD coordinate.
  */
