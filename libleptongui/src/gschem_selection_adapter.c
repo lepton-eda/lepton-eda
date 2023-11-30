@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1440,8 +1440,8 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
 
 /*! \brief Set the dash length in the selection
  *
- *  \param [in] selection
- *  \param [in] dash_length
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] dash_length The new dash length value.
  */
 void
 gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int dash_length)
