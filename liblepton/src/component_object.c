@@ -449,7 +449,7 @@ lepton_component_object_get_position (const LeptonObject *object,
  *  \par Function Description
  *  This function checks if an object should be promoted.
  *  An attribute object is promotable if it's promoted by default, or the user
- *  has configered it to promote an attribute.
+ *  has configured it to promote an attribute.
  *
  *  \param [in] object    The attribute object to check
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
