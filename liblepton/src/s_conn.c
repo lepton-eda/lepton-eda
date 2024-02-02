@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -413,7 +413,9 @@ s_conn_update_line_object (LeptonPage* page,
            the objects being tested. */
         if (object->line->x[j] == other_object->line->x[k] &&
             object->line->y[j] == other_object->line->y[k] &&
-            check_direct_compat (object, other_object)) {
+            ((lepton_object_is_net (object) &&
+              lepton_object_is_bus (other_object))
+             || check_direct_compat (object, other_object))) {
 
           lepton_object_emit_pre_change_notify (other_object);
 
