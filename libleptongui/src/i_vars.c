@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -315,7 +315,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic", "bus-ripper-size",
                            default_bus_ripper_size, &w_current->bus_ripper_size,
-                           &cfg_check_int_greater_0);
+                           &cfg_check_int_greater_eq_0);
 
 
   /* bus-ripper-type:
