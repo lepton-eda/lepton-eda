@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1057,7 +1057,12 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
     }
 
     for (i = 0; i < ripper_count; i++) {
-      if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
+      if ((w_current->bus_ripper_type == NET_BUS_RIPPER) &&
+          /* Don't add a new net if the coords are the same.
+           * Otherwise it will be zero sized. */
+          ! ((rippers[i].x[0] == rippers[i].x[1]) &&
+             (rippers[i].y[0] == rippers[i].y[1])))
+      {
         new_obj = lepton_net_object_new (NET_COLOR,
                                          rippers[i].x[0],
                                          rippers[i].y[0],
