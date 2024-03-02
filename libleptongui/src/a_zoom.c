@@ -73,7 +73,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
      virtual center if warp_cursor is disabled */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
     if (!x_event_get_pointer_position(w_current, FALSE,
-				      &start_x, &start_y))
+                                      &start_x, &start_y))
       return;
     if ( w_current->warp_cursor ) {
       world_pan_center_x = start_x;
