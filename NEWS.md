@@ -18,12 +18,20 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - All Lepton tools, including `lepton-schematic` do now reside in
   the toplevel directory `/tools` of the repository.
 
+- The files for creating developer documentation using the
+  `doxygen` program have been updated to support the current
+  version of the program.
+
 ### Changes when building from source:
 
 - Several deprecated GTK3 functions related to GUI have been
   replaced with newer ones or removed, thus eliminating many
   compilation warnings when Lepton is compiled with the
   `--with-gtk3` option.
+
+- A couple of no longer working options used in the command-line
+  of the `inkscape` program used for creating Doxygen developer
+  documentation have been replaced with their modern variants.
 
 ### Changes in `liblepton`:
 
