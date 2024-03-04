@@ -12,7 +12,7 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - **SMOB** machinery deprecated in Guile has been fully replaced
   with using modern foreign function interface (FFI) in all
-  libraries available in the projects.  Detailed changes on type
+  libraries available in the project.  Detailed changes on type
   renamings and new modules are described below.
 
 - All Lepton tools, including `lepton-schematic` do now reside in
