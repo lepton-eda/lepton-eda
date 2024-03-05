@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,6 +83,8 @@ o_save (const GList *object_list,
  *  \param [in]     buffer       The memory buffer to read from.
  *  \param [in]     size         The size of the buffer.
  *  \param [in]     name         The name to describe the data with.
+ *  \param [in,out] err \c GError structure for error reporting,
+ *                      or NULL to disable error reporting.
  *  \return GList of objects if successful read, or NULL on error.
  */
 GList
