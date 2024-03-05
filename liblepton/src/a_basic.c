@@ -39,7 +39,7 @@
  *
  *  \param [in] object_list The head of a GList of LeptonObjects to save.
  *  \param [in] filename    The filename to save the data to.
- *  \param [in,out] err     #GError structure for error reporting.
+ *  \param [in,out] err     \c GError structure for error reporting.
  *  \return 1 on success, 0 on failure.
  */
 int
@@ -382,7 +382,7 @@ error:
  *
  *  \param [in,out] page         The LeptonPage object.
  *  \param [in]     filename     The filename to read from.
- *  \param [in,out] err          #GError structure for error reporting, or
+ *  \param [in,out] err          \c GError structure for error reporting, or
  *                               NULL to disable error reporting
  *  \return page
  */
