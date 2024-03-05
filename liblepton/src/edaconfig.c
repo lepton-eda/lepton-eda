@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2012 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -872,10 +872,10 @@ eda_config_get_filename (EdaConfig *cfg)
  * \brief Load configuration parameters from file.
  *
  * Attempt to load configuration parameters for the context \a cfg
- * from its associated file.  Returns FALSE and generates a #GIOError
- * or #EdaConfigError on error.  If \a cfg does not have an associated
- * file, does nothing, returns FALSE, and generates a
- * G_IO_ERROR_FAILED error.
+ * from its associated file.  Returns FALSE and generates a \c
+ * GIOError or #EdaConfigError on error.  If \a cfg does not have
+ * an associated file, does nothing, returns FALSE, and generates
+ * a G_IO_ERROR_FAILED error.
  *
  * \see eda_config_is_loaded(), eda_config_get_file(),
  * eda_config_save().
@@ -959,10 +959,11 @@ eda_config_is_loaded (EdaConfig *cfg)
 /*! \public \memberof EdaConfig
  * \brief Save changes to a configuration context.
  *
- * Attempt to save configuration parameters for the context \a cfg to
- * its associated file.  Returns FALSE and generates a #GIOError on
- * error.  If \a cfg does not have an associated file, does nothing,
- * returns FALSE, and generates a G_IO_ERROR_FAILED error.
+ * Attempt to save configuration parameters for the context \a cfg
+ * to its associated file.  Returns FALSE and generates a \c
+ * GIOError on error.  If \a cfg does not have an associated file,
+ * does nothing, returns FALSE, and generates a G_IO_ERROR_FAILED
+ * error.
  *
  * \see eda_config_load(), eda_config_get_file().
  *
@@ -2008,7 +2009,7 @@ parent_config_changed_handler (EdaConfig *cfg, const gchar *group,
  * \warning You should not call this function directly; use
  * EDA_CONFIG_ERROR instead.
  *
- * \return a #GQuark representing the error domain.
+ * \return a \c GQuark representing the error domain.
  */
 GQuark
 eda_config_error_quark (void)
@@ -2016,17 +2017,17 @@ eda_config_error_quark (void)
   return g_quark_from_static_string ("eda-config-error-quark");
 }
 
-/*! \brief Create an #EdaConfigError from a #GKeyFileError.
+/*! \brief Create an #EdaConfigError from a \c GKeyFileError.
  *
- * Propagate an error returned by a #GKeyFile function, converting any
- * #GKeyFileError found into a #EdaConfigError.  The \a src error will
- * be freed.
+ * Propagate an error returned by a \c GKeyFile function,
+ * converting any \c GKeyFileError found into a #EdaConfigError.
+ * The \a src error will be freed.
  *
- * \note We do this so that we can move away from using a #GKeyFile
- *       internally if we want to at some point.
+ * \note We do this so that we can move away from using a \c
+ *       GKeyFile internally if we want to at some point.
  *
  * \param src   Error to propagate.
- * \param dest  Target #GError to set with error information.
+ * \param dest  Target \c GError to set with error information.
  */
 static void
 propagate_key_file_error (GError *src, GError **dest)
