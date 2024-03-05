@@ -71,7 +71,7 @@ get_stock_pixmap (const char *stock)
  * Sets the image file name to set the button pixmap from.
  *
  * \param [in] button The button widget pointer.
- * \param [in] icon_widget The filename of the image.
+ * \param [in] icon_name The filename of the image.
  */
 void
 schematic_toolbar_button_set_icon_widget (GtkWidget *button,
