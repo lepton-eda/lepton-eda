@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -353,7 +353,7 @@ schematic_toolbar_update (GtkWidget *toolbar,
  * Queries the state of a toggle button and returns TRUE if it is
  * pressed in and FALSE if it is raised.
  *
- * \param [in] The button widget.
+ * \param [in] button The button widget.
  * \return TRUE if the button is active, FALSE if not.
  */
 gboolean
