@@ -37,9 +37,10 @@ G_BEGIN_DECLS
  * context, the parent context is checked, and so on.
  *
  * Configuration contexts are represented by instances of the
- * #EdaConfig class. Since this is a a subclass of #GObject, the
- * instances are reference counted.  You can increment and decrement
- * their reference counters using g_object_ref() and g_object_unref().
+ * #EdaConfig class. Since this is a a subclass of \c GObject, the
+ * instances are reference counted.  You can increment and
+ * decrement their reference counters using g_object_ref() and
+ * g_object_unref().
  *
  * Normally, you shouldn't create a configuration context directly;
  * you should obtain the configuration context associated with a path
