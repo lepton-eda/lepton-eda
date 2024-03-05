@@ -312,6 +312,8 @@ lepton_bus_object_new (gint color,
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
+ *  \param [in,out] err  The \c GError structure storing the error
+ *                       in case of failure.
  *  \return The object list, or NULL on error.
  */
 LeptonObject*
