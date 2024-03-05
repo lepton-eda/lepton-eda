@@ -1972,7 +1972,6 @@ cclosure_marshal_VOID__STRING_STRING (GClosure *closure,
  * \param cfg     Configuration context.
  * \param group   Configuration group name.
  * \param key     Configuration key name.
- * \param cfg     Child configuration context.
  */
 static void
 default_config_changed_handler (EdaConfig *cfg, const gchar *group,
