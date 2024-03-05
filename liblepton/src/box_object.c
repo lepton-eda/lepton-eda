@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ lepton_box_object_get_lower_y (const LeptonObject *object)
 /*! \brief Set the value of the upper x coordinate of a box object.
  *
  *  \param [in,out] object The box object.
- *  \param [in] x The new upper x coordinate of the box.
+ *  \param [in] val The new upper x coordinate of the box.
  */
 void
 lepton_box_object_set_upper_x (LeptonObject *object, int val)
@@ -102,7 +102,7 @@ lepton_box_object_set_upper_x (LeptonObject *object, int val)
 /*! \brief Set the value of the upper y coordinate of a box object.
  *
  *  \param [in,out] object The box object.
- *  \param [in] y The new upper y coordinate of the box.
+ *  \param [in] val The new upper y coordinate of the box.
  */
 void
 lepton_box_object_set_upper_y (LeptonObject *object, int val)
@@ -116,7 +116,7 @@ lepton_box_object_set_upper_y (LeptonObject *object, int val)
 /*! \brief Set the value of the lower x coordinate of a box object.
  *
  *  \param [in,out] object The box object.
- *  \param [in] x The new lower x coordinate of the box.
+ *  \param [in] val The new lower x coordinate of the box.
  */
 void
 lepton_box_object_set_lower_x (LeptonObject *object, int val)
@@ -130,7 +130,7 @@ lepton_box_object_set_lower_x (LeptonObject *object, int val)
 /*! \brief Set the value of the lower y coordinate of a box object.
  *
  *  \param [in,out] object The box object.
- *  \param [in] y The new lower y coordinate of the box.
+ *  \param [in] val The new lower y coordinate of the box.
  */
 void
 lepton_box_object_set_lower_y (LeptonObject *object, int val)
