@@ -155,12 +155,12 @@ lepton_bounds_interior_point (const LeptonBounds *bounds,
  *
  *  For an empty set of points, this function returns an empty bounds.
  *
- *  \param [out]bounds  The bounds of the given set of points.  The bounds
+ *  \param [out] bounds The bounds of the given set of points.  The bounds
  *  does not need to be initialized before calling this function, but this
  *  parameter must not be NULL.
  *  \param [in] points The given set of points.  If the count is greater than
  *  zero, this parameter must not be NULL.
- *  \param [in]count The number of points in the set.
+ *  \param [in] count The number of points in the set.
  */
 void
 lepton_bounds_of_points (LeptonBounds *bounds,
