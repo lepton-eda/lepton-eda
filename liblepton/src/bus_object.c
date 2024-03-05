@@ -413,9 +413,9 @@ lepton_bus_object_translate (LeptonObject *object,
 
 /*! \brief create a copy of a bus object
  *  \par Function Description
- *  This function creates a copy of the bus object \a o_current.
+ *  This function creates a copy of the bus \a object.
  *
- *  \param [in] o_current    The object that is copied
+ *  \param [in] object    The object that is copied
  *  \return a new bus object
  */
 LeptonObject*
