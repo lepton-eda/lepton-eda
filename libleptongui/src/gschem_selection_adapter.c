@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1079,8 +1079,8 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
 
 /*! \brief Set the fill pitch 1 in the selection
  *
- *  \param [in] selection
- *  \param [in] angle
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] pitch The new fill pitch.
  */
 void
 gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int pitch)
@@ -1138,8 +1138,8 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
 
 /*! \brief Set the fill pitch 2 in the selection
  *
- *  \param [in] selection
- *  \param [in] pitch
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] pitch The new fill pitch.
  */
 void
 gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int pitch)
@@ -1199,8 +1199,8 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
 
 /*! \brief Set the fill type in the selection
  *
- *  \param [in] selection
- *  \param [in] line_type
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] fill_type The new fill type.
  */
 void
 gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fill_type)
@@ -1264,8 +1264,8 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
 
 /*! \brief Set the fill width in the selection
  *
- *  \param [in] selection
- *  \param [in] fill_width
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] fill_width The new fill width.
  */
 void
 gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fill_width)
@@ -1324,8 +1324,8 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
 
 /*! \brief Set the line type in the selection
  *
- *  \param [in] selection
- *  \param [in] line_type
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] line_type The new line type.
  */
 void
 gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int line_type)
@@ -1383,8 +1383,8 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
 
 /*! \brief Set the line width in the selection
  *
- *  \param [in] selection
- *  \param [in] line_width
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] line_width The new line width.
  */
 void
 gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int line_width)
@@ -1633,8 +1633,8 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
 
 /*! \brief Set the pin type in the selection
  *
- *  \param [in] adapter
- *  \param [in] color
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] type The new pin type.
  */
 void
 gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type)
@@ -1715,8 +1715,8 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
 
 /*! \brief Set the text alignment in the selection
  *
- *  \param [in] adapter
- *  \param [in] size
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] alignment The new text alignment.
  */
 void
 gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, int alignment)
@@ -1852,11 +1852,11 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
 
 
 
-/*! \brief Set the text size in the selection
+/*! \brief Set the text string in the selection
  *
- *  \param [in] adapter
- *  \param [in] size
- *  \param [in] w_current
+ *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] string The new text string.
+ *  \param [in] w_current The current #GschemToplevel object.
  */
 void
 gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current)
@@ -2252,9 +2252,9 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize GschemSelection instance
+/*! \brief Initialize #GschemSelectionAdapter instance
  *
- *  \param [in,out] selection
+ *  \param [in,out] adapter The #GschemSelectionAdapter instance.
  */
 static void
 gschem_selection_adapter_init (GschemSelectionAdapter *adapter)
