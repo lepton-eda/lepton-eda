@@ -332,7 +332,7 @@ lepton_object_get_drawing_color (const LeptonObject *object)
  *  \param [in] object the object
  *  \retval TRUE if the object can be selected
  *  \retval FALSE if the object cannot be selected
- *  \retval FALSE if a failure occured
+ *                or if a failure occured
  */
 gboolean
 lepton_object_get_selectable (const LeptonObject *object)
