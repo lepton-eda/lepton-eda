@@ -728,7 +728,8 @@ s_conn_add_object (LeptonPage *page,
 
 /*! \brief remove an object from the list of connectible objects
  *  \par Function Description
- *  \param object The object to remove
+ *  \param [in,out] page The page to remove the object from.
+ *  \param [in] object The object to remove.
  */
 void
 s_conn_remove_object (LeptonPage* page,
