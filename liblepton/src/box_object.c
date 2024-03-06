@@ -357,6 +357,8 @@ lepton_box_object_modify (LeptonObject *object,
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
+ *  \param [in,out] err \c GError structure for error reporting,
+ *                      or NULL to disable error reporting.
  *  \return The box LeptonObject that was created, or NULL on error.
  */
 LeptonObject*
