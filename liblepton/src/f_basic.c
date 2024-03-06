@@ -181,7 +181,7 @@ f_backup_message (gchar *backup_filename,
  *  If #F_OPEN_RESTORE_CWD is set, does not change the working
  *  directory to that of the file being loaded.
  *
- *  \param [in,out] toplevel  The LeptonToplevel object to load the schematic into.
+ *  \param [in,out] toplevel   The #LeptonToplevel object to load the schematic into.
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
