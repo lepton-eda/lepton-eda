@@ -579,12 +579,11 @@ lepton_box_object_translate (LeptonObject *object,
   lepton_box_object_set_lower_y (object, lower_y + dy);
 }
 
-/*! \brief Rotate box LeptonObject using WORLD coordinates.
+/*! \brief Rotate box object using WORLD coordinates.
  *  \par Function Description
- *  The function #o_box_rotate_world() rotate the box described by
- *  <B>*object</B> around the (<B>world_centerx</B>, <B>world_centery</B>) point by
- *  <B>angle</B> degrees.
- *  The center of rotation is in world unit.
+ *  This function rotates the box \a object around the point
+ *  (\a world_centerx, \a world_centery) by \a angle degrees.
+ *  The center of rotation is in world units.
  *
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
