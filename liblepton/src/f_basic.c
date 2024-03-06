@@ -334,7 +334,8 @@ f_open (LeptonToplevel *toplevel,
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
  *
- *  \param [in]      filename  The file name to save the schematic to.
+ *  \param [in]     page      The #LeptonPage instance whose objects to save.
+ *  \param [in]     filename  The file name to save the schematic to.
  *  \param [in,out] err       \c GError structure for error reporting, or
  *                            NULL to disable error reporting
  *  \return 1 on success, 0 on failure.
