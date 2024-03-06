@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,8 +118,8 @@ lepton_object_get_type (const LeptonObject *object)
 
 /*! \brief Set object's type
  *
- *  \param [in] object The object to obtain the type of.
- *  \return The object type as int.
+ *  \param [in,out] object The object to set the type of.
+ *  \param [in] type The new type of the object.
  */
 void
 lepton_object_set_type (LeptonObject *object, int type)
