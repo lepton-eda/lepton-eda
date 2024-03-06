@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,12 +96,11 @@ lepton_circle_object_new (gint color,
 
 /*! \brief Create a copy of a circle.
  *  \par Function Description
- *  The function #lepton_circle_object_copy() creates a verbatim
- *  copy of the object pointed by <B>o_current</B> describing a
- *  circle.
+ *  This function creates a verbatim copy of the object pointed by
+ *  \a object describing a circle.
  *
- *  \param [in]  o_current  Circle LeptonObject to copy.
- *  \return The new LeptonObject
+ *  \param [in]  object  Circle #LeptonObject to copy.
+ *  \return The new #LeptonObject instance.
  */
 LeptonObject*
 lepton_circle_object_copy (const LeptonObject *object)
