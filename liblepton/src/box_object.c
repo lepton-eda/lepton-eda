@@ -359,7 +359,7 @@ lepton_box_object_modify (LeptonObject *object,
  *  \param [in]     fileformat_ver  liblepton file format version number.
  *  \param [in,out] err \c GError structure for error reporting,
  *                      or NULL to disable error reporting.
- *  \return The box LeptonObject that was created, or NULL on error.
+ *  \return The box #LeptonObject that was created, or NULL on error.
  */
 LeptonObject*
 lepton_box_object_read (const char buf[],
