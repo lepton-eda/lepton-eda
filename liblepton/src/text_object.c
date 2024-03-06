@@ -446,7 +446,6 @@ lepton_text_object_set_show (LeptonObject *object,
  *  \par Function Description
  *  Create an LeptonObject of type OBJ_TEXT.
  *
- *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
  *  \param [in]  color                  The color of the text.
  *  \param [in]  x                      World x coord of text.
  *  \param [in]  y                      World y coord of text.
