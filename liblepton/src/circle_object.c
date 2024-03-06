@@ -291,6 +291,8 @@ lepton_circle_object_modify (LeptonObject *object,
  *  \param [in]  buf             Character string with circle description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
+ *  \param [in,out] err  The \c GError structure storing the error
+ *                       in case of failure.
  *  \return A pointer to the new circle object, or NULL on error.
  */
 LeptonObject*
