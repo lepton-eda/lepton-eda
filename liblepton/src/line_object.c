@@ -48,7 +48,6 @@
  *  It can be changed after with the #lepton_object_set_line_options() and
  *  #lepton_object_set_fill_options().
  *
- *  \param [in]     type         Must be OBJ_LINE.
  *  \param [in]     color        Circle line color.
  *  \param [in]     x1           Upper x coordinate.
  *  \param [in]     y1           Upper y coordinate.
