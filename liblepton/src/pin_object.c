@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -392,6 +392,8 @@ lepton_pin_object_new_bus_pin (int color,
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
+ *  \param [in,out] err \c GError structure for error reporting,
+ *                      or NULL to disable error reporting.
  *  \return The object list, or NULL on error.
  */
 LeptonObject*
