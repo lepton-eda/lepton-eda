@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * Code originally from librsvg 2.22.2 (LGPL) Copyright (C) 2000 Eazel, Inc.
  *
@@ -66,7 +66,7 @@ lepton_path_new ()
 
 /*! \brief Free memory associated with the LeptonPath object.
  *
- *  \param [in] LeptonPath object to be freed.
+ *  \param [in] path The #LeptonPath object to be freed.
  */
 void
 lepton_path_free (LeptonPath * path)
