@@ -711,7 +711,7 @@ lepton_text_object_recreate (LeptonObject *o_current)
  *  \par Function Description
  *  This function changes the position of a text object.
  *
- *  \param [ref] object  The text LeptonObject to be moved
+ *  \param [in,out] object  The text #LeptonObject to be moved
  *  \param [in]  dx      The x-distance to move the object
  *  \param [in]  dy      The y-distance to move the object
  */
