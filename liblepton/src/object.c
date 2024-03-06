@@ -1647,7 +1647,7 @@ lepton_object_get_parent (const LeptonObject *object)
 /*! \brief Set a parent object for an object.
  *
  * \param [in] object  The object.
- * \param [in] object  The parent object.
+ * \param [in] parent  The parent object.
  */
 void
 lepton_object_set_parent (LeptonObject *object,
