@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ gchar *f_get_autosave_filename (const gchar *filename)
  *  returns TRUE.
  *
  *  \param [in] filename File to check
- *  \param [in,out] err  #GError structure for error reporting, or
+ *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
  *
  *  \returns TRUE if autosave active, FALSE otherwise
@@ -185,7 +185,7 @@ f_backup_message (gchar *backup_filename,
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
- *  \param [in,out] err  #GError structure for error reporting, or
+ *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
  *
  *  \return 0 on failure, 1 on success.
@@ -334,7 +334,7 @@ f_open (LeptonToplevel *toplevel,
  *  solves bug #698565 in the normal use-case
  *
  *  \param [in]      filename  The file name to save the schematic to.
- *  \param [in,out] err       #GError structure for error reporting, or
+ *  \param [in,out] err       \c GError structure for error reporting, or
  *                            NULL to disable error reporting
  *  \return 1 on success, 0 on failure.
  */
@@ -512,7 +512,7 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
  *  Does readlink() recursively until we find a real filename.
  *
  *  \param [in]     filename  The filename to search for.
- *  \param [in,out] err       #GError structure for error reporting,
+ *  \param [in,out] err       \c GError structure for error reporting,
  *                            or NULL to disable error reporting.
  *  \return The newly-allocated path to real file on success, NULL
  *          otherwise.
