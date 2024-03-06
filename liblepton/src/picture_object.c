@@ -975,14 +975,14 @@ lepton_picture_object_set_embedded (LeptonObject *object,
 
 /*! \brief Get a pixel buffer for a picture object.
  * \par Function Description
- * Returns a #GdkPixbuf for the picture object \a object, or NULL if
- * the picture could not be loaded.
+ * Returns a \c GdkPixbuf for the picture object \a object, or
+ * NULL if the picture could not be loaded.
  *
  * The returned value should have its reference count decremented with
  * g_object_unref() when no longer needed.
  *
  * \param object    The picture #LeptonObject to inspect.
- * \return A #GdkPixbuf for the picture.
+ * \return A \c GdkPixbuf for the picture.
  */
 GdkPixbuf *
 lepton_picture_object_get_pixbuf (LeptonObject *object)
