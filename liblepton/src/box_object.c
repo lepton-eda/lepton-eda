@@ -694,15 +694,12 @@ lepton_box_object_mirror (int world_centerx,
 
 /*! \brief Get box bounding rectangle in WORLD coordinates.
  *  \par Function Description
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B>
- *  parameters to the boundings of the box object described in <B>*box</B>
- *  in world units.
+ *  This function calculates the boundings of the box \a object in
+ *  world units and stores them in the given #LeptonBounds
+ *  instance \a bounds.
  *
  *  \param [in]  object     Box LeptonObject to read coordinates from.
- *  \param [out] left       Left box coordinate in WORLD units.
- *  \param [out] top        Top box coordinate in WORLD units.
- *  \param [out] right      Right box coordinate in WORLD units.
- *  \param [out] bottom     Bottom box coordinate in WORLD units.
+ *  \param [out] bounds     The resulting object bounds.
  */
 void
 lepton_box_object_calculate_bounds (const LeptonObject *object,
