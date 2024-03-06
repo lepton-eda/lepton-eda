@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ lepton_fill_get_pitch2 (const LeptonFill *fill)
 /*! \brief Set the second pitch of a fill.
  *
  *  \param [in] fill   The fill.
- *  \param [in] angle2 The new fill second pitch.
+ *  \param [in] pitch  The new fill second pitch.
  */
 void
 lepton_fill_set_pitch2 (LeptonFill *fill,
