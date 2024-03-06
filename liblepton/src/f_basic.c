@@ -182,6 +182,7 @@ f_backup_message (gchar *backup_filename,
  *  directory to that of the file being loaded.
  *
  *  \param [in,out] toplevel   The #LeptonToplevel object to load the schematic into.
+ *  \param [in,out] page       The #LeptonPage instance to load the schematic into.
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
