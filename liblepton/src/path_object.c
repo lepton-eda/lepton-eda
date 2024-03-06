@@ -73,9 +73,6 @@ lepton_path_object_get_section (const LeptonObject *object,
  *  It can be changed after with the #lepton_object_set_line_options() and
  *  #lepton_object_set_fill_options().
  *
- *  The object is added to the end of the list described by the
- *  <B>object_list</B> parameter by the #s_basic_link_object().
- *
  *  \param [in]     color        The path color.
  *  \param [in]     path_string  The string representation of the path
  *  \return A pointer to the new end of the object list.
