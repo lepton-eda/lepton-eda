@@ -590,10 +590,10 @@ lepton_component_object_get_promotable (LeptonObject *object,
 /*! \brief Promote attributes from a component LeptonObject
  *  \par Function Description
  *  Selects promotable attributes from \a object, and returns a new
- *  #GList containing them (suitable for appending to a #LeptonPage).
+ *  \c GList containing them (suitable for appending to a #LeptonPage).
  *
  *  \param [in]  object   The component #LeptonObject to promote from.
- *  \return A #GList of promoted attributes.
+ *  \return A \c GList of promoted attributes.
  */
 GList*
 lepton_component_promote_attribs (LeptonObject *object)
