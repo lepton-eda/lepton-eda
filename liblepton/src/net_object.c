@@ -340,7 +340,7 @@ lepton_net_object_to_buffer (const LeptonObject *object)
  *  \par Function Description
  *  This function changes the position of a net \a object.
  *
- *  \param [ref] object The net LeptonObject to be moved
+ *  \param [in,out] object The net LeptonObject to be moved
  *  \param [in]  dx     The x-distance to move the object
  *  \param [in]  dy     The y-distance to move the object
  */
