@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -359,7 +359,7 @@ lepton_picture_free (LeptonPicture *picture)
  * picture object fails to load.  The returned pixbuf should be freed
  * with g_object_unref() when no longer needed.
  *
- * \return a #GdkPixbuf containing a warning image.
+ * \return a \c GdkPixbuf containing a warning image.
  */
 GdkPixbuf *
 lepton_picture_get_fallback_pixbuf ()
