@@ -1418,9 +1418,11 @@ void o_grips_end(GschemToplevel *w_current)
 /*! \brief Draw objects being grip maniuplated from GschemToplevel object.
  *
  *  \par Function Description
- *  This function draws the objects being grip manipulated.
+ *  This function draws the objects being grip manipulated using
+ *  \a renderer.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] renderer   The \c EdaRenderer object.
  */
 void o_grips_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
