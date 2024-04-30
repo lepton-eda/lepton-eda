@@ -1404,7 +1404,7 @@ schematic_window_save_geometry (GschemToplevel* w_current)
 /*! \brief Restore main window's geometry.
  *
  *  \par Function Description
- *  If [schematic.gui]::restore-window-geometry configuration key is
+ *  If [schematic.gui]\::restore-window-geometry configuration key is
  *  set to true, read main window's geometry from the CACHE config
  *  context and restore it.
  *  Unless valid configuration values are read, use default width
