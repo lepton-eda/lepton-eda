@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -542,7 +542,7 @@ update_attributes_model (Compselect *compselect,
  *  select a row in either component treeview of the dialog.
  *
  *  If the selection is not a selection of a component (a directory
- *  name), it does nothing. Otherwise it retrieves the #CLibSymbol
+ *  name), it does nothing. Otherwise it retrieves the \c CLibSymbol
  *  from the model.
  *
  *  It then emits the dialog's <B>apply</B> signal to let its parent
