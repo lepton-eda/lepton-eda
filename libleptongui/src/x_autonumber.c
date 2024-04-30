@@ -482,6 +482,10 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
  *
  *  The new number is returned into the <B>number</B> parameter.
  *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
+ *  \param [in,out] autotext The #AUTONUMBER_TEXT instance.
+ *  \param [in] o_current The \c LeptonObject instance to process.
+ *  \param [in,out] number The new number.
+ *  \param [in,out] slot The new slot number.
  */
 void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_current,
                                 gint *number, gint *slot)
