@@ -697,14 +697,14 @@ compselect_callback_filter_button_clicked (GtkButton *button,
 
 /*! \brief Handles changes of behavior.
  *  \par Function Description
- *  This function is called every time the value of the option menu
- *  for behaviors is modified.
+ *  This function is called every time the value of the \c
+ *  GtkComboBox widget for behaviors is modified.
  *
- *  It emits the dialog's <B>apply</B> signal to let the parent know
- *  that the requested behavior for the next adding of a component has
- *  been changed.
+ *  It emits the dialog's <B>response</B> signal to let the parent
+ *  know that the requested behavior for the next adding of a
+ *  component has been changed.
  *
- *  \param [in] optionmenu The behavior option menu.
+ *  \param [in] widget The \c GtkComboBox widget.
  *  \param [in] user_data  The component selection dialog.
  */
 static void
