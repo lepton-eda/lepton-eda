@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,11 +174,15 @@ settings_save (GtkFileChooser* dialog,
 
 
 /*! \brief Create the options of the image size combobox
- *  \par This function adds the options of the image size to the given combobox.
- *  \param combo [in] the combobox to add the options to.
- *  \return nothing
+ *  \par Function description
+ *  This function adds the options of the image size to the given
+ *  combobox.
+ *
  *  \note
- *  This function is only used in this file, there are other create_menus...
+ *  This function is only used in this file, there are other
+ *  create_menus...
+ *
+ *  \param combo [in] the combobox to add the options to.
  */
 static void create_size_menu (GtkComboBox *combo)
 {
@@ -205,11 +209,14 @@ static void create_size_menu (GtkComboBox *combo)
 }
 
 /*! \brief Create the options of the image type combobox
- *  \par This function adds the options of the image type to the given combobox.
- *  \param combo [in] the combobox to add the options to.
- *  \return nothing
+ *  \par Function description
+ *  This function adds the options of the image type to the given
+ *  combobox.
  *  \note
- *  This function is only used in this file, there are other create_menus...
+ *  This function is only used in this file, there are other
+ *  create_menus...
+ *
+ *  \param combo [in] the combobox to add the options to.
  */
 static void create_type_menu (GtkComboBoxText *combo)
 {
@@ -278,13 +285,13 @@ x_image_get_type_from_description (const char *description)
 }
 
 /*! \brief Update the filename of a file dialog, when the image type has changed.
- *  \par Given a combobox inside a file chooser dialog, this function updates
- *  the filename displayed by the dialog, removing the current extension, and
- *  adding the extension of the image type selected.
+ *  \par Function description
+ *  Given a combobox inside a file chooser dialog, this function
+ *  updates the filename displayed by the dialog, removing the
+ *  current extension, and adding the extension of the image type
+ *  selected.
  *  \param combo     [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
  *  \param w_current [in] the GschemToplevel structure.
- *  \return nothing.
- *
  */
 static void
 x_image_update_dialog_filename (GtkComboBoxText *combo,
@@ -363,8 +370,6 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
  *  \param height    [in] the image height chosen by the user.
  *  \param filetype  [in] image filetype.
  *  \param is_color  [in] write image using colors (TRUE) or in grayscale (FALSE).
- *  \return nothing
- *
  */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
                        int width, int height, const char *filetype, gboolean is_color)
@@ -471,11 +476,12 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 }
 
 /*! \brief Display the image file selection dialog.
- *  \par Display the image file selection dialog, allowing the user to
- *  set several options, like image size and image type.
- *  When the user hits "ok", then it writes the image file.
+ *  \par Function description
+ *  Display the image file selection dialog, allowing the user to
+ *  set several options, like image size and image type.  When the
+ *  user hits "ok", then it writes the image file.
+ *
  *  \param w_current [in] the GschemToplevel structure.
- *  \return nothing
  */
 void x_image_setup (GschemToplevel *w_current)
 {
