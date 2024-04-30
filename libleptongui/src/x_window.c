@@ -1332,10 +1332,10 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
  *
  *"Untitled" pages are newly created pages with the default
  * file name and not yet saved to disk.
- * This function check if a \a page meets these conditions.
+ * This function checks if the \a page meets these conditions.
  *
- *  \param  w_current Page to check.
- *  \return           TRUE if a \a page looks like "untitled" one.
+ *  \param  page The page to check.
+ *  \return      TRUE if the \a page looks like "untitled" one.
  */
 gboolean
 x_window_untitled_page (LeptonPage* page)
