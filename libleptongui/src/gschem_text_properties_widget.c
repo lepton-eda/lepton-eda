@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -427,8 +427,8 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
 /*! \private
  *  \brief Property change notification from the base class
  *
- *  Handles property change notification from the base class to update members
- *  and signal handlers in the this derived class.
+ *  Handles property change notification from the base class to
+ *  update members and signal handlers in the derived class.
  *
  *  \param [in,out] widget    This widget
  *  \param [in]     selection The selection to manipulate
