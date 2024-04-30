@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2021-2022 Lepton EDA Contributors
+ * Copyright (C) 2021-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,10 +70,11 @@ struct st_halfspace {
 /*! \brief Encode WORLD coordinates as halfspace matrix.
  *  \par Function Description
  *  This function takes a point and checks if it is in the bounds
- *  of the current LeptonToplevel object's page coordinates. It
- *  handles points with WORLD coordinates.
+ *  of the current page viewport coordinates. It handles points
+ *  with WORLD coordinates.
  *
- *  \param [in]  w_current  The GschemToplevel object.
+ *  \param [in] geometry    The #GschemPageGeometry instance to get
+ *                          viewport coordinates from.
  *  \param [in]  point      The point in WORLD coordinates to be checked.
  *  \param [out] halfspace  The created HALFSPACE structure.
  *
