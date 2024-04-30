@@ -431,7 +431,6 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
  *  update members and signal handlers in the derived class.
  *
  *  \param [in,out] widget    This widget
- *  \param [in]     selection The selection to manipulate
  */
 static void
 notify_gschem_toplevel (GschemTextPropertiesWidget *widget)
