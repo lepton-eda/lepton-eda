@@ -1410,8 +1410,8 @@ schematic_window_save_geometry (GschemToplevel* w_current)
  *  Unless valid configuration values are read, use default width
  *  and height.
  *
- *  \param main_window The main window widget of lepton-schematic.
- *  \param find_text_state The find text state widget.
+ *  \param [in] w_current   The #GschemToplevel object.
+ *  \param [in] main_window The main window widget of lepton-schematic.
  */
 void
 schematic_window_restore_geometry (GschemToplevel *w_current,
