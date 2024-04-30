@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ gschem_dialog_init (GschemDialog *dialog)
  *  Save the dialog's current position and size to the passed GKeyFile
  *
  *  \param [in] dialog     The GschemDialog to save the position and size of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar* group_name)
@@ -121,7 +121,7 @@ static void geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar* group_na
  *  Restore dialog's last position and size from the passed GKeyFile
  *
  *  \param [in] dialog     The GschemDialog to restore the position and size of.
- *  \param [in] key_file   The GKeyFile to load the geometry data from.
+ *  \param [in] cfg        The \c EdaConfig instance to load the geometry data from.
  *  \param [in] group_name The group name in the key file to find the data under.
  */
 static void geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar* group_name)
@@ -466,4 +466,3 @@ GtkWidget* gschem_dialog_new_with_buttons (const gchar *title, GtkWindow *parent
 
   return GTK_WIDGET (dialog);
 }
-
