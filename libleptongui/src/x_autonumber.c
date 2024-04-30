@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -479,7 +479,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
  *  This function gets or generates new numbers for the <B>LeptonObject o_current</B>.
  *  It uses the element numbers <B>used_numbers</B> and the list of the free slots
  *  <B>free_slots</B> of the <B>AUTONUMBER_TEXT</B> struct.
- *  \return
+ *
  *  The new number is returned into the <B>number</B> parameter.
  *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
  */
