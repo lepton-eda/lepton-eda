@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -316,10 +316,11 @@ LeptonObject *o_grips_search_box_world(GschemToplevel *w_current, LeptonObject *
  *  If the point is not inside a grip the function returns a NULL pointer
  *  and the <B>whichone</B> pointed integer is unset.
  *
- *  A path object has four grips : one at each corner of the path.
- *  The identifiers of each corner are #PICTURE_UPPER_LEFT,
- *  #PICTURE_UPPER_RIGHT, #PICTURE_LOWER_LEFT and
- *  #PICTURE_LOWER_RIGHT.
+ *  A path object may have several grips depending on the number
+ *  of its elements.  If a path has N elements and M elements of
+ *  them are curve ones, the number of position (square) grips is
+ *  N+1 and the number of curve control (round) grips may achieve
+ *  2*M (since not all curve elements may have 2 grips).
  *
  *  The <B>x</B> and <B>y</B> parameters are in world units.
  *
