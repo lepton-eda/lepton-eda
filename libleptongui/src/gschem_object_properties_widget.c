@@ -536,8 +536,8 @@ notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
 /*! \private
  *  \brief Set the selection that this dialog manipulates
  *
- *  \param [in,out] dialog    This dialog
- *  \param [in]     selection The selection to manipulate
+ *  \param [in,out] dialog  This dialog.
+ *  \param [in]     adapter The #GschemSelectionAdapter instance to manipulate.
  */
 static void
 set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdapter *adapter)
