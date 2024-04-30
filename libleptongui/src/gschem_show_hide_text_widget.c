@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -224,9 +224,9 @@ gschem_show_hide_text_widget_get_text_string (GschemShowHideTextWidget *widget)
 
 
 
-/*! \brief Initialize GschemShowHideTextWidget instance
+/*! \brief Initialize #GschemShowHideTextWidget instance
  *
- *  \param [in,out] view the GschemShowHideTextWidget
+ *  \param [in,out] widget The #GschemShowHideTextWidget instance
  */
 static void
 gschem_show_hide_text_widget_init (GschemShowHideTextWidget *widget)
@@ -293,8 +293,8 @@ gschem_show_hide_text_widget_init (GschemShowHideTextWidget *widget)
 
 /*! \brief Set the ok button text
  *
- *  \param [in,out] view This GschemShowHideTextWidget
- *  \param [in]     text The button text
+ *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in]     text The button text.
  */
 void
 gschem_show_hide_text_widget_set_button_text (GschemShowHideTextWidget *widget, const char *text)
@@ -310,8 +310,8 @@ gschem_show_hide_text_widget_set_button_text (GschemShowHideTextWidget *widget, 
 
 /*! \brief Set the label text
  *
- *  \param [in,out] view This GschemShowHideTextWidget
- *  \param [in]     text The label text
+ *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in]     text The new label text.
  */
 void
 gschem_show_hide_text_widget_set_label_text (GschemShowHideTextWidget *widget, const char *text)
@@ -327,8 +327,8 @@ gschem_show_hide_text_widget_set_label_text (GschemShowHideTextWidget *widget, c
 
 /*! \brief Set the find text string
  *
- *  \param [in,out] view This GschemShowHideTextWidget
- *  \param [in]     str  The find text string
+ *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in]     str  The find text string.
  */
 void
 gschem_show_hide_text_widget_set_text_string (GschemShowHideTextWidget *widget, const char *str)
