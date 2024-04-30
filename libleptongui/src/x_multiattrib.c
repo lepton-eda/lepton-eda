@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1744,8 +1744,8 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
  *  Chain up to our parent's method to save the dialog's size and
  *  position, then save the dialog's current internal geometry.
  *
- *  \param [in] dialog     The GschemDialog to save the geometry of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] dialog     The #GschemDialog to save the geometry of.
+ *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
@@ -1776,8 +1776,8 @@ multiattrib_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_na
  *  position, then restore the dialog's current internal geometry.
  *
  *  \param [in] dialog     The GschemDialog to restore the geometry of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
- *  \param [in] group_name The group name in the key file to store the data under.
+ *  \param [in] cfg        The \c EdaConfig to restore the geometry data from.
+ *  \param [in] group_name The configuration group name to restore the data from.
  */
 static void
 multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
