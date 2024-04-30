@@ -1354,8 +1354,8 @@ create_behaviors_combo_box (void)
  *  Chain up to our parent's method to save the dialog's size and
  *  position, then save the dialog's current internal geometry.
  *
- *  \param [in] dialog     The GschemDialog to save the geometry of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] dialog     The #GschemDialog to save the geometry of.
+ *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
@@ -1384,9 +1384,9 @@ compselect_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_nam
  *  Chain up to our parent's method to restore the dialog's size and
  *  position, then restore the dialog's current internal geometry.
  *
- *  \param [in] dialog     The GschemDialog to restore the geometry of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
- *  \param [in] group_name The group name in the key file to store the data under.
+ *  \param [in] dialog     The #GschemDialog to restore the geometry of.
+ *  \param [in] cfg        The \c EdaConfig instance to get the geometry data from.
+ *  \param [in] group_name The configuration group name to restore the data from.
  */
 static void
 compselect_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
