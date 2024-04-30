@@ -556,6 +556,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \brief Update the grid mode in the model
  *
  *  \param [in,out] widget This widget
+ *  \param [in] button The radio button determining the grid mode.
  */
 static void
 update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
@@ -718,6 +719,7 @@ update_net_rubber_band_mode_widget (GschemOptionsWidget *widget)
  *  \brief Update the snap mode in the model
  *
  *  \param [in,out] widget This widget
+ *  \param [in] button The radio button determining the snap mode.
  */
 static void
 update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
