@@ -318,7 +318,7 @@ obj_selected (LeptonPage *page,
 
 /*! \brief Return TRUE if a component with "source" attribute is selected.
  *
- *  \param [in] w_current  GschemToplevel structure
+ *  \param [in] page The page to search for selected components.
  */
 static gboolean
 parent_comp_selected (LeptonPage* page)
