@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,16 +49,9 @@
 
 /*! \brief Create a default page setup for a schematic page.
  * \par Function Description
- * Creates and returns a new #GtkPageSetup for \a page, taking into
- * account the requested \a paper_size_name.  If \a paper_size_name is
- * NULL, the system default paper size is used. The \a orientation may
- * be LANDSCAPE, PORTRAIT or AUTOLAYOUT.  If \a AUTOLAYOUT is chosen,
- * the page orientation that best fits the page contents is chosen.
- *
- * \param page     The #LeptonPage to generate a page setup for.
- * \param paper_size_name   The name of the paper size to use.
- * \param orientation       The paper orientation to use.
- *
+ * Creates and returns a new \c GtkPageSetup for \a page, taking into
+ * account the path context configuration data.
+ * \param page     The \c LeptonPage instance to generate a page setup for.
  * \returns A newly-created page setup.
  */
 static GtkPageSetup *
