@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -449,7 +449,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 /*! \brief Initialize GschemOptions instance
  *
- *  \param [in,out] selection
+ *  \param [in,out] options The #GschemOptions instance.
  */
 static void
 gschem_options_init (GschemOptions *options)
