@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  Draws the dotted grid pattern over a given region of the screen.
  *
  *  \param [in] w_current  The GschemToplevel.
+ *  \param [in,out] cr     The Cairo context for the drawing.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
