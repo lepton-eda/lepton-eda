@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -356,7 +356,7 @@ gschem_find_text_widget_get_find_text_string (GschemFindTextWidget *widget)
 
 /*! \brief Initialize GschemFindTextWidget instance
  *
- *  \param [in,out] view the GschemFindTextWidget
+ *  \param [in,out] widget The #GschemFindTextWidget instance.
  */
 static void
 gschem_find_text_widget_init (GschemFindTextWidget *widget)
