@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -253,13 +253,14 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
 /*! \brief Draw arc from GschemToplevel object.
  *  \par Function Description
  *  This function draws the arc from the variables in the GschemToplevel
- *  structure <B>*w_current</B>.
+ *  structure <B>*w_current</B> using \a renderer.
  *  The center of the arc is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>), its radius equal to <B>w_current->distance</B>,
  *  and the start and end angle are given by <B>w_current->second_wx</B> and
  *  <B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] renderer   The \c EdaRenderer object.
  */
 void o_arc_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
