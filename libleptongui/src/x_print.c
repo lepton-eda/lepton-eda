@@ -109,7 +109,7 @@ x_print_default_page_setup (LeptonPage *page)
  * is_raster should be set if drawing to a raster surface such as an
  * image.
  *
- * \param page     The #LeptonPage to be rendered.
+ * \param page     The \c LeptonPage instance to be rendered.
  * \param cr       The Cairo context to render to.
  * \param pc       A Pango context for text rendering, or NULL.
  * \param cr_width The width of the drawing area.
