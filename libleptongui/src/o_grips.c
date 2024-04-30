@@ -1009,11 +1009,11 @@ void o_grips_cancel(GschemToplevel *w_current)
  *  If the grip at the center of the arc has been moved - modifying the radius
  *  of the arc -, the new radius is calculated expressed in world unit
  *  (the center is unchanged). It is updated with the function
- *  #lepton_arc_object_modify().
+ *  lepton_arc_object_modify().
  *
  *  If one of the end of arc grip has been moved - modifying one of the
  *  angles describing the arc -, this angle is updated with the
- *  #lepton_arc_object_modify() function.
+ *  lepton_arc_object_modify() function.
  *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] o_current  Arc LeptonObject to end modification on.
