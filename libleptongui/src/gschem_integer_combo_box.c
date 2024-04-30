@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ gschem_integer_combo_box_get_value (GtkWidget *widget)
 
 /*! \brief Initialize a GschemIntegerComboBox
  *
- *  \param [in] klass The instance of a GschemIntegerComboBox
+ *  \param [in] combo The instance of a #GschemIntegerComboBox.
  */
 static void
 gschem_integer_combo_box_init (GschemIntegerComboBox *combo)
