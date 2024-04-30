@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ schematic_event_skip_motion_event (GdkEvent *event)
  *  best fit the previously displayed area of the page in the new
  *  area. Otherwise the current zoom level is left unchanged.
  *
- *  \param [in] widget    The GschemPageView which received the signal.
+ *  \param [in] page_view The GschemPageView which received the signal.
  *  \param [in] event     The event structure of signal configure-event.
  *  \param [in] unused
  *  \returns FALSE to propagate the event further.
