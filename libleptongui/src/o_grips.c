@@ -388,10 +388,10 @@ LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject 
  *  If the point is not inside a grip the function returns a NULL pointer
  *  and the <B>whichone</B> pointed integer is unset.
  *
- *  A picture object has four grips : one at each corner of the picture.
- *  The identifiers of each corner are #PICTURE_UPPER_LEFT,
- *  #PICTURE_UPPER_RIGHT, #PICTURE_LOWER_LEFT and
- *  #PICTURE_LOWER_RIGHT.
+ *  A picture object has four grips: one at each corner of the
+ *  picture.  The identifiers of each corner are \c
+ *  PICTURE_UPPER_LEFT, \c PICTURE_UPPER_RIGHT, \c
+ *  PICTURE_LOWER_LEFT and \c PICTURE_LOWER_RIGHT.
  *
  *  The <B>x</B> and <B>y</B> parameters are in world units.
  *
