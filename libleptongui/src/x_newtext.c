@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -206,8 +206,9 @@ static void dialog_response_cancel(NewText *dialog)
  *  \par Function Description
  *  Callback function for the text entry dialog.
  *
- *  \param [in,out] widget The new text dialog
- *  \param [na]     unused Unused parameter
+ *  \param [in,out] dialog The new text dialog.
+ *  \param [in] response The Gtk response integer value.
+ *  \param unused Unused parameter.
  */
 static void text_input_dialog_response(NewText *dialog, gint response, gpointer unused)
 {
