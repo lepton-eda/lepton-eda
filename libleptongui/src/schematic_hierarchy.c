@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -168,9 +168,11 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
  *  - Does not change the current page
  *  - Does not modify the most recent "up" page
  *
- *  \param [in]  page
- *  \param [in]  filename
- *  \param [out] error
+ *  \param [in]  w_current The current #GschemToplevel environment.
+ *  \param [in]  page      The current page.
+ *  \param [in]  filename  The name of the subpage to open.
+ *  \param [in,out] error \c GError structure for error reporting,
+ *                        or NULL to disable error reporting.
  *  \return A pointer to the subpage or NULL if an error occured.
  */
 LeptonPage*
