@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,9 +90,9 @@ o_attrib_add_selected (GschemToplevel *w_current,
  *  from the selection list. If hidden text is being shown, this
  *  function returns immediately.
  *
- *  \param [in]     w_current  The GschemToplevel object.
- *  \param [in,out] selection  The LeptonSelection list to remove from.
- *  \param [in]     object     The LeptonObject whose invisible attributes to remove.
+ *  \param [in]     w_current  The #GschemToplevel object.
+ *  \param [in,out] selection  The \c LeptonSelection list to remove from.
+ *  \param [in]     selected   The \c LeptonObject whose invisible attributes to remove.
  */
 void
 o_attrib_deselect_invisible (GschemToplevel *w_current,
@@ -130,9 +130,9 @@ o_attrib_deselect_invisible (GschemToplevel *w_current,
  *  to the selection list. If hidden text is being shown, this
  *  function returns immediately.
  *
- *  \param [in]     w_current  The GschemToplevel object.
- *  \param [in,out] selection  The LeptonSelection list to add to.
- *  \param [in]     object     The LeptonObject whose invisible attributes to add.
+ *  \param [in]     w_current  The #GschemToplevel object.
+ *  \param [in,out] selection  The \c LeptonSelection list to add to.
+ *  \param [in]     selected   The \c LeptonObject whose invisible attributes to add.
  */
 void
 o_attrib_select_invisible (GschemToplevel *w_current,
