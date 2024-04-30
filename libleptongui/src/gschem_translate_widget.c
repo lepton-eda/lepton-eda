@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,8 +138,8 @@ gschem_translate_widget_get_value (GschemTranslateWidget *widget)
 
 /*! \brief Set the label text
  *
- *  \param [in,out] view This GschemTranslateWidget
- *  \param [in]     text The label text
+ *  \param [in,out] widget The #GschemTranslateWidget object.
+ *  \param [in]     text The new label text.
  */
 void
 gschem_translate_widget_set_label_text (GschemTranslateWidget *widget, const char *text)
@@ -154,7 +154,7 @@ gschem_translate_widget_set_label_text (GschemTranslateWidget *widget, const cha
 
 /*! \brief Set the value in the entry
  *
- *  \param [in,out] view This GschemTranslateWidget
+ *  \param [in,out] widget The #GschemTranslateWidget object.
  *  \param [in]     value the value to put in the entry
  */
 void
