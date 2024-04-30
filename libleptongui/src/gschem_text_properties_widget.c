@@ -471,8 +471,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 /*! \private
  *  \brief Set the selection that this widget manipulates
  *
- *  \param [in,out] widget    This widget
- *  \param [in]     selection The selection to manipulate
+ *  \param [in,out] widget  The #GschemTextPropertiesWidget widget.
+ *  \param [in]     adapter The #GschemSelectionAdapter instance to manipulate.
  */
 static void
 set_selection_adapter (GschemTextPropertiesWidget *widget, GschemSelectionAdapter *adapter)
