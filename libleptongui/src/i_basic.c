@@ -429,7 +429,7 @@ void i_update_menus (GschemToplevel* w_current)
  *  Set the main window's title using \a filename.
  *  Prepend an asterisk ("*") to indicate that the page
  *  is modified if \a changed is TRUE.
- *  Depending on [schematic.gui]::title-show-path configuration
+ *  Depending on [schematic.gui]\::title-show-path configuration
  *  value, either full path or basename of \a filename is shown
  *  in the title.
  *
