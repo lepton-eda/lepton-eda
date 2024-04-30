@@ -54,6 +54,7 @@ g_get_hook_by_name (const char *name)
  *
  * \see g_run_hook_object()
  *
+ * \param w_current The current #GschemToplevel object.
  * \param name    name of hook to run.
  * \param obj_lst list of \c LeptonObject smobs as hook argument.
  */
@@ -89,6 +90,7 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
  *
  * \see g_run_hook_object_list()
  *
+ * \param w_current The current #GschemToplevel object.
  * \param name name of hook to run.
  * \param obj  \c LeptonObject argument for hook.
  */
@@ -114,6 +116,7 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
  * Runs a hook called \a name, which should expect the single
  * \c LeptonPage \a page as its argument.
  *
+ * \param w_current The current #GschemToplevel object.
  * \param name name of hook to run
  * \param page \c LeptonPage argument for hook.
  */
