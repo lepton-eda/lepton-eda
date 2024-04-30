@@ -815,9 +815,9 @@ create_grid_size_widget (GschemBottomWidget* widget)
 
 
 
-/*! \brief Initialize GschemBottomWidget instance
+/*! \brief Initialize #GschemBottomWidget instance
  *
- *  \param [in,out] view the gschem page view
+ *  \param [in,out] widget The #GschemBottomWidget instance.
  */
 static void
 gschem_bottom_widget_init (GschemBottomWidget *widget)
