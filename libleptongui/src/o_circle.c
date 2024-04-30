@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -178,14 +178,15 @@ void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
 /*! \brief Draw circle from GschemToplevel object.
  *  \par Function Description
  *  This function draws the circle from the variables in the GschemToplevel
- *  structure <B>*w_current</B>.
+ *  structure <B>*w_current</B> using \a renderer.
  *  The center of the circle is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
  *
  *  It draws a horizontal radius segment on the right half of the circle and
  *  the circle with the selection color.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] renderer   The \c EdaRenderer object.
  */
 void o_circle_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
