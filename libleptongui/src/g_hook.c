@@ -140,11 +140,12 @@ g_run_hook_page (GschemToplevel *w_current,
 
 /*! \brief Runs a change action mode hook.
  * \par Function Description
- * Runs a hook called \a name, which should expect the single #MODE \a
- * mode as its argument.
+ * Runs a hook called \a name, which should expect the single \a
+ * action_mode as its argument.
  *
- * \param name name of hook to run
- * \param mode #MODE argument for hook.
+ * \param [in] w_current The current #GschemToplevel environment.
+ * \param [in] name The name of hook to run.
+ * \param [in] action_mode The mode argument for hook.
  */
 void
 g_run_hook_action_mode (GschemToplevel *w_current,
