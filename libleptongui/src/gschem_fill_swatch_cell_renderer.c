@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *
 /*! \private
  *  \brief Initialize fill swatch cell renderer instance
  *
- *  \param [in,out] renderer The fill swatch cell renderer
+ *  \param [in,out] swatch The fill swatch cell renderer
  */
 static void
 gschem_fill_swatch_cell_renderer_init (GschemFillSwatchCellRenderer *swatch)
