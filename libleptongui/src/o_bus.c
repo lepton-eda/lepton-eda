@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,11 +173,12 @@ void o_bus_invalidate_rubber (GschemToplevel *w_current)
  *  This function draws a bus segment from the point
  *  (<B>first_wx</B>,<B>first_wy</B>) to the point
  *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>GschemToplevel</B>
- *   structure.
+ *   structure using \a renderer.
  *
  *  The function can be used to draw or erase the rubberbus on the screen.
  *
- *  \param [in] w_current  The GschemToplevel object
+ *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] renderer   The \c EdaRenderer object.
  */
 void
 o_bus_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
