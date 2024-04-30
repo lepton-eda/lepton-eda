@@ -97,7 +97,7 @@ WORLDencode_halfspace (GschemPageGeometry *geometry,
  *  are within a clipping region. No action will be taken to change
  *  the coordinates.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] geometry   The #GschemPageGeometry structure.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
