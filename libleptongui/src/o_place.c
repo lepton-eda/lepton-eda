@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +60,9 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
  *  \param [in]  w_current  GschemToplevel which we're drawing for.
  *  \param [in]  w_x        The current world X coordinate.
  *  \param [in]  w_y        The current world Y coordinate.
+ *  \param [in]  continue_placing The boolean value defining if the
+ *                                current place list has to be
+ *                                saved for a new placement action.
  *  \param [in]  hook_name  The hook to run after adding the objects.
  */
 void o_place_end (GschemToplevel *w_current,
