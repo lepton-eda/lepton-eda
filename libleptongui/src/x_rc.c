@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,8 +78,7 @@ x_rc_parse_gschem_error (GError **err)
  * Instead of exiting on error, display error dialogs with explanatory
  * messages.
  *
- * \param w_current  The current #GschemToplevel structure.
- * \param rcfile     Specific config file path, or NULL.
+ * \param toplevel The current \c LeptonToplevel structure.
  */
 void
 x_rc_parse_gschem (LeptonToplevel *toplevel)
