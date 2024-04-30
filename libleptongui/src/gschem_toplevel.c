@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -635,8 +635,9 @@ gschem_toplevel_get_toplevel (GschemToplevel *w_current)
 
 /*! \brief Signal handler for a notify::page signal
  *
- *  \param [in] page_view The GschemPageView signal source
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] page_view The #GschemPageView signal source object.
+ *  \param [in] pspec     The \c GParamSpec structure.
+ *  \param [in] w_current The current #GschemToplevel object.
  */
 void
 gschem_toplevel_notify_page_callback (GschemPageView *page_view, GParamSpec *pspec, GschemToplevel *w_current)
