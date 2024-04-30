@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ gschem_main_window_class_init (GschemMainWindowClass *klass)
 
 /*! \brief Initialize GschemMainWindow instance
  *
- *  \param [in,out] GschemMainWindow object
+ *  \param [in,out] window The #GschemMainWindow instance.
  */
 static void
 gschem_main_window_init (GschemMainWindow *window)
