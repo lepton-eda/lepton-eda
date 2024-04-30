@@ -158,7 +158,7 @@ path_rubber_bbox (GschemToplevel *w_current,
 
 /*! \brief Add elements to the temporary LeptonPath.
  * \par Function Description
- * Check if the temporary #LeptonPath object used when interactively
+ * Check if the temporary \c LeptonPath object used when interactively
  * creating paths has room for additional sections.  If not, doubles
  * its capacity.
  */
@@ -184,8 +184,8 @@ path_expand (GschemToplevel *w_current)
  *     point's control point.
  *   - third_wx and third_wy contain the location of the previous
  *     point's control point.
- *   - temp_path is the new #LeptonPath object (i.e. sequence of path
- *     sections that comprise the path drawn so far).
+ *   - temp_path is the new \c LeptonPath object (i.e. sequence of
+ *     path sections that comprise the path drawn so far).
  *
  * path_next_sections() adds up to two additional sections to the
  * temporary path, and returns the number of sections added, on the
