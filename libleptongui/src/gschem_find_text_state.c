@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,8 +169,9 @@ gschem_find_text_state_new ()
 
 /*! \brief places object in the store so the user can see them
  *
- *  \param [in] state
- *  \param [in] objects the list of objects to put in the store
+ *  \param [in] state The #GschemFindTextState instance.
+ *  \param [in] objects The list of objects to put in the store.
+ *  \param [in] filter_text Wether only text objects are expected.
  */
 static void
 assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
