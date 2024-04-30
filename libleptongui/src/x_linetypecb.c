@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,7 +164,7 @@ x_linetypecb_get_index (GtkWidget *widget)
 /*! \brief Select the given line type index
  *
  *  \param [in,out] widget The line type combo box
- *  \param [in]     style  The line type index to select
+ *  \param [in]     index  The line type index to select
  */
 void
 x_linetypecb_set_index (GtkWidget *widget, int index)
