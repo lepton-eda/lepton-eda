@@ -1815,7 +1815,7 @@ multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group
  *
  *  \par Function Description
  *
- *  \param [in] selection    The LeptonList object of we are watching/
+ *  \param [in] object_list  The \c LeptonList object of we are watching.
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 static void
