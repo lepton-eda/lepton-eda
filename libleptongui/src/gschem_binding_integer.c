@@ -258,8 +258,8 @@ set_property (GObject      *object,
  *
  *  Can only be set during construction
  *
- *  \brief [in] binding This binding
- *  \return TRUE, if successful
+ *  \param [in] binding This binding.
+ *  \param [in] widget  The widget.
  */
 static void
 set_widget (GschemBindingInteger *binding, GtkWidget *widget)
