@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *m
  *  \brief Add a message to the log window
  *
  *  \par Function Description
- *  \param [in] log The log instance
+ *  \param [in] klass The #GschemLogWidgetClass instance.
  *  \param [in] message The message to be logged
  *  \param [in] style   The style to use in the text rendering
  */
