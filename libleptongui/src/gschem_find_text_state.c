@@ -602,6 +602,7 @@ find_objects_using_check (GSList *pages)
  *
  *  Descends the hierarchy of pages, if selected, and removes duplicate pages.
  *
+ *  \param [in] w_current The current #GschemToplevel environment.
  *  \param [in] pages the list of pages to begin search
  *  \param [in] descend alose locates subpages
  *  \return a list of all the pages
@@ -669,6 +670,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *
  *  if any subpages are not loaded, this function will load them.
  *
+ *  \param [in] w_current The current #GschemToplevel environment.
  *  \param [in] page the parent page
  *  \return a list of all the subpages
  */
