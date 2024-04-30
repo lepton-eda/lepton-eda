@@ -302,9 +302,10 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *  GTK+ callback function (registered in x_window_setup_draw_events() ) which
  *  handles key press and release events from the GTK+ system.
  *
- * \param [in] widget     the widget that generated the event
- * \param [in] event      the event itself
- * \param      w_current  the toplevel environment
+ * \param [in] page_view  The #GschemPageView widget that generated
+ *                        the event.
+ * \param [in] event      The event itself.
+ * \param      w_current  The toplevel environment.
  * \returns TRUE if the event has been handled.
  */
 GdkEventKey*
