@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,13 +48,14 @@ g_get_hook_by_name (const char *name)
 
 /*! \brief Runs a object hook for a list of objects.
  * \par Function Description
- * Runs a hook called \a name, which should expect a list of #LeptonObject
- * smobs as its argument, with \a obj_lst as the argument list.
+ * Runs a hook called \a name, which should expect a list of \c
+ * LeptonObject smobs as its argument, with \a obj_lst as the
+ * argument list.
  *
  * \see g_run_hook_object()
  *
  * \param name    name of hook to run.
- * \param obj_lst list of #LeptonObject smobs as hook argument.
+ * \param obj_lst list of \c LeptonObject smobs as hook argument.
  */
 void
 g_run_hook_object_list (GschemToplevel *w_current, const char *name,
@@ -83,13 +84,13 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
 
 /*! \brief Runs a object hook with a single LeptonObject.
  * \par Function Description
- * Runs a hook called \a name, which should expect a list of #LeptonObject
+ * Runs a hook called \a name, which should expect a list of \c LeptonObject
  * smobs as its argument, with a single-element list containing only \a obj.
  *
  * \see g_run_hook_object_list()
  *
  * \param name name of hook to run.
- * \param obj  #LeptonObject argument for hook.
+ * \param obj  \c LeptonObject argument for hook.
  */
 void
 g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj)
@@ -111,10 +112,10 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
 /*! \brief Runs a page hook.
  * \par Function Description
  * Runs a hook called \a name, which should expect the single
- * #LeptonPage \a page as its argument.
+ * \c LeptonPage \a page as its argument.
  *
  * \param name name of hook to run
- * \param page #LeptonPage argument for hook.
+ * \param page \c LeptonPage argument for hook.
  */
 void
 g_run_hook_page (GschemToplevel *w_current,
