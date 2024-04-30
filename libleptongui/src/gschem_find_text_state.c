@@ -581,9 +581,7 @@ scm_to_gslist (SCM list_s)
 
 /*! \brief Find all blamed objects after symbol check
  *
- *  \param pages
- *  \param text
- *  \param error
+ *  \param pages The list of pages to search for objects.
  *  \return a list of objects that are blamed
  */
 static GSList*
