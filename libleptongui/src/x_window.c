@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -632,6 +632,7 @@ x_window_set_current_page (GschemToplevel *w_current,
  *  to save page <B>page</B> to file <B>filename</B> (1 on success, 0
  *  on failure).
  *
+ *  \param [in] w_current The current #GschemToplevel environment.
  *  \param [in] page      The page to save.
  *  \param [in] filename  The name of the file in which to save page.
  *  \returns 1 on success, 0 otherwise.
@@ -1039,6 +1040,7 @@ schematic_window_create_statusbar (GschemToplevel *w_current,
 
 /*! \brief Setup scrolling parameters
  *
+ *  \param [in] w_current The current #GschemToplevel environment.
  *  \param [in] scrolled  Scrolled widget - a parent of page view widget
  */
 void
