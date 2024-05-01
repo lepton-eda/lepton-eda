@@ -678,10 +678,6 @@ pcb_element_pkg_to_element (gchar *pkg_line)
   s = strchr (pkg_line, (gint) '(');
 
   args = g_strsplit (s + 1, ",", 12);
-  if (!args[0] || !args[1] || !args[2]) {
-    fprintf (stderr, "Bad package line: %s\n", pkg_line);
-    return NULL;
-  }
   fix_spaces (args[0]);
   fix_spaces (args[1]);
   fix_spaces (args[2]);

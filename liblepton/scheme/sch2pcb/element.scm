@@ -20,6 +20,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi sch2pcb)
+  #:use-module (sch2pcb format)
 
   #:export (free-element
             pcb-element-description
@@ -83,7 +84,16 @@
       (let ((left-paren-index (string-index line #\()))
         (if (not left-paren-index)
             %null-pointer
-            (pcb_element_pkg_to_element (string->pointer line))))))
+            ;; Get the contents of the string after the left paren
+            ;; and check how many arguments it contains by
+            ;; splitting it up by commas.
+            (let* ((args-line (string-drop line (1+ left-paren-index)))
+                   (args (string-split args-line #\,)))
+              (if (< (length args) 3)
+                  (begin
+                    (format-warning "Bad package line: ~A\n" line)
+                    %null-pointer)
+                  (pcb_element_pkg_to_element (string->pointer line))))))))
 
 
 (define (free-element *element)
