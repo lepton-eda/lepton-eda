@@ -504,10 +504,10 @@ lepton_text_object_new (gint color,
  *  If the line object was read successfully, a new object is
  *  create and appended to the \a object_list.
  *
- *  \param [in] first_line   the first line of the text
- *  \param [in] tb           a text buffer (usually a line of a schematic file)
- *  \param [in] release_ver  The release number gEDA
- *  \param [in] fileformat_ver a integer value of the file format
+ *  \param [in] first_line     The first line of the text.
+ *  \param [in] tb             The text buffer to process lines of.
+ *  \param [in] release_ver    liblepton release version number.
+ *  \param [in] fileformat_ver liblepton file format version number.
  *  \param [in,out] err \c GError structure for error reporting,
  *                      or NULL to disable error reporting.
  *  \return The object list, or NULL on error.
