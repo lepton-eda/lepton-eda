@@ -43,8 +43,8 @@
  *
  *  \param [in]  first_line      Character string with picture description.
  *  \param [in]  tb              Text buffer to load embedded data from.
- *  \param [in]  release_ver     libgeda release version number.
- *  \param [in]  fileformat_ver  libgeda file format version number.
+ *  \param [in]  release_ver     liblepton release version number.
+ *  \param [in]  fileformat_ver  liblepton file format version number.
  *  \param [in,out] err \c GError structure for error reporting,
  *                      or NULL to disable error reporting.
  *  \return A pointer to the new picture object, or NULL on error.
