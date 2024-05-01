@@ -182,8 +182,8 @@ void o_attrib_print(GList *attributes)
  *  \param [in]  page                   The LeptonPage object.
  *  \param [in]  object_to_get_attribs  Object which gets these attribs.
  *  \param [in]  tb                     The text buffer to read from.
- *  \param [in]  release_ver            libgeda release version number.
- *  \param [in]  fileformat_ver         file format version number.
+ *  \param [in]  release_ver            liblepton release version number.
+ *  \param [in]  fileformat_ver         liblepton file format version number.
  *  \param [in,out] err \c GError structure for error reporting,
  *                      or NULL to disable error reporting.
  *  \return GList of attributes read, or NULL on error.
