@@ -271,11 +271,11 @@ lepton_net_object_new (int color,
  *  If the netobject was read successfully, a new net object is
  *  allocated and appended to the \a object_list.
  *
- *  \param [in] buf          a text buffer (usually a line of a schematic file)
- *  \param [in] release_ver  The release number gEDA
- *  \param [in] fileformat_ver a integer value of the file format
- *  \param [in,out] err The \c GError structure storing the error
- *                      in case of failure.
+ *  \param [in] buf            Character string with net description.
+ *  \param [in] release_ver    liblepton release version number.
+ *  \param [in] fileformat_ver liblepton file format version number.
+ *  \param [in,out] err \c GError structure for error reporting, or
+ *                      NULL to disable error reporting.
  *  \return The object list, or NULL on error.
  *
  */
