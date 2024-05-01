@@ -374,11 +374,11 @@ lepton_arc_object_modify (LeptonObject *object,
  *
  *  A negative or null radius is not allowed.
  *
- *  \param [in] buf
- *  \param [in] release_ver
- *  \param [in] fileformat_ver
- *  \param [in,out] err  The \c GError structure storing the error
- *                       in case of failure.
+ *  \param [in] buf            Character string with arc description.
+ *  \param [in] release_ver    liblepton release version number.
+ *  \param [in] fileformat_ver liblepton file format version number.
+ *  \param [in,out] err \c GError structure for error reporting, or
+ *                      NULL to disable error reporting.
  *  \return The ARC LeptonObject that was created, or NULL on error.
  */
 LeptonObject*
