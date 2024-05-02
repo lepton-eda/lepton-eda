@@ -254,11 +254,6 @@ schematic_window_create_main_popup_menu (GschemToplevel* w_current)
     GSimpleAction* action = g_simple_action_new (e.action, NULL);
     menu_item = lepton_action_create_menu_item (action, gettext (e.name), NULL);
 
-    g_signal_connect (menu_item,
-                      "activate",
-                      G_CALLBACK (&on_menu_item_activate),
-                      action);
-
     g_signal_connect (action,
                       "activate",
                       G_CALLBACK (g_menu_execute),
