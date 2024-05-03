@@ -303,6 +303,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
     selected, the action warns the user by displaying an error
     dialog box with an appropriate message.
 
+- Orthogonal connection of nets to buses are now allowed.  To
+  achieve this, the user has to set the value of the
+  `bus-ripper-size` key in the `schematic` configuration group to
+  `0` and the `bus-ripper-type` key to `net`.
+
 ### Changes in `lepton-archive`:
 
 - The program now outputs its basename instead of the full path
