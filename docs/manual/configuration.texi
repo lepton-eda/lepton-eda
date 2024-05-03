@@ -1099,6 +1099,9 @@ number.
 @tab
 @anchor{bus-ripper-size}
 Sets the size of the auto bus rippers.  @since{1.9.10}
+Setting this value to @cfgval{0} along with the value of
+@cfgkey{bus-ripper-type} set to @cfgval{net} allows for creating
+orthogonal connections of nets to buses.  @since{1.9.19}
 
 @item @cfgkey{bus-ripper-type}
 @tab @cfgtype{string}
