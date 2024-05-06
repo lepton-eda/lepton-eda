@@ -23,6 +23,23 @@
   (test-equal (pcb-element-value *element) "unknown__")
   (free-element *element))
 
+;;; Element's fields with several closing parens after the value.
+(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown))))"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "DIP14")
+  (test-equal (pcb-element-refdes *element) "U100")
+  (test-equal (pcb-element-value *element) "unknown")
+  (free-element *element))
+
+;;; Element's fields with several closing parens and text after
+;;; the value.
+(let ((*element (pkg-line->element (string->pointer "PKG_DIP14(DIP14,U100,unknown)))text"))))
+  (test-assert (not (null-pointer? *element)))
+  (test-equal (pcb-element-description *element) "DIP14")
+  (test-equal (pcb-element-refdes *element) "U100")
+  (test-equal (pcb-element-value *element) "unknown")
+  (free-element *element))
+
 ;;; Element with extra description arguments.
 (let ((*element (pkg-line->element (string->pointer "PKG_100-Pin-jack(100-Pin-jack,refdes,value,Pin,jack)"))))
   (test-assert (not (null-pointer? *element)))
