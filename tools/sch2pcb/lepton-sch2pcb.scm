@@ -1370,7 +1370,7 @@ Lepton EDA homepage: <~A>
                     (sch2pcb_get_n_none)
                     pcb-new-filename))
   (unless (zero? (sch2pcb_get_n_empty))
-    (format-message "~A components with empty footprint \"~A\" omitted from ~A.\n"
+    (format-message "~A components with empty footprint ~S omitted from ~A.\n"
                     (sch2pcb_get_n_empty)
                     %empty-footprint-name
                     pcb-new-filename))
