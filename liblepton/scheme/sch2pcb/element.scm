@@ -106,9 +106,13 @@
                         (value (fix-spaces (list-ref args 2))))
                     (set-pcb-element-description! *element description)
                     (set-pcb-element-refdes! *element refdes)
-                    (set-pcb-element-value! *element value)
-                    (pcb_element_pkg_to_element *element
-                                                (string->pointer line)))))))))
+                    (let* ((right-paren-index (string-index value #\)))
+                           (new-value (if right-paren-index
+                                          (string-take value right-paren-index)
+                                          value)))
+                      (set-pcb-element-value! *element new-value)
+                      (pcb_element_pkg_to_element *element
+                                                  (string->pointer line))))))))))
 
 
 (define (free-element *element)
