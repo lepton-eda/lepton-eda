@@ -158,12 +158,12 @@
       (set-pcb-element-refdes! *element refdes)
       (set-pcb-element-value! *element value)
       (when value-has-comma?
-        (let ((revamped-value (string-append value
-                                             ","
-                                             (fix-spaces (list-ref args 3)))))
-          (set-pcb-element-value!
-           *element
-           (trim-after-right-paren revamped-value))))
+        (let ((revamped-value
+               (trim-after-right-paren
+                (string-append value
+                               ","
+                               (fix-spaces (list-ref args 3))))))
+          (set-pcb-element-value! *element revamped-value)))
       (let* ((n (if value-has-comma? 4 3))
              (fix-args (list-tail args n)))
         (unless (null? fix-args)
