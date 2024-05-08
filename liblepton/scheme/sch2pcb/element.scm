@@ -175,11 +175,9 @@
                (trim-after-right-paren (string-join fix-args))))
             *element)))))
 
-  (if (not (string-prefix? "PKG_" line))
-      %null-pointer
+  (if (string-prefix? "PKG_" line)
       (let ((left-paren-index (string-index line #\()))
-        (if (not left-paren-index)
-            %null-pointer
+        (if left-paren-index
             ;; Get the contents of the string after the left paren
             ;; and check how many arguments it contains by
             ;; splitting it up by commas.
@@ -189,7 +187,9 @@
                   (begin
                     (format-warning "Bad package line: ~A\n" line)
                     %null-pointer)
-                  (args->element args)))))))
+                  (args->element args)))
+            %null-pointer))
+      %null-pointer))
 
 
 (define (free-element *element)
