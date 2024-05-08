@@ -160,17 +160,19 @@
                  (string-append value
                                 ","
                                 (fix-spaces (list-ref args 3))))
-                value)))
+                value))
+           (pkg-name-fix
+            (let ((fix-args (list-tail args (if value-has-comma? 4 3))))
+              (and (not (null? fix-args))
+                   ;; Trimming the string again seems to be
+                   ;; superfluous here.
+                   (trim-after-right-paren (string-join fix-args))))))
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
       (set-pcb-element-value! *element revamped-value)
-      (let ((fix-args (list-tail args (if value-has-comma? 4 3))))
-        (unless (null? fix-args)
-          (set-pcb-element-pkg-name-fix!
-           *element
-           ;; This seems to be superfluous here.
-           (trim-after-right-paren (string-join fix-args))))
-        *element)))
+      (and pkg-name-fix
+           (set-pcb-element-pkg-name-fix! *element pkg-name-fix))
+      *element))
 
   (if (string-prefix? "PKG_" line)
       (let ((left-paren-index (string-index line #\()))
