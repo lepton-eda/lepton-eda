@@ -144,9 +144,8 @@
   ;; value has a comma because gnet-gsch2pcb.scm munges the
   ;; description with '-' when there are extra args.
   ;;
-  (define (args->element args)
-    (let* ((*element (pcb_element_new))
-           (description (fix-spaces (list-ref args 0)))
+  (define (list->element-fields args)
+    (let* ((description (fix-spaces (list-ref args 0)))
            (refdes (fix-spaces (list-ref args 1)))
            (value (trim-after-right-paren (fix-spaces (list-ref args 2))))
            (extra-args-count (- (length args) 3))
@@ -167,9 +166,13 @@
                    ;; Trimming the string again seems to be
                    ;; superfluous here.
                    (trim-after-right-paren (string-join fix-args))))))
+      (values description refdes revamped-value pkg-name-fix)))
+
+  (define (field-values->element description refdes value pkg-name-fix)
+    (let ((*element (pcb_element_new)))
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
-      (set-pcb-element-value! *element revamped-value)
+      (set-pcb-element-value! *element value)
       (and pkg-name-fix
            (set-pcb-element-pkg-name-fix! *element pkg-name-fix))
       *element))
@@ -186,7 +189,9 @@
                   (begin
                     (format-warning "Bad package line: ~A\n" line)
                     %null-pointer)
-                  (args->element args)))
+                  (call-with-values
+                      (lambda () (list->element-fields args))
+                    field-values->element)))
             %null-pointer))
       %null-pointer))
 
