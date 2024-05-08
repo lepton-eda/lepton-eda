@@ -169,11 +169,10 @@
           (let* ((n (if value-has-comma? 4 3))
                  (fix-args (list-tail args n)))
             (unless (null? fix-args)
-              (let ((fix (string-join fix-args)))
-                (set-pcb-element-pkg-name-fix!
-                 *element
-                 ;; This seems to be superfluous here.
-                 (trim-after-right-paren fix))))
+              (set-pcb-element-pkg-name-fix!
+               *element
+               ;; This seems to be superfluous here.
+               (trim-after-right-paren (string-join fix-args))))
             *element)))))
 
   (if (not (string-prefix? "PKG_" line))
