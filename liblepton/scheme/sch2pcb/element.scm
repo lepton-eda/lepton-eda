@@ -154,8 +154,7 @@
       (let ((new-value (trim-after-right-paren value)))
         (set-pcb-element-value! *element new-value)
         (let* ((extra-args-count (- (length args) 3))
-               (dashes-count (string-count
-                              (pcb-element-description *element) #\-))
+               (dashes-count (string-count description #\-))
                ;; Assume there was a comma in the value, for
                ;; instance "1K, 1%".
                (value-has-comma? (= extra-args-count (1+ dashes-count))))
