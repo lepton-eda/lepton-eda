@@ -120,6 +120,14 @@
 ;;;      100-Pin-jack -> 100 Pin jack
 ;;;
 (define (pkg-line->element line)
+  ;; Drop the part of string S starting with the first found
+  ;; right paren.
+  (define (trim-after-right-paren s)
+    (let ((right-paren-index (string-index s #\))))
+      (if right-paren-index
+          (string-take s right-paren-index)
+          s)))
+
   ;; If the component value has a comma, e.g. "1k, 1%", the
   ;; netlister generated PKG line will be
   ;;
@@ -143,10 +151,7 @@
           (value (fix-spaces (list-ref args 2))))
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
-      (let* ((right-paren-index (string-index value #\)))
-             (new-value (if right-paren-index
-                            (string-take value right-paren-index)
-                            value)))
+      (let ((new-value (trim-after-right-paren value)))
         (set-pcb-element-value! *element new-value)
         (let* ((extra-args-count (- (length args) 3))
                (dashes-count (string-count
@@ -160,25 +165,15 @@
                                                  (fix-spaces (list-ref args 3)))))
               (set-pcb-element-value!
                *element
-               (let ((right-paren-index (string-index revamped-value #\))))
-                 ;; Drop anything at right starting with a closing
-                 ;; paren.
-                 (if right-paren-index
-                     (string-take revamped-value right-paren-index)
-                     revamped-value)))))
+               (trim-after-right-paren revamped-value))))
           (let* ((n (if value-has-comma? 4 3))
                  (fix-args (list-tail args n)))
             (unless (null? fix-args)
               (let ((fix (string-join fix-args)))
                 (set-pcb-element-pkg-name-fix!
                  *element
-                 ;; Drop anything at right starting with a closing
-                 ;; paren once again.  This seems to be
-                 ;; superfluous here.
-                 (let ((right-paren-index (string-index fix #\))))
-                   (if right-paren-index
-                       (string-take fix right-paren-index)
-                       fix)))))
+                 ;; This seems to be superfluous here.
+                 (trim-after-right-paren fix))))
             *element)))))
 
   (if (not (string-prefix? "PKG_" line))
