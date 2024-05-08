@@ -148,31 +148,31 @@
     (let ((*element (pcb_element_new))
           (description (fix-spaces (list-ref args 0)))
           (refdes (fix-spaces (list-ref args 1)))
-          (value (fix-spaces (list-ref args 2))))
+          (value (trim-after-right-paren
+                  (fix-spaces (list-ref args 2)))))
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
-      (let ((new-value (trim-after-right-paren value)))
-        (set-pcb-element-value! *element new-value)
-        (let* ((extra-args-count (- (length args) 3))
-               (dashes-count (string-count description #\-))
-               ;; Assume there was a comma in the value, for
-               ;; instance "1K, 1%".
-               (value-has-comma? (= extra-args-count (1+ dashes-count))))
-          (when value-has-comma?
-            (let ((revamped-value (string-append (pcb-element-value *element)
-                                                 ","
-                                                 (fix-spaces (list-ref args 3)))))
-              (set-pcb-element-value!
-               *element
-               (trim-after-right-paren revamped-value))))
-          (let* ((n (if value-has-comma? 4 3))
-                 (fix-args (list-tail args n)))
-            (unless (null? fix-args)
-              (set-pcb-element-pkg-name-fix!
-               *element
-               ;; This seems to be superfluous here.
-               (trim-after-right-paren (string-join fix-args))))
-            *element)))))
+      (set-pcb-element-value! *element value)
+      (let* ((extra-args-count (- (length args) 3))
+             (dashes-count (string-count description #\-))
+             ;; Assume there was a comma in the value, for
+             ;; instance "1K, 1%".
+             (value-has-comma? (= extra-args-count (1+ dashes-count))))
+        (when value-has-comma?
+          (let ((revamped-value (string-append (pcb-element-value *element)
+                                               ","
+                                               (fix-spaces (list-ref args 3)))))
+            (set-pcb-element-value!
+             *element
+             (trim-after-right-paren revamped-value))))
+        (let* ((n (if value-has-comma? 4 3))
+               (fix-args (list-tail args n)))
+          (unless (null? fix-args)
+            (set-pcb-element-pkg-name-fix!
+             *element
+             ;; This seems to be superfluous here.
+             (trim-after-right-paren (string-join fix-args))))
+          *element))))
 
   (if (string-prefix? "PKG_" line)
       (let ((left-paren-index (string-index line #\()))
