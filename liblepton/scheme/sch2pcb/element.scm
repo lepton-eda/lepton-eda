@@ -164,8 +164,7 @@
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
       (set-pcb-element-value! *element revamped-value)
-      (let* ((n (if value-has-comma? 4 3))
-             (fix-args (list-tail args n)))
+      (let ((fix-args (list-tail args (if value-has-comma? 4 3))))
         (unless (null? fix-args)
           (set-pcb-element-pkg-name-fix!
            *element
