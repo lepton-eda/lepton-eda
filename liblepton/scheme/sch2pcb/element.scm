@@ -153,17 +153,17 @@
            (dashes-count (string-count description #\-))
            ;; Assume there was a comma in the value, for
            ;; instance "1K, 1%".
-           (value-has-comma? (= extra-args-count (1+ dashes-count))))
+           (value-has-comma? (= extra-args-count (1+ dashes-count)))
+           (revamped-value
+            (if value-has-comma?
+                (trim-after-right-paren
+                 (string-append value
+                                ","
+                                (fix-spaces (list-ref args 3))))
+                value)))
       (set-pcb-element-description! *element description)
       (set-pcb-element-refdes! *element refdes)
-      (set-pcb-element-value! *element value)
-      (when value-has-comma?
-        (let ((revamped-value
-               (trim-after-right-paren
-                (string-append value
-                               ","
-                               (fix-spaces (list-ref args 3))))))
-          (set-pcb-element-value! *element revamped-value)))
+      (set-pcb-element-value! *element revamped-value)
       (let* ((n (if value-has-comma? 4 3))
              (fix-args (list-tail args n)))
         (unless (null? fix-args)
