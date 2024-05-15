@@ -24,9 +24,9 @@
 
   #:export (insert-file-element))
 
-(define (insert-file-element *output-file path *element)
+(define (insert-file-element *output-file element-filename *element)
   (true? (sch2pcb_insert_element *output-file
-                                 (string->pointer path)
+                                 (string->pointer element-filename)
                                  (pcb_element_get_description *element)
                                  (pcb_element_get_refdes *element)
                                  (pcb_element_get_value *element))))
