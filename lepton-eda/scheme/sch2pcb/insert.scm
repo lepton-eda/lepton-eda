@@ -25,6 +25,9 @@
   #:export (insert-file-element))
 
 (define (insert-file-element *output-file element-filename *element)
+  "Insert the contents of the file ELEMENT-FILENAME into *OUTPUT-FILE
+replacing its fields 'footprint', 'refdes', and 'value' with the
+corresponding fields of *ELEMENT."
   (true? (sch2pcb_insert_element *output-file
                                  (string->pointer element-filename)
                                  (pcb_element_get_description *element)
