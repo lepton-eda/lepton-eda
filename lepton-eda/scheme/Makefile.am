@@ -283,7 +283,8 @@ TESTS = \
 	unit-tests/netlist-attrib.scm \
 	unit-tests/netlist-load-path.scm \
 	unit-tests/netlist-partlist.scm \
-	unit-tests/sch2pcb-element.scm
+	unit-tests/sch2pcb-element.scm \
+	unit-tests/sch2pcb-insert.scm
 
 TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
