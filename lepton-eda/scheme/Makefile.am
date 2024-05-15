@@ -131,6 +131,7 @@ nobase_dist_scmdata_DATA = \
 	netlist/verbose.scm \
 	sch2pcb/element.scm \
 	sch2pcb/format.scm \
+	sch2pcb/insert.scm \
 	schematic/action.scm \
 	schematic/action-mode.scm \
 	schematic/action/copy.scm \

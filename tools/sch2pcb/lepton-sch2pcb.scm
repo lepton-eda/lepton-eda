@@ -33,7 +33,8 @@
              (lepton srfi-37)
              (lepton version)
              (sch2pcb element)
-             (sch2pcb format))
+             (sch2pcb format)
+             (sch2pcb insert))
 
 
 (define %sch2pcb (basename (car (program-arguments))))
@@ -505,13 +506,6 @@
           (set! %not-found-packages-count (1+ %not-found-packages-count))
           ;; Copy PKG_ line.
           (sch2pcb_buffer_to_file *mline *tmp-file))))
-
-  (define (insert-file-element *output-file path *element)
-    (true? (sch2pcb_insert_element *output-file
-                                   (string->pointer path)
-                                   (pcb_element_get_description *element)
-                                   (pcb_element_get_refdes *element)
-                                   (pcb_element_get_value *element))))
 
   (define (process-file-element *mline
                                 *tmp-file
