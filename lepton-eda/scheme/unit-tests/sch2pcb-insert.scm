@@ -50,7 +50,7 @@
                      (insert-file-element *output-file element-filename *element)))
                 (test-assert (not <result>)))))))
     (test-assert (string-contains <stderr>
-                                  (string-append "insert_element() can't open "
+                                  (string-append "insert-file-element(): can't open "
                                                  element-filename)))
     ;; Skip the test as the real error is not catched yet on
     ;; reading the file.
