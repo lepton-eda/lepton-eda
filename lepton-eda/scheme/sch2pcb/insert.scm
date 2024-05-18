@@ -37,7 +37,7 @@ corresponding fields of *ELEMENT."
     (if (null-pointer? *input-file)
         (begin
           (format (current-error-port)
-                  "insert_element() can't open ~A\n"
+                  "insert-file-element(): can't open ~A\n"
                   element-filename)
           #f)
         (true? (sch2pcb_insert_element *input-file
