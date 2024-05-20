@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2023 Lepton EDA Contributors
+;;; Copyright (C) 2020-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -383,7 +383,6 @@
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
             schematic_window_get_undo_panzoom
-            schematic_window_get_undo_type
             schematic_window_get_keyaccel_string
             schematic_window_set_keyaccel_string
             schematic_window_get_keyaccel_string_source_id
@@ -702,7 +701,6 @@
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
-(define-lff schematic_window_get_undo_type int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
 (define-lff schematic_window_set_keyaccel_string void '(* *))
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
