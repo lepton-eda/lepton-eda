@@ -264,7 +264,8 @@
 
 
 (define (zoom-box-end *window x y)
-  (a_zoom_box_end *window x y))
+  (a_zoom_box_end *window x y)
+  (set-action-mode! 'select-mode #:window (pointer->window *window)))
 
 
 (define (callback-button-released *page-view *event *window)

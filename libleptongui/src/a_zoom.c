@@ -207,7 +207,6 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   }
 
   i_action_stop (w_current);
-  i_set_state(w_current, SELECT);
 }
 
 /*! \todo Finish function documentation!!!
