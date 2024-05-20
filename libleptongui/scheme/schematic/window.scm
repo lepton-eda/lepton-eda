@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;; Copyright (C) 2017-2024 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -263,6 +263,10 @@
     (cons window-x window-y)))
 
 
+(define (zoom-box-end *window x y)
+  (a_zoom_box_end *window x y))
+
+
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
@@ -300,7 +304,7 @@
                    ('path-mode (o_path_end *window x y))
                    ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
                    ('select-mode (o_select_end *window unsnapped-x unsnapped-y))
-                   ('zoom-box-mode (a_zoom_box_end *window unsnapped-x unsnapped-y))
+                   ('zoom-box-mode (zoom-box-end *window unsnapped-x unsnapped-y))
                    (_ FALSE)))))
 
           (2
