@@ -486,7 +486,6 @@
 
             a_zoom
             a_zoom_box
-            a_zoom_box_end
             a_zoom_box_invalidate_rubber
             a_zoom_box_motion
             a_zoom_box_start
@@ -1065,7 +1064,6 @@
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
 (define-lff a_zoom_box void '(*))
-(define-lff a_zoom_box_end void (list '* int int))
 (define-lff a_zoom_box_invalidate_rubber void '(*))
 (define-lff a_zoom_box_motion void (list '* int int))
 (define-lff a_zoom_box_start void (list '* int int))

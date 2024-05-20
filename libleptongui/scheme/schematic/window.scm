@@ -264,9 +264,13 @@
 
 
 (define (zoom-box-end *window x y)
+  "End zooming in *WINDOW at coords X and Y."
   (define UNDO_VIEWPORT_ONLY 1)
-
-  (a_zoom_box_end *window x y)
+  (unless (in-action? (pointer->window *window))
+    (error "zoom-box-end(): The window is not in action!"))
+  (a_zoom_box_invalidate_rubber *window)
+  (schematic_window_set_rubber_visible *window 0)
+  (a_zoom_box *window)
   (when (schematic_window_get_undo_panzoom *window)
     (o_undo_savestate_old *window UNDO_VIEWPORT_ONLY))
   (i_action_stop *window)

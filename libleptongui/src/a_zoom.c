@@ -184,20 +184,6 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
-{
-  g_assert (schematic_window_get_inside_action (w_current) != 0);
-
-  a_zoom_box_invalidate_rubber (w_current);
-  schematic_window_set_rubber_visible (w_current, 0);
-
-  a_zoom_box(w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
