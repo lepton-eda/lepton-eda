@@ -24,9 +24,6 @@
 
 #include "gschem.h"
 
-static void
-a_zoom_box(GschemToplevel *w_current);
-
 /* Kazu - discuss with Ales
  * 1) rint
  * 2) SWAP & SORT
@@ -136,7 +133,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  *  \par Function Description
  *
  */
-static void
+void
 a_zoom_box(GschemToplevel *w_current)
 {
   double zx, zy, relativ_zoom_factor;
