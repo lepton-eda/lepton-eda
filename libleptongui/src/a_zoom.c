@@ -200,11 +200,6 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   schematic_window_set_rubber_visible (w_current, 0);
 
   a_zoom_box(w_current);
-
-  if (schematic_window_get_undo_panzoom (w_current))
-  {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
-  }
 }
 
 /*! \todo Finish function documentation!!!

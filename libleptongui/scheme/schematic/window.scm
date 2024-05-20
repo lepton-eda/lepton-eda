@@ -264,7 +264,11 @@
 
 
 (define (zoom-box-end *window x y)
+  (define UNDO_VIEWPORT_ONLY 1)
+
   (a_zoom_box_end *window x y)
+  (when (schematic_window_get_undo_panzoom *window)
+    (o_undo_savestate_old *window UNDO_VIEWPORT_ONLY))
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window)))
 
