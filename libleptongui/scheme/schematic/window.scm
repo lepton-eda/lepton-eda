@@ -265,6 +265,7 @@
 
 (define (zoom-box-end *window x y)
   (a_zoom_box_end *window x y)
+  (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window)))
 
 

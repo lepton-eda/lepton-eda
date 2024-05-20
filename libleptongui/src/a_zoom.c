@@ -205,8 +205,6 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
-
-  i_action_stop (w_current);
 }
 
 /*! \todo Finish function documentation!!!
