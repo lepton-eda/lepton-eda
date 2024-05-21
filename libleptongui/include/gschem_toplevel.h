@@ -562,4 +562,10 @@ schematic_window_get_second_wy (GschemToplevel *w_current);
 void
 schematic_window_set_second_wy (GschemToplevel *w_current,
                                 int val);
+int
+schematic_window_get_file_preview (GschemToplevel *w_current);
+
+void
+schematic_window_set_file_preview (GschemToplevel *w_current,
+                                   int val);
 G_END_DECLS
