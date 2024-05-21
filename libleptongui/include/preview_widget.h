@@ -52,10 +52,10 @@ struct _SchematicPreview
 GType
 schematic_preview_get_type (void);
 
+G_BEGIN_DECLS
+
 GtkWidget*
 schematic_preview_new ();
-
-G_BEGIN_DECLS
 
 gboolean
 schematic_preview_callback_button_press (GtkWidget *widget,

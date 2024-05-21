@@ -272,18 +272,22 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
  *
  *  \param [in] dialog The file chooser dialog widget to add the
  *                     preview to.
+ *  \param [in] preview The new preview widget to add.
  */
 void
-x_fileselect_add_preview (GtkWidget *dialog)
+x_fileselect_add_preview (GtkWidget *dialog,
+                          GtkWidget *preview)
 {
   GtkFileChooser *filechooser;
-  GtkWidget *frame, *preview;
+  GtkWidget *frame;
 
   filechooser = GTK_FILE_CHOOSER (dialog);
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
                                     "label", _("Preview"),
                                     NULL));
-#ifndef ENABLE_GTK3
+#ifdef ENABLE_GTK3
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+#else
   GtkWidget *alignment;
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
                                         "right-padding", 5,
@@ -293,13 +297,6 @@ x_fileselect_add_preview (GtkWidget *dialog)
                                         "xalign", 0.5,
                                         "yalign", 0.5,
                                         NULL));
-#endif
-
-  preview = schematic_preview_new ();
-
-#ifdef ENABLE_GTK3
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-#else
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 #endif

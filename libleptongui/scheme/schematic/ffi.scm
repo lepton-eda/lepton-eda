@@ -331,6 +331,7 @@
             gschem_page_view_zoom_extents
             schematic_page_view_grab_focus
 
+            schematic_preview_new
             *schematic_preview_callback_realize
             *schematic_preview_callback_button_press
             *schematic_preview_callback_scroll_event
@@ -635,6 +636,7 @@
 (define-lff schematic_page_view_grab_focus void '(*))
 
 ;;; preview_widget.c
+(define-lff schematic_preview_new '* '())
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
 (define-lfc *schematic_preview_callback_scroll_event)
@@ -1014,7 +1016,7 @@
 
 ;;; x_fileselect.c
 (define-lff schematic_file_select_dialog_new '* '(*))
-(define-lff x_fileselect_add_preview void '(*))
+(define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
 (define-lff x_fileselect_save int '(* * *))
 (define-lff schematic_file_open int '(* * * *))
