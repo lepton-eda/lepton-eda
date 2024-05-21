@@ -33,6 +33,7 @@
   #:use-module (schematic dialog file-select)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
+  #:use-module (schematic preview-widget)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
@@ -135,15 +136,6 @@
 
 (define (callback-add-component *widget *window)
   (define window (pointer->window *window))
-  (define signal-callback-list
-    (list
-     (if %m4-use-gtk3
-         `("draw" . ,*x_event_draw)
-         `("expose-event" . ,*x_event_expose))
-     `("realize" . ,*schematic_preview_callback_realize)
-     `("button-press-event" . ,*schematic_preview_callback_button_press)
-     `("configure-event" . ,*x_event_configure)
-     `("scroll-event" . ,*schematic_preview_callback_scroll_event)))
 
   (o_redraw_cleanstates *window)
 
@@ -154,14 +146,8 @@
                                 (string->pointer "response")
                                 *x_compselect_callback_response
                                 *window)
-      (let ((*preview (schematic_compselect_get_preview *compselect-widget)))
-        (for-each
-         (lambda (element)
-           (schematic_signal_connect *preview
-                                     (string->pointer (car element))
-                                     (cdr element)
-                                     (schematic_preview_get_window *preview)))
-         signal-callback-list))
+      (init-preview-widget-signals
+       (schematic_compselect_get_preview *compselect-widget))
       (schematic_window_set_compselect *window *compselect-widget)))
   (x_compselect_open (schematic_window_get_compselect *window))
 
