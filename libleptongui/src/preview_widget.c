@@ -284,9 +284,7 @@ schematic_preview_callback_scroll_event (GtkWidget *widget,
 GtkWidget*
 schematic_preview_new ()
 {
-  SchematicPreview *preview = SCHEMATIC_PREVIEW (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
-
-  return GTK_WIDGET (preview);
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
 }
 
 
