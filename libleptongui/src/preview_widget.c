@@ -286,30 +286,6 @@ schematic_preview_new ()
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
 
-  struct event_reg_t {
-    const gchar *detailed_signal;
-    GCallback c_handler;
-  } drawing_area_events[] = {
-    { "realize",              G_CALLBACK (schematic_preview_callback_realize)},
-#ifdef ENABLE_GTK3
-    { "draw",                 G_CALLBACK (x_event_draw)                   },
-#else
-    { "expose_event",         G_CALLBACK (x_event_expose)                 },
-#endif
-    { "button_press_event",   G_CALLBACK (schematic_preview_callback_button_press)},
-    { "configure_event",      G_CALLBACK (x_event_configure)              },
-    { "scroll_event",         G_CALLBACK (schematic_preview_callback_scroll_event)},
-    { NULL,                   NULL                                        }
-  }, *tmp;
-
-  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
-  {
-    g_signal_connect (GTK_WIDGET (preview),
-                      tmp->detailed_signal,
-                      tmp->c_handler,
-                      preview->window);
-  }
-
   return GTK_WIDGET (preview);
 }
 

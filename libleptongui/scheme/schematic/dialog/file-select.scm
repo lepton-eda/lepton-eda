@@ -25,6 +25,7 @@
   #:use-module (lepton ffi glib)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic preview-widget)
   #:use-module (schematic window)
   #:use-module (schematic window foreign)
 
@@ -41,7 +42,9 @@ last loaded page."
     (let ((*dialog
            (schematic_file_select_dialog_new *window)))
       (when (true? (schematic_window_get_file_preview *window))
-        (x_fileselect_add_preview *dialog (schematic_preview_new)))
+        (x_fileselect_add_preview
+         *dialog
+         (init-preview-widget-signals (schematic_preview_new))))
       *dialog))
 
   (define filenames
