@@ -1530,7 +1530,7 @@ compselect_constructor (GType type,
                                         NULL));
 #endif
 
-  preview = GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
+  preview = schematic_preview_new ();
 
 #ifdef ENABLE_GTK3
   gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
