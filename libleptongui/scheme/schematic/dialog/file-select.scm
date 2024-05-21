@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -36,8 +36,12 @@ pages.  The current page of the window is set to the page of the
 last loaded page."
   (define *window (check-window window 1))
 
+  (define *dialog (schematic_file_select_dialog_new *window))
+
   (define filenames
-    (gslist->list (x_fileselect_open *window) pointer->string 'free))
+    (gslist->list (x_fileselect_open *window
+                                     *dialog)
+                  pointer->string 'free))
 
   ;; Open each file.
   (define pages

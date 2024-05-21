@@ -316,21 +316,19 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
 
 }
 
-/*! \brief Opens a file chooser for opening one or more schematics.
+
+/*! \brief Create a file chooser for opening schematics
  *  \par Function Description
  *
- *  This function opens a file chooser dialog and waits for the
- *  user to select at least one file to load.
+ *  This function creates and initializes a file chooser dialog.
  *
  *  \param [in] w_current The GschemToplevel environment.
- *  \return The GSList of file names to open.
+ *  \return The created dialog widget.
  */
-GSList*
-x_fileselect_open (GschemToplevel *w_current)
+GtkWidget*
+schematic_file_select_dialog_new (GschemToplevel *w_current)
 {
-  GSList *filenames = NULL;
   GtkWidget *dialog;
-  gchar *cwd;
 
   dialog = gtk_file_chooser_dialog_new (_("Open"),
                                         GTK_WINDOW(w_current->main_window),
@@ -351,6 +349,27 @@ x_fileselect_open (GschemToplevel *w_current)
   {
     x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
   }
+
+  return dialog;
+}
+
+
+/*! \brief Opens a file chooser for opening one or more schematics.
+ *  \par Function Description
+ *
+ *  This function opens a file chooser dialog and waits for the
+ *  user to select at least one file to load.
+ *
+ *  \param [in] w_current The GschemToplevel environment.
+ *  \param [in] dialog The dialog window widget.
+ *  \return The GSList of file names to open.
+ */
+GSList*
+x_fileselect_open (GschemToplevel *w_current,
+                   GtkWidget *dialog)
+{
+  GSList *filenames = NULL;
+  gchar *cwd;
 
   g_object_set (dialog,
                 /* GtkFileChooser */

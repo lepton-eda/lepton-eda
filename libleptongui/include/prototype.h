@@ -496,8 +496,12 @@ schematic_compselect_new (GschemToplevel *w_current);
 
 
 /* x_fileselect.c */
+GtkWidget*
+schematic_file_select_dialog_new (GschemToplevel *w_current);
+
 GSList*
-x_fileselect_open (GschemToplevel *w_current);
+x_fileselect_open (GschemToplevel *w_current,
+                   GtkWidget *dialog);
 
 gboolean
 x_fileselect_save (GschemToplevel *w_current,
