@@ -347,7 +347,7 @@ x_fileselect_open (GschemToplevel *w_current)
                                           -1);
 #endif
 
-  if (w_current->file_preview)
+  if (schematic_window_get_file_preview (w_current) == TRUE)
   {
     x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
   }
