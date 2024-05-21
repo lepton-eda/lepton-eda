@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
 
   #:use-module (schematic ffi)
@@ -36,12 +37,17 @@ pages.  The current page of the window is set to the page of the
 last loaded page."
   (define *window (check-window window 1))
 
-  (define *dialog (schematic_file_select_dialog_new *window))
+  (define (*make-dialog)
+    (let ((*dialog
+           (schematic_file_select_dialog_new *window)))
+      (when (true? (schematic_window_get_file_preview *window))
+        (x_fileselect_add_preview *dialog))
+      *dialog))
 
   (define filenames
-    (gslist->list (x_fileselect_open *window
-                                     *dialog)
-                  pointer->string 'free))
+    (gslist->list (x_fileselect_open *window (*make-dialog))
+                  pointer->string
+                  'free))
 
   ;; Open each file.
   (define pages

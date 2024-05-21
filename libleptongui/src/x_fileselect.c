@@ -270,13 +270,16 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
  *  so that it redraws the preview area every time a new file is
  *  selected.
  *
- *  \param [in] filechooser The file chooser to add the preview to.
+ *  \param [in] dialog The file chooser dialog widget to add the
+ *                     preview to.
  */
 void
-x_fileselect_add_preview (GtkFileChooser *filechooser)
+x_fileselect_add_preview (GtkWidget *dialog)
 {
+  GtkFileChooser *filechooser;
   GtkWidget *frame, *preview;
 
+  filechooser = GTK_FILE_CHOOSER (dialog);
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
                                     "label", _("Preview"),
                                     NULL));
@@ -344,11 +347,6 @@ schematic_file_select_dialog_new (GschemToplevel *w_current)
                                           GTK_RESPONSE_CANCEL,
                                           -1);
 #endif
-
-  if (schematic_window_get_file_preview (w_current) == TRUE)
-  {
-    x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
-  }
 
   return dialog;
 }

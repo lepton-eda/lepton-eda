@@ -500,7 +500,7 @@ GtkWidget*
 schematic_file_select_dialog_new (GschemToplevel *w_current);
 
 void
-x_fileselect_add_preview (GtkFileChooser *filechooser);
+x_fileselect_add_preview (GtkWidget *dialog);
 
 GSList*
 x_fileselect_open (GschemToplevel *w_current,
