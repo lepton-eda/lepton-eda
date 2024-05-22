@@ -151,7 +151,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *
  *  \param [in] preview The preview widget.
  */
-static void
+void
 schematic_preview_callback_update (SchematicPreview *preview)
 {
   int left, top, right, bottom;
