@@ -229,7 +229,7 @@ on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
  *  \param [in] chooser   The file chooser to add the preview to.
  *  \param [in] user_data A pointer on the preview widget.
  */
-static void
+void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data)
 {

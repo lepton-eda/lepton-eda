@@ -515,6 +515,9 @@ schematic_file_open (GschemToplevel *w_current,
                      LeptonPage *page,
                      const gchar *filename,
                      GError **err);
+void
+x_fileselect_callback_update_preview (GtkFileChooser *chooser,
+                                      gpointer user_data);
 
 /* x_fstylecb.c */
 GtkWidget* x_fstylecb_new ();
