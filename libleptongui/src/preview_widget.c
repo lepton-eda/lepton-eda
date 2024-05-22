@@ -150,9 +150,11 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  it. Otherwise it displays a blank page.
  *
  *  \param [in] preview The preview widget.
+ *  \param [in] user_data Unused user data.
  */
 void
-schematic_preview_callback_update (SchematicPreview *preview)
+schematic_preview_callback_update (SchematicPreview *preview,
+                                   gpointer user_data)
 {
   int left, top, right, bottom;
   int width, height;
@@ -263,7 +265,16 @@ schematic_preview_class_init (SchematicPreviewClass *klass)
                           FALSE,
                           G_PARAM_READWRITE));
 
-
+  g_signal_new ("update-preview",
+                G_OBJECT_CLASS_TYPE (klass),
+                (GSignalFlags) (G_SIGNAL_RUN_LAST), /*signal_flags */
+                0, /*class_offset */
+                NULL, /* accumulator */
+                NULL, /* accu_data */
+                NULL,
+                G_TYPE_NONE,
+                0 /* n_params */
+                );
 }
 
 
@@ -362,7 +373,7 @@ schematic_preview_set_property (GObject *object,
 
       case PROP_ACTIVE:
         preview->active = g_value_get_boolean (value);
-        schematic_preview_callback_update (preview);
+        g_signal_emit_by_name (preview, "update-preview");
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

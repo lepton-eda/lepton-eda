@@ -37,7 +37,8 @@
    `("realize" . ,*schematic_preview_callback_realize)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)
-   `("scroll-event" . ,*schematic_preview_callback_scroll_event)))
+   `("scroll-event" . ,*schematic_preview_callback_scroll_event)
+   `("update-preview" . ,*schematic_preview_callback_update)))
 
 
 (define (init-preview-widget-signals *preview)
