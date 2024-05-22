@@ -42,9 +42,15 @@ last loaded page."
     (let ((*dialog
            (schematic_file_select_dialog_new *window)))
       (when (true? (schematic_window_get_file_preview *window))
-        (x_fileselect_add_preview
-         *dialog
-         (init-preview-widget-signals (schematic_preview_new))))
+        (let ((*preview (schematic_preview_new)))
+          (x_fileselect_add_preview
+           *dialog
+           (init-preview-widget-signals *preview))
+          ;; Connect callback to update preview.
+          (schematic_signal_connect *dialog
+                                    (string->pointer "update-preview")
+                                    *x_fileselect_callback_update_preview
+                                    *preview)))
       *dialog))
 
   (define filenames

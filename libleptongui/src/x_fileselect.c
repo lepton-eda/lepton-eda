@@ -308,12 +308,6 @@ x_fileselect_add_preview (GtkWidget *dialog,
                 "preview-widget", frame,
                 NULL);
 
-  /* connect callback to update preview */
-  g_signal_connect (filechooser,
-                    "update-preview",
-                    G_CALLBACK (x_fileselect_callback_update_preview),
-                    preview);
-
 }
 
 
