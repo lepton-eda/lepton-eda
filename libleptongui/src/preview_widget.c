@@ -174,6 +174,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview_active If the preview should be updated.
  *  \param [in] preview_filename The filename to read the preview
  *                               data from.
+ *  \param [in] preview_buffer The buffer to read the preview
+ *                             data from.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
@@ -188,7 +190,7 @@ schematic_preview_update (SchematicPreview *preview,
 
   if (schematic_preview_get_active (GTK_WIDGET (preview))) {
     g_assert ((schematic_preview_get_filename (GTK_WIDGET (preview)) == NULL)
-              || (preview->buffer == NULL));
+              || (schematic_preview_get_buffer (GTK_WIDGET (preview)) == NULL));
     if (schematic_preview_get_filename (GTK_WIDGET (preview)) != NULL) {
       /* open up file in current page */
       f_open (preview_toplevel,
@@ -199,12 +201,14 @@ schematic_preview_update (SchematicPreview *preview,
       /* test value returned by f_open... - Fix me */
       /* we should display something if there an error occured - Fix me */
     }
-    if (preview->buffer != NULL) {
+    if (schematic_preview_get_buffer (GTK_WIDGET (preview)) != NULL) {
       /* Load the data buffer */
       GList * objects = o_read_buffer (preview_page,
-                                       NULL, preview->buffer, -1,
-                                       _("Preview Buffer"), &err);
-
+                                       NULL,
+                                       schematic_preview_get_buffer (GTK_WIDGET (preview)),
+                                       -1,
+                                       _("Preview Buffer"),
+                                       &err);
       if (err == NULL) {
         lepton_page_append_list (preview_page, objects);
       }
