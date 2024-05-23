@@ -182,7 +182,8 @@ schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
                           LeptonToplevel *preview_toplevel,
                           gboolean preview_active,
-                          char *preview_filename)
+                          char *preview_filename,
+                          char *preview_buffer)
 {
   int left, top, right, bottom;
   int width, height;
@@ -193,7 +194,7 @@ schematic_preview_update (SchematicPreview *preview,
   if (preview_active)
   {
     g_assert ((preview_filename == NULL)
-              || (schematic_preview_get_buffer (GTK_WIDGET (preview)) == NULL));
+              || (preview_buffer == NULL));
     if (preview_filename != NULL) {
       /* open up file in current page */
       f_open (preview_toplevel,
@@ -204,11 +205,11 @@ schematic_preview_update (SchematicPreview *preview,
       /* test value returned by f_open... - Fix me */
       /* we should display something if there an error occured - Fix me */
     }
-    if (schematic_preview_get_buffer (GTK_WIDGET (preview)) != NULL) {
+    if (preview_buffer != NULL) {
       /* Load the data buffer */
       GList * objects = o_read_buffer (preview_page,
                                        NULL,
-                                       schematic_preview_get_buffer (GTK_WIDGET (preview)),
+                                       preview_buffer,
                                        -1,
                                        _("Preview Buffer"),
                                        &err);

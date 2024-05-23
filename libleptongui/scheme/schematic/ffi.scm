@@ -641,7 +641,7 @@
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
-(define-lff schematic_preview_update void (list '* '* '* int '*))
+(define-lff schematic_preview_update void (list '* '* '* int '* '*))
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
 (define-lff schematic_preview_get_active int '(*))
