@@ -230,7 +230,8 @@ x_event_configure (GschemPageView    *page_view,
     return FALSE;
   }
 
-  g_return_val_if_fail (p_current->toplevel != NULL, FALSE);
+  LeptonToplevel *toplevel = lepton_page_get_toplevel (p_current);
+  g_return_val_if_fail (toplevel != NULL, FALSE);
 
   gtk_widget_get_allocation (GTK_WIDGET(page_view), &current_allocation);
 
@@ -263,7 +264,7 @@ x_event_configure (GschemPageView    *page_view,
 
 
   /* re-pan each page of the LeptonToplevel */
-  for ( iter = lepton_list_get_glist (p_current->toplevel->pages);
+  for ( iter = lepton_list_get_glist (toplevel->pages);
         iter != NULL;
         iter = g_list_next (iter) ) {
 
