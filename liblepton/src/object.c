@@ -1793,7 +1793,8 @@ lepton_object_emit_change_notify (LeptonObject *object)
     return;
   }
 
-  LeptonToplevel *toplevel = object->page->toplevel;
+  LeptonToplevel *toplevel =
+    lepton_page_get_toplevel (object->page);
 
   if (toplevel == NULL) {
     return;
