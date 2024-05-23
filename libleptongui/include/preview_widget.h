@@ -63,6 +63,7 @@ void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
                           LeptonToplevel *preview_toplevel,
-                          gboolean preview_active);
+                          gboolean preview_active,
+                          char *preview_filename);
 
 G_END_DECLS

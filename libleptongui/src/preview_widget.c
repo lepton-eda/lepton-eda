@@ -181,7 +181,8 @@ void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
                           LeptonToplevel *preview_toplevel,
-                          gboolean preview_active)
+                          gboolean preview_active,
+                          char *preview_filename)
 {
   int left, top, right, bottom;
   int width, height;
@@ -191,13 +192,13 @@ schematic_preview_update (SchematicPreview *preview,
 
   if (preview_active)
   {
-    g_assert ((schematic_preview_get_filename (GTK_WIDGET (preview)) == NULL)
+    g_assert ((preview_filename == NULL)
               || (schematic_preview_get_buffer (GTK_WIDGET (preview)) == NULL));
-    if (schematic_preview_get_filename (GTK_WIDGET (preview)) != NULL) {
+    if (preview_filename != NULL) {
       /* open up file in current page */
       f_open (preview_toplevel,
               preview_page,
-              schematic_preview_get_filename (GTK_WIDGET (preview)),
+              preview_filename,
               F_OPEN_RC | F_OPEN_RESTORE_CWD,
               NULL);
       /* test value returned by f_open... - Fix me */
