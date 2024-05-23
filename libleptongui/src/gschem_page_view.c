@@ -1522,7 +1522,8 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
-  g_return_if_fail (object->page->toplevel != NULL);
+  LeptonToplevel *toplevel = lepton_page_get_toplevel (object->page);
+  g_return_if_fail (toplevel != NULL);
 
   success = lepton_object_calculate_visible_bounds (object,
                                                     view->show_hidden_text,
