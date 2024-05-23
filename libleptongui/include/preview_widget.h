@@ -57,6 +57,9 @@ schematic_preview_get_active (GtkWidget *preview);
 gchar*
 schematic_preview_get_buffer (GtkWidget *preview);
 
+gchar*
+schematic_preview_get_filename (GtkWidget *preview);
+
 GschemToplevel*
 schematic_preview_get_window (GtkWidget *preview);
 

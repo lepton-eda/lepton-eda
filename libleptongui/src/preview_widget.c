@@ -465,6 +465,20 @@ schematic_preview_get_buffer (GtkWidget *preview)
 }
 
 
+/*! \brief Get the field \a filename of this preview.
+ *
+ *  \param [in] preview The preview.
+ *  \return The \a filename field.
+ */
+gchar*
+schematic_preview_get_filename (GtkWidget *preview)
+{
+  g_return_val_if_fail (preview != NULL, NULL);
+
+  return SCHEMATIC_PREVIEW (preview)->filename;
+}
+
+
 /*! \brief Get the field \a preview_w_current of this preview.
  *
  *  \param [in] preview The preview.

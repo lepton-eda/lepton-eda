@@ -338,6 +338,7 @@
             *schematic_preview_callback_scroll_event
             schematic_preview_get_active
             schematic_preview_get_buffer
+            schematic_preview_get_filename
             schematic_preview_get_window
 
             schematic_signal_connect
@@ -647,6 +648,7 @@
 (define-lfc *schematic_preview_callback_scroll_event)
 (define-lff schematic_preview_get_active int '(*))
 (define-lff schematic_preview_get_buffer '* '(*))
+(define-lff schematic_preview_get_filename '* '(*))
 (define-lff schematic_preview_get_window '* '(*))
 
 ;;; schematic_hierarchy.c
