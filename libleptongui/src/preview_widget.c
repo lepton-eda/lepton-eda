@@ -227,9 +227,6 @@ schematic_preview_update (SchematicPreview *preview,
     geometry->world_top    = top    - ((double)height * OVER_ZOOM_FACTOR);
     geometry->world_bottom = bottom + ((double)height * OVER_ZOOM_FACTOR);
   }
-
-  /* display current page (possibly empty) */
-  gschem_page_view_zoom_extents (preview_view, NULL);
 }
 
 

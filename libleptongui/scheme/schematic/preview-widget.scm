@@ -28,7 +28,10 @@
 
 
 (define (update-preview *preview *user-data)
-  (schematic_preview_update *preview %null-pointer))
+  (schematic_preview_update *preview %null-pointer)
+
+  ;; Display current page (possibly empty).
+  (gschem_page_view_zoom_extents *preview %null-pointer))
 
 
 (define *update-preview
