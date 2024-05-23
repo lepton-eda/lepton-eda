@@ -180,7 +180,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
 void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
-                          LeptonToplevel *preview_toplevel)
+                          LeptonToplevel *preview_toplevel,
+                          gboolean preview_active)
 {
   int left, top, right, bottom;
   int width, height;
@@ -188,7 +189,8 @@ schematic_preview_update (SchematicPreview *preview,
 
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
-  if (schematic_preview_get_active (GTK_WIDGET (preview))) {
+  if (preview_active)
+  {
     g_assert ((schematic_preview_get_filename (GTK_WIDGET (preview)) == NULL)
               || (schematic_preview_get_buffer (GTK_WIDGET (preview)) == NULL));
     if (schematic_preview_get_filename (GTK_WIDGET (preview)) != NULL) {
