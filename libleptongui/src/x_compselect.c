@@ -561,6 +561,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   Compselect *compselect = (Compselect*)user_data;
   const CLibSymbol *sym = NULL;
   gchar *buffer = NULL;
+  GschemToplevel *w_current;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
 
@@ -582,8 +583,9 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                 NULL);
 
   /* update the attributes with the toplevel of the preview widget*/
-  update_attributes_model (compselect,
-                           compselect->preview->window);
+  w_current =
+    schematic_preview_get_window (GTK_WIDGET (compselect->preview));
+  update_attributes_model (compselect, w_current);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
