@@ -20,6 +20,7 @@
 (define-module (schematic preview-widget)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton m4)
 
@@ -33,6 +34,8 @@
       (log! 'warning "NULL preview widget")
       (let ((*page (gschem_page_view_get_page *preview)))
         (unless (null-pointer? *page)
+          ;; Delete old preview.
+          (lepton_page_delete_objects *page)
           (schematic_preview_update *preview *page)
           ;; Display current page (possibly empty).
           (gschem_page_view_zoom_extents *preview %null-pointer)))))

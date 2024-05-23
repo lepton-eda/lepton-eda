@@ -165,9 +165,6 @@ schematic_preview_update (SchematicPreview *preview,
   LeptonToplevel *preview_toplevel =
     lepton_page_get_toplevel (preview_page);
 
-  /* delete old preview */
-  lepton_page_delete_objects (preview_page);
-
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
     if (preview->filename != NULL) {
