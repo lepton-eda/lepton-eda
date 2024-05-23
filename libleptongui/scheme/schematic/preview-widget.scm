@@ -20,6 +20,7 @@
 (define-module (schematic preview-widget)
   #:use-module (system foreign)
 
+  #:use-module (lepton log)
   #:use-module (lepton m4)
 
   #:use-module (schematic ffi)
@@ -28,10 +29,12 @@
 
 
 (define (update-preview *preview *user-data)
-  (schematic_preview_update *preview %null-pointer)
-
-  ;; Display current page (possibly empty).
-  (gschem_page_view_zoom_extents *preview %null-pointer))
+  (if (null-pointer? *preview)
+      (log! 'warning "NULL preview widget")
+      (begin
+        (schematic_preview_update *preview %null-pointer)
+        ;; Display current page (possibly empty).
+        (gschem_page_view_zoom_extents *preview %null-pointer))))
 
 
 (define *update-preview

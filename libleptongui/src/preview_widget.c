@@ -162,7 +162,6 @@ schematic_preview_update (SchematicPreview *preview,
 
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
-  g_return_if_fail (preview_view != NULL);
   LeptonPage *preview_page = gschem_page_view_get_page (preview_view);
 
   if (preview_page == NULL) {
