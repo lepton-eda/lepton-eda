@@ -31,10 +31,11 @@
 (define (update-preview *preview *user-data)
   (if (null-pointer? *preview)
       (log! 'warning "NULL preview widget")
-      (begin
-        (schematic_preview_update *preview %null-pointer)
-        ;; Display current page (possibly empty).
-        (gschem_page_view_zoom_extents *preview %null-pointer))))
+      (let ((*page (gschem_page_view_get_page *preview)))
+        (unless (null-pointer? *page)
+          (schematic_preview_update *preview *page)
+          ;; Display current page (possibly empty).
+          (gschem_page_view_zoom_extents *preview %null-pointer)))))
 
 
 (define *update-preview

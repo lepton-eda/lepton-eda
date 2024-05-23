@@ -150,23 +150,17 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  it. Otherwise it displays a blank page.
  *
  *  \param [in] preview The preview widget.
- *  \param [in] user_data Unused user data.
+ *  \param [in] preview_page The \c LeptonPage object of the preview.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
-                          gpointer user_data)
+                          LeptonPage *preview_page)
 {
   int left, top, right, bottom;
   int width, height;
   GError * err = NULL;
 
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
-
-  LeptonPage *preview_page = gschem_page_view_get_page (preview_view);
-
-  if (preview_page == NULL) {
-    return;
-  }
 
   LeptonToplevel *preview_toplevel =
     lepton_page_get_toplevel (preview_page);
