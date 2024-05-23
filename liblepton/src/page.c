@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -319,6 +319,34 @@ lepton_page_set_selection_list (LeptonPage *page,
   g_return_if_fail (page != NULL);
 
   page->selection_list = selection_list;
+}
+
+
+/*! \brief Get page's \a toplevel field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a toplevel field.
+ */
+LeptonToplevel*
+lepton_page_get_toplevel (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, NULL);
+
+  return page->toplevel;
+}
+
+/*! \brief Set page's \a toplevel field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] toplevel The new \a toplevel value.
+ */
+void
+lepton_page_set_toplevel (LeptonPage *page,
+                          LeptonToplevel *toplevel)
+{
+  g_return_if_fail (page != NULL);
+
+  page->toplevel = toplevel;
 }
 
 
