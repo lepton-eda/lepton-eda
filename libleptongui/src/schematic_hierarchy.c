@@ -143,7 +143,8 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
 
-  LeptonToplevel *toplevel = current_page->toplevel;
+  LeptonToplevel *toplevel =
+    lepton_page_get_toplevel (current_page);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   if (current_page->up < 0) {
