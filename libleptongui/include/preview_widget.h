@@ -48,10 +48,6 @@ void
 schematic_preview_callback_realize (GtkWidget *widget,
                                     gpointer user_data);
 gboolean
-schematic_preview_callback_scroll_event (GtkWidget *widget,
-                                         GdkEventScroll *event,
-                                         GschemToplevel *w_current);
-gboolean
 schematic_preview_get_active (GtkWidget *preview);
 
 gchar*

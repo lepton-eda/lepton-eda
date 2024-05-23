@@ -291,20 +291,6 @@ schematic_preview_class_init (SchematicPreviewClass *klass)
 }
 
 
-gboolean
-schematic_preview_callback_scroll_event (GtkWidget *widget,
-                                         GdkEventScroll *event,
-                                         GschemToplevel *w_current)
-{
-  if (!schematic_preview_get_active (widget)) {
-    return TRUE;
-  }
-  return x_event_scroll (widget,
-                         event,
-                         schematic_preview_get_window (widget));
-}
-
-
 /*! \brief create a new preview widget
  */
 GtkWidget*

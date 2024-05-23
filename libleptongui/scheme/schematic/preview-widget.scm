@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton log)
   #:use-module (lepton m4)
 
@@ -45,6 +46,15 @@
 (define *update-preview
   (procedure->pointer void update-preview '(* *)))
 
+(define (scroll-preview *preview *scroll-event *window)
+  (if (not (true? (schematic_preview_get_active *preview)))
+      TRUE
+      (x_event_scroll *preview
+                      *scroll-event
+                      (schematic_preview_get_window *preview))))
+
+(define *scroll-preview
+  (procedure->pointer int scroll-preview '(* * *)))
 
 ;;; The list of pairs (NAME . CALLBACK) for initialization of
 ;;; preview widgets.
@@ -56,7 +66,7 @@
    `("realize" . ,*schematic_preview_callback_realize)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)
-   `("scroll-event" . ,*schematic_preview_callback_scroll_event)
+   `("scroll-event" . ,*scroll-preview)
    `("update-preview" . ,*update-preview)))
 
 

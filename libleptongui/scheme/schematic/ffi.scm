@@ -335,7 +335,6 @@
             schematic_preview_update
             *schematic_preview_callback_realize
             *schematic_preview_callback_button_press
-            *schematic_preview_callback_scroll_event
             schematic_preview_get_active
             schematic_preview_get_buffer
             schematic_preview_get_filename
@@ -645,7 +644,6 @@
 (define-lff schematic_preview_update void '(* * *))
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
-(define-lfc *schematic_preview_callback_scroll_event)
 (define-lff schematic_preview_get_active int '(*))
 (define-lff schematic_preview_get_buffer '* '(*))
 (define-lff schematic_preview_get_filename '* '(*))
