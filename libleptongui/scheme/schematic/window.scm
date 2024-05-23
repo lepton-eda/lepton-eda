@@ -703,6 +703,13 @@
   (procedure->pointer int callback-motion '(* * *)))
 
 
+(define (callback-scroll *widget *event *window)
+  (x_event_scroll *widget *event *window))
+
+(define *callback-scroll
+  (procedure->pointer int callback-scroll '(* * *)))
+
+
 (define (setup-page-view-draw-events *window *page-view)
   (define signal-callback-list
     (list
@@ -715,7 +722,7 @@
      `("configure-event" . ,*x_event_configure)
      `("key-press-event" . ,*process-key-event)
      `("key-release-event" . ,*process-key-event)
-     `("scroll-event" . ,*x_event_scroll)
+     `("scroll-event" . ,*callback-scroll)
      `("update-grid-info" . ,*i_update_grid_info_callback)
      `("notify::page" . ,*gschem_toplevel_notify_page_callback)))
 
