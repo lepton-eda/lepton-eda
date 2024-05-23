@@ -454,7 +454,7 @@ lepton_page_new (LeptonToplevel *toplevel,
 
   /* now append page to page list of toplevel */
   lepton_list_add( toplevel->pages, page );
-  page->toplevel = toplevel;
+  lepton_page_set_toplevel (page, toplevel);
 
   return page;
 }
