@@ -172,6 +172,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview_toplevel The \c LeptonToplevel object of
  *                               the preview page.
  *  \param [in] preview_active If the preview should be updated.
+ *  \param [in] preview_filename The filename to read the preview
+ *                               data from.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
@@ -185,12 +187,13 @@ schematic_preview_update (SchematicPreview *preview,
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
   if (schematic_preview_get_active (GTK_WIDGET (preview))) {
-    g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
-    if (preview->filename != NULL) {
+    g_assert ((schematic_preview_get_filename (GTK_WIDGET (preview)) == NULL)
+              || (preview->buffer == NULL));
+    if (schematic_preview_get_filename (GTK_WIDGET (preview)) != NULL) {
       /* open up file in current page */
       f_open (preview_toplevel,
               preview_page,
-              preview->filename,
+              schematic_preview_get_filename (GTK_WIDGET (preview)),
               F_OPEN_RC | F_OPEN_RESTORE_CWD,
               NULL);
       /* test value returned by f_open... - Fix me */
