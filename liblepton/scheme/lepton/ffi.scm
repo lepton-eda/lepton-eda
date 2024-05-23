@@ -358,6 +358,7 @@
             lepton_page_get_page_control
             lepton_page_set_page_control
             lepton_page_get_pid
+            lepton_page_get_toplevel
             lepton_page_get_undo_bottom
             lepton_page_set_undo_bottom
             lepton_page_get_undo_current
@@ -712,6 +713,7 @@
 (define-lff lepton_page_get_page_control int '(*))
 (define-lff lepton_page_set_page_control void (list '* int))
 (define-lff lepton_page_get_pid int '(*))
+(define-lff lepton_page_get_toplevel '* '(*))
 (define-lff lepton_page_get_undo_bottom '* '(*))
 (define-lff lepton_page_set_undo_bottom void '(* *))
 (define-lff lepton_page_get_undo_current '* '(*))

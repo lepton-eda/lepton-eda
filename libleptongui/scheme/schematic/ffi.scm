@@ -639,7 +639,7 @@
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
-(define-lff schematic_preview_update void '(* *))
+(define-lff schematic_preview_update void '(* * *))
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
 (define-lfc *schematic_preview_callback_scroll_event)

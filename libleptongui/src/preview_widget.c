@@ -151,19 +151,19 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *
  *  \param [in] preview The preview widget.
  *  \param [in] preview_page The \c LeptonPage object of the preview.
+ *  \param [in] preview_toplevel The \c LeptonToplevel object of
+ *                               the preview page.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
-                          LeptonPage *preview_page)
+                          LeptonPage *preview_page,
+                          LeptonToplevel *preview_toplevel)
 {
   int left, top, right, bottom;
   int width, height;
   GError * err = NULL;
 
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
-
-  LeptonToplevel *preview_toplevel =
-    lepton_page_get_toplevel (preview_page);
 
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));

@@ -36,9 +36,10 @@
         (unless (null-pointer? *page)
           ;; Delete old preview.
           (lepton_page_delete_objects *page)
-          (schematic_preview_update *preview *page)
-          ;; Display current page (possibly empty).
-          (gschem_page_view_zoom_extents *preview %null-pointer)))))
+          (let ((*toplevel (lepton_page_get_toplevel *page)))
+            (schematic_preview_update *preview *page *toplevel)
+            ;; Display current page (possibly empty).
+            (gschem_page_view_zoom_extents *preview %null-pointer))))))
 
 
 (define *update-preview
