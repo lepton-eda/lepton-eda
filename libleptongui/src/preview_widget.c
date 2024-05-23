@@ -437,6 +437,20 @@ schematic_preview_finalize (GObject *self)
 }
 
 
+/*! \brief Get the field \a active of this preview.
+ *
+ *  \param [in] preview The preview.
+ *  \return The \a active field.
+ */
+gboolean
+schematic_preview_get_active (GtkWidget *preview)
+{
+  g_return_val_if_fail (preview != NULL, FALSE);
+
+  return SCHEMATIC_PREVIEW (preview)->active;
+}
+
+
 /*! \brief Get the field \a preview_w_current of this preview.
  *
  *  \param [in] preview The preview.

@@ -51,6 +51,9 @@ gboolean
 schematic_preview_callback_scroll_event (GtkWidget *widget,
                                          GdkEventScroll *event,
                                          GschemToplevel *w_current);
+gboolean
+schematic_preview_get_active (GtkWidget *preview);
+
 GschemToplevel*
 schematic_preview_get_window (GtkWidget *preview);
 
