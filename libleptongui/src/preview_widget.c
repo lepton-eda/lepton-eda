@@ -451,6 +451,20 @@ schematic_preview_get_active (GtkWidget *preview)
 }
 
 
+/*! \brief Get the field \a buffer of this preview.
+ *
+ *  \param [in] preview The preview.
+ *  \return The \a buffer field.
+ */
+gchar*
+schematic_preview_get_buffer (GtkWidget *preview)
+{
+  g_return_val_if_fail (preview != NULL, NULL);
+
+  return SCHEMATIC_PREVIEW (preview)->buffer;
+}
+
+
 /*! \brief Get the field \a preview_w_current of this preview.
  *
  *  \param [in] preview The preview.
