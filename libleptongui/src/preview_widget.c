@@ -296,7 +296,7 @@ schematic_preview_callback_scroll_event (GtkWidget *widget,
                                          GdkEventScroll *event,
                                          GschemToplevel *w_current)
 {
-  if (!SCHEMATIC_PREVIEW (widget)->active) {
+  if (!schematic_preview_get_active (widget)) {
     return TRUE;
   }
   return x_event_scroll (widget, event, SCHEMATIC_PREVIEW (widget)->window);
