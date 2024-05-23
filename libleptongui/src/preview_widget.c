@@ -299,7 +299,9 @@ schematic_preview_callback_scroll_event (GtkWidget *widget,
   if (!schematic_preview_get_active (widget)) {
     return TRUE;
   }
-  return x_event_scroll (widget, event, SCHEMATIC_PREVIEW (widget)->window);
+  return x_event_scroll (widget,
+                         event,
+                         schematic_preview_get_window (widget));
 }
 
 
