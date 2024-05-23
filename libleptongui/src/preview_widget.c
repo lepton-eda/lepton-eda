@@ -41,6 +41,24 @@
 #define OVER_ZOOM_FACTOR 0.1
 
 
+struct _SchematicPreviewClass
+{
+  GschemPageViewClass parent_class;
+};
+
+struct _SchematicPreview
+{
+  GschemPageView parent_instance;
+
+  GschemToplevel *window;
+
+  gchar *filename;
+  gchar *buffer;
+
+  gboolean active;
+};
+
+
 enum {
   PROP_FILENAME=1,
   PROP_BUFFER,

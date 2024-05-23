@@ -32,23 +32,6 @@
 typedef struct _SchematicPreviewClass SchematicPreviewClass;
 typedef struct _SchematicPreview      SchematicPreview;
 
-struct _SchematicPreviewClass
-{
-  GschemPageViewClass parent_class;
-};
-
-struct _SchematicPreview
-{
-  GschemPageView parent_instance;
-
-  GschemToplevel *window;
-
-  gchar *filename;
-  gchar *buffer;
-
-  gboolean active;
-};
-
 GType
 schematic_preview_get_type (void);
 
