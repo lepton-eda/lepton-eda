@@ -588,7 +588,7 @@ static GSList*
 find_objects_using_check (GSList *pages)
 {
   LeptonPage *page = (LeptonPage*) pages->data;
-  LeptonToplevel *toplevel = page->toplevel;
+  LeptonToplevel *toplevel = lepton_page_get_toplevel (page);
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   edascm_dynwind_toplevel (toplevel);
   GSList *objects = scm_to_gslist (scm_call_0 (scm_c_public_ref ("schematic symbol check",
