@@ -27,6 +27,14 @@
   #:export (init-preview-widget-signals))
 
 
+(define (update-preview *preview *user-data)
+  (schematic_preview_update *preview %null-pointer))
+
+
+(define *update-preview
+  (procedure->pointer void update-preview '(* *)))
+
+
 ;;; The list of pairs (NAME . CALLBACK) for initialization of
 ;;; preview widgets.
 (define %signal-callback-list
@@ -38,7 +46,7 @@
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)
    `("scroll-event" . ,*schematic_preview_callback_scroll_event)
-   `("update-preview" . ,*schematic_preview_callback_update)))
+   `("update-preview" . ,*update-preview)))
 
 
 (define (init-preview-widget-signals *preview)

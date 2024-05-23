@@ -153,8 +153,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] user_data Unused user data.
  */
 void
-schematic_preview_callback_update (SchematicPreview *preview,
-                                   gpointer user_data)
+schematic_preview_update (SchematicPreview *preview,
+                          gpointer user_data)
 {
   int left, top, right, bottom;
   int width, height;
