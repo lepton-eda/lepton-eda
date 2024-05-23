@@ -47,11 +47,11 @@
   (procedure->pointer void update-preview '(* *)))
 
 (define (scroll-preview *preview *scroll-event *window)
-  (if (not (true? (schematic_preview_get_active *preview)))
-      TRUE
+  (if (true? (schematic_preview_get_active *preview))
       (x_event_scroll *preview
                       *scroll-event
-                      (schematic_preview_get_window *preview))))
+                      (schematic_preview_get_window *preview))
+      TRUE))
 
 (define *scroll-preview
   (procedure->pointer int scroll-preview '(* * *)))
