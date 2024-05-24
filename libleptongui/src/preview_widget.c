@@ -240,10 +240,10 @@ schematic_preview_update (SchematicPreview *preview,
     height = bottom - top;
 
     GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (preview_view);
-    geometry->world_left   = left   - ((double)width  * OVER_ZOOM_FACTOR);
-    geometry->world_right  = right  + ((double)width  * OVER_ZOOM_FACTOR);
-    geometry->world_top    = top    - ((double)height * OVER_ZOOM_FACTOR);
-    geometry->world_bottom = bottom + ((double)height * OVER_ZOOM_FACTOR);
+    gschem_page_geometry_set_world_left   (geometry, left   - ((double)width  * OVER_ZOOM_FACTOR));
+    gschem_page_geometry_set_world_right  (geometry, right  + ((double)width  * OVER_ZOOM_FACTOR));
+    gschem_page_geometry_set_world_top    (geometry, top    - ((double)height * OVER_ZOOM_FACTOR));
+    gschem_page_geometry_set_world_bottom (geometry, bottom + ((double)height * OVER_ZOOM_FACTOR));
   }
 }
 
