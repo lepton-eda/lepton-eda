@@ -193,8 +193,6 @@ schematic_preview_update (SchematicPreview *preview,
 
   if (preview_active)
   {
-    g_assert ((preview_filename == NULL)
-              || (preview_buffer == NULL));
     if (preview_filename != NULL) {
       /* open up file in current page */
       f_open (preview_toplevel,

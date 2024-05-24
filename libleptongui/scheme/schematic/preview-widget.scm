@@ -41,6 +41,10 @@
                 (preview_active (schematic_preview_get_active *preview))
                 (*preview_filename (schematic_preview_get_filename *preview))
                 (*preview_buffer (schematic_preview_get_buffer *preview)))
+            (when (true? preview_active)
+              (unless (or (null-pointer? *preview_filename)
+                          (null-pointer? *preview_buffer))
+                (error "Either preview filename or buffer has to be NULL!")))
             (schematic_preview_update *preview
                                       *page
                                       *toplevel
