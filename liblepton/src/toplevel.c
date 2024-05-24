@@ -437,3 +437,19 @@ lepton_toplevel_set_rc_list (LeptonToplevel *toplevel,
 
   toplevel->RC_list = val;
 }
+
+
+/*! \brief Add RC file name to toplevel's list of loaded RC files.
+ *
+ * \param toplevel  The #LeptonToplevel structure.
+ * \param filename  The RC file name to add.
+ */
+void
+lepton_toplevel_rc_list_add (LeptonToplevel *toplevel,
+                             gchar *filename)
+{
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (filename != NULL);
+
+  toplevel->RC_list = g_list_append (toplevel->RC_list, filename);
+}

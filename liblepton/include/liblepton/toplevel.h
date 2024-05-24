@@ -82,5 +82,7 @@ lepton_toplevel_get_rc_list (LeptonToplevel *toplevel);
 void
 lepton_toplevel_set_rc_list (LeptonToplevel *toplevel,
                              GList *val);
-
+void
+lepton_toplevel_rc_list_add (LeptonToplevel *toplevel,
+                             gchar *filename);
 G_END_DECLS
