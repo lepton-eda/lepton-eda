@@ -193,6 +193,20 @@ gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry)
   return geometry->world_bottom;
 }
 
+/*! \brief Set the bottom edge of the world in world coordinates.
+ *
+ *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] val The new value of the bottom edge of the world
+ *                  in world coordinates.
+ */
+void
+gschem_page_geometry_set_world_bottom (GschemPageGeometry *geometry,
+                                       int val)
+{
+  g_return_if_fail (geometry != NULL);
+
+  geometry->world_bottom = val;
+}
 
 
 /*! \brief Get the left edge of the world in world coordinates.
@@ -208,6 +222,20 @@ gschem_page_geometry_get_world_left (GschemPageGeometry *geometry)
   return geometry->world_left;
 }
 
+/*! \brief Set the left edge of the world in world coordinates.
+ *
+ *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] val The new value of the left edge of the world
+ *                  in world coordinates.
+ */
+void
+gschem_page_geometry_set_world_left (GschemPageGeometry *geometry,
+                                     int val)
+{
+  g_return_if_fail (geometry != NULL);
+
+  geometry->world_left = val;
+}
 
 
 /*! \brief Get the right edge of the world in world coordinates.
@@ -223,6 +251,20 @@ gschem_page_geometry_get_world_right (GschemPageGeometry *geometry)
   return geometry->world_right;
 }
 
+/*! \brief Set the right edge of the world in world coordinates.
+ *
+ *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] val The new value of the right edge of the world
+ *                  in world coordinates.
+ */
+void
+gschem_page_geometry_set_world_right (GschemPageGeometry *geometry,
+                                      int val)
+{
+  g_return_if_fail (geometry != NULL);
+
+  geometry->world_right = val;
+}
 
 
 /*! \brief Get the top edge of the world in world coordinates.
@@ -238,6 +280,20 @@ gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
   return geometry->world_top;
 }
 
+/*! \brief Set the top edge of the world in world coordinates.
+ *
+ *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] val The new value of the top edge of the world
+ *                  in world coordinates.
+ */
+void
+gschem_page_geometry_set_world_top (GschemPageGeometry *geometry,
+                                    int val)
+{
+  g_return_if_fail (geometry != NULL);
+
+  geometry->world_top = val;
+}
 
 
 /*! \brief Get the world to screen transformation matrix.

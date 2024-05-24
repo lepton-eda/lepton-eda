@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,18 +88,30 @@ gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry);
 int
 gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry);
 
+void
+gschem_page_geometry_set_world_bottom (GschemPageGeometry *geometry,
+                                       int val);
 int
 gschem_page_geometry_get_world_left (GschemPageGeometry *geometry);
 
+void
+gschem_page_geometry_set_world_left (GschemPageGeometry *geometry,
+                                     int val);
 int
 gschem_page_geometry_get_world_right (GschemPageGeometry *geometry);
 
+void
+gschem_page_geometry_set_world_right (GschemPageGeometry *geometry,
+                                      int val);
 cairo_matrix_t*
 gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry);
 
 int
 gschem_page_geometry_get_world_top (GschemPageGeometry *geometry);
 
+void
+gschem_page_geometry_set_world_top (GschemPageGeometry *geometry,
+                                    int val);
 int
 gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value);
 
