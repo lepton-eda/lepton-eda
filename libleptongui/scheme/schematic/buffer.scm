@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023 Lepton EDA Contributors
+;;; Copyright (C) 2023-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 
 
 (define-module (schematic buffer)
-  #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
+  #:use-module (lepton bounds)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
@@ -111,25 +111,6 @@ removed from the selection and the hook won't be run."
 
   (lepton_object_list_delete (buffer-list-ref buffer-number))
   (buffer-list-set! buffer-number *objects))
-
-
-(define (object-list-bounds *objects show-hidden-text?)
-  (define (get-int bv)
-    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
-  (define x1 (make-bytevector (sizeof int)))
-  (define y1 (make-bytevector (sizeof int)))
-  (define x2 (make-bytevector (sizeof int)))
-  (define y2 (make-bytevector (sizeof int)))
-  (define result
-    (true? (world_get_object_glist_bounds *objects
-                                          show-hidden-text?
-                                          (bytevector->pointer x1)
-                                          (bytevector->pointer y1)
-                                          (bytevector->pointer x2)
-                                          (bytevector->pointer y2))))
-  (if result
-      (values (get-int x1) (get-int y1) (get-int x2) (get-int y2))
-      (values #f #f #f #f)))
 
 
 (define (paste-buffer window anchor buffer-number)

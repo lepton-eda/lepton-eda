@@ -15,6 +15,7 @@ nobase_dist_scmdata_DATA = \
 	geda/library.scm \
 	lepton/attrib.scm \
 	lepton/autoplace.scm \
+	lepton/bounds.scm \
 	lepton/color-map.scm \
 	lepton/config.scm \
 	lepton/gettext.scm \
