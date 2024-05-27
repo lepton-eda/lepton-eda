@@ -55,4 +55,5 @@ CENTER-Y by ANGLE."
            (s_conn_update_object (lepton_object_get_page *object)
                                  *object))
          *object-ls)
+        (o_invalidate_glist *window *objects)
         (o_rotate_world_update *window center-x center-y angle *objects))))

@@ -53,8 +53,6 @@ o_rotate_world_update (SchematicWindow *w_current,
                        int angle,
                        GList *list)
 {
-  o_invalidate_glist (w_current, list);
-
   /* Run rotate-objects-hook */
   g_run_hook_object_list (w_current, "rotate-objects-hook", list);
 
