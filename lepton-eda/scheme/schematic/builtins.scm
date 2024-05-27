@@ -41,6 +41,7 @@
   #:use-module (schematic action copy)
   #:use-module (schematic action delete)
   #:use-module (schematic action edit)
+  #:use-module (schematic action rotate)
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
@@ -350,7 +351,7 @@
                 (o_redraw_cleanstates *window)
                 (unless (null-pointer? *objects)
                   (match (snap-point position)
-                    ((x . y) (o_rotate_world_update *window x y 90 *objects))
+                    ((x . y) (rotate-objects *window x y 90 *objects))
                     (_ #f))))
               ;; Mouse pointer is out of the canvas: just set the
               ;; rotation mode.
