@@ -108,6 +108,8 @@
             o_grips_end
             o_grips_motion
 
+            o_invalidate_glist
+
             o_line_end
             o_line_invalidate_rubber
             o_line_motion
@@ -1070,6 +1072,7 @@
 
 ;;; o_misc.c
 (define-lff o_edit_show_hidden void '(* *))
+(define-lff o_invalidate_glist void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
 

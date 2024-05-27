@@ -34,4 +34,6 @@ CENTER-Y by ANGLE."
       (begin
         (i_action_stop *window)
         (i_set_state *window (symbol->action-mode 'select-mode)))
-      (o_rotate_world_update *window center-x center-y angle *objects)))
+      (begin
+        (o_invalidate_glist *window *objects)
+        (o_rotate_world_update *window center-x center-y angle *objects))))
