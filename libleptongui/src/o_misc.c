@@ -30,35 +30,6 @@
 #include "schematic.h"
 
 
-/*! \brief Rotate all objects in list.
- *  \par Function Description
- *  Given an object <B>list</B>, and the center of rotation
- *  (<B>centerx</B>,<B>centery</B>, this function traverses all the selection
- *  list, rotating each object through angle <B>angle</B>.
- *  The list contains a given object and all its attributes
- *  (refdes, pinname, pinlabel, ...).
- *  There is a second pass to run the rotate hooks of non-simple objects,
- *  like pin or component objects, for example.
- *
- *  \param [in] w_current  The SchematicWindow object.
- *  \param [in] centerx    Center x coordinate of rotation.
- *  \param [in] centery    Center y coordinate of rotation.
- *  \param [in] angle      Angle to rotate the objects through.
- *  \param [in] list       The list of objects to rotate.
- */
-void
-o_rotate_world_update (SchematicWindow *w_current,
-                       int centerx,
-                       int centery,
-                       int angle,
-                       GList *list)
-{
-  if (schematic_window_get_action_mode (w_current) == ROTATEMODE)
-  {
-    i_set_state(w_current, SELECT);
-  }
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

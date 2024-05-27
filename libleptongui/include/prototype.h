@@ -433,12 +433,6 @@ o_line_visible (SchematicWindow *w_current,
 
 /* o_misc.c */
 void
-o_rotate_world_update (SchematicWindow *w_current,
-                       int centerx,
-                       int centery,
-                       int angle,
-                       GList *list);
-void
 o_mirror_world_update (SchematicWindow *w_current,
                        int centerx,
                        int centery,

@@ -116,7 +116,6 @@
             o_line_start
 
             o_mirror_world_update
-            o_rotate_world_update
 
             o_move_cancel
             o_move_end
@@ -1074,7 +1073,6 @@
 (define-lff o_edit_show_hidden void '(* *))
 (define-lff o_invalidate_glist void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
-(define-lff o_rotate_world_update void (list '* int int int '*))
 
 ;;; o_move.c
 (define-lff o_move_cancel void '(*))

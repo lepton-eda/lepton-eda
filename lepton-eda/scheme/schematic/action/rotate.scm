@@ -69,4 +69,6 @@ CENTER-Y by ANGLE."
         ;; moving, for example.
         (unless (in-action? (pointer->window *window))
           (o_undo_savestate_old *window))
-        (o_rotate_world_update *window center-x center-y angle *objects))))
+        (when (eq? (action-mode (pointer->window *window))
+                   'rotate-mode)
+          (i_set_state *window (symbol->action-mode 'select-mode))))))
