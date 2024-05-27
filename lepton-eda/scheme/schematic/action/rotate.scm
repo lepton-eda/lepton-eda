@@ -20,9 +20,12 @@
 (define-module (schematic action rotate)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic hook)
+  #:use-module (schematic window global)
 
   #:export (rotate-objects))
 
@@ -30,6 +33,7 @@
   "Rotate the list *OBJECTS in *WINDOW around the coords CENTER-X and
 CENTER-Y by ANGLE."
   (define *object-ls (glist->list *objects identity))
+  (define objects (glist->list *objects pointer->object))
 
   ;; This is okay if you just hit rotate and have nothing
   ;; selected.
@@ -56,4 +60,6 @@ CENTER-Y by ANGLE."
                                  *object))
          *object-ls)
         (o_invalidate_glist *window *objects)
+        ;; Run hook.
+        (with-window *window (run-hook rotate-objects-hook objects))
         (o_rotate_world_update *window center-x center-y angle *objects))))

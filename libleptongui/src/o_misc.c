@@ -53,9 +53,6 @@ o_rotate_world_update (SchematicWindow *w_current,
                        int angle,
                        GList *list)
 {
-  /* Run rotate-objects-hook */
-  g_run_hook_object_list (w_current, "rotate-objects-hook", list);
-
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
   schematic_window_active_page_changed (w_current);
