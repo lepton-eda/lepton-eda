@@ -44,7 +44,7 @@ rotate-objects-hook() after rotation of the objects."
   (if (null? *object-ls)
       (begin
         (i_action_stop *window)
-        (set-action-mode! 'select-mode #:window (pointer->window *window)))
+        (set-action-mode! 'select-mode #:window window))
       (begin
         (o_invalidate_glist *window *objects)
         ;; Find connected objects, removing each object in turn
@@ -70,8 +70,7 @@ rotate-objects-hook() after rotation of the objects."
         ;; Don't save the undo state if we are inside an action.
         ;; This is useful when rotating the selection while
         ;; moving, for example.
-        (unless (in-action? (pointer->window *window))
+        (unless (in-action? window)
           (o_undo_savestate_old *window))
-        (when (eq? (action-mode (pointer->window *window))
-                   'rotate-mode)
-          (i_set_state *window (symbol->action-mode 'select-mode))))))
+        (when (eq? (action-mode window) 'rotate-mode)
+          (set-action-mode! 'select-mode #:window window)))))
