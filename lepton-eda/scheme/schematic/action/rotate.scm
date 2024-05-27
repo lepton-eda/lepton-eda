@@ -62,4 +62,5 @@ CENTER-Y by ANGLE."
         (o_invalidate_glist *window *objects)
         ;; Run hook.
         (with-window *window (run-hook rotate-objects-hook objects))
+        (schematic_window_active_page_changed *window)
         (o_rotate_world_update *window center-x center-y angle *objects))))
