@@ -53,20 +53,6 @@ o_rotate_world_update (SchematicWindow *w_current,
                        int angle,
                        GList *list)
 {
-  LeptonObject *o_current;
-  GList *o_iter;
-
-  /* Find connected objects, adding each object in turn back to the
-   * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it.
-   */
-  for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = (LeptonObject*) o_iter->data;
-
-    s_conn_update_object (lepton_object_get_page (o_current),
-                          o_current);
-  }
-
   o_invalidate_glist (w_current, list);
 
   /* Run rotate-objects-hook */

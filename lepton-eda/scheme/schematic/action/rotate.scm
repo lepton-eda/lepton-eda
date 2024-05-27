@@ -45,4 +45,14 @@ CENTER-Y by ANGLE."
         ;; it.
         (for-each s_conn_remove_object_connections *object-ls)
         (lepton_object_list_rotate *objects center-x center-y angle)
+
+        ;; Find connected objects, adding each object in turn back
+        ;; to the connection list.  We only *really* want those
+        ;; objects connected to the selection, not those within in
+        ;; it.
+        (for-each
+         (lambda (*object)
+           (s_conn_update_object (lepton_object_get_page *object)
+                                 *object))
+         *object-ls)
         (o_rotate_world_update *window center-x center-y angle *objects))))
