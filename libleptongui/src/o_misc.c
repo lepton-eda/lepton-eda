@@ -56,13 +56,6 @@ o_rotate_world_update (SchematicWindow *w_current,
   LeptonObject *o_current;
   GList *o_iter;
 
-  /* this is okay if you just hit rotate and have nothing selected */
-  if (list == NULL) {
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
-    return;
-  }
-
   o_invalidate_glist (w_current, list);
 
   /* Find connected objects, removing each object in turn from the

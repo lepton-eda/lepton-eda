@@ -18,6 +18,9 @@
 
 
 (define-module (schematic action rotate)
+  #:use-module (system foreign)
+
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
 
   #:export (rotate-objects))
@@ -25,4 +28,10 @@
 (define (rotate-objects *window center-x center-y angle *objects)
   "Rotate the list *OBJECTS in *WINDOW around the coords CENTER-X and
 CENTER-Y by ANGLE."
-  (o_rotate_world_update *window center-x center-y angle *objects))
+  ;; This is okay if you just hit rotate and have nothing
+  ;; selected.
+  (if (null-pointer? *objects)
+      (begin
+        (i_action_stop *window)
+        (i_set_state *window (symbol->action-mode 'select-mode)))
+      (o_rotate_world_update *window center-x center-y angle *objects)))
