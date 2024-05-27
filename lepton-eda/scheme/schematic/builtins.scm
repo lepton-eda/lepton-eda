@@ -351,7 +351,8 @@
                 (o_redraw_cleanstates *window)
                 (unless (null-pointer? *objects)
                   (match (snap-point position)
-                    ((x . y) (rotate-objects *window x y 90 *objects))
+                    ((x . y) (rotate-objects x y 90 *objects
+                                             #:window (pointer->window *window)))
                     (_ #f))))
               ;; Mouse pointer is out of the canvas: just set the
               ;; rotation mode.

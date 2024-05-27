@@ -572,7 +572,8 @@ zooming."
 
                  (match current-action-mode
                    ('rotate-mode
-                    (rotate-objects *window x y 90 (lepton_list_get_glist *selection)))
+                    (rotate-objects x y 90 (lepton_list_get_glist *selection)
+                                    #:window window))
                    ('mirror-mode
                     (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
                    ('pan-mode

@@ -30,10 +30,12 @@
 
   #:export (rotate-objects))
 
-(define (rotate-objects *window center-x center-y angle *objects)
-  "Rotate the list *OBJECTS in *WINDOW around the coords CENTER-X and
+(define* (rotate-objects center-x center-y angle *objects
+                         #:key (window (current-window)))
+  "Rotate the list *OBJECTS in WINDOW around the coords CENTER-X and
 CENTER-Y by ANGLE.  The function runs the hook
 rotate-objects-hook() after rotation of the objects."
+  (define *window (window->pointer window))
   (define *object-ls (glist->list *objects identity))
   (define objects (glist->list *objects pointer->object))
 
