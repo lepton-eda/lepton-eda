@@ -32,7 +32,8 @@
 
 (define (rotate-objects *window center-x center-y angle *objects)
   "Rotate the list *OBJECTS in *WINDOW around the coords CENTER-X and
-CENTER-Y by ANGLE."
+CENTER-Y by ANGLE.  The function runs the hook
+rotate-objects-hook() after rotation of the objects."
   (define *object-ls (glist->list *objects identity))
   (define objects (glist->list *objects pointer->object))
 
