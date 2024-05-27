@@ -42,7 +42,7 @@ rotate-objects-hook() after rotation of the objects."
   (if (null? *object-ls)
       (begin
         (i_action_stop *window)
-        (i_set_state *window (symbol->action-mode 'select-mode)))
+        (set-action-mode! 'select-mode #:window (pointer->window *window)))
       (begin
         (o_invalidate_glist *window *objects)
         ;; Find connected objects, removing each object in turn
