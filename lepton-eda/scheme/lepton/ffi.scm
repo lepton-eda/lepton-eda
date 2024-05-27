@@ -349,6 +349,7 @@
 
             lepton_object_list_bounds
             lepton_object_list_delete
+            lepton_object_list_rotate
             lepton_object_list_to_buffer
             lepton_object_list_translate
             lepton_object_list_copy
@@ -709,6 +710,7 @@
 ;;; object_list.c
 (define-lff lepton_object_list_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_list_delete void '(*))
+(define-lff lepton_object_list_rotate void (list '* int int int))
 (define-lff lepton_object_list_to_buffer '* '(*))
 (define-lff lepton_object_list_copy '* '(* *))
 (define-lff lepton_object_list_translate void  (list '* int int))

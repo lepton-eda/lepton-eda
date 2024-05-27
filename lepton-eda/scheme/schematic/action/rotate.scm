@@ -44,4 +44,5 @@ CENTER-Y by ANGLE."
         ;; objects connected to the selection, not those within in
         ;; it.
         (for-each s_conn_remove_object_connections *object-ls)
+        (lepton_object_list_rotate *objects center-x center-y angle)
         (o_rotate_world_update *window center-x center-y angle *objects))))
