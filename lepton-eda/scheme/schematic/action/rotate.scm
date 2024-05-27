@@ -25,6 +25,7 @@
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic hook)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
   #:export (rotate-objects))
@@ -63,4 +64,9 @@ CENTER-Y by ANGLE."
         ;; Run hook.
         (with-window *window (run-hook rotate-objects-hook objects))
         (schematic_window_active_page_changed *window)
+        ;; Don't save the undo state if we are inside an action.
+        ;; This is useful when rotating the selection while
+        ;; moving, for example.
+        (unless (in-action? (pointer->window *window))
+          (o_undo_savestate_old *window))
         (o_rotate_world_update *window center-x center-y angle *objects))))

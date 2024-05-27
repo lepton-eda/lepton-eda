@@ -53,13 +53,6 @@ o_rotate_world_update (SchematicWindow *w_current,
                        int angle,
                        GList *list)
 {
-  /* Don't save the undo state if we are inside an action */
-  /* This is useful when rotating the selection while moving, for example */
-  if (!schematic_window_get_inside_action (w_current))
-  {
-    o_undo_savestate_old (w_current);
-  }
-
   if (schematic_window_get_action_mode (w_current) == ROTATEMODE)
   {
     i_set_state(w_current, SELECT);
