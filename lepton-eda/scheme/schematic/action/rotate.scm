@@ -19,6 +19,7 @@
 
 (define-module (schematic action rotate)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -38,4 +39,9 @@ CENTER-Y by ANGLE."
         (i_set_state *window (symbol->action-mode 'select-mode)))
       (begin
         (o_invalidate_glist *window *objects)
+        ;; Find connected objects, removing each object in turn
+        ;; from the connection list.  We only *really* want those
+        ;; objects connected to the selection, not those within in
+        ;; it.
+        (for-each s_conn_remove_object_connections *object-ls)
         (o_rotate_world_update *window center-x center-y angle *objects))))
