@@ -18,7 +18,7 @@
 
 
 (define-module (schematic action rotate)
-  #:use-module (system foreign)
+  #:use-module (lepton ffi glib)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -28,9 +28,11 @@
 (define (rotate-objects *window center-x center-y angle *objects)
   "Rotate the list *OBJECTS in *WINDOW around the coords CENTER-X and
 CENTER-Y by ANGLE."
+  (define *object-ls (glist->list *objects identity))
+
   ;; This is okay if you just hit rotate and have nothing
   ;; selected.
-  (if (null-pointer? *objects)
+  (if (null? *object-ls)
       (begin
         (i_action_stop *window)
         (i_set_state *window (symbol->action-mode 'select-mode)))
