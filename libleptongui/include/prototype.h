@@ -326,7 +326,8 @@ void
 o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,
                   int flag);
-void o_undo_savestate_old(GschemToplevel *w_current, int flag);
+void
+o_undo_savestate_old (GschemToplevel *w_current);
 
 void
 o_undo_savestate_viewport (GschemToplevel *w_current);

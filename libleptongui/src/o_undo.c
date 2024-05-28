@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -429,23 +429,16 @@ o_undo_savestate (GschemToplevel *w_current,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- *
- *  <B>flag</B> can be one of the following values:
- *  <DL>
- *    <DT>*</DT><DD>UNDO_ALL
- *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
- *  </DL>
  */
 void
-o_undo_savestate_old (GschemToplevel *w_current, int flag)
+o_undo_savestate_old (GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);
 
-  o_undo_savestate (w_current, page, flag);
+  o_undo_savestate (w_current, page, UNDO_ALL);
 }
 
 

@@ -732,7 +732,7 @@ handle_undo (GschemToplevel *w_current)
   g_return_if_fail (w_current != NULL);
 
   schematic_window_active_page_changed (w_current);
-  o_undo_savestate_old (w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current);
 }
 
 

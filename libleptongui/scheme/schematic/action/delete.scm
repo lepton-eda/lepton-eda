@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023 Lepton EDA Contributors
+;;; Copyright (C) 2023-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -34,9 +34,6 @@
   #:use-module (schematic window global)
 
   #:export (delete-selection))
-
-;;; Temp definition.
-(define UNDO_ALL 0)
 
 (define* (delete-selection *window)
   "Delete selected objects on the active page in *WINDOW."
@@ -91,5 +88,5 @@
                 (map object->pointer objects-to-remove))
 
       (schematic_window_active_page_changed *window)
-      (o_undo_savestate_old *window UNDO_ALL)
+      (o_undo_savestate_old *window)
       (i_update_menus *window))))

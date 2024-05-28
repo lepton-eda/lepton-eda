@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
         }
         s_current = g_list_next (s_current);
       }
-      o_undo_savestate_old(w_current, UNDO_ALL);
+      o_undo_savestate_old (w_current);
     }
     else
     {
@@ -245,12 +245,12 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
                            wy);
 
       schematic_window_active_page_changed (w_current);
-      o_undo_savestate_old(w_current, UNDO_ALL);
+      o_undo_savestate_old (w_current);
     }
   } else {
     o_text_change(w_current, attribptr, newtext, vis, show);
     schematic_window_active_page_changed (w_current);
-    o_undo_savestate_old(w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current);
   }
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);

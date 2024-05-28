@@ -232,7 +232,7 @@ void o_move_end(GschemToplevel *w_current)
   g_list_free (moved_list);
 
   gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current);
 
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;

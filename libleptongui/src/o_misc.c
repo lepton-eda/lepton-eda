@@ -93,7 +93,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
   schematic_window_active_page_changed (w_current);
   if (!schematic_window_get_inside_action (w_current))
   {
-    o_undo_savestate_old(w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current);
   }
 
   if (schematic_window_get_action_mode (w_current) == ROTATEMODE)
@@ -148,7 +148,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   g_run_hook_object_list (w_current, "mirror-objects-hook", list);
 
   schematic_window_active_page_changed (w_current);
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current);
 
   if (schematic_window_get_action_mode (w_current) == MIRRORMODE)
   {
@@ -245,7 +245,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
     }
     iter = g_list_next (iter);
   }
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current);
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
@@ -279,5 +279,5 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
     }
     iter = g_list_next (iter);
   }
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current);
 }
