@@ -269,7 +269,7 @@
   (check-integer x 2)
   (check-integer y 3)
 
-  (unless (in-action? (pointer->window *window))
+  (unless (in-action? window)
     (error "zoom-box-end(): The window is not in action!"))
   (a_zoom_box_invalidate_rubber *window)
   (schematic_window_set_rubber_visible *window 0)
@@ -277,7 +277,7 @@
   (when (schematic_window_get_undo_panzoom *window)
     (o_undo_savestate_viewport *window))
   (i_action_stop *window)
-  (set-action-mode! 'select-mode #:window (pointer->window *window)))
+  (set-action-mode! 'select-mode #:window window))
 
 
 (define (callback-button-released *page-view *event *window)
