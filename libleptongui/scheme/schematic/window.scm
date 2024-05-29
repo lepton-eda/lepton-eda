@@ -263,8 +263,10 @@
     (cons window-x window-y)))
 
 
-(define (zoom-box-end *window x y)
+(define (zoom-box-end window x y)
   "End zooming in *WINDOW at coords X and Y."
+  (define *window (check-window window 1))
+
   (unless (in-action? (pointer->window *window))
     (error "zoom-box-end(): The window is not in action!"))
   (a_zoom_box_invalidate_rubber *window)
@@ -313,7 +315,7 @@
                    ('path-mode (o_path_end *window x y))
                    ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
                    ('select-mode (o_select_end *window unsnapped-x unsnapped-y))
-                   ('zoom-box-mode (zoom-box-end *window unsnapped-x unsnapped-y))
+                   ('zoom-box-mode (zoom-box-end window unsnapped-x unsnapped-y))
                    (_ FALSE)))))
 
           (2
