@@ -265,6 +265,10 @@
     (cons window-x window-y)))
 
 
+(define (zoom-box *window)
+  (a_zoom_box *window))
+
+
 (define (zoom-box-end window x y)
   "End zooming in *WINDOW at coords X and Y."
   (define *window (check-window window 1))
@@ -275,7 +279,7 @@
     (error "zoom-box-end(): The window is not in action!"))
   (a_zoom_box_invalidate_rubber *window)
   (schematic_window_set_rubber_visible *window 0)
-  (a_zoom_box *window)
+  (zoom-box *window)
   (when (schematic_window_get_undo_panzoom *window)
     (o_undo_savestate_viewport *window))
   (i_action_stop *window)
