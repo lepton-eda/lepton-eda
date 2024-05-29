@@ -266,6 +266,8 @@
 (define (zoom-box-end window x y)
   "End zooming in *WINDOW at coords X and Y."
   (define *window (check-window window 1))
+  (check-integer x 2)
+  (check-integer y 3)
 
   (unless (in-action? (pointer->window *window))
     (error "zoom-box-end(): The window is not in action!"))
