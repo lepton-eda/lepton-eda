@@ -148,21 +148,26 @@ a_zoom_box(GschemToplevel *w_current)
   g_return_if_fail (geometry != NULL);
 
   /*test if there is really a box*/
-  if (w_current->first_wx == w_current->second_wx ||
-      w_current->first_wy == w_current->second_wy) {
+  if ((schematic_window_get_first_wx (w_current) == schematic_window_get_second_wx (w_current)) ||
+      (schematic_window_get_first_wy (w_current) == schematic_window_get_second_wy (w_current)))
+  {
     g_message (_("Zoom too small!  Cannot zoom further."));
     return;
   }
 
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) abs(geometry->viewport_left - geometry->viewport_right) / abs(w_current->first_wx - w_current->second_wx);
-  zy = (double) abs(geometry->viewport_top - geometry->viewport_bottom) / abs(w_current->first_wy - w_current->second_wy);
+  zx = (double) abs(geometry->viewport_left - geometry->viewport_right) /
+    abs(schematic_window_get_first_wx (w_current) - schematic_window_get_second_wx (w_current));
+  zy = (double) abs(geometry->viewport_top - geometry->viewport_bottom) /
+    abs(schematic_window_get_first_wy (w_current) - schematic_window_get_second_wy (w_current));
 
   relativ_zoom_factor = (zx < zy ? zx : zy);
 
   /* calculate the center of the zoom box */
-  world_pan_center_x = (w_current->first_wx + w_current->second_wx) / 2.0;
-  world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
+  world_pan_center_x =
+    (schematic_window_get_first_wx (w_current) + schematic_window_get_second_wx (w_current)) / 2.0;
+  world_pan_center_y =
+    (schematic_window_get_first_wy (w_current) + schematic_window_get_second_wy (w_current)) / 2.0;
 
   /* and create the new window*/
   gschem_page_view_pan_general (page_view,
