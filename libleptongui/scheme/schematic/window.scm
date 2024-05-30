@@ -42,6 +42,7 @@
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
   #:use-module (schematic callback)
+  #:use-module (schematic canvas foreign)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic gettext)
@@ -64,6 +65,7 @@
             set-active-page!
             pointer-position
             snap-point
+            window-canvas
             window-close-page!
             window-open-page!
             window-set-current-page!
@@ -1216,6 +1218,13 @@ window to PAGE.  Returns PAGE."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
   (*window-set-current-page! *window *page))
+
+
+(define (window-canvas window)
+  "Return the <canvas> object of WINDOW."
+  (define *window (check-window window 1))
+
+  (pointer->canvas (schematic_window_get_current_page_view *window)))
 
 
 (define (pointer-position)
