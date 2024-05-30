@@ -22,6 +22,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/buffer.scm \
 	schematic/builtins.scm \
 	schematic/callback.scm \
+	schematic/canvas/foreign.scm \
 	schematic/dialog.scm \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/slot-edit.scm \
