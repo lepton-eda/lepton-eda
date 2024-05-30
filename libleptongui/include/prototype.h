@@ -11,7 +11,8 @@ a_zoom (SchematicWindow *w_current,
         int selected_from);
 void
 a_zoom_box (SchematicWindow *w_current,
-            SchematicCanvas *page_view);
+            SchematicCanvas *page_view,
+            SchematicViewport *geometry);
 void
 a_zoom_box_start (SchematicWindow *w_current,
                   int x,

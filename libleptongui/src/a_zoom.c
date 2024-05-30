@@ -138,13 +138,11 @@ a_zoom (SchematicWindow *w_current,
  */
 void
 a_zoom_box (SchematicWindow *w_current,
-            SchematicCanvas *page_view)
+            SchematicCanvas *page_view,
+            SchematicViewport *geometry)
 {
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
-
-  SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
-  g_return_if_fail (geometry != NULL);
 
   /*test if there is really a box*/
   if ((schematic_window_get_first_wx (w_current) == schematic_window_get_second_wx (w_current)) ||

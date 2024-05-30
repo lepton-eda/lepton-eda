@@ -43,6 +43,7 @@
   #:use-module (schematic buffer)
   #:use-module (schematic callback)
   #:use-module (schematic canvas foreign)
+  #:use-module (schematic canvas)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic gettext)
@@ -51,6 +52,7 @@
   #:use-module (schematic menu)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
+  #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
   #:use-module (schematic window list)
@@ -268,9 +270,11 @@
 (define (zoom-box window)
   "Zoom WINDOW using the info saved in its page view geometry."
   (define *window (check-window window 1))
-  (define *canvas (canvas->pointer (window-canvas window)))
+  (define canvas (window-canvas window))
+  (define *canvas (canvas->pointer canvas))
+  (define *viewport (viewport->pointer (canvas-viewport canvas)))
 
-  (a_zoom_box *window *canvas))
+  (a_zoom_box *window *canvas *viewport))
 
 
 (define (zoom-box-end window x y)
