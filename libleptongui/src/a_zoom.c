@@ -137,13 +137,11 @@ a_zoom (SchematicWindow *w_current,
  *
  */
 void
-a_zoom_box (SchematicWindow *w_current)
+a_zoom_box (SchematicWindow *w_current,
+            SchematicCanvas *page_view)
 {
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
-
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
 
   SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
   g_return_if_fail (geometry != NULL);

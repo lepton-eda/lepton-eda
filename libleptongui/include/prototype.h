@@ -10,8 +10,8 @@ a_zoom (SchematicWindow *w_current,
         int dir,
         int selected_from);
 void
-a_zoom_box (SchematicWindow *w_current);
-
+a_zoom_box (SchematicWindow *w_current,
+            SchematicCanvas *page_view);
 void
 a_zoom_box_start (SchematicWindow *w_current,
                   int x,

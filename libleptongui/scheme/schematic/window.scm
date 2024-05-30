@@ -268,8 +268,9 @@
 (define (zoom-box window)
   "Zoom WINDOW using the info saved in its page view geometry."
   (define *window (check-window window 1))
+  (define *canvas (canvas->pointer (window-canvas window)))
 
-  (a_zoom_box *window))
+  (a_zoom_box *window *canvas))
 
 
 (define (zoom-box-end window x y)
