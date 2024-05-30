@@ -19,8 +19,17 @@
 (define-module (schematic canvas)
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
+  #:use-module (schematic viewport foreign)
 
-  #:export (invalidate-canvas))
+  #:export (canvas-viewport
+            invalidate-canvas))
+
+
+(define (canvas-viewport canvas)
+  "Return the <viewport> object of CANVAS."
+  (define *canvas (check-canvas canvas 1))
+
+  (pointer->viewport (schematic_canvas_get_viewport *canvas)))
 
 
 (define (invalidate-canvas canvas)
