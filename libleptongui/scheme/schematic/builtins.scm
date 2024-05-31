@@ -783,7 +783,7 @@ the snap grid size should be set to 100")))
   (set-action-mode! 'zoom-box-mode)
 
   (match (action-position)
-    ((x . y) (zoom-box-start *window x y))
+    ((x . y) (zoom-box-start (current-window) x y))
     (_ #f)))
 
 

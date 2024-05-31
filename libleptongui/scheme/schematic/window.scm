@@ -303,8 +303,10 @@
                                       relative-zoom-factor))))
 
 
-(define (zoom-box-start *window x y)
-  "Start zooming in *WINDOW at coords X and Y."
+(define (zoom-box-start window x y)
+  "Start zooming in WINDOW at coords X and Y."
+  (define *window (check-window window 1))
+
   (i_action_start *window)
   (schematic_window_set_first_wx *window x)
   (schematic_window_set_second_wx *window x)
@@ -539,7 +541,7 @@
                        ('path-mode (o_path_start *window x y))
                        ('picture-mode (o_picture_start *window x y))
                        ('pin-mode (o_pin_start *window x y))
-                       ('zoom-box-mode (zoom-box-start *window unsnapped-x unsnapped-y))
+                       ('zoom-box-mode (zoom-box-start window unsnapped-x unsnapped-y))
                        ('select-mode (o_select_start *window x y))
                        ((or 'copy-mode 'multiple-copy-mode) (start-copy *window x y))
                        ('move-mode (o_move_start *window x y))
