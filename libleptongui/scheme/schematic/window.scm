@@ -284,24 +284,16 @@
       ;; Calculate new zoom factors.
       (let* ((zx (/ (abs (- (schematic_viewport_get_left *viewport)
                             (schematic_viewport_get_right *viewport)))
-                    (abs (- (schematic_window_get_first_wx *window)
-                            (schematic_window_get_second_wx *window)))))
+                    (abs (- x1 x2))))
              (zy (/ (abs (- (schematic_viewport_get_top *viewport)
                             (schematic_viewport_get_bottom *viewport)))
-                    (abs (- (schematic_window_get_first_wy *window)
-                            (schematic_window_get_second_wy *window)))))
+                    (abs (- y1 y2))))
              ;; Choose the smaller one.
              (relative-zoom-factor (if (< zx zy) zx zy))
 
              ;; Calculate the center of the zoom box.
-             (world-pan-center-x
-              (/ (+ (schematic_window_get_first_wx *window)
-                    (schematic_window_get_second_wx *window))
-                 2.0))
-             (world-pan-center-y
-              (/ (+ (schematic_window_get_first_wy *window)
-                    (schematic_window_get_second_wy *window))
-                 2.0)))
+             (world-pan-center-x (/ (+ x1 x2) 2.0))
+             (world-pan-center-y (/ (+ y1 y2) 2.0)))
         (a_zoom_box *window
                     *canvas
                     *viewport
