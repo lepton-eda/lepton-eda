@@ -139,17 +139,13 @@ a_zoom (SchematicWindow *w_current,
 void
 a_zoom_box (SchematicWindow *w_current,
             SchematicCanvas *page_view,
-            SchematicViewport *geometry)
+            SchematicViewport *geometry,
+            double zx,
+            double zy)
 {
-  double zx, zy, relativ_zoom_factor;
+  double relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
-
-  /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) abs (schematic_viewport_get_left (geometry) - schematic_viewport_get_right (geometry)) /
-    abs(schematic_window_get_first_wx (w_current) - schematic_window_get_second_wx (w_current));
-  zy = (double) abs (schematic_viewport_get_top (geometry) - schematic_viewport_get_bottom (geometry)) /
-    abs(schematic_window_get_first_wy (w_current) - schematic_window_get_second_wy (w_current));
-
+  /* Choose the smaller one. */
   relativ_zoom_factor = (zx < zy ? zx : zy);
 
   /* calculate the center of the zoom box */

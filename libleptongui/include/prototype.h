@@ -12,7 +12,9 @@ a_zoom (SchematicWindow *w_current,
 void
 a_zoom_box (SchematicWindow *w_current,
             SchematicCanvas *page_view,
-            SchematicViewport *geometry);
+            SchematicViewport *geometry,
+            double zx,
+            double zy);
 void
 a_zoom_box_start (SchematicWindow *w_current,
                   int x,
