@@ -13,8 +13,7 @@ void
 a_zoom_box (SchematicWindow *w_current,
             SchematicCanvas *page_view,
             SchematicViewport *geometry,
-            double zx,
-            double zy);
+            double relativ_zoom_factor);
 void
 a_zoom_box_start (SchematicWindow *w_current,
                   int x,

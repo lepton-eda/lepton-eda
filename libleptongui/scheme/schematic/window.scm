@@ -282,15 +282,17 @@
   (if (or (= x1 x2) (= y1 y2))
       (log! 'message (G_ "Zoom too small!  Cannot zoom further."))
       ;; Calculate new zoom factors.
-      (let ((zx (/ (abs (- (schematic_viewport_get_left *viewport)
-                           (schematic_viewport_get_right *viewport)))
-                   (abs (- (schematic_window_get_first_wx *window)
-                           (schematic_window_get_second_wx *window)))))
-            (zy (/ (abs (- (schematic_viewport_get_top *viewport)
-                           (schematic_viewport_get_bottom *viewport)))
-                   (abs (- (schematic_window_get_first_wy *window)
-                           (schematic_window_get_second_wy *window))))))
-        (a_zoom_box *window *canvas *viewport zx zy))))
+      (let* ((zx (/ (abs (- (schematic_viewport_get_left *viewport)
+                            (schematic_viewport_get_right *viewport)))
+                    (abs (- (schematic_window_get_first_wx *window)
+                            (schematic_window_get_second_wx *window)))))
+             (zy (/ (abs (- (schematic_viewport_get_top *viewport)
+                            (schematic_viewport_get_bottom *viewport)))
+                    (abs (- (schematic_window_get_first_wy *window)
+                            (schematic_window_get_second_wy *window)))))
+             ;; Choose the smaller one.
+             (relative-zoom-factor (if (< zx zy) zx zy)))
+        (a_zoom_box *window *canvas *viewport relative-zoom-factor))))
 
 
 (define (zoom-box-end window x y)

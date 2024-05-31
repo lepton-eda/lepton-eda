@@ -140,13 +140,10 @@ void
 a_zoom_box (SchematicWindow *w_current,
             SchematicCanvas *page_view,
             SchematicViewport *geometry,
-            double zx,
-            double zy)
+            double relativ_zoom_factor)
 {
-  double relativ_zoom_factor;
+
   double world_pan_center_x, world_pan_center_y;
-  /* Choose the smaller one. */
-  relativ_zoom_factor = (zx < zy ? zx : zy);
 
   /* calculate the center of the zoom box */
   world_pan_center_x =
