@@ -185,8 +185,10 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   i_action_start (w_current);
 
-  w_current->first_wx = w_current->second_wx = w_x;
-  w_current->first_wy = w_current->second_wy = w_y;
+  schematic_window_set_first_wx (w_current, w_x);
+  schematic_window_set_second_wx (w_current, w_x);
+  schematic_window_set_first_wy (w_current, w_y);
+  schematic_window_set_second_wy (w_current, w_y);
 }
 
 
