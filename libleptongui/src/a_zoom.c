@@ -131,25 +131,6 @@ a_zoom (SchematicWindow *w_current,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-a_zoom_box (SchematicWindow *w_current,
-            SchematicCanvas *page_view,
-            SchematicViewport *geometry,
-            double world_pan_center_x,
-            double world_pan_center_y,
-            double relativ_zoom_factor)
-{
-  /* Create the new window*/
-  schematic_canvas_pan_general (page_view,
-                                world_pan_center_x,
-                                world_pan_center_y,
-                                relativ_zoom_factor);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

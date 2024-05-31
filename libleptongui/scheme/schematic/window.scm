@@ -292,14 +292,14 @@
              (relative-zoom-factor (if (< zx zy) zx zy))
 
              ;; Calculate the center of the zoom box.
-             (world-pan-center-x (/ (+ x1 x2) 2.0))
-             (world-pan-center-y (/ (+ y1 y2) 2.0)))
-        (a_zoom_box *window
-                    *canvas
-                    *viewport
-                    world-pan-center-x
-                    world-pan-center-y
-                    relative-zoom-factor))))
+             (world-pan-center-x (round (/ (+ x1 x2) 2)))
+             (world-pan-center-y (round (/ (+ y1 y2) 2))))
+
+        ;; Update the canvas with new values.
+        (schematic_canvas_pan_general *canvas
+                                      world-pan-center-x
+                                      world-pan-center-y
+                                      relative-zoom-factor))))
 
 
 (define (zoom-box-end window x y)

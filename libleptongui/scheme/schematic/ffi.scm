@@ -324,6 +324,7 @@
             schematic_canvas_new_with_page
             schematic_canvas_pan
             schematic_canvas_pan_end
+            schematic_canvas_pan_general
             schematic_canvas_pan_mouse
             schematic_canvas_pan_motion
             schematic_canvas_pan_start
@@ -503,7 +504,6 @@
             x_tabs_prev
 
             a_zoom
-            a_zoom_box
             a_zoom_box_invalidate_rubber
             a_zoom_box_motion
             a_zoom_box_start
@@ -642,6 +642,7 @@
 (define-lff schematic_canvas_new_with_page '* '(*))
 (define-lff schematic_canvas_pan void (list '* int int))
 (define-lff schematic_canvas_pan_end int '(*))
+(define-lff schematic_canvas_pan_general void (list '* int int double))
 (define-lff schematic_canvas_pan_mouse void (list '* int int))
 (define-lff schematic_canvas_pan_motion void (list '* int int int))
 (define-lff schematic_canvas_pan_start void (list '* int int))
@@ -1100,7 +1101,6 @@
 
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
-(define-lff a_zoom_box void (list '* '* '* double double double))
 (define-lff a_zoom_box_invalidate_rubber void '(*))
 (define-lff a_zoom_box_motion void (list '* int int))
 (define-lff a_zoom_box_start void (list '* int int))
