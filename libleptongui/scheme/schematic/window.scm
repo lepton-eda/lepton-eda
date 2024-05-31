@@ -273,8 +273,15 @@
   (define canvas (window-canvas window))
   (define *canvas (canvas->pointer canvas))
   (define *viewport (viewport->pointer (canvas-viewport canvas)))
+  (define x1 (schematic_window_get_first_wx *window))
+  (define x2 (schematic_window_get_second_wx *window))
+  (define y1 (schematic_window_get_first_wy *window))
+  (define y2 (schematic_window_get_second_wy *window))
 
-  (a_zoom_box *window *canvas *viewport))
+  ;; Test if there is really a box.
+  (if (or (= x1 x2) (= y1 y2))
+      (log! 'message (G_ "Zoom too small!  Cannot zoom further."))
+      (a_zoom_box *window *canvas *viewport)))
 
 
 (define (zoom-box-end window x y)

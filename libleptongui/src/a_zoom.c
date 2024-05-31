@@ -144,14 +144,6 @@ a_zoom_box (SchematicWindow *w_current,
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
 
-  /*test if there is really a box*/
-  if ((schematic_window_get_first_wx (w_current) == schematic_window_get_second_wx (w_current)) ||
-      (schematic_window_get_first_wy (w_current) == schematic_window_get_second_wy (w_current)))
-  {
-    g_message (_("Zoom too small!  Cannot zoom further."));
-    return;
-  }
-
   /*calc new zoomfactors and choose the smaller one*/
   zx = (double) abs (schematic_viewport_get_left (geometry) - schematic_viewport_get_right (geometry)) /
     abs(schematic_window_get_first_wx (w_current) - schematic_window_get_second_wx (w_current));

@@ -366,7 +366,9 @@
             schematic_window_get_enforce_hierarchy
             schematic_window_get_file_preview
             schematic_window_set_file_preview
+            schematic_window_get_first_wx
             schematic_window_set_first_wx
+            schematic_window_get_first_wy
             schematic_window_set_first_wy
             schematic_window_get_second_wx
             schematic_window_get_second_wy
@@ -701,7 +703,9 @@
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_file_preview int '(*))
 (define-lff schematic_window_set_file_preview void (list int '*))
+(define-lff schematic_window_get_first_wx int '(*))
 (define-lff schematic_window_set_first_wx void (list '* int))
+(define-lff schematic_window_get_first_wy int '(*))
 (define-lff schematic_window_set_first_wy void (list '* int))
 (define-lff schematic_window_get_second_wx int '(*))
 (define-lff schematic_window_get_second_wy int '(*))
