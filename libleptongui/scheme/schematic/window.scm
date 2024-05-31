@@ -71,7 +71,8 @@
             window-close-page!
             window-open-page!
             window-set-current-page!
-            *window-set-current-page!)
+            *window-set-current-page!
+            zoom-box-start)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -302,8 +303,17 @@
                                       relative-zoom-factor))))
 
 
+(define (zoom-box-start *window x y)
+  "Start zooming in *WINDOW at coords X and Y."
+  (i_action_start *window)
+  (schematic_window_set_first_wx *window x)
+  (schematic_window_set_second_wx *window x)
+  (schematic_window_set_first_wy *window y)
+  (schematic_window_set_second_wy *window y))
+
+
 (define (zoom-box-end window x y)
-  "End zooming in *WINDOW at coords X and Y."
+  "End zooming in WINDOW at coords X and Y."
   (define *window (check-window window 1))
   (check-integer x 2)
   (check-integer y 3)
@@ -529,7 +539,7 @@
                        ('path-mode (o_path_start *window x y))
                        ('picture-mode (o_picture_start *window x y))
                        ('pin-mode (o_pin_start *window x y))
-                       ('zoom-box-mode (a_zoom_box_start *window unsnapped-x unsnapped-y))
+                       ('zoom-box-mode (zoom-box-start *window unsnapped-x unsnapped-y))
                        ('select-mode (o_select_start *window x y))
                        ((or 'copy-mode 'multiple-copy-mode) (start-copy *window x y))
                        ('move-mode (o_move_start *window x y))

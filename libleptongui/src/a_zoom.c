@@ -138,25 +138,6 @@ a_zoom (SchematicWindow *w_current,
  *
  */
 void
-a_zoom_box_start (SchematicWindow *w_current,
-                  int w_x,
-                  int w_y)
-{
-  i_action_start (w_current);
-
-  schematic_window_set_first_wx (w_current, w_x);
-  schematic_window_set_second_wx (w_current, w_x);
-  schematic_window_set_first_wy (w_current, w_y);
-  schematic_window_set_second_wy (w_current, w_y);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 a_zoom_box_motion (SchematicWindow *w_current,
                    int w_x,
                    int w_y)

@@ -46,6 +46,7 @@
             i_callback_file_save
             *i_callback_file_save
 
+            i_action_start
             i_action_stop
             i_set_state
             i_set_state_msg
@@ -372,7 +373,9 @@
             schematic_window_get_first_wy
             schematic_window_set_first_wy
             schematic_window_get_second_wx
+            schematic_window_set_second_wx
             schematic_window_get_second_wy
+            schematic_window_set_second_wy
             schematic_window_get_find_text_state_widget
             schematic_window_set_find_text_state_widget
             schematic_window_set_font_select_widget
@@ -506,7 +509,6 @@
             a_zoom
             a_zoom_box_invalidate_rubber
             a_zoom_box_motion
-            a_zoom_box_start
 
             g_action_eval_by_name
 
@@ -709,7 +711,9 @@
 (define-lff schematic_window_get_first_wy int '(*))
 (define-lff schematic_window_set_first_wy void (list '* int))
 (define-lff schematic_window_get_second_wx int '(*))
+(define-lff schematic_window_set_second_wx void (list '* int))
 (define-lff schematic_window_get_second_wy int '(*))
+(define-lff schematic_window_set_second_wy void (list '* int))
 (define-lff schematic_window_get_find_text_state_widget '* '(*))
 (define-lff schematic_window_set_find_text_state_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
@@ -902,6 +906,7 @@
 (define-lfc *i_callback_file_save)
 
 ;;; i_basic.c
+(define-lff i_action_start void '(*))
 (define-lff i_action_stop void '(*))
 (define-lff i_set_state void (list '* int))
 (define-lff i_set_state_msg void (list '* int '*))
@@ -1103,7 +1108,6 @@
 (define-lff a_zoom void (list '* '* int int))
 (define-lff a_zoom_box_invalidate_rubber void '(*))
 (define-lff a_zoom_box_motion void (list '* int int))
-(define-lff a_zoom_box_start void (list '* int int))
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))
