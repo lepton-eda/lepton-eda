@@ -428,6 +428,10 @@
 
             gschem_options_widget_new
 
+            gschem_page_geometry_get_viewport_bottom
+            gschem_page_geometry_get_viewport_left
+            gschem_page_geometry_get_viewport_right
+            gschem_page_geometry_get_viewport_top
             gschem_page_geometry_set_viewport
             gschem_page_geometry_set_world_bottom
             gschem_page_geometry_set_world_left
@@ -764,6 +768,10 @@
 (define-lff gschem_options_widget_new '* '(*))
 
 ;;; gschem_page_geometry.c
+(define-lff gschem_page_geometry_get_viewport_bottom int '(*))
+(define-lff gschem_page_geometry_get_viewport_left int '(*))
+(define-lff gschem_page_geometry_get_viewport_right int '(*))
+(define-lff gschem_page_geometry_get_viewport_top int '(*))
 (define-lff gschem_page_geometry_set_viewport void (list '* int int double))
 (define-lff gschem_page_geometry_set_world_bottom void (list '* int))
 (define-lff gschem_page_geometry_set_world_left void (list '* int))
