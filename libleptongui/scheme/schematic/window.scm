@@ -314,6 +314,10 @@
   (schematic_window_set_second_wy *window y))
 
 
+(define (zoom-box-motion *window x y)
+  (a_zoom_box_motion *window x y))
+
+
 (define (zoom-box-end window x y)
   "End zooming in WINDOW at coords X and Y."
   (define *window (check-window window 1))
@@ -730,7 +734,7 @@
                               ('pin-mode (o_pin_motion *window x y))
                               ('grips-mode (o_grips_motion *window x y))
                               ('box-select-mode (o_select_box_motion *window unsnapped-x unsnapped-y))
-                              ('zoom-box-mode (a_zoom_box_motion *window unsnapped-x unsnapped-y))
+                              ('zoom-box-mode (zoom-box-motion *window unsnapped-x unsnapped-y))
                               ('select-mode (o_select_motion *window x y))
                               (_ FALSE)))
 
