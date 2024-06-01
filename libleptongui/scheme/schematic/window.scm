@@ -318,7 +318,7 @@
   "Process motion events in *WINDOW when box zooming is in action."
   (define *window (check-window window 1))
 
-  (unless (true? (schematic_window_get_inside_action *window))
+  (unless (in-action? window)
     (error "zoom-box-motion(): The window is not in action!"))
 
   (when (true? (schematic_window_get_rubber_visible *window))
