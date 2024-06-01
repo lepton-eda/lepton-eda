@@ -135,28 +135,6 @@ a_zoom (SchematicWindow *w_current,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- */
-void
-a_zoom_box_motion (SchematicWindow *w_current,
-                   int w_x,
-                   int w_y)
-{
-  g_assert (schematic_window_get_inside_action (w_current) != 0);
-
-  if (schematic_window_get_rubber_visible (w_current))
-    a_zoom_box_invalidate_rubber (w_current);
-
-  schematic_window_set_second_wx (w_current, w_x);
-  schematic_window_set_second_wy (w_current, w_y);
-
-  a_zoom_box_invalidate_rubber (w_current);
-  schematic_window_set_rubber_visible (w_current, 1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  */
 void
 a_zoom_box_invalidate_rubber (SchematicWindow *w_current)

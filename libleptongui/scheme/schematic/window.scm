@@ -315,7 +315,18 @@
 
 
 (define (zoom-box-motion *window x y)
-  (a_zoom_box_motion *window x y))
+  "Process motion events in *WINDOW when box zooming is in action."
+  (unless (true? (schematic_window_get_inside_action *window))
+    (error "zoom-box-motion(): The window is not in action!"))
+
+  (when (true? (schematic_window_get_rubber_visible *window))
+    (a_zoom_box_invalidate_rubber *window))
+
+  (schematic_window_set_second_wx *window x)
+  (schematic_window_set_second_wy *window y)
+
+  (a_zoom_box_invalidate_rubber *window)
+  (schematic_window_set_rubber_visible *window 1))
 
 
 (define (zoom-box-end window x y)

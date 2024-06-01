@@ -390,6 +390,7 @@
             schematic_window_set_place_list
             schematic_window_get_right_notebook
             schematic_window_set_right_notebook
+            schematic_window_get_rubber_visible
             schematic_window_set_rubber_visible
             schematic_window_get_selection_list
             schematic_window_get_third_button
@@ -508,7 +509,6 @@
 
             a_zoom
             a_zoom_box_invalidate_rubber
-            a_zoom_box_motion
 
             g_action_eval_by_name
 
@@ -728,6 +728,7 @@
 (define-lff schematic_window_set_place_list void '(* *))
 (define-lff schematic_window_get_right_notebook '* '(*))
 (define-lff schematic_window_set_right_notebook void '(* *))
+(define-lff schematic_window_get_rubber_visible int '(*))
 (define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_third_button int '(*))
@@ -1107,7 +1108,6 @@
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
 (define-lff a_zoom_box_invalidate_rubber void '(*))
-(define-lff a_zoom_box_motion void (list '* int int))
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))
