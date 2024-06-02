@@ -222,10 +222,10 @@ void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_world_rect (page_view,
-                                          w_current->first_wx,
-                                          w_current->first_wy,
-                                          w_current->second_wx,
-                                          w_current->second_wy);
+                                          schematic_window_get_first_wx (w_current),
+                                          schematic_window_get_first_wy (w_current),
+                                          schematic_window_get_second_wx (w_current),
+                                          schematic_window_get_second_wy (w_current));
 }
 
 /*! \todo Finish function documentation!!!
