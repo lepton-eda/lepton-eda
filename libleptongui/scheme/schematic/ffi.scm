@@ -471,6 +471,7 @@
             schematic_event_shift_mask
 
             schematic_file_select_dialog_new
+            x_fileselect_add_preview
             x_fileselect_open
             x_fileselect_save
             schematic_file_open
@@ -1013,6 +1014,7 @@
 
 ;;; x_fileselect.c
 (define-lff schematic_file_select_dialog_new '* '(*))
+(define-lff x_fileselect_add_preview void '(*))
 (define-lff x_fileselect_open '* '(* *))
 (define-lff x_fileselect_save int '(* * *))
 (define-lff schematic_file_open int '(* * * *))

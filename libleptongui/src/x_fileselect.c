@@ -272,7 +272,7 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
  *
  *  \param [in] filechooser The file chooser to add the preview to.
  */
-static void
+void
 x_fileselect_add_preview (GtkFileChooser *filechooser)
 {
   GtkWidget *frame, *preview;
