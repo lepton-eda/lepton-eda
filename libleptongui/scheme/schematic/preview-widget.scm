@@ -29,6 +29,11 @@
 
   #:export (init-preview-widget-signals))
 
+;;; Flags defined in struct.h.
+(define F_OPEN_RC 1)
+(define F_OPEN_CHECK_BACKUP 2)
+(define F_OPEN_FORCE_BACKUP 4)
+(define F_OPEN_RESTORE_CWD 8)
 
 (define (update-preview *preview *user-data)
   (if (null-pointer? *preview)
@@ -45,11 +50,20 @@
               (unless (or (null-pointer? *preview_filename)
                           (null-pointer? *preview_buffer))
                 (error "Either preview filename or buffer has to be NULL!")))
+            (when (true? preview_active)
+              (unless (null-pointer? *preview_filename)
+                ;; Open up file in current page.
+                ;; FIXME: Test the value returned by f_open(), we
+                ;; should display something if there an error
+                ;; occured.
+                (f_open *toplevel
+                        *page
+                        *preview_filename
+                        (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
+                        %null-pointer)))
             (schematic_preview_update *preview
                                       *page
-                                      *toplevel
                                       preview_active
-                                      *preview_filename
                                       *preview_buffer)
             ;; Display current page (possibly empty).
             (gschem_page_view_zoom_extents *preview %null-pointer))))))

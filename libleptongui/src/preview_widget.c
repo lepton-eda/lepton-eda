@@ -169,20 +169,14 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *
  *  \param [in] preview The preview widget.
  *  \param [in] preview_page The \c LeptonPage object of the preview.
- *  \param [in] preview_toplevel The \c LeptonToplevel object of
- *                               the preview page.
  *  \param [in] preview_active If the preview should be updated.
- *  \param [in] preview_filename The filename to read the preview
- *                               data from.
  *  \param [in] preview_buffer The buffer to read the preview
  *                             data from.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
-                          LeptonToplevel *preview_toplevel,
                           gboolean preview_active,
-                          char *preview_filename,
                           char *preview_buffer)
 {
   int left, top, right, bottom;
@@ -193,16 +187,6 @@ schematic_preview_update (SchematicPreview *preview,
 
   if (preview_active)
   {
-    if (preview_filename != NULL) {
-      /* open up file in current page */
-      f_open (preview_toplevel,
-              preview_page,
-              preview_filename,
-              F_OPEN_RC | F_OPEN_RESTORE_CWD,
-              NULL);
-      /* test value returned by f_open... - Fix me */
-      /* we should display something if there an error occured - Fix me */
-    }
     if (preview_buffer != NULL) {
       /* Load the data buffer */
       GList * objects = o_read_buffer (preview_page,
