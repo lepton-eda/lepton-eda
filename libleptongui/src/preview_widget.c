@@ -171,15 +171,13 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview_buffer The buffer to read the preview
  *                             data from.
  */
-GschemPageView*
+void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
                           gboolean preview_active,
                           char *preview_buffer)
 {
   GError * err = NULL;
-
-  GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
   if (preview_active)
   {
@@ -209,8 +207,6 @@ schematic_preview_update (SchematicPreview *preview,
       }
     }
   }
-
-  return preview_view;
 }
 
 

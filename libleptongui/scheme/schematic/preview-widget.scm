@@ -67,31 +67,31 @@
                         *preview_filename
                         (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
                         %null-pointer)))
-            (let ((*view (schematic_preview_update *preview
-                                                   *page
-                                                   preview_active
-                                                   *preview_buffer)))
-              (let-values (((left top right bottom)
-                            (object-list-bounds
-                             (lepton_page_objects *page)
-                             ;; Do not include hidden text.
-                             FALSE)))
-                (when left
-                  ;; Clamp the canvas size to the extents of the
-                  ;; page being previewed.
-                  (let ((width-add (inexact->exact (round (* %over-zoom-factor
-                                                             (- right left)))))
-                        (height-add (inexact->exact (round (* %over-zoom-factor
-                                                              (- bottom top)))))
-                        (*geometry (gschem_page_view_get_page_geometry *view)))
-                    (gschem_page_geometry_set_world_left *geometry
-                                                         (- left width-add))
-                    (gschem_page_geometry_set_world_right *geometry
-                                                          (+ right width-add))
-                    (gschem_page_geometry_set_world_top *geometry
-                                                        (- top height-add))
-                    (gschem_page_geometry_set_world_bottom *geometry
-                                                           (+ bottom height-add))))))
+            (schematic_preview_update *preview
+                            *page
+                            preview_active
+                            *preview_buffer)
+            (let-values (((left top right bottom)
+                          (object-list-bounds
+                           (lepton_page_objects *page)
+                           ;; Do not include hidden text.
+                           FALSE)))
+              (when left
+                ;; Clamp the canvas size to the extents of the
+                ;; page being previewed.
+                (let ((width-add (inexact->exact (round (* %over-zoom-factor
+                                                           (- right left)))))
+                      (height-add (inexact->exact (round (* %over-zoom-factor
+                                                            (- bottom top)))))
+                      (*geometry (gschem_page_view_get_page_geometry *preview)))
+                  (gschem_page_geometry_set_world_left *geometry
+                                                       (- left width-add))
+                  (gschem_page_geometry_set_world_right *geometry
+                                                        (+ right width-add))
+                  (gschem_page_geometry_set_world_top *geometry
+                                                      (- top height-add))
+                  (gschem_page_geometry_set_world_bottom *geometry
+                                                         (+ bottom height-add)))))
             ;; Display current page (possibly empty).
             (gschem_page_view_zoom_extents *preview %null-pointer))))))
 
