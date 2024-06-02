@@ -314,6 +314,12 @@
   (schematic_window_set_second_wy *window y))
 
 
+(define (zoom-box-invalidate *window)
+  "Schedule redrawing of the canvas region in WINDOW during box
+zooming."
+  (a_zoom_box_invalidate_rubber *window))
+
+
 (define (zoom-box-motion window x y)
   "Process motion events in *WINDOW when box zooming is in action."
   (define *window (check-window window 1))
@@ -322,12 +328,12 @@
     (error "zoom-box-motion(): The window is not in action!"))
 
   (when (true? (schematic_window_get_rubber_visible *window))
-    (a_zoom_box_invalidate_rubber *window))
+    (zoom-box-invalidate *window))
 
   (schematic_window_set_second_wx *window x)
   (schematic_window_set_second_wy *window y)
 
-  (a_zoom_box_invalidate_rubber *window)
+  (zoom-box-invalidate *window)
   (schematic_window_set_rubber_visible *window 1))
 
 
@@ -339,7 +345,7 @@
 
   (unless (in-action? window)
     (error "zoom-box-end(): The window is not in action!"))
-  (a_zoom_box_invalidate_rubber *window)
+  (zoom-box-invalidate *window)
   (schematic_window_set_rubber_visible *window 0)
   (zoom-box window)
   (when (schematic_window_get_undo_panzoom *window)
