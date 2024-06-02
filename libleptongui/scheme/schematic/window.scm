@@ -319,7 +319,12 @@
 zooming."
   (define *window (check-window window 1))
 
-  (a_zoom_box_invalidate_rubber *window))
+  (schematic_canvas_invalidate_world_rect
+   (schematic_window_get_current_canvas *window)
+   (schematic_window_get_first_wx *window)
+   (schematic_window_get_first_wy *window)
+   (schematic_window_get_second_wx *window)
+   (schematic_window_get_second_wy *window)))
 
 
 (define (zoom-box-motion window x y)

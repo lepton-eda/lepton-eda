@@ -10,9 +10,6 @@ a_zoom (SchematicWindow *w_current,
         int dir,
         int selected_from);
 void
-a_zoom_box_invalidate_rubber (SchematicWindow *w_current);
-
-void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer);
 

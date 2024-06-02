@@ -135,22 +135,6 @@ a_zoom (SchematicWindow *w_current,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- */
-void
-a_zoom_box_invalidate_rubber (SchematicWindow *w_current)
-{
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-
-  schematic_canvas_invalidate_world_rect (page_view,
-                                          schematic_window_get_first_wx (w_current),
-                                          schematic_window_get_first_wy (w_current),
-                                          schematic_window_get_second_wx (w_current),
-                                          schematic_window_get_second_wy (w_current));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  *
  */
 void

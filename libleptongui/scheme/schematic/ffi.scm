@@ -322,6 +322,7 @@
             schematic_canvas_get_page
             schematic_canvas_get_viewport
             schematic_canvas_invalidate_all
+            schematic_canvas_invalidate_world_rect
             schematic_canvas_new_with_page
             schematic_canvas_pan
             schematic_canvas_pan_end
@@ -508,7 +509,6 @@
             x_tabs_prev
 
             a_zoom
-            a_zoom_box_invalidate_rubber
 
             g_action_eval_by_name
 
@@ -641,6 +641,7 @@
 (define-lff schematic_canvas_get_page '* '(*))
 (define-lff schematic_canvas_get_viewport '* '(*))
 (define-lff schematic_canvas_invalidate_all void '(*))
+(define-lff schematic_canvas_invalidate_world_rect void (list '* int int int int))
 (define-lff schematic_canvas_new_with_page '* '(*))
 (define-lff schematic_canvas_pan void (list '* int int))
 (define-lff schematic_canvas_pan_end int '(*))
@@ -1107,7 +1108,6 @@
 
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
-(define-lff a_zoom_box_invalidate_rubber void '(*))
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))
