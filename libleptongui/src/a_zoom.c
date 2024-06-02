@@ -139,8 +139,6 @@ a_zoom (SchematicWindow *w_current,
 void
 a_zoom_box_invalidate_rubber (SchematicWindow *w_current)
 {
-  g_return_if_fail (w_current != NULL);
-
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
 
   schematic_canvas_invalidate_world_rect (page_view,
