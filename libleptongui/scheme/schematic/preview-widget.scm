@@ -18,8 +18,10 @@
 
 
 (define-module (schematic preview-widget)
+  #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
+  #:use-module (lepton bounds)
   #:use-module (lepton ffi)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton log)
@@ -28,6 +30,10 @@
   #:use-module (schematic ffi)
 
   #:export (init-preview-widget-signals))
+
+
+(define %over-zoom-factor 0.1)
+
 
 ;;; Flags defined in struct.h.
 (define F_OPEN_RC 1)
@@ -61,10 +67,33 @@
                         *preview_filename
                         (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
                         %null-pointer)))
-            (schematic_preview_update *preview
-                                      *page
-                                      preview_active
-                                      *preview_buffer)
+            (let ((*view (schematic_preview_update *preview
+                                                   *page
+                                                   preview_active
+                                                   *preview_buffer)))
+              (let-values (((left top right bottom)
+                            (object-list-bounds
+                             (lepton_page_objects *page)
+                             ;; Do not include hidden text.
+                             FALSE)))
+                (when left
+                  ;; Clamp the canvas size to the extents of the
+                  ;; page being previewed.
+                  (let ((width (- right left))
+                        (height (- bottom top))
+                        (*geometry (gschem_page_view_get_page_geometry *view)))
+                    (gschem_page_geometry_set_world_left *geometry
+                                                         (inexact->exact
+                                                          (round (- left (* width %over-zoom-factor)))))
+                    (gschem_page_geometry_set_world_right *geometry
+                                                          (inexact->exact
+                                                           (round (+ right (* width %over-zoom-factor)))))
+                    (gschem_page_geometry_set_world_top *geometry
+                                                        (inexact->exact
+                                                         (round (- top (* height %over-zoom-factor)))))
+                    (gschem_page_geometry_set_world_bottom *geometry
+                                                           (inexact->exact
+                                                            (round (+ bottom (* height %over-zoom-factor)))))))))
             ;; Display current page (possibly empty).
             (gschem_page_view_zoom_extents *preview %null-pointer))))))
 

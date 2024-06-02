@@ -38,8 +38,6 @@
 
 #include "gschem.h"
 
-#define OVER_ZOOM_FACTOR 0.1
-
 
 struct _SchematicPreviewClass
 {
@@ -173,14 +171,12 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview_buffer The buffer to read the preview
  *                             data from.
  */
-void
+GschemPageView*
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
                           gboolean preview_active,
                           char *preview_buffer)
 {
-  int left, top, right, bottom;
-  int width, height;
   GError * err = NULL;
 
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
@@ -214,21 +210,7 @@ schematic_preview_update (SchematicPreview *preview,
     }
   }
 
-  if (world_get_object_glist_bounds (lepton_page_objects (preview_page),
-                                     /* Do not include hidden text. */
-                                     FALSE,
-                                     &left, &top,
-                                     &right, &bottom)) {
-    /* Clamp the canvas size to the extents of the page being previewed */
-    width = right - left;
-    height = bottom - top;
-
-    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (preview_view);
-    gschem_page_geometry_set_world_left   (geometry, left   - ((double)width  * OVER_ZOOM_FACTOR));
-    gschem_page_geometry_set_world_right  (geometry, right  + ((double)width  * OVER_ZOOM_FACTOR));
-    gschem_page_geometry_set_world_top    (geometry, top    - ((double)height * OVER_ZOOM_FACTOR));
-    gschem_page_geometry_set_world_bottom (geometry, bottom + ((double)height * OVER_ZOOM_FACTOR));
-  }
+  return preview_view;
 }
 
 
