@@ -62,7 +62,6 @@ schematic_preview_get_window (GtkWidget *preview);
 void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
-                          gboolean preview_active,
                           char *preview_buffer);
 
 G_END_DECLS

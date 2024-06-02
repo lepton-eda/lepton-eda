@@ -167,44 +167,39 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *
  *  \param [in] preview The preview widget.
  *  \param [in] preview_page The \c LeptonPage object of the preview.
- *  \param [in] preview_active If the preview should be updated.
  *  \param [in] preview_buffer The buffer to read the preview
  *                             data from.
  */
 void
 schematic_preview_update (SchematicPreview *preview,
                           LeptonPage *preview_page,
-                          gboolean preview_active,
                           char *preview_buffer)
 {
   GError * err = NULL;
 
-  if (preview_active)
-  {
-    if (preview_buffer != NULL) {
-      /* Load the data buffer */
-      GList * objects = o_read_buffer (preview_page,
-                                       NULL,
-                                       preview_buffer,
-                                       -1,
-                                       _("Preview Buffer"),
-                                       &err);
-      if (err == NULL) {
-        lepton_page_append_list (preview_page, objects);
-      }
-      else {
-        lepton_page_append (preview_page,
-                            lepton_text_object_new (2,
-                                                    100,
-                                                    100,
-                                                    LOWER_MIDDLE,
-                                                    0,
-                                                    err->message,
-                                                    10,
-                                                    VISIBLE,
-                                                    SHOW_NAME_VALUE));
-        g_error_free(err);
-      }
+  if (preview_buffer != NULL) {
+    /* Load the data buffer */
+    GList * objects = o_read_buffer (preview_page,
+                                     NULL,
+                                     preview_buffer,
+                                     -1,
+                                     _("Preview Buffer"),
+                                     &err);
+    if (err == NULL) {
+      lepton_page_append_list (preview_page, objects);
+    }
+    else {
+      lepton_page_append (preview_page,
+                          lepton_text_object_new (2,
+                                                  100,
+                                                  100,
+                                                  LOWER_MIDDLE,
+                                                  0,
+                                                  err->message,
+                                                  10,
+                                                  VISIBLE,
+                                                  SHOW_NAME_VALUE));
+      g_error_free(err);
     }
   }
 }

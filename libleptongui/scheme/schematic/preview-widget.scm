@@ -66,11 +66,10 @@
                         *page
                         *preview_filename
                         (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
-                        %null-pointer)))
-            (schematic_preview_update *preview
-                            *page
-                            preview_active
-                            *preview_buffer)
+                        %null-pointer))
+              (schematic_preview_update *preview
+                                        *page
+                                        *preview_buffer))
             (let-values (((left top right bottom)
                           (object-list-bounds
                            (lepton_page_objects *page)
