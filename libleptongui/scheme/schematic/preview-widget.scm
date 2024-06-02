@@ -79,21 +79,19 @@
                 (when left
                   ;; Clamp the canvas size to the extents of the
                   ;; page being previewed.
-                  (let ((width (- right left))
-                        (height (- bottom top))
+                  (let ((width-add (inexact->exact (round (* %over-zoom-factor
+                                                             (- right left)))))
+                        (height-add (inexact->exact (round (* %over-zoom-factor
+                                                              (- bottom top)))))
                         (*geometry (gschem_page_view_get_page_geometry *view)))
                     (gschem_page_geometry_set_world_left *geometry
-                                                         (inexact->exact
-                                                          (round (- left (* width %over-zoom-factor)))))
+                                                         (- left width-add))
                     (gschem_page_geometry_set_world_right *geometry
-                                                          (inexact->exact
-                                                           (round (+ right (* width %over-zoom-factor)))))
+                                                          (+ right width-add))
                     (gschem_page_geometry_set_world_top *geometry
-                                                        (inexact->exact
-                                                         (round (- top (* height %over-zoom-factor)))))
+                                                        (- top height-add))
                     (gschem_page_geometry_set_world_bottom *geometry
-                                                           (inexact->exact
-                                                            (round (+ bottom (* height %over-zoom-factor)))))))))
+                                                           (+ bottom height-add))))))
             ;; Display current page (possibly empty).
             (gschem_page_view_zoom_extents *preview %null-pointer))))))
 
