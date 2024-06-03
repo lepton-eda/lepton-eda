@@ -59,9 +59,4 @@ schematic_preview_get_filename (GtkWidget *preview);
 GschemToplevel*
 schematic_preview_get_window (GtkWidget *preview);
 
-void
-schematic_preview_update (LeptonPage *preview_page,
-                          GList *objects,
-                          GError *err);
-
 G_END_DECLS

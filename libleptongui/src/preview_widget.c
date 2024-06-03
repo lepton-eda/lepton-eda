@@ -159,41 +159,6 @@ schematic_preview_callback_button_press (GtkWidget *widget,
 }
 
 
-/*! \brief Updates the preview widget.
- *  \par Function Description
- *  This function updates the preview: if the preview is active and a
- *  filename has been given, it opens the file and displays
- *  it. Otherwise it displays a blank page.
- *
- *  \param [in] preview_page The \c LeptonPage object of the preview.
- *  \param [in] objects The list of objects to display.
- *  \param [in,out] err \c GError structure for error reporting, or
- *                      NULL to disable error reporting.
- */
-void
-schematic_preview_update (LeptonPage *preview_page,
-                          GList *objects,
-                          GError *err)
-{
-  if (err == NULL) {
-    lepton_page_append_list (preview_page, objects);
-  }
-  else {
-    lepton_page_append (preview_page,
-                        lepton_text_object_new (2,
-                                                100,
-                                                100,
-                                                LOWER_MIDDLE,
-                                                0,
-                                                err->message,
-                                                10,
-                                                VISIBLE,
-                                                SHOW_NAME_VALUE));
-    g_error_free(err);
-  }
-}
-
-
 static void
 schematic_preview_class_init (SchematicPreviewClass *klass)
 {

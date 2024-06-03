@@ -25,6 +25,8 @@
   #:use-module (lepton bounds)
   #:use-module (lepton ffi)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton gerror)
   #:use-module (lepton log)
   #:use-module (lepton m4)
 
@@ -43,7 +45,12 @@
 (define F_OPEN_FORCE_BACKUP 4)
 (define F_OPEN_RESTORE_CWD 8)
 
+
 (define (update-preview *preview *user-data)
+  "Update the preview widget *PREVIEW if it is 'active' and either a
+filename or a buffer is associated with it.  The argument
+*USER-DATA is currently unused.  In case of an error, when a
+buffer should be displayed, the widget displays the error message."
   (if (null-pointer? *preview)
       (log! 'warning "NULL preview widget")
       (let ((*page (gschem_page_view_get_page *preview)))
@@ -78,9 +85,24 @@
                                                 -1
                                                 (string->pointer (G_ "Preview Buffer"))
                                                 *error)))
-                  (schematic_preview_update *page *objects (if (null-pointer? *error)
-                                                               *error
-                                                               (dereference-pointer *error))))))
+                  (let ((*err (if (null-pointer? *error)
+                                  %null-pointer
+                                  (dereference-pointer *error))))
+                    (if (null-pointer? *err)
+                        (lepton_page_append_list *page *objects)
+                        (begin
+                          (lepton_page_append *page
+                                              (lepton_text_object_new 2
+                                                                      100
+                                                                      100
+                                                                      3 ; LOWER_MIDDLE from defines.h
+                                                                      0
+                                                                      (string->pointer (gerror-message *err))
+                                                                      10
+                                                                      1 ; VISIBLE from defines.h
+                                                                      0 ; SHOW_NAME_VALUE from defines.h
+                                                                      ))
+                          (g_clear_error *error)))))))
             (let-values (((left top right bottom)
                           (object-list-bounds
                            (lepton_page_objects *page)
