@@ -29,6 +29,8 @@
   #:use-module (lepton gerror)
   #:use-module (lepton log)
   #:use-module (lepton m4)
+  #:use-module (lepton object foreign)
+  #:use-module (lepton object)
 
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
@@ -92,16 +94,15 @@ buffer should be displayed, the widget displays the error message."
                         (lepton_page_append_list *page *objects)
                         (begin
                           (lepton_page_append *page
-                                              (lepton_text_object_new 2
-                                                                      100
-                                                                      100
-                                                                      3 ; LOWER_MIDDLE from defines.h
-                                                                      0
-                                                                      (string->pointer (gerror-message *err))
-                                                                      10
-                                                                      1 ; VISIBLE from defines.h
-                                                                      0 ; SHOW_NAME_VALUE from defines.h
-                                                                      ))
+                                              (object->pointer
+                                               (make-text '(100 . 100)
+                                                          'lower-center
+                                                          0
+                                                          (gerror-message *err)
+                                                          10
+                                                          #t
+                                                          'both
+                                                          2)))
                           (g_clear_error *error)))))))
             (let-values (((left top right bottom)
                           (object-list-bounds
