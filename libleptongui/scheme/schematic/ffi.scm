@@ -631,7 +631,7 @@
 (define-lff gschem_page_view_zoom_extents void '(* *))
 (define-lff schematic_page_view_grab_focus void '(*))
 
-;;; gschem_preview.c
+;;; preview_widget.c
 (define-lfc *preview_callback_realize)
 (define-lfc *preview_callback_button_press)
 (define-lfc *preview_event_scroll)

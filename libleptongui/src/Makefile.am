@@ -39,7 +39,6 @@ libleptongui_la_SOURCES = \
 	gschem_page_geometry.c \
 	gschem_page_view.c \
 	gschem_pin_type_combo.c \
-	gschem_preview.c \
 	gschem_rotation_combo.c \
 	gschem_selection_adapter.c \
 	gschem_show_hide_text_widget.c \
@@ -75,6 +74,7 @@ libleptongui_la_SOURCES = \
 	o_text.c \
 	o_undo.c \
 	page_revert_dialog.c \
+	preview_widget.c \
 	signals.c \
 	s_stretch.c \
 	schematic_hierarchy.c \
