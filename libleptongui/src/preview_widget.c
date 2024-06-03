@@ -47,7 +47,7 @@ enum {
   PROP_ACTIVE
 };
 
-G_DEFINE_TYPE (GschemPreview, gschem_preview, GSCHEM_TYPE_PAGE_VIEW);
+G_DEFINE_TYPE (SchematicPreview, schematic_preview, GSCHEM_TYPE_PAGE_VIEW);
 
 static void preview_set_property (GObject *object,
                                   guint property_id,
@@ -64,7 +64,7 @@ static void preview_finalize (GObject *self);
 /*! \brief get the filename for the current page
  */
 static const char*
-preview_get_filename (GschemPreview *preview)
+preview_get_filename (SchematicPreview *preview)
 {
   LeptonPage *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
@@ -108,7 +108,7 @@ preview_callback_button_press (GtkWidget *widget,
                                GdkEventButton *event,
                                gpointer user_data)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (widget);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
   gint wx, wy;
 
@@ -151,7 +151,7 @@ preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview The preview widget.
  */
 static void
-preview_update (GschemPreview *preview)
+preview_update (SchematicPreview *preview)
 {
   int left, top, right, bottom;
   int width, height;
@@ -231,7 +231,7 @@ preview_update (GschemPreview *preview)
 
 
 static void
-gschem_preview_class_init (GschemPreviewClass *klass)
+schematic_preview_class_init (SchematicPreviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
@@ -271,19 +271,19 @@ preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
                       GschemToplevel *w_current)
 {
-  if (!GSCHEM_PREVIEW (widget)->active) {
+  if (!SCHEMATIC_PREVIEW (widget)->active) {
     return TRUE;
   }
-  return x_event_scroll (widget, event, GSCHEM_PREVIEW (widget)->preview_w_current);
+  return x_event_scroll (widget, event, SCHEMATIC_PREVIEW (widget)->preview_w_current);
 }
 
 
 /*! \brief create a new preview widget
  */
 GtkWidget*
-gschem_preview_new ()
+schematic_preview_new ()
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
 
   struct event_reg_t {
     const gchar *detailed_signal;
@@ -314,7 +314,7 @@ gschem_preview_new ()
 
 
 static void
-gschem_preview_init (GschemPreview *preview)
+schematic_preview_init (SchematicPreview *preview)
 {
   GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
@@ -359,7 +359,7 @@ preview_set_property (GObject *object,
                       const GValue *value,
                       GParamSpec *pspec)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (object);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
   GschemToplevel *preview_w_current = preview->preview_w_current;
 
   g_assert (preview_w_current != NULL);
@@ -401,7 +401,7 @@ preview_get_property (GObject *object,
                       GValue *value,
                       GParamSpec *pspec)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (object);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
 
   switch(property_id) {
       case PROP_FILENAME:
@@ -420,7 +420,7 @@ preview_get_property (GObject *object,
 static void
 preview_dispose (GObject *self)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (self);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
   GschemToplevel *preview_w_current = preview->preview_w_current;
 
   if (preview_w_current != NULL) {
@@ -431,18 +431,18 @@ preview_dispose (GObject *self)
     preview->preview_w_current = NULL;
   }
 
-  G_OBJECT_CLASS (gschem_preview_parent_class)->dispose (self);
+  G_OBJECT_CLASS (schematic_preview_parent_class)->dispose (self);
 }
 
 static void
 preview_finalize (GObject *self)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (self);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
 
   g_free (preview->filename);
   g_free (preview->buffer);
 
-  G_OBJECT_CLASS (gschem_preview_parent_class)->finalize (self);
+  G_OBJECT_CLASS (schematic_preview_parent_class)->finalize (self);
 }
 
 
@@ -456,5 +456,5 @@ schematic_preview_get_preview_w_current (GtkWidget *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);
 
-  return GSCHEM_PREVIEW (preview)->preview_w_current;
+  return SCHEMATIC_PREVIEW (preview)->preview_w_current;
 }

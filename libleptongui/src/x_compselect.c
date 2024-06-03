@@ -1530,7 +1530,7 @@ compselect_constructor (GType type,
                                         NULL));
 #endif
 
-  preview = GTK_WIDGET (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
+  preview = GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_PREVIEW, NULL));
 
 #ifdef ENABLE_GTK3
   gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
@@ -1540,7 +1540,7 @@ compselect_constructor (GType type,
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 #endif
   /* set preview of compselect */
-  compselect->preview = GSCHEM_PREVIEW (preview);
+  compselect->preview = SCHEMATIC_PREVIEW (preview);
   g_object_set (GTK_WIDGET (preview),
                 "width-request",  160,
                 "height-request", 120,

@@ -21,21 +21,21 @@
  *  \brief A widget for viewing a symbol or schematic
  */
 
-#define GSCHEM_TYPE_PREVIEW           (gschem_preview_get_type())
-#define GSCHEM_PREVIEW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_PREVIEW, GschemPreview))
-#define GSCHEM_PREVIEW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_PREVIEW, GschemPreviewClass))
-#define GSCHEM_IS_PREVIEW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_PREVIEW))
-#define GSCHEM_PREVIEW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_PREVIEW, GschemPreviewClass))
+#define SCHEMATIC_TYPE_PREVIEW           (schematic_preview_get_type())
+#define SCHEMATIC_PREVIEW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_PREVIEW, SchematicPreview))
+#define SCHEMATIC_PREVIEW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_PREVIEW, SchematicPreviewClass))
+#define SCHEMATIC_IS_PREVIEW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_PREVIEW))
+#define SCHEMATIC_PREVIEW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_PREVIEW, SchematicPreviewClass))
 
-typedef struct _GschemPreviewClass GschemPreviewClass;
-typedef struct _GschemPreview      GschemPreview;
+typedef struct _SchematicPreviewClass SchematicPreviewClass;
+typedef struct _SchematicPreview      SchematicPreview;
 
-struct _GschemPreviewClass
+struct _SchematicPreviewClass
 {
   GschemPageViewClass parent_class;
 };
 
-struct _GschemPreview
+struct _SchematicPreview
 {
   GschemPageView parent_instance;
 
@@ -48,10 +48,10 @@ struct _GschemPreview
 };
 
 GType
-gschem_preview_get_type (void);
+schematic_preview_get_type (void);
 
 GtkWidget*
-gschem_preview_new ();
+schematic_preview_new ();
 
 G_BEGIN_DECLS
 

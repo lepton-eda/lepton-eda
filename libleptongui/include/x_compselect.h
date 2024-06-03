@@ -63,7 +63,7 @@ struct _Compselect {
   GtkWidget   *hpaned, *vpaned, *attrframe;
   GtkTreeView *libtreeview, *inusetreeview, *attrtreeview;
   GtkNotebook *viewtabs;
-  GschemPreview *preview;
+  SchematicPreview *preview;
   GtkEntry    *entry_filter;
   GtkButton   *button_clear;
   guint        filter_timeout;

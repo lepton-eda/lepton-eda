@@ -233,7 +233,7 @@ static void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (user_data);
+  SchematicPreview *preview = SCHEMATIC_PREVIEW (user_data);
   gchar *filename, *preview_filename = NULL;
 
   filename = gtk_file_chooser_get_preview_filename (chooser);
@@ -292,7 +292,7 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
                                         NULL));
 #endif
 
-  preview = gschem_preview_new ();
+  preview = schematic_preview_new ();
 
 #ifdef ENABLE_GTK3
   gtk_container_add (GTK_CONTAINER (frame), preview);
