@@ -23,10 +23,10 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
-  #:use-module (lepton gettext)
 
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
+  #:use-module (schematic gettext)
   #:use-module (schematic undo)
   #:use-module (schematic window global)
   #:use-module (schematic window foreign)
