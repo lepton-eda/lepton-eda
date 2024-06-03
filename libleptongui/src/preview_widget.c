@@ -165,25 +165,16 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  filename has been given, it opens the file and displays
  *  it. Otherwise it displays a blank page.
  *
- *  \param [in] preview The preview widget.
  *  \param [in] preview_page The \c LeptonPage object of the preview.
- *  \param [in] preview_buffer The buffer to read the preview
- *                             data from.
+ *  \param [in] objects The list of objects to display.
+ *  \param [in,out] err \c GError structure for error reporting, or
+ *                      NULL to disable error reporting.
  */
 void
-schematic_preview_update (SchematicPreview *preview,
-                          LeptonPage *preview_page,
-                          char *preview_buffer)
+schematic_preview_update (LeptonPage *preview_page,
+                          GList *objects,
+                          GError *err)
 {
-  GError * err = NULL;
-
-  /* Load the data buffer */
-  GList * objects = o_read_buffer (preview_page,
-                                   NULL,
-                                   preview_buffer,
-                                   -1,
-                                   _("Preview Buffer"),
-                                   &err);
   if (err == NULL) {
     lepton_page_append_list (preview_page, objects);
   }

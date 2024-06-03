@@ -18,6 +18,7 @@
 
 
 (define-module (schematic preview-widget)
+  #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
@@ -28,6 +29,7 @@
   #:use-module (lepton m4)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic gettext)
 
   #:export (init-preview-widget-signals))
 
@@ -68,9 +70,17 @@
                         (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
                         %null-pointer))
               (unless (null-pointer? *preview_buffer)
-                (schematic_preview_update *preview
-                                          *page
-                                          *preview_buffer)))
+                (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+                       ;; Load the data buffer.
+                       (*objects (o_read_buffer *page
+                                                %null-pointer
+                                                *preview_buffer
+                                                -1
+                                                (string->pointer (G_ "Preview Buffer"))
+                                                *error)))
+                  (schematic_preview_update *page *objects (if (null-pointer? *error)
+                                                               *error
+                                                               (dereference-pointer *error))))))
             (let-values (((left top right bottom)
                           (object-list-bounds
                            (lepton_page_objects *page)
