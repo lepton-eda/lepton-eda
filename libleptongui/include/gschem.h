@@ -41,7 +41,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_dialog_misc.h"
 #include "gschemhotkeystore.h"
 #include "i_vars.h"
-#include "gschem_preview.h"
+#include "preview_widget.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
 #include "x_tabs.h"

@@ -34,7 +34,6 @@ noinst_HEADERS = \
 	gschem_page_geometry.h \
 	gschem_page_view.h \
 	gschem_pin_type_combo.h \
-	gschem_preview.h \
 	gschem_selection_adapter.h \
 	gschem_show_hide_text_widget.h \
 	gschem_struct.h \
@@ -45,5 +44,6 @@ noinst_HEADERS = \
 	color_edit_widget.h \
 	font_select_widget.h \
 	page_select_widget.h \
+	preview_widget.h \
 	snap_mode.h \
 	toolbar.h
