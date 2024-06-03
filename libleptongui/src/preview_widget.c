@@ -177,30 +177,28 @@ schematic_preview_update (SchematicPreview *preview,
 {
   GError * err = NULL;
 
-  if (preview_buffer != NULL) {
-    /* Load the data buffer */
-    GList * objects = o_read_buffer (preview_page,
-                                     NULL,
-                                     preview_buffer,
-                                     -1,
-                                     _("Preview Buffer"),
-                                     &err);
-    if (err == NULL) {
-      lepton_page_append_list (preview_page, objects);
-    }
-    else {
-      lepton_page_append (preview_page,
-                          lepton_text_object_new (2,
-                                                  100,
-                                                  100,
-                                                  LOWER_MIDDLE,
-                                                  0,
-                                                  err->message,
-                                                  10,
-                                                  VISIBLE,
-                                                  SHOW_NAME_VALUE));
-      g_error_free(err);
-    }
+  /* Load the data buffer */
+  GList * objects = o_read_buffer (preview_page,
+                                   NULL,
+                                   preview_buffer,
+                                   -1,
+                                   _("Preview Buffer"),
+                                   &err);
+  if (err == NULL) {
+    lepton_page_append_list (preview_page, objects);
+  }
+  else {
+    lepton_page_append (preview_page,
+                        lepton_text_object_new (2,
+                                                100,
+                                                100,
+                                                LOWER_MIDDLE,
+                                                0,
+                                                err->message,
+                                                10,
+                                                VISIBLE,
+                                                SHOW_NAME_VALUE));
+    g_error_free(err);
   }
 }
 
