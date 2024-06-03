@@ -583,7 +583,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 
   /* update the attributes with the toplevel of the preview widget*/
   update_attributes_model (compselect,
-                           compselect->preview->preview_w_current);
+                           compselect->preview->window);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,

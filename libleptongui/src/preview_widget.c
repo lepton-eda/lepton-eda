@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ preview_callback_button_press (GtkWidget *widget,
                                gpointer user_data)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->window;
   gint wx, wy;
 
   if (!preview->active) {
@@ -274,7 +274,7 @@ preview_event_scroll (GtkWidget *widget,
   if (!SCHEMATIC_PREVIEW (widget)->active) {
     return TRUE;
   }
-  return x_event_scroll (widget, event, SCHEMATIC_PREVIEW (widget)->preview_w_current);
+  return x_event_scroll (widget, event, SCHEMATIC_PREVIEW (widget)->window);
 }
 
 
@@ -306,7 +306,7 @@ schematic_preview_new ()
     g_signal_connect (GTK_WIDGET (preview),
                       tmp->detailed_signal,
                       tmp->c_handler,
-                      preview->preview_w_current);
+                      preview->window);
   }
 
   return GTK_WIDGET (preview);
@@ -333,14 +333,14 @@ schematic_preview_init (SchematicPreview *preview)
   preview_w_current->toolbars    = FALSE;
 
   preview_w_current->drawing_area = GTK_WIDGET (preview);
-  preview->preview_w_current = preview_w_current;
+  preview->window = preview_w_current;
 
   preview->active   = FALSE;
   preview->filename = NULL;
   preview->buffer   = NULL;
 
   gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview),
-                             lepton_page_new (preview->preview_w_current->toplevel,
+                             lepton_page_new (preview->window->toplevel,
                                               "preview"));
 
   gtk_widget_set_events (GTK_WIDGET (preview),
@@ -360,7 +360,7 @@ preview_set_property (GObject *object,
                       GParamSpec *pspec)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->window;
 
   g_assert (preview_w_current != NULL);
 
@@ -421,14 +421,14 @@ static void
 preview_dispose (GObject *self)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->window;
 
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
 
     gschem_toplevel_free (preview_w_current);
 
-    preview->preview_w_current = NULL;
+    preview->window = NULL;
   }
 
   G_OBJECT_CLASS (schematic_preview_parent_class)->dispose (self);
@@ -456,5 +456,5 @@ schematic_preview_get_preview_w_current (GtkWidget *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);
 
-  return SCHEMATIC_PREVIEW (preview)->preview_w_current;
+  return SCHEMATIC_PREVIEW (preview)->window;
 }

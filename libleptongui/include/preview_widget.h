@@ -39,7 +39,7 @@ struct _SchematicPreview
 {
   GschemPageView parent_instance;
 
-  GschemToplevel *preview_w_current;
+  GschemToplevel *window;
 
   gchar *filename;
   gchar *buffer;
