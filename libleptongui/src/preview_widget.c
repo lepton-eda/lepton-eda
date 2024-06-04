@@ -453,7 +453,7 @@ schematic_preview_finalize (GObject *self)
  *  \return The field.
  */
 GschemToplevel*
-schematic_preview_get_preview_w_current (GtkWidget *preview)
+schematic_preview_get_window (GtkWidget *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);
 

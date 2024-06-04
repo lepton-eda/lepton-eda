@@ -67,6 +67,6 @@ schematic_preview_callback_scroll_event (GtkWidget *widget,
                                          GdkEventScroll *event,
                                          GschemToplevel *w_current);
 GschemToplevel*
-schematic_preview_get_preview_w_current (GtkWidget *preview);
+schematic_preview_get_window (GtkWidget *preview);
 
 G_END_DECLS

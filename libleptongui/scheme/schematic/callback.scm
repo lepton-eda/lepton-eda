@@ -160,7 +160,7 @@
            (schematic_signal_connect *preview
                                      (string->pointer (car element))
                                      (cdr element)
-                                     (schematic_preview_get_preview_w_current *preview)))
+                                     (schematic_preview_get_window *preview)))
          signal-callback-list))
       (schematic_window_set_compselect *window *compselect-widget)))
   (x_compselect_open (schematic_window_get_compselect *window))

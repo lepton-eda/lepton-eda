@@ -334,7 +334,7 @@
             *schematic_preview_callback_realize
             *schematic_preview_callback_button_press
             *schematic_preview_callback_scroll_event
-            schematic_preview_get_preview_w_current
+            schematic_preview_get_window
 
             schematic_signal_connect
 
@@ -635,7 +635,7 @@
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
 (define-lfc *schematic_preview_callback_scroll_event)
-(define-lff schematic_preview_get_preview_w_current '* '(*))
+(define-lff schematic_preview_get_window '* '(*))
 
 ;;; schematic_hierarchy.c
 (define-lff schematic_hierarchy_get_page_control_counter int '())
