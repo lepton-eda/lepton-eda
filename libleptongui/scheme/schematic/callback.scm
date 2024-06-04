@@ -140,7 +140,7 @@
      (if %m4-use-gtk3
          `("draw" . ,*x_event_draw)
          `("expose-event" . ,*x_event_expose))
-     `("realize" . ,*preview_callback_realize)
+     `("realize" . ,*schematic_preview_callback_realize)
      `("button-press-event" . ,*preview_callback_button_press)
      `("configure-event" . ,*x_event_configure)
      `("scroll-event" . ,*preview_event_scroll)))

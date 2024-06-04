@@ -83,7 +83,8 @@ preview_get_filename (SchematicPreview *preview)
  *  \param [in] user_data Unused user data.
  */
 void
-preview_callback_realize (GtkWidget *widget, gpointer user_data)
+schematic_preview_callback_realize (GtkWidget *widget,
+                                    gpointer user_data)
 {
   g_return_if_fail (widget != NULL);
 
@@ -289,7 +290,7 @@ schematic_preview_new ()
     const gchar *detailed_signal;
     GCallback c_handler;
   } drawing_area_events[] = {
-    { "realize",              G_CALLBACK (preview_callback_realize)       },
+    { "realize",              G_CALLBACK (schematic_preview_callback_realize)},
 #ifdef ENABLE_GTK3
     { "draw",                 G_CALLBACK (x_event_draw)                   },
 #else

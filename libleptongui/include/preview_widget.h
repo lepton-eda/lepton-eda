@@ -60,8 +60,8 @@ preview_callback_button_press (GtkWidget *widget,
                                GdkEventButton *event,
                                gpointer user_data);
 void
-preview_callback_realize (GtkWidget *widget,
-                          gpointer user_data);
+schematic_preview_callback_realize (GtkWidget *widget,
+                                    gpointer user_data);
 gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
