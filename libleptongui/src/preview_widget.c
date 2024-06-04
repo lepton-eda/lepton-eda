@@ -49,22 +49,22 @@ enum {
 
 G_DEFINE_TYPE (SchematicPreview, schematic_preview, GSCHEM_TYPE_PAGE_VIEW);
 
-static void preview_set_property (GObject *object,
-                                  guint property_id,
-                                  const GValue *value,
-                                  GParamSpec *pspec);
-static void preview_get_property (GObject *object,
-                                  guint property_id,
-                                  GValue *value,
-                                  GParamSpec *pspec);
-static void preview_dispose (GObject *self);
-static void preview_finalize (GObject *self);
+static void schematic_preview_set_property (GObject *object,
+                                            guint property_id,
+                                            const GValue *value,
+                                            GParamSpec *pspec);
+static void schematic_preview_get_property (GObject *object,
+                                            guint property_id,
+                                            GValue *value,
+                                            GParamSpec *pspec);
+static void schematic_preview_dispose (GObject *self);
+static void schematic_preview_finalize (GObject *self);
 
 
 /*! \brief get the filename for the current page
  */
 static const char*
-preview_get_filename (SchematicPreview *preview)
+schematic_preview_get_filename (SchematicPreview *preview)
 {
   LeptonPage *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
@@ -106,8 +106,8 @@ schematic_preview_callback_realize (GtkWidget *widget,
  */
 gboolean
 schematic_preview_callback_button_press (GtkWidget *widget,
-                               GdkEventButton *event,
-                               gpointer user_data)
+                                         GdkEventButton *event,
+                                         gpointer user_data)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->window;
@@ -152,7 +152,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview The preview widget.
  */
 static void
-preview_update (SchematicPreview *preview)
+schematic_preview_callback_update (SchematicPreview *preview)
 {
   int left, top, right, bottom;
   int width, height;
@@ -236,10 +236,10 @@ schematic_preview_class_init (SchematicPreviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  gobject_class->set_property = preview_set_property;
-  gobject_class->get_property = preview_get_property;
-  gobject_class->dispose      = preview_dispose;
-  gobject_class->finalize     = preview_finalize;
+  gobject_class->set_property = schematic_preview_set_property;
+  gobject_class->get_property = schematic_preview_get_property;
+  gobject_class->dispose      = schematic_preview_dispose;
+  gobject_class->finalize     = schematic_preview_finalize;
 
   g_object_class_install_property (
     gobject_class, PROP_FILENAME,
@@ -355,10 +355,10 @@ schematic_preview_init (SchematicPreview *preview)
 }
 
 static void
-preview_set_property (GObject *object,
-                      guint property_id,
-                      const GValue *value,
-                      GParamSpec *pspec)
+schematic_preview_set_property (GObject *object,
+                                guint property_id,
+                                const GValue *value,
+                                GParamSpec *pspec)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
   GschemToplevel *preview_w_current = preview->window;
@@ -388,7 +388,7 @@ preview_set_property (GObject *object,
 
       case PROP_ACTIVE:
         preview->active = g_value_get_boolean (value);
-        preview_update (preview);
+        schematic_preview_callback_update (preview);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -397,16 +397,16 @@ preview_set_property (GObject *object,
 }
 
 static void
-preview_get_property (GObject *object,
-                      guint property_id,
-                      GValue *value,
-                      GParamSpec *pspec)
+schematic_preview_get_property (GObject *object,
+                                guint property_id,
+                                GValue *value,
+                                GParamSpec *pspec)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
 
   switch(property_id) {
       case PROP_FILENAME:
-        g_value_set_string (value, preview_get_filename (preview));
+        g_value_set_string (value, schematic_preview_get_filename (preview));
         break;
 
       case PROP_ACTIVE:
@@ -419,7 +419,7 @@ preview_get_property (GObject *object,
 }
 
 static void
-preview_dispose (GObject *self)
+schematic_preview_dispose (GObject *self)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
   GschemToplevel *preview_w_current = preview->window;
@@ -436,7 +436,7 @@ preview_dispose (GObject *self)
 }
 
 static void
-preview_finalize (GObject *self)
+schematic_preview_finalize (GObject *self)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
 
