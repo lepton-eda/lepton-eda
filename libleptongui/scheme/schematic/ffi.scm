@@ -333,7 +333,7 @@
 
             *schematic_preview_callback_realize
             *schematic_preview_callback_button_press
-            *preview_event_scroll
+            *schematic_preview_callback_scroll_event
             schematic_preview_get_preview_w_current
 
             schematic_signal_connect
@@ -634,7 +634,7 @@
 ;;; preview_widget.c
 (define-lfc *schematic_preview_callback_realize)
 (define-lfc *schematic_preview_callback_button_press)
-(define-lfc *preview_event_scroll)
+(define-lfc *schematic_preview_callback_scroll_event)
 (define-lff schematic_preview_get_preview_w_current '* '(*))
 
 ;;; schematic_hierarchy.c

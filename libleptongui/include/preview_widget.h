@@ -63,9 +63,9 @@ void
 schematic_preview_callback_realize (GtkWidget *widget,
                                     gpointer user_data);
 gboolean
-preview_event_scroll (GtkWidget *widget,
-                      GdkEventScroll *event,
-                      GschemToplevel *w_current);
+schematic_preview_callback_scroll_event (GtkWidget *widget,
+                                         GdkEventScroll *event,
+                                         GschemToplevel *w_current);
 GschemToplevel*
 schematic_preview_get_preview_w_current (GtkWidget *preview);
 

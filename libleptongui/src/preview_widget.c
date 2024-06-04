@@ -268,9 +268,9 @@ schematic_preview_class_init (SchematicPreviewClass *klass)
 
 
 gboolean
-preview_event_scroll (GtkWidget *widget,
-                      GdkEventScroll *event,
-                      GschemToplevel *w_current)
+schematic_preview_callback_scroll_event (GtkWidget *widget,
+                                         GdkEventScroll *event,
+                                         GschemToplevel *w_current)
 {
   if (!SCHEMATIC_PREVIEW (widget)->active) {
     return TRUE;
@@ -298,7 +298,7 @@ schematic_preview_new ()
 #endif
     { "button_press_event",   G_CALLBACK (schematic_preview_callback_button_press)},
     { "configure_event",      G_CALLBACK (x_event_configure)              },
-    { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
+    { "scroll_event",         G_CALLBACK (schematic_preview_callback_scroll_event)},
     { NULL,                   NULL                                        }
   }, *tmp;
 

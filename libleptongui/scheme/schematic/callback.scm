@@ -143,7 +143,7 @@
      `("realize" . ,*schematic_preview_callback_realize)
      `("button-press-event" . ,*schematic_preview_callback_button_press)
      `("configure-event" . ,*x_event_configure)
-     `("scroll-event" . ,*preview_event_scroll)))
+     `("scroll-event" . ,*schematic_preview_callback_scroll_event)))
 
   (o_redraw_cleanstates *window)
 
