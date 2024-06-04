@@ -332,7 +332,7 @@
             schematic_page_view_grab_focus
 
             *schematic_preview_callback_realize
-            *preview_callback_button_press
+            *schematic_preview_callback_button_press
             *preview_event_scroll
             schematic_preview_get_preview_w_current
 
@@ -633,7 +633,7 @@
 
 ;;; preview_widget.c
 (define-lfc *schematic_preview_callback_realize)
-(define-lfc *preview_callback_button_press)
+(define-lfc *schematic_preview_callback_button_press)
 (define-lfc *preview_event_scroll)
 (define-lff schematic_preview_get_preview_w_current '* '(*))
 

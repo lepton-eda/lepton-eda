@@ -105,7 +105,7 @@ schematic_preview_callback_realize (GtkWidget *widget,
  *  \returns FALSE to propagate the event further.
  */
 gboolean
-preview_callback_button_press (GtkWidget *widget,
+schematic_preview_callback_button_press (GtkWidget *widget,
                                GdkEventButton *event,
                                gpointer user_data)
 {
@@ -296,7 +296,7 @@ schematic_preview_new ()
 #else
     { "expose_event",         G_CALLBACK (x_event_expose)                 },
 #endif
-    { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
+    { "button_press_event",   G_CALLBACK (schematic_preview_callback_button_press)},
     { "configure_event",      G_CALLBACK (x_event_configure)              },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }

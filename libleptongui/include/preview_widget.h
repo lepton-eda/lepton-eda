@@ -56,9 +56,9 @@ schematic_preview_new ();
 G_BEGIN_DECLS
 
 gboolean
-preview_callback_button_press (GtkWidget *widget,
-                               GdkEventButton *event,
-                               gpointer user_data);
+schematic_preview_callback_button_press (GtkWidget *widget,
+                                         GdkEventButton *event,
+                                         gpointer user_data);
 void
 schematic_preview_callback_realize (GtkWidget *widget,
                                     gpointer user_data);

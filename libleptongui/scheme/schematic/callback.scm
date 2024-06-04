@@ -141,7 +141,7 @@
          `("draw" . ,*x_event_draw)
          `("expose-event" . ,*x_event_expose))
      `("realize" . ,*schematic_preview_callback_realize)
-     `("button-press-event" . ,*preview_callback_button_press)
+     `("button-press-event" . ,*schematic_preview_callback_button_press)
      `("configure-event" . ,*x_event_configure)
      `("scroll-event" . ,*preview_event_scroll)))
 
