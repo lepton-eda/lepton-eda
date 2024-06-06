@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,9 @@ struct st_undo
   char *filename;
   GList *object_list;
 
-  /* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
-  int type;
+  /* TRUE if only viewport size has to be saved.  Otherwise,
+     FALSE. */
+  gboolean type;
 
   /* viewport information */
   int x, y;

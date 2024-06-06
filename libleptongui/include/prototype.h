@@ -325,7 +325,7 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
 void
 o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,
-                  int flag);
+                  gboolean only_viewport);
 void
 o_undo_savestate_old (GschemToplevel *w_current);
 

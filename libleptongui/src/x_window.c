@@ -578,7 +578,7 @@ x_window_open_page (GschemToplevel *w_current,
   recent_manager_add (w_current, filename);
 
   /* Save current state of the page: */
-  o_undo_savestate (w_current, page, UNDO_ALL);
+  o_undo_savestate (w_current, page, FALSE);
 
   return page;
 
@@ -1167,7 +1167,7 @@ x_window_new_page (GschemToplevel* w_current)
   g_run_hook_page (w_current, "new-page-hook", page);
 
   /* Save current state of the page: */
-  o_undo_savestate (w_current, page, UNDO_ALL);
+  o_undo_savestate (w_current, page, FALSE);
 
   return page;
 

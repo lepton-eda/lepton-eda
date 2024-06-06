@@ -241,21 +241,16 @@ o_autosave_backups (GschemToplevel *w_current)
  *  page onto the head of the undo stack to possibly restore it
  *  later.
  *
- *  <B>flag</B> can be one of the following values:
- *  <DL>
- *    <DT>*</DT><DD>UNDO_ALL
- *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
- *  </DL>
-
  * \param [in] w_current The #GschemToplevel object the current
  *                       page belongs to.
  * \param [in] page The \c LeptonPage instance.
- * \param [in] flag The flag of the current operation type.
+ * \param [in] only_viewport If only the current viewport size have
+ *                           to be stored.
  */
 void
 o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,
-                  int flag)
+                  gboolean only_viewport)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;
@@ -278,8 +273,8 @@ o_undo_savestate (GschemToplevel *w_current,
     return;
   }
 
-  if (flag == UNDO_ALL) {
-
+  if (!only_viewport)
+  {
     /* Increment the number of operations since last backup if
        auto-save is enabled */
     if (toplevel->auto_save_interval != 0) {
@@ -295,8 +290,8 @@ o_undo_savestate (GschemToplevel *w_current,
     lepton_net_object_consolidate (page);
   }
 
-  if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
-
+  if (w_current->undo_type == UNDO_DISK && !only_viewport)
+  {
     filename = schematic_undo_index_to_filename (undo_file_index++);
 
     /* Changed from f_save to o_save when adding backup copy creation. */
@@ -305,7 +300,9 @@ o_undo_savestate (GschemToplevel *w_current,
        saving an undo backup copy */
     o_save (lepton_page_objects (page), filename, NULL);
 
-  } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
+  }
+  else if (w_current->undo_type == UNDO_MEMORY && !only_viewport)
+  {
     object_list = o_glist_copy_all (lepton_page_objects (page),
                                     object_list);
   }
@@ -324,7 +321,9 @@ o_undo_savestate (GschemToplevel *w_current,
   if (geometry != NULL) {
     page->undo_tos =
       lepton_undo_add (page->undo_tos,
-                       flag, filename, object_list,
+                       only_viewport,
+                       filename,
+                       object_list,
                        (geometry->viewport_left + geometry->viewport_right) / 2,
                        (geometry->viewport_top + geometry->viewport_bottom) / 2,
                        /* scale */
@@ -334,7 +333,9 @@ o_undo_savestate (GschemToplevel *w_current,
                        page->up);
   } else {
     page->undo_tos = lepton_undo_add (page->undo_tos,
-                                      flag, filename, object_list,
+                                      only_viewport,
+                                      filename,
+                                      object_list,
                                       0, /* center x */
                                       0, /* center y */
                                       0, /* scale */
@@ -444,7 +445,7 @@ o_undo_savestate_old (GschemToplevel *w_current)
 
   LeptonPage *page = gschem_page_view_get_page (page_view);
 
-  o_undo_savestate (w_current, page, UNDO_ALL);
+  o_undo_savestate (w_current, page, FALSE);
 }
 
 
@@ -464,5 +465,5 @@ o_undo_savestate_viewport (GschemToplevel *w_current)
 
   LeptonPage *page = schematic_window_get_active_page (w_current);
 
-  o_undo_savestate (w_current, page, UNDO_VIEWPORT_ONLY);
+  o_undo_savestate (w_current, page, TRUE);
 }

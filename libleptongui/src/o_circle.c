@@ -125,7 +125,7 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
   g_run_hook_object (w_current, "add-objects-hook", new_obj);
 
   gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate(w_current, page, UNDO_ALL);
+  o_undo_savestate (w_current, page, FALSE);
 
   i_action_stop (w_current);
 }

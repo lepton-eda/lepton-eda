@@ -100,7 +100,7 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
     w_current->first_wy = w_current->second_wy;
 
     gschem_toplevel_page_content_changed (w_current, page);
-    o_undo_savestate(w_current, page, UNDO_ALL);
+    o_undo_savestate(w_current, page, FALSE);
   }
 
   /* Don't reset w_current->inside_action here since we want to continue drawing */
