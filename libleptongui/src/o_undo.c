@@ -235,16 +235,22 @@ o_autosave_backups (GschemToplevel *w_current)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Save current state of page onto the undo stack.
  *  \par Function Description
- *
+ *  The function saves the objects and/or viewport of the current
+ *  page onto the head of the undo stack to possibly restore it
+ *  later.
  *
  *  <B>flag</B> can be one of the following values:
  *  <DL>
  *    <DT>*</DT><DD>UNDO_ALL
  *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
  *  </DL>
+
+ * \param [in] w_current The #GschemToplevel object the current
+ *                       page belongs to.
+ * \param [in] page The \c LeptonPage instance.
+ * \param [in] flag The flag of the current operation type.
  */
 void
 o_undo_savestate (GschemToplevel *w_current,
