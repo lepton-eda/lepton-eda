@@ -118,6 +118,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 ### Changes in `libleptongui`:
 
+- The type `GschemPreview` has been renamed to `SchematicPreview`,
+  all related functions and macros have been renamed accordingly.
+
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
 
