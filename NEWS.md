@@ -311,6 +311,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `bus-ripper-size` key in the `schematic` configuration group to
   `0` and the `bus-ripper-type` key to `net`.
 
+- Crashes of the GTK3 port of the program when built with newer
+  Glib versions (newer than 2.74) have been fixed.  Those could be
+  triggered by clicking on any main, tabs' or popup menu item.
+
+- Crashes on closing one of the open program windows, it doesn't
+  matter whether with mouse click on the menu item or with a
+  keyboard shortcut, have been fixed.
+
 ### Changes in `lepton-archive`:
 
 - The program now outputs its basename instead of the full path
