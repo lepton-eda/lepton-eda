@@ -27,7 +27,9 @@
 
   #:export (canvas-viewport
             invalidate-canvas
-            *redraw-canvas))
+            *redraw-canvas
+            scroll-canvas
+            *scroll-canvas))
 
 
 (define (canvas-viewport canvas)
@@ -56,3 +58,10 @@
 
 (define *redraw-canvas
   (procedure->pointer int redraw-canvas '(* * *)))
+
+
+(define (scroll-canvas *widget *event *window)
+  (x_event_scroll *widget *event *window))
+
+(define *scroll-canvas
+  (procedure->pointer int scroll-canvas '(* * *)))
