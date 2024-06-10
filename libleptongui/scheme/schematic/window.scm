@@ -795,7 +795,7 @@ zooming."
   (define signal-callback-list
     (list
      (if %m4-use-gtk3
-         `("draw" . ,*x_event_draw)
+         `("draw" . ,*redraw-canvas)
          `("expose-event" . ,*x_event_expose))
      `("button-press-event" . ,*callback-button-pressed)
      `("button-release-event" . ,*callback-button-released)

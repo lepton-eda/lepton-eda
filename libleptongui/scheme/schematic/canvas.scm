@@ -17,12 +17,15 @@
 
 
 (define-module (schematic canvas)
+  #:use-module (system foreign)
+
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic viewport foreign)
 
   #:export (canvas-viewport
-            invalidate-canvas))
+            invalidate-canvas
+            *redraw-canvas))
 
 
 (define (canvas-viewport canvas)
@@ -37,3 +40,10 @@
   (define *canvas (check-canvas canvas 1))
 
   (schematic_canvas_invalidate_all *canvas))
+
+
+(define (redraw-canvas *widget *cairo-context *window)
+  (x_event_draw *widget *cairo-context *window))
+
+(define *redraw-canvas
+  (procedure->pointer int redraw-canvas '(* * *)))

@@ -32,6 +32,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic canvas)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
 
@@ -151,7 +152,7 @@ buffer should be displayed, the widget displays the error message."
 (define %signal-callback-list
   (list
    (if %m4-use-gtk3
-       `("draw" . ,*x_event_draw)
+       `("draw" . ,*redraw-canvas)
        `("expose-event" . ,*x_event_expose))
    `("realize" . ,*schematic_preview_callback_realize)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
