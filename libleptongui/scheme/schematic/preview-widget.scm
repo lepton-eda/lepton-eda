@@ -153,7 +153,7 @@ buffer should be displayed, the widget displays the error message."
   (list
    (if %m4-use-gtk3
        `("draw" . ,*redraw-canvas)
-       `("expose-event" . ,*x_event_expose))
+       `("expose-event" . ,*redraw-canvas))
    `("realize" . ,*schematic_preview_callback_realize)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)

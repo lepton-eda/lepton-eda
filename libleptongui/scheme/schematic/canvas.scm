@@ -19,6 +19,8 @@
 (define-module (schematic canvas)
   #:use-module (system foreign)
 
+  #:use-module (lepton m4)
+
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic viewport foreign)
@@ -42,8 +44,10 @@
   (schematic_canvas_invalidate_all *canvas))
 
 
-(define (redraw-canvas *widget *cairo-context *window)
-  (x_event_draw *widget *cairo-context *window))
+(define (redraw-canvas *widget *cairo-context-or-event *window)
+  (if %m4-use-gtk3
+      (x_event_draw *widget *cairo-context-or-event *window)
+      (x_event_expose *widget *cairo-context-or-event *window)))
 
 (define *redraw-canvas
   (procedure->pointer int redraw-canvas '(* * *)))

@@ -796,7 +796,7 @@ zooming."
     (list
      (if %m4-use-gtk3
          `("draw" . ,*redraw-canvas)
-         `("expose-event" . ,*x_event_expose))
+         `("expose-event" . ,*redraw-canvas))
      `("button-press-event" . ,*callback-button-pressed)
      `("button-release-event" . ,*callback-button-released)
      `("motion-notify-event" . ,*callback-motion)
