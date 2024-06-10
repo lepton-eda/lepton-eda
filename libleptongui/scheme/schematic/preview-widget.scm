@@ -139,9 +139,9 @@ buffer should be displayed, the widget displays the error message."
 
 (define (scroll-preview *preview *scroll-event *window)
   (if (true? (schematic_preview_get_active *preview))
-      (x_event_scroll *preview
-                      *scroll-event
-                      (schematic_preview_get_window *preview))
+      (scroll-canvas *preview
+                     *scroll-event
+                     (schematic_preview_get_window *preview))
       TRUE))
 
 (define *scroll-preview

@@ -786,13 +786,6 @@ zooming."
   (procedure->pointer int callback-motion '(* * *)))
 
 
-(define (callback-scroll *widget *event *window)
-  (x_event_scroll *widget *event *window))
-
-(define *callback-scroll
-  (procedure->pointer int callback-scroll '(* * *)))
-
-
 (define (setup-canvas-draw-events *window *canvas)
   (define signal-callback-list
     (list
@@ -803,7 +796,7 @@ zooming."
      `("configure-event" . ,*x_event_configure)
      `("key-press-event" . ,*process-key-event)
      `("key-release-event" . ,*process-key-event)
-     `("scroll-event" . ,*callback-scroll)
+     `("scroll-event" . ,*scroll-canvas)
      `("update-grid-info" . ,*i_update_grid_info_callback)
      `("notify::page" . ,*schematic_window_notify_page_callback)))
 
