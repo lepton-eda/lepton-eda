@@ -64,6 +64,8 @@
 (define (scroll-canvas *widget *event *window)
   (when (null-pointer? *window)
     (error "NULL window"))
+  (when (null-pointer? *widget)
+    (error "NULL canvas"))
   (x_event_scroll *widget *event *window))
 
 (define *scroll-canvas
