@@ -82,7 +82,7 @@ static void schematic_preview_finalize (GObject *self);
 /*! \brief get the filename for the current page
  */
 static const char*
-schematic_preview_get_filename (SchematicPreview *preview)
+schematic_preview_get_page_filename (SchematicPreview *preview)
 {
   LeptonPage *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
@@ -396,7 +396,7 @@ schematic_preview_get_property (GObject *object,
 
   switch(property_id) {
       case PROP_FILENAME:
-        g_value_set_string (value, schematic_preview_get_filename (preview));
+        g_value_set_string (value, schematic_preview_get_page_filename (preview));
         break;
 
       case PROP_ACTIVE:
