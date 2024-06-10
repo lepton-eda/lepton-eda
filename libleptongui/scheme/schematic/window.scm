@@ -794,9 +794,7 @@ zooming."
 (define (setup-page-view-draw-events *window *page-view)
   (define signal-callback-list
     (list
-     (if %m4-use-gtk3
-         `("draw" . ,*redraw-canvas)
-         `("expose-event" . ,*redraw-canvas))
+     `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
      `("button-press-event" . ,*callback-button-pressed)
      `("button-release-event" . ,*callback-button-released)
      `("motion-notify-event" . ,*callback-motion)

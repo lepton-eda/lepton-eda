@@ -151,9 +151,7 @@ buffer should be displayed, the widget displays the error message."
 ;;; preview widgets.
 (define %signal-callback-list
   (list
-   (if %m4-use-gtk3
-       `("draw" . ,*redraw-canvas)
-       `("expose-event" . ,*redraw-canvas))
+   `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
    `("realize" . ,*schematic_preview_callback_realize)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)
