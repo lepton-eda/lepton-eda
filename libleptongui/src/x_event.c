@@ -322,8 +322,6 @@ x_event_scroll (GtkWidget *widget,
   SchematicCanvas *view = NULL;
   LeptonPage *page = NULL;
 
-  g_return_val_if_fail ((w_current != NULL), 0);
-
   view = SCHEMATIC_CANVAS (widget);
   g_return_val_if_fail ((view != NULL), 0);
 
