@@ -478,8 +478,6 @@
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
-            x_event_draw
-            x_event_expose
             x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
@@ -1037,8 +1035,6 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_draw int '(* * *))
-(define-lff x_event_expose int '(* * *))
 (define-lff x_event_scroll int '(* * *))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))

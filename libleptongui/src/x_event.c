@@ -97,67 +97,6 @@ schematic_event_get_button (GdkEvent *event)
 }
 
 
-#ifdef ENABLE_GTK3
-/*! \brief Redraws the view when widget is exposed.
- *
- *  \param [in] view      The SchematicCanvas.
- *  \param [in] cr        The cairo context.
- *  \param [in] w_current The SchematicWindow.
- *  \returns FALSE to propagate the event further.
- */
-gint
-x_event_draw (SchematicCanvas *view,
-              cairo_t *cr,
-              SchematicWindow *w_current)
-{
-  schematic_canvas_redraw (view, cr, w_current);
-
-  return(0);
-}
-
-
-/* Dummy function for making Scheme happy. */
-gint
-x_event_expose (gpointer view,
-                gpointer event,
-                gpointer w_current)
-{
-  return(0);
-}
-
-
-#else /* GTK2 */
-
-
-/* Dummy function for making Scheme happy. */
-gint
-x_event_draw (gpointer view,
-              gpointer cr,
-              gpointer w_current)
-{
-  return(0);
-}
-
-
-/*! \brief Redraws the view when widget is exposed.
- *
- *  \param [in] view      The SchematicCanvas.
- *  \param [in] event     The event structure.
- *  \param [in] w_current The SchematicWindow.
- *  \returns FALSE to propagate the event further.
- */
-gint
-x_event_expose (SchematicCanvas *view,
-                GdkEventExpose *event,
-                SchematicWindow *w_current)
-{
-  schematic_canvas_redraw (view, event, w_current);
-
-  return(0);
-}
-#endif
-
-
 /*! \brief Check if a moving event has to be skipped.
  *
  *  \par Function Description

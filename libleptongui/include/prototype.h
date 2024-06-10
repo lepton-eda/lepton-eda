@@ -932,28 +932,6 @@ schematic_event_is_double_button_press (GdkEvent *event);
 gboolean
 schematic_event_skip_motion_event (GdkEvent *event);
 
-#ifdef ENABLE_GTK3
-gint
-x_event_draw (SchematicCanvas *widget,
-              cairo_t *cr,
-              SchematicWindow *w_current);
-gint
-x_event_expose (gpointer view,
-                gpointer event,
-                gpointer w_current);
-
-#else /* GTK2 */
-
-gint
-x_event_draw (gpointer view,
-              gpointer cr,
-              gpointer w_current);
-gint
-x_event_expose (SchematicCanvas *widget,
-                GdkEventExpose *event,
-                SchematicWindow *w_current);
-#endif
-
 gboolean
 x_event_faked_motion (SchematicCanvas *view,
                       GdkEventKey *event);

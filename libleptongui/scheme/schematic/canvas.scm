@@ -19,7 +19,7 @@
 (define-module (schematic canvas)
   #:use-module (system foreign)
 
-  #:use-module (lepton m4)
+  #:use-module (lepton ffi boolean)
 
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
@@ -44,10 +44,15 @@
   (schematic_canvas_invalidate_all *canvas))
 
 
+;;; The function redraws the canvas *WIDGET in *WINDOW when an
+;;; appropriate signal is received ("draw" for GTK3, and
+;;; "expose-event" for GTK2).  The second argument,
+;;; *CAIRO-CONTEXT-OR-EVENT, is cairo context of the canvas for
+;;; GTK3, and a Gdk event instance for GTK2.  The function always
+;;; returns FALSE to propagate the event further.
 (define (redraw-canvas *widget *cairo-context-or-event *window)
-  (if %m4-use-gtk3
-      (x_event_draw *widget *cairo-context-or-event *window)
-      (x_event_expose *widget *cairo-context-or-event *window)))
+  (schematic_canvas_redraw *widget *cairo-context-or-event *window)
+  FALSE)
 
 (define *redraw-canvas
   (procedure->pointer int redraw-canvas '(* * *)))
