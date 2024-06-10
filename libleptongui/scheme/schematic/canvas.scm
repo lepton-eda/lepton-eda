@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2024 Lepton EDA Contributors
+;;; Copyright (C) 2024-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton log)
 
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
@@ -61,6 +62,8 @@
 
 
 (define (scroll-canvas *widget *event *window)
+  (when (null-pointer? *window)
+    (error "NULL window"))
   (x_event_scroll *widget *event *window))
 
 (define *scroll-canvas
