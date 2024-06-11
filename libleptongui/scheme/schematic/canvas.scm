@@ -66,7 +66,12 @@
     (error "NULL window"))
   (when (null-pointer? *widget)
     (error "NULL canvas"))
-  (x_event_scroll *widget *event *window))
+
+  (let ((*page (schematic_canvas_get_page *widget)))
+    (if (null-pointer? *page)
+        ;; We cannot zoom or scroll a page if it doesn't exist :)
+        FALSE
+        (x_event_scroll *widget *event *window))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))

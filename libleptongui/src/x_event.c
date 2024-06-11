@@ -320,14 +320,8 @@ x_event_scroll (GtkWidget *widget,
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
   SchematicCanvas *view = NULL;
-  LeptonPage *page = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
-  page = schematic_canvas_get_page (view);
-
-  if (page == NULL) {
-    return FALSE; /* we cannot zoom page if it doesn't exist :) */
-  }
 
   /* update the state of the modifiers */
   schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
