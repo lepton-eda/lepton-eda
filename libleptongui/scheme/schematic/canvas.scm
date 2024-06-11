@@ -24,6 +24,7 @@
 
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
+  #:use-module (schematic event)
   #:use-module (schematic viewport foreign)
 
   #:export (canvas-viewport
@@ -62,6 +63,9 @@
 
 
 (define (scroll-canvas *widget *event *window)
+  (define (state-contains? state mask)
+    (if (logtest state mask) 1 0))
+
   (when (null-pointer? *window)
     (error "NULL window"))
   (when (null-pointer? *widget)
@@ -71,7 +75,18 @@
     (if (null-pointer? *page)
         ;; We cannot zoom or scroll a page if it doesn't exist :)
         FALSE
-        (x_event_scroll *widget *event *window))))
+        (let ((alt-mask (schematic_event_alt_mask))
+              (control-mask (schematic_event_control_mask))
+              (shift-mask (schematic_event_shift_mask))
+              (state (event-state *event)))
+          ;; Update the state of the modifiers.
+          (schematic_window_set_shift_key_pressed *window
+                                                  (state-contains? state shift-mask))
+          (schematic_window_set_control_key_pressed *window
+                                                    (state-contains? state control-mask))
+          (schematic_window_set_alt_key_pressed *window
+                                                (state-contains? state alt-mask))
+          (x_event_scroll *widget *event *window)))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
