@@ -307,11 +307,13 @@ x_event_key (SchematicCanvas *page_view,
  *  \param [in] widget The SchematicCanvas with the scroll event.
  *  \param [in] event
  *  \param [in] w_current
+ *  \param [in] gtk_scroll_wheel
  */
 gint
 x_event_scroll (GtkWidget *widget,
                 GdkEventScroll *event,
-                SchematicWindow *w_current)
+                SchematicWindow *w_current,
+                gboolean gtk_scroll_wheel)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
@@ -323,7 +325,7 @@ x_event_scroll (GtkWidget *widget,
 
   view = SCHEMATIC_CANVAS (widget);
 
-  if (schematic_window_get_scroll_wheel (w_current) == SCROLL_WHEEL_CLASSIC)
+  if (!gtk_scroll_wheel)
   {
     /* Classic gschem behaviour */
     zoom =      !schematic_window_get_control_key_pressed (w_current) &&

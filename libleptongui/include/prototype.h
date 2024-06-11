@@ -940,7 +940,8 @@ x_event_key (SchematicCanvas *page_view,
 gint
 x_event_scroll (GtkWidget *widget,
                 GdkEventScroll *event,
-                SchematicWindow *w_current);
+                SchematicWindow *w_current,
+                gboolean gtk_scroll_wheel);
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
