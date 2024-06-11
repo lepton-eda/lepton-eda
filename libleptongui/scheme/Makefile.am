@@ -30,6 +30,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/new-text.scm \
 	schematic/dialog/slot-edit.scm \
 	schematic/doc.scm \
+	schematic/event.scm \
 	schematic/ffi.scm \
 	schematic/ffi/gtk.scm \
 	schematic/gettext.scm \
