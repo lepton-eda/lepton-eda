@@ -52,6 +52,7 @@
             gtk_window_set_transient_for
             gtk_window_present
 
+            GdkModifierType
             gdk_event_get_coords
             gdk_event_get_state))
 
@@ -60,9 +61,10 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libgtk))
 
+(define GdkModifierType uint32)
+
 
 (define-lff gtk_accelerator_parse void '(* * *))
-(define GdkModifierType uint32)
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
 (define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
 
