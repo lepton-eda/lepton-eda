@@ -58,6 +58,7 @@ buffer should be displayed, the widget displays the error message."
       (unless (null-pointer? *err)
         (let ((message (gerror-message *err)))
           (g_clear_error *error)
+          (log! 'warning (G_ "Preview error: ~A") message)
           (lepton_page_append *page
                               (object->pointer
                                (make-text '(100 . 100)
