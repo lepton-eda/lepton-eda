@@ -53,6 +53,22 @@
 filename or a buffer is associated with it.  The argument
 *USER-DATA is currently unused.  In case of an error, when a
 buffer should be displayed, the widget displays the error message."
+  (define (report-gerror *error *page)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (let ((message (gerror-message *err)))
+          (g_clear_error *error)
+          (lepton_page_append *page
+                              (object->pointer
+                               (make-text '(100 . 100)
+                                          'lower-center
+                                          0
+                                          message
+                                          10
+                                          #t
+                                          'both
+                                          2)))))))
+
   (if (null-pointer? *preview)
       (log! 'warning "NULL preview widget")
       (let ((*page (gschem_page_view_get_page *preview)))
@@ -78,21 +94,7 @@ buffer should be displayed, the widget displays the error message."
                                 (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
                                 *error)))
                   (when (false? result)
-                    (let ((*err (if (null-pointer? *error)
-                                    %null-pointer
-                                    (dereference-pointer *error))))
-                      (unless (null-pointer? *err)
-                        (lepton_page_append *page
-                                            (object->pointer
-                                             (make-text '(100 . 100)
-                                                        'lower-center
-                                                        0
-                                                        (gerror-message *err)
-                                                        10
-                                                        #t
-                                                        'both
-                                                        2)))
-                        (g_clear_error *error))))))
+                    (report-gerror *error *page))))
               (unless (null-pointer? *preview_buffer)
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
                        ;; Load the data buffer.
@@ -102,23 +104,9 @@ buffer should be displayed, the widget displays the error message."
                                                 -1
                                                 (string->pointer (G_ "Preview Buffer"))
                                                 *error)))
-                  (let ((*err (if (null-pointer? *error)
-                                  %null-pointer
-                                  (dereference-pointer *error))))
-                    (if (null-pointer? *err)
-                        (lepton_page_append_list *page *objects)
-                        (begin
-                          (lepton_page_append *page
-                                              (object->pointer
-                                               (make-text '(100 . 100)
-                                                          'lower-center
-                                                          0
-                                                          (gerror-message *err)
-                                                          10
-                                                          #t
-                                                          'both
-                                                          2)))
-                          (g_clear_error *error)))))))
+                  (if (null-pointer? (dereference-pointer *error))
+                      (lepton_page_append_list *page *objects)
+                      (report-gerror *error *page)))))
             (let-values (((left top right bottom)
                           (object-list-bounds
                            (lepton_page_objects *page)
