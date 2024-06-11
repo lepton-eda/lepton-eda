@@ -86,7 +86,11 @@
                                                     (state-contains? state control-mask))
           (schematic_window_set_alt_key_pressed *window
                                                 (state-contains? state alt-mask))
-          (x_event_scroll *widget *event *window)))))
+          ;; There are two scrolling types defined in gschem_defines.h:
+          ;;   SCROLL_WHEEL_CLASSIC = 0
+          ;;   SCROLL_WHEEL_GTK = 1
+          (let ((scrolling-type (schematic_window_get_scroll_wheel *window)))
+            (x_event_scroll *widget *event *window scrolling-type))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
