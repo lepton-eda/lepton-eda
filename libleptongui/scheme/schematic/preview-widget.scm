@@ -70,14 +70,29 @@ buffer should be displayed, the widget displays the error message."
             (when (true? preview_active)
               (unless (null-pointer? *preview_filename)
                 ;; Open up file in current page.
-                ;; FIXME: Test the value returned by f_open(), we
-                ;; should display something if there an error
-                ;; occured.
-                (f_open *toplevel
-                        *page
-                        *preview_filename
-                        (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
-                        %null-pointer))
+                (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+                       (result
+                        (f_open *toplevel
+                                *page
+                                *preview_filename
+                                (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
+                                *error)))
+                  (when (false? result)
+                    (let ((*err (if (null-pointer? *error)
+                                    %null-pointer
+                                    (dereference-pointer *error))))
+                      (unless (null-pointer? *err)
+                        (lepton_page_append *page
+                                            (object->pointer
+                                             (make-text '(100 . 100)
+                                                        'lower-center
+                                                        0
+                                                        (gerror-message *err)
+                                                        10
+                                                        #t
+                                                        'both
+                                                        2)))
+                        (g_clear_error *error))))))
               (unless (null-pointer? *preview_buffer)
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
                        ;; Load the data buffer.
