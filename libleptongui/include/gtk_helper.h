@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2023 Lepton EDA Contributors
+ * Copyright (C) 2023-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +20,12 @@
 #define GTK_HELPER_H
 
 G_BEGIN_DECLS
+
+GdkScrollDirection
+gdk_event_scroll_direction_from_string (char *s);
+
+const char*
+gdk_event_scroll_direction_to_string (GdkScrollDirection mode);
 
 const char*
 gtk_response_to_string (int response);
