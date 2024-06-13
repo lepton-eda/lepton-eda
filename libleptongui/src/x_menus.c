@@ -297,7 +297,7 @@ do_popup (SchematicWindow *w_current,
 #else
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   ((GdkEventButton*) event)->button,
-                  ((GdkEventButton*) event)->time);
+                  gdk_event_get_time (event));
 #endif
 
   return FALSE;
