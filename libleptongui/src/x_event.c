@@ -376,9 +376,10 @@ x_event_scroll (GtkWidget *widget,
   static guint last_scroll_event_time = GDK_CURRENT_TIME;
   /* check for duplicate legacy scroll event, see GNOME bug 726878 */
   if (event->direction != GDK_SCROLL_SMOOTH &&
-      last_scroll_event_time == event->time) {
+      last_scroll_event_time == gdk_event_get_time ((GdkEvent*) event))
+  {
     g_debug ("[%d] duplicate legacy scroll event %d\n",
-             event->time,
+             gdk_event_get_time ((GdkEvent*) event),
              event->direction);
     return FALSE;
   }
@@ -387,7 +388,7 @@ x_event_scroll (GtkWidget *widget,
   case GDK_SCROLL_SMOOTH:
     /* As of GTK 3.4, all directional scroll events are provided by */
     /* the GDK_SCROLL_SMOOTH direction on XInput2 and Wayland devices. */
-    last_scroll_event_time = event->time;
+    last_scroll_event_time = gdk_event_get_time ((GdkEvent*) event);
 
     /* event->delta_x seems to be unused on not touch devices. */
     pan_direction = event->delta_y;
