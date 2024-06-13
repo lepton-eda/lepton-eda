@@ -350,13 +350,6 @@ x_event_scroll (GtkWidget *widget,
     pan_xaxis = TRUE;
   }
 
-  /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
-  if (!schematic_window_get_scrollbars_flag (w_current))
-  {
-    pan_xaxis = FALSE;
-    pan_yaxis = FALSE;
-  }
-
 #ifdef ENABLE_GTK3
   static guint last_scroll_event_time = GDK_CURRENT_TIME;
   /* check for duplicate legacy scroll event, see GNOME bug 726878 */
@@ -392,6 +385,14 @@ x_event_scroll (GtkWidget *widget,
     pan_direction =  1;
     zoom_direction = ZOOM_OUT;
     break;
+  }
+
+  /* You must have scrollbars enabled if you want to use the
+     scroll wheel to pan. */
+  if (!schematic_window_get_scrollbars_flag (w_current))
+  {
+    pan_xaxis = FALSE;
+    pan_yaxis = FALSE;
   }
 
   if (zoom) {
