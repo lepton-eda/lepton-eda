@@ -368,8 +368,10 @@ x_event_scroll (GtkWidget *widget,
              event->direction);
     return FALSE;
   }
+#endif
 
   switch (event->direction) {
+#ifdef ENABLE_GTK3
   case GDK_SCROLL_SMOOTH:
     /* As of GTK 3.4, all directional scroll events are provided by */
     /* the GDK_SCROLL_SMOOTH direction on XInput2 and Wayland devices. */
@@ -379,6 +381,7 @@ x_event_scroll (GtkWidget *widget,
     pan_direction = event->delta_y;
     zoom_direction = (event->delta_y > 0) ? ZOOM_OUT : ZOOM_IN;
     break;
+#endif
   case GDK_SCROLL_UP:
   case GDK_SCROLL_LEFT:
     pan_direction = -1;
@@ -390,20 +393,6 @@ x_event_scroll (GtkWidget *widget,
     zoom_direction = ZOOM_OUT;
     break;
   }
-#else
-  switch (event->direction) {
-    case GDK_SCROLL_UP:
-    case GDK_SCROLL_LEFT:
-      pan_direction = -1;
-      zoom_direction = ZOOM_IN;
-      break;
-    case GDK_SCROLL_DOWN:
-    case GDK_SCROLL_RIGHT:
-      pan_direction =  1;
-      zoom_direction = ZOOM_OUT;
-      break;
-  }
-#endif
 
   if (zoom) {
     /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
