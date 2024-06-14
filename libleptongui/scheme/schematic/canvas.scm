@@ -89,14 +89,14 @@
           ;; There are two scrolling types defined in gschem_defines.h:
           ;;   SCROLL_WHEEL_CLASSIC = 0
           ;;   SCROLL_WHEEL_GTK = 1
-          (let* ((scrolling-type (schematic_window_get_scroll_wheel *window))
+          (let* ((classic-scrolling? (= (schematic_window_get_scroll_wheel *window) 0))
                  (scroll-direction (event-direction *event))
                  (control-pressed?
                   (true? (schematic_window_get_control_key_pressed *window)))
                  (shift-pressed?
                   (true? (schematic_window_get_shift_key_pressed *window)))
                  (zoom-by-mods?
-                  (if (= scrolling-type 0)
+                  (if classic-scrolling?
                       ;; Classic gschem behaviour.
                       (and (not control-pressed?) (not shift-pressed?))
                       ;; GTK style behaviour.
@@ -112,7 +112,7 @@
                       FALSE
                       (if zoom-by-mods? TRUE FALSE)))
                  (pan-y-by-mods
-                  (if (= scrolling-type 0)
+                  (if classic-scrolling?
                       ;; Classic gschem behaviour.
                       (and (not control-pressed?) shift-pressed?)
                       ;; GTK style behaviour.
@@ -133,7 +133,7 @@
                                      FALSE
                                      (if pan-y-by-mods TRUE FALSE))))
                  (pan-x-by-mods
-                  (if (= scrolling-type 0)
+                  (if classic-scrolling?
                       ;; Classic gschem behaviour.
                       (and (true? (schematic_window_get_control_key_pressed *window))
                            (false? (schematic_window_get_shift_key_pressed *window)))
