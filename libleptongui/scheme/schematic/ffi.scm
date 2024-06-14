@@ -425,6 +425,7 @@
             schematic_window_set_text_properties_widget
             schematic_window_get_alt_key_pressed
             schematic_window_set_alt_key_pressed
+            schematic_window_get_control_key_pressed
             schematic_window_set_control_key_pressed
             schematic_window_get_shift_key_pressed
             schematic_window_set_shift_key_pressed
@@ -789,6 +790,7 @@
 (define-lff schematic_window_set_text_properties_widget void '(* *))
 (define-lff schematic_window_get_alt_key_pressed int '(*))
 (define-lff schematic_window_set_alt_key_pressed void (list '* int))
+(define-lff schematic_window_get_control_key_pressed int '(*))
 (define-lff schematic_window_set_control_key_pressed void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_set_shift_key_pressed void (list '* int))
@@ -1079,7 +1081,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int (list '* '* '* int int int))
+(define-lff x_event_scroll int (list '* '* '* int int int int))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())

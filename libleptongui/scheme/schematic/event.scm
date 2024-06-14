@@ -29,7 +29,9 @@
 
   #:export (event-coords
             event-direction
-            event-state))
+            event-state
+            event-scroll-direction->symbol
+            symbol->event-scroll-direction))
 
 
 (define (event-state *event)
