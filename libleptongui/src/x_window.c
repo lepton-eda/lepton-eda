@@ -1074,7 +1074,7 @@ x_window_setup_scrolling (SchematicWindow *w_current,
   gtk_scrolled_window_set_hadjustment (GTK_SCROLLED_WINDOW (scrolled), hadjustment);
   gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scrolled), vadjustment);
 
-  GtkPolicyType policy = w_current->scrollbars_flag ?
+  GtkPolicyType policy = schematic_window_get_scrollbars_flag (w_current) ?
                          GTK_POLICY_ALWAYS :
                          GTK_POLICY_NEVER;
 
