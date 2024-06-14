@@ -366,7 +366,8 @@ x_event_scroll (GtkWidget *widget,
   }
 
   /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
-  if (!w_current->scrollbars_flag) {
+  if (!schematic_window_get_scrollbars_flag (w_current))
+  {
     pan_xaxis = FALSE;
     pan_yaxis = FALSE;
   }
