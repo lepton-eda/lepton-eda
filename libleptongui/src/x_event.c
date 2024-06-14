@@ -308,6 +308,21 @@ schematic_event_get_scroll_direction (GdkEventScroll *event)
 }
 
 
+static guint last_scroll_event_time = GDK_CURRENT_TIME;
+
+guint
+schematic_event_get_last_scroll_event_time ()
+{
+  return last_scroll_event_time;
+}
+
+void
+schematic_event_set_last_scroll_event_time (guint val)
+{
+  last_scroll_event_time = val;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -337,10 +352,9 @@ x_event_scroll (GtkWidget *widget,
   view = SCHEMATIC_CANVAS (widget);
 
 #ifdef ENABLE_GTK3
-  static guint last_scroll_event_time = GDK_CURRENT_TIME;
   /* check for duplicate legacy scroll event, see GNOME bug 726878 */
   if (direction != GDK_SCROLL_SMOOTH &&
-      last_scroll_event_time == gdk_event_get_time ((GdkEvent*) event))
+      schematic_event_get_last_scroll_event_time () == gdk_event_get_time ((GdkEvent*) event))
   {
     g_debug ("[%d] duplicate legacy scroll event %d\n",
              gdk_event_get_time ((GdkEvent*) event),
@@ -354,7 +368,7 @@ x_event_scroll (GtkWidget *widget,
   case GDK_SCROLL_SMOOTH:
     /* As of GTK 3.4, all directional scroll events are provided by */
     /* the GDK_SCROLL_SMOOTH direction on XInput2 and Wayland devices. */
-    last_scroll_event_time = gdk_event_get_time ((GdkEvent*) event);
+    schematic_event_set_last_scroll_event_time (gdk_event_get_time ((GdkEvent*) event));
 
     /* event->delta_x seems to be unused on not touch devices. */
     pan_direction = event->delta_y;
