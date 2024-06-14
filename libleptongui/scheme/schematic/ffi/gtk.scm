@@ -56,7 +56,8 @@
             GdkModifierType
             gdk_event_get_coords
             gdk_event_get_scroll_direction
-            gdk_event_get_state))
+            gdk_event_get_state
+            gdk_event_get_time))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -111,6 +112,7 @@
 ;; (define-lff gdk_event_get_button int '(* *))
 (define-lff gdk_event_get_coords int '(* * *))
 (define-lff gdk_event_get_state int '(* *))
+(define-lff gdk_event_get_time uint32 '(*))
 
 (define gdk_event_get_scroll_direction
   (if %m4-use-gtk3

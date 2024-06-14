@@ -351,18 +351,6 @@ x_event_scroll (GtkWidget *widget,
 
   view = SCHEMATIC_CANVAS (widget);
 
-#ifdef ENABLE_GTK3
-  /* check for duplicate legacy scroll event, see GNOME bug 726878 */
-  if (direction != GDK_SCROLL_SMOOTH &&
-      schematic_event_get_last_scroll_event_time () == gdk_event_get_time ((GdkEvent*) event))
-  {
-    g_debug ("[%d] duplicate legacy scroll event %d\n",
-             gdk_event_get_time ((GdkEvent*) event),
-             direction);
-    return FALSE;
-  }
-#endif
-
   switch (event->direction) {
 #ifdef ENABLE_GTK3
   case GDK_SCROLL_SMOOTH:

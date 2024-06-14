@@ -30,6 +30,7 @@
   #:export (event-coords
             event-direction
             event-state
+            event-time
             event-scroll-direction->symbol
             symbol->event-scroll-direction))
 
@@ -88,3 +89,6 @@ symbol SYM."
   ((if %m4-use-gtk3
        event-direction-gtk3
        schematic_event_get_scroll_direction) *event))
+
+(define (event-time *event)
+  (gdk_event_get_time *event))
