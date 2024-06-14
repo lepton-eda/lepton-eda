@@ -89,14 +89,34 @@
           ;; There are two scrolling types defined in gschem_defines.h:
           ;;   SCROLL_WHEEL_CLASSIC = 0
           ;;   SCROLL_WHEEL_GTK = 1
-          (let ((scrolling-type (schematic_window_get_scroll_wheel *window))
-                (scroll-direction (event-direction *event)))
+          (let* ((scrolling-type (schematic_window_get_scroll_wheel *window))
+                 (scroll-direction (event-direction *event))
+                 (zoom-by-mods?
+                  (if (= scrolling-type 0)
+                      ;; Classic gschem behaviour.
+                      (and (false? (schematic_window_get_control_key_pressed *window))
+                           (false? (schematic_window_get_shift_key_pressed *window)))
+                      ;; GTK style behaviour.
+                      (and (true? (schematic_window_get_control_key_pressed *window))
+                           (false? (schematic_window_get_shift_key_pressed *window)))))
+                 (zoom
+                  ;; If the user has a left/right scroll
+                  ;; wheel, always scroll the y-axis.
+                  (if (and scroll-direction
+                           (or (eq? (event-scroll-direction->symbol scroll-direction)
+                                    'gdk-scroll-left)
+                               (eq? (event-scroll-direction->symbol scroll-direction)
+                                    'gdk-scroll-right)))
+                      FALSE
+                      (if zoom-by-mods? TRUE FALSE))))
+
             (x_event_scroll *widget
                             *event
                             *window
                             scrolling-type
                             (or scroll-direction 0)
-                            (if scroll-direction TRUE FALSE)))))))
+                            (if scroll-direction TRUE FALSE)
+                            zoom))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))

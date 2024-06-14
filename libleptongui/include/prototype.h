@@ -947,7 +947,8 @@ x_event_scroll (GtkWidget *widget,
                 SchematicWindow *w_current,
                 gboolean gtk_scroll_wheel,
                 GdkScrollDirection direction,
-                gboolean event_has_direction);
+                gboolean event_has_direction,
+                gboolean zoom);
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
