@@ -339,17 +339,33 @@ x_event_scroll (GtkWidget *widget,
 
   if (!gtk_scroll_wheel)
   {
-    /* Classic gschem behaviour */
+    /* Classic gschem behaviour. */
     zoom =      !schematic_window_get_control_key_pressed (w_current) &&
                 !schematic_window_get_shift_key_pressed (w_current);
+  } else {
+    /* GTK style behaviour. */
+    zoom =       schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
+  }
+
+  /* If the user has a left/right scroll wheel, always scroll the
+     y-axis. */
+  if (event_has_direction &&
+      (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
+  {
+    zoom = FALSE;
+  }
+
+
+  if (!gtk_scroll_wheel)
+  {
+    /* Classic gschem behaviour */
     pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
                  schematic_window_get_shift_key_pressed (w_current);
     pan_xaxis =  schematic_window_get_control_key_pressed (w_current) &&
                 !schematic_window_get_shift_key_pressed (w_current);
   } else {
     /* GTK style behaviour */
-    zoom =       schematic_window_get_control_key_pressed (w_current) &&
-                !schematic_window_get_shift_key_pressed (w_current);
     pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
                 !schematic_window_get_shift_key_pressed (w_current);
     pan_xaxis = !schematic_window_get_control_key_pressed (w_current) &&
@@ -360,7 +376,6 @@ x_event_scroll (GtkWidget *widget,
   if (event_has_direction &&
       (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
   {
-    zoom = FALSE;
     pan_yaxis = FALSE;
     pan_xaxis = TRUE;
   }
