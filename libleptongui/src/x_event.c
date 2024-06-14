@@ -343,12 +343,33 @@ x_event_scroll (GtkWidget *widget,
     /* Classic gschem behaviour */
     pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
                  schematic_window_get_shift_key_pressed (w_current);
-    pan_xaxis =  schematic_window_get_control_key_pressed (w_current) &&
-                !schematic_window_get_shift_key_pressed (w_current);
   } else {
     /* GTK style behaviour */
     pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
                 !schematic_window_get_shift_key_pressed (w_current);
+  }
+
+  /* If the user has a left/right scroll wheel, always scroll the y-axis */
+  if (event_has_direction &&
+      (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
+  {
+    pan_yaxis = FALSE;
+  }
+
+  /* You must have scrollbars enabled if you want to use the
+     scroll wheel to pan. */
+  if (!schematic_window_get_scrollbars_flag (w_current))
+  {
+    pan_yaxis = FALSE;
+  }
+
+  if (!gtk_scroll_wheel)
+  {
+    /* Classic gschem behaviour */
+    pan_xaxis =  schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
+  } else {
+    /* GTK style behaviour */
     pan_xaxis = !schematic_window_get_control_key_pressed (w_current) &&
                  schematic_window_get_shift_key_pressed (w_current);
   }
@@ -357,8 +378,14 @@ x_event_scroll (GtkWidget *widget,
   if (event_has_direction &&
       (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
   {
-    pan_yaxis = FALSE;
     pan_xaxis = TRUE;
+  }
+
+  /* You must have scrollbars enabled if you want to use the
+     scroll wheel to pan. */
+  if (!schematic_window_get_scrollbars_flag (w_current))
+  {
+    pan_xaxis = FALSE;
   }
 
 #ifdef ENABLE_GTK3
@@ -396,14 +423,6 @@ x_event_scroll (GtkWidget *widget,
     pan_direction =  1;
     zoom_direction = ZOOM_OUT;
     break;
-  }
-
-  /* You must have scrollbars enabled if you want to use the
-     scroll wheel to pan. */
-  if (!schematic_window_get_scrollbars_flag (w_current))
-  {
-    pan_xaxis = FALSE;
-    pan_yaxis = FALSE;
   }
 
   if (zoom) {
