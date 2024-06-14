@@ -91,14 +91,16 @@
           ;;   SCROLL_WHEEL_GTK = 1
           (let* ((scrolling-type (schematic_window_get_scroll_wheel *window))
                  (scroll-direction (event-direction *event))
+                 (control-pressed?
+                  (true? (schematic_window_get_control_key_pressed *window)))
+                 (shift-pressed?
+                  (true? (schematic_window_get_shift_key_pressed *window)))
                  (zoom-by-mods?
                   (if (= scrolling-type 0)
                       ;; Classic gschem behaviour.
-                      (and (false? (schematic_window_get_control_key_pressed *window))
-                           (false? (schematic_window_get_shift_key_pressed *window)))
+                      (and (not control-pressed?) (not shift-pressed?))
                       ;; GTK style behaviour.
-                      (and (true? (schematic_window_get_control_key_pressed *window))
-                           (false? (schematic_window_get_shift_key_pressed *window)))))
+                      (and control-pressed? (not shift-pressed?))))
                  (zoom
                   ;; If the user has a left/right scroll
                   ;; wheel, always scroll the y-axis.
