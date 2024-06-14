@@ -201,8 +201,10 @@ i_vars_set (SchematicWindow* w_current)
                        &w_current->actionfeedback_mode);
 
 
+  int scrollbars_flag = 0;
   cfg_read_bool ("schematic.gui", "scrollbars",
-                 default_scrollbars_flag, &w_current->scrollbars_flag);
+                 default_scrollbars_flag, &scrollbars_flag);
+  schematic_window_set_scrollbars_flag (w_current, scrollbars_flag);
 
   cfg_read_bool ("schematic.gui", "embed-components",
                  default_embed_component, &w_current->embed_component);
