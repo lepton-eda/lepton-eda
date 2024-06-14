@@ -135,11 +135,9 @@
                  (pan-x-by-mods
                   (if classic-scrolling?
                       ;; Classic gschem behaviour.
-                      (and (true? (schematic_window_get_control_key_pressed *window))
-                           (false? (schematic_window_get_shift_key_pressed *window)))
+                      (and control-pressed? (not shift-pressed?))
                       ;; GTK style behaviour.
-                      (and (false? (schematic_window_get_control_key_pressed *window))
-                           (true? (schematic_window_get_shift_key_pressed *window)))))
+                      (and (not control-pressed?) shift-pressed?)))
                  (pan-x-axis
                   (if (false? (schematic_window_get_scrollbars_flag *window))
                       ;; You must have scrollbars enabled if
