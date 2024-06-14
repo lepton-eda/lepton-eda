@@ -223,7 +223,7 @@ schematic_preview_init (SchematicPreview *preview)
   i_vars_set (preview_w_current);
 
   /* be sure to turn off scrollbars */
-  preview_w_current->scrollbars_flag = FALSE;
+  schematic_window_set_scrollbars_flag (preview_w_current, 0);
 
   /* be sure to turn off the grid */
   schematic_options_set_grid_mode (preview_w_current->options, GRID_MODE_NONE);
