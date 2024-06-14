@@ -339,12 +339,12 @@ x_event_scroll (GtkWidget *widget,
 #ifdef ENABLE_GTK3
   static guint last_scroll_event_time = GDK_CURRENT_TIME;
   /* check for duplicate legacy scroll event, see GNOME bug 726878 */
-  if (event->direction != GDK_SCROLL_SMOOTH &&
+  if (direction != GDK_SCROLL_SMOOTH &&
       last_scroll_event_time == gdk_event_get_time ((GdkEvent*) event))
   {
     g_debug ("[%d] duplicate legacy scroll event %d\n",
              gdk_event_get_time ((GdkEvent*) event),
-             event->direction);
+             direction);
     return FALSE;
   }
 #endif
