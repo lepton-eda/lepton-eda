@@ -371,8 +371,12 @@ x_event_scroll (GtkWidget *widget,
     schematic_event_set_last_scroll_event_time (gdk_event_get_time ((GdkEvent*) event));
 
     /* event->delta_x seems to be unused on not touch devices. */
-    pan_direction = event->delta_y;
-    zoom_direction = (event->delta_y > 0) ? ZOOM_OUT : ZOOM_IN;
+    double x_delta, y_delta;
+    if (gdk_event_get_scroll_deltas ((GdkEvent*) event, &x_delta, &y_delta))
+    {
+      pan_direction = y_delta;
+      zoom_direction = (y_delta > 0) ? ZOOM_OUT : ZOOM_IN;
+    }
     break;
 #endif
   case GDK_SCROLL_UP:
