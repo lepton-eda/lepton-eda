@@ -2200,3 +2200,32 @@ schematic_window_set_scroll_wheel (SchematicWindow *w_current,
 
   w_current->scroll_wheel = val;
 }
+
+
+/*! \brief Get schematic window's field 'scrollbars_flag'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'scrollbars_flag'.
+ */
+int
+schematic_window_get_scrollbars_flag (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->scrollbars_flag;
+}
+
+
+/*! \brief Set schematic window's field 'scrollbars_flag'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'scrollbars_flag'.
+ */
+void
+schematic_window_set_scrollbars_flag (SchematicWindow *w_current,
+                                      int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->scrollbars_flag = val;
+}
