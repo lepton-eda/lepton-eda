@@ -131,14 +131,37 @@
                                               (eq? (event-scroll-direction->symbol scroll-direction)
                                                    'gdk-scroll-right)))
                                      FALSE
-                                     (if pan-y-by-mods TRUE FALSE)))))
+                                     (if pan-y-by-mods TRUE FALSE))))
+                 (pan-x-by-mods
+                  (if (= scrolling-type 0)
+                      ;; Classic gschem behaviour.
+                      (and (true? (schematic_window_get_control_key_pressed *window))
+                           (false? (schematic_window_get_shift_key_pressed *window)))
+                      ;; GTK style behaviour.
+                      (and (false? (schematic_window_get_control_key_pressed *window))
+                           (true? (schematic_window_get_shift_key_pressed *window)))))
+                 (pan-x-axis
+                  (if (false? (schematic_window_get_scrollbars_flag *window))
+                      ;; You must have scrollbars enabled if
+                      ;; you want to use the scroll wheel to
+                      ;; pan.
+                      FALSE
+                      (if (and scroll-direction
+                               (or (eq? (event-scroll-direction->symbol scroll-direction)
+                                        'gdk-scroll-left)
+                                   (eq? (event-scroll-direction->symbol scroll-direction)
+                                        'gdk-scroll-right)))
+                          ;; If the user has a left/right
+                          ;; scroll wheel, always scroll the
+                          ;; y-axis.
+                          TRUE
+                          (if pan-x-by-mods TRUE FALSE)))))
             (x_event_scroll *widget
                             *event
                             *window
-                            scrolling-type
                             (or scroll-direction 0)
-                            (if scroll-direction TRUE FALSE)
                             zoom
+                            pan-x-axis
                             pan-y-axis))))))
 
 (define *scroll-canvas
