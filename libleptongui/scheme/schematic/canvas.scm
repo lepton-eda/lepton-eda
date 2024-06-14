@@ -21,6 +21,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton log)
+  #:use-module (lepton m4)
 
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
@@ -154,13 +155,26 @@
                           ;; y-axis.
                           TRUE
                           (if pan-x-by-mods TRUE FALSE)))))
-            (x_event_scroll *widget
-                            *event
-                            *window
-                            (or scroll-direction 0)
-                            zoom
-                            pan-x-axis
-                            pan-y-axis))))))
+
+            ;; Check for duplicate legacy scroll event, see
+            ;; GNOME bug 726878.
+            (if (and %m4-use-gtk3
+                     scroll-direction
+                     (not (eq? (event-scroll-direction->symbol scroll-direction)
+                               'gdk-scroll-smooth))
+                     (= (schematic_event_get_last_scroll_event_time)
+                        (event-time *event)))
+                (begin (log! 'debug "[~A] duplicate legacy scroll event ~A"
+                             (event-time *event)
+                             (event-scroll-direction->symbol scroll-direction))
+                       FALSE)
+                (x_event_scroll *widget
+                                *event
+                                *window
+                                (or scroll-direction 0)
+                                zoom
+                                pan-x-axis
+                                pan-y-axis)))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
