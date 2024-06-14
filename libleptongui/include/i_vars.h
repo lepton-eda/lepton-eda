@@ -10,7 +10,7 @@ extern int default_embed_component;
 extern int default_include_component;
 extern int default_snap_size;
 
-extern int default_scrollbars_flag;
+extern gboolean default_scrollbars_flag;
 extern gchar *default_print_paper;
 extern int default_print_orientation;
 extern int default_print_color;

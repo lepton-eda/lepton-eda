@@ -193,7 +193,7 @@ struct st_schematic_window {
   int net_selection_state;  /* current status of the net selecting mode */
   int embed_component;    /* controls if component objects are embedded */
   int include_component;  /* controls if component objects are included */
-  int scrollbars_flag;    /* controls if scrollbars are displayed */
+  gboolean scrollbars_flag;    /* controls if scrollbars are displayed */
   int third_button;       /* controls what the third mouse button does */
   int third_button_cancel;/* controls if the third mouse button cancels actions */
   int middle_button;      /* controls what the third mouse button does */
@@ -623,12 +623,12 @@ schematic_window_get_scroll_wheel (SchematicWindow *w_current);
 void
 schematic_window_set_scroll_wheel (SchematicWindow *w_current,
                                    int val);
-int
+gboolean
 schematic_window_get_scrollbars_flag (SchematicWindow *w_current);
 
 void
 schematic_window_set_scrollbars_flag (SchematicWindow *w_current,
-                                      int val);
+                                      gboolean val);
 int
 schematic_window_get_scrollpan_steps (SchematicWindow *w_current);
 
