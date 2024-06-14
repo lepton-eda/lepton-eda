@@ -317,7 +317,7 @@ SchematicWindow *schematic_window_new ()
   w_current->net_selection_state = 0;
   w_current->embed_component = 0;
   w_current->include_component = 0;
-  schematic_window_set_scrollbars_flag (w_current, 0);
+  schematic_window_set_scrollbars_flag (w_current, FALSE);
   w_current->third_button = 0;
   w_current->third_button_cancel = TRUE;
   w_current->middle_button = 0;
@@ -2481,7 +2481,7 @@ schematic_window_set_scroll_wheel (SchematicWindow *w_current,
  *  \param [in] w_current The schematic window.
  *  \return The value of the field 'scrollbars_flag'.
  */
-int
+gboolean
 schematic_window_get_scrollbars_flag (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
@@ -2497,7 +2497,7 @@ schematic_window_get_scrollbars_flag (SchematicWindow *w_current)
  */
 void
 schematic_window_set_scrollbars_flag (SchematicWindow *w_current,
-                                      int val)
+                                      gboolean val)
 {
   g_return_if_fail (w_current != NULL);
 
