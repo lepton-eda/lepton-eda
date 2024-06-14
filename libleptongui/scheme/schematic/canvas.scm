@@ -114,11 +114,9 @@
                  (pan-y-by-mods
                   (if (= scrolling-type 0)
                       ;; Classic gschem behaviour.
-                      (and (false? (schematic_window_get_control_key_pressed *window))
-                           (true? (schematic_window_get_shift_key_pressed *window)))
+                      (and (not control-pressed?) shift-pressed?)
                       ;; GTK style behaviour.
-                      (and (false? (schematic_window_get_control_key_pressed *window))
-                           (false? (schematic_window_get_shift_key_pressed *window)))))
+                      (and (not control-pressed?) (not shift-pressed?))))
                  (pan-y-axis (if (false? (schematic_window_get_scrollbars_flag *window))
                                  ;; You must have scrollbars
                                  ;; enabled if you want to use
