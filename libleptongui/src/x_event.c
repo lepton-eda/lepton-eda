@@ -319,6 +319,7 @@ schematic_event_get_scroll_direction (GdkEventScroll *event)
  *  \param [in] direction
  *  \param [in] event_has_direction
  *  \param [in] zoom
+ *  \param [in] pan_yaxis
  */
 gint
 x_event_scroll (GtkWidget *widget,
@@ -327,41 +328,16 @@ x_event_scroll (GtkWidget *widget,
                 gboolean gtk_scroll_wheel,
                 GdkScrollDirection direction,
                 gboolean event_has_direction,
-                gboolean zoom)
+                gboolean zoom,
+                gboolean pan_yaxis)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
-  gboolean pan_yaxis = FALSE;
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
   SchematicCanvas *view = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
-
-  if (!gtk_scroll_wheel)
-  {
-    /* Classic gschem behaviour */
-    pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
-                 schematic_window_get_shift_key_pressed (w_current);
-  } else {
-    /* GTK style behaviour */
-    pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
-                !schematic_window_get_shift_key_pressed (w_current);
-  }
-
-  /* If the user has a left/right scroll wheel, always scroll the y-axis */
-  if (event_has_direction &&
-      (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
-  {
-    pan_yaxis = FALSE;
-  }
-
-  /* You must have scrollbars enabled if you want to use the
-     scroll wheel to pan. */
-  if (!schematic_window_get_scrollbars_flag (w_current))
-  {
-    pan_yaxis = FALSE;
-  }
 
   if (!gtk_scroll_wheel)
   {

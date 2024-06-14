@@ -430,6 +430,8 @@
             schematic_window_get_shift_key_pressed
             schematic_window_set_shift_key_pressed
             schematic_window_get_scroll_wheel
+            schematic_window_get_scrollbars_flag
+            schematic_window_set_scrollbars_flag
             schematic_window_get_text_caps
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
@@ -795,6 +797,8 @@
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_set_shift_key_pressed void (list '* int))
 (define-lff schematic_window_get_scroll_wheel int '(*))
+(define-lff schematic_window_get_scrollbars_flag int '(*))
+(define-lff schematic_window_set_scrollbars_flag void (list '* int))
 (define-lff schematic_window_get_text_caps int '(*))
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
@@ -1081,7 +1085,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int (list '* '* '* int int int int))
+(define-lff x_event_scroll int (list '* '* '* int int int int int))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())
