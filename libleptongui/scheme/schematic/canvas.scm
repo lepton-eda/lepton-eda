@@ -67,6 +67,14 @@
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
 
+  (define (scroll-direction->symbol scroll-direction smooth-scroll?)
+    (and scroll-direction
+         (not smooth-scroll?)
+         (or (eq? (event-scroll-direction->symbol scroll-direction)
+                  'gdk-scroll-left)
+             (eq? (event-scroll-direction->symbol scroll-direction)
+                  'gdk-scroll-right))))
+
   (when (null-pointer? *window)
     (error "NULL window"))
   (when (null-pointer? *widget)
@@ -93,6 +101,8 @@
           (let* ((classic-scrolling? (= (schematic_window_get_scroll_wheel *window) 0))
                  (scroll-direction (event-direction *event))
                  (smooth-scroll? (pair? scroll-direction))
+                 (left-or-right-direction? (scroll-direction->symbol scroll-direction
+                                                                     smooth-scroll?))
                  (control-pressed?
                   (true? (schematic_window_get_control_key_pressed *window)))
                  (shift-pressed?
@@ -106,12 +116,7 @@
                  (zoom
                   ;; If the user has a left/right scroll
                   ;; wheel, always scroll the y-axis.
-                  (if (and scroll-direction
-                           (not smooth-scroll?)
-                           (or (eq? (event-scroll-direction->symbol scroll-direction)
-                                    'gdk-scroll-left)
-                               (eq? (event-scroll-direction->symbol scroll-direction)
-                                    'gdk-scroll-right)))
+                  (if left-or-right-direction?
                       FALSE
                       (if zoom-by-mods? TRUE FALSE)))
                  (pan-y-by-mods
@@ -128,12 +133,7 @@
                                  ;; If the user has a
                                  ;; left/right scroll wheel,
                                  ;; always scroll the y-axis.
-                                 (if (and scroll-direction
-                                          (not smooth-scroll?)
-                                          (or (eq? (event-scroll-direction->symbol scroll-direction)
-                                                   'gdk-scroll-left)
-                                              (eq? (event-scroll-direction->symbol scroll-direction)
-                                                   'gdk-scroll-right)))
+                                 (if left-or-right-direction?
                                      FALSE
                                      (if pan-y-by-mods TRUE FALSE))))
                  (pan-x-by-mods
@@ -148,12 +148,7 @@
                       ;; you want to use the scroll wheel to
                       ;; pan.
                       FALSE
-                      (if (and scroll-direction
-                               (not smooth-scroll?)
-                               (or (eq? (event-scroll-direction->symbol scroll-direction)
-                                        'gdk-scroll-left)
-                                   (eq? (event-scroll-direction->symbol scroll-direction)
-                                        'gdk-scroll-right)))
+                      (if left-or-right-direction?
                           ;; If the user has a left/right
                           ;; scroll wheel, always scroll the
                           ;; y-axis.
