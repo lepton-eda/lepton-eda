@@ -330,7 +330,6 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \param [in] widget The SchematicCanvas with the scroll event.
  *  \param [in] event
  *  \param [in] w_current
- *  \param [in] direction
  *  \param [in] zoom
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
@@ -340,7 +339,6 @@ gint
 x_event_scroll (GtkWidget *widget,
                 GdkEventScroll *event,
                 SchematicWindow *w_current,
-                GdkScrollDirection direction,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
