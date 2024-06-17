@@ -354,10 +354,6 @@ x_event_scroll (GtkWidget *widget,
   switch (event->direction) {
 #ifdef ENABLE_GTK3
   case GDK_SCROLL_SMOOTH:
-    /* As of GTK 3.4, all directional scroll events are provided by */
-    /* the GDK_SCROLL_SMOOTH direction on XInput2 and Wayland devices. */
-    schematic_event_set_last_scroll_event_time (gdk_event_get_time ((GdkEvent*) event));
-
     /* event->delta_x seems to be unused on not touch devices. */
     if (y_delta != 0)
     {
