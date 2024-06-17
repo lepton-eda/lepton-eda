@@ -176,15 +176,32 @@
                     ;; GDK_SCROLL_SMOOTH direction on XInput2
                     ;; and Wayland devices.
                     (schematic_event_set_last_scroll_event_time (event-time *event)))
-                  (x_event_scroll *widget
-                                  *event
-                                  *window
-                                  zoom
-                                  pan-x-axis
-                                  pan-y-axis
-                                  (if smooth-scroll?
-                                      (cdr scroll-direction)
-                                      0.0)))))))))
+                  (let ((pan-direction
+                         (if %m4-use-gtk3
+                             (if smooth-scroll?
+                                 (inexact->exact (round (cdr scroll-direction)))
+                                 (case (event-scroll-direction->symbol scroll-direction)
+                                   ((gdk-scroll-up) -1)
+                                   ((gdk-scroll-left) -1)
+                                   ((gdk-scroll-down) 1)
+                                   ((gdk-scroll-right) 1)
+                                   (else 0)))
+                             (case (event-scroll-direction->symbol scroll-direction)
+                               ((gdk-scroll-up) -1)
+                               ((gdk-scroll-left) -1)
+                               ((gdk-scroll-down) 1)
+                               ((gdk-scroll-right) 1)
+                               (else 0)))))
+                    (x_event_scroll *widget
+                                    *event
+                                    *window
+                                    zoom
+                                    pan-x-axis
+                                    pan-y-axis
+                                    pan-direction
+                                    (if smooth-scroll?
+                                        (cdr scroll-direction)
+                                        0.0))))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
