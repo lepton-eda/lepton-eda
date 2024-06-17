@@ -951,7 +951,6 @@ gint
 x_event_scroll (GtkWidget *widget,
                 GdkEventScroll *event,
                 SchematicWindow *w_current,
-                GdkScrollDirection direction,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,

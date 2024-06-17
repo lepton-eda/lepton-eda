@@ -171,7 +171,6 @@
                 (x_event_scroll *widget
                                 *event
                                 *window
-                                0
                                 zoom
                                 pan-x-axis
                                 pan-y-axis
