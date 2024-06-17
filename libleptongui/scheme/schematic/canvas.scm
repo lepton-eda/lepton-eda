@@ -168,15 +168,23 @@
                              (event-time *event)
                              (event-scroll-direction->symbol scroll-direction))
                        FALSE)
-                (x_event_scroll *widget
-                                *event
-                                *window
-                                zoom
-                                pan-x-axis
-                                pan-y-axis
-                                (if smooth-scroll?
-                                    (cdr scroll-direction)
-                                    0.0))))))))
+                (begin
+                  (when (and %m4-use-gtk3
+                             smooth-scroll?)
+                    ;; As of GTK 3.4, all directional scroll
+                    ;; events are provided by the
+                    ;; GDK_SCROLL_SMOOTH direction on XInput2
+                    ;; and Wayland devices.
+                    (schematic_event_set_last_scroll_event_time (event-time *event)))
+                  (x_event_scroll *widget
+                                  *event
+                                  *window
+                                  zoom
+                                  pan-x-axis
+                                  pan-y-axis
+                                  (if smooth-scroll?
+                                      (cdr scroll-direction)
+                                      0.0)))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
