@@ -334,6 +334,7 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \param [in] zoom
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
+ *  \param [in] y_delta
  */
 gint
 x_event_scroll (GtkWidget *widget,
@@ -342,7 +343,8 @@ x_event_scroll (GtkWidget *widget,
                 GdkScrollDirection direction,
                 gboolean zoom,
                 gboolean pan_xaxis,
-                gboolean pan_yaxis)
+                gboolean pan_yaxis,
+                double y_delta)
 {
   GtkAdjustment *adj;
   int pan_direction = 1;
@@ -359,8 +361,7 @@ x_event_scroll (GtkWidget *widget,
     schematic_event_set_last_scroll_event_time (gdk_event_get_time ((GdkEvent*) event));
 
     /* event->delta_x seems to be unused on not touch devices. */
-    double x_delta, y_delta;
-    if (gdk_event_get_scroll_deltas ((GdkEvent*) event, &x_delta, &y_delta))
+    if (y_delta != 0)
     {
       pan_direction = y_delta;
       zoom_direction = (y_delta > 0) ? ZOOM_OUT : ZOOM_IN;

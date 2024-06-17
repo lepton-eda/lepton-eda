@@ -79,11 +79,21 @@ symbol SYM."
             *event
             (bytevector->pointer direction))))
 
-  (and has-direction?
-       (bytevector-uint-ref direction
-                            0
-                            (native-endianness)
-                            (sizeof int))))
+  (define result
+    (bytevector-uint-ref direction
+                         0
+                         (native-endianness)
+                         (sizeof int)))
+
+  (if has-direction?
+      result
+      (let ((delta-x (make-bytevector (sizeof double) 0))
+            (delta-y (make-bytevector (sizeof double) 0)))
+        (and (true? (gdk_event_get_scroll_deltas *event
+                                                 (bytevector->pointer delta-x)
+                                                 (bytevector->pointer delta-y)))
+             (cons (bytevector-ieee-double-native-ref delta-x 0)
+                   (bytevector-ieee-double-native-ref delta-y 0))))))
 
 (define (event-direction *event)
   ((if %m4-use-gtk3
