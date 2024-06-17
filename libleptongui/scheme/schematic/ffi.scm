@@ -1087,7 +1087,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int (list '* '* '* int int int int double))
+(define-lff x_event_scroll int (list '* '* '* int int int int int))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())
