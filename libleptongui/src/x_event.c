@@ -328,33 +328,24 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \par Function Description
  *
  *  \param [in] widget The SchematicCanvas with the scroll event.
- *  \param [in] event
  *  \param [in] w_current
  *  \param [in] zoom
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
  *  \param [in] pan_direction
- *  \param [in] zoom_direction
  */
 gint
 x_event_scroll (GtkWidget *widget,
-                GdkEventScroll *event,
                 SchematicWindow *w_current,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
-                int pan_direction,
-                int zoom_direction)
+                int pan_direction)
 {
   GtkAdjustment *adj;
   SchematicCanvas *view = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
-
-  if (zoom) {
-    /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
-    a_zoom(w_current, SCHEMATIC_CANVAS (widget), zoom_direction, HOTKEY);
-  }
 
   if (pan_xaxis) {
     adj = schematic_canvas_get_hadjustment (SCHEMATIC_CANVAS (widget));
