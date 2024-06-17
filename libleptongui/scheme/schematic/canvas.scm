@@ -63,6 +63,11 @@
   (procedure->pointer int redraw-canvas '(* * *)))
 
 
+;;; Temporary definitions from "gschem_defines.h".
+(define ZOOM_OUT 0)
+(define ZOOM_IN 1)
+(define ZOOM_FULL 2)
+
 (define (scroll-canvas *widget *event *window)
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
@@ -191,7 +196,26 @@
                                ((gdk-scroll-left) -1)
                                ((gdk-scroll-down) 1)
                                ((gdk-scroll-right) 1)
-                               (else 0)))))
+                               (else 0))))
+                        (zoom-direction
+                         (if %m4-use-gtk3
+                             (if smooth-scroll?
+                                 ;; event->delta_x seems to be
+                                 ;; unused on not touch
+                                 ;; devices.
+                                 (if (> (cdr scroll-direction) 0) ZOOM_OUT ZOOM_IN)
+                                 (case (event-scroll-direction->symbol scroll-direction)
+                                   ((gdk-scroll-up) ZOOM_IN)
+                                   ((gdk-scroll-left) ZOOM_IN)
+                                   ((gdk-scroll-down) ZOOM_OUT)
+                                   ((gdk-scroll-right) ZOOM_OUT)
+                                   (else ZOOM_IN)))
+                             (case (event-scroll-direction->symbol scroll-direction)
+                               ((gdk-scroll-up) ZOOM_IN)
+                               ((gdk-scroll-left) ZOOM_IN)
+                               ((gdk-scroll-down) ZOOM_OUT)
+                               ((gdk-scroll-right) ZOOM_OUT)
+                               (else ZOOM_IN)))))
                     (x_event_scroll *widget
                                     *event
                                     *window
@@ -199,9 +223,7 @@
                                     pan-x-axis
                                     pan-y-axis
                                     pan-direction
-                                    (if smooth-scroll?
-                                        (cdr scroll-direction)
-                                        0.0))))))))))
+                                    zoom-direction)))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))

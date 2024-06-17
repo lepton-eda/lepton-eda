@@ -334,7 +334,7 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
  *  \param [in] pan_direction
- *  \param [in] y_delta
+ *  \param [in] zoom_direction
  */
 gint
 x_event_scroll (GtkWidget *widget,
@@ -344,33 +344,12 @@ x_event_scroll (GtkWidget *widget,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
                 int pan_direction,
-                double y_delta)
+                int zoom_direction)
 {
   GtkAdjustment *adj;
-  int zoom_direction = ZOOM_IN;
   SchematicCanvas *view = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
-
-  switch (event->direction) {
-#ifdef ENABLE_GTK3
-  case GDK_SCROLL_SMOOTH:
-    /* event->delta_x seems to be unused on not touch devices. */
-    if (y_delta != 0)
-    {
-      zoom_direction = (y_delta > 0) ? ZOOM_OUT : ZOOM_IN;
-    }
-    break;
-#endif
-  case GDK_SCROLL_UP:
-  case GDK_SCROLL_LEFT:
-    zoom_direction = ZOOM_IN;
-    break;
-  case GDK_SCROLL_DOWN:
-  case GDK_SCROLL_RIGHT:
-    zoom_direction = ZOOM_OUT;
-    break;
-  }
 
   if (zoom) {
     /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
