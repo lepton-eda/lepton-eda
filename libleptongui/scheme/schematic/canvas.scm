@@ -68,6 +68,10 @@
 (define ZOOM_IN 1)
 (define ZOOM_FULL 2)
 
+(define DONTCARE 0)
+(define MENU 1)
+(define HOTKEY 2)
+
 (define (scroll-canvas *widget *event *window)
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
@@ -216,14 +220,15 @@
                                ((gdk-scroll-down) ZOOM_OUT)
                                ((gdk-scroll-right) ZOOM_OUT)
                                (else ZOOM_IN)))))
+                    (when (true? zoom)
+                      (a_zoom *window *widget zoom-direction HOTKEY))
+
                     (x_event_scroll *widget
-                                    *event
                                     *window
                                     zoom
                                     pan-x-axis
                                     pan-y-axis
-                                    pan-direction
-                                    zoom-direction)))))))))
+                                    pan-direction)))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))

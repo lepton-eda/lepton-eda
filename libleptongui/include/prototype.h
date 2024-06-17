@@ -949,13 +949,11 @@ schematic_event_get_scroll_direction (GdkEventScroll *event);
 
 gint
 x_event_scroll (GtkWidget *widget,
-                GdkEventScroll *event,
                 SchematicWindow *w_current,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
-                int pan_direction,
-                int zoom_direction);
+                int pan_direction);
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
