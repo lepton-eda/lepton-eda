@@ -92,6 +92,7 @@
           ;;   SCROLL_WHEEL_GTK = 1
           (let* ((classic-scrolling? (= (schematic_window_get_scroll_wheel *window) 0))
                  (scroll-direction (event-direction *event))
+                 (smooth-scroll? (pair? scroll-direction))
                  (control-pressed?
                   (true? (schematic_window_get_control_key_pressed *window)))
                  (shift-pressed?
@@ -106,7 +107,7 @@
                   ;; If the user has a left/right scroll
                   ;; wheel, always scroll the y-axis.
                   (if (and scroll-direction
-                           (not (pair? scroll-direction))
+                           (not smooth-scroll?)
                            (or (eq? (event-scroll-direction->symbol scroll-direction)
                                     'gdk-scroll-left)
                                (eq? (event-scroll-direction->symbol scroll-direction)
@@ -128,7 +129,7 @@
                                  ;; left/right scroll wheel,
                                  ;; always scroll the y-axis.
                                  (if (and scroll-direction
-                                          (not (pair? scroll-direction))
+                                          (not smooth-scroll?)
                                           (or (eq? (event-scroll-direction->symbol scroll-direction)
                                                    'gdk-scroll-left)
                                               (eq? (event-scroll-direction->symbol scroll-direction)
@@ -148,7 +149,7 @@
                       ;; pan.
                       FALSE
                       (if (and scroll-direction
-                               (not (pair? scroll-direction))
+                               (not smooth-scroll?)
                                (or (eq? (event-scroll-direction->symbol scroll-direction)
                                         'gdk-scroll-left)
                                    (eq? (event-scroll-direction->symbol scroll-direction)
@@ -163,7 +164,7 @@
             ;; GNOME bug 726878.
             (if (and %m4-use-gtk3
                      scroll-direction
-                     (not (pair? scroll-direction))
+                     (not smooth-scroll?)
                      (not (eq? (event-scroll-direction->symbol scroll-direction)
                                'gdk-scroll-smooth))
                      (= (schematic_event_get_last_scroll_event_time)
@@ -179,7 +180,7 @@
                                 zoom
                                 pan-x-axis
                                 pan-y-axis
-                                (if (pair? scroll-direction)
+                                (if smooth-scroll?
                                     (cdr scroll-direction)
                                     0.0))))))))
 
