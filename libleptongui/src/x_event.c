@@ -333,6 +333,7 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \param [in] zoom
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
+ *  \param [in] pan_direction
  *  \param [in] y_delta
  */
 gint
@@ -342,10 +343,10 @@ x_event_scroll (GtkWidget *widget,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
+                int pan_direction,
                 double y_delta)
 {
   GtkAdjustment *adj;
-  int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
   SchematicCanvas *view = NULL;
 
@@ -357,19 +358,16 @@ x_event_scroll (GtkWidget *widget,
     /* event->delta_x seems to be unused on not touch devices. */
     if (y_delta != 0)
     {
-      pan_direction = y_delta;
       zoom_direction = (y_delta > 0) ? ZOOM_OUT : ZOOM_IN;
     }
     break;
 #endif
   case GDK_SCROLL_UP:
   case GDK_SCROLL_LEFT:
-    pan_direction = -1;
     zoom_direction = ZOOM_IN;
     break;
   case GDK_SCROLL_DOWN:
   case GDK_SCROLL_RIGHT:
-    pan_direction =  1;
     zoom_direction = ZOOM_OUT;
     break;
   }
