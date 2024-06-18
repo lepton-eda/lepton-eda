@@ -430,7 +430,7 @@ x_event_scroll (GtkWidget *widget,
     gtk_adjustment_set_value (adj,
                               MIN (gtk_adjustment_get_value (adj) + pan_direction *
                                    (gtk_adjustment_get_page_increment (adj) /
-                                    w_current->scrollpan_steps),
+                                    schematic_window_get_scrollpan_steps (w_current)),
                                    gtk_adjustment_get_upper (adj) -
                                    gtk_adjustment_get_page_size (adj)));
   }
@@ -441,7 +441,7 @@ x_event_scroll (GtkWidget *widget,
     gtk_adjustment_set_value (adj,
                               MIN (gtk_adjustment_get_value (adj) + pan_direction *
                                    (gtk_adjustment_get_page_increment (adj) /
-                                    w_current->scrollpan_steps),
+                                    schematic_window_get_scrollpan_steps (w_current)),
                                    gtk_adjustment_get_upper (adj) -
                                    gtk_adjustment_get_page_size (adj)));
   }
