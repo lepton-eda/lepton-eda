@@ -399,9 +399,11 @@ i_vars_set (SchematicWindow* w_current)
                            default_zoom_gain, &w_current->zoom_gain,
                            &cfg_check_int_not_0);
 
+  int scrollpan_steps = 8;
   cfg_read_int_with_check ("schematic.gui", "scrollpan-steps",
-                           default_scrollpan_steps, &w_current->scrollpan_steps,
+                           default_scrollpan_steps, &scrollpan_steps,
                            &cfg_check_int_not_0);
+  schematic_window_set_scrollpan_steps (w_current, scrollpan_steps);
 
   cfg_read_int_with_check ("schematic", "auto-save-interval",
                            default_auto_save_interval, &toplevel->auto_save_interval,
