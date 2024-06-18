@@ -97,9 +97,9 @@ success, #f on failure."
                 #t)))))
 
 
-(define (undo-save-viewport)
+(define* (undo-save-viewport #:optional (window (current-window)))
   "Saves current viewport data onto the undo stack."
-  (define *window (*current-window))
+  (define *window (check-window window 1))
 
   (when (undo-panzoom?)
     (o_undo_savestate_viewport *window)))
