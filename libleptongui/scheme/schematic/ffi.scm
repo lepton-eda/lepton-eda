@@ -329,6 +329,8 @@
 
             schematic_canvas_get_page
             schematic_canvas_get_viewport
+            schematic_canvas_get_hadjustment
+            schematic_canvas_get_vadjustment
             schematic_canvas_invalidate_all
             schematic_canvas_invalidate_world_rect
             schematic_canvas_new_with_page
@@ -681,6 +683,8 @@
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
 (define-lff schematic_canvas_get_viewport '* '(*))
+(define-lff schematic_canvas_get_hadjustment '* '(*))
+(define-lff schematic_canvas_get_vadjustment '* '(*))
 (define-lff schematic_canvas_invalidate_all void '(*))
 (define-lff schematic_canvas_invalidate_world_rect void (list '* int int int int))
 (define-lff schematic_canvas_new_with_page '* '(*))
@@ -1091,7 +1095,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int (list '* '* int int int int))
+(define-lff x_event_scroll int (list '* '* int int int int '* '*))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())

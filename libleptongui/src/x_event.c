@@ -340,33 +340,30 @@ x_event_scroll (GtkWidget *widget,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
-                int pan_direction)
+                int pan_direction,
+                GtkAdjustment *horiz_adj,
+                GtkAdjustment *vert_adj)
 {
-  GtkAdjustment *adj;
   SchematicCanvas *view = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
 
   if (pan_xaxis) {
-    adj = schematic_canvas_get_hadjustment (SCHEMATIC_CANVAS (widget));
-    g_return_val_if_fail (adj != NULL, TRUE);
-    gtk_adjustment_set_value (adj,
-                              MIN (gtk_adjustment_get_value (adj) + pan_direction *
-                                   (gtk_adjustment_get_page_increment (adj) /
+    gtk_adjustment_set_value (horiz_adj,
+                              MIN (gtk_adjustment_get_value (horiz_adj) + pan_direction *
+                                   (gtk_adjustment_get_page_increment (horiz_adj) /
                                     schematic_window_get_scrollpan_steps (w_current)),
-                                   gtk_adjustment_get_upper (adj) -
-                                   gtk_adjustment_get_page_size (adj)));
+                                   gtk_adjustment_get_upper (horiz_adj) -
+                                   gtk_adjustment_get_page_size (horiz_adj)));
   }
 
   if (pan_yaxis) {
-    adj = schematic_canvas_get_vadjustment (SCHEMATIC_CANVAS (widget));
-    g_return_val_if_fail (adj != NULL, TRUE);
-    gtk_adjustment_set_value (adj,
-                              MIN (gtk_adjustment_get_value (adj) + pan_direction *
-                                   (gtk_adjustment_get_page_increment (adj) /
+    gtk_adjustment_set_value (vert_adj,
+                              MIN (gtk_adjustment_get_value (vert_adj) + pan_direction *
+                                   (gtk_adjustment_get_page_increment (vert_adj) /
                                     schematic_window_get_scrollpan_steps (w_current)),
-                                   gtk_adjustment_get_upper (adj) -
-                                   gtk_adjustment_get_page_size (adj)));
+                                   gtk_adjustment_get_upper (vert_adj) -
+                                   gtk_adjustment_get_page_size (vert_adj)));
   }
 
   if (schematic_window_get_undo_panzoom (w_current) &&

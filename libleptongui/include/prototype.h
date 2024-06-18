@@ -953,7 +953,9 @@ x_event_scroll (GtkWidget *widget,
                 gboolean zoom,
                 gboolean pan_xaxis,
                 gboolean pan_yaxis,
-                int pan_direction);
+                int pan_direction,
+                GtkAdjustment *horiz_adj,
+                GtkAdjustment *vert_adj);
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
