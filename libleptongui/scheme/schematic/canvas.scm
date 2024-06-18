@@ -85,6 +85,16 @@
              (eq? (event-scroll-direction->symbol scroll-direction)
                   'gdk-scroll-right))))
 
+  (define (update-adjustment *adjustment pan-direction)
+    (gtk_adjustment_set_value
+     *adjustment
+     (min (+ (gtk_adjustment_get_value *adjustment)
+             (* pan-direction
+                (/ (gtk_adjustment_get_page_increment *adjustment)
+                   (schematic_window_get_scrollpan_steps *window))))
+          (- (gtk_adjustment_get_upper *adjustment)
+             (gtk_adjustment_get_page_size *adjustment)))))
+
   (when (null-pointer? *window)
     (error "NULL window"))
   (when (null-pointer? *widget)
@@ -225,22 +235,9 @@
                             TRUE)
                           (begin
                             (when pan-x-axis
-                              (gtk_adjustment_set_value *horiz-adjustment
-                                                        (min (+ (gtk_adjustment_get_value *horiz-adjustment)
-                                                                (* pan-direction
-                                                                   (/ (gtk_adjustment_get_page_increment *horiz-adjustment)
-                                                                      (schematic_window_get_scrollpan_steps *window))))
-                                                             (- (gtk_adjustment_get_upper *horiz-adjustment)
-                                                                (gtk_adjustment_get_page_size *horiz-adjustment)))))
-
+                              (update-adjustment *horiz-adjustment pan-direction))
                             (when pan-y-axis
-                              (gtk_adjustment_set_value *vert-adjustment
-                                                        (min (+ (gtk_adjustment_get_value *vert-adjustment)
-                                                                (* pan-direction
-                                                                   (/ (gtk_adjustment_get_page_increment *vert-adjustment)
-                                                                      (schematic_window_get_scrollpan_steps *window))))
-                                                             (- (gtk_adjustment_get_upper *vert-adjustment)
-                                                                (gtk_adjustment_get_page_size *vert-adjustment)))))
+                              (update-adjustment *vert-adjustment pan-direction))
 
                             (when (and (true? (schematic_window_get_undo_panzoom *window))
                                        (or zoom pan-x-axis pan-y-axis))
