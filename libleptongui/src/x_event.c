@@ -323,39 +323,6 @@ schematic_event_set_last_scroll_event_time (guint val)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] widget The SchematicCanvas with the scroll event.
- *  \param [in] w_current
- *  \param [in] zoom
- *  \param [in] pan_yaxis
- *  \param [in] pan_xaxis
- */
-gint
-x_event_scroll (GtkWidget *widget,
-                SchematicWindow *w_current,
-                gboolean zoom,
-                gboolean pan_xaxis,
-                gboolean pan_yaxis)
-{
-  SchematicCanvas *view = NULL;
-
-  view = SCHEMATIC_CANVAS (widget);
-
-  if (schematic_window_get_undo_panzoom (w_current) &&
-      (zoom || pan_xaxis || pan_yaxis))
-  {
-    o_undo_savestate_viewport (w_current);
-  }
-
-  x_event_faked_motion (view, NULL);
-  /* Stop further processing of this signal */
-  return TRUE;
-}
-
-
 /*! \brief get the pointer position of a given SchematicWindow
  *  \par Function Description
  *  This function gets the pointer position of the drawing area of the

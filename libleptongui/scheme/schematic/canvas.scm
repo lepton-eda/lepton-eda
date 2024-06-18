@@ -249,11 +249,14 @@
                                                                       (schematic_window_get_scrollpan_steps *window))))
                                                              (- (gtk_adjustment_get_upper *vert-adjustment)
                                                                 (gtk_adjustment_get_page_size *vert-adjustment)))))
-                            (x_event_scroll *widget
-                                            *window
-                                            zoom
-                                            pan-x-axis
-                                            pan-y-axis))))))))))))
+
+                            (when (and (true? (schematic_window_get_undo_panzoom *window))
+                                       (or (true? zoom) (true? pan-x-axis) (true? pan-y-axis)))
+                              (o_undo_savestate_viewport *window))
+
+                            (x_event_faked_motion *widget %null-pointer)
+                            ;; Stop further processing of this signal.
+                            TRUE)))))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
