@@ -23,6 +23,7 @@
   #:use-module (lepton log)
   #:use-module (lepton m4)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic event)
@@ -230,14 +231,29 @@
                           (begin
                             (log! 'warning "scroll-canvas(): NULL horizontal or vertical adjustment.")
                             TRUE)
-                          (x_event_scroll *widget
-                                          *window
-                                          zoom
-                                          pan-x-axis
-                                          pan-y-axis
-                                          pan-direction
-                                          *horiz-adjustment
-                                          *vert-adjustment)))))))))))
+                          (begin
+                            (when (true? pan-x-axis)
+                              (gtk_adjustment_set_value *horiz-adjustment
+                                                        (min (+ (gtk_adjustment_get_value *horiz-adjustment)
+                                                                (* pan-direction
+                                                                   (/ (gtk_adjustment_get_page_increment *horiz-adjustment)
+                                                                      (schematic_window_get_scrollpan_steps *window))))
+                                                             (- (gtk_adjustment_get_upper *horiz-adjustment)
+                                                                (gtk_adjustment_get_page_size *horiz-adjustment)))))
+
+                            (when (true? pan-y-axis)
+                              (gtk_adjustment_set_value *vert-adjustment
+                                                        (min (+ (gtk_adjustment_get_value *vert-adjustment)
+                                                                (* pan-direction
+                                                                   (/ (gtk_adjustment_get_page_increment *vert-adjustment)
+                                                                      (schematic_window_get_scrollpan_steps *window))))
+                                                             (- (gtk_adjustment_get_upper *vert-adjustment)
+                                                                (gtk_adjustment_get_page_size *vert-adjustment)))))
+                            (x_event_scroll *widget
+                                            *window
+                                            zoom
+                                            pan-x-axis
+                                            pan-y-axis))))))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
