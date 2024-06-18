@@ -432,6 +432,8 @@
             schematic_window_get_scroll_wheel
             schematic_window_get_scrollbars_flag
             schematic_window_set_scrollbars_flag
+            schematic_window_get_scrollpan_steps
+            schematic_window_set_scrollpan_steps
             schematic_window_get_text_caps
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
@@ -801,6 +803,8 @@
 (define-lff schematic_window_get_scroll_wheel int '(*))
 (define-lff schematic_window_get_scrollbars_flag int '(*))
 (define-lff schematic_window_set_scrollbars_flag void (list '* int))
+(define-lff schematic_window_get_scrollpan_steps int '(*))
+(define-lff schematic_window_set_scrollpan_steps void (list '* int))
 (define-lff schematic_window_get_text_caps int '(*))
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
