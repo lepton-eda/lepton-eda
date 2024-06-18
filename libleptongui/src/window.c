@@ -342,7 +342,7 @@ SchematicWindow *schematic_window_new ()
   w_current->keyboardpan_gain = 10;
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
-  w_current->scrollpan_steps = 8;
+  schematic_window_set_scrollpan_steps (w_current, 8);
 
   w_current->bus_ripper_symname = NULL;
 
