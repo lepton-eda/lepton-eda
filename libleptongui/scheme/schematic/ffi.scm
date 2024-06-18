@@ -507,10 +507,10 @@
 
             gdk_event_scroll_direction_from_string
             gdk_event_scroll_direction_to_string
+            x_event_faked_motion
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
-            x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
             schematic_event_get_doing_stroke
@@ -1092,10 +1092,10 @@
 ;;; x_event.c
 (define-lff gdk_event_scroll_direction_from_string int '(*))
 (define-lff gdk_event_scroll_direction_to_string '* (list int))
+(define-lff x_event_faked_motion int '(* *))
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int (list '* '* int int int))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())

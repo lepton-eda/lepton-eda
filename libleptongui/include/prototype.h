@@ -947,12 +947,6 @@ x_event_key (SchematicCanvas *page_view,
 GdkScrollDirection
 schematic_event_get_scroll_direction (GdkEventScroll *event);
 
-gint
-x_event_scroll (GtkWidget *widget,
-                SchematicWindow *w_current,
-                gboolean zoom,
-                gboolean pan_xaxis,
-                gboolean pan_yaxis);
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
