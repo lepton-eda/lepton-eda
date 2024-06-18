@@ -120,6 +120,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - The type `GschemPreview` has been renamed to `SchematicPreview`,
   all related functions and macros have been renamed accordingly.
+  The type structure has been made an opaque one and its data is
+  now available only via accessors.
 
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
@@ -318,6 +320,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Crashes on closing one of the open program windows, it doesn't
   matter whether with mouse click on the menu item or with a
   keyboard shortcut, have been fixed.
+
+- The *File Select* dialog code has been refactored so it and its
+  preview widget are now available for dealing with in Scheme.
+
+- The *Preview* widgets of the *File Select* and *Component
+  Select* dialogs are now created in Scheme.  A new module,
+  `(schematic preview-widget)`, has been added to work with their
+  data, signals, and callbacks in Scheme.  To make this possible,
+  several C callbacks and other functions dealing with signals
+  have been rewritten in Scheme, and a new signal,
+  "update-preview", has been added.
 
 ### Changes in `lepton-archive`:
 
