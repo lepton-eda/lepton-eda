@@ -126,9 +126,8 @@
                  (zoom
                   ;; If the user has a left/right scroll
                   ;; wheel, always scroll the y-axis.
-                  (if left-or-right-direction?
-                      FALSE
-                      (if zoom-by-mods? TRUE FALSE)))
+                  (and (not left-or-right-direction?)
+                       zoom-by-mods?))
                  (pan-y-by-mods
                   (if classic-scrolling?
                       ;; Classic gschem behaviour.
@@ -214,7 +213,7 @@
                                ((gdk-scroll-down) ZOOM_OUT)
                                ((gdk-scroll-right) ZOOM_OUT)
                                (else ZOOM_IN)))))
-                    (when (true? zoom)
+                    (when zoom
                       (a_zoom *window *widget zoom-direction HOTKEY))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
@@ -244,7 +243,7 @@
                                                                 (gtk_adjustment_get_page_size *vert-adjustment)))))
 
                             (when (and (true? (schematic_window_get_undo_panzoom *window))
-                                       (or (true? zoom) pan-x-axis pan-y-axis))
+                                       (or zoom pan-x-axis pan-y-axis))
                               (o_undo_savestate_viewport *window))
 
                             (x_event_faked_motion *widget %null-pointer)
