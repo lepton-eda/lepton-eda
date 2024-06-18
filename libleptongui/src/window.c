@@ -2229,3 +2229,32 @@ schematic_window_set_scrollbars_flag (SchematicWindow *w_current,
 
   w_current->scrollbars_flag = val;
 }
+
+
+/*! \brief Get schematic window's field 'scrollpan_steps'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'scrollpan_steps'.
+ */
+int
+schematic_window_get_scrollpan_steps (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 8);
+
+  return w_current->scrollpan_steps;
+}
+
+
+/*! \brief Set schematic window's field 'scrollpan_steps'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'scrollpan_steps'.
+ */
+void
+schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
+                                      int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->scrollpan_steps = val;
+}

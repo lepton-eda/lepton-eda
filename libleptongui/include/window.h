@@ -578,4 +578,10 @@ schematic_window_get_scrollbars_flag (SchematicWindow *w_current);
 void
 schematic_window_set_scrollbars_flag (SchematicWindow *w_current,
                                       int val);
+int
+schematic_window_get_scrollpan_steps (SchematicWindow *w_current);
+
+void
+schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
+                                      int val);
 G_END_DECLS
