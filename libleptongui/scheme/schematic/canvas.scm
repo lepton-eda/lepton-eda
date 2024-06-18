@@ -135,17 +135,14 @@
                       (and (not control-pressed?) shift-pressed?)
                       ;; GTK style behaviour.
                       (and (not control-pressed?) (not shift-pressed?))))
-                 (pan-y-axis (if (false? (schematic_window_get_scrollbars_flag *window))
-                                 ;; You must have scrollbars
-                                 ;; enabled if you want to use
-                                 ;; the scroll wheel to pan.
-                                 FALSE
-                                 ;; If the user has a
-                                 ;; left/right scroll wheel,
-                                 ;; always scroll the y-axis.
-                                 (if left-or-right-direction?
-                                     FALSE
-                                     (if pan-y-by-mods TRUE FALSE))))
+                 ;; You must have scrollbars enabled if you
+                 ;; want to use the scroll wheel to pan.
+                 (pan-y-axis (and (true? (schematic_window_get_scrollbars_flag *window))
+                                  ;; If the user has a
+                                  ;; left/right scroll wheel,
+                                  ;; always scroll the y-axis.
+                                  (and (not left-or-right-direction?)
+                                       pan-y-by-mods)))
                  (pan-x-by-mods
                   (if classic-scrolling?
                       ;; Classic gschem behaviour.
@@ -223,7 +220,7 @@
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))
                       (if (or (and pan-x-axis (null-pointer? *horiz-adjustment))
-                              (and (true? pan-y-axis) (null-pointer? *vert-adjustment)))
+                              (and pan-y-axis (null-pointer? *vert-adjustment)))
                           (begin
                             (log! 'warning "scroll-canvas(): NULL horizontal or vertical adjustment.")
                             TRUE)
@@ -237,7 +234,7 @@
                                                              (- (gtk_adjustment_get_upper *horiz-adjustment)
                                                                 (gtk_adjustment_get_page_size *horiz-adjustment)))))
 
-                            (when (true? pan-y-axis)
+                            (when pan-y-axis
                               (gtk_adjustment_set_value *vert-adjustment
                                                         (min (+ (gtk_adjustment_get_value *vert-adjustment)
                                                                 (* pan-direction
@@ -247,7 +244,7 @@
                                                                 (gtk_adjustment_get_page_size *vert-adjustment)))))
 
                             (when (and (true? (schematic_window_get_undo_panzoom *window))
-                                       (or (true? zoom) pan-x-axis (true? pan-y-axis)))
+                                       (or (true? zoom) pan-x-axis pan-y-axis))
                               (o_undo_savestate_viewport *window))
 
                             (x_event_faked_motion *widget %null-pointer)
