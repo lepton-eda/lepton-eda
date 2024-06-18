@@ -223,12 +223,21 @@
                     (when (true? zoom)
                       (a_zoom *window *widget zoom-direction HOTKEY))
 
-                    (x_event_scroll *widget
-                                    *window
-                                    zoom
-                                    pan-x-axis
-                                    pan-y-axis
-                                    pan-direction)))))))))
+                    (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
+                          (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))
+                      (if (or (and (true? pan-x-axis) (null-pointer? *horiz-adjustment))
+                              (and (true? pan-y-axis) (null-pointer? *vert-adjustment)))
+                          (begin
+                            (log! 'warning "scroll-canvas(): NULL horizontal or vertical adjustment.")
+                            TRUE)
+                          (x_event_scroll *widget
+                                          *window
+                                          zoom
+                                          pan-x-axis
+                                          pan-y-axis
+                                          pan-direction
+                                          *horiz-adjustment
+                                          *vert-adjustment)))))))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
