@@ -332,39 +332,17 @@ schematic_event_set_last_scroll_event_time (guint val)
  *  \param [in] zoom
  *  \param [in] pan_yaxis
  *  \param [in] pan_xaxis
- *  \param [in] pan_direction
  */
 gint
 x_event_scroll (GtkWidget *widget,
                 SchematicWindow *w_current,
                 gboolean zoom,
                 gboolean pan_xaxis,
-                gboolean pan_yaxis,
-                int pan_direction,
-                GtkAdjustment *horiz_adj,
-                GtkAdjustment *vert_adj)
+                gboolean pan_yaxis)
 {
   SchematicCanvas *view = NULL;
 
   view = SCHEMATIC_CANVAS (widget);
-
-  if (pan_xaxis) {
-    gtk_adjustment_set_value (horiz_adj,
-                              MIN (gtk_adjustment_get_value (horiz_adj) + pan_direction *
-                                   (gtk_adjustment_get_page_increment (horiz_adj) /
-                                    schematic_window_get_scrollpan_steps (w_current)),
-                                   gtk_adjustment_get_upper (horiz_adj) -
-                                   gtk_adjustment_get_page_size (horiz_adj)));
-  }
-
-  if (pan_yaxis) {
-    gtk_adjustment_set_value (vert_adj,
-                              MIN (gtk_adjustment_get_value (vert_adj) + pan_direction *
-                                   (gtk_adjustment_get_page_increment (vert_adj) /
-                                    schematic_window_get_scrollpan_steps (w_current)),
-                                   gtk_adjustment_get_upper (vert_adj) -
-                                   gtk_adjustment_get_page_size (vert_adj)));
-  }
 
   if (schematic_window_get_undo_panzoom (w_current) &&
       (zoom || pan_xaxis || pan_yaxis))

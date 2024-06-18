@@ -29,6 +29,11 @@
             gtk_accelerator_parse
             gtk_accelerator_name
             gtk_accelerator_get_label
+            gtk_adjustment_get_page_increment
+            gtk_adjustment_get_page_size
+            gtk_adjustment_get_upper
+            gtk_adjustment_get_value
+            gtk_adjustment_set_value
             gtk_events_pending
             gtk_rc_parse
             gtk_icon_theme_get_default
@@ -71,6 +76,12 @@
 (define-lff gtk_accelerator_parse void '(* * *))
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
 (define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
+
+(define-lff gtk_adjustment_get_page_increment double '(*))
+(define-lff gtk_adjustment_get_page_size double '(*))
+(define-lff gtk_adjustment_get_upper double '(*))
+(define-lff gtk_adjustment_get_value double '(*))
+(define-lff gtk_adjustment_set_value void (list '* double))
 
 (define-lff gtk_events_pending int '())
 
