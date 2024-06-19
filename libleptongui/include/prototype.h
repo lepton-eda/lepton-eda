@@ -919,12 +919,6 @@ schematic_event_get_button (GdkEvent *event);
 gboolean
 schematic_event_is_double_button_press (GdkEvent *event);
 
-guint
-schematic_event_get_last_scroll_event_time ();
-
-void
-schematic_event_set_last_scroll_event_time (guint val);
-
 gboolean
 schematic_event_skip_motion_event (GdkEvent *event);
 

@@ -73,6 +73,8 @@
 (define MENU 1)
 (define HOTKEY 2)
 
+(define %last-scroll-event-time 0)
+
 (define (scroll-canvas *widget *event *window)
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
@@ -174,8 +176,7 @@
                      (not smooth-scroll?)
                      (not (eq? (event-scroll-direction->symbol scroll-direction)
                                'gdk-scroll-smooth))
-                     (= (schematic_event_get_last_scroll_event_time)
-                        (event-time *event)))
+                     (= %last-scroll-event-time (event-time *event)))
                 (begin (log! 'debug "[~A] duplicate legacy scroll event ~A"
                              (event-time *event)
                              (event-scroll-direction->symbol scroll-direction))
@@ -187,7 +188,7 @@
                     ;; events are provided by the
                     ;; GDK_SCROLL_SMOOTH direction on XInput2
                     ;; and Wayland devices.
-                    (schematic_event_set_last_scroll_event_time (event-time *event)))
+                    (set! %last-scroll-event-time (event-time *event)))
                   (let ((pan-direction
                          (if %m4-use-gtk3
                              (if smooth-scroll?

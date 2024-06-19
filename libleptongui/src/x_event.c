@@ -308,21 +308,6 @@ schematic_event_get_scroll_direction (GdkEventScroll *event)
 }
 
 
-static guint last_scroll_event_time = GDK_CURRENT_TIME;
-
-guint
-schematic_event_get_last_scroll_event_time ()
-{
-  return last_scroll_event_time;
-}
-
-void
-schematic_event_set_last_scroll_event_time (guint val)
-{
-  last_scroll_event_time = val;
-}
-
-
 /*! \brief get the pointer position of a given SchematicWindow
  *  \par Function Description
  *  This function gets the pointer position of the drawing area of the

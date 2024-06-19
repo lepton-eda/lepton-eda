@@ -515,8 +515,6 @@
             schematic_event_is_double_button_press
             schematic_event_get_doing_stroke
             schematic_event_set_doing_stroke
-            schematic_event_get_last_scroll_event_time
-            schematic_event_set_last_scroll_event_time
             schematic_event_get_scroll_direction
             schematic_event_skip_motion_event
             schematic_event_alt_mask
@@ -1100,8 +1098,6 @@
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())
 (define-lff schematic_event_set_doing_stroke void (list int))
-(define-lff schematic_event_get_last_scroll_event_time uint32 '())
-(define-lff schematic_event_set_last_scroll_event_time void (list uint32))
 (define-lff schematic_event_get_scroll_direction int '(*))
 (define-lff schematic_event_skip_motion_event int '(*))
 (define-lff schematic_event_alt_mask int '())
