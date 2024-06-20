@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,8 @@ find_single_object (GschemToplevel *w_current, LeptonObject *object,
       o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
   }
 
-  w_current->toplevel->page_current->object_lastplace = object;
+  LeptonPage *active_page = w_current->toplevel->page_current;
+  lepton_page_set_object_lastplace (active_page, object);
   i_update_menus (w_current);
   return TRUE;
 }
@@ -158,10 +159,11 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  if (active_page->object_lastplace != NULL) {
+  if (lepton_page_get_object_lastplace (active_page) != NULL)
+  {
     /* NB: g_list_find doesn't declare its input const, so we cast */
     iter = g_list_find ((GList *)lepton_page_objects (active_page),
-                        active_page->object_lastplace);
+                        lepton_page_get_object_lastplace (active_page));
     iter = g_list_next (iter);
   }
 
@@ -184,12 +186,12 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
       return TRUE;
     }
     /* break once we've inspected up to where we started the first loop */
-    if (o_current == active_page->object_lastplace)
+    if (o_current == lepton_page_get_object_lastplace (active_page))
       break;
   }
 
   /* didn't find anything.... reset lastplace */
-  active_page->object_lastplace = NULL;
+  lepton_page_set_object_lastplace (active_page, NULL);
 
   /* deselect everything only if shift key isn't pressed and
      the caller allows it */
