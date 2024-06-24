@@ -26,6 +26,7 @@
   #:use-module (lepton ffi gobject)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -38,11 +39,22 @@
 (define (run-autonumbering *autotext)
   (define *window (schematic_autonumber_get_autotext_window *autotext))
   (define *active-page (schematic_window_get_active_page *window))
-  ;; Get all pages of the hierarchy.
-  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
 
   (define scope-number
     (schematic_autonumber_get_autotext_scope_number *autotext))
+
+  (define scope
+    (string->symbol
+     (pointer->string
+      (schematic_autonumber_scope_to_string scope-number))))
+
+  ;; Get all pages of the hierarchy.
+  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
+  (define *page-ls
+    (if (eq? scope 'scope-hierarchy)
+        (glist->list *pages identity)
+        ;; The text will be searched for only in the current page.
+        (list *active-page)))
 
   (define *scope-text
     (glist-data
@@ -75,11 +87,17 @@
                  (if single-search?
                      (g_list_append %null-pointer *search-text)
                      (if multi-search?
-                         (schematic_autonumber_create_search_text_list
-                          *window
-                          *pages
-                          *search-text
-                          scope-number)
+                         (let loop ((ls *page-ls)
+                                    (*search-text-ls %null-pointer))
+                           (if (null? ls)
+                               *search-text-ls
+                               (loop (cdr ls)
+                                     (schematic_autonumber_create_search_text_list
+                                      *window
+                                      (car ls)
+                                      *search-text
+                                      *search-text-ls
+                                      scope-number))))
                          %null-pointer))))
             (schematic_autonumber_run *autotext
                                       *window

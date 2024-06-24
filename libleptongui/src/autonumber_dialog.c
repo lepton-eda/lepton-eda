@@ -1437,12 +1437,11 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 
 GList*
 schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
-                                              GList *pages,
+                                              LeptonPage *page,
                                               gchar *searchtext,
+                                              GList *searchtext_list,
                                               gint scope_number)
 {
-  GList *searchtext_list = NULL;
-  GList *page_item;
   LeptonObject *o_current;
   gchar *new_searchtext;
   const GList *iter;
@@ -1458,9 +1457,7 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
      in the searchtext list */
 
   /* collect all the possible searchtexts in all pages of the hierarchy */
-  for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
-                               (LeptonPage*) page_item->data);
+    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
     schematic_window_page_changed (w_current);
     /* iterate over all objects an look for matching searchtext's */
     for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
@@ -1490,11 +1487,6 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
             }
         }
     }
-    if ((scope_number == SCOPE_SELECTED)
-        || (scope_number == SCOPE_PAGE))
-      break; /* search only in the first page */
-  }
-
   return searchtext_list;
 }
 
