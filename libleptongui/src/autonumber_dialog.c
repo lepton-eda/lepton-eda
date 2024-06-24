@@ -1523,10 +1523,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         break; /* search only in the first page */
     }
   }
-  else
-  {
-    return;
-  }
 
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
