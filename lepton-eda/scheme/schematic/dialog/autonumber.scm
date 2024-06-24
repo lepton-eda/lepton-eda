@@ -48,9 +48,11 @@
 
   (define scope-text (pointer->string *scope-text))
 
+  (define single-search? (string-suffix? "?" scope-text))
+  (define multi-search? (string-suffix? "*" scope-text))
+
   (define search-text
-    (and (or (string-suffix? "?" scope-text)
-             (string-suffix? "*" scope-text))
+    (and (or single-search? multi-search?)
          ;; Drop suffix "?" or "*".
          (string-drop-right scope-text 1)))
 
