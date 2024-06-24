@@ -1453,8 +1453,6 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-    if (lepton_object_is_text (o_current))
-    {
       if ((scope_number == SCOPE_HIERARCHY)
           || (scope_number == SCOPE_PAGE)
           || ((scope_number == SCOPE_SELECTED)
@@ -1474,7 +1472,6 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
           g_free(new_searchtext);
         }
       }
-    }
   return searchtext_list;
 }
 
