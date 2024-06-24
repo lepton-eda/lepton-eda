@@ -56,6 +56,9 @@
          ;; Drop suffix "?" or "*".
          (string-drop-right scope-text 1)))
 
+  (define *search-text
+    (and search-text (string->pointer search-text)))
+
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
   (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
@@ -65,11 +68,15 @@
   (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
       (if search-text
-          (schematic_autonumber_run *autotext
-                                    *window
-                                    *pages
-                                    *scope-text
-                                    (string->pointer search-text))
+          (let ((*search-text-list (if single-search?
+                                       (g_list_append %null-pointer *search-text)
+                                       %null-pointer)))
+            (schematic_autonumber_run *autotext
+                                      *window
+                                      *pages
+                                      *scope-text
+                                      *search-text
+                                      *search-text-list))
           (log! 'message (G_ "No '*' or '?' given at the end of the autonumber text.")))))
 
 

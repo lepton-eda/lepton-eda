@@ -1451,15 +1451,18 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
  *  \param [in] scope_text The attribute text to search for.
  *  \param [in] searchtext The base of the above text without
  *                         wildcards.
+ *  \param [in] searchtext_list The list of the object text
+ *                              patterns in the schematics that
+ *                              match to the above search text.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,
                           gchar *scope_text,
-                          gchar *searchtext)
+                          gchar *searchtext,
+                          GList *searchtext_list)
 {
-  GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
   gchar *new_searchtext;
@@ -1480,12 +1483,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  if (g_str_has_suffix(scope_text,"?") == TRUE) {
-    /* single searchtext */
-    searchtext_list=g_list_append (searchtext_list, searchtext);
-  }
-  else if (g_str_has_suffix(scope_text,"*") == TRUE) {
-
+  if ((searchtext_list == NULL) &&
+      (g_str_has_suffix (scope_text, "*") == TRUE))
+  {
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
       lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
