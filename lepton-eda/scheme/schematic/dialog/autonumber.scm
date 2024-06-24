@@ -74,6 +74,13 @@
   (define *search-text
     (and search-text (string->pointer search-text)))
 
+  (define (create-search-text-list *window *page *search-text *search-text-ls)
+    (schematic_autonumber_create_search_text_list *window
+                                                  *page
+                                                  *search-text
+                                                  *search-text-ls
+                                                  scope-number))
+
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
   (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
@@ -92,12 +99,10 @@
                            (if (null? ls)
                                *search-text-ls
                                (loop (cdr ls)
-                                     (schematic_autonumber_create_search_text_list
-                                      *window
-                                      (car ls)
-                                      *search-text
-                                      *search-text-ls
-                                      scope-number))))
+                                     (create-search-text-list *window
+                                                              (car ls)
+                                                              *search-text
+                                                              *search-text-ls))))
                          %null-pointer))))
             (schematic_autonumber_run *autotext
                                       *window
