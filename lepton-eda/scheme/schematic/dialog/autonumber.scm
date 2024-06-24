@@ -78,10 +78,20 @@
   (define (create-search-text-list *window *page *search-text *search-text-ls)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
     (schematic_window_page_changed *window)
-    (schematic_autonumber_create_search_text_list *window
-                                                  *search-text
-                                                  *search-text-ls
-                                                  scope-number))
+    ;; Iterate over all objects and look for matching
+    ;; search patterns.
+    (let loop ((*objects
+                (glist->list
+                 (lepton_page_objects (schematic_window_get_active_page *window))
+                 identity))
+               (*ls *search-text-ls))
+      (if (null? *objects)
+          *ls
+          (loop (cdr *objects)
+                (schematic_autonumber_create_search_text_list (car *objects)
+                                                              *search-text
+                                                              *ls
+                                                              scope-number)))))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)

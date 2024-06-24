@@ -1436,14 +1436,12 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 
 
 GList*
-schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
+schematic_autonumber_create_search_text_list (LeptonObject *o_current,
                                               gchar *searchtext,
                                               GList *searchtext_list,
                                               gint scope_number)
 {
-  LeptonObject *o_current;
   gchar *new_searchtext;
-  const GList *iter;
 
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes.
@@ -1455,12 +1453,6 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  /* iterate over all objects an look for matching searchtext's */
-  for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
-       iter != NULL;
-       iter = g_list_next (iter))
-  {
-    o_current = (LeptonObject*) iter->data;
     if (lepton_object_is_text (o_current))
     {
       if ((scope_number == SCOPE_HIERARCHY)
@@ -1483,7 +1475,6 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
         }
       }
     }
-  }
   return searchtext_list;
 }
 
