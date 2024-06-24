@@ -1435,6 +1435,69 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 }
 
 
+GList*
+schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
+                                              GList *pages,
+                                              gchar *searchtext,
+                                              gint scope_number)
+{
+  GList *searchtext_list = NULL;
+  GList *page_item;
+  LeptonObject *o_current;
+  gchar *new_searchtext;
+  const GList *iter;
+
+  /* Step2: if searchtext has an asterisk at the end we have to find
+     all matching searchtextes.
+
+     Example:  "refdes=*" will match each text that starts with "refdes="
+     and has a trailing "?" or a trailing number if the "all"-option is set.
+     We get a list of possible prefixes: refdes=R, refdes=C.
+
+     If there is only one search pattern, it becomes a single item
+     in the searchtext list */
+
+  /* collect all the possible searchtexts in all pages of the hierarchy */
+  for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
+    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
+                               (LeptonPage*) page_item->data);
+    schematic_window_page_changed (w_current);
+    /* iterate over all objects an look for matching searchtext's */
+    for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
+         iter != NULL;
+         iter = g_list_next (iter)) {
+      o_current = (LeptonObject*) iter->data;
+      if (lepton_object_is_text (o_current))
+        {
+          if ((scope_number == SCOPE_HIERARCHY)
+              || (scope_number == SCOPE_PAGE)
+              || ((scope_number == SCOPE_SELECTED)
+                  && (lepton_object_get_selected (o_current))))
+            {
+              const gchar *str = lepton_text_object_get_string (o_current);
+              /* the beginnig of the current text matches with the searchtext now */
+              /* strip of the trailing [0-9?] chars and add it too the searchtext */
+              new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
+              if ((new_searchtext != NULL)
+                  && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
+                {
+                  searchtext_list = g_list_append (searchtext_list, new_searchtext);
+                }
+              else
+                {
+                  g_free(new_searchtext);
+                }
+            }
+        }
+    }
+    if ((scope_number == SCOPE_SELECTED)
+        || (scope_number == SCOPE_PAGE))
+      break; /* search only in the first page */
+  }
+
+  return searchtext_list;
+}
+
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It
@@ -1467,7 +1530,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 {
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
-  gchar *new_searchtext;
   gint number, slot;
   GList *o_list = NULL;
   const GList *iter;
@@ -1475,55 +1537,14 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  /* Step2: if searchtext has an asterisk at the end we have to find
-     all matching searchtextes.
-
-     Example:  "refdes=*" will match each text that starts with "refdes="
-     and has a trailing "?" or a trailing number if the "all"-option is set.
-     We get a list of possible prefixes: refdes=R, refdes=C.
-
-     If there is only one search pattern, it becomes a single item
-     in the searchtext list */
-
   if ((searchtext_list == NULL) &&
       (g_str_has_suffix (scope_text, "*") == TRUE))
   {
-    /* collect all the possible searchtexts in all pages of the hierarchy */
-    for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
-      schematic_window_page_changed (w_current);
-      /* iterate over all objects an look for matching searchtext's */
-      for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
-           iter != NULL;
-           iter = g_list_next (iter)) {
-        o_current = (LeptonObject*) iter->data;
-        if (lepton_object_is_text (o_current))
-        {
-          if ((scope_number == SCOPE_HIERARCHY)
-              || (scope_number == SCOPE_PAGE)
-              || ((scope_number == SCOPE_SELECTED)
-                  && (lepton_object_get_selected (o_current))))
-          {
-            const gchar *str = lepton_text_object_get_string (o_current);
-            /* the beginnig of the current text matches with the searchtext now */
-            /* strip of the trailing [0-9?] chars and add it too the searchtext */
-            new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
-            if ((new_searchtext != NULL)
-                && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
-            {
-              searchtext_list = g_list_append (searchtext_list, new_searchtext);
-            }
-            else
-            {
-              g_free(new_searchtext);
-            }
-          }
-        }
-      }
-      if ((scope_number == SCOPE_SELECTED)
-          || (scope_number == SCOPE_PAGE))
-        break; /* search only in the first page */
-    }
+    searchtext_list =
+      schematic_autonumber_create_search_text_list (w_current,
+                                                    pages,
+                                                    searchtext,
+                                                    scope_number);
   }
 
   /* Step3: iterate over the search items in the list */
