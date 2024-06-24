@@ -70,13 +70,16 @@
       (if search-text
           (let ((*search-text-list (if single-search?
                                        (g_list_append %null-pointer *search-text)
-                                       %null-pointer)))
+                                       %null-pointer))
+                (scope-number
+                 (schematic_autonumber_get_autotext_scope_number *autotext)))
             (schematic_autonumber_run *autotext
                                       *window
                                       *pages
                                       *scope-text
                                       *search-text
-                                      *search-text-list))
+                                      *search-text-list
+                                      scope-number))
           (log! 'message (G_ "No '*' or '?' given at the end of the autonumber text.")))))
 
 

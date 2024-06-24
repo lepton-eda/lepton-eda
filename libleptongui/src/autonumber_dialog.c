@@ -1454,6 +1454,7 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
  *  \param [in] searchtext_list The list of the object text
  *                              patterns in the schematics that
  *                              match to the above search text.
+ *  \param [in] scope_number The selected (re)numbering scope.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
@@ -1461,7 +1462,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
                           GList *pages,
                           gchar *scope_text,
                           gchar *searchtext,
-                          GList *searchtext_list)
+                          GList *searchtext_list,
+                          gint scope_number)
 {
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
@@ -1497,9 +1499,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         o_current = (LeptonObject*) iter->data;
         if (lepton_object_is_text (o_current))
         {
-          if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_HIERARCHY)
-              || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE)
-              || ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
+          if ((scope_number == SCOPE_HIERARCHY)
+              || (scope_number == SCOPE_PAGE)
+              || ((scope_number == SCOPE_SELECTED)
                   && (lepton_object_get_selected (o_current))))
           {
             const gchar *str = lepton_text_object_get_string (o_current);
@@ -1518,8 +1520,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
           }
         }
       }
-      if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
-          || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE))
+      if ((scope_number == SCOPE_SELECTED)
+          || (scope_number == SCOPE_PAGE))
         break; /* search only in the first page */
     }
   }
@@ -1533,7 +1535,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
     {
       /* renumbering all means that no db is required */
-      if (!((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_HIERARCHY)
+      if (!((scope_number == SCOPE_HIERARCHY)
             && autotext->scope_overwrite)) {
         for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
           autotext->root_page = (pages->data == page_item->data);
@@ -1609,8 +1611,8 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
           || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
         autonumber_clear_database(autotext);
 
-      if ((schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_SELECTED)
-          || (schematic_autonumber_get_autotext_scope_number (autotext) == SCOPE_PAGE))
+      if ((scope_number == SCOPE_SELECTED)
+          || (scope_number == SCOPE_PAGE))
         break; /* only renumber the parent page (the first page) */
     }
     autonumber_clear_database(autotext);   /* cleanup */
