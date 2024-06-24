@@ -41,6 +41,9 @@
   ;; Get all pages of the hierarchy.
   (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
 
+  (define scope-number
+    (schematic_autonumber_get_autotext_scope_number *autotext))
+
   (define *scope-text
     (glist-data
      (g_list_first
@@ -68,11 +71,16 @@
   (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
       (if search-text
-          (let ((*search-text-list (if single-search?
-                                       (g_list_append %null-pointer *search-text)
-                                       %null-pointer))
-                (scope-number
-                 (schematic_autonumber_get_autotext_scope_number *autotext)))
+          (let ((*search-text-list
+                 (if single-search?
+                     (g_list_append %null-pointer *search-text)
+                     (if multi-search?
+                         (schematic_autonumber_create_search_text_list
+                          *window
+                          *pages
+                          *search-text
+                          scope-number)
+                         %null-pointer))))
             (schematic_autonumber_run *autotext
                                       *window
                                       *pages

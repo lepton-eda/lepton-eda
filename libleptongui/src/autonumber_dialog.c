@@ -1537,16 +1537,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  if ((searchtext_list == NULL) &&
-      (g_str_has_suffix (scope_text, "*") == TRUE))
-  {
-    searchtext_list =
-      schematic_autonumber_create_search_text_list (w_current,
-                                                    pages,
-                                                    searchtext,
-                                                    scope_number);
-  }
-
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
     autotext->current_searchtext = (gchar*) text_item->data;
