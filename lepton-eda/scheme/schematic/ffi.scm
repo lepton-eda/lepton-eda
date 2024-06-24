@@ -1156,7 +1156,7 @@
 (define-lff schematic_autonumber_set_autotext_used_slots void '(* *))
 (define-lff schematic_autonumber_get_autotext_window '* '(*))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
-(define-lff schematic_autonumber_create_search_text_list '* (list '* '* '* '* int))
+(define-lff schematic_autonumber_create_search_text_list '* (list '* '* '* int))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_history_add '* '(* *))

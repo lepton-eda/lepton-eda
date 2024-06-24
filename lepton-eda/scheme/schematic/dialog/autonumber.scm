@@ -24,6 +24,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
@@ -75,8 +76,9 @@
     (and search-text (string->pointer search-text)))
 
   (define (create-search-text-list *window *page *search-text *search-text-ls)
+    (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
+    (schematic_window_page_changed *window)
     (schematic_autonumber_create_search_text_list *window
-                                                  *page
                                                   *search-text
                                                   *search-text-ls
                                                   scope-number))
@@ -94,6 +96,8 @@
                  (if single-search?
                      (g_list_append %null-pointer *search-text)
                      (if multi-search?
+                         ;; Collect all the possible searchtexts
+                         ;; in all pages of the hierarchy.
                          (let loop ((ls *page-ls)
                                     (*search-text-ls %null-pointer))
                            (if (null? ls)

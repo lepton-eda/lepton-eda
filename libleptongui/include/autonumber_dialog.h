@@ -224,7 +224,6 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 
 GList*
 schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
-                                              LeptonPage *page,
                                               gchar *searchtext,
                                               GList *searchtext_list,
                                               gint scope_number);

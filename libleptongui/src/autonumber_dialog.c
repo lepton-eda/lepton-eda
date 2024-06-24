@@ -1437,7 +1437,6 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 
 GList*
 schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
-                                              LeptonPage *page,
                                               gchar *searchtext,
                                               GList *searchtext_list,
                                               gint scope_number)
@@ -1456,9 +1455,6 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  /* collect all the possible searchtexts in all pages of the hierarchy */
-  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
-  schematic_window_page_changed (w_current);
   /* iterate over all objects an look for matching searchtext's */
   for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
        iter != NULL;
