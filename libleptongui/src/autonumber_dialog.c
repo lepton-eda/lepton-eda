@@ -1442,16 +1442,6 @@ schematic_autonumber_create_search_text_list (const gchar *str,
 {
   gchar *new_searchtext;
 
-  /* Step2: if searchtext has an asterisk at the end we have to find
-     all matching searchtextes.
-
-     Example:  "refdes=*" will match each text that starts with "refdes="
-     and has a trailing "?" or a trailing number if the "all"-option is set.
-     We get a list of possible prefixes: refdes=R, refdes=C.
-
-     If there is only one search pattern, it becomes a single item
-     in the searchtext list */
-
   /* the beginnig of the current text matches with the searchtext now */
   /* strip of the trailing [0-9?] chars and add it too the searchtext */
   new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
