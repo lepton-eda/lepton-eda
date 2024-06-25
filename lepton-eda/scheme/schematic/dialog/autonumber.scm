@@ -93,12 +93,12 @@
         (if (null? objects)
             ls
             (loop (cdr objects)
-                  (let* ((s (text-string (car objects)))
-                         ;; The beginning of the current text
-                         ;; matches with the searchtext now.
-                         ;; Strip of the trailing [0-9?] chars
-                         ;; and add it to the searchtext.
-                         (trimmed-s (autonumber-string->template s search-text)))
+                  ;; The beginning of the current text matches
+                  ;; with the searchtext now.  Strip of the
+                  ;; trailing [0-9?] chars and add it to the
+                  ;; searchtext.
+                  (let ((trimmed-s (autonumber-string->template (text-string (car objects))
+                                                                search-text)))
                     (if (not trimmed-s)
                         ls
                         (if (member trimmed-s ls)
