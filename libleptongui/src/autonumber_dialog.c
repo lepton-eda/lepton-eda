@@ -1435,21 +1435,6 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 }
 
 
-GList*
-schematic_autonumber_create_search_text_list (gchar *new_searchtext,
-                                              GList *searchtext_list)
-{
-  if (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL)
-  {
-    searchtext_list = g_list_append (searchtext_list, new_searchtext);
-  }
-  else
-  {
-    g_free(new_searchtext);
-  }
-  return searchtext_list;
-}
-
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It
@@ -1582,7 +1567,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   }
 
   /* cleanup and redraw all*/
-  g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
+  /* g_list_foreach(searchtext_list, (GFunc) g_free, NULL); */
   g_list_free(searchtext_list);
 
   /* Go back to the root page. */

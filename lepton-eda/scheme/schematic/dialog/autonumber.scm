@@ -107,7 +107,12 @@
 
                         (if (null-pointer? *new-search-text)
                             *ls
-                            (schematic_autonumber_create_search_text_list *new-search-text *ls)))
+                            (let ((search-text-ls (glist->list *ls pointer->string)))
+                              (if (member (pointer->string *new-search-text) search-text-ls)
+                                  (begin
+                                    (g_free *new-search-text)
+                                    *ls)
+                                  (g_list_append *ls *new-search-text)))))
                       ;; Otherwise return the list as is.
                       *ls))))))
 
