@@ -75,7 +75,7 @@
   (define *search-text
     (and search-text (string->pointer search-text)))
 
-  (define (create-search-text-list *window *page *search-text current-template-list)
+  (define (create-search-text-list *page *search-text current-template-list)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
     (schematic_window_page_changed *window)
     ;; Guard to check if the page has already got active.
@@ -148,8 +148,7 @@
                            (if (null? ls)
                                current-template-list
                                (loop (cdr ls)
-                                     (create-search-text-list *window
-                                                              (car ls)
+                                     (create-search-text-list (car ls)
                                                               *search-text
                                                               current-template-list))))
                          '()))))
