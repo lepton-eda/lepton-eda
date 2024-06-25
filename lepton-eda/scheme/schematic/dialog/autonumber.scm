@@ -81,32 +81,29 @@
     ;; Guard to check if the page has already got active.
     (unless (equal? *page (schematic_window_get_active_page *window))
       (error "Processing non-active page."))
-    ;; Iterate over all objects and look for matching
+    ;; Iterate over all text objects and look for matching
     ;; search patterns.
-    (let loop ((objects (filter text? (page-contents (pointer->page *page))))
-               (ls current-template-list))
-      (if (null? objects)
-          ls
-          (loop (cdr objects)
-                (let ((object (car objects)))
-                  (if (or (eq? scope 'scope-hierarchy)
-                          (eq? scope 'scope-page)
-                          (and (eq? scope 'scope-selected)
-                               (object-selected? object)))
-                      ;; If the object is text then process it.
-                      (let* ((s (text-string object))
-                             ;; The beginning of the current text
-                             ;; matches with the searchtext now.
-                             ;; Strip of the trailing [0-9?] chars
-                             ;; and add it to the searchtext.
-                             (trimmed-s (autonumber-string->template s search-text)))
-                        (if (not trimmed-s)
+    (let ((text-objects (filter text? (page-contents (pointer->page *page)))))
+      (let loop ((objects (if (eq? scope 'scope-selected)
+                              ;; Process only selected objects.
+                              (filter object-selected? text-objects)
+                              ;; Otherwise process all objects.
+                              text-objects))
+                 (ls current-template-list))
+        (if (null? objects)
+            ls
+            (loop (cdr objects)
+                  (let* ((s (text-string (car objects)))
+                         ;; The beginning of the current text
+                         ;; matches with the searchtext now.
+                         ;; Strip of the trailing [0-9?] chars
+                         ;; and add it to the searchtext.
+                         (trimmed-s (autonumber-string->template s search-text)))
+                    (if (not trimmed-s)
+                        ls
+                        (if (member trimmed-s ls)
                             ls
-                            (if (member trimmed-s ls)
-                                ls
-                                (cons trimmed-s ls))))
-                      ;; Otherwise return the list as is.
-                      ls))))))
+                            (cons trimmed-s ls)))))))))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
