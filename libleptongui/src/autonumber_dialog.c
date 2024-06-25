@@ -1439,8 +1439,7 @@ GList*
 schematic_autonumber_create_search_text_list (gchar *new_searchtext,
                                               GList *searchtext_list)
 {
-  if ((new_searchtext != NULL)
-      && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
+  if (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL)
   {
     searchtext_list = g_list_append (searchtext_list, new_searchtext);
   }

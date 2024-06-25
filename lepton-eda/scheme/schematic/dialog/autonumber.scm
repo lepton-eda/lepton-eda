@@ -105,7 +105,9 @@
                              ;; and add it to the searchtext.
                              (*new-search-text (schematic_autonumber_drop_string_suffix *str *search-text)))
 
-                        (schematic_autonumber_create_search_text_list *new-search-text *ls))
+                        (if (null-pointer? *new-search-text)
+                            *ls
+                            (schematic_autonumber_create_search_text_list *new-search-text *ls)))
                       ;; Otherwise return the list as is.
                       *ls))))))
 
