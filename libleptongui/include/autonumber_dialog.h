@@ -223,7 +223,7 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 GList*
-schematic_autonumber_create_search_text_list (LeptonObject *o_current,
+schematic_autonumber_create_search_text_list (const gchar *str,
                                               gchar *searchtext,
                                               GList *searchtext_list);
 GtkWidget*

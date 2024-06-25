@@ -98,9 +98,10 @@
                                (and (eq? scope 'scope-selected)
                                     (true? (lepton_object_get_selected *object)))))
                       ;; If the object is text then process it.
-                      (schematic_autonumber_create_search_text_list *object
-                                                                    *search-text
-                                                                    *ls)
+                      (let ((*str (lepton_text_object_get_string *object)))
+                        (schematic_autonumber_create_search_text_list *str
+                                                                      *search-text
+                                                                      *ls))
                       ;; Otherwise return the list as is.
                       *ls))))))
 

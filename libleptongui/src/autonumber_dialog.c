@@ -1436,7 +1436,7 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 
 
 GList*
-schematic_autonumber_create_search_text_list (LeptonObject *o_current,
+schematic_autonumber_create_search_text_list (const gchar *str,
                                               gchar *searchtext,
                                               GList *searchtext_list)
 {
@@ -1452,7 +1452,6 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  const gchar *str = lepton_text_object_get_string (o_current);
   /* the beginnig of the current text matches with the searchtext now */
   /* strip of the trailing [0-9?] chars and add it too the searchtext */
   new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
