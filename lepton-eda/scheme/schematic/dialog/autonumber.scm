@@ -28,7 +28,9 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -80,15 +82,12 @@
       (error "Processing non-active page."))
     ;; Iterate over all objects and look for matching
     ;; search patterns.
-    (let loop ((*objects
-                (glist->list
-                 (lepton_page_objects *page)
-                 identity))
+    (let loop ((objects (page-contents (pointer->page *page)))
                (ls current-template-list))
-      (if (null? *objects)
+      (if (null? objects)
           ls
-          (loop (cdr *objects)
-                (let ((*object (car *objects)))
+          (loop (cdr objects)
+                (let ((*object (object->pointer (car objects))))
                   (if (and (true? (lepton_object_is_text *object))
                            (or (eq? scope 'scope-hierarchy)
                                (eq? scope 'scope-page)
