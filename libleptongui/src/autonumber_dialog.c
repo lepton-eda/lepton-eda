@@ -1436,15 +1436,9 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 
 
 GList*
-schematic_autonumber_create_search_text_list (const gchar *str,
-                                              gchar *searchtext,
+schematic_autonumber_create_search_text_list (gchar *new_searchtext,
                                               GList *searchtext_list)
 {
-  gchar *new_searchtext;
-
-  /* the beginnig of the current text matches with the searchtext now */
-  /* strip of the trailing [0-9?] chars and add it too the searchtext */
-  new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
   if ((new_searchtext != NULL)
       && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
   {
