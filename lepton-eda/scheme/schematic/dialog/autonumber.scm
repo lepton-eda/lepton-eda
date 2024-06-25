@@ -29,6 +29,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
 
@@ -82,17 +83,16 @@
       (error "Processing non-active page."))
     ;; Iterate over all objects and look for matching
     ;; search patterns.
-    (let loop ((objects (page-contents (pointer->page *page)))
+    (let loop ((objects (filter text? (page-contents (pointer->page *page))))
                (ls current-template-list))
       (if (null? objects)
           ls
           (loop (cdr objects)
                 (let ((*object (object->pointer (car objects))))
-                  (if (and (true? (lepton_object_is_text *object))
-                           (or (eq? scope 'scope-hierarchy)
-                               (eq? scope 'scope-page)
-                               (and (eq? scope 'scope-selected)
-                                    (true? (lepton_object_get_selected *object)))))
+                  (if (or (eq? scope 'scope-hierarchy)
+                          (eq? scope 'scope-page)
+                          (and (eq? scope 'scope-selected)
+                               (true? (lepton_object_get_selected *object))))
                       ;; If the object is text then process it.
                       (let* ((*str (lepton_text_object_get_string *object))
                              ;; The beginning of the current text
