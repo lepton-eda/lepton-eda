@@ -1452,19 +1452,19 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-    const gchar *str = lepton_text_object_get_string (o_current);
-    /* the beginnig of the current text matches with the searchtext now */
-    /* strip of the trailing [0-9?] chars and add it too the searchtext */
-    new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
-    if ((new_searchtext != NULL)
-        && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
-    {
-      searchtext_list = g_list_append (searchtext_list, new_searchtext);
-    }
-    else
-    {
-      g_free(new_searchtext);
-    }
+  const gchar *str = lepton_text_object_get_string (o_current);
+  /* the beginnig of the current text matches with the searchtext now */
+  /* strip of the trailing [0-9?] chars and add it too the searchtext */
+  new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
+  if ((new_searchtext != NULL)
+      && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
+  {
+    searchtext_list = g_list_append (searchtext_list, new_searchtext);
+  }
+  else
+  {
+    g_free(new_searchtext);
+  }
   return searchtext_list;
 }
 
