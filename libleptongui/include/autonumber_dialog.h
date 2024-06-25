@@ -225,8 +225,7 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 GList*
 schematic_autonumber_create_search_text_list (LeptonObject *o_current,
                                               gchar *searchtext,
-                                              GList *searchtext_list,
-                                              gint scope_number);
+                                              GList *searchtext_list);
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);

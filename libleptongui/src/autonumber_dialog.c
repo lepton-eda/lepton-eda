@@ -1438,8 +1438,7 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
 GList*
 schematic_autonumber_create_search_text_list (LeptonObject *o_current,
                                               gchar *searchtext,
-                                              GList *searchtext_list,
-                                              gint scope_number)
+                                              GList *searchtext_list)
 {
   gchar *new_searchtext;
 
@@ -1453,11 +1452,6 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
 
-  if ((scope_number == SCOPE_HIERARCHY)
-      || (scope_number == SCOPE_PAGE)
-      || ((scope_number == SCOPE_SELECTED)
-          && (lepton_object_get_selected (o_current))))
-  {
     const gchar *str = lepton_text_object_get_string (o_current);
     /* the beginnig of the current text matches with the searchtext now */
     /* strip of the trailing [0-9?] chars and add it too the searchtext */
@@ -1471,7 +1465,6 @@ schematic_autonumber_create_search_text_list (LeptonObject *o_current,
     {
       g_free(new_searchtext);
     }
-  }
   return searchtext_list;
 }
 

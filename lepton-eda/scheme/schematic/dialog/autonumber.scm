@@ -92,12 +92,15 @@
           *ls
           (loop (cdr *objects)
                 (let ((*object (car *objects)))
-                  (if (true? (lepton_object_is_text *object))
+                  (if (and (true? (lepton_object_is_text *object))
+                           (or (eq? scope 'scope-hierarchy)
+                               (eq? scope 'scope-page)
+                               (and (eq? scope 'scope-selected)
+                                    (true? (lepton_object_get_selected *object)))))
                       ;; If the object is text then process it.
                       (schematic_autonumber_create_search_text_list *object
                                                                     *search-text
-                                                                    *ls
-                                                                    scope-number)
+                                                                    *ls)
                       ;; Otherwise return the list as is.
                       *ls))))))
 
