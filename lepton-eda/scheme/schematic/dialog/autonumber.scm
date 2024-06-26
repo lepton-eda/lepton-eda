@@ -58,12 +58,11 @@
         ;; The text will be searched for only in the current page.
         (list *active-page)))
 
-  (define *scope-text
-    (glist-data
-     (g_list_first
-      (schematic_autonumber_get_autotext_scope_text *autotext))))
-
-  (define scope-text (pointer->string *scope-text))
+  (define scope-text
+    (pointer->string
+     (glist-data
+      (g_list_first
+       (schematic_autonumber_get_autotext_scope_text *autotext)))))
 
   (define single-search? (string-suffix? "?" scope-text))
   (define multi-search? (string-suffix? "*" scope-text))
@@ -154,7 +153,6 @@
                (schematic_autonumber_run *autotext
                                          *window
                                          *pages
-                                         *scope-text
                                          (string->pointer template)
                                          scope-number))
              template-list)

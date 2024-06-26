@@ -232,7 +232,6 @@ void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,
-                          gchar *scope_text,
                           gchar *text_template,
                           gint scope_number);
 int

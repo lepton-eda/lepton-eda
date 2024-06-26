@@ -1412,7 +1412,6 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
  *  \param [in] pages The whole list of pages of the window.
- *  \param [in] scope_text The attribute text to search for.
  *  \param [in] text_template A text template for renumbering.
  *  \param [in] scope_number The selected (re)numbering scope.
  */
@@ -1420,7 +1419,6 @@ void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,
-                          gchar *scope_text,
                           gchar *text_template,
                           gint scope_number)
 {
