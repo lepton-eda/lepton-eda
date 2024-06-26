@@ -104,10 +104,6 @@
 #define CONN_ENDPOINT		1
 #define CONN_MIDPOINT		2
 
-/* used for undo_savestate flag */
-#define UNDO_ALL		0
-#define UNDO_VIEWPORT_ONLY	1
-
 /* list copying flags */
 #define NORMAL_FLAG		0
 #define SELECTION_FLAG		1

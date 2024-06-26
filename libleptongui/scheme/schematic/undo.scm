@@ -50,9 +50,6 @@
 ) ; define-module
 
 
-;;; Variables defined in defines.h for C code.
-(define UNDO_ALL 0)
-(define UNDO_VIEWPORT_ONLY 1)
 ;;; Variables defined in gschem_defines.h.
 (define UNDO_DISK 0)
 (define UNDO_MEMORY 1)
@@ -95,7 +92,7 @@ success, #f on failure."
     (and (not (null-pointer? *view))
          (let ((*page (gschem_page_view_get_page *view)))
            (and (not (null-pointer? *page))
-                (o_undo_savestate *window *page UNDO_ALL)
+                (o_undo_savestate *window *page FALSE)
                 #t)))))
 
 
@@ -203,8 +200,8 @@ success, #f on failure."
 
   (define (page-undo *page-view *page *current-undo *undo-to-do)
     (let ((undo-viewport?
-           (and (= (lepton_undo_get_type *current-undo) UNDO_ALL)
-                (= (lepton_undo_get_type *undo-to-do) UNDO_VIEWPORT_ONLY))))
+           (and (false? (lepton_undo_get_type *current-undo))
+                (true? (lepton_undo_get_type *undo-to-do)))))
       (when undo-viewport?
         ;; Debugging stuff.
         (log! 'debug "Type: ~A\n" (lepton_undo_get_type *undo-to-do))

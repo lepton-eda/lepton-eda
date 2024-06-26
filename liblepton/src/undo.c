@@ -210,7 +210,7 @@ lepton_undo_set_scale (LeptonUndo *undo,
 int
 lepton_undo_get_type (LeptonUndo *undo)
 {
-  g_return_val_if_fail (undo != NULL, UNDO_ALL);
+  g_return_val_if_fail (undo != NULL, FALSE);
 
   return undo->type;
 }
