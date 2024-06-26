@@ -159,7 +159,6 @@
                                          *window
                                          *pages
                                          *scope-text
-                                         *search-text
                                          *template
                                          scope-number))
              template-list)

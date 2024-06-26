@@ -1449,10 +1449,7 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
  *  \param [in] w_current The #SchematicWindow instance.
  *  \param [in] pages The whole list of pages of the window.
  *  \param [in] scope_text The attribute text to search for.
- *  \param [in] searchtext The base of the above text without
- *                         wildcards.
- *  \param [in] text_template An object text template matching to
- *                            the above search text.
+ *  \param [in] text_template A text template for renumbering.
  *  \param [in] scope_number The selected (re)numbering scope.
  */
 void
@@ -1460,7 +1457,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,
                           gchar *scope_text,
-                          gchar *searchtext,
                           gchar *text_template,
                           gint scope_number)
 {
@@ -1474,7 +1470,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   toplevel = schematic_window_get_toplevel (w_current);
 
   autotext->current_searchtext = text_template;
-  /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
   /* decide whether to renumber page by page or get a global used-list */
 
   if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
