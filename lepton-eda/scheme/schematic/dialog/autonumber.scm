@@ -75,6 +75,14 @@
          ;; Drop suffix "?" or "*".
          (string-drop-right scope-text 1)))
 
+  (define (filter-scope-contents page)
+    (let ((text-objects (filter text? (page-contents page))))
+      (if (eq? scope 'scope-selected)
+          ;; Process only selected objects.
+          (filter object-selected? text-objects)
+          ;; Otherwise process all objects.
+          text-objects)))
+
   (define (create-search-text-list page search-text current-template-list)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
                                (page->pointer page))
@@ -84,26 +92,20 @@
       (error "Processing non-active page."))
     ;; Iterate over all text objects and look for matching
     ;; search patterns.
-    (let ((text-objects (filter text? (page-contents page))))
-      (let loop ((objects (if (eq? scope 'scope-selected)
-                              ;; Process only selected objects.
-                              (filter object-selected? text-objects)
-                              ;; Otherwise process all objects.
-                              text-objects))
-                 (ls current-template-list))
-        (if (null? objects)
-            ls
-            (loop (cdr objects)
-                  ;; The beginning of the current text matches
-                  ;; with the searchtext now.  Strip of the
-                  ;; trailing [0-9?] chars and add it to the
-                  ;; searchtext.
-                  (let ((trimmed-s (autonumber-string->template (text-string (car objects))
-                                                                search-text)))
-                    (if (or (not trimmed-s)
-                            (member trimmed-s ls))
-                        ls
-                        (cons trimmed-s ls))))))))
+    (let loop ((objects (filter-scope-contents page))
+               (ls current-template-list))
+      (if (null? objects)
+          ls
+          (loop (cdr objects)
+                ;; The beginning of the current text matches with
+                ;; the searchtext now.  Strip of the trailing
+                ;; [0-9?] chars and add it to the searchtext.
+                (let ((trimmed-s (autonumber-string->template (text-string (car objects))
+                                                              search-text)))
+                  (if (or (not trimmed-s)
+                          (member trimmed-s ls))
+                      ls
+                      (cons trimmed-s ls)))))))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
