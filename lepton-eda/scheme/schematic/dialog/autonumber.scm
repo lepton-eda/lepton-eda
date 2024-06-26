@@ -55,11 +55,11 @@
 
   ;; Get all pages of the hierarchy.
   (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
-  (define *page-ls
+  (define page-list
     (if (eq? scope 'scope-hierarchy)
-        (glist->list *pages identity)
+        (glist->list *pages pointer->page)
         ;; The text will be searched for only in the current page.
-        (list *active-page)))
+        (list (pointer->page *active-page))))
 
   (define scope-text
     (pointer->string
@@ -75,15 +75,16 @@
          ;; Drop suffix "?" or "*".
          (string-drop-right scope-text 1)))
 
-  (define (create-search-text-list *page search-text current-template-list)
-    (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
+  (define (create-search-text-list page search-text current-template-list)
+    (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
+                               (page->pointer page))
     (schematic_window_page_changed *window)
     ;; Guard to check if the page has already got active.
-    (unless (equal? *page (schematic_window_get_active_page *window))
+    (unless (eq? page (pointer->page (schematic_window_get_active_page *window)))
       (error "Processing non-active page."))
     ;; Iterate over all text objects and look for matching
     ;; search patterns.
-    (let ((text-objects (filter text? (page-contents (pointer->page *page)))))
+    (let ((text-objects (filter text? (page-contents page))))
       (let loop ((objects (if (eq? scope 'scope-selected)
                               ;; Process only selected objects.
                               (filter object-selected? text-objects)
@@ -133,7 +134,7 @@
                      (if multi-search?
                          ;; Collect all the possible searchtexts
                          ;; in all pages of the hierarchy.
-                         (let loop ((ls *page-ls)
+                         (let loop ((ls page-list)
                                     (current-template-list '()))
                            (if (null? ls)
                                current-template-list
