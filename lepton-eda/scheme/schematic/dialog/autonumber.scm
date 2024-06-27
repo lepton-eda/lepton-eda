@@ -161,6 +161,8 @@
                                       *search-text
                                       *search-text-list
                                       scope-number)
+            ;; Cleanup and redraw all.
+            (g_list_free *search-text-list)
             ;; Go back to the root page.
             (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
                                        *active-page)
