@@ -1565,10 +1565,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     }
     autonumber_clear_database(autotext);   /* cleanup */
   }
-
-  /* cleanup and redraw all*/
-  /* g_list_foreach(searchtext_list, (GFunc) g_free, NULL); */
-  g_list_free(searchtext_list);
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
