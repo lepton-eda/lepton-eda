@@ -160,7 +160,11 @@
                                       *scope-text
                                       *search-text
                                       *search-text-list
-                                      scope-number))
+                                      scope-number)
+            ;; FIXME: Undo information saving has to be done
+            ;; for all changed pages in hierarchy, not only for
+            ;; the current one.
+            (o_undo_savestate_old *window))
           (log! 'message (G_ "No '*' or '?' given at the end of the autonumber text.")))))
 
 
