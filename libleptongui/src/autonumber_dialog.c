@@ -1569,9 +1569,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   /* cleanup and redraw all*/
   /* g_list_foreach(searchtext_list, (GFunc) g_free, NULL); */
   g_list_free(searchtext_list);
-
-  /* Go back to the root page. */
-  lepton_toplevel_goto_page (toplevel, (LeptonPage*) pages->data);
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
