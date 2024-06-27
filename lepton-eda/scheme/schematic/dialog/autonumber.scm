@@ -161,6 +161,9 @@
                                       *search-text
                                       *search-text-list
                                       scope-number)
+            ;; Go back to the root page.
+            (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
+                                       *active-page)
             (schematic_window_page_changed *window)
             (schematic_canvas_invalidate_all (schematic_window_get_current_canvas *window))
             (g_list_free *pages)
