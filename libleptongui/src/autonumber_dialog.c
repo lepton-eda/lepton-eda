@@ -1473,94 +1473,105 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-    autotext->current_searchtext = text_template;
-    /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
-    /* decide whether to renumber page by page or get a global used-list */
+  autotext->current_searchtext = text_template;
+  /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
+  /* decide whether to renumber page by page or get a global used-list */
 
-    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
+  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
+  {
+    /* renumbering all means that no db is required */
+    if (!((scope_number == SCOPE_HIERARCHY)
+          && autotext->scope_overwrite))
     {
-      /* renumbering all means that no db is required */
-      if (!((scope_number == SCOPE_HIERARCHY)
-            && autotext->scope_overwrite)) {
-        for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-          autotext->root_page = (pages->data == page_item->data);
-          lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
-          schematic_window_page_changed (w_current);
-          autonumber_get_used(w_current, autotext);
-        }
-      }
-    }
-
-    /* renumber the elements */
-    for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
-      schematic_window_page_changed (w_current);
-      autotext->root_page = (pages->data == page_item->data);
-      /* build a page database if we're numbering pagebypage or selection only*/
-      if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-          || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+      for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
       {
+        autotext->root_page = (pages->data == page_item->data);
+        lepton_toplevel_goto_page (toplevel,
+                                   (LeptonPage*) page_item->data);
+        schematic_window_page_changed (w_current);
         autonumber_get_used(w_current, autotext);
       }
-
-      /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
-      /* 1. get objects to renumber */
-      for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
-           iter != NULL;
-           iter = g_list_next (iter)) {
-        o_current = (LeptonObject*) iter->data;
-        if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER) {
-          /* put number into the used list */
-          o_list = g_list_append(o_list, o_current);
-        }
-      }
-
-      /* 2. sort object list */
-      switch (autotext->order) {
-      case AUTONUMBER_SORT_YX:
-        o_list=g_list_sort(o_list, autonumber_sort_yx);
-        break;
-      case AUTONUMBER_SORT_YX_REV:
-        o_list=g_list_sort(o_list, autonumber_sort_yx_rev);
-        break;
-      case AUTONUMBER_SORT_XY:
-        o_list=g_list_sort(o_list, autonumber_sort_xy);
-        break;
-      case AUTONUMBER_SORT_XY_REV:
-        o_list=g_list_sort(o_list, autonumber_sort_xy_rev);
-        break;
-      case AUTONUMBER_SORT_DIAGONAL:
-        o_list=g_list_sort(o_list, autonumber_sort_diagonal);
-        break;
-      default:
-        ; /* unsorted file order */
-      }
-
-      /* 3. renumber/reslot the objects */
-      for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item)) {
-        o_current = (LeptonObject*) obj_item->data;
-        if(autotext->removenum) {
-          autonumber_remove_number(autotext, o_current);
-        } else {
-          /* get valid numbers from the database */
-          autonumber_get_new_numbers(autotext, o_current, &number, &slot);
-          /* and apply it. TODO: join these two functions */
-          autonumber_apply_new_text(autotext, o_current, number, slot);
-        }
-      }
-      g_list_free(o_list);
-      o_list = NULL;
-
-      /* destroy the page database */
-      if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-          || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-        autonumber_clear_database(autotext);
-
-      if ((scope_number == SCOPE_SELECTED)
-          || (scope_number == SCOPE_PAGE))
-        break; /* only renumber the parent page (the first page) */
     }
-    autonumber_clear_database(autotext);   /* cleanup */
+  }
+
+  /* renumber the elements */
+  for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
+  {
+    lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
+    schematic_window_page_changed (w_current);
+    autotext->root_page = (pages->data == page_item->data);
+    /* build a page database if we're numbering pagebypage or selection only*/
+    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+        || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+    {
+      autonumber_get_used(w_current, autotext);
+    }
+
+    /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
+    /* 1. get objects to renumber */
+    for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
+         iter != NULL;
+         iter = g_list_next (iter))
+    {
+      o_current = (LeptonObject*) iter->data;
+      if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER)
+      {
+        /* put number into the used list */
+        o_list = g_list_append(o_list, o_current);
+      }
+    }
+
+    /* 2. sort object list */
+    switch (autotext->order)
+    {
+    case AUTONUMBER_SORT_YX:
+      o_list=g_list_sort(o_list, autonumber_sort_yx);
+      break;
+    case AUTONUMBER_SORT_YX_REV:
+      o_list=g_list_sort(o_list, autonumber_sort_yx_rev);
+      break;
+    case AUTONUMBER_SORT_XY:
+      o_list=g_list_sort(o_list, autonumber_sort_xy);
+      break;
+    case AUTONUMBER_SORT_XY_REV:
+      o_list=g_list_sort(o_list, autonumber_sort_xy_rev);
+      break;
+    case AUTONUMBER_SORT_DIAGONAL:
+      o_list=g_list_sort(o_list, autonumber_sort_diagonal);
+      break;
+    default:
+      ; /* unsorted file order */
+    }
+
+    /* 3. renumber/reslot the objects */
+    for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
+    {
+      o_current = (LeptonObject*) obj_item->data;
+      if(autotext->removenum)
+      {
+        autonumber_remove_number(autotext, o_current);
+      }
+      else
+      {
+        /* get valid numbers from the database */
+        autonumber_get_new_numbers(autotext, o_current, &number, &slot);
+        /* and apply it. TODO: join these two functions */
+        autonumber_apply_new_text(autotext, o_current, number, slot);
+      }
+    }
+    g_list_free(o_list);
+    o_list = NULL;
+
+    /* destroy the page database */
+    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+        || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+      autonumber_clear_database(autotext);
+
+    if ((scope_number == SCOPE_SELECTED)
+        || (scope_number == SCOPE_PAGE))
+      break; /* only renumber the parent page (the first page) */
+  }
+  autonumber_clear_database(autotext);   /* cleanup */
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
