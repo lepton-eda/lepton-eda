@@ -1451,9 +1451,8 @@ schematic_autonumber_drop_string_suffix (const gchar *str,
  *  \param [in] scope_text The attribute text to search for.
  *  \param [in] searchtext The base of the above text without
  *                         wildcards.
- *  \param [in] searchtext_list The list of the object text
- *                              patterns in the schematics that
- *                              match to the above search text.
+ *  \param [in] text_template An object text template matching to
+ *                            the above search text.
  *  \param [in] scope_number The selected (re)numbering scope.
  */
 void
@@ -1462,10 +1461,10 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
                           GList *pages,
                           gchar *scope_text,
                           gchar *searchtext,
-                          GList *searchtext_list,
+                          gchar *text_template,
                           gint scope_number)
 {
-  GList *text_item, *obj_item, *page_item;
+  GList *obj_item, *page_item;
   LeptonObject *o_current;
   gint number, slot;
   GList *o_list = NULL;
@@ -1474,9 +1473,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  /* Step3: iterate over the search items in the list */
-  for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
-    autotext->current_searchtext = (gchar*) text_item->data;
+    autotext->current_searchtext = text_template;
     /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
 
@@ -1564,7 +1561,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         break; /* only renumber the parent page (the first page) */
     }
     autonumber_clear_database(autotext);   /* cleanup */
-  }
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
