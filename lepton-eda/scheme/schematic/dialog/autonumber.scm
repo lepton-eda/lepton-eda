@@ -75,7 +75,7 @@
   (define *search-text
     (and search-text (string->pointer search-text)))
 
-  (define (create-search-text-list *window *page *search-text *search-text-ls)
+  (define (create-search-text-list *window *page *search-text current-template-list)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
     (schematic_window_page_changed *window)
     ;; Guard to check if the page has already got active.
@@ -87,9 +87,9 @@
                 (glist->list
                  (lepton_page_objects *page)
                  identity))
-               (*ls *search-text-ls))
+               (ls current-template-list))
       (if (null? *objects)
-          *ls
+          ls
           (loop (cdr *objects)
                 (let ((*object (car *objects)))
                   (if (and (true? (lepton_object_is_text *object))
@@ -106,15 +106,14 @@
                              (*new-search-text (schematic_autonumber_drop_string_suffix *str *search-text)))
 
                         (if (null-pointer? *new-search-text)
-                            *ls
-                            (let ((search-text-ls (glist->list *ls pointer->string)))
-                              (if (member (pointer->string *new-search-text) search-text-ls)
-                                  (begin
-                                    (g_free *new-search-text)
-                                    *ls)
-                                  (g_list_append *ls *new-search-text)))))
+                            ls
+                            (if (member (pointer->string *new-search-text) ls)
+                                (begin
+                                  (g_free *new-search-text)
+                                  ls)
+                                (cons *new-search-text ls))))
                       ;; Otherwise return the list as is.
-                      *ls))))))
+                      ls))))))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
@@ -138,22 +137,22 @@
   (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
       (if search-text
-          (let ((*search-text-list
+          (let ((template-list
                  (if single-search?
-                     (g_list_append %null-pointer *search-text)
+                     (list *search-text)
                      (if multi-search?
                          ;; Collect all the possible searchtexts
                          ;; in all pages of the hierarchy.
                          (let loop ((ls *page-ls)
-                                    (*search-text-ls %null-pointer))
+                                    (current-template-list '()))
                            (if (null? ls)
-                               *search-text-ls
+                               current-template-list
                                (loop (cdr ls)
                                      (create-search-text-list *window
                                                               (car ls)
                                                               *search-text
-                                                              *search-text-ls))))
-                         %null-pointer))))
+                                                              current-template-list))))
+                         '()))))
             ;; Step3: iterate over the search items in the list.
             (for-each
              (lambda (*template)
@@ -164,9 +163,8 @@
                                          *search-text
                                          *template
                                          scope-number))
-             (glist->list *search-text-list identity))
+             template-list)
             ;; Cleanup and redraw all.
-            (g_list_free *search-text-list)
             ;; Go back to the root page.
             (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
                                        *active-page)
