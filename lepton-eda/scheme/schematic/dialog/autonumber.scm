@@ -154,13 +154,17 @@
                                                               *search-text
                                                               *search-text-ls))))
                          %null-pointer))))
-            (schematic_autonumber_run *autotext
-                                      *window
-                                      *pages
-                                      *scope-text
-                                      *search-text
-                                      *search-text-list
-                                      scope-number)
+            ;; Step3: iterate over the search items in the list.
+            (for-each
+             (lambda (*template)
+               (schematic_autonumber_run *autotext
+                                         *window
+                                         *pages
+                                         *scope-text
+                                         *search-text
+                                         *template
+                                         scope-number))
+             (glist->list *search-text-list identity))
             ;; Cleanup and redraw all.
             (g_list_free *search-text-list)
             ;; Go back to the root page.
