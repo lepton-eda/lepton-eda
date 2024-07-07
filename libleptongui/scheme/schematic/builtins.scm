@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;; Copyright (C) 2017-2024 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
   #:use-module (schematic callback)
+  #:use-module (schematic canvas)
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
@@ -454,8 +455,7 @@ the snap grid size should be set to 100")))
   (i_update_menus *window)
 
   ;; Refresh page view to properly restore attributes' colors.
-  (gschem_page_view_invalidate_all
-   (schematic_window_get_current_page_view *window)))
+  (invalidate-canvas (window-canvas (current-window))))
 
 
 ;;; Unlock all objects in selection list.
@@ -479,8 +479,7 @@ the snap grid size should be set to 100")))
   (undo-save-state)
 
   ;; Refresh page view to properly restore attributes' colors.
-  (gschem_page_view_invalidate_all
-   (schematic_window_get_current_page_view *window)))
+  (invalidate-canvas (window-canvas (current-window))))
 
 
 (define-action-public (&edit-select-locked #:label (G_ "Select Locked"))
@@ -716,8 +715,7 @@ the snap grid size should be set to 100")))
 
 ;;; Redraw canvas.
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
-  (gschem_page_view_invalidate_all
-   (schematic_window_get_current_page_view (*current-window))))
+  (invalidate-canvas (window-canvas (current-window))))
 
 
 (define-action-public (&view-pan #:label (G_ "Pan"))
@@ -835,8 +833,7 @@ the snap grid size should be set to 100")))
   (x_colorcb_update_colors)
   (color_edit_widget_update *window)
 
-  (gschem_page_view_invalidate_all
-   (schematic_window_get_current_page_view *window)))
+  (invalidate-canvas (window-canvas (current-window))))
 
 
 ;;; Load the Dark color scheme.
@@ -1588,8 +1585,7 @@ the snap grid size should be set to 100")))
   (define draw-grips (true? (schematic_window_get_draw_grips *window)))
 
   (schematic_window_set_draw_grips *window (if draw-grips FALSE TRUE))
-  (gschem_page_view_invalidate_all
-   (schematic_window_get_current_page_view *window)))
+  (invalidate-canvas (window-canvas (current-window))))
 
 
 ;; -------------------------------------------------------------------
