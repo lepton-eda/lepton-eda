@@ -280,6 +280,7 @@ Please note @code{..} in the above commands, it ensures
 @cindex --with-gtk3
 @cindex --disable-attrib
 @cindex --enable-contrib
+@cindex --enable-doxygen
 @cindex --enable-guild
 @cindex --disable-doc
 
@@ -316,6 +317,16 @@ manuals, wiki, readme files and man pages.
 Build and installation of several contributed tools are disabled by
 default.  @xref{Overview} for info on what tools can be additionally
 installed.
+
+@item --enable-doxygen
+turns on building the doxygen documentation.  To actually create it,
+Lepton has to be configured using this option, and then the user needs
+to run the following command:
+@example
+make doxygen
+@end example
+in all directories where @file{*.dox} files are residing.
+
 @end table
 
 @node Hardcode library names for Guile,  , Configure options, Installation

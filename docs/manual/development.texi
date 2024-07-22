@@ -9,10 +9,11 @@ with it, edit and run without touching anything else.
 
 @menu
 * Debugging::                   Debugging the tools
+* Doxygen documentation::       Developer documentation
 * Collaboration::               Working together to make Lepton better
 @end menu
 
-@node Debugging, Collaboration, Development, Development
+@node Debugging, Doxygen documentation, Development, Development
 @section Debugging the tools
 @cindex debug
 @cindex debugging
@@ -149,8 +150,27 @@ G_DEBUG=fatal_criticals gdb --args \
   guile -s /usr/local/bin/lepton-schematic
 @end example
 
+@node Doxygen documentation, Collaboration, Debugging, Development
+@section Developer documentation
+The @code{doxygen} files are used by developers to learn better the
+relations between the C functions in the project they are working on.
+Lepton EDA has a gross C code base so it is probably one of a
+convenient ways to discover things in it.
 
-@node Collaboration,  , Debugging, Development
+As the @url{http://www.doxygen.nl, Doxygen project} is also
+continuously improving, it is good to every now and then (say, once
+per a release) update the @code{doxygen} files in Lepton.  Basically,
+the procedure is as follows:
+@example
+cd lepton-eda/libleptonattrib/docs;
+doxygen -u libleptonattrib.dox
+@end example
+
+It is necessary to do so in any @code{doxygen} documentation directory
+of the libraries included in Lepton.
+
+
+@node Collaboration,  , Doxygen documentation, Development
 @section Let's make Lepton better
 
 @menu

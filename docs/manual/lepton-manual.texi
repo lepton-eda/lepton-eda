@@ -270,6 +270,7 @@ lepton-sch2pcb - interface to PCB layout programs
 Development
 
 * Debugging::                   Debugging the tools
+* Doxygen documentation::       Developer documentation
 * Collaboration::               Working together to make Lepton better
 
 Debugging the tools
