@@ -20,6 +20,7 @@
   #:use-module (system foreign)
   #:use-module (lepton ffi lff)
   #:use-module (lepton ffi)
+  #:use-module (lepton m4)
 
   #:export (gtk_init
             gtk_main_iteration
@@ -54,6 +55,7 @@
 
             GdkModifierType
             gdk_event_get_coords
+            gdk_event_get_scroll_direction
             gdk_event_get_state))
 
 ;;; Simplify definition of functions by omitting the library
@@ -109,3 +111,12 @@
 ;; (define-lff gdk_event_get_button int '(* *))
 (define-lff gdk_event_get_coords int '(* * *))
 (define-lff gdk_event_get_state int '(* *))
+
+(define gdk_event_get_scroll_direction
+  (if %m4-use-gtk3
+      (let ((proc (delay (pointer->procedure
+                          int
+                          (dynamic-func "gdk_event_get_scroll_direction" libgtk)
+                          '(* *)))))
+        (force proc))
+      #f))

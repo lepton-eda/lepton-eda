@@ -299,6 +299,14 @@ x_event_key (SchematicCanvas *page_view,
   return pressed ? event : NULL;
 }
 
+/* Helper function for GTK2 port which doesn't have the getter for
+   event scroll direction. */
+GdkScrollDirection
+schematic_event_get_scroll_direction (GdkEventScroll *event)
+{
+  return event->direction;
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -308,12 +316,16 @@ x_event_key (SchematicCanvas *page_view,
  *  \param [in] event
  *  \param [in] w_current
  *  \param [in] gtk_scroll_wheel
+ *  \param [in] direction
+ *  \param [in] event_has_direction
  */
 gint
 x_event_scroll (GtkWidget *widget,
                 GdkEventScroll *event,
                 SchematicWindow *w_current,
-                gboolean gtk_scroll_wheel)
+                gboolean gtk_scroll_wheel,
+                GdkScrollDirection direction,
+                gboolean event_has_direction)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
@@ -345,8 +357,9 @@ x_event_scroll (GtkWidget *widget,
   }
 
   /* If the user has a left/right scroll wheel, always scroll the y-axis */
-  if (event->direction == GDK_SCROLL_LEFT ||
-      event->direction == GDK_SCROLL_RIGHT) {
+  if (event_has_direction &&
+      (direction == GDK_SCROLL_LEFT || direction == GDK_SCROLL_RIGHT))
+  {
     zoom = FALSE;
     pan_yaxis = FALSE;
     pan_xaxis = TRUE;
