@@ -2171,3 +2171,32 @@ schematic_window_set_file_preview (SchematicWindow *w_current,
 
   w_current->file_preview = val;
 }
+
+
+/*! \brief Get schematic window's field 'scroll_wheel'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'scroll_wheel'.
+ */
+int
+schematic_window_get_scroll_wheel (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->scroll_wheel;
+}
+
+
+/*! \brief Set schematic window's field 'scroll_wheel'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'scroll_wheel'.
+ */
+void
+schematic_window_set_scroll_wheel (SchematicWindow *w_current,
+                                   int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->scroll_wheel = val;
+}

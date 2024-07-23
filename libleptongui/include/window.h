@@ -566,4 +566,10 @@ schematic_window_get_file_preview (SchematicWindow *w_current);
 void
 schematic_window_set_file_preview (SchematicWindow *w_current,
                                    int val);
+int
+schematic_window_get_scroll_wheel (SchematicWindow *w_current);
+
+void
+schematic_window_set_scroll_wheel (SchematicWindow *w_current,
+                                   int val);
 G_END_DECLS
