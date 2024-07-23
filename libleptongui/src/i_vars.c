@@ -258,12 +258,14 @@ i_vars_set (SchematicWindow* w_current)
     { "gtk",     SCROLL_WHEEL_GTK     }
   };
 
+  int scroll_wheel = 0;
   cfg_read_string2int ("schematic.gui",
                        "scroll-wheel",
                        default_scroll_wheel,
                        vals_sw,
                        sizeof( vals_sw ) / sizeof( vals_sw[0] ),
-                       &w_current->scroll_wheel);
+                       &scroll_wheel);
+  schematic_window_set_scroll_wheel (w_current, scroll_wheel);
 
   cfg_read_bool ("schematic.gui", "file-preview",
                  default_file_preview, &w_current->file_preview);
