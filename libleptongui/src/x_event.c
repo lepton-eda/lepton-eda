@@ -338,7 +338,8 @@ x_event_scroll (GtkWidget *widget,
   schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
   schematic_window_set_alt_key_pressed (w_current, (event->state & GDK_MOD1_MASK) ? 1 : 0);
 
-  if (w_current->scroll_wheel == SCROLL_WHEEL_CLASSIC) {
+  if (schematic_window_get_scroll_wheel (w_current) == SCROLL_WHEEL_CLASSIC)
+  {
     /* Classic gschem behaviour */
     zoom =      !schematic_window_get_control_key_pressed (w_current) &&
                 !schematic_window_get_shift_key_pressed (w_current);
