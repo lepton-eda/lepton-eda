@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2024 Lepton EDA Contributors
+;;; Copyright (C) 2023-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -50,6 +50,20 @@
   (let ((window-x (bytevector-ieee-double-native-ref window-x-bv 0))
         (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
     (cons window-x window-y)))
+
+
+(define (event-scroll-direction->symbol direction)
+  "Returns a Scheme symbol corresponding to integer DIRECTION value."
+  (string->symbol
+   (pointer->string
+    (gdk_event_scroll_direction_to_string direction))))
+
+
+(define (symbol->event-scroll-direction sym)
+  "Returns an integer scroll direction value corresponding to the
+symbol SYM."
+  (gdk_event_scroll_direction_from_string (string->pointer
+                                           (symbol->string sym))))
 
 
 ;;; The getter gdk_event_get_scroll_direction() is defined in GTK3
