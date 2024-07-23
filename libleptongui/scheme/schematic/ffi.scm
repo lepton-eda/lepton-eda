@@ -498,6 +498,8 @@
             lepton_log_set_logging_enabled
             s_log_close
 
+            gdk_event_scroll_direction_from_string
+            gdk_event_scroll_direction_to_string
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
@@ -1072,6 +1074,8 @@
 (define-lff x_show_uri int '(* * *))
 
 ;;; x_event.c
+(define-lff gdk_event_scroll_direction_from_string int '(*))
+(define-lff gdk_event_scroll_direction_to_string '* (list int))
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
