@@ -89,8 +89,14 @@
           ;; There are two scrolling types defined in gschem_defines.h:
           ;;   SCROLL_WHEEL_CLASSIC = 0
           ;;   SCROLL_WHEEL_GTK = 1
-          (let ((scrolling-type (schematic_window_get_scroll_wheel *window)))
-            (x_event_scroll *widget *event *window scrolling-type))))))
+          (let ((scrolling-type (schematic_window_get_scroll_wheel *window))
+                (scroll-direction (event-direction *event)))
+            (x_event_scroll *widget
+                            *event
+                            *window
+                            scrolling-type
+                            (or scroll-direction 0)
+                            (if scroll-direction TRUE FALSE)))))))
 
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))

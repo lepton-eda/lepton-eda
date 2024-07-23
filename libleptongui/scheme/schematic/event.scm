@@ -21,9 +21,14 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton m4)
+
   #:use-module (schematic ffi gtk)
+  #:use-module (schematic ffi)
 
   #:export (event-coords
+            event-direction
             event-state))
 
 
@@ -45,3 +50,25 @@
   (let ((window-x (bytevector-ieee-double-native-ref window-x-bv 0))
         (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
     (cons window-x window-y)))
+
+
+;;; The getter gdk_event_get_scroll_direction() is defined in GTK3
+;;; only.
+(define (event-direction-gtk3 *event)
+  (define direction (make-bytevector (sizeof int) 0))
+
+  (define has-direction?
+    (true? (gdk_event_get_scroll_direction
+            *event
+            (bytevector->pointer direction))))
+
+  (and has-direction?
+       (bytevector-uint-ref direction
+                            0
+                            (native-endianness)
+                            (sizeof int))))
+
+(define (event-direction *event)
+  ((if %m4-use-gtk3
+       event-direction-gtk3
+       schematic_event_get_scroll_direction) *event))
