@@ -453,9 +453,10 @@ just have to exist in the symbol file as @attr{name=value}.
  @clicksequence{Edit @click{} Show/Hide Inv Text}.
 
 @item
-There is a symbol content versioning system in libgeda which is based
-on the @attr{symversion=} attribute.  Please see the @ref{symversion
-attribute} for more information on using this versioning scheme.
+There is a symbol content versioning system in @code{liblepton} which
+is based on the @attr{symversion=} attribute.  Please see the
+@ref{symversion attribute} for more information on using this
+versioning scheme.
 
 @end itemize
 

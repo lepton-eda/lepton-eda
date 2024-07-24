@@ -603,8 +603,8 @@ be stored on the symbol instance in the schematic itself.  When a
 symbol is loaded from disk, the value of the @attr{symversion=} inside
 the symbol file (if any) and the symversion value attached to the
 symbol instance on the schematic are compared.  If the values differ,
-then libgeda will output a warning message (for minor version changes)
-or an error message (for major version changes).
+then @code{liblepton} will output a warning message (for minor version
+changes) or an error message (for major version changes).
 
 This attribute should normally be made invisible when placed inside a
 symbol file.  This attribute is always promoted when it is found
