@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -305,7 +305,7 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  * initialisation file, prints an informative message and calls
  * exit(1).
  *
- * \bug libgeda shouldn't call exit() - this function calls
+ * \bug liblepton shouldn't call exit() - this function calls
  *      g_rc_parse__process_error(), which does.
  *
  * \warning Since this function may not return, it should only be used
