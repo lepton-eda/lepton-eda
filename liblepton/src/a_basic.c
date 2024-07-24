@@ -19,7 +19,7 @@
  */
 
 /*! \file a_basic.c
- *  \brief basic libgeda read and write functions
+ *  \brief basic liblepton read and write functions
  */
 #include <config.h>
 
