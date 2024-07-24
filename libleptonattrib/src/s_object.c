@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@
  *
  * This file holds functions involved in manipulating the
  * LeptonObject data structure.  LeptonObject is defined in
- * libgeda.  An LeptonObject is a graphical primitive normally
- * used in gschem.  Example LeptonObjects: some text, a component, a
- * pin, a line, etc.
+ * liblepton.  An LeptonObject is a graphical primitive normally
+ * used in lepton-schematic.  Example LeptonObjects: some text, a
+ * component, a pin, a line, etc.
  *
- * The functions herein are functions which I wrote as wrappers to the
- * fcns in libgeda.
+ * The functions herein are functions which I wrote as wrappers to
+ * the functions in liblepton.
  */
 
 #include <config.h>
