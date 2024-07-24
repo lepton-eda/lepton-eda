@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ lepton_log_set_logging_enabled (int enable)
 }
 
 
-/*! \brief Initialize libgeda logging feature.
+/*! \brief Initialize liblepton logging feature.
  *  \par Function Description
  *  This function opens the file <B>filename</B> to log to and registers the
  *  handler to redirect log message to this file.
