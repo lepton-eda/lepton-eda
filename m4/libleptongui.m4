@@ -2,7 +2,7 @@
 # serial 2
 
 dnl libleptongui-specific setup
-dnl Copyright (C) 2020-2021 Lepton EDA Contributors
+dnl Copyright (C) 2020-2024 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-# Work out the gettext domain that libgeda should use
+# Work out the gettext domain that the library should use
 AC_DEFUN([AX_LIBLEPTONGUI],
 [
   AC_PREREQ([2.60])dnl
