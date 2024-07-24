@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -292,7 +292,7 @@ lepton_object_list_set_color (const GList *objects,
 
 /*! \brief "Save" a file into a string buffer
  *  \par Function Description
- *  This function saves a whole schematic into a buffer in libgeda
+ *  This function saves a whole schematic into a buffer in gEDA
  *  format. The buffer should be freed when no longer needed.
  *
  *  \param [in] objects The head of a GList of LeptonObjects to
@@ -336,7 +336,7 @@ static const gchar
 /*! \brief Save a series of objects into a string buffer
  *  \par Function Description
  *  This function recursively saves a set of objects into a buffer in
- *  libgeda format.  User code should not normally call this function;
+ *  gEDA format.  User code should not normally call this function;
  *  they should call o_save_buffer() instead.
  *
  *  With save_attribs passed as FALSE, attribute objects are skipped over,
