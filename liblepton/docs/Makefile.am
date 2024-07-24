@@ -6,7 +6,7 @@ EXTRA_DIST = \
 	README.libleptonrenderer \
 	HACKING
 
-SUFFIXES =		.html .tex .pdf
+SUFFIXES = .html .tex .pdf
 
 all:
 	@echo 'Type: make doxygen  to create doxygen documentation for libgeda'
