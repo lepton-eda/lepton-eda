@@ -636,7 +636,7 @@ lepton_pin_object_modify (LeptonObject *object,
 /*! \brief guess the whichend of pins of object list
  *  \par Function Description
  *  This function determines the whichend of the pins in the \a object_list.
- *  In older libgeda file format versions there was no information about the
+ *  In older gEDA file format versions there was no information about the
  *  active end of pins.
  *  This function calculates the bounding box of all pins in the object list.
  *  The side of the pins that are closer to the boundary of the box are
