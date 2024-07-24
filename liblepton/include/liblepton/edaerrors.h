@@ -18,10 +18,10 @@
 
 G_BEGIN_DECLS
 
-/*! Domain for GErrors originating in libgeda. */
+/*! Domain for GErrors originating in liblepton. */
 #define EDA_ERROR eda_error_quark ()
 
-/*! Error numbers for errors originating in libgeda. */
+/*! Error numbers for errors originating in liblepton. */
 typedef enum {
   EDA_ERROR_SCHEME,   /* A Scheme error occurred */
   EDA_ERROR_RC_TWICE, /* Attempted to read a configuration file twice */
