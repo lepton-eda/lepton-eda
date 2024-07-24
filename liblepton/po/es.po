@@ -1,6 +1,6 @@
-# Spanish/Spain translation of libgeda.
+# Spanish/Spain translation of liblepton.
 # Copyright (C) 2007-2008 Carlos Nieves Ónega
-# This file is distributed under the same license as the libgeda package.
+# This file is distributed under the same license as the liblepton package.
 #
 #
 # Carlos Nieves Ónega <cnieves@iespana.es>, 2007-2009.

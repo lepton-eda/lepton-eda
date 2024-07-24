@@ -1,6 +1,6 @@
-# British English translation for libgeda
+# British English translation for liblepton
 # Copyright (C) 2007-2008 Peter Clifton
-# This file is distributed under the same license as the libgeda package.
+# This file is distributed under the same license as the liblepton package.
 # Peter Clifton <pcjc2@cam.ac.uk> 2007, 2008
 #
 #

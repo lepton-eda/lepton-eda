@@ -1,7 +1,7 @@
 # translation of de.po to deutsch
-# German translation for libgeda
+# German translation for liblepton
 # Copyright (C) 2008 Werner Hoch
-# This file is distributed under the same license as the libgeda package.
+# This file is distributed under the same license as the liblepton package.
 #
 # Werner Hoch <werner.ho@gmx.de>, 2008, 2009.
 msgid ""
