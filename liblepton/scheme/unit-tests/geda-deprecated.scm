@@ -14,12 +14,12 @@
 
 
 (test-begin "calcule-new-attrib-bounds"
-  ;; Can't actually test this procedure in libgeda only, due to
+  ;; Can't actually test this procedure in liblepton only, due to
   ;; the absence of a function for calculating text bounds.
   #f)
 
 (test-begin "get-attribute-bounds"
-  ;; Can't actually test this procedure in libgeda only, due to
+  ;; Can't actually test this procedure in liblepton only, due to
   ;; the absence of a function for calculating text bounds.
   #f)
 
