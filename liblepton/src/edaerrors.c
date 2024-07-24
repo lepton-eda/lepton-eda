@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2011 gEDA Contributors
- * Copyright (C) 2020-2021 Lepton EDA Contributors
+ * Copyright (C) 2020-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #include <liblepton_priv.h>
 
 /* Used by EDA_ERROR. Returns a GQuark used to identify GErrors
- * originating in libgeda. Should not be called directly. */
+ * originating in liblepton. Should not be called directly. */
 GQuark
 eda_error_quark (void)
 {
