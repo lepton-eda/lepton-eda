@@ -930,10 +930,10 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the libgeda toplevel associated with this adapter
+/*! \brief Get the liblepton toplevel associated with this adapter
  *
- *  \param [in] adapter This adapter
- *  \return The libgeda toplevel
+ *  \param [in] adapter This selection adapter.
+ *  \return The liblepton toplevel instance.
  */
 LeptonToplevel*
 gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter)
