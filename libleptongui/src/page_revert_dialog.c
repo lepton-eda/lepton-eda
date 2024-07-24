@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
  *          otherwise FALSE.
  */
 gboolean
-schematic_page_revert_dialog (GschemToplevel *w_current,
+schematic_page_revert_dialog (SchematicWindow *w_current,
                               const char *filename)
 {
   int response;

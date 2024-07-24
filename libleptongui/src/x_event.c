@@ -102,13 +102,13 @@ schematic_event_get_button (GdkEvent *event)
  *
  *  \param [in] view      The GschemPageView.
  *  \param [in] cr        The cairo context.
- *  \param [in] w_current The GschemToplevel.
+ *  \param [in] w_current The SchematicWindow.
  *  \returns FALSE to propagate the event further.
  */
 gint
 x_event_draw (GschemPageView *view,
               cairo_t *cr,
-              GschemToplevel *w_current)
+              SchematicWindow *w_current)
 {
   gschem_page_view_redraw (view, cr, w_current);
 
@@ -143,13 +143,13 @@ x_event_draw (gpointer view,
  *
  *  \param [in] view      The GschemPageView.
  *  \param [in] event     The event structure.
- *  \param [in] w_current The GschemToplevel.
+ *  \param [in] w_current The SchematicWindow.
  *  \returns FALSE to propagate the event further.
  */
 gint
 x_event_expose (GschemPageView *view,
                 GdkEventExpose *event,
-                GschemToplevel *w_current)
+                SchematicWindow *w_current)
 {
   gschem_page_view_redraw (view, event, w_current);
 
@@ -289,8 +289,10 @@ x_event_configure (GschemPageView    *page_view,
  *  \par Function Description
  *
  */
-gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
-                   GschemToplevel *w_current)
+gint
+x_event_enter (GtkWidget *widget,
+               GdkEventCrossing *event,
+               SchematicWindow *w_current)
 {
   g_return_val_if_fail ((w_current != NULL), 0);
   /* do nothing or now */
@@ -312,7 +314,7 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
 GdkEventKey*
 x_event_key (GschemPageView *page_view,
              GdkEventKey *event,
-             GschemToplevel *w_current)
+             SchematicWindow *w_current)
 {
   int pressed;
   gboolean special = FALSE;
@@ -367,8 +369,10 @@ x_event_key (GschemPageView *page_view,
  *  \param [in] event
  *  \param [in] w_current
  */
-gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
-                     GschemToplevel *w_current)
+gint
+x_event_scroll (GtkWidget *widget,
+                GdkEventScroll *event,
+                SchematicWindow *w_current)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
@@ -513,13 +517,13 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 }
 
 
-/*! \brief get the pointer position of a given GschemToplevel
+/*! \brief get the pointer position of a given SchematicWindow
  *  \par Function Description
  *  This function gets the pointer position of the drawing area of the
- *  current workspace <b>GschemToplevel</b>. The flag <b>snapped</b> specifies
+ *  current workspace <b>SchematicWindow</b>. The flag <b>snapped</b> specifies
  *  whether the pointer position should be snapped to the current grid.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] snapped    An option flag to specify the wished coords
  *  \param [out] wx        snapped/unsnapped world x coordinate
  *  \param [out] wy        snapped/unsnapped world y coordinate
@@ -528,7 +532,10 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
  *
  */
 gboolean
-x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy)
+x_event_get_pointer_position (SchematicWindow *w_current,
+                              gboolean snapped,
+                              gint *wx,
+                              gint *wy)
 {
   int width;
   int height;

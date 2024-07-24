@@ -76,7 +76,7 @@ g_menu_execute (GSimpleAction* action,
                 gpointer user_data)
 {
   const gchar *action_name = g_action_get_name (G_ACTION (action));
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
+  SchematicWindow *w_current = (SchematicWindow *) user_data;
 
   g_action_eval_by_name (w_current, action_name);
 }
@@ -85,7 +85,7 @@ g_menu_execute (GSimpleAction* action,
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
   const gchar *action_name = gtk_action_get_name (action);
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
+  SchematicWindow *w_current = (SchematicWindow *) user_data;
   g_action_eval_by_name (w_current, action_name);
 }
 #endif
@@ -111,7 +111,7 @@ make_menu_action (const char *action_name,
                   const char *menu_item_name,
                   const char *menu_item_keys,
                   const char *menu_item_stock,
-                  GschemToplevel *w_current)
+                  SchematicWindow *w_current)
 {
 #ifndef ENABLE_GTK3
   GtkStockItem stock_info;
@@ -231,7 +231,7 @@ lepton_menu_set_action_data (GtkWidget *menu,
  *  - value: pointer to a corresponding GschemAction object
  */
 GtkWidget*
-schematic_window_create_main_popup_menu (GschemToplevel* w_current)
+schematic_window_create_main_popup_menu (SchematicWindow* w_current)
 {
   GtkWidget *menu_item;
   GtkWidget *menu;
@@ -285,7 +285,9 @@ schematic_window_create_main_popup_menu (GschemToplevel* w_current)
  *  \note
  *  need to look at this... here and the setup
  */
-gint do_popup (GschemToplevel *w_current, GdkEvent *event)
+gint
+do_popup (SchematicWindow *w_current,
+          GdkEvent *event)
 {
   GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
   g_return_val_if_fail (menu != NULL, FALSE);
@@ -307,7 +309,7 @@ gint do_popup (GschemToplevel *w_current, GdkEvent *event)
  *  Use the key/value data associated with the \a menu to find
  *  an action object, and if found, set its sensitivity (\a sensitive).
  *
- *  \param menu         Menu widget (menubar, popup_menu in st_gschem_toplevel)
+ *  \param menu         Menu widget (menubar, popup_menu in st_schematic_window)
  *  \param action_name  Action name (e.g. "&edit-object-properties")
  *  \param sensitive    Boolean, enable or disable the action
  */
@@ -363,7 +365,7 @@ x_menus_sensitivity (GtkWidget*   menu,
  */
 char*
 schematic_menu_recent_chooser_get_filename (GtkRecentChooser *chooser,
-                                            GschemToplevel *w_current)
+                                            SchematicWindow *w_current)
 {
   gchar *uri;
   gchar *filename;
@@ -384,7 +386,7 @@ schematic_menu_recent_chooser_get_filename (GtkRecentChooser *chooser,
 /*! \brief Attach 'Open Recent' submenu to \a menuitem.
  */
 void
-x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+x_menu_attach_recent_files_submenu (SchematicWindow* w_current,
                                     GtkWidget*      menuitem,
                                     GCallback callback_item_activated,
                                     gint max_items)

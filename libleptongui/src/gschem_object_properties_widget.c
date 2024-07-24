@@ -105,10 +105,10 @@ update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
 
 /*! \brief Create a new Object properties dialog
  *
- *  \param [in] w_current The GschemToplevel structure
+ *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_object_properties_widget_new (GschemToplevel *w_current)
+gschem_object_properties_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
                                    /* GschemObjectProperties */
@@ -497,7 +497,7 @@ gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
 static void
 notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
 {
-    GschemToplevel *w_current;
+    SchematicWindow *w_current;
 
     g_return_if_fail (dialog != NULL);
 
@@ -621,7 +621,7 @@ static void
 update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -687,7 +687,7 @@ static void
 update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -752,7 +752,7 @@ static void
 update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -817,7 +817,7 @@ static void
 update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -881,7 +881,7 @@ static void
 update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);

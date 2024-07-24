@@ -28,7 +28,10 @@
  *  \par Function Description
  *
  */
-void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_move_start (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   GList *s_iter;
 
@@ -80,9 +83,11 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-static void o_move_end_lowlevel_glist (GschemToplevel *w_current,
-                                       GList *list,
-                                       int diff_x, int diff_y)
+static void
+o_move_end_lowlevel_glist (SchematicWindow *w_current,
+                           GList *list,
+                           int diff_x,
+                           int diff_y)
 {
   LeptonObject *object;
   GList *iter;
@@ -101,9 +106,11 @@ static void o_move_end_lowlevel_glist (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void o_move_end_lowlevel (GschemToplevel *w_current,
-                         LeptonObject *object,
-                         int diff_x, int diff_y)
+void
+o_move_end_lowlevel (SchematicWindow *w_current,
+                     LeptonObject *object,
+                     int diff_x,
+                     int diff_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -132,7 +139,8 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void o_move_end(GschemToplevel *w_current)
+void
+o_move_end (SchematicWindow *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -247,7 +255,8 @@ void o_move_end(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void o_move_cancel (GschemToplevel *w_current)
+void
+o_move_cancel (SchematicWindow *w_current)
 {
   GList *s_iter;
 
@@ -290,7 +299,10 @@ void o_move_cancel (GschemToplevel *w_current)
  * \param w_x        X-axis translation
  * \param w_y        Y-axis translation
  */
-void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_move_motion (SchematicWindow *w_current,
+               int w_x,
+               int w_y)
 {
   GList *selection, *s_current;
   LeptonObject *object = NULL;
@@ -401,7 +413,9 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
+void
+o_move_invalidate_rubber (SchematicWindow *w_current,
+                          int drawing)
 {
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
@@ -452,7 +466,7 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
  *
  */
 void
-o_move_draw_rubber (GschemToplevel *w_current,
+o_move_draw_rubber (SchematicWindow *w_current,
                     EdaRenderer *renderer)
 {
   GList *s_iter;
@@ -527,7 +541,9 @@ int o_move_return_whichone(LeptonObject * object, int x, int y)
  *  \par Function Description
  *
  */
-void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
+void
+o_move_check_endpoint (SchematicWindow *w_current,
+                       LeptonObject *object)
 {
   GList *cl_current;
   LeptonConn *c_current;
@@ -621,7 +637,8 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
  *  \par Function Description
  *
  */
-void o_move_prep_rubberband(GschemToplevel *w_current)
+void
+o_move_prep_rubberband (SchematicWindow *w_current)
 {
   GList *s_current;
   LeptonObject *object;
@@ -689,9 +706,11 @@ int o_move_zero_length(LeptonObject * object)
  *  \par Function Description
  *
  */
-void o_move_end_rubberband (GschemToplevel *w_current,
-                            int w_dx, int w_dy,
-                            GList** objects)
+void
+o_move_end_rubberband (SchematicWindow *w_current,
+                       int w_dx,
+                       int w_dy,
+                       GList** objects)
 {
   GList *s_iter, *s_iter_next;
 

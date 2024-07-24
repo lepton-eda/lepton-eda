@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2022 Lepton EDA Contributors
+ * Copyright (C) 2018-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ struct _FontSelectWidget
 {
   GschemBin parent_instance;
 
-  GschemToplevel* toplevel_;
+  SchematicWindow* toplevel_;
 
 #ifdef ENABLE_GTK3
   GtkFontChooser* font_chooser;
@@ -66,7 +66,7 @@ font_select_widget_get_type();
 G_BEGIN_DECLS
 
 GtkWidget*
-font_select_widget_new (GschemToplevel* w_current);
+font_select_widget_new (SchematicWindow* w_current);
 
 G_END_DECLS
 

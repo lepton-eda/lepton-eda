@@ -31,10 +31,12 @@
  *  This function actually updates the status bar
  *  widget with the new string.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \param [in] string The new string to be shown in the status bar
  */
-static void i_update_status(GschemToplevel *w_current, const char *string)
+static void
+i_update_status (SchematicWindow *w_current,
+                 const char *string)
 {
   if (!w_current->bottom_widget) {
     return;
@@ -52,12 +54,13 @@ static void i_update_status(GschemToplevel *w_current, const char *string)
  *  Returns a string describing the currently
  *  selected mode.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \returns a string that will only last until the next time
  *   the function is called (which is probably just fine, really)
  *   *EK* Egil Kvaleberg
  */
-static const char *i_status_string(GschemToplevel *w_current)
+static const char*
+i_status_string (SchematicWindow *w_current)
 {
   static char *buf = 0;
 
@@ -103,10 +106,12 @@ static const char *i_status_string(GschemToplevel *w_current)
  *  Show state field on screen, possibly with the
  *  addition of an extra message
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \param [in] message The string to be displayed
  */
-void i_show_state(GschemToplevel *w_current, const char *message)
+void
+i_show_state (SchematicWindow *w_current,
+              const char *message)
 {
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
@@ -161,9 +166,10 @@ void i_show_state(GschemToplevel *w_current, const char *message)
  *  Calls i_action_update_status() informing it that the new
  *  editing action is started.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
-void i_action_start (GschemToplevel *w_current)
+void
+i_action_start (SchematicWindow *w_current)
 {
   i_action_update_status (w_current, TRUE);
 }
@@ -175,9 +181,10 @@ void i_action_start (GschemToplevel *w_current)
  *  Calls i_action_update_status() informing it that the current
  *  editing action is finished.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
-void i_action_stop (GschemToplevel *w_current)
+void
+i_action_stop (SchematicWindow *w_current)
 {
   i_action_update_status (w_current, FALSE);
 }
@@ -190,10 +197,12 @@ void i_action_stop (GschemToplevel *w_current)
  *  was started or finished) and informs the bottom widget to make
  *  it update the status text color accordingly
  *
- *  \param [in] w_current The \c GschemToplevel structure.
+ *  \param [in] w_current The \c SchematicWindow structure.
  *  \param [in] inside_action The new action state.
  */
-void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
+void
+i_action_update_status (SchematicWindow *w_current,
+                        gboolean inside_action)
 {
   if (schematic_window_get_inside_action (w_current) != inside_action)
   {
@@ -207,11 +216,11 @@ void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
 
 /*! \brief Update sensitivity of menu items according to current event state.
  *
- *  \param [in] w_current  GschemToplevel structure
+ *  \param [in] w_current  SchematicWindow structure
  *  \param [in] newstate   The new state
  */
 static void
-update_state_menu_items (GschemToplevel* w_current,
+update_state_menu_items (SchematicWindow* w_current,
                          SchematicActionMode newstate)
 {
   x_menus_sensitivity (w_current->menubar, "&edit-select", newstate != SELECT);
@@ -225,12 +234,12 @@ update_state_menu_items (GschemToplevel* w_current,
  *  Set new state and show it in the state field. Then run change
  *  action mode hook to notify Scheme code about the change.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \param [in] newstate The new state
  *   *EK* Egil Kvaleberg
  */
 void
-i_set_state (GschemToplevel *w_current,
+i_set_state (SchematicWindow *w_current,
              SchematicActionMode newstate)
 {
   i_set_state_msg(w_current, newstate, NULL);
@@ -249,13 +258,13 @@ i_set_state (GschemToplevel *w_current,
  *  Set new state, then show state field including some
  *  message.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \param [in] newstate The new state
  *  \param [in] message Message to be shown
  *   *EK* Egil Kvaleberg
  */
 void
-i_set_state_msg (GschemToplevel *w_current,
+i_set_state_msg (SchematicWindow *w_current,
                  SchematicActionMode newstate,
                  const char *message)
 {
@@ -279,7 +288,7 @@ i_set_state_msg (GschemToplevel *w_current,
  */
 static void clipboard_usable_cb (int usable, void *userdata)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
+  SchematicWindow *w_current = GSCHEM_TOPLEVEL (userdata);
   x_menus_sensitivity (w_current->menubar,    "&clipboard-paste", usable);
   x_menus_sensitivity (w_current->popup_menu, "&clipboard-paste", usable);
 }
@@ -346,9 +355,10 @@ parent_comp_selected (LeptonPage* page)
 
 /*! \brief Update menu items sensitivity for the main and popup menus.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
-void i_update_menus (GschemToplevel* w_current)
+void
+i_update_menus (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -434,13 +444,14 @@ void i_update_menus (GschemToplevel* w_current)
  *  value, either full path or basename of \a filename is shown
  *  in the title.
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  *  \param [in] filename  The filename
  *  \param [in] changed   Page changed status
  */
-void i_set_filename (GschemToplevel* w_current,
-                     const gchar* filename,
-                     gboolean changed)
+void
+i_set_filename (SchematicWindow* w_current,
+                const gchar* filename,
+                gboolean changed)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->main_window != NULL);
@@ -491,10 +502,10 @@ void i_set_filename (GschemToplevel* w_current,
  *  and prints it to the status bar.
  *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
 void
-i_update_grid_info (GschemToplevel *w_current)
+i_update_grid_info (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -513,10 +524,11 @@ i_update_grid_info (GschemToplevel *w_current)
 /*! \brief Write the grid settings to the gschem status bar
  *
  *  \param [in] view The page view originating the signal
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
 void
-i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current)
+i_update_grid_info_callback (GschemPageView *view,
+                             SchematicWindow *w_current)
 {
   i_update_grid_info (w_current);
 }
@@ -525,10 +537,10 @@ i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current)
 
 /*! \brief Update the status bar: rubber band, magnetic net modes
  *
- *  \param [in] w_current GschemToplevel structure
+ *  \param [in] w_current SchematicWindow structure
  */
 void
-i_update_net_options_status (GschemToplevel* w_current)
+i_update_net_options_status (SchematicWindow* w_current)
 {
   gschem_bottom_widget_set_rubber_band_mode(
     GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),

@@ -114,10 +114,10 @@ schematic_undo_index_to_filename (int index)
  *  Looks for pages with the do_autosave_backup flag activated and
  *  autosaves them.
  *
- *  \param [in] w_current  The #GschemToplevel object to search for autosave's.
+ *  \param [in] w_current  The #SchematicWindow object to search for autosave's.
  */
 static void
-o_autosave_backups (GschemToplevel *w_current)
+o_autosave_backups (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
@@ -241,14 +241,14 @@ o_autosave_backups (GschemToplevel *w_current)
  *  page onto the head of the undo stack to possibly restore it
  *  later.
  *
- * \param [in] w_current The #GschemToplevel object the current
+ * \param [in] w_current The #SchematicWindow object the current
  *                       page belongs to.
  * \param [in] page The \c LeptonPage instance.
  * \param [in] only_viewport If only the current viewport size have
  *                           to be stored.
  */
 void
-o_undo_savestate (GschemToplevel *w_current,
+o_undo_savestate (SchematicWindow *w_current,
                   LeptonPage *page,
                   gboolean only_viewport)
 {
@@ -438,7 +438,7 @@ o_undo_savestate (GschemToplevel *w_current,
  *  \par Function Description
  */
 void
-o_undo_savestate_old (GschemToplevel *w_current)
+o_undo_savestate_old (SchematicWindow *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -459,7 +459,7 @@ o_undo_savestate_old (GschemToplevel *w_current)
  * \param [in] w_current The current schematic window instance.
  */
 void
-o_undo_savestate_viewport (GschemToplevel *w_current)
+o_undo_savestate_viewport (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 

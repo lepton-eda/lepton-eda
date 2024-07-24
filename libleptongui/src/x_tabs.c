@@ -28,11 +28,11 @@
  * It maintains 1:1 relationship between page and page view objects
  * by intercepting requests to open, close, and set current page.
  * When switching between tabs, current page view
- * (GschemToplevel::drawing_area) is updated to point to a
+ * (SchematicWindow::drawing_area) is updated to point to a
  * page view appropriate for the current page.
  * Pages and corresponding page view objects are stored as a list
- * of TabInfo structures (GschemToplevel::xtabs_info_list).
- * GtkNotebook widget is stored in GschemToplevel::xtabs_nbook.
+ * of TabInfo structures (SchematicWindow::xtabs_info_list).
+ * GtkNotebook widget is stored in SchematicWindow::xtabs_nbook.
  *
  * Public interface:
  *
@@ -172,13 +172,13 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
 
 
 
-/* GschemToplevel accessors: */
+/* SchematicWindow accessors: */
 
 static LeptonPage*
-x_tabs_tl_page_cur (GschemToplevel* w_current);
+x_tabs_tl_page_cur (SchematicWindow* w_current);
 
 static void
-x_tabs_tl_page_cur_set (GschemToplevel* w_current,
+x_tabs_tl_page_cur_set (SchematicWindow* w_current,
                         LeptonPage* page);
 
 
@@ -189,7 +189,7 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
 static GtkMenu*
 x_tabs_menu_create (TabInfo* nfo);
 static void
-x_tabs_menu_create_item (GschemToplevel* toplevel,
+x_tabs_menu_create_item (SchematicWindow* toplevel,
                          GtkWidget*      menu,
                          const gchar*    action_name,
                          const gchar*    action_label,
@@ -247,7 +247,7 @@ schematic_tabs_set_callback (char *name,
 /*! \brief Get current tab info.
 */
 TabInfo*
-x_tabs_info_cur (GschemToplevel* w_current)
+x_tabs_info_cur (SchematicWindow* w_current)
 {
   GschemPageView* pview = x_tabs_tl_pview_cur (w_current);
   TabInfo* nfo = x_tabs_info_find_by_pview(w_current->xtabs_info_list, pview);
@@ -257,7 +257,7 @@ x_tabs_info_cur (GschemToplevel* w_current)
 
 
 TabInfo*
-x_tabs_info_add (GschemToplevel* w_current,
+x_tabs_info_add (SchematicWindow* w_current,
                  gint            ndx,
                  LeptonPage*     page,
                  GschemPageView* pview,
@@ -280,7 +280,7 @@ x_tabs_info_add (GschemToplevel* w_current,
 
 
 void
-x_tabs_info_rm (GschemToplevel* w_current,
+x_tabs_info_rm (SchematicWindow* w_current,
                 TabInfo* nfo)
 {
   GList* node = g_list_find (w_current->xtabs_info_list, nfo);
@@ -376,12 +376,12 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
 
 /* --------------------------------------------------------
  *
- * implementation: GschemToplevel accessors:
+ * implementation: SchematicWindow accessors:
  *
  */
 
 static LeptonPage*
-x_tabs_tl_page_cur (GschemToplevel* w_current)
+x_tabs_tl_page_cur (SchematicWindow* w_current)
 {
   return schematic_window_get_active_page (w_current);
 }
@@ -389,7 +389,7 @@ x_tabs_tl_page_cur (GschemToplevel* w_current)
 
 
 static void
-x_tabs_tl_page_cur_set (GschemToplevel* w_current,
+x_tabs_tl_page_cur_set (SchematicWindow* w_current,
                         LeptonPage* page)
 {
   lepton_toplevel_goto_page (w_current->toplevel, page);
@@ -403,7 +403,7 @@ x_tabs_tl_page_cur_set (GschemToplevel* w_current,
 
 
 GschemPageView*
-x_tabs_tl_pview_cur (GschemToplevel* w_current)
+x_tabs_tl_pview_cur (SchematicWindow* w_current)
 {
   GtkWidget*      wview = w_current->drawing_area;
   GschemPageView* view  = GSCHEM_PAGE_VIEW (wview);
@@ -414,7 +414,7 @@ x_tabs_tl_pview_cur (GschemToplevel* w_current)
 
 
 void
-x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview)
+x_tabs_tl_pview_cur_set (SchematicWindow* w_current, GschemPageView* pview)
 {
   w_current->drawing_area = GTK_WIDGET (pview);
 }
@@ -427,7 +427,7 @@ x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview)
  *
  */
 gboolean
-x_tabs_tl_page_find (GschemToplevel* w_current,
+x_tabs_tl_page_find (SchematicWindow* w_current,
                      LeptonPage* page)
 {
   GList* ptr = lepton_list_get_glist (w_current->toplevel->pages);
@@ -453,7 +453,7 @@ x_tabs_tl_page_find (GschemToplevel* w_current,
  */
 
 GtkWidget*
-x_tabs_nbook_create (GschemToplevel* w_current,
+x_tabs_nbook_create (SchematicWindow* w_current,
                      GtkWidget* work_box)
 {
   GtkWidget* nbook = gtk_notebook_new();
@@ -518,7 +518,7 @@ x_tabs_nbook_create (GschemToplevel* w_current,
 
 
 gint
-x_tabs_nbook_page_add (GschemToplevel* w_current,
+x_tabs_nbook_page_add (SchematicWindow* w_current,
                        LeptonPage*     page,
                        GschemPageView* pview,
                        GtkWidget*      wtab)
@@ -538,7 +538,7 @@ x_tabs_nbook_page_add (GschemToplevel* w_current,
 
 
 void
-x_tabs_nbook_page_close (GschemToplevel* w_current,
+x_tabs_nbook_page_close (SchematicWindow* w_current,
                          LeptonPage* page)
 {
   TabInfo* nfo = x_tabs_info_find_by_page (w_current->xtabs_info_list, page);
@@ -834,7 +834,7 @@ x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo)
  *  For now, it simply recreates the header.
  */
 void
-x_tabs_hdr_update (GschemToplevel* w_current,
+x_tabs_hdr_update (SchematicWindow* w_current,
                    LeptonPage* page)
 {
   g_return_if_fail (w_current != NULL);
@@ -848,7 +848,7 @@ x_tabs_hdr_update (GschemToplevel* w_current,
 }
 
 
-GschemToplevel*
+SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info)
 {
   g_return_val_if_fail (tab_info != NULL, NULL);
@@ -913,7 +913,7 @@ schematic_tab_info_get_tab_widget (TabInfo *tab_info)
  *
 */
 void
-x_tabs_cancel_all (GschemToplevel* w_current)
+x_tabs_cancel_all (SchematicWindow* w_current)
 {
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
@@ -976,7 +976,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
  *  \param [in] w_current  The toplevel environment.
  */
 void
-x_tabs_next (GschemToplevel* w_current)
+x_tabs_next (SchematicWindow* w_current)
 {
   if (!x_tabs_enabled())
     return;
@@ -996,7 +996,7 @@ x_tabs_next (GschemToplevel* w_current)
  *  \param [in] w_current  The toplevel environment.
  */
 void
-x_tabs_prev (GschemToplevel* w_current)
+x_tabs_prev (SchematicWindow* w_current)
 {
   if (!x_tabs_enabled())
       return;
@@ -1013,7 +1013,7 @@ x_tabs_prev (GschemToplevel* w_current)
  *  \param [in] nbook  Notebook widget.
  *  \param [in] wtab   Tab widget.
  *  \param [in] ndx    Tab index.
- *  \param [in] data   GschemToplevel*.
+ *  \param [in] data   SchematicWindow*.
  *
  */
 void
@@ -1022,7 +1022,7 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
                     guint        ndx,
                     gpointer     data)
 {
-  GschemToplevel* w_current = (GschemToplevel*) data;
+  SchematicWindow* w_current = (SchematicWindow*) data;
 
   LeptonPage*     p_cur  = x_tabs_tl_page_cur  (w_current);
   GschemPageView* pv_cur = x_tabs_tl_pview_cur (w_current);
@@ -1061,7 +1061,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           guint        newindex,
                           gpointer     data)
 {
-  GschemToplevel* w_current = (GschemToplevel*) data;
+  SchematicWindow* w_current = (SchematicWindow*) data;
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
   g_return_if_fail (w_current->toplevel->pages != NULL);
@@ -1085,7 +1085,7 @@ x_tabs_menu_create (TabInfo* nfo)
 {
   g_return_val_if_fail (nfo != NULL, NULL);
 
-  GschemToplevel* tl = nfo->tl_;
+  SchematicWindow* tl = nfo->tl_;
   g_return_val_if_fail (tl != NULL, NULL);
 
   GtkWidget* menu = gtk_menu_new();
@@ -1160,7 +1160,7 @@ x_tabs_menu_action_on_activate (GSimpleAction* action,
                                 GVariant *parameter,
                                 gpointer data)
 {
-  GschemToplevel* toplevel    = (GschemToplevel*) data;
+  SchematicWindow* toplevel    = (SchematicWindow*) data;
   const gchar*    action_name = g_action_get_name (G_ACTION (action));
 
   g_action_eval_by_name (toplevel, action_name);
@@ -1179,7 +1179,7 @@ static void
 x_tabs_menu_action_on_activate (GtkAction* action,
                                 gpointer data)
 {
-  GschemToplevel* toplevel    = (GschemToplevel*) data;
+  SchematicWindow* toplevel    = (SchematicWindow*) data;
   const gchar*    action_name = gtk_action_get_name (action);
 
   g_action_eval_by_name (toplevel, action_name);
@@ -1202,7 +1202,7 @@ x_tabs_menu_create_item_separ (GtkWidget* menu)
 /*! \brief Create and add popup menu item.
  */
 static void
-x_tabs_menu_create_item (GschemToplevel* toplevel,
+x_tabs_menu_create_item (SchematicWindow* toplevel,
                          GtkWidget*      menu,
                          const gchar*    action_name,
                          const gchar*    action_label,

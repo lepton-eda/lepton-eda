@@ -24,7 +24,7 @@
 
 /*! \brief A function pointer for creating non-modal dialogs
  */
-typedef GtkDialog* (*CreateNonModalDialog)(GschemToplevel *w_current);
+typedef GtkDialog* (*CreateNonModalDialog)(SchematicWindow *w_current);
 
 
 GtkWidget*
@@ -43,4 +43,6 @@ void
 gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointer unused);
 
 void
-gschem_dialog_misc_show_non_modal (GschemToplevel *w_current, GtkWidget **widget, CreateNonModalDialog create);
+gschem_dialog_misc_show_non_modal (SchematicWindow *w_current,
+                                   GtkWidget **widget,
+                                   CreateNonModalDialog create);

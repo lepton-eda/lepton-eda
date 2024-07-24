@@ -20,11 +20,11 @@
 
 G_BEGIN_DECLS
 
-/* Temporary cast until GschemToplevel becomes a class */
-#define GSCHEM_TOPLEVEL(ptr) ((GschemToplevel*)(ptr))
+/* Temporary cast until SchematicWindow becomes a class */
+#define GSCHEM_TOPLEVEL(ptr) ((SchematicWindow*)(ptr))
 
 
-struct st_gschem_toplevel {
+struct st_schematic_window {
 
   LeptonToplevel *toplevel;
 
@@ -238,70 +238,71 @@ struct st_gschem_toplevel {
 
 
 void
-gschem_toplevel_free (GschemToplevel *w_current);
+gschem_toplevel_free (SchematicWindow *w_current);
 
 GschemPageView*
-gschem_toplevel_get_current_page_view (GschemToplevel *w_current);
+gschem_toplevel_get_current_page_view (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_dash_length_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_dash_space_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_dash_space_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_angle_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_fill_angle_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_fill_pitch_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_width_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_fill_width_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_line_width_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_line_width_list_store (SchematicWindow *w_current);
 
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (GschemToplevel *w_current);
+gschem_toplevel_get_selection_adapter (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current);
+gschem_toplevel_get_text_size_list_store (SchematicWindow *w_current);
 
 LeptonToplevel*
-gschem_toplevel_get_toplevel (GschemToplevel *w_current);
+gschem_toplevel_get_toplevel (SchematicWindow *w_current);
 
-GschemToplevel*
+SchematicWindow*
 gschem_toplevel_new ();
 
 void
-gschem_toplevel_notify_page_callback (GschemPageView *page_view, GParamSpec *pspec, GschemToplevel *w_current);
+gschem_toplevel_notify_page_callback (GschemPageView *page_view,
+                                      GParamSpec *pspec,
+                                      SchematicWindow *w_current);
+void
+gschem_toplevel_page_changed (SchematicWindow *w_current);
 
 void
-gschem_toplevel_page_changed (GschemToplevel *w_current);
-
-void
-gschem_toplevel_set_toplevel (GschemToplevel *w_current,
+gschem_toplevel_set_toplevel (SchematicWindow *w_current,
                               LeptonToplevel *toplevel);
 void
-gschem_toplevel_page_content_changed (GschemToplevel *w_current,
+gschem_toplevel_page_content_changed (SchematicWindow *w_current,
                                       LeptonPage *page);
 void
-schematic_window_active_page_changed (GschemToplevel *w_current);
+schematic_window_active_page_changed (SchematicWindow *w_current);
 
 gboolean
-gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current);
+gschem_toplevel_get_show_hidden_text (SchematicWindow *w_current);
 
 LeptonPage*
-schematic_window_get_active_page (GschemToplevel *w_current);
+schematic_window_get_active_page (SchematicWindow *w_current);
 
 GdkDisplay*
-schematic_window_get_gdk_display (GschemToplevel *w_current);
+schematic_window_get_gdk_display (SchematicWindow *w_current);
 
 LeptonPageList*
-schematic_window_get_pages (GschemToplevel *w_current);
+schematic_window_get_pages (SchematicWindow *w_current);
 
 GschemOptions*
-schematic_window_get_options (GschemToplevel *w_current);
+schematic_window_get_options (SchematicWindow *w_current);
 
 guint
 schematic_window_add_timer (guint interval,
@@ -311,258 +312,258 @@ void
 schematic_window_destroy_timer (guint source_id);
 
 SchematicActionMode
-schematic_window_get_action_mode (GschemToplevel *w_current);
+schematic_window_get_action_mode (SchematicWindow *w_current);
 
 void
-schematic_window_set_action_mode (GschemToplevel *w_current,
+schematic_window_set_action_mode (SchematicWindow *w_current,
                                   SchematicActionMode mode);
 void
-schematic_window_set_toolbar (GschemToplevel *w_current,
+schematic_window_set_toolbar (SchematicWindow *w_current,
                               GtkWidget *toolbar);
 int
-schematic_window_get_inside_action (GschemToplevel *w_current);
+schematic_window_get_inside_action (SchematicWindow *w_current);
 
 void
-schematic_window_set_inside_action (GschemToplevel *w_current,
+schematic_window_set_inside_action (SchematicWindow *w_current,
                                     int inside_action);
 gboolean
-schematic_window_get_draw_grips (GschemToplevel *w_current);
+schematic_window_get_draw_grips (SchematicWindow *w_current);
 
 void
-schematic_window_set_draw_grips (GschemToplevel *w_current,
+schematic_window_set_draw_grips (SchematicWindow *w_current,
                                  gboolean draw_grips);
 int
-schematic_window_get_actionfeedback_mode (GschemToplevel *w_current);
+schematic_window_get_actionfeedback_mode (SchematicWindow *w_current);
 
 void
-schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
+schematic_window_set_actionfeedback_mode (SchematicWindow *w_current,
                                           int actionfeedback_mode);
 GList*
-schematic_window_get_place_list (GschemToplevel *w_current);
+schematic_window_get_place_list (SchematicWindow *w_current);
 
 void
-schematic_window_set_place_list (GschemToplevel *w_current,
+schematic_window_set_place_list (SchematicWindow *w_current,
                                  GList *place_list);
 void
-schematic_window_delete_place_list (GschemToplevel *w_current);
+schematic_window_delete_place_list (SchematicWindow *w_current);
 
 GtkWidget*
-schematic_window_get_page_select_widget (GschemToplevel *w_current);
+schematic_window_get_page_select_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_page_select_widget (GschemToplevel *w_current,
+schematic_window_set_page_select_widget (SchematicWindow *w_current,
                                          GtkWidget* widget);
 LeptonSelection*
-schematic_window_get_selection_list (GschemToplevel *w_current);
+schematic_window_get_selection_list (SchematicWindow *w_current);
 
 void
-schematic_window_set_selection_list (GschemToplevel *w_current,
+schematic_window_set_selection_list (SchematicWindow *w_current,
                                      LeptonSelection *place_list);
 GtkWidget*
-schematic_window_get_macro_widget (GschemToplevel *w_current);
+schematic_window_get_macro_widget (SchematicWindow *w_current);
 
 int
-schematic_window_get_alt_key_pressed (GschemToplevel *w_current);
+schematic_window_get_alt_key_pressed (SchematicWindow *w_current);
 
 void
-schematic_window_set_alt_key_pressed (GschemToplevel *w_current,
+schematic_window_set_alt_key_pressed (SchematicWindow *w_current,
                                       int state);
 int
-schematic_window_get_control_key_pressed (GschemToplevel *w_current);
+schematic_window_get_control_key_pressed (SchematicWindow *w_current);
 
 void
-schematic_window_set_control_key_pressed (GschemToplevel *w_current,
+schematic_window_set_control_key_pressed (SchematicWindow *w_current,
                                           int state);
 int
-schematic_window_get_shift_key_pressed (GschemToplevel *w_current);
+schematic_window_get_shift_key_pressed (SchematicWindow *w_current);
 
 void
-schematic_window_set_shift_key_pressed (GschemToplevel *w_current,
+schematic_window_set_shift_key_pressed (SchematicWindow *w_current,
                                         int state);
 GtkWidget*
-schematic_window_get_right_notebook (GschemToplevel *w_current);
+schematic_window_get_right_notebook (SchematicWindow *w_current);
 
 void
-schematic_window_set_right_notebook (GschemToplevel *w_current,
+schematic_window_set_right_notebook (SchematicWindow *w_current,
                                      GtkWidget *widget);
 GtkWidget*
-schematic_window_get_bottom_notebook (GschemToplevel *w_current);
+schematic_window_get_bottom_notebook (SchematicWindow *w_current);
 
 void
-schematic_window_set_bottom_notebook (GschemToplevel *w_current,
+schematic_window_set_bottom_notebook (SchematicWindow *w_current,
                                       GtkWidget *widget);
 int
-schematic_window_get_undo_panzoom (GschemToplevel *w_current);
+schematic_window_get_undo_panzoom (SchematicWindow *w_current);
 
 void
-schematic_window_set_undo_panzoom (GschemToplevel *w_current,
+schematic_window_set_undo_panzoom (SchematicWindow *w_current,
                                    int undo_panzoom);
 int
-schematic_window_get_keyboardpan_gain (GschemToplevel *w_current);
+schematic_window_get_keyboardpan_gain (SchematicWindow *w_current);
 
 void
-schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
+schematic_window_set_keyboardpan_gain (SchematicWindow *w_current,
                                        int keyboardpan_gain);
 gboolean
-schematic_window_get_dont_invalidate (GschemToplevel *w_current);
+schematic_window_get_dont_invalidate (SchematicWindow *w_current);
 
 void
-schematic_window_set_dont_invalidate (GschemToplevel *w_current,
+schematic_window_set_dont_invalidate (SchematicWindow *w_current,
                                       gboolean val);
 int
-schematic_window_get_enforce_hierarchy (GschemToplevel *w_current);
+schematic_window_get_enforce_hierarchy (SchematicWindow *w_current);
 
 void
-schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
+schematic_window_set_enforce_hierarchy (SchematicWindow *w_current,
                                         int enforce);
 guint
-schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current);
+schematic_window_get_keyaccel_string_source_id (SchematicWindow *w_current);
 
 void
-schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
+schematic_window_set_keyaccel_string_source_id (SchematicWindow *w_current,
                                                 guint source_id);
 const char*
-schematic_window_get_keyaccel_string (GschemToplevel *w_current);
+schematic_window_get_keyaccel_string (SchematicWindow *w_current);
 
 void
-schematic_window_set_keyaccel_string (GschemToplevel *w_current,
+schematic_window_set_keyaccel_string (SchematicWindow *w_current,
                                       char *str);
 GtkWidget*
-schematic_window_get_compselect_widget (GschemToplevel *w_current);
+schematic_window_get_compselect_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_compselect_widget (GschemToplevel *w_current,
+schematic_window_set_compselect_widget (SchematicWindow *w_current,
                                         GtkWidget *widget);
 GtkWidget*
-schematic_window_get_text_input_widget (GschemToplevel *w_current);
+schematic_window_get_text_input_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_text_input_widget (GschemToplevel *w_current,
+schematic_window_set_text_input_widget (SchematicWindow *w_current,
                                         GtkWidget *widget);
 GtkWidget*
-schematic_window_get_arc_edit_widget (GschemToplevel *w_current);
+schematic_window_get_arc_edit_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_arc_edit_widget (GschemToplevel *w_current,
+schematic_window_set_arc_edit_widget (SchematicWindow *w_current,
                                       GtkWidget *widget);
 GtkWidget*
-schematic_window_get_attrib_edit_widget (GschemToplevel *w_current);
+schematic_window_get_attrib_edit_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_attrib_edit_widget (GschemToplevel *w_current,
+schematic_window_set_attrib_edit_widget (SchematicWindow *w_current,
                                          GtkWidget *widget);
 GtkWidget*
-schematic_window_get_hotkey_widget (GschemToplevel *w_current);
+schematic_window_get_hotkey_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_hotkey_widget (GschemToplevel *w_current,
+schematic_window_set_hotkey_widget (SchematicWindow *w_current,
                                     GtkWidget *widget);
 GtkWidget*
-schematic_window_get_coord_widget (GschemToplevel *w_current);
+schematic_window_get_coord_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_coord_widget (GschemToplevel *w_current,
+schematic_window_set_coord_widget (SchematicWindow *w_current,
                                    GtkWidget *widget);
 GtkWidget*
-schematic_window_get_slot_edit_widget (GschemToplevel *w_current);
+schematic_window_get_slot_edit_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_slot_edit_widget (GschemToplevel *w_current,
+schematic_window_set_slot_edit_widget (SchematicWindow *w_current,
                                        GtkWidget *widget);
 GList*
-schematic_window_get_tab_info_list (GschemToplevel *w_current);
+schematic_window_get_tab_info_list (SchematicWindow *w_current);
 
 GtkNotebook*
-schematic_window_get_tab_notebook (GschemToplevel *w_current);
+schematic_window_get_tab_notebook (SchematicWindow *w_current);
 
 void
-schematic_window_set_object_properties_widget (GschemToplevel *w_current,
+schematic_window_set_object_properties_widget (SchematicWindow *w_current,
                                                GtkWidget *widget);
 void
-schematic_window_set_text_properties_widget (GschemToplevel *w_current,
+schematic_window_set_text_properties_widget (SchematicWindow *w_current,
                                              GtkWidget *widget);
 void
-schematic_window_set_options_widget (GschemToplevel *w_current,
+schematic_window_set_options_widget (SchematicWindow *w_current,
                                      GtkWidget *widget);
 void
-schematic_window_set_log_widget (GschemToplevel *w_current,
+schematic_window_set_log_widget (SchematicWindow *w_current,
                                  GtkWidget *widget);
 GtkWidget*
-schematic_window_get_find_text_state_widget (GschemToplevel *w_current);
+schematic_window_get_find_text_state_widget (SchematicWindow *w_current);
 
 void
-schematic_window_set_find_text_state_widget (GschemToplevel *w_current,
+schematic_window_set_find_text_state_widget (SchematicWindow *w_current,
                                              GtkWidget *widget);
 void
-schematic_window_set_color_edit_widget (GschemToplevel *w_current,
+schematic_window_set_color_edit_widget (SchematicWindow *w_current,
                                         GtkWidget *widget);
 void
-schematic_window_set_font_select_widget (GschemToplevel *w_current,
+schematic_window_set_font_select_widget (SchematicWindow *w_current,
                                          GtkWidget *widget);
 GtkWidget*
-schematic_window_get_compselect (GschemToplevel *w_current);
+schematic_window_get_compselect (SchematicWindow *w_current);
 
 void
-schematic_window_set_compselect (GschemToplevel *w_current,
+schematic_window_set_compselect (SchematicWindow *w_current,
                                  GtkWidget *widget);
 int
-schematic_window_get_rubber_visible (GschemToplevel *w_current);
+schematic_window_get_rubber_visible (SchematicWindow *w_current);
 
 void
-schematic_window_set_rubber_visible (GschemToplevel *w_current,
+schematic_window_set_rubber_visible (SchematicWindow *w_current,
                                      int visibility);
 int
-schematic_window_get_middle_button (GschemToplevel *w_current);
+schematic_window_get_middle_button (SchematicWindow *w_current);
 
 void
-schematic_window_set_middle_button (GschemToplevel *w_current,
+schematic_window_set_middle_button (SchematicWindow *w_current,
                                     int button);
 int
-schematic_window_get_third_button (GschemToplevel *w_current);
+schematic_window_get_third_button (SchematicWindow *w_current);
 
 void
-schematic_window_set_third_button (GschemToplevel *w_current,
+schematic_window_set_third_button (SchematicWindow *w_current,
                                    int button);
 int
-schematic_window_get_third_button_cancel (GschemToplevel *w_current);
+schematic_window_get_third_button_cancel (SchematicWindow *w_current);
 
 void
-schematic_window_set_third_button_cancel (GschemToplevel *w_current,
+schematic_window_set_third_button_cancel (SchematicWindow *w_current,
                                           int val);
 int
-schematic_window_get_mousepan_gain (GschemToplevel *w_current);
+schematic_window_get_mousepan_gain (SchematicWindow *w_current);
 
 void
-schematic_window_set_mousepan_gain (GschemToplevel *w_current,
+schematic_window_set_mousepan_gain (SchematicWindow *w_current,
                                     int val);
 int
-schematic_window_get_first_wx (GschemToplevel *w_current);
+schematic_window_get_first_wx (SchematicWindow *w_current);
 
 void
-schematic_window_set_first_wx (GschemToplevel *w_current,
+schematic_window_set_first_wx (SchematicWindow *w_current,
                                int val);
 int
-schematic_window_get_first_wy (GschemToplevel *w_current);
+schematic_window_get_first_wy (SchematicWindow *w_current);
 
 void
-schematic_window_set_first_wy (GschemToplevel *w_current,
+schematic_window_set_first_wy (SchematicWindow *w_current,
                                int val);
 int
-schematic_window_get_second_wx (GschemToplevel *w_current);
+schematic_window_get_second_wx (SchematicWindow *w_current);
 
 void
-schematic_window_set_second_wx (GschemToplevel *w_current,
+schematic_window_set_second_wx (SchematicWindow *w_current,
                                 int val);
 int
-schematic_window_get_second_wy (GschemToplevel *w_current);
+schematic_window_get_second_wy (SchematicWindow *w_current);
 
 void
-schematic_window_set_second_wy (GschemToplevel *w_current,
+schematic_window_set_second_wy (SchematicWindow *w_current,
                                 int val);
 int
-schematic_window_get_file_preview (GschemToplevel *w_current);
+schematic_window_get_file_preview (SchematicWindow *w_current);
 
 void
-schematic_window_set_file_preview (GschemToplevel *w_current,
+schematic_window_set_file_preview (SchematicWindow *w_current,
                                    int val);
 G_END_DECLS

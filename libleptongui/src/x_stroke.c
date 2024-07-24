@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,12 +87,14 @@ x_stroke_free (void)
  *
  * The footprint is updated and the new point is drawn on the drawing area.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current The SchematicWindow object.
  *  \param [in] x        The X coord of the new point.
  *  \param [in] Y        The X coord of the new point.
  */
 void
-x_stroke_record (GschemToplevel *w_current, gint x, gint y)
+x_stroke_record (SchematicWindow *w_current,
+                 gint x,
+                 gint y)
 {
   cairo_matrix_t user_to_device_matrix;
   double x0, y0;
@@ -149,11 +151,11 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
  *  transform the stroke.  The user must g_free the returned
  *  string.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current The SchematicWindow object.
  *  \returns A string representing the stroke, or NULL.
  */
 char*
-x_stroke_translate_and_execute (GschemToplevel *w_current)
+x_stroke_translate_and_execute (SchematicWindow *w_current)
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
   StrokePoint *point;

@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013, 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,8 @@
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
+g_action_eval_by_name (SchematicWindow *w_current,
+                       const gchar *action_name)
 {
   SCM s_eval_action_proc;
   SCM s_expr;

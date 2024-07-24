@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,13 @@
  *  \par Function Description
  *
  */
-void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
+void
+o_text_prepare_place (SchematicWindow *w_current,
+                      char *text,
+                      int color,
+                      int align,
+                      int rotate,
+                      int size)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -84,8 +90,12 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
  *  The object passed in should be the REAL object, NOT any copy in any
  *  selection list
  */
-void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string,
-                   int visibility, int show)
+void
+o_text_change (SchematicWindow *w_current,
+               LeptonObject *object,
+               char *string,
+               int visibility,
+               int show)
 {
   g_return_if_fail (w_current != NULL);
 

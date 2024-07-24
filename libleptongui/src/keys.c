@@ -75,10 +75,10 @@ schematic_keys_verify_keyval (guint keyval)
  * If any prefix keys are stored in the current key sequence, clears
  * them.
  *
- * \param w_current  The active #GschemToplevel context.
+ * \param w_current  The active #SchematicWindow context.
  */
 void
-schematic_keys_reset (GschemToplevel *w_current)
+schematic_keys_reset (SchematicWindow *w_current)
 {
   SCM s_expr = scm_list_1 (scm_from_utf8_symbol ("reset-keys"));
 

@@ -112,7 +112,7 @@ dialog_response_apply (NewText *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
-  GschemToplevel *w_current = NULL;
+  SchematicWindow *w_current = NULL;
   g_object_get (GSCHEM_DIALOG (dialog), "gschem-toplevel", &w_current, NULL);
   g_return_if_fail (w_current != NULL);
 
@@ -490,7 +490,7 @@ static void newtext_init(NewText *dialog)
  *  \param [in] w_current The gschem toplevel
  */
 void
-text_input_dialog (GschemToplevel *w_current)
+text_input_dialog (SchematicWindow *w_current)
 {
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */

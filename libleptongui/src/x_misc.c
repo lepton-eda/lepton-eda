@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2011-2013 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,13 +101,14 @@ show_uri__win32 (const gchar *uri, GError **error)
  * -# Calling the ShellExecute() Windows API call (default on Windows)
  * -# Running an appropriate external tool.
  *
- * \param w_current  Current #GschemToplevel structure.
+ * \param w_current  Current #SchematicWindow structure.
  * \param uri        URI to launch viewer for.
  * \param error      Location to return error information.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-x_show_uri (GschemToplevel *w_current, const gchar *uri,
+x_show_uri (SchematicWindow *w_current,
+            const gchar *uri,
             GError **error)
 {
 # if defined (SHOW_URI_GIO)

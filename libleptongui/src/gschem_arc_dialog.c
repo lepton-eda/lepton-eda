@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,8 +42,10 @@
  *  the dialog and applies it on the current arc.
  *  If the dialog is closed or canceled the function destroys the dialog.
  */
-void arc_angle_dialog_response(GtkWidget *w, gint response,
-                               GschemToplevel *w_current)
+void
+arc_angle_dialog_response (GtkWidget *w,
+                           gint response,
+                           SchematicWindow *w_current)
 {
   GtkWidget *spinentry;
   gint radius, start_angle, sweep_angle;
@@ -88,11 +90,13 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
  *  \a arc_object the entries are filled with the arc LeptonObject properties
  *  or with some standard values.
  *
- *  \param [in] w_current   The GschemToplevel object
+ *  \param [in] w_current   The SchematicWindow object
  *  \param [in] arc_object  an arc LeptonObject if used to modify an arc
  *                          or NULL to create a new arc.
  */
-void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
+void
+arc_angle_dialog (SchematicWindow *w_current,
+                  LeptonObject *arc_object)
 {
   GtkWidget *label[3];
   GtkWidget *vbox;

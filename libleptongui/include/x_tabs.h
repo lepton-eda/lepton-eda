@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2022 Lepton EDA Contributors
+ * Copyright (C) 2018-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ struct _TabInfo
   GschemPageView* pview_;
   GtkWidget*      wtab_;  /* tab widget, i.e. scrolled wnd, parent of pview_ */
 
-  GschemToplevel* tl_;
+  SchematicWindow* tl_;
 
 };
 

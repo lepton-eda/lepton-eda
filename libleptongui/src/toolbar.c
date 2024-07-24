@@ -225,7 +225,7 @@ schematic_toolbar_insert_separator (GtkWidget *toolbar,
  * \param [in] main_box The main box widget.
  */
 GtkWidget*
-schematic_toolbar_new (GschemToplevel *w_current,
+schematic_toolbar_new (SchematicWindow *w_current,
                        GtkWidget *main_box)
 {
   GtkWidget *toolbar = gtk_toolbar_new ();

@@ -125,10 +125,10 @@ gschem_options_widget_adjust_focus (GschemOptionsWidget *widget)
 
 /*! \brief Create a new options widget
  *
- *  \param [in] w_current The GschemToplevel structure
+ *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_options_widget_new (GschemToplevel *w_current)
+gschem_options_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OPTIONS_WIDGET,
                                    "gschem-toplevel",  w_current,
@@ -449,7 +449,7 @@ gschem_options_widget_init (GschemOptionsWidget *widget)
 static void
 notify_gschem_toplevel (GschemOptionsWidget *widget)
 {
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (widget != NULL);
 
@@ -622,7 +622,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
 static void
 update_magnetic_net_mode_model (GschemOptionsWidget *widget)
 {
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (widget != NULL);
 
@@ -652,7 +652,7 @@ update_magnetic_net_mode_widget (GschemOptionsWidget *widget)
   g_return_if_fail (widget != NULL);
 
   if (widget->options != NULL) {
-    GschemToplevel *w_current;
+    SchematicWindow *w_current;
 
     g_object_get (widget, "gschem-toplevel", &w_current, NULL);
 
@@ -672,7 +672,7 @@ update_magnetic_net_mode_widget (GschemOptionsWidget *widget)
 static void
 update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
 {
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (widget != NULL);
 
@@ -702,7 +702,7 @@ update_net_rubber_band_mode_widget (GschemOptionsWidget *widget)
   g_return_if_fail (widget != NULL);
 
   if (widget->options != NULL) {
-    GschemToplevel *w_current;
+    SchematicWindow *w_current;
 
     g_object_get (widget, "gschem-toplevel", &w_current, NULL);
 
@@ -789,7 +789,7 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
 static void
 update_snap_size_model (GschemOptionsWidget *widget)
 {
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   g_return_if_fail (widget != NULL);
 
@@ -814,7 +814,7 @@ update_snap_size_widget (GschemOptionsWidget *widget)
   g_return_if_fail (widget != NULL);
 
   if (widget->options != NULL) {
-    GschemToplevel *w_current;
+    SchematicWindow *w_current;
 
     g_object_get (widget, "gschem-toplevel", &w_current, NULL);
 

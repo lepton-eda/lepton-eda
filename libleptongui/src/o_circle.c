@@ -28,7 +28,8 @@
  *  \par Function Description
  *
  */
-void o_circle_invalidate_rubber (GschemToplevel *w_current)
+void
+o_circle_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -52,11 +53,14 @@ void o_circle_invalidate_rubber (GschemToplevel *w_current)
  *  The first step of the circle input is to set the center of the arc.
  *  This center is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>).
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_circle_start (SchematicWindow *w_current,
+                int w_x,
+                int w_y)
 {
   i_action_start (w_current);
 
@@ -87,11 +91,14 @@ void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
  *  A new object is allocated, initialized and linked in the object list.
  *  This new object is finally drawn.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_circle_end (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   LeptonObject *new_obj;
 
@@ -148,11 +155,14 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
  *    <DT>*</DT><DD><B>w_current->distance</B> as its radius.
  *  </DL>
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_circle_motion (SchematicWindow *w_current,
+                 int w_x,
+                 int w_y)
 {
   int diff_x, diff_y;
 
@@ -175,9 +185,9 @@ void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw circle from GschemToplevel object.
+/*! \brief Draw circle from SchematicWindow object.
  *  \par Function Description
- *  This function draws the circle from the variables in the GschemToplevel
+ *  This function draws the circle from the variables in the SchematicWindow
  *  structure <B>*w_current</B> using \a renderer.
  *  The center of the circle is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
@@ -185,10 +195,12 @@ void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  It draws a horizontal radius segment on the right half of the circle and
  *  the circle with the selection color.
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
-void o_circle_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_circle_draw_rubber (SchematicWindow *w_current,
+                      EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

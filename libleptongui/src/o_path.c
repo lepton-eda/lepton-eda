@@ -92,7 +92,7 @@ path_copy_modify (LeptonPath *path,
  * control point changes applied.
  */
 static void
-path_rubber_bbox (GschemToplevel *w_current,
+path_rubber_bbox (SchematicWindow *w_current,
                   LeptonPath *path,
                   int *min_x,
                   int *max_y,
@@ -163,7 +163,7 @@ path_rubber_bbox (GschemToplevel *w_current,
  * its capacity.
  */
 static void
-path_expand (GschemToplevel *w_current)
+path_expand (SchematicWindow *w_current)
 {
   LeptonPath *p = w_current->temp_path;
   if (p->num_sections == p->num_sections_max) {
@@ -176,7 +176,7 @@ path_expand (GschemToplevel *w_current)
 /*! \brief Add new sections to the temporary path while drawing.
  * \par Function Description
  * Calculates the next section to be added to a path while drawing.
- * The temporary slots in the #GschemToplevel structure are used as
+ * The temporary slots in the #SchematicWindow structure are used as
  * follows:
  *   - first_wx and first_wy contain the location of the next point
  *     that will lie on the path
@@ -197,7 +197,7 @@ path_expand (GschemToplevel *w_current)
  * \return the number of path sections added.
  */
 static int
-path_next_sections (GschemToplevel *w_current)
+path_next_sections (SchematicWindow *w_current)
 {
   gboolean cusp_point, cusp_prev, close_path, end_path, start_path;
   LeptonPath *p;
@@ -305,7 +305,7 @@ path_next_sections (GschemToplevel *w_current)
  * preview and control handle helpers.
  */
 void
-o_path_invalidate_rubber (GschemToplevel *w_current)
+o_path_invalidate_rubber (SchematicWindow *w_current)
 {
   int added_sections;
   int min_x, min_y, max_x, max_y;
@@ -343,15 +343,17 @@ o_path_invalidate_rubber (GschemToplevel *w_current)
  *  the current sheet by resetting the path creation state and
  *  enabling preview ("rubber") drawing.
  *
- *  For details of how #GschemToplevel fields are used during the
+ *  For details of how #SchematicWindow fields are used during the
  *  path creation process, see path_next_sections().
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
 void
-o_path_start(GschemToplevel *w_current, int w_x, int w_y)
+o_path_start (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   g_assert (w_current);
 
@@ -387,7 +389,9 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
  * as the location of the next path control point.
  */
 void
-o_path_continue (GschemToplevel *w_current, int w_x, int w_y)
+o_path_continue (SchematicWindow *w_current,
+                 int w_x,
+                 int w_y)
 {
   g_assert (w_current);
   g_assert (schematic_window_get_inside_action (w_current) != 0);
@@ -413,7 +417,9 @@ o_path_continue (GschemToplevel *w_current, int w_x, int w_y)
  * point together.
  */
 void
-o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
+o_path_motion (SchematicWindow *w_current,
+               int w_x,
+               int w_y)
 {
   g_assert (w_current);
   g_assert (schematic_window_get_inside_action (w_current) != 0);
@@ -441,12 +447,14 @@ o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  adds a new initialized path object to the list of object of the current
  *  sheet.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
 void
-o_path_end(GschemToplevel *w_current, int w_x, int w_y)
+o_path_end (SchematicWindow *w_current,
+            int w_x,
+            int w_y)
 {
   gboolean close_path, end_path, start_path;
   LeptonPath *p;
@@ -534,7 +542,8 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
  * applicable).
  */
 void
-o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+o_path_draw_rubber (SchematicWindow *w_current,
+                    EdaRenderer *renderer)
 {
   LeptonObject object;
   int added_sections = 0;
@@ -577,7 +586,7 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 }
 
 void
-o_path_invalidate_rubber_grips (GschemToplevel *w_current)
+o_path_invalidate_rubber_grips (SchematicWindow *w_current)
 {
   int min_x, min_y, max_x, max_y;
 
@@ -604,11 +613,14 @@ o_path_invalidate_rubber_grips (GschemToplevel *w_current)
  *  (<B>second_wx</B>,<B>second_wy</B>).
  *  The first end is constant. The second end is updated to the (<B>w_x</B>,<B>w_y</B>).
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_path_motion_grips (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_path_motion_grips (SchematicWindow *w_current,
+                     int w_x,
+                     int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -623,7 +635,7 @@ void o_path_motion_grips (GschemToplevel *w_current, int w_x, int w_y)
 }
 
 
-/*! \brief Draw path from #GschemToplevel object.
+/*! \brief Draw path from #SchematicWindow object.
  *  \par Function Description
  *  This function draws a path with an exclusive or function over
  *  the sheet using \a renderer.
@@ -631,11 +643,12 @@ void o_path_motion_grips (GschemToplevel *w_current, int w_x, int w_y)
  *  described by the two points (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
 void
-o_path_draw_rubber_grips (GschemToplevel *w_current, EdaRenderer *renderer)
+o_path_draw_rubber_grips (SchematicWindow *w_current,
+                          EdaRenderer *renderer)
 {
   LeptonObject object;
 

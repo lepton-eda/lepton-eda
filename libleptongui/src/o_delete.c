@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,12 @@
  *  This function erases the object \a object before deleting it. It
  *  deals with connection and object connected to it.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current The SchematicWindow object.
  *  \param [in] object    The object to delete.
  */
-void o_delete (GschemToplevel *w_current, LeptonObject *object)
+void
+o_delete (SchematicWindow *w_current,
+          LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
 

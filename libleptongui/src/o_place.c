@@ -29,11 +29,14 @@
  *  invalidates the bounding box of the objects in the current
  *  place list.
  *
- *  \param [in] w_current   GschemToplevel which we're drawing for.
+ *  \param [in] w_current   SchematicWindow which we're drawing for.
  *  \param [in] w_x         The current world X coordinate.
  *  \param [in] w_y         The current world Y coordinate.
  */
-void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_place_start (SchematicWindow *w_current,
+               int w_x,
+               int w_y)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -57,7 +60,7 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
  *  If \a continue_placing is TRUE, a copy of the placement list
  *  is saved to start a new place action.
  *
- *  \param [in]  w_current  GschemToplevel which we're drawing for.
+ *  \param [in]  w_current  SchematicWindow which we're drawing for.
  *  \param [in]  w_x        The current world X coordinate.
  *  \param [in]  w_y        The current world Y coordinate.
  *  \param [in]  continue_placing The boolean value defining if the
@@ -65,10 +68,11 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
  *                                saved for a new placement action.
  *  \param [in]  hook_name  The hook to run after adding the objects.
  */
-void o_place_end (GschemToplevel *w_current,
-                  int w_x, int w_y,
-                  int continue_placing,
-                  const char* hook_name)
+void
+o_place_end (SchematicWindow *w_current,
+             int w_x, int w_y,
+             int continue_placing,
+             const char* hook_name)
 {
   int w_diff_x, w_diff_y;
   LeptonObject *o_current;
@@ -148,11 +152,14 @@ void o_place_end (GschemToplevel *w_current,
  *  their previous coordinates and draws them at the new given
  *  coordinates.
  *
- *  \param [in] w_current   GschemToplevel which we're drawing for.
+ *  \param [in] w_current   SchematicWindow which we're drawing for.
  *  \param [in] w_x         The current world X coordinate.
  *  \param [in] w_y         The current world Y coordinate.
  */
-void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_place_motion (SchematicWindow *w_current,
+                int w_x,
+                int w_y)
 {
   LeptonPage *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
   g_return_if_fail (page != NULL);
@@ -197,11 +204,13 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
  * no mode / constraint changes were made between the pair, it is not
  * harmful to call the draw operation with "drawing=FALSE".
  *
- *  \param [in] w_current   GschemToplevel which we're drawing for.
+ *  \param [in] w_current   SchematicWindow which we're drawing for.
  *  \param [in] drawing     Set to FALSE for undraw operations to ensure
  *                            matching conditions to a previous draw operation.
  */
-void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
+void
+o_place_invalidate_rubber (SchematicWindow *w_current,
+                           int drawing)
 {
   int diff_x, diff_y;
   int left, top, bottom, right;
@@ -280,11 +289,12 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
  * before drawing if the CONTROL key is recording as being pressed in
  * the w_current structure.
  *
- *  \param w_current   GschemToplevel which we're drawing for.
+ *  \param w_current   SchematicWindow which we're drawing for.
  *  \param renderer    Renderer to use for drawing.
  */
 void
-o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+o_place_draw_rubber (SchematicWindow *w_current,
+                     EdaRenderer *renderer)
 {
   int diff_x, diff_y;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
@@ -367,9 +377,10 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  *  them, runs rotate-objects-hook, and redraws the objects after
  *  rotating.
  *
- *  \param [in] w_current   The GschemToplevel object.
+ *  \param [in] w_current   The SchematicWindow object.
  */
-void o_place_rotate (GschemToplevel *w_current)
+void
+o_place_rotate (SchematicWindow *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -398,9 +409,10 @@ void o_place_rotate (GschemToplevel *w_current)
  *  them, runs mirror-objects-hook, and redraws the objects after
  *  mirroring.
  *
- *  \param [in] w_current   The GschemToplevel object.
+ *  \param [in] w_current   The SchematicWindow object.
  */
-void o_place_mirror (GschemToplevel *w_current)
+void
+o_place_mirror (SchematicWindow *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);

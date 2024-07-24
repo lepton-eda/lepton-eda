@@ -49,11 +49,14 @@
  *  The other corner will be saved in (<B>w_current->second_wx</B>,
  *  <B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_picture_start (SchematicWindow *w_current,
+                 int w_x,
+                 int w_y)
 {
   i_action_start (w_current);
 
@@ -76,11 +79,14 @@ void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
  *  initialized and linked to the object list ; The object is finally
  *  drawn on the current sheet.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_picture_end (SchematicWindow *w_current,
+               int w_x,
+               int w_y)
 {
   LeptonObject *new_obj;
   int picture_width, picture_height;
@@ -172,7 +178,8 @@ setup_filechooser_filters (GtkFileChooser* filechooser)
 
 /*! \brief Creates and shows the "Add Picture" dialog.
  */
-void picture_selection_dialog (GschemToplevel *w_current)
+void
+picture_selection_dialog (SchematicWindow *w_current)
 {
   gchar *filename;
   GdkPixbuf *pixbuf;
@@ -249,7 +256,8 @@ void picture_selection_dialog (GschemToplevel *w_current)
  *  \note
  * used in button cancel code in x_events.c
  */
-void o_picture_invalidate_rubber (GschemToplevel *w_current)
+void
+o_picture_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -274,11 +282,14 @@ void o_picture_invalidate_rubber (GschemToplevel *w_current)
  *  width, height and left and top values are recomputed by the corresponding
  *  macros.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_picture_motion (SchematicWindow *w_current,
+                  int w_x,
+                  int w_y)
 {
 #if DEBUG
   printf("o_picture_rubberbox called\n");
@@ -304,18 +315,20 @@ void o_picture_motion (GschemToplevel *w_current, int w_x, int w_y)
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw picture from GschemToplevel object.
+/*! \brief Draw picture from SchematicWindow object.
  *  \par Function Description
  *  This function draws the box from the variables in the
- *  #GschemToplevel structure <B>*w_current</B> using \a renderer.
+ *  #SchematicWindow structure <B>*w_current</B> using \a renderer.
  *  One corner of the box is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and the second corner is at
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
-void o_picture_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_picture_draw_rubber (SchematicWindow *w_current,
+                       EdaRenderer *renderer)
 {
   int left, top, width, height;
   double wwidth = 0;
@@ -338,14 +351,15 @@ void o_picture_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  * \par Function Description
  * Replaces all pictures in the current selection with a new image.
  *
- * \param [in] w_current  The GschemToplevel object
+ * \param [in] w_current  The SchematicWindow object
  * \param [in] filename   The filename of the new picture
  * \param [out] error     The location to return error information.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_exchange (GschemToplevel *w_current,
-                    const gchar *filename, GError **error)
+o_picture_exchange (SchematicWindow *w_current,
+                    const gchar *filename,
+                    GError **error)
 {
   GList *iter;
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
@@ -381,7 +395,8 @@ o_picture_exchange (GschemToplevel *w_current,
  *
  *  \todo Maybe merge this dialog function with picture_selection_dialog()
  */
-void picture_change_filename_dialog (GschemToplevel *w_current)
+void
+picture_change_filename_dialog (SchematicWindow *w_current)
 {
   gchar *filename;
   gboolean result;
@@ -443,12 +458,14 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] pixbuf
  *  \param [in] filename
  */
-void o_picture_set_pixbuf(GschemToplevel *w_current,
-                          GdkPixbuf *pixbuf, char *filename)
+void
+o_picture_set_pixbuf (SchematicWindow *w_current,
+                      GdkPixbuf *pixbuf,
+                      char *filename)
 {
 
   /* need to put an error messages here */

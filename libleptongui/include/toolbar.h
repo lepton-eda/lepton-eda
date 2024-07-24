@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@
 G_BEGIN_DECLS
 
 GtkWidget*
-schematic_toolbar_new (GschemToplevel *w_current,
+schematic_toolbar_new (SchematicWindow *w_current,
                        GtkWidget *main_box);
 void
 schematic_toolbar_activate_button (GtkWidget *button);

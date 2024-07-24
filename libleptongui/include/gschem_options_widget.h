@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ struct _GschemOptionsWidgetClass {
 struct _GschemOptionsWidget {
   GschemBin parent;
 
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   GschemOptions *options;
 
@@ -62,6 +62,6 @@ gschem_options_widget_get_type ();
 G_BEGIN_DECLS
 
 GtkWidget*
-gschem_options_widget_new (GschemToplevel *w_current);
+gschem_options_widget_new (SchematicWindow *w_current);
 
 G_END_DECLS

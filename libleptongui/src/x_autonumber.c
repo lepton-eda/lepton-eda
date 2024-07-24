@@ -93,8 +93,8 @@ struct autonumber_text_t {
   /** @brief Pointer to the dialog */
   GtkWidget *dialog;
 
-  /** @brief Pointer to the GschemToplevel struct */
-  GschemToplevel *w_current;
+  /** @brief Pointer to the SchematicWindow struct */
+  SchematicWindow *w_current;
 
   /* variables used while autonumbering */
   gchar * current_searchtext;
@@ -411,7 +411,9 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *
  *  multislotted symbols, that were used only partially.
  *  The criterias are derivated from the autonumber dialog entries.
  */
-void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
+void
+autonumber_get_used (SchematicWindow *w_current,
+                     AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
   LeptonObject *o_current, *o_parent;
@@ -671,7 +673,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
@@ -892,7 +894,9 @@ GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
  *  Load all bitmaps for the combobox and store them together with the label
  *  in a GtkListStore.
  */
-void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_order)
+void
+autonumber_sortorder_create (SchematicWindow *w_current,
+                             GtkWidget *sort_order)
 {
   GtkListStore *store;
   GtkTreeIter iter;
@@ -1229,7 +1233,8 @@ void autonumber_removenum_toggled(GtkWidget * opt_removenum,
  * @param w_current Pointer to the top level struct.
  * @return Pointer to the dialog window.
  */
-GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
+GtkWidget*
+autonumber_create_dialog (SchematicWindow *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
@@ -1533,7 +1538,8 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
  *
  *  @param w_current Pointer to the top level struct
  */
-void autonumber_text_dialog(GschemToplevel *w_current)
+void
+autonumber_text_dialog (SchematicWindow *w_current)
 {
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
@@ -1544,7 +1550,7 @@ void autonumber_text_dialog(GschemToplevel *w_current)
     schematic_autonumber_set_autotext (autonumber_init_state ());
   }
 
-  /* set the GschemToplevel always. Can it be changed between the calls??? */
+  /* set the SchematicWindow always. Can it be changed between the calls??? */
   autotext->w_current = w_current;
 
   if(autotext->dialog == NULL) {

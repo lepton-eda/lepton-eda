@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -192,7 +192,7 @@ generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 /*! \brief Show the "Symbol version changes" dialog box.
  */
 void
-major_changed_dialog (GschemToplevel* w_current)
+major_changed_dialog (SchematicWindow* w_current)
 {
   GtkListStore *list_store = NULL;
   GtkWidget *dialog = NULL;
@@ -398,4 +398,3 @@ x_dialog_validate_attribute (GtkWindow* parent, char *attribute)
   }
   return TRUE;
 }
-

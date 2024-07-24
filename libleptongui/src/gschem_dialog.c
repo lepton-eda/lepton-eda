@@ -397,15 +397,16 @@ static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
  *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
- *  \param [in]  w_current          The GschemToplevel object this dialog is associated with
+ *  \param [in]  w_current          The SchematicWindow object this dialog is associated with
  *
  *  \return  The GschemDialog created.
  */
-static GtkWidget* gschem_dialog_new_empty (const gchar     *title,
-                                           GtkWindow       *parent,
-                                           GtkDialogFlags   flags,
-                                           const gchar *settings_name,
-                                           GschemToplevel *w_current)
+static GtkWidget*
+gschem_dialog_new_empty (const gchar *title,
+                         GtkWindow *parent,
+                         GtkDialogFlags flags,
+                         const gchar *settings_name,
+                         SchematicWindow *w_current)
 {
   GschemDialog *dialog;
 
@@ -441,15 +442,20 @@ static GtkWidget* gschem_dialog_new_empty (const gchar     *title,
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
  *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
- *  \param [in]  w_current          The GschemToplevel object this dialog is associated with
+ *  \param [in]  w_current          The SchematicWindow object this dialog is associated with
  *  \param [in]  first_button_text  The text string for the first button
  *  \param [in]  ...                A variable number of arguments with the remaining button strings
  *
  *  \return  The GschemDialog created.
  */
-GtkWidget* gschem_dialog_new_with_buttons (const gchar *title, GtkWindow *parent, GtkDialogFlags flags,
-                                           const gchar *settings_name, GschemToplevel *w_current,
-                                           const gchar *first_button_text, ...)
+GtkWidget*
+gschem_dialog_new_with_buttons (const gchar *title,
+                                GtkWindow *parent,
+                                GtkDialogFlags flags,
+                                const gchar *settings_name,
+                                SchematicWindow *w_current,
+                                const gchar *first_button_text,
+                                ...)
 {
   GschemDialog *dialog;
   va_list args;

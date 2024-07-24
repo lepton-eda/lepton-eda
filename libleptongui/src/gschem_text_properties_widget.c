@@ -126,10 +126,10 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
 
 /*! \brief Create a new text properties widget
  *
- *  \param [in] w_current The GschemToplevel structure
+ *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_text_properties_widget_new (GschemToplevel *w_current)
+gschem_text_properties_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET,
                                    "gschem-toplevel", w_current,
@@ -146,7 +146,7 @@ gschem_text_properties_widget_new (GschemToplevel *w_current)
  *  \param [in] w_current The gschem toplevel
  */
 void
-text_edit_dialog (GschemToplevel *w_current)
+text_edit_dialog (SchematicWindow *w_current)
 {
   x_widgets_show_text_properties (w_current);
 }
@@ -435,7 +435,7 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
 static void
 notify_gschem_toplevel (GschemTextPropertiesWidget *widget)
 {
-    GschemToplevel *w_current;
+    SchematicWindow *w_current;
 
     g_return_if_fail (widget != NULL);
 

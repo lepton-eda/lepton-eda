@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
  *  \par Function Description
  *  This function creates the about dialog.
  */
-void about_dialog (GschemToplevel *w_current)
+void about_dialog (SchematicWindow *w_current)
 {
   char *version_string;
   char *logo_file;
@@ -130,4 +130,3 @@ void about_dialog (GschemToplevel *w_current)
 }
 
 /***************** End of help/about dialog box *********************/
-

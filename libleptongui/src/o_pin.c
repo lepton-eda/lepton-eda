@@ -29,7 +29,10 @@
  *  \par Function Description
  *
  */
-void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_pin_start (SchematicWindow *w_current,
+             int w_x,
+             int w_y)
 {
   i_action_start (w_current);
 
@@ -42,7 +45,10 @@ void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_pin_end(GschemToplevel *w_current, int x, int y)
+void
+o_pin_end (SchematicWindow *w_current,
+           int x,
+           int y)
 {
   LeptonObject *new_obj;
 
@@ -86,7 +92,10 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_pin_motion (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -113,7 +122,8 @@ void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void o_pin_invalidate_rubber (GschemToplevel *w_current)
+void
+o_pin_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -132,7 +142,9 @@ void o_pin_invalidate_rubber (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void o_pin_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_pin_draw_rubber (SchematicWindow *w_current,
+                   EdaRenderer *renderer)
 {
   double wwidth = PIN_WIDTH_NET;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

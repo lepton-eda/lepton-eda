@@ -291,11 +291,11 @@ x_image_get_type_from_description (const char *description)
  *  current extension, and adding the extension of the image type
  *  selected.
  *  \param combo     [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
- *  \param w_current [in] the GschemToplevel structure.
+ *  \param w_current [in] the SchematicWindow structure.
  */
 static void
 x_image_update_dialog_filename (GtkComboBoxText *combo,
-                                GschemToplevel *w_current) {
+                                SchematicWindow *w_current) {
   char* image_type_descr = NULL;
   gchar *image_type = NULL;
   const char *old_image_filename = NULL;
@@ -364,15 +364,20 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
 /*! \brief Write the image file, with the desired options.
  *  \par This function writes the image file, with the options set in the
  *  dialog by the user.
- *  \param w_current [in] the GschemToplevel structure.
+ *  \param w_current [in] the SchematicWindow structure.
  *  \param filename  [in] the image filename.
  *  \param width     [in] the image width chosen by the user.
  *  \param height    [in] the image height chosen by the user.
  *  \param filetype  [in] image filetype.
  *  \param is_color  [in] write image using colors (TRUE) or in grayscale (FALSE).
  */
-void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-                       int width, int height, const char *filetype, gboolean is_color)
+void
+x_image_lowlevel (SchematicWindow *w_current,
+                  const char* filename,
+                  int width,
+                  int height,
+                  const char *filetype,
+                  gboolean is_color)
 {
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
@@ -481,9 +486,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
  *  set several options, like image size and image type.  When the
  *  user hits "ok", then it writes the image file.
  *
- *  \param w_current [in] the GschemToplevel structure.
+ *  \param w_current [in] the SchematicWindow structure.
  */
-void x_image_setup (GschemToplevel *w_current)
+void
+x_image_setup (SchematicWindow *w_current)
 {
   GtkWidget *dialog;
   GtkWidget *vbox1;
@@ -747,8 +753,11 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *
  */
 #ifdef ENABLE_GTK3
-GdkPixbuf
-*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
+GdkPixbuf*
+x_image_get_pixbuf (SchematicWindow *w_current,
+                    int width,
+                    int height,
+                    gboolean is_color)
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
@@ -891,13 +900,16 @@ GdkPixbuf
 
 #else /* GTK2 */
 
-GdkPixbuf
-*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
+GdkPixbuf*
+x_image_get_pixbuf (SchematicWindow *w_current,
+                    int width,
+                    int height,
+                    gboolean is_color)
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
   int origin_x, origin_y, bottom, right;
-  GschemToplevel new_w_current;
+  SchematicWindow new_w_current;
   GschemOptions options;
   LeptonToplevel toplevel;
   GdkRectangle rect;
@@ -909,7 +921,7 @@ GdkPixbuf
   old_geometry = gschem_page_view_get_page_geometry (page_view);
 
   /* Do a copy of the w_current struct and work with it */
-  memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
+  memcpy (&new_w_current, w_current, sizeof (SchematicWindow));
   /* Do a copy of the options struct and work with it */
   memcpy(&options, w_current->options, sizeof(GschemOptions));
   /* Do a copy of the toplevel struct and work with it */

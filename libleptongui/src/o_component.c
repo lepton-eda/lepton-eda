@@ -33,7 +33,7 @@
  *
  */
 void
-o_component_prepare_place (GschemToplevel *w_current,
+o_component_prepare_place (SchematicWindow *w_current,
                            const CLibSymbol *sym)
 {
   GList *temp_list;
@@ -133,11 +133,11 @@ o_component_prepare_place (GschemToplevel *w_current,
  *  The component place list is usually used when placing new components
  *  in the schematic. This function should be called whenever that list
  *  is modified.
- *  \param [in] w_current GschemToplevel structure.
+ *  \param [in] w_current SchematicWindow structure.
  *
  */
 void
-o_component_place_changed_run_hook (GschemToplevel *w_current)
+o_component_place_changed_run_hook (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
@@ -159,7 +159,8 @@ o_component_place_changed_run_hook (GschemToplevel *w_current)
  *  don't know if this belongs yet
  */
 void
-o_component_translate_all (GschemToplevel *w_current, int offset)
+o_component_translate_all (SchematicWindow *w_current,
+                           int offset)
 {
   int w_rleft, w_rtop, w_rright, w_rbottom;
   LeptonObject *o_current;

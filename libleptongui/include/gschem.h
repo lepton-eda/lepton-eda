@@ -12,7 +12,7 @@
 
 
 /* forward declaration, until everyone stops referencing it */
-typedef struct st_gschem_toplevel GschemToplevel;
+typedef struct st_schematic_window SchematicWindow;
 
 /* gschem headers */
 #include "action_mode.h"

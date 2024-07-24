@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
  *  \param [in] w_current The schematic window structure.
  */
 void
-slot_edit_dialog_quit (GschemToplevel *w_current)
+slot_edit_dialog_quit (SchematicWindow *w_current)
 {
   i_set_state (w_current, SELECT);
   gtk_widget_destroy (w_current->sewindow);
@@ -98,7 +98,7 @@ slot_edit_dialog_response (gint response)
  *  \return The slot edit dialog widget.
  */
 GtkWidget*
-slot_edit_dialog (GschemToplevel *w_current,
+slot_edit_dialog (SchematicWindow *w_current,
                   const char *count,
                   const char *string)
 {

@@ -723,7 +723,8 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *  otherwise.
  */
 gboolean
-x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
+x_dialog_close_changed_page (SchematicWindow *w_current,
+                             LeptonPage *page)
 {
   GtkWidget *dialog;
   LeptonPage *keep_page;
@@ -801,7 +802,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (GschemToplevel *w_current)
+x_dialog_close_window (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;

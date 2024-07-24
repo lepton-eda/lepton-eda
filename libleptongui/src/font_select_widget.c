@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2022 Lepton EDA Contributors
+ * Copyright (C) 2018-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,10 +64,11 @@ static void
 update_font_label (FontSelectWidget* widget, const gchar* font);
 
 static gchar*
-schematic_get_font (GschemToplevel* toplevel);
+schematic_get_font (SchematicWindow* toplevel);
 
 static void
-schematic_set_font (GschemToplevel* toplevel, const gchar* font);
+schematic_set_font (SchematicWindow* toplevel,
+                    const gchar* font);
 
 #ifdef ENABLE_GTK3
 static gchar*
@@ -86,7 +87,8 @@ fontsel_set_font (FontSelectWidget* widget, const gchar* font);
 #endif
 
 static void
-config_save (GschemToplevel* toplevel, EdaConfig* cfg);
+config_save (SchematicWindow* toplevel,
+             EdaConfig* cfg);
 
 static void
 on_btn_apply(GtkWidget* btn, gpointer p);
@@ -107,7 +109,7 @@ save_settings_dlg (FontSelectWidget* widget);
  */
 
 GtkWidget*
-font_select_widget_new (GschemToplevel* w_current)
+font_select_widget_new (SchematicWindow* w_current)
 {
   gpointer obj = g_object_new (FONT_SELECT_WIDGET_TYPE,
                                "toplevel", w_current,
@@ -354,7 +356,7 @@ update_font_label (FontSelectWidget* widget, const gchar* font)
  *  \return Current schematic font name
  */
 static gchar*
-schematic_get_font (GschemToplevel* toplevel)
+schematic_get_font (SchematicWindow* toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (toplevel->renderer != NULL, NULL);
@@ -373,7 +375,8 @@ schematic_get_font (GschemToplevel* toplevel)
  *  \param font     Font name
  */
 static void
-schematic_set_font (GschemToplevel* toplevel, const gchar* font)
+schematic_set_font (SchematicWindow* toplevel,
+                    const gchar* font)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->renderer != NULL);
@@ -392,7 +395,8 @@ schematic_set_font (GschemToplevel* toplevel, const gchar* font)
  * *  \param cfg      Configuration context to save settings to
  */
 static void
-config_save (GschemToplevel* toplevel, EdaConfig* cfg)
+config_save (SchematicWindow* toplevel,
+             EdaConfig* cfg)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (cfg != NULL);

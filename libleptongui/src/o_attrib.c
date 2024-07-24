@@ -52,7 +52,7 @@
  *  \todo get a better name
  */
 void
-o_attrib_add_selected (GschemToplevel *w_current,
+o_attrib_add_selected (SchematicWindow *w_current,
                        LeptonSelection *selection,
                        LeptonObject *selected)
 {
@@ -90,12 +90,12 @@ o_attrib_add_selected (GschemToplevel *w_current,
  *  from the selection list. If hidden text is being shown, this
  *  function returns immediately.
  *
- *  \param [in]     w_current  The #GschemToplevel object.
+ *  \param [in]     w_current  The #SchematicWindow object.
  *  \param [in,out] selection  The \c LeptonSelection list to remove from.
  *  \param [in]     selected   The \c LeptonObject whose invisible attributes to remove.
  */
 void
-o_attrib_deselect_invisible (GschemToplevel *w_current,
+o_attrib_deselect_invisible (SchematicWindow *w_current,
                              LeptonSelection *selection,
                              LeptonObject *selected)
 {
@@ -130,12 +130,12 @@ o_attrib_deselect_invisible (GschemToplevel *w_current,
  *  to the selection list. If hidden text is being shown, this
  *  function returns immediately.
  *
- *  \param [in]     w_current  The #GschemToplevel object.
+ *  \param [in]     w_current  The #SchematicWindow object.
  *  \param [in,out] selection  The \c LeptonSelection list to add to.
  *  \param [in]     selected   The \c LeptonObject whose invisible attributes to add.
  */
 void
-o_attrib_select_invisible (GschemToplevel *w_current,
+o_attrib_select_invisible (SchematicWindow *w_current,
                            LeptonSelection *selection,
                            LeptonObject *selected)
 {
@@ -168,7 +168,7 @@ o_attrib_select_invisible (GschemToplevel *w_current,
  *  \par Function Description
  *  This function creates and returns an attribute object with
  *  given properties from \a text_string and adds it to the canvas
- *  of the #GschemToplevel object \a w_current.  Depending on the
+ *  of the #SchematicWindow object \a w_current.  Depending on the
  *  state of the objects on the page (selection, visibility), it
  *  adds an attached or unattached attribute and selects an
  *  appropriate place for it.  The strategy of choosing the place
@@ -217,7 +217,7 @@ o_attrib_select_invisible (GschemToplevel *w_current,
  * script processing of newly added and hence selected attributes
  * there.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current The SchematicWindow object.
  *  \param [in] text_string The text string of the attribute object.
  *  \param [in] visibility If the attribute should be visible.
  *  \param [in] show_name_value What combination of name-value to show.
@@ -228,7 +228,7 @@ o_attrib_select_invisible (GschemToplevel *w_current,
  *  \return The new attribute object.
  */
 LeptonObject*
-o_attrib_add_attrib (GschemToplevel *w_current,
+o_attrib_add_attrib (SchematicWindow *w_current,
                      const char *text_string,
                      int visibility,
                      int show_name_value,

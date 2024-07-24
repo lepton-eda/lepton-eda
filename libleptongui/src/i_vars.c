@@ -125,7 +125,7 @@ i_vars_set_options (GschemOptions* opts)
 /*! \brief Read configuration and set toplevel options appropriately.
  */
 void
-i_vars_set (GschemToplevel* w_current)
+i_vars_set (SchematicWindow* w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 

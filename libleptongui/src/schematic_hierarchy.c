@@ -43,7 +43,7 @@ schematic_hierarchy_increment_page_control_counter ()
  *  <B>filename</B> and loads it.  If the page is already in the list of
  *  pages it will return the <B>pid</B> of that page.
  *
- *  \param [in] w_current     The GschemToplevel object.
+ *  \param [in] w_current     The SchematicWindow object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
@@ -51,7 +51,7 @@ schematic_hierarchy_increment_page_control_counter ()
  *  \return The page loaded, or NULL if failed.
  */
 LeptonPage *
-s_hierarchy_down_schematic_single (GschemToplevel *w_current,
+s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                                    const gchar *filename,
                                    LeptonPage *parent,
                                    int page_control,
@@ -172,7 +172,7 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
  *  - Does not change the current page
  *  - Does not modify the most recent "up" page
  *
- *  \param [in]  w_current The current #GschemToplevel environment.
+ *  \param [in]  w_current The current #SchematicWindow environment.
  *  \param [in]  page      The current page.
  *  \param [in]  filename  The name of the subpage to open.
  *  \param [in,out] error \c GError structure for error reporting,
@@ -180,7 +180,7 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
  *  \return A pointer to the subpage or NULL if an error occured.
  */
 LeptonPage*
-s_hierarchy_load_subpage (GschemToplevel *w_current,
+s_hierarchy_load_subpage (SchematicWindow *w_current,
                           LeptonPage *page,
                           const char *filename,
                           GError **error)
@@ -242,7 +242,7 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
  *  duplicate pages, and <B>HIERARCHY_POSTORDER</B> traverses the
  *  hierarchy tree and returns a postorder list instead of preorder.
  *
- *  \param w_current The GschemToplevel structure.
+ *  \param w_current The SchematicWindow structure.
  *  \param p_current The LeptonPage to traverse hierarchy for.
  *  \param flags Flags controlling form of return value.
  *  \return A GList of LeptonPage pointers.
@@ -251,7 +251,7 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
  *  Caller must destroy returned GList with g_list_free().
  */
 GList *
-s_hierarchy_traversepages (GschemToplevel *w_current,
+s_hierarchy_traversepages (SchematicWindow *w_current,
                            LeptonPage *p_current,
                            gint flags)
 {

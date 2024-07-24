@@ -24,29 +24,29 @@
 
 
 static GtkWidget*
-create_notebook_right (GschemToplevel *w_current);
+create_notebook_right (SchematicWindow *w_current);
 
 static GtkWidget*
-create_notebook_bottom (GschemToplevel *w_current);
+create_notebook_bottom (SchematicWindow *w_current);
 
 
 static void
-open_page_error_dialog (GschemToplevel* w_current,
+open_page_error_dialog (SchematicWindow* w_current,
                         const gchar*    filename,
                         GError*         err);
 
 static void
-recent_manager_add (GschemToplevel* w_current,
+recent_manager_add (SchematicWindow* w_current,
                     const gchar*    filename);
 
 static int
-untitled_next_index (GschemToplevel* w_current);
+untitled_next_index (SchematicWindow* w_current);
 
 static gchar*
-untitled_filename (GschemToplevel* w_current, gboolean log_skipped);
+untitled_filename (SchematicWindow* w_current, gboolean log_skipped);
 
 static LeptonPage*
-x_window_new_page (GschemToplevel* w_current);
+x_window_new_page (SchematicWindow* w_current);
 
 
 /*! \todo Finish function documentation!!!
@@ -54,7 +54,7 @@ x_window_new_page (GschemToplevel* w_current);
  *  \par Function Description
  *
  */
-void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
+void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
 {
   LeptonPage* page = schematic_window_get_active_page (w_current);
   GschemPageView* view = gschem_page_view_new_with_page (page);
@@ -86,7 +86,7 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
  * \param [in] w_current   The toplevel environment.
  * \param [in] main_window The main window.
  */
-void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
+void x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
                                           GtkWidget* main_window)
 {
   struct event_reg_t
@@ -123,7 +123,7 @@ void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
  * \param [in] w_current    The toplevel environment.
  * \param [in] drawing_area The drawing area (page view).
  */
-void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
+void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                               GschemPageView* drawing_area)
 {
   /* gtk_widget_set_events() can be called on unrealized widgets only.
@@ -159,7 +159,9 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
 
 
 static void
-x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+x_window_find_text (GtkWidget *widget,
+                    gint response,
+                    SchematicWindow *w_current)
 {
   gint close = FALSE;
   int count;
@@ -206,7 +208,7 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 
 
 static void
-x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
   LeptonPage *page = NULL;
 
@@ -225,7 +227,9 @@ x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 
 
 static void
-x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+x_window_show_text (GtkWidget *widget,
+                    gint response,
+                    SchematicWindow *w_current)
 {
   LeptonPage *page = NULL;
 
@@ -246,7 +250,7 @@ x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 void
 x_window_select_object (GschemFindTextState *state,
                         LeptonObject *object,
-                        GschemToplevel *w_current)
+                        SchematicWindow *w_current)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
@@ -270,7 +274,9 @@ x_window_select_object (GschemFindTextState *state,
 }
 
 static void
-x_window_translate_response (GschemTranslateWidget *widget, gint response, GschemToplevel *w_current)
+x_window_translate_response (GschemTranslateWidget *widget,
+                             gint response,
+                             SchematicWindow *w_current)
 {
   if (response == GTK_RESPONSE_OK) {
     o_component_translate_all (w_current,
@@ -366,12 +372,12 @@ schematic_window_create_work_box ()
  *  Creates a scrolled #GschemPageView widget in the working area
  *  \a work_box.  This function is used when tabs are disabled.
  *
- * \param w_current The #GschemToplevel object.
+ * \param w_current The #SchematicWindow object.
  * \param work_box The working area widget.
  * \return Pointer to the new GtkWidget object.
  */
 GschemPageView*
-schematic_window_create_page_view (GschemToplevel *w_current,
+schematic_window_create_page_view (SchematicWindow *w_current,
                                    GtkWidget *work_box)
 {
   GtkWidget *scrolled = NULL;
@@ -396,12 +402,12 @@ schematic_window_create_page_view (GschemToplevel *w_current,
  *  Creates bottom and right notebooks and two paned widgets for
  *  them.
  *
- * \param [in] w_current The #GschemToplevel object.
+ * \param [in] w_current The #SchematicWindow object.
  * \param [in] main_box The top level box container widget.
  * \param [in] work_box The working area widget.
  */
 void
-schematic_window_create_notebooks (GschemToplevel *w_current,
+schematic_window_create_notebooks (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    GtkWidget *work_box)
 {
@@ -443,11 +449,11 @@ schematic_window_create_notebooks (GschemToplevel *w_current,
  *  Shows widgets of schematic window, sets visibility of right
  *  and bottom notebooks, and sets focus to the drawing area.
  *
- * \param [in] w_current The #GschemToplevel object.
+ * \param [in] w_current The #SchematicWindow object.
  * \param [in] main_window The main window widget.
  */
 void
-schematic_window_show_all (GschemToplevel *w_current,
+schematic_window_show_all (SchematicWindow *w_current,
                            GtkWidget *main_window)
 {
   g_return_if_fail (w_current != NULL);
@@ -475,7 +481,7 @@ schematic_window_show_all (GschemToplevel *w_current,
  * \return The main window widget.
  */
 GtkWidget*
-schematic_window_get_main_window (GschemToplevel *w_current)
+schematic_window_get_main_window (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -485,14 +491,14 @@ schematic_window_get_main_window (GschemToplevel *w_current)
 
 /*! \brief Set main window widget of schematic window
  *  \par Function Description
- *  Sets the main window widget of #GschemToplevel instance \a
+ *  Sets the main window widget of #SchematicWindow instance \a
  *  w_current to \a main_window.
  *
- * \param [in] w_current The #GschemToplevel object.
+ * \param [in] w_current The #SchematicWindow object.
  * \param [in] main_window The main window widget.
  */
-GschemToplevel*
-schematic_window_set_main_window (GschemToplevel *w_current,
+SchematicWindow*
+schematic_window_set_main_window (SchematicWindow *w_current,
                                   GtkWidget *main_window)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
@@ -529,7 +535,7 @@ schematic_window_set_main_window (GschemToplevel *w_current,
  *  does not conflict with a file on disk.
  */
 LeptonPage*
-x_window_open_page (GschemToplevel *w_current,
+x_window_open_page (SchematicWindow *w_current,
                     const gchar *filename)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -601,7 +607,7 @@ x_window_open_page (GschemToplevel *w_current,
  *  \param [in] page      The page to become current page.
  */
 void
-x_window_set_current_page (GschemToplevel *w_current,
+x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -632,13 +638,13 @@ x_window_set_current_page (GschemToplevel *w_current,
  *  to save page <B>page</B> to file <B>filename</B> (1 on success, 0
  *  on failure).
  *
- *  \param [in] w_current The current #GschemToplevel environment.
+ *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page      The page to save.
  *  \param [in] filename  The name of the file in which to save page.
  *  \returns 1 on success, 0 otherwise.
  */
 gint
-x_window_save_page (GschemToplevel *w_current,
+x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename)
 {
@@ -717,7 +723,7 @@ x_window_save_page (GschemToplevel *w_current,
  *  \return               Pointer to a new current LeptonPage object.
  */
 LeptonPage*
-x_window_close_page (GschemToplevel *w_current,
+x_window_close_page (SchematicWindow *w_current,
                      LeptonPage *page)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -791,11 +797,11 @@ x_window_close_page (GschemToplevel *w_current,
 
 /*! \brief Creates and initializes a new lepton-schematic window.
  *
- * \return Pointer to the new GschemToplevel object.
+ * \return Pointer to the new SchematicWindow object.
  */
-GschemToplevel* x_window_new (LeptonToplevel *toplevel)
+SchematicWindow* x_window_new (LeptonToplevel *toplevel)
 {
-  GschemToplevel *w_current = gschem_toplevel_new ();
+  SchematicWindow *w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current, toplevel);
 
   /* Damage notifications should invalidate the object on screen */
@@ -822,7 +828,7 @@ GschemToplevel* x_window_new (LeptonToplevel *toplevel)
  *  \param [in] menubar The menubar widget created elsewhere.
  */
 void
-schematic_window_create_menubar (GschemToplevel *w_current,
+schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar)
 {
@@ -849,7 +855,7 @@ schematic_window_create_menubar (GschemToplevel *w_current,
 
 
 void
-schematic_window_create_find_text_widget (GschemToplevel *w_current,
+schematic_window_create_find_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL);
@@ -867,7 +873,7 @@ schematic_window_create_find_text_widget (GschemToplevel *w_current,
 
 
 void
-schematic_window_create_hide_text_widget (GschemToplevel *w_current,
+schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
@@ -888,7 +894,7 @@ schematic_window_create_hide_text_widget (GschemToplevel *w_current,
 
 
 void
-schematic_window_create_show_text_widget (GschemToplevel *w_current,
+schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
@@ -909,7 +915,7 @@ schematic_window_create_show_text_widget (GschemToplevel *w_current,
 
 
 void
-schematic_window_create_macro_widget (GschemToplevel *w_current,
+schematic_window_create_macro_widget (SchematicWindow *w_current,
                                       GtkWidget *work_box)
 {
   w_current->macro_widget = macro_widget_new (w_current);
@@ -922,7 +928,7 @@ schematic_window_create_macro_widget (GschemToplevel *w_current,
 
 
 void
-schematic_window_create_translate_widget (GschemToplevel *w_current,
+schematic_window_create_translate_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL);
@@ -939,7 +945,7 @@ schematic_window_create_translate_widget (GschemToplevel *w_current,
 
 
 void
-schematic_window_show_translate_widget (GschemToplevel *w_current)
+schematic_window_show_translate_widget (SchematicWindow *w_current)
 {
   gtk_widget_show (w_current->translate_widget);
   gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
@@ -948,7 +954,7 @@ schematic_window_show_translate_widget (GschemToplevel *w_current)
 
 
 void
-schematic_window_create_statusbar (GschemToplevel *w_current,
+schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box)
 {
   const char* text_mid_button = _("none");
@@ -1042,11 +1048,12 @@ schematic_window_create_statusbar (GschemToplevel *w_current,
 
 /*! \brief Setup scrolling parameters
  *
- *  \param [in] w_current The current #GschemToplevel environment.
+ *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] scrolled  Scrolled widget - a parent of page view widget
  */
 void
-x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
+x_window_setup_scrolling (SchematicWindow *w_current,
+                          GtkWidget *scrolled)
 {
   GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
     gtk_adjustment_new (0.0,
@@ -1079,7 +1086,7 @@ x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
 
 
 static GtkWidget*
-create_notebook_right (GschemToplevel* w_current)
+create_notebook_right (SchematicWindow* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
@@ -1109,7 +1116,7 @@ create_notebook_right (GschemToplevel* w_current)
 
 
 static GtkWidget*
-create_notebook_bottom (GschemToplevel* w_current)
+create_notebook_bottom (SchematicWindow* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
@@ -1141,7 +1148,7 @@ create_notebook_bottom (GschemToplevel* w_current)
  *  \param w_current The toplevel environment.
  */
 static LeptonPage*
-x_window_new_page (GschemToplevel* w_current)
+x_window_new_page (SchematicWindow* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1182,7 +1189,7 @@ x_window_new_page (GschemToplevel* w_current)
  *  \param err       Associated GError.
  */
 static void
-open_page_error_dialog (GschemToplevel* w_current,
+open_page_error_dialog (SchematicWindow* w_current,
                         const gchar*    filename,
                         GError*         err)
 {
@@ -1226,7 +1233,7 @@ open_page_error_dialog (GschemToplevel* w_current,
  *  \param filename  File name to add.
  */
 static void
-recent_manager_add (GschemToplevel* w_current,
+recent_manager_add (SchematicWindow* w_current,
                     const gchar*    filename)
 {
   g_return_if_fail (w_current != NULL);
@@ -1246,7 +1253,7 @@ recent_manager_add (GschemToplevel* w_current,
 /*! \brief Get next number to be part of the untitled file name.
  */
 static int
-untitled_next_index (GschemToplevel* w_current)
+untitled_next_index (SchematicWindow* w_current)
 {
   return ++w_current->num_untitled;
 }
@@ -1267,7 +1274,8 @@ untitled_next_index (GschemToplevel* w_current)
  *  \return             Newly-allocated untitled file path.
  */
 static gchar*
-untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
+untitled_filename (SchematicWindow* w_current,
+                   gboolean log_skipped)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1381,7 +1389,7 @@ x_window_untitled_page (LeptonPage* page)
  *  \param w_current The toplevel environment.
  */
 void
-schematic_window_save_geometry (GschemToplevel* w_current)
+schematic_window_save_geometry (SchematicWindow* w_current)
 {
   gint x = 0;
   gint y = 0;
@@ -1412,11 +1420,11 @@ schematic_window_save_geometry (GschemToplevel* w_current)
  *  Unless valid configuration values are read, use default width
  *  and height.
  *
- *  \param [in] w_current   The #GschemToplevel object.
+ *  \param [in] w_current   The #SchematicWindow object.
  *  \param [in] main_window The main window widget of lepton-schematic.
  */
 void
-schematic_window_restore_geometry (GschemToplevel *w_current,
+schematic_window_restore_geometry (SchematicWindow *w_current,
                                    GtkWidget* main_window)
 {
   gchar* cwd = g_get_current_dir();

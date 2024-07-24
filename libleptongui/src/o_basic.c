@@ -38,13 +38,13 @@ extern LeptonColorMap display_outline_colors;
  */
 #ifdef ENABLE_GTK3
 void
-o_redraw_rect (GschemToplevel *w_current,
+o_redraw_rect (SchematicWindow *w_current,
                GtkWidget *widget,
                LeptonPage *page,
                GschemPageGeometry *geometry,
                cairo_t *cr)
 #else
-void o_redraw_rect (GschemToplevel *w_current,
+void o_redraw_rect (SchematicWindow *w_current,
                     GdkDrawable *drawable,
                     LeptonPage *page,
                     GschemPageGeometry *geometry,
@@ -331,7 +331,8 @@ void o_redraw_rect (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-int o_invalidate_rubber (GschemToplevel *w_current)
+int
+o_invalidate_rubber (SchematicWindow *w_current)
 {
   /* return FALSE if it did not erase anything */
 
@@ -369,7 +370,8 @@ int o_invalidate_rubber (GschemToplevel *w_current)
  *  screen.
  *  Usually a intermediate select state would clean (redraw) the screen.
  */
-int o_redraw_cleanstates(GschemToplevel *w_current)
+int
+o_redraw_cleanstates (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
   /* returns FALSE if the function was'nt nessecary */
@@ -466,20 +468,24 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
  *  A further, larger margin is added to account for invalidating the
  *  size occupied by an object's grips.
  *
- *  If the GschemToplevel in question is not rendering to a GDK_WINDOW,
+ *  If the SchematicWindow in question is not rendering to a GDK_WINDOW,
  *  (e.g. image export), this function call is a no-op. A test is used:
  *  GDK_IS_WINDOW(), which should be safe since in either case,
  *  w_current->window is a GObject. This is really a _HACK_,
  *  and should be fixed with a re-worked drawing model.
  *
- *  \param [in] w_current  The GschemToplevel who's drawing area is being invalidated.
+ *  \param [in] w_current  The SchematicWindow who's drawing area is being invalidated.
  *  \param [in] x1         X coord for corner 1 (SCREEN units)
  *  \param [in] y1         Y coord for corner 1 (SCREEN units)
  *  \param [in] x2         X coord for corner 2 (SCREEN units)
  *  \param [in] y2         Y coord for corner 2 (SCREEN units)
  */
-void o_invalidate_rect (GschemToplevel *w_current,
-                        int x1, int y1, int x2, int y2)
+void
+o_invalidate_rect (SchematicWindow *w_current,
+                   int x1,
+                   int y1,
+                   int x2,
+                   int y2)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
@@ -497,10 +503,12 @@ void o_invalidate_rect (GschemToplevel *w_current,
  *  This function calls o_invalidate_rect() with the bounds of the
  *  passed LeptonObject, converted to screen coordinates.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] object     The LeptonObject invalidated on screen.
  */
-void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
+void
+o_invalidate (SchematicWindow *w_current,
+              LeptonObject *object)
 {
   if (w_current == NULL
       || schematic_window_get_dont_invalidate (w_current))
@@ -542,10 +550,12 @@ void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
  *  This function calls o_invalidate_rect() with the bounds of the
  *  passed GList, converted to screen coordinates.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] list       The glist objects invalidated on screen.
  */
-void o_invalidate_glist (GschemToplevel *w_current, GList *list)
+void
+o_invalidate_glist (SchematicWindow *w_current,
+                    GList *list)
 {
   int left, top, bottom, right;
 

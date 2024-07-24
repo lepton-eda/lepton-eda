@@ -50,11 +50,14 @@
  *  The function is intended to be called by pressing the left
  *  mouse button.
  *
- *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] wx        The world X coordinate.
  *  \param [in] wy        The world Y coordinate.
  */
-void o_select_start (GschemToplevel *w_current, int wx, int wy)
+void
+o_select_start (SchematicWindow *w_current,
+                int wx,
+                int wy)
 {
   /* look for grips or fall through if not enabled */
   o_grips_start(w_current, wx, wy);
@@ -78,11 +81,14 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
  *  The function is intended to be called by releasing the left
  *  mouse button.
  *
- *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] wx        The world X coordinate.
  *  \param [in] wy        The world Y coordinate.
  */
-void o_select_end (GschemToplevel *w_current, int wx, int wy)
+void
+o_select_end (SchematicWindow *w_current,
+              int wx,
+              int wy)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -104,11 +110,14 @@ void o_select_end (GschemToplevel *w_current, int wx, int wy)
  *  The function is intended to be called by motion of the mouse
  *  while the left mouse button is pressed.
  *
- *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] wx        The world X coordinate.
  *  \param [in] wy        The world Y coordinate.
  */
-void o_select_motion (GschemToplevel *w_current, int wx, int wy)
+void
+o_select_motion (SchematicWindow *w_current,
+                 int wx,
+                 int wy)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -132,7 +141,10 @@ void o_select_motion (GschemToplevel *w_current, int wx, int wy)
  *  \par Function Description
  *
  */
-void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int flag)
+void
+o_select_run_hooks (SchematicWindow *w_current,
+                    LeptonObject *o_current,
+                    int flag)
 {
   switch (flag) {
   /* If flag == 0, then we are deselecting something. */
@@ -156,8 +168,11 @@ void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int 
  *  type can be either SINGLE meaning selection is a single mouse click
  *      or it can be MULTIPLE meaning selection is a selection box
  */
-void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
-                     int type, int count)
+void
+o_select_object (SchematicWindow *w_current,
+                 LeptonObject *o_current,
+                 int type,
+                 int count)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   int SHIFTKEY;
@@ -288,7 +303,10 @@ void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
  *  \par Function Description
  *
  */
-void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_select_box_start (SchematicWindow *w_current,
+                    int w_x,
+                    int w_y)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -318,7 +336,10 @@ void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_select_box_end (SchematicWindow *w_current,
+                  int w_x,
+                  int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -336,7 +357,10 @@ void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_select_box_motion (SchematicWindow *w_current,
+                     int w_x,
+                     int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -354,7 +378,8 @@ void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void o_select_box_invalidate_rubber (GschemToplevel *w_current)
+void
+o_select_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -373,7 +398,9 @@ void o_select_box_invalidate_rubber (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_select_box_draw_rubber (SchematicWindow *w_current,
+                          EdaRenderer *renderer)
 {
   o_box_draw_rubber (w_current, renderer);
 }
@@ -383,7 +410,8 @@ void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  *  \par Function Description
  *
  */
-void o_select_box_search(GschemToplevel *w_current)
+void
+o_select_box_search (SchematicWindow *w_current)
 {
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
@@ -444,10 +472,12 @@ void o_select_box_search(GschemToplevel *w_current)
  *   and the net_selection_state of the current net this function will either
  *   select the single net, all directly connected nets or all nets connected
  *   with netname labels.
- *  \param [in] w_current  GschemToplevel struct.
+ *  \param [in] w_current  SchematicWindow struct.
  *  \param [in] o_net      Pointer to a single net object
  */
-void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
+void
+o_select_connected_nets (SchematicWindow *w_current,
+                         LeptonObject* o_net)
 {
   const GList *o_iter;
   GList *iter1;
@@ -552,7 +582,8 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */
-LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
+LeptonObject*
+o_select_return_first_object (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   if (! (w_current &&
@@ -570,7 +601,8 @@ LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
  * \return TRUE if the selection list is not empty, otherwise false.
  * also make sure item is valid
  */
-int o_select_selected(GschemToplevel *w_current)
+int
+o_select_selected (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   if ( lepton_list_get_glist( toplevel->page_current->selection_list )) {
@@ -585,7 +617,8 @@ int o_select_selected(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void o_select_unselect_all(GschemToplevel *w_current)
+void
+o_select_unselect_all (SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonSelection *selection = toplevel->page_current->selection_list;
@@ -610,7 +643,7 @@ void o_select_unselect_all(GschemToplevel *w_current)
  *
  */
 void
-o_select_move_to_place_list(GschemToplevel *w_current)
+o_select_move_to_place_list (SchematicWindow *w_current)
 {
   GList *selection;
   GList *selection_copy;

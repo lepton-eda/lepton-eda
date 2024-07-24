@@ -37,7 +37,8 @@
  *  \par Function Description
  *
  */
-void o_box_invalidate_rubber (GschemToplevel *w_current)
+void
+o_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -64,11 +65,14 @@ void o_box_invalidate_rubber (GschemToplevel *w_current)
  *  The other corner will be saved in (<B>w_current->second_wx</B>,
  *  <B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world.
  *  \param [in] w_y        Current y coordinate of pointer in world.
  */
-void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_box_start (SchematicWindow *w_current,
+             int w_x,
+             int w_y)
 {
   i_action_start (w_current);
 
@@ -92,11 +96,14 @@ void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
  *  and linked to the object list ; The object is finally drawn on the
  *  current sheet.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_box_end (SchematicWindow *w_current,
+           int w_x,
+           int w_y)
 {
   LeptonObject *new_obj;
 
@@ -171,11 +178,14 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
  *  The old values are inside the <B>w_current</B> pointed structure. Old width,
  *  height and left and top values are recomputed by the corresponding macros.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_box_motion (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);
@@ -199,18 +209,20 @@ void o_box_motion (GschemToplevel *w_current, int w_x, int w_y)
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw box from GschemToplevel object.
+/*! \brief Draw box from SchematicWindow object.
  *  \par Function Description
- *  This function draws the box from the variables in the GschemToplevel
+ *  This function draws the box from the variables in the SchematicWindow
  *  structure <B>*w_current</B> using \a renderer..
  *  One corner of the box is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and the second corner is at
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
-void o_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_box_draw_rubber (SchematicWindow *w_current,
+                   EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

@@ -48,7 +48,7 @@ struct _SchematicPreview
 {
   GschemPageView parent_instance;
 
-  GschemToplevel *window;
+  SchematicWindow *window;
 
   gchar *filename;
   gchar *buffer;
@@ -126,7 +126,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
                                          gpointer user_data)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
-  GschemToplevel *preview_w_current = preview->window;
+  SchematicWindow *preview_w_current = preview->window;
   gint wx, wy;
 
   if (!preview->active) {
@@ -216,7 +216,7 @@ schematic_preview_new ()
 static void
 schematic_preview_init (SchematicPreview *preview)
 {
-  GschemToplevel *preview_w_current;
+  SchematicWindow *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, lepton_toplevel_new ());
 
@@ -260,7 +260,7 @@ schematic_preview_set_property (GObject *object,
                                 GParamSpec *pspec)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (object);
-  GschemToplevel *preview_w_current = preview->window;
+  SchematicWindow *preview_w_current = preview->window;
 
   g_assert (preview_w_current != NULL);
 
@@ -321,7 +321,7 @@ static void
 schematic_preview_dispose (GObject *self)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (self);
-  GschemToplevel *preview_w_current = preview->window;
+  SchematicWindow *preview_w_current = preview->window;
 
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
@@ -393,7 +393,7 @@ schematic_preview_get_filename (GtkWidget *preview)
  *  \param [in] preview The preview.
  *  \return The field.
  */
-GschemToplevel*
+SchematicWindow*
 schematic_preview_get_window (GtkWidget *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);

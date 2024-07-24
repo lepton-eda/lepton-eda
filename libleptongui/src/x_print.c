@@ -207,7 +207,7 @@ draw_page__print_operation (GtkPrintOperation *print,
                             gint page_nr,
                             gpointer user_data)
 {
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
+  SchematicWindow *w_current = (SchematicWindow *) user_data;
   LeptonPage *page;
   cairo_t *cr;
   PangoContext *pc;
@@ -245,13 +245,13 @@ draw_page__print_operation (GtkPrintOperation *print,
  * export is carried out using a normal paper size and margins, as if
  * printing.
  *
- * \param w_current A #GschemToplevel structure.
+ * \param w_current A #SchematicWindow structure.
  * \param filename  The filename for generated PDF.
  *
  * \returns TRUE if the operation was successful.
  */
 gboolean
-x_print_export_pdf_page (GschemToplevel *w_current,
+x_print_export_pdf_page (SchematicWindow *w_current,
                          const gchar *filename)
 {
   LeptonPage *page;
@@ -306,14 +306,14 @@ x_print_export_pdf_page (GschemToplevel *w_current,
  * is carried out using a page size matching the size of the visible
  * extents of the schematic page.
  *
- * \param w_current A #GschemToplevel structure.
+ * \param w_current A #SchematicWindow structure.
  * \param filename  The filename for generated PDF.
  * \param is_color  Export using colors (TRUE) or in grayscale (FALSE).
  *
  * \returns TRUE if the operation was successful.
  */
 gboolean
-x_print_export_pdf (GschemToplevel *w_current,
+x_print_export_pdf (SchematicWindow *w_current,
                     const gchar *filename,
                     gboolean is_color)
 {
@@ -366,11 +366,11 @@ x_print_export_pdf (GschemToplevel *w_current,
  * \par Function Description
  * Shows a standard print dialog, and allows the user to print the current page.
  *
- * \param w_current A #GschemToplevel structure.
+ * \param w_current A #SchematicWindow structure.
  */
 
 void
-x_print (GschemToplevel *w_current)
+x_print (SchematicWindow *w_current)
 {
   static GtkPrintSettings *settings = NULL;
   GtkPageSetup *setup;

@@ -184,7 +184,8 @@ finalize (GObject *object)
  *  \par Function Description
  *  This function creates the text find dialog.
  */
-void find_text_dialog (GschemToplevel *w_current)
+void
+find_text_dialog (SchematicWindow *w_current)
 {
   LeptonObject *object;
 

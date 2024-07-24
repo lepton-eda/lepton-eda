@@ -40,14 +40,18 @@
  *  There is a second pass to run the rotate hooks of non-simple objects,
  *  like pin or component objects, for example.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
  *  \param [in] angle      Angle to rotate the objects through.
  *  \param [in] list       The list of objects to rotate.
  */
-void o_rotate_world_update(GschemToplevel *w_current,
-                           int centerx, int centery, int angle, GList *list)
+void
+o_rotate_world_update (SchematicWindow *w_current,
+                       int centerx,
+                       int centery,
+                       int angle,
+                       GList *list)
 {
   LeptonObject *o_current;
   GList *o_iter;
@@ -107,7 +111,11 @@ void o_rotate_world_update(GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list)
+void
+o_mirror_world_update (SchematicWindow *w_current,
+                       int centerx,
+                       int centery,
+                       GList *list)
 {
   LeptonObject *o_current;
   GList *o_iter;
@@ -161,8 +169,9 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
  *  \par Function Description
  *
  */
-void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
-                                  const GList *o_list)
+void
+o_edit_show_hidden_lowlevel (SchematicWindow *w_current,
+                             const GList *o_list)
 {
   LeptonObject *o_current;
   const GList *iter;
@@ -193,7 +202,9 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
+void
+o_edit_show_hidden (SchematicWindow *w_current,
+                    const GList *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
@@ -220,9 +231,10 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
  *  \par Function Description
  *
  */
-void o_edit_hide_specific_text (GschemToplevel *w_current,
-                                const GList *o_list,
-                                const char *stext)
+void
+o_edit_hide_specific_text (SchematicWindow *w_current,
+                           const GList *o_list,
+                           const char *stext)
 {
   LeptonObject *o_current;
   const GList *iter;
@@ -254,9 +266,10 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void o_edit_show_specific_text (GschemToplevel *w_current,
-                                const GList *o_list,
-                                const char *stext)
+void
+o_edit_show_specific_text (SchematicWindow *w_current,
+                           const GList *o_list,
+                           const char *stext)
 {
   LeptonObject *o_current;
   const GList *iter;

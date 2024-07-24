@@ -22,10 +22,10 @@
 #include "gschem.h"
 
 static void
-handle_undo (GschemToplevel *w_current);
+handle_undo (SchematicWindow *w_current);
 
 static void
-notify_options (GschemToplevel *w_current);
+notify_options (SchematicWindow *w_current);
 
 static void
 renderer_load_font (EdaRenderer* renderer);
@@ -145,11 +145,11 @@ static const char *routine_text_size[] =
 
 
 
-GschemToplevel *gschem_toplevel_new ()
+SchematicWindow *gschem_toplevel_new ()
 {
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
-  w_current = g_new0 (GschemToplevel, 1);
+  w_current = g_new0 (SchematicWindow, 1);
 
   w_current->toplevel = NULL;
 
@@ -356,7 +356,7 @@ GschemToplevel *gschem_toplevel_new ()
  *  \param [in] w_current The gschem toplevel
  */
 void
-gschem_toplevel_free (GschemToplevel *w_current)
+gschem_toplevel_free (SchematicWindow *w_current)
 {
   if (w_current->toplevel != NULL) {
     lepton_toplevel_delete (w_current->toplevel);
@@ -419,7 +419,7 @@ gschem_toplevel_free (GschemToplevel *w_current)
  *  \return The selection adapter
  */
 GschemPageView*
-gschem_toplevel_get_current_page_view (GschemToplevel *w_current)
+gschem_toplevel_get_current_page_view (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -434,7 +434,7 @@ gschem_toplevel_get_current_page_view (GschemToplevel *w_current)
  *  \return The selection adapter
  */
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
+gschem_toplevel_get_selection_adapter (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -470,7 +470,7 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
  *  \return A list of the commonly used dash_lengths
  */
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_dash_length_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -489,7 +489,7 @@ gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used dash spacing
  */
 GtkListStore*
-gschem_toplevel_get_dash_space_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_dash_space_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -508,7 +508,7 @@ gschem_toplevel_get_dash_space_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used fill angles
  */
 GtkListStore*
-gschem_toplevel_get_fill_angle_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_fill_angle_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -527,7 +527,7 @@ gschem_toplevel_get_fill_angle_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used fill pitches
  */
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_fill_pitch_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -546,7 +546,7 @@ gschem_toplevel_get_fill_pitch_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used fill line widths
  */
 GtkListStore*
-gschem_toplevel_get_fill_width_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_fill_width_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -565,7 +565,7 @@ gschem_toplevel_get_fill_width_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used line widths
  */
 GtkListStore*
-gschem_toplevel_get_line_width_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_line_width_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -584,7 +584,7 @@ gschem_toplevel_get_line_width_list_store (GschemToplevel *w_current)
  *  \return A list of the commonly used text sizes
  */
 GtkListStore*
-gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
+gschem_toplevel_get_text_size_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -624,7 +624,7 @@ gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
  *  \return The libgeda toplevel
  */
 LeptonToplevel*
-gschem_toplevel_get_toplevel (GschemToplevel *w_current)
+gschem_toplevel_get_toplevel (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -637,10 +637,12 @@ gschem_toplevel_get_toplevel (GschemToplevel *w_current)
  *
  *  \param [in] page_view The #GschemPageView signal source object.
  *  \param [in] pspec     The \c GParamSpec structure.
- *  \param [in] w_current The current #GschemToplevel object.
+ *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-gschem_toplevel_notify_page_callback (GschemPageView *page_view, GParamSpec *pspec, GschemToplevel *w_current)
+gschem_toplevel_notify_page_callback (GschemPageView *page_view,
+                                      GParamSpec *pspec,
+                                      SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -657,7 +659,7 @@ gschem_toplevel_notify_page_callback (GschemPageView *page_view, GParamSpec *psp
  *  \param [in] w_current The current gschem toplevel
  */
 void
-gschem_toplevel_page_changed (GschemToplevel *w_current)
+gschem_toplevel_page_changed (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -679,7 +681,7 @@ gschem_toplevel_page_changed (GschemToplevel *w_current)
  *  \param [in] page      The page that underwent changes.
  */
 void
-gschem_toplevel_page_content_changed (GschemToplevel *w_current,
+gschem_toplevel_page_content_changed (SchematicWindow *w_current,
                                       LeptonPage *page)
 {
   g_return_if_fail (page != NULL);
@@ -699,7 +701,7 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current,
  *  \param [in] w_current The current schematic window.
  */
 void
-schematic_window_active_page_changed (GschemToplevel *w_current)
+schematic_window_active_page_changed (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
@@ -714,7 +716,7 @@ schematic_window_active_page_changed (GschemToplevel *w_current)
  *  \param [in] toplevel The libgeda toplevel
  */
 void
-gschem_toplevel_set_toplevel (GschemToplevel *w_current,
+gschem_toplevel_set_toplevel (SchematicWindow *w_current,
                               LeptonToplevel *toplevel)
 {
   g_return_if_fail (w_current != NULL);
@@ -727,7 +729,7 @@ gschem_toplevel_set_toplevel (GschemToplevel *w_current,
  *  \param [in] w_current
  */
 static void
-handle_undo (GschemToplevel *w_current)
+handle_undo (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -742,7 +744,7 @@ handle_undo (GschemToplevel *w_current)
  *  \param [in] w_current
  */
 static void
-notify_options (GschemToplevel *w_current)
+notify_options (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -793,7 +795,7 @@ renderer_load_font (EdaRenderer* renderer)
  *  \return TRUE if hidden text should be visible, otherwise FALSE
  */
 gboolean
-gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current)
+gschem_toplevel_get_show_hidden_text (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 
@@ -811,7 +813,7 @@ gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current)
  *  \return The currently active page.
  */
 LeptonPage*
-schematic_window_get_active_page (GschemToplevel *w_current)
+schematic_window_get_active_page (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -828,7 +830,7 @@ schematic_window_get_active_page (GschemToplevel *w_current)
  *  \return The GdkDisplay of the window.
  */
 GdkDisplay*
-schematic_window_get_gdk_display (GschemToplevel *w_current)
+schematic_window_get_gdk_display (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -842,7 +844,7 @@ schematic_window_get_gdk_display (GschemToplevel *w_current)
  *  \return The currently opened pages.
  */
 LeptonPageList*
-schematic_window_get_pages (GschemToplevel *w_current)
+schematic_window_get_pages (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -859,7 +861,7 @@ schematic_window_get_pages (GschemToplevel *w_current)
  *  \return The options of the schematic window.
  */
 GschemOptions*
-schematic_window_get_options (GschemToplevel *w_current)
+schematic_window_get_options (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -910,11 +912,11 @@ schematic_window_destroy_timer (guint source_id)
  * \par Function Description
  * Returns the current action mode value for \a w_current.
  *
- * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] w_current The #SchematicWindow instance.
  * \return The current action mode value.
  */
 SchematicActionMode
-schematic_window_get_action_mode (GschemToplevel *w_current)
+schematic_window_get_action_mode (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, SELECT);
 
@@ -928,11 +930,11 @@ schematic_window_get_action_mode (GschemToplevel *w_current)
  * Sets the current action mode value for \a w_current to the
  * given value.
  *
- * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] w_current The #SchematicWindow instance.
  * \param [in] mode The new action mode value.
  */
 void
-schematic_window_set_action_mode (GschemToplevel *w_current,
+schematic_window_set_action_mode (SchematicWindow *w_current,
                                   SchematicActionMode mode)
 {
   g_return_if_fail (w_current != NULL);
@@ -951,7 +953,7 @@ schematic_window_set_action_mode (GschemToplevel *w_current,
  * \param [in] toolbar The toolbar.
  */
 void
-schematic_window_set_toolbar (GschemToplevel *w_current,
+schematic_window_set_toolbar (SchematicWindow *w_current,
                               GtkWidget *toolbar)
 {
   w_current->toolbar = toolbar;
@@ -960,11 +962,11 @@ schematic_window_set_toolbar (GschemToplevel *w_current,
 
 /*! \brief Get the 'inside_action' field of a schematic window structure.
  *
- * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] w_current The #SchematicWindow instance.
  * \return TRUE if the window is inside action.
  */
 gboolean
-schematic_window_get_inside_action (GschemToplevel *w_current)
+schematic_window_get_inside_action (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 
@@ -982,7 +984,7 @@ schematic_window_get_inside_action (GschemToplevel *w_current)
  * \param [in] inside_action The new value.
  */
 void
-schematic_window_set_inside_action (GschemToplevel *w_current,
+schematic_window_set_inside_action (SchematicWindow *w_current,
                                     int inside_action)
 {
   g_return_if_fail (w_current != NULL);
@@ -997,7 +999,7 @@ schematic_window_set_inside_action (GschemToplevel *w_current,
  *  \return TRUE if drawing grips enabled, FALSE otherwise.
  */
 gboolean
-schematic_window_get_draw_grips (GschemToplevel *w_current)
+schematic_window_get_draw_grips (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, TRUE);
 
@@ -1011,7 +1013,7 @@ schematic_window_get_draw_grips (GschemToplevel *w_current)
  *  \param [in] draw_grips The new value.
  */
 void
-schematic_window_set_draw_grips (GschemToplevel *w_current,
+schematic_window_set_draw_grips (SchematicWindow *w_current,
                                  gboolean draw_grips)
 {
   g_return_if_fail (w_current != NULL);
@@ -1026,7 +1028,7 @@ schematic_window_set_draw_grips (GschemToplevel *w_current,
  *  \return The action feedback mode.
  */
 int
-schematic_window_get_actionfeedback_mode (GschemToplevel *w_current)
+schematic_window_get_actionfeedback_mode (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, OUTLINE);
 
@@ -1040,7 +1042,7 @@ schematic_window_get_actionfeedback_mode (GschemToplevel *w_current)
  *  \param [in] actionfeedback_mode The current action feedback mode.
  */
 void
-schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
+schematic_window_set_actionfeedback_mode (SchematicWindow *w_current,
                                           int actionfeedback_mode)
 {
   g_return_if_fail (w_current != NULL);
@@ -1056,7 +1058,7 @@ schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
  *  \return The list of objects.
  */
 GList*
-schematic_window_get_place_list (GschemToplevel *w_current)
+schematic_window_get_place_list (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1074,7 +1076,7 @@ schematic_window_get_place_list (GschemToplevel *w_current)
  *  \param [in] place_list The new list of objects to place.
  */
 void
-schematic_window_set_place_list (GschemToplevel *w_current,
+schematic_window_set_place_list (SchematicWindow *w_current,
                                  GList *place_list)
 {
   g_return_if_fail (w_current != NULL);
@@ -1092,7 +1094,7 @@ schematic_window_set_place_list (GschemToplevel *w_current,
  *  \param [in] w_current The schematic window.
  */
 void
-schematic_window_delete_place_list (GschemToplevel *w_current)
+schematic_window_delete_place_list (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -1104,11 +1106,11 @@ schematic_window_delete_place_list (GschemToplevel *w_current)
 
 /*! \brief Get Page select widget for this schematic window.
  *
- * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] w_current The #SchematicWindow instance.
  * \return The current Page select widget.
  */
 GtkWidget*
-schematic_window_get_page_select_widget (GschemToplevel *w_current)
+schematic_window_get_page_select_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1118,11 +1120,11 @@ schematic_window_get_page_select_widget (GschemToplevel *w_current)
 
 /*! \brief Set Page select widget for this schematic window.
  *
- * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] w_current The #SchematicWindow instance.
  * \param [in] widget The Page select widget.
  */
 void
-schematic_window_set_page_select_widget (GschemToplevel *w_current,
+schematic_window_set_page_select_widget (SchematicWindow *w_current,
                                          GtkWidget* widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1137,7 +1139,7 @@ schematic_window_set_page_select_widget (GschemToplevel *w_current,
  *  \return The list of objects.
  */
 LeptonSelection*
-schematic_window_get_selection_list (GschemToplevel *w_current)
+schematic_window_get_selection_list (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1155,7 +1157,7 @@ schematic_window_get_selection_list (GschemToplevel *w_current)
  *  \param [in] selection_list The new list of objects to select.
  */
 void
-schematic_window_set_selection_list (GschemToplevel *w_current,
+schematic_window_set_selection_list (SchematicWindow *w_current,
                                      LeptonSelection *selection_list)
 {
   g_return_if_fail (w_current != NULL);
@@ -1174,7 +1176,7 @@ schematic_window_set_selection_list (GschemToplevel *w_current,
  *  \return The macro widget pointer.
  */
 GtkWidget*
-schematic_window_get_macro_widget (GschemToplevel *w_current)
+schematic_window_get_macro_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1188,7 +1190,7 @@ schematic_window_get_macro_widget (GschemToplevel *w_current)
  *  \return 1 if the Alt key is pressed, 0 otherwise.
  */
 int
-schematic_window_get_alt_key_pressed (GschemToplevel *w_current)
+schematic_window_get_alt_key_pressed (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1202,7 +1204,7 @@ schematic_window_get_alt_key_pressed (GschemToplevel *w_current)
  *  \param [in] state The state.
  */
 void
-schematic_window_set_alt_key_pressed (GschemToplevel *w_current,
+schematic_window_set_alt_key_pressed (SchematicWindow *w_current,
                                       int state)
 {
   g_return_if_fail (w_current != NULL);
@@ -1217,7 +1219,7 @@ schematic_window_set_alt_key_pressed (GschemToplevel *w_current,
  *  \return 1 if the Control key is pressed, 0 otherwise.
  */
 int
-schematic_window_get_control_key_pressed (GschemToplevel *w_current)
+schematic_window_get_control_key_pressed (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1231,7 +1233,7 @@ schematic_window_get_control_key_pressed (GschemToplevel *w_current)
  *  \param [in] state The state.
  */
 void
-schematic_window_set_control_key_pressed (GschemToplevel *w_current,
+schematic_window_set_control_key_pressed (SchematicWindow *w_current,
                                           int state)
 {
   g_return_if_fail (w_current != NULL);
@@ -1246,7 +1248,7 @@ schematic_window_set_control_key_pressed (GschemToplevel *w_current,
  *  \return 1 if the Shift key is pressed, 0 otherwise.
  */
 int
-schematic_window_get_shift_key_pressed (GschemToplevel *w_current)
+schematic_window_get_shift_key_pressed (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1260,7 +1262,7 @@ schematic_window_get_shift_key_pressed (GschemToplevel *w_current)
  *  \param [in] state The state.
  */
 void
-schematic_window_set_shift_key_pressed (GschemToplevel *w_current,
+schematic_window_set_shift_key_pressed (SchematicWindow *w_current,
                                         int state)
 {
   g_return_if_fail (w_current != NULL);
@@ -1275,7 +1277,7 @@ schematic_window_set_shift_key_pressed (GschemToplevel *w_current,
  *  \return The right notebook widget.
  */
 GtkWidget*
-schematic_window_get_right_notebook (GschemToplevel *w_current)
+schematic_window_get_right_notebook (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1289,7 +1291,7 @@ schematic_window_get_right_notebook (GschemToplevel *w_current)
  *  \param [in] widget The new right notebook widget.
  */
 void
-schematic_window_set_right_notebook (GschemToplevel *w_current,
+schematic_window_set_right_notebook (SchematicWindow *w_current,
                                      GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1304,7 +1306,7 @@ schematic_window_set_right_notebook (GschemToplevel *w_current,
  *  \return The bottom notebook.
  */
 GtkWidget*
-schematic_window_get_bottom_notebook (GschemToplevel *w_current)
+schematic_window_get_bottom_notebook (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1318,7 +1320,7 @@ schematic_window_get_bottom_notebook (GschemToplevel *w_current)
  *  \param [in] widget The new bottom notebook.
  */
 void
-schematic_window_set_bottom_notebook (GschemToplevel *w_current,
+schematic_window_set_bottom_notebook (SchematicWindow *w_current,
                                       GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1333,7 +1335,7 @@ schematic_window_set_bottom_notebook (GschemToplevel *w_current,
  *  \return The field 'undo_panzoom'.
  */
 int
-schematic_window_get_undo_panzoom (GschemToplevel *w_current)
+schematic_window_get_undo_panzoom (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1347,7 +1349,7 @@ schematic_window_get_undo_panzoom (GschemToplevel *w_current)
  *  \param [in] undo_panzoom The new value for the field 'undo_panzoom'.
  */
 void
-schematic_window_set_undo_panzoom (GschemToplevel *w_current,
+schematic_window_set_undo_panzoom (SchematicWindow *w_current,
                                    int undo_panzoom)
 {
   g_return_if_fail (w_current != NULL);
@@ -1362,7 +1364,7 @@ schematic_window_set_undo_panzoom (GschemToplevel *w_current,
  *  \return The field 'keyboardpan_gain'.
  */
 int
-schematic_window_get_keyboardpan_gain (GschemToplevel *w_current)
+schematic_window_get_keyboardpan_gain (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1376,7 +1378,7 @@ schematic_window_get_keyboardpan_gain (GschemToplevel *w_current)
  *  \param [in] keyboardpan_gain The new value for the field 'keyboardpan_gain'.
  */
 void
-schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
+schematic_window_set_keyboardpan_gain (SchematicWindow *w_current,
                                        int keyboardpan_gain)
 {
   g_return_if_fail (w_current != NULL);
@@ -1391,7 +1393,7 @@ schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
  *  \return The field 'dont_invalidate'.
  */
 gboolean
-schematic_window_get_dont_invalidate (GschemToplevel *w_current)
+schematic_window_get_dont_invalidate (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 
@@ -1405,7 +1407,7 @@ schematic_window_get_dont_invalidate (GschemToplevel *w_current)
  *  \param [in] val The new value for the field 'dont_invalidate'.
  */
 void
-schematic_window_set_dont_invalidate (GschemToplevel *w_current,
+schematic_window_set_dont_invalidate (SchematicWindow *w_current,
                                       gboolean val)
 {
   g_return_if_fail (w_current != NULL);
@@ -1420,7 +1422,7 @@ schematic_window_set_dont_invalidate (GschemToplevel *w_current,
  *  \return The field 'enforce_hierarchy'.
  */
 int
-schematic_window_get_enforce_hierarchy (GschemToplevel *w_current)
+schematic_window_get_enforce_hierarchy (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1434,7 +1436,7 @@ schematic_window_get_enforce_hierarchy (GschemToplevel *w_current)
  *  \param [in] enforce The new value for the field 'enforce_hierarchy'.
  */
 void
-schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
+schematic_window_set_enforce_hierarchy (SchematicWindow *w_current,
                                         int enforce)
 {
   g_return_if_fail (w_current != NULL);
@@ -1449,7 +1451,7 @@ schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
  *  \return The field 'keyaccel_string_source_id'.
  */
 guint
-schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current)
+schematic_window_get_keyaccel_string_source_id (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1463,7 +1465,7 @@ schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current)
  *  \param [in] source_id The new value for the field 'keyaccel_string_source_id'.
  */
 void
-schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
+schematic_window_set_keyaccel_string_source_id (SchematicWindow *w_current,
                                                 guint source_id)
 {
   g_return_if_fail (w_current != NULL);
@@ -1478,7 +1480,7 @@ schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
  *  \return The field 'keyaccel_string'.
  */
 const char*
-schematic_window_get_keyaccel_string (GschemToplevel *w_current)
+schematic_window_get_keyaccel_string (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1492,7 +1494,7 @@ schematic_window_get_keyaccel_string (GschemToplevel *w_current)
  *  \param [in] str The new value for the field 'keyaccel_string'.
  */
 void
-schematic_window_set_keyaccel_string (GschemToplevel *w_current,
+schematic_window_set_keyaccel_string (SchematicWindow *w_current,
                                       char *str)
 {
   g_return_if_fail (w_current != NULL);
@@ -1508,7 +1510,7 @@ schematic_window_set_keyaccel_string (GschemToplevel *w_current,
  *  \return The Compselect widget.
  */
 GtkWidget*
-schematic_window_get_compselect_widget (GschemToplevel *w_current)
+schematic_window_get_compselect_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1522,7 +1524,7 @@ schematic_window_get_compselect_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_compselect_widget (GschemToplevel *w_current,
+schematic_window_set_compselect_widget (SchematicWindow *w_current,
                                         GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1537,7 +1539,7 @@ schematic_window_set_compselect_widget (GschemToplevel *w_current,
  *  \return The Text input widget.
  */
 GtkWidget*
-schematic_window_get_text_input_widget (GschemToplevel *w_current)
+schematic_window_get_text_input_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1551,7 +1553,7 @@ schematic_window_get_text_input_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_text_input_widget (GschemToplevel *w_current,
+schematic_window_set_text_input_widget (SchematicWindow *w_current,
                                         GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1566,7 +1568,7 @@ schematic_window_set_text_input_widget (GschemToplevel *w_current,
  *  \return The Arc edit widget.
  */
 GtkWidget*
-schematic_window_get_arc_edit_widget (GschemToplevel *w_current)
+schematic_window_get_arc_edit_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1580,7 +1582,7 @@ schematic_window_get_arc_edit_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_arc_edit_widget (GschemToplevel *w_current,
+schematic_window_set_arc_edit_widget (SchematicWindow *w_current,
                                       GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1595,7 +1597,7 @@ schematic_window_set_arc_edit_widget (GschemToplevel *w_current,
  *  \return The Attrib edit widget.
  */
 GtkWidget*
-schematic_window_get_attrib_edit_widget (GschemToplevel *w_current)
+schematic_window_get_attrib_edit_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1609,7 +1611,7 @@ schematic_window_get_attrib_edit_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_attrib_edit_widget (GschemToplevel *w_current,
+schematic_window_set_attrib_edit_widget (SchematicWindow *w_current,
                                          GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1624,7 +1626,7 @@ schematic_window_set_attrib_edit_widget (GschemToplevel *w_current,
  *  \return The Hotkey widget.
  */
 GtkWidget*
-schematic_window_get_hotkey_widget (GschemToplevel *w_current)
+schematic_window_get_hotkey_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1638,7 +1640,7 @@ schematic_window_get_hotkey_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_hotkey_widget (GschemToplevel *w_current,
+schematic_window_set_hotkey_widget (SchematicWindow *w_current,
                                     GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1653,7 +1655,7 @@ schematic_window_set_hotkey_widget (GschemToplevel *w_current,
  *  \return The Coord widget.
  */
 GtkWidget*
-schematic_window_get_coord_widget (GschemToplevel *w_current)
+schematic_window_get_coord_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1667,7 +1669,7 @@ schematic_window_get_coord_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_coord_widget (GschemToplevel *w_current,
+schematic_window_set_coord_widget (SchematicWindow *w_current,
                                    GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1682,7 +1684,7 @@ schematic_window_set_coord_widget (GschemToplevel *w_current,
  *  \return The Slot edit widget.
  */
 GtkWidget*
-schematic_window_get_slot_edit_widget (GschemToplevel *w_current)
+schematic_window_get_slot_edit_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1696,7 +1698,7 @@ schematic_window_get_slot_edit_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_slot_edit_widget (GschemToplevel *w_current,
+schematic_window_set_slot_edit_widget (SchematicWindow *w_current,
                                        GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1711,7 +1713,7 @@ schematic_window_set_slot_edit_widget (GschemToplevel *w_current,
  *  \return The field 'xtabs_info_list'.
  */
 GList*
-schematic_window_get_tab_info_list (GschemToplevel *w_current)
+schematic_window_get_tab_info_list (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1725,7 +1727,7 @@ schematic_window_get_tab_info_list (GschemToplevel *w_current)
  *  \return The field 'xtabs_nbook'.
  */
 GtkNotebook*
-schematic_window_get_tab_notebook (GschemToplevel *w_current)
+schematic_window_get_tab_notebook (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1739,7 +1741,7 @@ schematic_window_get_tab_notebook (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_object_properties_widget (GschemToplevel *w_current,
+schematic_window_set_object_properties_widget (SchematicWindow *w_current,
                                                GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1754,7 +1756,7 @@ schematic_window_set_object_properties_widget (GschemToplevel *w_current,
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_text_properties_widget (GschemToplevel *w_current,
+schematic_window_set_text_properties_widget (SchematicWindow *w_current,
                                              GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1769,7 +1771,7 @@ schematic_window_set_text_properties_widget (GschemToplevel *w_current,
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_options_widget (GschemToplevel *w_current,
+schematic_window_set_options_widget (SchematicWindow *w_current,
                                      GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1784,7 +1786,7 @@ schematic_window_set_options_widget (GschemToplevel *w_current,
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_log_widget (GschemToplevel *w_current,
+schematic_window_set_log_widget (SchematicWindow *w_current,
                                  GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1799,7 +1801,7 @@ schematic_window_set_log_widget (GschemToplevel *w_current,
  *  \return The widget.
  */
 GtkWidget*
-schematic_window_get_find_text_state_widget (GschemToplevel *w_current)
+schematic_window_get_find_text_state_widget (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1813,7 +1815,7 @@ schematic_window_get_find_text_state_widget (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_find_text_state_widget (GschemToplevel *w_current,
+schematic_window_set_find_text_state_widget (SchematicWindow *w_current,
                                              GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1828,7 +1830,7 @@ schematic_window_set_find_text_state_widget (GschemToplevel *w_current,
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_color_edit_widget (GschemToplevel *w_current,
+schematic_window_set_color_edit_widget (SchematicWindow *w_current,
                                         GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1843,7 +1845,7 @@ schematic_window_set_color_edit_widget (GschemToplevel *w_current,
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_font_select_widget (GschemToplevel *w_current,
+schematic_window_set_font_select_widget (SchematicWindow *w_current,
                                          GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1858,7 +1860,7 @@ schematic_window_set_font_select_widget (GschemToplevel *w_current,
  *  \return The Compselect widget.
  */
 GtkWidget*
-schematic_window_get_compselect (GschemToplevel *w_current)
+schematic_window_get_compselect (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1872,7 +1874,7 @@ schematic_window_get_compselect (GschemToplevel *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_compselect (GschemToplevel *w_current,
+schematic_window_set_compselect (SchematicWindow *w_current,
                                  GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
@@ -1887,7 +1889,7 @@ schematic_window_set_compselect (GschemToplevel *w_current,
  *  \return The value of the field 'rubber_visible'.
  */
 int
-schematic_window_get_rubber_visible (GschemToplevel *w_current)
+schematic_window_get_rubber_visible (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1901,7 +1903,7 @@ schematic_window_get_rubber_visible (GschemToplevel *w_current)
  *  \param [in] visibility The new value of the field 'rubber_visible'.
  */
 void
-schematic_window_set_rubber_visible (GschemToplevel *w_current,
+schematic_window_set_rubber_visible (SchematicWindow *w_current,
                                      int visibility)
 {
   g_return_if_fail (w_current != NULL);
@@ -1916,7 +1918,7 @@ schematic_window_set_rubber_visible (GschemToplevel *w_current,
  *  \return The value of the field 'middle_button'.
  */
 int
-schematic_window_get_middle_button (GschemToplevel *w_current)
+schematic_window_get_middle_button (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1930,7 +1932,7 @@ schematic_window_get_middle_button (GschemToplevel *w_current)
  *  \param [in] button The new value of the field 'middle_button'.
  */
 void
-schematic_window_set_middle_button (GschemToplevel *w_current,
+schematic_window_set_middle_button (SchematicWindow *w_current,
                                     int button)
 {
   g_return_if_fail (w_current != NULL);
@@ -1945,7 +1947,7 @@ schematic_window_set_middle_button (GschemToplevel *w_current,
  *  \return The value of the field 'third_button'.
  */
 int
-schematic_window_get_third_button (GschemToplevel *w_current)
+schematic_window_get_third_button (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1959,7 +1961,7 @@ schematic_window_get_third_button (GschemToplevel *w_current)
  *  \param [in] button The new value of the field 'third_button'.
  */
 void
-schematic_window_set_third_button (GschemToplevel *w_current,
+schematic_window_set_third_button (SchematicWindow *w_current,
                                    int button)
 {
   g_return_if_fail (w_current != NULL);
@@ -1974,7 +1976,7 @@ schematic_window_set_third_button (GschemToplevel *w_current,
  *  \return The value of the field 'third_button_cancel'.
  */
 int
-schematic_window_get_third_button_cancel (GschemToplevel *w_current)
+schematic_window_get_third_button_cancel (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -1988,7 +1990,7 @@ schematic_window_get_third_button_cancel (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'third_button_cancel'.
  */
 void
-schematic_window_set_third_button_cancel (GschemToplevel *w_current,
+schematic_window_set_third_button_cancel (SchematicWindow *w_current,
                                           int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2003,7 +2005,7 @@ schematic_window_set_third_button_cancel (GschemToplevel *w_current,
  *  \return The value of the field 'mousepan_gain'.
  */
 int
-schematic_window_get_mousepan_gain (GschemToplevel *w_current)
+schematic_window_get_mousepan_gain (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2017,7 +2019,7 @@ schematic_window_get_mousepan_gain (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'mousepan_gain'.
  */
 void
-schematic_window_set_mousepan_gain (GschemToplevel *w_current,
+schematic_window_set_mousepan_gain (SchematicWindow *w_current,
                                     int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2032,7 +2034,7 @@ schematic_window_set_mousepan_gain (GschemToplevel *w_current,
  *  \return The value of the field 'first_wx'.
  */
 int
-schematic_window_get_first_wx (GschemToplevel *w_current)
+schematic_window_get_first_wx (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2046,7 +2048,7 @@ schematic_window_get_first_wx (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'first_wx'.
  */
 void
-schematic_window_set_first_wx (GschemToplevel *w_current,
+schematic_window_set_first_wx (SchematicWindow *w_current,
                                int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2061,7 +2063,7 @@ schematic_window_set_first_wx (GschemToplevel *w_current,
  *  \return The value of the field 'first_wy'.
  */
 int
-schematic_window_get_first_wy (GschemToplevel *w_current)
+schematic_window_get_first_wy (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2075,7 +2077,7 @@ schematic_window_get_first_wy (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'first_wy'.
  */
 void
-schematic_window_set_first_wy (GschemToplevel *w_current,
+schematic_window_set_first_wy (SchematicWindow *w_current,
                                int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2090,7 +2092,7 @@ schematic_window_set_first_wy (GschemToplevel *w_current,
  *  \return The value of the field 'second_wx'.
  */
 int
-schematic_window_get_second_wx (GschemToplevel *w_current)
+schematic_window_get_second_wx (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2104,7 +2106,7 @@ schematic_window_get_second_wx (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'second_wx'.
  */
 void
-schematic_window_set_second_wx (GschemToplevel *w_current,
+schematic_window_set_second_wx (SchematicWindow *w_current,
                                 int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2119,7 +2121,7 @@ schematic_window_set_second_wx (GschemToplevel *w_current,
  *  \return The value of the field 'second_wy'.
  */
 int
-schematic_window_get_second_wy (GschemToplevel *w_current)
+schematic_window_get_second_wy (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2133,7 +2135,7 @@ schematic_window_get_second_wy (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'second_wy'.
  */
 void
-schematic_window_set_second_wy (GschemToplevel *w_current,
+schematic_window_set_second_wy (SchematicWindow *w_current,
                                 int val)
 {
   g_return_if_fail (w_current != NULL);
@@ -2148,7 +2150,7 @@ schematic_window_set_second_wy (GschemToplevel *w_current,
  *  \return The value of the field 'file_preview'.
  */
 int
-schematic_window_get_file_preview (GschemToplevel *w_current)
+schematic_window_get_file_preview (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, 0);
 
@@ -2162,7 +2164,7 @@ schematic_window_get_file_preview (GschemToplevel *w_current)
  *  \param [in] val The new value of the field 'file_preview'.
  */
 void
-schematic_window_set_file_preview (GschemToplevel *w_current,
+schematic_window_set_file_preview (SchematicWindow *w_current,
                                    int val)
 {
   g_return_if_fail (w_current != NULL);

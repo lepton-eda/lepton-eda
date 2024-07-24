@@ -44,14 +44,14 @@ snv_shows_value (int snv)
  *
  *  \param [in] dialog    The multi-attribute editor dialog.
  *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the GschemToplevel environment.
+ *  \param [in] user_data A pointer on the SchematicWindow environment.
  */
 static void
 multiattrib_callback_response (GtkDialog *dialog,
                                gint arg1,
                                gpointer user_data)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
+  SchematicWindow *w_current = GSCHEM_TOPLEVEL (user_data);
 
   switch (arg1) {
       case GTK_RESPONSE_CLOSE:
@@ -65,12 +65,12 @@ multiattrib_callback_response (GtkDialog *dialog,
 /*! \brief Open multiple attribute editor dialog.
  *  \par Function Description
  *  Opens the multiple attribute editor dialog for objects in this
- *  <B>GschemToplevel</B>.
+ *  <B>SchematicWindow</B>.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  */
 void
-x_multiattrib_open (GschemToplevel *w_current)
+x_multiattrib_open (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
@@ -104,10 +104,10 @@ x_multiattrib_open (GschemToplevel *w_current)
  *
  *  Closes the multiattrib dialog associated with <B>w_current</B>.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  */
 void
-x_multiattrib_close (GschemToplevel *w_current)
+x_multiattrib_close (SchematicWindow *w_current)
 {
   if (w_current->mawindow != NULL) {
     gtk_widget_destroy (w_current->mawindow);
@@ -115,17 +115,17 @@ x_multiattrib_close (GschemToplevel *w_current)
   }
 }
 
-/*! \brief Update the multiattrib editor dialog for a GschemToplevel.
+/*! \brief Update the multiattrib editor dialog for a SchematicWindow.
  *
  *  \par Function Description
  *
- *  If the GschemToplevel has an open multiattrib dialog, switch to
+ *  If the SchematicWindow has an open multiattrib dialog, switch to
  *  watching the current page's LeptonSelection object for changes.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  */
 void
-x_multiattrib_update (GschemToplevel *w_current)
+x_multiattrib_update (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
@@ -538,7 +538,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
   LeptonObject *object;
   gchar *newtext;
   GList *iter;
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
 
   newtext = g_strdup_printf ("%s=%s", name, value);
 
@@ -581,7 +581,7 @@ static void
 multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
                                          GList *attr_list)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *iter;
 
   for (iter = attr_list;
@@ -613,7 +613,7 @@ static void
 multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                                        GList *attr_list)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   LeptonObject *o_new;
   GList *iter;
   LeptonPage *active_page = NULL;
@@ -660,7 +660,7 @@ static void
 multiattrib_action_delete_attributes (Multiattrib *multiattrib,
                                       GList *attr_list)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *a_iter;
   LeptonObject *o_attrib;
 
@@ -683,7 +683,7 @@ static void
 multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
                                           GList *attr_list)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *iter;
   GList *objects_needing_add;
 
@@ -911,7 +911,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   LeptonList *attr_list;
   GList *a_iter;
   LeptonObject *o_attrib;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   gchar *value, *newtext;
   int visibility;
   int inherited;
@@ -1008,7 +1008,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   LeptonList *attr_list;
   GList *a_iter;
   LeptonObject *o_attrib;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   char *name;
   char *old_value;
   char *newtext;
@@ -1097,7 +1097,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonObject *o_attrib;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   gboolean new_visibility;
   LeptonList *attr_list;
   GList *a_iter;
@@ -1151,7 +1151,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   gboolean new_name_visible;
   LeptonList *attr_list;
   GList *a_iter;
@@ -1215,7 +1215,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   gboolean new_value_visible;
   LeptonList *attr_list;
   GList *a_iter;

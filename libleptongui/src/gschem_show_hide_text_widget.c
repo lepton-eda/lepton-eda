@@ -75,7 +75,8 @@ notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemShowHideTextWidget
 
 /*! \brief Show the hide text widget
  */
-void hide_text_dialog (GschemToplevel *w_current)
+void
+hide_text_dialog (SchematicWindow *w_current)
 {
   LeptonObject *object;
 
@@ -100,7 +101,8 @@ void hide_text_dialog (GschemToplevel *w_current)
 
 /*! \brief show the show text widget
  */
-void show_text_dialog (GschemToplevel *w_current)
+void
+show_text_dialog (SchematicWindow *w_current)
 {
   LeptonObject *object;
 

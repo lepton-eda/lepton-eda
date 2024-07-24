@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 2012 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -38,7 +38,7 @@ struct _PageSelectWidget
 {
   GschemBinClass parent_instance;
 
-  GschemToplevel* toplevel_;
+  SchematicWindow* toplevel_;
   GtkTreeView*    treeview_;
   gboolean        show_paths_;
 };
@@ -48,14 +48,14 @@ typedef struct _PageSelectWidget      PageSelectWidget;
 
 G_BEGIN_DECLS
 
-GschemToplevel*
+SchematicWindow*
 schematic_page_select_widget_get_window (PageSelectWidget* pagesel);
 
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current);
+page_select_widget_new (SchematicWindow* w_current);
 
 void
-page_select_widget_update (GschemToplevel* w_current);
+page_select_widget_update (SchematicWindow* w_current);
 
 void
 schematic_page_select_widget_set_callback (char *name,

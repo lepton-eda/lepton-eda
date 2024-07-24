@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,8 +177,9 @@ void
 gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int size);
 
 void
-gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current);
-
+gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter,
+                                          const char *string,
+                                          SchematicWindow *w_current);
 void
 gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
                                        LeptonToplevel *toplevel);

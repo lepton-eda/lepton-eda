@@ -55,11 +55,12 @@ struct st_bus_ripper
 
 /*! \brief Reset all variables used for net drawing
  *  \par Function Description
- *  This function resets all variables from GschemToplevel that are used
+ *  This function resets all variables from SchematicWindow that are used
  *  for net drawing. This function should be called when escaping from
  *  a net drawing action or before entering it.
  */
-void o_net_reset(GschemToplevel *w_current)
+void
+o_net_reset (SchematicWindow *w_current)
 {
   o_net_invalidate_rubber (w_current);
   w_current->first_wx = w_current->first_wy = -1;
@@ -76,11 +77,13 @@ void o_net_reset(GschemToplevel *w_current)
  *  It determines the best drawing direction for each quadrant of the
  *  possible net endpoint.
  *
- *  The directions are stored in the GschemToplevel->net_direction variable
+ *  The directions are stored in the SchematicWindow->net_direction variable
  *  as a bitfield.
  */
-void o_net_guess_direction(GschemToplevel *w_current,
-                           int wx, int wy)
+void
+o_net_guess_direction (SchematicWindow *w_current,
+                       int wx,
+                       int wy)
 {
   int up=0, down=0, left=0, right=0;
   int x1, y1, x2, y2;
@@ -203,12 +206,14 @@ void o_net_guess_direction(GschemToplevel *w_current,
  *  and searches the closest connection point.
  *  It searches for pins, nets and busses.
  *
- *  The connection point is stored in GschemToplevel->magnetic_wx and
- *  GschemToplevel->magnetic_wy. If no connection is found. Both variables
+ *  The connection point is stored in SchematicWindow->magnetic_wx and
+ *  SchematicWindow->magnetic_wy. If no connection is found. Both variables
  *  are set to -1.
  */
-void o_net_find_magnetic(GschemToplevel *w_current,
-                         int w_x, int w_y)
+void
+o_net_find_magnetic (SchematicWindow *w_current,
+                     int w_x,
+                     int w_y)
 {
   int x1, x2, y1, y2, min_x, min_y;
   double mindist, minbest, dist1, dist2;
@@ -345,7 +350,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
  *  last to second, the 3 coordinates are manipulated to find
  *  a way to the magnetic marker.
  */
-void o_net_finishmagnetic(GschemToplevel *w_current)
+void
+o_net_finishmagnetic (SchematicWindow *w_current)
 {
   int primary_zero_length, secondary_zero_length;
 
@@ -405,7 +411,10 @@ void o_net_finishmagnetic(GschemToplevel *w_current)
  *  position of the magnetic marker.
  *  If the controllkey is pressed the magnetic marker follows the mouse.
  */
-void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_net_start_magnetic (SchematicWindow *w_current,
+                      int w_x,
+                      int w_y)
 {
   if (!(gschem_options_get_magnetic_net_mode (w_current->options))) {
     return;
@@ -432,7 +441,10 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
  *  cursor. If we have a visible magnetic marker, we use that instead of
  *  the cursor position
  */
-void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_net_start (SchematicWindow *w_current,
+             int w_x,
+             int w_y)
 {
   i_action_start (w_current);
 
@@ -467,7 +479,10 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  *
  * The function returns TRUE if it has drawn a net, FALSE otherwise.
  */
-void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_net_end (SchematicWindow *w_current,
+           int w_x,
+           int w_y)
 {
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
@@ -594,7 +609,10 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws the rubbernet lines when drawing a net.
  */
-void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_net_motion (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   int ortho, horizontal, quadrant;
   gboolean magnetic_net_mode;
@@ -667,7 +685,8 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  This function draws the rubbernets to the graphic context
  */
 void
-o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
+o_net_draw_rubber (SchematicWindow *w_current,
+                   EdaRenderer *renderer)
 {
   int size = NET_WIDTH, w_magnetic_halfsize;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
@@ -713,7 +732,8 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
  *  \par Function Description
  *
  */
-void o_net_invalidate_rubber (GschemToplevel *w_current)
+void
+o_net_invalidate_rubber (SchematicWindow *w_current)
 {
   int size = 0, magnetic_halfsize;
   int magnetic_x, magnetic_y;
@@ -762,8 +782,10 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
-                         GList *prev_conn_objects)
+int
+o_net_add_busrippers (SchematicWindow *w_current,
+                      LeptonObject *net_obj,
+                      GList *prev_conn_objects)
 
 {
   LeptonObject *new_obj;

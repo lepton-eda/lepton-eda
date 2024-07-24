@@ -54,12 +54,13 @@ g_get_hook_by_name (const char *name)
  *
  * \see g_run_hook_object()
  *
- * \param w_current The current #GschemToplevel object.
+ * \param w_current The current #SchematicWindow object.
  * \param name    name of hook to run.
  * \param obj_lst list of \c LeptonObject smobs as hook argument.
  */
 void
-g_run_hook_object_list (GschemToplevel *w_current, const char *name,
+g_run_hook_object_list (SchematicWindow *w_current,
+                        const char *name,
                         GList *obj_lst)
 {
   SCM lst = SCM_EOL;
@@ -90,12 +91,14 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
  *
  * \see g_run_hook_object_list()
  *
- * \param w_current The current #GschemToplevel object.
+ * \param w_current The current #SchematicWindow object.
  * \param name name of hook to run.
  * \param obj  \c LeptonObject argument for hook.
  */
 void
-g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj)
+g_run_hook_object (SchematicWindow *w_current,
+                   const char *name,
+                   LeptonObject *obj)
 {
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
@@ -116,12 +119,12 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
  * Runs a hook called \a name, which should expect the single
  * \c LeptonPage \a page as its argument.
  *
- * \param w_current The current #GschemToplevel object.
+ * \param w_current The current #SchematicWindow object.
  * \param name name of hook to run
  * \param page \c LeptonPage argument for hook.
  */
 void
-g_run_hook_page (GschemToplevel *w_current,
+g_run_hook_page (SchematicWindow *w_current,
                  const char *name,
                  LeptonPage *page)
 {
@@ -143,12 +146,12 @@ g_run_hook_page (GschemToplevel *w_current,
  * Runs a hook called \a name, which should expect the single \a
  * action_mode as its argument.
  *
- * \param [in] w_current The current #GschemToplevel environment.
+ * \param [in] w_current The current #SchematicWindow environment.
  * \param [in] name The name of hook to run.
  * \param [in] action_mode The mode argument for hook.
  */
 void
-g_run_hook_action_mode (GschemToplevel *w_current,
+g_run_hook_action_mode (SchematicWindow *w_current,
                         const gchar *name,
                         const gchar *action_mode)
 {

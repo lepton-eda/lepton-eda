@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,10 @@
  *  \par Function Description
  *  This function destroys the coord dialog box and does some cleanup.
  */
-void coord_dialog_response(GtkWidget *w, gint response, GschemToplevel *w_current)
+void
+coord_dialog_response (GtkWidget *w,
+                       gint response,
+                       SchematicWindow *w_current)
 {
   gtk_widget_destroy(w_current->cowindow);
   w_current->cowindow = NULL;
@@ -40,7 +43,10 @@ void coord_dialog_response(GtkWidget *w, gint response, GschemToplevel *w_curren
  *  This function takes the screen coordinates and prints the
  *  screen and the world coordinates in the coord dialog.
  */
-void coord_display_update(GschemToplevel *w_current, int x, int y)
+void
+coord_display_update (SchematicWindow *w_current,
+                      int x,
+                      int y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   char *string;
@@ -62,7 +68,10 @@ void coord_display_update(GschemToplevel *w_current, int x, int y)
 
 /*! \brief Create the coord dialog
  */
-void coord_dialog (GschemToplevel *w_current, int x, int y)
+void
+coord_dialog (SchematicWindow *w_current,
+              int x,
+              int y)
 {
   GtkWidget *frame;
   GtkWidget *vbox;

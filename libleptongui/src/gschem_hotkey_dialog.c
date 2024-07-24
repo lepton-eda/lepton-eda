@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -159,7 +159,7 @@ filter_setup (GtkTreeView* tree, GtkTreeModel* model, GtkEntry* entry)
 static void
 response (GtkWidget* widget, gint response, gpointer data)
 {
-  GschemToplevel* w_current = (GschemToplevel*) data;
+  SchematicWindow* w_current = (SchematicWindow*) data;
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->hkwindow != NULL);
 
@@ -174,7 +174,8 @@ response (GtkWidget* widget, gint response, gpointer data)
  *  This function creates the hotkey dialog and puts the list of hotkeys
  *  into it.
  */
-void x_dialog_hotkeys (GschemToplevel *w_current)
+void
+x_dialog_hotkeys (SchematicWindow *w_current)
 {
   GtkWidget *vbox = NULL;
   GtkWidget *scrolled_win = NULL;

@@ -29,11 +29,13 @@
  *  This function snaps the current input coordinate to the
  *  closest grid coordinate.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] coord      The coordinate to snap.
  *  \return The closest grid coordinate to the input.
  */
-int snap_grid(GschemToplevel *w_current, int coord)
+int
+snap_grid (SchematicWindow *w_current,
+           int coord)
 {
   SchematicSnapMode snap_mode;
 
@@ -226,15 +228,19 @@ int clip_nochange (GschemPageGeometry *geometry, int x1, int y1, int x2, int y2)
  *  top is the smallest "y" value, and bottom is the largest.
  *  Be careful! This doesn't correspond to what you'd expect.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] wleft      Left coordinate of the bounding box.
  *  \param [in] wtop       Top coordinate of the bounding box.
  *  \param [in] wright     Right coordinate of the bounding box.
  *  \param [in] wbottom    Bottom coordinate of the bounding box.
  *  \return TRUE if bounding box is visible, FALSE otherwise
  */
-int visible (GschemToplevel *w_current,
-             int wleft, int wtop, int wright, int wbottom)
+int
+visible (SchematicWindow *w_current,
+         int wleft,
+         int wtop,
+         int wright,
+         int wbottom)
 {
   int visible=FALSE;
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));

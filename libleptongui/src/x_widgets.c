@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget);
 
 
 static void
-x_widgets_show_in_dialog (GschemToplevel* w_current,
+x_widgets_show_in_dialog (SchematicWindow* w_current,
                           GtkWidget*      widget,
                           GtkWidget**     dialog,
                           const gchar*    title,
@@ -120,7 +120,7 @@ void x_widgets_init()
 
 
 
-void x_widgets_show_options (GschemToplevel* w_current)
+void x_widgets_show_options (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -141,7 +141,7 @@ void x_widgets_show_options (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_text_properties (GschemToplevel* w_current)
+void x_widgets_show_text_properties (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -165,7 +165,7 @@ void x_widgets_show_text_properties (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_object_properties (GschemToplevel* w_current)
+void x_widgets_show_object_properties (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -186,7 +186,7 @@ void x_widgets_show_object_properties (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_log (GschemToplevel* w_current)
+void x_widgets_show_log (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -207,7 +207,7 @@ void x_widgets_show_log (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_find_text_state (GschemToplevel* w_current)
+void x_widgets_show_find_text_state (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -228,7 +228,7 @@ void x_widgets_show_find_text_state (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_color_edit (GschemToplevel* w_current)
+void x_widgets_show_color_edit (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -241,7 +241,7 @@ void x_widgets_show_color_edit (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_font_select (GschemToplevel* w_current)
+void x_widgets_show_font_select (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -254,7 +254,7 @@ void x_widgets_show_font_select (GschemToplevel* w_current)
 
 
 
-void x_widgets_show_page_select (GschemToplevel* w_current)
+void x_widgets_show_page_select (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -296,7 +296,7 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
  *  \param [in]     ini_group Config file section for dialog geometry
  */
 static void
-x_widgets_show_in_dialog (GschemToplevel* w_current,
+x_widgets_show_in_dialog (SchematicWindow* w_current,
                           GtkWidget*      widget,
                           GtkWidget**     dialog,
                           const gchar*    title,
@@ -352,7 +352,7 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
  *  \param [in] w_current  The toplevel environment.
  */
 void
-x_widgets_destroy_dialogs (GschemToplevel* w_current)
+x_widgets_destroy_dialogs (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 

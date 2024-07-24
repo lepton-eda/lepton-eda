@@ -36,7 +36,7 @@
 void
 i_callback_file_save (GtkWidget *widget, gpointer data)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  SchematicWindow *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
   LeptonPage* page = schematic_window_get_active_page (w_current);
@@ -72,7 +72,7 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 void
 i_callback_cancel (GtkWidget *widget, gpointer data)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  SchematicWindow *w_current = GSCHEM_TOPLEVEL (data);
   GValue value = { 0, };
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 

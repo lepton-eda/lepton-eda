@@ -28,7 +28,8 @@
  *  \par Function Description
  *
  */
-void o_arc_invalidate_rubber (GschemToplevel *w_current)
+void
+o_arc_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -53,11 +54,14 @@ void o_arc_invalidate_rubber (GschemToplevel *w_current)
  *  of the arc is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>).
  *  The radius of the arc is in <B>w_current->distance</B>.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_arc_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_arc_start (SchematicWindow *w_current,
+             int w_x,
+             int w_y)
 {
   i_action_start (w_current);
 
@@ -89,11 +93,14 @@ void o_arc_start(GschemToplevel *w_current, int w_x, int w_y)
  *
  *  The two angles needs to be input to fully define the arc.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_arc_end1 (SchematicWindow *w_current,
+            int w_x,
+            int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -123,13 +130,16 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
  *  the center and the radius of the arc, are converted in world units.
  *  A new object is created and linked to the object list.
  *
- *  \param [in] w_current    The GschemToplevel object.
+ *  \param [in] w_current    The SchematicWindow object.
  *  \param [in] radius       Radius of the arc
  *  \param [in] start_angle  Start of angle in degrees.
  *  \param [in] sweep_angle  Angle sweep in degrees.
  */
-void o_arc_end4(GschemToplevel *w_current, int radius,
-                int start_angle, int sweep_angle)
+void
+o_arc_end4 (SchematicWindow *w_current,
+            int radius,
+            int start_angle,
+            int sweep_angle)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -179,7 +189,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
  *                  start and end angle respectively.
  *  </DL>
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which angle to change.
@@ -197,7 +207,11 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
  *        ending angle of the arc.
  *  </DL>
  */
-void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
+void
+o_arc_motion (SchematicWindow *w_current,
+              int w_x,
+              int w_y,
+              int whichone)
 {
   int diff_x, diff_y, angle_deg;
 
@@ -250,19 +264,21 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw arc from GschemToplevel object.
+/*! \brief Draw arc from SchematicWindow object.
  *  \par Function Description
- *  This function draws the arc from the variables in the GschemToplevel
+ *  This function draws the arc from the variables in the SchematicWindow
  *  structure <B>*w_current</B> using \a renderer.
  *  The center of the arc is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>), its radius equal to <B>w_current->distance</B>,
  *  and the start and end angle are given by <B>w_current->second_wx</B> and
  *  <B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
-void o_arc_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_arc_draw_rubber (SchematicWindow *w_current,
+                   EdaRenderer *renderer)
 {
   double rad_angle;
   int rdx, rdy;

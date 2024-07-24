@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,8 @@ on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
 
 
 static void
-exec_macro (GschemToplevel* toplevel, const gchar* macro_text);
+exec_macro (SchematicWindow* toplevel,
+            const gchar* macro_text);
 
 static void
 macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text);
@@ -249,7 +250,7 @@ on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
  */
 
 GtkWidget*
-macro_widget_new (GschemToplevel* toplevel)
+macro_widget_new (SchematicWindow* toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
 
@@ -290,7 +291,8 @@ macro_widget_hide (GschemMacroWidget* widget)
  * Execution output and result will be logged.
 */
 static void
-exec_macro (GschemToplevel* toplevel, const gchar* macro_text)
+exec_macro (SchematicWindow* toplevel,
+            const gchar* macro_text)
 {
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (toplevel);

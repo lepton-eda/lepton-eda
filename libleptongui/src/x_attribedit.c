@@ -39,7 +39,9 @@
  *  \par Function Documentation
  *
  */
-void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
+void
+attrib_edit_dialog_ok (GtkWidget * w,
+                       SchematicWindow *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   const char *value, *label;
@@ -263,8 +265,10 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
  *  This function catches the user response for the add and edit
  *  attribute dialog.
  */
-void attribute_edit_dialog_response(GtkWidget *w, gint response,
-                                    GschemToplevel *w_current)
+void
+attribute_edit_dialog_response (GtkWidget *w,
+                                gint response,
+                                SchematicWindow *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_APPLY:
@@ -288,7 +292,10 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the single attribute edit dialog.
  */
-void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int flag)
+void
+attrib_edit_dialog (SchematicWindow *w_current,
+                    LeptonObject *attr_obj,
+                    int flag)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;

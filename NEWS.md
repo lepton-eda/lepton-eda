@@ -131,7 +131,7 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   toplevel schematic window structure similar to what we have in
   `(lepton toplevel foreign)` for `<toplevel>` structure.  The new
   Scheme window type is called `<window>`.  Its instances wrap
-  foreign C pointers to structures of the type `GschemToplevel`.
+  foreign C pointers to structures of the type `SchematicWindow`.
 
 - The function `current-window()` now returns an instance of the
   type `<window>`.

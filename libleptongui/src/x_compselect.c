@@ -97,7 +97,7 @@ compselect_get_view (Compselect *compselect)
  *
  *  \param [in] dialog    The component selection dialog.
  *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the GschemToplevel environment.
+ *  \param [in] user_data A pointer on the SchematicWindow environment.
  */
 void
 x_compselect_callback_response (GtkDialog *dialog,
@@ -105,7 +105,7 @@ x_compselect_callback_response (GtkDialog *dialog,
                                 gpointer user_data)
 {
   Compselect *compselect = (Compselect*)dialog;
-  GschemToplevel *w_current = (GschemToplevel *)user_data;
+  SchematicWindow *w_current = (SchematicWindow *)user_data;
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   SchematicActionMode action_mode =
@@ -208,7 +208,7 @@ schematic_compselect_get_preview (GtkWidget *cs)
 
 
 GtkWidget*
-schematic_compselect_new (GschemToplevel *w_current)
+schematic_compselect_new (SchematicWindow *w_current)
 {
   GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
                                             /* GschemDialog */
@@ -254,7 +254,7 @@ x_compselect_open (GtkWidget *cswindow)
 
 
 void
-x_compselect_deselect (GschemToplevel *w_current)
+x_compselect_deselect (SchematicWindow *w_current)
 {
   Compselect *compselect = COMPSELECT (w_current->cswindow);
 
@@ -454,7 +454,7 @@ enum {
  */
 static void
 update_attributes_model (Compselect *compselect,
-                         GschemToplevel *preview_toplevel)
+                         SchematicWindow *preview_toplevel)
 {
   GtkListStore *model;
   GtkTreeIter iter;
@@ -561,7 +561,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   Compselect *compselect = (Compselect*)user_data;
   const CLibSymbol *sym = NULL;
   gchar *buffer = NULL;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
 

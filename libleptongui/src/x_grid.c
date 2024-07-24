@@ -38,11 +38,12 @@
  *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-static int query_dots_grid_spacing (GschemToplevel *w_current)
+static int
+query_dots_grid_spacing (SchematicWindow *w_current)
 {
   int incr, screen_incr;
 
@@ -87,7 +88,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  \par Function Description
  *  Draws the dotted grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \param [in,out] cr     The Cairo context for the drawing.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
@@ -95,7 +96,12 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  \param [in] height     The height of the region to draw.
  */
 static void
-draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height)
+draw_dots_grid_region (SchematicWindow *w_current,
+                       cairo_t *cr,
+                       int x,
+                       int y,
+                       int width,
+                       int height)
 {
   int incr = query_dots_grid_spacing (w_current);
 
@@ -160,12 +166,17 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
 
 /*! \brief Helper function for draw_mesh_grid_region
  */
-static void draw_mesh (GschemToplevel *w_current,
-                       cairo_t *cr,
-                       cairo_matrix_t *user_to_device_matrix,
-                       LeptonColor *color,
-                       int x_start, int y_start, int x_end, int y_end,
-                       int incr, int coarse_mult)
+static void
+draw_mesh (SchematicWindow *w_current,
+           cairo_t *cr,
+           cairo_matrix_t *user_to_device_matrix,
+           LeptonColor *color,
+           int x_start,
+           int y_start,
+           int x_end,
+           int y_end,
+           int incr,
+           int coarse_mult)
 {
   int i, j;
   double x1, y1, x2, y2;
@@ -249,11 +260,12 @@ static void draw_mesh (GschemToplevel *w_current,
  *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-static int query_mesh_grid_spacing (GschemToplevel *w_current)
+static int
+query_mesh_grid_spacing (SchematicWindow *w_current)
 {
   int incr, screen_incr;
 
@@ -283,7 +295,7 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
  *  \par Function Description
  *  Draws the mesh grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \param [in] cr         The cairo context.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
@@ -291,7 +303,12 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
  *  \param [in] height     The height of the region to draw.
  */
 static void
-draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height)
+draw_mesh_grid_region (SchematicWindow *w_current,
+                       cairo_t *cr,
+                       int x,
+                       int y,
+                       int width,
+                       int height)
 {
   int snap_size = gschem_options_get_snap_size (w_current->options);
   int coarse_increment = MESH_COARSE_GRID_MULTIPLIER * snap_size;
@@ -350,19 +367,20 @@ draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
  *  \par Function Description
  *  Draws the desired grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \param [in] cr         The cairo context.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-void x_grid_draw_region (GschemToplevel *w_current,
-                         cairo_t *cr,
-                         int x,
-                         int y,
-                         int width,
-                         int height)
+void
+x_grid_draw_region (SchematicWindow *w_current,
+                    cairo_t *cr,
+                    int x,
+                    int y,
+                    int width,
+                    int height)
 {
   SchematicGridMode grid_mode;
 
@@ -393,11 +411,12 @@ void x_grid_draw_region (GschemToplevel *w_current,
  *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GschemToplevel.
+ *  \param [in] w_current  The SchematicWindow.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-int x_grid_query_drawn_spacing (GschemToplevel *w_current)
+int
+x_grid_query_drawn_spacing (SchematicWindow *w_current)
 {
   SchematicGridMode grid_mode;
 

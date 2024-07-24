@@ -1571,7 +1571,7 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
  *
  *  \param [in] view The #GschemPageView object to redraw page on.
  *  \param [in] event The \c GdkEventExpose event (GTK2).
- *  \param [in] w_current The parent #GschemToplevel object of the view.
+ *  \param [in] w_current The parent #SchematicWindow object of the view.
  *
  *  \@param cr The \c cairo_t object (GTK3).  FIXME: The functions
  *  for GTK2 and GTK3 have to be separate in the code and have
@@ -1584,7 +1584,7 @@ gschem_page_view_redraw (GschemPageView *view,
 #else
                          GdkEventExpose *event,
 #endif
-                         GschemToplevel *w_current)
+                         SchematicWindow *w_current)
 {
   GschemPageGeometry *geometry;
   LeptonPage *page;

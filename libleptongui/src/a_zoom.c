@@ -38,7 +38,10 @@
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void
-a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from)
+a_zoom (SchematicWindow *w_current,
+        GschemPageView *page_view,
+        int dir,
+        int selected_from)
 {
   g_return_if_fail (page_view != NULL);
 
@@ -134,7 +137,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  *
  */
 void
-a_zoom_box(GschemToplevel *w_current)
+a_zoom_box (SchematicWindow *w_current)
 {
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
@@ -181,7 +184,10 @@ a_zoom_box(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+a_zoom_box_start (SchematicWindow *w_current,
+                  int w_x,
+                  int w_y)
 {
   i_action_start (w_current);
 
@@ -197,7 +203,10 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+a_zoom_box_motion (SchematicWindow *w_current,
+                   int w_x,
+                   int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
@@ -215,7 +224,8 @@ void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
+void
+a_zoom_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -233,7 +243,9 @@ void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void a_zoom_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+a_zoom_box_draw_rubber (SchematicWindow *w_current,
+                        EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

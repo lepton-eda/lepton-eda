@@ -35,7 +35,7 @@ static GtkFileFilter* filter_all      = NULL;
 static GtkFileFilter* filter_last_opendlg = NULL;
 
 static int
-x_fileselect_load_backup (GschemToplevel *w_current,
+x_fileselect_load_backup (SchematicWindow *w_current,
                           GString *message);
 
 static void
@@ -316,11 +316,11 @@ x_fileselect_add_preview (GtkWidget *dialog,
  *
  *  This function creates and initializes a file chooser dialog.
  *
- *  \param [in] w_current The GschemToplevel environment.
+ *  \param [in] w_current The SchematicWindow environment.
  *  \return The created dialog widget.
  */
 GtkWidget*
-schematic_file_select_dialog_new (GschemToplevel *w_current)
+schematic_file_select_dialog_new (SchematicWindow *w_current)
 {
   GtkWidget *dialog;
 
@@ -349,12 +349,12 @@ schematic_file_select_dialog_new (GschemToplevel *w_current)
  *  This function opens a file chooser dialog and waits for the
  *  user to select at least one file to load.
  *
- *  \param [in] w_current The GschemToplevel environment.
+ *  \param [in] w_current The SchematicWindow environment.
  *  \param [in] dialog The dialog window widget.
  *  \return The GSList of file names to open.
  */
 GSList*
-x_fileselect_open (GschemToplevel *w_current,
+x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog)
 {
   GSList *filenames = NULL;
@@ -402,13 +402,13 @@ x_fileselect_open (GschemToplevel *w_current,
  *  is performed in x_window_save_page(), which is called by this
  *  function).
  *
- *  \param  [in]     w_current The GschemToplevel environment.
+ *  \param  [in]     w_current The SchematicWindow environment.
  *  \param  [in]     page      The page to be saved.
  *  \param  [in,out] result    If not NULL, will be filled with save operation result.
  *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
 gboolean
-x_fileselect_save (GschemToplevel *w_current,
+x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result)
 {
@@ -570,14 +570,14 @@ x_fileselect_save (GschemToplevel *w_current,
  *  if load the backup or the original file.
  *
  *  \todo Make this a registered callback function with user data,
- *        as we'd rather be passed a GschemToplevel than a LeptonToplevel.
+ *        as we'd rather be passed a SchematicWindow than a LeptonToplevel.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current The SchematicWindow object.
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
 static int
-x_fileselect_load_backup (GschemToplevel *w_current,
+x_fileselect_load_backup (SchematicWindow *w_current,
                           GString *message)
 {
   GtkWidget *dialog;
@@ -617,7 +617,7 @@ x_fileselect_load_backup (GschemToplevel *w_current,
 
 
 gboolean
-schematic_file_open (GschemToplevel *w_current,
+schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
                      const gchar *filename,
                      GError **err)

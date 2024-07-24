@@ -68,7 +68,7 @@ static GSList*
 find_objects_using_check (GSList *pages);
 
 static GSList*
-get_pages (GschemToplevel *w_current,
+get_pages (SchematicWindow *w_current,
            GList *pages,
            gboolean descend);
 
@@ -76,7 +76,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static GList*
-get_subpages (GschemToplevel *w_current,
+get_subpages (SchematicWindow *w_current,
               LeptonPage *page);
 
 static void
@@ -97,7 +97,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  Finds instances of a given string and displays the result inside this
  *  widget.
  *
- *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] state The GschemFindTextState structure.
  *  \param [in] pages a list of pages to search
  *  \param [in] type the type of find to perform
@@ -107,7 +107,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \return the number of objects found
  */
 int
-gschem_find_text_state_find (GschemToplevel *w_current,
+gschem_find_text_state_find (SchematicWindow *w_current,
                              GschemFindTextState *state,
                              GList *pages,
                              int type,
@@ -602,13 +602,13 @@ find_objects_using_check (GSList *pages)
  *
  *  Descends the hierarchy of pages, if selected, and removes duplicate pages.
  *
- *  \param [in] w_current The current #GschemToplevel environment.
+ *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] pages the list of pages to begin search
  *  \param [in] descend alose locates subpages
  *  \return a list of all the pages
  */
 static GSList*
-get_pages (GschemToplevel *w_current,
+get_pages (SchematicWindow *w_current,
            GList *pages,
            gboolean descend)
 {
@@ -670,12 +670,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *
  *  if any subpages are not loaded, this function will load them.
  *
- *  \param [in] w_current The current #GschemToplevel environment.
+ *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page the parent page
  *  \return a list of all the subpages
  */
 static GList*
-get_subpages (GschemToplevel *w_current,
+get_subpages (SchematicWindow *w_current,
               LeptonPage *page)
 {
   const GList *object_iter;

@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018-2020 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2022 Lepton EDA Contributors
+ * Copyright (C) 2018-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ dlg_confirm_overwrite (GtkWidget* parent, const gchar* fname);
  */
 
 GtkWidget*
-color_edit_widget_new (GschemToplevel* w_current)
+color_edit_widget_new (SchematicWindow* w_current)
 {
   gpointer obj = g_object_new (COLOR_EDIT_WIDGET_TYPE,
                                "toplevel", w_current,
@@ -376,7 +376,7 @@ color_sel_update (ColorEditWidget* widget)
  *  \brief: Update color selection widget to match color in a combo box
  */
 void
-color_edit_widget_update (GschemToplevel* w_current)
+color_edit_widget_update (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 

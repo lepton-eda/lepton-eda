@@ -28,7 +28,8 @@
  *  \brief
  *  \par Function Description
  */
-void o_line_invalidate_rubber (GschemToplevel *w_current)
+void
+o_line_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -53,11 +54,14 @@ void o_line_invalidate_rubber (GschemToplevel *w_current)
  *  A temporary line is drawn during the process with the selection color
  *  and changed according to the position of the mouse pointer.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_line_start(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_line_start (SchematicWindow *w_current,
+              int w_x,
+              int w_y)
 {
   i_action_start (w_current);
 
@@ -79,11 +83,14 @@ void o_line_start(GschemToplevel *w_current, int w_x, int w_y)
  *  adds a new initialized line object to the list of object of the current
  *  sheet.
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
+void
+o_line_end (SchematicWindow *w_current,
+            int w_x,
+            int w_y)
 {
   LeptonObject *new_obj;
 
@@ -131,11 +138,14 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
  *  (<B>second_wx</B>,<B>second_wy</B>).
  *  The first end is constant. The second end is updated to the (<B>w_x</B>,<B>w_y</B>).
  *
- *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_line_motion (GschemToplevel *w_current, int w_x, int w_y)
+void
+o_line_motion (SchematicWindow *w_current,
+               int w_x,
+               int w_y)
 {
   int diff_x, diff_y;
 
@@ -169,7 +179,7 @@ void o_line_motion (GschemToplevel *w_current, int w_x, int w_y)
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw line from GschemToplevel object.
+/*! \brief Draw line from SchematicWindow object.
  *  \par Function Description
  *  This function draws a line with an exclusive or function over
  *  the sheet using \a renderer.
@@ -177,10 +187,12 @@ void o_line_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  described by the two points (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The #GschemToplevel object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] renderer   The \c EdaRenderer object.
  */
-void o_line_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
+void
+o_line_draw_rubber (SchematicWindow *w_current,
+                    EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

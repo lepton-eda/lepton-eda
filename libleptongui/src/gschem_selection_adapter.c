@@ -1856,10 +1856,12 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
  *
  *  \param [in] adapter The #GschemSelectionAdapter structure.
  *  \param [in] string The new text string.
- *  \param [in] w_current The current #GschemToplevel object.
+ *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current)
+gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter,
+                                          const char *string,
+                                          SchematicWindow *w_current)
 {
   GList *iter;
 

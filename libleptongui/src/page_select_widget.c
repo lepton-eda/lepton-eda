@@ -64,7 +64,7 @@ static GCallback callback_page_close = NULL;
 static GCallback callback_selection_changed = NULL;
 
 
-GschemToplevel*
+SchematicWindow*
 schematic_page_select_widget_get_window (PageSelectWidget* pagesel)
 {
   g_return_val_if_fail (pagesel != NULL, NULL);
@@ -77,7 +77,7 @@ schematic_page_select_widget_get_window (PageSelectWidget* pagesel)
  *  \public
  */
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current)
+page_select_widget_new (SchematicWindow* w_current)
 {
   gpointer obj = g_object_new (PAGE_SELECT_WIDGET_TYPE,
                                "toplevel", w_current,
@@ -175,7 +175,7 @@ page_select_widget_init (PageSelectWidget* widget)
  *  \public
  */
 void
-page_select_widget_update (GschemToplevel* w_current)
+page_select_widget_update (SchematicWindow* w_current)
 {
   GtkWidget* widget = w_current->page_select_widget;
 
@@ -216,7 +216,7 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
   GtkTreeModel *model;
   GtkTreeIter iter;
   PageSelectWidget *pagesel = (PageSelectWidget*) data;
-  GschemToplevel *w_current;
+  SchematicWindow *w_current;
   LeptonPage *page;
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
@@ -322,8 +322,8 @@ static void
 pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
 {
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
-  GschemToplevel* toplevel = pagesel->toplevel_;
-  ((void (*) (GtkWidget*, GschemToplevel*)) callback_page_new) (NULL, toplevel);
+  SchematicWindow* toplevel = pagesel->toplevel_;
+  ((void (*) (GtkWidget*, SchematicWindow*)) callback_page_new) (NULL, toplevel);
 }
 
 
@@ -334,8 +334,8 @@ static void
 pagesel_callback_popup_open_page (GtkMenuItem* mitem, gpointer data)
 {
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
-  GschemToplevel* toplevel = pagesel->toplevel_;
-  ((void (*) (GtkWidget*, GschemToplevel*)) callback_page_open) (NULL, toplevel);
+  SchematicWindow* toplevel = pagesel->toplevel_;
+  ((void (*) (GtkWidget*, SchematicWindow*)) callback_page_open) (NULL, toplevel);
 }
 
 
@@ -346,8 +346,8 @@ static void
 pagesel_callback_popup_save_page (GtkMenuItem* mitem, gpointer data)
 {
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
-  GschemToplevel* toplevel = pagesel->toplevel_;
-  ((void (*) (GtkWidget*, GschemToplevel*)) callback_page_save) (NULL, toplevel);
+  SchematicWindow* toplevel = pagesel->toplevel_;
+  ((void (*) (GtkWidget*, SchematicWindow*)) callback_page_save) (NULL, toplevel);
 }
 
 
@@ -358,8 +358,8 @@ static void
 pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
 {
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
-  GschemToplevel* toplevel = pagesel->toplevel_;
-  ((void (*) (GtkWidget*, GschemToplevel*)) callback_page_close) (NULL, toplevel);
+  SchematicWindow* toplevel = pagesel->toplevel_;
+  ((void (*) (GtkWidget*, SchematicWindow*)) callback_page_close) (NULL, toplevel);
 }
 
 
@@ -746,7 +746,7 @@ pagesel_update (PageSelectWidget* pagesel)
 
   g_assert (IS_PAGE_SELECT_WIDGET (pagesel));
 
-  GschemToplevel *w_current = pagesel->toplevel_;
+  SchematicWindow *w_current = pagesel->toplevel_;
   g_return_if_fail (w_current != NULL);
 
   toplevel = gschem_toplevel_get_toplevel (w_current);
