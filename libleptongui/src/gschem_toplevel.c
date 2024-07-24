@@ -710,10 +710,10 @@ schematic_window_active_page_changed (SchematicWindow *w_current)
 }
 
 
-/*! \brief Set the libgeda toplevel for this gschem toplevel
+/*! \brief Set the liblepton toplevel for this window.
  *
- *  \param [in] w_current This gschem toplevel
- *  \param [in] toplevel The libgeda toplevel
+ *  \param [in] w_current This Lepton window instance.
+ *  \param [in] toplevel The liblepton toplevel.
  */
 void
 gschem_toplevel_set_toplevel (SchematicWindow *w_current,
