@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -1040,7 +1040,7 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
   int angle;
   int lower_x, lower_y, upper_x, upper_y;
 
-  /* Get a pixbuf. If image doesn't exist, libgeda should
+  /* Get a pixbuf. If image doesn't exist, liblepton should
    * provide a fallback image. */
   pixbuf = GDK_PIXBUF (g_object_ref (object->picture->pixbuf));
 
