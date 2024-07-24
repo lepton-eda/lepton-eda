@@ -19,6 +19,7 @@
 #ifndef DEFINES_PRIV_H
 #define DEFINES_PRIV_H
 
+/* Default object end type for newly created objects. */
 #define DEFAULT_OBJECT_END END_SQUARE
 
 #endif /* !DEFINES_PRIV_H */
