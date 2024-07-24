@@ -21,7 +21,7 @@
 G_BEGIN_DECLS
 
 /* Temporary cast until SchematicWindow becomes a class */
-#define GSCHEM_TOPLEVEL(ptr) ((SchematicWindow*)(ptr))
+#define SCHEMATIC_WINDOW(ptr) ((SchematicWindow*)(ptr))
 
 
 struct st_schematic_window {

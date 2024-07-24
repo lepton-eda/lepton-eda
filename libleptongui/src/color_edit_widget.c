@@ -137,7 +137,7 @@ set_property (GObject* obj, guint id, const GValue* val, GParamSpec* spec)
   if (id == PROP_TOPLEVEL)
   {
     gpointer ptr = g_value_get_pointer (val);
-    widget->toplevel_ = GSCHEM_TOPLEVEL (ptr);
+    widget->toplevel_ = SCHEMATIC_WINDOW (ptr);
   }
   else
   {

@@ -164,7 +164,7 @@ set_property (GObject* object,
   switch (param_id)
   {
     case PROP_TOPLEVEL:
-      widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
+      widget->toplevel = SCHEMATIC_WINDOW (g_value_get_pointer (value));
       break;
 
     default:

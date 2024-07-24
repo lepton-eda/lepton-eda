@@ -51,7 +51,7 @@ multiattrib_callback_response (GtkDialog *dialog,
                                gint arg1,
                                gpointer user_data)
 {
-  SchematicWindow *w_current = GSCHEM_TOPLEVEL (user_data);
+  SchematicWindow *w_current = SCHEMATIC_WINDOW (user_data);
 
   switch (arg1) {
       case GTK_RESPONSE_CLOSE:

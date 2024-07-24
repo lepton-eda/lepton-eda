@@ -543,7 +543,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_GSCHEM_TOPLEVEL:
-      widget->w_current = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
+      widget->w_current = SCHEMATIC_WINDOW (g_value_get_pointer (value));
       break;
 
     default:

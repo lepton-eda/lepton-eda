@@ -66,7 +66,7 @@ clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
 static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
-  SchematicWindow *w_current = GSCHEM_TOPLEVEL (user_data_or_owner);
+  SchematicWindow *w_current = SCHEMATIC_WINDOW (user_data_or_owner);
 
   /* Free the objects in the clipboard buffer */
   lepton_object_list_delete (w_current->clipboard_buffer);

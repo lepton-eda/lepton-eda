@@ -288,7 +288,7 @@ i_set_state_msg (SchematicWindow *w_current,
  */
 static void clipboard_usable_cb (int usable, void *userdata)
 {
-  SchematicWindow *w_current = GSCHEM_TOPLEVEL (userdata);
+  SchematicWindow *w_current = SCHEMATIC_WINDOW (userdata);
   x_menus_sensitivity (w_current->menubar,    "&clipboard-paste", usable);
   x_menus_sensitivity (w_current->popup_menu, "&clipboard-paste", usable);
 }

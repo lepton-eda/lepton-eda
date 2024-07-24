@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1302,7 +1302,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_TOPLEVEL:
-          widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
+          widget->toplevel = SCHEMATIC_WINDOW (g_value_get_pointer (value));
           break;
 
     case PROP_GRID_MODE:
