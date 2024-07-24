@@ -1089,7 +1089,7 @@ eda_config_is_descendent (EdaConfig *cfg, EdaConfig *parent)
  * \warning Normally, application code should avoid using this
  *          function; keeping to the default configuration inheritance
  *          structure is recommended in order to ensure consistent
- *          behaviour of all libgeda applications.
+ *          behaviour of all liblepton applications.
  *
  * \param cfg     Configuration context.
  * \param parent  New parent context for \a cfg.
