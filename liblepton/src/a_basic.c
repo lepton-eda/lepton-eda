@@ -32,7 +32,7 @@
 
 /*! \brief Save a file
  *  \par Function Description
- *  This function saves the data in a libgeda format to a file
+ *  This function saves the data in a gEDA format to a file
  *
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
