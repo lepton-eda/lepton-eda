@@ -726,8 +726,8 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
 
 /*! \brief Get the selection associated with this adapter
  *
- *  \param [in] adapter This adapter
- *  \return The libgeda selection
+ *  \param [in] adapter This selection adapter.
+ *  \return The current page selection.
  */
 LeptonSelection*
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter)
