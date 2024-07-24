@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -430,7 +430,7 @@ static void cache_find_oldest (gpointer key,
  *  NULL if the command fails for some reason.  The system \b PATH is
  *  used to find the program to execute.
  *  The command can write messages to the standard error output. They
- *  are forwarded to the libgeda logging mechanism.
+ *  are forwarded to the liblepton logging mechanism.
  *
  *  Private function used only in s_clib.c.
  *
@@ -996,7 +996,7 @@ GList *s_clib_source_get_symbols (const CLibSource *source)
 /*! \brief Get the name of a symbol.
  *  \par Function Description
  *  Get the name of a symbol.  The symbol name uniquely identifies it
- *  to libgeda.
+ *  to liblepton.
  *
  *  \param symbol Symbol to be examined.
  *  \return Name of symbol.
