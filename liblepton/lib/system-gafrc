@@ -10,7 +10,8 @@
              (geda deprecated)
              (lepton color-map))
 
-; The following global variables are defined by libgeda:
+;;; The following global variables are defined in (lepton rc).
+;;; All of them are deprecated, please avoid using them:
 ;
 ; path-sep       -- system path separator
 ; geda-data-path -- path to gEDA system-wide data directory
