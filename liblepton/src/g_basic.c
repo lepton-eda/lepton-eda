@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,18 +71,20 @@ static SCM protected_body_eval (void *data)
 /*! \brief Evaluate a Scheme expression safely.
  *  \par Function Description
  *
- *  Often a libgeda program (or libgeda itself) will need to call out
- *  to Scheme code, for example to load a Scheme initialisation (RC) file.
- *  If an error or exception caused by such code goes uncaught, it
- *  locks up the Scheme interpreter, stopping any further Scheme code
- *  from being run until the program is restarted.
+ *  Often a liblepton program (or liblepton itself) will need to
+ *  call out to Scheme code, for example to load a Scheme
+ *  initialisation (RC) file.  If an error or exception caused by
+ *  such code goes uncaught, it locks up the Scheme interpreter,
+ *  stopping any further Scheme code from being run until the
+ *  program is restarted.
  *
  *  This function is equivalent to scm_eval (), with the important
- *  difference that any errors or exceptions caused by the evaluated
- *  expression \a exp are caught and reported via the libgeda logging
- *  mechanism.  If an error occurs during evaluation, this function
- *  returns SCM_BOOL_F.  If \a module_or_state is undefined, uses the
- *  current interaction environment.
+ *  difference that any errors or exceptions caused by the
+ *  evaluated expression \a exp are caught and reported via the
+ *  liblepton logging mechanism.  If an error occurs during
+ *  evaluation, this function returns SCM_BOOL_F.  If \a
+ *  module_or_state is undefined, uses the current interaction
+ *  environment.
  *
  *  \param exp             Expression to evaluate
  *  \param module_or_state Environment in which to evaluate \a exp
@@ -136,7 +138,7 @@ SCM g_scm_c_eval_string_protected (const gchar *str) {
  *  \par Function Description
  *
  *  Evaluates a string similarly to scm_eval_string(), but catching
- *  any errors or exceptions and reporting them via the libgeda
+ *  any errors or exceptions and reporting them via the liblepton
  *  logging mechanism.
  *
  *  See also g_scm_eval_protected() and g_scm_c_eval_string_protected().
@@ -191,7 +193,7 @@ g_read_file__pre_handler (struct g_read_file_data_t *data, SCM key, SCM args)
  * \par Function Description
  * Loads \a filename, catching any uncaught errors and logging them.
  *
- * \bug Most other functions in the libgeda API return TRUE on success
+ * \bug Most other functions in the liblepton API return TRUE on success
  * and FALSE on failure. g_read_file() shouldn't be an exception.
  *
  * \param toplevel  The LeptonToplevel structure.
