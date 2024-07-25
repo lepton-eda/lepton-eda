@@ -281,8 +281,8 @@ void
 schematic_window_page_changed (SchematicWindow *w_current);
 
 void
-gschem_toplevel_set_toplevel (SchematicWindow *w_current,
-                              LeptonToplevel *toplevel);
+schematic_window_set_toplevel (SchematicWindow *w_current,
+                               LeptonToplevel *toplevel);
 void
 schematic_window_page_content_changed (SchematicWindow *w_current,
                                        LeptonPage *page);

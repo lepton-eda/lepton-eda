@@ -716,8 +716,8 @@ schematic_window_active_page_changed (SchematicWindow *w_current)
  *  \param [in] toplevel The liblepton toplevel.
  */
 void
-gschem_toplevel_set_toplevel (SchematicWindow *w_current,
-                              LeptonToplevel *toplevel)
+schematic_window_set_toplevel (SchematicWindow *w_current,
+                               LeptonToplevel *toplevel)
 {
   g_return_if_fail (w_current != NULL);
 

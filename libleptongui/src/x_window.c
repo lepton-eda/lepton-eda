@@ -802,7 +802,7 @@ x_window_close_page (SchematicWindow *w_current,
 SchematicWindow* x_window_new (LeptonToplevel *toplevel)
 {
   SchematicWindow *w_current = schematic_window_new ();
-  gschem_toplevel_set_toplevel (w_current, toplevel);
+  schematic_window_set_toplevel (w_current, toplevel);
 
   /* Damage notifications should invalidate the object on screen */
   lepton_object_add_change_notify (toplevel,
