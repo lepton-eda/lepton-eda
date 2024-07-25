@@ -9,7 +9,7 @@ EXTRA_DIST = \
 SUFFIXES = .html .tex .pdf
 
 all:
-	@echo 'Type: make doxygen  to create doxygen documentation for libgeda'
+	@echo 'Type: "make doxygen" to create doxygen documentation for liblepton'
 
 doxygen: liblepton.dox
 	@echo 'Creating doxygen documentation for liblepton...'

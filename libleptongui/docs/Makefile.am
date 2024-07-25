@@ -6,7 +6,7 @@ EXTRA_DIST = \
 	README.agile
 
 all:
-	@echo 'Type: make doxygen to create doxygen documentation for gschem'
+	@echo 'Type: "make doxygen" to create doxygen documentation for libleptongui'
 
 doxygen: libleptongui.dox
 	@echo 'Creating doxygen documentation for gschem...'

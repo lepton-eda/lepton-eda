@@ -7,7 +7,7 @@ EXTRA_DIST = \
 	README
 
 all:
-	@echo 'Type: make doxygen  to create doxygen documentation for libleptonattrib'
+	@echo 'Type: "make doxygen" to create doxygen documentation for libleptonattrib'
 
 doxygen: libleptonattrib.dox
 	@echo 'Creating doxygen documentation for libleptonattrib...'
