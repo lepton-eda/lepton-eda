@@ -89,10 +89,6 @@
 #define MIDDLE_RIGHT	7
 #define UPPER_RIGHT	8
 
-/* one character string used to calculate tab's width */
-/* Warning: it MUST be a string. */
-#define TAB_CHAR_MODEL "b"
-
 /* The conn modes for type */
 #define CONN_NULL               0
 #define CONN_ENDPOINT		1
