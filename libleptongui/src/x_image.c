@@ -385,7 +385,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   GError *gerror = NULL;
   GtkWidget *dialog;
   float prop;
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *view = schematic_window_get_current_page_view (w_current);
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -777,7 +777,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  page_view = gschem_toplevel_get_current_page_view (w_current);
+  page_view = schematic_window_get_current_page_view (w_current);
 
   g_return_val_if_fail (page_view != NULL, NULL);
 
@@ -916,7 +916,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   GschemPageGeometry *old_geometry, *new_geometry;
   GdkPixmap *window = NULL;
 
-  page_view = gschem_toplevel_get_current_page_view (w_current);
+  page_view = schematic_window_get_current_page_view (w_current);
 
   old_geometry = gschem_page_view_get_page_geometry (page_view);
 

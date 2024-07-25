@@ -44,7 +44,7 @@ o_text_prepare_place (SchematicWindow *w_current,
                       int rotate,
                       int size)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);
@@ -99,7 +99,7 @@ o_text_change (SchematicWindow *w_current,
 {
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);

@@ -70,7 +70,7 @@ o_grips_search_world (SchematicWindow *w_current,
   int size;
   int w_size;
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, NULL);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);

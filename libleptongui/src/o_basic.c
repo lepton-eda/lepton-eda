@@ -133,7 +133,7 @@ void o_redraw_rect (SchematicWindow *w_current,
   if (show_hidden_text)
     render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
   if (w_current->fast_mousepan &&
-      gschem_toplevel_get_current_page_view(w_current)->doing_pan)
+      schematic_window_get_current_page_view(w_current)->doing_pan)
     render_flags |= (EDA_RENDERER_FLAG_TEXT_OUTLINE
                      | EDA_RENDERER_FLAG_PICTURE_OUTLINE);
 
@@ -436,7 +436,7 @@ o_redraw_cleanstates (SchematicWindow *w_current)
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
-      gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
+      gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
       return TRUE;
 
     /* all remaining states without dc changes */
@@ -487,7 +487,7 @@ o_invalidate_rect (SchematicWindow *w_current,
                    int x2,
                    int y2)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_screen_rect (page_view,
                                            x1,
@@ -518,7 +518,7 @@ o_invalidate (SchematicWindow *w_current,
 
   int left, top, bottom, right;
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   LeptonPage *page = gschem_page_view_get_page (page_view);
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
@@ -559,7 +559,7 @@ o_invalidate_glist (SchematicWindow *w_current,
 {
   int left, top, bottom, right;
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);

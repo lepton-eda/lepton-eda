@@ -150,7 +150,7 @@ o_find_object (SchematicWindow *w_current,
                int w_y,
                gboolean change_selection)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -224,7 +224,7 @@ o_find_selected_object (SchematicWindow *w_current,
                         int w_x,
                         int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);

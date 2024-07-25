@@ -312,7 +312,7 @@ o_path_invalidate_rubber (SchematicWindow *w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   /* Calculate any new sections */
@@ -466,7 +466,7 @@ o_path_end (SchematicWindow *w_current,
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);
@@ -590,7 +590,7 @@ o_path_invalidate_rubber_grips (SchematicWindow *w_current)
 {
   int min_x, min_y, max_x, max_y;
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   path_rubber_bbox (w_current, NULL,

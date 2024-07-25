@@ -144,7 +144,7 @@ a_zoom_box (SchematicWindow *w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
@@ -229,7 +229,7 @@ a_zoom_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           schematic_window_get_first_wx (w_current),

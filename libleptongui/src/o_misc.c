@@ -212,12 +212,12 @@ o_edit_show_hidden (SchematicWindow *w_current,
 
   /* toggle show_hidden_text variable, which when it is true */
   /* means that hidden text IS drawn */
-  g_signal_emit_by_name (gschem_toplevel_get_current_page_view (w_current),
+  g_signal_emit_by_name (schematic_window_get_current_page_view (w_current),
                          "toggle-hidden-text");
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
-  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
+  gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
 
   if (gschem_toplevel_get_show_hidden_text (w_current)) {
     g_message (_("Hidden text is now visible"));
@@ -258,7 +258,7 @@ o_edit_hide_specific_text (SchematicWindow *w_current,
     iter = g_list_next (iter);
   }
   o_undo_savestate_old (w_current);
-  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
+  gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!

@@ -48,7 +48,7 @@ coord_display_update (SchematicWindow *w_current,
                       int x,
                       int y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   char *string;
   int world_x, world_y;
 

@@ -129,7 +129,7 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
   /* clear the key guile command-sequence */
   schematic_keys_reset (w_current);
 
-  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
+  gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
 
   i_action_stop (w_current);
 }

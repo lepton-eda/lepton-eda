@@ -261,7 +261,7 @@ o_picture_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   gschem_page_view_invalidate_world_rect (page_view,

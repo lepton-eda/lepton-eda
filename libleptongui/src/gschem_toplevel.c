@@ -419,7 +419,7 @@ schematic_window_free (SchematicWindow *w_current)
  *  \return The selection adapter
  */
 GschemPageView*
-gschem_toplevel_get_current_page_view (SchematicWindow *w_current)
+schematic_window_get_current_page_view (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -753,7 +753,7 @@ notify_options (SchematicWindow *w_current)
   if (w_current->drawing_area != NULL)
   {
     i_update_grid_info (w_current);
-    gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
+    gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
   }
 }
 

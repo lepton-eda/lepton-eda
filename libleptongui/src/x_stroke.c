@@ -98,7 +98,7 @@ x_stroke_record (SchematicWindow *w_current,
 {
   cairo_matrix_t user_to_device_matrix;
   double x0, y0;
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);

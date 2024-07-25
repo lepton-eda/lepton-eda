@@ -252,7 +252,7 @@ x_window_select_object (GschemFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current)
 {
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (view);
@@ -267,7 +267,7 @@ x_window_select_object (GschemFindTextState *state,
     x_window_set_current_page (w_current, object->page);
 
     /* tabbed GUI: current page view may be different here: */
-    view = gschem_toplevel_get_current_page_view (w_current);
+    view = schematic_window_get_current_page_view (w_current);
   }
 
   gschem_page_view_zoom_object (view, object);
@@ -610,7 +610,7 @@ void
 x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   g_return_if_fail (page != NULL);

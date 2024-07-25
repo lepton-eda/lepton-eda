@@ -88,7 +88,7 @@
 success, #f on failure."
   (define *window (*current-window))
 
-  (let ((*view (gschem_toplevel_get_current_page_view *window)))
+  (let ((*view (schematic_window_get_current_page_view *window)))
     (and (not (null-pointer? *view))
          (let ((*page (gschem_page_view_get_page *view)))
            (and (not (null-pointer? *page))
@@ -320,7 +320,7 @@ success, #f on failure."
                         redo?))
 
   (define (window-undo)
-    (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+    (let ((*page-view (schematic_window_get_current_page_view *window)))
       (if (null-pointer? *page-view)
           (log! 'warning "undo-callback: NULL page view.")
           (page-view-undo *page-view))))

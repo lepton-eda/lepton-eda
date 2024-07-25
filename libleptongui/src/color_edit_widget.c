@@ -440,7 +440,7 @@ on_color_activated (GtkColorChooser* csel,
 
   /* Refresh page view. */
   GschemPageView* pview =
-    gschem_toplevel_get_current_page_view (widget->toplevel_);
+    schematic_window_get_current_page_view (widget->toplevel_);
   gschem_page_view_invalidate_all (pview);
 
 }
@@ -480,7 +480,7 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 
   /* refresh page view: */
   GschemPageView* pview =
-    gschem_toplevel_get_current_page_view (widget->toplevel_);
+    schematic_window_get_current_page_view (widget->toplevel_);
   gschem_page_view_invalidate_all (pview);
 
 } /* on_color_sel_changed() */
@@ -514,7 +514,7 @@ on_btn_apply (GtkWidget* btn, gpointer p)
     x_colorcb_set_rgba_color (&iter, &color);
   }
 
-  gtk_widget_queue_draw (GTK_WIDGET (gschem_toplevel_get_current_page_view (widget->toplevel_)));
+  gtk_widget_queue_draw (GTK_WIDGET (schematic_window_get_current_page_view (widget->toplevel_)));
 }
 
 /*! \brief "Toggle Editor" button "clicked" signal handler. */

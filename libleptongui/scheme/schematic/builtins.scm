@@ -455,7 +455,7 @@ the snap grid size should be set to 100")))
 
   ;; Refresh page view to properly restore attributes' colors.
   (gschem_page_view_invalidate_all
-   (gschem_toplevel_get_current_page_view *window)))
+   (schematic_window_get_current_page_view *window)))
 
 
 ;;; Unlock all objects in selection list.
@@ -480,7 +480,7 @@ the snap grid size should be set to 100")))
 
   ;; Refresh page view to properly restore attributes' colors.
   (gschem_page_view_invalidate_all
-   (gschem_toplevel_get_current_page_view *window)))
+   (schematic_window_get_current_page_view *window)))
 
 
 (define-action-public (&edit-select-locked #:label (G_ "Select Locked"))
@@ -717,7 +717,7 @@ the snap grid size should be set to 100")))
 ;;; Redraw canvas.
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
   (gschem_page_view_invalidate_all
-   (gschem_toplevel_get_current_page_view (*current-window))))
+   (schematic_window_get_current_page_view (*current-window))))
 
 
 (define-action-public (&view-pan #:label (G_ "Pan"))
@@ -725,7 +725,7 @@ the snap grid size should be set to 100")))
 
   (match (action-position)
     ((x . y)
-     (gschem_page_view_pan (gschem_toplevel_get_current_page_view *window) x y)
+     (gschem_page_view_pan (schematic_window_get_current_page_view *window) x y)
      (undo-save-viewport))
     (_
      (o_redraw_cleanstates *window)
@@ -739,7 +739,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the left.
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
                               (schematic_window_get_keyboardpan_gain *window)
                               0))
 
@@ -747,7 +747,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the right.
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
                               (- (schematic_window_get_keyboardpan_gain *window))
                               0))
 
@@ -755,7 +755,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport up.
 (define-action-public (&view-pan-up #:label (G_ "Pan Up"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
                               0
                               (schematic_window_get_keyboardpan_gain *window)))
 
@@ -763,7 +763,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport down.
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
                               0
                               (- (schematic_window_get_keyboardpan_gain *window))))
 
@@ -792,7 +792,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
   (define *window (*current-window))
 
-  (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
+  (gschem_page_view_zoom_extents (schematic_window_get_current_page_view *window)
                                  %null-pointer)
   (undo-save-viewport))
 
@@ -801,7 +801,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (a_zoom *window
-          (gschem_toplevel_get_current_page_view *window)
+          (schematic_window_get_current_page_view *window)
           ZOOM_IN
           (match (action-position)
             ((x . y) HOTKEY)
@@ -813,7 +813,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (a_zoom *window
-          (gschem_toplevel_get_current_page_view *window)
+          (schematic_window_get_current_page_view *window)
           ZOOM_OUT
           (match (action-position)
             ((x . y) HOTKEY)
@@ -823,7 +823,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
   (define *window (*current-window))
-  (define *page-view (gschem_toplevel_get_current_page_view *window))
+  (define *page-view (schematic_window_get_current_page_view *window))
 
   (a_zoom *window *page-view ZOOM_FULL DONTCARE)
   (undo-save-viewport))
@@ -836,7 +836,7 @@ the snap grid size should be set to 100")))
   (color_edit_widget_update *window)
 
   (gschem_page_view_invalidate_all
-   (gschem_toplevel_get_current_page_view *window)))
+   (schematic_window_get_current_page_view *window)))
 
 
 ;;; Load the Dark color scheme.
@@ -1110,7 +1110,7 @@ the snap grid size should be set to 100")))
 
 (define (zoom-child-page *window *parent *child)
   (define *toplevel (gschem_toplevel_get_toplevel *window))
-  (define *page-view (gschem_toplevel_get_current_page_view *window))
+  (define *page-view (schematic_window_get_current_page_view *window))
   (lepton_toplevel_goto_page *toplevel *child)
   (gschem_toplevel_page_changed *window)
   (gschem_page_view_zoom_extents *page-view %null-pointer)
@@ -1271,7 +1271,7 @@ the snap grid size should be set to 100")))
                ;; Tabbed GUI: zoom is set in set-tab-page!().
                (unless (true? (x_tabs_enabled))
                  (gschem_page_view_zoom_extents
-                  (gschem_toplevel_get_current_page_view *window)
+                  (schematic_window_get_current_page_view *window)
                   %null-pointer))
 
                (undo-save-state)))))))
@@ -1589,7 +1589,7 @@ the snap grid size should be set to 100")))
 
   (schematic_window_set_draw_grips *window (if draw-grips FALSE TRUE))
   (gschem_page_view_invalidate_all
-   (gschem_toplevel_get_current_page_view *window)))
+   (schematic_window_get_current_page_view *window)))
 
 
 ;; -------------------------------------------------------------------

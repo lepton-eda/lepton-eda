@@ -33,7 +33,7 @@ o_arc_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
 
   /* FIXME: This isn't a tight bounding box */
 
@@ -141,7 +141,7 @@ o_arc_end4 (SchematicWindow *w_current,
             int start_angle,
             int sweep_angle)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (page_view);
