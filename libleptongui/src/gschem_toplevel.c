@@ -527,7 +527,7 @@ schematic_window_get_fill_angle_list_store (SchematicWindow *w_current)
  *  \return A list of the commonly used fill pitches
  */
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (SchematicWindow *w_current)
+schematic_window_get_fill_pitch_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 

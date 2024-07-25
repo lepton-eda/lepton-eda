@@ -519,13 +519,13 @@ notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
                                         schematic_window_get_fill_angle_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->pitch1e,
-                                        gschem_toplevel_get_fill_pitch_list_store (w_current));
+                                        schematic_window_get_fill_pitch_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->angle2e,
                                         schematic_window_get_fill_angle_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->pitch2e,
-                                        gschem_toplevel_get_fill_pitch_list_store (w_current));
+                                        schematic_window_get_fill_pitch_list_store (w_current));
 
     set_selection_adapter (dialog,
                            gschem_toplevel_get_selection_adapter (w_current));

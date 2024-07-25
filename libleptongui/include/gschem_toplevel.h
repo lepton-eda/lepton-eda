@@ -253,7 +253,7 @@ GtkListStore*
 schematic_window_get_fill_angle_list_store (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (SchematicWindow *w_current);
+schematic_window_get_fill_pitch_list_store (SchematicWindow *w_current);
 
 GtkListStore*
 gschem_toplevel_get_fill_width_list_store (SchematicWindow *w_current);
