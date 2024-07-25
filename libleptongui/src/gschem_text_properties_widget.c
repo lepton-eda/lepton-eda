@@ -40,7 +40,7 @@
 enum
 {
   PROP_0,
-  PROP_GSCHEM_TOPLEVEL
+  PROP_SCHEMATIC_WINDOW
 };
 
 G_DEFINE_TYPE (GschemTextPropertiesWidget, gschem_text_properties_widget, GSCHEM_TYPE_BIN);
@@ -176,7 +176,7 @@ gschem_text_properties_widget_class_init (GschemTextPropertiesWidgetClass *klass
 
   g_object_class_install_property (
     object_class,
-    PROP_GSCHEM_TOPLEVEL,
+    PROP_SCHEMATIC_WINDOW,
     g_param_spec_pointer ("gschem-toplevel",
                           "",
                           "",
@@ -358,7 +358,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
   GschemTextPropertiesWidget *widget = GSCHEM_TEXT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
-    case PROP_GSCHEM_TOPLEVEL:
+    case PROP_SCHEMATIC_WINDOW:
       g_value_set_pointer (value, widget->w_current);
       break;
 
@@ -458,7 +458,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
   GschemTextPropertiesWidget *widget = GSCHEM_TEXT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
-    case PROP_GSCHEM_TOPLEVEL:
+    case PROP_SCHEMATIC_WINDOW:
       widget->w_current = SCHEMATIC_WINDOW (g_value_get_pointer (value));
       break;
 
