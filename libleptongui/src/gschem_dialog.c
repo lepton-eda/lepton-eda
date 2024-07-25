@@ -68,7 +68,7 @@ gschem_marshal_VOID__POINTER_STRING (GClosure     *closure,
 
 enum {
   PROP_SETTINGS_NAME = 1,
-  PROP_GSCHEM_TOPLEVEL
+  PROP_SCHEMATIC_WINDOW
 };
 
 
@@ -241,7 +241,7 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
       g_free (dialog->settings_name);
       dialog->settings_name = g_strdup (g_value_get_string (value));
       break;
-    case PROP_GSCHEM_TOPLEVEL:
+    case PROP_SCHEMATIC_WINDOW:
       dialog->w_current = SCHEMATIC_WINDOW (g_value_get_pointer (value));
       break;
     default:
@@ -271,7 +271,7 @@ static void gschem_dialog_get_property (GObject *object, guint property_id, GVal
       case PROP_SETTINGS_NAME:
         g_value_set_string (value, dialog->settings_name);
         break;
-      case PROP_GSCHEM_TOPLEVEL:
+      case PROP_SCHEMATIC_WINDOW:
         g_value_set_pointer (value, (gpointer)dialog->w_current);
         break;
       default:
@@ -341,7 +341,7 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                          (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
                                         | G_PARAM_READWRITE)));
   g_object_class_install_property (
-    gobject_class, PROP_GSCHEM_TOPLEVEL,
+    gobject_class, PROP_SCHEMATIC_WINDOW,
     g_param_spec_pointer ("gschem-toplevel",
                           "",
                           "",
