@@ -132,7 +132,7 @@
       ;; Destroy main widget of the window.
       (gtk_widget_destroy (schematic_window_get_main_window *window))
       (remove-window! (pointer->window *window))
-      (gschem_toplevel_free *window)
+      (schematic_window_free *window)
 
       ;; Just closed last window, so quit.
       (when (zero? (length (schematic-windows)))

@@ -326,7 +326,7 @@ schematic_preview_dispose (GObject *self)
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
 
-    gschem_toplevel_free (preview_w_current);
+    schematic_window_free (preview_w_current);
 
     preview->window = NULL;
   }

@@ -345,7 +345,7 @@
             schematic_window_active_page_changed
             schematic_window_add_timer
             schematic_window_destroy_timer
-            gschem_toplevel_free
+            schematic_window_free
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
@@ -680,7 +680,7 @@
 (define-lff schematic_window_active_page_changed void '(*))
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
-(define-lff gschem_toplevel_free void '(*))
+(define-lff schematic_window_free void '(*))
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))

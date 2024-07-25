@@ -356,7 +356,7 @@ SchematicWindow *gschem_toplevel_new ()
  *  \param [in] w_current The gschem toplevel
  */
 void
-gschem_toplevel_free (SchematicWindow *w_current)
+schematic_window_free (SchematicWindow *w_current)
 {
   if (w_current->toplevel != NULL) {
     lepton_toplevel_delete (w_current->toplevel);
