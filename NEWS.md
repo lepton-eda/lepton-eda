@@ -117,6 +117,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `$HOME` environment variable is not set.
 
 ### Changes in `libleptongui`:
+- The type `GschemToplevel` has been renamed to `SchematicWindow`,
+  all related functions have been renamed accordingly.
 
 - The type `GschemPreview` has been renamed to `SchematicPreview`,
   all related functions and macros have been renamed accordingly.
