@@ -39,7 +39,7 @@
 enum
 {
   PROP_0,
-  PROP_GSCHEM_TOPLEVEL
+  PROP_SCHEMATIC_WINDOW
 };
 
 
@@ -159,7 +159,7 @@ gschem_options_widget_class_init (GschemOptionsWidgetClass *klass)
   object_class->set_property = set_property;
 
   g_object_class_install_property (object_class,
-                                   PROP_GSCHEM_TOPLEVEL,
+                                   PROP_SCHEMATIC_WINDOW,
                                    g_param_spec_pointer ("gschem-toplevel",
                                                          "",
                                                          "",
@@ -387,7 +387,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
   GschemOptionsWidget *widget = GSCHEM_OPTIONS_WIDGET (object);
 
   switch (param_id) {
-    case PROP_GSCHEM_TOPLEVEL:
+    case PROP_SCHEMATIC_WINDOW:
       g_value_set_pointer (value, widget->w_current);
       break;
 
@@ -542,7 +542,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
   GschemOptionsWidget *widget = GSCHEM_OPTIONS_WIDGET (object);
 
   switch (param_id) {
-    case PROP_GSCHEM_TOPLEVEL:
+    case PROP_SCHEMATIC_WINDOW:
       widget->w_current = SCHEMATIC_WINDOW (g_value_get_pointer (value));
       break;
 
