@@ -420,7 +420,7 @@ o_select_box_search (SchematicWindow *w_current)
   int left, right, top, bottom;
   const GList *iter;
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   left = MIN(w_current->first_wx, w_current->second_wx);
   right = MAX(w_current->first_wx, w_current->second_wx);

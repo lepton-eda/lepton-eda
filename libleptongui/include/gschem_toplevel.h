@@ -290,7 +290,7 @@ void
 schematic_window_active_page_changed (SchematicWindow *w_current);
 
 gboolean
-gschem_toplevel_get_show_hidden_text (SchematicWindow *w_current);
+schematic_window_get_show_hidden_text (SchematicWindow *w_current);
 
 LeptonPage*
 schematic_window_get_active_page (SchematicWindow *w_current);

@@ -102,7 +102,7 @@ o_attrib_deselect_invisible (SchematicWindow *w_current,
   LeptonObject *a_current;
   GList *a_iter;
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   g_assert( selection != NULL );
 
@@ -142,7 +142,7 @@ o_attrib_select_invisible (SchematicWindow *w_current,
   LeptonObject *a_current;
   GList *a_iter;
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   g_assert( selection != NULL );
 

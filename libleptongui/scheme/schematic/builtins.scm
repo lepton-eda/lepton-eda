@@ -234,7 +234,7 @@
 
   (define *window (*current-window))
   (define show-hidden-text?
-    (true? (gschem_toplevel_get_show_hidden_text *window)))
+    (true? (schematic_window_get_show_hidden_text *window)))
 
   (o_redraw_cleanstates *window)
 

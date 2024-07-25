@@ -225,7 +225,7 @@ o_place_invalidate_rubber (SchematicWindow *w_current,
   g_return_if_fail (page->place_list != NULL);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
@@ -309,7 +309,7 @@ o_place_draw_rubber (SchematicWindow *w_current,
   g_return_if_fail (page->place_list != NULL);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);

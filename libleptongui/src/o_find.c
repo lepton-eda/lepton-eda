@@ -55,7 +55,7 @@ is_object_hit (SchematicWindow *w_current,
   }
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */

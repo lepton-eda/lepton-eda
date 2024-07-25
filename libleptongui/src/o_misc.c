@@ -219,7 +219,8 @@ o_edit_show_hidden (SchematicWindow *w_current,
   o_edit_show_hidden_lowlevel(w_current, o_list);
   gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
 
-  if (gschem_toplevel_get_show_hidden_text (w_current)) {
+  if (schematic_window_get_show_hidden_text (w_current))
+  {
     g_message (_("Hidden text is now visible"));
   } else {
     g_message (_("Hidden text is now invisible"));

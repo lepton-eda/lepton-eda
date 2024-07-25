@@ -119,7 +119,7 @@ void o_redraw_rect (SchematicWindow *w_current,
   world_rect->upper_y = ceil (upper_y);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   obj_list = lepton_page_objects_in_regions (page,
                                              world_rect,
@@ -521,7 +521,7 @@ o_invalidate (SchematicWindow *w_current,
   GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
   LeptonPage *page = gschem_page_view_get_page (page_view);
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   /* this function may be called before a page is created */
   if (page == NULL) {
@@ -566,7 +566,7 @@ o_invalidate_glist (SchematicWindow *w_current,
   g_return_if_fail (page != NULL);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   if (world_get_object_glist_bounds (list,
                                      show_hidden_text,

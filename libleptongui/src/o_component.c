@@ -172,7 +172,7 @@ o_component_translate_all (SchematicWindow *w_current,
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   /* first zoom extents */
   gschem_page_view_zoom_extents (view, NULL);

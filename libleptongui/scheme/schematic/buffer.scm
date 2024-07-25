@@ -169,7 +169,7 @@ place list at the point ANCHOR."
                        (symbol->action-mode 'select-mode)
                        (string->pointer (G_ "Empty clipboard")))
 
-      (let ((show-hidden-text? (gschem_toplevel_get_show_hidden_text *window))
+      (let ((show-hidden-text? (schematic_window_get_show_hidden_text *window))
             (*place-list (buffer->place-list)))
         (let-values (((x1 y1 x2 y2)
                       (object-list-bounds *place-list show-hidden-text?)))

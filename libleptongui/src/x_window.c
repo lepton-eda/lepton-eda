@@ -170,7 +170,7 @@ x_window_find_text (GtkWidget *widget,
   g_return_if_fail (w_current->toplevel != NULL);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   switch (response) {
   case GTK_RESPONSE_OK:

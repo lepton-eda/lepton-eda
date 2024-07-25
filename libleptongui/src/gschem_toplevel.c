@@ -795,7 +795,7 @@ renderer_load_font (EdaRenderer* renderer)
  *  \return TRUE if hidden text should be visible, otherwise FALSE
  */
 gboolean
-gschem_toplevel_get_show_hidden_text (SchematicWindow *w_current)
+schematic_window_get_show_hidden_text (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 

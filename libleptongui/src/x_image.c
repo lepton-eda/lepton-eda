@@ -824,7 +824,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   world_rect->upper_y = ceil (upper_y);
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   obj_list = lepton_page_objects_in_regions (page,
                                              world_rect,

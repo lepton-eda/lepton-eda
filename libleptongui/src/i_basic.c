@@ -119,7 +119,7 @@ i_show_state (SchematicWindow *w_current,
   SchematicSnapMode snap_mode;
 
   gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
+    schematic_window_get_show_hidden_text (w_current);
 
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
