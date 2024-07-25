@@ -1863,8 +1863,12 @@ gEDA currently emits one path data line per command + coordinate set.
 As example, lets draw the outline of an AND gate. The path data is:
 
 @example
-M 100,100 L 500,100 C 700,100 800,275 800,400
-C 800,525 700,700 500,700 L 100,700 z
+M 100,100
+L 500,100
+C 700,100 800,275 800,400
+C 800,525 700,700 500,700
+L 100,700
+z
 @end example
 
 And a complete schematic:
