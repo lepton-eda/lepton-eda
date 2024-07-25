@@ -1528,10 +1528,8 @@ FILLING HATCH.
 
 The format of path data is deliberately similar to that of
 @url{http://www.w3.org/TR/SVG/paths.html, paths in the W3C SVG
-standard}.
-
-The subset of the SVG path syntax emitted by gEDA is documented below
-in section @ref{Path data}.
+standard}.  The subset of the SVG path syntax utilized in the gEDA
+file format is documented below in section @ref{Path data}.
 
 Example:
 @example
