@@ -70,8 +70,8 @@
 #define JUNCTION_CUE_SIZE_BUS    (BUS_WIDTH + 40)
 
 /* For text location on component not found graphics */
-#define NOT_FOUND_TEXT_X	100
-#define NOT_FOUND_TEXT_Y	100
+#define NOT_FOUND_TEXT_X 100
+#define NOT_FOUND_TEXT_Y 100
 
 /* for text alignment */
 /*   2 -- 5 -- 8  */
@@ -79,20 +79,20 @@
 /*   1 -- 4 -- 7  */
 /*   |    |    |  */
 /*   0 -- 3 -- 6  */
-#define LOWER_LEFT	0
-#define MIDDLE_LEFT	1
-#define UPPER_LEFT	2
-#define LOWER_MIDDLE	3
-#define MIDDLE_MIDDLE	4
-#define UPPER_MIDDLE	5
-#define LOWER_RIGHT	6
-#define MIDDLE_RIGHT	7
-#define UPPER_RIGHT	8
+#define LOWER_LEFT    0
+#define MIDDLE_LEFT   1
+#define UPPER_LEFT    2
+#define LOWER_MIDDLE  3
+#define MIDDLE_MIDDLE 4
+#define UPPER_MIDDLE  5
+#define LOWER_RIGHT   6
+#define MIDDLE_RIGHT  7
+#define UPPER_RIGHT   8
 
 /* The conn modes for type */
-#define CONN_NULL               0
-#define CONN_ENDPOINT		1
-#define CONN_MIDPOINT		2
+#define CONN_NULL     0
+#define CONN_ENDPOINT 1
+#define CONN_MIDPOINT 2
 
 /* hierarchy traversing flags */
 #define HIERARCHY_NODUPS (1<<0)
@@ -100,8 +100,8 @@
 #define HIERARCHY_INNERLOOP (1<<7)
 
 /* for pin_type */
-#define PIN_TYPE_NET		0
-#define PIN_TYPE_BUS		1
+#define PIN_TYPE_NET 0
+#define PIN_TYPE_BUS 1
 
 /* Max level of symlinks */
 #define MAX_LINK_LEVEL 256
