@@ -106,7 +106,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 {
   Compselect *compselect = (Compselect*)dialog;
   SchematicWindow *w_current = (SchematicWindow *)user_data;
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);

@@ -538,7 +538,7 @@ LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
                     const gchar *filename)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   /* New blank page requested: */
@@ -726,7 +726,7 @@ LeptonPage*
 x_window_close_page (SchematicWindow *w_current,
                      LeptonPage *page)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   LeptonPage *new_current = NULL;
   GList *iter;
 
@@ -1152,7 +1152,7 @@ x_window_new_page (SchematicWindow* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = schematic_window_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   /* New page file name: */
@@ -1293,7 +1293,7 @@ untitled_filename (SchematicWindow* w_current,
   gchar* fname = NULL;
   gchar* fpath = NULL;
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = schematic_window_get_toplevel (w_current);
 
   for (;;)
   {

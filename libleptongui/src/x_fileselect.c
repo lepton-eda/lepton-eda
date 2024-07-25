@@ -646,7 +646,7 @@ schematic_file_open (SchematicWindow *w_current,
     g_free (backup_filename);
   }
 
-  return f_open (gschem_toplevel_get_toplevel (w_current),
+  return f_open (schematic_window_get_toplevel (w_current),
                  page,
                  filename,
                  flags,

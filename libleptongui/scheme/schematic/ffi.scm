@@ -348,7 +348,7 @@
             schematic_window_free
             schematic_window_get_current_page_view
             schematic_window_get_show_hidden_text
-            gschem_toplevel_get_toplevel
+            schematic_window_get_toplevel
             *schematic_window_notify_page_callback
             schematic_window_page_changed
             schematic_window_page_content_changed
@@ -683,7 +683,7 @@
 (define-lff schematic_window_free void '(*))
 (define-lff schematic_window_get_current_page_view '* '(*))
 (define-lff schematic_window_get_show_hidden_text int '(*))
-(define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff schematic_window_get_toplevel '* '(*))
 (define-lfc *schematic_window_notify_page_callback)
 (define-lff schematic_window_page_changed void '(*))
 (define-lff schematic_window_page_content_changed void '(* *))

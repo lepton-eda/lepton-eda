@@ -254,7 +254,7 @@ success, #f on failure."
               ;; F_OPEN_RESTORE_CWD: go back from temporary
               ;; directory, so that local config files can be
               ;; read.
-              (f_open (gschem_toplevel_get_toplevel *window)
+              (f_open (schematic_window_get_toplevel *window)
                       *page
                       (lepton_undo_get_filename *undo-to-do)
                       F_OPEN_RESTORE_CWD

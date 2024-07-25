@@ -45,7 +45,7 @@
 (define-syntax-rule (with-window window form form* ...)
   (with-fluids ((%lepton-window window)
                 (%lepton-toplevel
-                 (gschem_toplevel_get_toplevel window)))
+                 (schematic_window_get_toplevel window)))
     form form* ...))
 
 

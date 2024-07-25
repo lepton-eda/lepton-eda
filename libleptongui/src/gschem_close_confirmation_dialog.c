@@ -754,7 +754,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), page);
+        lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
         schematic_window_page_changed (w_current);
         i_callback_file_save (NULL, w_current);
         /* has the page been really saved? */
@@ -780,7 +780,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
   /* Switch back to the page we were on if it wasn't the one being closed */
   g_return_val_if_fail (keep_page != NULL, result);
   if (keep_page != page) {
-    lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), keep_page);
+    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), keep_page);
     schematic_window_page_changed (w_current);
   }
   return result;
@@ -804,7 +804,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
 gboolean
 x_dialog_close_window (SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GList *iter;
   GtkWidget *dialog;
   LeptonPage *p_current;

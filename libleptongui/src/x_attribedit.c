@@ -43,7 +43,7 @@ void
 attrib_edit_dialog_ok (GtkWidget * w,
                        SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
@@ -297,7 +297,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
                     int flag)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GtkWidget *aewindow;
   GtkWidget *vbox, *label;
   GtkWidget *show_options;

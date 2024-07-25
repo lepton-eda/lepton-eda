@@ -119,7 +119,7 @@ schematic_undo_index_to_filename (int index)
 static void
 o_autosave_backups (SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GList *iter;
   LeptonPage *p_save, *p_current;
   gchar *backup_filename;
@@ -252,7 +252,7 @@ o_undo_savestate (SchematicWindow *w_current,
                   LeptonPage *page,
                   gboolean only_viewport)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   char *filename = NULL;
   GList *object_list = NULL;
   int levels;

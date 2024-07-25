@@ -749,7 +749,7 @@ pagesel_update (PageSelectWidget* pagesel)
   SchematicWindow *w_current = pagesel->toplevel_;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   model    = gtk_tree_view_get_model (pagesel->treeview_);
 
   /* wipe out every thing in the store */

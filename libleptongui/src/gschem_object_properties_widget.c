@@ -629,7 +629,7 @@ update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
   w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->line_end != NULL)) {
@@ -695,7 +695,7 @@ update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
   w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->fstylecb != NULL)) {
@@ -760,7 +760,7 @@ update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
   w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->line_type != NULL)) {
@@ -825,7 +825,7 @@ update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dial
   w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->colorcb != NULL)) {
@@ -889,7 +889,7 @@ update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
   w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->pin_type != NULL)) {

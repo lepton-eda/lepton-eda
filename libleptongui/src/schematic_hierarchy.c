@@ -63,7 +63,7 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
 
   g_return_val_if_fail ((w_current != NULL), NULL);
 
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
   g_return_val_if_fail ((filename != NULL), NULL);

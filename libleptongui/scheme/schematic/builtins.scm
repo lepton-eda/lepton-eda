@@ -178,7 +178,7 @@
 
   (unless (null-pointer? *filename)
     (log! 'message (G_ "Executing Guile script: ~S") (pointer->string *filename))
-    (g_read_file (gschem_toplevel_get_toplevel *window)
+    (g_read_file (schematic_window_get_toplevel *window)
                  *filename
                  %null-pointer)
     (g_free *filename)))
@@ -1109,7 +1109,7 @@ the snap grid size should be set to 100")))
   (string-split (attrib-value object) #\,))
 
 (define (zoom-child-page *window *parent *child)
-  (define *toplevel (gschem_toplevel_get_toplevel *window))
+  (define *toplevel (schematic_window_get_toplevel *window))
   (define *page-view (schematic_window_get_current_page_view *window))
   (lepton_toplevel_goto_page *toplevel *child)
   (schematic_window_page_changed *window)
@@ -1250,7 +1250,7 @@ the snap grid size should be set to 100")))
        (log! 'message (G_ "Searching for symbol: ~S") name)
        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
          (unless (null-pointer? *sym)
-           (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
+           (let* ((*toplevel (schematic_window_get_toplevel *window))
                   (*parent (schematic_window_get_active_page *window))
                   (*page (hierarchy-down-symbol *window *toplevel *sym *parent)))
              (when *page

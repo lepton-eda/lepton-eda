@@ -174,7 +174,7 @@ o_select_object (SchematicWindow *w_current,
                  int type,
                  int count)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   int SHIFTKEY;
   int CONTROLKEY;
   int removing_obj = 0;
@@ -585,7 +585,7 @@ o_select_connected_nets (SchematicWindow *w_current,
 LeptonObject*
 o_select_return_first_object (SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   if (! (w_current &&
          toplevel->page_current &&
          lepton_list_get_glist( toplevel->page_current->selection_list )))
@@ -604,7 +604,7 @@ o_select_return_first_object (SchematicWindow *w_current)
 int
 o_select_selected (SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   if ( lepton_list_get_glist( toplevel->page_current->selection_list )) {
     return(TRUE);
   }
@@ -620,7 +620,7 @@ o_select_selected (SchematicWindow *w_current)
 void
 o_select_unselect_all (SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   LeptonSelection *selection = toplevel->page_current->selection_list;
   GList *removed = NULL;
   GList *iter;

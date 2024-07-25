@@ -127,7 +127,7 @@ i_vars_set_options (GschemOptions* opts)
 void
 i_vars_set (SchematicWindow* w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
 
   /* this will be false if logging cannot be enabled */
   if (do_logging != FALSE)

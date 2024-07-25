@@ -808,7 +808,7 @@ the new or found page."
 
           (let ((*page (if (null-pointer? *filename)
                            %null-pointer
-                           (lepton_toplevel_search_page (gschem_toplevel_get_toplevel *window)
+                           (lepton_toplevel_search_page (schematic_window_get_toplevel *window)
                                                         *filename))))
             ;; *FILENAME may be NULL when the user triggers one of
             ;; the actions:
@@ -1009,7 +1009,7 @@ for *PAGE page will be created and set active."
 GtkApplication structure of the program (when compiled with
 --with-gtk3).  TOPLEVEL is a foreign LeptonToplevel structure."
   (define (setup-window *window)
-    (let ((*toplevel (gschem_toplevel_get_toplevel *window)))
+    (let ((*toplevel (schematic_window_get_toplevel *window)))
       ;; Immediately setup user params.
       (i_vars_set *window)
 

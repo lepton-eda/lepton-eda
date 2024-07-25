@@ -624,7 +624,7 @@ schematic_window_get_text_size_list_store (SchematicWindow *w_current)
  *  \return The libgeda toplevel
  */
 LeptonToplevel*
-gschem_toplevel_get_toplevel (SchematicWindow *w_current)
+schematic_window_get_toplevel (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -817,7 +817,7 @@ schematic_window_get_active_page (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   return toplevel->page_current;
@@ -848,7 +848,7 @@ schematic_window_get_pages (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   return lepton_toplevel_get_pages (toplevel);
