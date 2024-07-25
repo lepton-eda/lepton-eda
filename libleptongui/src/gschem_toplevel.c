@@ -584,7 +584,7 @@ schematic_window_get_line_width_list_store (SchematicWindow *w_current)
  *  \return A list of the commonly used text sizes
  */
 GtkListStore*
-gschem_toplevel_get_text_size_list_store (SchematicWindow *w_current)
+schematic_window_get_text_size_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 

@@ -519,7 +519,7 @@ text_input_dialog (SchematicWindow *w_current)
                                   GTK_WINDOW (w_current->main_window));
 
     gschem_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
-                           gschem_toplevel_get_text_size_list_store (w_current));
+                           schematic_window_get_text_size_list_store (w_current));
 
     gschem_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
                                         w_current->text_size);

@@ -442,7 +442,7 @@ notify_gschem_toplevel (GschemTextPropertiesWidget *widget)
     g_object_get (widget, "gschem-toplevel", &w_current, NULL);
 
     gschem_integer_combo_box_set_model (widget->textsizecb,
-                                        gschem_toplevel_get_text_size_list_store (w_current));
+                                        schematic_window_get_text_size_list_store (w_current));
 
     set_selection_adapter (widget,
                            schematic_window_get_selection_adapter (w_current));
