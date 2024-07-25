@@ -349,7 +349,7 @@
             schematic_window_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
-            *gschem_toplevel_notify_page_callback
+            *schematic_window_notify_page_callback
             gschem_toplevel_page_changed
             gschem_toplevel_page_content_changed
             schematic_window_get_actionfeedback_mode
@@ -684,7 +684,7 @@
 (define-lff schematic_window_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
-(define-lfc *gschem_toplevel_notify_page_callback)
+(define-lfc *schematic_window_notify_page_callback)
 (define-lff gschem_toplevel_page_changed void '(*))
 (define-lff gschem_toplevel_page_content_changed void '(* *))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))

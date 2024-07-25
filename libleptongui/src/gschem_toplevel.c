@@ -640,9 +640,9 @@ gschem_toplevel_get_toplevel (SchematicWindow *w_current)
  *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-gschem_toplevel_notify_page_callback (GschemPageView *page_view,
-                                      GParamSpec *pspec,
-                                      SchematicWindow *w_current)
+schematic_window_notify_page_callback (GschemPageView *page_view,
+                                       GParamSpec *pspec,
+                                       SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 

@@ -724,7 +724,7 @@
      `("key-release-event" . ,*process-key-event)
      `("scroll-event" . ,*callback-scroll)
      `("update-grid-info" . ,*i_update_grid_info_callback)
-     `("notify::page" . ,*gschem_toplevel_notify_page_callback)))
+     `("notify::page" . ,*schematic_window_notify_page_callback)))
 
   (define (connect-signal element)
     (schematic_signal_connect *page-view
