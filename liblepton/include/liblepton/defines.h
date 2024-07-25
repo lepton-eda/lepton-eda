@@ -99,16 +99,6 @@
 #define HIERARCHY_POSTORDER (1<<1)
 #define HIERARCHY_INNERLOOP (1<<7)
 
-/* for print dialog box */
-#define EXTENTS			0
-#define WINDOW			1
-#define EXTENTS_NOMARGINS	2
-
-/* for print dialog box */
-#define LANDSCAPE		0
-#define PORTRAIT 		1
-#define AUTOLAYOUT 		2
-
 /* for pin_type */
 #define PIN_TYPE_NET		0
 #define PIN_TYPE_BUS		1
