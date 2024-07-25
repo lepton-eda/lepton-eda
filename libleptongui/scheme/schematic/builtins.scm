@@ -609,7 +609,7 @@ the snap grid size should be set to 100")))
                 (select-object! new-component)
 
                 ;; Mark the page as modified.
-                (gschem_toplevel_page_content_changed *window (page->pointer page))
+                (schematic_window_page_content_changed *window (page->pointer page))
 
                 ;; Register changes for undo.
                 (undo-save-state)))

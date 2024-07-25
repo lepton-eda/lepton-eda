@@ -270,7 +270,7 @@ success, #f on failure."
           ;; Restore hierarchy.
           (restore-hierarchy-by-undo *page *undo-to-do)
 
-          (gschem_toplevel_page_content_changed *window *page)
+          (schematic_window_page_content_changed *window *page)
 
           ;; Restore viewport size if necessary.
           (restore-viewport-by-undo *page-view *undo-to-do)

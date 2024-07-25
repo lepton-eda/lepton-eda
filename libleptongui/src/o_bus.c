@@ -105,7 +105,7 @@ o_bus_end (SchematicWindow *w_current,
     w_current->first_wx = w_current->second_wx;
     w_current->first_wy = w_current->second_wy;
 
-    gschem_toplevel_page_content_changed (w_current, page);
+    schematic_window_page_content_changed (w_current, page);
     o_undo_savestate(w_current, page, FALSE);
   }
 

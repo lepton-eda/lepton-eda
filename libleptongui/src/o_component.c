@@ -220,7 +220,7 @@ o_component_translate_all (SchematicWindow *w_current,
     o_select_unselect_all (w_current);
   }
   gschem_page_view_invalidate_all (view);
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_page_content_changed (w_current, active_page);
   o_undo_savestate_old (w_current);
   i_update_menus(w_current);
 }

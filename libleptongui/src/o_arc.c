@@ -166,7 +166,7 @@ o_arc_end4 (SchematicWindow *w_current,
   /* Call add-objects-hook */
   g_run_hook_object (w_current, "add-objects-hook", new_obj);
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  schematic_window_page_content_changed (w_current, page);
   o_undo_savestate(w_current, page, FALSE);
 }
 

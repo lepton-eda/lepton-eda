@@ -681,8 +681,8 @@ schematic_window_page_changed (SchematicWindow *w_current)
  *  \param [in] page      The page that underwent changes.
  */
 void
-gschem_toplevel_page_content_changed (SchematicWindow *w_current,
-                                      LeptonPage *page)
+schematic_window_page_content_changed (SchematicWindow *w_current,
+                                       LeptonPage *page)
 {
   g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
@@ -706,7 +706,7 @@ schematic_window_active_page_changed (SchematicWindow *w_current)
   g_return_if_fail (w_current != NULL);
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_page_content_changed (w_current, active_page);
 }
 
 

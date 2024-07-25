@@ -132,7 +132,7 @@ o_place_end (SchematicWindow *w_current,
   g_list_free (connected_objects);
   connected_objects = NULL;
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  schematic_window_page_content_changed (w_current, page);
   o_invalidate_glist (w_current, temp_dest_list); /* only redraw new objects */
   g_list_free (temp_dest_list);
 

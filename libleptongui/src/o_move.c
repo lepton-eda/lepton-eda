@@ -239,7 +239,7 @@ o_move_end (SchematicWindow *w_current)
   g_run_hook_object_list (w_current, "move-objects-hook", moved_list);
   g_list_free (moved_list);
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  schematic_window_page_content_changed (w_current, page);
   o_undo_savestate_old (w_current);
 
   s_stretch_destroy_all (w_current->stretch_list);

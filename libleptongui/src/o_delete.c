@@ -45,7 +45,7 @@ o_delete (SchematicWindow *w_current,
   g_run_hook_object (w_current, "remove-objects-hook", object);
   lepton_object_delete (object);
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  schematic_window_page_content_changed (w_current, page);
 }
 
 
