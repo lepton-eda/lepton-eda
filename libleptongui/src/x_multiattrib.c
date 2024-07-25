@@ -80,7 +80,7 @@ x_multiattrib_open (SchematicWindow *w_current)
                                 "object_list", active_page->selection_list,
                                 /* GschemDialog */
                                 "settings-name", "multiattrib",
-                                "gschem-toplevel", w_current,
+                                "schematic-window", w_current,
                                 NULL));
 
     gtk_window_set_transient_for (GTK_WINDOW(w_current->mawindow),

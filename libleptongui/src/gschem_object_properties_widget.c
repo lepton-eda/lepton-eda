@@ -112,7 +112,7 @@ gschem_object_properties_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
                                    /* GschemObjectProperties */
-                                   "gschem-toplevel",  w_current,
+                                   "schematic-window",  w_current,
                                    NULL));
 }
 
@@ -147,7 +147,7 @@ gschem_object_properties_widget_class_init (GschemObjectPropertiesWidgetClass *k
   g_object_class_install_property (
     object_class,
     PROP_SCHEMATIC_WINDOW,
-    g_param_spec_pointer ("gschem-toplevel",
+    g_param_spec_pointer ("schematic-window",
                           "",
                           "",
                           (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
@@ -427,7 +427,7 @@ gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
   GtkWidget *viewport;
 
   g_signal_connect (G_OBJECT (dialog),
-                    "notify::gschem-toplevel",
+                    "notify::schematic-window",
                     G_CALLBACK (notify_schematic_window),
                     NULL);
 
@@ -501,7 +501,7 @@ notify_schematic_window (GschemObjectPropertiesWidget *dialog)
 
     g_return_if_fail (dialog != NULL);
 
-    g_object_get (dialog, "gschem-toplevel", &w_current, NULL);
+    g_object_get (dialog, "schematic-window", &w_current, NULL);
 
     gschem_integer_combo_box_set_model (dialog->width_entry,
                                         schematic_window_get_line_width_list_store (w_current));

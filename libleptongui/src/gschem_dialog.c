@@ -342,7 +342,7 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                                         | G_PARAM_READWRITE)));
   g_object_class_install_property (
     gobject_class, PROP_SCHEMATIC_WINDOW,
-    g_param_spec_pointer ("gschem-toplevel",
+    g_param_spec_pointer ("schematic-window",
                           "",
                           "",
                           (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
@@ -412,7 +412,7 @@ gschem_dialog_new_empty (const gchar *title,
 
   dialog = GSCHEM_DIALOG (g_object_new (GSCHEM_TYPE_DIALOG,
                                         "settings-name", settings_name,
-                                        "gschem-toplevel", w_current,
+                                        "schematic-window", w_current,
                                         NULL));
 
   if (title)

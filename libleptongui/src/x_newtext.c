@@ -113,7 +113,7 @@ dialog_response_apply (NewText *dialog)
   g_return_if_fail (dialog != NULL);
 
   SchematicWindow *w_current = NULL;
-  g_object_get (GSCHEM_DIALOG (dialog), "gschem-toplevel", &w_current, NULL);
+  g_object_get (GSCHEM_DIALOG (dialog), "schematic-window", &w_current, NULL);
   g_return_if_fail (w_current != NULL);
 
   int size = w_current->text_size;
@@ -512,7 +512,7 @@ text_input_dialog (SchematicWindow *w_current)
 #endif
                                 /* GschemDialog */
                                 "settings-name",    "text-entry",
-                                "gschem-toplevel",  w_current,
+                                "schematic-window",  w_current,
                                 NULL));
 
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),

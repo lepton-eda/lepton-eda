@@ -213,7 +213,7 @@ schematic_compselect_new (SchematicWindow *w_current)
   GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
                                             /* GschemDialog */
                                             "settings-name", "compselect",
-                                            "gschem-toplevel", w_current,
+                                            "schematic-window", w_current,
                                             NULL));
   gtk_window_set_transient_for (GTK_WINDOW (cs),
                                 GTK_WINDOW (w_current->main_window));
