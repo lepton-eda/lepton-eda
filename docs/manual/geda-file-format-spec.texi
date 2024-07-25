@@ -1526,29 +1526,12 @@ FILLING HATCH.
 @end itemize
 
 
-@itemize
-@item
 The format of path data is deliberately similar to that of
 @url{http://www.w3.org/TR/SVG/paths.html, paths in the W3C SVG
 standard}.
 
-@item
 The subset of the SVG path syntax emitted by gEDA is documented below
 in section @ref{Path data}.
-
-@item
-As an implementation detail; libgeda takes code from librsvg, an SVG
-parsing library. As a result, the majority of SVG path syntax is read
-correctly, however this is always normalised to absolute move, line,
-Bézier curve and close-path commands internally (and is saved as
-such).
-
-@item
-Coordinates along the path are specified in the standard gschem
-coordinate space.
-
-@end itemize
-
 
 Example:
 @example
