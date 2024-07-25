@@ -103,12 +103,6 @@
 #define PIN_TYPE_NET		0
 #define PIN_TYPE_BUS		1
 
-/* gschcheck: Error types */
-#define NO_ERR                  0
-#define FLOAT_NET               1
-#define FLOAT_PIN               2
-#define DUP_NET_NAME            4
-
 /* Max level of symlinks */
 #define MAX_LINK_LEVEL 256
 
