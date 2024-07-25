@@ -565,7 +565,7 @@ schematic_window_get_fill_width_list_store (SchematicWindow *w_current)
  *  \return A list of the commonly used line widths
  */
 GtkListStore*
-gschem_toplevel_get_line_width_list_store (SchematicWindow *w_current)
+schematic_window_get_line_width_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
