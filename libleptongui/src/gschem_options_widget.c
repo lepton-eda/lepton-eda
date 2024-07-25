@@ -64,7 +64,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-notify_gschem_toplevel (GschemOptionsWidget *widget);
+notify_schematic_window (GschemOptionsWidget *widget);
 
 static void
 set_options (GschemOptionsWidget *widget, GschemOptions *options);
@@ -408,7 +408,7 @@ gschem_options_widget_init (GschemOptionsWidget *widget)
 
   g_signal_connect (G_OBJECT (widget),
                     "notify::gschem-toplevel",
-                    G_CALLBACK (notify_gschem_toplevel),
+                    G_CALLBACK (notify_schematic_window),
                     NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget),
@@ -447,7 +447,7 @@ gschem_options_widget_init (GschemOptionsWidget *widget)
  *  \param [in,out] widget    This widget
  */
 static void
-notify_gschem_toplevel (GschemOptionsWidget *widget)
+notify_schematic_window (GschemOptionsWidget *widget)
 {
   SchematicWindow *w_current;
 
