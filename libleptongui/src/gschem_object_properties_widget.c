@@ -528,7 +528,7 @@ notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
                                         schematic_window_get_fill_pitch_list_store (w_current));
 
     set_selection_adapter (dialog,
-                           gschem_toplevel_get_selection_adapter (w_current));
+                           schematic_window_get_selection_adapter (w_current));
 }
 
 

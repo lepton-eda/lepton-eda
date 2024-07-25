@@ -262,7 +262,7 @@ GtkListStore*
 schematic_window_get_line_width_list_store (SchematicWindow *w_current);
 
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (SchematicWindow *w_current);
+schematic_window_get_selection_adapter (SchematicWindow *w_current);
 
 GtkListStore*
 gschem_toplevel_get_text_size_list_store (SchematicWindow *w_current);

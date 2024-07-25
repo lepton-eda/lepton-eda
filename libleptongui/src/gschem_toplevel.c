@@ -434,7 +434,7 @@ schematic_window_get_current_page_view (SchematicWindow *w_current)
  *  \return The selection adapter
  */
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (SchematicWindow *w_current)
+schematic_window_get_selection_adapter (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 

@@ -445,7 +445,7 @@ notify_gschem_toplevel (GschemTextPropertiesWidget *widget)
                                         gschem_toplevel_get_text_size_list_store (w_current));
 
     set_selection_adapter (widget,
-                           gschem_toplevel_get_selection_adapter (w_current));
+                           schematic_window_get_selection_adapter (w_current));
 }
 
 
