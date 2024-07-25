@@ -513,7 +513,7 @@ notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
                                         schematic_window_get_dash_space_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->widthe,
-                                        gschem_toplevel_get_fill_width_list_store (w_current));
+                                        schematic_window_get_fill_width_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->angle1e,
                                         schematic_window_get_fill_angle_list_store (w_current));
