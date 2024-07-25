@@ -217,7 +217,7 @@ static void
 schematic_preview_init (SchematicPreview *preview)
 {
   SchematicWindow *preview_w_current;
-  preview_w_current = gschem_toplevel_new ();
+  preview_w_current = schematic_window_new ();
   gschem_toplevel_set_toplevel (preview_w_current, lepton_toplevel_new ());
 
   i_vars_set (preview_w_current);

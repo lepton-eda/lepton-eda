@@ -145,7 +145,7 @@ static const char *routine_text_size[] =
 
 
 
-SchematicWindow *gschem_toplevel_new ()
+SchematicWindow *schematic_window_new ()
 {
   SchematicWindow *w_current;
 

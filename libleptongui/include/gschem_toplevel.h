@@ -271,7 +271,7 @@ LeptonToplevel*
 gschem_toplevel_get_toplevel (SchematicWindow *w_current);
 
 SchematicWindow*
-gschem_toplevel_new ();
+schematic_window_new ();
 
 void
 gschem_toplevel_notify_page_callback (GschemPageView *page_view,
