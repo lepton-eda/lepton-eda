@@ -73,12 +73,6 @@
 #define NOT_FOUND_TEXT_X	100
 #define NOT_FOUND_TEXT_Y	100
 
-/* for s_clib_getfilename() */
-#define OPEN_DIR	0
-#define READ_DIR	1
-#define CLOSE_DIR	2
-#define SET_COUNT	3
-
 /* for text alignment */
 /*   2 -- 5 -- 8  */
 /*   |    |    |  */
