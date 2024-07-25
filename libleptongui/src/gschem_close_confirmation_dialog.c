@@ -755,7 +755,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
       case GTK_RESPONSE_YES:
         /* action selected: save */
         lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), page);
-        gschem_toplevel_page_changed (w_current);
+        schematic_window_page_changed (w_current);
         i_callback_file_save (NULL, w_current);
         /* has the page been really saved? */
         if (!lepton_page_get_changed (page))
@@ -781,7 +781,7 @@ x_dialog_close_changed_page (SchematicWindow *w_current,
   g_return_val_if_fail (keep_page != NULL, result);
   if (keep_page != page) {
     lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), keep_page);
-    gschem_toplevel_page_changed (w_current);
+    schematic_window_page_changed (w_current);
   }
   return result;
 }
@@ -859,7 +859,7 @@ x_dialog_close_window (SchematicWindow *w_current)
           p_current = (LeptonPage*) p_unsaved->data;
 
           lepton_toplevel_goto_page (toplevel, p_current);
-          gschem_toplevel_page_changed (w_current);
+          schematic_window_page_changed (w_current);
 
           i_callback_file_save (NULL, w_current);
           /* if user cancelled previous, do not close window */
@@ -882,7 +882,7 @@ x_dialog_close_window (SchematicWindow *w_current)
   /* Switch back to the page we were on */
   g_return_val_if_fail (keep_page != NULL, ret);
   lepton_toplevel_goto_page (toplevel, keep_page);
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 
   return ret;
 }

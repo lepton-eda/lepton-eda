@@ -146,7 +146,7 @@ o_autosave_backups (SchematicWindow *w_current)
     if (p_current->ops_since_last_backup != 0) {
       /* make p_current the current page of toplevel */
       lepton_toplevel_goto_page (toplevel, p_current);
-      gschem_toplevel_page_changed (w_current);
+      schematic_window_page_changed (w_current);
 
       /* Get the real filename and file permissions */
       real_filename = follow_symlinks (lepton_page_get_filename (p_current), NULL);
@@ -231,7 +231,7 @@ o_autosave_backups (SchematicWindow *w_current)
   }
   /* restore current page */
   lepton_toplevel_goto_page (toplevel, p_save);
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 }
 
 

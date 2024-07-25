@@ -646,7 +646,7 @@ schematic_window_notify_page_callback (GschemPageView *page_view,
 {
   g_return_if_fail (w_current != NULL);
 
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 }
 
 
@@ -659,7 +659,7 @@ schematic_window_notify_page_callback (GschemPageView *page_view,
  *  \param [in] w_current The current gschem toplevel
  */
 void
-gschem_toplevel_page_changed (SchematicWindow *w_current)
+schematic_window_page_changed (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 

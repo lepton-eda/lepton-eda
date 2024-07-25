@@ -1112,11 +1112,11 @@ the snap grid size should be set to 100")))
   (define *toplevel (gschem_toplevel_get_toplevel *window))
   (define *page-view (schematic_window_get_current_page_view *window))
   (lepton_toplevel_goto_page *toplevel *child)
-  (gschem_toplevel_page_changed *window)
+  (schematic_window_page_changed *window)
   (gschem_page_view_zoom_extents *page-view %null-pointer)
   (undo-save-state)
   (lepton_toplevel_goto_page *toplevel *parent)
-  (gschem_toplevel_page_changed *window))
+  (schematic_window_page_changed *window))
 
 (define (hierarchy-down-error-dialog filename *error)
   (let ((secondary-message
@@ -1149,7 +1149,7 @@ the snap grid size should be set to 100")))
         ;; Open the child page.
         (begin
           ;; Notify window that another page became active.
-          (gschem_toplevel_page_changed *window)
+          (schematic_window_page_changed *window)
           (if use-tabs?
               ;; Tabbed GUI is used.  Create a tab for every
               ;; subpage loaded.  Zoom will be set in
@@ -1260,7 +1260,7 @@ the snap grid size should be set to 100")))
                (lepton_page_set_up *page (lepton_page_get_pid *parent))
                (lepton_toplevel_goto_page *toplevel *page)
 
-               (gschem_toplevel_page_changed *window)
+               (schematic_window_page_changed *window)
 
                ;; Get active page once again, it should now be the symbol
                ;; page.

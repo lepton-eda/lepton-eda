@@ -278,7 +278,7 @@ schematic_window_notify_page_callback (GschemPageView *page_view,
                                        GParamSpec *pspec,
                                        SchematicWindow *w_current);
 void
-gschem_toplevel_page_changed (SchematicWindow *w_current);
+schematic_window_page_changed (SchematicWindow *w_current);
 
 void
 gschem_toplevel_set_toplevel (SchematicWindow *w_current,

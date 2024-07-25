@@ -557,7 +557,7 @@ x_window_open_page (SchematicWindow *w_current,
 
   /* Switch to a new page: */
   lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets current active page of toplevel */
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 
   if (!quiet_mode)
     g_message (_("Loading schematic [%1$s]"), filename);
@@ -770,7 +770,7 @@ x_window_close_page (SchematicWindow *w_current,
              lepton_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   lepton_page_delete (toplevel, page);
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 
   /* Switch to a different page if we just removed the current */
   if (lepton_toplevel_get_page_current (toplevel) == NULL)
@@ -1163,7 +1163,7 @@ x_window_new_page (SchematicWindow* w_current)
 
   /* Switch to a new page: */
   lepton_toplevel_goto_page (toplevel, page);
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 
   if (!quiet_mode)
     g_message (_("New file [%s]"), filename);

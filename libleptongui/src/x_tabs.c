@@ -394,10 +394,10 @@ x_tabs_tl_page_cur_set (SchematicWindow* w_current,
 {
   lepton_toplevel_goto_page (w_current->toplevel, page);
 
-  /* NOTE: gschem_toplevel_page_changed() after
+  /* NOTE: schematic_window_page_changed() after
    * lepton_toplevel_goto_page():
   */
-  gschem_toplevel_page_changed (w_current);
+  schematic_window_page_changed (w_current);
 }
 
 
