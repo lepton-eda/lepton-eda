@@ -244,7 +244,7 @@ GschemPageView*
 schematic_window_get_current_page_view (SchematicWindow *w_current);
 
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (SchematicWindow *w_current);
+schematic_window_get_dash_length_list_store (SchematicWindow *w_current);
 
 GtkListStore*
 gschem_toplevel_get_dash_space_list_store (SchematicWindow *w_current);

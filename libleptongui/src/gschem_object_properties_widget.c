@@ -507,7 +507,7 @@ notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
                                         gschem_toplevel_get_line_width_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->length_entry,
-                                        gschem_toplevel_get_dash_length_list_store (w_current));
+                                        schematic_window_get_dash_length_list_store (w_current));
 
     gschem_integer_combo_box_set_model (dialog->space_entry,
                                         gschem_toplevel_get_dash_space_list_store (w_current));

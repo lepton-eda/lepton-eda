@@ -470,7 +470,7 @@ gschem_toplevel_get_selection_adapter (SchematicWindow *w_current)
  *  \return A list of the commonly used dash_lengths
  */
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (SchematicWindow *w_current)
+schematic_window_get_dash_length_list_store (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
