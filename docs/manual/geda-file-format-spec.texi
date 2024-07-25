@@ -1750,11 +1750,11 @@ SVG standard.}.
 
 @itemize
 @item
-As an implementation detail; libgeda takes code from librsvg, an SVG
-parsing library. As a result, the majority of SVG path syntax is read
-correctly, however this is always normalised to absolute move, line,
-Bézier curve and close-path commands internally (and is saved as
-such).
+As an implementation detail; @code{liblepton} takes code from
+@code{librsvg}, an SVG parsing library. As a result, the majority of
+SVG path syntax is read correctly, however this is always normalised
+to absolute move, line, Bézier curve and close-path commands
+internally (and is saved as such).
 
 @item
 Coordinates along the path are specified in the standard gschem
