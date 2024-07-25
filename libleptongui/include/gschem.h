@@ -34,7 +34,6 @@ typedef struct st_schematic_window SchematicWindow;
 #include "gschem_show_hide_text_widget.h"
 #include "gschem_struct.h"
 #include "gschem_options.h"
-#include "gschem_toplevel.h"
 #include "gschem_accel_label.h"
 #include "gschem_action.h"
 #include "gschem_dialog.h"
@@ -52,6 +51,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "gschem_integer_combo_box.h"
 #include "gschem_binding.h"
 #include "gschem_binding_integer.h"
+#include "window.h"
 
 #include "gschem_object_properties_widget.h"
 #include "gschem_options_widget.h"

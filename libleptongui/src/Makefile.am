@@ -45,7 +45,6 @@ libleptongui_la_SOURCES = \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_widget.c \
 	gschem_translate_widget.c \
-	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
 	i_vars.c \
@@ -80,6 +79,7 @@ libleptongui_la_SOURCES = \
 	schematic_hierarchy.c \
 	slot_edit_dialog.c \
 	snap_mode.c \
+	window.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

@@ -40,10 +40,10 @@ noinst_HEADERS = \
 	gschem_swatch_column_renderer.h \
 	gschem_text_properties_widget.h \
 	gschem_translate_widget.h \
-	gschem_toplevel.h \
 	color_edit_widget.h \
 	font_select_widget.h \
 	page_select_widget.h \
 	preview_widget.h \
 	snap_mode.h \
-	toolbar.h
+	toolbar.h \
+	window.h

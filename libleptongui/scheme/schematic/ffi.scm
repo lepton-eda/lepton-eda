@@ -676,7 +676,7 @@
 (define-lff schematic_snap_mode_from_string int '(*))
 (define-lff schematic_snap_mode_to_string '* (list int))
 
-;;; gschem_toplevel.c
+;;; window.c
 (define-lff schematic_window_active_page_changed void '(*))
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
