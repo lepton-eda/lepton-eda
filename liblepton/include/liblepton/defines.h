@@ -94,10 +94,6 @@
 #define CONN_ENDPOINT		1
 #define CONN_MIDPOINT		2
 
-/* list copying flags */
-#define NORMAL_FLAG		0
-#define SELECTION_FLAG		1
-
 /* hierarchy traversing flags */
 #define HIERARCHY_NODUPS (1<<0)
 #define HIERARCHY_POSTORDER (1<<1)
