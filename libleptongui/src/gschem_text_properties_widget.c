@@ -58,7 +58,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-notify_gschem_toplevel (GschemTextPropertiesWidget *widget);
+notify_schematic_window (GschemTextPropertiesWidget *widget);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -382,7 +382,7 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
 
   g_signal_connect (G_OBJECT (widget),
                     "notify::gschem-toplevel",
-                    G_CALLBACK (notify_gschem_toplevel),
+                    G_CALLBACK (notify_schematic_window),
                     NULL);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -433,7 +433,7 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget    This widget
  */
 static void
-notify_gschem_toplevel (GschemTextPropertiesWidget *widget)
+notify_schematic_window (GschemTextPropertiesWidget *widget)
 {
     SchematicWindow *w_current;
 
