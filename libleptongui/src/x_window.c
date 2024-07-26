@@ -32,9 +32,6 @@ create_notebook_bottom (SchematicWindow *w_current);
 static int
 untitled_next_index (SchematicWindow* w_current);
 
-static gchar*
-untitled_filename (SchematicWindow* w_current, gboolean log_skipped);
-
 
 /*! \brief Create a schematic drawing canvas.
  *  \par Function Description
@@ -1091,7 +1088,7 @@ untitled_next_index (SchematicWindow* w_current)
  *  \param  log_skipped Print skipped file names to the log.
  *  \return             Newly-allocated untitled file path.
  */
-static gchar*
+gchar*
 untitled_filename (SchematicWindow* w_current,
                    gboolean log_skipped)
 {
