@@ -947,12 +947,17 @@ for *PAGE page will be created and set active."
 
 
 (define (close-window-page! *window *page)
+  (define *toplevel (schematic_window_get_toplevel *window))
+
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
+
   ;; If we're closing whilst inside an action, re-wind the page
   ;; contents back to their state before we started.
   (when (in-action? (pointer->window *window))
     (callback-cancel *window))
 
-  (x_window_close_page *window *page))
+  (x_window_close_page *window *toplevel *page))
 
 
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last

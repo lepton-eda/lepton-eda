@@ -921,7 +921,7 @@
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
-(define-lff x_window_close_page '* '(* *))
+(define-lff x_window_close_page '* '(* * *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())

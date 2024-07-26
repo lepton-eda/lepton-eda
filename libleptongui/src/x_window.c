@@ -713,19 +713,19 @@ x_window_save_page (SchematicWindow *w_current,
  *  If necessary, a new untitled page is created
  *  (unless tabbed GUI is enabled: return NULL in that case).
  *
- *  \param [in] w_current The toplevel environment.
+ *  \param [in] w_current The toplevel window environment.
+ *  \param [in] toplevel  The LeptonToplevel structure of the window.
  *  \param [in] page      The page to close.
  *  \return               Pointer to a new current LeptonPage object.
  */
 LeptonPage*
 x_window_close_page (SchematicWindow *w_current,
+                     LeptonToplevel *toplevel,
                      LeptonPage *page)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   LeptonPage *new_current = NULL;
   GList *iter;
 
-  g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (page     != NULL, NULL);
 
   if (page == lepton_toplevel_get_page_current (toplevel))
