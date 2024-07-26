@@ -109,9 +109,16 @@
 
 (define (close-window-dialog window)
   (define *window (check-window window 1))
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
   (define active-page
     (pointer->page (schematic_window_get_active_page *window)))
-  (define result (true? (x_dialog_close_window *window)))
+
+  ;; If there is no page with unsaved changes, just close the
+  ;; window.  Otherwise, run the close confirmation dialog.
+  (define result (or (null-pointer? *unsaved-pages)
+                     (true? (x_dialog_close_window *window
+                                                   *unsaved-pages))))
 
   ;; Switch back to the page we were on.
   (window-set-toplevel-page! window active-page)

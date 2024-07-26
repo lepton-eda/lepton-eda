@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2025 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -341,6 +341,7 @@
             lepton_toplevel_new
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
+            lepton_toplevel_get_changed_pages
             lepton_toplevel_goto_page
             lepton_toplevel_init_autosave
             lepton_toplevel_get_rc_list
@@ -424,6 +425,7 @@
 (define-lff lepton_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
+(define-lff lepton_toplevel_get_changed_pages '* '(*))
 (define-lff lepton_toplevel_goto_page void '(* *))
 (define-lff lepton_toplevel_init_autosave void '(*))
 (define-lff lepton_toplevel_get_rc_list '* '(*))

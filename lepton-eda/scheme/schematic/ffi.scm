@@ -761,7 +761,7 @@
 
 ;;; close_confirmation_dialog.c
 (define-lff x_dialog_close_changed_page int '(* *))
-(define-lff x_dialog_close_window int '(*))
+(define-lff x_dialog_close_window int '(* *))
 
 ;;; coord_dialog.c
 (define-lff coord_dialog void (list '* int int))

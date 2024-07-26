@@ -846,22 +846,17 @@ schematic_close_confirmation_dialog_save_selected (GtkWidget *dialog,
  *  must not be closed.
  *
  *  \param [in] w_current The toplevel environment.
+ *  \param [in] unsaved_pages The list of changed pages.
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (SchematicWindow *w_current)
+x_dialog_close_window (SchematicWindow *w_current,
+                       GList *unsaved_pages)
 {
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   GtkWidget *dialog;
-  GList *unsaved_pages;
   gboolean ret = FALSE;
 
-  unsaved_pages = lepton_toplevel_get_changed_pages (toplevel);
-
-  if (unsaved_pages == NULL) {
-    /* no page with unsaved changes, close window */
-    return TRUE;
-  }
   GtkWidget *main_window;
 
   dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
