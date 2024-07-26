@@ -464,6 +464,45 @@ schematic_newtext_init (SchematicNewText *dialog)
 }
 
 
+GtkWidget*
+schematic_newtext_dialog_new (SchematicWindow *w_current)
+{
+  GtkWidget *dialog =
+    GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_NEWTEXT,
+                              /* GtkContainer */
+                              "border-width",     DIALOG_BORDER_SPACING,
+                              /* GtkWindow */
+                              "title",            _("Add Text"),
+                              "default-width",    320,
+                              "default-height",   350,
+                              "window-position",  GTK_WIN_POS_MOUSE,
+                              "modal",            FALSE,
+#ifndef ENABLE_GTK3
+                              "allow-grow",       TRUE,
+                              "allow-shrink",     FALSE,
+                              /* GtkDialog */
+                              "has-separator",    TRUE,
+#endif
+                              /* SchematicDialog */
+                              "settings-name",    "text-entry",
+                              "schematic-window",  w_current,
+                              NULL));
+
+    gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                  GTK_WINDOW (w_current->main_window));
+
+    schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+                                           schematic_window_get_text_size_list_store (w_current));
+
+    schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+                                           w_current->text_size);
+
+    gtk_widget_show_all (dialog);
+
+    return dialog;
+}
+
+
 /*! \brief Open the dialog box to add new text
  *
  *  \par Function Description
@@ -476,41 +515,11 @@ schematic_newtext_dialog (SchematicWindow *w_current)
 {
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */
-    w_current->tiwindow =
-      GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_NEWTEXT,
-                                /* GtkContainer */
-                                "border-width",     DIALOG_BORDER_SPACING,
-                                /* GtkWindow */
-                                "title",            _("Add Text"),
-                                "default-width",    320,
-                                "default-height",   350,
-                                "window-position",  GTK_WIN_POS_MOUSE,
-                                "modal",            FALSE,
-#ifndef ENABLE_GTK3
-                                "allow-grow",       TRUE,
-                                "allow-shrink",     FALSE,
-                                /* GtkDialog */
-                                "has-separator",    TRUE,
-#endif
-                                /* SchematicDialog */
-                                "settings-name",    "text-entry",
-                                "schematic-window",  w_current,
-                                NULL));
+    w_current->tiwindow = schematic_newtext_dialog_new (w_current);
 
     g_signal_connect (G_OBJECT (w_current->tiwindow),
                       "response", G_CALLBACK (schematic_newtext_dialog_response),
                       NULL);
-
-    gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
-                                  GTK_WINDOW (w_current->main_window));
-
-    schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (w_current->tiwindow)->textsizecb,
-                                           schematic_window_get_text_size_list_store (w_current));
-
-    schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (w_current->tiwindow)->textsizecb,
-                                           w_current->text_size);
-
-    gtk_widget_show_all (w_current->tiwindow);
   }
   else {
     /* dialog already created */

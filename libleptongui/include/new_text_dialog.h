@@ -61,6 +61,9 @@ void
 schematic_newtext_dialog_response (SchematicNewText *dialog,
                                    gint response,
                                    gpointer unused);
+GtkWidget*
+schematic_newtext_dialog_new (SchematicWindow *w_current);
+
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */
