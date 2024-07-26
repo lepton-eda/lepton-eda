@@ -161,6 +161,8 @@
                                       *search-text
                                       *search-text-list
                                       scope-number)
+            (schematic_window_page_changed *window)
+            (schematic_canvas_invalidate_all (schematic_window_get_current_canvas *window))
             (g_list_free *pages)
             ;; FIXME: Undo information saving has to be done
             ;; for all changed pages in hierarchy, not only for

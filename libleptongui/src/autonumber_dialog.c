@@ -1572,8 +1572,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   /* Go back to the root page. */
   lepton_toplevel_goto_page (toplevel, (LeptonPage*) pages->data);
-  schematic_window_page_changed (w_current);
-  schematic_canvas_invalidate_all (schematic_window_get_current_canvas (w_current));
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
