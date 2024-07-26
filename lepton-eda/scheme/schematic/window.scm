@@ -130,8 +130,6 @@
   "Closes WINDOW."
   (define *window (window->pointer window))
   (define last-window? (= (length (schematic-windows)) 1))
-  (define *toplevel (schematic_window_get_toplevel *window))
-  (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
   ;; Remember current active page.  In cases when the user saves
   ;; some untitled pages but leaves some other ones unsaved, the
   ;; window won't be closed and we have to restore the active
@@ -187,23 +185,13 @@
   (when (in-action? window)
     (callback-cancel *window))
 
-  ;; Last chance to save possible unsaved pages.
-  (if (null-pointer? *unsaved-pages)
-      ;; If there is no page with unsaved changes, just close the
-      ;; window.
-      (close!)
-      ;; Otherwise, run the close confirmation dialog.
-      (let* ((*dialog (make-close-window-dialog *window *unsaved-pages))
-             (result (run-close-window-dialog *dialog *window *toplevel)))
-        ;; First close the dialog.
-        (gtk_widget_destroy *dialog)
-        (case result
-          ;; Close window.
-          ((close) (close!))
-          ;; Restore active page.
-          ((restore) (window-set-toplevel-page! window active-page))
-          ;; Dialog has been cancelled. Do nothing.
-          (else #f)))))
+  (case (close-window-dialog window)
+    ;; Close window.
+    ((close) (close!))
+    ;; Restore active page.
+    ((restore) (window-set-toplevel-page! window active-page))
+    ;; Dialog has been cancelled. Do nothing.
+    (else #f)))
 
 
 (define (callback-close-schematic-window *widget *event *window)

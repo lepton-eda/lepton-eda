@@ -26,11 +26,12 @@
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
+  #:use-module (schematic window foreign)
 
-  #:export (make-close-window-dialog
-            run-close-window-dialog))
+  #:export (close-window-dialog))
 
 
 (define (make-close-window-dialog *window *changed-pages)
@@ -81,3 +82,24 @@
     ;; otherwise destroyed the dialog window without a proper
     ;; response, there is nothing to do.
     (else #f)))
+
+
+(define (close-window-dialog window)
+  (define *window (check-window window 1))
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (define *unsaved-pages (lepton_toplevel_get_changed_pages *toplevel))
+  (define (run-dialog-and-get-result)
+    (define *dialog (make-close-window-dialog *window *unsaved-pages))
+    (define result (run-close-window-dialog *dialog *window *toplevel))
+    ;; First close the dialog.
+    (gtk_widget_destroy *dialog)
+    result)
+
+  ;; Last chance to save possible unsaved pages.
+  (if (null-pointer? *unsaved-pages)
+      ;; If there is no page with unsaved changes, just close the
+      ;; window.
+      'close
+      ;; Otherwise, actually run the close confirmation dialog and
+      ;; return the result.
+      (run-dialog-and-get-result)))
