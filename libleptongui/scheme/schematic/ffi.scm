@@ -769,7 +769,7 @@
 ;;; gschem_options_widget.c
 (define-lff gschem_options_widget_new '* '(*))
 
-;;; gschem_page_geometry.c
+;;; viewport.c
 (define-lff schematic_viewport_get_bottom int '(*))
 (define-lff schematic_viewport_get_left int '(*))
 (define-lff schematic_viewport_get_right int '(*))
