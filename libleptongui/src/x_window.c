@@ -270,7 +270,7 @@ x_window_select_object (GschemFindTextState *state,
     view = schematic_window_get_current_page_view (w_current);
   }
 
-  gschem_page_view_zoom_object (view, object);
+  schematic_canvas_zoom_object (view, object);
 }
 
 static void

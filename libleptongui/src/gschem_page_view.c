@@ -1549,7 +1549,8 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
  *  \param [in] object    The object
  */
 void
-gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object)
+schematic_canvas_zoom_object (SchematicCanvas *view,
+                              LeptonObject *object)
 {
   int success;
   int x[2];
