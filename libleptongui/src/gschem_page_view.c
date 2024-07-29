@@ -916,7 +916,10 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
  *  \param [in]     x     The screen x coordinate
  *  \param [in]     y     The screen y coordinate
  */
-void gschem_page_view_pan_start (SchematicCanvas *view, int x, int y)
+void
+schematic_canvas_pan_start (SchematicCanvas *view,
+                            int x,
+                            int y)
 {
   view->doing_pan = TRUE;
   view->pan_x = x;

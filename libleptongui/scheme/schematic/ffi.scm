@@ -326,7 +326,7 @@
             gschem_page_view_pan_end
             schematic_canvas_pan_mouse
             gschem_page_view_pan_motion
-            gschem_page_view_pan_start
+            schematic_canvas_pan_start
             gschem_page_view_redraw
             gschem_page_view_SCREENtoWORLD
             gschem_page_view_zoom_extents
@@ -642,7 +642,7 @@
 (define-lff gschem_page_view_pan_end int '(*))
 (define-lff schematic_canvas_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_pan_motion void (list '* int int int))
-(define-lff gschem_page_view_pan_start void (list '* int int))
+(define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff gschem_page_view_redraw void '(* * *))
 (define-lff gschem_page_view_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff gschem_page_view_zoom_extents void '(* *))

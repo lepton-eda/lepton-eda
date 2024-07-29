@@ -554,7 +554,7 @@
                          (schematic_event_set_doing_stroke TRUE))
 
                         ((= middle-button MOUSEBTN_DO_PAN)
-                         (gschem_page_view_pan_start *page-view
+                         (schematic_canvas_pan_start *page-view
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y))))
 
@@ -577,13 +577,13 @@
                            (i_update_menus *window)
                            (do_popup *window *event))
                          ;; (third-button "mousepan")
-                         (gschem_page_view_pan_start *page-view
+                         (schematic_canvas_pan_start *page-view
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y))))
                      (if (and (eq? (schematic_window_get_third_button *window)
                                    MOUSEBTN_DO_PAN)
                               (not (true? (schematic_window_get_third_button_cancel *window))))
-                         (gschem_page_view_pan_start *page-view
+                         (schematic_canvas_pan_start *page-view
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y)))
                          ;; This is the default cancel.
