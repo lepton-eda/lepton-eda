@@ -264,7 +264,7 @@ o_undo_savestate (SchematicWindow *w_current,
 
   g_return_if_fail (page != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   /* save autosave backups if necessary */
   o_autosave_backups(w_current);

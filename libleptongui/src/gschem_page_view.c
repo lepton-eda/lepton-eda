@@ -278,7 +278,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_PAGE_GEOMETRY:
-      g_value_set_boxed (value, gschem_page_view_get_page_geometry (view));
+      g_value_set_boxed (value, schematic_canvas_get_page_geometry (view));
       break;
 
     case PROP_VADJUSTMENT:
@@ -490,7 +490,7 @@ schematic_canvas_get_page (SchematicCanvas *view)
  *  \return The page geometry for the view
  */
 GschemPageGeometry*
-gschem_page_view_get_page_geometry (SchematicCanvas *view)
+schematic_canvas_get_page_geometry (SchematicCanvas *view)
 {
   LeptonPage *page = NULL;
   GschemPageGeometry *geometry = NULL;
@@ -815,7 +815,7 @@ gschem_page_view_pan_general (SchematicCanvas *view, int w_x, int w_y, double re
 
   g_return_if_fail (view != NULL);
 
-  geometry = gschem_page_view_get_page_geometry (view);
+  geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   /* make mouse to the new world-center;
@@ -864,7 +864,7 @@ gschem_page_view_pan_mouse (SchematicCanvas *view, int diff_x, int diff_y)
 
   g_return_if_fail (view != NULL);
 
-  geometry = gschem_page_view_get_page_geometry (view);
+  geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
@@ -983,7 +983,7 @@ gschem_page_view_pan_end (SchematicCanvas *view)
 void
 gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y)
 {
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   g_return_if_fail (geometry != NULL);
 
@@ -1163,7 +1163,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, SchematicCanvas *view)
   g_return_if_fail (hadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   if (view->hadjustment != NULL && geometry != NULL) {
     int current_left;
@@ -1242,7 +1242,7 @@ gschem_page_view_SCREENabs(SchematicCanvas *view, int val)
   double f0,f1;
   double i;
   int j;
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   g_return_val_if_fail (view != NULL, 0);
 
@@ -1270,7 +1270,7 @@ gschem_page_view_update_hadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   if (view->hadjustment != NULL && geometry != NULL) {
 
@@ -1333,7 +1333,7 @@ gschem_page_view_update_vadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   if (view->vadjustment != NULL && geometry != NULL) {
 
@@ -1391,7 +1391,7 @@ gschem_page_view_WORLDabs(SchematicCanvas *page_view, int val)
   double i;
   int j;
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (page_view);
 
   gtk_widget_get_allocation (GTK_WIDGET(page_view), &allocation);
 
@@ -1437,7 +1437,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment,
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   if (view->vadjustment != NULL && geometry != NULL) {
     int current_bottom;
@@ -1462,7 +1462,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment,
 void
 gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py)
 {
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 
   g_return_if_fail (geometry != NULL);
 
@@ -1492,7 +1492,7 @@ gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *objects)
   page = schematic_canvas_get_page (view);
   g_return_if_fail (page != NULL);
 
-  geometry = gschem_page_view_get_page_geometry (view);
+  geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
@@ -1524,7 +1524,7 @@ gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object)
   double scale;
 
   g_return_if_fail (view != NULL);
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   g_return_if_fail (object != NULL);
@@ -1606,7 +1606,7 @@ gschem_page_view_redraw (SchematicCanvas *view,
   page = schematic_canvas_get_page (view);
 
   if (page != NULL) {
-    geometry = gschem_page_view_get_page_geometry (view);
+    geometry = schematic_canvas_get_page_geometry (view);
 
     g_return_if_fail (view != NULL);
 

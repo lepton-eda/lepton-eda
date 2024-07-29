@@ -45,7 +45,7 @@ a_zoom (SchematicWindow *w_current,
 {
   g_return_if_fail (page_view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (page_view);
   g_return_if_fail (geometry != NULL);
 
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
@@ -147,7 +147,7 @@ a_zoom_box (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (page_view);
   g_return_if_fail (geometry != NULL);
 
   /*test if there is really a box*/

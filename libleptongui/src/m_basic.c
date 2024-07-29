@@ -243,7 +243,7 @@ visible (SchematicWindow *w_current,
          int wbottom)
 {
   int visible=FALSE;
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (schematic_window_get_current_page_view (w_current));
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (schematic_window_get_current_page_view (w_current));
 
   visible = clip_nochange (geometry, wleft, wtop, wright, wtop);
 

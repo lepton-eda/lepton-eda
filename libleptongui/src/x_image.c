@@ -387,7 +387,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   float prop;
   SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   /* Save geometry */
@@ -785,7 +785,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   g_return_val_if_fail (page != NULL, NULL);
 
-  old_geometry = gschem_page_view_get_page_geometry (page_view);
+  old_geometry = schematic_canvas_get_page_geometry (page_view);
 
   cs = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
   cr = cairo_create (cs);
@@ -918,7 +918,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   page_view = schematic_window_get_current_page_view (w_current);
 
-  old_geometry = gschem_page_view_get_page_geometry (page_view);
+  old_geometry = schematic_canvas_get_page_geometry (page_view);
 
   /* Do a copy of the w_current struct and work with it */
   memcpy (&new_w_current, w_current, sizeof (SchematicWindow));

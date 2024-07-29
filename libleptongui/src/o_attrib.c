@@ -388,7 +388,7 @@ o_attrib_add_attrib (SchematicWindow *w_current,
 
         if (view != NULL)
         {
-          GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+          GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
           world_x = (geometry->viewport_left + geometry->viewport_right) / 2;
           world_y = (geometry->viewport_top + geometry->viewport_bottom) / 2;
         }
