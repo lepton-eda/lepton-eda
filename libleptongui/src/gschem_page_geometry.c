@@ -105,7 +105,7 @@ gschem_page_geometry_get_screen_width (SchematicViewport *geometry)
  *  \return The SchematicViewport type.
  */
 GType
-gschem_page_geometry_get_type ()
+schematic_viewport_get_type ()
 {
   static GType type = 0;
 

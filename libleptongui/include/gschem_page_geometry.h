@@ -23,7 +23,7 @@
  * \brief
  */
 
-#define SCHEMATIC_TYPE_VIEWPORT (gschem_page_geometry_get_type())
+#define SCHEMATIC_TYPE_VIEWPORT (schematic_viewport_get_type())
 
 typedef struct _SchematicViewport SchematicViewport;
 
@@ -71,7 +71,7 @@ int
 gschem_page_geometry_get_screen_width (SchematicViewport *geometry);
 
 GType
-gschem_page_geometry_get_type ();
+schematic_viewport_get_type ();
 
 int
 gschem_page_geometry_get_viewport_bottom (SchematicViewport *geometry);
