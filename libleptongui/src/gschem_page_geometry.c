@@ -244,7 +244,7 @@ schematic_viewport_set_world_left (SchematicViewport *geometry,
  *  \return The right edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_right (SchematicViewport *geometry)
+schematic_viewport_get_world_right (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
