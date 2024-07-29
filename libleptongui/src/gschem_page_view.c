@@ -85,7 +85,7 @@ static void
 schematic_canvas_update_vadjustment (SchematicCanvas *view);
 
 static void
-gschem_page_view_update_scroll_adjustments (SchematicCanvas *view);
+schematic_canvas_update_scroll_adjustments (SchematicCanvas *view);
 
 static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, SchematicCanvas *view);
@@ -835,7 +835,7 @@ schematic_canvas_pan_general (SchematicCanvas *view,
   gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor);
 
   g_signal_emit_by_name (view, "update-grid-info");
-  gschem_page_view_update_scroll_adjustments (view);
+  schematic_canvas_update_scroll_adjustments (view);
   schematic_canvas_invalidate_all (view);
 }
 
@@ -856,7 +856,7 @@ schematic_canvas_pan (SchematicCanvas *view,
   /* This works e.g. if the view is centered at the mouse pointer position */
   x_event_faked_motion (view, NULL);
 
-  gschem_page_view_update_scroll_adjustments (view);
+  schematic_canvas_update_scroll_adjustments (view);
   schematic_canvas_invalidate_all (view);
 }
 
@@ -1091,7 +1091,7 @@ schematic_canvas_set_page (SchematicCanvas *view,
 
       /* redraw the current page and update UI */
       schematic_canvas_invalidate_all (view);
-      gschem_page_view_update_scroll_adjustments (view);
+      schematic_canvas_update_scroll_adjustments (view);
 
       g_object_notify (G_OBJECT (view), "page");
       g_object_notify (G_OBJECT (view), "page-geometry");
@@ -1346,7 +1346,7 @@ schematic_canvas_update_hadjustment (SchematicCanvas *view)
 /*! \brief Update the scroll adjustments
  */
 static void
-gschem_page_view_update_scroll_adjustments (SchematicCanvas *view)
+schematic_canvas_update_scroll_adjustments (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -1541,7 +1541,7 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
   x_event_faked_motion (view, NULL);
 
   g_signal_emit_by_name (view, "update-grid-info");
-  gschem_page_view_update_scroll_adjustments (view);
+  schematic_canvas_update_scroll_adjustments (view);
   schematic_canvas_invalidate_all (view);
 }
 
