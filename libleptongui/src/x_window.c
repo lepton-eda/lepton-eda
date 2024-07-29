@@ -617,7 +617,7 @@ x_window_set_current_page (SchematicWindow *w_current,
 
   o_redraw_cleanstates (w_current);
 
-  gschem_page_view_set_page (page_view, page);
+  schematic_canvas_set_page (page_view, page);
 
   i_update_menus (w_current);
   /* i_set_filename (w_current, page->page_filename); */

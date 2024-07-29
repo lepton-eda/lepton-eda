@@ -268,7 +268,7 @@ x_event_configure (SchematicCanvas   *page_view,
         iter != NULL;
         iter = g_list_next (iter) ) {
 
-    gschem_page_view_set_page (page_view, (LeptonPage *)iter->data);
+    schematic_canvas_set_page (page_view, (LeptonPage *)iter->data);
 
     if (page_view->configured) {
       schematic_canvas_pan_mouse (page_view, 0, 0);
@@ -279,7 +279,7 @@ x_event_configure (SchematicCanvas   *page_view,
 
   page_view->configured = TRUE;
 
-  gschem_page_view_set_page (page_view, p_current);
+  schematic_canvas_set_page (page_view, p_current);
 
   return FALSE;
 }

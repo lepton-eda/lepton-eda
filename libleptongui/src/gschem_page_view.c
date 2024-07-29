@@ -1069,7 +1069,7 @@ schematic_canvas_set_hadjustment (SchematicCanvas *view,
  *  \param [in]     page The page
  */
 void
-gschem_page_view_set_page (SchematicCanvas *view,
+schematic_canvas_set_page (SchematicCanvas *view,
                            LeptonPage *page)
 {
   g_return_if_fail (view != NULL);
@@ -1223,7 +1223,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_PAGE:
-      gschem_page_view_set_page (view, (LeptonPage*) g_value_get_pointer (value));
+      schematic_canvas_set_page (view, (LeptonPage*) g_value_get_pointer (value));
       break;
 
     case PROP_VADJUSTMENT:

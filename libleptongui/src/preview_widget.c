@@ -239,7 +239,7 @@ schematic_preview_init (SchematicPreview *preview)
   preview->filename = NULL;
   preview->buffer   = NULL;
 
-  gschem_page_view_set_page (SCHEMATIC_CANVAS (preview),
+  schematic_canvas_set_page (SCHEMATIC_CANVAS (preview),
                              lepton_page_new (preview->window->toplevel,
                                               "preview"));
 
