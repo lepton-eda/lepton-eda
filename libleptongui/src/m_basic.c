@@ -75,7 +75,7 @@ struct st_halfspace {
  *  of the current page viewport coordinates. It handles points
  *  with WORLD coordinates.
  *
- *  \param [in] geometry    The #GschemPageGeometry instance to get
+ *  \param [in] geometry    The #SchematicViewport instance to get
  *                          viewport coordinates from.
  *  \param [in]  point      The point in WORLD coordinates to be checked.
  *  \param [out] halfspace  The created HALFSPACE structure.
@@ -83,7 +83,7 @@ struct st_halfspace {
  *  \warning halfspace must be allocated before this function is called
  */
 static void
-WORLDencode_halfspace (GschemPageGeometry *geometry,
+WORLDencode_halfspace (SchematicViewport *geometry,
                        LeptonPoint *point,
                        HALFSPACE *halfspace)
 {
@@ -99,14 +99,14 @@ WORLDencode_halfspace (GschemPageGeometry *geometry,
  *  are within a clipping region. No action will be taken to change
  *  the coordinates.
  *
- *  \param [in] geometry   The #GschemPageGeometry structure.
+ *  \param [in] geometry   The #SchematicViewport structure.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int clip_nochange (GschemPageGeometry *geometry, int x1, int y1, int x2, int y2)
+int clip_nochange (SchematicViewport *geometry, int x1, int y1, int x2, int y2)
 {
   HALFSPACE half1, half2;
   HALFSPACE tmp_half;
@@ -243,7 +243,7 @@ visible (SchematicWindow *w_current,
          int wbottom)
 {
   int visible=FALSE;
-  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (schematic_window_get_current_page_view (w_current));
+  SchematicViewport *geometry = schematic_canvas_get_page_geometry (schematic_window_get_current_page_view (w_current));
 
   visible = clip_nochange (geometry, wleft, wtop, wright, wtop);
 

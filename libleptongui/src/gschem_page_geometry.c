@@ -41,7 +41,7 @@
 
 
 static void
-update_constants (GschemPageGeometry *geometry);
+update_constants (SchematicViewport *geometry);
 
 
 
@@ -50,10 +50,10 @@ update_constants (GschemPageGeometry *geometry);
  *  \param [in] geometry The page geometry to copy
  *  \return An dynamically allocated copy of the geometry
  */
-GschemPageGeometry*
-gschem_page_geometry_copy (GschemPageGeometry *geometry)
+SchematicViewport*
+gschem_page_geometry_copy (SchematicViewport *geometry)
 {
-  return (GschemPageGeometry*) g_memdup2 (geometry, sizeof (GschemPageGeometry));
+  return (SchematicViewport*) g_memdup2 (geometry, sizeof (SchematicViewport));
 }
 
 
@@ -63,7 +63,7 @@ gschem_page_geometry_copy (GschemPageGeometry *geometry)
  *  \param [in] geometry The page geometry to free
  */
 void
-gschem_page_geometry_free (GschemPageGeometry *geometry)
+gschem_page_geometry_free (SchematicViewport *geometry)
 {
   g_free (geometry);
 }
@@ -72,11 +72,11 @@ gschem_page_geometry_free (GschemPageGeometry *geometry)
 
 /*! \brief Get the screen height in pixels.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The screen height in pixels.
  */
 int
-gschem_page_geometry_get_screen_height (GschemPageGeometry *geometry)
+gschem_page_geometry_get_screen_height (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -87,11 +87,11 @@ gschem_page_geometry_get_screen_height (GschemPageGeometry *geometry)
 
 /*! \brief Get the screen width in pixels.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The screen width in pixels.
  */
 int
-gschem_page_geometry_get_screen_width (GschemPageGeometry *geometry)
+gschem_page_geometry_get_screen_width (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -100,9 +100,9 @@ gschem_page_geometry_get_screen_width (GschemPageGeometry *geometry)
 
 
 
-/*! \brief Get/register the GschemPageGeometry type.
+/*! \brief Get/register the SchematicViewport type.
  *
- *  \return The GschemPageGeometry type.
+ *  \return The SchematicViewport type.
  */
 GType
 gschem_page_geometry_get_type ()
@@ -110,7 +110,7 @@ gschem_page_geometry_get_type ()
   static GType type = 0;
 
   if (type == 0) {
-    type = g_boxed_type_register_static ("GschemPageGeometry",
+    type = g_boxed_type_register_static ("SchematicViewport",
                                          (GBoxedCopyFunc) gschem_page_geometry_copy,
                                          (GBoxedFreeFunc) gschem_page_geometry_free);
   }
@@ -122,11 +122,11 @@ gschem_page_geometry_get_type ()
 
 /*! \brief Get the bottom edge of the viewport in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The bottom edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_bottom (GschemPageGeometry *geometry)
+gschem_page_geometry_get_viewport_bottom (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -137,11 +137,11 @@ gschem_page_geometry_get_viewport_bottom (GschemPageGeometry *geometry)
 
 /*! \brief Get the left edge of the viewport in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The left edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_left (GschemPageGeometry *geometry)
+gschem_page_geometry_get_viewport_left (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -152,11 +152,11 @@ gschem_page_geometry_get_viewport_left (GschemPageGeometry *geometry)
 
 /*! \brief Get the right edge of the viewport in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The right edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_right (GschemPageGeometry *geometry)
+gschem_page_geometry_get_viewport_right (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -167,11 +167,11 @@ gschem_page_geometry_get_viewport_right (GschemPageGeometry *geometry)
 
 /*! \brief Get the top edge of the viewport in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The top edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry)
+gschem_page_geometry_get_viewport_top (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -182,11 +182,11 @@ gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry)
 
 /*! \brief Get the bottom edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The bottom edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_bottom (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -195,12 +195,12 @@ gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry)
 
 /*! \brief Set the bottom edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] geometry The SchematicViewport instance.
  *  \param [in] val The new value of the bottom edge of the world
  *                  in world coordinates.
  */
 void
-gschem_page_geometry_set_world_bottom (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_bottom (SchematicViewport *geometry,
                                        int val)
 {
   g_return_if_fail (geometry != NULL);
@@ -211,11 +211,11 @@ gschem_page_geometry_set_world_bottom (GschemPageGeometry *geometry,
 
 /*! \brief Get the left edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The left edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_left (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_left (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -224,12 +224,12 @@ gschem_page_geometry_get_world_left (GschemPageGeometry *geometry)
 
 /*! \brief Set the left edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] geometry The SchematicViewport instance.
  *  \param [in] val The new value of the left edge of the world
  *                  in world coordinates.
  */
 void
-gschem_page_geometry_set_world_left (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_left (SchematicViewport *geometry,
                                      int val)
 {
   g_return_if_fail (geometry != NULL);
@@ -240,11 +240,11 @@ gschem_page_geometry_set_world_left (GschemPageGeometry *geometry,
 
 /*! \brief Get the right edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The right edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_right (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_right (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -253,12 +253,12 @@ gschem_page_geometry_get_world_right (GschemPageGeometry *geometry)
 
 /*! \brief Set the right edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] geometry The SchematicViewport instance.
  *  \param [in] val The new value of the right edge of the world
  *                  in world coordinates.
  */
 void
-gschem_page_geometry_set_world_right (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_right (SchematicViewport *geometry,
                                       int val)
 {
   g_return_if_fail (geometry != NULL);
@@ -269,11 +269,11 @@ gschem_page_geometry_set_world_right (GschemPageGeometry *geometry,
 
 /*! \brief Get the top edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The top edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_top (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -282,12 +282,12 @@ gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
 
 /*! \brief Set the top edge of the world in world coordinates.
  *
- *  \param [in] geometry The GschemPageGeometry instance.
+ *  \param [in] geometry The SchematicViewport instance.
  *  \param [in] val The new value of the top edge of the world
  *                  in world coordinates.
  */
 void
-gschem_page_geometry_set_world_top (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_top (SchematicViewport *geometry,
                                     int val)
 {
   g_return_if_fail (geometry != NULL);
@@ -298,11 +298,11 @@ gschem_page_geometry_set_world_top (GschemPageGeometry *geometry,
 
 /*! \brief Get the world to screen transformation matrix.
  *
- *  \param [in] geometry The GschemPageGeometry
+ *  \param [in] geometry The SchematicViewport
  *  \return The world to screen transformation matrix.
  */
 cairo_matrix_t*
-gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_to_screen_matrix (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, NULL);
 
@@ -329,12 +329,12 @@ gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry)
  *  Convert a screen \a x coordinate to world \a x coordinate for
  *  a screen page \a geometry.
  *
- *  \param [in] geometry The #GschemPageGeometry structure.
+ *  \param [in] geometry The #SchematicViewport structure.
  *  \param [in] value    The \a x coordinate to convert.
  *  \return The world coordinate value.
  */
 int
-gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value)
+gschem_page_geometry_mil_x (SchematicViewport *geometry, int value)
 {
   double i;
   double fval;
@@ -360,12 +360,12 @@ gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value)
  *  Convert a screen \a y coordinate to world \a y coordinate for
  *  a screen page \a geometry.
  *
- *  \param [in] geometry The #GschemPageGeometry structure.
+ *  \param [in] geometry The #SchematicViewport structure.
  *  \param [in] value    The \a y coordinate to convert.
  *  \return The world coordinate value.
  */
 int
-gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
+gschem_page_geometry_mil_y(SchematicViewport *geometry, int value)
 {
   double i;
   double fval;
@@ -387,9 +387,9 @@ gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
 
 
 
-/*! \brief Create a new #GschemPageGeometry object.
+/*! \brief Create a new #SchematicViewport object.
  *  \par Function description
- *  Create a new #GschemPageGeometry object with given values
+ *  Create a new #SchematicViewport object with given values
  *  including the screen and viewport sizes and the world
  *  coordinates of the viewport.
  *
@@ -403,9 +403,9 @@ gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
  *  \param [in] world_top       The world top \a y coord.
  *  \param [in] world_right     The world right \a x coord.
  *  \param [in] world_bottom    The world bottom \a y coord.
- *  \return The pointer to the new #GschemPageGeometry object.
+ *  \return The pointer to the new #SchematicViewport object.
  */
-GschemPageGeometry*
+SchematicViewport*
 gschem_page_geometry_new_with_values (int screen_width,
                                       int screen_height,
                                       int viewport_left,
@@ -417,7 +417,7 @@ gschem_page_geometry_new_with_values (int screen_width,
                                       int world_right,
                                       int world_bottom)
 {
-  GschemPageGeometry *geometry = g_new0 (GschemPageGeometry, 1);
+  SchematicViewport *geometry = g_new0 (SchematicViewport, 1);
 
   double val1 = fabs ((double)(viewport_right - viewport_left) / screen_width);
   double val2 = fabs ((double)(viewport_top - viewport_bottom) / screen_height);
@@ -450,7 +450,7 @@ gschem_page_geometry_new_with_values (int screen_width,
  *  \param [in]     relativ_zoom_factor
  */
 void
-gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
+gschem_page_geometry_pan_general(SchematicViewport *geometry,
                                  double world_cx,
                                  double world_cy,
                                  double relativ_zoom_factor)
@@ -545,7 +545,7 @@ gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
  *  \return The x coordinate in pixels
  */
 int
-gschem_page_geometry_pix_x (GschemPageGeometry *geometry, int value)
+gschem_page_geometry_pix_x (SchematicViewport *geometry, int value)
 {
   double i;
   int j;
@@ -581,7 +581,7 @@ gschem_page_geometry_pix_x (GschemPageGeometry *geometry, int value)
  *  \return The y coordinate in pixels
  */
 int
-gschem_page_geometry_pix_y (GschemPageGeometry *geometry, int value)
+gschem_page_geometry_pix_y (SchematicViewport *geometry, int value)
 {
   double i;
   int j;
@@ -612,11 +612,11 @@ gschem_page_geometry_pix_y (GschemPageGeometry *geometry, int value)
 
 /*! \brief Set the screen height in pixels
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] screen_height The screen height in pixels.
  */
 void
-gschem_page_geometry_set_screen_height (GschemPageGeometry *geometry, int screen_height)
+gschem_page_geometry_set_screen_height (SchematicViewport *geometry, int screen_height)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -630,11 +630,11 @@ gschem_page_geometry_set_screen_height (GschemPageGeometry *geometry, int screen
 
 /*! \brief Set the screen width in pixels
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] screen_width The screen width in pixels.
  */
 void
-gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_width)
+gschem_page_geometry_set_screen_width (SchematicViewport *geometry, int screen_width)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -646,13 +646,13 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
 
 
 
-/*! \brief Set new geometry values for a #GschemPageGeometry
+/*! \brief Set new geometry values for a #SchematicViewport
  *  object.
  *  \par Function description
  *  Set given screen and viewport values for a new
- *  #GschemPageGeometry object.
+ *  #SchematicViewport object.
  *
- *  \param [in,out] geometry    The #GschemPageGeometry object.
+ *  \param [in,out] geometry    The #SchematicViewport object.
  *  \param [in] scale           The new scale (currently unused).
  *  \param [in] screen_width    The new screen width.
  *  \param [in] screen_height   The new screen height.
@@ -662,7 +662,7 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
  *  \param [in] viewport_bottom The new viewport bottom \a y coord.
  */
 void
-gschem_page_geometry_set_values (GschemPageGeometry *geometry,
+gschem_page_geometry_set_values (SchematicViewport *geometry,
                                  double scale,
                                  int screen_width,
                                  int screen_height,
@@ -693,13 +693,13 @@ gschem_page_geometry_set_values (GschemPageGeometry *geometry,
 
 /*! \brief Set the viewport in world coordinates
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in]     x        Center x coordinate of the viewport
  *  \param [in]     y        Center y coordinate of the viewport
  *  \param [in]     scale    Scale factor for the viewport
  */
 void
-gschem_page_geometry_set_viewport (GschemPageGeometry *geometry, int x, int y, double scale)
+gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, double scale)
 {
   g_return_if_fail (geometry != NULL);
   geometry->viewport_left   = x - (int) (geometry->screen_width  * scale / 2);
@@ -715,11 +715,11 @@ gschem_page_geometry_set_viewport (GschemPageGeometry *geometry, int x, int y, d
 
 /*! \brief Set the bottom edge of the viewport in world coordinates
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] viewport_bottom The bottom edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_bottom (GschemPageGeometry *geometry, int viewport_bottom)
+gschem_page_geometry_set_viewport_bottom (SchematicViewport *geometry, int viewport_bottom)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -733,11 +733,11 @@ gschem_page_geometry_set_viewport_bottom (GschemPageGeometry *geometry, int view
 
 /*! \brief Set the left edge of the viewport in world coordinates
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] viewport_left The left edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_left (GschemPageGeometry *geometry, int viewport_left)
+gschem_page_geometry_set_viewport_left (SchematicViewport *geometry, int viewport_left)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -751,11 +751,11 @@ gschem_page_geometry_set_viewport_left (GschemPageGeometry *geometry, int viewpo
 
 /*! \brief Set the right edge of the viewport in world coordinates
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] viewport_right The right edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_right (GschemPageGeometry *geometry, int viewport_right)
+gschem_page_geometry_set_viewport_right (SchematicViewport *geometry, int viewport_right)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -769,11 +769,11 @@ gschem_page_geometry_set_viewport_right (GschemPageGeometry *geometry, int viewp
 
 /*! \brief Set the top edge of the viewport in world coordinates
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  *  \param [in] viewport_top The top edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewport_top)
+gschem_page_geometry_set_viewport_top (SchematicViewport *geometry, int viewport_top)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -787,12 +787,12 @@ gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewpor
 
 /*! \brief Zoom the viewport to the extents of the given objects
  *
- *  \param [in,out] geometry    This GschemPageGeometry
+ *  \param [in,out] geometry    This SchematicViewport
  *  \param [in] list            The list of object to zoom extents
  *  \param [in] include_hidden  Calculate extents of hidden text
  */
 void
-gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry,
+gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
                                    const GList *list,
                                    gboolean include_hidden)
 {
@@ -845,10 +845,10 @@ gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry,
 
 /*! \brief Update the constants (coefficients) for calculations
  *
- *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in,out] geometry The SchematicViewport
  */
 static void
-update_constants (GschemPageGeometry *geometry)
+update_constants (SchematicViewport *geometry)
 {
   /* now do the constant setups */
 

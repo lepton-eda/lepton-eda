@@ -387,7 +387,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   float prop;
   SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
 
-  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   /* Save geometry */
@@ -763,7 +763,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   SchematicCanvas *page_view;
   LeptonPage *page;
   int origin_x, origin_y, bottom, right;
-  GschemPageGeometry *old_geometry, *new_geometry;
+  SchematicViewport *old_geometry, *new_geometry;
 
   GList *obj_list;
   GList *iter;
@@ -913,7 +913,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   GschemOptions options;
   LeptonToplevel toplevel;
   GdkRectangle rect;
-  GschemPageGeometry *old_geometry, *new_geometry;
+  SchematicViewport *old_geometry, *new_geometry;
   GdkPixmap *window = NULL;
 
   page_view = schematic_window_get_current_page_view (w_current);

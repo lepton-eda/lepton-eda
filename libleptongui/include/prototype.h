@@ -168,7 +168,7 @@ int
 snap_grid (SchematicWindow *w_current,
            int input);
 int
-clip_nochange (GschemPageGeometry *geometry,
+clip_nochange (SchematicViewport *geometry,
                int x1,
                int y1,
                int x2,
@@ -236,14 +236,14 @@ void
 o_redraw_rect (SchematicWindow *w_current,
                GtkWidget *widget,
                LeptonPage *page,
-               GschemPageGeometry *geometry,
+               SchematicViewport *geometry,
                cairo_t *cr);
 #else
 void
 o_redraw_rect (SchematicWindow *w_current,
                GdkDrawable *drawable,
                LeptonPage *page,
-               GschemPageGeometry *geometry,
+               SchematicViewport *geometry,
                GdkRectangle *rectangle);
 #endif
 int

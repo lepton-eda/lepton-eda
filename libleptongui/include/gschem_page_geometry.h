@@ -23,11 +23,11 @@
  * \brief
  */
 
-#define GSCHEM_TYPE_PAGE_GEOMETRY (gschem_page_geometry_get_type())
+#define SCHEMATIC_TYPE_VIEWPORT (gschem_page_geometry_get_type())
 
-typedef struct _GschemPageGeometry GschemPageGeometry;
+typedef struct _SchematicViewport SchematicViewport;
 
-struct _GschemPageGeometry
+struct _SchematicViewport
 {
   int screen_width;
   int screen_height;
@@ -58,67 +58,67 @@ struct _GschemPageGeometry
 
 G_BEGIN_DECLS
 
-GschemPageGeometry*
-gschem_page_geometry_copy (GschemPageGeometry *geometry);
+SchematicViewport*
+gschem_page_geometry_copy (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_free (GschemPageGeometry *geometry);
+gschem_page_geometry_free (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_screen_height (GschemPageGeometry *geometry);
+gschem_page_geometry_get_screen_height (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_screen_width (GschemPageGeometry *geometry);
+gschem_page_geometry_get_screen_width (SchematicViewport *geometry);
 
 GType
 gschem_page_geometry_get_type ();
 
 int
-gschem_page_geometry_get_viewport_bottom (GschemPageGeometry *geometry);
+gschem_page_geometry_get_viewport_bottom (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_viewport_left (GschemPageGeometry *geometry);
+gschem_page_geometry_get_viewport_left (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_viewport_right (GschemPageGeometry *geometry);
+gschem_page_geometry_get_viewport_right (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry);
+gschem_page_geometry_get_viewport_top (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry);
+gschem_page_geometry_get_world_bottom (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_bottom (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_bottom (SchematicViewport *geometry,
                                        int val);
 int
-gschem_page_geometry_get_world_left (GschemPageGeometry *geometry);
+gschem_page_geometry_get_world_left (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_left (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_left (SchematicViewport *geometry,
                                      int val);
 int
-gschem_page_geometry_get_world_right (GschemPageGeometry *geometry);
+gschem_page_geometry_get_world_right (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_right (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_right (SchematicViewport *geometry,
                                       int val);
 cairo_matrix_t*
-gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry);
+gschem_page_geometry_get_world_to_screen_matrix (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_world_top (GschemPageGeometry *geometry);
+gschem_page_geometry_get_world_top (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_top (GschemPageGeometry *geometry,
+gschem_page_geometry_set_world_top (SchematicViewport *geometry,
                                     int val);
 int
-gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value);
+gschem_page_geometry_mil_x (SchematicViewport *geometry, int value);
 
 int
-gschem_page_geometry_mil_y (GschemPageGeometry *geometry, int value);
+gschem_page_geometry_mil_y (SchematicViewport *geometry, int value);
 
-GschemPageGeometry*
+SchematicViewport*
 gschem_page_geometry_new_with_values (int screen_width,
                                       int screen_height,
                                       int viewport_left,
@@ -131,19 +131,19 @@ gschem_page_geometry_new_with_values (int screen_width,
                                       int world_bottom);
 
 void
-gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
+gschem_page_geometry_pan_general(SchematicViewport *geometry,
                                  double world_cx,
                                  double world_cy,
                                  double relativ_zoom_factor);
 
 int
-gschem_page_geometry_pix_x (GschemPageGeometry *geometry, int value);
+gschem_page_geometry_pix_x (SchematicViewport *geometry, int value);
 
 int
-gschem_page_geometry_pix_y (GschemPageGeometry *geometry, int value);
+gschem_page_geometry_pix_y (SchematicViewport *geometry, int value);
 
 void
-gschem_page_geometry_set_values (GschemPageGeometry *geometry,
+gschem_page_geometry_set_values (SchematicViewport *geometry,
                                  double scale,
                                  int screen_width,
                                  int screen_height,
@@ -152,22 +152,22 @@ gschem_page_geometry_set_values (GschemPageGeometry *geometry,
                                  int viewport_right,
                                  int viewport_bottom);
 void
-gschem_page_geometry_set_viewport (GschemPageGeometry *geometry, int x, int y, double scale);
+gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, double scale);
 
 void
-gschem_page_geometry_set_viewport_bottom (GschemPageGeometry *geometry, int viewport_bottom);
+gschem_page_geometry_set_viewport_bottom (SchematicViewport *geometry, int viewport_bottom);
 
 void
-gschem_page_geometry_set_viewport_left (GschemPageGeometry *geometry, int viewport_left);
+gschem_page_geometry_set_viewport_left (SchematicViewport *geometry, int viewport_left);
 
 void
-gschem_page_geometry_set_viewport_right (GschemPageGeometry *geometry, int viewport_right);
+gschem_page_geometry_set_viewport_right (SchematicViewport *geometry, int viewport_right);
 
 void
-gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewport_top);
+gschem_page_geometry_set_viewport_top (SchematicViewport *geometry, int viewport_top);
 
 void
-gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry,
+gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
                                    const GList *list,
                                    gboolean include_hidden);
 G_END_DECLS

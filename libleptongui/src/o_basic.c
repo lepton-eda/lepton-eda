@@ -41,13 +41,13 @@ void
 o_redraw_rect (SchematicWindow *w_current,
                GtkWidget *widget,
                LeptonPage *page,
-               GschemPageGeometry *geometry,
+               SchematicViewport *geometry,
                cairo_t *cr)
 #else
 void o_redraw_rect (SchematicWindow *w_current,
                     GdkDrawable *drawable,
                     LeptonPage *page,
-                    GschemPageGeometry *geometry,
+                    SchematicViewport *geometry,
                     GdkRectangle *rectangle)
 #endif
 {

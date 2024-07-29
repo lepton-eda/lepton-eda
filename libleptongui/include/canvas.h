@@ -75,7 +75,7 @@ schematic_canvas_get_hadjustment (SchematicCanvas *view);
 LeptonPage*
 schematic_canvas_get_page (SchematicCanvas *view);
 
-GschemPageGeometry*
+SchematicViewport*
 schematic_canvas_get_page_geometry (SchematicCanvas *view);
 
 GType

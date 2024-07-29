@@ -100,7 +100,7 @@ x_stroke_record (SchematicWindow *w_current,
   double x0, y0;
   SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
-  GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   g_assert (stroke_points != NULL);
