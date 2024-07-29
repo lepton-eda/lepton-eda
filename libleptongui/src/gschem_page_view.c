@@ -974,7 +974,7 @@ schematic_canvas_pan_motion (SchematicCanvas *view,
  *  \returns TRUE if panning has been finished, or FALSE if there was no panning
  */
 gboolean
-gschem_page_view_pan_end (SchematicCanvas *view)
+schematic_canvas_pan_end (SchematicCanvas *view)
 {
   if (view->doing_pan) {
     schematic_canvas_invalidate_all (view);

@@ -376,13 +376,13 @@
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
-                 (when (true? (gschem_page_view_pan_end *page-view))
+                 (when (true? (schematic_canvas_pan_end *page-view))
                    (undo-save-viewport)))
                 (else FALSE)))))
 
           (3
            ;; Just for ending a mouse pan.
-           (when (true? (gschem_page_view_pan_end *page-view))
+           (when (true? (schematic_canvas_pan_end *page-view))
              (undo-save-viewport)))
 
           (_ FALSE))

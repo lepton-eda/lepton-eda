@@ -129,7 +129,7 @@ schematic_canvas_pan_motion (SchematicCanvas *view,
                              int x,
                              int y);
 gboolean
-gschem_page_view_pan_end(SchematicCanvas *page_view);
+schematic_canvas_pan_end (SchematicCanvas *page_view);
 
 void
 #ifdef ENABLE_GTK3
