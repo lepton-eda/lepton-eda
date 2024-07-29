@@ -620,7 +620,8 @@ schematic_viewport_pix_y (SchematicViewport *geometry,
  *  \param [in] screen_height The screen height in pixels.
  */
 void
-gschem_page_geometry_set_screen_height (SchematicViewport *geometry, int screen_height)
+schematic_viewport_set_screen_height (SchematicViewport *geometry,
+                                      int screen_height)
 {
   g_return_if_fail (geometry != NULL);
 
@@ -638,7 +639,8 @@ gschem_page_geometry_set_screen_height (SchematicViewport *geometry, int screen_
  *  \param [in] screen_width The screen width in pixels.
  */
 void
-gschem_page_geometry_set_screen_width (SchematicViewport *geometry, int screen_width)
+schematic_viewport_set_screen_width (SchematicViewport *geometry,
+                                     int screen_width)
 {
   g_return_if_fail (geometry != NULL);
 
