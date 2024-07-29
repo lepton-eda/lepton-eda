@@ -95,8 +95,8 @@ int
 schematic_viewport_get_world_left (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_left (SchematicViewport *geometry,
-                                     int val);
+schematic_viewport_set_world_left (SchematicViewport *geometry,
+                                   int val);
 int
 gschem_page_geometry_get_world_right (SchematicViewport *geometry);
 
