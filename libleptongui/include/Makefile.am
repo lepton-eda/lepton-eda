@@ -1,4 +1,5 @@
 noinst_HEADERS = \
+	action.h \
 	action_mode.h \
 	canvas.h \
 	globals.h \
@@ -14,7 +15,6 @@ noinst_HEADERS = \
 	gschem.h \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
-	gschem_action.h \
 	gschem_bin.h \
 	gschem_binding.h \
 	gschem_binding_integer.h \

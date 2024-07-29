@@ -15,6 +15,7 @@
 typedef struct st_schematic_window SchematicWindow;
 
 /* gschem headers */
+#include "action.h"
 #include "action_mode.h"
 #include "grid_mode.h"
 #include "gtk_helper.h"
@@ -35,7 +36,6 @@ typedef struct st_schematic_window SchematicWindow;
 #include "gschem_struct.h"
 #include "gschem_options.h"
 #include "gschem_accel_label.h"
-#include "gschem_action.h"
 #include "gschem_dialog.h"
 #include "gschem_dialog_misc.h"
 #include "gschemhotkeystore.h"

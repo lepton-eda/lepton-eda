@@ -2,6 +2,7 @@ lib_LTLIBRARIES = libleptongui.la
 
 libleptongui_la_SOURCES = \
 	a_zoom.c \
+	action.c \
 	action_mode.c \
 	canvas.c \
 	execute_script.c \
@@ -15,7 +16,6 @@ libleptongui_la_SOURCES = \
 	gschemhotkeystore.c \
 	gschem_about_dialog.c \
 	gschem_accel_label.c \
-	gschem_action.c \
 	gschem_alignment_combo.c \
 	gschem_arc_dialog.c \
 	gschem_bin.c \
