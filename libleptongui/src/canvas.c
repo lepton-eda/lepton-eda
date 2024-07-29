@@ -545,7 +545,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
     double val1 = fabs ((double) (right - left) / screen_width);
 
     int top = gschem_page_geometry_get_viewport_top (geometry);
-    int bottom = gschem_page_geometry_get_viewport_bottom (geometry);
+    int bottom = schematic_viewport_get_bottom (geometry);
     double val2 = fabs ((double) (top - bottom) / screen_height);
 
     double scale = MAX (val1, val2);
@@ -557,7 +557,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
                                      gschem_page_geometry_get_viewport_left (geometry),
                                      gschem_page_geometry_get_viewport_top (geometry),
                                      gschem_page_geometry_get_viewport_right (geometry),
-                                     gschem_page_geometry_get_viewport_bottom (geometry));
+                                     schematic_viewport_get_bottom (geometry));
   }
 
   return geometry;
@@ -887,7 +887,7 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
 #endif
 
   page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
-  page_cy = (gschem_page_geometry_get_viewport_top (geometry) + gschem_page_geometry_get_viewport_bottom (geometry)) / 2.0;
+  page_cy = (gschem_page_geometry_get_viewport_top (geometry) + schematic_viewport_get_bottom (geometry)) / 2.0;
 
   world_cx = page_cx - schematic_canvas_WORLDabs (view, diff_x);
   world_cy = page_cy + schematic_canvas_WORLDabs (view, diff_y);

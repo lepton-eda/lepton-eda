@@ -429,7 +429,7 @@
 
             gschem_options_widget_new
 
-            gschem_page_geometry_get_viewport_bottom
+            schematic_viewport_get_bottom
             gschem_page_geometry_get_viewport_left
             gschem_page_geometry_get_viewport_right
             gschem_page_geometry_get_viewport_top
@@ -770,7 +770,7 @@
 (define-lff gschem_options_widget_new '* '(*))
 
 ;;; gschem_page_geometry.c
-(define-lff gschem_page_geometry_get_viewport_bottom int '(*))
+(define-lff schematic_viewport_get_bottom int '(*))
 (define-lff gschem_page_geometry_get_viewport_left int '(*))
 (define-lff gschem_page_geometry_get_viewport_right int '(*))
 (define-lff gschem_page_geometry_get_viewport_top int '(*))
