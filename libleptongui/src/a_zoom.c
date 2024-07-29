@@ -99,7 +99,7 @@ a_zoom (SchematicWindow *w_current,
 
 
   /* calculate new window and draw it */
-  gschem_page_view_pan_general (page_view,
+  schematic_canvas_pan_general (page_view,
                                 world_pan_center_x,
                                 world_pan_center_y,
                                 relativ_zoom_factor);
@@ -173,7 +173,7 @@ a_zoom_box (SchematicWindow *w_current)
     (schematic_window_get_first_wy (w_current) + schematic_window_get_second_wy (w_current)) / 2.0;
 
   /* and create the new window*/
-  gschem_page_view_pan_general (page_view,
+  schematic_canvas_pan_general (page_view,
                                 world_pan_center_x,
                                 world_pan_center_y,
                                 relativ_zoom_factor);

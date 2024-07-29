@@ -817,7 +817,10 @@ schematic_canvas_new_with_page (LeptonPage *page)
  *  \param [in]     relativ_zoom_factor  The zoom factor
  */
 void
-gschem_page_view_pan_general (SchematicCanvas *view, int w_x, int w_y, double relativ_zoom_factor)
+schematic_canvas_pan_general (SchematicCanvas *view,
+                              int w_x,
+                              int w_y,
+                              double relativ_zoom_factor)
 {
   GschemPageGeometry *geometry = NULL;
 
@@ -846,7 +849,7 @@ gschem_page_view_pan_general (SchematicCanvas *view, int w_x, int w_y, double re
 void
 gschem_page_view_pan (SchematicCanvas *view, int w_x, int w_y)
 {
-  gschem_page_view_pan_general (view, w_x, w_y, 1);
+  schematic_canvas_pan_general (view, w_x, w_y, 1);
   /* Trigger a motion event to update the objects being drawn */
   /* This works e.g. if the view is centered at the mouse pointer position */
   x_event_faked_motion (view, NULL);
@@ -889,7 +892,7 @@ gschem_page_view_pan_mouse (SchematicCanvas *view, int diff_x, int diff_y)
   printf("  world_cx=%1$f, world_cy=%2$f\n", world_cx, world_cy);
 #endif
 
-  gschem_page_view_pan_general (view, world_cx, world_cy, 1);
+  schematic_canvas_pan_general (view, world_cx, world_cy, 1);
 
   /* Trigger a motion event to update the objects being drawn */
   /* Don't emit such an event if diffs are zero to avoid recursion */
