@@ -152,8 +152,8 @@ schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
                                 int *x,
                                 int *y);
 void
-gschem_page_view_set_hadjustment (SchematicCanvas *view, GtkAdjustment *hadjustment);
-
+schematic_canvas_set_hadjustment (SchematicCanvas *view,
+                                  GtkAdjustment *hadjustment);
 void
 gschem_page_view_set_page (SchematicCanvas *view,
                            LeptonPage *page);

@@ -184,7 +184,7 @@ dispose (GObject *object)
     view->_page = NULL;
   }
 
-  gschem_page_view_set_hadjustment (view, NULL);
+  schematic_canvas_set_hadjustment (view, NULL);
   gschem_page_view_set_vadjustment (view, NULL);
 
   geometry_cache_dispose (view);
@@ -1024,7 +1024,8 @@ schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
  *  \param [in]     hadjustment The horizontal scroll adjustment
  */
 void
-gschem_page_view_set_hadjustment (SchematicCanvas *view, GtkAdjustment *hadjustment)
+schematic_canvas_set_hadjustment (SchematicCanvas *view,
+                                  GtkAdjustment *hadjustment)
 {
   g_return_if_fail (view != NULL);
 
@@ -1217,7 +1218,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_HADJUSTMENT:
-      gschem_page_view_set_hadjustment (view,
+      schematic_canvas_set_hadjustment (view,
                                         GTK_ADJUSTMENT (g_value_get_object (value)));
       break;
 
@@ -1447,7 +1448,7 @@ gschem_page_view_WORLDabs(SchematicCanvas *page_view, int val)
 static void
 set_scroll_adjustments (SchematicCanvas *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment)
 {
-  gschem_page_view_set_hadjustment (view, hadjustment);
+  schematic_canvas_set_hadjustment (view, hadjustment);
   gschem_page_view_set_vadjustment (view, vadjustment);
 }
 #endif
