@@ -73,7 +73,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_page_view_class_init (SchematicCanvasClass *klass);
+schematic_canvas_class_init (SchematicCanvasClass *klass);
 
 static void
 gschem_page_view_init (SchematicCanvas *view);
@@ -311,7 +311,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in] klass The class for the SchematicCanvas
  */
 static void
-gschem_page_view_class_init (SchematicCanvasClass *klass)
+schematic_canvas_class_init (SchematicCanvasClass *klass)
 {
   gschem_page_view_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
@@ -585,7 +585,7 @@ schematic_canvas_get_type ()
       sizeof(SchematicCanvasClass),
       NULL,                                                    /* base_init */
       NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_page_view_class_init,
+      (GClassInitFunc) schematic_canvas_class_init,
       NULL,                                                    /* class_finalize */
       NULL,                                                    /* class_data */
       sizeof(SchematicCanvas),
