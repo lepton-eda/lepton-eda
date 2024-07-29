@@ -295,7 +295,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_VSCROLL_POLICY:
-      g_value_set_enum (value, (gint) gschem_page_view_get_vscroll_policy (view));
+      g_value_set_enum (value, (gint) schematic_canvas_get_vscroll_policy (view));
       break;
 #endif
 
@@ -460,7 +460,7 @@ schematic_canvas_get_hscroll_policy (SchematicCanvas *view)
  *  \return The vertical scrolling policy for this view
  */
 GtkScrollablePolicy
-gschem_page_view_get_vscroll_policy (SchematicCanvas *view)
+schematic_canvas_get_vscroll_policy (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
 
