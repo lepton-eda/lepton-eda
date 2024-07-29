@@ -116,8 +116,8 @@ int
 schematic_viewport_mil_x (SchematicViewport *geometry,
                           int value);
 int
-gschem_page_geometry_mil_y (SchematicViewport *geometry, int value);
-
+schematic_viewport_mil_y (SchematicViewport *geometry,
+                          int value);
 SchematicViewport*
 gschem_page_geometry_new_with_values (int screen_width,
                                       int screen_height,

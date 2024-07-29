@@ -366,7 +366,8 @@ schematic_viewport_mil_x (SchematicViewport *geometry,
  *  \return The world coordinate value.
  */
 int
-gschem_page_geometry_mil_y(SchematicViewport *geometry, int value)
+schematic_viewport_mil_y (SchematicViewport *geometry,
+                          int value)
 {
   double i;
   double fval;
