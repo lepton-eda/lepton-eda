@@ -410,7 +410,7 @@ x_image_lowlevel (SchematicWindow *w_current,
     page_width = (page_height * prop);
   }
 
-  gschem_page_geometry_set_viewport_left   (geometry, page_center_left - (page_width / 2));
+  schematic_viewport_set_left   (geometry, page_center_left - (page_width / 2));
   gschem_page_geometry_set_viewport_right  (geometry, page_center_left + (page_width / 2));
   gschem_page_geometry_set_viewport_top    (geometry, page_center_top - (page_height / 2));
   schematic_viewport_set_bottom (geometry, page_center_top + (page_height / 2));
@@ -472,7 +472,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   }
 
   /* Restore geometry */
-  gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
+  schematic_viewport_set_left   (geometry, save_page_left  );
   gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
   gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
   schematic_viewport_set_bottom (geometry, save_page_bottom);

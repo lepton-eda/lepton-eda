@@ -742,7 +742,8 @@ schematic_viewport_set_bottom (SchematicViewport *geometry,
  *  \param [in] viewport_left The left edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_left (SchematicViewport *geometry, int viewport_left)
+schematic_viewport_set_left (SchematicViewport *geometry,
+                             int viewport_left)
 {
   g_return_if_fail (geometry != NULL);
 
