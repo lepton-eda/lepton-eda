@@ -9,7 +9,7 @@ all:
 	@echo 'Type: "make doxygen" to create doxygen documentation for libleptongui'
 
 doxygen: libleptongui.dox
-	@echo 'Creating doxygen documentation for gschem...'
+	@echo 'Creating doxygen documentation for libleptongui...'
 if ENABLE_DOXYGEN
 	$(DOXYGEN) libleptongui.dox
 else
