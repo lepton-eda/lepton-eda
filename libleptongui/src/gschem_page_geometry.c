@@ -425,14 +425,14 @@ schematic_viewport_new_with_values (int screen_width,
   double val2 = fabs ((double)(viewport_top - viewport_bottom) / screen_height);
   double scale = MAX (val1, val2);
 
-  gschem_page_geometry_set_values (geometry,
-                                   scale,
-                                   screen_width,
-                                   screen_height,
-                                   viewport_left,
-                                   viewport_top,
-                                   viewport_right,
-                                   viewport_bottom);
+  schematic_viewport_set_values (geometry,
+                                 scale,
+                                 screen_width,
+                                 screen_height,
+                                 viewport_left,
+                                 viewport_top,
+                                 viewport_right,
+                                 viewport_bottom);
 
   geometry->world_left   = world_left;
   geometry->world_top    = world_top;
@@ -666,14 +666,14 @@ gschem_page_geometry_set_screen_width (SchematicViewport *geometry, int screen_w
  *  \param [in] viewport_bottom The new viewport bottom \a y coord.
  */
 void
-gschem_page_geometry_set_values (SchematicViewport *geometry,
-                                 double scale,
-                                 int screen_width,
-                                 int screen_height,
-                                 int viewport_left,
-                                 int viewport_top,
-                                 int viewport_right,
-                                 int viewport_bottom)
+schematic_viewport_set_values (SchematicViewport *geometry,
+                               double scale,
+                               int screen_width,
+                               int screen_height,
+                               int viewport_left,
+                               int viewport_top,
+                               int viewport_right,
+                               int viewport_bottom)
 {
   g_return_if_fail (geometry != NULL);
   g_return_if_fail (screen_width > 0);

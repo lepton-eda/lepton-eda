@@ -141,14 +141,14 @@ int
 schematic_viewport_pix_y (SchematicViewport *geometry,
                           int value);
 void
-gschem_page_geometry_set_values (SchematicViewport *geometry,
-                                 double scale,
-                                 int screen_width,
-                                 int screen_height,
-                                 int viewport_left,
-                                 int viewport_top,
-                                 int viewport_right,
-                                 int viewport_bottom);
+schematic_viewport_set_values (SchematicViewport *geometry,
+                               double scale,
+                               int screen_width,
+                               int screen_height,
+                               int viewport_left,
+                               int viewport_top,
+                               int viewport_right,
+                               int viewport_bottom);
 void
 gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, double scale);
 

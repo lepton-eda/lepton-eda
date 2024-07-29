@@ -550,14 +550,14 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
 
     double scale = MAX (val1, val2);
 
-    gschem_page_geometry_set_values (geometry,
-                                     scale,
-                                     screen_width,
-                                     screen_height,
-                                     schematic_viewport_get_left (geometry),
-                                     schematic_viewport_get_top (geometry),
-                                     schematic_viewport_get_right (geometry),
-                                     schematic_viewport_get_bottom (geometry));
+    schematic_viewport_set_values (geometry,
+                                   scale,
+                                   screen_width,
+                                   screen_height,
+                                   schematic_viewport_get_left (geometry),
+                                   schematic_viewport_get_top (geometry),
+                                   schematic_viewport_get_right (geometry),
+                                   schematic_viewport_get_bottom (geometry));
   }
 
   return geometry;
@@ -1597,14 +1597,14 @@ schematic_canvas_zoom_object (SchematicCanvas *view,
     viewport_height = geometry->screen_height * scale;
     viewport_width  = geometry->screen_width  * scale;
 
-    gschem_page_geometry_set_values (geometry,
-                                     scale,
-                                     geometry->screen_width,
-                                     geometry->screen_height,
-                                     viewport_center_x - viewport_width / 2,
-                                     viewport_center_y - viewport_height / 2,
-                                     viewport_center_x + viewport_width / 2,
-                                     viewport_center_y + viewport_height / 2);
+    schematic_viewport_set_values (geometry,
+                                   scale,
+                                   geometry->screen_width,
+                                   geometry->screen_height,
+                                   viewport_center_x - viewport_width / 2,
+                                   viewport_center_y - viewport_height / 2,
+                                   viewport_center_x + viewport_width / 2,
+                                   viewport_center_y + viewport_height / 2);
 
     schematic_canvas_invalidate_all (view);
   }
