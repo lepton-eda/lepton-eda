@@ -286,7 +286,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_SHOW_HIDDEN_TEXT:
-      g_value_set_boolean (value, gschem_page_view_get_show_hidden_text (view));
+      g_value_set_boolean (value, schematic_canvas_get_show_hidden_text (view));
       break;
 
 #ifdef ENABLE_GTK3
@@ -565,7 +565,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
 
 
 gboolean
-gschem_page_view_get_show_hidden_text (SchematicCanvas *view)
+schematic_canvas_get_show_hidden_text (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, FALSE);
 

@@ -803,7 +803,7 @@ schematic_window_get_show_hidden_text (SchematicWindow *w_current)
 
   /* On early stage, page view may not be created yet, so just
      return FALSE in such cases. */
-  return (view == NULL) ? FALSE : gschem_page_view_get_show_hidden_text (view);
+  return (view == NULL) ? FALSE : schematic_canvas_get_show_hidden_text (view);
 }
 
 

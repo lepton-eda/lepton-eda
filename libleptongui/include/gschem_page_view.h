@@ -85,7 +85,7 @@ GtkAdjustment*
 schematic_canvas_get_vadjustment (SchematicCanvas *view);
 
 gboolean
-gschem_page_view_get_show_hidden_text (SchematicCanvas *view);
+schematic_canvas_get_show_hidden_text (SchematicCanvas *view);
 
 void
 gschem_page_view_invalidate_all (SchematicCanvas *view);
