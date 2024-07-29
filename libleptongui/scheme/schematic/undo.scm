@@ -190,10 +190,10 @@ success, #f on failure."
                 modify-viewport?)
         (if (not (zero? (lepton_undo_get_scale *undo-item)))
             (begin
-              (gschem_page_geometry_set_viewport *geometry
-                                                 (lepton_undo_get_x *undo-item)
-                                                 (lepton_undo_get_y *undo-item)
-                                                 (lepton_undo_get_scale *undo-item))
+              (schematic_viewport_pan *geometry
+                                      (lepton_undo_get_x *undo-item)
+                                      (lepton_undo_get_y *undo-item)
+                                      (lepton_undo_get_scale *undo-item))
               (schematic_canvas_invalidate_all *page-view))
             (schematic_canvas_zoom_extents *page-view
                                            (lepton_undo_get_object_list *undo-item))))))

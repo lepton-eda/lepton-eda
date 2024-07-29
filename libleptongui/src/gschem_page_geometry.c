@@ -703,7 +703,10 @@ schematic_viewport_set_values (SchematicViewport *geometry,
  *  \param [in]     scale    Scale factor for the viewport
  */
 void
-gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, double scale)
+schematic_viewport_pan (SchematicViewport *geometry,
+                        int x,
+                        int y,
+                        double scale)
 {
   g_return_if_fail (geometry != NULL);
   geometry->viewport_left   = x - (int) (geometry->screen_width  * scale / 2);
