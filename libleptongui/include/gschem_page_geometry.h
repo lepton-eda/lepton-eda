@@ -153,8 +153,8 @@ void
 gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, double scale);
 
 void
-gschem_page_geometry_set_viewport_bottom (SchematicViewport *geometry, int viewport_bottom);
-
+schematic_viewport_set_bottom (SchematicViewport *geometry,
+                               int viewport_bottom);
 void
 gschem_page_geometry_set_viewport_left (SchematicViewport *geometry, int viewport_left);
 

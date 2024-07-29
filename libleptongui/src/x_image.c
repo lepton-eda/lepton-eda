@@ -413,7 +413,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   gschem_page_geometry_set_viewport_left   (geometry, page_center_left - (page_width / 2));
   gschem_page_geometry_set_viewport_right  (geometry, page_center_left + (page_width / 2));
   gschem_page_geometry_set_viewport_top    (geometry, page_center_top - (page_height / 2));
-  gschem_page_geometry_set_viewport_bottom (geometry, page_center_top + (page_height / 2));
+  schematic_viewport_set_bottom (geometry, page_center_top + (page_height / 2));
 
   /* de select everything first */
   o_select_unselect_all( w_current );
@@ -475,7 +475,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
   gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
   gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
-  gschem_page_geometry_set_viewport_bottom (geometry, save_page_bottom);
+  schematic_viewport_set_bottom (geometry, save_page_bottom);
 
   schematic_canvas_invalidate_all (view);
 }

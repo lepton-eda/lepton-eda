@@ -723,7 +723,8 @@ gschem_page_geometry_set_viewport (SchematicViewport *geometry, int x, int y, do
  *  \param [in] viewport_bottom The bottom edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_bottom (SchematicViewport *geometry, int viewport_bottom)
+schematic_viewport_set_bottom (SchematicViewport *geometry,
+                               int viewport_bottom)
 {
   g_return_if_fail (geometry != NULL);
 
