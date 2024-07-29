@@ -62,7 +62,7 @@ SchematicViewport*
 schematic_viewport_copy (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_free (SchematicViewport *geometry);
+schematic_viewport_free (SchematicViewport *geometry);
 
 int
 gschem_page_geometry_get_screen_height (SchematicViewport *geometry);

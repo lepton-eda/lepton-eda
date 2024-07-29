@@ -884,7 +884,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   g_object_unref (G_OBJECT (renderer));
   g_array_free (render_color_map, TRUE);
 
-  gschem_page_geometry_free (new_geometry);
+  schematic_viewport_free (new_geometry);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_surface (cs, 0, 0, right-origin_x, bottom-origin_y);
@@ -969,7 +969,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
                  new_geometry,
                  &rect);
 
-  gschem_page_geometry_free (new_geometry);
+  schematic_viewport_free (new_geometry);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL, window, NULL,

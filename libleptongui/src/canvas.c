@@ -1684,7 +1684,7 @@ geometry_cache_create (SchematicCanvas *view)
     g_hash_table_new_full (NULL, /* hash_func */
                            NULL, /* equal_func */
                            NULL, /* key_destroy_func */
-                           (GDestroyNotify) gschem_page_geometry_free);
+                           (GDestroyNotify) schematic_viewport_free);
 }
 
 static SchematicViewport *
@@ -1719,7 +1719,7 @@ geometry_cache_dispose_func (gpointer key,
   lepton_page_weak_unref ((LeptonPage*) key,
                           geometry_cache_page_weak_ref_notify,
                           user_data);
-  gschem_page_geometry_free ((SchematicViewport*) value);
+  schematic_viewport_free ((SchematicViewport*) value);
   return TRUE;
 }
 

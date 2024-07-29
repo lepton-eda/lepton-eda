@@ -63,7 +63,7 @@ schematic_viewport_copy (SchematicViewport *geometry)
  *  \param [in] geometry The page geometry to free
  */
 void
-gschem_page_geometry_free (SchematicViewport *geometry)
+schematic_viewport_free (SchematicViewport *geometry)
 {
   g_free (geometry);
 }
@@ -112,7 +112,7 @@ schematic_viewport_get_type ()
   if (type == 0) {
     type = g_boxed_type_register_static ("SchematicViewport",
                                          (GBoxedCopyFunc) schematic_viewport_copy,
-                                         (GBoxedFreeFunc) gschem_page_geometry_free);
+                                         (GBoxedFreeFunc) schematic_viewport_free);
   }
 
   return type;
