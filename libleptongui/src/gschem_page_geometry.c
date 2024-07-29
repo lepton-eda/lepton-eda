@@ -452,10 +452,10 @@ schematic_viewport_new_with_values (int screen_width,
  *  \param [in]     relativ_zoom_factor
  */
 void
-gschem_page_geometry_pan_general(SchematicViewport *geometry,
-                                 double world_cx,
-                                 double world_cy,
-                                 double relativ_zoom_factor)
+schematic_viewport_pan_general (SchematicViewport *geometry,
+                                double world_cx,
+                                double world_cy,
+                                double relativ_zoom_factor)
 {
   /* think it's better that the zoomfactor is defined as pix/mills
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
@@ -466,7 +466,7 @@ gschem_page_geometry_pan_general(SchematicViewport *geometry,
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
-  printf("gschem_page_geometry_pan_general(): world_cx=%f, world_cy=%f\n",world_cx, world_cy);
+  printf ("schematic_viewport_pan_general(): world_cx=%f, world_cy=%f\n", world_cx, world_cy);
 #endif
 
   /* calc minimum zoomfactors and choose the smaller one. They are equal
@@ -837,10 +837,10 @@ gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
   world_pan_center_y = (double) (lbottom + ltop) / 2.0;
 
   /* and create the new window */
-  gschem_page_geometry_pan_general (geometry,
-                                    world_pan_center_x,
-                                    world_pan_center_y,
-                                    relativ_zoom_factor);
+  schematic_viewport_pan_general (geometry,
+                                  world_pan_center_x,
+                                  world_pan_center_y,
+                                  relativ_zoom_factor);
 }
 
 

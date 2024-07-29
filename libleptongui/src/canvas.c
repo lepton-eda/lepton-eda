@@ -832,7 +832,7 @@ schematic_canvas_pan_general (SchematicCanvas *view,
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor);
+  schematic_viewport_pan_general (geometry, w_x, w_y, relativ_zoom_factor);
 
   g_signal_emit_by_name (view, "update-grid-info");
   schematic_canvas_update_scroll_adjustments (view);
