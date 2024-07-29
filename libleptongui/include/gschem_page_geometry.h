@@ -135,8 +135,8 @@ schematic_viewport_pan_general (SchematicViewport *geometry,
                                 double world_cy,
                                 double relativ_zoom_factor);
 int
-gschem_page_geometry_pix_x (SchematicViewport *geometry, int value);
-
+schematic_viewport_pix_x (SchematicViewport *geometry,
+                          int value);
 int
 gschem_page_geometry_pix_y (SchematicViewport *geometry, int value);
 
