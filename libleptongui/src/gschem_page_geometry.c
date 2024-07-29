@@ -695,7 +695,7 @@ schematic_viewport_set_values (SchematicViewport *geometry,
 
 
 
-/*! \brief Set the viewport in world coordinates
+/*! \brief Pan and zoom the viewport in world coordinates
  *
  *  \param [in,out] geometry The SchematicViewport
  *  \param [in]     x        Center x coordinate of the viewport
