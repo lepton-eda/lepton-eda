@@ -869,7 +869,9 @@ schematic_canvas_pan (SchematicCanvas *view,
  *  \param [in]     diff_y    The screen y coordinate displacement
  */
 void
-gschem_page_view_pan_mouse (SchematicCanvas *view, int diff_x, int diff_y)
+schematic_canvas_pan_mouse (SchematicCanvas *view,
+                            int diff_x,
+                            int diff_y)
 {
   GschemPageGeometry *geometry = NULL;
   double world_cx, world_cy;
@@ -881,7 +883,7 @@ gschem_page_view_pan_mouse (SchematicCanvas *view, int diff_x, int diff_y)
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
-  printf("gschem_page_view_pan_mouse(): diff_x=%1$d, diff_y=%2$d\n", diff_x, diff_y);
+  printf ("schematic_canvas_pan_mouse(): diff_x=%1$d, diff_y=%2$d\n", diff_x, diff_y);
 #endif
 
   page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
@@ -946,9 +948,9 @@ gschem_page_view_pan_motion (SchematicCanvas *view, int mousepan_gain, int x, in
     pdiff_y = y - view->pan_y;
 
     if (!(view->throttle % 5)) {
-      gschem_page_view_pan_mouse(view,
-                                 pdiff_x * mousepan_gain,
-                                 pdiff_y * mousepan_gain);
+      schematic_canvas_pan_mouse (view,
+                                  pdiff_x * mousepan_gain,
+                                  pdiff_y * mousepan_gain);
 
       view->pan_x = x;
       view->pan_y = y;

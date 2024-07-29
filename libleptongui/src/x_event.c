@@ -251,7 +251,7 @@ x_event_configure (SchematicCanvas   *page_view,
   {
     if (page_view->configured)
     {
-      gschem_page_view_pan_mouse (page_view, 0, 0);
+      schematic_canvas_pan_mouse (page_view, 0, 0);
     }
     else
     {
@@ -271,7 +271,7 @@ x_event_configure (SchematicCanvas   *page_view,
     gschem_page_view_set_page (page_view, (LeptonPage *)iter->data);
 
     if (page_view->configured) {
-      gschem_page_view_pan_mouse (page_view, 0, 0);
+      schematic_canvas_pan_mouse (page_view, 0, 0);
     } else {
       gschem_page_view_zoom_extents (page_view, NULL);
     }

@@ -115,7 +115,9 @@ schematic_canvas_pan (SchematicCanvas *page_view,
                       int x,
                       int y);
 void
-gschem_page_view_pan_mouse(SchematicCanvas *page_view, int diff_x, int diff_y);
+schematic_canvas_pan_mouse (SchematicCanvas *page_view,
+                            int diff_x,
+                            int diff_y);
 
 void
 gschem_page_view_pan_start(SchematicCanvas *page_view, int x, int y);

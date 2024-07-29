@@ -324,7 +324,7 @@
             schematic_canvas_new_with_page
             schematic_canvas_pan
             gschem_page_view_pan_end
-            gschem_page_view_pan_mouse
+            schematic_canvas_pan_mouse
             gschem_page_view_pan_motion
             gschem_page_view_pan_start
             gschem_page_view_redraw
@@ -640,7 +640,7 @@
 (define-lff schematic_canvas_new_with_page '* '(*))
 (define-lff schematic_canvas_pan void (list '* int int))
 (define-lff gschem_page_view_pan_end int '(*))
-(define-lff gschem_page_view_pan_mouse void (list '* int int))
+(define-lff schematic_canvas_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_pan_motion void (list '* int int int))
 (define-lff gschem_page_view_pan_start void (list '* int int))
 (define-lff gschem_page_view_redraw void '(* * *))

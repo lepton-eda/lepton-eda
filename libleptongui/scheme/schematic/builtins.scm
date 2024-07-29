@@ -737,7 +737,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the left.
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
                               (schematic_window_get_keyboardpan_gain *window)
                               0))
 
@@ -745,7 +745,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the right.
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
                               (- (schematic_window_get_keyboardpan_gain *window))
                               0))
 
@@ -753,7 +753,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport up.
 (define-action-public (&view-pan-up #:label (G_ "Pan Up"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
                               0
                               (schematic_window_get_keyboardpan_gain *window)))
 
@@ -761,7 +761,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport down.
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
   (define *window (*current-window))
-  (gschem_page_view_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
                               0
                               (- (schematic_window_get_keyboardpan_gain *window))))
 
