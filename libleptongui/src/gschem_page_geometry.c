@@ -186,7 +186,7 @@ schematic_viewport_get_top (SchematicViewport *geometry)
  *  \return The bottom edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_bottom (SchematicViewport *geometry)
+schematic_viewport_get_world_bottom (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
