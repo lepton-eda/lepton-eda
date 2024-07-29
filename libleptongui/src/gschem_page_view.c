@@ -79,7 +79,7 @@ static void
 schematic_canvas_init (SchematicCanvas *view);
 
 static void
-gschem_page_view_update_hadjustment (SchematicCanvas *view);
+schematic_canvas_update_hadjustment (SchematicCanvas *view);
 
 static void
 gschem_page_view_update_vadjustment (SchematicCanvas *view);
@@ -1296,7 +1296,7 @@ schematic_canvas_SCREENabs (SchematicCanvas *view,
 /*! \brief Update the horizontal scroll adjustment
  */
 static void
-gschem_page_view_update_hadjustment (SchematicCanvas *view)
+schematic_canvas_update_hadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -1350,7 +1350,7 @@ gschem_page_view_update_scroll_adjustments (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
-  gschem_page_view_update_hadjustment (view);
+  schematic_canvas_update_hadjustment (view);
   gschem_page_view_update_vadjustment (view);
 }
 
