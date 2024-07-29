@@ -74,7 +74,7 @@ query_dots_grid_spacing (SchematicWindow *w_current)
   } else {
     /* Fixed size grid in world coorinates */
     incr = snap_size;
-    screen_incr = gschem_page_view_SCREENabs (page_view, incr);
+    screen_incr = schematic_canvas_SCREENabs (page_view, incr);
     if (screen_incr < w_current->dots_grid_fixed_threshold) {
       /* No grid drawn if the on-screen spacing is less than the threshold */
       incr = -1;
@@ -273,7 +273,7 @@ query_mesh_grid_spacing (SchematicWindow *w_current)
   g_return_val_if_fail (page_view != NULL, -1);
 
   incr = gschem_options_get_snap_size (w_current->options);
-  screen_incr = gschem_page_view_SCREENabs (page_view, incr);
+  screen_incr = schematic_canvas_SCREENabs (page_view, incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold) {
@@ -281,7 +281,7 @@ query_mesh_grid_spacing (SchematicWindow *w_current)
   }
 
   incr *= MESH_COARSE_GRID_MULTIPLIER;
-  screen_incr = gschem_page_view_SCREENabs (page_view, incr);
+  screen_incr = schematic_canvas_SCREENabs (page_view, incr);
 
   /* We draw a coarse grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold)

@@ -320,7 +320,7 @@ o_select_box_start (SchematicWindow *w_current,
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
-  dist = gschem_page_view_SCREENabs (page_view, MAX(diff_x, diff_y));
+  dist = schematic_canvas_SCREENabs (page_view, MAX(diff_x, diff_y));
 
   if (dist >= 10) {
     w_current->second_wx = w_x;

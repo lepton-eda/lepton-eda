@@ -686,7 +686,7 @@ schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
   }
 
   grip_half_size = GRIP_SIZE / 2;
-  cue_half_size = gschem_page_view_SCREENabs (view, CUE_BOX_SIZE);
+  cue_half_size = schematic_canvas_SCREENabs (view, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
 
   rect.x = MIN(left, right) - bloat;
@@ -1258,7 +1258,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \return The converted value in SCREEN pixels
  */
 int
-gschem_page_view_SCREENabs(SchematicCanvas *view, int val)
+schematic_canvas_SCREENabs (SchematicCanvas *view,
+                            int val)
 {
   double f0,f1;
   double i;

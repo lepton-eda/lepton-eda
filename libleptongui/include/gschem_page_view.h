@@ -143,8 +143,8 @@ schematic_canvas_redraw (SchematicCanvas *view,
 #endif
 
 int
-gschem_page_view_SCREENabs(SchematicCanvas *view, int val);
-
+schematic_canvas_SCREENabs (SchematicCanvas *view,
+                            int val);
 void
 gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y);
 

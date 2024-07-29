@@ -748,7 +748,7 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
                                   w_current->magnetic_wx, w_current->magnetic_wy,
                                   &magnetic_x, &magnetic_y);
 
-  size = gschem_page_view_SCREENabs (page_view, NET_WIDTH);
+  size = schematic_canvas_SCREENabs (page_view, NET_WIDTH);
 
   magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
 
