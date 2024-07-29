@@ -436,7 +436,7 @@ o_redraw_cleanstates (SchematicWindow *w_current)
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
-      gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
+      schematic_canvas_invalidate_all (schematic_window_get_current_page_view (w_current));
       return TRUE;
 
     /* all remaining states without dc changes */

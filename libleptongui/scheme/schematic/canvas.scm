@@ -27,4 +27,4 @@
   "Schedule redraw for the entire window CANVAS."
   (define *canvas (check-canvas canvas 1))
 
-  (gschem_page_view_invalidate_all *canvas))
+  (schematic_canvas_invalidate_all *canvas))

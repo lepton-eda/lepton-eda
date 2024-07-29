@@ -477,7 +477,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
   gschem_page_geometry_set_viewport_bottom (geometry, save_page_bottom);
 
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
 }
 
 /*! \brief Display the image file selection dialog.

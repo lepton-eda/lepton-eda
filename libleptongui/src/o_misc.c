@@ -217,7 +217,7 @@ o_edit_show_hidden (SchematicWindow *w_current,
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
-  gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
+  schematic_canvas_invalidate_all (schematic_window_get_current_page_view (w_current));
 
   if (schematic_window_get_show_hidden_text (w_current))
   {
@@ -259,7 +259,7 @@ o_edit_hide_specific_text (SchematicWindow *w_current,
     iter = g_list_next (iter);
   }
   o_undo_savestate_old (w_current);
-  gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
+  schematic_canvas_invalidate_all (schematic_window_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!

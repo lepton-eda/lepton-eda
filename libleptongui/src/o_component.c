@@ -176,7 +176,7 @@ o_component_translate_all (SchematicWindow *w_current,
 
   /* first zoom extents */
   gschem_page_view_zoom_extents (view, NULL);
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
 
   world_get_object_glist_bounds (lepton_page_objects (active_page),
                                  show_hidden_text,
@@ -219,7 +219,7 @@ o_component_translate_all (SchematicWindow *w_current,
   {
     o_select_unselect_all (w_current);
   }
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
   schematic_window_page_content_changed (w_current, active_page);
   o_undo_savestate_old (w_current);
   i_update_menus(w_current);

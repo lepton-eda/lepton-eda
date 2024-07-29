@@ -441,7 +441,7 @@ on_color_activated (GtkColorChooser* csel,
   /* Refresh page view. */
   SchematicCanvas* pview =
     schematic_window_get_current_page_view (widget->toplevel_);
-  gschem_page_view_invalidate_all (pview);
+  schematic_canvas_invalidate_all (pview);
 
 }
 
@@ -481,7 +481,7 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
   /* refresh page view: */
   SchematicCanvas* pview =
     schematic_window_get_current_page_view (widget->toplevel_);
-  gschem_page_view_invalidate_all (pview);
+  schematic_canvas_invalidate_all (pview);
 
 } /* on_color_sel_changed() */
 

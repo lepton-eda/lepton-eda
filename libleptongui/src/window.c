@@ -753,7 +753,7 @@ notify_options (SchematicWindow *w_current)
   if (w_current->drawing_area != NULL)
   {
     i_update_grid_info (w_current);
-    gschem_page_view_invalidate_all (schematic_window_get_current_page_view (w_current));
+    schematic_canvas_invalidate_all (schematic_window_get_current_page_view (w_current));
   }
 }
 

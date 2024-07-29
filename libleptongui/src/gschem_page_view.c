@@ -637,7 +637,7 @@ schematic_canvas_get_vadjustment (SchematicCanvas *view)
  *  \param [in,out] view The Gschem page view to redraw
  */
 void
-gschem_page_view_invalidate_all (SchematicCanvas *view)
+schematic_canvas_invalidate_all (SchematicCanvas *view)
 {
   GdkWindow *window;
 
@@ -825,7 +825,7 @@ gschem_page_view_pan_general (SchematicCanvas *view, int w_x, int w_y, double re
 
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
 }
 
 
@@ -844,7 +844,7 @@ gschem_page_view_pan (SchematicCanvas *view, int w_x, int w_y)
   x_event_faked_motion (view, NULL);
 
   gschem_page_view_update_scroll_adjustments (view);
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
 }
 
 
@@ -956,7 +956,7 @@ gboolean
 gschem_page_view_pan_end (SchematicCanvas *view)
 {
   if (view->doing_pan) {
-    gschem_page_view_invalidate_all (view);
+    schematic_canvas_invalidate_all (view);
     view->doing_pan = FALSE;
     return TRUE;
   } else {
@@ -1064,7 +1064,7 @@ gschem_page_view_set_page (SchematicCanvas *view,
       lepton_toplevel_goto_page (toplevel, page);
 
       /* redraw the current page and update UI */
-      gschem_page_view_invalidate_all (view);
+      schematic_canvas_invalidate_all (view);
       gschem_page_view_update_scroll_adjustments (view);
 
       g_object_notify (G_OBJECT (view), "page");
@@ -1177,7 +1177,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, SchematicCanvas *view)
     geometry->viewport_left = new_left;
     geometry->viewport_right = geometry->viewport_right - (current_left - new_left);
 
-    gschem_page_view_invalidate_all (view);
+    schematic_canvas_invalidate_all (view);
   }
 }
 
@@ -1451,7 +1451,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment,
     geometry->viewport_bottom = new_bottom;
     geometry->viewport_top = geometry->viewport_top - (current_bottom - new_bottom);
 
-    gschem_page_view_invalidate_all (view);
+    schematic_canvas_invalidate_all (view);
   }
 }
 
@@ -1506,7 +1506,7 @@ gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *objects)
 
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
-  gschem_page_view_invalidate_all (view);
+  schematic_canvas_invalidate_all (view);
 }
 
 /*! \brief Zoom in on a single object
@@ -1569,7 +1569,7 @@ gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object)
                                      viewport_center_x + viewport_width / 2,
                                      viewport_center_y + viewport_height / 2);
 
-    gschem_page_view_invalidate_all (view);
+    schematic_canvas_invalidate_all (view);
   }
 }
 

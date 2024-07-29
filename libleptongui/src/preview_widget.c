@@ -139,7 +139,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
                 SCHEMATIC_CANVAS (preview),
                 ZOOM_IN,
                 HOTKEY);
-        gschem_page_view_invalidate_all (SCHEMATIC_CANVAS (widget));
+        schematic_canvas_invalidate_all (SCHEMATIC_CANVAS (widget));
         break;
       case 2: /* middle mouse button: pan */
         if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
@@ -151,7 +151,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
                 SCHEMATIC_CANVAS (preview),
                 ZOOM_OUT,
                 HOTKEY);
-        gschem_page_view_invalidate_all (SCHEMATIC_CANVAS (widget));
+        schematic_canvas_invalidate_all (SCHEMATIC_CANVAS (widget));
         break;
   }
 

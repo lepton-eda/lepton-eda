@@ -955,7 +955,7 @@ x_tabs_cancel_all (SchematicWindow* w_current)
   schematic_keys_reset (w_current);
 
   SchematicCanvas* pview = schematic_window_get_current_page_view (w_current);
-  gschem_page_view_invalidate_all (pview);
+  schematic_canvas_invalidate_all (pview);
 
   i_action_stop (w_current);
 

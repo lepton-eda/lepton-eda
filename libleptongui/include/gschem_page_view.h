@@ -88,7 +88,7 @@ gboolean
 schematic_canvas_get_show_hidden_text (SchematicCanvas *view);
 
 void
-gschem_page_view_invalidate_all (SchematicCanvas *view);
+schematic_canvas_invalidate_all (SchematicCanvas *view);
 
 void
 gschem_page_view_invalidate_screen_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
