@@ -27,7 +27,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "gschem_log_widget.h"
 #include "gschem_macro_widget.h"
 #include "gschem_page_geometry.h"
-#include "gschem_page_view.h"
+#include "canvas.h"
 #include "gschem_pin_type_combo.h"
 #include "gschem_main_window.h"
 #include "gschem_selection_adapter.h"

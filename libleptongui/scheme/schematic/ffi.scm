@@ -633,7 +633,7 @@
 ;;; gschem_macro_widget.c
 (define-lff macro_widget_show void '(*))
 
-;;; gschem_page_view.c
+;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
 (define-lff schematic_canvas_get_page_geometry '* '(*))
 (define-lff schematic_canvas_invalidate_all void '(*))

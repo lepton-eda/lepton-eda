@@ -30,7 +30,7 @@ libleptongui/src/gschem_object_properties_widget.c
 libleptongui/src/gschem_options.c
 libleptongui/src/gschem_options_widget.c
 libleptongui/src/gschem_page_geometry.c
-libleptongui/src/gschem_page_view.c
+libleptongui/src/canvas.c
 libleptongui/src/gschem_pin_type_combo.c
 libleptongui/src/gschem_rotation_combo.c
 libleptongui/src/gschem_selection_adapter.c

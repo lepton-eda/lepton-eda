@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_page_view.h
+ * \file canvas.h
  *
  * \brief A widget for viewing a schematic page
  */

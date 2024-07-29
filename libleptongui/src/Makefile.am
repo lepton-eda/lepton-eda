@@ -3,6 +3,7 @@ lib_LTLIBRARIES = libleptongui.la
 libleptongui_la_SOURCES = \
 	a_zoom.c \
 	action_mode.c \
+	canvas.c \
 	execute_script.c \
 	g_action.c \
 	g_hook.c \
@@ -37,7 +38,6 @@ libleptongui_la_SOURCES = \
 	gschem_options.c \
 	gschem_options_widget.c \
 	gschem_page_geometry.c \
-	gschem_page_view.c \
 	gschem_pin_type_combo.c \
 	gschem_rotation_combo.c \
 	gschem_selection_adapter.c \
