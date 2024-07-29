@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales V. Hvezda
  * Copyright (C) 1998-2012 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -19,35 +19,35 @@
  */
 
 
-#ifndef __GSCHEM_ACTION_H__
-#define __GSCHEM_ACTION_H__
+#ifndef __SCHEMATIC_ACTION_H__
+#define __SCHEMATIC_ACTION_H__
 
 
-#define GSCHEM_TYPE_ACTION           (gschem_action_get_type())
-#define GSCHEM_ACTION(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_ACTION, GschemAction))
-#define GSCHEM_ACTION_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_ACTION, GschemActionClass))
-#define GSCHEM_IS_ACTION(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_ACTION))
-#define GSCHEM_ACTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_ACTION, GschemActionClass))
+#define SCHEMATIC_TYPE_ACTION           (schematic_action_get_type())
+#define SCHEMATIC_ACTION(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_ACTION, SchematicAction))
+#define SCHEMATIC_ACTION_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_ACTION, SchematicActionClass))
+#define SCHEMATIC_IS_ACTION(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_ACTION))
+#define SCHEMATIC_ACTION_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_ACTION, SchematicActionClass))
 
-typedef struct _GschemActionClass GschemActionClass;
-typedef struct _GschemAction      GschemAction;
+typedef struct _SchematicActionClass SchematicActionClass;
+typedef struct _SchematicAction      SchematicAction;
 
 
-struct _GschemActionClass {
+struct _SchematicActionClass {
   GtkActionClass parent_class;
 
 };
 
-struct _GschemAction {
+struct _SchematicAction {
   GtkAction parent_instance;
 
   gchar *multikey_accel;
 };
 
 
-GType gschem_action_get_type (void);
+GType schematic_action_get_type (void);
 
-GschemAction *gschem_action_new           (const gchar *name,
+SchematicAction *schematic_action_new     (const gchar *name,
                                            const gchar *label,
                                            const gchar *tooltip,
 #ifdef ENABLE_GTK3
@@ -57,4 +57,4 @@ GschemAction *gschem_action_new           (const gchar *name,
 #endif
                                            const gchar *multikey_accel);
 
-#endif /* __GSCHEM_ACTION_H__ */
+#endif /* __SCHEMATIC_ACTION_H__ */

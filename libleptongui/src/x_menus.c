@@ -105,7 +105,7 @@ make_separator_menu_item ()
 #ifdef ENABLE_GTK3
 GSimpleAction*
 #else
-GschemAction*
+SchematicAction*
 #endif
 make_menu_action (const char *action_name,
                   const char *menu_item_name,
@@ -123,13 +123,13 @@ make_menu_action (const char *action_name,
   /* Look up icon in the icon theme. */
 //  gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
 #else /* GTK2 */
-  GschemAction *action =
-    GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
-                                 "name", action_name,
-                                 "label", menu_item_name,
-                                 "tooltip", menu_item_name,
-                                 "multikey-accel", menu_item_keys,
-                                 NULL));
+  SchematicAction *action =
+    SCHEMATIC_ACTION (g_object_new (SCHEMATIC_TYPE_ACTION,
+                                    "name", action_name,
+                                    "label", menu_item_name,
+                                    "tooltip", menu_item_name,
+                                    "multikey-accel", menu_item_keys,
+                                    NULL));
   /* If stock name corresponds to a GTK stock item, then use it.
    * Otherwise, look it up in the icon theme. */
   if (menu_item_stock != NULL &&
@@ -228,7 +228,7 @@ lepton_menu_set_action_data (GtkWidget *menu,
  *  The key/value data (see g_object_set_data()/g_object_get_data())
  *  associated with the menu widget created by this function:
  *  - key:   action name, string, e.g. "&edit-object-properties"
- *  - value: pointer to a corresponding GschemAction object
+ *  - value: pointer to a corresponding SchematicAction object
  */
 GtkWidget*
 schematic_window_create_main_popup_menu (SchematicWindow* w_current)
@@ -259,7 +259,7 @@ schematic_window_create_main_popup_menu (SchematicWindow* w_current)
                       G_CALLBACK (g_menu_execute),
                       w_current);
 #else /* GTK2 */
-    GschemAction *action;
+    SchematicAction *action;
     /* Don't bother showing keybindings in the popup menu */
     action = make_menu_action (e.action,
                                gettext (e.name),
@@ -340,7 +340,7 @@ x_menus_sensitivity (GtkWidget*   menu,
   GObject* obj = G_OBJECT (menu);
   gpointer data = g_object_get_data (obj, action_name);
 
-  GschemAction* action = (GschemAction*) data;
+  SchematicAction* action = (SchematicAction*) data;
   if (action != NULL)
   {
     gtk_action_set_sensitive (GTK_ACTION (action), sensitive);

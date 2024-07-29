@@ -1221,11 +1221,11 @@ x_tabs_menu_create_item (SchematicWindow* toplevel,
                     action);
 #else /* GTK2 */
 
-  GschemAction* action = gschem_action_new (action_name,  /* name */
-                                            action_label, /* label */
-                                            NULL,         /* tooltip */
-                                            icon_name,    /* stock_id */
-                                            NULL);        /* multikey_accel */
+  SchematicAction* action = schematic_action_new (action_name,  /* name */
+                                                  action_label, /* label */
+                                                  NULL,         /* tooltip */
+                                                  icon_name,    /* stock_id */
+                                                  NULL);        /* multikey_accel */
 
   GtkWidget* item = gtk_action_create_menu_item (GTK_ACTION (action));
 #endif

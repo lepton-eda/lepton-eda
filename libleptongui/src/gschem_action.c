@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2012 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,40 +28,40 @@ enum {
   PROP_MULTIKEY_ACCEL = 1,
 };
 
-G_DEFINE_TYPE (GschemAction, gschem_action, GTK_TYPE_ACTION);
+G_DEFINE_TYPE (SchematicAction, schematic_action, GTK_TYPE_ACTION);
 
 /*! \private
- *  \brief Initialize GschemAction instance
+ *  \brief Initialize SchematicAction instance
  *
- *  \param [in,out]  action  The GschemAction instance
+ *  \param [in,out]  action  The SchematicAction instance
  */
 static void
-gschem_action_init (GschemAction *action)
+schematic_action_init (SchematicAction *action)
 {
 }
 
 /*! \brief GObject finalise handler
  *
  *  \par Function Description
- *  Just before the GschemAction GObject is finalized, free our
+ *  Just before the SchematicAction GObject is finalized, free our
  *  allocated data, and then chain up to the parent's finalize handler.
  *
  *  \param [in] object The GObject being finalized.
  */
-static void gschem_action_finalize (GObject *object)
+static void schematic_action_finalize (GObject *object)
 {
-  GschemAction *action = GSCHEM_ACTION (object);
+  SchematicAction *action = SCHEMATIC_ACTION (object);
 
   g_free (action->multikey_accel);
 
-  G_OBJECT_CLASS (gschem_action_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_action_parent_class)->finalize (object);
 }
 
 
 /*! \brief GObject property setter function
  *
  *  \par Function Description
- *  Setter function for GschemAction's GObject properties,
+ *  Setter function for SchematicAction's GObject properties,
  *  "settings-name" and "toplevel".
  *
  *  \param [in]  object       The GObject whose properties we are setting
@@ -70,9 +70,13 @@ static void gschem_action_finalize (GObject *object)
  *  \param [in]  value        The GValue the property is being set from
  *  \param [in]  pspec        A GParamSpec describing the property being set
  */
-static void gschem_action_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec)
+static void
+schematic_action_set_property (GObject *object,
+                               guint property_id,
+                               const GValue *value,
+                               GParamSpec *pspec)
 {
-  GschemAction *action = GSCHEM_ACTION (object);
+  SchematicAction *action = SCHEMATIC_ACTION (object);
 
   switch(property_id) {
     case PROP_MULTIKEY_ACCEL:
@@ -88,7 +92,7 @@ static void gschem_action_set_property (GObject *object, guint property_id, cons
 /*! \brief GObject property getter function
  *
  *  \par Function Description
- *  Getter function for GschemAction's GObject properties,
+ *  Getter function for SchematicAction's GObject properties,
  *  "settings-name" and "toplevel".
  *
  *  \param [in]  object       The GObject whose properties we are getting
@@ -97,9 +101,13 @@ static void gschem_action_set_property (GObject *object, guint property_id, cons
  *  \param [out] value        The GValue in which to return the value of the property
  *  \param [in]  pspec        A GParamSpec describing the property being got
  */
-static void gschem_action_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
+static void
+schematic_action_get_property (GObject *object,
+                               guint property_id,
+                               GValue *value,
+                               GParamSpec *pspec)
 {
-  GschemAction *action = GSCHEM_ACTION (object);
+  SchematicAction *action = SCHEMATIC_ACTION (object);
 
   switch(property_id) {
     case PROP_MULTIKEY_ACCEL:
@@ -112,10 +120,10 @@ static void gschem_action_get_property (GObject *object, guint property_id, GVal
 }
 
 static void
-gschem_action_connect_proxy (GtkAction *action,
-                             GtkWidget *proxy)
+schematic_action_connect_proxy (GtkAction *action,
+                                GtkWidget *proxy)
 {
-  GschemAction *gs_action = GSCHEM_ACTION (action);
+  SchematicAction *gs_action = SCHEMATIC_ACTION (action);
 
   /* Override the type of label widget used with the menu item */
   if (GTK_IS_MENU_ITEM (proxy)) {
@@ -145,28 +153,28 @@ gschem_action_connect_proxy (GtkAction *action,
   }
 
   /* Let the parent class do its work now we've fiddled with the label */
-  GTK_ACTION_CLASS (gschem_action_parent_class)->connect_proxy (action, proxy);
+  GTK_ACTION_CLASS (schematic_action_parent_class)->connect_proxy (action, proxy);
 }
 
 
-/*! \brief GType class initialiser for GschemAction
+/*! \brief GType class initialiser for SchematicAction
  *
  *  \par Function Description
- *  GType class initialiser for GschemAction. We override our parent
+ *  GType class initialiser for SchematicAction. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in]  klass       The GschemActionClass we are initialising
+ *  \param [in]  klass       The SchematicActionClass we are initialising
  */
-static void gschem_action_class_init (GschemActionClass *klass)
+static void schematic_action_class_init (SchematicActionClass *klass)
 {
   GObjectClass     *gobject_class = G_OBJECT_CLASS (klass);
   GtkActionClass *gtkaction_class = GTK_ACTION_CLASS (klass);
 
-  gtkaction_class->connect_proxy  = gschem_action_connect_proxy;
+  gtkaction_class->connect_proxy  = schematic_action_connect_proxy;
 
-  gobject_class->finalize      = gschem_action_finalize;
-  gobject_class->set_property  = gschem_action_set_property;
-  gobject_class->get_property  = gschem_action_get_property;
+  gobject_class->finalize      = schematic_action_finalize;
+  gobject_class->set_property  = schematic_action_set_property;
+  gobject_class->get_property  = schematic_action_get_property;
 
   g_object_class_install_property (
     gobject_class, PROP_MULTIKEY_ACCEL,
@@ -178,11 +186,11 @@ static void gschem_action_class_init (GschemActionClass *klass)
 }
 
 
-/*! /brief Creates a new GschemAction object
+/*! /brief Creates a new SchematicAction object
  *
  * /par Function Descriptions
  *
- * Creates a new GschemAction object.
+ * Creates a new SchematicAction object.
  *
  * /param [in] name            A unique name for the action
  * /param [in] label           The label displayed in menu items and on buttons, or NULL
@@ -191,22 +199,23 @@ static void gschem_action_class_init (GschemActionClass *klass)
  * /param [in] stock_id        The stock icon to display in widgets representing the action, or NULL (GTK2 only)
  * /param [in] multikey_accel  The (potentially) multi-key accelerator used for this action
  *
- * /returns A new GschemAction
+ * /returns A new SchematicAction
  */
-GschemAction *gschem_action_new (const gchar *name,
-                                 const gchar *label,
-                                 const gchar *tooltip,
-                                 const gchar *stock_id,
-                                 const gchar *multikey_accel)
+SchematicAction*
+schematic_action_new (const gchar *name,
+                      const gchar *label,
+                      const gchar *tooltip,
+                      const gchar *stock_id,
+                      const gchar *multikey_accel)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
-                                      "name", name,
-                                      "label", label,
-                                      "tooltip", tooltip,
-                                      "stock-id", stock_id,
-                                      "multikey-accel", multikey_accel,
-                                      NULL));
+  return SCHEMATIC_ACTION (g_object_new (SCHEMATIC_TYPE_ACTION,
+                                         "name", name,
+                                         "label", label,
+                                         "tooltip", tooltip,
+                                         "stock-id", stock_id,
+                                         "multikey-accel", multikey_accel,
+                                         NULL));
 }
 #endif

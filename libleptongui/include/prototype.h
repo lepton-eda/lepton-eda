@@ -1099,7 +1099,7 @@ make_separator_menu_item ();
 #ifdef ENABLE_GTK3
 GSimpleAction*
 #else
-GschemAction*
+SchematicAction*
 #endif
 make_menu_action (const char *action_name,
                   const char *menu_item_name,
