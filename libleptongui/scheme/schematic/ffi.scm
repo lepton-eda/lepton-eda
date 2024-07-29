@@ -436,7 +436,7 @@
             gschem_page_geometry_set_viewport
             schematic_viewport_set_world_bottom
             schematic_viewport_set_world_left
-            gschem_page_geometry_set_world_right
+            schematic_viewport_set_world_right
             gschem_page_geometry_set_world_top
 
             gschem_text_properties_widget_new
@@ -777,7 +777,7 @@
 (define-lff gschem_page_geometry_set_viewport void (list '* int int double))
 (define-lff schematic_viewport_set_world_bottom void (list '* int))
 (define-lff schematic_viewport_set_world_left void (list '* int))
-(define-lff gschem_page_geometry_set_world_right void (list '* int))
+(define-lff schematic_viewport_set_world_right void (list '* int))
 (define-lff gschem_page_geometry_set_world_top void (list '* int))
 
 ;;; gschem_text_properties_widget.c

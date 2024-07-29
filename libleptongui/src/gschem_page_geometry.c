@@ -258,8 +258,8 @@ schematic_viewport_get_world_right (SchematicViewport *geometry)
  *                  in world coordinates.
  */
 void
-gschem_page_geometry_set_world_right (SchematicViewport *geometry,
-                                      int val)
+schematic_viewport_set_world_right (SchematicViewport *geometry,
+                                    int val)
 {
   g_return_if_fail (geometry != NULL);
 

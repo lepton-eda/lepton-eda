@@ -123,8 +123,8 @@ buffer should be displayed, the widget displays the error message."
                       (*geometry (schematic_canvas_get_page_geometry *preview)))
                   (schematic_viewport_set_world_left *geometry
                                                      (- left width-add))
-                  (gschem_page_geometry_set_world_right *geometry
-                                                        (+ right width-add))
+                  (schematic_viewport_set_world_right *geometry
+                                                      (+ right width-add))
                   (gschem_page_geometry_set_world_top *geometry
                                                       (- top height-add))
                   (schematic_viewport_set_world_bottom *geometry
