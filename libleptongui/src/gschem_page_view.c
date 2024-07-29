@@ -889,8 +889,8 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
   page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
   page_cy = (gschem_page_geometry_get_viewport_top (geometry) + gschem_page_geometry_get_viewport_bottom (geometry)) / 2.0;
 
-  world_cx = page_cx - gschem_page_view_WORLDabs (view, diff_x);
-  world_cy = page_cy + gschem_page_view_WORLDabs (view, diff_y);
+  world_cx = page_cx - schematic_canvas_WORLDabs (view, diff_x);
+  world_cy = page_cy + schematic_canvas_WORLDabs (view, diff_y);
 
 #if DEBUG
   printf("  world_cx=%1$f, world_cy=%2$f\n", world_cx, world_cy);
@@ -1412,7 +1412,8 @@ gschem_page_view_update_vadjustment (SchematicCanvas *view)
  *  \return The converted WORLD coordinate.
  */
 int
-gschem_page_view_WORLDabs(SchematicCanvas *page_view, int val)
+schematic_canvas_WORLDabs (SchematicCanvas *page_view,
+                           int val)
 {
   GtkAllocation allocation;
   double fw0,fw1,fw,fval;

@@ -331,7 +331,8 @@ o_net_find_magnetic (SchematicWindow *w_current,
     case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
     case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;
     }
-    if (minbest > gschem_page_view_WORLDabs (page_view, magnetic_reach)) {
+    if (minbest > schematic_canvas_WORLDabs (page_view, magnetic_reach))
+    {
       w_current->magnetic_wx = -1;
       w_current->magnetic_wy = -1;
     }
@@ -706,7 +707,7 @@ o_net_draw_rubber (SchematicWindow *w_current,
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
       w_magnetic_halfsize = MAX (4 * size,
-                                 gschem_page_view_WORLDabs (page_view, MAGNETIC_HALFSIZE));
+                                 schematic_canvas_WORLDabs (page_view, MAGNETIC_HALFSIZE));
       eda_cairo_arc (cr, flags, size,
                      w_current->magnetic_wx, w_current->magnetic_wy,
                      w_magnetic_halfsize, 0, 360);

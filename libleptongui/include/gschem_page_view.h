@@ -164,8 +164,8 @@ void
 schematic_canvas_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text);
 int
-gschem_page_view_WORLDabs(SchematicCanvas *view, int val);
-
+schematic_canvas_WORLDabs (SchematicCanvas *view,
+                           int val);
 void
 gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py);
 

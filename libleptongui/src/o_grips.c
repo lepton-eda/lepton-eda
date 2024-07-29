@@ -81,7 +81,7 @@ o_grips_search_world (SchematicWindow *w_current,
 
   /* get the size of the grip according to zoom level */
   size = GRIP_SIZE / 2;
-  w_size = gschem_page_view_WORLDabs (page_view, size);
+  w_size = schematic_canvas_WORLDabs (page_view, size);
 
   s_current = lepton_list_get_glist (active_page->selection_list );
   while (s_current != NULL) {

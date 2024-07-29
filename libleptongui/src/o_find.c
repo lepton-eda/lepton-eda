@@ -159,7 +159,7 @@ o_find_object (SchematicWindow *w_current,
   int w_slack;
   const GList *iter = NULL;
 
-  w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
+  w_slack = schematic_canvas_WORLDabs (page_view, w_current->select_slack_pixels);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
@@ -230,7 +230,7 @@ o_find_selected_object (SchematicWindow *w_current,
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, FALSE);
 
-  int w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
+  int w_slack = schematic_canvas_WORLDabs (page_view, w_current->select_slack_pixels);
   GList *s_current;
 
   for (s_current = lepton_list_get_glist (toplevel->page_current->selection_list);
