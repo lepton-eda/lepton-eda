@@ -125,8 +125,8 @@ buffer should be displayed, the widget displays the error message."
                                                      (- left width-add))
                   (schematic_viewport_set_world_right *geometry
                                                       (+ right width-add))
-                  (gschem_page_geometry_set_world_top *geometry
-                                                      (- top height-add))
+                  (schematic_viewport_set_world_top *geometry
+                                                    (- top height-add))
                   (schematic_viewport_set_world_bottom *geometry
                                                        (+ bottom height-add)))))
             ;; Display current page (possibly empty).

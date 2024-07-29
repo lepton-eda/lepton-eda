@@ -110,8 +110,8 @@ int
 schematic_viewport_get_world_top (SchematicViewport *geometry);
 
 void
-gschem_page_geometry_set_world_top (SchematicViewport *geometry,
-                                    int val);
+schematic_viewport_set_world_top (SchematicViewport *geometry,
+                                  int val);
 int
 gschem_page_geometry_mil_x (SchematicViewport *geometry, int value);
 
