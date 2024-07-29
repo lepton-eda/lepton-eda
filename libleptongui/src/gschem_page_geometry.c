@@ -141,7 +141,7 @@ schematic_viewport_get_bottom (SchematicViewport *geometry)
  *  \return The left edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_left (SchematicViewport *geometry)
+schematic_viewport_get_left (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 

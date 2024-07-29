@@ -77,7 +77,7 @@ int
 schematic_viewport_get_bottom (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_viewport_left (SchematicViewport *geometry);
+schematic_viewport_get_left (SchematicViewport *geometry);
 
 int
 gschem_page_geometry_get_viewport_right (SchematicViewport *geometry);

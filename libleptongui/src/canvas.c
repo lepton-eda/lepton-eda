@@ -541,7 +541,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
   else {
 
     int right = gschem_page_geometry_get_viewport_right (geometry);
-    int left = gschem_page_geometry_get_viewport_left (geometry);
+    int left = schematic_viewport_get_left (geometry);
     double val1 = fabs ((double) (right - left) / screen_width);
 
     int top = gschem_page_geometry_get_viewport_top (geometry);
@@ -554,7 +554,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
                                      scale,
                                      screen_width,
                                      screen_height,
-                                     gschem_page_geometry_get_viewport_left (geometry),
+                                     schematic_viewport_get_left (geometry),
                                      gschem_page_geometry_get_viewport_top (geometry),
                                      gschem_page_geometry_get_viewport_right (geometry),
                                      schematic_viewport_get_bottom (geometry));
@@ -886,7 +886,7 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
   printf ("schematic_canvas_pan_mouse(): diff_x=%1$d, diff_y=%2$d\n", diff_x, diff_y);
 #endif
 
-  page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
+  page_cx = (schematic_viewport_get_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
   page_cy = (gschem_page_geometry_get_viewport_top (geometry) + schematic_viewport_get_bottom (geometry)) / 2.0;
 
   world_cx = page_cx - schematic_canvas_WORLDabs (view, diff_x);
@@ -1200,7 +1200,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, SchematicCanvas *view)
 
     g_return_if_fail (view->hadjustment == hadjustment);
 
-    current_left = gschem_page_geometry_get_viewport_left (geometry);
+    current_left = schematic_viewport_get_left (geometry);
     new_left = (int) gtk_adjustment_get_value (hadjustment);
 
     geometry->viewport_left = new_left;
@@ -1278,7 +1278,7 @@ schematic_canvas_SCREENabs (SchematicCanvas *view,
 
   if (geometry == NULL) return 0;
 
-  f0 = gschem_page_geometry_get_viewport_left  (geometry);
+  f0 = schematic_viewport_get_left  (geometry);
   f1 = gschem_page_geometry_get_viewport_right (geometry);
   i = (double)(geometry->screen_width) * (double)(val) / (f1 - f0);
 
