@@ -195,7 +195,7 @@ success, #f on failure."
                                                  (lepton_undo_get_y *undo-item)
                                                  (lepton_undo_get_scale *undo-item))
               (schematic_canvas_invalidate_all *page-view))
-            (gschem_page_view_zoom_extents *page-view
+            (schematic_canvas_zoom_extents *page-view
                                            (lepton_undo_get_object_list *undo-item))))))
 
   (define (page-undo *page-view *page *current-undo *undo-to-do)

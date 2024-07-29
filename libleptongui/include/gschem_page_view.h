@@ -173,8 +173,8 @@ schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
                                 int *px,
                                 int *py);
 void
-gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *list);
-
+schematic_canvas_zoom_extents (SchematicCanvas *view,
+                               const GList *list);
 void
 gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object);
 

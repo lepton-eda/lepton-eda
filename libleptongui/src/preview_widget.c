@@ -105,7 +105,7 @@ schematic_preview_callback_realize (GtkWidget *widget,
   g_return_if_fail (widget != NULL);
 
   gtk_widget_grab_focus (widget);
-  gschem_page_view_zoom_extents (SCHEMATIC_CANVAS (widget), NULL);
+  schematic_canvas_zoom_extents (SCHEMATIC_CANVAS (widget), NULL);
 }
 
 

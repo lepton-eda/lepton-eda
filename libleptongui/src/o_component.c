@@ -175,7 +175,7 @@ o_component_translate_all (SchematicWindow *w_current,
     schematic_window_get_show_hidden_text (w_current);
 
   /* first zoom extents */
-  gschem_page_view_zoom_extents (view, NULL);
+  schematic_canvas_zoom_extents (view, NULL);
   schematic_canvas_invalidate_all (view);
 
   world_get_object_glist_bounds (lepton_page_objects (active_page),
@@ -214,7 +214,7 @@ o_component_translate_all (SchematicWindow *w_current,
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  gschem_page_view_zoom_extents (view, NULL);
+  schematic_canvas_zoom_extents (view, NULL);
   if (!schematic_window_get_shift_key_pressed (w_current))
   {
     o_select_unselect_all (w_current);

@@ -329,7 +329,7 @@
             schematic_canvas_pan_start
             schematic_canvas_redraw
             schematic_canvas_SCREENtoWORLD
-            gschem_page_view_zoom_extents
+            schematic_canvas_zoom_extents
             schematic_page_view_grab_focus
 
             schematic_preview_new
@@ -645,7 +645,7 @@
 (define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
-(define-lff gschem_page_view_zoom_extents void '(* *))
+(define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_page_view_grab_focus void '(*))
 
 ;;; preview_widget.c

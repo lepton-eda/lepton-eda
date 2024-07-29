@@ -1514,7 +1514,8 @@ schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
  *  \param [in]     objects The list of objects to compute extents, or NULL
  */
 void
-gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *objects)
+schematic_canvas_zoom_extents (SchematicCanvas *view,
+                               const GList *objects)
 {
   GschemPageGeometry *geometry = NULL;
   LeptonPage *page = NULL;

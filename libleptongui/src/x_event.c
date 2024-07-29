@@ -255,7 +255,7 @@ x_event_configure (SchematicCanvas   *page_view,
     }
     else
     {
-      gschem_page_view_zoom_extents (page_view, NULL);
+      schematic_canvas_zoom_extents (page_view, NULL);
     }
 
     page_view->configured = TRUE;
@@ -273,7 +273,7 @@ x_event_configure (SchematicCanvas   *page_view,
     if (page_view->configured) {
       schematic_canvas_pan_mouse (page_view, 0, 0);
     } else {
-      gschem_page_view_zoom_extents (page_view, NULL);
+      schematic_canvas_zoom_extents (page_view, NULL);
     }
   }
 

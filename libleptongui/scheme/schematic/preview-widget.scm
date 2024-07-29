@@ -130,7 +130,7 @@ buffer should be displayed, the widget displays the error message."
                   (gschem_page_geometry_set_world_bottom *geometry
                                                          (+ bottom height-add)))))
             ;; Display current page (possibly empty).
-            (gschem_page_view_zoom_extents *preview %null-pointer))))))
+            (schematic_canvas_zoom_extents *preview %null-pointer))))))
 
 
 (define *update-preview

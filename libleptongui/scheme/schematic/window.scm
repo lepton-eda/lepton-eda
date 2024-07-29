@@ -890,7 +890,7 @@ for *PAGE page will be created and set active."
             (process-pending-events)
 
             ;; Zoom new page view created for existing page.
-            (gschem_page_view_zoom_extents (x_tabs_tl_pview_cur *window)
+            (schematic_canvas_zoom_extents (x_tabs_tl_pview_cur *window)
                                            %null-pointer))))))
 
 

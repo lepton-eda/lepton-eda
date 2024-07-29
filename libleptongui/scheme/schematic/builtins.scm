@@ -790,7 +790,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
   (define *window (*current-window))
 
-  (gschem_page_view_zoom_extents (schematic_window_get_current_page_view *window)
+  (schematic_canvas_zoom_extents (schematic_window_get_current_page_view *window)
                                  %null-pointer)
   (undo-save-viewport))
 
@@ -1110,7 +1110,7 @@ the snap grid size should be set to 100")))
   (define *page-view (schematic_window_get_current_page_view *window))
   (lepton_toplevel_goto_page *toplevel *child)
   (schematic_window_page_changed *window)
-  (gschem_page_view_zoom_extents *page-view %null-pointer)
+  (schematic_canvas_zoom_extents *page-view %null-pointer)
   (undo-save-state)
   (lepton_toplevel_goto_page *toplevel *parent)
   (schematic_window_page_changed *window))
@@ -1267,7 +1267,7 @@ the snap grid size should be set to 100")))
                ;; s_hierarchy_down_symbol() will not zoom the loaded page.
                ;; Tabbed GUI: zoom is set in set-tab-page!().
                (unless (true? (x_tabs_enabled))
-                 (gschem_page_view_zoom_extents
+                 (schematic_canvas_zoom_extents
                   (schematic_window_get_current_page_view *window)
                   %null-pointer))
 
