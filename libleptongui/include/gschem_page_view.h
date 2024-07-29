@@ -186,8 +186,8 @@ GtkScrollablePolicy
 schematic_canvas_get_vscroll_policy (SchematicCanvas *view);
 
 void
-gschem_page_view_set_hscroll_policy (SchematicCanvas *view, GtkScrollablePolicy scroll);
-
+schematic_canvas_set_hscroll_policy (SchematicCanvas *view,
+                                     GtkScrollablePolicy scroll);
 void
 gschem_page_view_set_vscroll_policy (SchematicCanvas *view, GtkScrollablePolicy scroll);
 
