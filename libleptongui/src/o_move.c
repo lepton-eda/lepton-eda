@@ -40,7 +40,7 @@ o_move_start (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (w_current->stretch_list == NULL);
@@ -115,7 +115,7 @@ o_move_end_lowlevel (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   switch (lepton_object_get_type (object)) {
@@ -145,7 +145,7 @@ o_move_end (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   GList *s_current = NULL;
@@ -265,7 +265,7 @@ o_move_cancel (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   /* Unset the dont_redraw flag on rubberbanded objects.
@@ -314,7 +314,7 @@ o_move_motion (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -558,7 +558,7 @@ o_move_check_endpoint (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (cl_current = object->conn_list;
@@ -648,7 +648,7 @@ o_move_prep_rubberband (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (s_current = lepton_list_get_glist (page->selection_list);
@@ -717,7 +717,7 @@ o_move_end_rubberband (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (s_iter = w_current->stretch_list;

@@ -392,7 +392,7 @@
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
       (error "NULL page view or window.")
-      (let ((*page (gschem_page_view_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *page-view)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
@@ -607,7 +607,7 @@
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
       (error "NULL page view or window.")
-      (let ((*page (gschem_page_view_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *page-view)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
@@ -695,7 +695,7 @@
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
       (error "NULL page view or window.")
-      (let ((*page (gschem_page_view_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *page-view)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE

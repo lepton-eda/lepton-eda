@@ -223,7 +223,7 @@ x_event_configure (SchematicCanvas   *page_view,
 {
   GtkAllocation current_allocation;
   GList *iter;
-  LeptonPage *p_current = gschem_page_view_get_page (page_view);
+  LeptonPage *p_current = schematic_canvas_get_page (page_view);
 
   if (p_current == NULL) {
     /* don't want to call this if the current page isn't setup yet */
@@ -388,7 +388,7 @@ x_event_scroll (GtkWidget *widget,
   view = SCHEMATIC_CANVAS (widget);
   g_return_val_if_fail ((view != NULL), 0);
 
-  page = gschem_page_view_get_page (view);
+  page = schematic_canvas_get_page (view);
 
   if (page == NULL) {
     return FALSE; /* we cannot zoom page if it doesn't exist :) */

@@ -86,7 +86,7 @@ o_place_end (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   /* erase old image */
@@ -161,7 +161,7 @@ o_place_motion (SchematicWindow *w_current,
                 int w_x,
                 int w_y)
 {
-  LeptonPage *page = gschem_page_view_get_page (schematic_window_get_current_page_view (w_current));
+  LeptonPage *page = schematic_canvas_get_page (schematic_window_get_current_page_view (w_current));
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (page->place_list != NULL);
@@ -220,7 +220,7 @@ o_place_invalidate_rubber (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -304,7 +304,7 @@ o_place_draw_rubber (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -385,7 +385,7 @@ o_place_rotate (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
@@ -417,7 +417,7 @@ o_place_mirror (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);

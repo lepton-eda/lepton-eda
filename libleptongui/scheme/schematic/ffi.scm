@@ -318,7 +318,7 @@
             lepton_action_create_menu_item
             lepton_menu_set_action_data
 
-            gschem_page_view_get_page
+            schematic_canvas_get_page
             gschem_page_view_get_page_geometry
             gschem_page_view_invalidate_all
             gschem_page_view_new_with_page
@@ -634,7 +634,7 @@
 (define-lff macro_widget_show void '(*))
 
 ;;; gschem_page_view.c
-(define-lff gschem_page_view_get_page '* '(*))
+(define-lff schematic_canvas_get_page '* '(*))
 (define-lff gschem_page_view_get_page_geometry '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
 (define-lff gschem_page_view_new_with_page '* '(*))

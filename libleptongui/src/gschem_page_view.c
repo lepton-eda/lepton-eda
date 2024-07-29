@@ -274,7 +274,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_PAGE:
-      g_value_set_pointer (value, gschem_page_view_get_page (view));
+      g_value_set_pointer (value, schematic_canvas_get_page (view));
       break;
 
     case PROP_PAGE_GEOMETRY:
@@ -475,7 +475,7 @@ gschem_page_view_get_vscroll_policy (SchematicCanvas *view)
  *  \return The page for the view
  */
 LeptonPage*
-gschem_page_view_get_page (SchematicCanvas *view)
+schematic_canvas_get_page (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
@@ -499,7 +499,7 @@ gschem_page_view_get_page_geometry (SchematicCanvas *view)
 
   g_return_val_if_fail (view != NULL, NULL);
 
-  page = gschem_page_view_get_page (view);
+  page = schematic_canvas_get_page (view);
   if (page == NULL) {
     return NULL;
   }
@@ -1489,14 +1489,14 @@ gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *objects)
 
   g_return_if_fail (view != NULL);
 
-  page = gschem_page_view_get_page (view);
+  page = schematic_canvas_get_page (view);
   g_return_if_fail (page != NULL);
 
   geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
-    temp = lepton_page_objects (gschem_page_view_get_page (view));
+    temp = lepton_page_objects (schematic_canvas_get_page (view));
   }
 
   gschem_page_geometry_zoom_extents (geometry, temp, view->show_hidden_text);
@@ -1603,7 +1603,7 @@ gschem_page_view_redraw (SchematicCanvas *view,
   g_return_if_fail (view != NULL);
   g_return_if_fail (w_current != NULL);
 
-  page = gschem_page_view_get_page (view);
+  page = schematic_canvas_get_page (view);
 
   if (page != NULL) {
     geometry = gschem_page_view_get_page_geometry (view);

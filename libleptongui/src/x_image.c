@@ -781,7 +781,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   g_return_val_if_fail (page_view != NULL, NULL);
 
-  page = gschem_page_view_get_page (page_view);
+  page = schematic_canvas_get_page (page_view);
 
   g_return_val_if_fail (page != NULL, NULL);
 

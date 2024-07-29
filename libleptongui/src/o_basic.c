@@ -519,7 +519,7 @@ o_invalidate (SchematicWindow *w_current,
   int left, top, bottom, right;
 
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
 
@@ -562,7 +562,7 @@ o_invalidate_glist (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   gboolean show_hidden_text =

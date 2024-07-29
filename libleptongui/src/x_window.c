@@ -255,7 +255,7 @@ x_window_select_object (GschemFindTextState *state,
   SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (view);
+  LeptonPage *page = schematic_canvas_get_page (view);
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (object != NULL);

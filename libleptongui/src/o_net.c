@@ -101,7 +101,7 @@ o_net_guess_direction (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   object_list = g_list_append (NULL, page->connectible_list);
@@ -226,7 +226,7 @@ o_net_find_magnetic (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   minbest = min_x = min_y = 0;
@@ -499,7 +499,7 @@ o_net_end (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_net_invalidate_rubber (w_current);
@@ -809,7 +809,7 @@ o_net_add_busrippers (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_val_if_fail (page != NULL, FALSE);
 
   length = lepton_line_object_length (net_obj);

@@ -72,7 +72,7 @@ buffer should be displayed, the widget displays the error message."
 
   (if (null-pointer? *preview)
       (log! 'warning "NULL preview widget")
-      (let ((*page (gschem_page_view_get_page *preview)))
+      (let ((*page (schematic_canvas_get_page *preview)))
         (unless (null-pointer? *page)
           ;; Delete old preview.
           (lepton_page_delete_objects *page)

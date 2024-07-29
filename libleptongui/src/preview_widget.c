@@ -82,7 +82,7 @@ static void schematic_preview_finalize (GObject *self);
 static const char*
 schematic_preview_get_page_filename (SchematicPreview *preview)
 {
-  LeptonPage *page = gschem_page_view_get_page (SCHEMATIC_CANVAS (preview));
+  LeptonPage *page = schematic_canvas_get_page (SCHEMATIC_CANVAS (preview));
 
   g_return_val_if_fail (page != NULL, "");
 

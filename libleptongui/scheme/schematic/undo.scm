@@ -90,7 +90,7 @@ success, #f on failure."
 
   (let ((*view (schematic_window_get_current_page_view *window)))
     (and (not (null-pointer? *view))
-         (let ((*page (gschem_page_view_get_page *view)))
+         (let ((*page (schematic_canvas_get_page *view)))
            (and (not (null-pointer? *page))
                 (o_undo_savestate *window *page FALSE)
                 #t)))))
@@ -316,7 +316,7 @@ success, #f on failure."
 
   (define (page-view-undo *page-view)
     (page-undo-callback *page-view
-                        (gschem_page_view_get_page *page-view)
+                        (schematic_canvas_get_page *page-view)
                         redo?))
 
   (define (window-undo)

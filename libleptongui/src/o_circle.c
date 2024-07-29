@@ -107,7 +107,7 @@ o_circle_end (SchematicWindow *w_current,
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   /* erase the temporary circle */

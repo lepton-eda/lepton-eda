@@ -443,7 +443,7 @@ o_undo_savestate_old (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  LeptonPage *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = schematic_canvas_get_page (page_view);
 
   o_undo_savestate (w_current, page, FALSE);
 }

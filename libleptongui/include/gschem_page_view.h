@@ -73,7 +73,7 @@ GtkAdjustment*
 schematic_canvas_get_hadjustment (SchematicCanvas *view);
 
 LeptonPage*
-gschem_page_view_get_page (SchematicCanvas *view);
+schematic_canvas_get_page (SchematicCanvas *view);
 
 GschemPageGeometry*
 gschem_page_view_get_page_geometry (SchematicCanvas *view);
