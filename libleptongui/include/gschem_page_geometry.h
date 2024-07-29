@@ -107,7 +107,7 @@ cairo_matrix_t*
 gschem_page_geometry_get_world_to_screen_matrix (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_world_top (SchematicViewport *geometry);
+schematic_viewport_get_world_top (SchematicViewport *geometry);
 
 void
 gschem_page_geometry_set_world_top (SchematicViewport *geometry,
