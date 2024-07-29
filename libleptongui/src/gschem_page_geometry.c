@@ -51,7 +51,7 @@ update_constants (SchematicViewport *geometry);
  *  \return An dynamically allocated copy of the geometry
  */
 SchematicViewport*
-gschem_page_geometry_copy (SchematicViewport *geometry)
+schematic_viewport_copy (SchematicViewport *geometry)
 {
   return (SchematicViewport*) g_memdup2 (geometry, sizeof (SchematicViewport));
 }
@@ -111,7 +111,7 @@ schematic_viewport_get_type ()
 
   if (type == 0) {
     type = g_boxed_type_register_static ("SchematicViewport",
-                                         (GBoxedCopyFunc) gschem_page_geometry_copy,
+                                         (GBoxedCopyFunc) schematic_viewport_copy,
                                          (GBoxedFreeFunc) gschem_page_geometry_free);
   }
 

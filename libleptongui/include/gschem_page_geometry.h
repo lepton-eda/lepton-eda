@@ -59,7 +59,7 @@ struct _SchematicViewport
 G_BEGIN_DECLS
 
 SchematicViewport*
-gschem_page_geometry_copy (SchematicViewport *geometry);
+schematic_viewport_copy (SchematicViewport *geometry);
 
 void
 gschem_page_geometry_free (SchematicViewport *geometry);
