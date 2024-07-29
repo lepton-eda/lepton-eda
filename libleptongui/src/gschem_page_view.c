@@ -799,7 +799,7 @@ gschem_page_view_init (SchematicCanvas *view)
  *  \return A new instance of the SchematicCanvas
  */
 SchematicCanvas*
-gschem_page_view_new_with_page (LeptonPage *page)
+schematic_canvas_new_with_page (LeptonPage *page)
 {
   SchematicCanvas *view = SCHEMATIC_CANVAS (g_object_new (SCHEMATIC_TYPE_CANVAS,
                                                           "page", page,

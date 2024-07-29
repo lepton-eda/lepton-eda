@@ -103,7 +103,7 @@ schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
                                         int right,
                                         int bottom);
 SchematicCanvas*
-gschem_page_view_new_with_page (LeptonPage *page);
+schematic_canvas_new_with_page (LeptonPage *page);
 
 void
 gschem_page_view_pan_general(SchematicCanvas *page_view, int x, int y, double relativ_zoom_factor);

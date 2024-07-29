@@ -57,7 +57,7 @@ x_window_new_page (SchematicWindow* w_current);
 void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
 {
   LeptonPage* page = schematic_window_get_active_page (w_current);
-  SchematicCanvas* view = gschem_page_view_new_with_page (page);
+  SchematicCanvas* view = schematic_canvas_new_with_page (page);
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
