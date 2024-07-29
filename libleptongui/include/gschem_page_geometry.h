@@ -83,7 +83,7 @@ int
 schematic_viewport_get_right (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_viewport_top (SchematicViewport *geometry);
+schematic_viewport_get_top (SchematicViewport *geometry);
 
 int
 gschem_page_geometry_get_world_bottom (SchematicViewport *geometry);

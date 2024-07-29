@@ -171,7 +171,7 @@ schematic_viewport_get_right (SchematicViewport *geometry)
  *  \return The top edge of the viewport in world coordinates.
  */
 int
-gschem_page_geometry_get_viewport_top (SchematicViewport *geometry)
+schematic_viewport_get_top (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
