@@ -568,7 +568,7 @@ x_event_get_pointer_position (SchematicWindow *w_current,
     return FALSE;
   }
 
-  gschem_page_view_SCREENtoWORLD (page_view, sx, sy, &x, &y);
+  schematic_canvas_SCREENtoWORLD (page_view, sx, sy, &x, &y);
 
   if (snapped) {
     x = snap_grid (w_current, x);

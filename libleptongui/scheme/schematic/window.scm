@@ -293,7 +293,7 @@
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
       (window-save-modifiers *window *event)
-      (gschem_page_view_SCREENtoWORLD *page-view
+      (schematic_canvas_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
                                       (bytevector->pointer unsnapped-x-bv)
@@ -421,7 +421,7 @@
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
-      (gschem_page_view_SCREENtoWORLD *page-view
+      (schematic_canvas_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
                                       (bytevector->pointer unsnapped-x-bv)
@@ -638,7 +638,7 @@
 
               (let ((unsnapped-x-bv (make-bytevector (sizeof int) 0))
                     (unsnapped-y-bv (make-bytevector (sizeof int) 0)))
-                (gschem_page_view_SCREENtoWORLD *page-view
+                (schematic_canvas_SCREENtoWORLD *page-view
                                                 (inexact->exact (round window-x))
                                                 (inexact->exact (round window-y))
                                                 (bytevector->pointer unsnapped-x-bv)

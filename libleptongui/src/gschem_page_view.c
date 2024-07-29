@@ -1002,7 +1002,11 @@ schematic_canvas_pan_end (SchematicCanvas *view)
  *                  coordinates be returned in mx and my?
  */
 void
-gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y)
+schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
+                                int mx,
+                                int my,
+                                int *x,
+                                int *y)
 {
   GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 

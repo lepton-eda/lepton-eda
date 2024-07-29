@@ -56,7 +56,7 @@ coord_display_update (SchematicWindow *w_current,
   gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
   g_free(string);
 
-  gschem_page_view_SCREENtoWORLD (page_view, x, y, &world_x, &world_y);
+  schematic_canvas_SCREENtoWORLD (page_view, x, y, &world_x, &world_y);
   world_x = snap_grid (w_current, world_x);
   world_y = snap_grid (w_current, world_y);
 

@@ -146,8 +146,11 @@ int
 schematic_canvas_SCREENabs (SchematicCanvas *view,
                             int val);
 void
-gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y);
-
+schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
+                                int mx,
+                                int my,
+                                int *x,
+                                int *y);
 void
 gschem_page_view_set_hadjustment (SchematicCanvas *view, GtkAdjustment *hadjustment);
 
