@@ -121,7 +121,7 @@ geometry_cache_dispose (SchematicCanvas *view);
 static void
 geometry_cache_finalize (SchematicCanvas *view);
 
-static GObjectClass *gschem_page_view_parent_class = NULL;
+static GObjectClass *schematic_canvas_parent_class = NULL;
 
 
 #ifndef ENABLE_GTK3
@@ -191,8 +191,8 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  g_return_if_fail (gschem_page_view_parent_class != NULL);
-  gschem_page_view_parent_class->dispose (object);
+  g_return_if_fail (schematic_canvas_parent_class != NULL);
+  schematic_canvas_parent_class->dispose (object);
 }
 
 
@@ -250,8 +250,8 @@ finalize (GObject *object)
 
   /* lastly, chain up to the parent finalize */
 
-  g_return_if_fail (gschem_page_view_parent_class != NULL);
-  gschem_page_view_parent_class->finalize (object);
+  g_return_if_fail (schematic_canvas_parent_class != NULL);
+  schematic_canvas_parent_class->finalize (object);
 }
 
 
@@ -313,7 +313,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 static void
 schematic_canvas_class_init (SchematicCanvasClass *klass)
 {
-  gschem_page_view_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+  schematic_canvas_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
