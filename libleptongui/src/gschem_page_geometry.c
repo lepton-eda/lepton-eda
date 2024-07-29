@@ -796,9 +796,9 @@ gschem_page_geometry_set_viewport_top (SchematicViewport *geometry, int viewport
  *  \param [in] include_hidden  Calculate extents of hidden text
  */
 void
-gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
-                                   const GList *list,
-                                   gboolean include_hidden)
+schematic_viewport_zoom_extents (SchematicViewport *geometry,
+                                 const GList *list,
+                                 gboolean include_hidden)
 {
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
@@ -820,8 +820,8 @@ gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
   }
 
 #if DEBUG
-  printf("in gschem_page_geometry_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
-         lleft, lright, ltop, lbottom);
+  printf ("schematic_viewport_zoom_extents(): left: %d, right: %d, top: %d, bottom: %d\n",
+          lleft, lright, ltop, lbottom);
 #endif
 
   /* Calc the necessary zoomfactor to show everything

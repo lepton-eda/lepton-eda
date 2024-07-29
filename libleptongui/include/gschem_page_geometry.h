@@ -165,7 +165,7 @@ void
 gschem_page_geometry_set_viewport_top (SchematicViewport *geometry, int viewport_top);
 
 void
-gschem_page_geometry_zoom_extents (SchematicViewport *geometry,
-                                   const GList *list,
-                                   gboolean include_hidden);
+schematic_viewport_zoom_extents (SchematicViewport *geometry,
+                                 const GList *list,
+                                 gboolean include_hidden);
 G_END_DECLS

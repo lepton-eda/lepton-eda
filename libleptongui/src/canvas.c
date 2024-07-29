@@ -534,9 +534,9 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
 
     geometry_cache_insert (view, page, geometry);
 
-    gschem_page_geometry_zoom_extents (geometry,
-                                       lepton_page_objects (page),
-                                       view->show_hidden_text);
+    schematic_viewport_zoom_extents (geometry,
+                                     lepton_page_objects (page),
+                                     view->show_hidden_text);
   }
   else {
 
@@ -1535,7 +1535,7 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
     temp = lepton_page_objects (schematic_canvas_get_page (view));
   }
 
-  gschem_page_geometry_zoom_extents (geometry, temp, view->show_hidden_text);
+  schematic_viewport_zoom_extents (geometry, temp, view->show_hidden_text);
 
   /* Trigger a motion event to update the objects being drawn */
   x_event_faked_motion (view, NULL);
