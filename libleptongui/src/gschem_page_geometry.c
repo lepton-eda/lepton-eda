@@ -91,7 +91,7 @@ schematic_viewport_get_screen_height (SchematicViewport *geometry)
  *  \return The screen width in pixels.
  */
 int
-gschem_page_geometry_get_screen_width (SchematicViewport *geometry)
+schematic_viewport_get_screen_width (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 

@@ -68,7 +68,7 @@ int
 schematic_viewport_get_screen_height (SchematicViewport *geometry);
 
 int
-gschem_page_geometry_get_screen_width (SchematicViewport *geometry);
+schematic_viewport_get_screen_width (SchematicViewport *geometry);
 
 GType
 schematic_viewport_get_type ();
