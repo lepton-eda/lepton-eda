@@ -185,7 +185,7 @@ dispose (GObject *object)
   }
 
   schematic_canvas_set_hadjustment (view, NULL);
-  gschem_page_view_set_vadjustment (view, NULL);
+  schematic_canvas_set_vadjustment (view, NULL);
 
   geometry_cache_dispose (view);
 
@@ -1117,7 +1117,8 @@ schematic_canvas_set_page (SchematicCanvas *view,
  *  \param [in]     vadjustment The vertical scroll adjustment
  */
 void
-gschem_page_view_set_vadjustment (SchematicCanvas *view, GtkAdjustment *vadjustment)
+schematic_canvas_set_vadjustment (SchematicCanvas *view,
+                                  GtkAdjustment *vadjustment)
 {
   g_return_if_fail (view != NULL);
 
@@ -1227,7 +1228,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_VADJUSTMENT:
-      gschem_page_view_set_vadjustment (view,
+      schematic_canvas_set_vadjustment (view,
                                         GTK_ADJUSTMENT (g_value_get_object (value)));
       break;
 
@@ -1449,7 +1450,7 @@ static void
 set_scroll_adjustments (SchematicCanvas *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment)
 {
   schematic_canvas_set_hadjustment (view, hadjustment);
-  gschem_page_view_set_vadjustment (view, vadjustment);
+  schematic_canvas_set_vadjustment (view, vadjustment);
 }
 #endif
 

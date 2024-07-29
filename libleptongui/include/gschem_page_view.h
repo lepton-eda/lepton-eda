@@ -158,8 +158,8 @@ void
 schematic_canvas_set_page (SchematicCanvas *view,
                            LeptonPage *page);
 void
-gschem_page_view_set_vadjustment (SchematicCanvas *view, GtkAdjustment *vadjustment);
-
+schematic_canvas_set_vadjustment (SchematicCanvas *view,
+                                  GtkAdjustment *vadjustment);
 void
 gschem_page_view_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text);
