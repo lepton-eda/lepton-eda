@@ -806,7 +806,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
                                           WORLD_DEFAULT_RIGHT,
                                           WORLD_DEFAULT_BOTTOM);
 
-  cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (new_geometry));
+  cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (new_geometry));
 
   world_rect = g_new (LeptonBox, 1);
 

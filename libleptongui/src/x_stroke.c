@@ -120,7 +120,7 @@ x_stroke_record (SchematicWindow *w_current,
                            lepton_color_get_blue_double (color),
                            lepton_color_get_alpha_double (color));
 
-    cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
+    cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (geometry));
     x0 = x;
     y0 = y;
     cairo_device_to_user (cr, &x0, &y0);

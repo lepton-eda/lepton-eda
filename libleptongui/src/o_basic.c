@@ -78,7 +78,7 @@ void o_redraw_rect (SchematicWindow *w_current,
 
   cairo_save (cr);
 #endif
-  cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
+  cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (geometry));
 
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = CUE_BOX_SIZE;

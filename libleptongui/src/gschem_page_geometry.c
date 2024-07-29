@@ -302,7 +302,7 @@ schematic_viewport_set_world_top (SchematicViewport *geometry,
  *  \return The world to screen transformation matrix.
  */
 cairo_matrix_t*
-gschem_page_geometry_get_world_to_screen_matrix (SchematicViewport *geometry)
+schematic_viewport_get_world_to_screen_matrix (SchematicViewport *geometry)
 {
   g_return_val_if_fail (geometry != NULL, NULL);
 

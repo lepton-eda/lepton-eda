@@ -104,7 +104,7 @@ void
 schematic_viewport_set_world_right (SchematicViewport *geometry,
                                     int val);
 cairo_matrix_t*
-gschem_page_geometry_get_world_to_screen_matrix (SchematicViewport *geometry);
+schematic_viewport_get_world_to_screen_matrix (SchematicViewport *geometry);
 
 int
 schematic_viewport_get_world_top (SchematicViewport *geometry);
