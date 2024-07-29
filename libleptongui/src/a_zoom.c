@@ -159,7 +159,7 @@ a_zoom_box (SchematicWindow *w_current)
   }
 
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) abs (schematic_viewport_get_left (geometry) - gschem_page_geometry_get_viewport_right (geometry)) /
+  zx = (double) abs (schematic_viewport_get_left (geometry) - schematic_viewport_get_right (geometry)) /
     abs(schematic_window_get_first_wx (w_current) - schematic_window_get_second_wx (w_current));
   zy = (double) abs (gschem_page_geometry_get_viewport_top (geometry) - schematic_viewport_get_bottom (geometry)) /
     abs(schematic_window_get_first_wy (w_current) - schematic_window_get_second_wy (w_current));

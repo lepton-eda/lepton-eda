@@ -540,7 +540,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
   }
   else {
 
-    int right = gschem_page_geometry_get_viewport_right (geometry);
+    int right = schematic_viewport_get_right (geometry);
     int left = schematic_viewport_get_left (geometry);
     double val1 = fabs ((double) (right - left) / screen_width);
 
@@ -556,7 +556,7 @@ schematic_canvas_get_page_geometry (SchematicCanvas *view)
                                      screen_height,
                                      schematic_viewport_get_left (geometry),
                                      gschem_page_geometry_get_viewport_top (geometry),
-                                     gschem_page_geometry_get_viewport_right (geometry),
+                                     schematic_viewport_get_right (geometry),
                                      schematic_viewport_get_bottom (geometry));
   }
 
@@ -886,7 +886,7 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
   printf ("schematic_canvas_pan_mouse(): diff_x=%1$d, diff_y=%2$d\n", diff_x, diff_y);
 #endif
 
-  page_cx = (schematic_viewport_get_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
+  page_cx = (schematic_viewport_get_left (geometry) + schematic_viewport_get_right (geometry)) / 2.0;
   page_cy = (gschem_page_geometry_get_viewport_top (geometry) + schematic_viewport_get_bottom (geometry)) / 2.0;
 
   world_cx = page_cx - schematic_canvas_WORLDabs (view, diff_x);
@@ -1279,7 +1279,7 @@ schematic_canvas_SCREENabs (SchematicCanvas *view,
   if (geometry == NULL) return 0;
 
   f0 = schematic_viewport_get_left  (geometry);
-  f1 = gschem_page_geometry_get_viewport_right (geometry);
+  f1 = schematic_viewport_get_right (geometry);
   i = (double)(geometry->screen_width) * (double)(val) / (f1 - f0);
 
 #ifdef HAS_RINT

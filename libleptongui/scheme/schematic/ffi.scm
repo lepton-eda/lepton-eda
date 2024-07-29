@@ -431,7 +431,7 @@
 
             schematic_viewport_get_bottom
             schematic_viewport_get_left
-            gschem_page_geometry_get_viewport_right
+            schematic_viewport_get_right
             gschem_page_geometry_get_viewport_top
             gschem_page_geometry_set_viewport
             gschem_page_geometry_set_world_bottom
@@ -772,7 +772,7 @@
 ;;; gschem_page_geometry.c
 (define-lff schematic_viewport_get_bottom int '(*))
 (define-lff schematic_viewport_get_left int '(*))
-(define-lff gschem_page_geometry_get_viewport_right int '(*))
+(define-lff schematic_viewport_get_right int '(*))
 (define-lff gschem_page_geometry_get_viewport_top int '(*))
 (define-lff gschem_page_geometry_set_viewport void (list '* int int double))
 (define-lff gschem_page_geometry_set_world_bottom void (list '* int))
