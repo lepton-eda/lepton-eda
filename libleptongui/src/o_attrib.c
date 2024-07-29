@@ -384,7 +384,7 @@ o_attrib_add_attrib (SchematicWindow *w_current,
         /* No visible object was found on the canvas, and no coord
          * is proposed.  Set the value to the center of the current
          * page view. */
-        GschemPageView *view = schematic_window_get_current_page_view (w_current);
+        SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
 
         if (view != NULL)
         {

@@ -418,12 +418,12 @@ schematic_window_free (SchematicWindow *w_current)
  *  \param [in] w_current The current gschem toplevel
  *  \return The selection adapter
  */
-GschemPageView*
+SchematicCanvas*
 schematic_window_get_current_page_view (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  return GSCHEM_PAGE_VIEW (w_current->drawing_area);
+  return SCHEMATIC_CANVAS (w_current->drawing_area);
 }
 
 
@@ -635,12 +635,12 @@ schematic_window_get_toplevel (SchematicWindow *w_current)
 
 /*! \brief Signal handler for a notify::page signal
  *
- *  \param [in] page_view The #GschemPageView signal source object.
+ *  \param [in] page_view The #SchematicCanvas signal source object.
  *  \param [in] pspec     The \c GParamSpec structure.
  *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-schematic_window_notify_page_callback (GschemPageView *page_view,
+schematic_window_notify_page_callback (SchematicCanvas *page_view,
                                        GParamSpec *pspec,
                                        SchematicWindow *w_current)
 {
@@ -799,7 +799,7 @@ schematic_window_get_show_hidden_text (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 
-  GschemPageView *view = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (w_current->drawing_area);
 
   /* On early stage, page view may not be created yet, so just
      return FALSE in such cases. */

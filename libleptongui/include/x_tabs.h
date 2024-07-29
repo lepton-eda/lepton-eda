@@ -36,7 +36,7 @@ struct _TabInfo
   gint            ndx_;   /* just for debugging; will be removed */
 
   LeptonPage*     page_;
-  GschemPageView* pview_;
+  SchematicCanvas* pview_;
   GtkWidget*      wtab_;  /* tab widget, i.e. scrolled wnd, parent of pview_ */
 
   SchematicWindow* tl_;

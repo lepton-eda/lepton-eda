@@ -6,7 +6,7 @@ G_BEGIN_DECLS
 /* a_zoom.c */
 void
 a_zoom (SchematicWindow *w_current,
-        GschemPageView *page_view,
+        SchematicCanvas *page_view,
         int dir,
         int selected_from);
 void
@@ -146,7 +146,7 @@ void
 i_update_grid_info (SchematicWindow *w_current);
 
 void
-i_update_grid_info_callback (GschemPageView *view,
+i_update_grid_info_callback (SchematicCanvas *view,
                              SchematicWindow *w_current);
 void
 i_update_net_options_status (SchematicWindow* w_current);
@@ -941,7 +941,7 @@ schematic_event_skip_motion_event (GdkEvent *event);
 
 #ifdef ENABLE_GTK3
 gint
-x_event_draw (GschemPageView *widget,
+x_event_draw (SchematicCanvas *widget,
               cairo_t *cr,
               SchematicWindow *w_current);
 gint
@@ -956,16 +956,16 @@ x_event_draw (gpointer view,
               gpointer cr,
               gpointer w_current);
 gint
-x_event_expose (GschemPageView *widget,
+x_event_expose (SchematicCanvas *widget,
                 GdkEventExpose *event,
                 SchematicWindow *w_current);
 #endif
 
 gboolean
-x_event_faked_motion (GschemPageView *view,
+x_event_faked_motion (SchematicCanvas *view,
                       GdkEventKey *event);
 gboolean
-x_event_configure (GschemPageView *page_view,
+x_event_configure (SchematicCanvas *page_view,
                    GdkEventConfigure *event,
                    gpointer user_data);
 gint
@@ -973,7 +973,7 @@ x_event_enter(GtkWidget *widget,
               GdkEventCrossing *event,
               SchematicWindow *w_current);
 GdkEventKey*
-x_event_key (GschemPageView *page_view,
+x_event_key (SchematicCanvas *page_view,
              GdkEventKey *event,
              SchematicWindow *w_current);
 gint
@@ -1183,7 +1183,7 @@ x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
                                      GtkWidget*      main_window);
 void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
-                                         GschemPageView* drawing_area);
+                                         SchematicCanvas* drawing_area);
 GtkWidget*
 schematic_window_create_app_window (gpointer app);
 
@@ -1193,7 +1193,7 @@ schematic_window_create_main_box (GtkWidget *main_window);
 GtkWidget*
 schematic_window_create_work_box ();
 
-GschemPageView*
+SchematicCanvas*
 schematic_window_create_page_view (SchematicWindow *w_current,
                                    GtkWidget *work_box);
 void
@@ -1313,7 +1313,7 @@ TabInfo*
 x_tabs_info_add (SchematicWindow* w_current,
                  gint            ndx,
                  LeptonPage*     page,
-                 GschemPageView* pview,
+                 SchematicCanvas* pview,
                  GtkWidget*      wtab);
 TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current);
@@ -1333,7 +1333,7 @@ x_tabs_nbook_create (SchematicWindow* w_current,
 gint
 x_tabs_nbook_page_add (SchematicWindow* w_current,
                        LeptonPage*     page,
-                       GschemPageView* pview,
+                       SchematicCanvas* pview,
                        GtkWidget*      wtab);
 void
 x_tabs_nbook_page_close (SchematicWindow* w_current,
@@ -1349,17 +1349,17 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           guint        newindex,
                           gpointer     data);
 void
-schematic_tabs_add_page_view (GschemPageView* pview,
+schematic_tabs_add_page_view (SchematicCanvas* pview,
                               GtkWidget*      wtab);
 gboolean
 x_tabs_tl_page_find (SchematicWindow* w_current,
                      LeptonPage* page);
-GschemPageView*
+SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current);
 
 void
 x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
-                         GschemPageView* pview);
+                         SchematicCanvas* pview);
 void
 x_tabs_next (SchematicWindow* w_current);
 
@@ -1384,7 +1384,7 @@ schematic_tab_info_get_page (TabInfo *tab_info);
 void
 schematic_tab_info_set_page (TabInfo *tab_info,
                              LeptonPage* page);
-GschemPageView*
+SchematicCanvas*
 schematic_tab_info_get_page_view (TabInfo *tab_info);
 
 GtkWidget*

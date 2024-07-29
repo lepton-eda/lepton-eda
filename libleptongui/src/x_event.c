@@ -100,13 +100,13 @@ schematic_event_get_button (GdkEvent *event)
 #ifdef ENABLE_GTK3
 /*! \brief Redraws the view when widget is exposed.
  *
- *  \param [in] view      The GschemPageView.
+ *  \param [in] view      The SchematicCanvas.
  *  \param [in] cr        The cairo context.
  *  \param [in] w_current The SchematicWindow.
  *  \returns FALSE to propagate the event further.
  */
 gint
-x_event_draw (GschemPageView *view,
+x_event_draw (SchematicCanvas *view,
               cairo_t *cr,
               SchematicWindow *w_current)
 {
@@ -141,13 +141,13 @@ x_event_draw (gpointer view,
 
 /*! \brief Redraws the view when widget is exposed.
  *
- *  \param [in] view      The GschemPageView.
+ *  \param [in] view      The SchematicCanvas.
  *  \param [in] event     The event structure.
  *  \param [in] w_current The SchematicWindow.
  *  \returns FALSE to propagate the event further.
  */
 gint
-x_event_expose (GschemPageView *view,
+x_event_expose (SchematicCanvas *view,
                 GdkEventExpose *event,
                 SchematicWindow *w_current)
 {
@@ -202,22 +202,22 @@ schematic_event_skip_motion_event (GdkEvent *event)
 /*! \brief Updates the display when drawing area is configured.
  *  \par Function Description
  *  This is the callback function connected to the configure event of
- *  the GschemPageView of the main window.
+ *  the SchematicCanvas of the main window.
  *
  *  It re-pans each of its pages to keep their contents centered in the
- *  GschemPageView.
+ *  SchematicCanvas.
  *
  *  When the window is maximised, the zoom of every page is changed to
  *  best fit the previously displayed area of the page in the new
  *  area. Otherwise the current zoom level is left unchanged.
  *
- *  \param [in] page_view The GschemPageView which received the signal.
+ *  \param [in] page_view The SchematicCanvas which received the signal.
  *  \param [in] event     The event structure of signal configure-event.
  *  \param [in] unused
  *  \returns FALSE to propagate the event further.
  */
 gboolean
-x_event_configure (GschemPageView    *page_view,
+x_event_configure (SchematicCanvas   *page_view,
                    GdkEventConfigure *event,
                    gpointer           unused)
 {
@@ -305,14 +305,14 @@ x_event_enter (GtkWidget *widget,
  *  GTK+ callback function (registered in x_window_setup_draw_events() ) which
  *  handles key press and release events from the GTK+ system.
  *
- * \param [in] page_view  The #GschemPageView widget that generated
+ * \param [in] page_view  The #SchematicCanvas widget that generated
  *                        the event.
  * \param [in] event      The event itself.
  * \param      w_current  The toplevel environment.
  * \returns TRUE if the event has been handled.
  */
 GdkEventKey*
-x_event_key (GschemPageView *page_view,
+x_event_key (SchematicCanvas *page_view,
              GdkEventKey *event,
              SchematicWindow *w_current)
 {
@@ -365,7 +365,7 @@ x_event_key (GschemPageView *page_view,
  *  \brief
  *  \par Function Description
  *
- *  \param [in] widget The GschemPageView with the scroll event.
+ *  \param [in] widget The SchematicCanvas with the scroll event.
  *  \param [in] event
  *  \param [in] w_current
  */
@@ -380,12 +380,12 @@ x_event_scroll (GtkWidget *widget,
   gboolean zoom = FALSE;
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
-  GschemPageView *view = NULL;
+  SchematicCanvas *view = NULL;
   LeptonPage *page = NULL;
 
   g_return_val_if_fail ((w_current != NULL), 0);
 
-  view = GSCHEM_PAGE_VIEW (widget);
+  view = SCHEMATIC_CANVAS (widget);
   g_return_val_if_fail ((view != NULL), 0);
 
   page = gschem_page_view_get_page (view);
@@ -480,11 +480,11 @@ x_event_scroll (GtkWidget *widget,
 
   if (zoom) {
     /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
-    a_zoom(w_current, GSCHEM_PAGE_VIEW (widget), zoom_direction, HOTKEY);
+    a_zoom(w_current, SCHEMATIC_CANVAS (widget), zoom_direction, HOTKEY);
   }
 
   if (pan_xaxis) {
-    adj = gschem_page_view_get_hadjustment (GSCHEM_PAGE_VIEW (widget));
+    adj = gschem_page_view_get_hadjustment (SCHEMATIC_CANVAS (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value (adj,
                               MIN (gtk_adjustment_get_value (adj) + pan_direction *
@@ -495,7 +495,7 @@ x_event_scroll (GtkWidget *widget,
   }
 
   if (pan_yaxis) {
-    adj = gschem_page_view_get_vadjustment (GSCHEM_PAGE_VIEW (widget));
+    adj = gschem_page_view_get_vadjustment (SCHEMATIC_CANVAS (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value (adj,
                               MIN (gtk_adjustment_get_value (adj) + pan_direction *
@@ -544,7 +544,7 @@ x_event_get_pointer_position (SchematicWindow *w_current,
   int x;
   int y;
 
-  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
   GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (page_view));
@@ -590,12 +590,13 @@ x_event_get_pointer_position (SchematicWindow *w_current,
  *  If its event parameter is not NULL, the current state of Shift
  *  and Control is preserved to correctly deal with special cases.
  *
- *  \param [in] view      The GschemPageView object which received the signal.
+ *  \param [in] view      The SchematicCanvas object which received the signal.
  *  \param [in] event     The event structure of the signal or NULL.
  *  \returns FALSE to propagate the event further.
  */
 gboolean
-x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
+x_event_faked_motion (SchematicCanvas *view, GdkEventKey *event)
+{
   gint x, y;
   gboolean ret;
   GdkEventMotion *newevent;

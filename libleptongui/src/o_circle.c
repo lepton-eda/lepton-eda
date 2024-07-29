@@ -33,7 +33,7 @@ o_circle_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx - w_current->distance,
@@ -102,7 +102,7 @@ o_circle_end (SchematicWindow *w_current,
 {
   LeptonObject *new_obj;
 
-  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);

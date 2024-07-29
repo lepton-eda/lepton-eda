@@ -73,47 +73,53 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_page_view_class_init (GschemPageViewClass *klass);
+gschem_page_view_class_init (SchematicCanvasClass *klass);
 
 static void
-gschem_page_view_init (GschemPageView *view);
+gschem_page_view_init (SchematicCanvas *view);
 
 static void
-gschem_page_view_update_hadjustment (GschemPageView *view);
+gschem_page_view_update_hadjustment (SchematicCanvas *view);
 
 static void
-gschem_page_view_update_vadjustment (GschemPageView *view);
+gschem_page_view_update_vadjustment (SchematicCanvas *view);
 
 static void
-gschem_page_view_update_scroll_adjustments (GschemPageView *view);
+gschem_page_view_update_scroll_adjustments (SchematicCanvas *view);
 
 static void
-hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+hadjustment_value_changed (GtkAdjustment *vadjustment, SchematicCanvas *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 #ifndef ENABLE_GTK3
 static void
-set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment);
+set_scroll_adjustments (SchematicCanvas *view,
+                        GtkAdjustment *hadjustment,
+                        GtkAdjustment *vadjustment);
 #endif
 
 static void
-vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+vadjustment_value_changed (GtkAdjustment *vadjustment,
+                           SchematicCanvas *view);
 
-static void geometry_cache_create (GschemPageView *view);
-
-static
-GschemPageGeometry *geometry_cache_lookup (const GschemPageView *view,
-                                           const LeptonPage *page);
 static void
-geometry_cache_insert (GschemPageView *view,
+geometry_cache_create (SchematicCanvas *view);
+
+static GschemPageGeometry*
+geometry_cache_lookup (const SchematicCanvas *view,
+                       const LeptonPage *page);
+static void
+geometry_cache_insert (SchematicCanvas *view,
                        LeptonPage *page,
                        GschemPageGeometry *geometry);
 
-static void geometry_cache_dispose (GschemPageView *view);
+static void
+geometry_cache_dispose (SchematicCanvas *view);
 
-static void geometry_cache_finalize (GschemPageView *view);
+static void
+geometry_cache_finalize (SchematicCanvas *view);
 
 static GObjectClass *gschem_page_view_parent_class = NULL;
 
@@ -167,10 +173,10 @@ cclosure_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
 static void
 dispose (GObject *object)
 {
-  GschemPageView *view;
+  SchematicCanvas *view;
 
   g_return_if_fail (object != NULL);
-  view = GSCHEM_PAGE_VIEW (object);
+  view = SCHEMATIC_CANVAS (object);
   g_return_if_fail (view != NULL);
 
   if (view->_page) {
@@ -196,7 +202,7 @@ dispose (GObject *object)
 static void
 event_realize(GtkWidget *widget, gpointer unused)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW(widget);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (widget);
   GdkWindow *window = gtk_widget_get_window (widget);
 
   g_return_if_fail (view != NULL);
@@ -212,7 +218,7 @@ event_realize(GtkWidget *widget, gpointer unused)
 static void
 event_unrealize(GtkWidget *widget, gpointer unused)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW(widget);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (widget);
 
   g_return_if_fail (view != NULL);
 }
@@ -223,7 +229,7 @@ event_unrealize(GtkWidget *widget, gpointer unused)
 static void
 event_toggle_hidden_text (GtkWidget *widget, gpointer unused)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW (widget);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (widget);
 
   g_return_if_fail (view != NULL);
 
@@ -236,7 +242,7 @@ event_toggle_hidden_text (GtkWidget *widget, gpointer unused)
 static void
 finalize (GObject *object)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (object);
 
   g_return_if_fail (view != NULL);
 
@@ -260,7 +266,7 @@ finalize (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (object);
 
   switch (param_id) {
     case PROP_HADJUSTMENT:
@@ -300,12 +306,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize GschemPageView class
+/*! \brief Initialize SchematicCanvas class
  *
- *  \param [in] klass The class for the GschemPageView
+ *  \param [in] klass The class for the SchematicCanvas
  */
 static void
-gschem_page_view_class_init (GschemPageViewClass *klass)
+gschem_page_view_class_init (SchematicCanvasClass *klass)
 {
   gschem_page_view_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
@@ -425,7 +431,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
  *  \return The horizontal adjustment for this view
  */
 GtkAdjustment*
-gschem_page_view_get_hadjustment (GschemPageView *view)
+gschem_page_view_get_hadjustment (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
@@ -440,7 +446,7 @@ gschem_page_view_get_hadjustment (GschemPageView *view)
  *  \return The horizontal scrolling policy for this view
  */
 GtkScrollablePolicy
-gschem_page_view_get_hscroll_policy (GschemPageView *view)
+gschem_page_view_get_hscroll_policy (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
 
@@ -454,7 +460,7 @@ gschem_page_view_get_hscroll_policy (GschemPageView *view)
  *  \return The vertical scrolling policy for this view
  */
 GtkScrollablePolicy
-gschem_page_view_get_vscroll_policy (GschemPageView *view)
+gschem_page_view_get_vscroll_policy (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
 
@@ -469,7 +475,7 @@ gschem_page_view_get_vscroll_policy (GschemPageView *view)
  *  \return The page for the view
  */
 LeptonPage*
-gschem_page_view_get_page (GschemPageView *view)
+gschem_page_view_get_page (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
@@ -484,7 +490,7 @@ gschem_page_view_get_page (GschemPageView *view)
  *  \return The page geometry for the view
  */
 GschemPageGeometry*
-gschem_page_view_get_page_geometry (GschemPageView *view)
+gschem_page_view_get_page_geometry (SchematicCanvas *view)
 {
   LeptonPage *page = NULL;
   GschemPageGeometry *geometry = NULL;
@@ -559,7 +565,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
 
 
 gboolean
-gschem_page_view_get_show_hidden_text (GschemPageView *view)
+gschem_page_view_get_show_hidden_text (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, FALSE);
 
@@ -567,7 +573,7 @@ gschem_page_view_get_show_hidden_text (GschemPageView *view)
 }
 
 
-/*! \brief Get/register GschemPageView type.
+/*! \brief Get/register SchematicCanvas type.
  */
 GType
 gschem_page_view_get_type ()
@@ -576,19 +582,19 @@ gschem_page_view_get_type ()
 
   if (type == 0) {
     static const GTypeInfo info = {
-      sizeof(GschemPageViewClass),
+      sizeof(SchematicCanvasClass),
       NULL,                                                    /* base_init */
       NULL,                                                    /* base_finalize */
       (GClassInitFunc) gschem_page_view_class_init,
       NULL,                                                    /* class_finalize */
       NULL,                                                    /* class_data */
-      sizeof(GschemPageView),
+      sizeof(SchematicCanvas),
       0,                                                       /* n_preallocs */
       (GInstanceInitFunc) gschem_page_view_init,
     };
 
     type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                   "GschemPageView",
+                                   "SchematicCanvas",
                                    &info,
                                    (GTypeFlags) 0);
 
@@ -617,7 +623,7 @@ gschem_page_view_get_type ()
  *  \return The vertical adjustment for this view
  */
 GtkAdjustment*
-gschem_page_view_get_vadjustment (GschemPageView *view)
+gschem_page_view_get_vadjustment (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
@@ -631,7 +637,7 @@ gschem_page_view_get_vadjustment (GschemPageView *view)
  *  \param [in,out] view The Gschem page view to redraw
  */
 void
-gschem_page_view_invalidate_all (GschemPageView *view)
+gschem_page_view_invalidate_all (SchematicCanvas *view)
 {
   GdkWindow *window;
 
@@ -659,7 +665,7 @@ gschem_page_view_invalidate_all (GschemPageView *view)
  *  \param [in]     bottom
  */
 void
-gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top, int right, int bottom)
+gschem_page_view_invalidate_screen_rect (SchematicCanvas *view, int left, int top, int right, int bottom)
 {
   int bloat;
   int cue_half_size;
@@ -698,7 +704,7 @@ gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top
  *  \param [in]     bottom
  */
 void
-gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom)
+gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top, int right, int bottom)
 {
   int screen_bottom = 0;
   int screen_right = 0;
@@ -719,12 +725,12 @@ gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top,
 
 
 
-/*! \brief Initialize GschemPageView instance
+/*! \brief Initialize SchematicCanvas instance
  *
  *  \param [in,out] view the gschem page view
  */
 static void
-gschem_page_view_init (GschemPageView *view)
+gschem_page_view_init (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -771,9 +777,9 @@ gschem_page_view_init (GschemPageView *view)
 
 
 
-/*! \brief Create a new instance of the GschemPageView
+/*! \brief Create a new instance of the SchematicCanvas
  *  \par Function Description
- *  This function creates a new instance of the GschemPageView
+ *  This function creates a new instance of the SchematicCanvas
  *  structure. The resulting view becomes a "viewport" for the
  *  given \a page. If the page is not NULL, a weak reference
  *  callback is added for \a page so that it can do necessary
@@ -782,14 +788,14 @@ gschem_page_view_init (GschemPageView *view)
  *
  *  \param [in] page The page to refer to.
  *
- *  \return A new instance of the GschemPageView
+ *  \return A new instance of the SchematicCanvas
  */
-GschemPageView*
+SchematicCanvas*
 gschem_page_view_new_with_page (LeptonPage *page)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW,
-                                                         "page", page,
-                                                         NULL));
+  SchematicCanvas *view = SCHEMATIC_CANVAS (g_object_new (SCHEMATIC_TYPE_CANVAS,
+                                                          "page", page,
+                                                          NULL));
   return view;
 }
 
@@ -797,13 +803,13 @@ gschem_page_view_new_with_page (LeptonPage *page)
 
 /*! \brief Pan the view on the given world coordinate using given zoom factor
  *
- *  \param [in,out] view      This GschemPageView
+ *  \param [in,out] view      This SchematicCanvas
  *  \param [in]     w_x       The world x coordinate of the new center
  *  \param [in]     w_y       The world y coordinate of the new center
  *  \param [in]     relativ_zoom_factor  The zoom factor
  */
 void
-gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double relativ_zoom_factor)
+gschem_page_view_pan_general (SchematicCanvas *view, int w_x, int w_y, double relativ_zoom_factor)
 {
   GschemPageGeometry *geometry = NULL;
 
@@ -825,12 +831,12 @@ gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double rel
 
 /*! \brief Center the view on the given world coordinate
  *
- *  \param [in,out] view This GschemPageView
+ *  \param [in,out] view This SchematicCanvas
  *  \param [in]     w_x  The world x coordinate of the new center
  *  \param [in]     w_y  The world y coordinate of the new center
  */
 void
-gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
+gschem_page_view_pan (SchematicCanvas *view, int w_x, int w_y)
 {
   gschem_page_view_pan_general (view, w_x, w_y, 1);
   /* Trigger a motion event to update the objects being drawn */
@@ -845,12 +851,12 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 
 /*! \brief Pan the view by the given screen coordinate displacement
  *
- *  \param [in,out] view      This GschemPageView
+ *  \param [in,out] view      This SchematicCanvas
  *  \param [in]     diff_x    The screen x coordinate displacement
  *  \param [in]     diff_y    The screen y coordinate displacement
  */
 void
-gschem_page_view_pan_mouse (GschemPageView *view, int diff_x, int diff_y)
+gschem_page_view_pan_mouse (SchematicCanvas *view, int diff_x, int diff_y)
 {
   GschemPageGeometry *geometry = NULL;
   double world_cx, world_cy;
@@ -891,11 +897,11 @@ gschem_page_view_pan_mouse (GschemPageView *view, int diff_x, int diff_y)
  *  This function saves current coordinates of the mouse pointer
  *  to pan_x and pan_y  and toggles the view into pan mode.
  *
- *  \param [in,out] view  This GschemPageView
+ *  \param [in,out] view  This SchematicCanvas
  *  \param [in]     x     The screen x coordinate
  *  \param [in]     y     The screen y coordinate
  */
-void gschem_page_view_pan_start (GschemPageView *view, int x, int y)
+void gschem_page_view_pan_start (SchematicCanvas *view, int x, int y)
 {
   view->doing_pan = TRUE;
   view->pan_x = x;
@@ -912,13 +918,13 @@ void gschem_page_view_pan_start (GschemPageView *view, int x, int y)
  *  the view taking into account the given mouse pan gain setting.
  *  Then it replaces pan_x and pan_y with the new coordinates.
  *
- *  \param [in,out] view            This GschemPageView
+ *  \param [in,out] view            This SchematicCanvas
  *  \param [in]     mousepan_gain   Mouse pan gain
  *  \param [in]     x               The new screen x coordinate
  *  \param [in]     y               The new screen y coordinate
  */
 void
-gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int y)
+gschem_page_view_pan_motion (SchematicCanvas *view, int mousepan_gain, int x, int y)
 {
   int pdiff_x, pdiff_y;
 
@@ -943,11 +949,11 @@ gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int
  *  This function resets the view pan mode and invalidates the
  *  view after panning.
  *
- *  \param [in,out] view      This GschemPageView
+ *  \param [in,out] view      This SchematicCanvas
  *  \returns TRUE if panning has been finished, or FALSE if there was no panning
  */
 gboolean
-gschem_page_view_pan_end (GschemPageView *view)
+gschem_page_view_pan_end (SchematicCanvas *view)
 {
   if (view->doing_pan) {
     gschem_page_view_invalidate_all (view);
@@ -965,7 +971,7 @@ gschem_page_view_pan_end (GschemPageView *view)
  *  This function takes in SCREEN x/y coordinates and
  *  transforms them to WORLD x/y coordinates.
  *
- *  \param [in]  view       The GschemPageView object.
+ *  \param [in]  view       The SchematicCanvas object.
  *  \param [in]  mx         The x coordinate in SCREEN units.
  *  \param [in]  my         The y coordinate in SCREEN units.
  *  \param [out] x          The x coordinate in WORLD units.
@@ -975,7 +981,7 @@ gschem_page_view_pan_end (GschemPageView *view)
  *                  coordinates be returned in mx and my?
  */
 void
-gschem_page_view_SCREENtoWORLD (GschemPageView *view, int mx, int my, int *x, int *y)
+gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y)
 {
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
@@ -993,7 +999,7 @@ gschem_page_view_SCREENtoWORLD (GschemPageView *view, int mx, int my, int *x, in
  *  \param [in]     hadjustment The horizontal scroll adjustment
  */
 void
-gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment)
+gschem_page_view_set_hadjustment (SchematicCanvas *view, GtkAdjustment *hadjustment)
 {
   g_return_if_fail (view != NULL);
 
@@ -1037,7 +1043,7 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
  *  \param [in]     page The page
  */
 void
-gschem_page_view_set_page (GschemPageView *view,
+gschem_page_view_set_page (SchematicCanvas *view,
                            LeptonPage *page)
 {
   g_return_if_fail (view != NULL);
@@ -1085,7 +1091,7 @@ gschem_page_view_set_page (GschemPageView *view,
  *  \param [in]     vadjustment The vertical scroll adjustment
  */
 void
-gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment)
+gschem_page_view_set_vadjustment (SchematicCanvas *view, GtkAdjustment *vadjustment)
 {
   g_return_if_fail (view != NULL);
 
@@ -1118,7 +1124,7 @@ gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustme
  *  \param [in] view The view
  */
 void
-gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy policy)
+gschem_page_view_set_hscroll_policy (SchematicCanvas *view, GtkScrollablePolicy policy)
 {
   g_return_if_fail (view != NULL);
 
@@ -1131,7 +1137,7 @@ gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy p
  *  \param [in] view The view
  */
 void
-gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy policy)
+gschem_page_view_set_vscroll_policy (SchematicCanvas *view, GtkScrollablePolicy policy)
 {
   g_return_if_fail (view != NULL);
 
@@ -1141,7 +1147,7 @@ gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy p
 
 
 void
-gschem_page_view_set_show_hidden_text (GschemPageView *view,
+gschem_page_view_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text)
 {
   g_return_if_fail (view != NULL);
@@ -1152,7 +1158,7 @@ gschem_page_view_set_show_hidden_text (GschemPageView *view,
 /*! \brief Signal handler for a horizontal scroll adjustment change
  */
 static void
-hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
+hadjustment_value_changed (GtkAdjustment *hadjustment, SchematicCanvas *view)
 {
   g_return_if_fail (hadjustment != NULL);
   g_return_if_fail (view != NULL);
@@ -1182,7 +1188,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (object);
 
   switch (param_id) {
     case PROP_HADJUSTMENT:
@@ -1226,12 +1232,12 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \par Function Description
  *  Converts WORLD value \a val to absolute SCREEN value.
  *
- *  \param [in]     view       This GschemPageView
+ *  \param [in]     view       This SchematicCanvas
  *  \param [in]     val        The value to convert
  *  \return The converted value in SCREEN pixels
  */
 int
-gschem_page_view_SCREENabs(GschemPageView *view, int val)
+gschem_page_view_SCREENabs(SchematicCanvas *view, int val)
 {
   double f0,f1;
   double i;
@@ -1260,7 +1266,7 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 /*! \brief Update the horizontal scroll adjustment
  */
 static void
-gschem_page_view_update_hadjustment (GschemPageView *view)
+gschem_page_view_update_hadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -1310,7 +1316,7 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
 /*! \brief Update the scroll adjustments
  */
 static void
-gschem_page_view_update_scroll_adjustments (GschemPageView *view)
+gschem_page_view_update_scroll_adjustments (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -1323,7 +1329,7 @@ gschem_page_view_update_scroll_adjustments (GschemPageView *view)
 /*! \brief Update the vertical scroll adjustment
  */
 static void
-gschem_page_view_update_vadjustment (GschemPageView *view)
+gschem_page_view_update_vadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
@@ -1378,7 +1384,7 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
  *  \return The converted WORLD coordinate.
  */
 int
-gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
+gschem_page_view_WORLDabs(SchematicCanvas *page_view, int val)
 {
   GtkAllocation allocation;
   double fw0,fw1,fw,fval;
@@ -1413,7 +1419,7 @@ gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
  *  corresponding scroll bars.
  */
 static void
-set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment)
+set_scroll_adjustments (SchematicCanvas *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment)
 {
   gschem_page_view_set_hadjustment (view, hadjustment);
   gschem_page_view_set_vadjustment (view, vadjustment);
@@ -1425,7 +1431,8 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
 /*! \brief Signal handler for a vertical scroll adjustment change
  */
 static void
-vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
+vadjustment_value_changed (GtkAdjustment *vadjustment,
+                           SchematicCanvas *view)
 {
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
@@ -1453,7 +1460,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
 /*! \brief Transform WORLD coordinates to SCREEN coordinates
  */
 void
-gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py)
+gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py)
 {
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
@@ -1470,11 +1477,11 @@ gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int
  *  By providing a NULL for the objects parameter, this function will zoom to
  *  the extents of all objects in the drawing.
  *
- *  \param [in,out] view    This GschemPageView
+ *  \param [in,out] view    This SchematicCanvas
  *  \param [in]     objects The list of objects to compute extents, or NULL
  */
 void
-gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
+gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *objects)
 {
   GschemPageGeometry *geometry = NULL;
   LeptonPage *page = NULL;
@@ -1504,11 +1511,11 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 
 /*! \brief Zoom in on a single object
  *
- *  \param [in] view      This GschemPageView
+ *  \param [in] view      This SchematicCanvas
  *  \param [in] object    The object
  */
 void
-gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
+gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object)
 {
   int success;
   int x[2];
@@ -1569,7 +1576,7 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
 
 /*! \brief Redraw page on the view
  *
- *  \param [in] view The #GschemPageView object to redraw page on.
+ *  \param [in] view The #SchematicCanvas object to redraw page on.
  *  \param [in] event The \c GdkEventExpose event (GTK2).
  *  \param [in] w_current The parent #SchematicWindow object of the view.
  *
@@ -1578,7 +1585,7 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
  *  different descriptions.
  */
 void
-gschem_page_view_redraw (GschemPageView *view,
+gschem_page_view_redraw (SchematicCanvas *view,
 #ifdef ENABLE_GTK3
                          cairo_t *cr,
 #else
@@ -1625,14 +1632,14 @@ geometry_cache_page_weak_ref_notify (gpointer target,
 {
   g_return_if_fail (target);
   g_return_if_fail (user_data);
-  GschemPageView *view = GSCHEM_PAGE_VIEW (user_data);
+  SchematicCanvas *view = SCHEMATIC_CANVAS (user_data);
   if (!view->_geometry_cache)
     return;
   g_hash_table_remove (view->_geometry_cache, target);
 }
 
 static void
-geometry_cache_create (GschemPageView *view)
+geometry_cache_create (SchematicCanvas *view)
 {
   g_return_if_fail (view && !view->_geometry_cache);
 
@@ -1644,7 +1651,7 @@ geometry_cache_create (GschemPageView *view)
 }
 
 static GschemPageGeometry *
-geometry_cache_lookup (const GschemPageView *view,
+geometry_cache_lookup (const SchematicCanvas *view,
                        const LeptonPage *page)
 {
   g_return_val_if_fail (view && view->_geometry_cache, NULL);
@@ -1654,7 +1661,7 @@ geometry_cache_lookup (const GschemPageView *view,
 }
 
 static void
-geometry_cache_insert (GschemPageView *view,
+geometry_cache_insert (SchematicCanvas *view,
                        LeptonPage *page,
                        GschemPageGeometry *geometry)
 {
@@ -1680,7 +1687,7 @@ geometry_cache_dispose_func (gpointer key,
 }
 
 static void
-geometry_cache_dispose (GschemPageView *view)
+geometry_cache_dispose (SchematicCanvas *view)
 {
   g_return_if_fail (view && view->_geometry_cache);
   g_hash_table_foreach_steal (view->_geometry_cache,
@@ -1689,7 +1696,7 @@ geometry_cache_dispose (GschemPageView *view)
 }
 
 static void
-geometry_cache_finalize (GschemPageView *view)
+geometry_cache_finalize (SchematicCanvas *view)
 {
   g_return_if_fail (view);
   if (!view->_geometry_cache)
@@ -1706,7 +1713,7 @@ geometry_cache_finalize (GschemPageView *view)
  *  \param  [in] page_view The page view.
  */
 void
-schematic_page_view_grab_focus (GschemPageView *page_view)
+schematic_page_view_grab_focus (SchematicCanvas *page_view)
 {
   g_return_if_fail (page_view != NULL);
 

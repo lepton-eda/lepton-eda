@@ -23,21 +23,21 @@
  * \brief A widget for viewing a schematic page
  */
 
-#define GSCHEM_TYPE_PAGE_VIEW           (gschem_page_view_get_type())
-#define GSCHEM_PAGE_VIEW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_PAGE_VIEW, GschemPageView))
-#define GSCHEM_PAGE_VIEW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_PAGE_VIEW, GschemPageViewClass))
-#define GSCHEM_IS_PAGE_VIEW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_PAGE_VIEW))
-#define GSCHEM_PAGE_VIEW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_PAGE_VIEW, GschemPageViewClass))
+#define SCHEMATIC_TYPE_CANVAS           (gschem_page_view_get_type())
+#define SCHEMATIC_CANVAS(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_CANVAS, SchematicCanvas))
+#define SCHEMATIC_CANVAS_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_CANVAS, SchematicCanvasClass))
+#define SCHEMATIC_IS_CANVAS(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_CANVAS))
+#define SCHEMATIC_CANVAS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_CANVAS, SchematicCanvasClass))
 
-typedef struct _GschemPageViewClass GschemPageViewClass;
-typedef struct _GschemPageView GschemPageView;
+typedef struct _SchematicCanvasClass SchematicCanvasClass;
+typedef struct _SchematicCanvas SchematicCanvas;
 
-struct _GschemPageViewClass
+struct _SchematicCanvasClass
 {
   GtkWindowClass parent_class;
 };
 
-struct _GschemPageView
+struct _SchematicCanvas
 {
   GtkWindow parent;
 
@@ -70,111 +70,111 @@ struct _GschemPageView
 G_BEGIN_DECLS
 
 GtkAdjustment*
-gschem_page_view_get_hadjustment (GschemPageView *view);
+gschem_page_view_get_hadjustment (SchematicCanvas *view);
 
 LeptonPage*
-gschem_page_view_get_page (GschemPageView *view);
+gschem_page_view_get_page (SchematicCanvas *view);
 
 GschemPageGeometry*
-gschem_page_view_get_page_geometry (GschemPageView *view);
+gschem_page_view_get_page_geometry (SchematicCanvas *view);
 
 GType
 gschem_page_view_get_type ();
 
 GtkAdjustment*
-gschem_page_view_get_vadjustment (GschemPageView *view);
+gschem_page_view_get_vadjustment (SchematicCanvas *view);
 
 gboolean
-gschem_page_view_get_show_hidden_text (GschemPageView *view);
+gschem_page_view_get_show_hidden_text (SchematicCanvas *view);
 
 void
-gschem_page_view_invalidate_all (GschemPageView *view);
+gschem_page_view_invalidate_all (SchematicCanvas *view);
 
 void
-gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top, int right, int bottom);
+gschem_page_view_invalidate_screen_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
 
 void
-gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom);
+gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
 
-GschemPageView*
+SchematicCanvas*
 gschem_page_view_new_with_page (LeptonPage *page);
 
 void
-gschem_page_view_pan_general(GschemPageView *page_view, int x, int y, double relativ_zoom_factor);
+gschem_page_view_pan_general(SchematicCanvas *page_view, int x, int y, double relativ_zoom_factor);
 
 void
-gschem_page_view_pan(GschemPageView *page_view, int x, int y);
+gschem_page_view_pan(SchematicCanvas *page_view, int x, int y);
 
 void
-gschem_page_view_pan_mouse(GschemPageView *page_view, int diff_x, int diff_y);
+gschem_page_view_pan_mouse(SchematicCanvas *page_view, int diff_x, int diff_y);
 
 void
-gschem_page_view_pan_start(GschemPageView *page_view, int x, int y);
+gschem_page_view_pan_start(SchematicCanvas *page_view, int x, int y);
 
 void
-gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int y);
+gschem_page_view_pan_motion (SchematicCanvas *view, int mousepan_gain, int x, int y);
 
 gboolean
-gschem_page_view_pan_end(GschemPageView *page_view);
+gschem_page_view_pan_end(SchematicCanvas *page_view);
 
 void
 #ifdef ENABLE_GTK3
-gschem_page_view_redraw (GschemPageView *view,
+gschem_page_view_redraw (SchematicCanvas *view,
                          cairo_t *cr,
                          SchematicWindow *w_current);
 #else
-gschem_page_view_redraw (GschemPageView *view,
+gschem_page_view_redraw (SchematicCanvas *view,
                          GdkEventExpose *event,
                          SchematicWindow *w_current);
 #endif
 
 int
-gschem_page_view_SCREENabs(GschemPageView *view, int val);
+gschem_page_view_SCREENabs(SchematicCanvas *view, int val);
 
 void
-gschem_page_view_SCREENtoWORLD (GschemPageView *view, int mx, int my, int *x, int *y);
+gschem_page_view_SCREENtoWORLD (SchematicCanvas *view, int mx, int my, int *x, int *y);
 
 void
-gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
+gschem_page_view_set_hadjustment (SchematicCanvas *view, GtkAdjustment *hadjustment);
 
 void
-gschem_page_view_set_page (GschemPageView *view,
+gschem_page_view_set_page (SchematicCanvas *view,
                            LeptonPage *page);
 
 void
-gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);
+gschem_page_view_set_vadjustment (SchematicCanvas *view, GtkAdjustment *vadjustment);
 
 void
-gschem_page_view_set_show_hidden_text (GschemPageView *view,
+gschem_page_view_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text);
 
 int
-gschem_page_view_WORLDabs(GschemPageView *view, int val);
+gschem_page_view_WORLDabs(SchematicCanvas *view, int val);
 
 void
-gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py);
+gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py);
 
 void
-gschem_page_view_zoom_extents (GschemPageView *view, const GList *list);
+gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *list);
 
 void
-gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object);
+gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object);
 
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy
-gschem_page_view_get_hscroll_policy (GschemPageView *view);
+gschem_page_view_get_hscroll_policy (SchematicCanvas *view);
 
 GtkScrollablePolicy
-gschem_page_view_get_vscroll_policy (GschemPageView *view);
+gschem_page_view_get_vscroll_policy (SchematicCanvas *view);
 
 void
-gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
+gschem_page_view_set_hscroll_policy (SchematicCanvas *view, GtkScrollablePolicy scroll);
 
 void
-gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
+gschem_page_view_set_vscroll_policy (SchematicCanvas *view, GtkScrollablePolicy scroll);
 
 void
-schematic_page_view_grab_focus (GschemPageView *page_view);
+schematic_page_view_grab_focus (SchematicCanvas *page_view);
 
 #endif
 

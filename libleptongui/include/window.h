@@ -240,7 +240,7 @@ struct st_schematic_window {
 void
 schematic_window_free (SchematicWindow *w_current);
 
-GschemPageView*
+SchematicCanvas*
 schematic_window_get_current_page_view (SchematicWindow *w_current);
 
 GtkListStore*
@@ -274,7 +274,7 @@ SchematicWindow*
 schematic_window_new ();
 
 void
-schematic_window_notify_page_callback (GschemPageView *page_view,
+schematic_window_notify_page_callback (SchematicCanvas *page_view,
                                        GParamSpec *pspec,
                                        SchematicWindow *w_current);
 void

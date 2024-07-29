@@ -385,7 +385,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   GError *gerror = NULL;
   GtkWidget *dialog;
   float prop;
-  GschemPageView *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -760,7 +760,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
                     gboolean is_color)
 {
   GdkPixbuf *pixbuf;
-  GschemPageView *page_view;
+  SchematicCanvas *page_view;
   LeptonPage *page;
   int origin_x, origin_y, bottom, right;
   GschemPageGeometry *old_geometry, *new_geometry;
@@ -907,7 +907,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
                     gboolean is_color)
 {
   GdkPixbuf *pixbuf;
-  GschemPageView *page_view;
+  SchematicCanvas *page_view;
   int origin_x, origin_y, bottom, right;
   SchematicWindow new_w_current;
   GschemOptions options;

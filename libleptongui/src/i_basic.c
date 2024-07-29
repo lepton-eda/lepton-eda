@@ -527,7 +527,7 @@ i_update_grid_info (SchematicWindow *w_current)
  *  \param [in] w_current SchematicWindow structure
  */
 void
-i_update_grid_info_callback (GschemPageView *view,
+i_update_grid_info_callback (SchematicCanvas *view,
                              SchematicWindow *w_current)
 {
   i_update_grid_info (w_current);

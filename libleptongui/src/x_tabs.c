@@ -165,7 +165,7 @@ static gint
 x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
 
 static TabInfo*
-x_tabs_info_find_by_pview (GList* nfos, GschemPageView* pview);
+x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
 static TabInfo*
 x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
@@ -249,7 +249,7 @@ schematic_tabs_set_callback (char *name,
 TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current)
 {
-  GschemPageView* pview = x_tabs_tl_pview_cur (w_current);
+  SchematicCanvas* pview = x_tabs_tl_pview_cur (w_current);
   TabInfo* nfo = x_tabs_info_find_by_pview(w_current->xtabs_info_list, pview);
   return nfo;
 }
@@ -260,7 +260,7 @@ TabInfo*
 x_tabs_info_add (SchematicWindow* w_current,
                  gint            ndx,
                  LeptonPage*     page,
-                 GschemPageView* pview,
+                 SchematicCanvas* pview,
                  GtkWidget*      wtab)
 {
   TabInfo* nfo = (TabInfo*) g_malloc (sizeof (TabInfo));
@@ -315,7 +315,7 @@ static gint
 x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data)
 {
   TabInfo*        nfo   = (TabInfo*)        elem;
-  GschemPageView* pview = (GschemPageView*) data;
+  SchematicCanvas* pview = (SchematicCanvas*) data;
 
   if (nfo->pview_ == pview)
     return 0;
@@ -352,7 +352,8 @@ x_tabs_info_find_by_page (GList* nfos,
 
 
 static TabInfo*
-x_tabs_info_find_by_pview (GList* nfos, GschemPageView* pview)
+x_tabs_info_find_by_pview (GList* nfos,
+                           SchematicCanvas* pview)
 {
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) pview,
@@ -402,11 +403,11 @@ x_tabs_tl_page_cur_set (SchematicWindow* w_current,
 
 
 
-GschemPageView*
+SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current)
 {
   GtkWidget*      wview = w_current->drawing_area;
-  GschemPageView* view  = GSCHEM_PAGE_VIEW (wview);
+  SchematicCanvas* view  = SCHEMATIC_CANVAS (wview);
 
   return view;
 }
@@ -414,7 +415,8 @@ x_tabs_tl_pview_cur (SchematicWindow* w_current)
 
 
 void
-x_tabs_tl_pview_cur_set (SchematicWindow* w_current, GschemPageView* pview)
+x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
+                         SchematicCanvas* pview)
 {
   w_current->drawing_area = GTK_WIDGET (pview);
 }
@@ -520,7 +522,7 @@ x_tabs_nbook_create (SchematicWindow* w_current,
 gint
 x_tabs_nbook_page_add (SchematicWindow* w_current,
                        LeptonPage*     page,
-                       GschemPageView* pview,
+                       SchematicCanvas* pview,
                        GtkWidget*      wtab)
 {
 #ifdef DEBUG
@@ -564,7 +566,7 @@ x_tabs_nbook_page_close (SchematicWindow* w_current,
 
 
 void
-schematic_tabs_add_page_view (GschemPageView* pview,
+schematic_tabs_add_page_view (SchematicCanvas* pview,
                               GtkWidget*      wtab)
 {
 #ifdef ENABLE_GTK3
@@ -875,7 +877,7 @@ schematic_tab_info_set_page (TabInfo *tab_info,
 }
 
 
-GschemPageView*
+SchematicCanvas*
 schematic_tab_info_get_page_view (TabInfo *tab_info)
 {
   g_return_val_if_fail (tab_info != NULL, NULL);
@@ -952,7 +954,7 @@ x_tabs_cancel_all (SchematicWindow* w_current)
 
   schematic_keys_reset (w_current);
 
-  GschemPageView* pview = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas* pview = schematic_window_get_current_page_view (w_current);
   gschem_page_view_invalidate_all (pview);
 
   i_action_stop (w_current);
@@ -1025,7 +1027,7 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
   SchematicWindow* w_current = (SchematicWindow*) data;
 
   LeptonPage*     p_cur  = x_tabs_tl_page_cur  (w_current);
-  GschemPageView* pv_cur = x_tabs_tl_pview_cur (w_current);
+  SchematicCanvas* pv_cur = x_tabs_tl_pview_cur (w_current);
 
   if (p_cur == NULL && pv_cur == NULL)
     return;

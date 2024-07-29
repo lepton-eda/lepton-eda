@@ -41,12 +41,12 @@
 
 struct _SchematicPreviewClass
 {
-  GschemPageViewClass parent_class;
+  SchematicCanvasClass parent_class;
 };
 
 struct _SchematicPreview
 {
-  GschemPageView parent_instance;
+  SchematicCanvas parent_instance;
 
   SchematicWindow *window;
 
@@ -63,7 +63,7 @@ enum {
   PROP_ACTIVE
 };
 
-G_DEFINE_TYPE (SchematicPreview, schematic_preview, GSCHEM_TYPE_PAGE_VIEW);
+G_DEFINE_TYPE (SchematicPreview, schematic_preview, SCHEMATIC_TYPE_CANVAS);
 
 static void schematic_preview_set_property (GObject *object,
                                             guint property_id,
@@ -82,7 +82,7 @@ static void schematic_preview_finalize (GObject *self);
 static const char*
 schematic_preview_get_page_filename (SchematicPreview *preview)
 {
-  LeptonPage *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
+  LeptonPage *page = gschem_page_view_get_page (SCHEMATIC_CANVAS (preview));
 
   g_return_val_if_fail (page != NULL, "");
 
@@ -105,7 +105,7 @@ schematic_preview_callback_realize (GtkWidget *widget,
   g_return_if_fail (widget != NULL);
 
   gtk_widget_grab_focus (widget);
-  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget), NULL);
+  gschem_page_view_zoom_extents (SCHEMATIC_CANVAS (widget), NULL);
 }
 
 
@@ -136,22 +136,22 @@ schematic_preview_callback_button_press (GtkWidget *widget,
   switch (event->button) {
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_w_current,
-                GSCHEM_PAGE_VIEW (preview),
+                SCHEMATIC_CANVAS (preview),
                 ZOOM_IN,
                 HOTKEY);
-        gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
+        gschem_page_view_invalidate_all (SCHEMATIC_CANVAS (widget));
         break;
       case 2: /* middle mouse button: pan */
         if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
           return FALSE;
-        gschem_page_view_pan (GSCHEM_PAGE_VIEW (preview), wx, wy);
+        gschem_page_view_pan (SCHEMATIC_CANVAS (preview), wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current,
-                GSCHEM_PAGE_VIEW (preview),
+                SCHEMATIC_CANVAS (preview),
                 ZOOM_OUT,
                 HOTKEY);
-        gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
+        gschem_page_view_invalidate_all (SCHEMATIC_CANVAS (widget));
         break;
   }
 
@@ -239,7 +239,7 @@ schematic_preview_init (SchematicPreview *preview)
   preview->filename = NULL;
   preview->buffer   = NULL;
 
-  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview),
+  gschem_page_view_set_page (SCHEMATIC_CANVAS (preview),
                              lepton_page_new (preview->window->toplevel,
                                               "preview"));
 

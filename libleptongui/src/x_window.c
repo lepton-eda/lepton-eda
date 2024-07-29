@@ -57,7 +57,7 @@ x_window_new_page (SchematicWindow* w_current);
 void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
 {
   LeptonPage* page = schematic_window_get_active_page (w_current);
-  GschemPageView* view = gschem_page_view_new_with_page (page);
+  SchematicCanvas* view = gschem_page_view_new_with_page (page);
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
@@ -124,7 +124,7 @@ void x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
  * \param [in] drawing_area The drawing area (page view).
  */
 void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
-                                              GschemPageView* drawing_area)
+                                              SchematicCanvas* drawing_area)
 {
   /* gtk_widget_set_events() can be called on unrealized widgets only.
   *  Since with tabbed GUI (see x_tabs.c) we need to setup events
@@ -252,7 +252,7 @@ x_window_select_object (GschemFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current)
 {
-  GschemPageView *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
   LeptonPage *page = gschem_page_view_get_page (view);
@@ -369,14 +369,14 @@ schematic_window_create_work_box ()
 
 /*! \brief Create a page view
  *  \par Function Description
- *  Creates a scrolled #GschemPageView widget in the working area
+ *  Creates a scrolled #SchematicCanvas widget in the working area
  *  \a work_box.  This function is used when tabs are disabled.
  *
  * \param w_current The #SchematicWindow object.
  * \param work_box The working area widget.
  * \return Pointer to the new GtkWidget object.
  */
-GschemPageView*
+SchematicCanvas*
 schematic_window_create_page_view (SchematicWindow *w_current,
                                    GtkWidget *work_box)
 {
@@ -393,7 +393,7 @@ schematic_window_create_page_view (SchematicWindow *w_current,
   x_window_create_drawing (scrolled, w_current);
   x_window_setup_scrolling (w_current, scrolled);
 
-  return GSCHEM_PAGE_VIEW (w_current->drawing_area);
+  return SCHEMATIC_CANVAS (w_current->drawing_area);
 }
 
 
@@ -610,7 +610,7 @@ void
 x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page)
 {
-  GschemPageView *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   g_return_if_fail (page != NULL);

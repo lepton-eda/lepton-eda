@@ -166,7 +166,7 @@ o_component_translate_all (SchematicWindow *w_current,
   LeptonObject *o_current;
   const GList *iter;
   int x, y;
-  GschemPageView *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
