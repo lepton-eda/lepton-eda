@@ -23,7 +23,7 @@
  * \brief A widget for viewing a schematic page
  */
 
-#define SCHEMATIC_TYPE_CANVAS           (gschem_page_view_get_type())
+#define SCHEMATIC_TYPE_CANVAS           (schematic_canvas_get_type())
 #define SCHEMATIC_CANVAS(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_CANVAS, SchematicCanvas))
 #define SCHEMATIC_CANVAS_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_CANVAS, SchematicCanvasClass))
 #define SCHEMATIC_IS_CANVAS(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_CANVAS))
@@ -79,7 +79,7 @@ GschemPageGeometry*
 gschem_page_view_get_page_geometry (SchematicCanvas *view);
 
 GType
-gschem_page_view_get_type ();
+schematic_canvas_get_type ();
 
 GtkAdjustment*
 gschem_page_view_get_vadjustment (SchematicCanvas *view);

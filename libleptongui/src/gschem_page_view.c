@@ -576,7 +576,7 @@ gschem_page_view_get_show_hidden_text (SchematicCanvas *view)
 /*! \brief Get/register SchematicCanvas type.
  */
 GType
-gschem_page_view_get_type ()
+schematic_canvas_get_type ()
 {
   static GType type = 0;
 
