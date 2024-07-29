@@ -1502,7 +1502,7 @@ schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
   g_return_if_fail (geometry != NULL);
 
   *px = schematic_viewport_pix_x (geometry, x);
-  *py = gschem_page_geometry_pix_y (geometry, y);
+  *py = schematic_viewport_pix_y (geometry, y);
 }
 
 

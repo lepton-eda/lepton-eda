@@ -138,8 +138,8 @@ int
 schematic_viewport_pix_x (SchematicViewport *geometry,
                           int value);
 int
-gschem_page_geometry_pix_y (SchematicViewport *geometry, int value);
-
+schematic_viewport_pix_y (SchematicViewport *geometry,
+                          int value);
 void
 gschem_page_geometry_set_values (SchematicViewport *geometry,
                                  double scale,

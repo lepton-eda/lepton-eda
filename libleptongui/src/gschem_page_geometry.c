@@ -584,7 +584,8 @@ schematic_viewport_pix_x (SchematicViewport *geometry,
  *  \return The y coordinate in pixels
  */
 int
-gschem_page_geometry_pix_y (SchematicViewport *geometry, int value)
+schematic_viewport_pix_y (SchematicViewport *geometry,
+                          int value)
 {
   double i;
   int j;
