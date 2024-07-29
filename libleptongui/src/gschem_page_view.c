@@ -76,7 +76,7 @@ static void
 schematic_canvas_class_init (SchematicCanvasClass *klass);
 
 static void
-gschem_page_view_init (SchematicCanvas *view);
+schematic_canvas_init (SchematicCanvas *view);
 
 static void
 gschem_page_view_update_hadjustment (SchematicCanvas *view);
@@ -590,7 +590,7 @@ schematic_canvas_get_type ()
       NULL,                                                    /* class_data */
       sizeof(SchematicCanvas),
       0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_page_view_init,
+      (GInstanceInitFunc) schematic_canvas_init,
     };
 
     type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
@@ -738,7 +738,7 @@ schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
  *  \param [in,out] view the gschem page view
  */
 static void
-gschem_page_view_init (SchematicCanvas *view)
+schematic_canvas_init (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
