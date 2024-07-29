@@ -763,13 +763,13 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
     }
   }
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
                                           w_current->second_wy);
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           w_current->second_wx,
                                           w_current->second_wy,
                                           w_current->third_wx,

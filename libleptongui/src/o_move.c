@@ -449,7 +449,7 @@ o_move_invalidate_rubber (SchematicWindow *w_current,
             dy2 = w_current->second_wy - w_current->first_wy;
           }
 
-          gschem_page_view_invalidate_world_rect (page_view,
+          schematic_canvas_invalidate_world_rect (page_view,
                                                   object->line->x[0] + dx1,
                                                   object->line->y[0] + dy1,
                                                   object->line->x[1] + dx2,

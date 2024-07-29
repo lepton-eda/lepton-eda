@@ -35,7 +35,7 @@ o_line_invalidate_rubber (SchematicWindow *w_current)
 
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,

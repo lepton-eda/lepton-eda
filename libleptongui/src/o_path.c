@@ -328,7 +328,7 @@ o_path_invalidate_rubber (SchematicWindow *w_current)
   min_y = MIN (min_y, w_current->second_wy);
   max_y = MAX (max_y, w_current->second_wy);
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           min_x,
                                           min_y,
                                           max_x,
@@ -596,7 +596,7 @@ o_path_invalidate_rubber_grips (SchematicWindow *w_current)
   path_rubber_bbox (w_current, NULL,
                     &min_x, &max_y, &max_x, &min_y);
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           min_x,
                                           min_y,
                                           max_x,

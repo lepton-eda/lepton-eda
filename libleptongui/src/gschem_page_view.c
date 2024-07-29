@@ -708,7 +708,11 @@ schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
  *  \param [in]     bottom
  */
 void
-gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top, int right, int bottom)
+schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
+                                        int left,
+                                        int top,
+                                        int right,
+                                        int bottom)
 {
   int screen_bottom = 0;
   int screen_right = 0;

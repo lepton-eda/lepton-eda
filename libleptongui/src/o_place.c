@@ -270,7 +270,7 @@ o_place_invalidate_rubber (SchematicWindow *w_current,
                                  &right,
                                  &bottom);
 
-  gschem_page_view_invalidate_world_rect (page_view,
+  schematic_canvas_invalidate_world_rect (page_view,
                                           left + diff_x,
                                           top + diff_y,
                                           right + diff_x,

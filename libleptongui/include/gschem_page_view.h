@@ -97,8 +97,11 @@ schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
                                          int right,
                                          int bottom);
 void
-gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
-
+schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
+                                        int left,
+                                        int top,
+                                        int right,
+                                        int bottom);
 SchematicCanvas*
 gschem_page_view_new_with_page (LeptonPage *page);
 

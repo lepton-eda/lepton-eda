@@ -535,7 +535,7 @@ o_invalidate (SchematicWindow *w_current,
                                               &right,
                                               &bottom))
   {
-    gschem_page_view_invalidate_world_rect (page_view,
+    schematic_canvas_invalidate_world_rect (page_view,
                                             left,
                                             top,
                                             right,
@@ -574,7 +574,7 @@ o_invalidate_glist (SchematicWindow *w_current,
                                      &top,
                                      &right,
                                      &bottom)) {
-    gschem_page_view_invalidate_world_rect (page_view,
+    schematic_canvas_invalidate_world_rect (page_view,
                                             left,
                                             top,
                                             right,
