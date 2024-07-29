@@ -408,16 +408,16 @@ schematic_viewport_mil_y (SchematicViewport *geometry,
  *  \return The pointer to the new #SchematicViewport object.
  */
 SchematicViewport*
-gschem_page_geometry_new_with_values (int screen_width,
-                                      int screen_height,
-                                      int viewport_left,
-                                      int viewport_top,
-                                      int viewport_right,
-                                      int viewport_bottom,
-                                      int world_left,
-                                      int world_top,
-                                      int world_right,
-                                      int world_bottom)
+schematic_viewport_new_with_values (int screen_width,
+                                    int screen_height,
+                                    int viewport_left,
+                                    int viewport_top,
+                                    int viewport_right,
+                                    int viewport_bottom,
+                                    int world_left,
+                                    int world_top,
+                                    int world_right,
+                                    int world_bottom)
 {
   SchematicViewport *geometry = g_new0 (SchematicViewport, 1);
 

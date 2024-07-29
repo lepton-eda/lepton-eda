@@ -795,16 +795,16 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   bottom = height;
 
   new_geometry =
-    gschem_page_geometry_new_with_values (width,
-                                          height,
-                                          old_geometry->viewport_left,
-                                          old_geometry->viewport_top,
-                                          old_geometry->viewport_right,
-                                          old_geometry->viewport_bottom,
-                                          WORLD_DEFAULT_LEFT,
-                                          WORLD_DEFAULT_TOP,
-                                          WORLD_DEFAULT_RIGHT,
-                                          WORLD_DEFAULT_BOTTOM);
+    schematic_viewport_new_with_values (width,
+                                        height,
+                                        old_geometry->viewport_left,
+                                        old_geometry->viewport_top,
+                                        old_geometry->viewport_right,
+                                        old_geometry->viewport_bottom,
+                                        WORLD_DEFAULT_LEFT,
+                                        WORLD_DEFAULT_TOP,
+                                        WORLD_DEFAULT_RIGHT,
+                                        WORLD_DEFAULT_BOTTOM);
 
   cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (new_geometry));
 
@@ -952,16 +952,16 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   rect.height = bottom - origin_y;
 
   new_geometry =
-    gschem_page_geometry_new_with_values (width,
-                                          height,
-                                          old_geometry->viewport_left,
-                                          old_geometry->viewport_top,
-                                          old_geometry->viewport_right,
-                                          old_geometry->viewport_bottom,
-                                          WORLD_DEFAULT_LEFT,
-                                          WORLD_DEFAULT_TOP,
-                                          WORLD_DEFAULT_RIGHT,
-                                          WORLD_DEFAULT_BOTTOM);
+    schematic_viewport_new_with_values (width,
+                                        height,
+                                        old_geometry->viewport_left,
+                                        old_geometry->viewport_top,
+                                        old_geometry->viewport_right,
+                                        old_geometry->viewport_bottom,
+                                        WORLD_DEFAULT_LEFT,
+                                        WORLD_DEFAULT_TOP,
+                                        WORLD_DEFAULT_RIGHT,
+                                        WORLD_DEFAULT_BOTTOM);
 
   o_redraw_rect (&new_w_current,
                  window,
