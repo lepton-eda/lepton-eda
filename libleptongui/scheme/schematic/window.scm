@@ -504,7 +504,7 @@
                    ('mirror-mode
                     (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
                    ('pan-mode
-                    (gschem_page_view_pan *page-view x y)
+                    (schematic_canvas_pan *page-view x y)
                     (set-action-mode! 'select-mode #:window window))
                    (_ FALSE))
                  ;; Finish event processing.

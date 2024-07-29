@@ -847,7 +847,9 @@ schematic_canvas_pan_general (SchematicCanvas *view,
  *  \param [in]     w_y  The world y coordinate of the new center
  */
 void
-gschem_page_view_pan (SchematicCanvas *view, int w_x, int w_y)
+schematic_canvas_pan (SchematicCanvas *view,
+                      int w_x,
+                      int w_y)
 {
   schematic_canvas_pan_general (view, w_x, w_y, 1);
   /* Trigger a motion event to update the objects being drawn */

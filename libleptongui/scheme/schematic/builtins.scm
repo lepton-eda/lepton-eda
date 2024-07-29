@@ -723,7 +723,7 @@ the snap grid size should be set to 100")))
 
   (match (action-position)
     ((x . y)
-     (gschem_page_view_pan (schematic_window_get_current_page_view *window) x y)
+     (schematic_canvas_pan (schematic_window_get_current_page_view *window) x y)
      (undo-save-viewport))
     (_
      (o_redraw_cleanstates *window)

@@ -144,7 +144,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
       case 2: /* middle mouse button: pan */
         if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
           return FALSE;
-        gschem_page_view_pan (SCHEMATIC_CANVAS (preview), wx, wy);
+        schematic_canvas_pan (SCHEMATIC_CANVAS (preview), wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current,
