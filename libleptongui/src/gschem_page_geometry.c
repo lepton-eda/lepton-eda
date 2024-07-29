@@ -780,7 +780,8 @@ schematic_viewport_set_right (SchematicViewport *geometry,
  *  \param [in] viewport_top The top edge of the viewport in world coordinates.
  */
 void
-gschem_page_geometry_set_viewport_top (SchematicViewport *geometry, int viewport_top)
+schematic_viewport_set_top (SchematicViewport *geometry,
+                            int viewport_top)
 {
   g_return_if_fail (geometry != NULL);
 
