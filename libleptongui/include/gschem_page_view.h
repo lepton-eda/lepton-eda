@@ -180,7 +180,7 @@ schematic_canvas_zoom_object (SchematicCanvas *view,
                               LeptonObject *object);
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy
-gschem_page_view_get_hscroll_policy (SchematicCanvas *view);
+schematic_canvas_get_hscroll_policy (SchematicCanvas *view);
 
 GtkScrollablePolicy
 gschem_page_view_get_vscroll_policy (SchematicCanvas *view);

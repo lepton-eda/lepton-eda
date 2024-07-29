@@ -291,7 +291,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 #ifdef ENABLE_GTK3
     case PROP_HSCROLL_POLICY:
-      g_value_set_enum (value, (gint) gschem_page_view_get_hscroll_policy (view));
+      g_value_set_enum (value, (gint) schematic_canvas_get_hscroll_policy (view));
       break;
 
     case PROP_VSCROLL_POLICY:
@@ -446,7 +446,7 @@ schematic_canvas_get_hadjustment (SchematicCanvas *view)
  *  \return The horizontal scrolling policy for this view
  */
 GtkScrollablePolicy
-gschem_page_view_get_hscroll_policy (SchematicCanvas *view)
+schematic_canvas_get_hscroll_policy (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
 
