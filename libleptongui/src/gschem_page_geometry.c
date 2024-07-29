@@ -334,7 +334,8 @@ schematic_viewport_get_world_to_screen_matrix (SchematicViewport *geometry)
  *  \return The world coordinate value.
  */
 int
-gschem_page_geometry_mil_x (SchematicViewport *geometry, int value)
+schematic_viewport_mil_x (SchematicViewport *geometry,
+                          int value)
 {
   double i;
   double fval;

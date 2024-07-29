@@ -1012,7 +1012,7 @@ schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
 
   g_return_if_fail (geometry != NULL);
 
-  *x = gschem_page_geometry_mil_x (geometry, mx);
+  *x = schematic_viewport_mil_x (geometry, mx);
   *y = gschem_page_geometry_mil_y (geometry, my);
 }
 
