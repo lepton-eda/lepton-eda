@@ -82,7 +82,7 @@ GType
 schematic_canvas_get_type ();
 
 GtkAdjustment*
-gschem_page_view_get_vadjustment (SchematicCanvas *view);
+schematic_canvas_get_vadjustment (SchematicCanvas *view);
 
 gboolean
 gschem_page_view_get_show_hidden_text (SchematicCanvas *view);

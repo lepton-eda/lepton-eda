@@ -495,7 +495,7 @@ x_event_scroll (GtkWidget *widget,
   }
 
   if (pan_yaxis) {
-    adj = gschem_page_view_get_vadjustment (SCHEMATIC_CANVAS (widget));
+    adj = schematic_canvas_get_vadjustment (SCHEMATIC_CANVAS (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value (adj,
                               MIN (gtk_adjustment_get_value (adj) + pan_direction *

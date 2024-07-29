@@ -282,7 +282,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_VADJUSTMENT:
-      g_value_set_object (value, gschem_page_view_get_vadjustment (view));
+      g_value_set_object (value, schematic_canvas_get_vadjustment (view));
       break;
 
     case PROP_SHOW_HIDDEN_TEXT:
@@ -623,7 +623,7 @@ schematic_canvas_get_type ()
  *  \return The vertical adjustment for this view
  */
 GtkAdjustment*
-gschem_page_view_get_vadjustment (SchematicCanvas *view)
+schematic_canvas_get_vadjustment (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
