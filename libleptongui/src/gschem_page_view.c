@@ -1606,7 +1606,7 @@ gschem_page_view_zoom_object (SchematicCanvas *view, LeptonObject *object)
  *  different descriptions.
  */
 void
-gschem_page_view_redraw (SchematicCanvas *view,
+schematic_canvas_redraw (SchematicCanvas *view,
 #ifdef ENABLE_GTK3
                          cairo_t *cr,
 #else

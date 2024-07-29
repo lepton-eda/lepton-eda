@@ -133,11 +133,11 @@ schematic_canvas_pan_end (SchematicCanvas *page_view);
 
 void
 #ifdef ENABLE_GTK3
-gschem_page_view_redraw (SchematicCanvas *view,
+schematic_canvas_redraw (SchematicCanvas *view,
                          cairo_t *cr,
                          SchematicWindow *w_current);
 #else
-gschem_page_view_redraw (SchematicCanvas *view,
+schematic_canvas_redraw (SchematicCanvas *view,
                          GdkEventExpose *event,
                          SchematicWindow *w_current);
 #endif

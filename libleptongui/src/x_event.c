@@ -110,7 +110,7 @@ x_event_draw (SchematicCanvas *view,
               cairo_t *cr,
               SchematicWindow *w_current)
 {
-  gschem_page_view_redraw (view, cr, w_current);
+  schematic_canvas_redraw (view, cr, w_current);
 
   return(0);
 }
@@ -151,7 +151,7 @@ x_event_expose (SchematicCanvas *view,
                 GdkEventExpose *event,
                 SchematicWindow *w_current)
 {
-  gschem_page_view_redraw (view, event, w_current);
+  schematic_canvas_redraw (view, event, w_current);
 
   return(0);
 }
