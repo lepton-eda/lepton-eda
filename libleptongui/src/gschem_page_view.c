@@ -665,7 +665,11 @@ schematic_canvas_invalidate_all (SchematicCanvas *view)
  *  \param [in]     bottom
  */
 void
-gschem_page_view_invalidate_screen_rect (SchematicCanvas *view, int left, int top, int right, int bottom)
+schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
+                                         int left,
+                                         int top,
+                                         int right,
+                                         int bottom)
 {
   int bloat;
   int cue_half_size;
@@ -716,7 +720,7 @@ gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top
   gschem_page_view_WORLDtoSCREEN (view, left, top, &screen_left, &screen_top);
   gschem_page_view_WORLDtoSCREEN (view, right, bottom, &screen_right, &screen_bottom);
 
-  gschem_page_view_invalidate_screen_rect (view,
+  schematic_canvas_invalidate_screen_rect (view,
                                            screen_left,
                                            screen_top,
                                            screen_right,

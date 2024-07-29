@@ -91,8 +91,11 @@ void
 schematic_canvas_invalidate_all (SchematicCanvas *view);
 
 void
-gschem_page_view_invalidate_screen_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
-
+schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
+                                         int left,
+                                         int top,
+                                         int right,
+                                         int bottom);
 void
 gschem_page_view_invalidate_world_rect (SchematicCanvas *view, int left, int top, int right, int bottom);
 

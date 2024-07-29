@@ -489,7 +489,7 @@ o_invalidate_rect (SchematicWindow *w_current,
 {
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
 
-  gschem_page_view_invalidate_screen_rect (page_view,
+  schematic_canvas_invalidate_screen_rect (page_view,
                                            x1,
                                            y1,
                                            x2,
