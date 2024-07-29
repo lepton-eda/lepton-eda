@@ -192,7 +192,7 @@ void
 schematic_canvas_set_vscroll_policy (SchematicCanvas *view,
                                      GtkScrollablePolicy scroll);
 void
-schematic_page_view_grab_focus (SchematicCanvas *page_view);
+schematic_canvas_grab_focus (SchematicCanvas *page_view);
 
 #endif
 

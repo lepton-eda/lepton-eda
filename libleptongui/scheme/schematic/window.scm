@@ -214,7 +214,7 @@
 
 
 (define (grab-focus *tab-info)
-  (schematic_page_view_grab_focus
+  (schematic_canvas_grab_focus
    (schematic_tab_info_get_page_view *tab-info)))
 
 
@@ -417,7 +417,7 @@
         FALSE))
 
   (define (process-event *page-view *event *window)
-    (schematic_page_view_grab_focus *page-view)
+    (schematic_canvas_grab_focus *page-view)
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))

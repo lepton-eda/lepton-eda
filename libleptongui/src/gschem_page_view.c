@@ -1750,7 +1750,7 @@ geometry_cache_finalize (SchematicCanvas *view)
  *  \param  [in] page_view The page view.
  */
 void
-schematic_page_view_grab_focus (SchematicCanvas *page_view)
+schematic_canvas_grab_focus (SchematicCanvas *page_view)
 {
   g_return_if_fail (page_view != NULL);
 
