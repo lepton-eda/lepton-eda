@@ -70,7 +70,7 @@ struct _SchematicCanvas
 G_BEGIN_DECLS
 
 GtkAdjustment*
-gschem_page_view_get_hadjustment (SchematicCanvas *view);
+schematic_canvas_get_hadjustment (SchematicCanvas *view);
 
 LeptonPage*
 gschem_page_view_get_page (SchematicCanvas *view);

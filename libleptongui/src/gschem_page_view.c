@@ -270,7 +270,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_HADJUSTMENT:
-      g_value_set_object (value, gschem_page_view_get_hadjustment (view));
+      g_value_set_object (value, schematic_canvas_get_hadjustment (view));
       break;
 
     case PROP_PAGE:
@@ -431,7 +431,7 @@ gschem_page_view_class_init (SchematicCanvasClass *klass)
  *  \return The horizontal adjustment for this view
  */
 GtkAdjustment*
-gschem_page_view_get_hadjustment (SchematicCanvas *view)
+schematic_canvas_get_hadjustment (SchematicCanvas *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
