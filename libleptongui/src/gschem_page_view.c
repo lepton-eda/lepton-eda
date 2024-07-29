@@ -1174,7 +1174,7 @@ gschem_page_view_set_vscroll_policy (SchematicCanvas *view, GtkScrollablePolicy 
 
 
 void
-gschem_page_view_set_show_hidden_text (SchematicCanvas *view,
+schematic_canvas_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text)
 {
   g_return_if_fail (view != NULL);
@@ -1233,7 +1233,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SHOW_HIDDEN_TEXT:
-      gschem_page_view_set_show_hidden_text (view,
+      schematic_canvas_set_show_hidden_text (view,
                                              g_value_get_boolean (value));
       break;
 

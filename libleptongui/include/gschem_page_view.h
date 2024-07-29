@@ -161,9 +161,8 @@ void
 schematic_canvas_set_vadjustment (SchematicCanvas *view,
                                   GtkAdjustment *vadjustment);
 void
-gschem_page_view_set_show_hidden_text (SchematicCanvas *view,
+schematic_canvas_set_show_hidden_text (SchematicCanvas *view,
                                        gboolean show_hidden_text);
-
 int
 gschem_page_view_WORLDabs(SchematicCanvas *view, int val);
 
