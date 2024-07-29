@@ -92,7 +92,7 @@ void
 schematic_viewport_set_world_bottom (SchematicViewport *geometry,
                                      int val);
 int
-gschem_page_geometry_get_world_left (SchematicViewport *geometry);
+schematic_viewport_get_world_left (SchematicViewport *geometry);
 
 void
 gschem_page_geometry_set_world_left (SchematicViewport *geometry,
