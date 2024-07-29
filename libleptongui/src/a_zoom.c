@@ -124,7 +124,7 @@ a_zoom (SchematicWindow *w_current,
 
   /* warp the cursor to the right position */
   if (w_current->warp_cursor) {
-     gschem_page_view_WORLDtoSCREEN (page_view,
+     schematic_canvas_WORLDtoSCREEN (page_view,
                                      world_pan_center_x, world_pan_center_y,
                                      &start_x, &start_y);
      x_basic_warp_cursor (GTK_WIDGET (page_view), start_x, start_y);

@@ -745,7 +745,7 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_WORLDtoSCREEN (page_view,
+  schematic_canvas_WORLDtoSCREEN (page_view,
                                   w_current->magnetic_wx, w_current->magnetic_wy,
                                   &magnetic_x, &magnetic_y);
 

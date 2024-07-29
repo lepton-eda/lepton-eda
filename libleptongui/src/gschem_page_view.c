@@ -721,8 +721,8 @@ schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
 
   g_return_if_fail (view != NULL);
 
-  gschem_page_view_WORLDtoSCREEN (view, left, top, &screen_left, &screen_top);
-  gschem_page_view_WORLDtoSCREEN (view, right, bottom, &screen_right, &screen_bottom);
+  schematic_canvas_WORLDtoSCREEN (view, left, top, &screen_left, &screen_top);
+  schematic_canvas_WORLDtoSCREEN (view, right, bottom, &screen_right, &screen_bottom);
 
   schematic_canvas_invalidate_screen_rect (view,
                                            screen_left,
@@ -1489,7 +1489,11 @@ vadjustment_value_changed (GtkAdjustment *vadjustment,
 /*! \brief Transform WORLD coordinates to SCREEN coordinates
  */
 void
-gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py)
+schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
+                                int x,
+                                int y,
+                                int *px,
+                                int *py)
 {
   GschemPageGeometry *geometry = schematic_canvas_get_page_geometry (view);
 

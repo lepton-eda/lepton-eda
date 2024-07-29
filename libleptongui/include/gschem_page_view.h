@@ -167,8 +167,11 @@ int
 schematic_canvas_WORLDabs (SchematicCanvas *view,
                            int val);
 void
-gschem_page_view_WORLDtoSCREEN (SchematicCanvas *view, int x, int y, int *px, int *py);
-
+schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
+                                int x,
+                                int y,
+                                int *px,
+                                int *py);
 void
 gschem_page_view_zoom_extents (SchematicCanvas *view, const GList *list);
 
