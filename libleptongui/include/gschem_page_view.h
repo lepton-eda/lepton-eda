@@ -124,8 +124,10 @@ schematic_canvas_pan_start (SchematicCanvas *page_view,
                             int x,
                             int y);
 void
-gschem_page_view_pan_motion (SchematicCanvas *view, int mousepan_gain, int x, int y);
-
+schematic_canvas_pan_motion (SchematicCanvas *view,
+                             int mousepan_gain,
+                             int x,
+                             int y);
 gboolean
 gschem_page_view_pan_end(SchematicCanvas *page_view);
 

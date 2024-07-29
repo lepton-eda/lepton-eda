@@ -942,7 +942,10 @@ schematic_canvas_pan_start (SchematicCanvas *view,
  *  \param [in]     y               The new screen y coordinate
  */
 void
-gschem_page_view_pan_motion (SchematicCanvas *view, int mousepan_gain, int x, int y)
+schematic_canvas_pan_motion (SchematicCanvas *view,
+                             int mousepan_gain,
+                             int x,
+                             int y)
 {
   int pdiff_x, pdiff_y;
 
