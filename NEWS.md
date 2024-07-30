@@ -132,6 +132,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   The type structure has been made an opaque one and its data is
   now available only via accessors.
 
+- The type `GschemAction` has been renamed to `SchematicAction`,
+  all related functions have been renamed accordingly.
+
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
 
