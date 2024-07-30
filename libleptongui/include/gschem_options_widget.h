@@ -41,7 +41,7 @@ struct _GschemOptionsWidget {
 
   SchematicWindow *w_current;
 
-  GschemOptions *options;
+  SchematicOptions *options;
 
   GtkSizeGroup *size_group;
 

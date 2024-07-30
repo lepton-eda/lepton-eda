@@ -81,7 +81,7 @@ gboolean default_tabs_show_up_button = TRUE;
 gboolean default_tabs_show_tooltips = TRUE;
 
 static void
-i_vars_set_options (GschemOptions* opts)
+i_vars_set_options (SchematicOptions* opts)
 {
   gint snap_size = 0;
   cfg_read_int_with_check ("schematic.gui", "snap-size",

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,20 +73,20 @@
 #define MINIMUM_SNAP_SIZE (1)
 
 
-#define GSCHEM_TYPE_OPTIONS           (gschem_options_get_type ())
-#define GSCHEM_OPTIONS(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_OPTIONS, GschemOptions))
-#define GSCHEM_OPTIONS_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_OPTIONS, GschemOptionsClass))
-#define IS_GSCHEM_OPTIONS(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_OPTIONS))
-#define GSCHEM_OPTIONS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_OPTIONS, GschemOptionsClass))
+#define SCHEMATIC_TYPE_OPTIONS           (schematic_options_get_type ())
+#define SCHEMATIC_OPTIONS(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_OPTIONS, SchematicOptions))
+#define SCHEMATIC_OPTIONS_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_OPTIONS, SchematicOptionsClass))
+#define IS_SCHEMATIC_OPTIONS(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_OPTIONS))
+#define SCHEMATIC_OPTIONS_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_OPTIONS, SchematicOptionsClass))
 
-typedef struct _GschemOptionsClass GschemOptionsClass;
-typedef struct _GschemOptions GschemOptions;
+typedef struct _SchematicOptionsClass SchematicOptionsClass;
+typedef struct _SchematicOptions SchematicOptions;
 
-struct _GschemOptionsClass {
+struct _SchematicOptionsClass {
   GObjectClass parent_class;
 };
 
-struct _GschemOptions {
+struct _SchematicOptions {
   GObject parent;
 
   int        grid_mode;
@@ -99,51 +99,51 @@ struct _GschemOptions {
 G_BEGIN_DECLS
 
 void
-gschem_options_cycle_grid_mode (GschemOptions *options);
+gschem_options_cycle_grid_mode (SchematicOptions *options);
 
 void
-gschem_options_cycle_magnetic_net_mode (GschemOptions *options);
+gschem_options_cycle_magnetic_net_mode (SchematicOptions *options);
 
 void
-gschem_options_cycle_net_rubber_band_mode (GschemOptions *options);
+gschem_options_cycle_net_rubber_band_mode (SchematicOptions *options);
 
 void
-gschem_options_cycle_snap_mode (GschemOptions *options);
+gschem_options_cycle_snap_mode (SchematicOptions *options);
 
 SchematicGridMode
-gschem_options_get_grid_mode (GschemOptions *options);
+gschem_options_get_grid_mode (SchematicOptions *options);
 
 gboolean
-gschem_options_get_magnetic_net_mode (GschemOptions *options);
+gschem_options_get_magnetic_net_mode (SchematicOptions *options);
 
 gboolean
-gschem_options_get_net_rubber_band_mode (GschemOptions *options);
+gschem_options_get_net_rubber_band_mode (SchematicOptions *options);
 
 SchematicSnapMode
-gschem_options_get_snap_mode (GschemOptions *options);
+gschem_options_get_snap_mode (SchematicOptions *options);
 
 int
-gschem_options_get_snap_size (GschemOptions *options);
+gschem_options_get_snap_size (SchematicOptions *options);
 
 GType
-gschem_options_get_type ();
+schematic_options_get_type ();
 
-GschemOptions*
+SchematicOptions*
 gschem_options_new ();
 
 void
-gschem_options_set_grid_mode (GschemOptions *options,
+gschem_options_set_grid_mode (SchematicOptions *options,
                               SchematicGridMode grid_mode);
 void
-gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled);
+gschem_options_set_magnetic_net_mode (SchematicOptions *options, gboolean enabled);
 
 void
-gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enabled);
+gschem_options_set_net_rubber_band_mode (SchematicOptions *options, gboolean enabled);
 
 void
-gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mode);
+gschem_options_set_snap_mode (SchematicOptions *options, SchematicSnapMode snap_mode);
 
 void
-gschem_options_set_snap_size (GschemOptions *options, int snap_size);
+gschem_options_set_snap_size (SchematicOptions *options, int snap_size);
 
 G_END_DECLS

@@ -860,7 +860,7 @@ schematic_window_get_pages (SchematicWindow *w_current)
  *  \param [in] w_current The schematic window.
  *  \return The options of the schematic window.
  */
-GschemOptions*
+SchematicOptions*
 schematic_window_get_options (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);

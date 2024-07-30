@@ -180,7 +180,7 @@ struct st_schematic_window {
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
-  GschemOptions *options;
+  SchematicOptions *options;
 
   int text_caps;
   int text_size;
@@ -301,7 +301,7 @@ schematic_window_get_gdk_display (SchematicWindow *w_current);
 LeptonPageList*
 schematic_window_get_pages (SchematicWindow *w_current);
 
-GschemOptions*
+SchematicOptions*
 schematic_window_get_options (SchematicWindow *w_current);
 
 guint

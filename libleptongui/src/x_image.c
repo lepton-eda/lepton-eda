@@ -910,7 +910,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   SchematicCanvas *page_view;
   int origin_x, origin_y, bottom, right;
   SchematicWindow new_w_current;
-  GschemOptions options;
+  SchematicOptions options;
   LeptonToplevel toplevel;
   GdkRectangle rect;
   SchematicViewport *old_geometry, *new_geometry;
@@ -923,7 +923,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   /* Do a copy of the w_current struct and work with it */
   memcpy (&new_w_current, w_current, sizeof (SchematicWindow));
   /* Do a copy of the options struct and work with it */
-  memcpy(&options, w_current->options, sizeof(GschemOptions));
+  memcpy (&options, w_current->options, sizeof (SchematicOptions));
   /* Do a copy of the toplevel struct and work with it */
   memcpy(&toplevel, w_current->toplevel, sizeof(LeptonToplevel));
 

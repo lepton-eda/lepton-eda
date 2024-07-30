@@ -51,17 +51,17 @@ enum
 
 
 
-G_DEFINE_TYPE (GschemOptions, gschem_options, G_TYPE_OBJECT);
+G_DEFINE_TYPE (SchematicOptions, schematic_options, G_TYPE_OBJECT);
 
 
 static void
-gschem_options_class_init (GschemOptionsClass *klass);
+schematic_options_class_init (SchematicOptionsClass *klass);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_options_init (GschemOptions *adapter);
+schematic_options_init (SchematicOptions *adapter);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -73,7 +73,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \param options These options
  */
 void
-gschem_options_cycle_grid_mode (GschemOptions *options)
+gschem_options_cycle_grid_mode (SchematicOptions *options)
 {
   SchematicGridMode next_grid_mode;
 
@@ -91,7 +91,7 @@ gschem_options_cycle_grid_mode (GschemOptions *options)
  *  \param options These options
  */
 void
-gschem_options_cycle_magnetic_net_mode (GschemOptions *options)
+gschem_options_cycle_magnetic_net_mode (SchematicOptions *options)
 {
   gboolean next_magnetic_net_mode;
 
@@ -109,7 +109,7 @@ gschem_options_cycle_magnetic_net_mode (GschemOptions *options)
  *  \param options These options
  */
 void
-gschem_options_cycle_net_rubber_band_mode (GschemOptions *options)
+gschem_options_cycle_net_rubber_band_mode (SchematicOptions *options)
 {
   gboolean next_net_rubber_band_mode;
 
@@ -127,7 +127,7 @@ gschem_options_cycle_net_rubber_band_mode (GschemOptions *options)
  *  \param options These options
  */
 void
-gschem_options_cycle_snap_mode (GschemOptions *options)
+gschem_options_cycle_snap_mode (SchematicOptions *options)
 {
   SchematicSnapMode next_snap_mode;
 
@@ -147,7 +147,7 @@ gschem_options_cycle_snap_mode (GschemOptions *options)
  *  \return The grid mode
  */
 SchematicGridMode
-gschem_options_get_grid_mode (GschemOptions *options)
+gschem_options_get_grid_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, GRID_MODE_MESH);
 
@@ -162,7 +162,7 @@ gschem_options_get_grid_mode (GschemOptions *options)
  *  \return The magnetic net mode
  */
 gboolean
-gschem_options_get_magnetic_net_mode (GschemOptions *options)
+gschem_options_get_magnetic_net_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, DEFAULT_MAGNETIC_NET_MODE);
 
@@ -177,7 +177,7 @@ gschem_options_get_magnetic_net_mode (GschemOptions *options)
  *  \return The rubber-band net mode
  */
 gboolean
-gschem_options_get_net_rubber_band_mode (GschemOptions *options)
+gschem_options_get_net_rubber_band_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, DEFAULT_NET_RUBBER_BAND_MODE);
 
@@ -192,7 +192,7 @@ gschem_options_get_net_rubber_band_mode (GschemOptions *options)
  *  \return The snap mode
  */
 SchematicSnapMode
-gschem_options_get_snap_mode (GschemOptions *options)
+gschem_options_get_snap_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, SNAP_GRID);
 
@@ -207,7 +207,7 @@ gschem_options_get_snap_mode (GschemOptions *options)
  *  \return The snap size
  */
 int
-gschem_options_get_snap_size (GschemOptions *options)
+gschem_options_get_snap_size (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, DEFAULT_SNAP_SIZE);
 
@@ -220,10 +220,10 @@ gschem_options_get_snap_size (GschemOptions *options)
  *
  *  \returns A new set of options
  */
-GschemOptions*
+SchematicOptions*
 gschem_options_new ()
 {
-  return GSCHEM_OPTIONS (g_object_new (GSCHEM_TYPE_OPTIONS, NULL));
+  return SCHEMATIC_OPTIONS (g_object_new (SCHEMATIC_TYPE_OPTIONS, NULL));
 }
 
 
@@ -235,7 +235,7 @@ gschem_options_new ()
  *  \param [in] grid_mode The grid mode
  */
 void
-gschem_options_set_grid_mode (GschemOptions *options, SchematicGridMode grid_mode)
+gschem_options_set_grid_mode (SchematicOptions *options, SchematicGridMode grid_mode)
 {
   g_return_if_fail (options != NULL);
 
@@ -261,7 +261,7 @@ gschem_options_set_grid_mode (GschemOptions *options, SchematicGridMode grid_mod
  *  \param [in] enabled Magnetic net mode
  */
 void
-gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled)
+gschem_options_set_magnetic_net_mode (SchematicOptions *options, gboolean enabled)
 {
   g_return_if_fail (options != NULL);
 
@@ -280,7 +280,7 @@ gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled)
  *  \param [in] enabled Net rubber band mode
  */
 void
-gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enabled)
+gschem_options_set_net_rubber_band_mode (SchematicOptions *options, gboolean enabled)
 {
   g_return_if_fail (options != NULL);
 
@@ -297,7 +297,7 @@ gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enable
  *  \param [in] snap_mode The snap mode
  */
 void
-gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mode)
+gschem_options_set_snap_mode (SchematicOptions *options, SchematicSnapMode snap_mode)
 {
   g_return_if_fail (options != NULL);
 
@@ -317,7 +317,7 @@ gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mod
  *  \param [in] snap_size The snap size
  */
 void
-gschem_options_set_snap_size (GschemOptions *options, int snap_size)
+gschem_options_set_snap_size (SchematicOptions *options, int snap_size)
 {
   g_return_if_fail (options != NULL);
 
@@ -342,7 +342,7 @@ gschem_options_set_snap_size (GschemOptions *options, int snap_size)
  *  \param [in] klass The class for the gschem options
  */
 static void
-gschem_options_class_init (GschemOptionsClass *klass)
+schematic_options_class_init (SchematicOptionsClass *klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -417,7 +417,7 @@ gschem_options_class_init (GschemOptionsClass *klass)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemOptions *options = GSCHEM_OPTIONS (object);
+  SchematicOptions *options = SCHEMATIC_OPTIONS (object);
 
   switch (param_id) {
     case PROP_GRID_MODE:
@@ -447,12 +447,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize GschemOptions instance
+/*! \brief Initialize SchematicOptions instance
  *
- *  \param [in,out] options The #GschemOptions instance.
+ *  \param [in,out] options The #SchematicOptions instance.
  */
 static void
-gschem_options_init (GschemOptions *options)
+schematic_options_init (SchematicOptions *options)
 {
 }
 
@@ -468,7 +468,7 @@ gschem_options_init (GschemOptions *options)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemOptions *options = GSCHEM_OPTIONS (object);
+  SchematicOptions *options = SCHEMATIC_OPTIONS (object);
 
   switch (param_id) {
     case PROP_GRID_MODE:

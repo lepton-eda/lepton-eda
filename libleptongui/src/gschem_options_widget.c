@@ -67,7 +67,7 @@ static void
 notify_schematic_window (GschemOptionsWidget *widget);
 
 static void
-set_options (GschemOptionsWidget *widget, GschemOptions *options);
+set_options (GschemOptionsWidget *widget, SchematicOptions *options);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -469,7 +469,7 @@ notify_schematic_window (GschemOptionsWidget *widget)
  *  \param [in]     options  The options to manipulate
  */
 static void
-set_options (GschemOptionsWidget *widget, GschemOptions *options)
+set_options (GschemOptionsWidget *widget, SchematicOptions *options)
 {
   if (widget->options != NULL) {
     g_signal_handlers_disconnect_by_func (widget->options,
