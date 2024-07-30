@@ -237,6 +237,19 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   "canonicalizing" symbol names in Scheme before searching for
   them.
 
+- A new foreign structure, `<canvas>`, and two new modules,
+  `(schematic canvas foreign)` and `(schematic canvas)`, have been
+  added.  The first module contains helpers for working with
+  wrapped pointers of this type.  The second one is going to
+  contain all the functions related to working with canvas in the
+  program.  Currently it exports an only function,
+  `invalidate-canvas()`, that is used to redraw the window canvas
+  when its page contents changes.
+
+- A new function, `window-canvas()`, has been introduced in the
+  module `(schematic window)`.  It returns the `<canvas>` instance
+  for a given `<window>` object.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
