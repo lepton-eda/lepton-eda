@@ -342,6 +342,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - The *File Select* dialog code has been refactored so it and its
   preview widget are now available for dealing with in Scheme.
 
+- Previously, if a schematic or symbol file could not be open for
+  some reason, the *File Select* dialog silently omitted the fact
+  and an empty preview widget was shown.  Now, if an error occurs,
+  it is reported the same way as in the *Component select* dialog,
+  that is, an empty page with an only text message corresponding
+  to the error is shown instead of a blank page.  The preview
+  errors are also output to log and can be seen in the log widget.
+
 - The *Preview* widgets of the *File Select* and *Component
   Select* dialogs are now created in Scheme.  A new module,
   `(schematic preview-widget)`, has been added to work with their
