@@ -123,6 +123,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - The type `GschemPageView` has been renamed to `SchematicCanvas`,
   all related functions have been renamed accordingly.
 
+- The type `GschemPageGeometry` has been renamed to
+  `SchematicViewport`, all related functions have been renamed
+  accordingly.
+
 - The type `GschemPreview` has been renamed to `SchematicPreview`,
   all related functions and macros have been renamed accordingly.
   The type structure has been made an opaque one and its data is
