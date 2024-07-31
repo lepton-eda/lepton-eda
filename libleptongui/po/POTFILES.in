@@ -28,7 +28,7 @@ libleptongui/src/gschem_macro_widget.c
 libleptongui/src/gschem_main_window.c
 libleptongui/src/gschem_object_properties_widget.c
 libleptongui/src/options.c
-libleptongui/src/gschem_options_widget.c
+libleptongui/src/options_widget.c
 libleptongui/src/viewport.c
 libleptongui/src/canvas.c
 libleptongui/src/gschem_pin_type_combo.c

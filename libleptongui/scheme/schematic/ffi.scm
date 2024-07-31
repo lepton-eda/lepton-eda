@@ -766,7 +766,7 @@
 (define-lff schematic_options_get_snap_size int '(*))
 (define-lff schematic_options_set_snap_size void (list '* int))
 
-;;; gschem_options_widget.c
+;;; options_widget.c
 (define-lff schematic_options_widget_new '* '(*))
 
 ;;; viewport.c

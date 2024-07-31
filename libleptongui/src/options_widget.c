@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_options_widget.c
+ * \file options_widget.c
  *
  * \brief A widget for editing options
  */
