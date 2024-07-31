@@ -42,7 +42,7 @@ G_BEGIN_DECLS
 
 #ifdef ENABLE_GTK3
 
-#define SCHEMATIC_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
+#define SCHEMATIC_TYPE_ACCEL_LABEL            (schematic_accel_label_get_type ())
 #define SCHEMATIC_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabel))
 #define SCHEMATIC_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
 #define SCHEMATIC_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_ACCEL_LABEL))
@@ -66,7 +66,7 @@ struct _SchematicAccelLabelClass
 };
 
 
-GType      gschem_accel_label_get_type          (void) G_GNUC_CONST;
+GType      schematic_accel_label_get_type       (void) G_GNUC_CONST;
 GtkWidget* gschem_accel_label_new               (const gchar      *string);
 guint      gschem_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
 void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
@@ -76,7 +76,7 @@ gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_labe
 
 #else /* GTK2 */
 
-#define SCHEMATIC_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
+#define SCHEMATIC_TYPE_ACCEL_LABEL            (schematic_accel_label_get_type ())
 #define SCHEMATIC_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabel))
 #define SCHEMATIC_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
 #define SCHEMATIC_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_ACCEL_LABEL))
@@ -100,7 +100,7 @@ struct _SchematicAccelLabelClass
 };
 
 
-GType      gschem_accel_label_get_type          (void) G_GNUC_CONST;
+GType      schematic_accel_label_get_type       (void) G_GNUC_CONST;
 GtkWidget* gschem_accel_label_new               (const gchar      *string);
 guint      gschem_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
 void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,

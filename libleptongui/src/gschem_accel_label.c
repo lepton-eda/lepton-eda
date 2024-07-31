@@ -57,14 +57,14 @@ struct _SchematicAccelLabelPrivate
   guint16        accel_string_width; /* seems to be private */
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (SchematicAccelLabel, gschem_accel_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE_WITH_PRIVATE (SchematicAccelLabel, schematic_accel_label, GTK_TYPE_LABEL)
 
 static void
-gschem_accel_label_init (SchematicAccelLabel *accel_label)
+schematic_accel_label_init (SchematicAccelLabel *accel_label)
 {
   SchematicAccelLabelPrivate *priv;
 
-  accel_label->priv = (SchematicAccelLabelPrivate*) gschem_accel_label_get_instance_private (accel_label);
+  accel_label->priv = (SchematicAccelLabelPrivate*) schematic_accel_label_get_instance_private (accel_label);
   priv = accel_label->priv;
   priv->accel_padding = 3;
   priv->accel_widget = NULL;
@@ -162,7 +162,7 @@ gschem_accel_label_finalize (GObject *object)
 
   g_free (accel_label->priv->accel_string);
 
-  G_OBJECT_CLASS (gschem_accel_label_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_accel_label_parent_class)->finalize (object);
 }
 
 guint
@@ -207,7 +207,7 @@ gschem_accel_label_draw (GtkWidget *widget,
   GtkAllocation allocation;
   GtkRequisition requisition;
 
-  GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->draw (widget, cr);
+  GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->draw (widget, cr);
 
   ac_width = gschem_accel_label_get_accel_width (accel_label);
 
@@ -291,9 +291,9 @@ gschem_accel_label_get_preferred_width (GtkWidget *widget,
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   PangoLayout   *layout;
   gint           width;
-  GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->get_preferred_width (widget,
-                                                                           minimal_width,
-                                                                           natural_width);
+  GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->get_preferred_width (widget,
+                                                                              minimal_width,
+                                                                              natural_width);
   layout = gschem_accel_label_get_accel_layout (accel_label);
   pango_layout_get_pixel_size (layout, &width, NULL);
   accel_label->priv->accel_string_width = width;
@@ -302,7 +302,7 @@ gschem_accel_label_get_preferred_width (GtkWidget *widget,
 
 
 static void
-gschem_accel_label_class_init (SchematicAccelLabelClass *klass)
+schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -339,8 +339,9 @@ enum {
   PROP_ACCEL_STRING,
 };
 
-G_DEFINE_TYPE (SchematicAccelLabel, gschem_accel_label, GTK_TYPE_ACCEL_LABEL)
-
+G_DEFINE_TYPE (SchematicAccelLabel,
+               schematic_accel_label,
+               GTK_TYPE_ACCEL_LABEL)
 
 gboolean
 gschem_accel_label_refetch (SchematicAccelLabel *accel_label)
@@ -433,7 +434,7 @@ gschem_accel_label_get_property (GObject    *object,
 }
 
 static void
-gschem_accel_label_init (SchematicAccelLabel *accel_label)
+schematic_accel_label_init (SchematicAccelLabel *accel_label)
 {
   accel_label->accel_padding = 3;
   accel_label->accel_string = NULL;
@@ -446,7 +447,7 @@ gschem_accel_label_finalize (GObject *object)
 
   g_free (accel_label->accel_string);
 
-  G_OBJECT_CLASS (gschem_accel_label_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_accel_label_parent_class)->finalize (object);
 }
 
 guint
@@ -466,7 +467,7 @@ gschem_accel_label_size_request (GtkWidget      *widget,
   PangoLayout *layout;
   gint width;
 
-  GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->size_request (widget, requisition);
+  GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->size_request (widget, requisition);
 
   layout = gtk_widget_create_pango_layout (widget, gschem_accel_label_get_string (accel_label));
   pango_layout_get_pixel_size (layout, &width, NULL);
@@ -534,8 +535,8 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
                                     pango_layout_get_width (label_layout)
                                     - ac_width * PANGO_SCALE);
 
-          if (GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event)
-            GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event (widget, event);
+          if (GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->expose_event)
+            GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->expose_event (widget, event);
 
           gtk_widget_get_allocation (widget, allocation);
           if (direction == GTK_TEXT_DIR_RTL)
@@ -574,8 +575,8 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
         }
       else
         {
-          if (GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event)
-            GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event (widget, event);
+          if (GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->expose_event)
+            GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->expose_event (widget, event);
         }
       g_free (allocation);
       g_free (requisition);
@@ -625,7 +626,7 @@ gschem_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
 }
 
 static void
-gschem_accel_label_class_init (SchematicAccelLabelClass *klass)
+schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
