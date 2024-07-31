@@ -72,7 +72,7 @@ schematic_accel_label_init (SchematicAccelLabel *accel_label)
 }
 
 gboolean
-gschem_accel_label_refetch (SchematicAccelLabel *accel_label)
+schematic_accel_label_refetch (SchematicAccelLabel *accel_label)
 {
   gboolean enable_accels;
 
@@ -99,7 +99,7 @@ static const gchar *
 gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->priv->accel_string)
-    gschem_accel_label_refetch (accel_label);
+    schematic_accel_label_refetch (accel_label);
 
   return accel_label->priv->accel_string;
 }
@@ -344,7 +344,7 @@ G_DEFINE_TYPE (SchematicAccelLabel,
                GTK_TYPE_ACCEL_LABEL)
 
 gboolean
-gschem_accel_label_refetch (SchematicAccelLabel *accel_label)
+schematic_accel_label_refetch (SchematicAccelLabel *accel_label)
 {
   gboolean enable_accels;
 
@@ -371,7 +371,7 @@ static const gchar *
 gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->accel_string)
-    gschem_accel_label_refetch (accel_label);
+    schematic_accel_label_refetch (accel_label);
 
   return accel_label->accel_string;
 }

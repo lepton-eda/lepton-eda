@@ -71,7 +71,7 @@ GtkWidget* schematic_accel_label_new            (const gchar      *string);
 guint      schematic_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
 void       schematic_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
                                                     const gchar *accel_string);
-gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
+gboolean   schematic_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 
 #else /* GTK2 */
@@ -105,7 +105,7 @@ GtkWidget* schematic_accel_label_new            (const gchar      *string);
 guint      schematic_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
 void       schematic_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
                                                     const gchar *accel_string);
-gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
+gboolean   schematic_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 /* private */
 gchar *    _gschem_accel_label_class_get_accelerator_label (SchematicAccelLabelClass *klass,
