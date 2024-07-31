@@ -43,7 +43,7 @@ enum
 };
 
 
-G_DEFINE_TYPE (SchematicOptionsWidget, gschem_options_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (SchematicOptionsWidget, schematic_options_widget, GSCHEM_TYPE_BIN);
 
 GtkWidget*
 create_grid_mode_widget (SchematicOptionsWidget *widget);
@@ -143,7 +143,7 @@ gschem_options_widget_new (SchematicWindow *w_current)
  *  \param [in] klass
  */
 static void
-gschem_options_widget_class_init (SchematicOptionsWidgetClass *klass)
+schematic_options_widget_class_init (SchematicOptionsWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -402,7 +402,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget The text property widget
  */
 static void
-gschem_options_widget_init (SchematicOptionsWidget *widget)
+schematic_options_widget_init (SchematicOptionsWidget *widget)
 {
   GtkWidget *vbox;
 

@@ -23,7 +23,7 @@
  * \brief A widget for editing options
  */
 
-#define SCHEMATIC_TYPE_OPTIONS_WIDGET           (gschem_options_widget_get_type())
+#define SCHEMATIC_TYPE_OPTIONS_WIDGET           (schematic_options_widget_get_type())
 #define SCHEMATIC_OPTIONS_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_OPTIONS_WIDGET, SchematicOptionsWidget))
 #define SCHEMATIC_OPTIONS_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_OPTIONS_WIDGET, SchematicOptionsWidgetClass))
 #define IS_SCHEMATIC_OPTIONS_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_OPTIONS_WIDGET))
@@ -57,7 +57,7 @@ void
 gschem_options_widget_adjust_focus (SchematicOptionsWidget *dialog);
 
 GType
-gschem_options_widget_get_type ();
+schematic_options_widget_get_type ();
 
 G_BEGIN_DECLS
 
