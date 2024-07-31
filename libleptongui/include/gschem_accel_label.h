@@ -69,8 +69,8 @@ struct _SchematicAccelLabelClass
 GType      schematic_accel_label_get_type       (void) G_GNUC_CONST;
 GtkWidget* schematic_accel_label_new            (const gchar      *string);
 guint      schematic_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
-void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
-                                                 const gchar      *accel_string);
+void       schematic_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
+                                                    const gchar *accel_string);
 gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 
@@ -103,8 +103,8 @@ struct _SchematicAccelLabelClass
 GType      schematic_accel_label_get_type       (void) G_GNUC_CONST;
 GtkWidget* schematic_accel_label_new            (const gchar      *string);
 guint      schematic_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
-void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
-                                                 const gchar      *accel_string);
+void       schematic_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
+                                                    const gchar *accel_string);
 gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 /* private */

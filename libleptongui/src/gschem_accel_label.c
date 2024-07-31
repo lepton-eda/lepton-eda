@@ -121,7 +121,7 @@ gschem_accel_label_set_property (GObject      *object,
       break;
 
     case PROP_ACCEL_STRING:
-      gschem_accel_label_set_accel_string (accel_label, g_value_get_string (value));
+      schematic_accel_label_set_accel_string (accel_label, g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -258,15 +258,15 @@ substitute_underscores (char *str)
 
 
 /**
- * gschem_accel_label_set_accel_string:
+ * schematic_accel_label_set_accel_string:
  * \param accel_label a #SchematicAccelLabel
  * \param accel_string the accelerator string.
  *
  * Sets the accelerator string for this accelerator label.
  **/
 void
-gschem_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
-                                     const gchar      *accel_string)
+schematic_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
+                                        const gchar *accel_string)
 {
   g_return_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label));
 
@@ -394,7 +394,7 @@ gschem_accel_label_set_property (GObject      *object,
       break;
 
     case PROP_ACCEL_STRING:
-      gschem_accel_label_set_accel_string (accel_label, g_value_get_string (value));
+      schematic_accel_label_set_accel_string (accel_label, g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -600,15 +600,15 @@ substitute_underscores (char *str)
 
 
 /**
- * gschem_accel_label_set_accel_string:
+ * schematic_accel_label_set_accel_string:
  * \param accel_label a #SchematicAccelLabel
  * \param accel_string the accelerator string.
  *
  * Sets the accelerator string for this accelerator label.
  **/
 void
-gschem_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
-                                     const gchar      *accel_string)
+schematic_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
+                                        const gchar *accel_string)
 {
   g_return_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label));
 
