@@ -117,7 +117,7 @@ schematic_options_cycle_net_rubber_band_mode (SchematicOptions *options)
 
   next_net_rubber_band_mode = !options->net_rubber_band_mode;
 
-  gschem_options_set_net_rubber_band_mode (options, next_net_rubber_band_mode);
+  schematic_options_set_net_rubber_band_mode (options, next_net_rubber_band_mode);
 }
 
 
@@ -282,7 +282,8 @@ schematic_options_set_magnetic_net_mode (SchematicOptions *options,
  *  \param [in] enabled Net rubber band mode
  */
 void
-gschem_options_set_net_rubber_band_mode (SchematicOptions *options, gboolean enabled)
+schematic_options_set_net_rubber_band_mode (SchematicOptions *options,
+                                            gboolean enabled)
 {
   g_return_if_fail (options != NULL);
 
@@ -482,7 +483,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_NET_RUBBER_BAND_MODE:
-      gschem_options_set_net_rubber_band_mode (options, g_value_get_boolean (value));
+      schematic_options_set_net_rubber_band_mode (options, g_value_get_boolean (value));
       break;
 
     case PROP_SNAP_MODE:

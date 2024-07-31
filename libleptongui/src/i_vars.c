@@ -113,7 +113,7 @@ i_vars_set_options (SchematicOptions* opts)
   gboolean val = FALSE;
   cfg_read_bool ("schematic.gui", "netconn-rubberband",
                  default_netconn_rubberband, &val);
-  gschem_options_set_net_rubber_band_mode (opts, val);
+  schematic_options_set_net_rubber_band_mode (opts, val);
 
   cfg_read_bool ("schematic.gui", "magnetic-net-mode",
                  default_magnetic_net_mode, &val);

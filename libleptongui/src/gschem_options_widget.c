@@ -680,8 +680,8 @@ update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
 
   g_return_if_fail (w_current != NULL);
 
-  gschem_options_set_net_rubber_band_mode (w_current->options,
-                                           gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->net_rubber_band_widget)));
+  schematic_options_set_net_rubber_band_mode (w_current->options,
+                                              gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->net_rubber_band_widget)));
 
   if (w_current->bottom_widget != NULL)
   {
