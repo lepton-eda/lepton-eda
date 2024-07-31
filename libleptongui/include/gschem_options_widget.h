@@ -54,7 +54,7 @@ struct _SchematicOptionsWidget {
 };
 
 void
-gschem_options_widget_adjust_focus (SchematicOptionsWidget *dialog);
+schematic_options_widget_adjust_focus (SchematicOptionsWidget *dialog);
 
 GType
 schematic_options_widget_get_type ();

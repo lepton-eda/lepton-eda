@@ -109,7 +109,7 @@ update_snap_size_widget (SchematicOptionsWidget *widget);
  *  \param [in] widget This options widget
  */
 void
-gschem_options_widget_adjust_focus (SchematicOptionsWidget *widget)
+schematic_options_widget_adjust_focus (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->snap_size != NULL);
