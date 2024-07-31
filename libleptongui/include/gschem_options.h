@@ -99,7 +99,7 @@ struct _SchematicOptions {
 G_BEGIN_DECLS
 
 void
-gschem_options_cycle_grid_mode (SchematicOptions *options);
+schematic_options_cycle_grid_mode (SchematicOptions *options);
 
 void
 gschem_options_cycle_magnetic_net_mode (SchematicOptions *options);

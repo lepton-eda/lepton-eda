@@ -73,7 +73,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \param options These options
  */
 void
-gschem_options_cycle_grid_mode (SchematicOptions *options)
+schematic_options_cycle_grid_mode (SchematicOptions *options)
 {
   SchematicGridMode next_grid_mode;
 

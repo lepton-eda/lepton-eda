@@ -1490,7 +1490,7 @@ the snap grid size should be set to 100")))
 
 ;;; Cycle grid mode.
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
-  (gschem_options_cycle_grid_mode (schematic_window_get_options (*current-window))))
+  (schematic_options_cycle_grid_mode (schematic_window_get_options (*current-window))))
 
 
 (define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))

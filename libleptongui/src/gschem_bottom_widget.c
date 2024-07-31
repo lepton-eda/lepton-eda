@@ -149,7 +149,7 @@ on_click_grid_size (GtkWidget* ebox, GdkEvent* e, gpointer data)
   GdkEventButton* ebtn = (GdkEventButton*) e;
   if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
   {
-    gschem_options_cycle_grid_mode (widget->toplevel->options);
+    schematic_options_cycle_grid_mode (widget->toplevel->options);
     return TRUE;
   }
 
