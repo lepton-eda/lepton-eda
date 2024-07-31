@@ -75,7 +75,7 @@ i_status_string (SchematicWindow *w_current)
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
       return buf;
     case NETMODE:
-      if (gschem_options_get_magnetic_net_mode (w_current->options))
+      if (schematic_options_get_magnetic_net_mode (w_current->options))
         return _("Magnetic Net Mode");
       else
         return _("Net Mode");
@@ -548,5 +548,5 @@ i_update_net_options_status (SchematicWindow* w_current)
 
   gschem_bottom_widget_set_magnetic_net_mode(
     GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-    gschem_options_get_magnetic_net_mode (w_current->options));
+    schematic_options_get_magnetic_net_mode (w_current->options));
 }

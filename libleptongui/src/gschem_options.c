@@ -162,7 +162,7 @@ schematic_options_get_grid_mode (SchematicOptions *options)
  *  \return The magnetic net mode
  */
 gboolean
-gschem_options_get_magnetic_net_mode (SchematicOptions *options)
+schematic_options_get_magnetic_net_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, DEFAULT_MAGNETIC_NET_MODE);
 
@@ -425,7 +425,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_MAGNETIC_NET_MODE:
-      g_value_set_boolean (value, gschem_options_get_magnetic_net_mode (options));
+      g_value_set_boolean (value, schematic_options_get_magnetic_net_mode (options));
       break;
 
     case PROP_NET_RUBBER_BAND_MODE:

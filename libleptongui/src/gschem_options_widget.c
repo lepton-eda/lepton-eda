@@ -659,7 +659,7 @@ update_magnetic_net_mode_widget (GschemOptionsWidget *widget)
     g_return_if_fail (w_current != NULL);
 
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget->magnetic_net_widget),
-                                  gschem_options_get_magnetic_net_mode (w_current->options));
+                                  schematic_options_get_magnetic_net_mode (w_current->options));
   }
 }
 

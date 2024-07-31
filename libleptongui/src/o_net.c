@@ -417,7 +417,8 @@ o_net_start_magnetic (SchematicWindow *w_current,
                       int w_x,
                       int w_y)
 {
-  if (!(gschem_options_get_magnetic_net_mode (w_current->options))) {
+  if (!(schematic_options_get_magnetic_net_mode (w_current->options)))
+  {
     return;
   }
 
@@ -621,7 +622,7 @@ o_net_motion (SchematicWindow *w_current,
   g_return_if_fail (w_current != NULL);
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
+  magnetic_net_mode = schematic_options_get_magnetic_net_mode (w_current->options);
 
   /* Orthognal mode enabled when Control Key is NOT pressed or
      if we are using magnetic mode */
@@ -702,7 +703,7 @@ o_net_draw_rubber (SchematicWindow *w_current,
 
   eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
 
-  magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
+  magnetic_net_mode = schematic_options_get_magnetic_net_mode (w_current->options);
 
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
@@ -751,7 +752,7 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
 
   size = schematic_canvas_SCREENabs (page_view, NET_WIDTH);
 
-  magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
+  magnetic_net_mode = schematic_options_get_magnetic_net_mode (w_current->options);
 
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
