@@ -709,7 +709,7 @@ update_net_rubber_band_mode_widget (GschemOptionsWidget *widget)
     g_return_if_fail (w_current != NULL);
 
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget->net_rubber_band_widget),
-                                  gschem_options_get_net_rubber_band_mode (w_current->options));
+                                  schematic_options_get_net_rubber_band_mode (w_current->options));
   }
 }
 

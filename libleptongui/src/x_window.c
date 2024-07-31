@@ -1029,7 +1029,7 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "status-text",
                                _("Select Mode"),
                                "net-rubber-band-mode",
-                               gschem_options_get_net_rubber_band_mode (w_current->options),
+                               schematic_options_get_net_rubber_band_mode (w_current->options),
                                "magnetic-net-mode",
                                schematic_options_get_magnetic_net_mode (w_current->options),
                                NULL);

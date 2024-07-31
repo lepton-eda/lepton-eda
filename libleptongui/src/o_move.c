@@ -50,7 +50,7 @@ o_move_start (SchematicWindow *w_current,
 
     gboolean net_rubber_band_mode;
 
-    net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+    net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
 
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
@@ -176,7 +176,7 @@ o_move_end (SchematicWindow *w_current)
   o_move_invalidate_rubber (w_current, FALSE);
   schematic_window_set_rubber_visible (w_current, 0);
 
-  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+  net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
 
   if (net_rubber_band_mode) {
     o_move_end_rubberband (w_current, diff_x, diff_y, &rubbernet_objects);
@@ -426,7 +426,7 @@ o_move_invalidate_rubber (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+  net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
 
   o_place_invalidate_rubber (w_current, drawing);
   if (net_rubber_band_mode) {
@@ -477,7 +477,7 @@ o_move_draw_rubber (SchematicWindow *w_current,
 
   o_place_draw_rubber (w_current, renderer);
 
-  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+  net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
 
   if (!net_rubber_band_mode)
     return;
