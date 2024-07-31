@@ -416,8 +416,8 @@
   (when (eq? snap-mode 'off)
     (log! 'message (G_ "WARNING: Do not translate with snap off!"))
     (log! 'message (G_ "WARNING: Turning snap on and continuing with translate."))
-    (gschem_options_set_snap_mode *options
-                                  (schematic_snap_mode_from_string (string->pointer "grid")))
+    (schematic_options_set_snap_mode *options
+                                     (schematic_snap_mode_from_string (string->pointer "grid")))
     ;; Update status on screen.
     (i_show_state *window %null-pointer))
 

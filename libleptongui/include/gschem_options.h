@@ -141,8 +141,8 @@ void
 schematic_options_set_net_rubber_band_mode (SchematicOptions *options,
                                             gboolean enabled);
 void
-gschem_options_set_snap_mode (SchematicOptions *options, SchematicSnapMode snap_mode);
-
+schematic_options_set_snap_mode (SchematicOptions *options,
+                                 SchematicSnapMode snap_mode);
 void
 gschem_options_set_snap_size (SchematicOptions *options, int snap_size);
 

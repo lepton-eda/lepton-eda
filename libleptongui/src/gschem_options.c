@@ -136,7 +136,7 @@ schematic_options_cycle_snap_mode (SchematicOptions *options)
   /* toggle to the next snap state */
   next_snap_mode = (SchematicSnapMode) ((options->snap_mode + 1) % SNAP_MODE_COUNT);
 
-  gschem_options_set_snap_mode (options, next_snap_mode);
+  schematic_options_set_snap_mode (options, next_snap_mode);
 }
 
 
@@ -300,7 +300,8 @@ schematic_options_set_net_rubber_band_mode (SchematicOptions *options,
  *  \param [in] snap_mode The snap mode
  */
 void
-gschem_options_set_snap_mode (SchematicOptions *options, SchematicSnapMode snap_mode)
+schematic_options_set_snap_mode (SchematicOptions *options,
+                                 SchematicSnapMode snap_mode)
 {
   g_return_if_fail (options != NULL);
 
@@ -487,7 +488,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SNAP_MODE:
-      gschem_options_set_snap_mode (options, (SchematicSnapMode) g_value_get_int (value));
+      schematic_options_set_snap_mode (options, (SchematicSnapMode) g_value_get_int (value));
       break;
 
     case PROP_SNAP_SIZE:
