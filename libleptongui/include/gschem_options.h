@@ -111,7 +111,7 @@ void
 schematic_options_cycle_snap_mode (SchematicOptions *options);
 
 SchematicGridMode
-gschem_options_get_grid_mode (SchematicOptions *options);
+schematic_options_get_grid_mode (SchematicOptions *options);
 
 gboolean
 gschem_options_get_magnetic_net_mode (SchematicOptions *options);

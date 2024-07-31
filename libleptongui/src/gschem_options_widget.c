@@ -591,7 +591,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
     SchematicGridMode grid_mode;
     int index;
 
-    grid_mode = gschem_options_get_grid_mode (widget->options);
+    grid_mode = schematic_options_get_grid_mode (widget->options);
 
     for (index=0; index<GRID_MODE_COUNT; index++) {
       g_signal_handlers_block_by_func (G_OBJECT (widget->grid_radio[index]),

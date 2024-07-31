@@ -147,7 +147,7 @@ schematic_options_cycle_snap_mode (SchematicOptions *options)
  *  \return The grid mode
  */
 SchematicGridMode
-gschem_options_get_grid_mode (SchematicOptions *options)
+schematic_options_get_grid_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, GRID_MODE_MESH);
 
@@ -421,7 +421,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_GRID_MODE:
-      g_value_set_int (value, gschem_options_get_grid_mode (options));
+      g_value_set_int (value, schematic_options_get_grid_mode (options));
       break;
 
     case PROP_MAGNETIC_NET_MODE:

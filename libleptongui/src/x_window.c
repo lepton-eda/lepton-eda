@@ -1012,7 +1012,7 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "toplevel",
                                w_current,
                                "grid-mode",
-                               gschem_options_get_grid_mode (w_current->options),
+                               schematic_options_get_grid_mode (w_current->options),
                                "grid-size",
                                gschem_options_get_snap_size (w_current->options),
                                /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */

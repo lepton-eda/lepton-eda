@@ -386,7 +386,7 @@ x_grid_draw_region (SchematicWindow *w_current,
 
   g_return_if_fail (w_current != NULL);
 
-  grid_mode = gschem_options_get_grid_mode (w_current->options);
+  grid_mode = schematic_options_get_grid_mode (w_current->options);
 
   switch (grid_mode) {
     case GRID_MODE_NONE:
@@ -422,7 +422,7 @@ x_grid_query_drawn_spacing (SchematicWindow *w_current)
 
   g_return_val_if_fail (w_current != NULL, -1);
 
-  grid_mode = gschem_options_get_grid_mode (w_current->options);
+  grid_mode = schematic_options_get_grid_mode (w_current->options);
 
   switch (grid_mode) {
     default:
