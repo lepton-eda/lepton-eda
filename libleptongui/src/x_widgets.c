@@ -26,7 +26,7 @@
  *
  * - object properties    (GschemObjectPropertiesWidget)  [right dock]
  * - text properties      (GschemTextPropertiesWidget)    [right dock]
- * - options              (GschemOptionsWidget)           [right dock]
+ * - options              (SchematicOptionsWidget)        [right dock]
  *
  * - find text results    (GschemFindTextState)           [bottom dock]
  * - log                  (GschemLogWidget)               [bottom dock]

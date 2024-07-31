@@ -43,19 +43,19 @@ enum
 };
 
 
-G_DEFINE_TYPE (GschemOptionsWidget, gschem_options_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (SchematicOptionsWidget, gschem_options_widget, GSCHEM_TYPE_BIN);
 
 GtkWidget*
-create_grid_mode_widget (GschemOptionsWidget *widget);
+create_grid_mode_widget (SchematicOptionsWidget *widget);
 
 GtkWidget*
-create_snap_mode_widget (GschemOptionsWidget *widget);
+create_snap_mode_widget (SchematicOptionsWidget *widget);
 
 static GtkWidget*
-create_net_section (GschemOptionsWidget *widget);
+create_net_section (SchematicOptionsWidget *widget);
 
 static GtkWidget*
-create_snap_section (GschemOptionsWidget *widget);
+create_snap_section (SchematicOptionsWidget *widget);
 
 static void
 dispose (GObject *object);
@@ -64,43 +64,43 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-notify_schematic_window (GschemOptionsWidget *widget);
+notify_schematic_window (SchematicOptionsWidget *widget);
 
 static void
-set_options (GschemOptionsWidget *widget, SchematicOptions *options);
-
+set_options (SchematicOptionsWidget *widget,
+             SchematicOptions *options);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button);
+update_grid_mode_model (SchematicOptionsWidget *widget,
+                        GtkWidget *button);
+static void
+update_grid_mode_widget (SchematicOptionsWidget *widget);
 
 static void
-update_grid_mode_widget (GschemOptionsWidget *widget);
+update_magnetic_net_mode_model (SchematicOptionsWidget *widget);
 
 static void
-update_magnetic_net_mode_model (GschemOptionsWidget *widget);
+update_magnetic_net_mode_widget (SchematicOptionsWidget *widget);
 
 static void
-update_magnetic_net_mode_widget (GschemOptionsWidget *widget);
+update_net_rubber_band_mode_model (SchematicOptionsWidget *widget);
 
 static void
-update_net_rubber_band_mode_model (GschemOptionsWidget *widget);
+update_net_rubber_band_mode_widget (SchematicOptionsWidget *widget);
 
 static void
-update_net_rubber_band_mode_widget (GschemOptionsWidget *widget);
+update_snap_mode_model (SchematicOptionsWidget *widget,
+                        GtkWidget *button);
+static void
+update_snap_mode_widget (SchematicOptionsWidget *widget);
 
 static void
-update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button);
+update_snap_size_model (SchematicOptionsWidget *widget);
 
 static void
-update_snap_mode_widget (GschemOptionsWidget *widget);
-
-static void
-update_snap_size_model (GschemOptionsWidget *widget);
-
-static void
-update_snap_size_widget (GschemOptionsWidget *widget);
+update_snap_size_widget (SchematicOptionsWidget *widget);
 
 
 
@@ -109,7 +109,7 @@ update_snap_size_widget (GschemOptionsWidget *widget);
  *  \param [in] widget This options widget
  */
 void
-gschem_options_widget_adjust_focus (GschemOptionsWidget *widget)
+gschem_options_widget_adjust_focus (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->snap_size != NULL);
@@ -130,7 +130,7 @@ gschem_options_widget_adjust_focus (GschemOptionsWidget *widget)
 GtkWidget*
 gschem_options_widget_new (SchematicWindow *w_current)
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OPTIONS_WIDGET,
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_OPTIONS_WIDGET,
                                    "schematic-window",  w_current,
                                    NULL));
 }
@@ -143,7 +143,7 @@ gschem_options_widget_new (SchematicWindow *w_current)
  *  \param [in] klass
  */
 static void
-gschem_options_widget_class_init (GschemOptionsWidgetClass *klass)
+gschem_options_widget_class_init (SchematicOptionsWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -176,7 +176,7 @@ gschem_options_widget_class_init (GschemOptionsWidgetClass *klass)
  *  \return The grid mode widget
  */
 GtkWidget*
-create_grid_mode_widget (GschemOptionsWidget *widget)
+create_grid_mode_widget (SchematicOptionsWidget *widget)
 {
   GtkWidget *box;
   int index;
@@ -227,7 +227,7 @@ create_grid_mode_widget (GschemOptionsWidget *widget)
  *  \return The net section widget
  */
 static GtkWidget*
-create_net_section (GschemOptionsWidget *widget)
+create_net_section (SchematicOptionsWidget *widget)
 {
   GtkWidget *label[2];
   GtkWidget *table;
@@ -266,7 +266,7 @@ create_net_section (GschemOptionsWidget *widget)
  *  \return The snap section widget
  */
 static GtkWidget*
-create_snap_section (GschemOptionsWidget *widget)
+create_snap_section (SchematicOptionsWidget *widget)
 {
   GtkWidget *label[3];
   GtkWidget *table;
@@ -303,7 +303,7 @@ create_snap_section (GschemOptionsWidget *widget)
  *  \return The snap mode widget
  */
 GtkWidget*
-create_snap_mode_widget (GschemOptionsWidget *widget)
+create_snap_mode_widget (SchematicOptionsWidget *widget)
 {
   GtkWidget *box;
   int index;
@@ -355,13 +355,13 @@ create_snap_mode_widget (GschemOptionsWidget *widget)
 static void
 dispose (GObject *object)
 {
-  GschemOptionsWidget *widget;
-  GschemOptionsWidgetClass *klass;
+  SchematicOptionsWidget *widget;
+  SchematicOptionsWidgetClass *klass;
   GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
-  widget = GSCHEM_OPTIONS_WIDGET (object);
+  widget = SCHEMATIC_OPTIONS_WIDGET (object);
 
   set_options (widget, NULL);
 
@@ -371,7 +371,7 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klass = GSCHEM_OPTIONS_WIDGET_GET_CLASS (object);
+  klass = SCHEMATIC_OPTIONS_WIDGET_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
   parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
   g_return_if_fail (parent_class != NULL);
@@ -384,7 +384,7 @@ dispose (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemOptionsWidget *widget = GSCHEM_OPTIONS_WIDGET (object);
+  SchematicOptionsWidget *widget = SCHEMATIC_OPTIONS_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:
@@ -402,7 +402,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget The text property widget
  */
 static void
-gschem_options_widget_init (GschemOptionsWidget *widget)
+gschem_options_widget_init (SchematicOptionsWidget *widget)
 {
   GtkWidget *vbox;
 
@@ -447,7 +447,7 @@ gschem_options_widget_init (GschemOptionsWidget *widget)
  *  \param [in,out] widget    This widget
  */
 static void
-notify_schematic_window (GschemOptionsWidget *widget)
+notify_schematic_window (SchematicOptionsWidget *widget)
 {
   SchematicWindow *w_current;
 
@@ -469,7 +469,8 @@ notify_schematic_window (GschemOptionsWidget *widget)
  *  \param [in]     options  The options to manipulate
  */
 static void
-set_options (GschemOptionsWidget *widget, SchematicOptions *options)
+set_options (SchematicOptionsWidget *widget,
+             SchematicOptions *options)
 {
   if (widget->options != NULL) {
     g_signal_handlers_disconnect_by_func (widget->options,
@@ -539,7 +540,7 @@ set_options (GschemOptionsWidget *widget, SchematicOptions *options)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemOptionsWidget *widget = GSCHEM_OPTIONS_WIDGET (object);
+  SchematicOptionsWidget *widget = SCHEMATIC_OPTIONS_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:
@@ -559,7 +560,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \param [in] button The radio button determining the grid mode.
  */
 static void
-update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
+update_grid_mode_model (SchematicOptionsWidget *widget,
+                        GtkWidget *button)
 {
   g_return_if_fail (widget != NULL);
 
@@ -583,7 +585,7 @@ update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
  *  \param [in,out] widget This widget
  */
 static void
-update_grid_mode_widget (GschemOptionsWidget *widget)
+update_grid_mode_widget (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -620,7 +622,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_magnetic_net_mode_model (GschemOptionsWidget *widget)
+update_magnetic_net_mode_model (SchematicOptionsWidget *widget)
 {
   SchematicWindow *w_current;
 
@@ -647,7 +649,7 @@ update_magnetic_net_mode_model (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_magnetic_net_mode_widget (GschemOptionsWidget *widget)
+update_magnetic_net_mode_widget (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -670,7 +672,7 @@ update_magnetic_net_mode_widget (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
+update_net_rubber_band_mode_model (SchematicOptionsWidget *widget)
 {
   SchematicWindow *w_current;
 
@@ -697,7 +699,7 @@ update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_net_rubber_band_mode_widget (GschemOptionsWidget *widget)
+update_net_rubber_band_mode_widget (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -722,7 +724,8 @@ update_net_rubber_band_mode_widget (GschemOptionsWidget *widget)
  *  \param [in] button The radio button determining the snap mode.
  */
 static void
-update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
+update_snap_mode_model (SchematicOptionsWidget *widget,
+                        GtkWidget *button)
 {
   g_return_if_fail (widget != NULL);
 
@@ -747,7 +750,7 @@ update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
  *  \param [in,out] widget This widget
  */
 static void
-update_snap_mode_widget (GschemOptionsWidget *widget)
+update_snap_mode_widget (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -787,7 +790,7 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_snap_size_model (GschemOptionsWidget *widget)
+update_snap_size_model (SchematicOptionsWidget *widget)
 {
   SchematicWindow *w_current;
 
@@ -809,7 +812,7 @@ update_snap_size_model (GschemOptionsWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_snap_size_widget (GschemOptionsWidget *widget)
+update_snap_size_widget (SchematicOptionsWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
