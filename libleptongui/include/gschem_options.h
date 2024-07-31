@@ -144,6 +144,6 @@ void
 schematic_options_set_snap_mode (SchematicOptions *options,
                                  SchematicSnapMode snap_mode);
 void
-gschem_options_set_snap_size (SchematicOptions *options, int snap_size);
-
+schematic_options_set_snap_size (SchematicOptions *options,
+                                 int snap_size);
 G_END_DECLS

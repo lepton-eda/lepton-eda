@@ -87,7 +87,7 @@ i_vars_set_options (SchematicOptions* opts)
   cfg_read_int_with_check ("schematic.gui", "snap-size",
                            default_snap_size, &snap_size,
                            &cfg_check_int_greater_0);
-  gschem_options_set_snap_size (opts, snap_size);
+  schematic_options_set_snap_size (opts, snap_size);
 
 
   /* grid-mode:

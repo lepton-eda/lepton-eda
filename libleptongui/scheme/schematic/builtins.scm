@@ -1524,8 +1524,8 @@ the snap grid size should be set to 100")))
 ;;; Multiplies by two the snap grid size.
 (define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
   (define *options (schematic_window_get_options (*current-window)))
-  (gschem_options_set_snap_size *options
-                                (* (schematic_options_get_snap_size *options) 2)))
+  (schematic_options_set_snap_size *options
+                                   (* (schematic_options_get_snap_size *options) 2)))
 
 
 ;;; Divides by two the snap grid size (if it's and even number).
@@ -1533,7 +1533,7 @@ the snap grid size should be set to 100")))
   (define *options (schematic_window_get_options (*current-window)))
   (define snap-size (schematic_options_get_snap_size *options))
   (when (even? snap-size)
-    (gschem_options_set_snap_size *options (/ snap-size 2))))
+    (schematic_options_set_snap_size *options (/ snap-size 2))))
 
 
 ;;; Toggles visibility of currently selected objects between

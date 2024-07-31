@@ -321,7 +321,8 @@ schematic_options_set_snap_mode (SchematicOptions *options,
  *  \param [in] snap_size The snap size
  */
 void
-gschem_options_set_snap_size (SchematicOptions *options, int snap_size)
+schematic_options_set_snap_size (SchematicOptions *options,
+                                 int snap_size)
 {
   g_return_if_fail (options != NULL);
 
@@ -492,7 +493,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SNAP_SIZE:
-      gschem_options_set_snap_size (options, g_value_get_int (value));
+      schematic_options_set_snap_size (options, g_value_get_int (value));
       break;
 
     default:

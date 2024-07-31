@@ -425,7 +425,7 @@
             schematic_options_get_snap_mode
             schematic_options_set_snap_mode
             schematic_options_get_snap_size
-            gschem_options_set_snap_size
+            schematic_options_set_snap_size
 
             gschem_options_widget_new
 
@@ -764,7 +764,7 @@
 (define-lff schematic_options_get_snap_mode int '(*))
 (define-lff schematic_options_set_snap_mode void (list '* int))
 (define-lff schematic_options_get_snap_size int '(*))
-(define-lff gschem_options_set_snap_size void (list '* int))
+(define-lff schematic_options_set_snap_size void (list '* int))
 
 ;;; gschem_options_widget.c
 (define-lff gschem_options_widget_new '* '(*))

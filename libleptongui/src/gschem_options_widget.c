@@ -797,8 +797,8 @@ update_snap_size_model (GschemOptionsWidget *widget)
 
   g_return_if_fail (w_current != NULL);
 
-  gschem_options_set_snap_size (w_current->options,
-                                gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget->snap_size)));
+  schematic_options_set_snap_size (w_current->options,
+                                   gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget->snap_size)));
 }
 
 
