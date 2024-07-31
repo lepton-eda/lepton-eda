@@ -221,7 +221,7 @@ schematic_options_get_snap_size (SchematicOptions *options)
  *  \returns A new set of options
  */
 SchematicOptions*
-gschem_options_new ()
+schematic_options_new ()
 {
   return SCHEMATIC_OPTIONS (g_object_new (SCHEMATIC_TYPE_OPTIONS, NULL));
 }

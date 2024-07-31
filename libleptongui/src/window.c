@@ -298,7 +298,7 @@ SchematicWindow *schematic_window_new ()
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
-  w_current->options = gschem_options_new();
+  w_current->options = schematic_options_new();
 
   g_signal_connect_swapped (G_OBJECT (w_current->options),
                             "notify",

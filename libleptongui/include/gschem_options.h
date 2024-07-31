@@ -129,7 +129,7 @@ GType
 schematic_options_get_type ();
 
 SchematicOptions*
-gschem_options_new ();
+schematic_options_new ();
 
 void
 gschem_options_set_grid_mode (SchematicOptions *options,
