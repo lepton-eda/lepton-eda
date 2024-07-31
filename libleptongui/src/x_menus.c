@@ -174,8 +174,8 @@ lepton_action_create_menu_item (GSimpleAction* action,
 
   GtkWidget *item_label = gtk_bin_get_child (GTK_BIN (item));
 
-  /* make sure item_label is a GschemAccelLabel */
-  if (item_label && !GSCHEM_IS_ACCEL_LABEL (item_label)) {
+  /* make sure item_label is a SchematicAccelLabel */
+  if (item_label && !SCHEMATIC_IS_ACCEL_LABEL (item_label)) {
     gtk_container_remove (GTK_CONTAINER (item), item_label);
     item_label = NULL;
   }
@@ -183,7 +183,7 @@ lepton_action_create_menu_item (GSimpleAction* action,
   if (item_label == NULL) {
     /* char *label_string; */
     /* g_object_get (action, "label", &label_string, NULL); */
-    g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
+    g_object_new (SCHEMATIC_TYPE_ACCEL_LABEL,
                   "use-underline", TRUE,
                   "xalign", 0.0,
                   "visible", TRUE,

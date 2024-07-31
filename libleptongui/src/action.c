@@ -131,8 +131,8 @@ schematic_action_connect_proxy (GtkAction *action,
 
     label = gtk_bin_get_child (GTK_BIN (proxy));
 
-    /* make sure label is a GschemAccelLabel */
-    if (label && !GSCHEM_IS_ACCEL_LABEL (label)) {
+    /* make sure label is a SchematicAccelLabel */
+    if (label && !SCHEMATIC_IS_ACCEL_LABEL (label)) {
       gtk_container_remove (GTK_CONTAINER (proxy), label);
       label = NULL;
     }
@@ -140,7 +140,7 @@ schematic_action_connect_proxy (GtkAction *action,
     if (label == NULL) {
       char *label_string;
       g_object_get (action, "label", &label_string, NULL);
-      g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
+      g_object_new (SCHEMATIC_TYPE_ACCEL_LABEL,
                     "use-underline", TRUE,
                     "xalign", 0.0,
                     "visible", TRUE,

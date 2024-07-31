@@ -1,13 +1,13 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2011 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * Code based on GTK 2.14.5 gtk/gtkaccellabel.h (LGPL)
  *
  * GTK - The GIMP Toolkit
  * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
  *
- * GschemAccelLabel: GtkLabel with accelerator monitoring facilities.
+ * SchematicAccelLabel: GtkLabel with accelerator monitoring facilities.
  * Copyright (C) 1998 Tim Janik
  *
  * Modified by the GTK+ Team and others 1997-2001.  See the AUTHORS
@@ -42,25 +42,25 @@ G_BEGIN_DECLS
 
 #ifdef ENABLE_GTK3
 
-#define GSCHEM_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
-#define GSCHEM_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabel))
-#define GSCHEM_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabelClass))
-#define GSCHEM_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_ACCEL_LABEL))
-#define GSCHEM_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSCHEM_TYPE_ACCEL_LABEL))
-#define GSCHEM_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabelClass))
+#define SCHEMATIC_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
+#define SCHEMATIC_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabel))
+#define SCHEMATIC_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
+#define SCHEMATIC_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_ACCEL_LABEL))
+#define SCHEMATIC_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCHEMATIC_TYPE_ACCEL_LABEL))
+#define SCHEMATIC_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
 
 
-typedef struct _GschemAccelLabel GschemAccelLabel;
-typedef struct _GschemAccelLabelClass GschemAccelLabelClass;
-typedef struct _GschemAccelLabelPrivate GschemAccelLabelPrivate;
+typedef struct _SchematicAccelLabel SchematicAccelLabel;
+typedef struct _SchematicAccelLabelClass SchematicAccelLabelClass;
+typedef struct _SchematicAccelLabelPrivate SchematicAccelLabelPrivate;
 
-struct _GschemAccelLabel
+struct _SchematicAccelLabel
 {
   GtkAccelLabel label;
-  GschemAccelLabelPrivate *priv;
+  SchematicAccelLabelPrivate *priv;
 };
 
-struct _GschemAccelLabelClass
+struct _SchematicAccelLabelClass
 {
   GtkLabelClass  parent_class;
 };
@@ -68,25 +68,25 @@ struct _GschemAccelLabelClass
 
 GType      gschem_accel_label_get_type          (void) G_GNUC_CONST;
 GtkWidget* gschem_accel_label_new               (const gchar      *string);
-guint      gschem_accel_label_get_accel_width   (GschemAccelLabel *accel_label);
-void       gschem_accel_label_set_accel_string  (GschemAccelLabel *accel_label,
+guint      gschem_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
+void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
                                                  const gchar      *accel_string);
-gboolean   gschem_accel_label_refetch           (GschemAccelLabel *accel_label);
+gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 
 #else /* GTK2 */
 
-#define GSCHEM_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
-#define GSCHEM_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabel))
-#define GSCHEM_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabelClass))
-#define GSCHEM_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_ACCEL_LABEL))
-#define GSCHEM_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSCHEM_TYPE_ACCEL_LABEL))
-#define GSCHEM_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_ACCEL_LABEL, GschemAccelLabelClass))
+#define SCHEMATIC_TYPE_ACCEL_LABEL            (gschem_accel_label_get_type ())
+#define SCHEMATIC_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabel))
+#define SCHEMATIC_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
+#define SCHEMATIC_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_ACCEL_LABEL))
+#define SCHEMATIC_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCHEMATIC_TYPE_ACCEL_LABEL))
+#define SCHEMATIC_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_ACCEL_LABEL, SchematicAccelLabelClass))
 
-typedef struct _GschemAccelLabel            GschemAccelLabel;
-typedef struct _GschemAccelLabelClass  GschemAccelLabelClass;
+typedef struct _SchematicAccelLabel            SchematicAccelLabel;
+typedef struct _SchematicAccelLabelClass  SchematicAccelLabelClass;
 
-struct _GschemAccelLabel
+struct _SchematicAccelLabel
 {
   GtkAccelLabel label;
   guint          accel_padding;
@@ -94,7 +94,7 @@ struct _GschemAccelLabel
   guint16        accel_string_width;
 };
 
-struct _GschemAccelLabelClass
+struct _SchematicAccelLabelClass
 {
   GtkAccelLabelClass  parent_class;
 };
@@ -102,13 +102,13 @@ struct _GschemAccelLabelClass
 
 GType      gschem_accel_label_get_type          (void) G_GNUC_CONST;
 GtkWidget* gschem_accel_label_new               (const gchar      *string);
-guint      gschem_accel_label_get_accel_width   (GschemAccelLabel *accel_label);
-void       gschem_accel_label_set_accel_string  (GschemAccelLabel *accel_label,
+guint      gschem_accel_label_get_accel_width   (SchematicAccelLabel *accel_label);
+void       gschem_accel_label_set_accel_string  (SchematicAccelLabel *accel_label,
                                                  const gchar      *accel_string);
-gboolean   gschem_accel_label_refetch           (GschemAccelLabel *accel_label);
+gboolean   gschem_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 /* private */
-gchar *    _gschem_accel_label_class_get_accelerator_label (GschemAccelLabelClass *klass,
+gchar *    _gschem_accel_label_class_get_accelerator_label (SchematicAccelLabelClass *klass,
                                                             guint                  accelerator_key,
                                                             GdkModifierType        accelerator_mods);
 #endif /* ENABLE_GTK3 */

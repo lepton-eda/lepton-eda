@@ -1,13 +1,13 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * Code based on GTK 2.14.5 gtk/gtkaccellabel.c (LGPL)
  *
  * GTK - The GIMP Toolkit
  * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
  *
- * GschemAccelLabel: GtkLabel with accelerator monitoring facilities.
+ * SchematicAccelLabel: GtkLabel with accelerator monitoring facilities.
  * Copyright (C) 1998 Tim Janik
  *
  * Modified by the GTK+ Team and others 1997-2001.  See the AUTHORS
@@ -49,7 +49,7 @@ enum {
   PROP_ACCEL_STRING,
 };
 
-struct _GschemAccelLabelPrivate
+struct _SchematicAccelLabelPrivate
 {
   GtkWidget     *accel_widget;       /* done */
   gchar         *accel_string;       /* has set function */
@@ -57,14 +57,14 @@ struct _GschemAccelLabelPrivate
   guint16        accel_string_width; /* seems to be private */
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GschemAccelLabel, gschem_accel_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE_WITH_PRIVATE (SchematicAccelLabel, gschem_accel_label, GTK_TYPE_LABEL)
 
 static void
-gschem_accel_label_init (GschemAccelLabel *accel_label)
+gschem_accel_label_init (SchematicAccelLabel *accel_label)
 {
-  GschemAccelLabelPrivate *priv;
+  SchematicAccelLabelPrivate *priv;
 
-  accel_label->priv = (GschemAccelLabelPrivate*) gschem_accel_label_get_instance_private (accel_label);
+  accel_label->priv = (SchematicAccelLabelPrivate*) gschem_accel_label_get_instance_private (accel_label);
   priv = accel_label->priv;
   priv->accel_padding = 3;
   priv->accel_widget = NULL;
@@ -72,11 +72,11 @@ gschem_accel_label_init (GschemAccelLabel *accel_label)
 }
 
 gboolean
-gschem_accel_label_refetch (GschemAccelLabel *accel_label)
+gschem_accel_label_refetch (SchematicAccelLabel *accel_label)
 {
   gboolean enable_accels;
 
-  g_return_val_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label), FALSE);
+  g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), FALSE);
 
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (accel_label)),
                 "gtk-enable-accels", &enable_accels,
@@ -96,7 +96,7 @@ gschem_accel_label_refetch (GschemAccelLabel *accel_label)
 
 
 static const gchar *
-gschem_accel_label_get_string (GschemAccelLabel *accel_label)
+gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->priv->accel_string)
     gschem_accel_label_refetch (accel_label);
@@ -111,9 +111,9 @@ gschem_accel_label_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GschemAccelLabel  *accel_label;
+  SchematicAccelLabel  *accel_label;
 
-  accel_label = GSCHEM_ACCEL_LABEL (object);
+  accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   switch (prop_id) {
     /* Dummy properties from GtkAccelLabel */
@@ -135,9 +135,9 @@ gschem_accel_label_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GschemAccelLabel  *accel_label;
+  SchematicAccelLabel  *accel_label;
 
-  accel_label = GSCHEM_ACCEL_LABEL (object);
+  accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   switch (prop_id) {
     /* Dummy property from GtkAccelLabel */
@@ -158,7 +158,7 @@ gschem_accel_label_get_property (GObject    *object,
 static void
 gschem_accel_label_finalize (GObject *object)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (object);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   g_free (accel_label->priv->accel_string);
 
@@ -166,16 +166,16 @@ gschem_accel_label_finalize (GObject *object)
 }
 
 guint
-gschem_accel_label_get_accel_width (GschemAccelLabel *accel_label)
+gschem_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
 {
-  g_return_val_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label), 0);
+  g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), 0);
 
   return (accel_label->priv->accel_string_width +
           (accel_label->priv->accel_string_width ? accel_label->priv->accel_padding : 0));
 }
 
 static PangoLayout *
-gschem_accel_label_get_accel_layout (GschemAccelLabel *accel_label)
+gschem_accel_label_get_accel_layout (SchematicAccelLabel *accel_label)
 {
   GtkWidget *widget = GTK_WIDGET (accel_label);
   PangoLayout *layout;
@@ -202,7 +202,7 @@ static gboolean
 gschem_accel_label_draw (GtkWidget *widget,
                          cairo_t *cr)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   guint ac_width;
   GtkAllocation allocation;
   GtkRequisition requisition;
@@ -259,16 +259,16 @@ substitute_underscores (char *str)
 
 /**
  * gschem_accel_label_set_accel_string:
- * \param accel_label a #GschemAccelLabel
+ * \param accel_label a #SchematicAccelLabel
  * \param accel_string the accelerator string.
  *
  * Sets the accelerator string for this accelerator label.
  **/
 void
-gschem_accel_label_set_accel_string (GschemAccelLabel *accel_label,
+gschem_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
                                      const gchar      *accel_string)
 {
-  g_return_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label));
+  g_return_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label));
 
   if (accel_label->priv->accel_string)
     g_free (accel_label->priv->accel_string);
@@ -288,7 +288,7 @@ gschem_accel_label_get_preferred_width (GtkWidget *widget,
                                         gint *minimal_width,
                                         gint *natural_width)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   PangoLayout   *layout;
   gint           width;
   GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->get_preferred_width (widget,
@@ -302,7 +302,7 @@ gschem_accel_label_get_preferred_width (GtkWidget *widget,
 
 
 static void
-gschem_accel_label_class_init (GschemAccelLabelClass *klass)
+gschem_accel_label_class_init (SchematicAccelLabelClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -339,15 +339,15 @@ enum {
   PROP_ACCEL_STRING,
 };
 
-G_DEFINE_TYPE (GschemAccelLabel, gschem_accel_label, GTK_TYPE_ACCEL_LABEL)
+G_DEFINE_TYPE (SchematicAccelLabel, gschem_accel_label, GTK_TYPE_ACCEL_LABEL)
 
 
 gboolean
-gschem_accel_label_refetch (GschemAccelLabel *accel_label)
+gschem_accel_label_refetch (SchematicAccelLabel *accel_label)
 {
   gboolean enable_accels;
 
-  g_return_val_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label), FALSE);
+  g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), FALSE);
 
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (accel_label)),
                 "gtk-enable-accels", &enable_accels,
@@ -367,7 +367,7 @@ gschem_accel_label_refetch (GschemAccelLabel *accel_label)
 
 
 static const gchar *
-gschem_accel_label_get_string (GschemAccelLabel *accel_label)
+gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->accel_string)
     gschem_accel_label_refetch (accel_label);
@@ -382,9 +382,9 @@ gschem_accel_label_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GschemAccelLabel  *accel_label;
+  SchematicAccelLabel  *accel_label;
 
-  accel_label = GSCHEM_ACCEL_LABEL (object);
+  accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   switch (prop_id) {
     /* Dummy properties from GtkAccelLabel */
@@ -407,9 +407,9 @@ gschem_accel_label_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GschemAccelLabel  *accel_label;
+  SchematicAccelLabel  *accel_label;
 
-  accel_label = GSCHEM_ACCEL_LABEL (object);
+  accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   switch (prop_id) {
     /* Dummy property from GtkAccelLabel */
@@ -433,7 +433,7 @@ gschem_accel_label_get_property (GObject    *object,
 }
 
 static void
-gschem_accel_label_init (GschemAccelLabel *accel_label)
+gschem_accel_label_init (SchematicAccelLabel *accel_label)
 {
   accel_label->accel_padding = 3;
   accel_label->accel_string = NULL;
@@ -442,7 +442,7 @@ gschem_accel_label_init (GschemAccelLabel *accel_label)
 static void
 gschem_accel_label_finalize (GObject *object)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (object);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
   g_free (accel_label->accel_string);
 
@@ -450,9 +450,9 @@ gschem_accel_label_finalize (GObject *object)
 }
 
 guint
-gschem_accel_label_get_accel_width (GschemAccelLabel *accel_label)
+gschem_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
 {
-  g_return_val_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label), 0);
+  g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), 0);
 
   return (accel_label->accel_string_width +
           (accel_label->accel_string_width ? accel_label->accel_padding : 0));
@@ -462,7 +462,7 @@ static void
 gschem_accel_label_size_request (GtkWidget      *widget,
                                  GtkRequisition *requisition)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   PangoLayout *layout;
   gint width;
 
@@ -491,7 +491,7 @@ static gboolean
 gschem_accel_label_expose_event (GtkWidget      *widget,
                                  GdkEventExpose *event)
 {
-  GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
+  SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   GtkMisc *misc = GTK_MISC (accel_label);
   guint xpad = 0;
   GtkTextDirection direction;
@@ -600,16 +600,16 @@ substitute_underscores (char *str)
 
 /**
  * gschem_accel_label_set_accel_string:
- * \param accel_label a #GschemAccelLabel
+ * \param accel_label a #SchematicAccelLabel
  * \param accel_string the accelerator string.
  *
  * Sets the accelerator string for this accelerator label.
  **/
 void
-gschem_accel_label_set_accel_string (GschemAccelLabel *accel_label,
+gschem_accel_label_set_accel_string (SchematicAccelLabel *accel_label,
                                      const gchar      *accel_string)
 {
-  g_return_if_fail (GSCHEM_IS_ACCEL_LABEL (accel_label));
+  g_return_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label));
 
   if (accel_label->accel_string)
     g_free (accel_label->accel_string);
@@ -625,7 +625,7 @@ gschem_accel_label_set_accel_string (GschemAccelLabel *accel_label,
 }
 
 static void
-gschem_accel_label_class_init (GschemAccelLabelClass *klass)
+gschem_accel_label_class_init (SchematicAccelLabelClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
