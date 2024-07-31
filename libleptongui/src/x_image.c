@@ -932,7 +932,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), width, height, -1);
 
-  gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
+  schematic_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
   /*! \bug Need to handle image color setting properly.
    *       See gEDA Launchpad bug 1086530.

@@ -107,7 +107,7 @@ i_vars_set_options (SchematicOptions* opts)
                        sizeof( vals_gm ) / sizeof( vals_gm[0] ),
                        &grid_mode);
 
-  gschem_options_set_grid_mode (opts, (SchematicGridMode) grid_mode);
+  schematic_options_set_grid_mode (opts, (SchematicGridMode) grid_mode);
 
 
   gboolean val = FALSE;

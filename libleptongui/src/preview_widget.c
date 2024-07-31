@@ -226,7 +226,7 @@ schematic_preview_init (SchematicPreview *preview)
   preview_w_current->scrollbars_flag = FALSE;
 
   /* be sure to turn off the grid */
-  gschem_options_set_grid_mode (preview_w_current->options, GRID_MODE_NONE);
+  schematic_options_set_grid_mode (preview_w_current->options, GRID_MODE_NONE);
 
   /* preview_w_current windows don't have toolbars */
   preview_w_current->handleboxes = FALSE;
