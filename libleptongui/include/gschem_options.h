@@ -135,8 +135,8 @@ void
 schematic_options_set_grid_mode (SchematicOptions *options,
                                  SchematicGridMode grid_mode);
 void
-gschem_options_set_magnetic_net_mode (SchematicOptions *options, gboolean enabled);
-
+schematic_options_set_magnetic_net_mode (SchematicOptions *options,
+                                         gboolean enabled);
 void
 gschem_options_set_net_rubber_band_mode (SchematicOptions *options, gboolean enabled);
 

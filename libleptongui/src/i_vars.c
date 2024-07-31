@@ -117,7 +117,7 @@ i_vars_set_options (SchematicOptions* opts)
 
   cfg_read_bool ("schematic.gui", "magnetic-net-mode",
                  default_magnetic_net_mode, &val);
-  gschem_options_set_magnetic_net_mode (opts, val);
+  schematic_options_set_magnetic_net_mode (opts, val);
 }
 
 
