@@ -62,6 +62,6 @@ schematic_options_widget_get_type ();
 G_BEGIN_DECLS
 
 GtkWidget*
-gschem_options_widget_new (SchematicWindow *w_current);
+schematic_options_widget_new (SchematicWindow *w_current);
 
 G_END_DECLS

@@ -427,7 +427,7 @@
             schematic_options_get_snap_size
             schematic_options_set_snap_size
 
-            gschem_options_widget_new
+            schematic_options_widget_new
 
             schematic_viewport_get_bottom
             schematic_viewport_get_left
@@ -767,7 +767,7 @@
 (define-lff schematic_options_set_snap_size void (list '* int))
 
 ;;; gschem_options_widget.c
-(define-lff gschem_options_widget_new '* '(*))
+(define-lff schematic_options_widget_new '* '(*))
 
 ;;; viewport.c
 (define-lff schematic_viewport_get_bottom int '(*))

@@ -1092,7 +1092,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_set_text_properties_widget *window
                                                    (gschem_text_properties_widget_new *window))
       (schematic_window_set_options_widget *window
-                                           (gschem_options_widget_new *window))
+                                           (schematic_options_widget_new *window))
       (schematic_window_set_log_widget *window
                                        (gschem_log_widget_new))
       (schematic_window_set_find_text_state_widget *window (gschem_find_text_state_new))

@@ -128,7 +128,7 @@ schematic_options_widget_adjust_focus (SchematicOptionsWidget *widget)
  *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_options_widget_new (SchematicWindow *w_current)
+schematic_options_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_OPTIONS_WIDGET,
                                    "schematic-window",  w_current,
