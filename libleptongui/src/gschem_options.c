@@ -192,7 +192,7 @@ schematic_options_get_net_rubber_band_mode (SchematicOptions *options)
  *  \return The snap mode
  */
 SchematicSnapMode
-gschem_options_get_snap_mode (SchematicOptions *options)
+schematic_options_get_snap_mode (SchematicOptions *options)
 {
   g_return_val_if_fail (options != NULL, SNAP_GRID);
 
@@ -433,7 +433,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_SNAP_MODE:
-      g_value_set_int (value, gschem_options_get_snap_mode (options));
+      g_value_set_int (value, schematic_options_get_snap_mode (options));
       break;
 
     case PROP_SNAP_SIZE:

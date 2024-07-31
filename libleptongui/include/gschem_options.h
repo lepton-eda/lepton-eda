@@ -120,7 +120,7 @@ gboolean
 schematic_options_get_net_rubber_band_mode (SchematicOptions *options);
 
 SchematicSnapMode
-gschem_options_get_snap_mode (SchematicOptions *options);
+schematic_options_get_snap_mode (SchematicOptions *options);
 
 int
 gschem_options_get_snap_size (SchematicOptions *options);

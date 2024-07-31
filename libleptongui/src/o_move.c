@@ -318,7 +318,7 @@ o_move_motion (SchematicWindow *w_current,
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
-  snap_mode = gschem_options_get_snap_mode (w_current->options);
+  snap_mode = schematic_options_get_snap_mode (w_current->options);
 
   selection = lepton_list_get_glist (page->selection_list);
 

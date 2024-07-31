@@ -124,7 +124,7 @@ i_show_state (SchematicWindow *w_current,
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
 
-  snap_mode = gschem_options_get_snap_mode (w_current->options);
+  snap_mode = schematic_options_get_snap_mode (w_current->options);
 
   if (show_hidden_text)
     array[i--] = _("Show Hidden");
@@ -511,7 +511,7 @@ i_update_grid_info (SchematicWindow *w_current)
 
   if (w_current->bottom_widget != NULL) {
     g_object_set (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-        "snap-mode", gschem_options_get_snap_mode (w_current->options),
+        "snap-mode", schematic_options_get_snap_mode (w_current->options),
         "snap-size", gschem_options_get_snap_size (w_current->options),
         "grid-mode", schematic_options_get_grid_mode (w_current->options),
         "grid-size", x_grid_query_drawn_spacing (w_current),

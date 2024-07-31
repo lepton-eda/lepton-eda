@@ -41,7 +41,7 @@ snap_grid (SchematicWindow *w_current,
 
   g_return_val_if_fail (w_current != NULL, coord);
 
-  snap_mode = gschem_options_get_snap_mode (w_current->options);
+  snap_mode = schematic_options_get_snap_mode (w_current->options);
 
   if (snap_mode != SNAP_OFF) {
     gint snap_size = gschem_options_get_snap_size (w_current->options);

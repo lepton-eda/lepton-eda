@@ -755,7 +755,7 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
     int index;
     SchematicSnapMode snap_mode;
 
-    snap_mode = gschem_options_get_snap_mode (widget->options);
+    snap_mode = schematic_options_get_snap_mode (widget->options);
 
     for (index = 0; index < SNAP_MODE_COUNT; index++)
     {

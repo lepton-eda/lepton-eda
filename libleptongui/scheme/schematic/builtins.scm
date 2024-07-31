@@ -411,7 +411,7 @@
     (string->symbol
      (pointer->string
       (schematic_snap_mode_to_string
-       (gschem_options_get_snap_mode *options)))))
+       (schematic_options_get_snap_mode *options)))))
 
   (when (eq? snap-mode 'off)
     (log! 'message (G_ "WARNING: Do not translate with snap off!"))
@@ -1501,7 +1501,7 @@ the snap grid size should be set to 100")))
 
   (let ((snap-mode (pointer->string
                     (schematic_snap_mode_to_string
-                     (gschem_options_get_snap_mode *options)))))
+                     (schematic_options_get_snap_mode *options)))))
     ;; FIXME: the user should be always aware of snap mode change,
     ;; no matter what is used to switch the mode, a hotkey or a
     ;; mouse click on the status bar.  May be show the messages
