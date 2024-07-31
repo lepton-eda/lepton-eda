@@ -113,7 +113,7 @@ on_click_rubber_band (GtkWidget* ebox, GdkEvent* e, gpointer data)
   GdkEventButton* ebtn = (GdkEventButton*) e;
   if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
   {
-    gschem_options_cycle_net_rubber_band_mode (widget->toplevel->options);
+    schematic_options_cycle_net_rubber_band_mode (widget->toplevel->options);
     return TRUE;
   }
 

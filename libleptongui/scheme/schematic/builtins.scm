@@ -1561,7 +1561,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&options-rubberband #:label (G_ "Toggle Net Rubber Band"))
-  (gschem_options_cycle_net_rubber_band_mode
+  (schematic_options_cycle_net_rubber_band_mode
    (schematic_window_get_options (*current-window))))
 
 (define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
