@@ -167,7 +167,7 @@ on_click_snap_info (GtkWidget* ebox, GdkEvent* e, gpointer data)
   GdkEventButton* ebtn = (GdkEventButton*) e;
   if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
   {
-    gschem_options_cycle_snap_mode (widget->toplevel->options);
+    schematic_options_cycle_snap_mode (widget->toplevel->options);
     return TRUE;
   }
 

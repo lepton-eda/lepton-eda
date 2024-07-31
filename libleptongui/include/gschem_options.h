@@ -108,7 +108,7 @@ void
 schematic_options_cycle_net_rubber_band_mode (SchematicOptions *options);
 
 void
-gschem_options_cycle_snap_mode (SchematicOptions *options);
+schematic_options_cycle_snap_mode (SchematicOptions *options);
 
 SchematicGridMode
 gschem_options_get_grid_mode (SchematicOptions *options);

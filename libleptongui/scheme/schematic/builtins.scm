@@ -1497,7 +1497,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
   (define *options (schematic_window_get_options *window))
 
-  (gschem_options_cycle_snap_mode *options)
+  (schematic_options_cycle_snap_mode *options)
 
   (let ((snap-mode (pointer->string
                     (schematic_snap_mode_to_string

@@ -421,7 +421,7 @@
             gschem_options_get_grid_mode
             schematic_options_cycle_magnetic_net_mode
             schematic_options_cycle_net_rubber_band_mode
-            gschem_options_cycle_snap_mode
+            schematic_options_cycle_snap_mode
             gschem_options_get_snap_mode
             gschem_options_set_snap_mode
             gschem_options_get_snap_size
@@ -760,7 +760,7 @@
 (define-lff gschem_options_get_grid_mode int '(*))
 (define-lff schematic_options_cycle_magnetic_net_mode void '(*))
 (define-lff schematic_options_cycle_net_rubber_band_mode void '(*))
-(define-lff gschem_options_cycle_snap_mode void '(*))
+(define-lff schematic_options_cycle_snap_mode void '(*))
 (define-lff gschem_options_get_snap_mode int '(*))
 (define-lff gschem_options_set_snap_mode void (list '* int))
 (define-lff gschem_options_get_snap_size int '(*))
