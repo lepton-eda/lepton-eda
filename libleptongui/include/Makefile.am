@@ -30,7 +30,7 @@ noinst_HEADERS = \
 	gschem_macro_widget.h \
 	gschem_main_window.h \
 	gschem_object_properties_widget.h \
-	gschem_options.h \
+	options.h \
 	gschem_options_widget.h \
 	viewport.h \
 	gschem_pin_type_combo.h \

@@ -755,7 +755,7 @@
 ;;; gschem_object_properties_widget.c
 (define-lff gschem_object_properties_widget_new '* '(*))
 
-;;; gschem_options.c
+;;; options.c
 (define-lff schematic_options_cycle_grid_mode void '(*))
 (define-lff schematic_options_get_grid_mode int '(*))
 (define-lff schematic_options_cycle_magnetic_net_mode void '(*))
