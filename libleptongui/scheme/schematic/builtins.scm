@@ -1566,7 +1566,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
   (define *window (*current-window))
-  (gschem_options_cycle_magnetic_net_mode (schematic_window_get_options *window))
+  (schematic_options_cycle_magnetic_net_mode (schematic_window_get_options *window))
   (i_show_state *window %null-pointer))
 
 

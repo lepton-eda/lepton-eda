@@ -91,7 +91,7 @@ schematic_options_cycle_grid_mode (SchematicOptions *options)
  *  \param options These options
  */
 void
-gschem_options_cycle_magnetic_net_mode (SchematicOptions *options)
+schematic_options_cycle_magnetic_net_mode (SchematicOptions *options)
 {
   gboolean next_magnetic_net_mode;
 
