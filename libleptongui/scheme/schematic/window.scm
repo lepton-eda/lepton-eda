@@ -1260,7 +1260,7 @@ snap settings."
   ;; Mimic snap_grid() when snapping is not off.
   (define (snap-grid coord)
     (lepton_coord_snap coord
-                       (gschem_options_get_snap_size
+                       (schematic_options_get_snap_size
                         (schematic_window_get_options *window))))
 
   (check-coord point 1)

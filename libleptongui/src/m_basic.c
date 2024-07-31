@@ -44,7 +44,7 @@ snap_grid (SchematicWindow *w_current,
   snap_mode = schematic_options_get_snap_mode (w_current->options);
 
   if (snap_mode != SNAP_OFF) {
-    gint snap_size = gschem_options_get_snap_size (w_current->options);
+    gint snap_size = schematic_options_get_snap_size (w_current->options);
 
     coord = lepton_coord_snap (coord, snap_size);
   }

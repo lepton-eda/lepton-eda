@@ -123,7 +123,7 @@ SchematicSnapMode
 schematic_options_get_snap_mode (SchematicOptions *options);
 
 int
-gschem_options_get_snap_size (SchematicOptions *options);
+schematic_options_get_snap_size (SchematicOptions *options);
 
 GType
 schematic_options_get_type ();

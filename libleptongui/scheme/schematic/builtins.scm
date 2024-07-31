@@ -421,7 +421,7 @@
     ;; Update status on screen.
     (i_show_state *window %null-pointer))
 
-  (when (not (= 100 (gschem_options_get_snap_size *options)))
+  (when (not (= 100 (schematic_options_get_snap_size *options)))
     (log! 'message (G_ "WARNING: Snap grid size is not equal to 100!"))
     (log! 'message (G_ "WARNING: If you are translating a symbol to the origin,
 the snap grid size should be set to 100")))
@@ -1525,13 +1525,13 @@ the snap grid size should be set to 100")))
 (define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
   (define *options (schematic_window_get_options (*current-window)))
   (gschem_options_set_snap_size *options
-                                (* (gschem_options_get_snap_size *options) 2)))
+                                (* (schematic_options_get_snap_size *options) 2)))
 
 
 ;;; Divides by two the snap grid size (if it's and even number).
 (define-action-public (&options-scale-down-snap-size #:label (G_ "Decrease Grid Spacing"))
   (define *options (schematic_window_get_options (*current-window)))
-  (define snap-size (gschem_options_get_snap_size *options))
+  (define snap-size (schematic_options_get_snap_size *options))
   (when (even? snap-size)
     (gschem_options_set_snap_size *options (/ snap-size 2))))
 

@@ -49,7 +49,7 @@ query_dots_grid_spacing (SchematicWindow *w_current)
 
   g_assert (w_current != NULL);
 
-  int snap_size = gschem_options_get_snap_size (w_current->options);
+  int snap_size = schematic_options_get_snap_size (w_current->options);
 
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, -1);
@@ -272,7 +272,7 @@ query_mesh_grid_spacing (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, -1);
 
-  incr = gschem_options_get_snap_size (w_current->options);
+  incr = schematic_options_get_snap_size (w_current->options);
   screen_incr = schematic_canvas_SCREENabs (page_view, incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
@@ -310,7 +310,7 @@ draw_mesh_grid_region (SchematicWindow *w_current,
                        int width,
                        int height)
 {
-  int snap_size = gschem_options_get_snap_size (w_current->options);
+  int snap_size = schematic_options_get_snap_size (w_current->options);
   int coarse_increment = MESH_COARSE_GRID_MULTIPLIER * snap_size;
   double dummy = 0.0;
   double threshold = w_current->mesh_grid_display_threshold;
