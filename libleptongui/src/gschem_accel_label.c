@@ -166,7 +166,7 @@ gschem_accel_label_finalize (GObject *object)
 }
 
 guint
-gschem_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
+schematic_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
 {
   g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), 0);
 
@@ -209,7 +209,7 @@ gschem_accel_label_draw (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->draw (widget, cr);
 
-  ac_width = gschem_accel_label_get_accel_width (accel_label);
+  ac_width = schematic_accel_label_get_accel_width (accel_label);
 
   gtk_widget_get_allocation (widget, &allocation);
   gtk_widget_get_preferred_size (widget, NULL, &requisition);
@@ -451,7 +451,7 @@ gschem_accel_label_finalize (GObject *object)
 }
 
 guint
-gschem_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
+schematic_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
 {
   g_return_val_if_fail (SCHEMATIC_IS_ACCEL_LABEL (accel_label), 0);
 
@@ -507,7 +507,7 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
     {
       guint ac_width;
 
-      ac_width = gschem_accel_label_get_accel_width (accel_label);
+      ac_width = schematic_accel_label_get_accel_width (accel_label);
 
       GtkAllocation *allocation = g_new (GtkAllocation, 1);
       GtkRequisition *requisition = g_new (GtkRequisition, 1);
