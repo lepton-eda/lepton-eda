@@ -106,10 +106,10 @@ schematic_accel_label_get_string (SchematicAccelLabel *accel_label)
 
 
 static void
-gschem_accel_label_set_property (GObject      *object,
-                                 guint         prop_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+schematic_accel_label_set_property (GObject      *object,
+                                    guint         prop_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   SchematicAccelLabel  *accel_label;
 
@@ -308,7 +308,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gobject_class->finalize = gschem_accel_label_finalize;
-  gobject_class->set_property = gschem_accel_label_set_property;
+  gobject_class->set_property = schematic_accel_label_set_property;
   gobject_class->get_property = gschem_accel_label_get_property;
 
   widget_class->get_preferred_width = gschem_accel_label_get_preferred_width;
@@ -378,10 +378,10 @@ schematic_accel_label_get_string (SchematicAccelLabel *accel_label)
 
 
 static void
-gschem_accel_label_set_property (GObject      *object,
-                                 guint         prop_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+schematic_accel_label_set_property (GObject      *object,
+                                    guint         prop_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   SchematicAccelLabel  *accel_label;
 
@@ -632,7 +632,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gobject_class->finalize = gschem_accel_label_finalize;
-  gobject_class->set_property = gschem_accel_label_set_property;
+  gobject_class->set_property = schematic_accel_label_set_property;
   gobject_class->get_property = gschem_accel_label_get_property;
 
   widget_class->size_request = gschem_accel_label_size_request;
