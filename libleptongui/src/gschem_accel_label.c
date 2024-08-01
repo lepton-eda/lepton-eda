@@ -96,7 +96,7 @@ schematic_accel_label_refetch (SchematicAccelLabel *accel_label)
 
 
 static const gchar *
-gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
+schematic_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->priv->accel_string)
     schematic_accel_label_refetch (accel_label);
@@ -180,7 +180,7 @@ gschem_accel_label_get_accel_layout (SchematicAccelLabel *accel_label)
   GtkWidget *widget = GTK_WIDGET (accel_label);
   PangoLayout *layout;
 
-  layout = gtk_widget_create_pango_layout (widget, gschem_accel_label_get_string (accel_label));
+  layout = gtk_widget_create_pango_layout (widget, schematic_accel_label_get_string (accel_label));
 
   return layout;
 }
@@ -368,7 +368,7 @@ schematic_accel_label_refetch (SchematicAccelLabel *accel_label)
 
 
 static const gchar *
-gschem_accel_label_get_string (SchematicAccelLabel *accel_label)
+schematic_accel_label_get_string (SchematicAccelLabel *accel_label)
 {
   if (!accel_label->accel_string)
     schematic_accel_label_refetch (accel_label);
@@ -469,7 +469,7 @@ gschem_accel_label_size_request (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (schematic_accel_label_parent_class)->size_request (widget, requisition);
 
-  layout = gtk_widget_create_pango_layout (widget, gschem_accel_label_get_string (accel_label));
+  layout = gtk_widget_create_pango_layout (widget, schematic_accel_label_get_string (accel_label));
   pango_layout_get_pixel_size (layout, &width, NULL);
   accel_label->accel_string_width = width;
   g_object_unref (layout);
@@ -557,7 +557,7 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
           gtk_label_get_layout_offsets (GTK_LABEL (accel_label), NULL, &y);
 
-          accel_layout = gtk_widget_create_pango_layout (widget, gschem_accel_label_get_string (accel_label));
+          accel_layout = gtk_widget_create_pango_layout (widget, schematic_accel_label_get_string (accel_label));
 
           y += get_first_baseline (label_layout) - get_first_baseline (accel_layout);
 
