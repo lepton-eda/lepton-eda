@@ -7,7 +7,7 @@ libleptongui/src/globals.c
 libleptongui/src/lepton-schematic.c
 libleptongui/src/gschemhotkeystore.c
 libleptongui/src/gschem_about_dialog.c
-libleptongui/src/gschem_accel_label.c
+libleptongui/src/accel_label.c
 libleptongui/src/gschem_alignment_combo.c
 libleptongui/src/gschem_arc_dialog.c
 libleptongui/src/gschem_bin.c

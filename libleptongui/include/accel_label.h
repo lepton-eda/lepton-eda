@@ -35,8 +35,8 @@
  * Boston, MA 02110-1301 USA
  */
 
-#ifndef __GSCHEM_ACCEL_LABEL_H__
-#define __GSCHEM_ACCEL_LABEL_H__
+#ifndef __ACCEL_LABEL_H__
+#define __ACCEL_LABEL_H__
 
 G_BEGIN_DECLS
 
@@ -115,4 +115,4 @@ gchar *_schematic_accel_label_class_get_accelerator_label (SchematicAccelLabelCl
 
 G_END_DECLS
 
-#endif /* __GSCHEM_ACCEL_LABEL_H__ */
+#endif /* __ACCEL_LABEL_H__ */
