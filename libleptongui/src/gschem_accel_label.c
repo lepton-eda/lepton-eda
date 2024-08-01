@@ -156,7 +156,7 @@ schematic_accel_label_get_property (GObject    *object,
 }
 
 static void
-gschem_accel_label_finalize (GObject *object)
+schematic_accel_label_finalize (GObject *object)
 {
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
@@ -307,7 +307,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gobject_class->finalize = gschem_accel_label_finalize;
+  gobject_class->finalize = schematic_accel_label_finalize;
   gobject_class->set_property = schematic_accel_label_set_property;
   gobject_class->get_property = schematic_accel_label_get_property;
 
@@ -441,7 +441,7 @@ schematic_accel_label_init (SchematicAccelLabel *accel_label)
 }
 
 static void
-gschem_accel_label_finalize (GObject *object)
+schematic_accel_label_finalize (GObject *object)
 {
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (object);
 
@@ -631,7 +631,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gobject_class->finalize = gschem_accel_label_finalize;
+  gobject_class->finalize = schematic_accel_label_finalize;
   gobject_class->set_property = schematic_accel_label_set_property;
   gobject_class->get_property = schematic_accel_label_get_property;
 
