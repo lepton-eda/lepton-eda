@@ -58,4 +58,4 @@ gboolean
 schematic_binding_update_model (SchematicBinding *binding);
 
 gboolean
-gschem_binding_update_widget (SchematicBinding *binding);
+schematic_binding_update_widget (SchematicBinding *binding);
