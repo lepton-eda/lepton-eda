@@ -95,7 +95,7 @@ schematic_binding_set_model_object (SchematicBinding *binding,
  *  \return TRUE, if successful
  */
 gboolean
-gschem_binding_update_model (SchematicBinding *binding)
+schematic_binding_update_model (SchematicBinding *binding)
 {
   SchematicBindingClass *klass = SCHEMATIC_BINDING_GET_CLASS (binding);
 

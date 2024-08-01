@@ -55,7 +55,7 @@ void
 schematic_binding_set_model_object (SchematicBinding *binding,
                                     GObject *object);
 gboolean
-gschem_binding_update_model (SchematicBinding *binding);
+schematic_binding_update_model (SchematicBinding *binding);
 
 gboolean
 gschem_binding_update_widget (SchematicBinding *binding);
