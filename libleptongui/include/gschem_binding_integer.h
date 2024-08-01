@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
- * Copyright (C) 2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2013 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +23,20 @@
  * \brief Data binding between a widget and model.
  */
 
-#define GSCHEM_TYPE_BINDING_INTEGER          (gschem_binding_integer_get_type())
-#define GSCHEM_BINDING_INTEGER(obj)          (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_BINDING_INTEGER, GschemBindingInteger))
-#define GSCHEM_BINDING_INTEGER_CLASS(klass)  (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_BINDING_INTEGER, GschemBindingIntegerClass))
-#define IS_GSCHEM_BINDING_INTEGER(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_BINDING_INTEGER))
+#define SCHEMATIC_TYPE_BINDING_INTEGER          (schematic_binding_integer_get_type())
+#define SCHEMATIC_BINDING_INTEGER(obj)          (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_BINDING_INTEGER, SchematicBindingInteger))
+#define SCHEMATIC_BINDING_INTEGER_CLASS(klass)  (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_BINDING_INTEGER, SchematicBindingIntegerClass))
+#define IS_SCHEMATIC_BINDING_INTEGER(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_BINDING_INTEGER))
 
-typedef struct _GschemBindingIntegerClass GschemBindingIntegerClass;
-typedef struct _GschemBindingInteger GschemBindingInteger;
+typedef struct _SchematicBindingIntegerClass SchematicBindingIntegerClass;
+typedef struct _SchematicBindingInteger SchematicBindingInteger;
 
-struct _GschemBindingIntegerClass
+struct _SchematicBindingIntegerClass
 {
   GschemBindingClass parent_class;
 };
 
-struct _GschemBindingInteger
+struct _SchematicBindingInteger
 {
   GschemBinding parent;
 
@@ -45,7 +46,7 @@ struct _GschemBindingInteger
 };
 
 GType
-gschem_binding_integer_get_type ();
+schematic_binding_integer_get_type ();
 
 GschemBinding*
 gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget);

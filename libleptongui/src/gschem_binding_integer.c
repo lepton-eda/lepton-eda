@@ -38,11 +38,12 @@ enum
 
 
 
-G_DEFINE_TYPE(GschemBindingInteger, gschem_binding_integer, GSCHEM_TYPE_BINDING);
-
+G_DEFINE_TYPE (SchematicBindingInteger,
+               schematic_binding_integer,
+               GSCHEM_TYPE_BINDING);
 
 static void
-gschem_binding_integer_class_init (GschemBindingIntegerClass *klass);
+schematic_binding_integer_class_init (SchematicBindingIntegerClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -51,14 +52,15 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-gschem_binding_integer_init (GschemBindingInteger *swatch);
+schematic_binding_integer_init (SchematicBindingInteger *swatch);
 
 static void
-model_notify (GObject *object, GParamSpec *pspec, GschemBindingInteger *binding);
-
+model_notify (GObject *object,
+              GParamSpec *pspec,
+              SchematicBindingInteger *binding);
 static void
-set_model_param (GschemBindingInteger *binding, const gchar *param_name);
-
+set_model_param (SchematicBindingInteger *binding,
+                 const gchar *param_name);
 static void
 set_property (GObject      *object,
               guint        param_id,
@@ -66,8 +68,8 @@ set_property (GObject      *object,
               GParamSpec   *pspec);
 
 static void
-set_widget (GschemBindingInteger *binding, GtkWidget *widget);
-
+set_widget (SchematicBindingInteger *binding,
+            GtkWidget *widget);
 static gboolean
 update_model (GschemBinding *binding);
 
@@ -75,8 +77,8 @@ static gboolean
 update_widget (GschemBinding *binding);
 
 static void
-widget_apply (GtkWidget *widget, GschemBindingInteger *binding);
-
+widget_apply (GtkWidget *widget,
+              SchematicBindingInteger *binding);
 
 
 /*! \brief Create a new GschemFillSwatchCellRenderer
@@ -86,7 +88,7 @@ widget_apply (GtkWidget *widget, GschemBindingInteger *binding);
 GschemBinding*
 gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget)
 {
-  return GSCHEM_BINDING (g_object_new (GSCHEM_TYPE_BINDING_INTEGER,
+  return GSCHEM_BINDING (g_object_new (SCHEMATIC_TYPE_BINDING_INTEGER,
                                        "model-param", param_name,
                                        "widget",      widget,
                                        NULL));
@@ -100,7 +102,7 @@ gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget)
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-gschem_binding_integer_class_init (GschemBindingIntegerClass *klass)
+schematic_binding_integer_class_init (SchematicBindingIntegerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -130,12 +132,12 @@ gschem_binding_integer_class_init (GschemBindingIntegerClass *klass)
 
 
 /*! \private
- *  \brief Initialize #GschemBindingInteger instance
+ *  \brief Initialize #SchematicBindingInteger instance
  *
  *  \param [in,out] binding The binding.
  */
 static void
-gschem_binding_integer_init (GschemBindingInteger *binding)
+schematic_binding_integer_init (SchematicBindingInteger *binding)
 {
 }
 
@@ -172,7 +174,9 @@ get_property (GObject    *object,
  *  \brief [in] binding  This binding
  */
 static void
-model_notify (GObject *object, GParamSpec *pspec, GschemBindingInteger *binding)
+model_notify (GObject *object,
+              GParamSpec *pspec,
+              SchematicBindingInteger *binding)
 {
   const gchar *param_name = g_intern_string (pspec->name);
 
@@ -183,7 +187,8 @@ model_notify (GObject *object, GParamSpec *pspec, GschemBindingInteger *binding)
 
 
 static void
-set_model_object (GschemBindingInteger *binding, GObject *object)
+set_model_object (SchematicBindingInteger *binding,
+                  GObject *object)
 {
   if (binding->model_object != NULL) {
     g_signal_handlers_disconnect_by_func (binding->model_object,
@@ -210,7 +215,8 @@ set_model_object (GschemBindingInteger *binding, GObject *object)
 
 
 static void
-set_model_param (GschemBindingInteger *binding, const gchar *param_name)
+set_model_param (SchematicBindingInteger *binding,
+                 const gchar *param_name)
 {
   binding->model_param = g_intern_string (param_name);
 }
@@ -230,7 +236,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (object);
+  SchematicBindingInteger *binding = SCHEMATIC_BINDING_INTEGER (object);
 
   switch (param_id) {
     case PROP_MODEL_OBJECT:
@@ -262,7 +268,8 @@ set_property (GObject      *object,
  *  \param [in] widget  The widget.
  */
 static void
-set_widget (GschemBindingInteger *binding, GtkWidget *widget)
+set_widget (SchematicBindingInteger *binding,
+            GtkWidget *widget)
 {
   g_return_if_fail (binding != NULL);
   g_return_if_fail (binding->widget == NULL);
@@ -289,7 +296,7 @@ set_widget (GschemBindingInteger *binding, GtkWidget *widget)
 static gboolean
 update_model (GschemBinding *obj)
 {
-  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (obj);
+  SchematicBindingInteger *binding = SCHEMATIC_BINDING_INTEGER (obj);
   int number;
   gboolean success = FALSE;
 
@@ -332,7 +339,7 @@ update_model (GschemBinding *obj)
 static gboolean
 update_widget (GschemBinding *obj)
 {
-  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (obj);
+  SchematicBindingInteger *binding = SCHEMATIC_BINDING_INTEGER (obj);
   gboolean success = FALSE;
 
   if (binding->model_object != NULL) {
@@ -369,7 +376,8 @@ update_widget (GschemBinding *obj)
 
 
 static void
-widget_apply (GtkWidget *widget, GschemBindingInteger *binding)
+widget_apply (GtkWidget *widget,
+              SchematicBindingInteger *binding)
 {
   update_model (GSCHEM_BINDING (binding));
 }
