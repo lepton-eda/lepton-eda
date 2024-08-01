@@ -489,8 +489,8 @@ get_first_baseline (PangoLayout *layout)
 }
 
 static gboolean
-gschem_accel_label_expose_event (GtkWidget      *widget,
-                                 GdkEventExpose *event)
+schematic_accel_label_expose_event (GtkWidget      *widget,
+                                    GdkEventExpose *event)
 {
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   GtkMisc *misc = GTK_MISC (accel_label);
@@ -636,7 +636,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   gobject_class->get_property = schematic_accel_label_get_property;
 
   widget_class->size_request = schematic_accel_label_size_request;
-  widget_class->expose_event = gschem_accel_label_expose_event;
+  widget_class->expose_event = schematic_accel_label_expose_event;
 
   g_object_class_install_property (gobject_class,
                                    PROP_ACCEL_CLOSURE,
