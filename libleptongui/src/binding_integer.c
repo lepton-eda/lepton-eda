@@ -40,7 +40,7 @@ enum
 
 G_DEFINE_TYPE (SchematicBindingInteger,
                schematic_binding_integer,
-               GSCHEM_TYPE_BINDING);
+               SCHEMATIC_TYPE_BINDING);
 
 static void
 schematic_binding_integer_class_init (SchematicBindingIntegerClass *klass);
@@ -71,10 +71,10 @@ static void
 set_widget (SchematicBindingInteger *binding,
             GtkWidget *widget);
 static gboolean
-update_model (GschemBinding *binding);
+update_model (SchematicBinding *binding);
 
 static gboolean
-update_widget (GschemBinding *binding);
+update_widget (SchematicBinding *binding);
 
 static void
 widget_apply (GtkWidget *widget,
@@ -85,14 +85,14 @@ widget_apply (GtkWidget *widget,
  *
  *  \return The new cell renderer
  */
-GschemBinding*
+SchematicBinding*
 schematic_binding_integer_new (const gchar *param_name,
                                GtkWidget *widget)
 {
-  return GSCHEM_BINDING (g_object_new (SCHEMATIC_TYPE_BINDING_INTEGER,
-                                       "model-param", param_name,
-                                       "widget",      widget,
-                                       NULL));
+  return SCHEMATIC_BINDING (g_object_new (SCHEMATIC_TYPE_BINDING_INTEGER,
+                                          "model-param", param_name,
+                                          "widget",      widget,
+                                          NULL));
 }
 
 
@@ -182,7 +182,7 @@ model_notify (GObject *object,
   const gchar *param_name = g_intern_string (pspec->name);
 
   if (param_name == binding->model_param) {
-    update_widget (GSCHEM_BINDING (binding));
+    update_widget (SCHEMATIC_BINDING (binding));
   }
 }
 
@@ -210,7 +210,7 @@ set_model_object (SchematicBindingInteger *binding,
                       binding);
   }
 
-  update_widget (GSCHEM_BINDING (binding));
+  update_widget (SCHEMATIC_BINDING (binding));
 }
 
 
@@ -295,7 +295,7 @@ set_widget (SchematicBindingInteger *binding,
  *  \return TRUE, if successful
  */
 static gboolean
-update_model (GschemBinding *obj)
+update_model (SchematicBinding *obj)
 {
   SchematicBindingInteger *binding = SCHEMATIC_BINDING_INTEGER (obj);
   int number;
@@ -338,7 +338,7 @@ update_model (GschemBinding *obj)
  *  \return TRUE, if successful
  */
 static gboolean
-update_widget (GschemBinding *obj)
+update_widget (SchematicBinding *obj)
 {
   SchematicBindingInteger *binding = SCHEMATIC_BINDING_INTEGER (obj);
   gboolean success = FALSE;
@@ -380,5 +380,5 @@ static void
 widget_apply (GtkWidget *widget,
               SchematicBindingInteger *binding)
 {
-  update_model (GSCHEM_BINDING (binding));
+  update_model (SCHEMATIC_BINDING (binding));
 }

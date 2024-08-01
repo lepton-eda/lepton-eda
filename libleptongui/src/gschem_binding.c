@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2014 Ales Hvezda
  * Copyright (C) 2014 gEDA Contributors
- * Copyright (C) 2022 Lepton EDA Contributors
+ * Copyright (C) 2022-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,11 +37,12 @@ enum
 
 
 
-G_DEFINE_TYPE(GschemBinding, gschem_binding, G_TYPE_OBJECT);
-
+G_DEFINE_TYPE (SchematicBinding,
+               schematic_binding,
+               G_TYPE_OBJECT);
 
 static void
-gschem_binding_class_init (GschemBindingClass *klass);
+schematic_binding_class_init (SchematicBindingClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -50,7 +51,7 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-gschem_binding_init (GschemBinding *binding);
+schematic_binding_init (SchematicBinding *binding);
 
 static void
 set_property (GObject      *object,
@@ -59,15 +60,15 @@ set_property (GObject      *object,
               GParamSpec   *pspec);
 
 static gboolean
-update_model (GschemBinding *binding);
+update_model (SchematicBinding *binding);
 
 static gboolean
-update_widget (GschemBinding *binding);
+update_widget (SchematicBinding *binding);
 
 
 
 //GObject*
-//gschem_binding_get_model_object (GschemBinding *binding)
+//gschem_binding_get_model_object (SchematicBinding *binding)
 //{
 //}
 
@@ -79,7 +80,8 @@ update_widget (GschemBinding *binding);
  *  overridden properties in derived classes.
  */
 void
-gschem_binding_set_model_object (GschemBinding *binding, GObject *object)
+gschem_binding_set_model_object (SchematicBinding *binding,
+                                 GObject *object)
 {
   g_object_set (binding, "model-object", object, NULL);
 }
@@ -93,9 +95,9 @@ gschem_binding_set_model_object (GschemBinding *binding, GObject *object)
  *  \return TRUE, if successful
  */
 gboolean
-gschem_binding_update_model (GschemBinding *binding)
+gschem_binding_update_model (SchematicBinding *binding)
 {
-  GschemBindingClass *klass = GSCHEM_BINDING_GET_CLASS (binding);
+  SchematicBindingClass *klass = SCHEMATIC_BINDING_GET_CLASS (binding);
 
   g_return_val_if_fail (klass != NULL, FALSE);
   g_return_val_if_fail (klass->update_model != NULL, FALSE);
@@ -112,9 +114,9 @@ gschem_binding_update_model (GschemBinding *binding)
  *  \return TRUE, if successful
  */
 gboolean
-gschem_binding_update_widget (GschemBinding *binding)
+gschem_binding_update_widget (SchematicBinding *binding)
 {
-  GschemBindingClass *klass = GSCHEM_BINDING_GET_CLASS (binding);
+  SchematicBindingClass *klass = SCHEMATIC_BINDING_GET_CLASS (binding);
 
   g_return_val_if_fail (klass != NULL, FALSE);
   g_return_val_if_fail (klass->update_widget != NULL, FALSE);
@@ -125,12 +127,12 @@ gschem_binding_update_widget (GschemBinding *binding)
 
 
 /*! \private
- *  \brief Initialize GschemBinding class
+ *  \brief Initialize SchematicBinding class
  *
- *  \param [in,out] klass The GschemBindingClass class
+ *  \param [in,out] klass The SchematicBindingClass class
  */
 static void
-gschem_binding_class_init (GschemBindingClass *klass)
+schematic_binding_class_init (SchematicBindingClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -162,12 +164,12 @@ gschem_binding_class_init (GschemBindingClass *klass)
 
 
 /*! \private
- *  \brief Initialize GschemBinding instance
+ *  \brief Initialize SchematicBinding instance
  *
- *  \param [in,out] binding The GschemBinding
+ *  \param [in,out] binding The SchematicBinding
  */
 static void
-gschem_binding_init (GschemBinding *binding)
+schematic_binding_init (SchematicBinding *binding)
 {
 }
 
@@ -187,7 +189,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-  //GschemBinding *binding = GSCHEM_BINDING (object);
+  //SchematicBinding *binding = SCHEMATIC_BINDING (object);
 
   switch (param_id) {
     default:
@@ -212,7 +214,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-  //GschemBinding *binding = GSCHEM_BINDING (object);
+  //SchematicBinding *binding = SCHEMATIC_BINDING (object);
 
   switch (param_id) {
     default:
@@ -230,7 +232,7 @@ set_property (GObject      *object,
  *  \return TRUE, if successful
  */
 static gboolean
-update_model (GschemBinding *binding)
+update_model (SchematicBinding *binding)
 {
   return FALSE;
 }
@@ -244,7 +246,7 @@ update_model (GschemBinding *binding)
  *  \return TRUE, if successful
  */
 static gboolean
-update_widget (GschemBinding *binding)
+update_widget (SchematicBinding *binding)
 {
   return FALSE;
 }

@@ -33,12 +33,12 @@ typedef struct _SchematicBindingInteger SchematicBindingInteger;
 
 struct _SchematicBindingIntegerClass
 {
-  GschemBindingClass parent_class;
+  SchematicBindingClass parent_class;
 };
 
 struct _SchematicBindingInteger
 {
-  GschemBinding parent;
+  SchematicBinding parent;
 
   GObject *model_object;
   const gchar *model_param;
@@ -48,6 +48,6 @@ struct _SchematicBindingInteger
 GType
 schematic_binding_integer_get_type ();
 
-GschemBinding*
+SchematicBinding*
 schematic_binding_integer_new (const gchar *param_name,
                                GtkWidget *widget);
