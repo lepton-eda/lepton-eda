@@ -158,6 +158,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - The signal "delete-event" of `lepton-schematic` is now connected
   in Scheme code.
 
+- The canvas signals for drawing, configuring, button pressing,
+  mouse motion, scrolling, and other events are now connected and
+  processed in Scheme.
+
 - Key event processing callback is now assigned in Scheme.
 
 - Global window list of `lepton-schematic` is now processed in
