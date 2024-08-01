@@ -50,7 +50,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"
 #include "gschem_binding.h"
-#include "gschem_binding_integer.h"
+#include "binding_integer.h"
 #include "window.h"
 
 #include "gschem_object_properties_widget.h"

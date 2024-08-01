@@ -20,7 +20,7 @@ libleptongui_la_SOURCES = \
 	gschem_arc_dialog.c \
 	gschem_bin.c \
 	gschem_binding.c \
-	gschem_binding_integer.c \
+	binding_integer.c \
 	gschem_bottom_widget.c \
 	gschem_close_confirmation_dialog.c \
 	gschem_coord_dialog.c \

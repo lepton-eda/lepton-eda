@@ -12,7 +12,7 @@ libleptongui/src/gschem_alignment_combo.c
 libleptongui/src/gschem_arc_dialog.c
 libleptongui/src/gschem_bin.c
 libleptongui/src/gschem_binding.c
-libleptongui/src/gschem_binding_integer.c
+libleptongui/src/binding_integer.c
 libleptongui/src/gschem_bottom_widget.c
 libleptongui/src/gschem_close_confirmation_dialog.c
 libleptongui/src/gschem_coord_dialog.c

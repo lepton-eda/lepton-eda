@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_binding_integer.h
+ * \file binding_integer.h
  *
  * \brief Data binding between a widget and model.
  */

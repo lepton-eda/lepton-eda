@@ -17,7 +17,7 @@ noinst_HEADERS = \
 	accel_label.h \
 	gschem_bin.h \
 	gschem_binding.h \
-	gschem_binding_integer.h \
+	binding_integer.h \
 	gschem_bottom_widget.h \
 	gschem_defines.h \
 	gschem_dialog.h \

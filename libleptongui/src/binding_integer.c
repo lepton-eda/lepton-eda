@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_binding_integer.c
+ * \file binding_integer.c
  *
  * \brief A cell renderer for fill type swatches.
  */
