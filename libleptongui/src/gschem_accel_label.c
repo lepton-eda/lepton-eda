@@ -130,10 +130,10 @@ schematic_accel_label_set_property (GObject      *object,
 }
 
 static void
-gschem_accel_label_get_property (GObject    *object,
-                              guint       prop_id,
-                              GValue     *value,
-                              GParamSpec *pspec)
+schematic_accel_label_get_property (GObject    *object,
+                                    guint       prop_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
   SchematicAccelLabel  *accel_label;
 
@@ -309,7 +309,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
 
   gobject_class->finalize = gschem_accel_label_finalize;
   gobject_class->set_property = schematic_accel_label_set_property;
-  gobject_class->get_property = gschem_accel_label_get_property;
+  gobject_class->get_property = schematic_accel_label_get_property;
 
   widget_class->get_preferred_width = gschem_accel_label_get_preferred_width;
   widget_class->draw = gschem_accel_label_draw;
@@ -403,10 +403,10 @@ schematic_accel_label_set_property (GObject      *object,
 }
 
 static void
-gschem_accel_label_get_property (GObject    *object,
-                              guint       prop_id,
-                              GValue     *value,
-                              GParamSpec *pspec)
+schematic_accel_label_get_property (GObject    *object,
+                                    guint       prop_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
   SchematicAccelLabel  *accel_label;
 
@@ -633,7 +633,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
 
   gobject_class->finalize = gschem_accel_label_finalize;
   gobject_class->set_property = schematic_accel_label_set_property;
-  gobject_class->get_property = gschem_accel_label_get_property;
+  gobject_class->get_property = schematic_accel_label_get_property;
 
   widget_class->size_request = gschem_accel_label_size_request;
   widget_class->expose_event = gschem_accel_label_expose_event;
