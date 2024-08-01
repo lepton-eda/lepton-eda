@@ -284,8 +284,8 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
   table = gschem_dialog_misc_create_property_table (label, editor, 4);
 
   widget->bindings = g_slist_append (widget->bindings,
-                                     gschem_binding_integer_new ("text-size",
-                                                                 editor[1]));
+                                     schematic_binding_integer_new ("text-size",
+                                                                    editor[1]));
 
   g_signal_connect_swapped (G_OBJECT (widget->colorcb),
                             "changed",

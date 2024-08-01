@@ -186,24 +186,24 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
   table = gschem_dialog_misc_create_property_table (label, widget, 6);
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("fill-width",
-                                                                 widget[1]));
+                                     schematic_binding_integer_new ("fill-width",
+                                                                    widget[1]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("fill-angle1",
-                                                                 widget[2]));
+                                     schematic_binding_integer_new ("fill-angle1",
+                                                                    widget[2]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("fill-pitch1",
-                                                                 widget[3]));
+                                     schematic_binding_integer_new ("fill-pitch1",
+                                                                    widget[3]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("fill-angle2",
-                                                                 widget[4]));
+                                     schematic_binding_integer_new ("fill-angle2",
+                                                                    widget[4]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("fill-pitch2",
-                                                                 widget[5]));
+                                     schematic_binding_integer_new ("fill-pitch2",
+                                                                    widget[5]));
 
   g_signal_connect (G_OBJECT (dialog->fstylecb), "changed",
                     G_CALLBACK (update_fill_type_model),
@@ -296,16 +296,16 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
   table = gschem_dialog_misc_create_property_table (label, widget, 5);
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("line-width",
-                                                                 widget[1]));
+                                     schematic_binding_integer_new ("line-width",
+                                                                    widget[1]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("dash-length",
-                                                                 widget[2]));
+                                     schematic_binding_integer_new ("dash-length",
+                                                                    widget[2]));
 
   dialog->bindings = g_slist_append (dialog->bindings,
-                                     gschem_binding_integer_new ("dash-space",
-                                                                 widget[3]));
+                                     schematic_binding_integer_new ("dash-space",
+                                                                    widget[3]));
 
   g_signal_connect (G_OBJECT (dialog->line_type), "changed",
                     G_CALLBACK (update_line_type_model),

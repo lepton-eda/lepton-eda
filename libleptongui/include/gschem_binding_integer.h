@@ -49,4 +49,5 @@ GType
 schematic_binding_integer_get_type ();
 
 GschemBinding*
-gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget);
+schematic_binding_integer_new (const gchar *param_name,
+                               GtkWidget *widget);
