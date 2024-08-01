@@ -502,7 +502,7 @@ set_selection_adapter (GschemTextPropertiesWidget *widget, GschemSelectionAdapte
   widget->adapter = adapter;
 
   g_slist_foreach (widget->bindings,
-                   (GFunc) gschem_binding_set_model_object,
+                   (GFunc) schematic_binding_set_model_object,
                    adapter);
 
   if (widget->adapter != NULL) {

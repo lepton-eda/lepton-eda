@@ -52,8 +52,8 @@ GType
 schematic_binding_get_type ();
 
 void
-gschem_binding_set_model_object (SchematicBinding *binding,
-                                 GObject *object);
+schematic_binding_set_model_object (SchematicBinding *binding,
+                                    GObject *object);
 gboolean
 gschem_binding_update_model (SchematicBinding *binding);
 

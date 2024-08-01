@@ -571,7 +571,7 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
   dialog->adapter = adapter;
 
   g_slist_foreach (dialog->bindings,
-                   (GFunc) gschem_binding_set_model_object,
+                   (GFunc) schematic_binding_set_model_object,
                    adapter);
 
   if (dialog->adapter != NULL) {

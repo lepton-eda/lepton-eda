@@ -80,8 +80,8 @@ update_widget (SchematicBinding *binding);
  *  overridden properties in derived classes.
  */
 void
-gschem_binding_set_model_object (SchematicBinding *binding,
-                                 GObject *object)
+schematic_binding_set_model_object (SchematicBinding *binding,
+                                    GObject *object)
 {
   g_object_set (binding, "model-object", object, NULL);
 }
