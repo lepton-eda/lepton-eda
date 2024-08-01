@@ -199,8 +199,8 @@ get_first_baseline (PangoLayout *layout)
 }
 
 static gboolean
-gschem_accel_label_draw (GtkWidget *widget,
-                         cairo_t *cr)
+schematic_accel_label_draw (GtkWidget *widget,
+                            cairo_t *cr)
 {
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   guint ac_width;
@@ -312,7 +312,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   gobject_class->get_property = schematic_accel_label_get_property;
 
   widget_class->get_preferred_width = gschem_accel_label_get_preferred_width;
-  widget_class->draw = gschem_accel_label_draw;
+  widget_class->draw = schematic_accel_label_draw;
 
   g_object_class_install_property (gobject_class,
                                    PROP_ACCEL_WIDGET,
