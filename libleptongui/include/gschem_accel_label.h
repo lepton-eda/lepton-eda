@@ -108,9 +108,9 @@ void       schematic_accel_label_set_accel_string  (SchematicAccelLabel *accel_l
 gboolean   schematic_accel_label_refetch           (SchematicAccelLabel *accel_label);
 
 /* private */
-gchar *    _gschem_accel_label_class_get_accelerator_label (SchematicAccelLabelClass *klass,
-                                                            guint                  accelerator_key,
-                                                            GdkModifierType        accelerator_mods);
+gchar *_schematic_accel_label_class_get_accelerator_label (SchematicAccelLabelClass *klass,
+                                                           guint accelerator_key,
+                                                           GdkModifierType accelerator_mods);
 #endif /* ENABLE_GTK3 */
 
 G_END_DECLS
