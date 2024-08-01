@@ -460,8 +460,8 @@ schematic_accel_label_get_accel_width (SchematicAccelLabel *accel_label)
 }
 
 static void
-gschem_accel_label_size_request (GtkWidget      *widget,
-                                 GtkRequisition *requisition)
+schematic_accel_label_size_request (GtkWidget      *widget,
+                                    GtkRequisition *requisition)
 {
   SchematicAccelLabel *accel_label = SCHEMATIC_ACCEL_LABEL (widget);
   PangoLayout *layout;
@@ -635,7 +635,7 @@ schematic_accel_label_class_init (SchematicAccelLabelClass *klass)
   gobject_class->set_property = schematic_accel_label_set_property;
   gobject_class->get_property = schematic_accel_label_get_property;
 
-  widget_class->size_request = gschem_accel_label_size_request;
+  widget_class->size_request = schematic_accel_label_size_request;
   widget_class->expose_event = gschem_accel_label_expose_event;
 
   g_object_class_install_property (gobject_class,
