@@ -36,7 +36,7 @@ struct _PageSelectWidgetClass
 
 struct _PageSelectWidget
 {
-  SchematicBinClass parent_instance;
+  SchematicBin parent_instance;
 
   SchematicWindow* toplevel_;
   GtkTreeView*    treeview_;
