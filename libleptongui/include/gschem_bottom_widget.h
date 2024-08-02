@@ -86,7 +86,7 @@ const char*
 schematic_bottom_widget_get_right_button_text (SchematicBottomWidget *widget);
 
 int
-gschem_bottom_widget_get_snap_mode (SchematicBottomWidget *widget);
+schematic_bottom_widget_get_snap_mode (SchematicBottomWidget *widget);
 
 int
 gschem_bottom_widget_get_snap_size (SchematicBottomWidget *widget);
