@@ -1090,7 +1090,8 @@ schematic_bottom_widget_set_grid_mode (SchematicBottomWidget *widget,
  *  \param [in]     size The grid size
  */
 void
-gschem_bottom_widget_set_grid_size (SchematicBottomWidget *widget, int size)
+schematic_bottom_widget_set_grid_size (SchematicBottomWidget *widget,
+                                       int size)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1318,7 +1319,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_GRID_SIZE:
-      gschem_bottom_widget_set_grid_size (widget, g_value_get_int (value));
+      schematic_bottom_widget_set_grid_size (widget, g_value_get_int (value));
       break;
 
     case PROP_LEFT_BUTTON_TEXT:

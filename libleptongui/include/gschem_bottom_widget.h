@@ -107,8 +107,8 @@ void
 schematic_bottom_widget_set_grid_mode (SchematicBottomWidget *widget,
                                        int mode);
 void
-gschem_bottom_widget_set_grid_size (SchematicBottomWidget *widget, int size);
-
+schematic_bottom_widget_set_grid_size (SchematicBottomWidget *widget,
+                                       int size);
 void
 gschem_bottom_widget_set_left_button_text (SchematicBottomWidget *widget, const char *text);
 
