@@ -793,7 +793,9 @@ schematic_alignment_combo_new ();
 int
 schematic_alignment_combo_get_align (GtkWidget *widget);
 
-void gschem_alignment_combo_set_align (GtkWidget *widget, int align);
+void
+schematic_alignment_combo_set_align (GtkWidget *widget,
+                                     int align);
 
 /* x_attribedit.c */
 void

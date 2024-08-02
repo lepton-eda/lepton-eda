@@ -154,7 +154,8 @@ schematic_alignment_combo_get_align (GtkWidget *widget)
  *  \param [in]     align  The text alignment to select
  */
 void
-gschem_alignment_combo_set_align (GtkWidget *widget, int align)
+schematic_alignment_combo_set_align (GtkWidget *widget,
+                                     int align)
 {
   g_return_if_fail (align_list_store != NULL);
 

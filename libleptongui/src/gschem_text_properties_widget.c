@@ -580,7 +580,7 @@ update_text_alignment_widget (GschemTextPropertiesWidget *widget)
                                      (gpointer) update_text_alignment_model,
                                      widget);
 
-    gschem_alignment_combo_set_align (widget->aligncb, alignment);
+    schematic_alignment_combo_set_align (widget->aligncb, alignment);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->aligncb),
                                        (gpointer) update_text_alignment_model,

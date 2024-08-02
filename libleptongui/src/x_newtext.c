@@ -408,7 +408,7 @@ static void newtext_init(NewText *dialog)
 #endif
 
   dialog->aligncb = schematic_alignment_combo_new ();
-  gschem_alignment_combo_set_align(dialog->aligncb, LOWER_LEFT);
+  schematic_alignment_combo_set_align (dialog->aligncb, LOWER_LEFT);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->aligncb);
 
