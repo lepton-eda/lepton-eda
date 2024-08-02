@@ -247,7 +247,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_RIGHT_BUTTON_TEXT:
-      g_value_set_string (value, gschem_bottom_widget_get_right_button_text (widget));
+      g_value_set_string (value, schematic_bottom_widget_get_right_button_text (widget));
       break;
 
     case PROP_SNAP_MODE:
@@ -471,7 +471,7 @@ schematic_bottom_widget_get_middle_button_text (SchematicBottomWidget *widget)
  *  \return The right button text
  */
 const char*
-gschem_bottom_widget_get_right_button_text (SchematicBottomWidget *widget)
+schematic_bottom_widget_get_right_button_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
