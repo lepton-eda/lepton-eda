@@ -22,7 +22,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "snap_mode.h"
 #include "gschem_defines.h"
 #include "bin.h"
-#include "gschem_bottom_widget.h"
+#include "bottom_widget.h"
 #include "gschem_find_text_state.h"
 #include "gschem_find_text_widget.h"
 #include "gschem_log_widget.h"

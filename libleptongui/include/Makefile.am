@@ -18,7 +18,7 @@ noinst_HEADERS = \
 	bin.h \
 	binding.h \
 	binding_integer.h \
-	gschem_bottom_widget.h \
+	bottom_widget.h \
 	gschem_defines.h \
 	gschem_dialog.h \
 	gschem_dialog_misc.h \

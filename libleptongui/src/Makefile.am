@@ -21,7 +21,7 @@ libleptongui_la_SOURCES = \
 	bin.c \
 	binding.c \
 	binding_integer.c \
-	gschem_bottom_widget.c \
+	bottom_widget.c \
 	gschem_close_confirmation_dialog.c \
 	gschem_coord_dialog.c \
 	gschem_dialog.c \
