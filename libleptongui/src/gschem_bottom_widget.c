@@ -1072,7 +1072,8 @@ schematic_bottom_widget_init (SchematicBottomWidget *widget)
  *  \param [in]     mode The grid mode
  */
 void
-gschem_bottom_widget_set_grid_mode (SchematicBottomWidget *widget, int mode)
+schematic_bottom_widget_set_grid_mode (SchematicBottomWidget *widget,
+                                       int mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1313,7 +1314,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
           break;
 
     case PROP_GRID_MODE:
-      gschem_bottom_widget_set_grid_mode (widget, g_value_get_int (value));
+      schematic_bottom_widget_set_grid_mode (widget, g_value_get_int (value));
       break;
 
     case PROP_GRID_SIZE:

@@ -104,8 +104,8 @@ GType
 schematic_bottom_widget_get_type ();
 
 void
-gschem_bottom_widget_set_grid_mode (SchematicBottomWidget *widget, int mode);
-
+schematic_bottom_widget_set_grid_mode (SchematicBottomWidget *widget,
+                                       int mode);
 void
 gschem_bottom_widget_set_grid_size (SchematicBottomWidget *widget, int size);
 
