@@ -1256,7 +1256,8 @@ gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gbool
  *  \param [in]     text The status text
  */
 void
-gschem_bottom_widget_set_status_text (SchematicBottomWidget *widget, const char *text)
+schematic_bottom_widget_set_status_text (SchematicBottomWidget *widget,
+                                         const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1348,7 +1349,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_STATUS_TEXT:
-      gschem_bottom_widget_set_status_text (widget, g_value_get_string (value));
+      schematic_bottom_widget_set_status_text (widget, g_value_get_string (value));
       break;
 
     case PROP_STATUS_TEXT_COLOR:

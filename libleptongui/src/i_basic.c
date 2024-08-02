@@ -44,7 +44,7 @@ i_update_status (SchematicWindow *w_current,
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    gschem_bottom_widget_set_status_text (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget), string);
+    schematic_bottom_widget_set_status_text (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget), string);
   }
 }
 

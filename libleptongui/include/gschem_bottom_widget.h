@@ -125,8 +125,8 @@ void
 schematic_bottom_widget_set_snap_size (SchematicBottomWidget *widget,
                                        int size);
 void
-gschem_bottom_widget_set_status_text (SchematicBottomWidget *widget, const char *text);
-
+schematic_bottom_widget_set_status_text (SchematicBottomWidget *widget,
+                                         const char *text);
 void
 gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gboolean active);
 
