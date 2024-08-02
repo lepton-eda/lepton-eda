@@ -1,6 +1,3 @@
-#ifndef LEPTON_MACRO_WIDGET_H_
-#define LEPTON_MACRO_WIDGET_H_
-
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
@@ -25,6 +22,9 @@
  *
  * \brief A widget for entering macros
  */
+
+#ifndef LEPTON_MACRO_WIDGET_H_
+#define LEPTON_MACRO_WIDGET_H_
 
 /* Maximum number of items to keep in the
  * macro widget command history by default:
