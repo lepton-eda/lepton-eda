@@ -1281,7 +1281,8 @@ schematic_bottom_widget_set_status_text (SchematicBottomWidget *widget,
  *  \param [in] mode    The rubber band mode: on (TRUE) or off (FALSE)
  */
 void
-gschem_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget, gboolean mode)
+schematic_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget,
+                                              gboolean mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1358,7 +1359,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_RUBBER_BAND_MODE:
-      gschem_bottom_widget_set_rubber_band_mode (widget, g_value_get_boolean (value));
+      schematic_bottom_widget_set_rubber_band_mode (widget, g_value_get_boolean (value));
       break;
 
     case PROP_MAGNETIC_NET_MODE:

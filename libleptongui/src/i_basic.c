@@ -542,7 +542,7 @@ i_update_grid_info_callback (SchematicCanvas *view,
 void
 i_update_net_options_status (SchematicWindow* w_current)
 {
-  gschem_bottom_widget_set_rubber_band_mode(
+  schematic_bottom_widget_set_rubber_band_mode(
     SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
     schematic_options_get_net_rubber_band_mode (w_current->options));
 

@@ -131,7 +131,7 @@ void
 schematic_bottom_widget_set_status_text_color (SchematicBottomWidget *widget,
                                                gboolean active);
 void
-gschem_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget, gboolean mode);
-
+schematic_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget,
+                                              gboolean mode);
 void
 gschem_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget, gboolean mode);
