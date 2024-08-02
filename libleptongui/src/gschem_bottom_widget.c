@@ -267,7 +267,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_MAGNETIC_NET_MODE:
-      g_value_set_boolean (value, gschem_bottom_widget_get_magnetic_net_mode (widget));
+      g_value_set_boolean (value, schematic_bottom_widget_get_magnetic_net_mode (widget));
       break;
 
     default:
@@ -546,7 +546,7 @@ schematic_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget)
  *  \return        The magnetic net mode: on (TRUE) or off (FALSE)
  */
 gboolean
-gschem_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget)
+schematic_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 

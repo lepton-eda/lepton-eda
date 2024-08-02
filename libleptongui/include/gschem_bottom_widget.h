@@ -98,7 +98,7 @@ gboolean
 schematic_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget);
 
 gboolean
-gschem_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget);
+schematic_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget);
 
 GType
 schematic_bottom_widget_get_type ();
