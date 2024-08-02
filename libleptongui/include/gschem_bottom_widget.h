@@ -74,7 +74,7 @@ int
 schematic_bottom_widget_get_grid_mode (SchematicBottomWidget *widget);
 
 int
-gschem_bottom_widget_get_grid_size (SchematicBottomWidget *widget);
+schematic_bottom_widget_get_grid_size (SchematicBottomWidget *widget);
 
 const char*
 gschem_bottom_widget_get_left_button_text (SchematicBottomWidget *widget);

@@ -235,7 +235,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_GRID_SIZE:
-      g_value_set_int (value, gschem_bottom_widget_get_grid_size (widget));
+      g_value_set_int (value, schematic_bottom_widget_get_grid_size (widget));
       break;
 
     case PROP_LEFT_BUTTON_TEXT:
@@ -426,7 +426,7 @@ schematic_bottom_widget_get_grid_mode (SchematicBottomWidget *widget)
  *  \return The grid size
  */
 int
-gschem_bottom_widget_get_grid_size (SchematicBottomWidget *widget)
+schematic_bottom_widget_get_grid_size (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
