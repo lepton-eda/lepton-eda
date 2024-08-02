@@ -80,7 +80,7 @@ const char*
 schematic_bottom_widget_get_left_button_text (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_middle_button_text (SchematicBottomWidget *widget);
+schematic_bottom_widget_get_middle_button_text (SchematicBottomWidget *widget);
 
 const char*
 gschem_bottom_widget_get_right_button_text (SchematicBottomWidget *widget);
