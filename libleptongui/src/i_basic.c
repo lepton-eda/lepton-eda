@@ -546,7 +546,7 @@ i_update_net_options_status (SchematicWindow* w_current)
     SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
     schematic_options_get_net_rubber_band_mode (w_current->options));
 
-  gschem_bottom_widget_set_magnetic_net_mode(
+  schematic_bottom_widget_set_magnetic_net_mode(
     SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
     schematic_options_get_magnetic_net_mode (w_current->options));
 }

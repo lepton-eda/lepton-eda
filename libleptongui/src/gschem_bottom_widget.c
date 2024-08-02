@@ -1299,7 +1299,8 @@ schematic_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget,
  *  \param [in] mode    The magnetic net mode: on (TRUE) or off (FALSE)
  */
 void
-gschem_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget, gboolean mode)
+schematic_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget,
+                                               gboolean mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1363,7 +1364,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_MAGNETIC_NET_MODE:
-      gschem_bottom_widget_set_magnetic_net_mode (widget, g_value_get_boolean (value));
+      schematic_bottom_widget_set_magnetic_net_mode (widget, g_value_get_boolean (value));
       break;
 
     default:
