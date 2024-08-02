@@ -57,7 +57,7 @@ size_request (GtkWidget *widget, GtkRequisition *requisition);
  *  \return a new status log widget
  */
 SchematicBin*
-gschem_bin_new ()
+schematic_bin_new ()
 {
   return SCHEMATIC_BIN (g_object_new (SCHEMATIC_TYPE_BIN, NULL));
 }

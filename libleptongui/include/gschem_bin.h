@@ -45,4 +45,4 @@ GType
 schematic_bin_get_type (void);
 
 SchematicBin*
-gschem_bin_new ();
+schematic_bin_new ();
