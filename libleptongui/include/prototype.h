@@ -786,7 +786,8 @@ schematic_undo_index_to_filename (int index);
 GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
 GList *s_stretch_remove(GList *list, LeptonObject *object);
 void s_stretch_destroy_all(GList *list);
-/* gschem_alignment_combo.c */
+
+/* alignment_combo.c */
 GtkWidget*
 schematic_alignment_combo_new ();
 

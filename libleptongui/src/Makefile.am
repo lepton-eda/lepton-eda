@@ -16,7 +16,7 @@ libleptongui_la_SOURCES = \
 	gschemhotkeystore.c \
 	gschem_about_dialog.c \
 	accel_label.c \
-	gschem_alignment_combo.c \
+	alignment_combo.c \
 	gschem_arc_dialog.c \
 	bin.c \
 	binding.c \

@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file gschem_alignment_combo.c
+/*! \file alignment_combo.c
  *
  *  \brief A GtkComboBox with the gschem text alignments.
  */
