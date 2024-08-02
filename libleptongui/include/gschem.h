@@ -49,7 +49,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "globals.h"
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"
-#include "gschem_binding.h"
+#include "binding.h"
 #include "binding_integer.h"
 #include "window.h"
 
