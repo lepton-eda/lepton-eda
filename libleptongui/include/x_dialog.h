@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2006-2010 Dan McMahill
+ * Copyright (C) 2006-2012 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
