@@ -154,7 +154,7 @@ dialog_response_apply (NewText *dialog)
     color = value;
   }
 
-  value = gschem_alignment_combo_get_align (dialog->aligncb);
+  value = schematic_alignment_combo_get_align (dialog->aligncb);
   if (value >= 0) {
     align = value;
   }

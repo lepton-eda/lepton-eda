@@ -552,7 +552,7 @@ update_text_alignment_model (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->aligncb != NULL);
 
   if (widget->adapter != NULL) {
-    int alignment = gschem_alignment_combo_get_align (widget->aligncb);
+    int alignment = schematic_alignment_combo_get_align (widget->aligncb);
 
     if (alignment >= 0) {
       gschem_selection_adapter_set_text_alignment (widget->adapter, alignment);

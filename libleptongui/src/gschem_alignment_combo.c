@@ -127,7 +127,7 @@ schematic_alignment_combo_new ()
  *  \return The currently selected text alignment
  */
 int
-gschem_alignment_combo_get_align (GtkWidget *widget)
+schematic_alignment_combo_get_align (GtkWidget *widget)
 {
   int align = -1;
   GtkTreeIter iter;
