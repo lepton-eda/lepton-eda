@@ -281,7 +281,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
 
   editor[0] = widget->colorcb = x_colorcb_new ();
   editor[1] = widget->textsizecb = gschem_integer_combo_box_new ();
-  editor[2] = widget->aligncb = gschem_alignment_combo_new();
+  editor[2] = widget->aligncb = schematic_alignment_combo_new();
   editor[3] = widget->rotatecb = gschem_rotation_combo_new();
 
   table = gschem_dialog_misc_create_property_table (label, editor, 4);

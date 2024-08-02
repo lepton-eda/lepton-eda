@@ -787,7 +787,9 @@ GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
 GList *s_stretch_remove(GList *list, LeptonObject *object);
 void s_stretch_destroy_all(GList *list);
 /* gschem_alignment_combo.c */
-GtkWidget* gschem_alignment_combo_new ();
+GtkWidget*
+schematic_alignment_combo_new ();
+
 int gschem_alignment_combo_get_align (GtkWidget *widget);
 void gschem_alignment_combo_set_align (GtkWidget *widget, int align);
 
