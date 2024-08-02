@@ -17,7 +17,7 @@ libleptongui_la_SOURCES = \
 	about_dialog.c \
 	accel_label.c \
 	alignment_combo.c \
-	gschem_arc_dialog.c \
+	arc_dialog.c \
 	bin.c \
 	binding.c \
 	binding_integer.c \

@@ -616,7 +616,7 @@
 ;;; about_dialog.c
 (define-lff about_dialog void '(*))
 
-;;; gschem_arc_dialog.c
+;;; arc_dialog.c
 (define-lff arc_angle_dialog void '(* *))
 
 ;;; gschem_close_confirmation_dialog.c
