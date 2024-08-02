@@ -22,9 +22,9 @@
  *
  * \brief a container with one child
  *
- * The gschem subclass implements virtual methods needed for subclasses to
- * operate properly. These method implementations would also be common to many
- * derived classes.
+ * The subclass implements virtual methods needed for subclasses
+ * to operate properly. These method implementations would also be
+ * common to many derived classes.
  */
 
 #include <config.h>
