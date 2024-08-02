@@ -43,7 +43,10 @@ enum
   PROP_SCHEMATIC_WINDOW
 };
 
-G_DEFINE_TYPE (GschemObjectPropertiesWidget, gschem_object_properties_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (GschemObjectPropertiesWidget,
+               gschem_object_properties_widget,
+               SCHEMATIC_TYPE_BIN);
+
 
 static GtkWidget*
 create_fill_property_widget (GschemObjectPropertiesWidget *dialog);

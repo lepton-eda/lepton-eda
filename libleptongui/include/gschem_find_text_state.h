@@ -48,12 +48,12 @@ typedef struct _GschemFindTextState GschemFindTextState;
 
 struct _GschemFindTextStateClass
 {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _GschemFindTextState
 {
-  GschemBin parent;
+  SchematicBin parent;
 
   GtkListStore *store;
 };

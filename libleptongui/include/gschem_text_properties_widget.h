@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
- * Copyright (C) 2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2013 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,11 +33,11 @@ typedef struct _GschemTextPropertiesWidgetClass GschemTextPropertiesWidgetClass;
 typedef struct _GschemTextPropertiesWidget GschemTextPropertiesWidget;
 
 struct _GschemTextPropertiesWidgetClass {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _GschemTextPropertiesWidget {
-  GschemBin parent;
+  SchematicBin parent;
 
   GschemSelectionAdapter *adapter;
 

@@ -31,7 +31,7 @@
 
 /* convenience macro - gobject type implementation:
 */
-G_DEFINE_TYPE (ColorEditWidget, color_edit_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (ColorEditWidget, color_edit_widget, SCHEMATIC_TYPE_BIN);
 
 
 /* widget's property IDs:

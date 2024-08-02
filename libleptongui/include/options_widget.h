@@ -33,11 +33,11 @@ typedef struct _SchematicOptionsWidgetClass SchematicOptionsWidgetClass;
 typedef struct _SchematicOptionsWidget SchematicOptionsWidget;
 
 struct _SchematicOptionsWidgetClass {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _SchematicOptionsWidget {
-  GschemBin parent;
+  SchematicBin parent;
 
   SchematicWindow *w_current;
 

@@ -43,7 +43,10 @@ enum
   PROP_SCHEMATIC_WINDOW
 };
 
-G_DEFINE_TYPE (GschemTextPropertiesWidget, gschem_text_properties_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (GschemTextPropertiesWidget,
+               gschem_text_properties_widget,
+               SCHEMATIC_TYPE_BIN);
+
 
 static GtkWidget*
 create_text_content_section (GschemTextPropertiesWidget *widget);

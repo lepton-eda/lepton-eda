@@ -39,12 +39,12 @@
 
 struct _FontSelectWidgetClass
 {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _FontSelectWidget
 {
-  GschemBin parent_instance;
+  SchematicBin parent_instance;
 
   SchematicWindow* toplevel_;
 

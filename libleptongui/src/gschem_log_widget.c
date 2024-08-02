@@ -29,7 +29,9 @@
 
 /* convenience macro - gobject type implementation:
 */
-G_DEFINE_TYPE (GschemLogWidget, gschem_log_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (GschemLogWidget,
+               gschem_log_widget,
+               SCHEMATIC_TYPE_BIN);
 
 
 static void

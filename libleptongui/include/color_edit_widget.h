@@ -39,12 +39,12 @@
 
 struct _ColorEditWidgetClass
 {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _ColorEditWidget
 {
-  GschemBin parent_instance;
+  SchematicBin parent_instance;
 
   SchematicWindow* toplevel_;
 

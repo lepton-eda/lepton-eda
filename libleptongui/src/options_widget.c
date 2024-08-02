@@ -43,7 +43,10 @@ enum
 };
 
 
-G_DEFINE_TYPE (SchematicOptionsWidget, schematic_options_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (SchematicOptionsWidget,
+               schematic_options_widget,
+               SCHEMATIC_TYPE_BIN);
+
 
 GtkWidget*
 create_grid_mode_widget (SchematicOptionsWidget *widget);

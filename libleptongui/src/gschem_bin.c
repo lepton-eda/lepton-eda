@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,14 +31,16 @@
 #include "gschem.h"
 
 
-G_DEFINE_TYPE(GschemBin, gschem_bin, GTK_TYPE_BIN);
+G_DEFINE_TYPE (SchematicBin,
+               schematic_bin,
+               GTK_TYPE_BIN);
 
 
 static void
-gschem_bin_class_init (GschemBinClass *klass);
+schematic_bin_class_init (SchematicBinClass *klass);
 
 static void
-gschem_bin_init (GschemBin *klass);
+schematic_bin_init (SchematicBin *klass);
 
 static void
 size_allocate (GtkWidget *widget, GtkAllocation *allocation);
@@ -54,10 +56,10 @@ size_request (GtkWidget *widget, GtkRequisition *requisition);
  *
  *  \return a new status log widget
  */
-GschemBin*
+SchematicBin*
 gschem_bin_new ()
 {
-  return GSCHEM_BIN (g_object_new (GSCHEM_TYPE_BIN, NULL));
+  return SCHEMATIC_BIN (g_object_new (SCHEMATIC_TYPE_BIN, NULL));
 }
 
 
@@ -101,7 +103,7 @@ lepton_bin_get_preferred_height (GtkWidget *widget,
 /*! \brief initialize class
  */
 static void
-gschem_bin_class_init (GschemBinClass *klass)
+schematic_bin_class_init (SchematicBinClass *klass)
 {
   GtkWidgetClass *widget_klass = GTK_WIDGET_CLASS (klass);
 
@@ -117,7 +119,7 @@ gschem_bin_class_init (GschemBinClass *klass)
 }
 
 static void
-gschem_bin_init (GschemBin *klass)
+schematic_bin_init (SchematicBin *klass)
 {
 }
 

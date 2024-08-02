@@ -23,7 +23,9 @@
 #include "gschem.h"
 
 
-G_DEFINE_TYPE (PageSelectWidget, page_select_widget, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (PageSelectWidget,
+               page_select_widget,
+               SCHEMATIC_TYPE_BIN);
 
 
 enum /* gobject property IDs */

@@ -37,7 +37,9 @@ enum
 };
 
 
-G_DEFINE_TYPE (GschemFindTextState, gschem_find_text_state, GSCHEM_TYPE_BIN);
+G_DEFINE_TYPE (GschemFindTextState,
+               gschem_find_text_state,
+               SCHEMATIC_TYPE_BIN);
 
 
 typedef void (*NotifyFunc)(void*, void*);

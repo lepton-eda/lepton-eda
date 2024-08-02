@@ -31,12 +31,12 @@
 
 struct _PageSelectWidgetClass
 {
-  GschemBinClass parent_class;
+  SchematicBinClass parent_class;
 };
 
 struct _PageSelectWidget
 {
-  GschemBinClass parent_instance;
+  SchematicBinClass parent_instance;
 
   SchematicWindow* toplevel_;
   GtkTreeView*    treeview_;
