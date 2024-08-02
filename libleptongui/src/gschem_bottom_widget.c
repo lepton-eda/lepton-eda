@@ -1126,7 +1126,8 @@ schematic_bottom_widget_set_left_button_text (SchematicBottomWidget *widget,
  *  \param [in]     text The text
  */
 void
-gschem_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget, const char *text)
+schematic_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget,
+                                                const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1328,7 +1329,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_MIDDLE_BUTTON_TEXT:
-      gschem_bottom_widget_set_middle_button_text (widget, g_value_get_string (value));
+      schematic_bottom_widget_set_middle_button_text (widget, g_value_get_string (value));
       break;
 
     case PROP_RIGHT_BUTTON_TEXT:

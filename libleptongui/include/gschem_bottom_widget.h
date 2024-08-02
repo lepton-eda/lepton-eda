@@ -113,8 +113,8 @@ void
 schematic_bottom_widget_set_left_button_text (SchematicBottomWidget *widget,
                                               const char *text);
 void
-gschem_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget, const char *text);
-
+schematic_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget,
+                                                const char *text);
 void
 gschem_bottom_widget_set_right_button_text (SchematicBottomWidget *widget, const char *text);
 
