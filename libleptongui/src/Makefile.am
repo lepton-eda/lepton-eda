@@ -14,7 +14,7 @@ libleptongui_la_SOURCES = \
 	gtk_helper.c \
 	lepton-schematic.c \
 	gschemhotkeystore.c \
-	gschem_about_dialog.c \
+	about_dialog.c \
 	accel_label.c \
 	alignment_combo.c \
 	gschem_arc_dialog.c \

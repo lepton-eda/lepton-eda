@@ -613,7 +613,7 @@
 (define-lff schematic_keys_get_event_modifiers int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
 
-;;; gschem_about_dialog.c
+;;; about_dialog.c
 (define-lff about_dialog void '(*))
 
 ;;; gschem_arc_dialog.c
