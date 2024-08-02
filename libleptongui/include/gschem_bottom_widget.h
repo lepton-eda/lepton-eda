@@ -92,7 +92,7 @@ int
 schematic_bottom_widget_get_snap_size (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_status_text (SchematicBottomWidget *widget);
+schematic_bottom_widget_get_status_text (SchematicBottomWidget *widget);
 
 gboolean
 gschem_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget);

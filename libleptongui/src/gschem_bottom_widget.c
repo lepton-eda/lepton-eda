@@ -259,7 +259,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_STATUS_TEXT:
-      g_value_set_string (value, gschem_bottom_widget_get_status_text (widget));
+      g_value_set_string (value, schematic_bottom_widget_get_status_text (widget));
       break;
 
     case PROP_RUBBER_BAND_MODE:
@@ -516,7 +516,7 @@ schematic_bottom_widget_get_snap_size (SchematicBottomWidget *widget)
  *  \return The status text
  */
 const char*
-gschem_bottom_widget_get_status_text (SchematicBottomWidget *widget)
+schematic_bottom_widget_get_status_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
