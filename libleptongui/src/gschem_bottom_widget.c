@@ -1162,7 +1162,8 @@ schematic_bottom_widget_set_right_button_text (SchematicBottomWidget *widget,
  *  \param [in]     mode The snap mode
  */
 void
-gschem_bottom_widget_set_snap_mode (SchematicBottomWidget *widget, int mode)
+schematic_bottom_widget_set_snap_mode (SchematicBottomWidget *widget,
+                                       int mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1338,7 +1339,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SNAP_MODE:
-      gschem_bottom_widget_set_snap_mode (widget, g_value_get_int (value));
+      schematic_bottom_widget_set_snap_mode (widget, g_value_get_int (value));
       break;
 
     case PROP_SNAP_SIZE:
