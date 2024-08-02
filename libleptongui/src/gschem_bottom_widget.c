@@ -255,7 +255,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_SNAP_SIZE:
-      g_value_set_int (value, gschem_bottom_widget_get_snap_size (widget));
+      g_value_set_int (value, schematic_bottom_widget_get_snap_size (widget));
       break;
 
     case PROP_STATUS_TEXT:
@@ -501,7 +501,7 @@ schematic_bottom_widget_get_snap_mode (SchematicBottomWidget *widget)
  *  \return The snap size
  */
 int
-gschem_bottom_widget_get_snap_size (SchematicBottomWidget *widget)
+schematic_bottom_widget_get_snap_size (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
