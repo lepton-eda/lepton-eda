@@ -23,21 +23,21 @@
  * \brief A widget for the "status bar" at the bottom of the window
  */
 
-#define GSCHEM_TYPE_BOTTOM_WIDGET           (gschem_bottom_widget_get_type())
-#define GSCHEM_BOTTOM_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_BOTTOM_WIDGET, GschemBottomWidget))
-#define GSCHEM_BOTTOM_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_BOTTOM_WIDGET, GschemBottomWidgetClass))
-#define GSCHEM_IS_BOTTOM_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_BOTTOM_WIDGET))
-#define GSCHEM_BOTTOM_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_BOTTOM_WIDGET, GschemBottomWidgetClass))
+#define SCHEMATIC_TYPE_BOTTOM_WIDGET           (schematic_bottom_widget_get_type())
+#define SCHEMATIC_BOTTOM_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_BOTTOM_WIDGET, SchematicBottomWidget))
+#define SCHEMATIC_BOTTOM_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_BOTTOM_WIDGET, SchematicBottomWidgetClass))
+#define SCHEMATIC_IS_BOTTOM_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_BOTTOM_WIDGET))
+#define SCHEMATIC_BOTTOM_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_BOTTOM_WIDGET, SchematicBottomWidgetClass))
 
-typedef struct _GschemBottomWidgetClass GschemBottomWidgetClass;
-typedef struct _GschemBottomWidget GschemBottomWidget;
+typedef struct _SchematicBottomWidgetClass SchematicBottomWidgetClass;
+typedef struct _SchematicBottomWidget SchematicBottomWidget;
 
-struct _GschemBottomWidgetClass
+struct _SchematicBottomWidgetClass
 {
   GtkHBoxClass parent_class;
 };
 
-struct _GschemBottomWidget
+struct _SchematicBottomWidget
 {
   GtkHBox parent;
 
@@ -71,67 +71,67 @@ struct _GschemBottomWidget
 
 
 int
-gschem_bottom_widget_get_grid_mode (GschemBottomWidget *widget);
+gschem_bottom_widget_get_grid_mode (SchematicBottomWidget *widget);
 
 int
-gschem_bottom_widget_get_grid_size (GschemBottomWidget *widget);
+gschem_bottom_widget_get_grid_size (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_left_button_text (GschemBottomWidget *widget);
+gschem_bottom_widget_get_left_button_text (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_middle_button_text (GschemBottomWidget *widget);
+gschem_bottom_widget_get_middle_button_text (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_right_button_text (GschemBottomWidget *widget);
+gschem_bottom_widget_get_right_button_text (SchematicBottomWidget *widget);
 
 int
-gschem_bottom_widget_get_snap_mode (GschemBottomWidget *widget);
+gschem_bottom_widget_get_snap_mode (SchematicBottomWidget *widget);
 
 int
-gschem_bottom_widget_get_snap_size (GschemBottomWidget *widget);
+gschem_bottom_widget_get_snap_size (SchematicBottomWidget *widget);
 
 const char*
-gschem_bottom_widget_get_status_text (GschemBottomWidget *widget);
+gschem_bottom_widget_get_status_text (SchematicBottomWidget *widget);
 
 gboolean
-gschem_bottom_widget_get_rubber_band_mode (GschemBottomWidget *widget);
+gschem_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget);
 
 gboolean
-gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget);
+gschem_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget);
 
 GType
-gschem_bottom_widget_get_type ();
+schematic_bottom_widget_get_type ();
 
 void
-gschem_bottom_widget_set_grid_mode (GschemBottomWidget *widget, int mode);
+gschem_bottom_widget_set_grid_mode (SchematicBottomWidget *widget, int mode);
 
 void
-gschem_bottom_widget_set_grid_size (GschemBottomWidget *widget, int size);
+gschem_bottom_widget_set_grid_size (SchematicBottomWidget *widget, int size);
 
 void
-gschem_bottom_widget_set_left_button_text (GschemBottomWidget *widget, const char *text);
+gschem_bottom_widget_set_left_button_text (SchematicBottomWidget *widget, const char *text);
 
 void
-gschem_bottom_widget_set_middle_button_text (GschemBottomWidget *widget, const char *text);
+gschem_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget, const char *text);
 
 void
-gschem_bottom_widget_set_right_button_text (GschemBottomWidget *widget, const char *text);
+gschem_bottom_widget_set_right_button_text (SchematicBottomWidget *widget, const char *text);
 
 void
-gschem_bottom_widget_set_snap_mode (GschemBottomWidget *widget, int mode);
+gschem_bottom_widget_set_snap_mode (SchematicBottomWidget *widget, int mode);
 
 void
-gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size);
+gschem_bottom_widget_set_snap_size (SchematicBottomWidget *widget, int size);
 
 void
-gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *text);
+gschem_bottom_widget_set_status_text (SchematicBottomWidget *widget, const char *text);
 
 void
-gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean active);
+gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gboolean active);
 
 void
-gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean mode);
+gschem_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget, gboolean mode);
 
 void
-gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean mode);
+gschem_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget, gboolean mode);

@@ -44,7 +44,7 @@ i_update_status (SchematicWindow *w_current,
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    gschem_bottom_widget_set_status_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget), string);
+    gschem_bottom_widget_set_status_text (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget), string);
   }
 }
 
@@ -207,7 +207,7 @@ i_action_update_status (SchematicWindow *w_current,
   if (schematic_window_get_inside_action (w_current) != inside_action)
   {
     schematic_window_set_inside_action (w_current, inside_action);
-    gschem_bottom_widget_set_status_text_color (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    gschem_bottom_widget_set_status_text_color (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
                                                 inside_action);
   }
 }
@@ -510,12 +510,12 @@ i_update_grid_info (SchematicWindow *w_current)
   g_return_if_fail (w_current != NULL);
 
   if (w_current->bottom_widget != NULL) {
-    g_object_set (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-        "snap-mode", schematic_options_get_snap_mode (w_current->options),
-        "snap-size", schematic_options_get_snap_size (w_current->options),
-        "grid-mode", schematic_options_get_grid_mode (w_current->options),
-        "grid-size", x_grid_query_drawn_spacing (w_current),
-        NULL);
+    g_object_set (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
+                  "snap-mode", schematic_options_get_snap_mode (w_current->options),
+                  "snap-size", schematic_options_get_snap_size (w_current->options),
+                  "grid-mode", schematic_options_get_grid_mode (w_current->options),
+                  "grid-size", x_grid_query_drawn_spacing (w_current),
+                  NULL);
   }
 }
 
@@ -543,10 +543,10 @@ void
 i_update_net_options_status (SchematicWindow* w_current)
 {
   gschem_bottom_widget_set_rubber_band_mode(
-    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
     schematic_options_get_net_rubber_band_mode (w_current->options));
 
   gschem_bottom_widget_set_magnetic_net_mode(
-    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
     schematic_options_get_magnetic_net_mode (w_current->options));
 }

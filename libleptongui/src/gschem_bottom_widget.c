@@ -76,38 +76,45 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass);
+schematic_bottom_widget_class_init (SchematicBottomWidgetClass *klass);
 
 static void
-gschem_bottom_widget_init (GschemBottomWidget *view);
+schematic_bottom_widget_init (SchematicBottomWidget *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
-
+update_grid_label (SchematicBottomWidget *widget,
+                   GParamSpec *pspec,
+                   gpointer unused);
 static void
-update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
-
+update_rubber_band_label (SchematicBottomWidget *widget,
+                          GParamSpec *pspec,
+                          gpointer unused);
 static void
-update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
-
+update_magnetic_net_label (SchematicBottomWidget *widget,
+                           GParamSpec *pspec,
+                           gpointer unused);
 
 
 /* convenience macro - gobject type implementation:
 */
 #ifdef ENABLE_GTK3
-G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_BOX);
+G_DEFINE_TYPE (SchematicBottomWidget,
+               schematic_bottom_widget,
+               GTK_TYPE_BOX);
 #else
-G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_HBOX);
+G_DEFINE_TYPE (SchematicBottomWidget,
+               schematic_bottom_widget,
+               GTK_TYPE_HBOX);
 #endif
 
 
 static gboolean
 on_click_rubber_band (GtkWidget* ebox, GdkEvent* e, gpointer data)
 {
-  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  SchematicBottomWidget* widget = (SchematicBottomWidget*) data;
   g_return_val_if_fail (widget != NULL, FALSE);
 
   GdkEventButton* ebtn = (GdkEventButton*) e;
@@ -125,7 +132,7 @@ on_click_rubber_band (GtkWidget* ebox, GdkEvent* e, gpointer data)
 static gboolean
 on_click_magnetic_net (GtkWidget* ebox, GdkEvent* e, gpointer data)
 {
-  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  SchematicBottomWidget* widget = (SchematicBottomWidget*) data;
   g_return_val_if_fail (widget != NULL, FALSE);
 
   GdkEventButton* ebtn = (GdkEventButton*) e;
@@ -143,7 +150,7 @@ on_click_magnetic_net (GtkWidget* ebox, GdkEvent* e, gpointer data)
 static gboolean
 on_click_grid_size (GtkWidget* ebox, GdkEvent* e, gpointer data)
 {
-  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  SchematicBottomWidget* widget = (SchematicBottomWidget*) data;
   g_return_val_if_fail (widget != NULL, FALSE);
 
   GdkEventButton* ebtn = (GdkEventButton*) e;
@@ -161,7 +168,7 @@ on_click_grid_size (GtkWidget* ebox, GdkEvent* e, gpointer data)
 static gboolean
 on_click_snap_info (GtkWidget* ebox, GdkEvent* e, gpointer data)
 {
-  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  SchematicBottomWidget* widget = (SchematicBottomWidget*) data;
   g_return_val_if_fail (widget != NULL, FALSE);
 
   GdkEventButton* ebtn = (GdkEventButton*) e;
@@ -183,7 +190,7 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  GschemBottomWidgetClass* cls = GSCHEM_BOTTOM_WIDGET_GET_CLASS (object);
+  SchematicBottomWidgetClass* cls = SCHEMATIC_BOTTOM_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
 
   parent_cls->dispose (object);
@@ -198,7 +205,7 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  GschemBottomWidgetClass* cls = GSCHEM_BOTTOM_WIDGET_GET_CLASS (object);
+  SchematicBottomWidgetClass* cls = SCHEMATIC_BOTTOM_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
 
   parent_cls->finalize (object);
@@ -216,7 +223,7 @@ finalize (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemBottomWidget *widget = GSCHEM_BOTTOM_WIDGET (object);
+  SchematicBottomWidget *widget = SCHEMATIC_BOTTOM_WIDGET (object);
 
   switch (param_id) {
     case PROP_TOPLEVEL:
@@ -270,12 +277,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize GschemBottomWidget class
+/*! \brief Initialize SchematicBottomWidget class
  *
- *  \param [in] klass The class for the GschemBottomWidget
+ *  \param [in] klass The class for the SchematicBottomWidget
  */
 static void
-gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
+schematic_bottom_widget_class_init (SchematicBottomWidgetClass *klass)
 {
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
@@ -400,11 +407,11 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
 
 /*! \brief Get the grid mode
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The grid mode
  */
 int
-gschem_bottom_widget_get_grid_mode (GschemBottomWidget *widget)
+gschem_bottom_widget_get_grid_mode (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -415,11 +422,11 @@ gschem_bottom_widget_get_grid_mode (GschemBottomWidget *widget)
 
 /*! \brief Get the grid size
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The grid size
  */
 int
-gschem_bottom_widget_get_grid_size (GschemBottomWidget *widget)
+gschem_bottom_widget_get_grid_size (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -430,11 +437,11 @@ gschem_bottom_widget_get_grid_size (GschemBottomWidget *widget)
 
 /*! \brief Get the left button text
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The left button text
  */
 const char*
-gschem_bottom_widget_get_left_button_text (GschemBottomWidget *widget)
+gschem_bottom_widget_get_left_button_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -445,11 +452,11 @@ gschem_bottom_widget_get_left_button_text (GschemBottomWidget *widget)
 
 /*! \brief Get the middle button text
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The middle button text
  */
 const char*
-gschem_bottom_widget_get_middle_button_text (GschemBottomWidget *widget)
+gschem_bottom_widget_get_middle_button_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -460,11 +467,11 @@ gschem_bottom_widget_get_middle_button_text (GschemBottomWidget *widget)
 
 /*! \brief Get the right button text
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The right button text
  */
 const char*
-gschem_bottom_widget_get_right_button_text (GschemBottomWidget *widget)
+gschem_bottom_widget_get_right_button_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -475,11 +482,11 @@ gschem_bottom_widget_get_right_button_text (GschemBottomWidget *widget)
 
 /*! \brief Get the snap mode
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The snap mode
  */
 int
-gschem_bottom_widget_get_snap_mode (GschemBottomWidget *widget)
+gschem_bottom_widget_get_snap_mode (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -490,11 +497,11 @@ gschem_bottom_widget_get_snap_mode (GschemBottomWidget *widget)
 
 /*! \brief Get the snap size
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The snap size
  */
 int
-gschem_bottom_widget_get_snap_size (GschemBottomWidget *widget)
+gschem_bottom_widget_get_snap_size (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -505,11 +512,11 @@ gschem_bottom_widget_get_snap_size (GschemBottomWidget *widget)
 
 /*! \brief Get the status text
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \return The status text
  */
 const char*
-gschem_bottom_widget_get_status_text (GschemBottomWidget *widget)
+gschem_bottom_widget_get_status_text (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -520,11 +527,11 @@ gschem_bottom_widget_get_status_text (GschemBottomWidget *widget)
 
 /*! \brief Get the rubber band mode
  *
- *  \param  widget This GschemBottomWidget
+ *  \param  widget This SchematicBottomWidget
  *  \return        The rubber band mode: on (TRUE) or off (FALSE)
  */
 gboolean
-gschem_bottom_widget_get_rubber_band_mode (GschemBottomWidget *widget)
+gschem_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -535,11 +542,11 @@ gschem_bottom_widget_get_rubber_band_mode (GschemBottomWidget *widget)
 
 /*! \brief Get the magnetic net mode
  *
- *  \param  widget This GschemBottomWidget
+ *  \param  widget This SchematicBottomWidget
  *  \return        The magnetic net mode: on (TRUE) or off (FALSE)
  */
 gboolean
-gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget)
+gschem_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, 0);
 
@@ -561,12 +568,12 @@ separator_new ()
 
 /*! \brief Set grid_snap_widget text and color
  *
- *  \param  widget      This GschemBottomWidget
+ *  \param  widget      This SchematicBottomWidget
  *  \param  str         Text to set. Newly-allocated string. Will be g_free()'d
  *  \param  color_name  Color name, e.g. "red", "blue"
  */
 static void
-set_snap_info_widget (GschemBottomWidget* widget,
+set_snap_info_widget (SchematicBottomWidget* widget,
                       gchar* str,
                       const gchar* color_name)
 {
@@ -587,10 +594,10 @@ set_snap_info_widget (GschemBottomWidget* widget,
  *  \par Function Description
  *  Remove any text decorations, reset text color to black
  *
- *  \param  widget  This GschemBottomWidget
+ *  \param  widget  This SchematicBottomWidget
  */
 static void
-reset_snap_info_widget (GschemBottomWidget* widget)
+reset_snap_info_widget (SchematicBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -602,10 +609,10 @@ reset_snap_info_widget (GschemBottomWidget* widget)
 
 /*! \brief Update info in the grid_snap_widget depending on current snap settings
  *
- *  \param  widget  This GschemBottomWidget
+ *  \param  widget  This SchematicBottomWidget
  */
 static void
-update_snap_info_widget (GschemBottomWidget* widget)
+update_snap_info_widget (SchematicBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -700,10 +707,10 @@ update_snap_info_widget (GschemBottomWidget* widget)
 
 /*! \brief Create grid_snap_widget
  *
- *  \param  widget  This GschemBottomWidget
+ *  \param  widget  This SchematicBottomWidget
  */
 static void
-create_snap_info_widget (GschemBottomWidget* widget)
+create_snap_info_widget (SchematicBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -741,10 +748,10 @@ create_snap_info_widget (GschemBottomWidget* widget)
 
 /*! \brief Update info in the grid_size_widget depending on current grid settings
  *
- *  \param  widget  This GschemBottomWidget
+ *  \param  widget  This SchematicBottomWidget
  */
 static void
-update_grid_size_widget (GschemBottomWidget* widget)
+update_grid_size_widget (SchematicBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -775,10 +782,10 @@ update_grid_size_widget (GschemBottomWidget* widget)
 
 /*! \brief Create grid_size_widget
  *
- *  \param  widget  This GschemBottomWidget
+ *  \param  widget  This SchematicBottomWidget
  */
 static void
-create_grid_size_widget (GschemBottomWidget* widget)
+create_grid_size_widget (SchematicBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -815,12 +822,12 @@ create_grid_size_widget (GschemBottomWidget* widget)
 
 
 
-/*! \brief Initialize #GschemBottomWidget instance
+/*! \brief Initialize #SchematicBottomWidget instance
  *
- *  \param [in,out] widget The #GschemBottomWidget instance.
+ *  \param [in,out] widget The #SchematicBottomWidget instance.
  */
 static void
-gschem_bottom_widget_init (GschemBottomWidget *widget)
+schematic_bottom_widget_init (SchematicBottomWidget *widget)
 {
   GtkWidget *separator;
 
@@ -1061,11 +1068,11 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 /*! \brief Set the grid mode
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     mode The grid mode
  */
 void
-gschem_bottom_widget_set_grid_mode (GschemBottomWidget *widget, int mode)
+gschem_bottom_widget_set_grid_mode (SchematicBottomWidget *widget, int mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1078,11 +1085,11 @@ gschem_bottom_widget_set_grid_mode (GschemBottomWidget *widget, int mode)
 
 /*! \brief Set the grid size
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     size The grid size
  */
 void
-gschem_bottom_widget_set_grid_size (GschemBottomWidget *widget, int size)
+gschem_bottom_widget_set_grid_size (SchematicBottomWidget *widget, int size)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1095,11 +1102,11 @@ gschem_bottom_widget_set_grid_size (GschemBottomWidget *widget, int size)
 
 /*! \brief Set the left button text
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     text The text
  */
 void
-gschem_bottom_widget_set_left_button_text (GschemBottomWidget *widget, const char *text)
+gschem_bottom_widget_set_left_button_text (SchematicBottomWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1112,11 +1119,11 @@ gschem_bottom_widget_set_left_button_text (GschemBottomWidget *widget, const cha
 
 /*! \brief Set the middle button text
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     text The text
  */
 void
-gschem_bottom_widget_set_middle_button_text (GschemBottomWidget *widget, const char *text)
+gschem_bottom_widget_set_middle_button_text (SchematicBottomWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1129,11 +1136,11 @@ gschem_bottom_widget_set_middle_button_text (GschemBottomWidget *widget, const c
 
 /*! \brief Set the right button text
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     text The text
  */
 void
-gschem_bottom_widget_set_right_button_text (GschemBottomWidget *widget, const char *text)
+gschem_bottom_widget_set_right_button_text (SchematicBottomWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1146,11 +1153,11 @@ gschem_bottom_widget_set_right_button_text (GschemBottomWidget *widget, const ch
 
 /*! \brief Set the snap mode
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     mode The snap mode
  */
 void
-gschem_bottom_widget_set_snap_mode (GschemBottomWidget *widget, int mode)
+gschem_bottom_widget_set_snap_mode (SchematicBottomWidget *widget, int mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1163,11 +1170,11 @@ gschem_bottom_widget_set_snap_mode (GschemBottomWidget *widget, int mode)
 
 /*! \brief Set the snap size
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     size The snap size
  */
 void
-gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size)
+gschem_bottom_widget_set_snap_size (SchematicBottomWidget *widget, int size)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1183,11 +1190,11 @@ gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size)
  *  Changes the status text color to show if the current editing
  *  action is active or not.
  *
- *  \param [in,out] widget  This GschemBottomWidget
+ *  \param [in,out] widget  This SchematicBottomWidget
  *  \param [in]     active  The state to visualise
  */
 void
-gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean active)
+gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gboolean active)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1238,11 +1245,11 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
 
 /*! \brief Set the status text
  *
- *  \param [in,out] widget This GschemBottomWidget
+ *  \param [in,out] widget This SchematicBottomWidget
  *  \param [in]     text The status text
  */
 void
-gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *text)
+gschem_bottom_widget_set_status_text (SchematicBottomWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1261,11 +1268,11 @@ gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *te
 
 /*! \brief Set the rubber band mode
  *
- *  \param [in] widget  This GschemBottomWidget
+ *  \param [in] widget  This SchematicBottomWidget
  *  \param [in] mode    The rubber band mode: on (TRUE) or off (FALSE)
  */
 void
-gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean mode)
+gschem_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget, gboolean mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1278,11 +1285,11 @@ gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean 
 
 /*! \brief Set the magnetic net mode
  *
- *  \param [in] widget  This GschemBottomWidget
+ *  \param [in] widget  This SchematicBottomWidget
  *  \param [in] mode    The magnetic net mode: on (TRUE) or off (FALSE)
  */
 void
-gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean mode)
+gschem_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget, gboolean mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1298,7 +1305,7 @@ gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemBottomWidget *widget = GSCHEM_BOTTOM_WIDGET (object);
+  SchematicBottomWidget *widget = SCHEMATIC_BOTTOM_WIDGET (object);
 
   switch (param_id) {
     case PROP_TOPLEVEL:
@@ -1358,12 +1365,14 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 /*! \brief Write the snap and grid settings to the status bar.
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \param [in] pspec  The parameter that changed
  *  \param [in] unused
  */
 static void
-update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
+update_grid_label (SchematicBottomWidget *widget,
+                   GParamSpec *pspec,
+                   gpointer unused)
 {
   update_snap_info_widget (widget);
   update_grid_size_widget (widget);
@@ -1373,12 +1382,14 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
 
 /*! \brief Display the rubber band indicator in the status bar
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \param [in] pspec  The parameter that changed
  *  \param [in] unused
  */
 static void
-update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
+update_rubber_band_label (SchematicBottomWidget *widget,
+                          GParamSpec *pspec,
+                          gpointer unused)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1416,12 +1427,14 @@ update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointe
 
 /*! \brief Display the magnetic net indicator in the status bar
  *
- *  \param [in] widget This GschemBottomWidget
+ *  \param [in] widget This SchematicBottomWidget
  *  \param [in] pspec  The parameter that changed
  *  \param [in] unused
  */
 static void
-update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
+update_magnetic_net_label (SchematicBottomWidget *widget,
+                           GParamSpec *pspec,
+                           gpointer unused)
 {
   g_return_if_fail (widget != NULL);
 

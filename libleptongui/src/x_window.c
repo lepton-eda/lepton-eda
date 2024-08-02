@@ -1008,7 +1008,7 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                        text_right_button_action,
                                        text_right_button_cancel);
 
-  gpointer obj = g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_BOTTOM_WIDGET,
                                "toplevel",
                                w_current,
                                "grid-mode",
