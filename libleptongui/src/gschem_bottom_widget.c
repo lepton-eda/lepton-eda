@@ -1201,7 +1201,8 @@ schematic_bottom_widget_set_snap_size (SchematicBottomWidget *widget,
  *  \param [in]     active  The state to visualise
  */
 void
-gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gboolean active)
+schematic_bottom_widget_set_status_text_color (SchematicBottomWidget *widget,
+                                               gboolean active)
 {
   g_return_if_fail (widget != NULL);
 
@@ -1353,7 +1354,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_STATUS_TEXT_COLOR:
-      gschem_bottom_widget_set_status_text_color (widget, g_value_get_boolean (value));
+      schematic_bottom_widget_set_status_text_color (widget, g_value_get_boolean (value));
       break;
 
     case PROP_RUBBER_BAND_MODE:

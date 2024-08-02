@@ -207,8 +207,8 @@ i_action_update_status (SchematicWindow *w_current,
   if (schematic_window_get_inside_action (w_current) != inside_action)
   {
     schematic_window_set_inside_action (w_current, inside_action);
-    gschem_bottom_widget_set_status_text_color (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
-                                                inside_action);
+    schematic_bottom_widget_set_status_text_color (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                   inside_action);
   }
 }
 

@@ -128,8 +128,8 @@ void
 schematic_bottom_widget_set_status_text (SchematicBottomWidget *widget,
                                          const char *text);
 void
-gschem_bottom_widget_set_status_text_color (SchematicBottomWidget *widget, gboolean active);
-
+schematic_bottom_widget_set_status_text_color (SchematicBottomWidget *widget,
+                                               gboolean active);
 void
 gschem_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget, gboolean mode);
 
