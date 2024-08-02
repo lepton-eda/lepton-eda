@@ -1,5 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2016 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
