@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libleptonrenderer - Rendering Lepton EDA schematics with Cairo
- * Copyright (C) 2010-2012 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 2010-2012 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,6 +18,12 @@
  *
  * This file based on GDK's gdkpango.h (LGPL V2+)
  * Copyright (C) 2000 Red Hat, Inc.
+ */
+
+/*!
+ * \file edapangorenderer.h
+ *
+ * \brief Pango renderer
  */
 
 #ifndef __EDA_PANGO_RENDERER_H__
