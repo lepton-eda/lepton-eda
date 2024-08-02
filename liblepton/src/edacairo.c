@@ -1,6 +1,6 @@
-/* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
- * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+/* Lepton EDA library
+ * Copyright (C) 2012-2015 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
+/*!
+ * \file edacairo.c
+ *
+ * \brief Cairo renderer
+ */
+
 
 #include <config.h>
 
