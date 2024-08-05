@@ -1938,10 +1938,10 @@ static void
 multiattrib_class_init (MultiattribClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-  SchematicDialogClass *gschem_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
+  SchematicDialogClass *schematic_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
 
-  gschem_dialog_class->geometry_save    = multiattrib_geometry_save;
-  gschem_dialog_class->geometry_restore = multiattrib_geometry_restore;
+  schematic_dialog_class->geometry_save    = multiattrib_geometry_save;
+  schematic_dialog_class->geometry_restore = multiattrib_geometry_restore;
 
   gobject_class->set_property = multiattrib_set_property;
   gobject_class->get_property = multiattrib_get_property;
