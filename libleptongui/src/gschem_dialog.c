@@ -78,7 +78,7 @@ enum {
   LAST_SIGNAL
 };
 
-static guint gschem_dialog_signals[ LAST_SIGNAL ] = { 0 };
+static guint schematic_dialog_signals[ LAST_SIGNAL ] = { 0 };
 
 G_DEFINE_TYPE (SchematicDialog,
                schematic_dialog,
@@ -167,7 +167,7 @@ static void show_handler (GtkWidget *widget)
 
     g_assert (cfg != NULL);
     if (eda_config_has_group (cfg, group_name)) {
-      g_signal_emit (dialog, gschem_dialog_signals[ GEOMETRY_RESTORE ], 0,
+      g_signal_emit (dialog, schematic_dialog_signals[ GEOMETRY_RESTORE ], 0,
                      cfg, group_name);
     }
 
@@ -200,7 +200,7 @@ static void unmap_handler (GtkWidget *widget)
                                   dialog->settings_name);
 
     g_assert (cfg != NULL);
-    g_signal_emit (dialog, gschem_dialog_signals[ GEOMETRY_SAVE ], 0,
+    g_signal_emit (dialog, schematic_dialog_signals[ GEOMETRY_SAVE ], 0,
                    cfg, group_name);
 
     g_free (group_name);
@@ -314,7 +314,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
   gobject_class->set_property  = gschem_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
 
-  gschem_dialog_signals[ GEOMETRY_SAVE ] =
+  schematic_dialog_signals[ GEOMETRY_SAVE ] =
     g_signal_new ("geometry-save",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
                   G_SIGNAL_RUN_FIRST,     /*signal_flags */
@@ -328,7 +328,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
                   G_TYPE_STRING
                  );
 
-  gschem_dialog_signals[ GEOMETRY_RESTORE ] =
+  schematic_dialog_signals[ GEOMETRY_RESTORE ] =
     g_signal_new ("geometry-restore",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
                   G_SIGNAL_RUN_FIRST,     /*signal_flags */
