@@ -23,7 +23,7 @@
 #include <math.h>
 #include <cairo.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define NUM_BEZIER_SEGMENTS 100
 

@@ -26,7 +26,7 @@
 
 #include "config.h"
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /* convenience macro - gobject type implementation:

@@ -36,7 +36,7 @@
 #include <unistd.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 struct _SchematicPreviewClass

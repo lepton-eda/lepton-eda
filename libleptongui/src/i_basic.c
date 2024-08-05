@@ -23,7 +23,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Update status bar string
  *

@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief set the start point of a new bus

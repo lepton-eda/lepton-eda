@@ -20,7 +20,7 @@
 
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 #ifndef ENABLE_GTK3

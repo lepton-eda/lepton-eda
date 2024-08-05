@@ -35,7 +35,7 @@
 
 #include <math.h>
 
-#include "gschem.h"
+#include "schematic.h"
 #include <gdk/gdkkeysyms.h>
 
 #ifndef ENABLE_GTK3

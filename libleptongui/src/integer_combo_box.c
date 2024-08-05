@@ -31,7 +31,7 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#include "gschem.h"
+#include "schematic.h"
 
 
 

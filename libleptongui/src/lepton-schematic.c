@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 
 #include <glib.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 #ifdef HAVE_LOCALE_H
 #include <locale.h>

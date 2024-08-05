@@ -24,7 +24,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 #include <liblepton/glib_compat.h>
 
 

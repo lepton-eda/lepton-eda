@@ -29,7 +29,7 @@
 #include <sys/stat.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 static int undo_file_index=0;
 

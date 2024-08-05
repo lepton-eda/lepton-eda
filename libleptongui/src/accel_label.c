@@ -37,7 +37,7 @@
 
 #include "config.h"
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define P_(x) (x)
 

@@ -28,7 +28,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \

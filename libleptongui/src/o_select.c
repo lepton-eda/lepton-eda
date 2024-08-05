@@ -36,7 +36,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Start the process of selection
  *  \par Function Description

@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Return an snap mode enum value from string.

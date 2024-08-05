@@ -33,7 +33,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 #include <gdk/gdkkeysyms.h>
 
 #include "../include/dialog.h"

@@ -24,7 +24,7 @@
 #endif
 
 
-#include "gschem.h"
+#include "schematic.h"
 
 #include <glib/gstdio.h>
 

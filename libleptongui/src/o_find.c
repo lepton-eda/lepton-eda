@@ -22,7 +22,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Tests a if a given LeptonObject was hit at a given set of coordinates

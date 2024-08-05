@@ -17,7 +17,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Create and run the Page revert dialog.

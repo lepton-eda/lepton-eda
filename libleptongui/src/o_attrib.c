@@ -25,7 +25,7 @@
 #endif
 #include <math.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 

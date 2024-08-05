@@ -19,7 +19,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 #define HELPER_FUNC_NAME "%gschem-hotkey-store/dump-global-keymap"

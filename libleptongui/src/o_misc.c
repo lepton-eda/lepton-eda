@@ -27,7 +27,7 @@
 
 #include <unistd.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Rotate all objects in list.

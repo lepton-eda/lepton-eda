@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <gschem.h>
+#include <schematic.h>
 
 /*! \brief Find the closest grid coordinate.
  *  \par Function Description

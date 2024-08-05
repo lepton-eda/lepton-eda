@@ -26,7 +26,7 @@
 #include <unistd.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define MIME_TYPE_SCHEMATIC "application/x-lepton-schematic"
 #define CLIP_TYPE_SCHEMATIC 1

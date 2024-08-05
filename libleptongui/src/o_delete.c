@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Delete an object.
  *  \par Function Description

@@ -36,7 +36,7 @@
 #include <math.h>
 
 #include <liblepton/glib_compat.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 

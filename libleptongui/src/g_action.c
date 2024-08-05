@@ -23,7 +23,7 @@
 
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Evaluate a lepton-schematic action by name.
  * \par Function Description

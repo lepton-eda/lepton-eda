@@ -29,7 +29,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 /***************** Start of Attrib Edit dialog box ********************/
 /*! \section attrib-edit-dialog-box Atrib Edit Dialog Box */

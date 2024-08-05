@@ -29,7 +29,7 @@
 #include <unistd.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \todo Finish function documentation!!!
  *  \brief

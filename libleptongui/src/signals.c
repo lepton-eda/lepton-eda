@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2020-2022 Lepton EDA Contributors
+ * Copyright (C) 2020-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #include <version.h>
 
 #include <glib.h>
-#include "gschem.h"
+#include "schematic.h"
 
 void
 schematic_signal_connect (gpointer instance,

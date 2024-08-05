@@ -29,7 +29,7 @@
 
 #include <math.h>
 
-#include "gschem.h"
+#include "schematic.h"
 #include <cairo-pdf.h>
 
 #define DEFAULT_PDF_SIZE 256

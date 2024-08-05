@@ -20,7 +20,7 @@
 
 #include <config.h>
 #include <gdk/gdkkeysyms.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 G_DEFINE_TYPE (PageSelectWidget,

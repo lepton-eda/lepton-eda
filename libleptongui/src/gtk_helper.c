@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2023 Lepton EDA Contributors
+ * Copyright (C) 2023-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Transform a GTK response id value to string.
  * \par Function Description

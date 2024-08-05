@@ -30,7 +30,7 @@
 #endif
 
 #include <liblepton/glib_compat.h>
-#include "gschem.h"
+#include "schematic.h"
 #include <gdk/gdkkeysyms.h>
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \

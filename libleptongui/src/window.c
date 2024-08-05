@@ -19,7 +19,7 @@
  */
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 static void
 handle_undo (SchematicWindow *w_current);

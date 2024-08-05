@@ -36,7 +36,7 @@
 #include <math.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*  The padding used around labels in the "status bar"

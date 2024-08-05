@@ -24,7 +24,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define DOTS_VARIABLE_MODE_SPACING   30
 

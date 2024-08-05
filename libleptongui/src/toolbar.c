@@ -20,7 +20,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Creates a new GtkImage displaying a GTK stock icon if available.

@@ -20,7 +20,7 @@
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
-#include "gschem.h"
+#include "schematic.h"
 
 #define INVALIDATE_MARGIN 1
 

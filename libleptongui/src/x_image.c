@@ -20,7 +20,7 @@
 
 #include <config.h>
 #include <math.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 extern LeptonColorMap display_colors;

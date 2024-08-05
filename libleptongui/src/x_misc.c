@@ -24,7 +24,7 @@
 # undef STRICT
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>

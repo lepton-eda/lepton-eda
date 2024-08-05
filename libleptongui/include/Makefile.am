@@ -12,7 +12,7 @@ noinst_HEADERS = \
 	gettext.h \
 	x_compselect.h \
 	x_multiattrib.h \
-	gschem.h \
+	schematic.h \
 	hotkey_store.h \
 	accel_label.h \
 	bin.h \

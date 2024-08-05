@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 /* Absolute default used when default_... strings are NULL */
 

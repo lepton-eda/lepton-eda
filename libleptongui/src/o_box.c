@@ -21,7 +21,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define GET_BOX_WIDTH(w)                        \
         abs((w)->second_wx - (w)->first_wx)

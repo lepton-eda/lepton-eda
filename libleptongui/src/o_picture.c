@@ -21,7 +21,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /* This works, but using one macro inside of other doesn't */
 #define GET_PICTURE_WIDTH(w) \

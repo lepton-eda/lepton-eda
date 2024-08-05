@@ -19,7 +19,7 @@
  */
 /*! \todo STILL NEED to clean up line lengths in aa and tr */
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 

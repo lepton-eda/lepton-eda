@@ -19,7 +19,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Open the "Execute Script" file chooser dialog

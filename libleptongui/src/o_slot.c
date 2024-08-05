@@ -24,7 +24,7 @@
 #include <string.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 #define MAX_SLOT_SIZE 10
 

@@ -19,7 +19,7 @@
  */
 #include <config.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 SCM scheme_window_fluid = SCM_UNDEFINED;
 

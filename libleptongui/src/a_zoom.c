@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /* Kazu - discuss with Ales
  * 1) rint

@@ -24,7 +24,7 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 #include <gdk/gdkkeysyms.h>
 
 

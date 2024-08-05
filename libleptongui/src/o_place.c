@@ -20,7 +20,7 @@
 #include <config.h>
 #include <stdio.h>
 
-#include "gschem.h"
+#include "schematic.h"
 
 /*! \brief Start placement action
  *

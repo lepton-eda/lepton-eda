@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #endif
 
-#include "gschem.h"
+#include "schematic.h"
 
 
 enum

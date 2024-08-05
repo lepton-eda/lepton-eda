@@ -19,7 +19,7 @@
  */
 
 #include <config.h>
-#include "gschem.h"
+#include "schematic.h"
 
 
 /*! \brief Response function for the coord dialog
