@@ -22,7 +22,7 @@ noinst_HEADERS = \
 	schematic_defines.h \
 	dialog.h \
 	dialog_misc.h \
-	gschem_fill_swatch_cell_renderer.h \
+	fill_swatch_cell_renderer.h \
 	gschem_find_text_state.h \
 	gschem_find_text_widget.h \
 	gschem_integer_combo_box.h \

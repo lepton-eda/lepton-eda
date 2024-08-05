@@ -45,7 +45,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "x_dialog.h"
 #include "x_tabs.h"
 #include "gschem_swatch_column_renderer.h"
-#include "gschem_fill_swatch_cell_renderer.h"
+#include "fill_swatch_cell_renderer.h"
 #include "globals.h"
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"
