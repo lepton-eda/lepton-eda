@@ -2394,8 +2394,8 @@ multiattrib_init (Multiattrib *multiattrib)
   gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);
 
   multiattrib->add_frame =
-    gschem_dialog_misc_create_section_widget(
-      _("<b>Add Attribute</b>"), grid);
+    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
+                                                 grid);
 #else
   gtk_table_attach (GTK_TABLE (table), button,
                     2, 3, 0, 3,
@@ -2405,8 +2405,8 @@ multiattrib_init (Multiattrib *multiattrib)
 
 
   multiattrib->add_frame =
-    gschem_dialog_misc_create_section_widget(
-      _("<b>Add Attribute</b>"), table);
+    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
+                                                 table);
 #endif
 
   g_signal_connect (multiattrib->add_frame,

@@ -256,7 +256,7 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
                       TRUE,                                    /* fill    */
                       0);                                      /* padding */
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Text Content</b>"), vbox);
+  return schematic_dialog_misc_create_section_widget (_("<b>Text Content</b>"), vbox);
 }
 
 
@@ -310,7 +310,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
                     G_CALLBACK (gschem_dialog_misc_entry_activate),
                     widget);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Text Properties</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Text Properties</b>"), table);
 }
 
 

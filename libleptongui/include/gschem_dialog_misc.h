@@ -36,8 +36,8 @@ schematic_dialog_misc_create_property_table (GtkWidget *label[],
                                              GtkWidget *widget[],
                                              int count);
 GtkWidget*
-gschem_dialog_misc_create_section_widget (const char *label, GtkWidget *child);
-
+schematic_dialog_misc_create_section_widget (const char *label,
+                                             GtkWidget *child);
 void
 gschem_dialog_misc_entry_activate (GtkWidget *widget, GtkDialog *dialog);
 

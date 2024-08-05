@@ -237,7 +237,7 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
                     G_CALLBACK (gschem_dialog_misc_entry_activate),
                     dialog);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Fill Properties</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Fill Properties</b>"), table);
 }
 
 
@@ -266,7 +266,7 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog)
                    G_CALLBACK (update_object_color_model),
                    dialog);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>General Properties</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>General Properties</b>"), table);
 }
 
 
@@ -333,7 +333,7 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
                     G_CALLBACK (gschem_dialog_misc_entry_activate),
                     dialog);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Line Properties</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Line Properties</b>"), table);
 }
 
 
@@ -362,7 +362,7 @@ create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
                     G_CALLBACK (update_pin_type_model),
                     dialog);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Pin Properties</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Pin Properties</b>"), table);
 }
 
 

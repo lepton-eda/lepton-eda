@@ -258,7 +258,7 @@ create_net_section (SchematicOptionsWidget *widget)
                             G_CALLBACK (update_net_rubber_band_mode_model),
                             widget);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Net Options</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Net Options</b>"), table);
 }
 
 
@@ -294,7 +294,7 @@ create_snap_section (SchematicOptionsWidget *widget)
                             G_CALLBACK (update_snap_size_model),
                             widget);
 
-  return gschem_dialog_misc_create_section_widget (_("<b>Snap Options</b>"), table);
+  return schematic_dialog_misc_create_section_widget (_("<b>Snap Options</b>"), table);
 }
 
 
