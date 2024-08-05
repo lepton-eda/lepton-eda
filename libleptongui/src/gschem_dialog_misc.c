@@ -264,9 +264,9 @@ schematic_dialog_misc_response_non_modal (GtkDialog *dialog,
  *  \param          create    A pointer to the function that creates the dialog
  */
 void
-gschem_dialog_misc_show_non_modal (SchematicWindow *w_current,
-                                   GtkWidget **widget,
-                                   CreateNonModalDialog create)
+schematic_dialog_misc_show_non_modal (SchematicWindow *w_current,
+                                      GtkWidget **widget,
+                                      CreateNonModalDialog create)
 {
   g_return_if_fail (create != NULL);
   g_return_if_fail (w_current != NULL);
