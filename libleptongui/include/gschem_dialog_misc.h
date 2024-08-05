@@ -39,8 +39,8 @@ GtkWidget*
 schematic_dialog_misc_create_section_widget (const char *label,
                                              GtkWidget *child);
 void
-gschem_dialog_misc_entry_activate (GtkWidget *widget, GtkDialog *dialog);
-
+schematic_dialog_misc_entry_activate (GtkWidget *widget,
+                                      GtkDialog *dialog);
 void
 gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointer unused);
 

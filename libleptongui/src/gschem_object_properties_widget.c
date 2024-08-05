@@ -214,27 +214,27 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->widthe)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->angle1e)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->pitch1e)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->angle2e)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->pitch2e)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   return schematic_dialog_misc_create_section_widget (_("<b>Fill Properties</b>"), table);
@@ -320,17 +320,17 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
   return schematic_dialog_misc_create_section_widget (_("<b>Line Properties</b>"), table);

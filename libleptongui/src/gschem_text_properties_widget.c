@@ -307,7 +307,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
 
   g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (widget->textsizecb)),
                     "activate",
-                    G_CALLBACK (gschem_dialog_misc_entry_activate),
+                    G_CALLBACK (schematic_dialog_misc_entry_activate),
                     widget);
 
   return schematic_dialog_misc_create_section_widget (_("<b>Text Properties</b>"), table);

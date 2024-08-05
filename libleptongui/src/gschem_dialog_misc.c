@@ -217,7 +217,8 @@ schematic_dialog_misc_create_section_widget (const char *label,
  *  \param [in] dialog The dialog containing the widget
  */
 void
-gschem_dialog_misc_entry_activate (GtkWidget *widget, GtkDialog *dialog)
+schematic_dialog_misc_entry_activate (GtkWidget *widget,
+                                      GtkDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
