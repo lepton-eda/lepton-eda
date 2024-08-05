@@ -219,7 +219,8 @@ static void unmap_handler (GtkWidget *widget)
  *
  *  \param [in] object The GObject being finalized.
  */
-static void gschem_dialog_finalize (GObject *object)
+static void
+schematic_dialog_finalize (GObject *object)
 {
   SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
@@ -310,7 +311,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
   gtkwidget_class->show        = show_handler;
   gtkwidget_class->unmap       = unmap_handler;
 
-  gobject_class->finalize      = gschem_dialog_finalize;
+  gobject_class->finalize      = schematic_dialog_finalize;
   gobject_class->set_property  = gschem_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
 
