@@ -1,7 +1,7 @@
 #ifndef LEPTON_MAIN_HEADER_H_
 #define LEPTON_MAIN_HEADER_H_
 
-/* System headers which gschem headers rely on */
+/* System headers which libleptongui headers rely on */
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libguile.h>
@@ -14,7 +14,7 @@
 /* forward declaration, until everyone stops referencing it */
 typedef struct st_schematic_window SchematicWindow;
 
-/* gschem headers */
+/* libleptongui headers */
 #include "action.h"
 #include "action_mode.h"
 #include "grid_mode.h"
