@@ -233,6 +233,10 @@ Component library setup
 * component-library-funcs::
 * reset-component-library::
 
+Interactive work with Scheme code
+
+* Geiser REPL::
+
 Netlister
 
 * Running lepton-netlist::

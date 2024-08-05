@@ -1742,7 +1742,7 @@ project (@pxref{gschemrc}):
 
 The command will make available a Scheme socket on the port
 @emph{37146} for your program.  You can connect to it, for example,
-using @command{netcat} or shiny @command{geiser} environment for
+using @command{netcat} or shiny @ref{Geiser REPL} environment for
 @command{Emacs}, and enjoy working with REPL using the program chosen.
 
 @end itemize
@@ -1760,3 +1760,43 @@ lack of proper multi-threading support in GTK while Scheme supports it
 pretty well.  If in doubt, save your designs before trying something
 out.
 @end quotation
+
+
+@menu
+* Geiser REPL::
+@end menu
+
+@node Geiser REPL,  , Interactive work with Scheme code, Interactive work with Scheme code
+@subsection Investigate the code using the Geiser REPL
+@cindex geiser
+
+Spawn a REPL server in @schematic{}:
+@lisp
+(use-modules (system repl server)) (spawn-server)
+@end lisp
+
+Move to your Emacs and do @kbd{M-x connect-to-guile}.  You'll see the
+REPL prompt.
+
+Import the module you would like to work on: either hit @kbd{C-c C-i}
+to get the prompt, or just write, for example
+@example
+scheme@@(guile-user)> ,use (schematic action-mode)
+@end example
+
+To get info on what functions are present in the module, hit @kbd{C-c
+C-d C-m} and enter the module name.  Then follow the links provided to
+get the info on separate functions.  You can also type the function
+name you want and do @kbd{C-c C-d C-d} or @kbd{C-c C-d C-i} on it to
+get the help.
+
+Sometimes you don't want to work with the GUI.  Supposed that you
+don't run @schematic{} and just want to work with functions of some
+Lepton module interactively in REPL, you'll just issue @kbd{M-x
+geiser} and then add the path for the module to the Guile load path:
+@example
+scheme@@(guile-user)> (add-to-load-path "/usr/share/lepton-eda/scheme")
+@end example
+
+Then you'll be able to investigate the contents of a module under the
+path as described above.
