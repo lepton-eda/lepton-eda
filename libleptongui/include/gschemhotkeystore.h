@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,19 +22,19 @@
 
 /* ---------------------------------------------------------------- */
 
-/*! \class GschemHotkeyStore gschemhotkeystore.h "gschemhotkeystore.h"
+/*! \class SchematicHotkeyStore gschemhotkeystore.h "gschemhotkeystore.h"
  * \brief GtkTreeModel that contains keybinding data.
  *
  * A GtkListStore that contains a list of actions with
  * their icons and their current keybindings.
  */
 
-#define GSCHEM_TYPE_HOTKEY_STORE (gschem_hotkey_store_get_type ())
-#define GSCHEM_HOTKEY_STORE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_HOTKEY_STORE, GschemHotkeyStore))
-#define GSCHEM_HOTKEY_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), GSCHEM_TYPE_HOTKEY_STORE, GschemHotkeyStoreClass))
-#define GSCHEM_IS_HOTKEY_STORE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_HOTKEY_STORE))
-#define GSCHEM_IS_HOTKEY_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSCHEM_TYPE_HOTKEY_STORE))
-#define GSCHEM_HOTKEY_STORE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_HOTKEY_STORE, GschemHotkeyStoreClass))
+#define SCHEMATIC_TYPE_HOTKEY_STORE (schematic_hotkey_store_get_type ())
+#define SCHEMATIC_HOTKEY_STORE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_HOTKEY_STORE, SchematicHotkeyStore))
+#define SCHEMATIC_HOTKEY_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SCHEMATIC_TYPE_HOTKEY_STORE, SchematicHotkeyStoreClass))
+#define SCHEMATIC_IS_HOTKEY_STORE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_HOTKEY_STORE))
+#define SCHEMATIC_IS_HOTKEY_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCHEMATIC_TYPE_HOTKEY_STORE))
+#define SCHEMATIC_HOTKEY_STORE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_HOTKEY_STORE, SchematicHotkeyStoreClass))
 
 
 enum {
@@ -45,23 +45,25 @@ enum {
 };
 
 
-typedef struct _GschemHotkeyStoreClass GschemHotkeyStoreClass;
-typedef struct _GschemHotkeyStore GschemHotkeyStore;
+typedef struct _SchematicHotkeyStoreClass SchematicHotkeyStoreClass;
+typedef struct _SchematicHotkeyStore SchematicHotkeyStore;
 
-struct _GschemHotkeyStoreClass
+struct _SchematicHotkeyStoreClass
 {
   GtkListStoreClass parent_class;
 };
 
-struct _GschemHotkeyStore
+struct _SchematicHotkeyStore
 {
   GtkListStore parent_instance;
 };
 
 
-GType gschem_hotkey_store_get_type();
-GschemHotkeyStore* gschem_hotkey_store_new();
+GType
+schematic_hotkey_store_get_type();
+
+SchematicHotkeyStore*
+gschem_hotkey_store_new();
 
 
 #endif /* GSCHEM_HOTKEY_STORE_H__ */
-

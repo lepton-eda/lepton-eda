@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,23 +25,25 @@
 #define HELPER_FUNC_NAME "%gschem-hotkey-store/dump-global-keymap"
 
 
-static gboolean gschem_hotkey_store_rebuild (GschemHotkeyStore *store);
+static gboolean gschem_hotkey_store_rebuild (SchematicHotkeyStore *store);
 
 
-G_DEFINE_TYPE (GschemHotkeyStore, gschem_hotkey_store, GTK_TYPE_LIST_STORE);
+G_DEFINE_TYPE (SchematicHotkeyStore,
+               schematic_hotkey_store,
+               GTK_TYPE_LIST_STORE);
 
 
-/*! Initialise GschemHotkeyStore class */
+/*! Initialise SchematicHotkeyStore class */
 static void
-gschem_hotkey_store_class_init (GschemHotkeyStoreClass *klass)
+schematic_hotkey_store_class_init (SchematicHotkeyStoreClass *klass)
 {
 }
 
 
 
-/*! Initialise GschemHotkeyStore instance */
+/*! Initialise SchematicHotkeyStore instance */
 static void
-gschem_hotkey_store_init (GschemHotkeyStore *store)
+schematic_hotkey_store_init (SchematicHotkeyStore *store)
 {
   GType column_types[GSCHEM_HOTKEY_STORE_NUM_COLUMNS]
     = { G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, };
@@ -60,12 +62,12 @@ gschem_hotkey_store_init (GschemHotkeyStore *store)
  * current keybindings, and uses it to update the GtkListStore that
  * backs the list of key bindings. */
 static gboolean
-gschem_hotkey_store_rebuild (GschemHotkeyStore *store)
+gschem_hotkey_store_rebuild (SchematicHotkeyStore *store)
 {
   SCM s_expr = SCM_UNDEFINED;
   SCM s_lst, s_iter;
 
-  g_assert (GSCHEM_IS_HOTKEY_STORE (store));
+  g_assert (SCHEMATIC_IS_HOTKEY_STORE (store));
 
   /* First run the Scheme function to dump the global keymap */
   s_expr = scm_list_1 (scm_from_utf8_symbol (HELPER_FUNC_NAME));
@@ -112,8 +114,8 @@ gschem_hotkey_store_rebuild (GschemHotkeyStore *store)
 
 
 
-GschemHotkeyStore*
+SchematicHotkeyStore*
 gschem_hotkey_store_new()
 {
-  return GSCHEM_HOTKEY_STORE (g_object_new (GSCHEM_TYPE_HOTKEY_STORE, NULL));
+  return SCHEMATIC_HOTKEY_STORE (g_object_new (SCHEMATIC_TYPE_HOTKEY_STORE, NULL));
 }
