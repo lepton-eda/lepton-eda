@@ -32,12 +32,12 @@
 
 /* Signal marshaller based on generated code from glib-genmarshal */
 static void
-gschem_marshal_VOID__POINTER_STRING (GClosure     *closure,
-                                     GValue       *return_value,
-                                     guint         n_param_values,
-                                     const GValue *param_values,
-                                     gpointer      invocation_hint,
-                                     gpointer      marshal_data)
+schematic_marshal_VOID__POINTER_STRING (GClosure     *closure,
+                                        GValue       *return_value,
+                                        guint         n_param_values,
+                                        const GValue *param_values,
+                                        gpointer      invocation_hint,
+                                        gpointer      marshal_data)
 {
   typedef void (*GMarshalFunc_VOID__POINTER_STRING) (gpointer     data1,
                                                      gpointer     arg_1,
@@ -321,7 +321,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
                   G_STRUCT_OFFSET (SchematicDialogClass, geometry_save),
                   NULL, /* accumulator */
                   NULL, /* accu_data */
-                  gschem_marshal_VOID__POINTER_STRING,
+                  schematic_marshal_VOID__POINTER_STRING,
                   G_TYPE_NONE,
                   2,    /* n_params */
                   G_TYPE_POINTER,
@@ -335,7 +335,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
                   G_STRUCT_OFFSET (SchematicDialogClass, geometry_restore),
                   NULL, /* accumulator */
                   NULL, /* accu_data */
-                  gschem_marshal_VOID__POINTER_STRING,
+                  schematic_marshal_VOID__POINTER_STRING,
                   G_TYPE_NONE,
                   2,    /* n_params */
                   G_TYPE_POINTER,
