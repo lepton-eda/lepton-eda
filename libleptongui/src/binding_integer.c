@@ -81,7 +81,7 @@ widget_apply (GtkWidget *widget,
               SchematicBindingInteger *binding);
 
 
-/*! \brief Create a new GschemFillSwatchCellRenderer
+/*! \brief Create a new SchematicFillSwatchCellRenderer
  *
  *  \return The new cell renderer
  */

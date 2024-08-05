@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
  * \brief A cell renderer for fill swatches.
  */
 
-#define GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER           (gschem_fill_swatch_cell_renderer_get_type())
-#define GSCHEM_FILL_SWATCH_CELL_RENDERER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, GschemFillSwatchCellRenderer))
-#define GSCHEM_FILL_SWATCH_CELL_RENDERER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, GschemFillSwatchCellRendererClass))
-#define IS_GSCHEM_FILL_SWATCH_CELL_RENDERER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER))
+#define SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER           (schematic_fill_swatch_cell_renderer_get_type())
+#define SCHEMATIC_FILL_SWATCH_CELL_RENDERER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER, SchematicFillSwatchCellRenderer))
+#define SCHEMATIC_FILL_SWATCH_CELL_RENDERER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER, SchematicFillSwatchCellRendererClass))
+#define IS_SCHEMATIC_FILL_SWATCH_CELL_RENDERER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER))
 
-typedef struct _GschemFillSwatchCellRendererClass GschemFillSwatchCellRendererClass;
-typedef struct _GschemFillSwatchCellRenderer GschemFillSwatchCellRenderer;
+typedef struct _SchematicFillSwatchCellRendererClass SchematicFillSwatchCellRendererClass;
+typedef struct _SchematicFillSwatchCellRenderer SchematicFillSwatchCellRenderer;
 
-struct _GschemFillSwatchCellRendererClass
+struct _SchematicFillSwatchCellRendererClass
 {
   GtkCellRendererTextClass parent_class;
 };
 
-struct _GschemFillSwatchCellRenderer
+struct _SchematicFillSwatchCellRenderer
 {
   GtkCellRendererText parent;
 
@@ -45,7 +45,7 @@ struct _GschemFillSwatchCellRenderer
 };
 
 GType
-gschem_fill_swatch_cell_renderer_get_type ();
+schematic_fill_swatch_cell_renderer_get_type ();
 
 GtkCellRenderer*
 gschem_fill_swatch_cell_renderer_new ();

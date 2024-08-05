@@ -52,13 +52,13 @@ enum
 
 
 
-G_DEFINE_TYPE (GschemFillSwatchCellRenderer,
-               gschem_fill_swatch_cell_renderer,
+G_DEFINE_TYPE (SchematicFillSwatchCellRenderer,
+               schematic_fill_swatch_cell_renderer,
                GTK_TYPE_CELL_RENDERER_TEXT);
 
 
 static void
-gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *klass);
+schematic_fill_swatch_cell_renderer_class_init (SchematicFillSwatchCellRendererClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -67,7 +67,7 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-gschem_fill_swatch_cell_renderer_init (GschemFillSwatchCellRenderer *swatch);
+schematic_fill_swatch_cell_renderer_init (SchematicFillSwatchCellRenderer *swatch);
 
 #ifdef ENABLE_GTK3
 static void
@@ -96,14 +96,14 @@ set_property (GObject      *object,
 
 
 
-/*! \brief Create a new GschemFillSwatchCellRenderer
+/*! \brief Create a new SchematicFillSwatchCellRenderer
  *
  *  \return The new cell renderer
  */
 GtkCellRenderer*
 gschem_fill_swatch_cell_renderer_new ()
 {
-  return GTK_CELL_RENDERER (g_object_new (GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, NULL));
+  return GTK_CELL_RENDERER (g_object_new (SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER, NULL));
 }
 
 
@@ -114,7 +114,7 @@ gschem_fill_swatch_cell_renderer_new ()
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *klass)
+schematic_fill_swatch_cell_renderer_class_init (SchematicFillSwatchCellRendererClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -150,7 +150,7 @@ gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *
  *  \param [in,out] swatch The fill swatch cell renderer
  */
 static void
-gschem_fill_swatch_cell_renderer_init (GschemFillSwatchCellRenderer *swatch)
+schematic_fill_swatch_cell_renderer_init (SchematicFillSwatchCellRenderer *swatch)
 {
   swatch->enabled = TRUE;
   swatch->fill_type = FILLING_HOLLOW;
@@ -172,7 +172,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-  GschemFillSwatchCellRenderer *swatch = GSCHEM_FILL_SWATCH_CELL_RENDERER (object);
+  SchematicFillSwatchCellRenderer *swatch = SCHEMATIC_FILL_SWATCH_CELL_RENDERER (object);
 
   switch (param_id) {
     case PROP_ENABLED:
@@ -231,7 +231,7 @@ render (GtkCellRenderer      *cell,
         GtkCellRendererState flags)
 #endif
 {
-  GschemFillSwatchCellRenderer *swatch = GSCHEM_FILL_SWATCH_CELL_RENDERER (cell);
+  SchematicFillSwatchCellRenderer *swatch = SCHEMATIC_FILL_SWATCH_CELL_RENDERER (cell);
 
   if (swatch->enabled) {
     double offset = SWATCH_BORDER_WIDTH / 2.0;
@@ -362,7 +362,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-  GschemFillSwatchCellRenderer *swatch = GSCHEM_FILL_SWATCH_CELL_RENDERER (object);
+  SchematicFillSwatchCellRenderer *swatch = SCHEMATIC_FILL_SWATCH_CELL_RENDERER (object);
 
   switch (param_id) {
     case PROP_ENABLED:
