@@ -55,12 +55,13 @@ struct _SchematicDialog {
 GType
 schematic_dialog_get_type (void);
 
-GtkWidget* gschem_dialog_new_with_buttons (const gchar *title,
-                                           GtkWindow *parent,
-                                           GtkDialogFlags flags,
-                                           const gchar *settings_name,
-                                           SchematicWindow *w_current,
-                                           const gchar *first_button_text,
-                                           ...);
+GtkWidget*
+schematic_dialog_new_with_buttons (const gchar *title,
+                                   GtkWindow *parent,
+                                   GtkDialogFlags flags,
+                                   const gchar *settings_name,
+                                   SchematicWindow *w_current,
+                                   const gchar *first_button_text,
+                                   ...);
 
 #endif /* __GSCHEM_DIALOG_H__ */

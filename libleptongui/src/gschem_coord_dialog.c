@@ -77,12 +77,13 @@ coord_dialog (SchematicWindow *w_current,
   GtkWidget *vbox;
 
   if (!w_current->cowindow) {
-    w_current->cowindow = gschem_dialog_new_with_buttons(_("Coords"),
-                                                         GTK_WINDOW(w_current->main_window),
-                                                         (GtkDialogFlags) 0, /* Not modal GTK_DIALOG_MODAL */
-                                                         "coord", w_current,
-                                                         _("_Close"), GTK_RESPONSE_REJECT,
-                                                         NULL);
+    w_current->cowindow =
+      schematic_dialog_new_with_buttons (_("Coords"),
+                                         GTK_WINDOW(w_current->main_window),
+                                         (GtkDialogFlags) 0, /* Not modal GTK_DIALOG_MODAL */
+                                         "coord", w_current,
+                                         _("_Close"), GTK_RESPONSE_REJECT,
+                                         NULL);
 
     gtk_window_set_position (GTK_WINDOW (w_current->cowindow), GTK_WIN_POS_NONE);
 

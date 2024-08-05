@@ -361,7 +361,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
 
 
 /*! \brief Internal GTK function modified from GTK+-2.4.14 gtkdialog.c
- *  to support gschem_dialog_new_with_buttons(...)
+ *  to support schematic_dialog_new_with_buttons(...)
  *
  *  \par Function Description
  *  Convenience function which adds buttons to a pre-existing GtkDialog
@@ -398,7 +398,7 @@ static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
 
 
 /*! \brief Internal GTK function modified from GTK+-2.4.14 gtkdialog.c
- *  to support gschem_dialog_new_with_buttons(...)
+ *  to support schematic_dialog_new_with_buttons(...)
  *
  *  \par Function Description
  *  Convenience function which creates a blank SchematicDialog
@@ -461,13 +461,13 @@ gschem_dialog_new_empty (const gchar *title,
  *  \return  The SchematicDialog created.
  */
 GtkWidget*
-gschem_dialog_new_with_buttons (const gchar *title,
-                                GtkWindow *parent,
-                                GtkDialogFlags flags,
-                                const gchar *settings_name,
-                                SchematicWindow *w_current,
-                                const gchar *first_button_text,
-                                ...)
+schematic_dialog_new_with_buttons (const gchar *title,
+                                   GtkWindow *parent,
+                                   GtkDialogFlags flags,
+                                   const gchar *settings_name,
+                                   SchematicWindow *w_current,
+                                   const gchar *first_button_text,
+                                   ...)
 {
   SchematicDialog *dialog;
   va_list args;

@@ -191,13 +191,13 @@ x_dialog_hotkeys (SchematicWindow *w_current)
   }
 
 
-  w_current->hkwindow = gschem_dialog_new_with_buttons(
-    _("Hotkeys"),
-    GTK_WINDOW (w_current->main_window),
-    (GtkDialogFlags) 0, /* not modal */
-    "hotkeys", w_current,
-    _("_Close"), GTK_RESPONSE_REJECT,
-    NULL);
+  w_current->hkwindow =
+    schematic_dialog_new_with_buttons (_("Hotkeys"),
+                                       GTK_WINDOW (w_current->main_window),
+                                       (GtkDialogFlags) 0, /* not modal */
+                                       "hotkeys", w_current,
+                                       _("_Close"), GTK_RESPONSE_REJECT,
+                                       NULL);
 
   g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
                     G_CALLBACK (&response),

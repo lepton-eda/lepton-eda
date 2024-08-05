@@ -1257,13 +1257,14 @@ autonumber_create_dialog (SchematicWindow *w_current)
   GtkWidget *label3;
 
 
-  autonumber_text = gschem_dialog_new_with_buttons(_("Autonumber Text"),
-                                                   GTK_WINDOW(w_current->main_window),
-                                                   (GtkDialogFlags) 0, /* not modal */
-                                                   "autonumber", w_current,
-                                                   _("_Close"), GTK_RESPONSE_REJECT,
-                                                   _("_Apply"), GTK_RESPONSE_ACCEPT,
-                                                   NULL);
+  autonumber_text =
+    schematic_dialog_new_with_buttons (_("Autonumber Text"),
+                                       GTK_WINDOW(w_current->main_window),
+                                       (GtkDialogFlags) 0, /* not modal */
+                                       "autonumber", w_current,
+                                       _("_Close"), GTK_RESPONSE_REJECT,
+                                       _("_Apply"), GTK_RESPONSE_ACCEPT,
+                                       NULL);
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(autonumber_text),

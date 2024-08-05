@@ -335,13 +335,14 @@ attrib_edit_dialog (SchematicWindow *w_current,
     }
   }
 
-  aewindow = gschem_dialog_new_with_buttons(NULL,
-                                            GTK_WINDOW(w_current->main_window),
-                                            GTK_DIALOG_MODAL,
-                                            "singleattrib", w_current,
-                                            _("_Cancel"), GTK_RESPONSE_REJECT,
-                                            _("_OK"), GTK_RESPONSE_APPLY,
-                                            NULL);
+  aewindow =
+    schematic_dialog_new_with_buttons (NULL,
+                                       GTK_WINDOW(w_current->main_window),
+                                       GTK_DIALOG_MODAL,
+                                       "singleattrib", w_current,
+                                       _("_Cancel"), GTK_RESPONSE_REJECT,
+                                       _("_OK"), GTK_RESPONSE_APPLY,
+                                       NULL);
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),

@@ -310,14 +310,14 @@ x_widgets_show_in_dialog (SchematicWindow* w_current,
     return;
   }
 
-  GtkWidget* dlg = gschem_dialog_new_with_buttons(
-    title,
-    GTK_WINDOW (w_current->main_window),
-    (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
-    ini_group,
-    w_current,
-    _("_Close"), GTK_RESPONSE_NONE,
-    NULL);
+  GtkWidget* dlg =
+    schematic_dialog_new_with_buttons (title,
+                                       GTK_WINDOW (w_current->main_window),
+                                       (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       ini_group,
+                                       w_current,
+                                       _("_Close"), GTK_RESPONSE_NONE,
+                                       NULL);
 
   if (x_widgets_use_toplevel_windows())
   {

@@ -108,13 +108,14 @@ slot_edit_dialog (SchematicWindow *w_current,
   GtkWidget *widget[2];
 
   if (!w_current->sewindow) {
-    w_current->sewindow = gschem_dialog_new_with_buttons(_("Edit Slot"),
-                                                         GTK_WINDOW(w_current->main_window),
-                                                         GTK_DIALOG_MODAL,
-                                                         "slot-edit", w_current,
-                                                         _("_Cancel"), GTK_RESPONSE_REJECT,
-                                                         _("_OK"), GTK_RESPONSE_ACCEPT,
-                                                         NULL);
+    w_current->sewindow =
+      schematic_dialog_new_with_buttons (_("Edit Slot"),
+                                         GTK_WINDOW(w_current->main_window),
+                                         GTK_DIALOG_MODAL,
+                                         "slot-edit", w_current,
+                                         _("_Cancel"), GTK_RESPONSE_REJECT,
+                                         _("_OK"), GTK_RESPONSE_ACCEPT,
+                                         NULL);
 
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
