@@ -239,7 +239,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
                                   GTK_POLICY_AUTOMATIC);
 
   /* the model */
-  store = GTK_TREE_MODEL (gschem_hotkey_store_new ());
+  store = GTK_TREE_MODEL (schematic_hotkey_store_new ());
 
   /* the tree view */
   treeview = gtk_tree_view_new_with_model (store);

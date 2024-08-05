@@ -116,7 +116,7 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
 
 
 SchematicHotkeyStore*
-gschem_hotkey_store_new()
+schematic_hotkey_store_new ()
 {
   return SCHEMATIC_HOTKEY_STORE (g_object_new (SCHEMATIC_TYPE_HOTKEY_STORE, NULL));
 }

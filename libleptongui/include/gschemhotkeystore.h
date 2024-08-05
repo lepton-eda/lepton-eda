@@ -63,7 +63,7 @@ GType
 schematic_hotkey_store_get_type();
 
 SchematicHotkeyStore*
-gschem_hotkey_store_new();
+schematic_hotkey_store_new ();
 
 
 #endif /* GSCHEM_HOTKEY_STORE_H__ */
