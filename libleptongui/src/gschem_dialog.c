@@ -417,7 +417,7 @@ schematic_dialog_add_buttons_valist (GtkDialog *dialog,
  *  \param [in]  title              The title text of the dialog
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
- *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
+ *  \param [in]  settings_name      The name the program should use to store this dialog's settings
  *  \param [in]  w_current          The SchematicWindow object this dialog is associated with
  *
  *  \return  The SchematicDialog created.
@@ -463,7 +463,7 @@ schematic_dialog_new_empty (const gchar *title,
  *  \param [in]  title              The title text of the dialog
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
- *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
+ *  \param [in]  settings_name      The name the program should use to store this dialog's settings
  *  \param [in]  w_current          The SchematicWindow object this dialog is associated with
  *  \param [in]  first_button_text  The text string for the first button
  *  \param [in]  ...                A variable number of arguments with the remaining button strings
