@@ -1424,10 +1424,10 @@ static void
 compselect_class_init (CompselectClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-  SchematicDialogClass *gschem_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
+  SchematicDialogClass *schematic_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
 
-  gschem_dialog_class->geometry_save    = compselect_geometry_save;
-  gschem_dialog_class->geometry_restore = compselect_geometry_restore;
+  schematic_dialog_class->geometry_save    = compselect_geometry_save;
+  schematic_dialog_class->geometry_restore = compselect_geometry_restore;
 
   gobject_class->constructor  = compselect_constructor;
   gobject_class->finalize     = compselect_finalize;
