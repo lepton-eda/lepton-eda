@@ -19,7 +19,7 @@
  */
 /*! \file alignment_combo.c
  *
- *  \brief A GtkComboBox with the gschem text alignments.
+ *  \brief A GtkComboBox with the text alignments.
  */
 #include <config.h>
 
@@ -53,7 +53,7 @@ static GtkListStore* align_list_store = NULL;
 
 /*! \brief Create the alignment combo box list store for the text property dialog
  *
- *  \return A GtkListStore with gschem text alignment entries.
+ *  \return A GtkListStore with text alignment entries.
  */
 static GtkListStore *
 create_align_list_store ()
@@ -94,7 +94,7 @@ create_align_list_store ()
 }
 
 
-/*! \brief Create a ComboBox with the gschem alignments.
+/*! \brief Create a ComboBox with the text alignments.
  *
  *  \return A GtkWidget for selecting text alignments.
  */
