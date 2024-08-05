@@ -423,11 +423,11 @@ schematic_dialog_add_buttons_valist (GtkDialog *dialog,
  *  \return  The SchematicDialog created.
  */
 static GtkWidget*
-gschem_dialog_new_empty (const gchar *title,
-                         GtkWindow *parent,
-                         GtkDialogFlags flags,
-                         const gchar *settings_name,
-                         SchematicWindow *w_current)
+schematic_dialog_new_empty (const gchar *title,
+                            GtkWindow *parent,
+                            GtkDialogFlags flags,
+                            const gchar *settings_name,
+                            SchematicWindow *w_current)
 {
   SchematicDialog *dialog;
 
@@ -482,11 +482,11 @@ schematic_dialog_new_with_buttons (const gchar *title,
   SchematicDialog *dialog;
   va_list args;
 
-  dialog = SCHEMATIC_DIALOG (gschem_dialog_new_empty (title,
-                                                      parent,
-                                                      flags,
-                                                      settings_name,
-                                                      w_current));
+  dialog = SCHEMATIC_DIALOG (schematic_dialog_new_empty (title,
+                                                         parent,
+                                                         flags,
+                                                         settings_name,
+                                                         w_current));
 
   va_start (args, first_button_text);
 
