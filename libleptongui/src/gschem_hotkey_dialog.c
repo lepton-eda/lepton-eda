@@ -98,8 +98,8 @@ filter (GtkTreeModel* model, GtkTreeIter* it, gpointer data)
 
   gchar* cmd = NULL;
   gchar* key = NULL;
-  gtk_tree_model_get (model, it, GSCHEM_HOTKEY_STORE_COLUMN_LABEL, &cmd, -1);
-  gtk_tree_model_get (model, it, GSCHEM_HOTKEY_STORE_COLUMN_KEYS,  &key, -1);
+  gtk_tree_model_get (model, it, SCHEMATIC_HOTKEY_STORE_COLUMN_LABEL, &cmd, -1);
+  gtk_tree_model_get (model, it, SCHEMATIC_HOTKEY_STORE_COLUMN_KEYS,  &key, -1);
 
   /* case-insensitive strings for comparison: */
   gchar* cmd_ci = g_utf8_casefold (cmd, strlen (cmd));
@@ -256,7 +256,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
 #else /* GTK2 */
                                                      "stock-id",
 #endif
-                                                     GSCHEM_HOTKEY_STORE_COLUMN_ICON,
+                                                     SCHEMATIC_HOTKEY_STORE_COLUMN_ICON,
                                                      NULL);
 #ifndef ENABLE_GTK3
   /* Fix things up to show stock icons *and* theme icons. */
@@ -268,7 +268,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "text", GSCHEM_HOTKEY_STORE_COLUMN_LABEL,
+                                       "text", SCHEMATIC_HOTKEY_STORE_COLUMN_LABEL,
                                        NULL);
 
   /* The second column contains the action's keybinding */
@@ -276,7 +276,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
   column = gtk_tree_view_column_new_with_attributes (_("Keystroke(s)"),
                                                      renderer,
                                                      "text",
-                                                     GSCHEM_HOTKEY_STORE_COLUMN_KEYS,
+                                                     SCHEMATIC_HOTKEY_STORE_COLUMN_KEYS,
                                                      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
 

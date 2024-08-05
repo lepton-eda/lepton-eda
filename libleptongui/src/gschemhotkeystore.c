@@ -46,12 +46,12 @@ schematic_hotkey_store_class_init (SchematicHotkeyStoreClass *klass)
 static void
 schematic_hotkey_store_init (SchematicHotkeyStore *store)
 {
-  GType column_types[GSCHEM_HOTKEY_STORE_NUM_COLUMNS]
+  GType column_types[SCHEMATIC_HOTKEY_STORE_NUM_COLUMNS]
     = { G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, };
 
   /* This list store contains the hotkey data */
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
-                                   GSCHEM_HOTKEY_STORE_NUM_COLUMNS,
+                                   SCHEMATIC_HOTKEY_STORE_NUM_COLUMNS,
                                    column_types);
 
   schematic_hotkey_store_rebuild (store);
@@ -101,9 +101,9 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
     }
 
     gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, -1,
-                                       GSCHEM_HOTKEY_STORE_COLUMN_LABEL, binding,
-                                       GSCHEM_HOTKEY_STORE_COLUMN_KEYS, keys,
-                                       GSCHEM_HOTKEY_STORE_COLUMN_ICON, icon,
+                                       SCHEMATIC_HOTKEY_STORE_COLUMN_LABEL, binding,
+                                       SCHEMATIC_HOTKEY_STORE_COLUMN_KEYS, keys,
+                                       SCHEMATIC_HOTKEY_STORE_COLUMN_ICON, icon,
                                        -1);
 
     scm_dynwind_end ();
