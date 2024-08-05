@@ -13,7 +13,7 @@ libleptongui_la_SOURCES = \
 	grid_mode.c \
 	gtk_helper.c \
 	lepton-schematic.c \
-	gschemhotkeystore.c \
+	hotkey_store.c \
 	about_dialog.c \
 	accel_label.c \
 	alignment_combo.c \

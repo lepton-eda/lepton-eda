@@ -17,12 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef GSCHEM_HOTKEY_STORE_H__
-#define GSCHEM_HOTKEY_STORE_H__
+#ifndef _HOTKEY_STORE_H__
+#define _HOTKEY_STORE_H__
 
 /* ---------------------------------------------------------------- */
 
-/*! \class SchematicHotkeyStore gschemhotkeystore.h "gschemhotkeystore.h"
+/*! \class SchematicHotkeyStore hotkey_store.h "hotkey_store.h"
  * \brief GtkTreeModel that contains keybinding data.
  *
  * A GtkListStore that contains a list of actions with
@@ -66,4 +66,4 @@ SchematicHotkeyStore*
 schematic_hotkey_store_new ();
 
 
-#endif /* GSCHEM_HOTKEY_STORE_H__ */
+#endif /* _HOTKEY_STORE_H__ */

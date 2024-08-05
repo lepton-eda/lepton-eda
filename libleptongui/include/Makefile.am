@@ -13,7 +13,7 @@ noinst_HEADERS = \
 	x_compselect.h \
 	x_multiattrib.h \
 	gschem.h \
-	gschemhotkeystore.h \
+	hotkey_store.h \
 	accel_label.h \
 	bin.h \
 	binding.h \
