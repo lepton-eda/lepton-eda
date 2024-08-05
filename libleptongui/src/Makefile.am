@@ -25,7 +25,7 @@ libleptongui_la_SOURCES = \
 	gschem_close_confirmation_dialog.c \
 	gschem_coord_dialog.c \
 	gschem_dialog.c \
-	gschem_dialog_misc.c \
+	dialog_misc.c \
 	gschem_fill_swatch_cell_renderer.c \
 	gschem_find_text_state.c \
 	gschem_find_text_widget.c \

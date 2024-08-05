@@ -17,7 +17,7 @@ libleptongui/src/bottom_widget.c
 libleptongui/src/gschem_close_confirmation_dialog.c
 libleptongui/src/gschem_coord_dialog.c
 libleptongui/src/gschem_dialog.c
-libleptongui/src/gschem_dialog_misc.c
+libleptongui/src/dialog_misc.c
 libleptongui/src/gschem_fill_swatch_cell_renderer.c
 libleptongui/src/gschem_find_text_state.c
 libleptongui/src/gschem_find_text_widget.c

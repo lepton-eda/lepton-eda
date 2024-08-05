@@ -21,7 +21,7 @@ noinst_HEADERS = \
 	bottom_widget.h \
 	schematic_defines.h \
 	gschem_dialog.h \
-	gschem_dialog_misc.h \
+	dialog_misc.h \
 	gschem_fill_swatch_cell_renderer.h \
 	gschem_find_text_state.h \
 	gschem_find_text_widget.h \
