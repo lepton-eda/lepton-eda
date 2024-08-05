@@ -48,4 +48,4 @@ GType
 schematic_fill_swatch_cell_renderer_get_type ();
 
 GtkCellRenderer*
-gschem_fill_swatch_cell_renderer_new ();
+schematic_fill_swatch_cell_renderer_new ();

@@ -101,7 +101,7 @@ set_property (GObject      *object,
  *  \return The new cell renderer
  */
 GtkCellRenderer*
-gschem_fill_swatch_cell_renderer_new ()
+schematic_fill_swatch_cell_renderer_new ()
 {
   return GTK_CELL_RENDERER (g_object_new (SCHEMATIC_TYPE_FILL_SWATCH_CELL_RENDERER, NULL));
 }

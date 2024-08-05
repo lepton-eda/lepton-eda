@@ -122,7 +122,7 @@ x_fstylecb_new ()
 
   /* Renders the fill swatch. Since this won't contain text, set a
    * minimum width. */
-  swatch_cell = GTK_CELL_RENDERER (gschem_fill_swatch_cell_renderer_new ());
+  swatch_cell = GTK_CELL_RENDERER (schematic_fill_swatch_cell_renderer_new ());
   g_object_set (swatch_cell, "width", 25, NULL);
   gtk_cell_layout_pack_start (layout, swatch_cell, FALSE);
   gtk_cell_layout_add_attribute (layout, swatch_cell, "fill-type", COLUMN_INDEX);
