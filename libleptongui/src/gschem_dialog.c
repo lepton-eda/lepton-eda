@@ -277,7 +277,11 @@ schematic_dialog_set_property (GObject *object,
  *  \param [out] value        The GValue in which to return the value of the property
  *  \param [in]  pspec        A GParamSpec describing the property being got
  */
-static void gschem_dialog_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
+static void
+schematic_dialog_get_property (GObject *object,
+                               guint property_id,
+                               GValue *value,
+                               GParamSpec *pspec)
 {
   SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
@@ -317,7 +321,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
 
   gobject_class->finalize      = schematic_dialog_finalize;
   gobject_class->set_property  = schematic_dialog_set_property;
-  gobject_class->get_property  = gschem_dialog_get_property;
+  gobject_class->get_property  = schematic_dialog_get_property;
 
   schematic_dialog_signals[ GEOMETRY_SAVE ] =
     g_signal_new ("geometry-save",
