@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023 Lepton EDA Contributors
+;;; Copyright (C) 2023-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
   #:export (edit-objects))
 
-;; Definitions from "gschem_defines.h".
+;; Definitions from "schematic_defines.h".
 (define FROM_MENU 0)
 (define FROM_HOTKEY 1)
 

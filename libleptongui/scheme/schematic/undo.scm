@@ -50,7 +50,7 @@
 ) ; define-module
 
 
-;;; Variables defined in gschem_defines.h.
+;;; Variables defined in schematic_defines.h.
 (define UNDO_DISK 0)
 (define UNDO_MEMORY 1)
 ;;; Flags defined in struct.h.

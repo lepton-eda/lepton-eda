@@ -218,7 +218,7 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
-;;; Defines from gschem_defines.h.
+;;; Defines from schematic_defines.h.
 (define MOUSEBTN_DO_STROKE 0)
 (define MOUSEBTN_DO_REPEAT 1)
 (define MOUSEBTN_DO_ACTION 2)

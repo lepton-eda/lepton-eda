@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _GSCHEM_DEFINES_H_INCL
-#define _GSCHEM_DEFINES_H_INCL
+#ifndef _SCHEMATIC_DEFINES_H_INCL
+#define _SCHEMATIC_DEFINES_H_INCL
 
 /* Default extents of the schematic drawing area in world
  * coordinates. The negative values allow symbols, residing at the
@@ -107,4 +107,4 @@
  * */
 #define UNTITLED_FILENAME_PREFIX _("untitled")
 
-#endif /* !_GSCHEM_DEFINES_H_INCL */
+#endif /* !_SCHEMATIC_DEFINES_H_INCL */

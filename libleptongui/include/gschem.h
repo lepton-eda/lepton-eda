@@ -20,7 +20,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "grid_mode.h"
 #include "gtk_helper.h"
 #include "snap_mode.h"
-#include "gschem_defines.h"
+#include "schematic_defines.h"
 #include "bin.h"
 #include "bottom_widget.h"
 #include "gschem_find_text_state.h"

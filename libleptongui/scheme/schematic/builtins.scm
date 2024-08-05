@@ -766,7 +766,7 @@ the snap grid size should be set to 100")))
                               (- (schematic_window_get_keyboardpan_gain *window))))
 
 
-;;; Definitions from "gschem_defines.h".
+;;; Definitions from "schematic_defines.h".
 (define DONTCARE 0)
 (define MENU 1)
 (define HOTKEY 2)
@@ -966,7 +966,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  ;; Definitions from "gschem_defines.h".
+  ;; Definitions from "schematic_defines.h".
   (define FROM_MENU 0)
   (define FROM_HOTKEY 1)
 
@@ -1542,7 +1542,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&options-action-feedback #:label (G_ "Toggle Outline Drawing"))
   (define *window (*current-window))
 
-  ;; Definitions from "gschem_defines.h".
+  ;; Definitions from "schematic_defines.h".
   (define OUTLINE 0)
   (define BOUNDINGBOX 1)
 
