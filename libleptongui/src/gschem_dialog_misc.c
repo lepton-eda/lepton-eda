@@ -76,7 +76,9 @@ schematic_dialog_misc_create_property_label (const char *label)
  *  \return A new property table
  */
 GtkWidget*
-gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[], int count)
+schematic_dialog_misc_create_property_table (GtkWidget *label[],
+                                             GtkWidget *widget[],
+                                             int count)
 {
   int index;
 #ifdef ENABLE_GTK3

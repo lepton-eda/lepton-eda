@@ -146,7 +146,7 @@ slot_edit_dialog (SchematicWindow *w_current,
     gtk_entry_set_max_length(GTK_ENTRY(widget[1]), 80);
     gtk_entry_set_activates_default (GTK_ENTRY(widget[1]),TRUE);
 
-    table = gschem_dialog_misc_create_property_table(label, widget, 2);
+    table = schematic_dialog_misc_create_property_table (label, widget, 2);
 
     gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
                         table,                                   /* child   */

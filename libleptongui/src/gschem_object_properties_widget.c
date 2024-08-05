@@ -186,7 +186,7 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
   widget[4] = dialog->angle2e = gschem_integer_combo_box_new ();
   widget[5] = dialog->pitch2e = gschem_integer_combo_box_new ();
 
-  table = gschem_dialog_misc_create_property_table (label, widget, 6);
+  table = schematic_dialog_misc_create_property_table (label, widget, 6);
 
   dialog->bindings = g_slist_append (dialog->bindings,
                                      schematic_binding_integer_new ("fill-width",
@@ -259,7 +259,7 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog)
 
   widget[0] = dialog->colorcb = x_colorcb_new ();
 
-  table = gschem_dialog_misc_create_property_table (label, widget, 1);
+  table = schematic_dialog_misc_create_property_table (label, widget, 1);
 
   g_signal_connect(G_OBJECT (dialog->colorcb),
                    "changed",
@@ -296,7 +296,7 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
   widget[3] = dialog->space_entry = gschem_integer_combo_box_new ();
   widget[4] = dialog->line_end = x_linecapcb_new ();
 
-  table = gschem_dialog_misc_create_property_table (label, widget, 5);
+  table = schematic_dialog_misc_create_property_table (label, widget, 5);
 
   dialog->bindings = g_slist_append (dialog->bindings,
                                      schematic_binding_integer_new ("line-width",
@@ -355,7 +355,7 @@ create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
 
   widget[0] = dialog->pin_type = gschem_pin_type_combo_new ();
 
-  table = gschem_dialog_misc_create_property_table (label, widget, 1);
+  table = schematic_dialog_misc_create_property_table (label, widget, 1);
 
   g_signal_connect (G_OBJECT (dialog->pin_type),
                     "changed",

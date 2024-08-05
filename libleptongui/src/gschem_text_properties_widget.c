@@ -284,7 +284,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
   editor[2] = widget->aligncb = schematic_alignment_combo_new();
   editor[3] = widget->rotatecb = gschem_rotation_combo_new();
 
-  table = gschem_dialog_misc_create_property_table (label, editor, 4);
+  table = schematic_dialog_misc_create_property_table (label, editor, 4);
 
   widget->bindings = g_slist_append (widget->bindings,
                                      schematic_binding_integer_new ("text-size",

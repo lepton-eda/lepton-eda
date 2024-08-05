@@ -154,7 +154,7 @@ arc_angle_dialog (SchematicWindow *w_current,
     widget[2] = gtk_spin_button_new_with_range (-360,360,1);
     gtk_entry_set_activates_default(GTK_ENTRY(widget[2]), TRUE);
 
-    table = gschem_dialog_misc_create_property_table (label, widget, 3);
+    table = schematic_dialog_misc_create_property_table (label, widget, 3);
 
 #ifdef ENABLE_GTK3
     gtk_box_pack_start (GTK_BOX(vbox), table, FALSE, FALSE, 0);

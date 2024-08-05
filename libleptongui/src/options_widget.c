@@ -246,7 +246,7 @@ create_net_section (SchematicOptionsWidget *widget)
   editor[0] = widget->net_rubber_band_widget = gtk_check_button_new_with_label (_("Enabled"));
   editor[1] = widget->magnetic_net_widget = gtk_check_button_new_with_label (_("Enabled"));
 
-  table = gschem_dialog_misc_create_property_table (label, editor, 2);
+  table = schematic_dialog_misc_create_property_table (label, editor, 2);
 
   g_signal_connect_swapped (G_OBJECT (widget->magnetic_net_widget),
                             "toggled",
@@ -285,7 +285,7 @@ create_snap_section (SchematicOptionsWidget *widget)
                                                                   MAXIMUM_SNAP_SIZE,
                                                                   5);
 
-  table = gschem_dialog_misc_create_property_table (label, editor, 3);
+  table = schematic_dialog_misc_create_property_table (label, editor, 3);
 
   // gtk_editable_select_region (GTK_EDITABLE(spin_size), 0, -1);
 
