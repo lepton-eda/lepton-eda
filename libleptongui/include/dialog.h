@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GSCHEM_DIALOG_H__
-#define __GSCHEM_DIALOG_H__
+#ifndef __DIALOG_H__
+#define __DIALOG_H__
 
 
 #define SCHEMATIC_TYPE_DIALOG           (schematic_dialog_get_type())
@@ -64,4 +64,4 @@ schematic_dialog_new_with_buttons (const gchar *title,
                                    const gchar *first_button_text,
                                    ...);
 
-#endif /* __GSCHEM_DIALOG_H__ */
+#endif /* __DIALOG_H__ */

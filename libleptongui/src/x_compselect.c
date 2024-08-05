@@ -36,7 +36,7 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
-#include "../include/gschem_dialog.h"
+#include "../include/dialog.h"
 #include "../include/x_compselect.h"
 
 /*! \def COMPSELECT_FILTER_INTERVAL

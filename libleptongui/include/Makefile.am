@@ -20,7 +20,7 @@ noinst_HEADERS = \
 	binding_integer.h \
 	bottom_widget.h \
 	schematic_defines.h \
-	gschem_dialog.h \
+	dialog.h \
 	dialog_misc.h \
 	gschem_fill_swatch_cell_renderer.h \
 	gschem_find_text_state.h \

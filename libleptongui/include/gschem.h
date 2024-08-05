@@ -36,7 +36,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "gschem_struct.h"
 #include "options.h"
 #include "accel_label.h"
-#include "gschem_dialog.h"
+#include "dialog.h"
 #include "dialog_misc.h"
 #include "gschemhotkeystore.h"
 #include "i_vars.h"

@@ -28,7 +28,7 @@
 #include <gdk/gdkkeysyms.h>
 
 
-#include "../include/gschem_dialog.h"
+#include "../include/dialog.h"
 
 /* Signal marshaller based on generated code from glib-genmarshal */
 static void
