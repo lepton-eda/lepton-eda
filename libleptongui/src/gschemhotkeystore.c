@@ -25,7 +25,8 @@
 #define HELPER_FUNC_NAME "%gschem-hotkey-store/dump-global-keymap"
 
 
-static gboolean gschem_hotkey_store_rebuild (SchematicHotkeyStore *store);
+static gboolean
+schematic_hotkey_store_rebuild (SchematicHotkeyStore *store);
 
 
 G_DEFINE_TYPE (SchematicHotkeyStore,
@@ -53,7 +54,7 @@ schematic_hotkey_store_init (SchematicHotkeyStore *store)
                                    GSCHEM_HOTKEY_STORE_NUM_COLUMNS,
                                    column_types);
 
-  gschem_hotkey_store_rebuild (store);
+  schematic_hotkey_store_rebuild (store);
 }
 
 
@@ -62,7 +63,7 @@ schematic_hotkey_store_init (SchematicHotkeyStore *store)
  * current keybindings, and uses it to update the GtkListStore that
  * backs the list of key bindings. */
 static gboolean
-gschem_hotkey_store_rebuild (SchematicHotkeyStore *store)
+schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
 {
   SCM s_expr = SCM_UNDEFINED;
   SCM s_lst, s_iter;
@@ -110,7 +111,7 @@ gschem_hotkey_store_rebuild (SchematicHotkeyStore *store)
 
   return FALSE;
 
-} /* gschem_hotkey_store_rebuild() */
+} /* schematic_hotkey_store_rebuild() */
 
 
 
