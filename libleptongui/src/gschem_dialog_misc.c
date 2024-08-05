@@ -239,7 +239,9 @@ schematic_dialog_misc_entry_activate (GtkWidget *widget,
  *  \param          unused   An unused parameter
  */
 void
-gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointer unused)
+schematic_dialog_misc_response_non_modal (GtkDialog *dialog,
+                                          gint response,
+                                          gpointer unused)
 {
   switch(response) {
     case GTK_RESPONSE_CLOSE:
@@ -277,7 +279,7 @@ gschem_dialog_misc_show_non_modal (SchematicWindow *w_current,
 
     g_signal_connect (G_OBJECT (*widget),
                       "response",
-                      G_CALLBACK (gschem_dialog_misc_response_non_modal),
+                      G_CALLBACK (schematic_dialog_misc_response_non_modal),
                       NULL);
 
     gtk_window_set_transient_for (GTK_WINDOW (*widget),

@@ -42,8 +42,9 @@ void
 schematic_dialog_misc_entry_activate (GtkWidget *widget,
                                       GtkDialog *dialog);
 void
-gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointer unused);
-
+schematic_dialog_misc_response_non_modal (GtkDialog *dialog,
+                                          gint response,
+                                          gpointer unused);
 void
 gschem_dialog_misc_show_non_modal (SchematicWindow *w_current,
                                    GtkWidget **widget,
