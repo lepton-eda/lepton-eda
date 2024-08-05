@@ -58,7 +58,9 @@ enum compselect_view {
 };
 
 
-G_DEFINE_TYPE (Compselect, compselect, GSCHEM_TYPE_DIALOG);
+G_DEFINE_TYPE (Compselect,
+               compselect,
+               SCHEMATIC_TYPE_DIALOG);
 
 
 /*! \brief Return currently active component-selector view
@@ -211,7 +213,7 @@ GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current)
 {
   GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
-                                            /* GschemDialog */
+                                            /* SchematicDialog */
                                             "settings-name", "compselect",
                                             "schematic-window", w_current,
                                             NULL));
@@ -735,7 +737,8 @@ create_inuse_tree_model (Compselect *compselect)
 
   store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
 
-  symhead = s_toplevel_get_symbols (GSCHEM_DIALOG (compselect)->w_current->toplevel);
+  symhead =
+    s_toplevel_get_symbols (SCHEMATIC_DIALOG (compselect)->w_current->toplevel);
 
   for (symlist = symhead;
        symlist != NULL;
@@ -873,7 +876,8 @@ create_lib_tree_model (Compselect *compselect)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
-  LeptonPage *active_page = schematic_window_get_active_page (GSCHEM_DIALOG(compselect)->w_current);
+  LeptonPage *active_page =
+    schematic_window_get_active_page (SCHEMATIC_DIALOG (compselect)->w_current);
   EdaConfig *cfg = eda_config_get_context_for_path (lepton_page_get_filename (active_page));
   gboolean sort = eda_config_get_boolean (cfg, "schematic.library", "sort", NULL);
 
@@ -1350,23 +1354,25 @@ create_behaviors_combo_box (void)
 }
 
 
-/*! \brief GschemDialog "geometry_save" class method handler
+/*! \brief SchematicDialog "geometry_save" class method handler
  *
  *  \par Function Description
  *  Chain up to our parent's method to save the dialog's size and
  *  position, then save the dialog's current internal geometry.
  *
- *  \param [in] dialog     The #GschemDialog to save the geometry of.
+ *  \param [in] dialog     The #SchematicDialog to save the geometry of.
  *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-compselect_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
+compselect_geometry_save (SchematicDialog *dialog,
+                          EdaConfig *cfg,
+                          gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_save method */
-  GSCHEM_DIALOG_CLASS (compselect_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (compselect_parent_class)->
     geometry_save (dialog, cfg, group_name);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
@@ -1380,23 +1386,25 @@ compselect_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_nam
 }
 
 
-/*! \brief GschemDialog "geometry_restore" class method handler
+/*! \brief SchematicDialog "geometry_restore" class method handler
  *
  *  \par Function Description
  *  Chain up to our parent's method to restore the dialog's size and
  *  position, then restore the dialog's current internal geometry.
  *
- *  \param [in] dialog     The #GschemDialog to restore the geometry of.
+ *  \param [in] dialog     The #SchematicDialog to restore the geometry of.
  *  \param [in] cfg        The \c EdaConfig instance to get the geometry data from.
  *  \param [in] group_name The configuration group name to restore the data from.
  */
 static void
-compselect_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
+compselect_geometry_restore (SchematicDialog *dialog,
+                             EdaConfig *cfg,
+                             gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_restore method */
-  GSCHEM_DIALOG_CLASS (compselect_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (compselect_parent_class)->
     geometry_restore (dialog, cfg, group_name);
 
   position = eda_config_get_int (cfg, group_name, "hpaned", NULL);
@@ -1416,7 +1424,7 @@ static void
 compselect_class_init (CompselectClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-  GschemDialogClass *gschem_dialog_class = GSCHEM_DIALOG_CLASS (klass);
+  SchematicDialogClass *gschem_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
 
   gschem_dialog_class->geometry_save    = compselect_geometry_save;
   gschem_dialog_class->geometry_restore = compselect_geometry_restore;

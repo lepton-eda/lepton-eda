@@ -47,11 +47,11 @@ typedef struct _NewTextClass NewTextClass;
 typedef struct _NewText NewText;
 
 struct _NewTextClass {
-  GschemDialogClass parent_class;
+  SchematicDialogClass parent_class;
 };
 
 struct _NewText {
-    GschemDialog parent;
+    SchematicDialog parent;
 
     GtkWidget *aligncb;
     GtkWidget *colorcb;
@@ -61,7 +61,9 @@ struct _NewText {
 };
 
 
-G_DEFINE_TYPE (NewText, newtext, GSCHEM_TYPE_DIALOG);
+G_DEFINE_TYPE (NewText,
+               newtext,
+               SCHEMATIC_TYPE_DIALOG);
 
 
 static int
@@ -113,7 +115,9 @@ dialog_response_apply (NewText *dialog)
   g_return_if_fail (dialog != NULL);
 
   SchematicWindow *w_current = NULL;
-  g_object_get (GSCHEM_DIALOG (dialog), "schematic-window", &w_current, NULL);
+  g_object_get (SCHEMATIC_DIALOG (dialog),
+                "schematic-window", &w_current,
+                NULL);
   g_return_if_fail (w_current != NULL);
 
   int size = w_current->text_size;
@@ -510,7 +514,7 @@ text_input_dialog (SchematicWindow *w_current)
                                 /* GtkDialog */
                                 "has-separator",    TRUE,
 #endif
-                                /* GschemDialog */
+                                /* SchematicDialog */
                                 "settings-name",    "text-entry",
                                 "schematic-window",  w_current,
                                 NULL));

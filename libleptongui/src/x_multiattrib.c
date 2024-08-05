@@ -78,7 +78,7 @@ x_multiattrib_open (SchematicWindow *w_current)
     w_current->mawindow =
       GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
                                 "object_list", active_page->selection_list,
-                                /* GschemDialog */
+                                /* SchematicDialog */
                                 "settings-name", "multiattrib",
                                 "schematic-window", w_current,
                                 NULL));
@@ -484,7 +484,7 @@ enum {
 
 G_DEFINE_TYPE (Multiattrib,
                multiattrib,
-               GSCHEM_TYPE_DIALOG);
+               SCHEMATIC_TYPE_DIALOG);
 
 static void multiattrib_class_init (MultiattribClass *klass);
 static void multiattrib_init       (Multiattrib *multiattrib);
@@ -538,7 +538,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
   LeptonObject *object;
   gchar *newtext;
   GList *iter;
-  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   newtext = g_strdup_printf ("%s=%s", name, value);
 
@@ -581,7 +581,7 @@ static void
 multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
                                          GList *attr_list)
 {
-  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
   GList *iter;
 
   for (iter = attr_list;
@@ -613,7 +613,7 @@ static void
 multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                                        GList *attr_list)
 {
-  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
   LeptonObject *o_new;
   GList *iter;
   LeptonPage *active_page = NULL;
@@ -660,7 +660,7 @@ static void
 multiattrib_action_delete_attributes (Multiattrib *multiattrib,
                                       GList *attr_list)
 {
-  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
   GList *a_iter;
   LeptonObject *o_attrib;
 
@@ -683,7 +683,7 @@ static void
 multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
                                           GList *attr_list)
 {
-  SchematicWindow *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
   GList *iter;
   GList *objects_needing_add;
 
@@ -917,7 +917,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
@@ -1016,7 +1016,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
@@ -1103,7 +1103,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   GList *a_iter;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -1158,7 +1158,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -1222,7 +1222,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -1738,23 +1738,25 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
 }
 
 
-/*! \brief GschemDialog "geometry_save" class method handler
+/*! \brief SchematicDialog "geometry_save" class method handler
  *
  *  \par Function Description
  *  Chain up to our parent's method to save the dialog's size and
  *  position, then save the dialog's current internal geometry.
  *
- *  \param [in] dialog     The #GschemDialog to save the geometry of.
+ *  \param [in] dialog     The #SchematicDialog to save the geometry of.
  *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-multiattrib_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
+multiattrib_geometry_save (SchematicDialog *dialog,
+                           EdaConfig *cfg,
+                           gchar *group_name)
 {
   gboolean show_inherited;
 
   /* Call the parent's geometry_save method */
-  GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (multiattrib_parent_class)->
     geometry_save (dialog, cfg, group_name);
 
   show_inherited =
@@ -1769,24 +1771,26 @@ multiattrib_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_na
 }
 
 
-/*! \brief GschemDialog "geometry_restore" class method handler
+/*! \brief SchematicDialog "geometry_restore" class method handler
  *
  *  \par Function Description
  *  Chain up to our parent's method to restore the dialog's size and
  *  position, then restore the dialog's current internal geometry.
  *
- *  \param [in] dialog     The GschemDialog to restore the geometry of.
+ *  \param [in] dialog     The SchematicDialog to restore the geometry of.
  *  \param [in] cfg        The \c EdaConfig to restore the geometry data from.
  *  \param [in] group_name The configuration group name to restore the data from.
  */
 static void
-multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
+multiattrib_geometry_restore (SchematicDialog *dialog,
+                              EdaConfig *cfg,
+                              gchar *group_name)
 {
   gboolean show_inherited;
   GError *error = NULL;
 
   /* Call the parent's geometry_restore method */
-  GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (multiattrib_parent_class)->
     geometry_restore (dialog, cfg, group_name);
 
   show_inherited = eda_config_get_boolean (cfg, group_name, "show_inherited", &error);
@@ -1934,7 +1938,7 @@ static void
 multiattrib_class_init (MultiattribClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-  GschemDialogClass *gschem_dialog_class = GSCHEM_DIALOG_CLASS (klass);
+  SchematicDialogClass *gschem_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
 
   gschem_dialog_class->geometry_save    = multiattrib_geometry_save;
   gschem_dialog_class->geometry_restore = multiattrib_geometry_restore;

@@ -53,14 +53,14 @@ typedef struct _Compselect      Compselect;
 
 
 struct _CompselectClass {
-  GschemDialogClass parent_class;
+  SchematicDialogClass parent_class;
 
   guint behavior_changed_signal_id;
 
 };
 
 struct _Compselect {
-  GschemDialog parent_instance;
+  SchematicDialog parent_instance;
 
   GtkWidget   *hpaned, *vpaned, *attrframe;
   GtkTreeView *libtreeview, *inusetreeview, *attrtreeview;

@@ -79,29 +79,35 @@ enum {
 };
 
 static guint gschem_dialog_signals[ LAST_SIGNAL ] = { 0 };
-G_DEFINE_TYPE (GschemDialog, gschem_dialog, GTK_TYPE_DIALOG);
+
+G_DEFINE_TYPE (SchematicDialog,
+               schematic_dialog,
+               GTK_TYPE_DIALOG);
 
 /*! \private
- *  \brief Initialize GschemDialog instance
+ *  \brief Initialize SchematicDialog instance
  *
- *  \param [in,out]  dialog  The GschemDialog instance
+ *  \param [in,out]  dialog  The SchematicDialog instance
  */
 static void
-gschem_dialog_init (GschemDialog *dialog)
+schematic_dialog_init (SchematicDialog *dialog)
 {
 }
 
 
-/*! \brief GschemDialog "geometry_save" class method handler
+/*! \brief SchematicDialog "geometry_save" class method handler
  *
  *  \par Function Description
  *  Save the dialog's current position and size to the passed GKeyFile
  *
- *  \param [in] dialog     The GschemDialog to save the position and size of.
+ *  \param [in] dialog     The SchematicDialog to save the position and size of.
  *  \param [in] cfg        The \c EdaConfig instance to save the geometry data to.
  *  \param [in] group_name The group name in the key file to store the data under.
  */
-static void geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar* group_name)
+static void
+geometry_save (SchematicDialog *dialog,
+               EdaConfig *cfg,
+               gchar* group_name)
 {
   gint x, y, width, height;
 
@@ -115,16 +121,19 @@ static void geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar* group_na
 }
 
 
-/*! \brief GschemDialog "geometry_restore" class method handler
+/*! \brief SchematicDialog "geometry_restore" class method handler
  *
  *  \par Function Description
  *  Restore dialog's last position and size from the passed GKeyFile
  *
- *  \param [in] dialog     The GschemDialog to restore the position and size of.
+ *  \param [in] dialog     The SchematicDialog to restore the position and size of.
  *  \param [in] cfg        The \c EdaConfig instance to load the geometry data from.
  *  \param [in] group_name The group name in the key file to find the data under.
  */
-static void geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar* group_name)
+static void
+geometry_restore (SchematicDialog *dialog,
+                  EdaConfig *cfg,
+                  gchar* group_name)
 {
   gint x, y, width, height;
 
@@ -150,7 +159,7 @@ static void show_handler (GtkWidget *widget)
 {
   gchar *group_name;
   EdaConfig *cfg = eda_config_get_cache_context ();
-  GschemDialog *dialog = GSCHEM_DIALOG( widget );
+  SchematicDialog *dialog = SCHEMATIC_DIALOG (widget);
 
   if (dialog->settings_name != NULL) {
     group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
@@ -166,7 +175,7 @@ static void show_handler (GtkWidget *widget)
   }
 
   /* Let GTK show the window */
-  GTK_WIDGET_CLASS (gschem_dialog_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (schematic_dialog_parent_class)->show (widget);
 }
 
 
@@ -184,7 +193,7 @@ static void unmap_handler (GtkWidget *widget)
 {
   gchar *group_name;
   EdaConfig *cfg = eda_config_get_cache_context ();
-  GschemDialog *dialog = GSCHEM_DIALOG (widget);
+  SchematicDialog *dialog = SCHEMATIC_DIALOG (widget);
 
   if (dialog->settings_name != NULL) {
     group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
@@ -198,32 +207,32 @@ static void unmap_handler (GtkWidget *widget)
   }
 
   /* Let GTK unmap the window */
-  GTK_WIDGET_CLASS (gschem_dialog_parent_class)->unmap (widget);
+  GTK_WIDGET_CLASS (schematic_dialog_parent_class)->unmap (widget);
 }
 
 
 /*! \brief GObject finalise handler
  *
  *  \par Function Description
- *  Just before the GschemDialog GObject is finalized, free our
+ *  Just before the SchematicDialog GObject is finalized, free our
  *  allocated data, and then chain up to the parent's finalize handler.
  *
  *  \param [in] object The GObject being finalized.
  */
 static void gschem_dialog_finalize (GObject *object)
 {
-  GschemDialog *dialog = GSCHEM_DIALOG (object);
+  SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
   g_free (dialog->settings_name);
 
-  G_OBJECT_CLASS (gschem_dialog_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_dialog_parent_class)->finalize (object);
 }
 
 
 /*! \brief GObject property setter function
  *
  *  \par Function Description
- *  Setter function for GschemDialog's GObject properties,
+ *  Setter function for SchematicDialog's GObject properties,
  *  "settings-name" and "toplevel".
  *
  *  \param [in]  object       The GObject whose properties we are setting
@@ -234,7 +243,7 @@ static void gschem_dialog_finalize (GObject *object)
  */
 static void gschem_dialog_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemDialog *dialog = GSCHEM_DIALOG (object);
+  SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
   switch(property_id) {
     case PROP_SETTINGS_NAME:
@@ -254,7 +263,7 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
 /*! \brief GObject property getter function
  *
  *  \par Function Description
- *  Getter function for GschemDialog's GObject properties,
+ *  Getter function for SchematicDialog's GObject properties,
  *  "settings-name" and "toplevel".
  *
  *  \param [in]  object       The GObject whose properties we are getting
@@ -265,7 +274,7 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
  */
 static void gschem_dialog_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
 {
-  GschemDialog *dialog = GSCHEM_DIALOG (object);
+  SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
   switch(property_id) {
       case PROP_SETTINGS_NAME:
@@ -281,15 +290,16 @@ static void gschem_dialog_get_property (GObject *object, guint property_id, GVal
 }
 
 
-/*! \brief GType class initialiser for GschemDialog
+/*! \brief GType class initialiser for SchematicDialog
  *
  *  \par Function Description
- *  GType class initialiser for GschemDialog. We override our parent
+ *  GType class initialiser for SchematicDialog. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in]  klass       The GschemDialogClass we are initialising
+ *  \param [in]  klass       The SchematicDialogClass we are initialising
  */
-static void gschem_dialog_class_init (GschemDialogClass *klass)
+static void
+schematic_dialog_class_init (SchematicDialogClass *klass)
 {
   GObjectClass     *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
@@ -308,7 +318,7 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
     g_signal_new ("geometry-save",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
                   G_SIGNAL_RUN_FIRST,     /*signal_flags */
-                  G_STRUCT_OFFSET( GschemDialogClass, geometry_save ),
+                  G_STRUCT_OFFSET (SchematicDialogClass, geometry_save),
                   NULL, /* accumulator */
                   NULL, /* accu_data */
                   gschem_marshal_VOID__POINTER_STRING,
@@ -322,7 +332,7 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
     g_signal_new ("geometry-restore",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
                   G_SIGNAL_RUN_FIRST,     /*signal_flags */
-                  G_STRUCT_OFFSET( GschemDialogClass, geometry_restore ),
+                  G_STRUCT_OFFSET (SchematicDialogClass, geometry_restore),
                   NULL, /* accumulator */
                   NULL, /* accu_data */
                   gschem_marshal_VOID__POINTER_STRING,
@@ -391,7 +401,8 @@ static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
  *  to support gschem_dialog_new_with_buttons(...)
  *
  *  \par Function Description
- *  Convenience function which creates a blank GschemDialog with various options.
+ *  Convenience function which creates a blank SchematicDialog
+ *  with various options.
  *
  *  \param [in]  title              The title text of the dialog
  *  \param [in]  parent             The GtkWindow which will parent this dialog
@@ -399,7 +410,7 @@ static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
  *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
  *  \param [in]  w_current          The SchematicWindow object this dialog is associated with
  *
- *  \return  The GschemDialog created.
+ *  \return  The SchematicDialog created.
  */
 static GtkWidget*
 gschem_dialog_new_empty (const gchar *title,
@@ -408,12 +419,12 @@ gschem_dialog_new_empty (const gchar *title,
                          const gchar *settings_name,
                          SchematicWindow *w_current)
 {
-  GschemDialog *dialog;
+  SchematicDialog *dialog;
 
-  dialog = GSCHEM_DIALOG (g_object_new (GSCHEM_TYPE_DIALOG,
-                                        "settings-name", settings_name,
-                                        "schematic-window", w_current,
-                                        NULL));
+  dialog = SCHEMATIC_DIALOG (g_object_new (SCHEMATIC_TYPE_DIALOG,
+                                           "settings-name", settings_name,
+                                           "schematic-window", w_current,
+                                           NULL));
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dialog), title);
@@ -431,12 +442,13 @@ gschem_dialog_new_empty (const gchar *title,
 }
 
 
-/*! \brief GTK function modified from GTK+-2.4.14 gtkdialog.c
- *  to provide a GschemDialog equivelant of the convenience function
- *  gtk_dialog_new_with_buttons(...)
+/*! \brief GTK function modified from GTK+-2.4.14 gtkdialog.c to
+ *  provide a SchematicDialog equivalent of the convenience
+ *  function gtk_dialog_new_with_buttons(...)
  *
  *  \par Function Description
- *  Convenience function which creates a GschemDialog with buttons and options.
+ *  Convenience function which creates a SchematicDialog with
+ *  buttons and options.
  *
  *  \param [in]  title              The title text of the dialog
  *  \param [in]  parent             The GtkWindow which will parent this dialog
@@ -446,7 +458,7 @@ gschem_dialog_new_empty (const gchar *title,
  *  \param [in]  first_button_text  The text string for the first button
  *  \param [in]  ...                A variable number of arguments with the remaining button strings
  *
- *  \return  The GschemDialog created.
+ *  \return  The SchematicDialog created.
  */
 GtkWidget*
 gschem_dialog_new_with_buttons (const gchar *title,
@@ -457,10 +469,14 @@ gschem_dialog_new_with_buttons (const gchar *title,
                                 const gchar *first_button_text,
                                 ...)
 {
-  GschemDialog *dialog;
+  SchematicDialog *dialog;
   va_list args;
 
-  dialog = GSCHEM_DIALOG (gschem_dialog_new_empty (title, parent, flags, settings_name, w_current));
+  dialog = SCHEMATIC_DIALOG (gschem_dialog_new_empty (title,
+                                                      parent,
+                                                      flags,
+                                                      settings_name,
+                                                      w_current));
 
   va_start (args, first_button_text);
 

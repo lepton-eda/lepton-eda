@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 2007-2013 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,28 +23,28 @@
 #define __GSCHEM_DIALOG_H__
 
 
-#define GSCHEM_TYPE_DIALOG           (gschem_dialog_get_type())
-#define GSCHEM_DIALOG(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_DIALOG, GschemDialog))
-#define GSCHEM_DIALOG_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_DIALOG, GschemDialogClass))
-#define GSCHEM_IS_DIALOG(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_DIALOG))
-#define GSCHEM_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_DIALOG, GschemDialogClass))
+#define SCHEMATIC_TYPE_DIALOG           (schematic_dialog_get_type())
+#define SCHEMATIC_DIALOG(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_DIALOG, SchematicDialog))
+#define SCHEMATIC_DIALOG_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_DIALOG, SchematicDialogClass))
+#define SCHEMATIC_IS_DIALOG(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_DIALOG))
+#define SCHEMATIC_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_DIALOG, SchematicDialogClass))
 
-typedef struct _GschemDialogClass GschemDialogClass;
-typedef struct _GschemDialog      GschemDialog;
+typedef struct _SchematicDialogClass SchematicDialogClass;
+typedef struct _SchematicDialog      SchematicDialog;
 
 
-struct _GschemDialogClass {
+struct _SchematicDialogClass {
   GtkDialogClass parent_class;
 
-  void (*geometry_save)    (GschemDialog *dialog,
+  void (*geometry_save)    (SchematicDialog *dialog,
                             EdaConfig *cfg,
                             gchar *group_name);
-  void (*geometry_restore) (GschemDialog *dialog,
+  void (*geometry_restore) (SchematicDialog *dialog,
                             EdaConfig *cfg,
                             gchar *group_name);
 };
 
-struct _GschemDialog {
+struct _SchematicDialog {
   GtkDialog parent_instance;
 
   gchar *settings_name;
@@ -50,7 +52,8 @@ struct _GschemDialog {
 };
 
 
-GType gschem_dialog_get_type (void);
+GType
+schematic_dialog_get_type (void);
 
 GtkWidget* gschem_dialog_new_with_buttons (const gchar *title,
                                            GtkWindow *parent,

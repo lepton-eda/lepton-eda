@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -38,12 +38,11 @@ typedef struct _Multiattrib      Multiattrib;
 
 
 struct _MultiattribClass {
-  GschemDialogClass parent_class;
-
+  SchematicDialogClass parent_class;
 };
 
 struct _Multiattrib {
-  GschemDialog parent_instance;
+  SchematicDialog parent_instance;
 
   LeptonList *object_list;
   int         total_num_in_list;
