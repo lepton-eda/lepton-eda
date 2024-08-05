@@ -238,8 +238,8 @@ create_net_section (SchematicOptionsWidget *widget)
 
   /* These widgets are shown in the same order as the options menu */
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Net R_ubber Band Mode:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("_Magnetic Net Mode:"));
+  label[0] = schematic_dialog_misc_create_property_label (_("Net R_ubber Band Mode:"));
+  label[1] = schematic_dialog_misc_create_property_label (_("_Magnetic Net Mode:"));
 
   /*! \todo These should become a GtkSwitch when updating to GTK 3.0 */
 
@@ -275,9 +275,9 @@ create_snap_section (SchematicOptionsWidget *widget)
   GtkWidget *table;
   GtkWidget *editor[3];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Grid Mode:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Snap Mode:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("_Snap Size:"));
+  label[0] = schematic_dialog_misc_create_property_label (_("Grid Mode:"));
+  label[1] = schematic_dialog_misc_create_property_label (_("Snap Mode:"));
+  label[2] = schematic_dialog_misc_create_property_label (_("_Snap Size:"));
 
   editor[0] = create_grid_mode_widget (widget);
   editor[1] = create_snap_mode_widget (widget);

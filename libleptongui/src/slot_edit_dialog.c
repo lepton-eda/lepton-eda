@@ -134,8 +134,8 @@ slot_edit_dialog (SchematicWindow *w_current,
     vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->sewindow));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    label[0] = gschem_dialog_misc_create_property_label (_("Number of Slots:"));
-    label[1] = gschem_dialog_misc_create_property_label (_("Slot Number:"));
+    label[0] = schematic_dialog_misc_create_property_label (_("Number of Slots:"));
+    label[1] = schematic_dialog_misc_create_property_label (_("Slot Number:"));
 
     widget[0] = gtk_entry_new();
     gtk_entry_set_max_length(GTK_ENTRY(widget[0]), 80);

@@ -274,10 +274,10 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
   GtkWidget *table;
   GtkWidget *editor[4];
 
-  label[0] = gschem_dialog_misc_create_property_label(_("Colo_r:"));
-  label[1] = gschem_dialog_misc_create_property_label(_("_Size:"));
-  label[2] = gschem_dialog_misc_create_property_label(_("Ali_gnment:"));
-  label[3] = gschem_dialog_misc_create_property_label(_("Ro_tation:"));
+  label[0] = schematic_dialog_misc_create_property_label(_("Colo_r:"));
+  label[1] = schematic_dialog_misc_create_property_label(_("_Size:"));
+  label[2] = schematic_dialog_misc_create_property_label(_("Ali_gnment:"));
+  label[3] = schematic_dialog_misc_create_property_label(_("Ro_tation:"));
 
   editor[0] = widget->colorcb = x_colorcb_new ();
   editor[1] = widget->textsizecb = gschem_integer_combo_box_new ();

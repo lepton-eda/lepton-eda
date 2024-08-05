@@ -141,9 +141,9 @@ arc_angle_dialog (SchematicWindow *w_current,
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 #endif
 
-    label[0] = gschem_dialog_misc_create_property_label (_("Arc _Radius:"));
-    label[1] = gschem_dialog_misc_create_property_label (_("Start _Angle:"));
-    label[2] = gschem_dialog_misc_create_property_label (_("_Degrees of Sweep:"));
+    label[0] = schematic_dialog_misc_create_property_label (_("Arc _Radius:"));
+    label[1] = schematic_dialog_misc_create_property_label (_("Start _Angle:"));
+    label[2] = schematic_dialog_misc_create_property_label (_("_Degrees of Sweep:"));
 
     widget[0] = gtk_spin_button_new_with_range (1, 100000, 100);
     gtk_entry_set_activates_default (GTK_ENTRY(widget[0]), TRUE);

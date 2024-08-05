@@ -44,7 +44,7 @@
  *  \return A new property label widget
  */
 GtkWidget*
-gschem_dialog_misc_create_property_label (const char *label)
+schematic_dialog_misc_create_property_label (const char *label)
 {
   GtkWidget *widget = gtk_label_new_with_mnemonic (label);
 
