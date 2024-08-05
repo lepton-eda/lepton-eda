@@ -242,7 +242,11 @@ schematic_dialog_finalize (GObject *object)
  *  \param [in]  value        The GValue the property is being set from
  *  \param [in]  pspec        A GParamSpec describing the property being set
  */
-static void gschem_dialog_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec)
+static void
+schematic_dialog_set_property (GObject *object,
+                               guint property_id,
+                               const GValue *value,
+                               GParamSpec *pspec)
 {
   SchematicDialog *dialog = SCHEMATIC_DIALOG (object);
 
@@ -312,7 +316,7 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
   gtkwidget_class->unmap       = unmap_handler;
 
   gobject_class->finalize      = schematic_dialog_finalize;
-  gobject_class->set_property  = gschem_dialog_set_property;
+  gobject_class->set_property  = schematic_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
 
   schematic_dialog_signals[ GEOMETRY_SAVE ] =
