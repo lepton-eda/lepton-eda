@@ -379,9 +379,10 @@ schematic_dialog_class_init (SchematicDialogClass *klass)
  *  \param [in]  first_button_text  The text string for the first button
  *  \param [in]  args               The va_list containging the remaining button strings
  */
-static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
-                                              const gchar    *first_button_text,
-                                              va_list         args)
+static void
+schematic_dialog_add_buttons_valist (GtkDialog *dialog,
+                                     const gchar *first_button_text,
+                                     va_list args)
 {
   const gchar* text;
   gint response_id;
@@ -489,9 +490,9 @@ schematic_dialog_new_with_buttons (const gchar *title,
 
   va_start (args, first_button_text);
 
-  gschem_dialog_add_buttons_valist (GTK_DIALOG (dialog),
-                                    first_button_text,
-                                    args);
+  schematic_dialog_add_buttons_valist (GTK_DIALOG (dialog),
+                                       first_button_text,
+                                       args);
 
   va_end (args);
 
