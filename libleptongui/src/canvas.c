@@ -126,9 +126,11 @@ static GObjectClass *schematic_canvas_parent_class = NULL;
 
 #ifndef ENABLE_GTK3
 /*
- *  In later versions of GTK+, the GtkScrolledWindow uses an interface, instead
- *  of signals, to set the scrollbar adjustments. When Gschem uses on of these
- *  more recent version of GTK+, this function will no longer be needed.
+ *  In later versions of GTK+, the GtkScrolledWindow uses an
+ *  interface, instead of signals, to set the scrollbar
+ *  adjustments. When lepton-schematic uses one of these more
+ *  recent version of GTK+, this function will no longer be
+ *  needed.
  */
 static void
 cclosure_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
@@ -634,7 +636,7 @@ schematic_canvas_get_vadjustment (SchematicCanvas *view)
 
 /*! \brief Schedule redraw for the entire window
  *
- *  \param [in,out] view The Gschem page view to redraw
+ *  \param [in,out] view The schematic canvas to redraw.
  */
 void
 schematic_canvas_invalidate_all (SchematicCanvas *view)
@@ -658,7 +660,7 @@ schematic_canvas_invalidate_all (SchematicCanvas *view)
 
 /*! \brief Schedule redraw of the given rectange
  *
- *  \param [in,out] view   The Gschem page view to redraw
+ *  \param [in,out] view   The schematic canvas to redraw.
  *  \param [in]     left
  *  \param [in]     top
  *  \param [in]     right
@@ -701,7 +703,7 @@ schematic_canvas_invalidate_screen_rect (SchematicCanvas *view,
 
 /*! \brief Schedule redraw of the given rectange
  *
- *  \param [in,out] view   The Gschem page view to redraw
+ *  \param [in,out] view   The schematic canvas to redraw.
  *  \param [in]     left
  *  \param [in]     top
  *  \param [in]     right
@@ -735,7 +737,7 @@ schematic_canvas_invalidate_world_rect (SchematicCanvas *view,
 
 /*! \brief Initialize SchematicCanvas instance
  *
- *  \param [in,out] view the gschem page view
+ *  \param [in,out] view The schematic canvas instance.
  */
 static void
 schematic_canvas_init (SchematicCanvas *view)
