@@ -36,37 +36,41 @@
 
 
 #if GTK_CHECK_VERSION (2, 24, 0)
-G_DEFINE_TYPE (GschemIntegerComboBox,
-               gschem_integer_combo_box,
+G_DEFINE_TYPE (SchematicIntegerComboBox,
+               schematic_integer_combo_box,
                GTK_TYPE_COMBO_BOX);
 #else
-G_DEFINE_TYPE (GschemIntegerComboBox,
-               gschem_integer_combo_box,
+G_DEFINE_TYPE (SchematicIntegerComboBox,
+               schematic_integer_combo_box,
                GTK_TYPE_COMBO_BOX_ENTRY);
 #endif
 
 
 static void
-add_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused);
-
+add_widget (SchematicIntegerComboBox *combo,
+            GtkWidget *widget,
+            gpointer unused);
 static gboolean
-focus_out_event (GtkEntry *entry, GdkEvent *event, GschemIntegerComboBox *combo);
+focus_out_event (GtkEntry *entry,
+                 GdkEvent *event,
+                 SchematicIntegerComboBox *combo);
+static void
+schematic_integer_combo_box_class_init (SchematicIntegerComboBoxClass *klass);
 
 static void
-gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass);
+schematic_integer_combo_box_init (SchematicIntegerComboBox *combo);
 
 static void
-gschem_integer_combo_box_init (GschemIntegerComboBox *combo);
-
+notify_active (SchematicIntegerComboBox *combo,
+               GParamSpec *pspec,
+               gpointer unused);
 static void
-notify_active (GschemIntegerComboBox *combo, GParamSpec *pspec, gpointer unused);
-
+remove_widget (SchematicIntegerComboBox *combo,
+               GtkWidget *widget,
+               gpointer unused);
 static void
-remove_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused);
-
-static void
-value_changed (GschemIntegerComboBox *combo, gpointer unused);
-
+value_changed (SchematicIntegerComboBox *combo,
+               gpointer unused);
 
 
 /*! \brief The entry widget is added to the combo box.
@@ -79,7 +83,9 @@ value_changed (GschemIntegerComboBox *combo, gpointer unused);
  *  \param [in] unused
  */
 static void
-add_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused)
+add_widget (SchematicIntegerComboBox *combo,
+            GtkWidget *widget,
+            gpointer unused)
 {
   g_return_if_fail (combo != NULL);
   g_return_if_fail (widget != NULL);
@@ -99,7 +105,9 @@ add_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused)
  *  \param [in] combo  The combo box
  */
 static gboolean
-focus_out_event (GtkEntry *entry, GdkEvent *event, GschemIntegerComboBox *combo)
+focus_out_event (GtkEntry *entry,
+                 GdkEvent *event,
+                 SchematicIntegerComboBox *combo)
 {
   g_return_val_if_fail (entry != NULL, FALSE);
   g_return_val_if_fail (combo != NULL, FALSE);
@@ -114,12 +122,12 @@ focus_out_event (GtkEntry *entry, GdkEvent *event, GschemIntegerComboBox *combo)
 
 
 
-/*! \brief Initialize GschemIntegerComboBoxClass class
+/*! \brief Initialize SchematicIntegerComboBoxClass class
  *
- *  \param [in] klass The class for the GschemIntegerComboBoxClass
+ *  \param [in] klass The class for the SchematicIntegerComboBoxClass
  */
 static void
-gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass)
+schematic_integer_combo_box_class_init (SchematicIntegerComboBoxClass *klass)
 {
   g_return_if_fail (klass != NULL);
 
@@ -182,12 +190,12 @@ gschem_integer_combo_box_get_value (GtkWidget *widget)
 
 
 
-/*! \brief Initialize a GschemIntegerComboBox
+/*! \brief Initialize a SchematicIntegerComboBox
  *
- *  \param [in] combo The instance of a #GschemIntegerComboBox.
+ *  \param [in] combo The instance of a #SchematicIntegerComboBox.
  */
 static void
-gschem_integer_combo_box_init (GschemIntegerComboBox *combo)
+schematic_integer_combo_box_init (SchematicIntegerComboBox *combo)
 {
   g_return_if_fail (combo != NULL);
 
@@ -224,9 +232,12 @@ GtkWidget*
 gschem_integer_combo_box_new ()
 {
 #if GTK_CHECK_VERSION (2, 24, 0)
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_INTEGER_COMBO_BOX, "has-entry", TRUE, NULL));
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_INTEGER_COMBO_BOX,
+                                   "has-entry", TRUE,
+                                   NULL));
 #else
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_INTEGER_COMBO_BOX, NULL));
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_INTEGER_COMBO_BOX,
+                                   NULL));
 #endif
 }
 
@@ -285,7 +296,9 @@ gschem_integer_combo_box_set_value (GtkWidget *widget, int value)
 /*! \brief The active item in the combo box has changed
  */
 static void
-notify_active (GschemIntegerComboBox *combo, GParamSpec *pspec, gpointer unused)
+notify_active (SchematicIntegerComboBox *combo,
+               GParamSpec *pspec,
+               gpointer unused)
 {
   g_return_if_fail (combo != NULL);
 
@@ -305,7 +318,9 @@ notify_active (GschemIntegerComboBox *combo, GParamSpec *pspec, gpointer unused)
  *  \param [in] unused
  */
 static void
-remove_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused)
+remove_widget (SchematicIntegerComboBox *combo,
+               GtkWidget *widget,
+               gpointer unused)
 {
   g_return_if_fail (combo != NULL);
   g_return_if_fail (widget != NULL);
@@ -329,7 +344,8 @@ remove_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused)
  *  \param [in] unused
  */
 static void
-value_changed (GschemIntegerComboBox *combo, gpointer unused)
+value_changed (SchematicIntegerComboBox *combo,
+               gpointer unused)
 {
   g_return_if_fail (combo != NULL);
 

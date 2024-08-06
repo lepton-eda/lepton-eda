@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +23,16 @@
  * \brief A GtkComboBox with and entry for integer values.
  */
 
-#define GSCHEM_TYPE_INTEGER_COMBO_BOX           (gschem_integer_combo_box_get_type())
-#define GSCHEM_INTEGER_COMBO_BOX(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_INTEGER_COMBO_BOX, GschemIntegerComboBox))
-#define GSCHEM_INTEGER_COMBO_BOX_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_INTEGER_COMBO_BOX, GschemIntegerComboBoxClass))
-#define GSCHEM_IS_INTEGER_COMBO_BOX(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_INTEGER_COMBO_BOX))
-#define GSCHEM_INTEGER_COMBO_BOX_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_INTEGER_COMBO_BOX, GschemIntegerComboBoxClass))
+#define SCHEMATIC_TYPE_INTEGER_COMBO_BOX           (schematic_integer_combo_box_get_type())
+#define SCHEMATIC_INTEGER_COMBO_BOX(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_INTEGER_COMBO_BOX, SchematicIntegerComboBox))
+#define SCHEMATIC_INTEGER_COMBO_BOX_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_INTEGER_COMBO_BOX, SchematicIntegerComboBoxClass))
+#define SCHEMATIC_IS_INTEGER_COMBO_BOX(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_INTEGER_COMBO_BOX))
+#define SCHEMATIC_INTEGER_COMBO_BOX_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_INTEGER_COMBO_BOX, SchematicIntegerComboBoxClass))
 
-typedef struct _GschemIntegerComboBoxClass GschemIntegerComboBoxClass;
-typedef struct _GschemIntegerComboBox GschemIntegerComboBox;
+typedef struct _SchematicIntegerComboBoxClass SchematicIntegerComboBoxClass;
+typedef struct _SchematicIntegerComboBox SchematicIntegerComboBox;
 
-struct _GschemIntegerComboBoxClass
+struct _SchematicIntegerComboBoxClass
 {
 #if GTK_CHECK_VERSION (2, 24, 0)
   GtkComboBoxClass parent_class;
@@ -40,7 +41,7 @@ struct _GschemIntegerComboBoxClass
 #endif
 };
 
-struct _GschemIntegerComboBox
+struct _SchematicIntegerComboBox
 {
 #if GTK_CHECK_VERSION (2, 24, 0)
   GtkComboBox parent;
@@ -55,7 +56,7 @@ GtkEntry*
 gschem_integer_combo_box_get_entry (GtkWidget *widget);
 
 GType
-gschem_integer_combo_box_get_type();
+schematic_integer_combo_box_get_type();
 
 int
 gschem_integer_combo_box_get_value (GtkWidget *widget);
