@@ -413,7 +413,7 @@
 
             font_select_widget_new
 
-            gschem_log_widget_new
+            schematic_log_widget_new
 
             gschem_object_properties_widget_new
 
@@ -750,7 +750,7 @@
 (define-lff font_select_widget_new '* '(*))
 
 ;;; gschem_log_widget.c
-(define-lff gschem_log_widget_new '* '())
+(define-lff schematic_log_widget_new '* '())
 
 ;;; gschem_object_properties_widget.c
 (define-lff gschem_object_properties_widget_new '* '(*))

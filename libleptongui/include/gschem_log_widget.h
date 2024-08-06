@@ -53,6 +53,6 @@ schematic_log_widget_get_type (void);
 G_BEGIN_DECLS
 
 GtkWidget*
-gschem_log_widget_new ();
+schematic_log_widget_new ();
 
 G_END_DECLS

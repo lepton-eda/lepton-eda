@@ -68,7 +68,7 @@ finalize (GObject* object);
  *  \return a new status log widget
  */
 GtkWidget*
-gschem_log_widget_new ()
+schematic_log_widget_new ()
 {
   return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_LOG_WIDGET, NULL));
 }
