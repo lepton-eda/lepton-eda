@@ -627,7 +627,7 @@
 (define-lff coord_dialog void (list '* int int))
 (define-lff coord_display_update void (list '* int int))
 
-;;; gschem_hotkey_dialog.c
+;;; hotkey_dialog.c
 (define-lff x_dialog_hotkeys void '(*))
 
 ;;; gschem_macro_widget.c
