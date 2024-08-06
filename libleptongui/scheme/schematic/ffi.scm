@@ -630,7 +630,7 @@
 ;;; hotkey_dialog.c
 (define-lff x_dialog_hotkeys void '(*))
 
-;;; gschem_macro_widget.c
+;;; macro_widget.c
 (define-lff macro_widget_show void '(*))
 
 ;;; canvas.c

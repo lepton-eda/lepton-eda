@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_macro_widget.h
+ * \file macro_widget.h
  *
  * \brief A widget for entering macros
  */

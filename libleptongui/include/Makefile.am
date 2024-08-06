@@ -27,7 +27,7 @@ noinst_HEADERS = \
 	find_text_widget.h \
 	integer_combo_box.h \
 	log_widget.h \
-	gschem_macro_widget.h \
+	macro_widget.h \
 	gschem_main_window.h \
 	gschem_object_properties_widget.h \
 	options.h \

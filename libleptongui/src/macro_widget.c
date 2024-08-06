@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_macro_widget.c
+ * \file macro_widget.c
  *
  * \brief A widget for entering and executing Guile macros
  */
@@ -484,7 +484,7 @@ history_add (GtkListStore* store, const gchar* line)
  *  Read max history size configuration from the "history-length"
  *  key in the "schematic.macro-widget" group (USER context).
  *  If that key is absent, maximum history size will be set
- *  to MACRO_WIDGET_HISTORY_MAX (\see gschem_macro_widget.h).
+ *  to MACRO_WIDGET_HISTORY_MAX (\see macro_widget.h).
  *  Truncate history to be <= maximum size.
  *
  *  \param store GtkListStore history container
