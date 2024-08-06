@@ -29,7 +29,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "macro_widget.h"
 #include "viewport.h"
 #include "canvas.h"
-#include "gschem_pin_type_combo.h"
+#include "pin_type_combo.h"
 #include "main_window.h"
 #include "gschem_selection_adapter.h"
 #include "gschem_show_hide_text_widget.h"

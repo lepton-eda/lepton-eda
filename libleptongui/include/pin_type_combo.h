@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_pin_type_combo.h
+ * \file pin_type_combo.h
  *
  * \brief A combo for selecting a pin type
  */

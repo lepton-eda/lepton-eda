@@ -38,7 +38,7 @@ libleptongui_la_SOURCES = \
 	options.c \
 	options_widget.c \
 	viewport.c \
-	gschem_pin_type_combo.c \
+	pin_type_combo.c \
 	gschem_rotation_combo.c \
 	gschem_selection_adapter.c \
 	gschem_show_hide_text_widget.c \
