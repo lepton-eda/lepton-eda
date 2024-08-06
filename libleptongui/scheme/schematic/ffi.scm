@@ -874,7 +874,7 @@
 ;;; find_text_state.c
 (define-lff schematic_find_text_state_new '* '())
 
-;;; gschem_find_text_widget.c
+;;; find_text_widget.c
 (define-lff find_text_dialog void '(*))
 
 ;;; gschem_show_hide_text_widget.c

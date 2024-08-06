@@ -20,7 +20,7 @@ libleptongui/src/dialog.c
 libleptongui/src/dialog_misc.c
 libleptongui/src/fill_swatch_cell_renderer.c
 libleptongui/src/find_text_state.c
-libleptongui/src/gschem_find_text_widget.c
+libleptongui/src/find_text_widget.c
 libleptongui/src/hotkey_dialog.c
 libleptongui/src/gschem_integer_combo_box.c
 libleptongui/src/gschem_log_widget.c

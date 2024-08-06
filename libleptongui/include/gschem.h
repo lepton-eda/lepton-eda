@@ -24,7 +24,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "bin.h"
 #include "bottom_widget.h"
 #include "find_text_state.h"
-#include "gschem_find_text_widget.h"
+#include "find_text_widget.h"
 #include "gschem_log_widget.h"
 #include "gschem_macro_widget.h"
 #include "viewport.h"

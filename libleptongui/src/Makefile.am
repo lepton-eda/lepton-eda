@@ -28,7 +28,7 @@ libleptongui_la_SOURCES = \
 	dialog_misc.c \
 	fill_swatch_cell_renderer.c \
 	find_text_state.c \
-	gschem_find_text_widget.c \
+	find_text_widget.c \
 	hotkey_dialog.c \
 	gschem_integer_combo_box.c \
 	gschem_log_widget.c \
