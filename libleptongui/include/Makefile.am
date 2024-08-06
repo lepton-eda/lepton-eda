@@ -23,7 +23,7 @@ noinst_HEADERS = \
 	dialog.h \
 	dialog_misc.h \
 	fill_swatch_cell_renderer.h \
-	gschem_find_text_state.h \
+	find_text_state.h \
 	gschem_find_text_widget.h \
 	gschem_integer_combo_box.h \
 	gschem_log_widget.h \

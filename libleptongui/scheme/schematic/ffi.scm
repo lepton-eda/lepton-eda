@@ -871,7 +871,7 @@
 (define-lff schematic_tab_info_get_window '* '(*))
 (define-lff schematic_tabs_set_callback void '(* *))
 
-;;; gschem_find_text_state.c
+;;; find_text_state.c
 (define-lff schematic_find_text_state_new '* '())
 
 ;;; gschem_find_text_widget.c

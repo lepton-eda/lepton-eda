@@ -18,13 +18,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_find_text_state.h
+ * \file find_text_state.h
  *
  * \brief
  */
 
-#ifndef GSCHEM_FIND_TEXT_STATE_H_
-#define GSCHEM_FIND_TEXT_STATE_H_
+#ifndef _FIND_TEXT_STATE_H_
+#define _FIND_TEXT_STATE_H_
 
 
 #define SCHEMATIC_FIND_TEXT_STATE_TYPE           (schematic_find_text_state_get_type())
@@ -78,4 +78,4 @@ schematic_find_text_state_new ();
 
 G_END_DECLS
 
-#endif /* GSCHEM_FIND_TEXT_STATE_H_ */
+#endif /* _FIND_TEXT_STATE_H_ */
