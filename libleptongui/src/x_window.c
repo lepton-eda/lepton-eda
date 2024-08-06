@@ -174,14 +174,14 @@ x_window_find_text (GtkWidget *widget,
 
   switch (response) {
   case GTK_RESPONSE_OK:
-    count = gschem_find_text_state_find (
-        w_current,
-        SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
-        lepton_list_get_glist (w_current->toplevel->pages),
-        gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-        gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-        gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-        show_hidden_text);
+    count =
+      schematic_find_text_state_find (w_current,
+                                      SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
+                                      lepton_list_get_glist (w_current->toplevel->pages),
+                                      gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      show_hidden_text);
 
     if (count > 0)
     {

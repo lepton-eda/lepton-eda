@@ -110,13 +110,13 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \return the number of objects found
  */
 int
-gschem_find_text_state_find (SchematicWindow *w_current,
-                             SchematicFindTextState *state,
-                             GList *pages,
-                             int type,
-                             const char *text,
-                             gboolean descend,
-                             gboolean include_hidden)
+schematic_find_text_state_find (SchematicWindow *w_current,
+                                SchematicFindTextState *state,
+                                GList *pages,
+                                int type,
+                                const char *text,
+                                gboolean descend,
+                                gboolean include_hidden)
 {
   int count;
   GSList *objects = NULL;

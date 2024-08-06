@@ -60,13 +60,13 @@ struct _SchematicFindTextState
 
 
 int
-gschem_find_text_state_find (SchematicWindow *w_current,
-                             SchematicFindTextState *state,
-                             GList *pages,
-                             int type,
-                             const char *text,
-                             gboolean descend,
-                             gboolean include_hidden);
+schematic_find_text_state_find (SchematicWindow *w_current,
+                                SchematicFindTextState *state,
+                                GList *pages,
+                                int type,
+                                const char *text,
+                                gboolean descend,
+                                gboolean include_hidden);
 
 GType
 schematic_find_text_state_get_type ();
