@@ -61,7 +61,7 @@ const char*
 schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
 
 int
-gschem_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
+schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
 
 GType
 schematic_find_text_widget_get_type ();

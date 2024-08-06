@@ -131,7 +131,8 @@ changed_type (GtkWidget *entry,
 {
   g_return_if_fail (widget != NULL);
 
-  if (gschem_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK) {
+  if (schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
+  {
     gtk_widget_set_sensitive (widget->find_button, TRUE);
     gtk_widget_set_visible (widget->entry, FALSE);
     gtk_widget_set_visible (widget->descend_button, FALSE);
@@ -151,7 +152,8 @@ click_find (GtkWidget *entry,
   g_return_if_fail (widget != NULL);
 
   if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0 ||
-      gschem_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK) {
+      schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
   }
 }
@@ -235,7 +237,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_FIND_TYPE:
-      g_value_set_int (value, gschem_find_text_widget_get_find_type (widget));
+      g_value_set_int (value, schematic_find_text_widget_get_find_type (widget));
       break;
 
     default:
@@ -326,7 +328,7 @@ schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
  *  \return The find type
  */
 int
-gschem_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
+schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
 {
   int index = -1;
   GtkTreeIter iter;
