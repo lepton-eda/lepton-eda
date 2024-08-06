@@ -33,21 +33,21 @@
 
 
 
-#define GSCHEM_TYPE_MACRO_WIDGET           (gschem_macro_widget_get_type())
-#define GSCHEM_MACRO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidget))
-#define GSCHEM_MACRO_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidgetClass))
-#define GSCHEM_IS_MACRO_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_MACRO_WIDGET))
-#define GSCHEM_MACRO_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidgetClass))
+#define SCHEMATIC_TYPE_MACRO_WIDGET           (schematic_macro_widget_get_type())
+#define SCHEMATIC_MACRO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_MACRO_WIDGET, SchematicMacroWidget))
+#define SCHEMATIC_MACRO_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_MACRO_WIDGET, SchematicMacroWidgetClass))
+#define SCHEMATIC_IS_MACRO_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_MACRO_WIDGET))
+#define SCHEMATIC_MACRO_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_MACRO_WIDGET, SchematicMacroWidgetClass))
 
-typedef struct _GschemMacroWidgetClass GschemMacroWidgetClass;
-typedef struct _GschemMacroWidget GschemMacroWidget;
+typedef struct _SchematicMacroWidgetClass SchematicMacroWidgetClass;
+typedef struct _SchematicMacroWidget SchematicMacroWidget;
 
-struct _GschemMacroWidgetClass
+struct _SchematicMacroWidgetClass
 {
   GtkInfoBarClass parent_class;
 };
 
-struct _GschemMacroWidget
+struct _SchematicMacroWidget
 {
   GtkInfoBar parent;
 
@@ -74,7 +74,7 @@ macro_widget_show (GtkWidget* widget);
 G_END_DECLS
 
 GType
-gschem_macro_widget_get_type();
+schematic_macro_widget_get_type();
 
 
 #endif /* LEPTON_MACRO_WIDGET_H_ */

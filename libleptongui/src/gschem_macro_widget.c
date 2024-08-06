@@ -29,10 +29,10 @@
 
 
 static void
-gschem_macro_widget_class_init (GschemMacroWidgetClass* klass);
+schematic_macro_widget_class_init (SchematicMacroWidgetClass* klass);
 
 static void
-gschem_macro_widget_init (GschemMacroWidget* widget);
+schematic_macro_widget_init (SchematicMacroWidget* widget);
 
 static void
 get_property (GObject* object, guint param_id, GValue* value, GParamSpec* pspec);
@@ -59,13 +59,13 @@ exec_macro (SchematicWindow* toplevel,
             const gchar* macro_text);
 
 static void
-macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text);
+macro_widget_exec_macro (SchematicMacroWidget* widget,
+                         const gchar* macro_text);
+static void
+macro_widget_hide (SchematicMacroWidget* widget);
 
 static void
-macro_widget_hide (GschemMacroWidget* widget);
-
-static void
-macro_widget_create (GschemMacroWidget* widget);
+macro_widget_create (SchematicMacroWidget* widget);
 
 static void
 history_add (GtkListStore* store, const gchar* line);
@@ -99,14 +99,14 @@ enum
 
 /*! \brief Convenience macro - gobject type implementation:
 */
-G_DEFINE_TYPE (GschemMacroWidget, gschem_macro_widget, GTK_TYPE_INFO_BAR);
-
-
+G_DEFINE_TYPE (SchematicMacroWidget,
+               schematic_macro_widget,
+               GTK_TYPE_INFO_BAR);
 
 /*! \brief Initialize gobject class
  */
 static void
-gschem_macro_widget_class_init (GschemMacroWidgetClass* klass)
+schematic_macro_widget_class_init (SchematicMacroWidgetClass* klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -121,7 +121,7 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass* klass)
 /*! \brief Initialize gobject instance
  */
 static void
-gschem_macro_widget_init (GschemMacroWidget* widget)
+schematic_macro_widget_init (SchematicMacroWidget* widget)
 {
   macro_widget_create (widget);
 }
@@ -136,7 +136,7 @@ get_property (GObject* object,
               GValue* value,
               GParamSpec* pspec)
 {
-  GschemMacroWidget* widget = GSCHEM_MACRO_WIDGET (object);
+  SchematicMacroWidget* widget = SCHEMATIC_MACRO_WIDGET (object);
 
   switch (param_id)
   {
@@ -159,7 +159,7 @@ set_property (GObject* object,
               const GValue* value,
               GParamSpec* pspec)
 {
-  GschemMacroWidget* widget = GSCHEM_MACRO_WIDGET (object);
+  SchematicMacroWidget* widget = SCHEMATIC_MACRO_WIDGET (object);
 
   switch (param_id)
   {
@@ -185,7 +185,7 @@ set_property (GObject* object,
 static void
 on_entry_activate (GtkEntry* entry, gpointer data)
 {
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
   if (gtk_entry_get_text_length (entry) <= 0)
@@ -205,7 +205,7 @@ on_entry_activate (GtkEntry* entry, gpointer data)
 static void
 on_evaluate_clicked (GtkButton* button, gpointer data)
 {
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
   const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
@@ -219,7 +219,7 @@ on_evaluate_clicked (GtkButton* button, gpointer data)
 static void
 on_cancel_clicked (GtkButton* button, gpointer data)
 {
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
   macro_widget_hide (widget);
@@ -232,7 +232,7 @@ on_cancel_clicked (GtkButton* button, gpointer data)
 static void
 on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
 {
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
   /* Update the sensitivity of the evaluate button:
@@ -254,7 +254,7 @@ macro_widget_new (SchematicWindow* toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
 
-  gpointer obj = g_object_new (GSCHEM_TYPE_MACRO_WIDGET,
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_MACRO_WIDGET,
                                "toplevel", toplevel,
                                NULL);
 
@@ -268,7 +268,7 @@ macro_widget_show (GtkWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
-  GschemMacroWidget* macro_widget = GSCHEM_MACRO_WIDGET (widget);
+  SchematicMacroWidget* macro_widget = SCHEMATIC_MACRO_WIDGET (widget);
 
   g_return_if_fail (macro_widget->entry != NULL);
 
@@ -279,7 +279,7 @@ macro_widget_show (GtkWidget* widget)
 
 
 static void
-macro_widget_hide (GschemMacroWidget* widget)
+macro_widget_hide (SchematicMacroWidget* widget)
 {
   gtk_widget_hide (GTK_WIDGET (widget));
   gtk_widget_grab_focus (widget->toplevel->drawing_area);
@@ -313,7 +313,8 @@ exec_macro (SchematicWindow* toplevel,
 /*! \brief Execute Guile code passed in [macro_text]
 */
 static void
-macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
+macro_widget_exec_macro (SchematicMacroWidget* widget,
+                         const gchar* macro_text)
 {
   if (macro_text == NULL || strlen(macro_text) <= 0)
   {
@@ -337,7 +338,7 @@ macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
 /*! \brief Create the macro widget
 */
 static void
-macro_widget_create (GschemMacroWidget* widget)
+macro_widget_create (SchematicMacroWidget* widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
