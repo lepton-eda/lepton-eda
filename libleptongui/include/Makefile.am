@@ -25,7 +25,7 @@ noinst_HEADERS = \
 	fill_swatch_cell_renderer.h \
 	find_text_state.h \
 	find_text_widget.h \
-	gschem_integer_combo_box.h \
+	integer_combo_box.h \
 	gschem_log_widget.h \
 	gschem_macro_widget.h \
 	gschem_main_window.h \

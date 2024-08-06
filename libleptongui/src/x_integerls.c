@@ -19,7 +19,7 @@
  */
 /*! \file x_integerls.c
  *
- *  \brief A GtkListStore for the integer combo box (gschem_integer_combo_box.c).
+ *  \brief A GtkListStore for the integer combo box (integer_combo_box.c).
  */
 #include <config.h>
 

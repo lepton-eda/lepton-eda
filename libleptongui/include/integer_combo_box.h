@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_integer_combo_box.h
+ * \file integer_combo_box.h
  *
  * \brief A GtkComboBox with and entry for integer values.
  */

@@ -48,7 +48,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "fill_swatch_cell_renderer.h"
 #include "globals.h"
 #include "prototype.h"
-#include "gschem_integer_combo_box.h"
+#include "integer_combo_box.h"
 #include "binding.h"
 #include "binding_integer.h"
 #include "window.h"

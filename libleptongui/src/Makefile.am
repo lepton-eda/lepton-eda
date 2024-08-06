@@ -30,7 +30,7 @@ libleptongui_la_SOURCES = \
 	find_text_state.c \
 	find_text_widget.c \
 	hotkey_dialog.c \
-	gschem_integer_combo_box.c \
+	integer_combo_box.c \
 	gschem_log_widget.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
