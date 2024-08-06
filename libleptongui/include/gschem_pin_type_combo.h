@@ -30,4 +30,5 @@ int
 schematic_pin_type_combo_get_index (GtkWidget *widget);
 
 void
-gschem_pin_type_combo_set_index (GtkWidget *widget, int type);
+schematic_pin_type_combo_set_index (GtkWidget *widget,
+                                    int type);

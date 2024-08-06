@@ -145,7 +145,8 @@ schematic_pin_type_combo_get_index (GtkWidget *widget)
  *  \param [in]     style  The pin type index to select
  */
 void
-gschem_pin_type_combo_set_index (GtkWidget *widget, int style)
+schematic_pin_type_combo_set_index (GtkWidget *widget,
+                                    int style)
 {
   GtkTreeIter *active = NULL;
   GtkTreeIter iter;

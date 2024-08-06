@@ -934,7 +934,7 @@ update_pin_type_widget (SchematicObjectPropertiesWidget *dialog)
                                      (gpointer) update_pin_type_model,
                                      dialog);
 
-    gschem_pin_type_combo_set_index (dialog->pin_type, type);
+    schematic_pin_type_combo_set_index (dialog->pin_type, type);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->pin_type),
                                        (gpointer) update_pin_type_model,
