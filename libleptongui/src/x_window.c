@@ -306,7 +306,7 @@ schematic_window_create_app_window (gpointer app)
   g_return_val_if_fail (app != NULL, NULL);
   main_window = gtk_application_window_new (GTK_APPLICATION (app));
 #else
-  main_window = GTK_WIDGET (gschem_main_window_new ());
+  main_window = GTK_WIDGET (schematic_main_window_new ());
 #endif
 
   gtk_widget_set_name (main_window, "lepton-schematic");

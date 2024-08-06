@@ -46,4 +46,4 @@ GType
 schematic_main_window_get_type();
 
 SchematicMainWindow*
-gschem_main_window_new ();
+schematic_main_window_new ();

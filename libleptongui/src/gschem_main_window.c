@@ -66,7 +66,7 @@ schematic_main_window_init (SchematicMainWindow *window)
  *  \return A new instance of the SchematicMainWindow
  */
 SchematicMainWindow*
-gschem_main_window_new ()
+schematic_main_window_new ()
 {
   return SCHEMATIC_MAIN_WINDOW (g_object_new (SCHEMATIC_TYPE_MAIN_WINDOW,
                                               "type", GTK_WINDOW_TOPLEVEL,
