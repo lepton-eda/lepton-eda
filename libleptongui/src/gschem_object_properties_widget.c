@@ -111,7 +111,7 @@ update_pin_type_widget (SchematicObjectPropertiesWidget *dialog);
  *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_object_properties_widget_new (SchematicWindow *w_current)
+schematic_object_properties_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET,
                                    /* GschemObjectProperties */

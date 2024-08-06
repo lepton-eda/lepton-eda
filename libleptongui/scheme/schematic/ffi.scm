@@ -415,7 +415,7 @@
 
             schematic_log_widget_new
 
-            gschem_object_properties_widget_new
+            schematic_object_properties_widget_new
 
             schematic_options_cycle_grid_mode
             schematic_options_get_grid_mode
@@ -753,7 +753,7 @@
 (define-lff schematic_log_widget_new '* '())
 
 ;;; gschem_object_properties_widget.c
-(define-lff gschem_object_properties_widget_new '* '(*))
+(define-lff schematic_object_properties_widget_new '* '(*))
 
 ;;; options.c
 (define-lff schematic_options_cycle_grid_mode void '(*))
