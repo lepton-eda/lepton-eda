@@ -50,17 +50,17 @@ enum
 
 
 static void
-activate_entry (GtkWidget *entry, GschemFindTextWidget *widget);
-
+activate_entry (GtkWidget *entry,
+                SchematicFindTextWidget *widget);
 static void
-click_cancel (GtkWidget *button, GschemFindTextWidget *widget);
-
+click_cancel (GtkWidget *button,
+              SchematicFindTextWidget *widget);
 static void
-changed_type (GtkWidget *entry, GschemFindTextWidget *widget);
-
+changed_type (GtkWidget *entry,
+              SchematicFindTextWidget *widget);
 static void
-click_find (GtkWidget *entry, GschemFindTextWidget *widget);
-
+click_find (GtkWidget *entry,
+            SchematicFindTextWidget *widget);
 static GtkListStore*
 create_find_type_store ();
 
@@ -74,21 +74,22 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass);
+schematic_find_text_widget_class_init (SchematicFindTextWidgetClass *klass);
 
 static void
-gschem_find_text_widget_init (GschemFindTextWidget *view);
+schematic_find_text_widget_init (SchematicFindTextWidget *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemFindTextWidget *widget);
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicFindTextWidget *widget);
 
 
-
-G_DEFINE_TYPE (GschemFindTextWidget,
-               gschem_find_text_widget,
+G_DEFINE_TYPE (SchematicFindTextWidget,
+               schematic_find_text_widget,
                GTK_TYPE_INFO_BAR);
 
 
@@ -96,7 +97,8 @@ G_DEFINE_TYPE (GschemFindTextWidget,
 /* Callback for when the user presses enter in the entry widget
  */
 static void
-activate_entry (GtkWidget *entry, GschemFindTextWidget *widget)
+activate_entry (GtkWidget *entry,
+                SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -113,7 +115,8 @@ activate_entry (GtkWidget *entry, GschemFindTextWidget *widget)
 /* Callback for when the user clicks the cancel button
  */
 static void
-click_cancel (GtkWidget *button, GschemFindTextWidget *widget)
+click_cancel (GtkWidget *button,
+              SchematicFindTextWidget *widget)
 {
   gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
 }
@@ -123,7 +126,8 @@ click_cancel (GtkWidget *button, GschemFindTextWidget *widget)
 /* Callback for when the user changes combo box active item
  */
 static void
-changed_type (GtkWidget *entry, GschemFindTextWidget *widget)
+changed_type (GtkWidget *entry,
+              SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -141,7 +145,8 @@ changed_type (GtkWidget *entry, GschemFindTextWidget *widget)
 /* Callback for when the user clicks the find button
  */
 static void
-click_find (GtkWidget *entry, GschemFindTextWidget *widget)
+click_find (GtkWidget *entry,
+            SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -160,7 +165,7 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  GschemFindTextWidgetClass* cls = GSCHEM_FIND_TEXT_WIDGET_GET_CLASS (object);
+  SchematicFindTextWidgetClass* cls = SCHEMATIC_FIND_TEXT_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->dispose (object);
 }
@@ -174,7 +179,7 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  GschemFindTextWidgetClass* cls = GSCHEM_FIND_TEXT_WIDGET_GET_CLASS (object);
+  SchematicFindTextWidgetClass* cls = SCHEMATIC_FIND_TEXT_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->finalize (object);
 }
@@ -197,14 +202,14 @@ find_text_dialog (SchematicWindow *w_current)
   if (lepton_object_is_text (object))
   {
     gschem_find_text_widget_set_find_text_string(
-            GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
+            SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget),
             lepton_text_object_get_string (object)
             );
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
-  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
+  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (gschem_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
 }
 
 
@@ -218,7 +223,7 @@ find_text_dialog (SchematicWindow *w_current)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemFindTextWidget *widget = GSCHEM_FIND_TEXT_WIDGET (object);
+  SchematicFindTextWidget *widget = SCHEMATIC_FIND_TEXT_WIDGET (object);
 
   switch (param_id) {
     case PROP_DESCEND:
@@ -240,12 +245,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize GschemFindTextWidget class
+/*! \brief Initialize SchematicFindTextWidget class
  *
- *  \param [in] klass The class for the GschemFindTextWidget
+ *  \param [in] klass The class for the SchematicFindTextWidget
  */
 static void
-gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
+schematic_find_text_widget_class_init (SchematicFindTextWidgetClass *klass)
 {
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
@@ -287,11 +292,11 @@ gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
 
 /*! \brief Get the descend property
  *
- *  \param [in] widget This GschemFindTextWidget
+ *  \param [in] widget This SchematicFindTextWidget
  *  \return The descend property
  */
 int
-gschem_find_text_widget_get_descend (GschemFindTextWidget *widget)
+gschem_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
@@ -302,11 +307,11 @@ gschem_find_text_widget_get_descend (GschemFindTextWidget *widget)
 
 /*! \brief Get the entry
  *
- *  \param [in] widget This GschemFindTextWidget
+ *  \param [in] widget This SchematicFindTextWidget
  *  \return The entry
  */
 GtkWidget*
-gschem_find_text_widget_get_entry (GschemFindTextWidget *widget)
+gschem_find_text_widget_get_entry (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -317,11 +322,11 @@ gschem_find_text_widget_get_entry (GschemFindTextWidget *widget)
 
 /*! \brief Get the type of find to perform
  *
- *  \param [in] widget This GschemFindTextWidget
+ *  \param [in] widget This SchematicFindTextWidget
  *  \return The find type
  */
 int
-gschem_find_text_widget_get_find_type (GschemFindTextWidget *widget)
+gschem_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
 {
   int index = -1;
   GtkTreeIter iter;
@@ -342,11 +347,11 @@ gschem_find_text_widget_get_find_type (GschemFindTextWidget *widget)
 
 /*! \brief Get the find text string
  *
- *  \param [in] widget This GschemFindTextWidget
+ *  \param [in] widget This SchematicFindTextWidget
  *  \return The find text string
  */
 const char*
-gschem_find_text_widget_get_find_text_string (GschemFindTextWidget *widget)
+gschem_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -355,12 +360,12 @@ gschem_find_text_widget_get_find_text_string (GschemFindTextWidget *widget)
 
 
 
-/*! \brief Initialize GschemFindTextWidget instance
+/*! \brief Initialize SchematicFindTextWidget instance
  *
- *  \param [in,out] widget The #GschemFindTextWidget instance.
+ *  \param [in,out] widget The #SchematicFindTextWidget instance.
  */
 static void
-gschem_find_text_widget_init (GschemFindTextWidget *widget)
+schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
@@ -438,13 +443,13 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
 
 
 
-/*! \brief Set the "descend into hierarchy" property of GschemFindTextWidget.
+/*! \brief Set the "descend into hierarchy" property of SchematicFindTextWidget.
  *
- *  \param [in,out] widget This GschemFindTextWidget
+ *  \param [in,out] widget This SchematicFindTextWidget
  *  \param [in]     descend If the button "descend into hierarchy" has to be active.
  */
 void
-gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
+gschem_find_text_widget_set_descend (SchematicFindTextWidget *widget, int descend)
 {
   g_return_if_fail (widget != NULL);
 
@@ -457,11 +462,11 @@ gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
 
 /*! \brief Set the type of find to perform
  *
- *  \param [in,out] widget This GschemFindTextWidget
+ *  \param [in,out] widget This SchematicFindTextWidget
  *  \param [in]     type The type of find.
  */
 void
-gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
+gschem_find_text_widget_set_find_type (SchematicFindTextWidget *widget, int type)
 {
   GtkTreeIter *active = NULL;
   GtkTreeIter iter;
@@ -494,11 +499,11 @@ gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
 
 /*! \brief Set the find text string
  *
- *  \param [in,out] widget This GschemFindTextWidget
+ *  \param [in,out] widget This SchematicFindTextWidget
  *  \param [in]     str  The find text string
  */
 void
-gschem_find_text_widget_set_find_text_string (GschemFindTextWidget *widget, const char *str)
+gschem_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget, const char *str)
 {
   g_return_if_fail (widget != NULL);
 
@@ -552,7 +557,9 @@ create_find_type_store ()
 /*! \brief Update the sensitivity of the find button
  */
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemFindTextWidget *widget)
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -567,7 +574,7 @@ notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemFindTextWidget *wi
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemFindTextWidget *widget = GSCHEM_FIND_TEXT_WIDGET (object);
+  SchematicFindTextWidget *widget = SCHEMATIC_FIND_TEXT_WIDGET (object);
 
   switch (param_id) {
     case PROP_DESCEND:

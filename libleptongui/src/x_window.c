@@ -178,9 +178,9 @@ x_window_find_text (GtkWidget *widget,
       schematic_find_text_state_find (w_current,
                                       SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
                                       lepton_list_get_glist (w_current->toplevel->pages),
-                                      gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-                                      gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-                                      gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      gschem_find_text_widget_get_find_type (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      gschem_find_text_widget_get_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+                                      gschem_find_text_widget_get_descend (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
                                       show_hidden_text);
 
     if (count > 0)
@@ -858,7 +858,7 @@ void
 schematic_window_create_find_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL);
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
 
   w_current->find_text_widget = GTK_WIDGET (obj);
 

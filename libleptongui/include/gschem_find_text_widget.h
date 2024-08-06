@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +23,21 @@
  * \brief A widget for finding text
  */
 
-#define GSCHEM_TYPE_FIND_TEXT_WIDGET           (gschem_find_text_widget_get_type())
-#define GSCHEM_FIND_TEXT_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_FIND_TEXT_WIDGET, GschemFindTextWidget))
-#define GSCHEM_FIND_TEXT_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_FIND_TEXT_WIDGET, GschemFindTextWidgetClass))
-#define GSCHEM_IS_FIND_TEXT_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_FIND_TEXT_WIDGET))
-#define GSCHEM_FIND_TEXT_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_FIND_TEXT_WIDGET, GschemFindTextWidgetClass))
+#define SCHEMATIC_TYPE_FIND_TEXT_WIDGET           (schematic_find_text_widget_get_type())
+#define SCHEMATIC_FIND_TEXT_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_FIND_TEXT_WIDGET, SchematicFindTextWidget))
+#define SCHEMATIC_FIND_TEXT_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_FIND_TEXT_WIDGET, SchematicFindTextWidgetClass))
+#define SCHEMATIC_IS_FIND_TEXT_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_FIND_TEXT_WIDGET))
+#define SCHEMATIC_FIND_TEXT_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_FIND_TEXT_WIDGET, SchematicFindTextWidgetClass))
 
-typedef struct _GschemFindTextWidgetClass GschemFindTextWidgetClass;
-typedef struct _GschemFindTextWidget GschemFindTextWidget;
+typedef struct _SchematicFindTextWidgetClass SchematicFindTextWidgetClass;
+typedef struct _SchematicFindTextWidget SchematicFindTextWidget;
 
-struct _GschemFindTextWidgetClass
+struct _SchematicFindTextWidgetClass
 {
   GtkInfoBarClass parent_class;
 };
 
-struct _GschemFindTextWidget
+struct _SchematicFindTextWidget
 {
   GtkInfoBar parent;
 
@@ -51,25 +52,25 @@ struct _GschemFindTextWidget
 
 
 int
-gschem_find_text_widget_get_descend (GschemFindTextWidget *widget);
+gschem_find_text_widget_get_descend (SchematicFindTextWidget *widget);
 
 GtkWidget*
-gschem_find_text_widget_get_entry (GschemFindTextWidget *widget);
+gschem_find_text_widget_get_entry (SchematicFindTextWidget *widget);
 
 const char*
-gschem_find_text_widget_get_find_text_string (GschemFindTextWidget *widget);
+gschem_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
 
 int
-gschem_find_text_widget_get_find_type (GschemFindTextWidget *widget);
+gschem_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
 
 GType
-gschem_find_text_widget_get_type ();
+schematic_find_text_widget_get_type ();
 
 void
-gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend);
+gschem_find_text_widget_set_descend (SchematicFindTextWidget *widget, int descend);
 
 void
-gschem_find_text_widget_set_find_text_string (GschemFindTextWidget *widget, const char *str);
+gschem_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget, const char *str);
 
 void
-gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type);
+gschem_find_text_widget_set_find_type (SchematicFindTextWidget *widget, int type);
