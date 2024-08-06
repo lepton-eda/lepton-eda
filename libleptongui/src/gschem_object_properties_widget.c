@@ -212,27 +212,27 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
                     G_CALLBACK (update_fill_type_model),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->widthe)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->widthe)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->angle1e)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->angle1e)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->pitch1e)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->pitch1e)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->angle2e)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->angle2e)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->pitch2e)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->pitch2e)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
@@ -318,17 +318,17 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
                     G_CALLBACK (update_cap_style_model),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->width_entry)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->length_entry)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (dialog->space_entry)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     dialog);

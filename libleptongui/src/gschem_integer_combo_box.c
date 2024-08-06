@@ -151,7 +151,7 @@ schematic_integer_combo_box_class_init (SchematicIntegerComboBoxClass *klass)
  *  \return The entry
  */
 GtkEntry*
-gschem_integer_combo_box_get_entry (GtkWidget *widget)
+schematic_integer_combo_box_get_entry (GtkWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -167,7 +167,7 @@ gschem_integer_combo_box_get_entry (GtkWidget *widget)
 int
 gschem_integer_combo_box_get_value (GtkWidget *widget)
 {
-  GtkWidget *entry = GTK_WIDGET (gschem_integer_combo_box_get_entry (widget));
+  GtkWidget *entry = GTK_WIDGET (schematic_integer_combo_box_get_entry (widget));
   int size = -1;
   const char *text0 = gtk_entry_get_text (GTK_ENTRY (entry));
 
@@ -349,7 +349,8 @@ value_changed (SchematicIntegerComboBox *combo,
 {
   g_return_if_fail (combo != NULL);
 
-  if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (GTK_WIDGET (combo))))) {
+  if (gtk_widget_is_focus (GTK_WIDGET (schematic_integer_combo_box_get_entry (GTK_WIDGET (combo)))))
+  {
     combo->changed = TRUE;
   }
 

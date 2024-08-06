@@ -53,7 +53,7 @@ struct _SchematicIntegerComboBox
 };
 
 GtkEntry*
-gschem_integer_combo_box_get_entry (GtkWidget *widget);
+schematic_integer_combo_box_get_entry (GtkWidget *widget);
 
 GType
 schematic_integer_combo_box_get_type();

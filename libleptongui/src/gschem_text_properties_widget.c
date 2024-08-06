@@ -305,7 +305,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
                             G_CALLBACK (update_text_rotation_model),
                             widget);
 
-  g_signal_connect (G_OBJECT (gschem_integer_combo_box_get_entry (widget->textsizecb)),
+  g_signal_connect (G_OBJECT (schematic_integer_combo_box_get_entry (widget->textsizecb)),
                     "activate",
                     G_CALLBACK (schematic_dialog_misc_entry_activate),
                     widget);
