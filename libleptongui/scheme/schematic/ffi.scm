@@ -623,7 +623,7 @@
 (define-lff x_dialog_close_changed_page int '(* *))
 (define-lff x_dialog_close_window int '(*))
 
-;;; gschem_coord_dialog.c
+;;; coord_dialog.c
 (define-lff coord_dialog void (list '* int int))
 (define-lff coord_display_update void (list '* int int))
 

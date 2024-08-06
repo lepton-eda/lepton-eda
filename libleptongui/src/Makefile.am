@@ -23,7 +23,7 @@ libleptongui_la_SOURCES = \
 	binding_integer.c \
 	bottom_widget.c \
 	gschem_close_confirmation_dialog.c \
-	gschem_coord_dialog.c \
+	coord_dialog.c \
 	dialog.c \
 	dialog_misc.c \
 	fill_swatch_cell_renderer.c \

@@ -15,7 +15,7 @@ libleptongui/src/binding.c
 libleptongui/src/binding_integer.c
 libleptongui/src/bottom_widget.c
 libleptongui/src/gschem_close_confirmation_dialog.c
-libleptongui/src/gschem_coord_dialog.c
+libleptongui/src/coord_dialog.c
 libleptongui/src/dialog.c
 libleptongui/src/dialog_misc.c
 libleptongui/src/fill_swatch_cell_renderer.c
