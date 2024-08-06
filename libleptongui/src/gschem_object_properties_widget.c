@@ -43,22 +43,22 @@ enum
   PROP_SCHEMATIC_WINDOW
 };
 
-G_DEFINE_TYPE (GschemObjectPropertiesWidget,
-               gschem_object_properties_widget,
+G_DEFINE_TYPE (SchematicObjectPropertiesWidget,
+               schematic_object_properties_widget,
                SCHEMATIC_TYPE_BIN);
 
 
 static GtkWidget*
-create_fill_property_widget (GschemObjectPropertiesWidget *dialog);
+create_fill_property_widget (SchematicObjectPropertiesWidget *dialog);
 
 static GtkWidget*
-create_general_property_widget (GschemObjectPropertiesWidget *dialog);
+create_general_property_widget (SchematicObjectPropertiesWidget *dialog);
 
 static GtkWidget*
-create_line_property_widget (GschemObjectPropertiesWidget *dialog);
+create_line_property_widget (SchematicObjectPropertiesWidget *dialog);
 
 static GtkWidget*
-create_pin_property_widget (GschemObjectPropertiesWidget *dialog);
+create_pin_property_widget (SchematicObjectPropertiesWidget *dialog);
 
 static void
 dispose (GObject *object);
@@ -67,43 +67,43 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-notify_schematic_window (GschemObjectPropertiesWidget *dialog);
+notify_schematic_window (SchematicObjectPropertiesWidget *dialog);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdapter *adapter);
+set_selection_adapter (SchematicObjectPropertiesWidget *dialog,
+                       GschemSelectionAdapter *adapter);
+static void
+update_cap_style_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog);
+static void
+update_cap_style_widget (SchematicObjectPropertiesWidget *dialog);
 
 static void
-update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
+update_fill_type_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog);
+static void
+update_fill_type_widget (SchematicObjectPropertiesWidget *dialog);
 
 static void
-update_cap_style_widget (GschemObjectPropertiesWidget *dialog);
+update_line_type_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog);
+static void
+update_line_type_widget (SchematicObjectPropertiesWidget *dialog);
 
 static void
-update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
+update_object_color_model (GtkWidget *widget,
+                           SchematicObjectPropertiesWidget *dialog);
+static void
+update_object_color_widget (SchematicObjectPropertiesWidget *dialog);
 
 static void
-update_fill_type_widget (GschemObjectPropertiesWidget *dialog);
-
+update_pin_type_model (GtkWidget *widget,
+                       SchematicObjectPropertiesWidget *dialog);
 static void
-update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
-
-static void
-update_line_type_widget (GschemObjectPropertiesWidget *dialog);
-
-static void
-update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
-
-static void
-update_object_color_widget (GschemObjectPropertiesWidget *dialog);
-
-static void
-update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
-
-static void
-update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
+update_pin_type_widget (SchematicObjectPropertiesWidget *dialog);
 
 
 /*! \brief Create a new Object properties dialog
@@ -113,7 +113,7 @@ update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
 GtkWidget*
 gschem_object_properties_widget_new (SchematicWindow *w_current)
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET,
                                    /* GschemObjectProperties */
                                    "schematic-window",  w_current,
                                    NULL));
@@ -122,7 +122,7 @@ gschem_object_properties_widget_new (SchematicWindow *w_current)
 
 
 /*! \private
- *  \brief Initialize GschemObjectPropertiesWidget class
+ *  \brief Initialize SchematicObjectPropertiesWidget class
  *
  *  \par Function Description
  *
@@ -132,7 +132,7 @@ gschem_object_properties_widget_new (SchematicWindow *w_current)
  *  \param [in] klass
  */
 static void
-gschem_object_properties_widget_class_init (GschemObjectPropertiesWidgetClass *klass)
+schematic_object_properties_widget_class_init (SchematicObjectPropertiesWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -166,7 +166,7 @@ gschem_object_properties_widget_class_init (GschemObjectPropertiesWidgetClass *k
  *  \return A new fill property section widget
  */
 static GtkWidget*
-create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
+create_fill_property_widget (SchematicObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[6];
   GtkWidget *table;
@@ -249,7 +249,7 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
  *  \return A new general property section widget
  */
 static GtkWidget*
-create_general_property_widget (GschemObjectPropertiesWidget *dialog)
+create_general_property_widget (SchematicObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[1];
   GtkWidget *table;
@@ -278,7 +278,7 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog)
  *  \return A new line property section widget
  */
 static GtkWidget*
-create_line_property_widget (GschemObjectPropertiesWidget *dialog)
+create_line_property_widget (SchematicObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[5];
   GtkWidget *table;
@@ -345,7 +345,7 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
  *  \return A new pin property section widget
  */
 static GtkWidget*
-create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
+create_pin_property_widget (SchematicObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[1];
   GtkWidget *table;
@@ -374,13 +374,13 @@ create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
 static void
 dispose (GObject *object)
 {
-  GschemObjectPropertiesWidget *dialog;
-  GschemObjectPropertiesWidgetClass *klass;
+  SchematicObjectPropertiesWidget *dialog;
+  SchematicObjectPropertiesWidgetClass *klass;
   GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
-  dialog = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
+  dialog = SCHEMATIC_OBJECT_PROPERTIES_WIDGET (object);
 
   set_selection_adapter (dialog, NULL);
 
@@ -390,7 +390,7 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klass = GSCHEM_OBJECT_PROPERTIES_WIDGET_GET_CLASS (object);
+  klass = SCHEMATIC_OBJECT_PROPERTIES_WIDGET_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
   parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
   g_return_if_fail (parent_class != NULL);
@@ -404,7 +404,7 @@ dispose (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemObjectPropertiesWidget *widget = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
+  SchematicObjectPropertiesWidget *widget = SCHEMATIC_OBJECT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:
@@ -418,12 +418,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 /*! \private
- *  \brief Initialize GschemObjectPropertiesWidget instance
+ *  \brief Initialize SchematicObjectPropertiesWidget instance
  *
  *  \param [in,out] dialog The edit text dialog
  */
 static void
-gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
+schematic_object_properties_widget_init (SchematicObjectPropertiesWidget *dialog)
 {
   GtkWidget *scrolled;
   GtkWidget *vbox;
@@ -498,7 +498,7 @@ gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
  *  \param [in,out] dialog    This dialog
  */
 static void
-notify_schematic_window (GschemObjectPropertiesWidget *dialog)
+notify_schematic_window (SchematicObjectPropertiesWidget *dialog)
 {
     SchematicWindow *w_current;
 
@@ -543,7 +543,8 @@ notify_schematic_window (GschemObjectPropertiesWidget *dialog)
  *  \param [in]     adapter The #GschemSelectionAdapter instance to manipulate.
  */
 static void
-set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdapter *adapter)
+set_selection_adapter (SchematicObjectPropertiesWidget *dialog,
+                       GschemSelectionAdapter *adapter)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -621,7 +622,8 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+update_cap_style_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
   SchematicWindow *w_current;
@@ -656,7 +658,7 @@ update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
+update_cap_style_widget (SchematicObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_end != NULL);
@@ -687,7 +689,8 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+update_fill_type_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
   SchematicWindow *w_current;
@@ -722,7 +725,7 @@ update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_fill_type_widget (GschemObjectPropertiesWidget *dialog)
+update_fill_type_widget (SchematicObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->fstylecb != NULL);
@@ -752,7 +755,8 @@ update_fill_type_widget (GschemObjectPropertiesWidget *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+update_line_type_model (GtkWidget *widget,
+                        SchematicObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
   SchematicWindow *w_current;
@@ -787,7 +791,7 @@ update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_line_type_widget (GschemObjectPropertiesWidget *dialog)
+update_line_type_widget (SchematicObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_type != NULL);
@@ -817,7 +821,8 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+update_object_color_model (GtkWidget *widget,
+                           SchematicObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
   SchematicWindow *w_current;
@@ -852,7 +857,7 @@ update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dial
  *  \param [in,out] dialog This dialog
  */
 static void
-update_object_color_widget (GschemObjectPropertiesWidget *dialog)
+update_object_color_widget (SchematicObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->colorcb != NULL);
@@ -881,7 +886,8 @@ update_object_color_widget (GschemObjectPropertiesWidget *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+update_pin_type_model (GtkWidget *widget,
+                       SchematicObjectPropertiesWidget *dialog)
 {
   LeptonToplevel *toplevel;
   SchematicWindow *w_current;
@@ -916,7 +922,7 @@ update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_pin_type_widget (GschemObjectPropertiesWidget *dialog)
+update_pin_type_widget (SchematicObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->pin_type != NULL);
@@ -944,7 +950,7 @@ update_pin_type_widget (GschemObjectPropertiesWidget *dialog)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemObjectPropertiesWidget *widget = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
+  SchematicObjectPropertiesWidget *widget = SCHEMATIC_OBJECT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:

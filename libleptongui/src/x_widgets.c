@@ -24,7 +24,7 @@
  *
  * lepton-schematic widgets:
  *
- * - object properties    (GschemObjectPropertiesWidget)  [right dock]
+ * - object properties    (ShematicObjectPropertiesWidget)[right dock]
  * - text properties      (GschemTextPropertiesWidget)    [right dock]
  * - options              (SchematicOptionsWidget)        [right dock]
  *

@@ -23,21 +23,21 @@
  * \brief A dialog box for editing an object's line properties.
  */
 
-#define GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET           (gschem_object_properties_widget_get_type())
-#define GSCHEM_OBJECT_PROPERTIES_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidget))
-#define GSCHEM_OBJECT_PROPERTIES_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidgetClass))
-#define IS_GSCHEM_OBJECT_PROPERTIES_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET))
-#define GSCHEM_OBJECT_PROPERTIES_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidgetClass))
+#define SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET           (schematic_object_properties_widget_get_type())
+#define SCHEMATIC_OBJECT_PROPERTIES_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET, SchematicObjectPropertiesWidget))
+#define SCHEMATIC_OBJECT_PROPERTIES_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET, SchematicObjectPropertiesWidgetClass))
+#define IS_SCHEMATIC_OBJECT_PROPERTIES_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET))
+#define SCHEMATIC_OBJECT_PROPERTIES_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_OBJECT_PROPERTIES_WIDGET, SchematicObjectPropertiesWidgetClass))
 
-typedef struct _GschemObjectPropertiesWidgetClass GschemObjectPropertiesWidgetClass;
-typedef struct _GschemObjectPropertiesWidget GschemObjectPropertiesWidget;
+typedef struct _SchematicObjectPropertiesWidgetClass SchematicObjectPropertiesWidgetClass;
+typedef struct _SchematicObjectPropertiesWidget SchematicObjectPropertiesWidget;
 
-struct _GschemObjectPropertiesWidgetClass
+struct _SchematicObjectPropertiesWidgetClass
 {
   SchematicBinClass parent_class;
 };
 
-struct _GschemObjectPropertiesWidget
+struct _SchematicObjectPropertiesWidget
 {
   SchematicBin parent;
 
@@ -71,7 +71,7 @@ struct _GschemObjectPropertiesWidget
 };
 
 GType
-gschem_object_properties_widget_get_type();
+schematic_object_properties_widget_get_type();
 
 G_BEGIN_DECLS
 
