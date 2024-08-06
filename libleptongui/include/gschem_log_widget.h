@@ -18,11 +18,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#define GSCHEM_TYPE_LOG_WIDGET           (gschem_log_widget_get_type())
-#define GSCHEM_LOG_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_LOG_WIDGET, GschemLogWidget))
-#define GSCHEM_LOG_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_LOG_WIDGET, GschemLogWidgetClass))
-#define GSCHEM_IS_LOG_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_LOG_WIDGET))
-#define GSCHEM_LOG_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_LOG_WIDGET, GschemLogWidgetClass))
+#define SCHEMATIC_TYPE_LOG_WIDGET           (schematic_log_widget_get_type())
+#define SCHEMATIC_LOG_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_LOG_WIDGET, SchematicLogWidget))
+#define SCHEMATIC_LOG_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_LOG_WIDGET, SchematicLogWidgetClass))
+#define SCHEMATIC_IS_LOG_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_LOG_WIDGET))
+#define SCHEMATIC_LOG_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_LOG_WIDGET, SchematicLogWidgetClass))
 
 
 typedef enum {
@@ -30,16 +30,16 @@ typedef enum {
 } LogResponseType;
 
 
-typedef struct _GschemLogWidgetClass GschemLogWidgetClass;
-typedef struct _GschemLogWidget      GschemLogWidget;
+typedef struct _SchematicLogWidgetClass SchematicLogWidgetClass;
+typedef struct _SchematicLogWidget      SchematicLogWidget;
 
-struct _GschemLogWidgetClass {
+struct _SchematicLogWidgetClass {
   SchematicBinClass parent_class;
 
   GtkTextBuffer *buffer;
 };
 
-struct _GschemLogWidget {
+struct _SchematicLogWidget {
   SchematicBin parent_instance;
 
   GtkTextView *viewer;
@@ -48,7 +48,7 @@ struct _GschemLogWidget {
 
 
 GType
-gschem_log_widget_get_type (void);
+schematic_log_widget_get_type (void);
 
 G_BEGIN_DECLS
 

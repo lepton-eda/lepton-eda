@@ -29,20 +29,21 @@
 
 /* convenience macro - gobject type implementation:
 */
-G_DEFINE_TYPE (GschemLogWidget,
-               gschem_log_widget,
+G_DEFINE_TYPE (SchematicLogWidget,
+               schematic_log_widget,
                SCHEMATIC_TYPE_BIN);
 
 
 static void
-changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget);
-
+changed_cb (GtkTextBuffer *buffer,
+            SchematicLogWidget *widget);
 static GtkTextBuffer*
 create_text_buffer();
 
 static void
-log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *style);
-
+log_message (SchematicLogWidgetClass *klass,
+             const gchar *message,
+             const gchar *style);
 static gboolean
 scroll_to_bottom (gpointer p);
 
@@ -69,7 +70,7 @@ finalize (GObject* object);
 GtkWidget*
 gschem_log_widget_new ()
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_LOG_WIDGET, NULL));
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_LOG_WIDGET, NULL));
 }
 
 
@@ -82,7 +83,8 @@ gschem_log_widget_new ()
 void
 x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *message)
 {
-  GschemLogWidgetClass *klass = GSCHEM_LOG_WIDGET_CLASS (g_type_class_peek_static (GSCHEM_TYPE_LOG_WIDGET));
+  SchematicLogWidgetClass *klass =
+    SCHEMATIC_LOG_WIDGET_CLASS (g_type_class_peek_static (SCHEMATIC_TYPE_LOG_WIDGET));
   const gchar *style;
 
   if (log_level & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_ERROR)) {
@@ -102,12 +104,14 @@ x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *m
  *  \brief Add a message to the log window
  *
  *  \par Function Description
- *  \param [in] klass The #GschemLogWidgetClass instance.
+ *  \param [in] klass The #SchematicLogWidgetClass instance.
  *  \param [in] message The message to be logged
  *  \param [in] style   The style to use in the text rendering
  */
 static void
-log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *style)
+log_message (SchematicLogWidgetClass *klass,
+             const gchar *message,
+             const gchar *style)
 {
   GtkTextIter iter;
 
@@ -143,7 +147,8 @@ log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *sty
  *  \param [in] widget the widget to scroll to the bottom
  */
 static void
-changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget)
+changed_cb (GtkTextBuffer *buffer,
+            SchematicLogWidget *widget)
 {
   g_return_if_fail (buffer != NULL);
   g_return_if_fail (widget != NULL);
@@ -160,7 +165,7 @@ changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget)
 /*! \brief initialize class
  */
 static void
-gschem_log_widget_class_init (GschemLogWidgetClass *klass)
+schematic_log_widget_class_init (SchematicLogWidgetClass *klass)
 {
   gchar *contents;
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
@@ -237,9 +242,9 @@ create_text_buffer()
  *  \param [in] widget an instance of the widget
  */
 static void
-gschem_log_widget_init (GschemLogWidget *widget)
+schematic_log_widget_init (SchematicLogWidget *widget)
 {
-  GschemLogWidgetClass *klass = GSCHEM_LOG_WIDGET_GET_CLASS (widget);
+  SchematicLogWidgetClass *klass = SCHEMATIC_LOG_WIDGET_GET_CLASS (widget);
   GtkWidget *scrolled;
 
   g_return_if_fail (klass != NULL);
@@ -376,11 +381,11 @@ gschem_log_widget_init (GschemLogWidget *widget)
 static gboolean
 scroll_to_bottom (gpointer p)
 {
-  GschemLogWidget* widget = (GschemLogWidget*) p;
+  SchematicLogWidget* widget = (SchematicLogWidget*) p;
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (widget->viewer != NULL, FALSE);
 
-  GschemLogWidgetClass* cls = GSCHEM_LOG_WIDGET_GET_CLASS (widget);
+  SchematicLogWidgetClass* cls = SCHEMATIC_LOG_WIDGET_GET_CLASS (widget);
   g_return_val_if_fail (cls != NULL, FALSE);
 
   GtkTextBuffer* buffer = cls->buffer;
@@ -458,12 +463,12 @@ log_window_clear (GtkMenuItem* item, gpointer data)
  *  Toggles long lines wrapping in the log text view
  *
  *  \param item  menu item
- *  \param data  user data (GschemLogWidget*)
+ *  \param data  user data (SchematicLogWidget*)
  */
 static void
 log_window_wrap (GtkCheckMenuItem* item, gpointer data)
 {
-  GschemLogWidget* widget = (GschemLogWidget*) data;
+  SchematicLogWidget* widget = (SchematicLogWidget*) data;
   g_return_if_fail (widget != NULL);
 
   widget->wrap = !widget->wrap;
@@ -483,14 +488,14 @@ log_window_wrap (GtkCheckMenuItem* item, gpointer data)
  *
  *  \param txtview  log text view widget
  *  \param menu     context menu to be extended
- *  \param data     user data (GschemLogWidget*)
+ *  \param data     user data (SchematicLogWidget*)
  */
 static void
 populate_popup_menu (GtkTextView* txtview,
                      GtkMenu*     menu,
                      gpointer     data)
 {
-  GschemLogWidget* widget = (GschemLogWidget*) data;
+  SchematicLogWidget* widget = (SchematicLogWidget*) data;
   g_return_if_fail (widget != NULL);
 
 
@@ -541,11 +546,11 @@ populate_popup_menu (GtkTextView* txtview,
 static void
 finalize (GObject* object)
 {
-  GschemLogWidgetClass* cls = GSCHEM_LOG_WIDGET_GET_CLASS (object);
+  SchematicLogWidgetClass* cls = SCHEMATIC_LOG_WIDGET_GET_CLASS (object);
 
   /* disconnect the "changed" signal handler:
   */
   g_signal_handlers_disconnect_by_func (cls->buffer, (gpointer) changed_cb, object);
 
-  G_OBJECT_CLASS (gschem_log_widget_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_log_widget_parent_class)->finalize (object);
 }

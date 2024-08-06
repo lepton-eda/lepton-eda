@@ -29,7 +29,7 @@
  * - options              (SchematicOptionsWidget)        [right dock]
  *
  * - find text results    (SchematicFindTextState)        [bottom dock]
- * - log                  (GschemLogWidget)               [bottom dock]
+ * - log                  (SchematicLogWidget)            [bottom dock]
  *
  * - page manager         (PageSelectWidget)
  * - font selector        (FontSelectWidget)
