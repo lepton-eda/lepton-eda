@@ -203,10 +203,8 @@ find_text_dialog (SchematicWindow *w_current)
 
   if (lepton_object_is_text (object))
   {
-    gschem_find_text_widget_set_find_text_string(
-            SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget),
-            lepton_text_object_get_string (object)
-            );
+    schematic_find_text_widget_set_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget),
+                                                     lepton_text_object_get_string (object));
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
@@ -506,7 +504,8 @@ gschem_find_text_widget_set_find_type (SchematicFindTextWidget *widget, int type
  *  \param [in]     str  The find text string
  */
 void
-gschem_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget, const char *str)
+schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget,
+                                                 const char *str)
 {
   g_return_if_fail (widget != NULL);
 
@@ -585,7 +584,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FIND_TEXT_STRING:
-      gschem_find_text_widget_set_find_text_string (widget, g_value_get_string (value));
+      schematic_find_text_widget_set_find_text_string (widget, g_value_get_string (value));
       break;
 
     case PROP_FIND_TYPE:
