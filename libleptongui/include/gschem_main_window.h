@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,27 +23,27 @@
  * \brief
  */
 
-#define GSCHEM_TYPE_MAIN_WINDOW           (gschem_main_window_get_type())
-#define GSCHEM_MAIN_WINDOW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_MAIN_WINDOW, GschemMainWindow))
-#define GSCHEM_MAIN_WINDOW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_MAIN_WINDOW, GschemMainWindowClass))
-#define GSCHEM_IS_MAIN_WINDOW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_MAIN_WINDOW))
-#define GSCHEM_MAIN_WINDOW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_MAIN_WINDOW, GschemMainWindowClass))
+#define SCHEMATIC_TYPE_MAIN_WINDOW           (schematic_main_window_get_type())
+#define SCHEMATIC_MAIN_WINDOW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_MAIN_WINDOW, SchematicMainWindow))
+#define SCHEMATIC_MAIN_WINDOW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_MAIN_WINDOW, SchematicMainWindowClass))
+#define SCHEMATIC_IS_MAIN_WINDOW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_MAIN_WINDOW))
+#define SCHEMATIC_MAIN_WINDOW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_MAIN_WINDOW, SchematicMainWindowClass))
 
-typedef struct _GschemMainWindowClass GschemMainWindowClass;
-typedef struct _GschemMainWindow GschemMainWindow;
+typedef struct _SchematicMainWindowClass SchematicMainWindowClass;
+typedef struct _SchematicMainWindow SchematicMainWindow;
 
-struct _GschemMainWindowClass
+struct _SchematicMainWindowClass
 {
   GtkWindowClass parent_class;
 };
 
-struct _GschemMainWindow
+struct _SchematicMainWindow
 {
   GtkWindow parent;
 };
 
 GType
-gschem_main_window_get_type();
+schematic_main_window_get_type();
 
-GschemMainWindow*
+SchematicMainWindow*
 gschem_main_window_new ();

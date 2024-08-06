@@ -27,47 +27,48 @@
 #include "gschem.h"
 
 
-G_DEFINE_TYPE(GschemMainWindow, gschem_main_window, GTK_TYPE_WINDOW);
-
-
-static void
-gschem_main_window_class_init (GschemMainWindowClass *klass);
+G_DEFINE_TYPE (SchematicMainWindow,
+               schematic_main_window,
+               GTK_TYPE_WINDOW);
 
 static void
-gschem_main_window_init (GschemMainWindow *window);
+schematic_main_window_class_init (SchematicMainWindowClass *klass);
+
+static void
+schematic_main_window_init (SchematicMainWindow *window);
 
 
 
-/*! \brief Initialize GschemMainWindow class
+/*! \brief Initialize SchematicMainWindow class
  *
- *  \param [in] klass The class for the GschemMainWindow
+ *  \param [in] klass The class for the SchematicMainWindow
  */
 static void
-gschem_main_window_class_init (GschemMainWindowClass *klass)
+schematic_main_window_class_init (SchematicMainWindowClass *klass)
 {
 }
 
 
 
-/*! \brief Initialize GschemMainWindow instance
+/*! \brief Initialize SchematicMainWindow instance
  *
- *  \param [in,out] window The #GschemMainWindow instance.
+ *  \param [in,out] window The #SchematicMainWindow instance.
  */
 static void
-gschem_main_window_init (GschemMainWindow *window)
+schematic_main_window_init (SchematicMainWindow *window)
 {
 }
 
 
 
-/*! \brief Create a new instance of the GschemMainWindow
+/*! \brief Create a new instance of the SchematicMainWindow
  *
- *  \return A new instance of the GschemMainWindow
+ *  \return A new instance of the SchematicMainWindow
  */
-GschemMainWindow*
+SchematicMainWindow*
 gschem_main_window_new ()
 {
-  return GSCHEM_MAIN_WINDOW (g_object_new (GSCHEM_TYPE_MAIN_WINDOW,
-                                           "type", GTK_WINDOW_TOPLEVEL,
-                                           NULL));
+  return SCHEMATIC_MAIN_WINDOW (g_object_new (SCHEMATIC_TYPE_MAIN_WINDOW,
+                                              "type", GTK_WINDOW_TOPLEVEL,
+                                              NULL));
 }
