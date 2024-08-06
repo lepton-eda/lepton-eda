@@ -122,7 +122,7 @@ schematic_pin_type_combo_new ()
  *  \return The currently selected pin type index
  */
 int
-gschem_pin_type_combo_get_index (GtkWidget *widget)
+schematic_pin_type_combo_get_index (GtkWidget *widget)
 {
   int index = -1;
   GtkTreeIter iter;

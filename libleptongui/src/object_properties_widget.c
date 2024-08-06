@@ -906,7 +906,7 @@ update_pin_type_model (GtkWidget *widget,
 
     g_return_if_fail (widget == dialog->pin_type);
 
-    pin_type = gschem_pin_type_combo_get_index (dialog->pin_type);
+    pin_type = schematic_pin_type_combo_get_index (dialog->pin_type);
 
     if (pin_type >= 0) {
       gschem_selection_adapter_set_pin_type (dialog->adapter, pin_type);
