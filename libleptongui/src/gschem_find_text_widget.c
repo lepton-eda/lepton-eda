@@ -451,7 +451,8 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
  *  \param [in]     descend If the button "descend into hierarchy" has to be active.
  */
 void
-gschem_find_text_widget_set_descend (SchematicFindTextWidget *widget, int descend)
+schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
+                                        int descend)
 {
   g_return_if_fail (widget != NULL);
 
@@ -580,7 +581,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_DESCEND:
-      gschem_find_text_widget_set_descend (widget, g_value_get_boolean (value));
+      schematic_find_text_widget_set_descend (widget, g_value_get_boolean (value));
       break;
 
     case PROP_FIND_TEXT_STRING:

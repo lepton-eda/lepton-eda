@@ -67,8 +67,8 @@ GType
 schematic_find_text_widget_get_type ();
 
 void
-gschem_find_text_widget_set_descend (SchematicFindTextWidget *widget, int descend);
-
+schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
+                                        int descend);
 void
 gschem_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget, const char *str);
 
