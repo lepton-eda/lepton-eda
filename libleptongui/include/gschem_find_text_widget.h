@@ -73,4 +73,5 @@ void
 schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget,
                                                  const char *str);
 void
-gschem_find_text_widget_set_find_type (SchematicFindTextWidget *widget, int type);
+schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
+                                          int type);

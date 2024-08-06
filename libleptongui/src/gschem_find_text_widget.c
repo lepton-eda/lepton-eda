@@ -467,7 +467,8 @@ schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
  *  \param [in]     type The type of find.
  */
 void
-gschem_find_text_widget_set_find_type (SchematicFindTextWidget *widget, int type)
+schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
+                                          int type)
 {
   GtkTreeIter *active = NULL;
   GtkTreeIter iter;
@@ -588,7 +589,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FIND_TYPE:
-      gschem_find_text_widget_set_find_type (widget, g_value_get_int (value));
+      schematic_find_text_widget_set_find_type (widget, g_value_get_int (value));
       break;
 
     default:
