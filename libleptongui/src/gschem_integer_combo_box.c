@@ -165,7 +165,7 @@ schematic_integer_combo_box_get_entry (GtkWidget *widget)
  *  \return The integer. If the value is invalid, this function returns -1.
  */
 int
-gschem_integer_combo_box_get_value (GtkWidget *widget)
+schematic_integer_combo_box_get_value (GtkWidget *widget)
 {
   GtkWidget *entry = GTK_WIDGET (schematic_integer_combo_box_get_entry (widget));
   int size = -1;

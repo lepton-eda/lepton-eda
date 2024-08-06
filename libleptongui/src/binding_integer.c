@@ -301,7 +301,7 @@ update_model (SchematicBinding *obj)
   int number;
   gboolean success = FALSE;
 
-  number = gschem_integer_combo_box_get_value (binding->widget);
+  number = schematic_integer_combo_box_get_value (binding->widget);
 
   if (number >= 0) {
     GValue value = G_VALUE_INIT;

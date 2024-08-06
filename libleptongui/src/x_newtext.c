@@ -163,7 +163,7 @@ dialog_response_apply (NewText *dialog)
     align = value;
   }
 
-  value = gschem_integer_combo_box_get_value (dialog->textsizecb);
+  value = schematic_integer_combo_box_get_value (dialog->textsizecb);
   if (value > 0) {
     size = value;
   }
