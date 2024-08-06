@@ -360,7 +360,7 @@ update_widget (SchematicBinding *obj)
                                     (gpointer) widget_apply,
                                     binding);
 
-    gschem_integer_combo_box_set_value (binding->widget, number);
+    schematic_integer_combo_box_set_value (binding->widget, number);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (binding->widget),
                                       (gpointer) widget_apply,

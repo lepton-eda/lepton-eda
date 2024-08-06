@@ -525,8 +525,8 @@ text_input_dialog (SchematicWindow *w_current)
     schematic_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
                                            schematic_window_get_text_size_list_store (w_current));
 
-    gschem_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
-                                        w_current->text_size);
+    schematic_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
+                                           w_current->text_size);
 
     gtk_widget_show_all (w_current->tiwindow);
   }
