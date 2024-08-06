@@ -20,7 +20,7 @@
 /*!
  * \file gschem_log_widget.c
  *
- * \brief GType class and functions to support the gschem log window.
+ * \brief GType class and functions to support the log window.
  */
 
 #include <config.h>
