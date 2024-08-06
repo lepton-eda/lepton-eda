@@ -444,8 +444,8 @@ notify_schematic_window (GschemTextPropertiesWidget *widget)
 
     g_object_get (widget, "schematic-window", &w_current, NULL);
 
-    gschem_integer_combo_box_set_model (widget->textsizecb,
-                                        schematic_window_get_text_size_list_store (w_current));
+    schematic_integer_combo_box_set_model (widget->textsizecb,
+                                           schematic_window_get_text_size_list_store (w_current));
 
     set_selection_adapter (widget,
                            schematic_window_get_selection_adapter (w_current));

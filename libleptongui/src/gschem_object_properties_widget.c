@@ -506,29 +506,29 @@ notify_schematic_window (GschemObjectPropertiesWidget *dialog)
 
     g_object_get (dialog, "schematic-window", &w_current, NULL);
 
-    gschem_integer_combo_box_set_model (dialog->width_entry,
-                                        schematic_window_get_line_width_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->width_entry,
+                                           schematic_window_get_line_width_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->length_entry,
-                                        schematic_window_get_dash_length_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->length_entry,
+                                           schematic_window_get_dash_length_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->space_entry,
-                                        schematic_window_get_dash_space_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->space_entry,
+                                           schematic_window_get_dash_space_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->widthe,
-                                        schematic_window_get_fill_width_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->widthe,
+                                           schematic_window_get_fill_width_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->angle1e,
-                                        schematic_window_get_fill_angle_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->angle1e,
+                                           schematic_window_get_fill_angle_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->pitch1e,
-                                        schematic_window_get_fill_pitch_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->pitch1e,
+                                           schematic_window_get_fill_pitch_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->angle2e,
-                                        schematic_window_get_fill_angle_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->angle2e,
+                                           schematic_window_get_fill_angle_list_store (w_current));
 
-    gschem_integer_combo_box_set_model (dialog->pitch2e,
-                                        schematic_window_get_fill_pitch_list_store (w_current));
+    schematic_integer_combo_box_set_model (dialog->pitch2e,
+                                           schematic_window_get_fill_pitch_list_store (w_current));
 
     set_selection_adapter (dialog,
                            schematic_window_get_selection_adapter (w_current));

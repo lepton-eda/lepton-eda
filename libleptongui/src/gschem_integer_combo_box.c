@@ -249,7 +249,8 @@ schematic_integer_combo_box_new ()
  *  \param [in]     store   The list containing the common values
  */
 void
-gschem_integer_combo_box_set_model (GtkWidget *widget, GtkListStore *store)
+schematic_integer_combo_box_set_model (GtkWidget *widget,
+                                       GtkListStore *store)
 {
   g_return_if_fail (widget != NULL);
 
