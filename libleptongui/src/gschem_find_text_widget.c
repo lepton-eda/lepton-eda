@@ -231,7 +231,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_FIND_TEXT_STRING:
-      g_value_set_string (value, gschem_find_text_widget_get_find_text_string (widget));
+      g_value_set_string (value, schematic_find_text_widget_get_find_text_string (widget));
       break;
 
     case PROP_FIND_TYPE:
@@ -351,7 +351,7 @@ gschem_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
  *  \return The find text string
  */
 const char*
-gschem_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget)
+schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
