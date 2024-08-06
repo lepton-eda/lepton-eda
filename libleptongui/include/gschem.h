@@ -30,7 +30,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "viewport.h"
 #include "canvas.h"
 #include "gschem_pin_type_combo.h"
-#include "gschem_main_window.h"
+#include "main_window.h"
 #include "gschem_selection_adapter.h"
 #include "gschem_show_hide_text_widget.h"
 #include "gschem_struct.h"

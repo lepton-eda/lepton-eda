@@ -33,7 +33,7 @@ libleptongui_la_SOURCES = \
 	integer_combo_box.c \
 	log_widget.c \
 	macro_widget.c \
-	gschem_main_window.c \
+	main_window.c \
 	gschem_object_properties_widget.c \
 	options.c \
 	options_widget.c \
