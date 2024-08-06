@@ -183,7 +183,7 @@
             x_stroke_record
             x_stroke_translate_and_execute
 
-            gschem_find_text_state_new
+            schematic_find_text_state_new
 
             find_text_dialog
             hide_text_dialog
@@ -872,7 +872,7 @@
 (define-lff schematic_tabs_set_callback void '(* *))
 
 ;;; gschem_find_text_state.c
-(define-lff gschem_find_text_state_new '* '())
+(define-lff schematic_find_text_state_new '* '())
 
 ;;; gschem_find_text_widget.c
 (define-lff find_text_dialog void '(*))

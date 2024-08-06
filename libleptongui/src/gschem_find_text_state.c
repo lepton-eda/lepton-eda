@@ -162,7 +162,7 @@ schematic_find_text_state_find (SchematicWindow *w_current,
  *  \return the new find text state widget
  */
 GtkWidget*
-gschem_find_text_state_new ()
+schematic_find_text_state_new ()
 {
   return GTK_WIDGET (g_object_new (SCHEMATIC_FIND_TEXT_STATE_TYPE,
                                    NULL));

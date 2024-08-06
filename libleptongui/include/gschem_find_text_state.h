@@ -74,7 +74,7 @@ schematic_find_text_state_get_type ();
 G_BEGIN_DECLS
 
 GtkWidget*
-gschem_find_text_state_new ();
+schematic_find_text_state_new ();
 
 G_END_DECLS
 
