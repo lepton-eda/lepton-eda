@@ -131,7 +131,7 @@ log_message (SchematicLogWidgetClass *klass,
      * other string being included by mistake), log a warning, and print
      * the original message to stderr, where it may be partly intelligible */
     gtk_text_buffer_insert_with_tags_by_name (klass->buffer, &iter,
-      _("** Invalid UTF-8 in log message. See stderr or gschem.log.\n"),
+      _("** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"),
                                               -1, "plain", style, NULL);
     fprintf (stderr, "%s", message);
   }
