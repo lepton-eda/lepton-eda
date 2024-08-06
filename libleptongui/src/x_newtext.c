@@ -382,7 +382,7 @@ static void newtext_init(NewText *dialog)
                     0);
 #endif
 
-  dialog->textsizecb = gschem_integer_combo_box_new();
+  dialog->textsizecb = schematic_integer_combo_box_new ();
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->textsizecb);
 

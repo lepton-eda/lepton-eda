@@ -280,7 +280,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
   label[3] = schematic_dialog_misc_create_property_label(_("Ro_tation:"));
 
   editor[0] = widget->colorcb = x_colorcb_new ();
-  editor[1] = widget->textsizecb = gschem_integer_combo_box_new ();
+  editor[1] = widget->textsizecb = schematic_integer_combo_box_new ();
   editor[2] = widget->aligncb = schematic_alignment_combo_new();
   editor[3] = widget->rotatecb = gschem_rotation_combo_new();
 

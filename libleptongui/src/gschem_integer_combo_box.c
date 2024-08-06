@@ -229,7 +229,7 @@ schematic_integer_combo_box_init (SchematicIntegerComboBox *combo)
  *  \return A GtkWidget for entering integer values
  */
 GtkWidget*
-gschem_integer_combo_box_new ()
+schematic_integer_combo_box_new ()
 {
 #if GTK_CHECK_VERSION (2, 24, 0)
   return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_INTEGER_COMBO_BOX,

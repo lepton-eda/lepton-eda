@@ -62,7 +62,7 @@ int
 schematic_integer_combo_box_get_value (GtkWidget *widget);
 
 GtkWidget*
-gschem_integer_combo_box_new ();
+schematic_integer_combo_box_new ();
 
 void
 gschem_integer_combo_box_set_model (GtkWidget *widget, GtkListStore *store);

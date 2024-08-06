@@ -180,11 +180,11 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
   label[5] = schematic_dialog_misc_create_property_label (_("Pitc_h 2:"));
 
   widget[0] = dialog->fstylecb = x_fstylecb_new ();
-  widget[1] = dialog->widthe = gschem_integer_combo_box_new ();
-  widget[2] = dialog->angle1e = gschem_integer_combo_box_new ();
-  widget[3] = dialog->pitch1e = gschem_integer_combo_box_new ();
-  widget[4] = dialog->angle2e = gschem_integer_combo_box_new ();
-  widget[5] = dialog->pitch2e = gschem_integer_combo_box_new ();
+  widget[1] = dialog->widthe = schematic_integer_combo_box_new ();
+  widget[2] = dialog->angle1e = schematic_integer_combo_box_new ();
+  widget[3] = dialog->pitch1e = schematic_integer_combo_box_new ();
+  widget[4] = dialog->angle2e = schematic_integer_combo_box_new ();
+  widget[5] = dialog->pitch2e = schematic_integer_combo_box_new ();
 
   table = schematic_dialog_misc_create_property_table (label, widget, 6);
 
@@ -291,9 +291,9 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
   label[4] = schematic_dialog_misc_create_property_label (_("C_ap style:"));
 
   widget[0] = dialog->line_type = x_linetypecb_new ();
-  widget[1] = dialog->width_entry = gschem_integer_combo_box_new ();
-  widget[2] = dialog->length_entry = gschem_integer_combo_box_new ();
-  widget[3] = dialog->space_entry = gschem_integer_combo_box_new ();
+  widget[1] = dialog->width_entry = schematic_integer_combo_box_new ();
+  widget[2] = dialog->length_entry = schematic_integer_combo_box_new ();
+  widget[3] = dialog->space_entry = schematic_integer_combo_box_new ();
   widget[4] = dialog->line_end = x_linecapcb_new ();
 
   table = schematic_dialog_misc_create_property_table (label, widget, 5);
