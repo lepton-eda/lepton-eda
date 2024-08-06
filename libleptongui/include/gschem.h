@@ -53,7 +53,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "binding_integer.h"
 #include "window.h"
 
-#include "gschem_object_properties_widget.h"
+#include "object_properties_widget.h"
 #include "options_widget.h"
 #include "gschem_text_properties_widget.h"
 #include "gschem_translate_widget.h"

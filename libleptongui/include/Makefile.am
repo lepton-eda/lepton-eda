@@ -29,7 +29,7 @@ noinst_HEADERS = \
 	log_widget.h \
 	macro_widget.h \
 	main_window.h \
-	gschem_object_properties_widget.h \
+	object_properties_widget.h \
 	options.h \
 	options_widget.h \
 	viewport.h \

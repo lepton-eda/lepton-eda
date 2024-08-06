@@ -752,7 +752,7 @@
 ;;; log_widget.c
 (define-lff schematic_log_widget_new '* '())
 
-;;; gschem_object_properties_widget.c
+;;; object_properties_widget.c
 (define-lff schematic_object_properties_widget_new '* '(*))
 
 ;;; options.c

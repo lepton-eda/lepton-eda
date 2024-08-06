@@ -34,7 +34,7 @@ libleptongui_la_SOURCES = \
 	log_widget.c \
 	macro_widget.c \
 	main_window.c \
-	gschem_object_properties_widget.c \
+	object_properties_widget.c \
 	options.c \
 	options_widget.c \
 	viewport.c \

@@ -26,7 +26,7 @@ libleptongui/src/integer_combo_box.c
 libleptongui/src/log_widget.c
 libleptongui/src/macro_widget.c
 libleptongui/src/main_window.c
-libleptongui/src/gschem_object_properties_widget.c
+libleptongui/src/object_properties_widget.c
 libleptongui/src/options.c
 libleptongui/src/options_widget.c
 libleptongui/src/viewport.c
