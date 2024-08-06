@@ -353,7 +353,7 @@ create_pin_property_widget (SchematicObjectPropertiesWidget *dialog)
 
   label[0] = schematic_dialog_misc_create_property_label (_("_Pin Type:"));
 
-  widget[0] = dialog->pin_type = gschem_pin_type_combo_new ();
+  widget[0] = dialog->pin_type = schematic_pin_type_combo_new ();
 
   table = schematic_dialog_misc_create_property_table (label, widget, 1);
 

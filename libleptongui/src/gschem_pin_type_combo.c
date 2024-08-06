@@ -92,7 +92,7 @@ create_pin_type_list_store ()
  *  \return GtkWidget
  */
 GtkWidget*
-gschem_pin_type_combo_new ()
+schematic_pin_type_combo_new ()
 {
   GtkComboBox *combo;
   GtkCellLayout *layout;
