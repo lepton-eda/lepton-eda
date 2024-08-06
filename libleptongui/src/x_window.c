@@ -176,7 +176,7 @@ x_window_find_text (GtkWidget *widget,
   case GTK_RESPONSE_OK:
     count = gschem_find_text_state_find (
         w_current,
-        GSCHEM_FIND_TEXT_STATE (w_current->find_text_state),
+        SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
         lepton_list_get_glist (w_current->toplevel->pages),
         gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
@@ -248,7 +248,7 @@ x_window_show_text (GtkWidget *widget,
 
 
 void
-x_window_select_object (GschemFindTextState *state,
+x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current)
 {

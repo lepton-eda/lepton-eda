@@ -37,8 +37,8 @@ enum
 };
 
 
-G_DEFINE_TYPE (GschemFindTextState,
-               gschem_find_text_state,
+G_DEFINE_TYPE (SchematicFindTextState,
+               schematic_find_text_state,
                SCHEMATIC_TYPE_BIN);
 
 
@@ -46,10 +46,11 @@ typedef void (*NotifyFunc)(void*, void*);
 
 
 static void
-assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text);
-
+assign_store (SchematicFindTextState *state,
+              GSList *objects,
+              gboolean filter_text);
 static void
-clear_store (GschemFindTextState *state);
+clear_store (SchematicFindTextState *state);
 
 static GSList*
 find_objects_using_pattern (GSList *pages,
@@ -82,14 +83,14 @@ get_subpages (SchematicWindow *w_current,
               LeptonPage *page);
 
 static void
-object_weakref_cb (LeptonObject *object, GschemFindTextState *state);
-
+object_weakref_cb (LeptonObject *object,
+                   SchematicFindTextState *state);
 static void
-remove_object (GschemFindTextState *state, LeptonObject *object);
-
+remove_object (SchematicFindTextState *state,
+               LeptonObject *object);
 static void
-select_cb (GtkTreeSelection *selection, GschemFindTextState *state);
-
+select_cb (GtkTreeSelection *selection,
+           SchematicFindTextState *state);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
@@ -100,7 +101,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  widget.
  *
  *  \param [in] w_current The SchematicWindow structure.
- *  \param [in] state The GschemFindTextState structure.
+ *  \param [in] state The SchematicFindTextState structure.
  *  \param [in] pages a list of pages to search
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
@@ -110,7 +111,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  */
 int
 gschem_find_text_state_find (SchematicWindow *w_current,
-                             GschemFindTextState *state,
+                             SchematicFindTextState *state,
                              GList *pages,
                              int type,
                              const char *text,
@@ -163,7 +164,7 @@ gschem_find_text_state_find (SchematicWindow *w_current,
 GtkWidget*
 gschem_find_text_state_new ()
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_FIND_TEXT_STATE_TYPE,
+  return GTK_WIDGET (g_object_new (SCHEMATIC_FIND_TEXT_STATE_TYPE,
                                    NULL));
 }
 
@@ -171,12 +172,14 @@ gschem_find_text_state_new ()
 
 /*! \brief places object in the store so the user can see them
  *
- *  \param [in] state The #GschemFindTextState instance.
+ *  \param [in] state The #SchematicFindTextState instance.
  *  \param [in] objects The list of objects to put in the store.
  *  \param [in] filter_text Wether only text objects are expected.
  */
 static void
-assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
+assign_store (SchematicFindTextState *state,
+              GSList *objects,
+              gboolean filter_text)
 {
   GSList *object_iter;
 
@@ -247,7 +250,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
 static void
 dispose (GObject *object)
 {
-  GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object);
+  SchematicFindTextState *state = SCHEMATIC_FIND_TEXT_STATE (object);
 
   if (state->store) {
     clear_store (state);
@@ -256,7 +259,7 @@ dispose (GObject *object)
   }
 
   /* lastly, chain up to the parent dispose */
-  GschemFindTextStateClass* cls = GSCHEM_FIND_TEXT_STATE_GET_CLASS (object);
+  SchematicFindTextStateClass *cls = SCHEMATIC_FIND_TEXT_STATE_GET_CLASS (object);
   g_return_if_fail (cls != NULL);
   GObjectClass* parent_cls = G_OBJECT_CLASS (g_type_class_peek_parent (cls));
   g_return_if_fail (parent_cls != NULL);
@@ -269,7 +272,7 @@ dispose (GObject *object)
  *  \param [in] klass The class for initialization
  */
 static void
-gschem_find_text_state_class_init (GschemFindTextStateClass *klass)
+schematic_find_text_state_class_init (SchematicFindTextStateClass *klass)
 {
   G_OBJECT_CLASS (klass)->dispose  = dispose;
 
@@ -298,7 +301,7 @@ gschem_find_text_state_class_init (GschemFindTextStateClass *klass)
  *  \param [in] state
  */
 static void
-clear_store (GschemFindTextState *state)
+clear_store (SchematicFindTextState *state)
 {
   GtkTreeIter iter;
   gboolean valid;
@@ -659,7 +662,7 @@ get_pages (SchematicWindow *w_current,
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  /* GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object); */
+  /* SchematicFindTextState *state = SCHEMATIC_FIND_TEXT_STATE (object); */
 
   switch (param_id) {
     default:
@@ -745,7 +748,7 @@ get_subpages (SchematicWindow *w_current,
  *  \param [in] state the new instance
  */
 static void
-gschem_find_text_state_init (GschemFindTextState *state)
+schematic_find_text_state_init (SchematicFindTextState *state)
 {
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
@@ -808,7 +811,8 @@ gschem_find_text_state_init (GschemFindTextState *state)
  *  \param [in] state
  */
 static void
-object_weakref_cb (LeptonObject *object, GschemFindTextState *state)
+object_weakref_cb (LeptonObject *object,
+                   SchematicFindTextState *state)
 {
   g_return_if_fail (state != NULL);
 
@@ -828,7 +832,8 @@ object_weakref_cb (LeptonObject *object, GschemFindTextState *state)
  *  \param [in] object the object to remove from the store
  */
 static void
-remove_object (GschemFindTextState *state, LeptonObject *object)
+remove_object (SchematicFindTextState *state,
+               LeptonObject *object)
 {
   GtkTreeIter iter;
   gboolean valid;
@@ -869,7 +874,8 @@ remove_object (GschemFindTextState *state, LeptonObject *object)
  *  \param [in] state
  */
 static void
-select_cb (GtkTreeSelection *selection, GschemFindTextState *state)
+select_cb (GtkTreeSelection *selection,
+           SchematicFindTextState *state)
 {
   GtkTreeIter iter;
   gboolean success;
@@ -912,7 +918,7 @@ select_cb (GtkTreeSelection *selection, GschemFindTextState *state)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  /* GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object); */
+  /* SchematicFindTextState *state = SCHEMATIC_FIND_TEXT_STATE (object); */
 
   switch (param_id) {
     default:

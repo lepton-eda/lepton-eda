@@ -1264,7 +1264,7 @@ SchematicWindow*
 x_window_new (LeptonToplevel *toplevel);
 
 void
-x_window_select_object (GschemFindTextState *state,
+x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current);
 void

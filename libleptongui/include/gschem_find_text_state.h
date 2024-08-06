@@ -27,11 +27,11 @@
 #define GSCHEM_FIND_TEXT_STATE_H_
 
 
-#define GSCHEM_FIND_TEXT_STATE_TYPE           (gschem_find_text_state_get_type())
-#define GSCHEM_FIND_TEXT_STATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextState))
-#define GSCHEM_FIND_TEXT_STATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextStateClass))
-#define IS_GSCHEM_FIND_TEXT_STATE(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_FIND_TEXT_STATE_TYPE))
-#define GSCHEM_FIND_TEXT_STATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextStateClass))
+#define SCHEMATIC_FIND_TEXT_STATE_TYPE           (schematic_find_text_state_get_type())
+#define SCHEMATIC_FIND_TEXT_STATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_FIND_TEXT_STATE_TYPE, SchematicFindTextState))
+#define SCHEMATIC_FIND_TEXT_STATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_FIND_TEXT_STATE_TYPE, SchematicFindTextStateClass))
+#define IS_SCHEMATIC_FIND_TEXT_STATE(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_FIND_TEXT_STATE_TYPE))
+#define SCHEMATIC_FIND_TEXT_STATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_FIND_TEXT_STATE_TYPE, SchematicFindTextStateClass))
 
 
 enum
@@ -43,15 +43,15 @@ enum
 };
 
 
-typedef struct _GschemFindTextStateClass GschemFindTextStateClass;
-typedef struct _GschemFindTextState GschemFindTextState;
+typedef struct _SchematicFindTextStateClass SchematicFindTextStateClass;
+typedef struct _SchematicFindTextState SchematicFindTextState;
 
-struct _GschemFindTextStateClass
+struct _SchematicFindTextStateClass
 {
   SchematicBinClass parent_class;
 };
 
-struct _GschemFindTextState
+struct _SchematicFindTextState
 {
   SchematicBin parent;
 
@@ -61,7 +61,7 @@ struct _GschemFindTextState
 
 int
 gschem_find_text_state_find (SchematicWindow *w_current,
-                             GschemFindTextState *state,
+                             SchematicFindTextState *state,
                              GList *pages,
                              int type,
                              const char *text,
@@ -69,7 +69,7 @@ gschem_find_text_state_find (SchematicWindow *w_current,
                              gboolean include_hidden);
 
 GType
-gschem_find_text_state_get_type ();
+schematic_find_text_state_get_type ();
 
 G_BEGIN_DECLS
 

@@ -28,7 +28,7 @@
  * - text properties      (GschemTextPropertiesWidget)    [right dock]
  * - options              (SchematicOptionsWidget)        [right dock]
  *
- * - find text results    (GschemFindTextState)           [bottom dock]
+ * - find text results    (SchematicFindTextState)        [bottom dock]
  * - log                  (GschemLogWidget)               [bottom dock]
  *
  * - page manager         (PageSelectWidget)
