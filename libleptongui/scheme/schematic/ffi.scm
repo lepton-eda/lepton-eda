@@ -619,7 +619,7 @@
 ;;; arc_dialog.c
 (define-lff arc_angle_dialog void '(* *))
 
-;;; gschem_close_confirmation_dialog.c
+;;; close_confirmation_dialog.c
 (define-lff x_dialog_close_changed_page int '(* *))
 (define-lff x_dialog_close_window int '(*))
 
