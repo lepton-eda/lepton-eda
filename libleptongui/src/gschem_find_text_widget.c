@@ -227,7 +227,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_DESCEND:
-      g_value_set_boolean (value, gschem_find_text_widget_get_descend (widget));
+      g_value_set_boolean (value, schematic_find_text_widget_get_descend (widget));
       break;
 
     case PROP_FIND_TEXT_STRING:
@@ -296,7 +296,7 @@ schematic_find_text_widget_class_init (SchematicFindTextWidgetClass *klass)
  *  \return The descend property
  */
 int
-gschem_find_text_widget_get_descend (SchematicFindTextWidget *widget)
+schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
