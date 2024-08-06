@@ -31,7 +31,7 @@ libleptongui_la_SOURCES = \
 	find_text_widget.c \
 	hotkey_dialog.c \
 	integer_combo_box.c \
-	gschem_log_widget.c \
+	log_widget.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
 	gschem_object_properties_widget.c \

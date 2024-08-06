@@ -749,7 +749,7 @@
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
 
-;;; gschem_log_widget.c
+;;; log_widget.c
 (define-lff schematic_log_widget_new '* '())
 
 ;;; gschem_object_properties_widget.c

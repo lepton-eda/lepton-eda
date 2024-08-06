@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_log_widget.c
+ * \file log_widget.c
  *
  * \brief GType class and functions to support the log window.
  */

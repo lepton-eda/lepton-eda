@@ -23,7 +23,7 @@ libleptongui/src/find_text_state.c
 libleptongui/src/find_text_widget.c
 libleptongui/src/hotkey_dialog.c
 libleptongui/src/integer_combo_box.c
-libleptongui/src/gschem_log_widget.c
+libleptongui/src/log_widget.c
 libleptongui/src/gschem_macro_widget.c
 libleptongui/src/gschem_main_window.c
 libleptongui/src/gschem_object_properties_widget.c
