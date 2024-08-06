@@ -208,8 +208,8 @@ find_text_dialog (SchematicWindow *w_current)
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
-  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
+  gtk_widget_grab_focus (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
 }
 
 
@@ -311,7 +311,7 @@ schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
  *  \return The entry
  */
 GtkWidget*
-gschem_find_text_widget_get_entry (SchematicFindTextWidget *widget)
+schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
