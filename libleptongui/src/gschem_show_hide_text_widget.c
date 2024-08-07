@@ -300,7 +300,8 @@ schematic_show_hide_text_widget_init (SchematicShowHideTextWidget *widget)
  *  \param [in]     text The button text.
  */
 void
-gschem_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget, const char *text)
+schematic_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget,
+                                                 const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -471,7 +472,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_BUTTON_TEXT:
-      gschem_show_hide_text_widget_set_button_text (widget, g_value_get_string (value));
+      schematic_show_hide_text_widget_set_button_text (widget, g_value_get_string (value));
       break;
 
     case PROP_LABEL_TEXT:

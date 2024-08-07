@@ -64,8 +64,8 @@ GType
 schematic_show_hide_text_widget_get_type ();
 
 void
-gschem_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget, const char *text);
-
+schematic_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget,
+                                                 const char *text);
 void
 gschem_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget, const char *text);
 
