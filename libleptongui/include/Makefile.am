@@ -34,7 +34,7 @@ noinst_HEADERS = \
 	options_widget.h \
 	viewport.h \
 	pin_type_combo.h \
-	gschem_selection_adapter.h \
+	selection_adapter.h \
 	gschem_show_hide_text_widget.h \
 	gschem_struct.h \
 	gschem_swatch_column_renderer.h \
