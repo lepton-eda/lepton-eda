@@ -1626,7 +1626,8 @@ schematic_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter,
  *  \param [in] color
  */
 void
-gschem_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter, int color)
+schematic_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter,
+                                              int color)
 {
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color_id_valid (color));
@@ -2374,7 +2375,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_OBJECT_COLOR:
-      gschem_selection_adapter_set_object_color (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_object_color (adapter, g_value_get_int (value));
       break;
 
     case PROP_PIN_TYPE:

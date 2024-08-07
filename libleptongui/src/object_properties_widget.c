@@ -844,7 +844,7 @@ update_object_color_model (GtkWidget *widget,
     color = x_colorcb_get_index (dialog->colorcb);
 
     if (color >= 0) {
-      gschem_selection_adapter_set_object_color (dialog->adapter, color);
+      schematic_selection_adapter_set_object_color (dialog->adapter, color);
     }
   }
 }
