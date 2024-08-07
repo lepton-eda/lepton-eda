@@ -1502,7 +1502,8 @@ schematic_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter,
  *  \param [in] dash_space The new dash spacing value.
  */
 void
-gschem_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter, int dash_space)
+schematic_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter,
+                                            int dash_space)
 {
   GList *iter;
 
@@ -2329,7 +2330,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_DASH_SPACE:
-      gschem_selection_adapter_set_dash_space (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_dash_space (adapter, g_value_get_int (value));
       break;
 
     case PROP_FILL_ANGLE1:
