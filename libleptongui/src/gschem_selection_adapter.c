@@ -1273,7 +1273,8 @@ schematic_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter,
  *  \param [in] fill_width The new fill width.
  */
 void
-gschem_selection_adapter_set_fill_width (SchematicSelectionAdapter *adapter, int fill_width)
+schematic_selection_adapter_set_fill_width (SchematicSelectionAdapter *adapter,
+                                            int fill_width)
 {
   GList *iter;
 
@@ -2359,7 +2360,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FILL_WIDTH:
-      gschem_selection_adapter_set_fill_width (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_fill_width (adapter, g_value_get_int (value));
       break;
 
     case PROP_LINE_TYPE:
