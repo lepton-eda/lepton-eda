@@ -104,7 +104,7 @@ update_text_rotation_widget (SchematicTextPropertiesWidget *widget);
  *  \param [in] widget This text properties widget
  */
 void
-gschem_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget)
+schematic_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->text_view != NULL);

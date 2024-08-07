@@ -55,7 +55,7 @@ struct _SchematicTextPropertiesWidget {
 };
 
 void
-gschem_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget);
+schematic_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget);
 
 GType
 schematic_text_properties_widget_get_type ();

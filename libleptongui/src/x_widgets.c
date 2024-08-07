@@ -159,8 +159,7 @@ void x_widgets_show_text_properties (SchematicWindow* w_current)
                               "txtprops");
   }
 
-  gschem_text_properties_widget_adjust_focus(
-    SCHEMATIC_TEXT_PROPERTIES_WIDGET (w_current->text_properties));
+  schematic_text_properties_widget_adjust_focus (SCHEMATIC_TEXT_PROPERTIES_WIDGET (w_current->text_properties));
 }
 
 
