@@ -667,7 +667,7 @@ update_text_content_model (GschemTextPropertiesWidget *widget)
     string =  gtk_text_iter_get_text (&start, &end);
 
     if (string != NULL) {
-      gschem_selection_adapter_set_text_string (widget->adapter, string, widget->w_current);
+      schematic_selection_adapter_set_text_string (widget->adapter, string, widget->w_current);
     }
   }
 }

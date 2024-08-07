@@ -1876,9 +1876,9 @@ schematic_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter,
  *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-gschem_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
-                                          const char *string,
-                                          SchematicWindow *w_current)
+schematic_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
+                                             const char *string,
+                                             SchematicWindow *w_current)
 {
   GList *iter;
 
@@ -2407,7 +2407,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
      * system
      *
      * case PROP_TEXT_STRING:
-     *   gschem_selection_adapter_set_text_string (adapter, g_value_get_string (value));
+     *   schematic_selection_adapter_set_text_string (adapter, g_value_get_string (value));
      *   break;
      */
 

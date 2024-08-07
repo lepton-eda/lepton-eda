@@ -176,9 +176,9 @@ void
 schematic_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter,
                                            int size);
 void
-gschem_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
-                                          const char *string,
-                                          SchematicWindow *w_current);
+schematic_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
+                                             const char *string,
+                                             SchematicWindow *w_current);
 void
 gschem_selection_adapter_set_toplevel (SchematicSelectionAdapter *adapter,
                                        LeptonToplevel *toplevel);
