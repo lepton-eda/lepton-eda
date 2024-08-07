@@ -62,7 +62,7 @@ int
 schematic_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter);

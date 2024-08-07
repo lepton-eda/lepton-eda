@@ -135,7 +135,7 @@ schematic_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter)
  *  \retval others          The dash length of the selected objects
  */
 int
-gschem_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter)
 {
   gint dash_length = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2180,7 +2180,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_DASH_LENGTH:
-      g_value_set_int (value, gschem_selection_adapter_get_dash_length (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_dash_length (adapter));
       break;
 
     case PROP_DASH_SPACE:
