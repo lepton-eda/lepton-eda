@@ -105,7 +105,7 @@ schematic_translate_widget_get_entry (SchematicTranslateWidget *widget)
  *  \return The label text
  */
 const char*
-gschem_translate_widget_get_label_text (SchematicTranslateWidget *widget)
+schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -338,7 +338,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_LABEL_TEXT:
-      g_value_set_string (value, gschem_translate_widget_get_label_text (widget));
+      g_value_set_string (value, schematic_translate_widget_get_label_text (widget));
       break;
 
     case PROP_VALUE:

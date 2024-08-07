@@ -52,7 +52,7 @@ GtkWidget*
 schematic_translate_widget_get_entry (SchematicTranslateWidget *widget);
 
 const char*
-gschem_translate_widget_get_label_text (SchematicTranslateWidget *widget);
+schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget);
 
 GType
 schematic_translate_widget_get_type ();
