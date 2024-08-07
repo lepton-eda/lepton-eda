@@ -1649,7 +1649,8 @@ schematic_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter
  *  \param [in] type The new pin type.
  */
 void
-gschem_selection_adapter_set_pin_type (SchematicSelectionAdapter *adapter, int type)
+schematic_selection_adapter_set_pin_type (SchematicSelectionAdapter *adapter,
+                                          int type)
 {
   GList *iter;
 
@@ -2379,7 +2380,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_PIN_TYPE:
-      gschem_selection_adapter_set_pin_type (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_pin_type (adapter, g_value_get_int (value));
       break;
 
     case PROP_TEXT_ALIGNMENT:
