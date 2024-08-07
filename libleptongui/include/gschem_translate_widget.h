@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +23,21 @@
  * \brief A widget for an offset for symbol translation
  */
 
-#define GSCHEM_TYPE_TRANSLATE_WIDGET           (gschem_translate_widget_get_type())
-#define GSCHEM_TRANSLATE_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_TRANSLATE_WIDGET, GschemTranslateWidget))
-#define GSCHEM_TRANSLATE_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_TRANSLATE_WIDGET, GschemTranslateWidgetClass))
-#define GSCHEM_IS_TRANSLATE_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_TRANSLATE_WIDGET))
-#define GSCHEM_TRANSLATE_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_TRANSLATE_WIDGET, GschemTranslateWidgetClass))
+#define SCHEMATIC_TYPE_TRANSLATE_WIDGET           (schematic_translate_widget_get_type())
+#define SCHEMATIC_TRANSLATE_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_TRANSLATE_WIDGET, SchematicTranslateWidget))
+#define SCHEMATIC_TRANSLATE_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_TRANSLATE_WIDGET, SchematicTranslateWidgetClass))
+#define SCHEMATIC_IS_TRANSLATE_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_TRANSLATE_WIDGET))
+#define SCHEMATIC_TRANSLATE_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_TRANSLATE_WIDGET, SchematicTranslateWidgetClass))
 
-typedef struct _GschemTranslateWidgetClass GschemTranslateWidgetClass;
-typedef struct _GschemTranslateWidget GschemTranslateWidget;
+typedef struct _SchematicTranslateWidgetClass SchematicTranslateWidgetClass;
+typedef struct _SchematicTranslateWidget SchematicTranslateWidget;
 
-struct _GschemTranslateWidgetClass
+struct _SchematicTranslateWidgetClass
 {
   GtkInfoBarClass parent_class;
 };
 
-struct _GschemTranslateWidget
+struct _SchematicTranslateWidget
 {
   GtkInfoBar parent;
 
@@ -48,19 +49,19 @@ struct _GschemTranslateWidget
 
 
 GtkWidget*
-gschem_translate_widget_get_entry (GschemTranslateWidget *widget);
+gschem_translate_widget_get_entry (SchematicTranslateWidget *widget);
 
 const char*
-gschem_translate_widget_get_label_text (GschemTranslateWidget *widget);
+gschem_translate_widget_get_label_text (SchematicTranslateWidget *widget);
 
 GType
-gschem_translate_widget_get_type ();
+schematic_translate_widget_get_type ();
 
 int
-gschem_translate_widget_get_value (GschemTranslateWidget *widget);
+gschem_translate_widget_get_value (SchematicTranslateWidget *widget);
 
 void
-gschem_translate_widget_set_label_text (GschemTranslateWidget *widget, const char *text);
+gschem_translate_widget_set_label_text (SchematicTranslateWidget *widget, const char *text);
 
 void
-gschem_translate_widget_set_value (GschemTranslateWidget *widget, int value);
+gschem_translate_widget_set_value (SchematicTranslateWidget *widget, int value);

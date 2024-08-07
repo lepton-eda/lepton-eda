@@ -43,23 +43,23 @@ enum
 };
 
 
-G_DEFINE_TYPE (GschemTranslateWidget,
-               gschem_translate_widget,
+G_DEFINE_TYPE (SchematicTranslateWidget,
+               schematic_translate_widget,
                GTK_TYPE_INFO_BAR);
 
 
 static void
-activate_entry (GtkWidget *entry, GschemTranslateWidget *widget);
+activate_entry (GtkWidget *entry,
+                SchematicTranslateWidget *widget);
+static void
+schematic_translate_widget_class_init (SchematicTranslateWidgetClass *klass);
 
 static void
-gschem_translate_widget_class_init (GschemTranslateWidgetClass *klass);
-
+click_cancel (GtkWidget *button,
+              SchematicTranslateWidget *widget);
 static void
-click_cancel (GtkWidget *button, GschemTranslateWidget *widget);
-
-static void
-click_evaluate (GtkWidget *entry, GschemTranslateWidget *widget);
-
+click_evaluate (GtkWidget *entry,
+                SchematicTranslateWidget *widget);
 static gboolean
 convert_value (const char *string, int *value);
 
@@ -73,23 +73,24 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_translate_widget_init (GschemTranslateWidget *view);
+schematic_translate_widget_init (SchematicTranslateWidget *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemTranslateWidget *widget);
-
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicTranslateWidget *widget);
 
 
 /*! \brief Get the entry
  *
- *  \param [in] widget This GschemTranslateWidget
+ *  \param [in] widget This SchematicTranslateWidget
  *  \return The entry
  */
 GtkWidget*
-gschem_translate_widget_get_entry (GschemTranslateWidget *widget)
+gschem_translate_widget_get_entry (SchematicTranslateWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -100,11 +101,11 @@ gschem_translate_widget_get_entry (GschemTranslateWidget *widget)
 
 /*! \brief Get the label text
  *
- *  \param [in] widget This GschemTranslateWidget
+ *  \param [in] widget This SchematicTranslateWidget
  *  \return The label text
  */
 const char*
-gschem_translate_widget_get_label_text (GschemTranslateWidget *widget)
+gschem_translate_widget_get_label_text (SchematicTranslateWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -120,11 +121,11 @@ gschem_translate_widget_get_label_text (GschemTranslateWidget *widget)
  *  signal, since the response signal will not be emitted if the value is
  *  invalid.
  *
- *  \param [in] widget This GschemTranslateWidget
+ *  \param [in] widget This SchematicTranslateWidget
  *  \return The value in the entry
  */
 int
-gschem_translate_widget_get_value (GschemTranslateWidget *widget)
+gschem_translate_widget_get_value (SchematicTranslateWidget *widget)
 {
   int value = 0;
 
@@ -138,11 +139,11 @@ gschem_translate_widget_get_value (GschemTranslateWidget *widget)
 
 /*! \brief Set the label text
  *
- *  \param [in,out] widget The #GschemTranslateWidget object.
+ *  \param [in,out] widget The #SchematicTranslateWidget object.
  *  \param [in]     text The new label text.
  */
 void
-gschem_translate_widget_set_label_text (GschemTranslateWidget *widget, const char *text)
+gschem_translate_widget_set_label_text (SchematicTranslateWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -154,11 +155,11 @@ gschem_translate_widget_set_label_text (GschemTranslateWidget *widget, const cha
 
 /*! \brief Set the value in the entry
  *
- *  \param [in,out] widget The #GschemTranslateWidget object.
+ *  \param [in,out] widget The #SchematicTranslateWidget object.
  *  \param [in]     value the value to put in the entry
  */
 void
-gschem_translate_widget_set_value (GschemTranslateWidget *widget, int value)
+gschem_translate_widget_set_value (SchematicTranslateWidget *widget, int value)
 {
   GString *temp;
 
@@ -176,7 +177,8 @@ gschem_translate_widget_set_value (GschemTranslateWidget *widget, int value)
 /* Callback for when the user presses enter in the entry widget
  */
 static void
-activate_entry (GtkWidget *entry, GschemTranslateWidget *widget)
+activate_entry (GtkWidget *entry,
+                SchematicTranslateWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -189,12 +191,12 @@ activate_entry (GtkWidget *entry, GschemTranslateWidget *widget)
 }
 
 
-/*! \brief Initialize GschemTranslateWidget class
+/*! \brief Initialize SchematicTranslateWidget class
  *
- *  \param [in] klass The class for the GschemTranslateWidget
+ *  \param [in] klass The class for the SchematicTranslateWidget
  */
 static void
-gschem_translate_widget_class_init (GschemTranslateWidgetClass *klass)
+schematic_translate_widget_class_init (SchematicTranslateWidgetClass *klass)
 {
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
@@ -227,7 +229,8 @@ gschem_translate_widget_class_init (GschemTranslateWidgetClass *klass)
 /* Callback for when the user clicks the cancel button
  */
 static void
-click_cancel (GtkWidget *button, GschemTranslateWidget *widget)
+click_cancel (GtkWidget *button,
+              SchematicTranslateWidget *widget)
 {
   gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
 }
@@ -236,7 +239,8 @@ click_cancel (GtkWidget *button, GschemTranslateWidget *widget)
 /* Callback for when the user clicks the evaluate button
  */
 static void
-click_evaluate (GtkWidget *entry, GschemTranslateWidget *widget)
+click_evaluate (GtkWidget *entry,
+                SchematicTranslateWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -304,7 +308,7 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  GschemTranslateWidgetClass* cls = GSCHEM_TRANSLATE_WIDGET_GET_CLASS (object);
+  SchematicTranslateWidgetClass* cls = SCHEMATIC_TRANSLATE_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->dispose (object);
 }
@@ -318,7 +322,7 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  GschemTranslateWidgetClass* cls = GSCHEM_TRANSLATE_WIDGET_GET_CLASS (object);
+  SchematicTranslateWidgetClass* cls = SCHEMATIC_TRANSLATE_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->finalize (object);
 }
@@ -330,7 +334,7 @@ finalize (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemTranslateWidget *widget = GSCHEM_TRANSLATE_WIDGET (object);
+  SchematicTranslateWidget *widget = SCHEMATIC_TRANSLATE_WIDGET (object);
 
   switch (param_id) {
     case PROP_LABEL_TEXT:
@@ -348,12 +352,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 /*! \private
- *  \brief Initialize GschemTranslateWidget instance
+ *  \brief Initialize SchematicTranslateWidget instance
  *
- *  \param [in,out] widget the GschemTranslateWidget
+ *  \param [in,out] widget the SchematicTranslateWidget
  */
 static void
-gschem_translate_widget_init (GschemTranslateWidget *widget)
+schematic_translate_widget_init (SchematicTranslateWidget *widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
@@ -417,7 +421,9 @@ gschem_translate_widget_init (GschemTranslateWidget *widget)
 /* Update the sensitivity of the evaluate button
  */
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemTranslateWidget *widget)
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicTranslateWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -431,7 +437,7 @@ notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemTranslateWidget *w
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemTranslateWidget *widget = GSCHEM_TRANSLATE_WIDGET (object);
+  SchematicTranslateWidget *widget = SCHEMATIC_TRANSLATE_WIDGET (object);
 
   switch (param_id) {
     case PROP_LABEL_TEXT:

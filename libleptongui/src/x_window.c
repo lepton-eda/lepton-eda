@@ -274,7 +274,7 @@ x_window_select_object (SchematicFindTextState *state,
 }
 
 static void
-x_window_translate_response (GschemTranslateWidget *widget,
+x_window_translate_response (SchematicTranslateWidget *widget,
                              gint response,
                              SchematicWindow *w_current)
 {
@@ -931,7 +931,7 @@ void
 schematic_window_create_translate_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL);
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
 
   w_current->translate_widget = GTK_WIDGET (obj);
 
@@ -948,7 +948,7 @@ void
 schematic_window_show_translate_widget (SchematicWindow *w_current)
 {
   gtk_widget_show (w_current->translate_widget);
-  gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
+  gtk_widget_grab_focus (gschem_translate_widget_get_entry (SCHEMATIC_TRANSLATE_WIDGET (w_current->translate_widget)));
 }
 
 
