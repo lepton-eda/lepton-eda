@@ -1444,7 +1444,8 @@ gschem_selection_adapter_set_line_width (SchematicSelectionAdapter *adapter, int
  *  \param [in] dash_length The new dash length value.
  */
 void
-gschem_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter, int dash_length)
+schematic_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter,
+                                             int dash_length)
 {
   GList *iter;
 
@@ -2324,7 +2325,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_DASH_LENGTH:
-      gschem_selection_adapter_set_dash_length (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_dash_length (adapter, g_value_get_int (value));
       break;
 
     case PROP_DASH_SPACE:

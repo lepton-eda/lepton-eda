@@ -125,8 +125,8 @@ void
 schematic_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter,
                                            int cap_style);
 void
-gschem_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter, int dash_length);
-
+schematic_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter,
+                                             int dash_length);
 void
 gschem_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter, int dash_space);
 
