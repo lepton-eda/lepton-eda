@@ -903,7 +903,7 @@ schematic_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter)
  *  \retval non-NULL  The content string of the selected text object [transfer none]
  */
 const char*
-gschem_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter)
 {
   const char *string = NULL;
   GList *iter = get_selection_iter (adapter);
@@ -2244,7 +2244,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_TEXT_STRING:
-      g_value_set_string (value, gschem_selection_adapter_get_text_string (adapter));
+      g_value_set_string (value, schematic_selection_adapter_get_text_string (adapter));
       break;
 
     default:

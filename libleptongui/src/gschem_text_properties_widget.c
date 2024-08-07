@@ -687,7 +687,7 @@ update_text_content_widget (GschemTextPropertiesWidget *widget)
 
   if (widget->adapter != NULL) {
     GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget->text_view));
-    const char *string = gschem_selection_adapter_get_text_string (widget->adapter);
+    const char *string = schematic_selection_adapter_get_text_string (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->text_view),
                                      (gpointer) update_text_content_model,

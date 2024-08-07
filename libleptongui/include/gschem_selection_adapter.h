@@ -113,7 +113,7 @@ int
 schematic_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter);
 
 const char*
-gschem_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter);
 
 LeptonToplevel*
 gschem_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter);
