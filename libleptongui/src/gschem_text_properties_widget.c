@@ -608,7 +608,7 @@ update_text_color_model (GschemTextPropertiesWidget *widget)
     int color = x_colorcb_get_index (widget->colorcb);
 
     if (color >= 0) {
-      gschem_selection_adapter_set_text_color (widget->adapter, color);
+      schematic_selection_adapter_set_text_color (widget->adapter, color);
     }
   }
 }

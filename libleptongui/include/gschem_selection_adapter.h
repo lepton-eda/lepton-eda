@@ -164,8 +164,8 @@ void
 schematic_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
                                            LeptonSelection *selection);
 void
-gschem_selection_adapter_set_text_color (SchematicSelectionAdapter *adapter, int color);
-
+schematic_selection_adapter_set_text_color (SchematicSelectionAdapter *adapter,
+                                            int color);
 void
 gschem_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter, int alignment);
 
