@@ -152,8 +152,8 @@ void
 schematic_selection_adapter_set_line_type (SchematicSelectionAdapter *adapter,
                                            int line_type);
 void
-gschem_selection_adapter_set_line_width (SchematicSelectionAdapter *adapter, int line_width);
-
+schematic_selection_adapter_set_line_width (SchematicSelectionAdapter *adapter,
+                                            int line_width);
 void
 gschem_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter, int color);
 
