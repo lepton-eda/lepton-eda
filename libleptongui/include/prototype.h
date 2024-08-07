@@ -1164,7 +1164,9 @@ void
 x_rc_parse_gschem (LeptonToplevel *toplevel);
 
 /* x_rotatecb.c */
-GtkWidget* gschem_rotation_combo_new ();
+GtkWidget*
+schematic_rotation_combo_new ();
+
 int gschem_rotation_combo_get_angle (GtkWidget *widget);
 void gschem_rotation_combo_set_angle (GtkWidget *widget, int angle);
 

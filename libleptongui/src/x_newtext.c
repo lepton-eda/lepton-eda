@@ -441,7 +441,7 @@ static void newtext_init(NewText *dialog)
                     0);
 #endif
 
-  dialog->rotatecb = gschem_rotation_combo_new ();
+  dialog->rotatecb = schematic_rotation_combo_new ();
   gschem_rotation_combo_set_angle(dialog->rotatecb, 0);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->rotatecb);

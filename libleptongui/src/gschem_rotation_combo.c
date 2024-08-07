@@ -88,7 +88,7 @@ create_rotation_list_store ()
  *  \return A widget for selecting the gschem text rotations
  */
 GtkWidget*
-gschem_rotation_combo_new ()
+schematic_rotation_combo_new ()
 {
   GtkComboBox *combo;
   GtkCellLayout *layout;
