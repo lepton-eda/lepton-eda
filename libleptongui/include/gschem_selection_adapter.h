@@ -77,7 +77,7 @@ int
 schematic_selection_adapter_get_fill_pitch1 (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_pitch2 (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_fill_pitch2 (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_fill_type (SchematicSelectionAdapter *adapter);
