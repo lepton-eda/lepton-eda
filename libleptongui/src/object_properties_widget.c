@@ -731,7 +731,7 @@ update_fill_type_widget (SchematicObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->fstylecb != NULL);
 
   if (dialog->adapter != NULL) {
-    int index = gschem_selection_adapter_get_fill_type (dialog->adapter);
+    int index = schematic_selection_adapter_get_fill_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->fstylecb),
                                      (gpointer) update_fill_type_model,
