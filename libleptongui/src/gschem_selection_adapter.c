@@ -486,7 +486,7 @@ schematic_selection_adapter_get_fill_type (SchematicSelectionAdapter *adapter)
  *  \retval others          The fill line width of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_width (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_fill_width (SchematicSelectionAdapter *adapter)
 {
   gint fill_width = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2208,7 +2208,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_FILL_WIDTH:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_width (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_fill_width (adapter));
       break;
 
     case PROP_LINE_TYPE:
