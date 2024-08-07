@@ -863,7 +863,7 @@ update_object_color_widget (SchematicObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->colorcb != NULL);
 
   if (dialog->adapter != NULL) {
-    int color = gschem_selection_adapter_get_object_color (dialog->adapter);
+    int color = schematic_selection_adapter_get_object_color (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->colorcb),
                                      (gpointer) update_object_color_model,

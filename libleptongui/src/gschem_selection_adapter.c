@@ -633,7 +633,7 @@ schematic_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter)
  *  \retval others          The color of the selected objects
  */
 int
-gschem_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2220,7 +2220,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_OBJECT_COLOR:
-      g_value_set_int (value, gschem_selection_adapter_get_object_color (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_object_color (adapter));
       break;
 
     case PROP_PIN_TYPE:
