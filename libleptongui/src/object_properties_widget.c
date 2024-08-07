@@ -778,7 +778,7 @@ update_line_type_model (GtkWidget *widget,
     line_type = x_linetypecb_get_index (dialog->line_type);
 
     if (line_type >= 0) {
-      gschem_selection_adapter_set_line_type (dialog->adapter, line_type);
+      schematic_selection_adapter_set_line_type (dialog->adapter, line_type);
     }
   }
 }

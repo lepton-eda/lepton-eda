@@ -1334,7 +1334,8 @@ schematic_selection_adapter_set_fill_width (SchematicSelectionAdapter *adapter,
  *  \param [in] line_type The new line type.
  */
 void
-gschem_selection_adapter_set_line_type (SchematicSelectionAdapter *adapter, int line_type)
+schematic_selection_adapter_set_line_type (SchematicSelectionAdapter *adapter,
+                                           int line_type)
 {
   GList *iter;
 
@@ -2364,7 +2365,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_LINE_TYPE:
-      gschem_selection_adapter_set_line_type (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_line_type (adapter, g_value_get_int (value));
       break;
 
     case PROP_LINE_WIDTH:
