@@ -318,7 +318,8 @@ schematic_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *wi
  *  \param [in]     text The new label text.
  */
 void
-gschem_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget, const char *text)
+schematic_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget,
+                                                const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -476,7 +477,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_LABEL_TEXT:
-      gschem_show_hide_text_widget_set_label_text (widget, g_value_get_string (value));
+      schematic_show_hide_text_widget_set_label_text (widget, g_value_get_string (value));
       break;
 
     case PROP_TEXT_STRING:
