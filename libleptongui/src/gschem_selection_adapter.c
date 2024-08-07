@@ -730,7 +730,7 @@ schematic_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter)
  *  \return The current page selection.
  */
 LeptonSelection*
-gschem_selection_adapter_get_selection (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_selection (SchematicSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
 
@@ -2151,7 +2151,7 @@ static GList*
 get_selection_iter (SchematicSelectionAdapter *adapter)
 {
   GList *iter = NULL;
-  LeptonSelection *selection = gschem_selection_adapter_get_selection (adapter);
+  LeptonSelection *selection = schematic_selection_adapter_get_selection (adapter);
 
   if (selection != NULL) {
     iter = lepton_list_get_glist (selection);
