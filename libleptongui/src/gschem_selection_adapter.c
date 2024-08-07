@@ -585,7 +585,7 @@ schematic_selection_adapter_get_line_type (SchematicSelectionAdapter *adapter)
  *  \retval others          The width of the selected objects
  */
 int
-gschem_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter)
 {
   gint line_width = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2216,7 +2216,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_LINE_WIDTH:
-      g_value_set_int (value, gschem_selection_adapter_get_line_width (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_line_width (adapter));
       break;
 
     case PROP_OBJECT_COLOR:
