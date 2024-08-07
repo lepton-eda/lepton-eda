@@ -87,7 +87,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \retval others          The cap style of the selected objects
  */
 int
-gschem_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter)
 {
   gint cap_style = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2176,7 +2176,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_CAP_STYLE:
-      g_value_set_int (value, gschem_selection_adapter_get_cap_style (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_cap_style (adapter));
       break;
 
     case PROP_DASH_LENGTH:

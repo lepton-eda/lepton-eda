@@ -664,7 +664,7 @@ update_cap_style_widget (SchematicObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->line_end != NULL);
 
   if (dialog->adapter != NULL) {
-    int end = gschem_selection_adapter_get_cap_style (dialog->adapter);
+    int end = schematic_selection_adapter_get_cap_style (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_end),
                                      (gpointer) update_cap_style_model,
