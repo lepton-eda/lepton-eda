@@ -1170,7 +1170,9 @@ schematic_rotation_combo_new ();
 int
 schematic_rotation_combo_get_angle (GtkWidget *widget);
 
-void gschem_rotation_combo_set_angle (GtkWidget *widget, int angle);
+void
+schematic_rotation_combo_set_angle (GtkWidget *widget,
+                                    int angle);
 
 /* x_stroke.c */
 void

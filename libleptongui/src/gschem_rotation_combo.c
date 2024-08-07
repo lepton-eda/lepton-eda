@@ -140,7 +140,8 @@ schematic_rotation_combo_get_angle (GtkWidget *widget)
  *  \param [in]     angle   The angle to select
  */
 void
-gschem_rotation_combo_set_angle (GtkWidget *widget, int angle)
+schematic_rotation_combo_set_angle (GtkWidget *widget,
+                                    int angle)
 {
   g_return_if_fail (rotation_list_store != NULL);
 

@@ -755,7 +755,7 @@ update_text_rotation_widget (GschemTextPropertiesWidget *widget)
                                      (gpointer) update_text_rotation_model,
                                      widget);
 
-    gschem_rotation_combo_set_angle (widget->rotatecb, angle);
+    schematic_rotation_combo_set_angle (widget->rotatecb, angle);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->rotatecb),
                                        (gpointer) update_text_rotation_model,
