@@ -1207,7 +1207,8 @@ schematic_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter,
  *  \param [in] fill_type The new fill type.
  */
 void
-gschem_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter, int fill_type)
+schematic_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter,
+                                           int fill_type)
 {
   GList *iter;
 
@@ -2354,7 +2355,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FILL_TYPE:
-      gschem_selection_adapter_set_fill_type (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_fill_type (adapter, g_value_get_int (value));
       break;
 
     case PROP_FILL_WIDTH:

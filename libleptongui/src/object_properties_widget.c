@@ -712,7 +712,7 @@ update_fill_type_model (GtkWidget *widget,
     fill_type = x_fstylecb_get_index (dialog->fstylecb);
 
     if (fill_type >= 0) {
-      gschem_selection_adapter_set_fill_type (dialog->adapter, fill_type);
+      schematic_selection_adapter_set_fill_type (dialog->adapter, fill_type);
     }
   }
 }
