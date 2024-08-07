@@ -52,7 +52,7 @@ const char*
 schematic_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *widget);
 
 GtkWidget*
-gschem_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget);
+schematic_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget);
 
 const char*
 gschem_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget);

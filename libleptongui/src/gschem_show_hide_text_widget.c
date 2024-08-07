@@ -95,8 +95,8 @@ hide_text_dialog (SchematicWindow *w_current)
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->hide_text_widget));
-  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget))), 0, -1);
+  gtk_widget_grab_focus (schematic_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (schematic_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget))), 0, -1);
 }
 
 
@@ -121,8 +121,8 @@ show_text_dialog (SchematicWindow *w_current)
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->show_text_widget));
-  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget))), 0, -1);
+  gtk_widget_grab_focus (schematic_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (schematic_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget))), 0, -1);
 }
 
 
@@ -188,7 +188,7 @@ schematic_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *wi
  *  \return The entry
  */
 GtkWidget*
-gschem_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget)
+schematic_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
