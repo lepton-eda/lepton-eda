@@ -730,7 +730,7 @@ update_text_rotation_model (GschemTextPropertiesWidget *widget)
     int angle = gschem_rotation_combo_get_angle (widget->rotatecb);
 
     if (angle >= 0) {
-      gschem_selection_adapter_set_text_rotation (widget->adapter, angle);
+      schematic_selection_adapter_set_text_rotation (widget->adapter, angle);
     }
   }
 }

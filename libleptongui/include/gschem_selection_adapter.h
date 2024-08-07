@@ -170,8 +170,8 @@ void
 schematic_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter,
                                                 int alignment);
 void
-gschem_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapter, int angle);
-
+schematic_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapter,
+                                               int angle);
 void
 gschem_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter, int size);
 
