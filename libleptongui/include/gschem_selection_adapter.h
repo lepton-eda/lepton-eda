@@ -134,8 +134,8 @@ void
 schematic_selection_adapter_set_fill_angle1 (SchematicSelectionAdapter *adapter,
                                              int angle);
 void
-gschem_selection_adapter_set_fill_angle2 (SchematicSelectionAdapter *adapter, int angle);
-
+schematic_selection_adapter_set_fill_angle2 (SchematicSelectionAdapter *adapter,
+                                             int angle);
 void
 gschem_selection_adapter_set_fill_pitch1 (SchematicSelectionAdapter *adapter, int pitch);
 
