@@ -749,7 +749,7 @@ update_text_rotation_widget (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->rotatecb != NULL);
 
   if (widget->adapter != NULL) {
-    int angle = gschem_selection_adapter_get_text_rotation (widget->adapter);
+    int angle = schematic_selection_adapter_get_text_rotation (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->rotatecb),
                                      (gpointer) update_text_rotation_model,

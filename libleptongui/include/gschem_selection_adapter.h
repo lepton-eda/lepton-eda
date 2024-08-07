@@ -107,7 +107,7 @@ int
 schematic_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter);
