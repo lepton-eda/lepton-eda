@@ -786,7 +786,7 @@ schematic_selection_adapter_get_text_alignment (SchematicSelectionAdapter *adapt
  *  \retval others          The color of the selected objects
  */
 int
-gschem_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2232,7 +2232,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_TEXT_COLOR:
-      g_value_set_int (value, gschem_selection_adapter_get_text_color (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_text_color (adapter));
       break;
 
     case PROP_TEXT_ROTATION:

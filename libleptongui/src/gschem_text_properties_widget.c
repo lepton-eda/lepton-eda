@@ -627,7 +627,7 @@ update_text_color_widget (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->colorcb != NULL);
 
   if (widget->adapter != NULL) {
-    int color = gschem_selection_adapter_get_text_color (widget->adapter);
+    int color = schematic_selection_adapter_get_text_color (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->colorcb),
                                      (gpointer) update_text_color_model,
