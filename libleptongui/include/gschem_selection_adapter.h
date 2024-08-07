@@ -86,7 +86,7 @@ int
 schematic_selection_adapter_get_fill_width (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_line_type (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_line_type (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter);
