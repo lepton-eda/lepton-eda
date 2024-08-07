@@ -41,7 +41,7 @@ libleptongui_la_SOURCES = \
 	pin_type_combo.c \
 	gschem_rotation_combo.c \
 	selection_adapter.c \
-	gschem_show_hide_text_widget.c \
+	show_hide_text_widget.c \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_widget.c \
 	gschem_translate_widget.c \

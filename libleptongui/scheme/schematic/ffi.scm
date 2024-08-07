@@ -877,7 +877,7 @@
 ;;; find_text_widget.c
 (define-lff find_text_dialog void '(*))
 
-;;; gschem_show_hide_text_widget.c
+;;; show_hide_text_widget.c
 (define-lff hide_text_dialog void '(*))
 (define-lff show_text_dialog void '(*))
 
