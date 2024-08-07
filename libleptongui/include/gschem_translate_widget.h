@@ -58,7 +58,7 @@ GType
 schematic_translate_widget_get_type ();
 
 int
-gschem_translate_widget_get_value (SchematicTranslateWidget *widget);
+schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
 
 void
 gschem_translate_widget_set_label_text (SchematicTranslateWidget *widget, const char *text);

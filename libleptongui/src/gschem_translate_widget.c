@@ -125,7 +125,7 @@ schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget)
  *  \return The value in the entry
  */
 int
-gschem_translate_widget_get_value (SchematicTranslateWidget *widget)
+schematic_translate_widget_get_value (SchematicTranslateWidget *widget)
 {
   int value = 0;
 
@@ -342,7 +342,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_VALUE:
-      g_value_set_int (value, gschem_translate_widget_get_value (widget));
+      g_value_set_int (value, schematic_translate_widget_get_value (widget));
       break;
 
     default:

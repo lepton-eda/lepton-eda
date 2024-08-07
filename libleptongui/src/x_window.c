@@ -280,7 +280,7 @@ x_window_translate_response (SchematicTranslateWidget *widget,
 {
   if (response == GTK_RESPONSE_OK) {
     o_component_translate_all (w_current,
-                               gschem_translate_widget_get_value (widget));
+                               schematic_translate_widget_get_value (widget));
   }
 
   i_set_state (w_current, SELECT);
