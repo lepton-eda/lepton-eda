@@ -168,7 +168,7 @@ dialog_response_apply (NewText *dialog)
     size = value;
   }
 
-  value = gschem_rotation_combo_get_angle (dialog->rotatecb);
+  value = schematic_rotation_combo_get_angle (dialog->rotatecb);
   if (value >= 0) {
     rotate = value;
   }

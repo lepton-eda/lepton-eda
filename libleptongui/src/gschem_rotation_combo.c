@@ -117,7 +117,7 @@ schematic_rotation_combo_new ()
  *  \return The currently selected rotation angle
  */
 int
-gschem_rotation_combo_get_angle (GtkWidget *widget)
+schematic_rotation_combo_get_angle (GtkWidget *widget)
 {
   int index = -1;
   GtkTreeIter iter;

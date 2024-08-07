@@ -1167,7 +1167,9 @@ x_rc_parse_gschem (LeptonToplevel *toplevel);
 GtkWidget*
 schematic_rotation_combo_new ();
 
-int gschem_rotation_combo_get_angle (GtkWidget *widget);
+int
+schematic_rotation_combo_get_angle (GtkWidget *widget);
+
 void gschem_rotation_combo_set_angle (GtkWidget *widget, int angle);
 
 /* x_stroke.c */
