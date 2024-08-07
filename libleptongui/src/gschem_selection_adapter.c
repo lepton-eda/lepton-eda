@@ -53,26 +53,26 @@ enum
 
 
 
-G_DEFINE_TYPE (GschemSelectionAdapter,
-               gschem_selection_adapter,
+G_DEFINE_TYPE (SchematicSelectionAdapter,
+               schematic_selection_adapter,
                G_TYPE_OBJECT);
 
 
 static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass);
+schematic_selection_adapter_class_init (SchematicSelectionAdapterClass *klass);
 
 static GList*
-get_selection_iter (GschemSelectionAdapter *adapter);
+get_selection_iter (SchematicSelectionAdapter *adapter);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_selection_adapter_init (GschemSelectionAdapter *adapter);
+schematic_selection_adapter_init (SchematicSelectionAdapter *adapter);
 
 static void
 selection_changed (LeptonList *selection,
-                   GschemSelectionAdapter *adapter);
+                   SchematicSelectionAdapter *adapter);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
@@ -87,7 +87,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \retval others          The cap style of the selected objects
  */
 int
-gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter)
 {
   gint cap_style = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -135,7 +135,7 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
  *  \retval others          The dash length of the selected objects
  */
 int
-gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter)
 {
   gint dash_length = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -183,7 +183,7 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
  *  \retval others          The dash spacing of the selected objects
  */
 int
-gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter)
 {
   gint dash_space = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -231,7 +231,7 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
  *  \retval others          The fill line angle of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter)
 {
   gint fill_angle = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -282,7 +282,7 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
  *  \retval others          The fill line angle of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_angle2 (SchematicSelectionAdapter *adapter)
 {
   gint fill_angle = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -333,7 +333,7 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
  *  \retval others          The fill line pitch of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_pitch1 (SchematicSelectionAdapter *adapter)
 {
   gint fill_pitch = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -384,7 +384,7 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
  *  \retval others          The fill line pitch of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_pitch2 (SchematicSelectionAdapter *adapter)
 {
   gint fill_pitch = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -435,7 +435,7 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
  *  \retval others          The fill type of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_type (SchematicSelectionAdapter *adapter)
 {
   gint fill_type = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -486,7 +486,7 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
  *  \retval others          The fill line width of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_fill_width (SchematicSelectionAdapter *adapter)
 {
   gint fill_width = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -537,7 +537,7 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
  *  \retval others          The line type of the selected objects
  */
 int
-gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_line_type (SchematicSelectionAdapter *adapter)
 {
   gint line_type = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -585,7 +585,7 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
  *  \retval others          The width of the selected objects
  */
 int
-gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter)
 {
   gint line_width = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -633,7 +633,7 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
  *  \retval others          The color of the selected objects
  */
 int
-gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -690,7 +690,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
  *  \retval others          The pin type of the selected objects
  */
 int
-gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter)
 {
   int type = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -730,7 +730,7 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
  *  \return The current page selection.
  */
 LeptonSelection*
-gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_selection (SchematicSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
 
@@ -748,7 +748,7 @@ gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter)
  *  \retval others          The rotation of the selected objects
  */
 int
-gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_text_alignment (SchematicSelectionAdapter *adapter)
 {
   gint alignment = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -786,7 +786,7 @@ gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
  *  \retval others          The color of the selected objects
  */
 int
-gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -829,7 +829,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
  *  \retval others          The rotation of the selected objects
  */
 int
-gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapter)
 {
   gint angle = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -867,7 +867,7 @@ gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
  *  \retval others          The rotation of the selected objects
  */
 int
-gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter)
 {
   gint size = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -903,7 +903,7 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
  *  \retval non-NULL  The content string of the selected text object [transfer none]
  */
 const char*
-gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter)
 {
   const char *string = NULL;
   GList *iter = get_selection_iter (adapter);
@@ -936,7 +936,7 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
  *  \return The liblepton toplevel instance.
  */
 LeptonToplevel*
-gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter)
+gschem_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
 
@@ -945,25 +945,25 @@ gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Create a new instance of the GschemSelectionAdapter
+/*! \brief Create a new instance of the SchematicSelectionAdapter
  *
- *  \return A new instance of the GschemSelectionAdapter
+ *  \return A new instance of the SchematicSelectionAdapter
  */
-GschemSelectionAdapter*
+SchematicSelectionAdapter*
 gschem_selection_adapter_new ()
 {
-  return GSCHEM_SELECTION_ADAPTER (g_object_new (GSCHEM_TYPE_SELECTION_ADAPTER, NULL));
+  return SCHEMATIC_SELECTION_ADAPTER (g_object_new (SCHEMATIC_TYPE_SELECTION_ADAPTER, NULL));
 }
 
 
 
 /*! \brief Set the first fill angle in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] angle The new angle.
  */
 void
-gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int angle)
+gschem_selection_adapter_set_fill_angle1 (SchematicSelectionAdapter *adapter, int angle)
 {
   GList *iter;
 
@@ -1018,11 +1018,11 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
 
 /*! \brief Set the fill angle 2 in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] angle The new angle.
  */
 void
-gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int angle)
+gschem_selection_adapter_set_fill_angle2 (SchematicSelectionAdapter *adapter, int angle)
 {
   GList *iter;
 
@@ -1079,11 +1079,11 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
 
 /*! \brief Set the fill pitch 1 in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] pitch The new fill pitch.
  */
 void
-gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int pitch)
+gschem_selection_adapter_set_fill_pitch1 (SchematicSelectionAdapter *adapter, int pitch)
 {
   GList *iter;
 
@@ -1138,11 +1138,11 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
 
 /*! \brief Set the fill pitch 2 in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] pitch The new fill pitch.
  */
 void
-gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int pitch)
+gschem_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter, int pitch)
 {
   GList *iter;
 
@@ -1199,11 +1199,11 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
 
 /*! \brief Set the fill type in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] fill_type The new fill type.
  */
 void
-gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fill_type)
+gschem_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter, int fill_type)
 {
   GList *iter;
 
@@ -1264,11 +1264,11 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
 
 /*! \brief Set the fill width in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] fill_width The new fill width.
  */
 void
-gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fill_width)
+gschem_selection_adapter_set_fill_width (SchematicSelectionAdapter *adapter, int fill_width)
 {
   GList *iter;
 
@@ -1324,11 +1324,11 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
 
 /*! \brief Set the line type in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] line_type The new line type.
  */
 void
-gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int line_type)
+gschem_selection_adapter_set_line_type (SchematicSelectionAdapter *adapter, int line_type)
 {
   GList *iter;
 
@@ -1383,11 +1383,11 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
 
 /*! \brief Set the line width in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] line_width The new line width.
  */
 void
-gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int line_width)
+gschem_selection_adapter_set_line_width (SchematicSelectionAdapter *adapter, int line_width)
 {
   GList *iter;
 
@@ -1440,11 +1440,11 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
 
 /*! \brief Set the dash length in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] dash_length The new dash length value.
  */
 void
-gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int dash_length)
+gschem_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter, int dash_length)
 {
   GList *iter;
 
@@ -1497,11 +1497,11 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
 
 /*! \brief Set the dash spacing in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] dash_space The new dash spacing value.
  */
 void
-gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int dash_space)
+gschem_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter, int dash_space)
 {
   GList *iter;
 
@@ -1558,7 +1558,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
  *  \param [in] cap_style
  */
 void
-gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap_style)
+gschem_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter, int cap_style)
 {
   GList *iter;
 
@@ -1615,7 +1615,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
  *  \param [in] color
  */
 void
-gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color)
+gschem_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter, int color)
 {
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color_id_valid (color));
@@ -1633,11 +1633,11 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
 
 /*! \brief Set the pin type in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] type The new pin type.
  */
 void
-gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type)
+gschem_selection_adapter_set_pin_type (SchematicSelectionAdapter *adapter, int type)
 {
   GList *iter;
 
@@ -1672,7 +1672,7 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
  *  \param [in] selection
  */
 void
-gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
                                         LeptonSelection *selection)
 {
   g_return_if_fail (adapter != NULL);
@@ -1715,11 +1715,11 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
 
 /*! \brief Set the text alignment in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] alignment The new text alignment.
  */
 void
-gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, int alignment)
+gschem_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter, int alignment)
 {
   GList *iter;
 
@@ -1754,7 +1754,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
  *  \param [in] color
  */
 void
-gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int color)
+gschem_selection_adapter_set_text_color (SchematicSelectionAdapter *adapter, int color)
 {
   GList *iter;
 
@@ -1788,7 +1788,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
  *  \param [in] angle
  */
 void
-gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int angle)
+gschem_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapter, int angle)
 {
   GList *iter;
 
@@ -1823,7 +1823,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
  *  \param [in] size
  */
 void
-gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int size)
+gschem_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter, int size)
 {
   GList *iter;
 
@@ -1854,12 +1854,12 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
 
 /*! \brief Set the text string in the selection
  *
- *  \param [in] adapter The #GschemSelectionAdapter structure.
+ *  \param [in] adapter The #SchematicSelectionAdapter structure.
  *  \param [in] string The new text string.
  *  \param [in] w_current The current #SchematicWindow object.
  */
 void
-gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
                                           const char *string,
                                           SchematicWindow *w_current)
 {
@@ -1906,7 +1906,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter,
  *  \param [in] toplevel
  */
 void
-gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_toplevel (SchematicSelectionAdapter *adapter,
                                        LeptonToplevel *toplevel)
 {
   g_return_if_fail (adapter != NULL);
@@ -1917,12 +1917,12 @@ gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
 
 
 /*! \private
- *  \brief Initialize GschemSelectionAdapter class
+ *  \brief Initialize SchematicSelectionAdapter class
  *
- *  \param [in] klass The class for the GschemSelectionAdapter
+ *  \param [in] klass The class for the SchematicSelectionAdapter
  */
 static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
+schematic_selection_adapter_class_init (SchematicSelectionAdapterClass *klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -2148,7 +2148,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
  *  \return an iterator for the selection or NULL in none
  */
 static GList*
-get_selection_iter (GschemSelectionAdapter *adapter)
+get_selection_iter (SchematicSelectionAdapter *adapter)
 {
   GList *iter = NULL;
   LeptonSelection *selection = gschem_selection_adapter_get_selection (adapter);
@@ -2172,7 +2172,7 @@ get_selection_iter (GschemSelectionAdapter *adapter)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
+  SchematicSelectionAdapter *adapter = SCHEMATIC_SELECTION_ADAPTER (object);
 
   switch (param_id) {
     case PROP_CAP_STYLE:
@@ -2254,12 +2254,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 
 
-/*! \brief Initialize #GschemSelectionAdapter instance
+/*! \brief Initialize #SchematicSelectionAdapter instance
  *
- *  \param [in,out] adapter The #GschemSelectionAdapter instance.
+ *  \param [in,out] adapter The #SchematicSelectionAdapter instance.
  */
 static void
-gschem_selection_adapter_init (GschemSelectionAdapter *adapter)
+schematic_selection_adapter_init (SchematicSelectionAdapter *adapter)
 {
 }
 
@@ -2277,7 +2277,7 @@ gschem_selection_adapter_init (GschemSelectionAdapter *adapter)
  */
 static void
 selection_changed (LeptonList *selection,
-                   GschemSelectionAdapter *adapter)
+                   SchematicSelectionAdapter *adapter)
 {
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (selection != NULL);
@@ -2315,7 +2315,7 @@ selection_changed (LeptonList *selection,
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
+  SchematicSelectionAdapter *adapter = SCHEMATIC_SELECTION_ADAPTER (object);
 
   switch (param_id) {
     case PROP_CAP_STYLE:

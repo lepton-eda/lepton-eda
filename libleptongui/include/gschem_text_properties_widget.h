@@ -39,7 +39,7 @@ struct _GschemTextPropertiesWidgetClass {
 struct _GschemTextPropertiesWidget {
   SchematicBin parent;
 
-  GschemSelectionAdapter *adapter;
+  SchematicSelectionAdapter *adapter;
 
   SchematicWindow *w_current;
 

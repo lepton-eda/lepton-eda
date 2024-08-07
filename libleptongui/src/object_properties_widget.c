@@ -74,7 +74,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 static void
 set_selection_adapter (SchematicObjectPropertiesWidget *dialog,
-                       GschemSelectionAdapter *adapter);
+                       SchematicSelectionAdapter *adapter);
 static void
 update_cap_style_model (GtkWidget *widget,
                         SchematicObjectPropertiesWidget *dialog);
@@ -540,11 +540,11 @@ notify_schematic_window (SchematicObjectPropertiesWidget *dialog)
  *  \brief Set the selection that this dialog manipulates
  *
  *  \param [in,out] dialog  This dialog.
- *  \param [in]     adapter The #GschemSelectionAdapter instance to manipulate.
+ *  \param [in]     adapter The #SchematicSelectionAdapter instance to manipulate.
  */
 static void
 set_selection_adapter (SchematicObjectPropertiesWidget *dialog,
-                       GschemSelectionAdapter *adapter)
+                       SchematicSelectionAdapter *adapter)
 {
   g_return_if_fail (dialog != NULL);
 

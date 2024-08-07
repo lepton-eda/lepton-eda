@@ -41,7 +41,7 @@ struct _SchematicObjectPropertiesWidget
 {
   SchematicBin parent;
 
-  GschemSelectionAdapter *adapter;
+  SchematicSelectionAdapter *adapter;
 
   SchematicWindow *w_current;
 

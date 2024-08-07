@@ -67,8 +67,8 @@ static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-set_selection_adapter (GschemTextPropertiesWidget *widget, GschemSelectionAdapter *adapter);
-
+set_selection_adapter (GschemTextPropertiesWidget *widget,
+                       SchematicSelectionAdapter *adapter);
 static void
 update_text_alignment_model (GschemTextPropertiesWidget *widget);
 
@@ -475,10 +475,11 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \brief Set the selection that this widget manipulates
  *
  *  \param [in,out] widget  The #GschemTextPropertiesWidget widget.
- *  \param [in]     adapter The #GschemSelectionAdapter instance to manipulate.
+ *  \param [in]     adapter The #SchematicSelectionAdapter instance to manipulate.
  */
 static void
-set_selection_adapter (GschemTextPropertiesWidget *widget, GschemSelectionAdapter *adapter)
+set_selection_adapter (GschemTextPropertiesWidget *widget,
+                       SchematicSelectionAdapter *adapter)
 {
   g_return_if_fail (widget != NULL);
 

@@ -33,21 +33,21 @@
 
 
 
-#define GSCHEM_TYPE_SELECTION_ADAPTER           (gschem_selection_adapter_get_type())
-#define GSCHEM_SELECTION_ADAPTER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_SELECTION_ADAPTER, GschemSelectionAdapter))
-#define GSCHEM_SELECTION_ADAPTER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_SELECTION_ADAPTER, GschemSelectionAdapterClass))
-#define GSCHEM_IS_SELECTION_ADAPTER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_SELECTION_ADAPTER))
-#define GSCHEM_SELECTION_ADAPTER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_SELECTION_ADAPTER, GschemSelectionAdapterClass))
+#define SCHEMATIC_TYPE_SELECTION_ADAPTER           (schematic_selection_adapter_get_type())
+#define SCHEMATIC_SELECTION_ADAPTER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_SELECTION_ADAPTER, SchematicSelectionAdapter))
+#define SCHEMATIC_SELECTION_ADAPTER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_SELECTION_ADAPTER, SchematicSelectionAdapterClass))
+#define SCHEMATIC_IS_SELECTION_ADAPTER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_SELECTION_ADAPTER))
+#define SCHEMATIC_SELECTION_ADAPTER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_SELECTION_ADAPTER, SchematicSelectionAdapterClass))
 
-typedef struct _GschemSelectionAdapterClass GschemSelectionAdapterClass;
-typedef struct _GschemSelectionAdapter GschemSelectionAdapter;
+typedef struct _SchematicSelectionAdapterClass SchematicSelectionAdapterClass;
+typedef struct _SchematicSelectionAdapter SchematicSelectionAdapter;
 
-struct _GschemSelectionAdapterClass
+struct _SchematicSelectionAdapterClass
 {
   GObjectClass parent_class;
 };
 
-struct _GschemSelectionAdapter
+struct _SchematicSelectionAdapter
 {
   GObject parent;
 
@@ -56,130 +56,130 @@ struct _GschemSelectionAdapter
 };
 
 GType
-gschem_selection_adapter_get_type();
+schematic_selection_adapter_get_type();
 
 int
-gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_cap_style (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_angle2 (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_pitch1 (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_pitch2 (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_type (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_fill_width (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_line_type (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_line_width (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter);
 
 LeptonSelection *
-gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_selection (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_text_alignment (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter);
 
 const char*
-gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter);
 
 LeptonToplevel*
-gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter);
+gschem_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter);
 
-GschemSelectionAdapter*
+SchematicSelectionAdapter*
 gschem_selection_adapter_new ();
 
 void
-gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap_style);
+gschem_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter, int cap_style);
 
 void
-gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int dash_length);
+gschem_selection_adapter_set_dash_length (SchematicSelectionAdapter *adapter, int dash_length);
 
 void
-gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int dash_space);
+gschem_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter, int dash_space);
 
 void
-gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int angle);
+gschem_selection_adapter_set_fill_angle1 (SchematicSelectionAdapter *adapter, int angle);
 
 void
-gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int angle);
+gschem_selection_adapter_set_fill_angle2 (SchematicSelectionAdapter *adapter, int angle);
 
 void
-gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int pitch);
+gschem_selection_adapter_set_fill_pitch1 (SchematicSelectionAdapter *adapter, int pitch);
 
 void
-gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int pitch);
+gschem_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter, int pitch);
 
 void
-gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int line_type);
+gschem_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter, int line_type);
 
 void
-gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int line_width);
+gschem_selection_adapter_set_fill_width (SchematicSelectionAdapter *adapter, int line_width);
 
 void
-gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int line_type);
+gschem_selection_adapter_set_line_type (SchematicSelectionAdapter *adapter, int line_type);
 
 void
-gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int line_width);
+gschem_selection_adapter_set_line_width (SchematicSelectionAdapter *adapter, int line_width);
 
 void
-gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color);
+gschem_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter, int color);
 
 void
-gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type);
+gschem_selection_adapter_set_pin_type (SchematicSelectionAdapter *adapter, int type);
 
 void
-gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
                                         LeptonSelection *selection);
 
 void
-gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int color);
+gschem_selection_adapter_set_text_color (SchematicSelectionAdapter *adapter, int color);
 
 void
-gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, int alignment);
+gschem_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter, int alignment);
 
 void
-gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int angle);
+gschem_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapter, int angle);
 
 void
-gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int size);
+gschem_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter, int size);
 
 void
-gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
                                           const char *string,
                                           SchematicWindow *w_current);
 void
-gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
+gschem_selection_adapter_set_toplevel (SchematicSelectionAdapter *adapter,
                                        LeptonToplevel *toplevel);

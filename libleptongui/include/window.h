@@ -120,7 +120,7 @@ struct st_schematic_window {
   /* ----------------------------------------- */
   /* An adapter for manipulating the selection */
   /* ----------------------------------------- */
-  GschemSelectionAdapter *selection_adapter;
+  SchematicSelectionAdapter *selection_adapter;
 
   /* --------------------------------- */
   /* Manager for "Open Recent..." menu */
@@ -261,7 +261,7 @@ schematic_window_get_fill_width_list_store (SchematicWindow *w_current);
 GtkListStore*
 schematic_window_get_line_width_list_store (SchematicWindow *w_current);
 
-GschemSelectionAdapter*
+SchematicSelectionAdapter*
 schematic_window_get_selection_adapter (SchematicWindow *w_current);
 
 GtkListStore*
