@@ -119,7 +119,7 @@ LeptonToplevel*
 schematic_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter);
 
 SchematicSelectionAdapter*
-gschem_selection_adapter_new ();
+schematic_selection_adapter_new ();
 
 void
 gschem_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter, int cap_style);

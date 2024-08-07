@@ -950,7 +950,7 @@ schematic_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter)
  *  \return A new instance of the SchematicSelectionAdapter
  */
 SchematicSelectionAdapter*
-gschem_selection_adapter_new ()
+schematic_selection_adapter_new ()
 {
   return SCHEMATIC_SELECTION_ADAPTER (g_object_new (SCHEMATIC_TYPE_SELECTION_ADAPTER, NULL));
 }
