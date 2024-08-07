@@ -143,7 +143,8 @@ schematic_translate_widget_get_value (SchematicTranslateWidget *widget)
  *  \param [in]     text The new label text.
  */
 void
-gschem_translate_widget_set_label_text (SchematicTranslateWidget *widget, const char *text)
+schematic_translate_widget_set_label_text (SchematicTranslateWidget *widget,
+                                           const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -441,7 +442,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_LABEL_TEXT:
-      gschem_translate_widget_set_label_text (widget, g_value_get_string (value));
+      schematic_translate_widget_set_label_text (widget, g_value_get_string (value));
       break;
 
     case PROP_VALUE:
