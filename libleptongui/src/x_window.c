@@ -948,7 +948,7 @@ void
 schematic_window_show_translate_widget (SchematicWindow *w_current)
 {
   gtk_widget_show (w_current->translate_widget);
-  gtk_widget_grab_focus (gschem_translate_widget_get_entry (SCHEMATIC_TRANSLATE_WIDGET (w_current->translate_widget)));
+  gtk_widget_grab_focus (schematic_translate_widget_get_entry (SCHEMATIC_TRANSLATE_WIDGET (w_current->translate_widget)));
 }
 
 

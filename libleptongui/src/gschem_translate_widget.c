@@ -90,7 +90,7 @@ notify_entry_text (GtkWidget *entry,
  *  \return The entry
  */
 GtkWidget*
-gschem_translate_widget_get_entry (SchematicTranslateWidget *widget)
+schematic_translate_widget_get_entry (SchematicTranslateWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
