@@ -1558,7 +1558,8 @@ gschem_selection_adapter_set_dash_space (SchematicSelectionAdapter *adapter, int
  *  \param [in] cap_style
  */
 void
-gschem_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter, int cap_style)
+schematic_selection_adapter_set_cap_style (SchematicSelectionAdapter *adapter,
+                                           int cap_style)
 {
   GList *iter;
 
@@ -2319,7 +2320,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_CAP_STYLE:
-      gschem_selection_adapter_set_cap_style (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_cap_style (adapter, g_value_get_int (value));
       break;
 
     case PROP_DASH_LENGTH:

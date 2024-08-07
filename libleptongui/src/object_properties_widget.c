@@ -645,7 +645,7 @@ update_cap_style_model (GtkWidget *widget,
     cap_style = x_linecapcb_get_index (dialog->line_end);
 
     if (cap_style >= 0) {
-      gschem_selection_adapter_set_cap_style (dialog->adapter, cap_style);
+      schematic_selection_adapter_set_cap_style (dialog->adapter, cap_style);
     }
   }
 }
