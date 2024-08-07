@@ -575,7 +575,7 @@ update_text_alignment_widget (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->aligncb != NULL);
 
   if (widget->adapter != NULL) {
-    int alignment = gschem_selection_adapter_get_text_alignment (widget->adapter);
+    int alignment = schematic_selection_adapter_get_text_alignment (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->aligncb),
                                      (gpointer) update_text_alignment_model,

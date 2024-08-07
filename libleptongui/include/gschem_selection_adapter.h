@@ -101,7 +101,7 @@ LeptonSelection *
 schematic_selection_adapter_get_selection (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_alignment (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_text_alignment (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_text_color (SchematicSelectionAdapter *adapter);
