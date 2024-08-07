@@ -231,7 +231,7 @@ schematic_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter)
  *  \retval others          The fill line angle of the selected objects
  */
 int
-gschem_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter)
 {
   gint fill_angle = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2188,7 +2188,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_FILL_ANGLE1:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_angle1 (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_fill_angle1 (adapter));
       break;
 
     case PROP_FILL_ANGLE2:

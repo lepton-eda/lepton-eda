@@ -68,7 +68,7 @@ int
 schematic_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_fill_angle1 (SchematicSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_fill_angle2 (SchematicSelectionAdapter *adapter);
