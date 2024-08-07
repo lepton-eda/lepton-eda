@@ -42,7 +42,7 @@ libleptongui_la_SOURCES = \
 	rotation_combo.c \
 	selection_adapter.c \
 	show_hide_text_widget.c \
-	gschem_swatch_column_renderer.c \
+	swatch_column_renderer.c \
 	gschem_text_properties_widget.c \
 	gschem_translate_widget.c \
 	i_basic.c \

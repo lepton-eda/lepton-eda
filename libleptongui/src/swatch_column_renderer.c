@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_swatch_column_renderer.c
+ * \file swatch_column_renderer.c
  *
  * \brief A cell renderer for color swatches.
  */

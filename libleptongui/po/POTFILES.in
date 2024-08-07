@@ -35,7 +35,7 @@ libleptongui/src/pin_type_combo.c
 libleptongui/src/rotation_combo.c
 libleptongui/src/selection_adapter.c
 libleptongui/src/show_hide_text_widget.c
-libleptongui/src/gschem_swatch_column_renderer.c
+libleptongui/src/swatch_column_renderer.c
 libleptongui/src/gschem_text_properties_widget.c
 libleptongui/src/gschem_translate_widget.c
 libleptongui/src/i_basic.c
