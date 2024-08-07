@@ -203,7 +203,7 @@ schematic_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget)
  *  \return The label text
  */
 const char*
-gschem_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget)
+schematic_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -434,7 +434,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_LABEL_TEXT:
-      g_value_set_string (value, gschem_show_hide_text_widget_get_label_text (widget));
+      g_value_set_string (value, schematic_show_hide_text_widget_get_label_text (widget));
       break;
 
     case PROP_TEXT_STRING:
