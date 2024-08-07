@@ -174,7 +174,7 @@ schematic_show_hide_text_widget_class_init (SchematicShowHideTextWidgetClass *kl
  *  \return The button label text
  */
 const char*
-gschem_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *widget)
+schematic_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
@@ -430,7 +430,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
   switch (param_id) {
     case PROP_BUTTON_TEXT:
-      g_value_set_string (value, gschem_show_hide_text_widget_get_button_text (widget));
+      g_value_set_string (value, schematic_show_hide_text_widget_get_button_text (widget));
       break;
 
     case PROP_LABEL_TEXT:
