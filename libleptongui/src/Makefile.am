@@ -43,7 +43,7 @@ libleptongui_la_SOURCES = \
 	selection_adapter.c \
 	show_hide_text_widget.c \
 	swatch_column_renderer.c \
-	gschem_text_properties_widget.c \
+	text_properties_widget.c \
 	gschem_translate_widget.c \
 	i_basic.c \
 	i_callbacks.c \

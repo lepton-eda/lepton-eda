@@ -38,7 +38,7 @@ noinst_HEADERS = \
 	show_hide_text_widget.h \
 	gschem_struct.h \
 	swatch_column_renderer.h \
-	gschem_text_properties_widget.h \
+	text_properties_widget.h \
 	gschem_translate_widget.h \
 	color_edit_widget.h \
 	font_select_widget.h \
