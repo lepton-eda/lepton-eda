@@ -556,7 +556,7 @@ update_text_alignment_model (GschemTextPropertiesWidget *widget)
     int alignment = schematic_alignment_combo_get_align (widget->aligncb);
 
     if (alignment >= 0) {
-      gschem_selection_adapter_set_text_alignment (widget->adapter, alignment);
+      schematic_selection_adapter_set_text_alignment (widget->adapter, alignment);
     }
   }
 }

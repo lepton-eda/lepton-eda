@@ -1732,7 +1732,8 @@ schematic_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
  *  \param [in] alignment The new text alignment.
  */
 void
-gschem_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter, int alignment)
+schematic_selection_adapter_set_text_alignment (SchematicSelectionAdapter *adapter,
+                                                int alignment)
 {
   GList *iter;
 
@@ -2385,7 +2386,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_TEXT_ALIGNMENT:
-      gschem_selection_adapter_set_text_alignment (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_text_alignment (adapter, g_value_get_int (value));
       break;
 
     case PROP_TEXT_COLOR:
