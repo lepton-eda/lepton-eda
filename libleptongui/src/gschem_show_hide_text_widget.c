@@ -88,10 +88,8 @@ hide_text_dialog (SchematicWindow *w_current)
 
   if (lepton_object_is_text (object))
   {
-    gschem_show_hide_text_widget_set_text_string(
-            SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget),
-            lepton_text_object_get_string (object)
-            );
+    schematic_show_hide_text_widget_set_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget),
+                                                     lepton_text_object_get_string (object));
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->hide_text_widget));
@@ -114,10 +112,8 @@ show_text_dialog (SchematicWindow *w_current)
 
   if (lepton_object_is_text (object))
   {
-    gschem_show_hide_text_widget_set_text_string(
-            SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget),
-            lepton_text_object_get_string (object)
-            );
+    schematic_show_hide_text_widget_set_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget),
+                                                     lepton_text_object_get_string (object));
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->show_text_widget));
@@ -336,7 +332,8 @@ schematic_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *wid
  *  \param [in]     str  The find text string.
  */
 void
-gschem_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget, const char *str)
+schematic_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget,
+                                                 const char *str)
 {
   g_return_if_fail (widget != NULL);
 
@@ -481,7 +478,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_TEXT_STRING:
-      gschem_show_hide_text_widget_set_text_string (widget, g_value_get_string (value));
+      schematic_show_hide_text_widget_set_text_string (widget, g_value_get_string (value));
       break;
 
     default:

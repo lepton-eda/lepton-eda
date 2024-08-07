@@ -70,4 +70,5 @@ void
 schematic_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget,
                                                 const char *text);
 void
-gschem_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget, const char *str);
+schematic_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget,
+                                                 const char *str);
