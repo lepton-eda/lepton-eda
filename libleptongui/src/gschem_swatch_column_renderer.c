@@ -41,8 +41,8 @@ enum
 
 
 
-G_DEFINE_TYPE (GschemSwatchColumnRenderer,
-               gschem_swatch_column_renderer,
+G_DEFINE_TYPE (SchematicSwatchColumnRenderer,
+               schematic_swatch_column_renderer,
                GTK_TYPE_CELL_RENDERER_TEXT);
 
 
@@ -92,7 +92,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (object);
+  SchematicSwatchColumnRenderer *swatch = SCHEMATIC_SWATCH_COLUMN_RENDERER (object);
 
   switch (param_id) {
     case PROP_COLOR: {
@@ -130,7 +130,7 @@ get_property (GObject    *object,
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-gschem_swatch_column_renderer_class_init (GschemSwatchColumnRendererClass *klass)
+schematic_swatch_column_renderer_class_init (SchematicSwatchColumnRendererClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -166,7 +166,7 @@ gschem_swatch_column_renderer_class_init (GschemSwatchColumnRendererClass *klass
  *  \param [in,out] swatch The swatch cell renderer
  */
 static void
-gschem_swatch_column_renderer_init (GschemSwatchColumnRenderer *swatch)
+schematic_swatch_column_renderer_init (SchematicSwatchColumnRenderer *swatch)
 {
 #ifdef ENABLE_GTK3
   swatch->color.red = 0.0;
@@ -238,7 +238,7 @@ render (GtkCellRenderer      *cell,
         GtkCellRendererState flags)
 #endif
 {
-  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (cell);
+  SchematicSwatchColumnRenderer *swatch = SCHEMATIC_SWATCH_COLUMN_RENDERER (cell);
 
   if (swatch->enabled) {
     double offset = SWATCH_BORDER_WIDTH / 2.0;
@@ -322,9 +322,11 @@ render (GtkCellRenderer      *cell,
  */
 static void
 #ifdef ENABLE_GTK3
-set_color (GschemSwatchColumnRenderer *swatch, const GdkRGBA *color)
+set_color (SchematicSwatchColumnRenderer *swatch,
+           const GdkRGBA *color)
 #else
-set_color (GschemSwatchColumnRenderer *swatch, const GdkColor *color)
+set_color (SchematicSwatchColumnRenderer *swatch,
+           const GdkColor *color)
 #endif
 {
   if (color) {
@@ -353,7 +355,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (object);
+  SchematicSwatchColumnRenderer *swatch = SCHEMATIC_SWATCH_COLUMN_RENDERER (object);
 
   switch (param_id) {
     case PROP_COLOR:
@@ -378,10 +380,10 @@ set_property (GObject      *object,
 
 /*! \brief Create a swatch cell renderer
  */
-GschemSwatchColumnRenderer*
+SchematicSwatchColumnRenderer*
 gschem_swatch_column_renderer_new()
 {
-  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (g_object_new (GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, NULL));
+  SchematicSwatchColumnRenderer *swatch = SCHEMATIC_SWATCH_COLUMN_RENDERER (g_object_new (SCHEMATIC_TYPE_SWATCH_COLUMN_RENDERER, NULL));
 
   return swatch;
 }
