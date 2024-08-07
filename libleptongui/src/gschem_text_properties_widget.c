@@ -132,7 +132,7 @@ schematic_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *wi
  *  \param [in] w_current The SchematicWindow structure
  */
 GtkWidget*
-gschem_text_properties_widget_new (SchematicWindow *w_current)
+schematic_text_properties_widget_new (SchematicWindow *w_current)
 {
   return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET,
                                    "schematic-window", w_current,

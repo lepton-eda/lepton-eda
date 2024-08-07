@@ -439,7 +439,7 @@
             schematic_viewport_set_world_right
             schematic_viewport_set_world_top
 
-            gschem_text_properties_widget_new
+            schematic_text_properties_widget_new
             text_edit_dialog
 
             text_input_dialog
@@ -781,7 +781,7 @@
 (define-lff schematic_viewport_set_world_top void (list '* int))
 
 ;;; gschem_text_properties_widget.c
-(define-lff gschem_text_properties_widget_new '* '(*))
+(define-lff schematic_text_properties_widget_new '* '(*))
 (define-lff text_edit_dialog void '(*))
 
 ;;; x_menus.c

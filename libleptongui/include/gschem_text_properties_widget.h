@@ -63,6 +63,6 @@ schematic_text_properties_widget_get_type ();
 G_BEGIN_DECLS
 
 GtkWidget*
-gschem_text_properties_widget_new (SchematicWindow *w_current);
+schematic_text_properties_widget_new (SchematicWindow *w_current);
 
 G_END_DECLS
