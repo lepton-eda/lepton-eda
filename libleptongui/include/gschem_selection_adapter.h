@@ -116,7 +116,7 @@ const char*
 schematic_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter);
 
 LeptonToplevel*
-gschem_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter);
 
 SchematicSelectionAdapter*
 gschem_selection_adapter_new ();

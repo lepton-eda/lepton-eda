@@ -936,7 +936,7 @@ schematic_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter)
  *  \return The liblepton toplevel instance.
  */
 LeptonToplevel*
-gschem_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_toplevel (SchematicSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
 
