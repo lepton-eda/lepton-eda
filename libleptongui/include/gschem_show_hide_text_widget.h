@@ -58,7 +58,7 @@ const char*
 schematic_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget);
 
 const char*
-gschem_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget);
+schematic_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget);
 
 GType
 schematic_show_hide_text_widget_get_type ();

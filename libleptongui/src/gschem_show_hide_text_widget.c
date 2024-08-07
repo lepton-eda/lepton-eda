@@ -218,7 +218,7 @@ schematic_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *wid
  *  \return The find text string
  */
 const char*
-gschem_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget)
+schematic_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -438,7 +438,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_TEXT_STRING:
-      g_value_set_string (value, gschem_show_hide_text_widget_get_text_string (widget));
+      g_value_set_string (value, schematic_show_hide_text_widget_get_text_string (widget));
       break;
 
     default:
