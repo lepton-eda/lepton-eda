@@ -19,7 +19,7 @@
  */
 /*! \file gschem_rotation_combo.c
  *
- *  \brief A GtkComboBox with the gschem text rotation.
+ *  \brief A GtkComboBox with the text rotation.
  */
 #include <config.h>
 
