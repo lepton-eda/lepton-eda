@@ -173,8 +173,8 @@ void
 schematic_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapter,
                                                int angle);
 void
-gschem_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter, int size);
-
+schematic_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter,
+                                           int size);
 void
 gschem_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
                                           const char *string,

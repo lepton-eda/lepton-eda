@@ -1839,7 +1839,8 @@ schematic_selection_adapter_set_text_rotation (SchematicSelectionAdapter *adapte
  *  \param [in] size
  */
 void
-gschem_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter, int size)
+schematic_selection_adapter_set_text_size (SchematicSelectionAdapter *adapter,
+                                           int size)
 {
   GList *iter;
 
@@ -2399,7 +2400,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_TEXT_SIZE:
-      gschem_selection_adapter_set_text_size (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_text_size (adapter, g_value_get_int (value));
       break;
 
     /* Currently, the text string cannot be set using the gobject property
