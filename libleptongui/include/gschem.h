@@ -56,7 +56,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "object_properties_widget.h"
 #include "options_widget.h"
 #include "text_properties_widget.h"
-#include "gschem_translate_widget.h"
+#include "translate_widget.h"
 
 #include "color_edit_widget.h"
 #include "font_select_widget.h"

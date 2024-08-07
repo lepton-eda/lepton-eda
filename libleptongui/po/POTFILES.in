@@ -37,7 +37,7 @@ libleptongui/src/selection_adapter.c
 libleptongui/src/show_hide_text_widget.c
 libleptongui/src/swatch_column_renderer.c
 libleptongui/src/text_properties_widget.c
-libleptongui/src/gschem_translate_widget.c
+libleptongui/src/translate_widget.c
 libleptongui/src/i_basic.c
 libleptongui/src/i_callbacks.c
 libleptongui/src/i_vars.c
