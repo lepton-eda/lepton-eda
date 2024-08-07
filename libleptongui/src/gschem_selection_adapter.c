@@ -963,7 +963,8 @@ schematic_selection_adapter_new ()
  *  \param [in] angle The new angle.
  */
 void
-gschem_selection_adapter_set_fill_angle1 (SchematicSelectionAdapter *adapter, int angle)
+schematic_selection_adapter_set_fill_angle1 (SchematicSelectionAdapter *adapter,
+                                             int angle)
 {
   GList *iter;
 
@@ -2334,7 +2335,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FILL_ANGLE1:
-      gschem_selection_adapter_set_fill_angle1 (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_fill_angle1 (adapter, g_value_get_int (value));
       break;
 
     case PROP_FILL_ANGLE2:
