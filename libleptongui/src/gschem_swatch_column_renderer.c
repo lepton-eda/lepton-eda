@@ -381,7 +381,7 @@ set_property (GObject      *object,
 /*! \brief Create a swatch cell renderer
  */
 SchematicSwatchColumnRenderer*
-gschem_swatch_column_renderer_new()
+schematic_swatch_column_renderer_new ()
 {
   SchematicSwatchColumnRenderer *swatch = SCHEMATIC_SWATCH_COLUMN_RENDERER (g_object_new (SCHEMATIC_TYPE_SWATCH_COLUMN_RENDERER, NULL));
 

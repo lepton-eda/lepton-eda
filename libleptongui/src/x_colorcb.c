@@ -192,7 +192,7 @@ x_colorcb_new ()
 
   /* Renders the color swatch. Since this won't contain text, set a
    * minimum width. */
-  color_cell = GTK_CELL_RENDERER (gschem_swatch_column_renderer_new ());
+  color_cell = GTK_CELL_RENDERER (schematic_swatch_column_renderer_new ());
   g_object_set (color_cell, "width", 25, NULL);
   gtk_cell_layout_pack_start (layout, color_cell, FALSE);
   gtk_cell_layout_add_attribute (layout, color_cell, "color", COLUMN_COLOR);

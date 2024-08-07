@@ -52,4 +52,4 @@ GType
 schematic_swatch_column_renderer_get_type ();
 
 SchematicSwatchColumnRenderer*
-gschem_swatch_column_renderer_new ();
+schematic_swatch_column_renderer_new ();
