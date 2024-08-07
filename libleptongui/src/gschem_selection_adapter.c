@@ -867,7 +867,7 @@ schematic_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapte
  *  \retval others          The rotation of the selected objects
  */
 int
-gschem_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter)
 {
   gint size = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2240,7 +2240,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_TEXT_SIZE:
-      g_value_set_int (value, gschem_selection_adapter_get_text_size (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_text_size (adapter));
       break;
 
     case PROP_TEXT_STRING:

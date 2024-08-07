@@ -110,7 +110,7 @@ int
 schematic_selection_adapter_get_text_rotation (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_text_size (SchematicSelectionAdapter *adapter);
 
 const char*
 gschem_selection_adapter_get_text_string (SchematicSelectionAdapter *adapter);
