@@ -25,7 +25,7 @@
  * lepton-schematic widgets:
  *
  * - object properties    (ShematicObjectPropertiesWidget)[right dock]
- * - text properties      (GschemTextPropertiesWidget)    [right dock]
+ * - text properties      (SchematicTextPropertiesWidget) [right dock]
  * - options              (SchematicOptionsWidget)        [right dock]
  *
  * - find text results    (SchematicFindTextState)        [bottom dock]
@@ -160,7 +160,7 @@ void x_widgets_show_text_properties (SchematicWindow* w_current)
   }
 
   gschem_text_properties_widget_adjust_focus(
-    GSCHEM_TEXT_PROPERTIES_WIDGET (w_current->text_properties));
+    SCHEMATIC_TEXT_PROPERTIES_WIDGET (w_current->text_properties));
 }
 
 

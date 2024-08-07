@@ -43,16 +43,16 @@ enum
   PROP_SCHEMATIC_WINDOW
 };
 
-G_DEFINE_TYPE (GschemTextPropertiesWidget,
-               gschem_text_properties_widget,
+G_DEFINE_TYPE (SchematicTextPropertiesWidget,
+               schematic_text_properties_widget,
                SCHEMATIC_TYPE_BIN);
 
 
 static GtkWidget*
-create_text_content_section (GschemTextPropertiesWidget *widget);
+create_text_content_section (SchematicTextPropertiesWidget *widget);
 
 static GtkWidget*
-create_text_property_section (GschemTextPropertiesWidget *widget);
+create_text_property_section (SchematicTextPropertiesWidget *widget);
 
 static void
 dispose (GObject *object);
@@ -61,37 +61,37 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-notify_schematic_window (GschemTextPropertiesWidget *widget);
+notify_schematic_window (SchematicTextPropertiesWidget *widget);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-set_selection_adapter (GschemTextPropertiesWidget *widget,
+set_selection_adapter (SchematicTextPropertiesWidget *widget,
                        SchematicSelectionAdapter *adapter);
 static void
-update_text_alignment_model (GschemTextPropertiesWidget *widget);
+update_text_alignment_model (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_alignment_widget (GschemTextPropertiesWidget *widget);
+update_text_alignment_widget (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_color_model (GschemTextPropertiesWidget *widget);
+update_text_color_model (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_color_widget (GschemTextPropertiesWidget *widget);
+update_text_color_widget (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_content_model (GschemTextPropertiesWidget *widget);
+update_text_content_model (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_content_widget (GschemTextPropertiesWidget *widget);
+update_text_content_widget (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_rotation_model (GschemTextPropertiesWidget *widget);
+update_text_rotation_model (SchematicTextPropertiesWidget *widget);
 
 static void
-update_text_rotation_widget (GschemTextPropertiesWidget *widget);
+update_text_rotation_widget (SchematicTextPropertiesWidget *widget);
 
 
 
@@ -104,7 +104,7 @@ update_text_rotation_widget (GschemTextPropertiesWidget *widget);
  *  \param [in] widget This text properties widget
  */
 void
-gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
+gschem_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->text_view != NULL);
@@ -134,7 +134,7 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
 GtkWidget*
 gschem_text_properties_widget_new (SchematicWindow *w_current)
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET,
+  return GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET,
                                    "schematic-window", w_current,
                                    NULL));
 }
@@ -162,7 +162,7 @@ text_edit_dialog (SchematicWindow *w_current)
  *  \param [in] klass
  */
 static void
-gschem_text_properties_widget_class_init (GschemTextPropertiesWidgetClass *klass)
+schematic_text_properties_widget_class_init (SchematicTextPropertiesWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -196,7 +196,7 @@ gschem_text_properties_widget_class_init (GschemTextPropertiesWidgetClass *klass
  *  \return The new text content section widget
  */
 static GtkWidget*
-create_text_content_section (GschemTextPropertiesWidget *widget)
+create_text_content_section (SchematicTextPropertiesWidget *widget)
 {
 #ifdef ENABLE_GTK3
   GtkWidget *bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -268,7 +268,7 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
  *  \return The new text property section widget
  */
 static GtkWidget*
-create_text_property_section (GschemTextPropertiesWidget *widget)
+create_text_property_section (SchematicTextPropertiesWidget *widget)
 {
   GtkWidget *label[4];
   GtkWidget *table;
@@ -323,13 +323,13 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
 static void
 dispose (GObject *object)
 {
-  GschemTextPropertiesWidget *widget;
-  GschemTextPropertiesWidgetClass *klass;
+  SchematicTextPropertiesWidget *widget;
+  SchematicTextPropertiesWidgetClass *klass;
   GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
-  widget = GSCHEM_TEXT_PROPERTIES_WIDGET (object);
+  widget = SCHEMATIC_TEXT_PROPERTIES_WIDGET (object);
 
   set_selection_adapter (widget, NULL);
 
@@ -339,7 +339,7 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klass = GSCHEM_TEXT_PROPERTIES_WIDGET_GET_CLASS (object);
+  klass = SCHEMATIC_TEXT_PROPERTIES_WIDGET_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
   parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
   g_return_if_fail (parent_class != NULL);
@@ -358,7 +358,7 @@ dispose (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemTextPropertiesWidget *widget = GSCHEM_TEXT_PROPERTIES_WIDGET (object);
+  SchematicTextPropertiesWidget *widget = SCHEMATIC_TEXT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:
@@ -377,7 +377,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget The text property widget
  */
 static void
-gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
+schematic_text_properties_widget_init (SchematicTextPropertiesWidget *widget)
 {
   GtkWidget *scrolled;
   GtkWidget *vbox;
@@ -436,7 +436,7 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget    This widget
  */
 static void
-notify_schematic_window (GschemTextPropertiesWidget *widget)
+notify_schematic_window (SchematicTextPropertiesWidget *widget)
 {
     SchematicWindow *w_current;
 
@@ -458,7 +458,7 @@ notify_schematic_window (GschemTextPropertiesWidget *widget)
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemTextPropertiesWidget *widget = GSCHEM_TEXT_PROPERTIES_WIDGET (object);
+  SchematicTextPropertiesWidget *widget = SCHEMATIC_TEXT_PROPERTIES_WIDGET (object);
 
   switch (param_id) {
     case PROP_SCHEMATIC_WINDOW:
@@ -474,11 +474,11 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 /*! \private
  *  \brief Set the selection that this widget manipulates
  *
- *  \param [in,out] widget  The #GschemTextPropertiesWidget widget.
+ *  \param [in,out] widget  The #SchematicTextPropertiesWidget widget.
  *  \param [in]     adapter The #SchematicSelectionAdapter instance to manipulate.
  */
 static void
-set_selection_adapter (GschemTextPropertiesWidget *widget,
+set_selection_adapter (SchematicTextPropertiesWidget *widget,
                        SchematicSelectionAdapter *adapter)
 {
   g_return_if_fail (widget != NULL);
@@ -547,7 +547,7 @@ set_selection_adapter (GschemTextPropertiesWidget *widget,
  *  \param [in,out] widget This widget
  */
 static void
-update_text_alignment_model (GschemTextPropertiesWidget *widget)
+update_text_alignment_model (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->aligncb != NULL);
@@ -569,7 +569,7 @@ update_text_alignment_model (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_alignment_widget (GschemTextPropertiesWidget *widget)
+update_text_alignment_widget (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->aligncb != NULL);
@@ -599,7 +599,7 @@ update_text_alignment_widget (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_color_model (GschemTextPropertiesWidget *widget)
+update_text_color_model (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->colorcb != NULL);
@@ -621,7 +621,7 @@ update_text_color_model (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_color_widget (GschemTextPropertiesWidget *widget)
+update_text_color_widget (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->colorcb != NULL);
@@ -651,7 +651,7 @@ update_text_color_widget (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_content_model (GschemTextPropertiesWidget *widget)
+update_text_content_model (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->text_view != NULL);
@@ -680,7 +680,7 @@ update_text_content_model (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_content_widget (GschemTextPropertiesWidget *widget)
+update_text_content_widget (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->text_view != NULL);
@@ -721,7 +721,7 @@ update_text_content_widget (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_rotation_model (GschemTextPropertiesWidget *widget)
+update_text_rotation_model (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->rotatecb != NULL);
@@ -743,7 +743,7 @@ update_text_rotation_model (GschemTextPropertiesWidget *widget)
  *  \param [in,out] widget This widget
  */
 static void
-update_text_rotation_widget (GschemTextPropertiesWidget *widget)
+update_text_rotation_widget (SchematicTextPropertiesWidget *widget)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->rotatecb != NULL);

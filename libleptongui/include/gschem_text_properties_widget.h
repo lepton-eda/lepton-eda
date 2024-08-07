@@ -23,20 +23,20 @@
  * \brief A widget for editing text properties
  */
 
-#define GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET           (gschem_text_properties_widget_get_type())
-#define GSCHEM_TEXT_PROPERTIES_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET, GschemTextPropertiesWidget))
-#define GSCHEM_TEXT_PROPERTIES_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET, GschemTextPropertiesWidgetClass))
-#define IS_GSCHEM_TEXT_PROPERTIES_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET))
-#define GSCHEM_TEXT_PROPERTIES_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET, GschemTextPropertiesWidgetClass))
+#define SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET           (schematic_text_properties_widget_get_type())
+#define SCHEMATIC_TEXT_PROPERTIES_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET, SchematicTextPropertiesWidget))
+#define SCHEMATIC_TEXT_PROPERTIES_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET, SchematicTextPropertiesWidgetClass))
+#define IS_SCHEMATIC_TEXT_PROPERTIES_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET))
+#define SCHEMATIC_TEXT_PROPERTIES_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  SCHEMATIC_TYPE_TEXT_PROPERTIES_WIDGET, SchematicTextPropertiesWidgetClass))
 
-typedef struct _GschemTextPropertiesWidgetClass GschemTextPropertiesWidgetClass;
-typedef struct _GschemTextPropertiesWidget GschemTextPropertiesWidget;
+typedef struct _SchematicTextPropertiesWidgetClass SchematicTextPropertiesWidgetClass;
+typedef struct _SchematicTextPropertiesWidget SchematicTextPropertiesWidget;
 
-struct _GschemTextPropertiesWidgetClass {
+struct _SchematicTextPropertiesWidgetClass {
   SchematicBinClass parent_class;
 };
 
-struct _GschemTextPropertiesWidget {
+struct _SchematicTextPropertiesWidget {
   SchematicBin parent;
 
   SchematicSelectionAdapter *adapter;
@@ -55,10 +55,10 @@ struct _GschemTextPropertiesWidget {
 };
 
 void
-gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget);
+gschem_text_properties_widget_adjust_focus (SchematicTextPropertiesWidget *widget);
 
 GType
-gschem_text_properties_widget_get_type ();
+schematic_text_properties_widget_get_type ();
 
 G_BEGIN_DECLS
 
