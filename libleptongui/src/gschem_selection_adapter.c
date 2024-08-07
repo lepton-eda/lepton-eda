@@ -183,7 +183,7 @@ schematic_selection_adapter_get_dash_length (SchematicSelectionAdapter *adapter)
  *  \retval others          The dash spacing of the selected objects
  */
 int
-gschem_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_dash_space (SchematicSelectionAdapter *adapter)
 {
   gint dash_space = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2184,7 +2184,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_DASH_SPACE:
-      g_value_set_int (value, gschem_selection_adapter_get_dash_space (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_dash_space (adapter));
       break;
 
     case PROP_FILL_ANGLE1:
