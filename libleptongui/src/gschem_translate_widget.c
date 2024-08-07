@@ -160,7 +160,8 @@ schematic_translate_widget_set_label_text (SchematicTranslateWidget *widget,
  *  \param [in]     value the value to put in the entry
  */
 void
-gschem_translate_widget_set_value (SchematicTranslateWidget *widget, int value)
+schematic_translate_widget_set_value (SchematicTranslateWidget *widget,
+                                      int value)
 {
   GString *temp;
 
@@ -446,7 +447,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_VALUE:
-      gschem_translate_widget_set_value (widget, g_value_get_int (value));
+      schematic_translate_widget_set_value (widget, g_value_get_int (value));
       break;
 
     default:
