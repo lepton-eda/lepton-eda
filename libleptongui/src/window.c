@@ -447,7 +447,7 @@ schematic_window_get_selection_adapter (SchematicWindow *w_current)
                               w_current);
 
 
-    gschem_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
+    schematic_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
 
     LeptonPage *active_page = schematic_window_get_active_page (w_current);
     if (active_page != NULL) {

@@ -1923,8 +1923,8 @@ schematic_selection_adapter_set_text_string (SchematicSelectionAdapter *adapter,
  *  \param [in] toplevel
  */
 void
-gschem_selection_adapter_set_toplevel (SchematicSelectionAdapter *adapter,
-                                       LeptonToplevel *toplevel)
+schematic_selection_adapter_set_toplevel (SchematicSelectionAdapter *adapter,
+                                          LeptonToplevel *toplevel)
 {
   g_return_if_fail (adapter != NULL);
 
