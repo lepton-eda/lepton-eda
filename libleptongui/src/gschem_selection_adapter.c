@@ -1685,8 +1685,8 @@ schematic_selection_adapter_set_pin_type (SchematicSelectionAdapter *adapter,
  *  \param [in] selection
  */
 void
-gschem_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
-                                        LeptonSelection *selection)
+schematic_selection_adapter_set_selection (SchematicSelectionAdapter *adapter,
+                                           LeptonSelection *selection)
 {
   g_return_if_fail (adapter != NULL);
 

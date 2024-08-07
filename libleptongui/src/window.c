@@ -451,11 +451,11 @@ schematic_window_get_selection_adapter (SchematicWindow *w_current)
 
     LeptonPage *active_page = schematic_window_get_active_page (w_current);
     if (active_page != NULL) {
-      gschem_selection_adapter_set_selection (w_current->selection_adapter,
-                                              active_page->selection_list);
+      schematic_selection_adapter_set_selection (w_current->selection_adapter,
+                                                 active_page->selection_list);
     } else {
-      gschem_selection_adapter_set_selection (w_current->selection_adapter,
-                                              NULL);
+      schematic_selection_adapter_set_selection (w_current->selection_adapter,
+                                                 NULL);
     }
   }
 
@@ -666,8 +666,8 @@ schematic_window_page_changed (SchematicWindow *w_current)
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
   if ((w_current->selection_adapter != NULL) && (active_page != NULL))
   {
-    gschem_selection_adapter_set_selection (w_current->selection_adapter,
-                                            active_page->selection_list);
+    schematic_selection_adapter_set_selection (w_current->selection_adapter,
+                                               active_page->selection_list);
   }
 }
 
