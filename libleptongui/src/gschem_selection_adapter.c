@@ -690,7 +690,7 @@ schematic_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter
  *  \retval others          The pin type of the selected objects
  */
 int
-gschem_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter)
+schematic_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter)
 {
   int type = NO_SELECTION;
   GList *iter = get_selection_iter (adapter);
@@ -2224,7 +2224,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_PIN_TYPE:
-      g_value_set_int (value, gschem_selection_adapter_get_pin_type (adapter));
+      g_value_set_int (value, schematic_selection_adapter_get_pin_type (adapter));
       break;
 
     case PROP_TEXT_ALIGNMENT:

@@ -95,7 +95,7 @@ int
 schematic_selection_adapter_get_object_color (SchematicSelectionAdapter *adapter);
 
 int
-gschem_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter);
+schematic_selection_adapter_get_pin_type (SchematicSelectionAdapter *adapter);
 
 LeptonSelection *
 gschem_selection_adapter_get_selection (SchematicSelectionAdapter *adapter);
