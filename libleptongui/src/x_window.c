@@ -218,7 +218,7 @@ x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current
     page = schematic_window_get_active_page (w_current);
     o_edit_hide_specific_text (w_current,
                                lepton_page_objects (page),
-                               gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
+                               gschem_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
   gtk_widget_grab_focus (w_current->drawing_area);
@@ -239,7 +239,7 @@ x_window_show_text (GtkWidget *widget,
     page = schematic_window_get_active_page (w_current);
     o_edit_show_specific_text (w_current,
                                lepton_page_objects (page),
-                               gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
+                               gschem_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
   gtk_widget_grab_focus (w_current->drawing_area);
@@ -876,7 +876,7 @@ void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Hide"),
                                "label-text", _("Hide text starting with:"),
                                NULL);
@@ -897,7 +897,7 @@ void
 schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Show"),
                                "label-text", _("Show text starting with:"),
                                NULL);

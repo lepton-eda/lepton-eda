@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +23,21 @@
  * \brief A widget for showing or hiding text
  */
 
-#define GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET           (gschem_show_hide_text_widget_get_type())
-#define GSCHEM_SHOW_HIDE_TEXT_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET, GschemShowHideTextWidget))
-#define GSCHEM_SHOW_HIDE_TEXT_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET, GschemShowHideTextWidgetClass))
-#define GSCHEM_IS_SHOW_HIDE_TEXT_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET))
-#define GSCHEM_SHOW_HIDE_TEXT_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET, GschemShowHideTextWidgetClass))
+#define SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET           (schematic_show_hide_text_widget_get_type())
+#define SCHEMATIC_SHOW_HIDE_TEXT_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET, SchematicShowHideTextWidget))
+#define SCHEMATIC_SHOW_HIDE_TEXT_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET, SchematicShowHideTextWidgetClass))
+#define SCHEMATIC_IS_SHOW_HIDE_TEXT_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET))
+#define SCHEMATIC_SHOW_HIDE_TEXT_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET, SchematicShowHideTextWidgetClass))
 
-typedef struct _GschemShowHideTextWidgetClass GschemShowHideTextWidgetClass;
-typedef struct _GschemShowHideTextWidget GschemShowHideTextWidget;
+typedef struct _SchematicShowHideTextWidgetClass SchematicShowHideTextWidgetClass;
+typedef struct _SchematicShowHideTextWidget SchematicShowHideTextWidget;
 
-struct _GschemShowHideTextWidgetClass
+struct _SchematicShowHideTextWidgetClass
 {
   GtkInfoBarClass parent_class;
 };
 
-struct _GschemShowHideTextWidget
+struct _SchematicShowHideTextWidget
 {
   GtkInfoBar parent;
 
@@ -48,25 +49,25 @@ struct _GschemShowHideTextWidget
 
 
 const char*
-gschem_show_hide_text_widget_get_button_text (GschemShowHideTextWidget *widget);
+gschem_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *widget);
 
 GtkWidget*
-gschem_show_hide_text_widget_get_entry (GschemShowHideTextWidget *widget);
+gschem_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget);
 
 const char*
-gschem_show_hide_text_widget_get_label_text (GschemShowHideTextWidget *widget);
+gschem_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget);
 
 const char*
-gschem_show_hide_text_widget_get_text_string (GschemShowHideTextWidget *widget);
+gschem_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget);
 
 GType
-gschem_show_hide_text_widget_get_type ();
+schematic_show_hide_text_widget_get_type ();
 
 void
-gschem_show_hide_text_widget_set_button_text (GschemShowHideTextWidget *widget, const char *text);
+gschem_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget, const char *text);
 
 void
-gschem_show_hide_text_widget_set_label_text (GschemShowHideTextWidget *widget, const char *text);
+gschem_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget, const char *text);
 
 void
-gschem_show_hide_text_widget_set_text_string (GschemShowHideTextWidget *widget, const char *str);
+gschem_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget, const char *str);

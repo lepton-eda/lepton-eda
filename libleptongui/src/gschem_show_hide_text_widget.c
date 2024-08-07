@@ -36,20 +36,20 @@ enum
 };
 
 
-G_DEFINE_TYPE (GschemShowHideTextWidget,
-               gschem_show_hide_text_widget,
+G_DEFINE_TYPE (SchematicShowHideTextWidget,
+               schematic_show_hide_text_widget,
                GTK_TYPE_INFO_BAR);
 
 
 static void
-activate_entry (GtkWidget *entry, GschemShowHideTextWidget *widget);
-
+activate_entry (GtkWidget *entry,
+                SchematicShowHideTextWidget *widget);
 static void
-click_cancel (GtkWidget *button, GschemShowHideTextWidget *widget);
-
+click_cancel (GtkWidget *button,
+              SchematicShowHideTextWidget *widget);
 static void
-click_ok (GtkWidget *entry, GschemShowHideTextWidget *widget);
-
+click_ok (GtkWidget *entry,
+          SchematicShowHideTextWidget *widget);
 static void
 dispose (GObject *object);
 
@@ -60,17 +60,18 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass);
+schematic_show_hide_text_widget_class_init (SchematicShowHideTextWidgetClass *klass);
 
 static void
-gschem_show_hide_text_widget_init (GschemShowHideTextWidget *view);
+schematic_show_hide_text_widget_init (SchematicShowHideTextWidget *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemShowHideTextWidget *widget);
-
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicShowHideTextWidget *widget);
 
 
 /*! \brief Show the hide text widget
@@ -88,14 +89,14 @@ hide_text_dialog (SchematicWindow *w_current)
   if (lepton_object_is_text (object))
   {
     gschem_show_hide_text_widget_set_text_string(
-            GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget),
+            SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget),
             lepton_text_object_get_string (object)
             );
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->hide_text_widget));
-  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget))), 0, -1);
+  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget))), 0, -1);
 }
 
 
@@ -114,23 +115,23 @@ show_text_dialog (SchematicWindow *w_current)
   if (lepton_object_is_text (object))
   {
     gschem_show_hide_text_widget_set_text_string(
-            GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget),
+            SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget),
             lepton_text_object_get_string (object)
             );
   }
 
   gtk_widget_show (GTK_WIDGET (w_current->show_text_widget));
-  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget))), 0, -1);
+  gtk_widget_grab_focus (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget)));
+  gtk_editable_select_region (GTK_EDITABLE (gschem_show_hide_text_widget_get_entry (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget))), 0, -1);
 }
 
 
-/*! \brief Initialize GschemShowHideTextWidget class
+/*! \brief Initialize SchematicShowHideTextWidget class
  *
- *  \param [in] klass The class for the GschemShowHideTextWidget
+ *  \param [in] klass The class for the SchematicShowHideTextWidget
  */
 static void
-gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
+schematic_show_hide_text_widget_class_init (SchematicShowHideTextWidgetClass *klass)
 {
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
@@ -169,11 +170,11 @@ gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
 
 /*! \brief Get the button label text
  *
- *  \param [in] widget This GschemShowHideTextWidget
+ *  \param [in] widget This SchematicShowHideTextWidget
  *  \return The button label text
  */
 const char*
-gschem_show_hide_text_widget_get_button_text (GschemShowHideTextWidget *widget)
+gschem_show_hide_text_widget_get_button_text (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
@@ -183,11 +184,11 @@ gschem_show_hide_text_widget_get_button_text (GschemShowHideTextWidget *widget)
 
 /*! \brief Get the entry
  *
- *  \param [in] widget This GschemShowHideTextWidget
+ *  \param [in] widget This SchematicShowHideTextWidget
  *  \return The entry
  */
 GtkWidget*
-gschem_show_hide_text_widget_get_entry (GschemShowHideTextWidget *widget)
+gschem_show_hide_text_widget_get_entry (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -198,11 +199,11 @@ gschem_show_hide_text_widget_get_entry (GschemShowHideTextWidget *widget)
 
 /*! \brief Get the label text
  *
- *  \param [in] widget This GschemShowHideTextWidget
+ *  \param [in] widget This SchematicShowHideTextWidget
  *  \return The label text
  */
 const char*
-gschem_show_hide_text_widget_get_label_text (GschemShowHideTextWidget *widget)
+gschem_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -213,11 +214,11 @@ gschem_show_hide_text_widget_get_label_text (GschemShowHideTextWidget *widget)
 
 /*! \brief Get the find text string
  *
- *  \param [in] widget This GschemShowHideTextWidget
+ *  \param [in] widget This SchematicShowHideTextWidget
  *  \return The find text string
  */
 const char*
-gschem_show_hide_text_widget_get_text_string (GschemShowHideTextWidget *widget)
+gschem_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -226,12 +227,12 @@ gschem_show_hide_text_widget_get_text_string (GschemShowHideTextWidget *widget)
 
 
 
-/*! \brief Initialize #GschemShowHideTextWidget instance
+/*! \brief Initialize #SchematicShowHideTextWidget instance
  *
- *  \param [in,out] widget The #GschemShowHideTextWidget instance
+ *  \param [in,out] widget The #SchematicShowHideTextWidget instance
  */
 static void
-gschem_show_hide_text_widget_init (GschemShowHideTextWidget *widget)
+schematic_show_hide_text_widget_init (SchematicShowHideTextWidget *widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
@@ -295,11 +296,11 @@ gschem_show_hide_text_widget_init (GschemShowHideTextWidget *widget)
 
 /*! \brief Set the ok button text
  *
- *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in,out] widget The #SchematicShowHideTextWidget object.
  *  \param [in]     text The button text.
  */
 void
-gschem_show_hide_text_widget_set_button_text (GschemShowHideTextWidget *widget, const char *text)
+gschem_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -312,11 +313,11 @@ gschem_show_hide_text_widget_set_button_text (GschemShowHideTextWidget *widget, 
 
 /*! \brief Set the label text
  *
- *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in,out] widget The #SchematicShowHideTextWidget object.
  *  \param [in]     text The new label text.
  */
 void
-gschem_show_hide_text_widget_set_label_text (GschemShowHideTextWidget *widget, const char *text)
+gschem_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *widget, const char *text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -329,11 +330,11 @@ gschem_show_hide_text_widget_set_label_text (GschemShowHideTextWidget *widget, c
 
 /*! \brief Set the find text string
  *
- *  \param [in,out] widget The #GschemShowHideTextWidget object.
+ *  \param [in,out] widget The #SchematicShowHideTextWidget object.
  *  \param [in]     str  The find text string.
  */
 void
-gschem_show_hide_text_widget_set_text_string (GschemShowHideTextWidget *widget, const char *str)
+gschem_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget, const char *str)
 {
   g_return_if_fail (widget != NULL);
 
@@ -347,7 +348,8 @@ gschem_show_hide_text_widget_set_text_string (GschemShowHideTextWidget *widget, 
 /* Callback for when the user presses enter in the entry widget
  */
 static void
-activate_entry (GtkWidget *entry, GschemShowHideTextWidget *widget)
+activate_entry (GtkWidget *entry,
+                SchematicShowHideTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -364,7 +366,8 @@ activate_entry (GtkWidget *entry, GschemShowHideTextWidget *widget)
 /* Callback for when the user clicks the cancel button
  */
 static void
-click_cancel (GtkWidget *button, GschemShowHideTextWidget *widget)
+click_cancel (GtkWidget *button,
+              SchematicShowHideTextWidget *widget)
 {
   gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
 }
@@ -374,7 +377,8 @@ click_cancel (GtkWidget *button, GschemShowHideTextWidget *widget)
 /* Callback for when the user clicks the find button
  */
 static void
-click_ok (GtkWidget *entry, GschemShowHideTextWidget *widget)
+click_ok (GtkWidget *entry,
+          SchematicShowHideTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -392,7 +396,7 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  GschemShowHideTextWidgetClass* cls = GSCHEM_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
+  SchematicShowHideTextWidgetClass* cls = SCHEMATIC_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->dispose (object);
 }
@@ -406,7 +410,7 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  GschemShowHideTextWidgetClass* cls = GSCHEM_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
+  SchematicShowHideTextWidgetClass* cls = SCHEMATIC_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
   GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
   parent_cls->finalize (object);
 }
@@ -422,7 +426,7 @@ finalize (GObject *object)
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GschemShowHideTextWidget *widget = GSCHEM_SHOW_HIDE_TEXT_WIDGET (object);
+  SchematicShowHideTextWidget *widget = SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (object);
 
   switch (param_id) {
     case PROP_BUTTON_TEXT:
@@ -446,7 +450,9 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 /*! \brief Update the sensitivity of the find button
  */
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemShowHideTextWidget *widget)
+notify_entry_text (GtkWidget *entry,
+                   GParamSpec *pspec,
+                   SchematicShowHideTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -461,7 +467,7 @@ notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemShowHideTextWidget
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  GschemShowHideTextWidget *widget = GSCHEM_SHOW_HIDE_TEXT_WIDGET (object);
+  SchematicShowHideTextWidget *widget = SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (object);
 
   switch (param_id) {
     case PROP_BUTTON_TEXT:
