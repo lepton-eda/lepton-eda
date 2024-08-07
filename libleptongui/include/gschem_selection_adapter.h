@@ -140,8 +140,8 @@ void
 schematic_selection_adapter_set_fill_pitch1 (SchematicSelectionAdapter *adapter,
                                              int pitch);
 void
-gschem_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter, int pitch);
-
+schematic_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter,
+                                             int pitch);
 void
 gschem_selection_adapter_set_fill_type (SchematicSelectionAdapter *adapter, int line_type);
 

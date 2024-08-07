@@ -1145,7 +1145,8 @@ schematic_selection_adapter_set_fill_pitch1 (SchematicSelectionAdapter *adapter,
  *  \param [in] pitch The new fill pitch.
  */
 void
-gschem_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter, int pitch)
+schematic_selection_adapter_set_fill_pitch2 (SchematicSelectionAdapter *adapter,
+                                             int pitch)
 {
   GList *iter;
 
@@ -2349,7 +2350,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_FILL_PITCH2:
-      gschem_selection_adapter_set_fill_pitch2 (adapter, g_value_get_int (value));
+      schematic_selection_adapter_set_fill_pitch2 (adapter, g_value_get_int (value));
       break;
 
     case PROP_FILL_TYPE:
