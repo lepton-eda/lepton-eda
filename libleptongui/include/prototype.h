@@ -1399,7 +1399,7 @@ void
 schematic_tab_info_set_page (TabInfo *tab_info,
                              LeptonPage* page);
 SchematicCanvas*
-schematic_tab_info_get_page_view (TabInfo *tab_info);
+schematic_tab_info_get_canvas (TabInfo *tab_info);
 
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info);

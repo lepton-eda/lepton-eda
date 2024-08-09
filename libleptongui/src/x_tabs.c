@@ -878,7 +878,7 @@ schematic_tab_info_set_page (TabInfo *tab_info,
 
 
 SchematicCanvas*
-schematic_tab_info_get_page_view (TabInfo *tab_info)
+schematic_tab_info_get_canvas (TabInfo *tab_info)
 {
   g_return_val_if_fail (tab_info != NULL, NULL);
 

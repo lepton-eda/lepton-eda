@@ -215,7 +215,7 @@
 
 (define (grab-focus *tab-info)
   (schematic_canvas_grab_focus
-   (schematic_tab_info_get_page_view *tab-info)))
+   (schematic_tab_info_get_canvas *tab-info)))
 
 
 ;;; Defines from schematic_defines.h.

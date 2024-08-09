@@ -282,7 +282,7 @@
             x_tabs_tl_pview_cur_set
             schematic_tab_info_get_page
             schematic_tab_info_set_page
-            schematic_tab_info_get_page_view
+            schematic_tab_info_get_canvas
             schematic_tab_info_get_tab_widget
             schematic_tab_info_get_window
             schematic_tabs_add_canvas
@@ -866,7 +866,7 @@
 (define-lff x_tabs_tl_pview_cur_set void '(* *))
 (define-lff schematic_tab_info_get_page '* '(*))
 (define-lff schematic_tab_info_set_page void '(* *))
-(define-lff schematic_tab_info_get_page_view '* '(*))
+(define-lff schematic_tab_info_get_canvas '* '(*))
 (define-lff schematic_tab_info_get_tab_widget '* '(*))
 (define-lff schematic_tab_info_get_window '* '(*))
 (define-lff schematic_tabs_set_callback void '(* *))
