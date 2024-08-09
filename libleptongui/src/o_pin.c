@@ -54,7 +54,7 @@ o_pin_end (SchematicWindow *w_current,
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
@@ -127,7 +127,7 @@ o_pin_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
 
   schematic_canvas_invalidate_world_rect (page_view,
                                           w_current->first_wx,

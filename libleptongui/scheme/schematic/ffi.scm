@@ -346,7 +346,7 @@
             schematic_window_add_timer
             schematic_window_destroy_timer
             schematic_window_free
-            schematic_window_get_current_page_view
+            schematic_window_get_current_canvas
             schematic_window_get_show_hidden_text
             schematic_window_get_toplevel
             *schematic_window_notify_page_callback
@@ -681,7 +681,7 @@
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
 (define-lff schematic_window_free void '(*))
-(define-lff schematic_window_get_current_page_view '* '(*))
+(define-lff schematic_window_get_current_canvas '* '(*))
 (define-lff schematic_window_get_show_hidden_text int '(*))
 (define-lff schematic_window_get_toplevel '* '(*))
 (define-lfc *schematic_window_notify_page_callback)

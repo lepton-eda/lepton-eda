@@ -98,7 +98,7 @@ x_stroke_record (SchematicWindow *w_current,
 {
   cairo_matrix_t user_to_device_matrix;
   double x0, y0;
-  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (view != NULL);
   SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);

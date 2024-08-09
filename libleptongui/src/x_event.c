@@ -544,7 +544,7 @@ x_event_get_pointer_position (SchematicWindow *w_current,
   int x;
   int y;
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
   GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (page_view));

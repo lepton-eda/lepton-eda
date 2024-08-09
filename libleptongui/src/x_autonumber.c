@@ -867,7 +867,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   lepton_toplevel_goto_page (w_current->toplevel,
                              (LeptonPage*) pages->data); /* go back to the root page */
   schematic_window_page_changed (w_current);
-  schematic_canvas_invalidate_all (schematic_window_get_current_page_view (w_current));
+  schematic_canvas_invalidate_all (schematic_window_get_current_canvas (w_current));
   g_list_free(pages);
   o_undo_savestate_old (w_current);
 }

@@ -48,7 +48,7 @@ coord_display_update (SchematicWindow *w_current,
                       int x,
                       int y)
 {
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   char *string;
   int world_x, world_y;
 

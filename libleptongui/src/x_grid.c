@@ -51,7 +51,7 @@ query_dots_grid_spacing (SchematicWindow *w_current)
 
   int snap_size = schematic_options_get_snap_size (w_current->options);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, -1);
 
   SchematicViewport *geometry = schematic_canvas_get_page_geometry (page_view);
@@ -269,7 +269,7 @@ query_mesh_grid_spacing (SchematicWindow *w_current)
 {
   int incr, screen_incr;
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, -1);
 
   incr = schematic_options_get_snap_size (w_current->options);

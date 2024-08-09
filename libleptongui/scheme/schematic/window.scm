@@ -1224,7 +1224,7 @@ window to PAGE.  Returns PAGE."
   "Return the <canvas> object of WINDOW."
   (define *window (check-window window 1))
 
-  (pointer->canvas (schematic_window_get_current_page_view *window)))
+  (pointer->canvas (schematic_window_get_current_canvas *window)))
 
 
 (define (pointer-position)

@@ -67,7 +67,7 @@ o_bus_end (SchematicWindow *w_current,
 {
   LeptonObject *new_obj;
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);
@@ -170,7 +170,7 @@ o_bus_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
 
   schematic_canvas_invalidate_world_rect (page_view,
                                           w_current->first_wx,

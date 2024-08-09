@@ -241,7 +241,7 @@ void
 schematic_window_free (SchematicWindow *w_current);
 
 SchematicCanvas*
-schematic_window_get_current_page_view (SchematicWindow *w_current);
+schematic_window_get_current_canvas (SchematicWindow *w_current);
 
 GtkListStore*
 schematic_window_get_dash_length_list_store (SchematicWindow *w_current);

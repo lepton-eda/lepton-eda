@@ -144,7 +144,7 @@ a_zoom_box (SchematicWindow *w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   SchematicViewport *geometry = schematic_canvas_get_page_geometry (page_view);
@@ -229,7 +229,7 @@ a_zoom_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
 
   schematic_canvas_invalidate_world_rect (page_view,
                                           schematic_window_get_first_wx (w_current),

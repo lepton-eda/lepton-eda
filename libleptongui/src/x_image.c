@@ -385,7 +385,7 @@ x_image_lowlevel (SchematicWindow *w_current,
   GError *gerror = NULL;
   GtkWidget *dialog;
   float prop;
-  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
 
   SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -777,7 +777,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  page_view = schematic_window_get_current_page_view (w_current);
+  page_view = schematic_window_get_current_canvas (w_current);
 
   g_return_val_if_fail (page_view != NULL, NULL);
 
@@ -916,7 +916,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   SchematicViewport *old_geometry, *new_geometry;
   GdkPixmap *window = NULL;
 
-  page_view = schematic_window_get_current_page_view (w_current);
+  page_view = schematic_window_get_current_canvas (w_current);
 
   old_geometry = schematic_canvas_get_page_geometry (page_view);
 

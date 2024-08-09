@@ -252,7 +252,7 @@ x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current)
 {
-  SchematicCanvas *view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (view);
@@ -267,7 +267,7 @@ x_window_select_object (SchematicFindTextState *state,
     x_window_set_current_page (w_current, object->page);
 
     /* tabbed GUI: current page view may be different here: */
-    view = schematic_window_get_current_page_view (w_current);
+    view = schematic_window_get_current_canvas (w_current);
   }
 
   schematic_canvas_zoom_object (view, object);
@@ -610,7 +610,7 @@ void
 x_window_set_current_page (SchematicWindow *w_current,
                            LeptonPage *page)
 {
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   g_return_if_fail (page != NULL);

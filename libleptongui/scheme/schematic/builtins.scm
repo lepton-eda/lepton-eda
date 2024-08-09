@@ -723,7 +723,7 @@ the snap grid size should be set to 100")))
 
   (match (action-position)
     ((x . y)
-     (schematic_canvas_pan (schematic_window_get_current_page_view *window) x y)
+     (schematic_canvas_pan (schematic_window_get_current_canvas *window) x y)
      (undo-save-viewport))
     (_
      (o_redraw_cleanstates *window)
@@ -737,7 +737,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the left.
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
   (define *window (*current-window))
-  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_canvas *window)
                               (schematic_window_get_keyboardpan_gain *window)
                               0))
 
@@ -745,7 +745,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport to the right.
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
   (define *window (*current-window))
-  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_canvas *window)
                               (- (schematic_window_get_keyboardpan_gain *window))
                               0))
 
@@ -753,7 +753,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport up.
 (define-action-public (&view-pan-up #:label (G_ "Pan Up"))
   (define *window (*current-window))
-  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_canvas *window)
                               0
                               (schematic_window_get_keyboardpan_gain *window)))
 
@@ -761,7 +761,7 @@ the snap grid size should be set to 100")))
 ;;; Moves the viewport down.
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
   (define *window (*current-window))
-  (schematic_canvas_pan_mouse (schematic_window_get_current_page_view *window)
+  (schematic_canvas_pan_mouse (schematic_window_get_current_canvas *window)
                               0
                               (- (schematic_window_get_keyboardpan_gain *window))))
 
@@ -790,7 +790,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
   (define *window (*current-window))
 
-  (schematic_canvas_zoom_extents (schematic_window_get_current_page_view *window)
+  (schematic_canvas_zoom_extents (schematic_window_get_current_canvas *window)
                                  %null-pointer)
   (undo-save-viewport))
 
@@ -799,7 +799,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (a_zoom *window
-          (schematic_window_get_current_page_view *window)
+          (schematic_window_get_current_canvas *window)
           ZOOM_IN
           (match (action-position)
             ((x . y) HOTKEY)
@@ -811,7 +811,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (a_zoom *window
-          (schematic_window_get_current_page_view *window)
+          (schematic_window_get_current_canvas *window)
           ZOOM_OUT
           (match (action-position)
             ((x . y) HOTKEY)
@@ -821,7 +821,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
   (define *window (*current-window))
-  (define *page-view (schematic_window_get_current_page_view *window))
+  (define *page-view (schematic_window_get_current_canvas *window))
 
   (a_zoom *window *page-view ZOOM_FULL DONTCARE)
   (undo-save-viewport))
@@ -1107,7 +1107,7 @@ the snap grid size should be set to 100")))
 
 (define (zoom-child-page *window *parent *child)
   (define *toplevel (schematic_window_get_toplevel *window))
-  (define *page-view (schematic_window_get_current_page_view *window))
+  (define *page-view (schematic_window_get_current_canvas *window))
   (lepton_toplevel_goto_page *toplevel *child)
   (schematic_window_page_changed *window)
   (schematic_canvas_zoom_extents *page-view %null-pointer)
@@ -1268,7 +1268,7 @@ the snap grid size should be set to 100")))
                ;; Tabbed GUI: zoom is set in set-tab-page!().
                (unless (true? (x_tabs_enabled))
                  (schematic_canvas_zoom_extents
-                  (schematic_window_get_current_page_view *window)
+                  (schematic_window_get_current_canvas *window)
                   %null-pointer))
 
                (undo-save-state)))))))

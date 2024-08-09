@@ -385,7 +385,7 @@ schematic_set_font (SchematicWindow* toplevel,
 
   g_object_set (toplevel->renderer, "font-name", font, NULL);
 
-  SchematicCanvas* view = schematic_window_get_current_page_view (toplevel);
+  SchematicCanvas* view = schematic_window_get_current_canvas (toplevel);
   schematic_canvas_invalidate_all (view);
 }
 

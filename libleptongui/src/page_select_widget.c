@@ -189,7 +189,7 @@ page_select_widget_update (SchematicWindow* w_current)
     pagesel_update (PAGE_SELECT_WIDGET (widget));
   }
 
-  SchematicCanvas* view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas* view = schematic_window_get_current_canvas (w_current);
   LeptonPage* page = schematic_canvas_get_page (view);
 
   if (page == NULL)

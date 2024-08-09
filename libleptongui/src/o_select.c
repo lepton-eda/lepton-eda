@@ -310,7 +310,7 @@ o_select_box_start (SchematicWindow *w_current,
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   int diff_x, diff_y, dist;
@@ -383,7 +383,7 @@ o_select_box_invalidate_rubber (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   schematic_canvas_invalidate_world_rect (page_view,

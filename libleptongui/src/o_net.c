@@ -98,7 +98,7 @@ o_net_guess_direction (SchematicWindow *w_current,
   const int bus_rules[] = {90, 0, 40};
   const int net_rules[] = {80, 30, 0};
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
@@ -223,7 +223,7 @@ o_net_find_magnetic (SchematicWindow *w_current,
   LeptonObject *o_magnetic = NULL;
   GList *object_list, *iter1, *iter2;
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
@@ -498,7 +498,7 @@ o_net_end (SchematicWindow *w_current,
 
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
@@ -698,7 +698,7 @@ o_net_draw_rubber (SchematicWindow *w_current,
 
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
@@ -743,7 +743,7 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   schematic_canvas_WORLDtoSCREEN (page_view,
@@ -808,7 +808,7 @@ o_net_add_busrippers (SchematicWindow *w_current,
   int component_angle = 0;
   const CLibSymbol *rippersym = NULL;
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);

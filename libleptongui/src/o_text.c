@@ -44,7 +44,7 @@ o_text_prepare_place (SchematicWindow *w_current,
                       int rotate,
                       int size)
 {
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
@@ -99,7 +99,7 @@ o_text_change (SchematicWindow *w_current,
 {
   g_return_if_fail (w_current != NULL);
 
-  SchematicCanvas *page_view = schematic_window_get_current_page_view (w_current);
+  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_if_fail (page_view != NULL);
 
   LeptonPage *page = schematic_canvas_get_page (page_view);
