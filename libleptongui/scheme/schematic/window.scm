@@ -750,7 +750,7 @@ tab notebook.  Returns a C TabInfo structure."
   (x_window_setup_scrolling *window *wtab)
 
   (let ((*page-view (schematic_canvas_new_with_page *page)))
-    (schematic_tabs_add_page_view *page-view *wtab)
+    (schematic_tabs_add_canvas *page-view *wtab)
     (setup-page-view-draw-events *window *page-view)
     (x_tabs_tl_pview_cur_set *window *page-view)
     (let ((page-index (x_tabs_nbook_page_add *window *page *page-view *wtab)))

@@ -285,7 +285,7 @@
             schematic_tab_info_get_page_view
             schematic_tab_info_get_tab_widget
             schematic_tab_info_get_window
-            schematic_tabs_add_page_view
+            schematic_tabs_add_canvas
             schematic_tabs_set_callback
 
             schematic_action_mode_from_string
@@ -860,7 +860,7 @@
 (define-lff x_tabs_nbook_page_close void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
-(define-lff schematic_tabs_add_page_view void '(* *))
+(define-lff schematic_tabs_add_canvas void '(* *))
 (define-lff x_tabs_tl_page_find int '(* *))
 (define-lff x_tabs_tl_pview_cur '* '(*))
 (define-lff x_tabs_tl_pview_cur_set void '(* *))

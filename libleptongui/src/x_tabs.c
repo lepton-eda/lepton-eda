@@ -566,8 +566,8 @@ x_tabs_nbook_page_close (SchematicWindow* w_current,
 
 
 void
-schematic_tabs_add_page_view (SchematicCanvas* pview,
-                              GtkWidget*      wtab)
+schematic_tabs_add_canvas (SchematicCanvas *pview,
+                           GtkWidget *wtab)
 {
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (pview), TRUE);
@@ -581,7 +581,7 @@ schematic_tabs_add_page_view (SchematicCanvas* pview,
 
   gtk_widget_set_can_focus (GTK_WIDGET (pview), TRUE);
 
-} /* schematic_tabs_add_page_view() */
+} /* schematic_tabs_add_canvas() */
 
 
 
