@@ -1208,8 +1208,8 @@ GtkWidget*
 schematic_window_create_work_box ();
 
 SchematicCanvas*
-schematic_window_create_page_view (SchematicWindow *w_current,
-                                   GtkWidget *work_box);
+schematic_window_create_canvas (SchematicWindow *w_current,
+                                GtkWidget *work_box);
 void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,

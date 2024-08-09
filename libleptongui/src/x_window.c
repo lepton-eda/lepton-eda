@@ -377,8 +377,8 @@ schematic_window_create_work_box ()
  * \return Pointer to the new GtkWidget object.
  */
 SchematicCanvas*
-schematic_window_create_page_view (SchematicWindow *w_current,
-                                   GtkWidget *work_box)
+schematic_window_create_canvas (SchematicWindow *w_current,
+                                GtkWidget *work_box)
 {
   GtkWidget *scrolled = NULL;
 

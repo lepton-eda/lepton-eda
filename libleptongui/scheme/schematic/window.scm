@@ -1070,7 +1070,7 @@ GtkApplication structure of the program (when compiled with
                                       *window)
             (tab-add-page! *window %null-pointer))
 
-          (let ((*page-view (schematic_window_create_page_view *window *work-box)))
+          (let ((*page-view (schematic_window_create_canvas *window *work-box)))
             ;; Setup callbacks for page view draw events.
             (setup-page-view-draw-events *window *page-view)))
 
