@@ -209,6 +209,7 @@ $ cp my-backend.scm /home/vzh/.local/share/lepton-eda/scheme/backend
 @subsubsection Custom legacy backends
 @cindex custom legacy backends
 @cindex writing custom legacy backend
+@cindex %load-path
 
 Writing a custom legacy backend is simple.  Create a file named
 @file{gnet-@var{backend-name}.scm} and define a function
@@ -307,6 +308,7 @@ lepton-netlist -c '(display %load-path)'
 or just open @netlist in interactive-mode
 
 @example
+lepton-netlist -i
 @end example
 
 enter @code{%load-path} and hit @kbd{@key{RET}}.
