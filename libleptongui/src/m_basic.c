@@ -243,7 +243,7 @@ visible (SchematicWindow *w_current,
          int wbottom)
 {
   int visible=FALSE;
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (schematic_window_get_current_canvas (w_current));
+  SchematicViewport *geometry = schematic_canvas_get_viewport (schematic_window_get_current_canvas (w_current));
 
   visible = clip_nochange (geometry, wleft, wtop, wright, wtop);
 

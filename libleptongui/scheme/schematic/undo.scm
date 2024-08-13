@@ -185,7 +185,7 @@ success, #f on failure."
     (lepton_page_set_up *page (lepton_undo_get_up *undo-item)))
 
   (define (restore-viewport-by-undo *page-view *undo-item)
-    (let ((*geometry (schematic_canvas_get_page_geometry *page-view)))
+    (let ((*geometry (schematic_canvas_get_viewport *page-view)))
       (when (or (undo-panzoom?)
                 modify-viewport?)
         (if (not (zero? (lepton_undo_get_scale *undo-item)))

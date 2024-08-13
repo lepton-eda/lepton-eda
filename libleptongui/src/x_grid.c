@@ -54,7 +54,7 @@ query_dots_grid_spacing (SchematicWindow *w_current)
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, -1);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (page_view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
 
   /* geometry may be NULL if page_view has no underlying page */
   if (geometry == NULL) {

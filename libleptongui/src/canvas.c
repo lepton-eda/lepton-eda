@@ -280,7 +280,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       break;
 
     case PROP_PAGE_GEOMETRY:
-      g_value_set_boxed (value, schematic_canvas_get_page_geometry (view));
+      g_value_set_boxed (value, schematic_canvas_get_viewport (view));
       break;
 
     case PROP_VADJUSTMENT:
@@ -492,7 +492,7 @@ schematic_canvas_get_page (SchematicCanvas *view)
  *  \return The page geometry for the view
  */
 SchematicViewport*
-schematic_canvas_get_page_geometry (SchematicCanvas *view)
+schematic_canvas_get_viewport (SchematicCanvas *view)
 {
   LeptonPage *page = NULL;
   SchematicViewport *geometry = NULL;
@@ -828,7 +828,7 @@ schematic_canvas_pan_general (SchematicCanvas *view,
 
   g_return_if_fail (view != NULL);
 
-  geometry = schematic_canvas_get_page_geometry (view);
+  geometry = schematic_canvas_get_viewport (view);
   g_return_if_fail (geometry != NULL);
 
   /* make mouse to the new world-center;
@@ -881,7 +881,7 @@ schematic_canvas_pan_mouse (SchematicCanvas *view,
 
   g_return_if_fail (view != NULL);
 
-  geometry = schematic_canvas_get_page_geometry (view);
+  geometry = schematic_canvas_get_viewport (view);
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
@@ -1010,7 +1010,7 @@ schematic_canvas_SCREENtoWORLD (SchematicCanvas *view,
                                 int *x,
                                 int *y)
 {
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   g_return_if_fail (geometry != NULL);
 
@@ -1194,7 +1194,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, SchematicCanvas *view)
   g_return_if_fail (hadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   if (view->hadjustment != NULL && geometry != NULL) {
     int current_left;
@@ -1274,7 +1274,7 @@ schematic_canvas_SCREENabs (SchematicCanvas *view,
   double f0,f1;
   double i;
   int j;
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   g_return_val_if_fail (view != NULL, 0);
 
@@ -1302,7 +1302,7 @@ schematic_canvas_update_hadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   if (view->hadjustment != NULL && geometry != NULL) {
 
@@ -1365,7 +1365,7 @@ schematic_canvas_update_vadjustment (SchematicCanvas *view)
 {
   g_return_if_fail (view != NULL);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   if (view->vadjustment != NULL && geometry != NULL) {
 
@@ -1424,7 +1424,7 @@ schematic_canvas_WORLDabs (SchematicCanvas *page_view,
   double i;
   int j;
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (page_view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
 
   gtk_widget_get_allocation (GTK_WIDGET(page_view), &allocation);
 
@@ -1470,7 +1470,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment,
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   if (view->vadjustment != NULL && geometry != NULL) {
     int current_bottom;
@@ -1499,7 +1499,7 @@ schematic_canvas_WORLDtoSCREEN (SchematicCanvas *view,
                                 int *px,
                                 int *py)
 {
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   g_return_if_fail (geometry != NULL);
 
@@ -1530,7 +1530,7 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
   page = schematic_canvas_get_page (view);
   g_return_if_fail (page != NULL);
 
-  geometry = schematic_canvas_get_page_geometry (view);
+  geometry = schematic_canvas_get_viewport (view);
   g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
@@ -1563,7 +1563,7 @@ schematic_canvas_zoom_object (SchematicCanvas *view,
   double scale;
 
   g_return_if_fail (view != NULL);
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
   g_return_if_fail (geometry != NULL);
 
   g_return_if_fail (object != NULL);
@@ -1645,7 +1645,7 @@ schematic_canvas_redraw (SchematicCanvas *view,
   page = schematic_canvas_get_page (view);
 
   if (page != NULL) {
-    geometry = schematic_canvas_get_page_geometry (view);
+    geometry = schematic_canvas_get_viewport (view);
 
     g_return_if_fail (view != NULL);
 

@@ -120,7 +120,7 @@ buffer should be displayed, the widget displays the error message."
                                                            (- right left)))))
                       (height-add (inexact->exact (round (* %over-zoom-factor
                                                             (- bottom top)))))
-                      (*geometry (schematic_canvas_get_page_geometry *preview)))
+                      (*geometry (schematic_canvas_get_viewport *preview)))
                   (schematic_viewport_set_world_left *geometry
                                                      (- left width-add))
                   (schematic_viewport_set_world_right *geometry

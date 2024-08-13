@@ -264,7 +264,7 @@ o_undo_savestate (SchematicWindow *w_current,
 
   g_return_if_fail (page != NULL);
 
-  SchematicViewport *geometry = schematic_canvas_get_page_geometry (view);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
 
   /* save autosave backups if necessary */
   o_autosave_backups(w_current);

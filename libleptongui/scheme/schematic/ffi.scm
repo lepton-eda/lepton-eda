@@ -319,7 +319,7 @@
             lepton_menu_set_action_data
 
             schematic_canvas_get_page
-            schematic_canvas_get_page_geometry
+            schematic_canvas_get_viewport
             schematic_canvas_invalidate_all
             schematic_canvas_new_with_page
             schematic_canvas_pan
@@ -635,7 +635,7 @@
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
-(define-lff schematic_canvas_get_page_geometry '* '(*))
+(define-lff schematic_canvas_get_viewport '* '(*))
 (define-lff schematic_canvas_invalidate_all void '(*))
 (define-lff schematic_canvas_new_with_page '* '(*))
 (define-lff schematic_canvas_pan void (list '* int int))
