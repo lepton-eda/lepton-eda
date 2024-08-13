@@ -117,23 +117,43 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `$HOME` environment variable is not set.
 
 ### Changes in `libleptongui`:
-- The type `GschemToplevel` has been renamed to `SchematicWindow`,
-  all related functions have been renamed accordingly.
+- The prefix `Gschem` in the names of the library object types has
+  been replaced with `Schematic`.  The following renamings have
+  been carried out:
 
-- The type `GschemPageView` has been renamed to `SchematicCanvas`,
-  all related functions have been renamed accordingly.
+  - `GschemAccelLabel` => `SchematicAccelLabel`
+  - `GschemAction` => `SchematicAction`
+  - `GschemBin` => `SchematicBin`
+  - `GschemBindingInteger` => `SchematicBindingInteger`
+  - `GschemBinding` => `SchematicBinding`
+  - `GschemBottomWidget` => `SchematicBottomWidget`
+  - `GschemDialog` => `SchematicDialog`
+  - `GschemFillSwatchCellRenderer` => `SchematicFillSwatchCellRenderer`
+  - `GschemFindTextState` => `SchematicFindTextState`
+  - `GschemFindTextWidget` => `SchematicFindTextWidget`
+  - `GschemHotkeyStore` => `SchematicHotkeyStore`
+  - `GschemIntegerComboBox` => `SchematicIntegerComboBox`
+  - `GschemLogWidget` => `SchematicLogWidget`
+  - `GschemMacroWidget` => `SchematicMacroWidget`
+  - `GschemMainWindow` => `SchematicMainWindow`
+  - `GschemObjectPropertiesWidget` => `SchematicObjectPropertiesWidget`
+  - `GschemOptionsWidget` => `SchematicOptionsWidget`
+  - `GschemOptions` => `SchematicOptions`
+  - `GschemPageGeometry` => `SchematicViewport`
+  - `GschemPageView` => `SchematicCanvas`
+  - `GschemPreview` => `SchematicPreview`
+  - `GschemSelectionAdapter` => `SchematicSelectionAdapter`
+  - `GschemShowHideTextWidget` => `SchematicShowHideTextWidget`
+  - `GschemSwatchColumnRenderer` => `SchematicSwatchColumnRenderer`
+  - `GschemTextPropertiesWidget` => `SchematicTextPropertiesWidget`
+  - `GschemToplevel` => `SchematicWindow`
+  - `GschemTranslateWidget` => `SchematicTranslateWidget`
 
-- The type `GschemPageGeometry` has been renamed to
-  `SchematicViewport`, all related functions have been renamed
-  accordingly.
+  All accessor, helper, and other functions and macros related to
+  those types have been renamed accordingly.
 
-- The type `GschemPreview` has been renamed to `SchematicPreview`,
-  all related functions and macros have been renamed accordingly.
-  The type structure has been made an opaque one and its data is
-  now available only via accessors.
-
-- The type `GschemAction` has been renamed to `SchematicAction`,
-  all related functions have been renamed accordingly.
+- The structure of the type `SchematicPreview` has been made an
+  opaque one and its data is now available only via accessors.
 
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
