@@ -305,7 +305,7 @@ Let's suppose that you have a legacy backend named
 lepton-netlist -c '(display %load-path)'
 @end example
 
-or just open @netlist in interactive-mode
+or just open @netlist in interactive mode
 
 @example
 lepton-netlist -i
