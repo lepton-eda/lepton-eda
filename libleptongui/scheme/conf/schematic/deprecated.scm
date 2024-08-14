@@ -126,7 +126,7 @@
 ( define ( add-titleblock page )
 
   ( define ( warn-deprecated )
-    ( format (current-error-port)
+    ( format (current-error-port) "~A"
       ( warning-option-deprecated
         "default-titleblock"
         "schematic.gui"
