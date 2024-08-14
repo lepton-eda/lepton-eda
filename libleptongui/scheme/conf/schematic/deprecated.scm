@@ -174,7 +174,7 @@
     )
 
     ( when ( defined? 'default-titleblock )
-      ( set! symname default-titleblock )
+      (set! symname (primitive-eval 'default-titleblock))
       ( warn-deprecated )
     )
 
