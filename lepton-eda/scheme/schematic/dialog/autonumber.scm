@@ -44,4 +44,4 @@
   ;; autonumber widget, which is not yet implemented.
   (schematic_autonumber_set_autotext_window *autotext *window)
 
-  (schematic_autonumber_dialog *window))
+  (schematic_autonumber_dialog *autotext *window))

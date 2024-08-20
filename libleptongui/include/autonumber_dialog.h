@@ -223,7 +223,11 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
-schematic_autonumber_dialog (SchematicWindow *w_current);
+schematic_autonumber_dialog (SchematicAutonumber *autotext,
+                             SchematicWindow *w_current);
+GtkWidget*
+schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
+                                  SchematicWindow *w_current);
 
 G_END_DECLS
 

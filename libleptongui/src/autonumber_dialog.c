@@ -2189,47 +2189,73 @@ schematic_autonumber_dialog_new (SchematicWindow *w_current)
   return autonumber_text;
 }
 
-/*! \brief Create or restore the autonumber text dialog
+
+/*! \brief Create an autonumber text dialog.
  *
- *  If the function is called the first time the dialog is created.
- *  If the dialog is only in background it is moved to the foreground.
+ *  \par Function Description
+ *  Creates and initializes a new autonumber text dialog for a
+ *  schematic window instance.  The pointer to the dialog widget
+ *  is stored in the #SchematicAutonumber instance \p autotext.
  *
- *  @param w_current Pointer to the top level struct
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current The schematic window.
  */
-void
-schematic_autonumber_dialog (SchematicWindow *w_current)
+GtkWidget*
+schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
+                                  SchematicWindow *w_current)
 {
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
+  GtkWidget *dialog = schematic_autonumber_dialog_new (w_current);
+
+  schematic_autonumber_set_autotext_dialog (autotext, dialog);
+
+  opt_removenum = lookup_widget (dialog, "opt_removenum");
+  sort_order = lookup_widget (dialog, "sort_order");
+
+  autonumber_sortorder_create (w_current, sort_order);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                   GTK_RESPONSE_ACCEPT);
+
+  g_signal_connect (G_OBJECT (dialog),
+                    "response",
+                    G_CALLBACK (autonumber_text_response),
+                    autotext);
+
+  g_signal_connect (G_OBJECT (opt_removenum),
+                    "clicked",
+                    G_CALLBACK (autonumber_removenum_toggled),
+                    autotext);
+
+  autonumber_set_state (autotext);
+
+  gtk_widget_show_all (dialog);
+
+  return dialog;
+}
+
+
+/*! \brief Display the Autonumber text dialog.
+ *
+ *  \par Function Description
+ *  Displays the Autonumber dialog of the \p autotext structure.
+ *
+ *  If the function is called the first time the dialog is created.
+ *  If the dialog is only in background it is moved to the foreground.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current Pointer to the top level struct
+ */
+void
+schematic_autonumber_dialog (SchematicAutonumber *autotext,
+                             SchematicWindow *w_current)
+{
   if (schematic_autonumber_get_autotext_dialog (autotext) == NULL)
   {
     /* Dialog is not currently displayed - create it */
-    GtkWidget *dialog = schematic_autonumber_dialog_new (w_current);
-
-    schematic_autonumber_set_autotext_dialog (autotext, dialog);
-
-    opt_removenum = lookup_widget (dialog, "opt_removenum");
-    sort_order = lookup_widget (dialog, "sort_order");
-
-    autonumber_sortorder_create(w_current, sort_order);
-
-    gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                     GTK_RESPONSE_ACCEPT);
-
-    g_signal_connect (G_OBJECT (dialog),
-                      "response",
-                      G_CALLBACK (autonumber_text_response),
-                      autotext);
-
-    g_signal_connect (G_OBJECT (opt_removenum),
-                      "clicked",
-                      G_CALLBACK (autonumber_removenum_toggled),
-                      autotext);
-
-    autonumber_set_state(autotext);
-
-    gtk_widget_show_all (dialog);
+    schematic_autonumber_dialog_init (autotext, w_current);
   }
 
   /* if the dialog is in the background or minimized: show it */
