@@ -443,7 +443,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   log.  If nothing found, it is also logged.
 
 - A number of tests for the program has been added to the
-  integration test suite.
+  integration test suite.  The test suite has been improved and
+  now contains more useful functions described in the comments in
+  the source code.
 
 ### Changes in `lepton-sch2pcb`:
 
