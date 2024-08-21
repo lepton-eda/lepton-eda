@@ -442,8 +442,6 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   program loads only the first file found and reports its name to
   log.  If nothing found, it is also logged.
 
-### Changes in `lepton-netlist`:
-
 - A number of tests for the program has been added to the
   integration test suite.
 
