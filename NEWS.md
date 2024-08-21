@@ -427,9 +427,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 ### Changes in `lepton-netlist`:
 
-- Previously, the program used to output backtrace when a
-  processed file was missing.  Now it just reports the issue
-  without outputting backtrace.
+- Previously, the program used to output a backtrace when the file
+  to process was missing.  Now it just reports the issue without
+  outputting the backtrace.
 
 - Previously, scripts specified by the options `-m` and `-l` had
   to be absolute file names or names of files in the current
