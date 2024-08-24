@@ -284,6 +284,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   module `(schematic window)`.  It returns the `<canvas>` instance
   for a given `<window>` object.
 
+- A new module, `(schematic viewport foreign)`, has been added.
+  The module contains helpers for working with the foreign C type
+  `SchematicViewport`.
+
+- A new module, `(schematic canvas)`, has been added.  Currently,
+  the module exports an only function, `canvas-viewport()`, that
+  obtains the `<viewport>` object of a `<canvas>` instance.
+
+- Most of the functions related to the *zoom box* feature have
+  been rewritten in Scheme.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
