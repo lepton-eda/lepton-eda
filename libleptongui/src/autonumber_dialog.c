@@ -2252,8 +2252,6 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 
   schematic_autonumber_dialog_restore_state (autotext);
 
-  gtk_widget_show_all (dialog);
-
   return dialog;
 }
 

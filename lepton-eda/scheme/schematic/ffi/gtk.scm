@@ -54,6 +54,7 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+            gtk_widget_show_all
 
             gtk_window_set_transient_for
             gtk_window_present
@@ -115,6 +116,7 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_show void '(*))
+(define-lff gtk_widget_show_all void '(*))
 
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))
