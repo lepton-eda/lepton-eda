@@ -100,11 +100,10 @@
                   ;; searchtext.
                   (let ((trimmed-s (autonumber-string->template (text-string (car objects))
                                                                 search-text)))
-                    (if (not trimmed-s)
+                    (if (or (not trimmed-s)
+                            (member trimmed-s ls))
                         ls
-                        (if (member trimmed-s ls)
-                            ls
-                            (cons trimmed-s ls)))))))))
+                        (cons trimmed-s ls))))))))
 
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
