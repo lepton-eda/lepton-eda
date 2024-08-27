@@ -1717,7 +1717,7 @@ schematic_autonumber_new ()
  * @param autotext Pointer to the state struct.
  */
 void
-autonumber_set_state (SchematicAutonumber *autotext)
+schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   GtkTreeModel *model;
@@ -2242,7 +2242,7 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                     G_CALLBACK (autonumber_removenum_toggled),
                     autotext);
 
-  autonumber_set_state (autotext);
+  schematic_autonumber_dialog_restore_state (autotext);
 
   gtk_widget_show_all (dialog);
 
