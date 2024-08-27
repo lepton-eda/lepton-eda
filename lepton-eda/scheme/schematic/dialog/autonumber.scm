@@ -86,6 +86,7 @@
           ;; Create a new dialog.
           (let ((*dialog (schematic_autonumber_dialog_init *autotext
                                                            *window)))
+            (schematic_autonumber_dialog_restore_state *autotext)
             (gtk_widget_show_all *dialog)
             *dialog)
           ;; Return existing dialog.

@@ -2250,8 +2250,6 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                     G_CALLBACK (autonumber_removenum_toggled),
                     autotext);
 
-  schematic_autonumber_dialog_restore_state (autotext);
-
   return dialog;
 }
 
