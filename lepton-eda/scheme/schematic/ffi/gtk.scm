@@ -22,13 +22,10 @@
   #:use-module (lepton ffi)
   #:use-module (lepton m4)
 
-  #:export (gtk_init
-            gtk_main_iteration
-            gtk_main_level
-            gtk_main_quit
-            gtk_accelerator_parse
+  #:export (gtk_accelerator_get_label
             gtk_accelerator_name
-            gtk_accelerator_get_label
+            gtk_accelerator_parse
+
             gtk_adjustment_get_page_increment
             gtk_adjustment_get_page_size
             gtk_adjustment_get_upper
@@ -40,7 +37,6 @@
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
-
             gtk_combo_box_text_append_text
 
             gtk_dialog_set_default_response
@@ -50,26 +46,30 @@
 
             gtk_events_pending
 
+            gtk_icon_theme_append_search_path
+            gtk_icon_theme_get_default
+
+            gtk_init
+
             gtk_list_store_clear
 
-            gtk_rc_parse
-            gtk_icon_theme_get_default
-            gtk_icon_theme_append_search_path
-            gtk_window_set_default_icon_name
-            gtk_tearoff_menu_item_new
-            gtk_menu_item_new_with_mnemonic
-            gtk_widget_destroy
-            gtk_widget_grab_focus
-            gtk_widget_hide
-            gtk_widget_show
-            gtk_menu_new
+            gtk_main_iteration
+            gtk_main_level
+            gtk_main_quit
+
             gtk_menu_bar_new
+            gtk_menu_item_new_with_mnemonic
             gtk_menu_item_set_submenu
+            gtk_menu_new
             gtk_menu_shell_append
+
             gtk_notebook_get_n_pages
             gtk_notebook_page_num
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
+
+            gtk_rc_parse
+
             gtk_scrolled_window_new
 
             gtk_spin_button_get_value_as_int
@@ -78,12 +78,20 @@
             gtk_toggle_button_get_active
             gtk_toggle_button_set_active
 
+            gtk_tearoff_menu_item_new
+
+            gtk_widget_destroy
+            gtk_widget_grab_focus
+            gtk_widget_hide
             gtk_widget_set_sensitive
+            gtk_widget_show
             gtk_widget_show_all
 
+            gtk_window_set_default_icon_name
             gtk_window_set_transient_for
             gtk_window_present
 
+            ;; GDK
             GdkModifierType
             gdk_event_get_coords
             gdk_event_get_scroll_deltas
@@ -124,12 +132,12 @@
 
 (define-lff gtk_events_pending int '())
 
-(define-lff gtk_list_store_clear void '(*))
-
 (define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())
 
 (define-lff gtk_init void '(* *))
+
+(define-lff gtk_list_store_clear void '(*))
 
 (define-lff gtk_main_iteration int '())
 (define-lff gtk_main_level int '())
