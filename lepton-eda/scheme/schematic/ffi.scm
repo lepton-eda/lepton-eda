@@ -39,6 +39,7 @@
             g_read_file
 
             gtk_response_to_string
+            gtk_string_to_response
             gtk_widget_get_gtk_window
 
             generic_confirm_dialog
@@ -611,6 +612,7 @@
 
 ;;; gtk_helper.c
 (define-lff gtk_response_to_string '* (list int))
+(define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
 
 ;;; o_attrib.c
