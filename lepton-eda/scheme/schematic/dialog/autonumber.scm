@@ -24,6 +24,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
 
   #:export (autonumber-dialog))
@@ -64,6 +65,8 @@
   (procedure->pointer void autonumber-response (list '* int '*)))
 
 
+(define %gtk-response-accept (symbol->gtk-response 'accept))
+
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
@@ -84,27 +87,26 @@
                     *autotext)))
       (if (null-pointer? *dialog)
           ;; Create a new dialog.
-          (let* ((*dialog-widget (schematic_autonumber_dialog_new *window))
+          (let* ((*new-dialog (schematic_autonumber_dialog_new *window))
                  (*remove-number-widget
-                  (schematic_autonumber_dialog_lookup_widget *dialog-widget
+                  (schematic_autonumber_dialog_lookup_widget *new-dialog
                                                              (string->pointer "opt_removenum")))
                  (*sort-order-widget
-                  (schematic_autonumber_dialog_lookup_widget *dialog-widget
+                  (schematic_autonumber_dialog_lookup_widget *new-dialog
                                                              (string->pointer "sort_order"))))
             (schematic_autonumber_sort_order_widget_init *sort-order-widget)
-            (let ((*dialog (schematic_autonumber_dialog_init *autotext
-                                                             *window
-                                                             *dialog-widget)))
 
-              (schematic_signal_connect *remove-number-widget
-                                        (string->pointer "clicked")
-                                        *schematic_autonumber_remove_numbers_checkbox_clicked
-                                        *autotext)
+            (gtk_dialog_set_default_response *new-dialog %gtk-response-accept)
 
-              (schematic_autonumber_set_autotext_dialog *autotext *dialog)
-              (schematic_autonumber_dialog_restore_state *autotext)
-              (gtk_widget_show_all *dialog)
-              *dialog))
+            (schematic_signal_connect *remove-number-widget
+                                      (string->pointer "clicked")
+                                      *schematic_autonumber_remove_numbers_checkbox_clicked
+                                      *autotext)
+
+            (schematic_autonumber_set_autotext_dialog *autotext *new-dialog)
+            (schematic_autonumber_dialog_restore_state *autotext)
+            (gtk_widget_show_all *new-dialog)
+            *new-dialog)
           ;; Return existing dialog.
           *dialog)))
 

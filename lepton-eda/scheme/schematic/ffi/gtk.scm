@@ -34,6 +34,7 @@
             gtk_adjustment_get_upper
             gtk_adjustment_get_value
             gtk_adjustment_set_value
+            gtk_dialog_set_default_response
             gtk_events_pending
             gtk_rc_parse
             gtk_icon_theme_get_default
@@ -83,6 +84,8 @@
 (define-lff gtk_adjustment_get_upper double '(*))
 (define-lff gtk_adjustment_get_value double '(*))
 (define-lff gtk_adjustment_set_value void (list '* double))
+
+(define-lff gtk_dialog_set_default_response void (list '* int))
 
 (define-lff gtk_events_pending int '())
 

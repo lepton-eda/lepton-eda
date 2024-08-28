@@ -223,10 +223,6 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 GtkWidget*
-schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
-                                  SchematicWindow *w_current,
-                                  GtkWidget *dialog);
-GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
 void

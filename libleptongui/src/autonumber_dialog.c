@@ -2214,28 +2214,6 @@ schematic_autonumber_dialog_new (SchematicWindow *w_current)
 }
 
 
-/*! \brief Create an autonumber text dialog.
- *
- *  \par Function Description
- *  Initializes a new autonumber text dialog for a schematic
- *  window instance.
- *
- *  \param [in,out] autotext The #SchematicAutonumber instance.
- *  \param [in] w_current The schematic window.
- *  \param [in] dialog The autonumber text dialog widget.
- *  \return The configured dialog widget.
- */
-GtkWidget*
-schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
-                                  SchematicWindow *w_current,
-                                  GtkWidget *dialog)
-{
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                   GTK_RESPONSE_ACCEPT);
-  return dialog;
-}
-
-
 /*! \brief Show the Autonumber dialog.
  *
  *  \par Function Description
