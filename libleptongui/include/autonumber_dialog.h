@@ -225,6 +225,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 GtkWidget*
 schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                                   SchematicWindow *w_current);
+GtkWidget*
+schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
+                                           const gchar *widget_name);
 gboolean
 schematic_autonumber_dialog_response (int response);
 
