@@ -2233,8 +2233,6 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
-  schematic_autonumber_set_autotext_dialog (autotext, dialog);
-
   opt_removenum =
     schematic_autonumber_dialog_lookup_widget (dialog, "opt_removenum");
   sort_order =
