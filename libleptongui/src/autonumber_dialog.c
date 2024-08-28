@@ -2217,21 +2217,21 @@ schematic_autonumber_dialog_new (SchematicWindow *w_current)
 /*! \brief Create an autonumber text dialog.
  *
  *  \par Function Description
- *  Creates and initializes a new autonumber text dialog for a
- *  schematic window instance.  The pointer to the dialog widget
- *  is stored in the #SchematicAutonumber instance \p autotext.
+ *  Initializes a new autonumber text dialog for a schematic
+ *  window instance.
  *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The schematic window.
+ *  \param [in] dialog The autonumber text dialog widget.
+ *  \return The configured dialog widget.
  */
 GtkWidget*
 schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
-                                  SchematicWindow *w_current)
+                                  SchematicWindow *w_current,
+                                  GtkWidget *dialog)
 {
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
-
-  GtkWidget *dialog = schematic_autonumber_dialog_new (w_current);
 
   schematic_autonumber_set_autotext_dialog (autotext, dialog);
 

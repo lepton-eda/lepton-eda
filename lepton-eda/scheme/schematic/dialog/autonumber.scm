@@ -84,8 +84,10 @@
                     *autotext)))
       (if (null-pointer? *dialog)
           ;; Create a new dialog.
-          (let ((*dialog (schematic_autonumber_dialog_init *autotext
-                                                           *window)))
+          (let ((*dialog (schematic_autonumber_dialog_init
+                          *autotext
+                          *window
+                          (schematic_autonumber_dialog_new *window))))
             (schematic_autonumber_dialog_restore_state *autotext)
             (gtk_widget_show_all *dialog)
             *dialog)
