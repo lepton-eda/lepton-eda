@@ -230,6 +230,9 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
+void
+schematic_autonumber_remove_numbers_checkbox_clicked (GtkWidget *opt_removenum,
+                                                      SchematicAutonumber *autotext);
 gboolean
 schematic_autonumber_dialog_response (int response);
 

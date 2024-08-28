@@ -1876,8 +1876,8 @@ schematic_autonumber_dialog_response (int response)
  * This gets called each time "remove numbers" check box gets clicked.
  */
 void
-autonumber_removenum_toggled (GtkWidget *opt_removenum,
-                              SchematicAutonumber *autotext)
+schematic_autonumber_remove_numbers_checkbox_clicked (GtkWidget *opt_removenum,
+                                                      SchematicAutonumber *autotext)
 {
   GtkWidget *scope_overwrite;
 
@@ -2237,7 +2237,7 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 
   g_signal_connect (G_OBJECT (opt_removenum),
                     "clicked",
-                    G_CALLBACK (autonumber_removenum_toggled),
+                    G_CALLBACK (schematic_autonumber_remove_numbers_checkbox_clicked),
                     autotext);
 
   return dialog;
