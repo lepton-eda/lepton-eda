@@ -2223,23 +2223,15 @@ schematic_autonumber_dialog_new (SchematicWindow *w_current)
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The schematic window.
  *  \param [in] dialog The autonumber text dialog widget.
- *  \param [in] opt_removenum The 'Remove number' checkbox widget.
  *  \return The configured dialog widget.
  */
 GtkWidget*
 schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                                   SchematicWindow *w_current,
-                                  GtkWidget *dialog,
-                                  GtkWidget *opt_removenum)
+                                  GtkWidget *dialog)
 {
   gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                    GTK_RESPONSE_ACCEPT);
-
-  g_signal_connect (G_OBJECT (opt_removenum),
-                    "clicked",
-                    G_CALLBACK (schematic_autonumber_remove_numbers_checkbox_clicked),
-                    autotext);
-
   return dialog;
 }
 

@@ -94,8 +94,13 @@
             (schematic_autonumber_sort_order_widget_init *sort-order-widget)
             (let ((*dialog (schematic_autonumber_dialog_init *autotext
                                                              *window
-                                                             *dialog-widget
-                                                             *remove-number-widget)))
+                                                             *dialog-widget)))
+
+              (schematic_signal_connect *remove-number-widget
+                                        (string->pointer "clicked")
+                                        *schematic_autonumber_remove_numbers_checkbox_clicked
+                                        *autotext)
+
               (schematic_autonumber_set_autotext_dialog *autotext *dialog)
               (schematic_autonumber_dialog_restore_state *autotext)
               (gtk_widget_show_all *dialog)
