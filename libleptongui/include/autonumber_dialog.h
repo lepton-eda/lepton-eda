@@ -240,6 +240,9 @@ schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext);
 
+void
+schematic_autonumber_sort_order_widget_init (SchematicWindow *w_current,
+                                             GtkWidget *sort_order);
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
