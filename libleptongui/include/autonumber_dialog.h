@@ -228,9 +228,6 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
 void
 schematic_autonumber_remove_numbers_checkbox_clicked (GtkWidget *opt_removenum,
                                                       SchematicAutonumber *autotext);
-gboolean
-schematic_autonumber_dialog_response (int response);
-
 void
 schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext);
 

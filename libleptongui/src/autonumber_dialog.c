@@ -1844,30 +1844,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 }
 
 
-/*! \brief Get response signal from the autonumber dialog.
- *
- *  \par Function Description
- *  The function gets the autonumber dialog response ID and
- *  returns \c TRUE if it should accept the input, otherwise it
- *  returns \c FALSE.
- *
- *  \param [in] response The GTK response ID.
- *  \retval TRUE if the response ID is \a GTK_RESPONSE_ACCEPT,
- *  \retval FALSE otherwise.
- */
-gboolean
-schematic_autonumber_dialog_response (int response)
-{
-  switch (response)
-  {
-  case GTK_RESPONSE_ACCEPT:
-    return TRUE;
-  default:
-    return FALSE;
-  }
-}
-
-
 /* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
 
 /** @brief Callback that activates or deactivates "overwrite existing numbers"

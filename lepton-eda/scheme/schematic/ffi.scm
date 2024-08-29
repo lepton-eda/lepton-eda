@@ -190,7 +190,6 @@
             schematic_autonumber_set_autotext_window
             schematic_autonumber_dialog_lookup_widget
             schematic_autonumber_dialog_new
-            schematic_autonumber_dialog_response
             schematic_autonumber_dialog_restore_state
             schematic_autonumber_dialog_save_state
             schematic_autonumber_dialog_show
@@ -1106,7 +1105,6 @@
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
-(define-lff schematic_autonumber_dialog_response int (list int))
 (define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
 (define-lff schematic_autonumber_dialog_show void '(*))

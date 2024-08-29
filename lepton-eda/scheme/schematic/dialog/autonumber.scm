@@ -51,8 +51,11 @@
   (schematic_autonumber_set_autotext_dialog *autotext %null-pointer))
 
 
+;;; Get response signal from the autonumber dialog.  The function
+;;; gets the autonumber dialog response ID and either starts
+;;; autonumbering or destroys the dialog.
 (define (autonumber-response *widget response *autotext)
-  (if (true? (schematic_autonumber_dialog_response response))
+  (if (eq? (gtk-response->symbol response) 'accept)
       ;; Triggering the apply button will call the autonumber
       ;; action functions.
       (start-autonumbering *autotext)
