@@ -1826,7 +1826,7 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 void
 schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext)
 {
-  gtk_widget_destroy (autotext->dialog);
+  gtk_widget_destroy (schematic_autonumber_get_autotext_dialog (autotext));
   schematic_autonumber_set_autotext_dialog (autotext, NULL);
 }
 
