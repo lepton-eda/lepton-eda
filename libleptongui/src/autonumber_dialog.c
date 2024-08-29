@@ -1844,8 +1844,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 }
 
 
-/* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
-
 /* ***** DIALOG SET-UP ***************************************************** */
 
 /** @brief Creates the autonumber text dialog.
