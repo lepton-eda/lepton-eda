@@ -68,6 +68,13 @@
   (procedure->pointer void autonumber-response (list '* int '*)))
 
 
+(define (autonumber-remove-numbers-checkbox-clicked-callback *widget *autotext)
+  (schematic_autonumber_remove_numbers_checkbox_clicked *widget *autotext))
+
+(define *autonumber-remove-numbers-checkbox-clicked-callback
+  (procedure->pointer void autonumber-remove-numbers-checkbox-clicked-callback '(* *)))
+
+
 (define %gtk-response-accept (symbol->gtk-response 'accept))
 
 (define (autonumber-dialog window)
@@ -103,7 +110,7 @@
 
             (schematic_signal_connect *remove-number-widget
                                       (string->pointer "clicked")
-                                      *schematic_autonumber_remove_numbers_checkbox_clicked
+                                      *autonumber-remove-numbers-checkbox-clicked-callback
                                       *autotext)
 
             (schematic_autonumber_set_autotext_dialog *autotext *new-dialog)

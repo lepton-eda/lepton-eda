@@ -193,7 +193,7 @@
             schematic_autonumber_dialog_restore_state
             schematic_autonumber_dialog_save_state
             schematic_autonumber_dialog_show
-            *schematic_autonumber_remove_numbers_checkbox_clicked
+            schematic_autonumber_remove_numbers_checkbox_clicked
             schematic_autonumber_run
             schematic_autonumber_sort_order_widget_init
 
@@ -1108,7 +1108,7 @@
 (define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
 (define-lff schematic_autonumber_dialog_show void '(*))
-(define-lfc *schematic_autonumber_remove_numbers_checkbox_clicked)
+(define-lff schematic_autonumber_remove_numbers_checkbox_clicked void '(* *))
 (define-lff schematic_autonumber_run void '(*))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
 
