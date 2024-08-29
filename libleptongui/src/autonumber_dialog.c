@@ -1431,7 +1431,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  autotext->current_searchtext = text_template;
+  schematic_autonumber_set_autotext_current_searchtext (autotext, text_template);
   /* decide whether to renumber page by page or get a global used-list */
 
   if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
