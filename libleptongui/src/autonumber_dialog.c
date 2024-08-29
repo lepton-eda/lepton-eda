@@ -1846,30 +1846,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
 /* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
 
-/** @brief Callback that activates or deactivates "overwrite existing numbers"
- * check box.
- *
- * This gets called each time "remove numbers" check box gets clicked.
- */
-void
-schematic_autonumber_remove_numbers_checkbox_clicked (GtkWidget *opt_removenum,
-                                                      SchematicAutonumber *autotext)
-{
-  GtkWidget *scope_overwrite;
-
-  scope_overwrite =
-    schematic_autonumber_dialog_lookup_widget (schematic_autonumber_get_autotext_dialog (autotext),
-                                               "scope_overwrite");
-
-  /* toggle activity of scope overwrite with respect to removenum */
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(opt_removenum))) {
-    gtk_widget_set_sensitive(scope_overwrite, 0);
-  } else {
-    gtk_widget_set_sensitive(scope_overwrite, 1);
-  }
-}
-
-
 /* ***** DIALOG SET-UP ***************************************************** */
 
 /** @brief Creates the autonumber text dialog.

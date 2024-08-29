@@ -55,6 +55,8 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+            gtk_toggle_button_get_active
+            gtk_widget_set_sensitive
             gtk_widget_show_all
 
             gtk_window_set_transient_for
@@ -115,9 +117,12 @@
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
+(define-lff gtk_toggle_button_get_active int '(*))
+
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
+(define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))
 

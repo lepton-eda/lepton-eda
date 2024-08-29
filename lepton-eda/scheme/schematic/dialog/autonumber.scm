@@ -68,8 +68,15 @@
   (procedure->pointer void autonumber-response (list '* int '*)))
 
 
+;;; Activate or deactivate the "Overwrite existing numbers"
+;;; checkbox depending on the state of the "Remove numbers"
+;;; checkbox.
 (define (autonumber-remove-numbers-checkbox-clicked-callback *widget *autotext)
-  (schematic_autonumber_remove_numbers_checkbox_clicked *widget *autotext))
+  (gtk_widget_set_sensitive
+   (schematic_autonumber_dialog_lookup_widget
+    (schematic_autonumber_get_autotext_dialog *autotext)
+    (string->pointer "scope_overwrite"))
+   (if (true? (gtk_toggle_button_get_active *widget)) 0 1)))
 
 (define *autonumber-remove-numbers-checkbox-clicked-callback
   (procedure->pointer void autonumber-remove-numbers-checkbox-clicked-callback '(* *)))
