@@ -180,7 +180,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - The canvas signals for drawing, configuring, button pressing,
   mouse motion, scrolling, and other events are now connected and
-  processed in Scheme.
+  processed in Scheme.  Processing of draw events has been unified
+  for GTK2 and GTK3 ports.
 
 - Key event processing callback is now assigned in Scheme.
 
