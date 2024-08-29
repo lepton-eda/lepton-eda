@@ -41,6 +41,14 @@
   #:export (autonumber-dialog))
 
 
+(define (autonumber-by-template! *autotext *window *pages *template scope-number)
+  (schematic_autonumber_run *autotext
+                            *window
+                            *pages
+                            *template
+                            scope-number))
+
+
 (define (run-autonumbering *autotext)
   (define *window (schematic_autonumber_get_autotext_window *autotext))
   (define *active-page (schematic_window_get_active_page *window))
@@ -147,11 +155,11 @@
             ;; Step3: iterate over the search items in the list.
             (for-each
              (lambda (template)
-               (schematic_autonumber_run *autotext
-                                         *window
-                                         *pages
-                                         (string->pointer template)
-                                         scope-number))
+               (autonumber-by-template! *autotext
+                                        *window
+                                        *pages
+                                        (string->pointer template)
+                                        scope-number))
              template-list)
             ;; Cleanup and redraw all.
             ;; Go back to the root page.
