@@ -1438,7 +1438,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   {
     /* renumbering all means that no db is required */
     if (!((scope_number == SCOPE_HIERARCHY)
-          && autotext->scope_overwrite))
+          && schematic_autonumber_get_autotext_scope_overwrite (autotext)))
     {
       for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
       {
