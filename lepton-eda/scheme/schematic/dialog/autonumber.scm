@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -43,6 +44,12 @@
       (schematic_autonumber_run *autotext)))
 
 
+;;; Destroy the Autonumber dialog.
+(define (destroy-autonumber-dialog! *autotext)
+  (gtk_widget_destroy (schematic_autonumber_get_autotext_dialog *autotext))
+  (schematic_autonumber_set_autotext_dialog *autotext %null-pointer))
+
+
 (define (autonumber-response *widget response *autotext)
   (if (true? (schematic_autonumber_dialog_response response))
       ;; Triggering the apply button will call the autonumber
@@ -50,7 +57,7 @@
       (start-autonumbering *autotext)
       ;; Close the dialog if the close button is pressed or the
       ;; user closes the dialog window.
-      (schematic_autonumber_dialog_destroy *autotext)))
+      (destroy-autonumber-dialog! *autotext)))
 
 ;;; Response callback for the autonumber text dialog.
 (define *autonumber-response-callback

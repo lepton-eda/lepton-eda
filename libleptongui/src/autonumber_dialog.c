@@ -1815,22 +1815,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 }
 
 
-/*! \brief Destroy the Autonumber dialog.
- *
- *  \par Function Description
- *  Destroys the Autonumber dialog widget.
- *
- * \param [in] autotext The #SchematicAutonumber structure storing the
- *                      dialog.
- */
-void
-schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext)
-{
-  gtk_widget_destroy (schematic_autonumber_get_autotext_dialog (autotext));
-  schematic_autonumber_set_autotext_dialog (autotext, NULL);
-}
-
-
 /*! \brief Get response signal from the autonumber dialog.
  *
  *  \par Function Description

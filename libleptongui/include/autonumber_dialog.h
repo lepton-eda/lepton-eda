@@ -222,9 +222,6 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
                                            char *name);
 /* Methods */
 
-void
-schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext);
-
 GtkWidget*
 schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                                   SchematicWindow *w_current);

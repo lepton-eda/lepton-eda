@@ -182,11 +182,11 @@
             schematic_autonumber_get_autotext
             schematic_autonumber_set_autotext
             schematic_autonumber_get_autotext_dialog
+            schematic_autonumber_set_autotext_dialog
             schematic_autonumber_get_autotext_removenum
             schematic_autonumber_get_autotext_scope_overwrite
             schematic_autonumber_set_autotext_scope_overwrite
             schematic_autonumber_set_autotext_window
-            schematic_autonumber_dialog_destroy
             schematic_autonumber_dialog_init
             schematic_autonumber_dialog_response
             schematic_autonumber_dialog_save_state
@@ -1093,11 +1093,11 @@
 (define-lff schematic_autonumber_get_autotext '* '())
 (define-lff schematic_autonumber_set_autotext void '(*))
 (define-lff schematic_autonumber_get_autotext_dialog '* '(*))
+(define-lff schematic_autonumber_set_autotext_dialog void '(* *))
 (define-lff schematic_autonumber_get_autotext_removenum int '(*))
 (define-lff schematic_autonumber_get_autotext_scope_overwrite int '(*))
 (define-lff schematic_autonumber_set_autotext_scope_overwrite void (list '* int))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
-(define-lff schematic_autonumber_dialog_destroy void '(*))
 (define-lff schematic_autonumber_dialog_init '* '(* *))
 (define-lff schematic_autonumber_dialog_response int (list int))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
