@@ -1858,7 +1858,7 @@ schematic_autonumber_remove_numbers_checkbox_clicked (GtkWidget *opt_removenum,
   GtkWidget *scope_overwrite;
 
   scope_overwrite =
-    schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+    schematic_autonumber_dialog_lookup_widget (schematic_autonumber_get_autotext_dialog (autotext),
                                                "scope_overwrite");
 
   /* toggle activity of scope overwrite with respect to removenum */
