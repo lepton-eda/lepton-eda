@@ -42,10 +42,11 @@
 
 
 (define (autonumber-by-template! *autotext *window *pages *template scope-number)
+  (schematic_autonumber_set_autotext_current_searchtext *autotext
+                                                        *template)
   (schematic_autonumber_run *autotext
                             *window
                             *pages
-                            *template
                             scope-number))
 
 

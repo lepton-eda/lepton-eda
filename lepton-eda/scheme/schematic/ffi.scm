@@ -1159,7 +1159,7 @@
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_history_add '* '(* *))
-(define-lff schematic_autonumber_run void (list '* '* '* '* int))
+(define-lff schematic_autonumber_run void (list '* '* '* int))
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_scope_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))

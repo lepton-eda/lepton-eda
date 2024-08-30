@@ -1450,14 +1450,12 @@ schematic_autonumber_collect_used_objects (SchematicAutonumber *autotext,
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
  *  \param [in] pages The whole list of pages of the window.
- *  \param [in] text_template A text template for renumbering.
  *  \param [in] scope_number The selected (re)numbering scope.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,
-                          gchar *text_template,
                           gint scope_number)
 {
   GList *obj_item, *page_item;
@@ -1469,7 +1467,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  schematic_autonumber_set_autotext_current_searchtext (autotext, text_template);
   /* decide whether to renumber page by page or get a global used-list */
 
   if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
