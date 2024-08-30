@@ -1543,7 +1543,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         || (scope_number == SCOPE_PAGE))
       break; /* only renumber the parent page (the first page) */
   }
-  schematic_autonumber_clear_database (autotext);   /* cleanup */
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */

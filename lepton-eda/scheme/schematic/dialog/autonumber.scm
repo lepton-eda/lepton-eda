@@ -69,7 +69,9 @@
   (schematic_autonumber_run *autotext
                             *window
                             *pages
-                            scope-number))
+                            scope-number)
+  ;; Cleanup.
+  (schematic_autonumber_clear_database *autotext))
 
 
 (define (run-autonumbering *autotext)
