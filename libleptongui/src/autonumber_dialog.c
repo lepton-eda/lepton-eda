@@ -1047,7 +1047,8 @@ void freeslot_print(GList *list) {
  *  \par Function Descriptions
  *  Just remove the list of used numbers, used slots and free slots.
  */
-void autonumber_clear_database (SchematicAutonumber *autotext)
+void
+schematic_autonumber_clear_database (SchematicAutonumber *autotext)
 {
   /* cleanup everything for the next searchtext */
   if (autotext->used_numbers != NULL) {
@@ -1537,13 +1538,13 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     /* destroy the page database */
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
         || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-      autonumber_clear_database(autotext);
+      schematic_autonumber_clear_database (autotext);
 
     if ((scope_number == SCOPE_SELECTED)
         || (scope_number == SCOPE_PAGE))
       break; /* only renumber the parent page (the first page) */
   }
-  autonumber_clear_database(autotext);   /* cleanup */
+  schematic_autonumber_clear_database (autotext);   /* cleanup */
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */

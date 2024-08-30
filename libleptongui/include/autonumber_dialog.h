@@ -223,6 +223,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
+schematic_autonumber_clear_database (SchematicAutonumber *autotext);
+
+void
 schematic_autonumber_collect_used_objects (SchematicAutonumber *autotext,
                                            SchematicWindow *w_current,
                                            GList *pages);
