@@ -1419,19 +1419,13 @@ schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
 void
 schematic_autonumber_collect_used_objects (SchematicAutonumber *autotext,
                                            SchematicWindow *w_current,
-                                           GList *pages)
+                                           LeptonPage *root_page,
+                                           LeptonPage *page)
 {
-  GList *page_item;
-
-  for (page_item = pages; page_item != NULL; page_item = g_list_next (page_item))
-  {
-    schematic_autonumber_set_autotext_root_page (autotext,
-                                                 (pages->data == page_item->data));
-    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
-                               (LeptonPage*) page_item->data);
-    schematic_window_page_changed (w_current);
-    schematic_autonumber_get_used (w_current, autotext);
-  }
+  schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
+  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
+  schematic_window_page_changed (w_current);
+  schematic_autonumber_get_used (w_current, autotext);
 }
 
 

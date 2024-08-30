@@ -47,7 +47,7 @@
     (schematic_autonumber_scope_to_string scope-number))))
 
 
-(define (autonumber-by-template! *autotext *window *pages *template scope-number)
+(define (autonumber-by-template! *autotext *window *pages page-list *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
   ;; Decide whether to renumber page by page or get a global
@@ -64,7 +64,13 @@
                          'scope-hierarchy)
                     (true? (schematic_autonumber_get_autotext_scope_overwrite
                             *autotext))))
-      (schematic_autonumber_collect_used_objects *autotext *window *pages)))
+      (for-each
+       (lambda (page)
+         (schematic_autonumber_collect_used_objects *autotext
+                                                    *window
+                                                    (page->pointer (car page-list))
+                                                    (page->pointer page)))
+       page-list)))
 
   (schematic_autonumber_run *autotext
                             *window
@@ -179,6 +185,7 @@
                (autonumber-by-template! *autotext
                                         *window
                                         *pages
+                                        page-list
                                         (string->pointer template)
                                         scope-number))
              template-list)

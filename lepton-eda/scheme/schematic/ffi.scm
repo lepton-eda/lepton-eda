@@ -1159,7 +1159,7 @@
 (define-lff schematic_autonumber_get_autotext_window '* '(*))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_clear_database void '(*))
-(define-lff schematic_autonumber_collect_used_objects void '(* * *))
+(define-lff schematic_autonumber_collect_used_objects void '(* * * *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_history_add '* '(* *))
