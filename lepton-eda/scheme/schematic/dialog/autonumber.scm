@@ -41,6 +41,12 @@
   #:export (autonumber-dialog))
 
 
+(define (scope-number->symbol scope-number)
+  (string->symbol
+   (pointer->string
+    (schematic_autonumber_scope_to_string scope-number))))
+
+
 (define (autonumber-by-template! *autotext *window *pages *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
@@ -48,17 +54,13 @@
   ;; used-list.  The already used numbers will be skipped in all
   ;; the hierarchical structure if the skip scope is set to
   ;; "hierarchy".
-  (when (eq? (string->symbol
-              (pointer->string
-               (schematic_autonumber_scope_to_string
-                (schematic_autonumber_get_autotext_scope_skip *autotext))))
+  (when (eq? (scope-number->symbol
+              (schematic_autonumber_get_autotext_scope_skip *autotext))
              'scope-hierarchy)
     ;; Renumbering and overwriting all the numbers in the
     ;; hierarchy means that no database is required so we do not
     ;; collect already used numbers in such a case.
-    (when (not (and (eq? (string->symbol
-                          (pointer->string
-                           (schematic_autonumber_scope_to_string scope-number)))
+    (when (not (and (eq? (scope-number->symbol scope-number)
                          'scope-hierarchy)
                     (true? (schematic_autonumber_get_autotext_scope_overwrite
                             *autotext))))
@@ -76,11 +78,7 @@
 
   (define scope-number
     (schematic_autonumber_get_autotext_scope_number *autotext))
-
-  (define scope
-    (string->symbol
-     (pointer->string
-      (schematic_autonumber_scope_to_string scope-number))))
+  (define scope (scope-number->symbol scope-number))
 
   ;; Get all pages of the hierarchy.
   (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
