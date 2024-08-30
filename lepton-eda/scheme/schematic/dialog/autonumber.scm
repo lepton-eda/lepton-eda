@@ -44,6 +44,26 @@
 (define (autonumber-by-template! *autotext *window *pages *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
+  ;; Decide whether to renumber page by page or get a global
+  ;; used-list.  The already used numbers will be skipped in all
+  ;; the hierarchical structure if the skip scope is set to
+  ;; "hierarchy".
+  (when (eq? (string->symbol
+              (pointer->string
+               (schematic_autonumber_scope_to_string
+                (schematic_autonumber_get_autotext_scope_skip *autotext))))
+             'scope-hierarchy)
+    ;; Renumbering and overwriting all the numbers in the
+    ;; hierarchy means that no database is required so we do not
+    ;; collect already used numbers in such a case.
+    (when (not (and (eq? (string->symbol
+                          (pointer->string
+                           (schematic_autonumber_scope_to_string scope-number)))
+                         'scope-hierarchy)
+                    (true? (schematic_autonumber_get_autotext_scope_overwrite
+                            *autotext))))
+      (schematic_autonumber_collect_used_objects *autotext *window *pages)))
+
   (schematic_autonumber_run *autotext
                             *window
                             *pages

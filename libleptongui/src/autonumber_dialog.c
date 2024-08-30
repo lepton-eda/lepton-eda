@@ -1465,18 +1465,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  /* decide whether to renumber page by page or get a global used-list */
-
-  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_HIERARCHY)) /* whole hierarchy database */
-  {
-    /* renumbering all means that no db is required */
-    if (!((scope_number == SCOPE_HIERARCHY)
-          && schematic_autonumber_get_autotext_scope_overwrite (autotext)))
-    {
-      schematic_autonumber_collect_used_objects (autotext, w_current, pages);
-    }
-  }
-
   /* renumber the elements */
   for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
   {
