@@ -66,10 +66,15 @@
                             *autotext))))
       (for-each
        (lambda (page)
-         (schematic_autonumber_collect_used_objects *autotext
-                                                    *window
-                                                    (page->pointer (car page-list))
-                                                    (page->pointer page)))
+         (schematic_autonumber_set_autotext_root_page
+          *autotext
+          (if (eq? page (car page-list))
+              TRUE
+              FALSE))
+         (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
+                                    (page->pointer page))
+         (schematic_window_page_changed *window)
+         (schematic_autonumber_get_used *window *autotext))
        page-list)))
 
   (schematic_autonumber_run *autotext

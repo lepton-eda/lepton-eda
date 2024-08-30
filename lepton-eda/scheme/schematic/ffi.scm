@@ -210,9 +210,9 @@
             schematic_autonumber_get_autotext_window
             schematic_autonumber_set_autotext_window
             schematic_autonumber_clear_database
-            schematic_autonumber_collect_used_objects
             schematic_autonumber_dialog_lookup_widget
             schematic_autonumber_dialog_new
+            schematic_autonumber_get_used
             schematic_autonumber_history_add
             schematic_autonumber_run
             schematic_autonumber_scope_from_string
@@ -1159,9 +1159,9 @@
 (define-lff schematic_autonumber_get_autotext_window '* '(*))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_clear_database void '(*))
-(define-lff schematic_autonumber_collect_used_objects void '(* * * *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
+(define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_run void (list '* '* '* int))
 (define-lff schematic_autonumber_scope_from_string int '(*))

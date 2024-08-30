@@ -1416,19 +1416,6 @@ schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
 }
 
 
-void
-schematic_autonumber_collect_used_objects (SchematicAutonumber *autotext,
-                                           SchematicWindow *w_current,
-                                           LeptonPage *root_page,
-                                           LeptonPage *page)
-{
-  schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
-  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
-  schematic_window_page_changed (w_current);
-  schematic_autonumber_get_used (w_current, autotext);
-}
-
-
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It
