@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +25,13 @@ G_BEGIN_DECLS
 /* ---------------------------------------------------------------- */
 
 /*! \class EdaConfig edaconfig.h "liblepton/edaconfig.h"
- * \brief Hierarchical configuration context for gEDA configuration data.
+ * \brief Hierarchical configuration context for Lepton
+ * configuration data.
  *
- * Configuration parameters in gEDA are always evaluated within a
- * configuration context.  Each context is associated with a
- * configuration file (although the file does not necessarily need to
- * exist).
+ * Configuration parameters in Lepton EDA are always evaluated
+ * within a configuration context.  Each context is associated
+ * with a configuration file (although the file does not
+ * necessarily need to exist).
  *
  * Each configuration context may have a parent context.  If, when
  * looking up a parameter, it has no value set in the selected
