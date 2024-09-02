@@ -249,7 +249,7 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
                                     LeptonObject *o_current);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          const GList *objects);
+                          GList *o_list);
 int
 schematic_autonumber_scope_from_string (char *s);
 

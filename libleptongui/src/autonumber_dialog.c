@@ -1449,19 +1449,14 @@ schematic_autonumber_make_renumber_list (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] objects The objects to renumber.
+ *  \param [in] o_list The objects to renumber.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          const GList *objects)
+                          GList *o_list)
 {
   GList *obj_item;
   LeptonObject *o_current;
-
-  /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
-  /* 1. get objects to renumber */
-  GList *o_list =
-    schematic_autonumber_make_renumber_list (autotext, objects);
 
   /* 2. sort object list */
   switch (schematic_autonumber_get_autotext_sort_order (autotext))

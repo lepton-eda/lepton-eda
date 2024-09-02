@@ -98,10 +98,14 @@
                     'scope-selected))
        (schematic_autonumber_get_used *window *autotext))
 
+     ;; Renumber code for one page and one searchtext.
 
-     (schematic_autonumber_run *autotext
-                               (lepton_page_objects
-                                (schematic_window_get_active_page *window)))
+     ;; 1. Get objects to renumber.
+     (let ((*objects-to-renumber
+            (schematic_autonumber_make_renumber_list
+             *autotext
+             (lepton_page_objects (schematic_window_get_active_page *window)))))
+       (schematic_autonumber_run *autotext *objects-to-renumber))
 
      ;; Destroy the page database.
      (when (or (eq? (scope-number->symbol
