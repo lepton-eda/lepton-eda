@@ -1427,11 +1427,11 @@ schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] objects The objects to renumber.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          SchematicWindow *w_current)
+                          const GList *objects)
 {
   GList *obj_item;
   LeptonObject *o_current;
@@ -1441,7 +1441,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
   /* 1. get objects to renumber */
-  for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
+  for (iter = objects;
        iter != NULL;
        iter = g_list_next (iter))
   {

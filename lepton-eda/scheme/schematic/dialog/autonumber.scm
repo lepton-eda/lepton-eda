@@ -98,7 +98,10 @@
                     'scope-selected))
        (schematic_autonumber_get_used *window *autotext))
 
-     (schematic_autonumber_run *autotext *window)
+
+     (schematic_autonumber_run *autotext
+                               (lepton_page_objects
+                                (schematic_window_get_active_page *window)))
 
      ;; Destroy the page database.
      (when (or (eq? (scope-number->symbol
