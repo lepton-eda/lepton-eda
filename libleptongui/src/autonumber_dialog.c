@@ -1493,11 +1493,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   }
   g_list_free(o_list);
   o_list = NULL;
-
-  /* destroy the page database */
-  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-      || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-    schematic_autonumber_clear_database (autotext);
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */

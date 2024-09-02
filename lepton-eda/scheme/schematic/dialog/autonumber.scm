@@ -98,7 +98,17 @@
                     'scope-selected))
        (schematic_autonumber_get_used *window *autotext))
 
-     (schematic_autonumber_run *autotext *window))
+     (schematic_autonumber_run *autotext *window)
+
+     ;; Destroy the page database.
+     (when (or (eq? (scope-number->symbol
+                     (schematic_autonumber_get_autotext_scope_skip *autotext))
+                    'scope-page)
+               (eq? (scope-number->symbol
+                     (schematic_autonumber_get_autotext_scope_skip *autotext))
+                    'scope-selected))
+       (schematic_autonumber_clear_database *autotext)))
+
    (if  (or (eq? (scope-number->symbol scope-number) 'scope-selected)
             (eq? (scope-number->symbol scope-number) 'scope-page))
         ;; Only renumber the parent page (the first page).
