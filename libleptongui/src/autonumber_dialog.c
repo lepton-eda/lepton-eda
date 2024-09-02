@@ -697,6 +697,36 @@ schematic_autonumber_scope_to_string (int scope)
 }
 
 
+/*! \brief Convert an autonumbering sort order enum value into a
+ *  string.
+ *
+ *  \par Function Description
+ *  Returns a string corresponding to the given autonumbering sort
+ *  order enum value \p sort_order.
+ *
+ *  \param [in] sort_order The sort order integer value.
+ *  \return The string corresponding to the sort order.
+ */
+const char*
+schematic_autonumber_sort_order_to_string (int sort_order)
+{
+  const char *result = NULL;
+
+  switch (sort_order)
+  {
+  case AUTONUMBER_SORT_DIAGONAL: result = "sort-diagonal"; break;
+  case AUTONUMBER_SORT_YX: result = "sort-yx"; break;
+  case AUTONUMBER_SORT_YX_REV: result = "sort-yx-rev"; break;
+  case AUTONUMBER_SORT_XY: result = "sort-xy"; break;
+  case AUTONUMBER_SORT_XY_REV: result = "sort-xy-rev"; break;
+  case AUTONUMBER_SORT_FILE: result = "sort-file"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
 /* ***** BACK-END CODE ***************************************************** */
 
 /********** compare functions for g_list_sort, ... ***********************/

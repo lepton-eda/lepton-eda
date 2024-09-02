@@ -240,6 +240,9 @@ schematic_autonumber_scope_from_string (char *s);
 const char*
 schematic_autonumber_scope_to_string (int scope);
 
+const char*
+schematic_autonumber_sort_order_to_string (int sort_order);
+
 void
 schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
 
