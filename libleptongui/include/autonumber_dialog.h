@@ -254,8 +254,8 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
-                          GList *pages,
-                          gint scope_number);
+                          LeptonPage *root_page,
+                          LeptonPage *page);
 int
 schematic_autonumber_scope_from_string (char *s);
 

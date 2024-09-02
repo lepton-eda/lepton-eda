@@ -1428,16 +1428,16 @@ schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
- *  \param [in] pages The whole list of pages of the window.
- *  \param [in] scope_number The selected (re)numbering scope.
+ *  \param [in] root_page The root page of the hierarchy.
+ *  \param [in] page The page to process.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
-                          GList *pages,
-                          gint scope_number)
+                          LeptonPage *root_page,
+                          LeptonPage *page)
 {
-  GList *obj_item, *page_item;
+  GList *obj_item;
   LeptonObject *o_current;
   gint number, slot;
   GList *o_list = NULL;
@@ -1446,13 +1446,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-  /* renumber the elements */
-  for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item))
-  {
-    lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
+    lepton_toplevel_goto_page (toplevel, page);
     schematic_window_page_changed (w_current);
-    schematic_autonumber_set_autotext_root_page (autotext,
-                                                 (pages->data == page_item->data));
+    schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
     /* build a page database if we're numbering pagebypage or selection only*/
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
         || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
@@ -1519,11 +1515,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
         || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
       schematic_autonumber_clear_database (autotext);
-
-    if ((scope_number == SCOPE_SELECTED)
-        || (scope_number == SCOPE_PAGE))
-      break; /* only renumber the parent page (the first page) */
-  }
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */

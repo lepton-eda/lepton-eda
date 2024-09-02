@@ -77,10 +77,19 @@
          (schematic_autonumber_get_used *window *autotext))
        page-list)))
 
-  (schematic_autonumber_run *autotext
-                            *window
-                            *pages
-                            scope-number)
+  ;; Renumber the elements.
+  (for-each
+   (lambda (page)
+     (schematic_autonumber_run *autotext
+                               *window
+                               (page->pointer (car page-list))
+                               (page->pointer page)))
+   (if  (or (eq? (scope-number->symbol scope-number) 'scope-selected)
+            (eq? (scope-number->symbol scope-number) 'scope-page))
+        ;; Only renumber the parent page (the first page).
+        (list (car page-list))
+        page-list))
+
   ;; Cleanup.
   (schematic_autonumber_clear_database *autotext))
 
