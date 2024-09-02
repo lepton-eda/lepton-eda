@@ -166,21 +166,6 @@ void lepton_list_remove( LeptonList *list, gpointer item )
 }
 
 
-/*! \brief Removes all the items in the given LeptonList.
- *
- *  \par Function Description
- *  Removes all items in the given LeptonList.
- *
- *  \param [in] list Pointer to the LeptonList
- */
-void lepton_list_remove_all( LeptonList *list )
-{
-  g_list_free(list->glist);
-  list->glist = NULL;
-  g_signal_emit( list, lepton_list_signals[ CHANGED ], 0 );
-}
-
-
 /*! \brief Moves the list data \a item to a new position \a newpos.
  */
 void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos )
