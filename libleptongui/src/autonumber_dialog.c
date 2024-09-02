@@ -1496,7 +1496,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     }
 
     /* 2. sort object list */
-    switch (autotext->order)
+    switch (schematic_autonumber_get_autotext_sort_order (autotext))
     {
     case AUTONUMBER_SORT_YX:
       o_list=g_list_sort(o_list, autonumber_sort_yx);
