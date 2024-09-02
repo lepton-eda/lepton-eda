@@ -80,10 +80,25 @@
   ;; Renumber the elements.
   (for-each
    (lambda (page)
-     (schematic_autonumber_run *autotext
-                               *window
-                               (page->pointer (car page-list))
-                               (page->pointer page)))
+     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window)
+                                (page->pointer page))
+     (schematic_window_page_changed *window)
+     (schematic_autonumber_set_autotext_root_page
+      *autotext
+      (if (eq? (car page-list) page)
+          TRUE
+          FALSE))
+     ;; Build a page database if we're numbering page by page or
+     ;; selection only.
+     (when (or (eq? (scope-number->symbol
+                     (schematic_autonumber_get_autotext_scope_skip *autotext))
+                    'scope-page)
+               (eq? (scope-number->symbol
+                     (schematic_autonumber_get_autotext_scope_skip *autotext))
+                    'scope-selected))
+       (schematic_autonumber_get_used *window *autotext))
+
+     (schematic_autonumber_run *autotext *window))
    (if  (or (eq? (scope-number->symbol scope-number) 'scope-selected)
             (eq? (scope-number->symbol scope-number) 'scope-page))
         ;; Only renumber the parent page (the first page).

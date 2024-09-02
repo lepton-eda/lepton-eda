@@ -253,9 +253,7 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
                                     LeptonObject *o_current);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          SchematicWindow *w_current,
-                          LeptonPage *root_page,
-                          LeptonPage *page);
+                          SchematicWindow *w_current);
 int
 schematic_autonumber_scope_from_string (char *s);
 

@@ -1428,31 +1428,16 @@ schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance.
- *  \param [in] root_page The root page of the hierarchy.
- *  \param [in] page The page to process.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          SchematicWindow *w_current,
-                          LeptonPage *root_page,
-                          LeptonPage *page)
+                          SchematicWindow *w_current)
 {
   GList *obj_item;
   LeptonObject *o_current;
   gint number, slot;
   GList *o_list = NULL;
   const GList *iter;
-
-  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
-                             page);
-  schematic_window_page_changed (w_current);
-  schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
-  /* build a page database if we're numbering pagebypage or selection only*/
-  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-      || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-  {
-    schematic_autonumber_get_used (w_current, autotext);
-  }
 
   /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
   /* 1. get objects to renumber */
