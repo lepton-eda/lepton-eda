@@ -238,6 +238,10 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 GList*
 schematic_autonumber_history_add (GList *history,
                                   gchar *text);
+int
+schematic_autonumber_match (SchematicAutonumber *autotext,
+                            LeptonObject *o_current,
+                            int *number);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,

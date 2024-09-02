@@ -1076,10 +1076,10 @@ schematic_autonumber_clear_database (SchematicAutonumber *autotext)
  *  <B>AUTONUMBER_RESPECT</B> or <B>AUTONUMBER_RENUMBER</B> and the current number
  *  of the text object in <B>*number</B>.
  */
-gint
-autonumber_match (SchematicAutonumber *autotext,
-                  LeptonObject *o_current,
-                  gint *number)
+int
+schematic_autonumber_match (SchematicAutonumber *autotext,
+                            LeptonObject *o_current,
+                            int *number)
 {
   gint i, isnumbered=1;
   size_t len;
@@ -1160,7 +1160,8 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
        iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
-    if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
+    if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RESPECT)
+    {
       /* check slot and maybe add it to the lists */
       o_parent = lepton_object_get_attached_to (o_current);
       if (autotext->slotting && o_parent != NULL) {
@@ -1487,7 +1488,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
          iter = g_list_next (iter))
     {
       o_current = (LeptonObject*) iter->data;
-      if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER)
+      if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RENUMBER)
       {
         /* put number into the used list */
         o_list = g_list_append(o_list, o_current);
