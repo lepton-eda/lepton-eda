@@ -1442,11 +1442,9 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   gint number, slot;
   GList *o_list = NULL;
   const GList *iter;
-  LeptonToplevel *toplevel = NULL;
 
-  toplevel = schematic_window_get_toplevel (w_current);
-
-  lepton_toplevel_goto_page (toplevel, page);
+  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
+                             page);
   schematic_window_page_changed (w_current);
   schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
   /* build a page database if we're numbering pagebypage or selection only*/
