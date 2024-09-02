@@ -54,7 +54,6 @@ LeptonList *lepton_list_new( void );
 void lepton_list_add( LeptonList *list, gpointer item );
 void lepton_list_add_glist( LeptonList *list, GList *items );
 void lepton_list_remove( LeptonList *list, gpointer item );
-/*void lepton_list_remove_glist( LeptonList *list, GList *items ); */ /* Undemanded as yet */
 void lepton_list_remove_all( LeptonList *list );
 void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos );
 
