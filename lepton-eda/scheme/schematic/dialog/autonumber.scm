@@ -122,7 +122,8 @@
                  (g_list_sort *objects-to-renumber *sort-function)
                  ;; Unsorted file order.
                  *objects-to-renumber)))
-       (schematic_autonumber_run *autotext *sorted-objects))
+       (schematic_autonumber_run *autotext *sorted-objects)
+       (g_list_free *sorted-objects))
 
      ;; Destroy the page database.
      (when (or (eq? (scope-number->symbol

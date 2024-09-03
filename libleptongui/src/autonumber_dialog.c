@@ -1472,8 +1472,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       schematic_autonumber_get_new_numbers (autotext, o_current);
     }
   }
-  g_list_free(o_list);
-  o_list = NULL;
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
