@@ -1400,7 +1400,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   }
 
   /* Replace old text. */
-  str = g_strdup_printf ("%s%d", autotext->current_searchtext, number);
+  str = g_strdup_printf ("%s%d",
+                         schematic_autonumber_get_autotext_current_searchtext (autotext),
+                         number);
   lepton_text_object_set_string (o_current, str);
   g_free (str);
 
