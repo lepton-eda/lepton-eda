@@ -243,6 +243,9 @@ schematic_autonumber_match (SchematicAutonumber *autotext,
                             LeptonObject *o_current,
                             int *number);
 void
+schematic_autonumber_remove_number (SchematicAutonumber *autotext,
+                                    LeptonObject *o_current);
+void
 schematic_autonumber_run (SchematicAutonumber *autotext,
                           SchematicWindow *w_current,
                           GList *pages,

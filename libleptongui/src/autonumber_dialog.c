@@ -1353,8 +1353,8 @@ autonumber_get_new_numbers (SchematicAutonumber *autotext,
  *
  */
 void
-autonumber_remove_number (SchematicAutonumber *autotext,
-                          LeptonObject *o_current)
+schematic_autonumber_remove_number (SchematicAutonumber *autotext,
+                                    LeptonObject *o_current)
 {
   LeptonObject *o_parent, *o_slot;
   gchar *slot_str;
@@ -1538,7 +1538,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       o_current = (LeptonObject*) obj_item->data;
       if (schematic_autonumber_get_autotext_removenum (autotext))
       {
-        autonumber_remove_number(autotext, o_current);
+        schematic_autonumber_remove_number (autotext, o_current);
       }
       else
       {
