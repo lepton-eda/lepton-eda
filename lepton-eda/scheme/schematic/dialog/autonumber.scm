@@ -122,7 +122,11 @@
                  (g_list_sort *objects-to-renumber *sort-function)
                  ;; Unsorted file order.
                  *objects-to-renumber)))
-       (schematic_autonumber_run *autotext *sorted-objects)
+       ;; 3. Renumber/reslot the objects.
+       (for-each
+        (lambda (*object)
+          (schematic_autonumber_run *autotext *object))
+        (glist->list *sorted-objects identity))
        (g_list_free *sorted-objects))
 
      ;; Destroy the page database.

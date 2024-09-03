@@ -1449,28 +1449,18 @@ schematic_autonumber_make_renumber_list (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] o_list The objects to renumber.
+ *  \param [in] o_current The object to renumber.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext,
-                          GList *o_list)
+                          LeptonObject *o_current)
 {
-  GList *obj_item;
-  LeptonObject *o_current;
-
-  /* 3. renumber/reslot the objects */
-  for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
+  if (schematic_autonumber_get_autotext_removenum (autotext))
   {
-    o_current = (LeptonObject*) obj_item->data;
-    if (schematic_autonumber_get_autotext_removenum (autotext))
-    {
-      schematic_autonumber_remove_number (autotext, o_current);
-    }
-    else
-    {
-      /* get valid numbers from the database */
-      schematic_autonumber_get_new_numbers (autotext, o_current);
-    }
+    schematic_autonumber_remove_number (autotext, o_current);
+  } else {
+    /* get valid numbers from the database */
+    schematic_autonumber_get_new_numbers (autotext, o_current);
   }
 }
 
