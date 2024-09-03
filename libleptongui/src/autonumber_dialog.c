@@ -775,7 +775,10 @@ gint autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
  *  the second sort criteria is the y location.
  *  The Function is used as GCompareFunc by g_list_sort().
  */
-gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
+int
+schematic_autonumber_sort_xy (gconstpointer a,
+                              gconstpointer b)
+{
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
@@ -798,7 +801,10 @@ gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
  *  This function sorts the objects in reverse order.
  *  The function is used as GCompareFunc by g_list_sort().
  */
-gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
+int
+schematic_autonumber_sort_xy_rev (gconstpointer a,
+                                  gconstpointer b)
+{
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
@@ -820,7 +826,10 @@ gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
  *  the second sort criteria is the x location.
  *  The function is used as GCompareFunc by g_list_sort().
  */
-int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
+int
+schematic_autonumber_sort_yx (gconstpointer a,
+                              gconstpointer b)
+{
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
@@ -843,7 +852,10 @@ int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
  *  This function sorts the objects in reverse order.
  *  The function is used as GCompareFunc by g_list_sort().
  */
-int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
+int
+schematic_autonumber_sort_yx_rev (gconstpointer a,
+                                  gconstpointer b)
+{
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
@@ -865,7 +877,10 @@ int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
  *  y-location. The function sorts from top left to bottom right.
  *  The function is used as GCompareFunc by g_list_sort().
  */
-int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
+int
+schematic_autonumber_sort_diagonal (gconstpointer a,
+                                    gconstpointer b)
+{
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (lepton_text_object_get_x (aa) - lepton_text_object_get_y (aa) <
@@ -1499,19 +1514,19 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     switch (schematic_autonumber_get_autotext_sort_order (autotext))
     {
     case AUTONUMBER_SORT_YX:
-      o_list=g_list_sort(o_list, autonumber_sort_yx);
+      o_list=g_list_sort(o_list, schematic_autonumber_sort_yx);
       break;
     case AUTONUMBER_SORT_YX_REV:
-      o_list=g_list_sort(o_list, autonumber_sort_yx_rev);
+      o_list=g_list_sort(o_list, schematic_autonumber_sort_yx_rev);
       break;
     case AUTONUMBER_SORT_XY:
-      o_list=g_list_sort(o_list, autonumber_sort_xy);
+      o_list=g_list_sort(o_list, schematic_autonumber_sort_xy);
       break;
     case AUTONUMBER_SORT_XY_REV:
-      o_list=g_list_sort(o_list, autonumber_sort_xy_rev);
+      o_list=g_list_sort(o_list, schematic_autonumber_sort_xy_rev);
       break;
     case AUTONUMBER_SORT_DIAGONAL:
-      o_list=g_list_sort(o_list, autonumber_sort_diagonal);
+      o_list=g_list_sort(o_list, schematic_autonumber_sort_diagonal);
       break;
     default:
       ; /* unsorted file order */

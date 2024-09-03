@@ -260,6 +260,21 @@ schematic_autonumber_sort_order_from_string (char *s);
 const char*
 schematic_autonumber_sort_order_to_string (int sort_order);
 
+int
+schematic_autonumber_sort_diagonal (gconstpointer a,
+                                    gconstpointer b);
+int
+schematic_autonumber_sort_xy (gconstpointer a,
+                              gconstpointer b);
+gint
+schematic_autonumber_sort_xy_rev (gconstpointer a,
+                                  gconstpointer b);
+int
+schematic_autonumber_sort_yx (gconstpointer a,
+                              gconstpointer b);
+int
+schematic_autonumber_sort_yx_rev (gconstpointer a,
+                                  gconstpointer b);
 void
 schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
 
