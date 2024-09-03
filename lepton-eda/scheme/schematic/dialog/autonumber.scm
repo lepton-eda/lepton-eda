@@ -47,6 +47,10 @@
     (schematic_autonumber_scope_to_string scope-number))))
 
 
+(define (remove-number! *autotext *object)
+  (schematic_autonumber_remove_number *autotext *object))
+
+
 (define (autonumber-by-template! *autotext *window *pages page-list *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
@@ -126,7 +130,7 @@
        (for-each
         (lambda (*object)
           (if (true? (schematic_autonumber_get_autotext_removenum *autotext))
-              (schematic_autonumber_remove_number *autotext *object)
+              (remove-number! *autotext *object)
               (schematic_autonumber_get_new_numbers *autotext *object)))
         (glist->list *sorted-objects identity))
        (g_list_free *sorted-objects))
