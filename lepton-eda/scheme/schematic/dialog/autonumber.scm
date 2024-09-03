@@ -101,11 +101,28 @@
      ;; Renumber code for one page and one searchtext.
 
      ;; 1. Get objects to renumber.
-     (let ((*objects-to-renumber
-            (schematic_autonumber_make_renumber_list
-             *autotext
-             (lepton_page_objects (schematic_window_get_active_page *window)))))
-       (schematic_autonumber_run *autotext *objects-to-renumber))
+     (let* ((*objects-to-renumber
+             (schematic_autonumber_make_renumber_list
+              *autotext
+              (lepton_page_objects (schematic_window_get_active_page *window))))
+            ;; 2. Sort object list.
+            (*sort-function
+             (case (string->symbol
+                    (pointer->string
+                     (schematic_autonumber_sort_order_to_string
+                      (schematic_autonumber_get_autotext_sort_order *autotext))))
+               ((sort-yx) *schematic_autonumber_sort_yx)
+               ((sort-yx-rev) *schematic_autonumber_sort_yx_rev)
+               ((sort-xy) *schematic_autonumber_sort_xy)
+               ((sort-xy-rev) *schematic_autonumber_sort_xy_rev)
+               ((sort-diagonal) *schematic_autonumber_sort_diagonal)
+               (else #f)))
+            (*sorted-objects
+             (if *sort-function
+                 (g_list_sort *objects-to-renumber *sort-function)
+                 ;; Unsorted file order.
+                 *objects-to-renumber)))
+       (schematic_autonumber_run *autotext *sorted-objects))
 
      ;; Destroy the page database.
      (when (or (eq? (scope-number->symbol

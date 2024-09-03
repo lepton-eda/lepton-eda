@@ -1458,28 +1458,6 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
   GList *obj_item;
   LeptonObject *o_current;
 
-  /* 2. sort object list */
-  switch (schematic_autonumber_get_autotext_sort_order (autotext))
-  {
-  case AUTONUMBER_SORT_YX:
-    o_list=g_list_sort(o_list, schematic_autonumber_sort_yx);
-    break;
-  case AUTONUMBER_SORT_YX_REV:
-    o_list=g_list_sort(o_list, schematic_autonumber_sort_yx_rev);
-    break;
-  case AUTONUMBER_SORT_XY:
-    o_list=g_list_sort(o_list, schematic_autonumber_sort_xy);
-    break;
-  case AUTONUMBER_SORT_XY_REV:
-    o_list=g_list_sort(o_list, schematic_autonumber_sort_xy_rev);
-    break;
-  case AUTONUMBER_SORT_DIAGONAL:
-    o_list=g_list_sort(o_list, schematic_autonumber_sort_diagonal);
-    break;
-  default:
-    ; /* unsorted file order */
-  }
-
   /* 3. renumber/reslot the objects */
   for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
   {

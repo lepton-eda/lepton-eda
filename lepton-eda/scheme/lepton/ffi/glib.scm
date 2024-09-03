@@ -30,6 +30,8 @@
             g_list_free
             g_list_remove
             g_list_remove_all
+            g_list_sort
+
             g_log
             g_strdup
 
@@ -61,6 +63,7 @@
 (define-lff g_list_free_full void '(*))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))
+(define-lff g_list_sort '* '(* *))
 
 (define-lff g_log void (list '* int '* '*))
 

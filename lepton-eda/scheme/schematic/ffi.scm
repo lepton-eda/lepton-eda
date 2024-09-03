@@ -219,7 +219,13 @@
             schematic_autonumber_scope_from_string
             schematic_autonumber_scope_to_string
             schematic_autonumber_sort_order_from_string
+            schematic_autonumber_sort_order_to_string
             schematic_autonumber_sort_order_widget_init
+            *schematic_autonumber_sort_yx
+            *schematic_autonumber_sort_yx_rev
+            *schematic_autonumber_sort_xy
+            *schematic_autonumber_sort_xy_rev
+            *schematic_autonumber_sort_diagonal
 
             x_clipboard_finish
             x_clipboard_init
@@ -1169,7 +1175,13 @@
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_scope_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))
+(define-lff schematic_autonumber_sort_order_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
+(define-lfc *schematic_autonumber_sort_yx)
+(define-lfc *schematic_autonumber_sort_yx_rev)
+(define-lfc *schematic_autonumber_sort_xy)
+(define-lfc *schematic_autonumber_sort_xy_rev)
+(define-lfc *schematic_autonumber_sort_diagonal)
 
 ;;; x_clipboard.c
 (define-lff x_clipboard_finish void '(*))
