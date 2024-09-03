@@ -1536,7 +1536,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
     {
       o_current = (LeptonObject*) obj_item->data;
-      if(autotext->removenum)
+      if (schematic_autonumber_get_autotext_removenum (autotext))
       {
         autonumber_remove_number(autotext, o_current);
       }
