@@ -1393,7 +1393,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (slot != 0) {
     /* Update the slot on the owning object. */
     str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (autotext->w_current,
+    o_slot_end (schematic_autonumber_get_autotext_window (autotext),
                 lepton_object_get_attached_to (o_current),
                 str);
     g_free (str);
@@ -1404,7 +1404,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   lepton_text_object_set_string (o_current, str);
   g_free (str);
 
-  schematic_window_active_page_changed (autotext->w_current);
+  schematic_window_active_page_changed (schematic_autonumber_get_autotext_window (autotext));
 }
 
 
