@@ -1391,10 +1391,10 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
  *  component element that is also the parent object of the o_current element.
  */
 void
-autonumber_apply_new_text (SchematicAutonumber *autotext,
-                           LeptonObject *o_current,
-                           gint number,
-                           gint slot)
+schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
+                                     LeptonObject *o_current,
+                                     gint number,
+                                     gint slot)
 {
   char *str;
 
@@ -1545,7 +1545,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         /* get valid numbers from the database */
         schematic_autonumber_get_new_numbers (autotext, o_current, &number, &slot);
         /* and apply it. TODO: join these two functions */
-        autonumber_apply_new_text(autotext, o_current, number, slot);
+        schematic_autonumber_apply_new_text (autotext, o_current, number, slot);
       }
     }
     g_list_free(o_list);

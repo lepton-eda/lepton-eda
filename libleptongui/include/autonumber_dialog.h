@@ -223,6 +223,11 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
+schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
+                                     LeptonObject *o_current,
+                                     gint number,
+                                     gint slot);
+void
 schematic_autonumber_clear_database (SchematicAutonumber *autotext);
 
 void
