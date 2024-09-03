@@ -1385,7 +1385,9 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
   gchar *str = NULL;
 
   /* replace old text */
-  str = g_strdup_printf("%s?", autotext->current_searchtext);
+  str =
+    g_strdup_printf ("%s?",
+                     schematic_autonumber_get_autotext_current_searchtext (autotext));
   lepton_text_object_set_string (o_current, str);
   g_free (str);
 
