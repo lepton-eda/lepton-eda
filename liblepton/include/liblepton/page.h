@@ -24,6 +24,8 @@ G_BEGIN_DECLS
 
 struct st_page
 {
+  /* The toplevel structure the page belongs to.  It contains the
+   * lists of all open pages and configuration settings. */
   LeptonToplevel* toplevel;
   int pid;
 
