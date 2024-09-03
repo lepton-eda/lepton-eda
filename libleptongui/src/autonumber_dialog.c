@@ -1392,7 +1392,8 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
   g_free (str);
 
   /* remove the slot attribute if slotting is active */
-  if (autotext->slotting) {
+  if (schematic_autonumber_get_autotext_slotting (autotext))
+  {
     /* get the slot attribute */
     o_parent = lepton_object_get_attached_to (o_current);
     if (o_parent != NULL) {
