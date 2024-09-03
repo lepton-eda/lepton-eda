@@ -1263,10 +1263,10 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  \param [in,out] slot The new slot number.
  */
 void
-autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                            LeptonObject *o_current,
-                            gint *number,
-                            gint *slot)
+schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
+                                      LeptonObject *o_current,
+                                      gint *number,
+                                      gint *slot)
 {
   GList *item;
   gint new_number, numslots, i;
@@ -1543,7 +1543,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
       else
       {
         /* get valid numbers from the database */
-        autonumber_get_new_numbers(autotext, o_current, &number, &slot);
+        schematic_autonumber_get_new_numbers (autotext, o_current, &number, &slot);
         /* and apply it. TODO: join these two functions */
         autonumber_apply_new_text(autotext, o_current, number, slot);
       }

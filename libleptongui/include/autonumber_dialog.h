@@ -233,6 +233,11 @@ GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
 void
+schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
+                                      LeptonObject *o_current,
+                                      gint *number,
+                                      gint *slot);
+void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);
 GList*
