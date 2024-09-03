@@ -414,6 +414,45 @@ schematic_autonumber_set_autotext_scope_text (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the \c slotting field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c slotting field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The value of the \c slotting field.
+ */
+gboolean
+schematic_autonumber_get_autotext_slotting (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, FALSE);
+
+  return autotext->slotting;
+}
+
+
+/*! \brief Set the value of \c slotting field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \par Function Description
+ *  Sets the value of the \c slotting field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the \c slotting field.
+ */
+void
+schematic_autonumber_set_autotext_slotting (SchematicAutonumber *autotext,
+                                            gboolean val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->slotting = val;
+}
+
+
 /*! \brief Set the \c order field of a #SchematicAutonumber
  *  instance.
  *

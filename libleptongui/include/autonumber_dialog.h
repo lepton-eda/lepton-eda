@@ -158,6 +158,12 @@ schematic_autonumber_get_autotext_scope_text (SchematicAutonumber *autotext);
 void
 schematic_autonumber_set_autotext_scope_text (SchematicAutonumber *autotext,
                                               GList *val);
+gboolean
+schematic_autonumber_get_autotext_slotting (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_set_autotext_slotting (SchematicAutonumber *autotext,
+                                            gboolean val);
 int
 schematic_autonumber_get_autotext_sort_order (SchematicAutonumber *autotext);
 
