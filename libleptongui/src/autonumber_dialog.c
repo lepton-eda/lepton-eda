@@ -1403,12 +1403,12 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
       if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
       {
         /* delete the slot attribute */
-        schematic_delete (autotext->w_current, o_slot);
+        schematic_delete (schematic_autonumber_get_autotext_window (autotext), o_slot);
       }
     }
   }
 
-  schematic_window_active_page_changed (autotext->w_current);
+  schematic_window_active_page_changed (schematic_autonumber_get_autotext_window (autotext));
 }
 
 
