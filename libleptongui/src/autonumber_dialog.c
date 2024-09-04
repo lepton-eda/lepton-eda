@@ -1382,14 +1382,6 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
 {
   LeptonObject *o_parent, *o_slot;
   gchar *slot_str;
-  gchar *str = NULL;
-
-  /* replace old text */
-  str =
-    g_strdup_printf ("%s?",
-                     schematic_autonumber_get_autotext_current_searchtext (autotext));
-  lepton_text_object_set_string (o_current, str);
-  g_free (str);
 
   /* remove the slot attribute if slotting is active */
   if (schematic_autonumber_get_autotext_slotting (autotext))

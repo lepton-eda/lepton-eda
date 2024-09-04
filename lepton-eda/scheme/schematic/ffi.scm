@@ -184,6 +184,7 @@
             schematic_autonumber_new
             schematic_autonumber_get_autotext
             schematic_autonumber_set_autotext
+            schematic_autonumber_get_autotext_current_searchtext
             schematic_autonumber_set_autotext_current_searchtext
             schematic_autonumber_get_autotext_dialog
             schematic_autonumber_set_autotext_dialog
@@ -1210,6 +1211,7 @@
 (define-lff schematic_autonumber_new '* '())
 (define-lff schematic_autonumber_get_autotext '* '())
 (define-lff schematic_autonumber_set_autotext void '(*))
+(define-lff schematic_autonumber_get_autotext_current_searchtext '* '(*))
 (define-lff schematic_autonumber_set_autotext_current_searchtext void '(* *))
 (define-lff schematic_autonumber_get_autotext_dialog '* '(*))
 (define-lff schematic_autonumber_set_autotext_dialog void '(* *))

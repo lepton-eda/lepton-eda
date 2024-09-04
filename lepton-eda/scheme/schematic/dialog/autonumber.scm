@@ -48,6 +48,15 @@
 
 
 (define (remove-number! *autotext *object)
+  ;; Replace old text.
+  (lepton_text_object_set_string
+   *object
+   (string->pointer
+    (format #f
+            "~A?"
+            (pointer->string
+             (schematic_autonumber_get_autotext_current_searchtext *autotext)))))
+
   (schematic_autonumber_remove_number *autotext *object)
 
   (schematic_window_active_page_changed
