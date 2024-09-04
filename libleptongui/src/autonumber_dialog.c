@@ -1376,18 +1376,14 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
  *  @param o_current Pointer to the object from which to remove the number
  *  @param o_parent Pointer to the parent object to which
  *         o_current is attached to.
- *
+ *  @param o_slot The slot attribute of the parent object.
  */
 void
 schematic_autonumber_remove_number (SchematicAutonumber *autotext,
                                     LeptonObject *o_current,
-                                    LeptonObject *o_parent)
+                                    LeptonObject *o_parent,
+                                    LeptonObject *o_slot)
 {
-  LeptonObject *o_slot;
-  gchar *slot_str;
-
-  slot_str = lepton_slot_search (o_parent, &o_slot);
-  g_free (slot_str);
   /* Only attempt to remove non-inherited slot attributes */
   if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
   {

@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2025 Lepton EDA Contributors
+;;; Copyright (C) 2023-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog autonumber)
+  #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
@@ -62,7 +63,16 @@
     ;; Get the slot attribute.
     (let ((*parent (lepton_object_get_attached_to *object)))
       (unless (null-pointer? *parent)
-        (schematic_autonumber_remove_number *autotext *object *parent))))
+        (let* ((**slot (bytevector->pointer (make-bytevector (sizeof '*)) 0))
+               (*slot-string (lepton_slot_search *parent **slot)))
+          ;; As lepton_slot_search() returns the string value, we
+          ;; have to free it.  Really we need only the slot
+          ;; object.
+          (g_free *slot-string)
+          (schematic_autonumber_remove_number *autotext
+                                              *object
+                                              *parent
+                                              (dereference-pointer **slot))))))
 
   (schematic_window_active_page_changed
    (schematic_autonumber_get_autotext_window *autotext)))
