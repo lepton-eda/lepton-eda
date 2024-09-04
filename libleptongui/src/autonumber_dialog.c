@@ -1407,8 +1407,6 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
       }
     }
   }
-
-  schematic_window_active_page_changed (schematic_autonumber_get_autotext_window (autotext));
 }
 
 

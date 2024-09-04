@@ -48,7 +48,10 @@
 
 
 (define (remove-number! *autotext *object)
-  (schematic_autonumber_remove_number *autotext *object))
+  (schematic_autonumber_remove_number *autotext *object)
+
+  (schematic_window_active_page_changed
+   (schematic_autonumber_get_autotext_window *autotext)))
 
 
 (define (autonumber-by-template! *autotext *window *pages page-list *template scope-number)
