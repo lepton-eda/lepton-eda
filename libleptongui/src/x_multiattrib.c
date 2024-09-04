@@ -2527,7 +2527,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
 {
   GList *model_rows = NULL;
   GList *a_iter;
-  GList *object_attribs = o_attrib_return_attribs (object);
+  GList *object_attribs = lepton_attrib_return_attribs (object);
 
   for (a_iter = object_attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {

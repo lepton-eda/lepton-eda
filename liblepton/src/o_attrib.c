@@ -553,7 +553,7 @@ char *o_attrib_search_object_attribs_by_name (LeptonObject *object,
   char *result;
   GList *attributes;
 
-  attributes = o_attrib_return_attribs (object);
+  attributes = lepton_attrib_return_attribs (object);
   result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
   g_list_free (attributes);
 
@@ -575,7 +575,8 @@ char *o_attrib_search_object_attribs_by_name (LeptonObject *object,
  *  \param [in] object  LeptonObject whose attributes to return.
  *  \return             A GList of attached and inherited attributes.
  */
-GList * o_attrib_return_attribs (LeptonObject *object)
+GList*
+lepton_attrib_return_attribs (LeptonObject *object)
 {
   GList *attribs = NULL;
   GList *inherited_attribs;

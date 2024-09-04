@@ -57,7 +57,7 @@ lepton_slot_search (LeptonObject *object,
   LeptonObject *attrib;
   char *value = NULL;
 
-  attributes = o_attrib_return_attribs (object);
+  attributes = lepton_attrib_return_attribs (object);
   attrib = o_attrib_find_attrib_by_name (attributes, "slot", 0);
   g_list_free (attributes);
 
@@ -198,7 +198,7 @@ lepton_slot_update_object (LeptonObject *object)
     if (o_pin_object != NULL) {
       /* Now rename pinnumber= attrib on this part with value found */
       /* in slotdef attribute  */
-      attributes = o_attrib_return_attribs (o_pin_object);
+      attributes = lepton_attrib_return_attribs (o_pin_object);
       o_pinnum_attrib = o_attrib_find_attrib_by_name (attributes, "pinnumber", 0);
       g_list_free (attributes);
 
