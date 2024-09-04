@@ -1244,7 +1244,7 @@
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_make_renumber_list '* '(* *))
-(define-lff schematic_autonumber_remove_number void '(* *))
+(define-lff schematic_autonumber_remove_number void '(* * *))
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_scope_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))
