@@ -497,9 +497,10 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list,
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_attached_attribs_by_name (LeptonObject *object,
-                                                const char *name,
-                                                int counter)
+char*
+lepton_attrib_search_attached_attribs_by_name (LeptonObject *object,
+                                               const char *name,
+                                               int counter)
 {
   GList *attribs = lepton_object_get_attribs (object);
   return o_attrib_search_attrib_list_by_name (attribs, name, counter);

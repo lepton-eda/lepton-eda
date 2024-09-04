@@ -726,8 +726,9 @@ s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
   /*  Now get the old attrib name & value from complete_comp_attrib_list
    *  and value from o_current  */
   old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
-  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_current, old_attrib_name, 0);
-
+  old_attrib_value = lepton_attrib_search_attached_attribs_by_name (o_current,
+                                                                    old_attrib_name,
+                                                                    0);
   g_debug ("s_toplevel_update_component_attribs_in_toplevel: "
            "Old name = \"%s\".\n"
            "Old value = \"%s\".\n",
@@ -990,7 +991,9 @@ s_toplevel_update_pin_attribs_in_toplevel (LeptonToplevel *toplevel,
     g_free(new_attrib_value);
     new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
   }
-  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_pin, new_attrib_name, 0);
+  old_attrib_value = lepton_attrib_search_attached_attribs_by_name (o_pin,
+                                                                    new_attrib_name,
+                                                                    0);
 
     /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {

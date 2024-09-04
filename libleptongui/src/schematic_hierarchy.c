@@ -288,7 +288,7 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
     if (!lepton_object_is_component (o_current)) continue;
 
     filename =
-      o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
+      lepton_attrib_search_attached_attribs_by_name (o_current, "source", 0);
 
     /* if above is NULL, then look inside symbol */
     if (filename == NULL) {

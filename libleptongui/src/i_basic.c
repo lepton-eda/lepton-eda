@@ -338,7 +338,8 @@ parent_comp_selected (LeptonPage* page)
 
   if (obj != NULL)
   {
-    char* attr = o_attrib_search_attached_attribs_by_name (obj, "source", 0);
+    char* attr =
+      lepton_attrib_search_attached_attribs_by_name (obj, "source", 0);
     if (attr == NULL)
     {
       attr = lepton_attrib_search_inherited_attribs_by_name (obj, "source", 0);
