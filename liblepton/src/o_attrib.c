@@ -625,7 +625,8 @@ GList * o_attrib_return_attribs (LeptonObject *object)
  *  \param [in] attrib       LeptonObject who's status to query.
  *  \return TRUE if the attribute is inherited, FALSE otherwise.
  */
-int o_attrib_is_inherited (const LeptonObject *attrib)
+int
+lepton_attrib_is_inherited (const LeptonObject *attrib)
 {
   return (lepton_object_get_attached_to (attrib) == NULL &&
           lepton_object_get_parent (attrib) != NULL);

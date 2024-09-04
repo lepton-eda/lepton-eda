@@ -88,7 +88,8 @@ o_slot_end (SchematicWindow *w_current,
   slot_value = lepton_slot_search (object, &o_slot);
   g_free (slot_value);
 
-  if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
+  if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
+  {
     lepton_text_object_set_string (o_slot, string);
   } else {
     /* here you need to do the add the slot

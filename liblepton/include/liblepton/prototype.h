@@ -130,7 +130,10 @@ char *o_attrib_search_attached_attribs_by_name (LeptonObject *object, const char
 char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object, const char *name, int counter);
 char *o_attrib_search_object_attribs_by_name (LeptonObject *object, const char *name, int counter);
 GList *o_attrib_return_attribs(LeptonObject *object);
-int o_attrib_is_inherited(const LeptonObject *attrib);
+
+int
+lepton_attrib_is_inherited (const LeptonObject *attrib);
+
 
 /* o_selection.c */
 LeptonSelection*
