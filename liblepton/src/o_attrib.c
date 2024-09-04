@@ -365,7 +365,8 @@ o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **v
  *
  *  Caller must g_list_free() the returned list.
  */
-GList *o_attrib_find_floating_attribs (const GList *list)
+GList*
+lepton_attrib_find_floating_attribs (const GList *list)
 {
   GList *floating_attributes = NULL;
   const GList *iter;
@@ -476,7 +477,7 @@ char* lepton_attrib_search_floating_attribs_by_name (const GList *list,
   char *result;
   GList *attributes;
 
-  attributes = o_attrib_find_floating_attribs (list);
+  attributes = lepton_attrib_find_floating_attribs (list);
   result = lepton_attrib_search_attrib_list_by_name (attributes, name, counter);
   g_list_free (attributes);
 
@@ -613,7 +614,7 @@ lepton_attrib_return_attribs (LeptonObject *object)
   if (lepton_object_is_component (object))
   {
     primitives = lepton_component_object_get_contents (object);
-    inherited_attribs = o_attrib_find_floating_attribs (primitives);
+    inherited_attribs = lepton_attrib_find_floating_attribs (primitives);
 
     attribs = g_list_concat (attribs, inherited_attribs);
   }

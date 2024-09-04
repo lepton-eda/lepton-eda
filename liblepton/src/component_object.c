@@ -562,7 +562,7 @@ lepton_component_object_get_promotable (LeptonObject *object,
     return NULL;
 
   primitives = lepton_component_object_get_contents (object);
-  attribs = o_attrib_find_floating_attribs (primitives);
+  attribs = lepton_attrib_find_floating_attribs (primitives);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
     tmp = (LeptonObject*) iter->data;
