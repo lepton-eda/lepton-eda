@@ -55,7 +55,7 @@ liblepton_la_SOURCES = \
 	s_conn.c \
 	s_encoding.c \
 	s_log.c \
-	s_slot.c \
+	slot.c \
 	s_textbuffer.c \
 	s_weakref.c \
 	sch2pcb.c \

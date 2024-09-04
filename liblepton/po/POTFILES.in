@@ -23,7 +23,7 @@ liblepton/src/o_attrib.c
 liblepton/src/object.c
 liblepton/src/color.c
 liblepton/src/s_clib.c
-liblepton/src/s_slot.c
+liblepton/src/slot.c
 liblepton/src/edaconfig.c
 liblepton/src/export.c
 

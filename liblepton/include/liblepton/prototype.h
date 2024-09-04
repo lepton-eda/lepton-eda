@@ -218,7 +218,7 @@ lepton_log_level_info ();
 GLogLevelFlags
 lepton_log_level_debug ();
 
-/* s_slot.c */
+/* slot.c */
 char*
 lepton_slot_search (LeptonObject *object,
                     LeptonObject **return_found);

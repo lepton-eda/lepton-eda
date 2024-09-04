@@ -1079,7 +1079,7 @@
 ;;; o_slot.c
 (define-lff o_slot_end void '(* * *))
 
-;;; s_slot.c
+;;; slot.c
 (define-lff lepton_slot_update_object void '(*))
 
 ;;; signals.c
