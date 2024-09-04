@@ -384,7 +384,8 @@ x_dialog_validate_attribute (GtkWindow* parent, char *attribute)
   GtkWidget* message_box;
 
   /* validate the new attribute */
-  if (!o_attrib_string_get_name_value (attribute, NULL, NULL)) {
+  if (!lepton_attrib_string_get_name_value (attribute, NULL, NULL))
+  {
       message_box = gtk_message_dialog_new_with_markup (parent,
                                   GTK_DIALOG_DESTROY_WITH_PARENT,
                                   GTK_MESSAGE_ERROR,

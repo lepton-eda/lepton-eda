@@ -123,8 +123,10 @@ o_attrib_detach_all (LeptonObject *object);
 
 void o_attrib_print(GList *attributes);
 
-gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
-
+gboolean
+lepton_attrib_string_get_name_value (const gchar *string,
+                                     gchar **name_ptr,
+                                     gchar **value_ptr);
 GList*
 lepton_attrib_find_floating_attribs (const GList *list);
 

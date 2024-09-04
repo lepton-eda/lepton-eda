@@ -323,7 +323,9 @@ error:
  *  \return TRUE on success, FALSE otherwise.
  */
 gboolean
-o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr)
+lepton_attrib_string_get_name_value (const gchar *string,
+                                     gchar **name_ptr,
+                                     gchar **value_ptr)
 {
   gchar *ptr, *prev_char, *next_char;
 

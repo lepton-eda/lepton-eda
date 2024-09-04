@@ -52,7 +52,7 @@ o_slot_end (SchematicWindow *w_current,
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  status = o_attrib_string_get_name_value (string, NULL, &value);
+  status = lepton_attrib_string_get_name_value (string, NULL, &value);
   if (!status) {
     g_message (_("Slot attribute malformed"));
     return;

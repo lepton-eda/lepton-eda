@@ -960,12 +960,12 @@ lepton_text_object_set_string (LeptonObject *obj,
   g_free (obj->text->string);
   obj->text->string = g_strdup (new_string);
 
-  if (o_attrib_string_get_name_value (new_string, &name, &value))
+  if (lepton_attrib_string_get_name_value (new_string, &name, &value))
   {
     lepton_text_object_set_name (obj, name);
     lepton_text_object_set_value (obj, value);
     /* Free the strings allocated by
-     * o_attrib_string_get_name_value(). */
+     * lepton_attrib_string_get_name_value(). */
     g_free (name);
     g_free (value);
   }
