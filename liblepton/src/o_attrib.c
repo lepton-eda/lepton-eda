@@ -436,9 +436,10 @@ LeptonObject *o_attrib_find_attrib_by_name (const GList *list,
  *  \param [in] counter  Which occurrence to return.
  *  \return Character string with attribute value, NULL otherwise.
  */
-static char *o_attrib_search_attrib_list_by_name (const GList *list,
-                                                  const char *name,
-                                                  int counter)
+static char*
+lepton_attrib_search_attrib_list_by_name (const GList *list,
+                                          const char *name,
+                                          int counter)
 {
   LeptonObject *attrib;
   char *value = NULL;
@@ -475,7 +476,7 @@ char* lepton_attrib_search_floating_attribs_by_name (const GList *list,
   GList *attributes;
 
   attributes = o_attrib_find_floating_attribs (list);
-  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  result = lepton_attrib_search_attrib_list_by_name (attributes, name, counter);
   g_list_free (attributes);
 
   return result;
@@ -503,7 +504,7 @@ lepton_attrib_search_attached_attribs_by_name (LeptonObject *object,
                                                int counter)
 {
   GList *attribs = lepton_object_get_attribs (object);
-  return o_attrib_search_attrib_list_by_name (attribs, name, counter);
+  return lepton_attrib_search_attrib_list_by_name (attribs, name, counter);
 }
 
 
@@ -557,7 +558,7 @@ lepton_attrib_search_object_attribs_by_name (LeptonObject *object,
   GList *attributes;
 
   attributes = lepton_attrib_return_attribs (object);
-  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  result = lepton_attrib_search_attrib_list_by_name (attributes, name, counter);
   g_list_free (attributes);
 
   return result;
