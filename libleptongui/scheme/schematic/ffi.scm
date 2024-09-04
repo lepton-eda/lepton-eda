@@ -462,7 +462,7 @@
 
             o_slot_end
 
-            s_slot_update_object
+            lepton_slot_update_object
 
             o_undo_savestate
             o_undo_savestate_old
@@ -1080,7 +1080,7 @@
 (define-lff o_slot_end void '(* * *))
 
 ;;; s_slot.c
-(define-lff s_slot_update_object void '(*))
+(define-lff lepton_slot_update_object void '(*))
 
 ;;; signals.c
 (define-lff schematic_signal_connect void '(* * * *))

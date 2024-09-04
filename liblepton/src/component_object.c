@@ -1318,7 +1318,7 @@ lepton_component_copy (LeptonObject *o_current)
      component. */
   remove_promotable_attribs (o_new);
 
-  s_slot_update_object (o_new);
+  lepton_slot_update_object (o_new);
 
   /* deal with stuff that has changed */
 

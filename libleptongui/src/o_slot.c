@@ -111,7 +111,7 @@ o_slot_end (SchematicWindow *w_current,
     g_run_hook_object (w_current, "add-objects-hook", new_obj);
   }
 
-  s_slot_update_object (object);
+  lepton_slot_update_object (object);
 
   schematic_window_active_page_changed (w_current);
   g_free (value);

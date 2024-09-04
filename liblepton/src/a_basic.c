@@ -243,7 +243,7 @@ GList
           /* slots only apply to component objects */
           if (lepton_object_is_component (new_obj))
           {
-            s_slot_update_object (new_obj);
+            lepton_slot_update_object (new_obj);
           }
           new_obj = NULL;
         }

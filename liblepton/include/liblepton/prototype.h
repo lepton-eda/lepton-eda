@@ -223,7 +223,7 @@ char*
 lepton_slot_search (LeptonObject *object,
                     LeptonObject **return_found);
 void
-s_slot_update_object (LeptonObject *object);
+lepton_slot_update_object (LeptonObject *object);
 
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name);

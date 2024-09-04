@@ -602,7 +602,7 @@ the snap grid size should be set to 100")))
                 (apply attach-attribs! new-component attribs)
 
                 ;; Update pinnumbers for current slot
-                (s_slot_update_object (object->pointer new-component))
+                (lepton_slot_update_object (object->pointer new-component))
 
                 ;; Select the new component.
                 (select-object! new-component)

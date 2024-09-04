@@ -110,7 +110,7 @@ static char *s_slot_search_slotdef (LeptonObject *object, int slotnumber)
  *  Update pinnumber attributes in a graphic object.
  *  The interesting case is where the object is an
  *  instantiation of a slotted part.  This means that
- *  s_slot_update_object iterates through all pins
+ *  lepton_slot_update_object iterates through all pins
  *  found on object and sets the pinnumber= attrib
  *  on each.  This doesn't matter for non-slotted
  *  parts, but on slotted parts, this is what sets the
@@ -119,7 +119,7 @@ static char *s_slot_search_slotdef (LeptonObject *object, int slotnumber)
  *  \param [in,out] object     The LeptonObject to update.
  */
 void
-s_slot_update_object (LeptonObject *object)
+lepton_slot_update_object (LeptonObject *object)
 {
   LeptonObject *o_pin_object;
   LeptonObject *o_pinnum_attrib;
