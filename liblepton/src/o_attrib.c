@@ -467,9 +467,9 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list,
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_floating_attribs_by_name (const GList *list,
-                                                const char *name,
-                                                int counter)
+char* lepton_attrib_search_floating_attribs_by_name (const GList *list,
+                                                     const char *name,
+                                                     int counter)
 {
   char *result;
   GList *attributes;
@@ -530,7 +530,7 @@ lepton_attrib_search_inherited_attribs_by_name (LeptonObject *object,
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
 
   GList *primitives = lepton_component_object_get_contents (object);
-  return o_attrib_search_floating_attribs_by_name (primitives, name, counter);
+  return lepton_attrib_search_floating_attribs_by_name (primitives, name, counter);
 }
 
 
