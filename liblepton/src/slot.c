@@ -93,8 +93,9 @@ lepton_slot_search_slotdef (LeptonObject *object,
   search_for = g_strdup_printf ("%d:", slotnumber);
 
   while (1) {
-    slotdef = o_attrib_search_object_attribs_by_name (object, "slotdef",
-                                                      counter++);
+    slotdef = lepton_attrib_search_object_attribs_by_name (object,
+                                                           "slotdef",
+                                                           counter++);
     if (slotdef == NULL ||
         strncmp (slotdef, search_for, strlen (search_for)) == 0)
       break;
@@ -137,7 +138,7 @@ lepton_slot_update_object (LeptonObject *object)
 
   /* For this particular graphic object (component instantiation) */
   /* get the slot number as a string */
-  string = o_attrib_search_object_attribs_by_name (object, "slot", 0);
+  string = lepton_attrib_search_object_attribs_by_name (object, "slot", 0);
 
   if (string == NULL) {
     /* Did not find slot= attribute.

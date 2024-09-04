@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -600,7 +600,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
           if (lepton_object_is_pin (o_lower_current))
           {
             /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
-            pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
+            pinnumber = lepton_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
             row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
 
             g_debug ("s_table_add_toplevel_pin_items_to_pin_table: "

@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * -# Dive down to primitives of the component.
  * -# Loop on the primitives looking for pins.
  * -# When we find a pin, find the pinnumber by calling
- *    o_attrib_search_object_attribs_by_name(o_lower_current, "pinnumber", 0)
+ *    lepton_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0)
  * -# Create the pin list label as "refdes=XXX", and stick it into
  *    the master pin list.
  * Since this function operates on the global sheet_data->master_pin_list,
@@ -328,7 +328,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
                    o_lower_current->name);
           if (lepton_object_is_pin (o_lower_current))
           {
-            temp_pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
+            temp_pinnumber = lepton_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
 
             if (temp_pinnumber != NULL) {
               row_label = g_strconcat (temp_uref, ":", temp_pinnumber, NULL);

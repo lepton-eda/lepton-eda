@@ -527,7 +527,7 @@ o_select_connected_nets (SchematicWindow *w_current,
         }
         if (w_current->net_selection_state > 2) {
           /* collect netnames */
-          netname = o_attrib_search_object_attribs_by_name (o_current, "netname", 0);
+          netname = lepton_attrib_search_object_attribs_by_name (o_current, "netname", 0);
           if (netname != NULL) {
             if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
               netnamestack = g_list_append(netnamestack, netname);
@@ -559,7 +559,7 @@ o_select_connected_nets (SchematicWindow *w_current,
       {
         if (lepton_object_is_net (attachment))
         {
-          netname = o_attrib_search_object_attribs_by_name (attachment, "netname", 0);
+          netname = lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
           if (netname != NULL) {
             if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
               netstack = g_list_prepend (netstack, attachment);

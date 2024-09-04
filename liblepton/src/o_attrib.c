@@ -546,9 +546,10 @@ char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object,
  *  \param [in] counter  Which occurrence to return.
  *  \return              Attribute value, NULL if not found.
  */
-char *o_attrib_search_object_attribs_by_name (LeptonObject *object,
-                                              const char *name,
-                                              int counter)
+char*
+lepton_attrib_search_object_attribs_by_name (LeptonObject *object,
+                                             const char *name,
+                                             int counter)
 {
   char *result;
   GList *attributes;

@@ -95,9 +95,9 @@ char *s_attrib_get_refdes(LeptonObject *object)
   LeptonObject *slot_text_object;
 
   /*------ Try to get the refdes -----*/
-  temp_uref = o_attrib_search_object_attribs_by_name (object, "refdes", 0);
+  temp_uref = lepton_attrib_search_object_attribs_by_name (object, "refdes", 0);
   if (!temp_uref) {
-    temp_uref = o_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
+    temp_uref = lepton_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
     if (temp_uref) {
       fprintf (stderr, _("WARNING: "));
       fprintf (stderr,
@@ -117,7 +117,7 @@ char *s_attrib_get_refdes(LeptonObject *object)
   /*------- Now append .slot to refdes if part is slotted -------- */
   /* Find out if this is a multislotted component */
   numslots_value =
-    o_attrib_search_object_attribs_by_name (object, "numslots", 0);
+    lepton_attrib_search_object_attribs_by_name (object, "numslots", 0);
   if (numslots_value != NULL) {  /* this is a slotted component;
                                     append slot number to refdes. */
     slot_value = lepton_slot_search (object, &slot_text_object);

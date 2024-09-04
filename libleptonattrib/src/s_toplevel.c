@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -434,9 +434,10 @@ s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
     {
 
 #if 0
-      if (o_attrib_search_object_attribs_by_name (o_current, "graphical", 0)) {
-        break;  /* Ignore graphical components */
-      }
+      if lepton_attrib_search_object_attribs_by_name (o_current, "graphical", 0))
+    {
+      break;  /* Ignore graphical components */
+    }
 #endif
 
       temp_uref = s_attrib_get_refdes(o_current);
@@ -883,7 +884,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, LeptonObject *pin
   /* First find pos of this pin in the master pin list */
   /* first convert refdes, pin to refdes:pinno text string. Then call table_get_index.  */
 
-  pinnumber = o_attrib_search_object_attribs_by_name (pin, "pinnumber", 0);
+  pinnumber = lepton_attrib_search_object_attribs_by_name (pin, "pinnumber", 0);
 
   if ( (refdes != NULL) && (pinnumber != NULL) ) {
     row_label = g_strconcat(refdes, ":", pinnumber, NULL);

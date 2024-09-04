@@ -1453,7 +1453,7 @@ lepton_component_find_pin_by_attribute (LeptonObject *object,
     if (!lepton_object_is_pin (o_current))
       continue;
 
-    value = o_attrib_search_object_attribs_by_name (o_current, name, 0);
+    value = lepton_attrib_search_object_attribs_by_name (o_current, name, 0);
     found = (value != NULL && strcmp (value, wanted_value) == 0);
     g_free (value);
 
@@ -1513,7 +1513,7 @@ lepton_component_check_symversion (LeptonPage* page,
   outside = o_attrib_search_attached_attribs_by_name (object, "symversion", 0);
 
   /* get the uref for future use */
-  refdes = o_attrib_search_object_attribs_by_name(object, "refdes", 0);
+  refdes = lepton_attrib_search_object_attribs_by_name(object, "refdes", 0);
   if (!refdes)
   {
     refdes = g_strdup ("no refdes");

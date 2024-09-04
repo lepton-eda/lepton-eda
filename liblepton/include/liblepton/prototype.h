@@ -128,8 +128,11 @@ GList *o_attrib_find_floating_attribs (const GList *list);
 char *o_attrib_search_floating_attribs_by_name (const GList *list, const char *name, int counter);
 char *o_attrib_search_attached_attribs_by_name (LeptonObject *object, const char *name, int counter);
 char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object, const char *name, int counter);
-char *o_attrib_search_object_attribs_by_name (LeptonObject *object, const char *name, int counter);
 
+char*
+lepton_attrib_search_object_attribs_by_name (LeptonObject *object,
+                                             const char *name,
+                                             int counter);
 GList*
 lepton_attrib_return_attribs (LeptonObject *object);
 

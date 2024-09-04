@@ -59,7 +59,7 @@ o_slot_end (SchematicWindow *w_current,
   }
 
   numslots_value =
-    o_attrib_search_object_attribs_by_name (object, "numslots", 0);
+    lepton_attrib_search_object_attribs_by_name (object, "numslots", 0);
 
   if (!numslots_value) {
     g_message (_("numslots attribute missing"));
