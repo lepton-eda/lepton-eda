@@ -293,7 +293,7 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
     /* if above is NULL, then look inside symbol */
     if (filename == NULL) {
       filename =
-        o_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
+        lepton_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
     }
 
     if (filename == NULL) continue;

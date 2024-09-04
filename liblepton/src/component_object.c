@@ -1507,7 +1507,7 @@ lepton_component_check_symversion (LeptonPage* page,
 
 
   /* first look on the inside for the symversion= attribute */
-  inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
+  inside = lepton_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
 
   /* now look for the symversion= attached to object */
   outside = o_attrib_search_attached_attribs_by_name (object, "symversion", 0);

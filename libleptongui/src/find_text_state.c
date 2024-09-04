@@ -713,9 +713,9 @@ get_subpages (SchematicWindow *w_current,
                                                        0);
 
     if (attrib == NULL) {
-      attrib = o_attrib_search_inherited_attribs_by_name (object,
-                                                          "source",
-                                                          0);
+      attrib = lepton_attrib_search_inherited_attribs_by_name (object,
+                                                               "source",
+                                                               0);
     }
 
     if (attrib == NULL) {

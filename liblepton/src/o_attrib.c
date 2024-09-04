@@ -521,9 +521,10 @@ char *o_attrib_search_attached_attribs_by_name (LeptonObject *object,
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object,
-                                                 const char *name,
-                                                 int counter)
+char*
+lepton_attrib_search_inherited_attribs_by_name (LeptonObject *object,
+                                                const char *name,
+                                                int counter)
 {
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
 
