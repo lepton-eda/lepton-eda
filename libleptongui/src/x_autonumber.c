@@ -616,7 +616,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
     /* get the slot attribute */
     o_parent = lepton_object_get_attached_to (o_current);
     if (o_parent != NULL) {
-      slot_str = s_slot_search_slot (o_parent, &o_slot);
+      slot_str = lepton_slot_search (o_parent, &o_slot);
       g_free (slot_str);
       /* Only attempt to remove non-inherited slot attributes */
       if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {

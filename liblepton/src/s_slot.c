@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,9 @@
  *  \warning
  *  Caller must g_free returned character string
  */
-char *s_slot_search_slot (LeptonObject *object, LeptonObject **return_found)
+char*
+lepton_slot_search (LeptonObject *object,
+                    LeptonObject **return_found)
 {
   GList *attributes;
   LeptonObject *attrib;

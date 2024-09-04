@@ -85,7 +85,7 @@ o_slot_end (SchematicWindow *w_current,
 
   /* first see if slot attribute already exists outside
    * component */
-  slot_value = s_slot_search_slot (object, &o_slot);
+  slot_value = lepton_slot_search (object, &o_slot);
   g_free (slot_value);
 
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {

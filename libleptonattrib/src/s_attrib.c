@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ char *s_attrib_get_refdes(LeptonObject *object)
     o_attrib_search_object_attribs_by_name (object, "numslots", 0);
   if (numslots_value != NULL) {  /* this is a slotted component;
                                     append slot number to refdes. */
-    slot_value = s_slot_search_slot (object, &slot_text_object);
+    slot_value = lepton_slot_search (object, &slot_text_object);
 
     /* Mark component as slotted only if it has a "slot" attribute:
     */
