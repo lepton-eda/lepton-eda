@@ -1383,20 +1383,16 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
   LeptonObject *o_parent, *o_slot;
   gchar *slot_str;
 
-  /* remove the slot attribute if slotting is active */
-  if (schematic_autonumber_get_autotext_slotting (autotext))
-  {
-    /* get the slot attribute */
-    o_parent = lepton_object_get_attached_to (o_current);
-    if (o_parent != NULL) {
-      slot_str = lepton_slot_search (o_parent, &o_slot);
-      g_free (slot_str);
-      /* Only attempt to remove non-inherited slot attributes */
-      if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
-      {
-        /* delete the slot attribute */
-        schematic_delete (schematic_autonumber_get_autotext_window (autotext), o_slot);
-      }
+  /* get the slot attribute */
+  o_parent = lepton_object_get_attached_to (o_current);
+  if (o_parent != NULL) {
+    slot_str = lepton_slot_search (o_parent, &o_slot);
+    g_free (slot_str);
+    /* Only attempt to remove non-inherited slot attributes */
+    if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
+    {
+      /* delete the slot attribute */
+      schematic_delete (schematic_autonumber_get_autotext_window (autotext), o_slot);
     }
   }
 }

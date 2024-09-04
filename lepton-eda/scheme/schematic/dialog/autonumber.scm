@@ -57,7 +57,9 @@
             (pointer->string
              (schematic_autonumber_get_autotext_current_searchtext *autotext)))))
 
-  (schematic_autonumber_remove_number *autotext *object)
+  ;; Remove the slot attribute if slotting is active.
+  (when (true? (schematic_autonumber_get_autotext_slotting *autotext))
+    (schematic_autonumber_remove_number *autotext *object))
 
   (schematic_window_active_page_changed
    (schematic_autonumber_get_autotext_window *autotext)))
