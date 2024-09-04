@@ -82,7 +82,9 @@ lepton_slot_search (LeptonObject *object,
  *  \warning
  *  Caller must g_free returned character string.
  */
-static char *s_slot_search_slotdef (LeptonObject *object, int slotnumber)
+static char*
+lepton_slot_search_slotdef (LeptonObject *object,
+                            int slotnumber)
 {
   int counter = 0;
   char *slotdef;
@@ -153,7 +155,7 @@ lepton_slot_update_object (LeptonObject *object)
 
   /* OK, now that we have the slot number, use it to get the */
   /* corresponding slotdef=#:#,#,# string.  */
-  slotdef = s_slot_search_slotdef (object, slot);
+  slotdef = lepton_slot_search_slotdef (object, slot);
 
   if (slotdef == NULL) {
     if (slot_string) /* only an error if there's a slot string */
