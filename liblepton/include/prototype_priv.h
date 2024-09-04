@@ -13,7 +13,10 @@ o_read_attribs (LeptonPage *page,
                 unsigned int release_ver,
                 unsigned int fileformat_ver,
                 GError **err);
-LeptonObject *o_attrib_find_attrib_by_name (const GList *list, const char *name, int count);
+LeptonObject*
+lepton_attrib_find_attrib_by_name (const GList *list,
+                                   const char *name,
+                                   int count);
 
 /* o_selection.c */
 void o_selection_select (LeptonObject *object);

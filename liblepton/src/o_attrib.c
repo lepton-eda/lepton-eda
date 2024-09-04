@@ -401,9 +401,10 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *  \param [in] count    Which occurrence to return.
  *  \return The n'th attribute object in the given list with the given name.
  */
-LeptonObject *o_attrib_find_attrib_by_name (const GList *list,
-                                      const char *name,
-                                      int count)
+LeptonObject*
+lepton_attrib_find_attrib_by_name (const GList *list,
+                                   const char *name,
+                                   int count)
 {
   g_return_val_if_fail (name, NULL);
 
@@ -444,7 +445,7 @@ lepton_attrib_search_attrib_list_by_name (const GList *list,
   LeptonObject *attrib;
   char *value = NULL;
 
-  attrib = o_attrib_find_attrib_by_name (list, name, counter);
+  attrib = lepton_attrib_find_attrib_by_name (list, name, counter);
 
   if (attrib != NULL)
     value = g_strdup (lepton_text_object_get_value (attrib));
