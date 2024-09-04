@@ -121,7 +121,8 @@ o_attrib_attach_list (GList *attr_list,
 void
 o_attrib_detach_all (LeptonObject *object);
 
-void o_attrib_print(GList *attributes);
+void
+lepton_attrib_print (GList *attributes);
 
 gboolean
 lepton_attrib_string_get_name_value (const gchar *string,

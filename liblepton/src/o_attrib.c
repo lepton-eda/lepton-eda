@@ -159,7 +159,8 @@ o_attrib_detach_all (LeptonObject *object)
  *
  *  \param [in] attributes  List of attributes to print.
  */
-void o_attrib_print(GList *attributes)
+void
+lepton_attrib_print (GList *attributes)
 {
   LeptonObject *a_current;
   GList *a_iter;
