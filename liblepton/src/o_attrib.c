@@ -58,7 +58,8 @@
  *  \param [in]  item       The item you want to add as an attribute.
  */
 void
-o_attrib_add (LeptonObject *object, LeptonObject *item)
+lepton_attrib_add (LeptonObject *object,
+                   LeptonObject *item)
 {
   GList *attribs = lepton_object_get_attribs (object);
   GList *new_attribs = g_list_append (attribs, item);
@@ -106,7 +107,7 @@ lepton_attrib_attach (LeptonObject *attrib,
   */
   lepton_object_set_selectable (attrib, lepton_object_get_selectable (object));
 
-  o_attrib_add (object, attrib);
+  lepton_attrib_add (object, attrib);
 
   if (set_color)
     lepton_object_set_color (attrib, ATTRIBUTE_COLOR);

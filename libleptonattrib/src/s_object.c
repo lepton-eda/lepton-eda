@@ -74,7 +74,8 @@ s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
  * -# It gets the position info from o_current's refdes attrib and
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute LeptonObject )
+ * -# It calls lepton_attrib_add() to wrap attrib_graphic with
+ *    (attribute LeptonObject)
  * \param toplevel LeptonToplevel structure
  * \param o_current pointer to object to add attribute to
  * \param new_attrib_name name of the attribute to add
@@ -135,8 +136,8 @@ s_object_add_net_attrib_to_object (LeptonToplevel *toplevel,
  * -# It gets the position info from o_current's refdes attrib and
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute
-      LeptonObject)
+ * -# It calls lepton_attrib_add() to wrap attrib_graphic with
+ *    (attribute LeptonObject)
  * \param toplevel LeptonToplevel structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add

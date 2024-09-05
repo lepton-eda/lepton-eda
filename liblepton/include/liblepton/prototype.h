@@ -105,9 +105,8 @@ void m_polygon_append_point(GArray *points, int x, int y);
 
 /* o_attrib.c */
 void
-o_attrib_add (LeptonObject *object,
-              LeptonObject *item);
-
+lepton_attrib_add (LeptonObject *object,
+                   LeptonObject *item);
 void
 lepton_attrib_attach (LeptonObject *attrib,
                       LeptonObject *object,
