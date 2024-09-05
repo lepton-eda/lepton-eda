@@ -1378,9 +1378,10 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
               schematic_autonumber_slot_new (new_number,
                                              i,
                                              lepton_component_object_get_basename (o_parent));
-            autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
-                                                        freeslot,
-                                                        (GCompareFunc) freeslot_compare);
+            schematic_autonumber_set_autotext_free_slots (autotext,
+                                                          g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
+                                                                                freeslot,
+                                                                                (GCompareFunc) freeslot_compare));
           }
         }
       }
