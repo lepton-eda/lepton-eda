@@ -1281,8 +1281,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   gint number, slot;
   gboolean unused_slot_found = FALSE;
 
-  new_number = autotext->startnum;
-
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
   o_parent = lepton_object_get_attached_to (o_current);
@@ -1310,6 +1308,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (!unused_slot_found)
   {
     /* get a new number */
+    new_number = autotext->startnum;
+
     item = autotext->used_numbers;
     while (1) {
       while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
