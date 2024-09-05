@@ -5,7 +5,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 gboolean m_polygon_interior_point(GArray *points, int x, int y);
 double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed);
 
-/* o_attrib.c */
+/* attrib.c */
 GList*
 o_read_attribs (LeptonPage *page,
                 LeptonObject *object_to_get_attribs,

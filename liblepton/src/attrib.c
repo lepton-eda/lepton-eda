@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_attrib.c
+/*! \file attrib.c
  *  \brief utility functions for attributes
  *
  *  Attributes are normal text objects. An attribute is a text object

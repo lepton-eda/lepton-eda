@@ -685,7 +685,7 @@
 (define-lff lepton_stroke_type_from_string int '(*))
 (define-lff lepton_stroke_type_to_string '* (list int))
 
-;;; o_attrib.c
+;;; attrib.c
 (define-lff lepton_attrib_attach void (list '* '* int))
 
 ;; s_conn.c

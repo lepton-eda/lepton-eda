@@ -103,7 +103,7 @@ m_polygon_append_bezier (GArray *points,
                          int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
 
-/* o_attrib.c */
+/* attrib.c */
 void
 lepton_attrib_add (LeptonObject *object,
                    LeptonObject *item);

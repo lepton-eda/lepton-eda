@@ -19,7 +19,7 @@ liblepton/src/f_basic.c
 liblepton/src/g_basic.c
 liblepton/src/g_rc.c
 liblepton/src/page.c
-liblepton/src/o_attrib.c
+liblepton/src/attrib.c
 liblepton/src/object.c
 liblepton/src/color.c
 liblepton/src/s_clib.c
