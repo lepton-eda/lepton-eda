@@ -1318,10 +1318,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (schematic_autonumber_get_autotext_slotting (autotext) &&
       o_parent != NULL)
   {
-    freeslot = g_new (SchematicAutonumberSlot, 1);
-    freeslot->symbolname = lepton_component_object_get_basename (o_parent);
-    freeslot->number = 0;
-    freeslot->slotnr = 0;
+    freeslot =
+      schematic_autonumber_slot_new (0, 0, lepton_component_object_get_basename (o_parent));
     freeslot_item = g_list_find_custom(autotext->free_slots,
                                        freeslot,
                                        (GCompareFunc) freeslot_compare);
