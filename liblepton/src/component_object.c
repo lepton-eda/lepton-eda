@@ -637,7 +637,7 @@ lepton_component_promote_attribs (LeptonObject *object)
 
   /* Attach promoted attributes to the original component
      object. */
-  o_attrib_attach_list (promoted, object, TRUE);
+  lepton_attrib_attach_list (promoted, object, TRUE);
 
   return promoted;
 }

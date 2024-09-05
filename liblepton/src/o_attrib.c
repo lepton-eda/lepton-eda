@@ -120,9 +120,9 @@ o_attrib_attach (LeptonObject *attrib,
  *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
 void
-o_attrib_attach_list (GList *attr_list,
-                      LeptonObject *object,
-                      int set_color)
+lepton_attrib_attach_list (GList *attr_list,
+                           LeptonObject *object,
+                           int set_color)
 {
   GList *iter;
 
