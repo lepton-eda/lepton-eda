@@ -1026,7 +1026,7 @@ lepton_object_delete (LeptonObject *o_current)
       o_current->component = NULL;
     }
 
-    o_attrib_detach_all (o_current);
+    lepton_attrib_detach_all (o_current);
 
     o_current->weak_refs = s_weakref_notify (o_current, o_current->weak_refs);
 

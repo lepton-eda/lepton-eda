@@ -136,7 +136,7 @@ o_attrib_attach_list (GList *attr_list,
  *  \param [in,out] object    The object whose attributes to detach.
  */
 void
-o_attrib_detach_all (LeptonObject *object)
+lepton_attrib_detach_all (LeptonObject *object)
 {
   LeptonObject *a_current;
   GList *a_iter;
