@@ -1148,6 +1148,37 @@ schematic_autonumber_match (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Create and return a new #SchematicAutonumberSlot
+ *  instance.
+ *
+ *  \par Function Description
+ *  Creates and returns a new #SchematicAutonumberSlot instance
+ *  setting its fields to the given argument values.
+ *
+ *  \param [in] number The number being a suffix of the processed
+ *              object text string.
+ *  \param [in] slot_number The given slot number.
+ *  \param [in] symbol_name The name of the symbol the data
+ *              belongs to.
+ *  \return The new #SchematicAutonumberSlot instance.
+ */
+SchematicAutonumberSlot*
+schematic_autonumber_slot_new (int number,
+                               int slot_number,
+                               char *symbol_name)
+{
+  SchematicAutonumberSlot *slot;
+
+  slot = g_new (SchematicAutonumberSlot, 1);
+
+  slot->number = number;
+  slot->slotnr = slot_number;
+  slot->symbolname = symbol_name;
+
+  return slot;
+}
+
+
 /*! \brief Creates a list of already numbered objects and slots
  *  \par Function Description
  *  This function collects the used numbers of a single schematic
