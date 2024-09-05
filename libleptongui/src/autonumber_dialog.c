@@ -1320,9 +1320,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   {
     freeslot =
       schematic_autonumber_slot_new (0, 0, lepton_component_object_get_basename (o_parent));
-    freeslot_item = g_list_find_custom(autotext->free_slots,
-                                       freeslot,
-                                       (GCompareFunc) freeslot_compare);
+    freeslot_item = g_list_find_custom (schematic_autonumber_get_autotext_free_slots (autotext),
+                                        freeslot,
+                                        (GCompareFunc) freeslot_compare);
     g_free(freeslot);
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {
