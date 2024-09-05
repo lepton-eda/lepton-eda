@@ -48,6 +48,9 @@
     (schematic_autonumber_scope_to_string scope-number))))
 
 
+;;; Remove the number from *OBJECT and replace it with question
+;;; mark.  If the Automatic slotting checkbox is active, remove
+;;; the attached slot attributes of the object as well.
 (define (remove-number! *autotext *object)
   ;; Replace old text.
   (lepton_text_object_set_string
@@ -69,10 +72,14 @@
           ;; have to free it.  Really we need only the slot
           ;; object.
           (g_free *slot-string)
-          (schematic_autonumber_remove_number *autotext
-                                              *object
-                                              *parent
-                                              (dereference-pointer **slot))))))
+          (let ((*slot (dereference-pointer **slot)))
+            ;; Only attempt to remove non-inherited slot attributes.
+            (when (and (not (null-pointer? *slot))
+                       (false? (lepton_attrib_is_inherited *slot)))
+              ;; Delete the slot attribute.
+              (schematic_delete
+               (schematic_autonumber_get_autotext_window *autotext)
+               *slot)))))))
 
   (schematic_window_active_page_changed
    (schematic_autonumber_get_autotext_window *autotext)))

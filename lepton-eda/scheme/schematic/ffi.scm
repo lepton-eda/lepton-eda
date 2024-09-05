@@ -98,6 +98,7 @@
 
             o_component_place_changed_run_hook
 
+            schematic_delete
             schematic_delete_dialog
 
             o_edit_show_hidden
@@ -217,7 +218,6 @@
             schematic_autonumber_get_used
             schematic_autonumber_history_add
             schematic_autonumber_make_renumber_list
-            schematic_autonumber_remove_number
             schematic_autonumber_scope_from_string
             schematic_autonumber_scope_to_string
             schematic_autonumber_sort_order_from_string
@@ -1140,6 +1140,7 @@
 (define-lff o_component_place_changed_run_hook void '(*))
 
 ;;; delete_dialog.c
+(define-lff schematic_delete void '(* *))
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
@@ -1244,7 +1245,6 @@
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_make_renumber_list '* '(* *))
-(define-lff schematic_autonumber_remove_number void '(* * * *))
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_scope_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))

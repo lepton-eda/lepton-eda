@@ -1368,31 +1368,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 }
 
 
-/** @brief Removes the number from the element.
- *
- *  This function updates the text content of the \a o_current object.
- *
- *  @param autotext Pointer to the state structure
- *  @param o_current Pointer to the object from which to remove the number
- *  @param o_parent Pointer to the parent object to which
- *         o_current is attached to.
- *  @param o_slot The slot attribute of the parent object.
- */
-void
-schematic_autonumber_remove_number (SchematicAutonumber *autotext,
-                                    LeptonObject *o_current,
-                                    LeptonObject *o_parent,
-                                    LeptonObject *o_slot)
-{
-  /* Only attempt to remove non-inherited slot attributes */
-  if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
-  {
-    /* delete the slot attribute */
-    schematic_delete (schematic_autonumber_get_autotext_window (autotext), o_slot);
-  }
-}
-
-
 /*! \brief Form the list of objects to renumber.
  *  \par Function Description
  *  Filters the list of given objects and returns a new list of

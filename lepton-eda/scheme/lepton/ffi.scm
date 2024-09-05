@@ -329,6 +329,7 @@
             s_clib_symbol_invalidate_data
 
             lepton_attrib_attach
+            lepton_attrib_is_inherited
 
             s_conn_remove_object
             s_conn_remove_object_connections
@@ -702,6 +703,7 @@
 
 ;;; attrib.c
 (define-lff lepton_attrib_attach void (list '* '* int))
+(define-lff lepton_attrib_is_inherited int '(*))
 
 ;; s_conn.c
 (define-lff s_conn_remove_object void '(* *))

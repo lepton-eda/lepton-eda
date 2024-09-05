@@ -244,11 +244,6 @@ int
 schematic_autonumber_match (SchematicAutonumber *autotext,
                             LeptonObject *o_current,
                             int *number);
-void
-schematic_autonumber_remove_number (SchematicAutonumber *autotext,
-                                    LeptonObject *o_current,
-                                    LeptonObject *o_parent,
-                                    LeptonObject *o_slot);
 int
 schematic_autonumber_scope_from_string (char *s);
 
