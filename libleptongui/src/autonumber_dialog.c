@@ -1330,8 +1330,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
       number = schematic_autonumber_slot_get_number (freeslot);
       slot = schematic_autonumber_slot_get_slot_number (freeslot);
       g_free(freeslot);
-      autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
-
+      schematic_autonumber_set_autotext_free_slots (autotext,
+                                                    g_list_delete_link (schematic_autonumber_get_autotext_free_slots (autotext),
+                                                                        freeslot_item));
       unused_slot_found = TRUE;
     }
   }
