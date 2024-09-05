@@ -622,7 +622,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
       if (o_slot != NULL && !lepton_attrib_is_inherited (o_slot))
       {
         /* delete the slot attribute */
-        o_delete (autotext->w_current, o_slot);
+        schematic_delete (autotext->w_current, o_slot);
       }
     }
   }

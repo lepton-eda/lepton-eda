@@ -667,7 +667,7 @@ multiattrib_action_delete_attributes (Multiattrib *multiattrib,
   for (a_iter = attr_list; a_iter != NULL; a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject*) a_iter->data;
     /* actually deletes the attribute */
-    o_delete (w_current, o_attrib);
+    schematic_delete (w_current, o_attrib);
   }
 
   schematic_window_active_page_changed (w_current);

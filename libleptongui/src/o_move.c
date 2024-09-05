@@ -741,7 +741,7 @@ o_move_end_rubberband (SchematicWindow *w_current,
       if (o_move_zero_length (object)) {
         w_current->stretch_list =
           s_stretch_remove (w_current->stretch_list, object);
-        o_delete (w_current, object);
+        schematic_delete (w_current, object);
         continue;
       }
 

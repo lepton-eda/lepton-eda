@@ -32,8 +32,8 @@
  *  \param [in] object    The object to delete.
  */
 void
-o_delete (SchematicWindow *w_current,
-          LeptonObject *object)
+schematic_delete (SchematicWindow *w_current,
+                  LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
 

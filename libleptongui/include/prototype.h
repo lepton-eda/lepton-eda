@@ -332,8 +332,8 @@ o_component_translate_all (SchematicWindow *w_current,
 
 /* o_delete.c */
 void
-o_delete (SchematicWindow *w_current,
-          LeptonObject *object);
+schematic_delete (SchematicWindow *w_current,
+                  LeptonObject *object);
 gint
 schematic_delete_dialog ();
 
