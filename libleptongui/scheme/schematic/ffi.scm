@@ -952,7 +952,7 @@
 ;;; o_component.c
 (define-lff o_component_place_changed_run_hook void '(*))
 
-;;; o_delete.c
+;;; delete_dialog.c
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c

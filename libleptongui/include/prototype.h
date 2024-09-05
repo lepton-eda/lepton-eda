@@ -330,7 +330,7 @@ void
 o_component_translate_all (SchematicWindow *w_current,
                            int offset);
 
-/* o_delete.c */
+/* delete_dialog.c */
 void
 schematic_delete (SchematicWindow *w_current,
                   LeptonObject *object);

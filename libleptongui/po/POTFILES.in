@@ -48,7 +48,7 @@ libleptongui/src/o_box.c
 libleptongui/src/o_bus.c
 libleptongui/src/o_circle.c
 libleptongui/src/o_component.c
-libleptongui/src/o_delete.c
+libleptongui/src/delete_dialog.c
 libleptongui/src/o_find.c
 libleptongui/src/o_grips.c
 libleptongui/src/o_line.c
