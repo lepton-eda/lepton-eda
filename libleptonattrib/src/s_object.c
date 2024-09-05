@@ -369,7 +369,7 @@ s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
 
   /* now attach the attribute to the object */
   /* remember that o_current contains the object to get the attribute */
-  o_attrib_attach (new_obj, o_current, FALSE);
+  lepton_attrib_attach (new_obj, o_current, FALSE);
 
   lepton_page_set_changed (active_page, 1);
 

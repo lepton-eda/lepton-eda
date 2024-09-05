@@ -425,7 +425,7 @@ o_attrib_add_attrib (SchematicWindow *w_current,
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach (new_obj, o_current, FALSE);
+    lepton_attrib_attach (new_obj, o_current, FALSE);
   }
 
   /* Select the attribute to enable its further processing. */

@@ -639,7 +639,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
         o_new = lepton_object_copy (o_attrib);
         lepton_page_append (active_page, o_new);
         /* add the attribute its parent */
-        o_attrib_attach (o_new, lepton_object_get_parent (o_attrib), TRUE);
+        lepton_attrib_attach (o_new, lepton_object_get_parent (o_attrib), TRUE);
         /* note: this object is unselected (not added to selection). */
 
         /* Call add-objects-hook */

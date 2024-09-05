@@ -109,10 +109,9 @@ o_attrib_add (LeptonObject *object,
               LeptonObject *item);
 
 void
-o_attrib_attach (LeptonObject *attrib,
-                 LeptonObject *object,
-                 int set_color);
-
+lepton_attrib_attach (LeptonObject *attrib,
+                      LeptonObject *object,
+                      int set_color);
 void
 lepton_attrib_attach_list (GList *attr_list,
                            LeptonObject *object,

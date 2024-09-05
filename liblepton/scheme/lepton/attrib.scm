@@ -220,7 +220,7 @@ returns #f."
 
         ;; Carry out the attachment.
         (lepton_object_emit_pre_change_notify attrib-pointer)
-        (o_attrib_attach attrib-pointer object-pointer TRUE)
+        (lepton_attrib_attach attrib-pointer object-pointer TRUE)
         (lepton_object_emit_change_notify attrib-pointer)
 
         (lepton_object_page_set_changed object-pointer)

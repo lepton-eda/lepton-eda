@@ -322,7 +322,7 @@
             s_clib_symbol_get_filename
             s_clib_symbol_invalidate_data
 
-            o_attrib_attach
+            lepton_attrib_attach
 
             s_conn_remove_object
             s_conn_remove_object_connections
@@ -686,7 +686,7 @@
 (define-lff lepton_stroke_type_to_string '* (list int))
 
 ;;; o_attrib.c
-(define-lff o_attrib_attach void (list '* '* int))
+(define-lff lepton_attrib_attach void (list '* '* int))
 
 ;; s_conn.c
 (define-lff s_conn_remove_object void '(* *))

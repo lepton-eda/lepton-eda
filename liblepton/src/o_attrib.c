@@ -74,9 +74,9 @@ o_attrib_add (LeptonObject *object, LeptonObject *item)
  *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
 void
-o_attrib_attach (LeptonObject *attrib,
-                 LeptonObject *object,
-                 int set_color)
+lepton_attrib_attach (LeptonObject *attrib,
+                      LeptonObject *object,
+                      int set_color)
 {
   g_return_if_fail (attrib != NULL);
   g_return_if_fail (object != NULL);
@@ -127,7 +127,7 @@ lepton_attrib_attach_list (GList *attr_list,
   GList *iter;
 
   for (iter = attr_list; iter != NULL; iter = g_list_next (iter))
-    o_attrib_attach ((LeptonObject*) iter->data, object, set_color);
+    lepton_attrib_attach ((LeptonObject*) iter->data, object, set_color);
 }
 
 
@@ -282,7 +282,7 @@ o_read_attribs (LeptonPage *page,
     }
 
     if (ATTACH) {
-      o_attrib_attach (new_obj, object_to_get_attribs, FALSE);
+      lepton_attrib_attach (new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Tried to attach a non-text item as an attribute"));

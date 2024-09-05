@@ -106,7 +106,7 @@ o_slot_end (SchematicWindow *w_current,
     lepton_page_append (active_page, new_obj);
 
     /* manually attach attribute */
-    o_attrib_attach (new_obj, object, FALSE);
+    lepton_attrib_attach (new_obj, object, FALSE);
 
     /* Call add-objects-hook */
     g_run_hook_object (w_current, "add-objects-hook", new_obj);

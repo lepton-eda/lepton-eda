@@ -117,9 +117,9 @@ o_glist_copy_all (const GList *src_list,
       if (attachment != NULL &&
           attachment->copied_to != NULL)
       {
-        o_attrib_attach (dst_object,
-                         attachment->copied_to,
-                         FALSE);
+        lepton_attrib_attach (dst_object,
+                              attachment->copied_to,
+                              FALSE);
         /* handle slot= attribute, it's a special case */
         if (g_ascii_strncasecmp (lepton_text_object_get_string (dst_object),
                                  "slot=", 5) == 0)
