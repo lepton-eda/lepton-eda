@@ -1284,7 +1284,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
   o_parent = lepton_object_get_attached_to (o_current);
-  if (autotext->slotting && o_parent != NULL) {
+  if (schematic_autonumber_get_autotext_slotting (autotext) &&
+      o_parent != NULL)
+  {
     freeslot = g_new (SchematicAutonumberSlot, 1);
     freeslot->symbolname = lepton_component_object_get_basename (o_parent);
     freeslot->number = 0;
