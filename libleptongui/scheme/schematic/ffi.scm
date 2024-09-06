@@ -1061,7 +1061,7 @@
 (define-lff x_multiattrib_open void '(*))
 (define-lff x_multiattrib_update void '(*))
 
-;;; x_newtext.c
+;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog void '(*))
 
 ;;; x_print.c

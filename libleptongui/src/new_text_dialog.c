@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file x_newtext.c
+ * \file new_text_dialog.c
  *
  * \brief A dialog box for adding new text to a schematic.
  */

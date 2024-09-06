@@ -85,7 +85,7 @@ libleptongui/src/x_linetypecb.c
 libleptongui/src/x_menus.c
 libleptongui/src/x_misc.c
 libleptongui/src/x_multiattrib.c
-libleptongui/src/x_newtext.c
+libleptongui/src/new_text_dialog.c
 libleptongui/src/page_select_widget.c
 libleptongui/src/x_print.c
 libleptongui/src/x_rc.c

@@ -99,7 +99,7 @@ libleptongui_la_SOURCES = \
 	x_menus.c \
 	x_misc.c \
 	x_multiattrib.c \
-	x_newtext.c \
+	new_text_dialog.c \
 	page_select_widget.c \
 	toolbar.c \
 	x_print.c \
