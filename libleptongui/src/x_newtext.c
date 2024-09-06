@@ -37,30 +37,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-
-#define TYPE_NEWTEXT           (newtext_get_type())
-#define NEWTEXT(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_NEWTEXT, NewText))
-#define NEWTEXT_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_NEWTEXT, NewTextClass))
-#define IS_NEWTEXT(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_NEWTEXT))
-
-typedef struct _NewTextClass NewTextClass;
-typedef struct _NewText NewText;
-
-struct _NewTextClass {
-  SchematicDialogClass parent_class;
-};
-
-struct _NewText {
-    SchematicDialog parent;
-
-    GtkWidget *aligncb;
-    GtkWidget *colorcb;
-    GtkWidget *rotatecb;
-    GtkWidget *textsizecb;
-    GtkWidget *text_view;
-};
-
-
 G_DEFINE_TYPE (NewText,
                newtext,
                SCHEMATIC_TYPE_DIALOG);

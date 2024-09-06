@@ -42,6 +42,7 @@ noinst_HEADERS = \
 	translate_widget.h \
 	color_edit_widget.h \
 	font_select_widget.h \
+	new_text_dialog.h \
 	page_select_widget.h \
 	preview_widget.h \
 	snap_mode.h \

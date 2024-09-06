@@ -871,9 +871,6 @@ int
 x_dialog_validate_attribute (GtkWindow *parent,
                              char *attribute);
 void
-text_input_dialog (SchematicWindow *w_current);
-
-void
 text_edit_dialog (SchematicWindow *w_current);
 
 void
