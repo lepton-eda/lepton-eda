@@ -57,6 +57,10 @@ G_BEGIN_DECLS
 void
 schematic_newtext_dialog (SchematicWindow *w_current);
 
+void
+schematic_newtext_dialog_response (SchematicNewText *dialog,
+                                   gint response,
+                                   gpointer unused);
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */

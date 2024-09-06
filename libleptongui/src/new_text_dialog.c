@@ -191,10 +191,10 @@ dialog_response_cancel (SchematicNewText *dialog)
  *  \param [in] response The Gtk response integer value.
  *  \param unused Unused parameter.
  */
-static void
-text_input_dialog_response (SchematicNewText *dialog,
-                            gint response,
-                            gpointer unused)
+void
+schematic_newtext_dialog_response (SchematicNewText *dialog,
+                                   gint response,
+                                   gpointer unused)
 {
   switch(response) {
     case GTK_RESPONSE_APPLY:
@@ -205,7 +205,7 @@ text_input_dialog_response (SchematicNewText *dialog,
       dialog_response_cancel(dialog);
       break;
     default:
-      printf ("text_input_dialog_response(): strange signal %d\n", response);
+      printf ("schematic_newtext_dialog_response(): strange signal %d\n", response);
   }
 }
 
@@ -498,7 +498,7 @@ schematic_newtext_dialog (SchematicWindow *w_current)
                                 NULL));
 
     g_signal_connect (G_OBJECT (w_current->tiwindow),
-                      "response", G_CALLBACK (text_input_dialog_response),
+                      "response", G_CALLBACK (schematic_newtext_dialog_response),
                       NULL);
 
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
