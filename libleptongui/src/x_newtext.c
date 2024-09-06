@@ -225,7 +225,7 @@ static void text_input_dialog_response(NewText *dialog, gint response, gpointer 
       dialog_response_cancel(dialog);
       break;
     default:
-      printf("text_edit_dialog_response(): strange signal %d\n", response);
+      printf ("text_input_dialog_response(): strange signal %d\n", response);
   }
 }
 
