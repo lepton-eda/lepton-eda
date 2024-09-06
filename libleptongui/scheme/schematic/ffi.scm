@@ -450,7 +450,7 @@
             schematic_text_properties_widget_new
             text_edit_dialog
 
-            text_input_dialog
+            schematic_newtext_dialog
 
             o_select_box_end
             o_select_box_motion
@@ -1062,7 +1062,7 @@
 (define-lff x_multiattrib_update void '(*))
 
 ;;; x_newtext.c
-(define-lff text_input_dialog void '(*))
+(define-lff schematic_newtext_dialog void '(*))
 
 ;;; x_print.c
 (define-lff x_print void '(*))

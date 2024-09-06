@@ -472,7 +472,7 @@ schematic_newtext_init (SchematicNewText *dialog)
  *  \param [in] w_current The gschem toplevel
  */
 void
-text_input_dialog (SchematicWindow *w_current)
+schematic_newtext_dialog (SchematicWindow *w_current)
 {
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */

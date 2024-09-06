@@ -161,4 +161,4 @@
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window))
 
-  (text_input_dialog *window))
+  (schematic_newtext_dialog *window))
