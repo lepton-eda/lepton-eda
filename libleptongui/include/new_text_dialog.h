@@ -29,19 +29,19 @@
 #define NEW_TEXT_DIALOG_H
 
 
-#define TYPE_NEWTEXT           (newtext_get_type())
-#define NEWTEXT(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_NEWTEXT, NewText))
-#define NEWTEXT_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_NEWTEXT, NewTextClass))
-#define IS_NEWTEXT(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_NEWTEXT))
+#define SCHEMATIC_TYPE_NEWTEXT         (schematic_newtext_get_type())
+#define SCHEMATIC_NEWTEXT(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_NEWTEXT, SchematicNewText))
+#define SCHEMATIC_NEWTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_NEWTEXT, SchematicNewTextClass))
+#define SCHEMATIC_IS_NEWTEXT(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_NEWTEXT))
 
-typedef struct _NewTextClass NewTextClass;
-typedef struct _NewText NewText;
+typedef struct _SchematicNewTextClass SchematicNewTextClass;
+typedef struct _SchematicNewText SchematicNewText;
 
-struct _NewTextClass {
+struct _SchematicNewTextClass {
   SchematicDialogClass parent_class;
 };
 
-struct _NewText {
+struct _SchematicNewText {
     SchematicDialog parent;
 
     GtkWidget *aligncb;

@@ -37,8 +37,8 @@
 #include <gdk/gdkkeysyms.h>
 
 
-G_DEFINE_TYPE (NewText,
-               newtext,
+G_DEFINE_TYPE (SchematicNewText,
+               schematic_newtext,
                SCHEMATIC_TYPE_DIALOG);
 
 
@@ -86,7 +86,7 @@ select_all_text_in_textview (GtkTextView *textview)
  *  \param [in] dialog The new text dialog
  */
 static void
-dialog_response_apply (NewText *dialog)
+dialog_response_apply (SchematicNewText *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -172,7 +172,8 @@ dialog_response_apply (NewText *dialog)
  *
  *  \param [in,out] dialog The new text dialog
  */
-static void dialog_response_cancel(NewText *dialog)
+static void
+dialog_response_cancel (SchematicNewText *dialog)
 {
   i_callback_cancel (NULL, dialog->parent.w_current);
   gtk_widget_destroy(dialog->parent.w_current->tiwindow);
@@ -190,7 +191,10 @@ static void dialog_response_cancel(NewText *dialog)
  *  \param [in] response The Gtk response integer value.
  *  \param unused Unused parameter.
  */
-static void text_input_dialog_response(NewText *dialog, gint response, gpointer unused)
+static void
+text_input_dialog_response (SchematicNewText *dialog,
+                            gint response,
+                            gpointer unused)
 {
   switch(response) {
     case GTK_RESPONSE_APPLY:
@@ -206,27 +210,29 @@ static void text_input_dialog_response(NewText *dialog, gint response, gpointer 
 }
 
 
-/*! \brief Initialize NewText class
+/*! \brief Initialize SchematicNewText class
  *
  *  \par Function Description
  *
- *  GType class initialiser for NewText. We override our parent
- *  virtual class methods as needed and register our GObject
- *  properties.
+ *  GType class initialiser for SchematicNewText.  We override our
+ *  parent virtual class methods as needed and register our
+ *  GObject properties.
  *
  *  \param [in] klass
  */
-static void newtext_class_init(NewTextClass *klass)
+static void
+schematic_newtext_class_init (SchematicNewTextClass *klass)
 {
 }
 
 
 
-/*! \brief Initialize NewText instance
+/*! \brief Initialize SchematicNewText instance
  *
  *  \param [in,out] dialog The new text dialog
  */
-static void newtext_init(NewText *dialog)
+static void
+schematic_newtext_init (SchematicNewText *dialog)
 {
   GtkWidget *vbox;
   GtkWidget *label = NULL;
@@ -450,7 +456,7 @@ static void newtext_init(NewText *dialog)
                             tab_array);
   }
   else {
-    g_warning ("newtext_init: Impossible to set tab width.\n");
+    g_warning ("schematic_newtext_init: Impossible to set tab width.\n");
   }
 
   pango_tab_array_free (tab_array);
@@ -471,7 +477,7 @@ text_input_dialog (SchematicWindow *w_current)
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */
     w_current->tiwindow =
-      GTK_WIDGET (g_object_new (TYPE_NEWTEXT,
+      GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_NEWTEXT,
                                 /* GtkContainer */
                                 "border-width",     DIALOG_BORDER_SPACING,
                                 /* GtkWindow */
@@ -498,10 +504,10 @@ text_input_dialog (SchematicWindow *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
                                   GTK_WINDOW (w_current->main_window));
 
-    schematic_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
+    schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (w_current->tiwindow)->textsizecb,
                                            schematic_window_get_text_size_list_store (w_current));
 
-    schematic_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
+    schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (w_current->tiwindow)->textsizecb,
                                            w_current->text_size);
 
     gtk_widget_show_all (w_current->tiwindow);
@@ -512,6 +518,6 @@ text_input_dialog (SchematicWindow *w_current)
   }
 
   /* always select the text in the entry */
-  select_all_text_in_textview (GTK_TEXT_VIEW (NEWTEXT (w_current->tiwindow)->text_view));
-  gtk_widget_grab_focus (NEWTEXT (w_current->tiwindow)->text_view);
+  select_all_text_in_textview (GTK_TEXT_VIEW (SCHEMATIC_NEWTEXT (w_current->tiwindow)->text_view));
+  gtk_widget_grab_focus (SCHEMATIC_NEWTEXT (w_current->tiwindow)->text_view);
 }
