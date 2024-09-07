@@ -1539,7 +1539,7 @@ schematic_window_set_compselect_widget (SchematicWindow *w_current,
  *  \return The Text input widget.
  */
 GtkWidget*
-schematic_window_get_text_input_widget (SchematicWindow *w_current)
+schematic_window_get_newtext_dialog (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -1553,8 +1553,8 @@ schematic_window_get_text_input_widget (SchematicWindow *w_current)
  *  \param [in] widget The widget.
  */
 void
-schematic_window_set_text_input_widget (SchematicWindow *w_current,
-                                        GtkWidget *widget)
+schematic_window_set_newtext_dialog (SchematicWindow *w_current,
+                                     GtkWidget *widget)
 {
   g_return_if_fail (w_current != NULL);
 

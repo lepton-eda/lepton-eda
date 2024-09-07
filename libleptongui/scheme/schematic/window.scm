@@ -102,7 +102,7 @@
       ;; Close the window if the user didn't cancel the close.
       (x_clipboard_finish *window)
       (let ((*cswindow (schematic_window_get_compselect_widget *window))
-            (*tiwindow (schematic_window_get_text_input_widget *window))
+            (*tiwindow (schematic_window_get_newtext_dialog *window))
             (*aawindow (schematic_window_get_arc_edit_widget *window))
             (*aewindow (schematic_window_get_attrib_edit_widget *window))
             (*hkwindow (schematic_window_get_hotkey_widget *window))

@@ -407,7 +407,7 @@
             schematic_window_get_coord_widget
             schematic_window_get_hotkey_widget
             schematic_window_get_slot_edit_widget
-            schematic_window_get_text_input_widget
+            schematic_window_get_newtext_dialog
             schematic_window_set_dont_invalidate
             schematic_window_set_log_widget
             schematic_window_set_object_properties_widget
@@ -743,7 +743,7 @@
 (define-lff schematic_window_get_coord_widget '* '(*))
 (define-lff schematic_window_get_hotkey_widget '* '(*))
 (define-lff schematic_window_get_slot_edit_widget '* '(*))
-(define-lff schematic_window_get_text_input_widget '* '(*))
+(define-lff schematic_window_get_newtext_dialog '* '(*))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
 (define-lff schematic_window_set_log_widget void '(* *))
 (define-lff schematic_window_set_object_properties_widget void '(* *))

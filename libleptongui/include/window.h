@@ -435,11 +435,11 @@ void
 schematic_window_set_compselect_widget (SchematicWindow *w_current,
                                         GtkWidget *widget);
 GtkWidget*
-schematic_window_get_text_input_widget (SchematicWindow *w_current);
+schematic_window_get_newtext_dialog (SchematicWindow *w_current);
 
 void
-schematic_window_set_text_input_widget (SchematicWindow *w_current,
-                                        GtkWidget *widget);
+schematic_window_set_newtext_dialog (SchematicWindow *w_current,
+                                     GtkWidget *widget);
 GtkWidget*
 schematic_window_get_arc_edit_widget (SchematicWindow *w_current);
 
