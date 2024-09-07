@@ -118,8 +118,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 ### Changes in `libleptongui`:
 - The prefix `Gschem` in the names of the library object types has
-  been replaced with `Schematic`.  The following renamings have
-  been carried out:
+  been replaced with `Schematic`.  Some other types have been
+  renamed as well.  The following renamings have been carried out:
 
   - `GschemAccelLabel` => `SchematicAccelLabel`
   - `GschemAction` => `SchematicAction`
@@ -148,6 +148,7 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   - `GschemTextPropertiesWidget` => `SchematicTextPropertiesWidget`
   - `GschemToplevel` => `SchematicWindow`
   - `GschemTranslateWidget` => `SchematicTranslateWidget`
+  - `NewText` => `SchematicNewText`
 
   All accessor, helper, and other functions and macros related to
   those types have been renamed accordingly.
