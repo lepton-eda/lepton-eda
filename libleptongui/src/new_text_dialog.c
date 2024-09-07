@@ -165,19 +165,6 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
 }
 
 
-
-/*! \brief Destroy the New text dialog.
- *
- *  \param [in,out] dialog The new text dialog
- */
-void
-schematic_newtext_dialog_destroy (SchematicNewText *dialog)
-{
-  gtk_widget_destroy (GTK_WIDGET (dialog));
-}
-
-
-
 /*! \brief Initialize SchematicNewText class
  *
  *  \par Function Description

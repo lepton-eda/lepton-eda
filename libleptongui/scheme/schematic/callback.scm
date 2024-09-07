@@ -31,6 +31,7 @@
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic dialog file-select)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
   #:use-module (schematic preview-widget)
@@ -167,7 +168,7 @@
 
   (define (close-dialog!)
     (i_callback_cancel %null-pointer *window)
-    (schematic_newtext_dialog_destroy *dialog)
+    (gtk_widget_destroy *dialog)
     (schematic_window_set_newtext_dialog *window %null-pointer))
 
   (case response-sym
