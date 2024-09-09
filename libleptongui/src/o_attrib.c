@@ -417,7 +417,7 @@ o_attrib_add_attrib (SchematicWindow *w_current,
                                     align,
                                     angle,
                                     text_string,
-                                    w_current->text_size, /* current text size */
+                                    schematic_window_get_text_size (w_current), /* current text size */
                                     visibility,
                                     show_name_value);
   lepton_page_append (active_page, new_obj);
