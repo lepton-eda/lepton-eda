@@ -171,8 +171,11 @@
     (gtk_widget_destroy *dialog)
     (schematic_window_set_newtext_dialog *window %null-pointer))
 
+  (define (apply-changes!)
+    (schematic_newtext_dialog_response_apply *dialog))
+
   (case response-sym
-    ((apply) (schematic_newtext_dialog_response_apply *dialog))
+    ((apply) (apply-changes!))
     ((close delete-event) (close-dialog!))
     (else (log-warning))))
 
