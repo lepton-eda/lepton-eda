@@ -87,6 +87,12 @@ schematic_newtext_dialog_get_textsizecb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_textsizecb (SchematicNewText *dialog,
                                          GtkWidget *textsizecb);
+GtkWidget*
+schematic_newtext_dialog_get_text_view (SchematicNewText *dialog);
+
+void
+schematic_newtext_dialog_set_text_view (SchematicNewText *dialog,
+                                        GtkWidget *text_view);
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */
