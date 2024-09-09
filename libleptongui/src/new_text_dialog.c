@@ -256,7 +256,7 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
   if (string[0] == '\0' )
     return;
 
-  switch (w_current->text_caps)
+  switch (schematic_window_get_text_caps (w_current))
   {
     case(LOWER):
       tmp = g_utf8_strdown (string, -1);
