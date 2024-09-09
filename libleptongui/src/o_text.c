@@ -55,8 +55,8 @@ o_text_prepare_place (SchematicWindow *w_current,
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
 
-  w_current->first_wx = 0;
-  w_current->first_wy = 0;
+  schematic_window_set_first_wx (w_current, 0);
+  schematic_window_set_first_wy (w_current, 0);
 
   /* remove the old place list if it exists */
   schematic_window_delete_place_list (w_current);
