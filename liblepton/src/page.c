@@ -93,7 +93,7 @@ lepton_page_get_pid (LeptonPage *page)
 {
   g_return_val_if_fail (page != NULL, 0);
 
-  return page->pid;
+  return page->_pid;
 }
 
 /*! \brief Set page's \a pid field value.
@@ -107,7 +107,7 @@ lepton_page_set_pid (LeptonPage *page,
 {
   g_return_if_fail (page != NULL);
 
-  page->pid = pid;
+  page->_pid = pid;
 }
 
 

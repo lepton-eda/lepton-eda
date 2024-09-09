@@ -31,7 +31,7 @@ struct st_page
    * lists of all open pages and configuration settings. */
   LeptonToplevel* _toplevel;
   /* The internal unique page ID. */
-  int pid;
+  int _pid;
   /* The list of page objects. */
   GList *_object_list;
   /* The list of selected objects. */
