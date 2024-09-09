@@ -175,7 +175,9 @@
     (if (null-pointer? *dialog)
         (error "NULL dialog")
         (let ((*window (schematic_newtext_dialog_get_window *dialog)))
-          (schematic_newtext_dialog_response_apply *dialog *window))))
+          (if (null-pointer? *window)
+              (error "NULL window")
+              (schematic_newtext_dialog_response_apply *dialog *window)))))
 
   (case response-sym
     ((apply) (apply-changes!))
