@@ -2260,3 +2260,32 @@ schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
 
   w_current->scrollpan_steps = val;
 }
+
+
+/*! \brief Get schematic window's field 'text_size'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'text_size'.
+ */
+int
+schematic_window_get_text_size (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, DEFAULT_TEXT_SIZE);
+
+  return w_current->text_size;
+}
+
+
+/*! \brief Set schematic window's field 'text_size'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'text_size'.
+ */
+void
+schematic_window_set_text_size (SchematicWindow *w_current,
+                                int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->text_size = val;
+}

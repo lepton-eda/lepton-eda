@@ -584,4 +584,10 @@ schematic_window_get_scrollpan_steps (SchematicWindow *w_current);
 void
 schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
                                       int val);
+int
+schematic_window_get_text_size (SchematicWindow *w_current);
+
+void
+schematic_window_set_text_size (SchematicWindow *w_current,
+                                int val);
 G_END_DECLS
