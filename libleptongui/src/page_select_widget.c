@@ -681,7 +681,8 @@ add_page (GtkTreeModel *model,
         p_iter = g_list_next( p_iter ) ) {
 
     p_current = (LeptonPage *)p_iter->data;
-    if (p_current->up == page->pid) {
+    if (p_current->up == lepton_page_get_pid (page))
+    {
       add_page (model, &iter, pages, p_current, pagesel);
     }
   }
