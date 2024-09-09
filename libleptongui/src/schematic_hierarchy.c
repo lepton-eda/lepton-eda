@@ -341,6 +341,7 @@ s_hierarchy_print_page (LeptonPage *p_current,
                         void * data)
 {
   printf("pagefilename: %s pageid: %d\n",
-         lepton_page_get_filename (p_current), p_current->pid);
+         lepton_page_get_filename (p_current),
+         lepton_page_get_pid (p_current));
   return 0;
 }
