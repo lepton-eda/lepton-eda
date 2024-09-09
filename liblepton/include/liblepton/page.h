@@ -27,38 +27,49 @@ struct st_page
   /* The toplevel structure the page belongs to.  It contains the
    * lists of all open pages and configuration settings. */
   LeptonToplevel* toplevel;
+  /* The internal unique page ID. */
   int pid;
-
+  /* The list of page objects. */
   GList *_object_list;
+  /* The list of selected objects. */
   LeptonSelection *selection_list; /* selection mechanism */
+  /* The list of the objects to be placed on the current page in
+   * GUI. */
   GList *place_list;
-  LeptonObject *object_lastplace; /* the last found item */
-  GList *connectible_list;  /* connectible page objects */
-
-  /* The page filename. You must access this field only via the
-   * accessor functions lepton_page_set_filename() and
-   * lepton_page_get_filename() */
+  /* The object found last by the find functions. */
+  LeptonObject *object_lastplace;
+  /* The list of connectible page objects. */
+  GList *connectible_list;
+  /* The page filename. */
   char *_filename;
+  /* The flag that means the page has been changed and not yet
+   * saved. */
+  int CHANGED;
 
-  int CHANGED;                  /* changed flag */
-
-  /* Undo/Redo Stacks and pointers */
-  /* needs to go into page mechanism actually */
+  /* Undo/Redo Stacks and pointers. */
+  /* The bottom of the Undo stack. */
   LeptonUndo *undo_bottom;
+  /* The pointer to the current Undo item in the stack. */
   LeptonUndo *undo_current;
-  LeptonUndo *undo_tos;       /* Top Of Stack */
+  /* The top of the Undo stack (Top Of Stack). */
+  LeptonUndo *undo_tos;
 
-  /* up and down the hierarchy */
-  /* this holds the pid of the parent page */
+  /* Hierarchy. */
+  /* The pid of the parent page in the hierarchy. */
   int up;
-  /* int down; not needed */
-
-  /* used to control which pages are viewable when moving around */
+  /* The control value that defines which pages are viewable when
+   * moving around in the hierarchy. */
   int page_control;
 
-  /* backup variables */
+  /* Backup variables. */
+  /* The flag that indicates that the page has been opened and
+   * changed but not ever saved yet so the initial file has to
+   * backed up. */
   char saved_since_first_loaded;
+  /* The number of operations since the last backup to determine
+   * when automatic save should be carried out. */
   gint ops_since_last_backup;
+  /* If the page has to be saved automatically. */
   gchar do_autosave_backup;
 
   /* list of 'symbol version changed' info messages, e.g.:
@@ -66,7 +77,8 @@ struct st_page
   */
   GList* major_changed_refdes;
 
-  GList *weak_refs; /* Weak references */
+  /* The list of weak references of the page. */
+  GList *weak_refs;
 };
 
 int
