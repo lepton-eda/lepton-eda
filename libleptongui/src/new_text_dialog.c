@@ -245,12 +245,13 @@ select_all_text_in_textview (GtkTextView *textview)
  *  This function applies the text from the text entry dialog.
  *
  *  \param [in] dialog The new text dialog
+ *  \param [in] w_current The pointer to the parent window of the
+ *              dialog.
  */
 void
-schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
+schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
+                                         SchematicWindow *w_current)
 {
-  SchematicWindow *w_current =
-    schematic_newtext_dialog_get_window (dialog);
   g_return_if_fail (w_current != NULL);
 
   int size = schematic_window_get_text_size (w_current);

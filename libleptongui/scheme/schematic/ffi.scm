@@ -450,6 +450,7 @@
             schematic_text_properties_widget_new
             text_edit_dialog
 
+            schematic_newtext_dialog_get_window
             schematic_newtext_dialog_new
             schematic_newtext_dialog_response_apply
             schematic_newtext_dialog_run
@@ -1064,8 +1065,9 @@
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
+(define-lff schematic_newtext_dialog_get_window '* '(*))
 (define-lff schematic_newtext_dialog_new '* '(*))
-(define-lff schematic_newtext_dialog_response_apply void '(*))
+(define-lff schematic_newtext_dialog_response_apply void '(* *))
 (define-lff schematic_newtext_dialog_run void '(*))
 
 ;;; x_print.c
