@@ -137,9 +137,13 @@ i_vars_set (SchematicWindow* w_current)
   }
 
 
-  cfg_read_int_with_check ("schematic.gui", "text-size",
-                           default_text_size, &w_current->text_size,
+  int text_size = 0;
+  cfg_read_int_with_check ("schematic.gui",
+                           "text-size",
+                           default_text_size,
+                           &text_size,
                            &cfg_check_int_text_size);
+  schematic_window_set_text_size (w_current, text_size);
 
 
   /* text-caps-style:
