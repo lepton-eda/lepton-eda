@@ -29,7 +29,7 @@ struct st_page
 {
   /* The toplevel structure the page belongs to.  It contains the
    * lists of all open pages and configuration settings. */
-  LeptonToplevel* toplevel;
+  LeptonToplevel* _toplevel;
   /* The internal unique page ID. */
   int pid;
   /* The list of page objects. */

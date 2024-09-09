@@ -332,7 +332,7 @@ lepton_page_get_toplevel (LeptonPage *page)
 {
   g_return_val_if_fail (page != NULL, NULL);
 
-  return page->toplevel;
+  return page->_toplevel;
 }
 
 /*! \brief Set page's \a toplevel field value.
@@ -346,7 +346,7 @@ lepton_page_set_toplevel (LeptonPage *page,
 {
   g_return_if_fail (page != NULL);
 
-  page->toplevel = toplevel;
+  page->_toplevel = toplevel;
 }
 
 
