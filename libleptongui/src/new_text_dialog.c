@@ -70,6 +70,34 @@ schematic_newtext_dialog_set_aligncb (SchematicNewText *dialog,
 }
 
 
+/*! \brief Get the field 'colorcb' of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \return The value of the field 'colorcb'.
+ */
+GtkWidget*
+schematic_newtext_dialog_get_colorcb (SchematicNewText *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, NULL);
+
+  return dialog->colorcb;
+}
+
+/*! \brief Set the 'colorcb' field of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \param [in] widget The new value of the field 'colorcb'.
+ */
+void
+schematic_newtext_dialog_set_colorcb (SchematicNewText *dialog,
+                                      GtkWidget *widget)
+{
+  g_return_if_fail (dialog != NULL);
+
+  dialog->colorcb = widget;
+}
+
+
 static int
 text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
 {

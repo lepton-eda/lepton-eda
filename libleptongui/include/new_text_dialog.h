@@ -69,6 +69,12 @@ schematic_newtext_dialog_get_aligncb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_aligncb (SchematicNewText *dialog,
                                       GtkWidget *aligncb);
+GtkWidget*
+schematic_newtext_dialog_get_colorcb (SchematicNewText *dialog);
+
+void
+schematic_newtext_dialog_set_colorcb (SchematicNewText *dialog,
+                                      GtkWidget *colorcb);
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */
