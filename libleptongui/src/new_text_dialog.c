@@ -98,6 +98,34 @@ schematic_newtext_dialog_set_colorcb (SchematicNewText *dialog,
 }
 
 
+/*! \brief Get the field 'rotatecb' of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \return The value of the field 'rotatecb'.
+ */
+GtkWidget*
+schematic_newtext_dialog_get_rotatecb (SchematicNewText *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, NULL);
+
+  return dialog->rotatecb;
+}
+
+/*! \brief Set the 'rotatecb' field of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \param [in] widget The new value of the field 'rotatecb'.
+ */
+void
+schematic_newtext_dialog_set_rotatecb (SchematicNewText *dialog,
+                                       GtkWidget *widget)
+{
+  g_return_if_fail (dialog != NULL);
+
+  dialog->rotatecb = widget;
+}
+
+
 static int
 text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
 {

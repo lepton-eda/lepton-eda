@@ -75,6 +75,12 @@ schematic_newtext_dialog_get_colorcb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_colorcb (SchematicNewText *dialog,
                                       GtkWidget *colorcb);
+GtkWidget*
+schematic_newtext_dialog_get_rotatecb (SchematicNewText *dialog);
+
+void
+schematic_newtext_dialog_set_rotatecb (SchematicNewText *dialog,
+                                       GtkWidget *rotatecb);
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */
