@@ -96,7 +96,7 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
                 NULL);
   g_return_if_fail (w_current != NULL);
 
-  int size = w_current->text_size;
+  int size = schematic_window_get_text_size (w_current);
 
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
@@ -450,7 +450,7 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
                                            schematic_window_get_text_size_list_store (w_current));
 
     schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
-                                           w_current->text_size);
+                                           schematic_window_get_text_size (w_current));
 
     gtk_widget_show_all (dialog);
 
