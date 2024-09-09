@@ -63,6 +63,9 @@ schematic_newtext_dialog_run (GtkWidget *widget);
 GtkWidget*
 schematic_newtext_dialog_new (SchematicWindow *w_current);
 
+SchematicWindow*
+schematic_newtext_dialog_get_window (SchematicNewText *dialog);
+
 GtkWidget*
 schematic_newtext_dialog_get_aligncb (SchematicNewText *dialog);
 

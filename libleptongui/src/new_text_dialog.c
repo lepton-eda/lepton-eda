@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,27 @@
 G_DEFINE_TYPE (SchematicNewText,
                schematic_newtext,
                SCHEMATIC_TYPE_DIALOG);
+
+
+/*! \brief Get the parent window instance of a Newtext dialog.
+ *  \par Function description
+ *  Gets the parent #SchematicWindow instance of a
+ *  #SchematicNewText dialog.
+ *
+ *  \param [in] dialog The #SchematicNewText dialog instance.
+ *  \return The parent schematic window of the dialog.
+ */
+SchematicWindow*
+schematic_newtext_dialog_get_window (SchematicNewText *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, NULL);
+
+  SchematicWindow *w_current = NULL;
+  g_object_get (SCHEMATIC_DIALOG (dialog),
+                "schematic-window", &w_current,
+                NULL);
+  return w_current;
+}
 
 
 /*! \brief Get the field 'aligncb' of #SchematicNewText instance.
