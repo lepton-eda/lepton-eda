@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2024 Lepton EDA Contributors
+;;; Copyright (C) 2022-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -172,7 +172,9 @@
     (schematic_window_set_newtext_dialog *window %null-pointer))
 
   (define (apply-changes!)
-    (schematic_newtext_dialog_response_apply *dialog))
+    (if (null-pointer? *dialog)
+        (error "NULL dialog")
+        (schematic_newtext_dialog_response_apply *dialog)))
 
   (case response-sym
     ((apply) (apply-changes!))

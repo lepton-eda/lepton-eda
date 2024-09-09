@@ -249,8 +249,6 @@ select_all_text_in_textview (GtkTextView *textview)
 void
 schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
 {
-  g_return_if_fail (dialog != NULL);
-
   SchematicWindow *w_current =
     schematic_newtext_dialog_get_window (dialog);
   g_return_if_fail (w_current != NULL);
