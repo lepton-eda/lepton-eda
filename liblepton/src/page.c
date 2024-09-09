@@ -447,7 +447,7 @@ lepton_page_new (LeptonToplevel *toplevel,
   /* Now create a blank page */
   page = (LeptonPage*)g_new0 (LeptonPage, 1);
 
-  page->pid = global_pid++;
+  lepton_page_set_pid (page, global_pid++);
 
   lepton_page_set_changed (page, 0);
 
