@@ -254,7 +254,8 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
   if (string[0] == '\0' )
     return;
 
-  switch(dialog->parent.w_current->text_caps) {
+  switch (w_current->text_caps)
+  {
     case(LOWER):
       tmp = g_utf8_strdown (string, -1);
       break;
@@ -293,7 +294,7 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
   select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
   gtk_widget_grab_focus(dialog->text_view);
 
-  o_text_prepare_place (dialog->parent.w_current,
+  o_text_prepare_place (w_current,
                         tmp == NULL ? string : tmp,
                         color,
                         align,
