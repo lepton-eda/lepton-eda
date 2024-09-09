@@ -81,6 +81,12 @@ schematic_newtext_dialog_get_rotatecb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_rotatecb (SchematicNewText *dialog,
                                        GtkWidget *rotatecb);
+GtkWidget*
+schematic_newtext_dialog_get_textsizecb (SchematicNewText *dialog);
+
+void
+schematic_newtext_dialog_set_textsizecb (SchematicNewText *dialog,
+                                         GtkWidget *textsizecb);
 G_END_DECLS
 
 #endif /* NEW_TEXT_DIALOG_H */

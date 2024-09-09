@@ -126,6 +126,34 @@ schematic_newtext_dialog_set_rotatecb (SchematicNewText *dialog,
 }
 
 
+/*! \brief Get the field 'textsizecb' of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \return The value of the field 'textsizecb'.
+ */
+GtkWidget*
+schematic_newtext_dialog_get_textsizecb (SchematicNewText *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, NULL);
+
+  return dialog->textsizecb;
+}
+
+/*! \brief Set the 'textsizecb' field of #SchematicNewText instance.
+ *
+ *  \param [in] dialog The #SchematicNewText instance.
+ *  \param [in] widget The new value of the field 'textsizecb'.
+ */
+void
+schematic_newtext_dialog_set_textsizecb (SchematicNewText *dialog,
+                                         GtkWidget *widget)
+{
+  g_return_if_fail (dialog != NULL);
+
+  dialog->textsizecb = widget;
+}
+
+
 static int
 text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
 {
