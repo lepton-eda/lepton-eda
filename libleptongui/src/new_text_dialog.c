@@ -252,8 +252,6 @@ void
 schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
                                          SchematicWindow *w_current)
 {
-  g_return_if_fail (w_current != NULL);
-
   int size = schematic_window_get_text_size (w_current);
 
   int align = LOWER_LEFT;
