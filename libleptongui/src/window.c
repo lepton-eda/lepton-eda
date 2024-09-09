@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2506,6 +2506,41 @@ schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
   g_return_if_fail (w_current != NULL);
 
   w_current->scrollpan_steps = val;
+}
+
+
+/*! \brief Get schematic window's field \c text_caps.
+ *  \par Function Description
+ *  Gets the value of the field \c text_caps of a #SchematicWindow
+ *  instance.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'text_caps'.
+ */
+int
+schematic_window_get_text_caps (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, BOTH);
+
+  return w_current->text_caps;
+}
+
+
+/*! \brief Set schematic window's field \c text_caps.
+ *  \par Function Description
+ *  Sets the field \c text_caps of a #SchematicWindow instance to
+ *  a new value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_window_set_text_caps (SchematicWindow *w_current,
+                                int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->text_caps = val;
 }
 
 
