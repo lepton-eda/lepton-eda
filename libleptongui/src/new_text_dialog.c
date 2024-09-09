@@ -251,10 +251,8 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
-  SchematicWindow *w_current = NULL;
-  g_object_get (SCHEMATIC_DIALOG (dialog),
-                "schematic-window", &w_current,
-                NULL);
+  SchematicWindow *w_current =
+    schematic_newtext_dialog_get_window (dialog);
   g_return_if_fail (w_current != NULL);
 
   int size = schematic_window_get_text_size (w_current);
