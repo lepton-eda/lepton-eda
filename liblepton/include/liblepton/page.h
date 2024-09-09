@@ -22,6 +22,9 @@
 
 G_BEGIN_DECLS
 
+/* The fields whose names have the prefix '_' are private ones.
+ * Please don't use them directly, use the provided accessors
+ * instead. */
 struct st_page
 {
   /* The toplevel structure the page belongs to.  It contains the
