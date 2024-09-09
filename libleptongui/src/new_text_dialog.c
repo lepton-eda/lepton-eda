@@ -272,22 +272,22 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
       break;
   }
 
-  value = x_colorcb_get_index (dialog->colorcb);
+  value = x_colorcb_get_index (schematic_newtext_dialog_get_colorcb (dialog));
   if (value >= 0) {
     color = value;
   }
 
-  value = schematic_alignment_combo_get_align (dialog->aligncb);
+  value = schematic_alignment_combo_get_align (schematic_newtext_dialog_get_aligncb (dialog));
   if (value >= 0) {
     align = value;
   }
 
-  value = schematic_integer_combo_box_get_value (dialog->textsizecb);
+  value = schematic_integer_combo_box_get_value (schematic_newtext_dialog_get_textsizecb (dialog));
   if (value > 0) {
     size = value;
   }
 
-  value = schematic_rotation_combo_get_angle (dialog->rotatecb);
+  value = schematic_rotation_combo_get_angle (schematic_newtext_dialog_get_rotatecb (dialog));
   if (value >= 0) {
     rotate = value;
   }
