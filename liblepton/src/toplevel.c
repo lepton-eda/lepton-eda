@@ -304,7 +304,8 @@ lepton_toplevel_search_page_by_id (LeptonPageList *list,
         iter != NULL;
         iter = g_list_next (iter) ) {
     LeptonPage *page = (LeptonPage *)iter->data;
-    if (page->pid == pid) {
+    if (lepton_page_get_pid (page) == pid)
+    {
       return page;
     }
   }
