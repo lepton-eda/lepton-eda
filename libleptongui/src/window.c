@@ -623,6 +623,31 @@ schematic_window_get_text_size_list_store (SchematicWindow *w_current)
 }
 
 
+/*! \brief Transform \c text_caps value into a string
+ *  \par Function Description
+ *  Transforms the value of the field \c text_caps of a
+ *  #SchematicWindow instance into a string.  This is mainly
+ *  intended to be used for value conversion in Scheme FFI
+ *  functions.
+ *
+ *  \param [in] val The value to convert.
+ *  \return The string representation of the given value.
+ */
+const char*
+schematic_window_text_caps_to_string (int val)
+{
+  const char *result = "both";
+  switch (val)
+  {
+  case LOWER: result = "lower"; break;
+  case UPPER: result = "upper"; break;
+  case BOTH: result = "both"; break;
+  default: break;
+  }
+
+  return result;
+}
+
 
 /*! \brief Get the liblepton toplevel for this schematic window
  *
