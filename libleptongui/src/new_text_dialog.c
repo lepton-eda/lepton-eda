@@ -247,7 +247,9 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
   GtkTextIter start, end;
   int value;
 
-  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(dialog->text_view));
+  GtkWidget *text_view = schematic_newtext_dialog_get_text_view (dialog);
+
+  textbuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
   gtk_text_buffer_get_bounds (textbuffer, &start, &end);
   string =  gtk_text_iter_get_text (&start, &end);
 
@@ -291,8 +293,8 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
   }
 
   /* select the text, so you can continue immediatly writing the next text */
-  select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
-  gtk_widget_grab_focus(dialog->text_view);
+  select_all_text_in_textview (GTK_TEXT_VIEW (text_view));
+  gtk_widget_grab_focus (text_view);
 
   o_text_prepare_place (w_current,
                         tmp == NULL ? string : tmp,
