@@ -252,8 +252,7 @@ void
 schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
                                          SchematicWindow *w_current)
 {
-  int size = schematic_window_get_text_size (w_current);
-
+  int size = 0;
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
   int rotate = 0;
@@ -301,6 +300,10 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
   value = schematic_integer_combo_box_get_value (schematic_newtext_dialog_get_textsizecb (dialog));
   if (value > 0) {
     size = value;
+  }
+  else
+  {
+    size = schematic_window_get_text_size (w_current);
   }
 
   value = schematic_rotation_combo_get_angle (schematic_newtext_dialog_get_rotatecb (dialog));
