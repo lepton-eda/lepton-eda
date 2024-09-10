@@ -31,6 +31,7 @@
 
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog new-text)
   #:use-module (schematic ffi)
@@ -131,7 +132,7 @@
 (define (callback-toolbar-edit-select *widget *window)
   (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
     (unless (true? (o_invalidate_rubber *window))
-      (i_callback_cancel *widget *window))
+      (callback-cancel *window))
     (callback-edit-select *window)))
 
 
