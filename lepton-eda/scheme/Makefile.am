@@ -146,6 +146,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/buffer.scm \
 	schematic/builtins.scm \
 	schematic/callback.scm \
+	schematic/callback/cancel.scm \
 	schematic/canvas.scm \
 	schematic/canvas/foreign.scm \
 	schematic/dialog.scm \
