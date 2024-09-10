@@ -44,6 +44,7 @@
   #:use-module (schematic action rotate)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic callback)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
@@ -100,7 +101,7 @@
     ;; If we're closing whilst inside an action, re-wind the page
     ;; contents back to their state before we started.
     (when (in-action? window)
-      (i_callback_cancel %null-pointer *window))
+      (callback-cancel *window))
 
     ;; Last chance to save possible unsaved pages.
     (when (true? (x_dialog_close_window *window))
@@ -592,7 +593,7 @@ zooming."
                                  (eq? current-action-mode 'copy-mode)
                                  (eq? current-action-mode 'multiple-copy-mode)
                                  (eq? current-action-mode 'paste-mode))
-                       (i_callback_cancel %null-pointer *window))
+                       (callback-cancel *window))
 
                      (let ((middle-button (schematic_window_get_middle_button *window)))
                        (cond
@@ -671,7 +672,7 @@ zooming."
                            ('path-mode (o_path_invalidate_rubber *window))
                            ('picture-mode (o_picture_invalidate_rubber *window))
                            ('pin-mode (o_pin_invalidate_rubber *window))
-                           (_ (i_callback_cancel %null-pointer *window)))))
+                           (_ (callback-cancel *window)))))
                  ;; Finish event processing.
                  FALSE)
 
@@ -949,7 +950,7 @@ for *PAGE page will be created and set active."
   ;; If we're closing whilst inside an action, re-wind the page
   ;; contents back to their state before we started.
   (when (in-action? (pointer->window *window))
-    (i_callback_cancel %null-pointer *window))
+    (callback-cancel *window))
 
   (x_window_close_page *window *page))
 
