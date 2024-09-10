@@ -31,6 +31,7 @@
 
   #:use-module (schematic action delete)
   #:use-module (schematic action-mode)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic ffi)
   #:use-module (schematic hook)
   #:use-module (schematic window foreign)
@@ -157,7 +158,7 @@ place list at the point ANCHOR."
   ;; Cancel current place or draw action if it is being
   ;; done.
   (when (in-action? window)
-    (i_callback_cancel %null-pointer *window))
+    (callback-cancel *window))
 
   (when (= buffer-n %clipboard-buffer-id)
     (clipboard->buffer window buffer-n))
