@@ -45,6 +45,7 @@
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic callback)
   #:use-module (schematic canvas)
   #:use-module (schematic ffi)
@@ -93,7 +94,7 @@
 ;;;; Special actions
 
 (define-action-public (&cancel #:label (G_ "Cancel"))
-  (run-callback i_callback_cancel "&cancel"))
+  (callback-cancel (*current-window)))
 
 ;; -------------------------------------------------------------------
 ;;;; File menu actions
