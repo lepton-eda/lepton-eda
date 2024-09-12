@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -24,10 +24,15 @@
 #include <glib.h>  /* Include needed to make GList work. */
 
 /* Wrappers around a new list mechanism */
+
+/* The list of selected objects of a page. */
 typedef struct _LeptonList LeptonSelection;
+/* The list of currently open pages. */
 typedef struct _LeptonList LeptonPageList;
 
 /* lepton-schematic structures */
+
+/* The connection data. */
 typedef struct st_conn LeptonConn;
 
 /* Managed text buffers */
