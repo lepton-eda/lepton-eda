@@ -301,6 +301,15 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   contains the functions that allow to select locked objects
   providing the info on the selection in the log window.
 
+- The function `pointer-position()` has been renamed to
+  `mouse-pointer-position()` and is now exported in a separate
+  module, `(schematic mouse-pointer)`.  The function has been
+  renamed and the new module has been factored out in order to
+  avoid ambiguities when working with Guile's functions related to
+  FFI pointers and having the `pointer-` prefixes in their names.
+  While deprecated, the previous function name is still available
+  for users for backwards compatibility.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
