@@ -2373,6 +2373,7 @@ operations.
 
 @menu
 * Windows and views::
+* Mouse pointer::
 * Key mapping::
 * Selections::
 * Hooks::
@@ -2394,10 +2395,9 @@ Returns the @code{page} currently being displayed for editing.
 Sets the current @code{page} to @var{page}.
 @end defun
 
-@defun mouse-pointer-position
-Returns the current mouse pointer position in world coordinates in the
-form @samp{(x . y)}.  If the pointer is outside the display area,
-returns @samp{#f}.
+@defun pointer-position
+The function is deprecated.  Instead, use the function
+@code{mouse-pointer-position} described below.
 @end defun
 
 @defun snap-point point
@@ -2405,6 +2405,22 @@ Snaps the given @var{point} to the current snap grid, i.e. returns the
 closest grid location to @var{point}.  Expects a point in the form
 @samp{(x . y)}, and returns a point in the same format.
 @end defun
+
+
+@node Mouse pointer
+@section Mouse pointer
+To use the functions described in this section, you will need to load
+the @code{(schematic mouse-pointer)} module.
+
+@defun mouse-pointer-position
+Returns the current mouse pointer position in world coordinates in the
+form @samp{(x . y)}.  If the pointer is outside the display area,
+returns @samp{#f}.  Please note that unlike its deprecated
+predecessor, @code{pointer-position}, which is still available in the
+module @code{(schematic window)}, the function is not exported in that
+module.
+@end defun
+
 
 @node Key mapping
 @section Key mapping
