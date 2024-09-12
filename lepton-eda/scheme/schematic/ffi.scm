@@ -1077,7 +1077,6 @@
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_dialog_save_error void '(* *))
-(define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_notebooks void '(* * * *))
@@ -1101,6 +1100,7 @@
 (define-lff schematic_toolbar_insert_separator void (list '* int))
 (define-lff schematic_toolbar_radio_button_get_group '* '(*))
 (define-lff schematic_toolbar_radio_button_set_group void '(* *))
+(define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 
 ;;; x_tabs.c
 (define-lff x_tabs_enabled int '())
