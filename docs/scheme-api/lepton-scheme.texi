@@ -2394,7 +2394,7 @@ Returns the @code{page} currently being displayed for editing.
 Sets the current @code{page} to @var{page}.
 @end defun
 
-@defun pointer-position
+@defun mouse-pointer-position
 Returns the current mouse pointer position in world coordinates in the
 form @samp{(x . y)}.  If the pointer is outside the display area,
 returns @samp{#f}.

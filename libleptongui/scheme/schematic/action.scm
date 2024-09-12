@@ -98,7 +98,7 @@
 ;; mouse pointer position.
 (define* (eval-action-at-point!
           action
-          #:optional (point (pointer-position)))
+          #:optional (point (mouse-pointer-position)))
 
   (with-fluids ((current-action-position point))
                (eval-action! action)))

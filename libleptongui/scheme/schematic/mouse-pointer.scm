@@ -22,21 +22,23 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton log)
 
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
-  #:export (pointer-position))
+  #:export (mouse-pointer-position
+            pointer-position))
 
 
-(define (pointer-position)
+(define (mouse-pointer-position)
   "Returns the current mouse pointer position, expressed in world
-coordinates in the form (X . Y).  If the pointer is outside the
-schematic drawing area, returns #f."
+coordinates in the form (X . Y).  If the mouse pointer is outside
+the schematic drawing area, returns #f."
   (define *window
     (or (and=> (current-window) window->pointer)
-        (error "~S: Current window is unavailable." 'pointer-position)))
+        (error "~S: Current window is unavailable." 'mouse-pointer-position)))
 
   (define x (make-bytevector (sizeof int)))
   (define y (make-bytevector (sizeof int)))
@@ -49,3 +51,11 @@ schematic drawing area, returns #f."
     (and result
          (cons (bytevector-sint-ref x 0 (native-endianness) (sizeof int))
                (bytevector-sint-ref y 0 (native-endianness) (sizeof int))))))
+
+
+(define (pointer-position)
+  "The function is deprecated and is left for backward compatibility
+only.  Use the mouse-pointer() function instead."
+  (log! 'warning "The function name \"pointer-position()\" is deprecated.")
+  (log! 'warning "Use \"mouse-pointer-position()\" instead.")
+  (mouse-pointer-position))
