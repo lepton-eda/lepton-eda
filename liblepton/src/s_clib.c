@@ -1250,7 +1250,7 @@ s_clib_search (const gchar *pattern)
 
   if (pattern == NULL) return NULL;
 
-  key = g_strdup_printf("s%s", pattern);
+  key = g_strdup (pattern);
 
   /* Check to see if the query is already in the cache */
   result = (GList *) g_hash_table_lookup (clib_search_cache, key);
