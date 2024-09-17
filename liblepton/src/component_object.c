@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1438,7 +1438,7 @@ lepton_component_check_symversion (LeptonPage* page,
 
   /* No need to check symversion if symbol is not found in libraries:
   */
-  GList* symlist = s_clib_search (basename, CLIB_EXACT);
+  GList* symlist = s_clib_search (basename);
   if (symlist == NULL)
   {
     return;
