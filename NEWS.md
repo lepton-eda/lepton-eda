@@ -297,6 +297,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Most of the functions related to the *zoom box* feature have
   been rewritten in Scheme.
 
+- A new module, `(schematic sellock)`, has been added.  It
+  contains the functions that allow to select locked objects
+  providing the info on the selection in the log window.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
@@ -401,6 +405,18 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   several C callbacks and other functions dealing with signals
   have been rewritten in Scheme, and a new signal,
   "update-preview", has been added.
+
+- A new action, `&edit-select-locked()`, has been added to allow
+  for selecting locking objects and cycling the component
+  selection on the current page.  Previously, no locked object
+  could be selected by clicking on it.  The user had to use *box
+  selection* to select a locked object.  Now, for locked
+  *components* there is another method.  The user can choose the
+  action via the menu item *Edit* → *Select Locked* or using the
+  keyboard shortcut <kbd>E</kbd>-<kbd>K</kbd>.  By repeating this
+  action, the locked components on the current page can be
+  selected one by one.  The information about selected components
+  is shown in the log and, briefly, in the status bar.
 
 ### Changes in `lepton-archive`:
 
