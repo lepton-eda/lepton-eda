@@ -38,6 +38,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/hook.scm \
 	schematic/keymap.scm \
 	schematic/menu.scm \
+	schematic/mouse-pointer.scm \
 	schematic/netlist.scm \
 	schematic/pcb.scm \
 	schematic/precompile.scm \

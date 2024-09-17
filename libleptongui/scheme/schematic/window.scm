@@ -50,6 +50,7 @@
   #:use-module (schematic gui keymap)
   #:use-module (schematic gui stroke)
   #:use-module (schematic menu)
+  #:use-module (schematic mouse-pointer)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
@@ -59,13 +60,13 @@
 
   #:re-export (%lepton-window
                current-window
-               with-window)
+               with-window
+               pointer-position)
 
   #:export (close-window!
             make-schematic-window
             active-page
             set-active-page!
-            pointer-position
             snap-point
             window-canvas
             window-close-page!
@@ -1302,27 +1303,6 @@ window to PAGE.  Returns PAGE."
   (define *window (check-window window 1))
 
   (pointer->canvas (schematic_window_get_current_canvas *window)))
-
-
-(define (pointer-position)
-  "Returns the current mouse pointer position, expressed in world
-coordinates in the form (X . Y).  If the pointer is outside the
-schematic drawing area, returns #f."
-  (define *window
-    (or (and=> (current-window) window->pointer)
-        (error "~S: Current window is unavailable." 'pointer-position)))
-
-  (define x (make-bytevector (sizeof int)))
-  (define y (make-bytevector (sizeof int)))
-
-  (let ((result (true? (x_event_get_pointer_position
-                        *window
-                        FALSE
-                        (bytevector->pointer x)
-                        (bytevector->pointer y)))))
-    (and result
-         (cons (bytevector-sint-ref x 0 (native-endianness) (sizeof int))
-               (bytevector-sint-ref y 0 (native-endianness) (sizeof int))))))
 
 
 (define (snap-point point)
