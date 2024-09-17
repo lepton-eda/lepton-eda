@@ -1247,13 +1247,10 @@ s_clib_search (const gchar *pattern)
   CLibSource *source;
   CLibSymbol *symbol;
   gchar *key;
-  gchar keytype;
 
   if (pattern == NULL) return NULL;
 
-  /* Use different cache keys depending on what sort of search is being done */
-  keytype = 's';
-  key = g_strdup_printf("%c%s", keytype, pattern);
+  key = g_strdup_printf("s%s", pattern);
 
   /* Check to see if the query is already in the cache */
   result = (GList *) g_hash_table_lookup (clib_search_cache, key);
