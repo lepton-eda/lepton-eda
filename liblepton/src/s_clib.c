@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1236,35 +1236,23 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
  *  call to s_clib_free() or s_clib_refresh().
  *
  *  \param pattern The pattern to match against.
- *  \param mode    The search mode to use.
  *  \return A \b GList of matching #CLibSymbol structures.
  */
-GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
+GList*
+s_clib_search (const gchar *pattern)
 {
   GList *sourcelist;
   GList *symlist;
   GList *result = NULL;
   CLibSource *source;
   CLibSymbol *symbol;
-  GPatternSpec *globpattern = NULL;
   gchar *key;
   gchar keytype;
 
   if (pattern == NULL) return NULL;
 
   /* Use different cache keys depending on what sort of search is being done */
-  switch (mode)
-    {
-    case CLIB_GLOB:
-      keytype = 'g';
-      break;
-    case CLIB_EXACT:
-      keytype = 's';
-      break;
-    default:
-      g_critical ("s_clib_search: Bad search mode %1$i\n", mode);
-      return NULL;
-    }
+  keytype = 's';
   key = g_strdup_printf("%c%s", keytype, pattern);
 
   /* Check to see if the query is already in the cache */
@@ -1272,10 +1260,6 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
   if (result != NULL) {
     g_free (key);
     return g_list_copy (result);
-  }
-
-  if (mode == CLIB_GLOB) {
-    globpattern = g_pattern_spec_new(pattern);
   }
 
   for (sourcelist = clib_sources;
@@ -1290,28 +1274,14 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
 
       symbol = (CLibSymbol *) symlist->data;
 
-      switch (mode)
-        {
-        case CLIB_EXACT:
-          if (strcmp (pattern, symbol->name) == 0) {
-            result = g_list_prepend (result, symbol);
-          }
-          break;
-        case CLIB_GLOB:
-          if (g_pattern_spec_match_string (globpattern, symbol->name))
-          {
-            result = g_list_prepend (result, symbol);
-          }
-          break;
-        }
+      if (strcmp (pattern, symbol->name) == 0)
+      {
+        result = g_list_prepend (result, symbol);
+      }
     }
   }
 
   result = g_list_reverse (result);
-
-  if (globpattern != NULL) {
-    g_pattern_spec_free (globpattern);
-  }
 
   g_hash_table_insert (clib_search_cache, key, g_list_copy (result));
   /* __don't__ free key here, it's stored by the hash table! */
@@ -1371,7 +1341,7 @@ const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name)
   GList *symlist = NULL;
   const CLibSymbol *retval;
 
-  symlist = s_clib_search (name, CLIB_EXACT);
+  symlist = s_clib_search (name);
 
   if (symlist == NULL) {
     g_message (_("Component [%1$s] was not found in the component library."),
@@ -1460,7 +1430,7 @@ s_toplevel_get_symbols (const LeptonToplevel *toplevel)
        * component with the given name will be the one we need.
        * N.b. we don't use s_clib_get_symbol_by_name() because it's
        * spammeh. */
-      symlist = s_clib_search (basename, CLIB_EXACT);
+      symlist = s_clib_search (basename);
       if (symlist == NULL) continue;
       sym = (CLibSymbol *) symlist->data;
       g_list_free (symlist);

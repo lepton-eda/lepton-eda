@@ -1002,7 +1002,7 @@ o_net_add_busrippers (SchematicWindow *w_current,
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =
-        s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
+        s_clib_search (w_current->bus_ripper_symname);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }

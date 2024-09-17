@@ -42,9 +42,6 @@ typedef struct _TextBuffer TextBuffer;
 typedef struct _CLibSource CLibSource;
 typedef struct _CLibSymbol CLibSymbol;
 
-/* Component library search modes */
-typedef enum { CLIB_EXACT=0, CLIB_GLOB } CLibSearchMode;
-
 /* f_open() behaviour flags */
 typedef enum {
           /* Execute RC files found in the target directory. */
