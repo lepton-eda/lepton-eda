@@ -367,13 +367,13 @@ o_attrib_add_attrib (SchematicWindow *w_current,
       /* Otherwise, try first to set the coordinate to the
        * bottom-left corner of the visible objects. */
       found =
-        world_get_object_glist_bounds (lepton_page_objects (active_page),
-                                       /* Don't include hidden objects. */
-                                       FALSE,
-                                       &left,
-                                       &top,
-                                       &right,
-                                       &bottom);
+        lepton_object_list_bounds (lepton_page_objects (active_page),
+                                   /* Don't include hidden objects. */
+                                   FALSE,
+                                   &left,
+                                   &top,
+                                   &right,
+                                   &bottom);
       if (found)
       {
         world_x = left;

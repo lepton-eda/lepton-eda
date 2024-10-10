@@ -568,12 +568,13 @@ o_invalidate_glist (SchematicWindow *w_current,
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
 
-  if (world_get_object_glist_bounds (list,
-                                     show_hidden_text,
-                                     &left,
-                                     &top,
-                                     &right,
-                                     &bottom)) {
+  if (lepton_object_list_bounds (list,
+                                 show_hidden_text,
+                                 &left,
+                                 &top,
+                                 &right,
+                                 &bottom))
+  {
     schematic_canvas_invalidate_world_rect (page_view,
                                             left,
                                             top,

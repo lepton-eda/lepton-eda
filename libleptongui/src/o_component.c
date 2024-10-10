@@ -178,10 +178,12 @@ o_component_translate_all (SchematicWindow *w_current,
   schematic_canvas_zoom_extents (view, NULL);
   schematic_canvas_invalidate_all (view);
 
-  world_get_object_glist_bounds (lepton_page_objects (active_page),
-                                 show_hidden_text,
-                                 &w_rleft,  &w_rtop,
-                                 &w_rright, &w_rbottom);
+  lepton_object_list_bounds (lepton_page_objects (active_page),
+                             show_hidden_text,
+                             &w_rleft,
+                             &w_rtop,
+                             &w_rright,
+                             &w_rbottom);
 
   /*! \todo do we want snap grid here? */
   x = snap_grid (w_current, w_rleft);

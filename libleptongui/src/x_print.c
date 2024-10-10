@@ -83,10 +83,13 @@ x_print_default_page_setup (LeptonPage *page)
   } else if (orientation == NULL
              || g_strcmp0 (orientation, "auto") == 0) {
     /* Automatically choose the orientation that fits best */
-    status = world_get_object_glist_bounds (lepton_page_objects (page),
-                                            /* Don't include hidden objects */
-                                            FALSE,
-                                            &wx_min, &wy_min, &wx_max, &wy_max);
+    status = lepton_object_list_bounds (lepton_page_objects (page),
+                                        /* Don't include hidden objects */
+                                        FALSE,
+                                        &wx_min,
+                                        &wy_min,
+                                        &wx_max,
+                                        &wy_max);
     if (!status || (wx_max - wx_min) > (wy_max - wy_min)) {
       /* Default to landscape */
       gtk_page_setup_set_orientation (setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
@@ -136,13 +139,13 @@ x_print_draw_page (LeptonPage *page,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (lepton_page_objects (page),
-                                          /* Don't include hidden objects. */
-                                          FALSE,
-                                          &wx_min,
-                                          &wy_min,
-                                          &wx_max,
-                                          &wy_max);
+  status = lepton_object_list_bounds (lepton_page_objects (page),
+                                      /* Don't include hidden objects. */
+                                      FALSE,
+                                      &wx_min,
+                                      &wy_min,
+                                      &wx_max,
+                                      &wy_max);
   /* If there are no printable objects, draw nothing. */
   if (!status) return;
 
@@ -328,10 +331,13 @@ x_print_export_pdf (SchematicWindow *w_current,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (lepton_page_objects (active_page),
-                                          /* Don't include hidden objects. */
-                                          FALSE,
-                                          &wx_min, &wy_min, &wx_max, &wy_max);
+  status = lepton_object_list_bounds (lepton_page_objects (active_page),
+                                      /* Don't include hidden objects. */
+                                      FALSE,
+                                      &wx_min,
+                                      &wy_min,
+                                      &wx_max,
+                                      &wy_max);
   if (status) {
     width  = (wx_max - wx_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;
     height = (wy_max - wy_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;

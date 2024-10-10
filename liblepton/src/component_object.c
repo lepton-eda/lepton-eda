@@ -339,12 +339,12 @@ static gboolean placeholder_rendering = FALSE;
  *  \retval 1 Bound was found
  */
 int
-world_get_object_glist_bounds (const GList *head,
-                               gboolean include_hidden,
-                               int *left,
-                               int *top,
-                               int *right,
-                               int *bottom)
+lepton_object_list_bounds (const GList *head,
+                           gboolean include_hidden,
+                           int *left,
+                           int *top,
+                           int *right,
+                           int *bottom)
 {
   const GList *s_current=NULL;
   LeptonObject *o_current=NULL;
@@ -408,12 +408,12 @@ lepton_component_object_calculate_bounds (const LeptonObject *object,
 
   primitives = lepton_component_object_get_contents (object);
 
-  world_get_object_glist_bounds (primitives,
-                                 include_hidden,
-                                 &(bounds->min_x),
-                                 &(bounds->min_y),
-                                 &(bounds->max_x),
-                                 &(bounds->max_y));
+  lepton_object_list_bounds (primitives,
+                             include_hidden,
+                             &(bounds->min_x),
+                             &(bounds->min_y),
+                             &(bounds->max_x),
+                             &(bounds->max_y));
 }
 
 /*! \brief get the position of the component base point

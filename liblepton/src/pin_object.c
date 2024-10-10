@@ -677,21 +677,21 @@ lepton_pin_object_update_whichend (GList *object_list,
 
   if (force_boundingbox) {
     /* Include text objects since we need full bounds. */
-    world_get_object_glist_bounds (object_list,
-                                   /* Never consider hidden text. */
-                                   FALSE,
-                                   &left,
-                                   &top,
-                                   &right,
-                                   &bottom);
+    lepton_object_list_bounds (object_list,
+                               /* Never consider hidden text. */
+                               FALSE,
+                               &left,
+                               &top,
+                               &right,
+                               &bottom);
   } else {
     /* Only look at the pins to calculate symbol bounds. */
-    world_get_object_glist_bounds (pin_list,
-                                   FALSE,
-                                   &left,
-                                   &top,
-                                   &right,
-                                   &bottom);
+    lepton_object_list_bounds (pin_list,
+                               FALSE,
+                               &left,
+                               &top,
+                               &right,
+                               &bottom);
   }
 
   iter = pin_list;

@@ -819,12 +819,13 @@ schematic_viewport_zoom_extents (SchematicViewport *geometry,
     return;
   }
 
-  if (!world_get_object_glist_bounds (list,
-                                      include_hidden,
-                                      &lleft,
-                                      &ltop,
-                                      &lright,
-                                      &lbottom)) {
+  if (!lepton_object_list_bounds (list,
+                                  include_hidden,
+                                  &lleft,
+                                  &ltop,
+                                  &lright,
+                                  &lbottom))
+  {
     return;
   }
 

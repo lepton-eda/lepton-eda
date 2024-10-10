@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@
 G_BEGIN_DECLS
 
 int
-world_get_object_glist_bounds (const GList *head,
-                               gboolean include_hidden,
-                               int *left,
-                               int *top,
-                               int *right,
-                               int *bottom);
+lepton_object_list_bounds (const GList *head,
+                           gboolean include_hidden,
+                           int *left,
+                           int *top,
+                           int *right,
+                           int *bottom);
 gchar*
 lepton_component_object_get_basename (const LeptonObject *object);
 

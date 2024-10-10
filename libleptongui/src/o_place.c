@@ -263,12 +263,12 @@ o_place_invalidate_rubber (SchematicWindow *w_current,
   }
 
   /* Find the bounds of the drawing to be done */
-  world_get_object_glist_bounds (page->place_list,
-                                 show_hidden_text,
-                                 &left,
-                                 &top,
-                                 &right,
-                                 &bottom);
+  lepton_object_list_bounds (page->place_list,
+                             show_hidden_text,
+                             &left,
+                             &top,
+                             &right,
+                             &bottom);
 
   schematic_canvas_invalidate_world_rect (page_view,
                                           left + diff_x,
@@ -348,12 +348,12 @@ o_place_draw_rubber (SchematicWindow *w_current,
     int left, top, bottom, right;
 
     /* Find the bounds of the drawing to be done */
-    world_get_object_glist_bounds (page->place_list,
-                                   show_hidden_text,
-                                   &left,
-                                   &top,
-                                   &right,
-                                   &bottom);
+    lepton_object_list_bounds (page->place_list,
+                               show_hidden_text,
+                               &left,
+                               &top,
+                               &right,
+                               &bottom);
 
     /* Draw box outline */
     eda_cairo_box (cr, flags, 0, left, top, right, bottom);

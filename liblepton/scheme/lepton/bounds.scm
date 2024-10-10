@@ -35,12 +35,12 @@
   (define x2 (make-bytevector (sizeof int)))
   (define y2 (make-bytevector (sizeof int)))
   (define result
-    (true? (world_get_object_glist_bounds *objects
-                                          with-hidden?
-                                          (bytevector->pointer x1)
-                                          (bytevector->pointer y1)
-                                          (bytevector->pointer x2)
-                                          (bytevector->pointer y2))))
+    (true? (lepton_object_list_bounds *objects
+                                      with-hidden?
+                                      (bytevector->pointer x1)
+                                      (bytevector->pointer y1)
+                                      (bytevector->pointer x2)
+                                      (bytevector->pointer y2))))
   (if result
       (values (get-int x1) (get-int y1) (get-int x2) (get-int y2))
       (values #f #f #f #f)))
