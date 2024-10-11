@@ -156,7 +156,6 @@
             lepton_object_is_pin
             lepton_object_is_text
 
-            lepton_object_list_bounds
             lepton_object_calculate_visible_bounds
             lepton_object_copy
             lepton_object_delete
@@ -341,6 +340,7 @@
             lepton_toplevel_rc_list_add
             lepton_toplevel_search_page
 
+            lepton_object_list_bounds
             lepton_object_list_delete
             lepton_object_list_to_buffer
             lepton_object_list_translate
@@ -537,7 +537,6 @@
 (define-lff lepton_object_is_pin int '(*))
 (define-lff lepton_object_is_text int '(*))
 
-(define-lff lepton_object_list_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
 (define-lff lepton_object_delete void '(*))
@@ -695,6 +694,7 @@
 (define-lff s_conn_update_object void '(* *))
 
 ;;; object_list.c
+(define-lff lepton_object_list_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_list_delete void '(*))
 (define-lff lepton_object_list_to_buffer '* '(*))
 (define-lff o_glist_copy_all '* '(* *))

@@ -41,6 +41,69 @@ o_save_objects (const GList *object_list, gboolean save_attribs);
 /*! global which is used in o_list_copy_all */
 extern int global_sid;
 
+
+/*! \brief Return the bounds of the given GList of objects.
+ *  \par Given a list of objects, calcule the bounds coordinates.
+ *
+ *  \param [in]  head   The list of objects to look the bounds for.
+ *  \param [in] include_hidden If bounds of hidden objects should
+ *                             be calculated.
+ *  \param [out] left   pointer to the left coordinate of the object.
+ *  \param [out] top    pointer to the top coordinate of the object.
+ *  \param [out] right  pointer to the right coordinate of the object.
+ *  \param [out] bottom pointer to the bottom coordinate of the object.
+ *  \return If any bounds were found for the list of objects
+ *  \retval 0 No bounds were found
+ *  \retval 1 Bound was found
+ */
+int
+lepton_object_list_bounds (const GList *head,
+                           gboolean include_hidden,
+                           int *left,
+                           int *top,
+                           int *right,
+                           int *bottom)
+{
+  const GList *s_current=NULL;
+  LeptonObject *o_current=NULL;
+  int rleft, rtop, rright, rbottom;
+  int found = 0;
+
+  s_current = head;
+
+  /* Find the first object with bounds, and set the bounds variables, then expand as necessary */
+  while ( s_current != NULL ) {
+    o_current = (LeptonObject *) s_current->data;
+
+    /* Sanity check */
+    g_return_val_if_fail ((o_current != NULL), found);
+
+    if (lepton_object_calculate_visible_bounds (o_current,
+                                                include_hidden,
+                                                &rleft,
+                                                &rtop,
+                                                &rright,
+                                                &rbottom))
+    {
+      if ( found ) {
+        *left = MIN( *left, rleft );
+        *top = MIN( *top, rtop );
+        *right = MAX( *right, rright );
+        *bottom = MAX( *bottom, rbottom );
+      } else {
+        *left = rleft;
+        *top = rtop;
+        *right = rright;
+        *bottom = rbottom;
+        found = 1;
+      }
+    }
+    s_current = g_list_next (s_current);
+  }
+  return found;
+}
+
+
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description

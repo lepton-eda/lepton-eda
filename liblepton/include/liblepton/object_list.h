@@ -22,6 +22,13 @@
 
 G_BEGIN_DECLS
 
+int
+lepton_object_list_bounds (const GList *head,
+                           gboolean include_hidden,
+                           int *left,
+                           int *top,
+                           int *right,
+                           int *bottom);
 void
 lepton_object_list_delete (GList *list);
 

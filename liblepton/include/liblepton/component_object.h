@@ -24,13 +24,6 @@
 
 G_BEGIN_DECLS
 
-int
-lepton_object_list_bounds (const GList *head,
-                           gboolean include_hidden,
-                           int *left,
-                           int *top,
-                           int *right,
-                           int *bottom);
 gchar*
 lepton_component_object_get_basename (const LeptonObject *object);
 
