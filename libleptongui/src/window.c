@@ -618,10 +618,10 @@ schematic_window_get_text_size_list_store (SchematicWindow *w_current)
 
 
 
-/*! \brief Get the libgeda toplevel for this gschem toplevel
+/*! \brief Get the liblepton toplevel for this schematic window
  *
- *  \param [in] w_current This gschem toplevel
- *  \return The libgeda toplevel
+ *  \param [in] w_current The #SchematicWindow pointer.
+ *  \return The liblepton \a LeptonToplevel instance pointer.
  */
 LeptonToplevel*
 schematic_window_get_toplevel (SchematicWindow *w_current)
