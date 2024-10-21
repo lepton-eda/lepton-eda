@@ -33,8 +33,8 @@ attrib_edit_dialog_ok (GtkWidget *w,
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
-                    GList *selection_list,
-                    int flag);
+                    int flag,
+                    int nsel);
 G_END_DECLS
 
 #endif /* ATTRIB_EDIT_DIALOG_H */

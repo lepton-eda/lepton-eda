@@ -300,8 +300,8 @@ attribute_edit_dialog_response (GtkWidget *w,
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
-                    GList *selection_list,
-                    int flag)
+                    int flag,
+                    int nsel)
 {
   GtkWidget *aewindow;
   GtkWidget *vbox, *label;
@@ -318,23 +318,12 @@ attrib_edit_dialog (SchematicWindow *w_current,
   GtkEntryCompletion *attrib_combo_entry_completion;
 
   /* gschem specific */
-  GList *s_current = NULL;
   char* string = NULL;
-  int nsel=0, i, len;
+  int i, len;
   char *name = NULL;
   char *val = NULL;
   LeptonObject *attrib = NULL;
   gint wx, wy;
-
-  /* gschem specific: What do we count here? (Werner)  */
-  for (s_current = selection_list;
-       s_current != NULL;
-       s_current = g_list_next(s_current)) {
-    if (!lepton_object_get_attached_to ((LeptonObject *) s_current->data))
-    {
-      nsel++;
-    }
-  }
 
   aewindow =
     schematic_dialog_new_with_buttons (NULL,

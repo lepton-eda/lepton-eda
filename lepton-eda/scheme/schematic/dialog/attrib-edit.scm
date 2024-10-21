@@ -21,6 +21,8 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
 
   #:use-module (schematic ffi)
 
@@ -35,8 +37,22 @@ FROM_KEY (1)."
   (define *attrib-edit-widget
     (schematic_window_get_attrib_edit_widget *window))
 
+  (define (get-number-of-not-attached-objects *selection-list)
+    (let loop ((*list *selection-list)
+               (count 0))
+      (if (null-pointer? *list)
+          count
+          (let ((*next (glist-next *list)))
+            (loop *next
+                  (if (null-pointer? (lepton_object_get_attached_to (glist-data *list)))
+                      (1+ count)
+                      count))))))
+
   ;; Return if the widget has already been created.
   (when (null-pointer? *attrib-edit-widget)
     (let ((*selection-list (lepton_list_get_glist
                             (schematic_window_get_selection_list *window))))
-      (attrib_edit_dialog *window *attrib *selection-list invocation-flag))))
+      (attrib_edit_dialog *window
+                          *attrib
+                          invocation-flag
+                          (get-number-of-not-attached-objects *selection-list)))))
