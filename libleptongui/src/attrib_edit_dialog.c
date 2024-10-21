@@ -300,6 +300,7 @@ attribute_edit_dialog_response (GtkWidget *w,
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
+                    LeptonSelection *selection_list,
                     int flag)
 {
   GtkWidget *aewindow;
@@ -326,7 +327,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gint wx, wy;
 
   /* gschem specific: What do we count here? (Werner)  */
-  for (s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
+  for (s_current = lepton_list_get_glist (selection_list);
        s_current != NULL;
        s_current = g_list_next(s_current)) {
     if (!lepton_object_get_attached_to ((LeptonObject *) s_current->data))

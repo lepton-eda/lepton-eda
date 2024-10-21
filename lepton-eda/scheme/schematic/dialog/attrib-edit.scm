@@ -35,4 +35,5 @@ FROM_KEY (1)."
 
   ;; Return if the widget has already been created.
   (when (null-pointer? *attrib-edit-widget)
-    (attrib_edit_dialog *window *attrib invocation-flag)))
+    (let ((*selection-list (schematic_window_get_selection_list *window)))
+      (attrib_edit_dialog *window *attrib *selection-list invocation-flag))))
