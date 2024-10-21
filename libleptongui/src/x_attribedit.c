@@ -337,7 +337,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
 
   aewindow =
     schematic_dialog_new_with_buttons (NULL,
-                                       GTK_WINDOW(w_current->main_window),
+                                       GTK_WINDOW (schematic_window_get_main_window (w_current)),
                                        GTK_DIALOG_MODAL,
                                        "singleattrib", w_current,
                                        _("_Cancel"), GTK_RESPONSE_REJECT,
