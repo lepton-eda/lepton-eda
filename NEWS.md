@@ -496,6 +496,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `/etc/gsch2pcb` and `/usr/local/etc/gsch2pcb`, are no longer
   used for this purpose.
 
+- The calls of a C function expanding paths have been replaced by
+  the more sophisticated and pretty well tested Scheme function
+  `expand-env-variables()` from the module `(lepton os)`.
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
