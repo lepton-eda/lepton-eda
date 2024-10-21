@@ -292,6 +292,34 @@ attribute_edit_dialog_response (GtkWidget *w,
 }
 
 
+/*! \brief Create a new attribute add/edit dialog widget
+ *  \par Function Description
+ *  This function creates the widget for the single attribute edit
+ *  dialog.
+ *
+ *  \return The new dialog widget.
+ */
+GtkWidget*
+schematic_attrib_edit_dialog_new (SchematicWindow *w_current)
+{
+  GtkWidget *aewindow =
+    schematic_dialog_new_with_buttons (NULL,
+                                       GTK_WINDOW (schematic_window_get_main_window (w_current)),
+                                       GTK_DIALOG_MODAL,
+                                       "singleattrib", w_current,
+                                       _("_Cancel"), GTK_RESPONSE_REJECT,
+                                       _("_OK"), GTK_RESPONSE_APPLY,
+                                       NULL);
+#ifndef ENABLE_GTK3
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
+                                          GTK_RESPONSE_APPLY,
+                                          GTK_RESPONSE_REJECT,
+                                          -1);
+#endif
+  return aewindow;
+}
+
 
 /*! \brief Create the attribute add/edit dialog
  *  \par Function Description
@@ -325,21 +353,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  aewindow =
-    schematic_dialog_new_with_buttons (NULL,
-                                       GTK_WINDOW (schematic_window_get_main_window (w_current)),
-                                       GTK_DIALOG_MODAL,
-                                       "singleattrib", w_current,
-                                       _("_Cancel"), GTK_RESPONSE_REJECT,
-                                       _("_OK"), GTK_RESPONSE_APPLY,
-                                       NULL);
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
-                                          GTK_RESPONSE_APPLY,
-                                          GTK_RESPONSE_REJECT,
-                                          -1);
-#endif
+  aewindow = schematic_attrib_edit_dialog_new (w_current);
 
   g_signal_connect (G_OBJECT (aewindow), "response",
                     G_CALLBACK (attribute_edit_dialog_response),
