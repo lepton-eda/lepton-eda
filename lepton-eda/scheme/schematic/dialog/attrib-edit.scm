@@ -30,6 +30,9 @@
 INVOCATION-FLAG must be an integer set to a value defined in
 libleptongui/include/schematic_defines.h, namely FROM_MENU (0) or
 FROM_KEY (1)."
+  (define *attrib-edit-widget
+    (schematic_window_get_attrib_edit_widget *window))
+
   ;; Return if the widget has already been created.
-  (when (null-pointer? (schematic_window_get_attrib_edit_widget *window))
+  (when (null-pointer? *attrib-edit-widget)
     (attrib_edit_dialog *window *attrib invocation-flag)))
