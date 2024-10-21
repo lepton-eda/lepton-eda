@@ -327,12 +327,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  aewindow = schematic_window_get_attrib_edit_widget (w_current);
-
-  /* Return if the widget has already been created. */
-  if (aewindow != NULL)
-    return;
-
   /* gschem specific: What do we count here? (Werner)  */
   for (s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
        s_current != NULL;
