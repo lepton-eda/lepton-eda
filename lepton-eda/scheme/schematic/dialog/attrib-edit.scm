@@ -20,6 +20,8 @@
 (define-module (schematic dialog attrib-edit)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi)
+
   #:use-module (schematic ffi)
 
   #:export (attrib-edit-dialog))
@@ -35,5 +37,6 @@ FROM_KEY (1)."
 
   ;; Return if the widget has already been created.
   (when (null-pointer? *attrib-edit-widget)
-    (let ((*selection-list (schematic_window_get_selection_list *window)))
+    (let ((*selection-list (lepton_list_get_glist
+                            (schematic_window_get_selection_list *window))))
       (attrib_edit_dialog *window *attrib *selection-list invocation-flag))))
