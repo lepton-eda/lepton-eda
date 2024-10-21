@@ -22,6 +22,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic dialog attrib-edit)
   #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
@@ -58,7 +59,7 @@ depends of the type of the first object in the object list."
                        ;; Attribute editor only accepts one line values for
                        ;; attributes.
                        (= (line-number str) 1))
-                  (attrib_edit_dialog *window *object FROM_MENU)
+                  (attrib-edit-dialog *window *object FROM_MENU)
                   (text-edit-dialog window))))
            ;; All other primitives may have attributes attached to
            ;; them.  Show the Multiattrib dialog instead of simply

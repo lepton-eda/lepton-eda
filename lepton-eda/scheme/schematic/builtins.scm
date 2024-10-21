@@ -54,6 +54,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic file)
   #:use-module (schematic dialog)
+  #:use-module (schematic dialog attrib-edit)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog color-edit)
@@ -971,7 +972,7 @@ the snap grid size should be set to 100")))
 
   (define *window (*current-window))
 
-  (attrib_edit_dialog *window
+  (attrib-edit-dialog *window
                       %null-pointer
                       (match (action-position)
                         ((x . y) FROM_HOTKEY)
