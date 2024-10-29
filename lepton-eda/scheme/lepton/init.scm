@@ -18,6 +18,7 @@
 
 (define-module (lepton init)
   #:use-module (lepton ffi)
+  #:use-module (lepton m4)
 
   #:export (init-liblepton))
 
@@ -26,7 +27,12 @@
 function is responsible for making sure that any runtime
 initialization is done for all the liblepton routines. It should
 be called before any other liblepton functions are called."
-  (liblepton_init_gettext)
+
+  ;; Initialize liblepton gettext domain.
+  (bindtextdomain %m4-liblepton-gettext-domain %lepton-localedir)
+  (textdomain %m4-liblepton-gettext-domain)
+  (bind-textdomain-codeset %m4-liblepton-gettext-domain "UTF-8")
+
   (eda_paths_init)
   (s_clib_init)
   (s_attrib_init)

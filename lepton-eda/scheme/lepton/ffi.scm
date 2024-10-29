@@ -25,8 +25,7 @@
   #:re-export (libgtk
                liblepton)
 
-  #:export (liblepton_init_gettext
-            liblepton_init
+  #:export (liblepton_init
             reference-pointer
             c-string-array->list
             register-data-dirs
@@ -395,7 +394,6 @@
 
 ;;; Basic lepton initialisation function.
 ;;; liblepton.c
-(define-lff liblepton_init_gettext void '())
 (define-lff liblepton_init void '())
 
 (define-lff set_render_placeholders void '())
