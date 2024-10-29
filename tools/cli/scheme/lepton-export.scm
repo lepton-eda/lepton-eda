@@ -34,8 +34,6 @@
 
 ;;; Initialize liblepton library.
 (init-liblepton)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
 
 
 ;;; Each export format is a list of the form:
