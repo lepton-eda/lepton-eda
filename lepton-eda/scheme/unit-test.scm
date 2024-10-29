@@ -72,6 +72,8 @@
 ;;; variable to a bigger value. Example:
 ;; (setenv "COLUMNS" "1000")
 
+;;; Skip initialisation of RC paths here.  It's what the
+;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
 (setenv "LEPTON_INHIBIT_RC_FILES" "yes")
 ;;; The load path should not be changed after loading the
 ;;; liblepton library.  This is tested in the unit test
@@ -81,10 +83,6 @@
 
 ;;; Initialize liblepton library.
 (init-liblepton)
-;;; Skip initialisation of RC paths here.  It's what the
-;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
-;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
-;;;     (register-data-dirs))
 
 ;;; Syntax and procedure that check exception type and probably
 ;;; have no analogs in SRFI-64.

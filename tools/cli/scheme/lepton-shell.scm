@@ -34,8 +34,6 @@
 
 ;;; Initialize liblepton library.
 (init-liblepton)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
 
 
 (define cmd (basename (car (program-arguments))))
