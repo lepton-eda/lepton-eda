@@ -44,5 +44,4 @@ void liblepton_init(void)
 
   s_clib_init();
   s_attrib_init();
-  lepton_color_init ();
 }
