@@ -41,6 +41,4 @@ void liblepton_init(void)
 #endif
 
   eda_paths_init();
-
-  s_clib_init();
 }
