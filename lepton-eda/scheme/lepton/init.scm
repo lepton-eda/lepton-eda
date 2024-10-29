@@ -27,6 +27,7 @@ function is responsible for making sure that any runtime
 initialization is done for all the liblepton routines. It should
 be called before any other liblepton functions are called."
   (liblepton_init)
+  (s_attrib_init)
   (lepton_color_init)
   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
     (register-data-dirs)))
