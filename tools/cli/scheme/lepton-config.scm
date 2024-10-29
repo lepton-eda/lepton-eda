@@ -1,7 +1,7 @@
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2015 gEDA Contributors
-;;; Copyright (C) 2017-2024 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

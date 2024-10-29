@@ -1,6 +1,5 @@
-;;; Lepton EDA Symbol Checker
-;;; Scheme API
-;;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;;; Lepton EDA library - Scheme API
+;;; Copyright (C) 2024-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -16,20 +15,15 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(use-modules (lepton ffi)
-             (lepton toplevel)
-             (symcheck check))
 
-;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(define-module (lepton init)
+  #:use-module (lepton ffi)
 
+  #:export (init-liblepton))
 
-;;; Localization.
-(define %textdomain "lepton-symcheck")
-(textdomain %textdomain)
-(bindtextdomain %textdomain %lepton-localedir)
-(bind-textdomain-codeset %textdomain "UTF-8")
-
-(with-toplevel (make-toplevel) check-all-symbols)
+(define (init-liblepton)
+  "Perform runtime initialization of liblepton library.  This
+function is responsible for making sure that any runtime
+initialization is done for all the liblepton routines. It should
+be called before any other liblepton functions are called."
+  (liblepton_init))

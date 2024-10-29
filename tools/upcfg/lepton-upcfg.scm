@@ -2,7 +2,7 @@
 ;; Lepton EDA
 ;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2022 Lepton EDA Contributors
+;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 

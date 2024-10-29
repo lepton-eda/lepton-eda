@@ -83,6 +83,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/ffi/undo.scm \
 	lepton/file-system.scm \
 	lepton/gerror.scm \
+	lepton/init.scm \
 	lepton/library.scm \
 	lepton/library/component.scm \
 	lepton/log.scm \
