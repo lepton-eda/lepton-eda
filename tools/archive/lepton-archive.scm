@@ -1,4 +1,4 @@
-;;; Copyright (C) 2019-2023 Lepton EDA Contributors
+;;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Stuart Brorson:
 ;;; Copyright (C) 2003 Stuart Brorson <sdb@cloud9.net>
