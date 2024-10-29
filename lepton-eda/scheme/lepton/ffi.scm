@@ -313,8 +313,10 @@
             print_colors_array
             lepton_color_init
 
+            s_attrib_init
             s_attrib_uniq
             s_attrib_add_entry
+
             s_clib_add_command
             s_clib_add_directory
             s_clib_add_scm
@@ -427,7 +429,9 @@
 
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * * *))
+
 ;;; s_attrib.c
+(define-lff s_attrib_init void '())
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
 
