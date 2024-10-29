@@ -17,11 +17,12 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (use-modules (lepton ffi)
+             (lepton init)
              (lepton toplevel)
              (symcheck check))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

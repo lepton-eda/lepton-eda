@@ -27,6 +27,7 @@
              (lepton ffi lib)
              (lepton ffi)
              (lepton file-system)
+             (lepton init)
              (lepton log)
              (lepton page)
              (lepton rc)
@@ -35,7 +36,7 @@
              (lepton version))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

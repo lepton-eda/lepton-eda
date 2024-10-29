@@ -9,6 +9,7 @@
 (use-modules (ice-9 format)
              (ice-9 getopt-long)
              (lepton ffi)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton rc)
@@ -18,7 +19,7 @@
              (lepton color-map))
 
 ;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 
