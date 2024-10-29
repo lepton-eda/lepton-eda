@@ -68,6 +68,7 @@
              (srfi srfi-26)
              (lepton ffi)
              (lepton file-system)
+             (lepton init)
              (lepton library component)
              (lepton library)
              (lepton log)
@@ -83,7 +84,7 @@
              (lepton color-map))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

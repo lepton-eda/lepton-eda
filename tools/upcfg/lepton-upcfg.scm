@@ -10,12 +10,13 @@
              (ice-9 rdelim) ; read-line()
              (ice-9 getopt-long)
              (lepton ffi)
+             (lepton init)
              (lepton legacy-config)
              (lepton log)
              (lepton version))
 
 ;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

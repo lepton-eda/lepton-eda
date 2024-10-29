@@ -41,6 +41,7 @@
              (sxml match)
              (lepton attrib)
              (lepton ffi)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton toplevel)
@@ -48,7 +49,7 @@
              (netlist attrib compare))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

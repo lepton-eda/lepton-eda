@@ -21,6 +21,7 @@
              (system foreign)
              (lepton ffi)
              (lepton gettext)
+             (lepton init)
              (lepton library)
              (lepton page)
              (lepton rc)
@@ -32,7 +33,7 @@
              (lepton color-map))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

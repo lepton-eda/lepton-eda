@@ -25,6 +25,7 @@
              (lepton ffi)
              (lepton file-system)
              (lepton gettext)
+             (lepton init)
              (lepton log)
              (lepton m4)
              (lepton os)
@@ -40,7 +41,7 @@
              (schematic window))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 

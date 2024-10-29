@@ -64,7 +64,7 @@
              (srfi srfi-26)
              (ice-9 getopt-long)
              (ice-9 pretty-print)
-             (lepton ffi)
+             (lepton init)
              (lepton toplevel))
 
 ;;; In order to facilitate debugging, you can increase the pile of
@@ -80,7 +80,7 @@
         (with-output-to-string (lambda () (write %load-path))))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 ;;; Skip initialisation of RC paths here.  It's what the
 ;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
 ;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")

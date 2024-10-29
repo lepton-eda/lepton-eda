@@ -25,6 +25,7 @@
              (lepton ffi)
              (lepton file-system)
              (lepton gettext)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton srfi-37)
@@ -33,7 +34,7 @@
              (symbol check obsolete))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
+(init-liblepton)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 
