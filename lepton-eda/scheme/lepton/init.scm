@@ -27,13 +27,22 @@
 function is responsible for making sure that any runtime
 initialization is done for all the liblepton routines. It should
 be called before any other liblepton functions are called."
+  ;; Initialise Lepton EDA data and configuration search paths.
+  (define (init-paths)
+    ;; These functions store their data in static local variables.
+    ;; Calling them here forces data initialization.
+    (eda_get_system_data_dirs)
+    (eda_get_system_config_dirs)
+    (eda_get_user_data_dir)
+    (eda_get_user_config_dir)
+    (eda_get_user_cache_dir))
 
   ;; Initialize liblepton gettext domain.
   (bindtextdomain %m4-liblepton-gettext-domain %lepton-localedir)
   (textdomain %m4-liblepton-gettext-domain)
   (bind-textdomain-codeset %m4-liblepton-gettext-domain "UTF-8")
 
-  (eda_paths_init)
+  (init-paths)
   (s_clib_init)
   (s_attrib_init)
   (lepton_color_init)

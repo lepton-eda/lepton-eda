@@ -84,8 +84,6 @@
             eda_get_user_config_dir
             eda_get_user_data_dir
 
-            eda_paths_init
-
             eda_renderer_new
             eda_renderer_set_color_map
 
@@ -486,7 +484,6 @@
 (define-lff eda_get_user_cache_dir '* '())
 (define-lff eda_get_user_config_dir '* '())
 (define-lff eda_get_user_data_dir '* '())
-(define-lff eda_paths_init void '())
 
 ;;; edarenderer.c
 (define-lff eda_renderer_new '* '(* *))
