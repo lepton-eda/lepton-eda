@@ -9,8 +9,6 @@
 #include <glib/gstdio.h>
 
 /* Public headers */
-#define __LIBLEPTON_INTERNAL_API__ 1
-
 #include "defines.h"
 
 #include "color.h"
