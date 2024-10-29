@@ -39,6 +39,4 @@ void liblepton_init(void)
   bindtextdomain (LIBLEPTON_GETTEXT_DOMAIN, LOCALEDIR);
   bind_textdomain_codeset(LIBLEPTON_GETTEXT_DOMAIN, "UTF-8");
 #endif
-
-  eda_paths_init();
 }
