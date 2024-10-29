@@ -37,7 +37,6 @@ liblepton_la_SOURCES = \
 	transform.c \
 	undo.c \
 	i_vars.c \
-	liblepton.c \
 	line_object.c \
 	net_object.c \
 	m_hatch.c \

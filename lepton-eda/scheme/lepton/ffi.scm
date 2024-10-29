@@ -25,8 +25,7 @@
   #:re-export (libgtk
                liblepton)
 
-  #:export (liblepton_init
-            reference-pointer
+  #:export (reference-pointer
             c-string-array->list
             register-data-dirs
 
@@ -391,10 +390,6 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-
-;;; Basic lepton initialisation function.
-;;; liblepton.c
-(define-lff liblepton_init void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff lepton_color_get_color_count size_t '())
