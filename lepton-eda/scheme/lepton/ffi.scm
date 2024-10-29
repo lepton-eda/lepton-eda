@@ -311,6 +311,8 @@
             lepton_colormap_set_color
             lepton_object_page_set_changed
             print_colors_array
+            lepton_color_init
+
             s_attrib_uniq
             s_attrib_add_entry
             s_clib_add_command
@@ -396,6 +398,9 @@
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
 (define-lff print_colors_array '* '())
+
+;;; color.c
+(define-lff lepton_color_init void '())
 
 ;;; s_clib.c
 (define-lff s_clib_add_command '* '(* * *))
