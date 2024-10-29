@@ -33,12 +33,6 @@ const gchar *eda_get_user_data_dir(void);
 const gchar *eda_get_user_config_dir(void);
 const gchar *eda_get_user_cache_dir(void);
 
-/* ----------------------------------------------------------------
- * Initialisation
- * ---------------------------------------------------------------- */
-
-void eda_paths_init (void);
-
 G_END_DECLS
 
 #endif /* !__EDA_PATHS_H__ */

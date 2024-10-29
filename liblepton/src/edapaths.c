@@ -192,23 +192,3 @@ eda_get_user_cache_dir()
 
   return user_cache_dir;
 }
-
-
-
-/*! \brief Initialise Lepton EDA data and configuration search paths.
- *
- * \par Function Description
- * Should only be called (once) by init-liblepton().
- */
-void
-eda_paths_init()
-{
-  /* These functions store their data in static local variables.
-   * Calling them here forces data initialization:
-  */
-  eda_get_system_data_dirs();
-  eda_get_system_config_dirs();
-  eda_get_user_data_dir();
-  eda_get_user_config_dir();
-  eda_get_user_cache_dir();
-}
