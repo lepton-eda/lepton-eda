@@ -15,7 +15,7 @@ AC_INIT([Lepton EDA],
         [https://github.com/lepton-eda/lepton-eda])
 AC_PREREQ([2.60])
 
-AC_CONFIG_SRCDIR([liblepton/src/liblepton.c])
+AC_CONFIG_SRCDIR([liblepton/src/version.c])
 AC_CONFIG_AUX_DIR([build-tools])
 AC_REQUIRE_AUX_FILE([test-driver.scm])
 AC_CONFIG_MACRO_DIR([m4])
