@@ -497,6 +497,12 @@ schematic_window_get_find_text_state_widget (SchematicWindow *w_current);
 void
 schematic_window_set_find_text_state_widget (SchematicWindow *w_current,
                                              GtkWidget *widget);
+GtkWidget*
+schematic_window_get_find_text_widget (SchematicWindow *w_current);
+
+void
+schematic_window_set_find_text_widget (SchematicWindow *w_current,
+                                       GtkWidget *widget);
 void
 schematic_window_set_color_edit_widget (SchematicWindow *w_current,
                                         GtkWidget *widget);

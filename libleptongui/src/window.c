@@ -1853,6 +1853,35 @@ schematic_window_set_find_text_state_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get find text widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The widget.
+ */
+GtkWidget*
+schematic_window_get_find_text_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->find_text_widget;
+}
+
+
+/*! \brief Set find text widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_find_text_widget (SchematicWindow *w_current,
+                                       GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->find_text_widget = widget;
+}
+
+
 /*! \brief Set color edit widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
