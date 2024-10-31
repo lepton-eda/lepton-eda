@@ -55,7 +55,7 @@ libleptongui/src/o_move.c
 libleptongui/src/net.c
 libleptongui/src/o_picture.c
 libleptongui/src/o_pin.c
-libleptongui/src/o_select.c
+libleptongui/src/selection.c
 libleptongui/src/o_slot.c
 libleptongui/src/o_text.c
 libleptongui/src/o_undo.c

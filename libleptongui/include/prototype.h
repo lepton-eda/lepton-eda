@@ -483,7 +483,7 @@ o_place_rotate (SchematicWindow *w_current);
 void
 o_place_mirror (SchematicWindow *w_current);
 
-/* o_select.c */
+/* selection.c */
 void
 o_select_start (SchematicWindow *w_current,
                 int x,

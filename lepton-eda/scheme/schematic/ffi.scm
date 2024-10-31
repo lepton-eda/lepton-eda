@@ -1382,7 +1382,7 @@
 ;;; x_print.c
 (define-lff x_print void '(*))
 
-;;; o_select.c
+;;; selection.c
 (define-lff o_select_box_end void (list '* int int))
 (define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_end void (list '* int int))

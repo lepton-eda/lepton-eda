@@ -69,7 +69,7 @@ libleptongui_la_SOURCES = \
 	o_picture.c \
 	o_pin.c \
 	o_place.c \
-	o_select.c \
+	selection.c \
 	o_slot.c \
 	o_text.c \
 	o_undo.c \
