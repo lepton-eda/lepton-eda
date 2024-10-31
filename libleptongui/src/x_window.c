@@ -842,13 +842,13 @@ schematic_window_create_find_text_widget (SchematicWindow *w_current,
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
 
-  w_current->find_text_widget = GTK_WIDGET (obj);
+  GtkWidget *find_text_widget = GTK_WIDGET (obj);
 
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->find_text_widget,
-                      FALSE, FALSE, 0);
+  schematic_window_set_find_text_widget (w_current, find_text_widget);
 
-  g_signal_connect (w_current->find_text_widget, "response",
+  gtk_box_pack_start (GTK_BOX (work_box), find_text_widget, FALSE, FALSE, 0);
+
+  g_signal_connect (find_text_widget, "response",
                     G_CALLBACK (&x_window_find_text), w_current);
 }
 
