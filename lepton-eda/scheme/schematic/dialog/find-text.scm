@@ -19,10 +19,13 @@
 
 (define-module (schematic dialog find-text)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (find-text-dialog))
 
 
-(define (find-text-dialog *window)
-  "Open the Find text dialog in *WINDOW."
+(define (find-text-dialog window)
+  "Open the Find text dialog in WINDOW."
+  (define *window (check-window window 1))
+
   (find_text_dialog *window))

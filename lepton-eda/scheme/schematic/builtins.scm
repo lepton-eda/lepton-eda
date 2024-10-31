@@ -1469,7 +1469,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
   (unless (in-action?)
-    (find-text-dialog (*current-window))))
+    (find-text-dialog (current-window))))
 
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))

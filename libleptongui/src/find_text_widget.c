@@ -197,8 +197,6 @@ find_text_dialog (SchematicWindow *w_current)
   LeptonObject *object;
   GtkWidget *find_text_widget;
 
-  g_return_if_fail (w_current != NULL);
-
   object = o_select_return_first_object(w_current);
   find_text_widget = schematic_window_get_find_text_widget (w_current);
 
