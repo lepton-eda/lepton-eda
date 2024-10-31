@@ -163,7 +163,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_drawing_area (w_current, NULL);
   schematic_window_set_menubar (w_current, NULL);
   schematic_window_set_popup_menu (w_current, NULL);
-  w_current->find_text_widget = NULL;
+  schematic_window_set_find_text_widget (w_current, NULL);
   w_current->macro_widget  = NULL;
   w_current->bottom_widget = NULL;
   w_current->translate_widget = NULL;
