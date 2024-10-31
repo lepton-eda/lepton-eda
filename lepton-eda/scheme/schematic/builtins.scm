@@ -52,6 +52,7 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog file-select)
+  #:use-module (schematic dialog find-text)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
@@ -1468,7 +1469,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
   (unless (in-action?)
-    (find_text_dialog (*current-window))))
+    (find-text-dialog (*current-window))))
 
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
