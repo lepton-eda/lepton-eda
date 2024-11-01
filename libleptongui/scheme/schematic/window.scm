@@ -792,7 +792,7 @@ zooming."
   (procedure->pointer int callback-scroll '(* * *)))
 
 
-(define (setup-page-view-draw-events *window *page-view)
+(define (setup-page-view-draw-events *window *canvas)
   (define signal-callback-list
     (list
      `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
@@ -807,12 +807,12 @@ zooming."
      `("notify::page" . ,*schematic_window_notify_page_callback)))
 
   (define (connect-signal element)
-    (schematic_signal_connect *page-view
+    (schematic_signal_connect *canvas
                               (string->pointer (car element))
                               (cdr element)
                               *window))
 
-  (x_window_setup_draw_events_drawing_area *window *page-view)
+  (x_window_setup_draw_events_drawing_area *window *canvas)
 
   (for-each connect-signal signal-callback-list))
 
