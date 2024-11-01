@@ -362,18 +362,18 @@ zooming."
   (set-action-mode! 'select-mode #:window window))
 
 
-(define (callback-button-released *page-view *event *window)
+(define (callback-button-released *canvas *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
-  (define (process-event *page-view *event *window)
+  (define (process-event *canvas *event *window)
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
       (window-save-modifiers *window *event)
-      (schematic_canvas_SCREENtoWORLD *page-view
+      (schematic_canvas_SCREENtoWORLD *canvas
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
                                       (bytevector->pointer unsnapped-x-bv)
@@ -456,13 +456,13 @@ zooming."
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
-                 (when (true? (schematic_canvas_pan_end *page-view))
+                 (when (true? (schematic_canvas_pan_end *canvas))
                    (undo-save-viewport)))
                 (else FALSE)))))
 
           (3
            ;; Just for ending a mouse pan.
-           (when (true? (schematic_canvas_pan_end *page-view))
+           (when (true? (schematic_canvas_pan_end *canvas))
              (undo-save-viewport)))
 
           (_ FALSE))
@@ -470,13 +470,13 @@ zooming."
         FALSE)))
 
   (if (or (null-pointer? *window)
-          (null-pointer? *page-view))
+          (null-pointer? *canvas))
       (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *canvas)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
-            (process-event *page-view *event *window)))))
+            (process-event *canvas *event *window)))))
 
 (define *callback-button-released
   (procedure->pointer int callback-button-released '(* * *)))
