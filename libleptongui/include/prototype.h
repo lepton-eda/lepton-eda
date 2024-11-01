@@ -858,7 +858,7 @@ x_dialog_hotkeys (SchematicWindow *w_current);
 
 void
 find_text_dialog (SchematicWindow *w_current,
-                  LeptonObject *object);
+                  const gchar *str);
 void
 hide_text_dialog (SchematicWindow *w_current);
 

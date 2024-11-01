@@ -193,16 +193,16 @@ finalize (GObject *object)
  */
 void
 find_text_dialog (SchematicWindow *w_current,
-                  LeptonObject *object)
+                  const gchar *str)
 {
   GtkWidget *find_text_widget;
 
   find_text_widget = schematic_window_get_find_text_widget (w_current);
 
-  if (lepton_object_is_text (object))
+  if (str != NULL)
   {
     schematic_find_text_widget_set_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget),
-                                                     lepton_text_object_get_string (object));
+                                                     str);
   }
 
   gtk_widget_show (GTK_WIDGET (find_text_widget));

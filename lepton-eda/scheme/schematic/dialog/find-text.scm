@@ -18,6 +18,11 @@
 
 
 (define-module (schematic dialog find-text)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi)
+
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -29,4 +34,7 @@
   (define *window (check-window window 1))
   (define *object (o_select_return_first_object *window))
 
-  (find_text_dialog *window *object))
+  (find_text_dialog *window
+                    (if (true? (lepton_object_is_text *object))
+                        (lepton_text_object_get_string *object)
+                        %null-pointer)))
