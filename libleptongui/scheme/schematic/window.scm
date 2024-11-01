@@ -697,14 +697,14 @@ zooming."
   (procedure->pointer int callback-button-pressed '(* * *)))
 
 
-(define (callback-motion *page-view *event *window)
+(define (callback-motion *canvas *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
   ;; Define from arc_object.h.
   (define ARC_RADIUS 1)
 
-  (define (process-event *page-view *event *window)
+  (define (process-event *canvas *event *window)
     (let ((window-x (car window-coords))
           (window-y (cdr window-coords)))
       (window-save-modifiers *window *event)
@@ -718,7 +718,7 @@ zooming."
 
               (let ((unsnapped-x-bv (make-bytevector (sizeof int) 0))
                     (unsnapped-y-bv (make-bytevector (sizeof int) 0)))
-                (schematic_canvas_SCREENtoWORLD *page-view
+                (schematic_canvas_SCREENtoWORLD *canvas
                                                 (inexact->exact (round window-x))
                                                 (inexact->exact (round window-y))
                                                 (bytevector->pointer unsnapped-x-bv)
@@ -731,7 +731,7 @@ zooming."
                     (coord_display_update *window
                                           (inexact->exact (round window-x))
                                           (inexact->exact (round window-y))))
-                  (schematic_canvas_pan_motion *page-view
+                  (schematic_canvas_pan_motion *canvas
                                                (schematic_window_get_mousepan_gain *window)
                                                (inexact->exact (round window-x))
                                                (inexact->exact (round window-y)))
@@ -773,13 +773,13 @@ zooming."
                     FALSE)))))))
 
   (if (or (null-pointer? *window)
-          (null-pointer? *page-view))
+          (null-pointer? *canvas))
       (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *canvas)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
-            (process-event *page-view *event *window)))))
+            (process-event *canvas *event *window)))))
 
 (define *callback-motion
   (procedure->pointer int callback-motion '(* * *)))
