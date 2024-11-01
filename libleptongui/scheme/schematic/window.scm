@@ -827,17 +827,17 @@ tab notebook.  Returns a C TabInfo structure."
 
   (x_window_setup_scrolling *window *wtab)
 
-  (let ((*page-view (schematic_canvas_new_with_page *page)))
-    (schematic_tabs_add_canvas *page-view *wtab)
-    (setup-page-view-draw-events *window *page-view)
-    (x_tabs_tl_pview_cur_set *window *page-view)
-    (let ((page-index (x_tabs_nbook_page_add *window *page *page-view *wtab)))
+  (let ((*canvas (schematic_canvas_new_with_page *page)))
+    (schematic_tabs_add_canvas *canvas *wtab)
+    (setup-page-view-draw-events *window *canvas)
+    (x_tabs_tl_pview_cur_set *window *canvas)
+    (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))
 
       (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
                                         *wtab
                                         TRUE)
       ;; Return TabInfo.
-      (x_tabs_info_add *window page-index *page *page-view *wtab))))
+      (x_tabs_info_add *window page-index *page *canvas *wtab))))
 
 
 (define (open-tab! *window *filename)
