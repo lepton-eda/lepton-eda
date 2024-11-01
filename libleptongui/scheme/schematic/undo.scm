@@ -184,8 +184,8 @@ success, #f on failure."
                                   (lepton_undo_get_page_control *undo-item))
     (lepton_page_set_up *page (lepton_undo_get_up *undo-item)))
 
-  (define (restore-viewport-by-undo *page-view *undo-item)
-    (let ((*geometry (schematic_canvas_get_viewport *page-view)))
+  (define (restore-viewport-by-undo *canvas *undo-item)
+    (let ((*geometry (schematic_canvas_get_viewport *canvas)))
       (when (or (undo-panzoom?)
                 modify-viewport?)
         (if (not (zero? (lepton_undo_get_scale *undo-item)))
@@ -194,11 +194,11 @@ success, #f on failure."
                                       (lepton_undo_get_x *undo-item)
                                       (lepton_undo_get_y *undo-item)
                                       (lepton_undo_get_scale *undo-item))
-              (schematic_canvas_invalidate_all *page-view))
-            (schematic_canvas_zoom_extents *page-view
+              (schematic_canvas_invalidate_all *canvas))
+            (schematic_canvas_zoom_extents *canvas
                                            (lepton_undo_get_object_list *undo-item))))))
 
-  (define (page-undo *page-view *page *current-undo *undo-to-do)
+  (define (page-undo *canvas *page *current-undo *undo-to-do)
     (let ((undo-viewport?
            (and (false? (lepton_undo_get_type *current-undo))
                 (true? (lepton_undo_get_type *undo-to-do)))))
@@ -273,7 +273,7 @@ success, #f on failure."
           (schematic_window_page_content_changed *window *page)
 
           ;; Restore viewport size if necessary.
-          (restore-viewport-by-undo *page-view *undo-to-do)
+          (restore-viewport-by-undo *canvas *undo-to-do)
 
           ;; Restore logging.
           (lepton_log_set_logging_enabled save-logging?)
@@ -302,7 +302,7 @@ success, #f on failure."
           ;; Debugging stuff.
           (debug-print-undo-info *page)))))
 
-  (define (page-undo-callback *page-view *page redo?)
+  (define (page-undo-callback *canvas *page redo?)
     (unless (null-pointer? *page)
       (let ((*current-undo (lepton_page_get_undo_current *page)))
         (unless (null-pointer? *current-undo)
@@ -312,18 +312,18 @@ success, #f on failure."
                                  ;; Undo action.
                                  (lepton_undo_get_prev *current-undo))))
             (unless (null-pointer? *undo-to-do)
-              (page-undo *page-view *page *current-undo *undo-to-do)))))))
+              (page-undo *canvas *page *current-undo *undo-to-do)))))))
 
-  (define (page-view-undo *page-view)
-    (page-undo-callback *page-view
-                        (schematic_canvas_get_page *page-view)
+  (define (canvas-undo *canvas)
+    (page-undo-callback *canvas
+                        (schematic_canvas_get_page *canvas)
                         redo?))
 
   (define (window-undo)
-    (let ((*page-view (schematic_window_get_current_canvas *window)))
-      (if (null-pointer? *page-view)
+    (let ((*canvas (schematic_window_get_current_canvas *window)))
+      (if (null-pointer? *canvas)
           (log! 'warning "undo-callback: NULL page view.")
-          (page-view-undo *page-view))))
+          (canvas-undo *canvas))))
 
   (if undo-enabled?
       (window-undo)
