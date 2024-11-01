@@ -482,7 +482,7 @@ zooming."
   (procedure->pointer int callback-button-released '(* * *)))
 
 
-(define (callback-button-pressed *page-view *event *window)
+(define (callback-button-pressed *canvas *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
   (define window-coords (event-coords *event))
@@ -496,12 +496,12 @@ zooming."
         TRUE
         FALSE))
 
-  (define (process-event *page-view *event *window)
-    (schematic_canvas_grab_focus *page-view)
+  (define (process-event *canvas *event *window)
+    (schematic_canvas_grab_focus *canvas)
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
-      (schematic_canvas_SCREENtoWORLD *page-view
+      (schematic_canvas_SCREENtoWORLD *canvas
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
                                       (bytevector->pointer unsnapped-x-bv)
@@ -584,7 +584,7 @@ zooming."
                    ('mirror-mode
                     (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
                    ('pan-mode
-                    (schematic_canvas_pan *page-view x y)
+                    (schematic_canvas_pan *canvas x y)
                     (set-action-mode! 'select-mode #:window window))
                    (_ FALSE))
                  ;; Finish event processing.
@@ -634,7 +634,7 @@ zooming."
                          (schematic_event_set_doing_stroke TRUE))
 
                         ((= middle-button MOUSEBTN_DO_PAN)
-                         (schematic_canvas_pan_start *page-view
+                         (schematic_canvas_pan_start *canvas
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y))))
 
@@ -657,13 +657,13 @@ zooming."
                            (i_update_menus *window)
                            (do_popup *window *event))
                          ;; (third-button "mousepan")
-                         (schematic_canvas_pan_start *page-view
+                         (schematic_canvas_pan_start *canvas
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y))))
                      (if (and (eq? (schematic_window_get_third_button *window)
                                    MOUSEBTN_DO_PAN)
                               (not (true? (schematic_window_get_third_button_cancel *window))))
-                         (schematic_canvas_pan_start *page-view
+                         (schematic_canvas_pan_start *canvas
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y)))
                          ;; This is the default cancel.
@@ -685,13 +685,13 @@ zooming."
                 (_ FALSE)))))))
 
   (if (or (null-pointer? *window)
-          (null-pointer? *page-view))
+          (null-pointer? *canvas))
       (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *page-view)))
+      (let ((*page (schematic_canvas_get_page *canvas)))
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
-            (process-event *page-view *event *window)))))
+            (process-event *canvas *event *window)))))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))
