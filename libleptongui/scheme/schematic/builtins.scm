@@ -821,9 +821,9 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
   (define *window (*current-window))
-  (define *page-view (schematic_window_get_current_canvas *window))
+  (define *canvas (schematic_window_get_current_canvas *window))
 
-  (a_zoom *window *page-view ZOOM_FULL DONTCARE)
+  (a_zoom *window *canvas ZOOM_FULL DONTCARE)
   (undo-save-viewport))
 
 
