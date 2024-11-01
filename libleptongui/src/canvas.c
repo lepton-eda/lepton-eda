@@ -362,7 +362,7 @@ schematic_canvas_class_init (SchematicCanvasClass *klass)
                                    PROP_SHOW_HIDDEN_TEXT,
                                    g_param_spec_boolean ("show-hidden-text",
                                                         "Show hidden text",
-                                                        "Show hidden text in page-view",
+                                                        "Show hidden text on canvas",
                                                         FALSE,
                                                         (GParamFlags) (G_PARAM_READWRITE |
                                                                        G_PARAM_CONSTRUCT)));
