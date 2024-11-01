@@ -27,5 +27,6 @@
 (define (find-text-dialog window)
   "Open the Find text dialog in WINDOW."
   (define *window (check-window window 1))
+  (define *object (o_select_return_first_object *window))
 
-  (find_text_dialog *window))
+  (find_text_dialog *window *object))

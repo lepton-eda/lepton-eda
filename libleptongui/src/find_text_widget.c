@@ -192,12 +192,11 @@ finalize (GObject *object)
  *  This function creates the text find dialog.
  */
 void
-find_text_dialog (SchematicWindow *w_current)
+find_text_dialog (SchematicWindow *w_current,
+                  LeptonObject *object)
 {
-  LeptonObject *object;
   GtkWidget *find_text_widget;
 
-  object = o_select_return_first_object(w_current);
   find_text_widget = schematic_window_get_find_text_widget (w_current);
 
   if (lepton_object_is_text (object))

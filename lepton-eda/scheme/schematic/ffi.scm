@@ -542,6 +542,7 @@
             o_select_box_motion
             o_select_end
             o_select_motion
+            o_select_return_first_object
             o_select_selected
             o_select_start
             o_select_unselect_all
@@ -1008,7 +1009,7 @@
 (define-lff schematic_find_text_state_new '* '())
 
 ;;; find_text_widget.c
-(define-lff find_text_dialog void '(*))
+(define-lff find_text_dialog void '(* *))
 
 ;;; show_hide_text_widget.c
 (define-lff hide_text_dialog void '(*))
@@ -1252,6 +1253,7 @@
 (define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_end void (list '* int int))
 (define-lff o_select_motion void (list '* int int))
+(define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
