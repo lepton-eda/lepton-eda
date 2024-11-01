@@ -792,7 +792,7 @@ zooming."
   (procedure->pointer int callback-scroll '(* * *)))
 
 
-(define (setup-page-view-draw-events *window *canvas)
+(define (setup-canvas-draw-events *window *canvas)
   (define signal-callback-list
     (list
      `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
@@ -829,7 +829,7 @@ tab notebook.  Returns a C TabInfo structure."
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
     (schematic_tabs_add_canvas *canvas *wtab)
-    (setup-page-view-draw-events *window *canvas)
+    (setup-canvas-draw-events *window *canvas)
     (x_tabs_tl_pview_cur_set *window *canvas)
     (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))
 
@@ -1150,7 +1150,7 @@ GtkApplication structure of the program (when compiled with
 
           (let ((*canvas (schematic_window_create_canvas *window *work-box)))
             ;; Setup callbacks for page view draw events.
-            (setup-page-view-draw-events *window *canvas)))
+            (setup-canvas-draw-events *window *canvas)))
 
 
       ;; Setup callbacks for main window draw events.
