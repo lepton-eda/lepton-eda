@@ -1107,6 +1107,10 @@ void
 x_window_create_drawing (GtkWidget *drawbox,
                          SchematicWindow *w_current);
 void
+x_window_find_text (GtkWidget *widget,
+                    gint response,
+                    SchematicWindow *w_current);
+void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                          SchematicCanvas* drawing_area);
 GtkWidget*

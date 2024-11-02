@@ -110,7 +110,7 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 
 
 
-static void
+void
 x_window_find_text (GtkWidget *widget,
                     gint response,
                     SchematicWindow *w_current)
