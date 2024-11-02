@@ -857,7 +857,7 @@ void
 x_dialog_hotkeys (SchematicWindow *w_current);
 
 void
-find_text_dialog (SchematicWindow *w_current,
+find_text_dialog (GtkWidget *find_text_widget,
                   const gchar *str);
 void
 hide_text_dialog (SchematicWindow *w_current);

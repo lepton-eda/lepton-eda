@@ -192,13 +192,9 @@ finalize (GObject *object)
  *  This function creates the text find dialog.
  */
 void
-find_text_dialog (SchematicWindow *w_current,
+find_text_dialog (GtkWidget *find_text_widget,
                   const gchar *str)
 {
-  GtkWidget *find_text_widget;
-
-  find_text_widget = schematic_window_get_find_text_widget (w_current);
-
   if (str != NULL)
   {
     schematic_find_text_widget_set_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget),

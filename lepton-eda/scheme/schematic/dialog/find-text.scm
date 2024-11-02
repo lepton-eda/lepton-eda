@@ -32,9 +32,11 @@
 (define (find-text-dialog window)
   "Open the Find text dialog in WINDOW."
   (define *window (check-window window 1))
+  (define *find-text-widget
+    (schematic_window_get_find_text_widget *window))
   (define *object (o_select_return_first_object *window))
 
-  (find_text_dialog *window
+  (find_text_dialog *find-text-widget
                     (if (true? (lepton_object_is_text *object))
                         (lepton_text_object_get_string *object)
                         %null-pointer)))
