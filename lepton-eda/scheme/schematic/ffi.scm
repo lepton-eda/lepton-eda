@@ -441,6 +441,8 @@
             schematic_window_set_second_wy
             schematic_window_get_find_text_state_widget
             schematic_window_set_find_text_state_widget
+            schematic_window_get_find_text_widget
+            schematic_window_set_find_text_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
@@ -819,6 +821,8 @@
 (define-lff schematic_window_set_second_wy void (list '* int))
 (define-lff schematic_window_get_find_text_state_widget '* '(*))
 (define-lff schematic_window_set_find_text_state_widget void '(* *))
+(define-lff schematic_window_get_find_text_widget '* '(*))
+(define-lff schematic_window_set_find_text_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
