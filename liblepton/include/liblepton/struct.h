@@ -87,7 +87,8 @@ struct st_conn {
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, LeptonObject *);
 
-/* Used by g_rc_parse_handler() */
+/*! \brief Type of RC file parse error functions used by
+    g_rc_parse_handler() and similar functions. */
 typedef void (*ConfigParseErrorFunc)(GError **, void *);
 
 #endif
