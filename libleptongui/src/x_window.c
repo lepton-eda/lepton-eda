@@ -30,7 +30,7 @@ static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
 
-static void
+void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
   LeptonPage *page = NULL;

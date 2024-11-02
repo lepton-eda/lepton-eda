@@ -1157,6 +1157,11 @@ gboolean
 x_window_untitled_page (LeptonPage* page);
 
 
+void
+x_window_hide_text (GtkWidget *widget,
+                    gint response,
+                    SchematicWindow *w_current);
+
 /* x_widgets.c */
 gboolean
 x_widgets_use_docks();
