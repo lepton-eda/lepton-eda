@@ -766,6 +766,10 @@ zooming."
   (procedure->pointer int callback-motion '(* * *)))
 
 
+(define (setup-main-window-draw-events *window *main-window)
+  (x_window_setup_draw_events_main_wnd *window *main-window))
+
+
 (define (setup-canvas-draw-events *window *canvas)
   (define signal-callback-list
     (list
@@ -1213,7 +1217,7 @@ GtkApplication structure of the program (when compiled with
 
 
       ;; Setup callbacks for main window draw events.
-      (x_window_setup_draw_events_main_wnd *window *main-window)
+      (setup-main-window-draw-events *window *main-window)
 
       ;; Setup hidden infowidgets.
       (schematic_window_create_find_text_widget *window *work-box)
