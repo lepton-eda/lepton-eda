@@ -666,8 +666,6 @@ schematic_window_create_find_text_widget (SchematicWindow *w_current,
 
   gtk_box_pack_start (GTK_BOX (work_box), find_text_widget, FALSE, FALSE, 0);
 
-  g_signal_connect (find_text_widget, "response",
-                    G_CALLBACK (&x_window_find_text), w_current);
   return find_text_widget;
 }
 

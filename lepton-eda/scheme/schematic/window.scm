@@ -1349,7 +1349,12 @@ GtkApplication structure of the program (when compiled with
       (setup-main-window-draw-events *window *main-window)
 
       ;; Setup hidden infowidgets.
-      (schematic_window_create_find_text_widget *window *work-box)
+      (let ((*find-text-widget
+             (schematic_window_create_find_text_widget *window *work-box)))
+        (g_signal_connect *find-text-widget
+                          (string->pointer "response")
+                          *x_window_find_text
+                          *window))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
       (schematic_window_create_macro_widget *window *work-box)
