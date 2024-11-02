@@ -87,9 +87,6 @@ struct st_conn {
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, LeptonObject *);
 
-/*! \brief Type of callback function for querying loading of backups */
-typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
-
 /* Used by g_rc_parse_handler() */
 typedef void (*ConfigParseErrorFunc)(GError **, void *);
 
