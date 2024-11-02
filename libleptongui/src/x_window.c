@@ -437,9 +437,6 @@ schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                       hide_text_widget,
                       FALSE, FALSE, 0);
 
-  g_signal_connect (hide_text_widget, "response",
-                    G_CALLBACK (&x_window_hide_text), w_current);
-
   return hide_text_widget;
 }
 
