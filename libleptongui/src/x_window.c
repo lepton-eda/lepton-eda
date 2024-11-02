@@ -863,13 +863,14 @@ schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                "label-text", _("Hide text starting with:"),
                                NULL);
 
-  w_current->hide_text_widget = GTK_WIDGET (obj);
+  GtkWidget *hide_text_widget = GTK_WIDGET (obj);
+  schematic_window_set_hide_text_widget (w_current, hide_text_widget);
 
   gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->hide_text_widget,
+                      hide_text_widget,
                       FALSE, FALSE, 0);
 
-  g_signal_connect (w_current->hide_text_widget, "response",
+  g_signal_connect (hide_text_widget, "response",
                     G_CALLBACK (&x_window_hide_text), w_current);
 }
 
