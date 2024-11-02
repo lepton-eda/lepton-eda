@@ -662,8 +662,6 @@ schematic_window_create_find_text_widget (SchematicWindow *w_current,
 
   GtkWidget *find_text_widget = GTK_WIDGET (obj);
 
-  schematic_window_set_find_text_widget (w_current, find_text_widget);
-
   gtk_box_pack_start (GTK_BOX (work_box), find_text_widget, FALSE, FALSE, 0);
 
   return find_text_widget;
