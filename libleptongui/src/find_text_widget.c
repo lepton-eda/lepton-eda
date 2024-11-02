@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -187,9 +187,14 @@ finalize (GObject *object)
 }
 
 
-/*! \brief Create the text find dialog
+/*! \brief Populate and show the text find dialog.
  *  \par Function Description
- *  This function creates the text find dialog.
+ *  This function populates \a find_text_widget with child widgets
+ *  and adds \p str as an initial string to search for if it is
+ *  not NULL.
+ *
+ *  \param [in] find_text_widget The Find text dialog widget.
+ *  \param [in] str The string to search for.
  */
 void
 find_text_dialog (GtkWidget *find_text_widget,
