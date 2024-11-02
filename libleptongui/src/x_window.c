@@ -421,7 +421,7 @@ schematic_window_pack_widget (GtkWidget *parent_widget,
 
 
 
-void
+GtkWidget*
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
@@ -439,6 +439,8 @@ schematic_window_create_hide_text_widget (SchematicWindow *w_current,
 
   g_signal_connect (hide_text_widget, "response",
                     G_CALLBACK (&x_window_hide_text), w_current);
+
+  return hide_text_widget;
 }
 
 
