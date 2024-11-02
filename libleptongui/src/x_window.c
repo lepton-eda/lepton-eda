@@ -654,7 +654,7 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 
 
 
-void
+GtkWidget*
 schematic_window_create_find_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
@@ -668,6 +668,7 @@ schematic_window_create_find_text_widget (SchematicWindow *w_current,
 
   g_signal_connect (find_text_widget, "response",
                     G_CALLBACK (&x_window_find_text), w_current);
+  return find_text_widget;
 }
 
 
