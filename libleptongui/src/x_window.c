@@ -109,7 +109,7 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 } /* x_window_setup_draw_events_drawing_area() */
 
 
-static void
+void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
   LeptonPage *page = NULL;
