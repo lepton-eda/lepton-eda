@@ -552,7 +552,6 @@
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
-            *x_event_enter
             schematic_event_get_button
             schematic_event_is_double_button_press
             schematic_event_get_doing_stroke
@@ -1179,7 +1178,6 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lfc *x_event_enter)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())

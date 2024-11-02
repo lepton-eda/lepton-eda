@@ -906,10 +906,6 @@ gboolean
 x_event_configure (SchematicCanvas *page_view,
                    GdkEventConfigure *event,
                    gpointer user_data);
-gint
-x_event_enter(GtkWidget *widget,
-              GdkEventCrossing *event,
-              SchematicWindow *w_current);
 GdkEventKey*
 x_event_key (SchematicCanvas *page_view,
              GdkEventKey *event,
