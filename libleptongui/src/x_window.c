@@ -82,26 +82,6 @@ void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
 }
 
 
-
-/*! \brief Set up callbacks for window events that affect drawing.
- *  \par Function Description
- *
- * Installs GTK+ callback handlers for the main window
- * that affect the drawing area.
- *
- * \param [in] w_current   The toplevel environment.
- * \param [in] main_window The main window.
- */
-void x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
-                                          GtkWidget* main_window)
-{
-  g_signal_connect (main_window,
-                    "enter_notify_event",
-                    G_CALLBACK(x_event_enter),
-                    w_current);
-} /* x_window_setup_draw_events_main_wnd() */
-
-
 /*! \brief Set up callbacks for the drawing area.
  *  \par Function Description
  *
