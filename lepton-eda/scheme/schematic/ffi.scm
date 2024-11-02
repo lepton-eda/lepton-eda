@@ -272,7 +272,6 @@
             *x_window_select_object
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
-            x_window_setup_draw_events_main_wnd
             x_window_setup_scrolling
             x_window_untitled_page
             schematic_window_create_app_window
@@ -553,6 +552,7 @@
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
+            *x_event_enter
             schematic_event_get_button
             schematic_event_is_double_button_press
             schematic_event_get_doing_stroke
@@ -918,7 +918,6 @@
 (define-lfc *x_window_select_object)
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
-(define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
@@ -1180,6 +1179,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
+(define-lfc *x_event_enter)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())

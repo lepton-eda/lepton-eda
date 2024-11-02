@@ -766,8 +766,13 @@ zooming."
   (procedure->pointer int callback-motion '(* * *)))
 
 
+;;; Set up GTK+ callback handlers for the *MAIN-WINDOW widget of
+;;; *WINDOW.
 (define (setup-main-window-draw-events *window *main-window)
-  (x_window_setup_draw_events_main_wnd *window *main-window))
+  (g_signal_connect *main-window
+                    (string->pointer "enter-notify-event")
+                    *x_event_enter
+                    *window))
 
 
 (define (setup-canvas-draw-events *window *canvas)

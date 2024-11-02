@@ -1115,9 +1115,6 @@ void
 x_window_create_drawing (GtkWidget *drawbox,
                          SchematicWindow *w_current);
 void
-x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
-                                     GtkWidget*      main_window);
-void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                          SchematicCanvas* drawing_area);
 GtkWidget*
