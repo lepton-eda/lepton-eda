@@ -344,7 +344,7 @@
             lepton_object_list_delete
             lepton_object_list_to_buffer
             lepton_object_list_translate
-            o_glist_copy_all
+            lepton_object_list_copy
 
             lepton_page_get_changed
             lepton_page_set_changed
@@ -697,7 +697,7 @@
 (define-lff lepton_object_list_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_list_delete void '(*))
 (define-lff lepton_object_list_to_buffer '* '(*))
-(define-lff o_glist_copy_all '* '(* *))
+(define-lff lepton_object_list_copy '* '(* *))
 (define-lff lepton_object_list_translate void  (list '* int int))
 
 ;;; page.c

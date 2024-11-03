@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ lepton_object_list_translate (const GList *objects,
                               int dx,
                               int dy);
 GList*
-o_glist_copy_all (const GList *src_list,
-                  GList *dest_list);
+lepton_object_list_copy (const GList *src_list,
+                         GList *dest_list);
 
 G_END_DECLS

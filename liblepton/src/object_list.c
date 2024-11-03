@@ -120,8 +120,8 @@ lepton_object_list_bounds (const GList *head,
  *  \return the dest_list GList with objects appended to it.
  */
 GList*
-o_glist_copy_all (const GList *src_list,
-                  GList *dest_list)
+lepton_object_list_copy (const GList *src_list,
+                         GList *dest_list)
 {
   const GList *src;
   GList *dest;

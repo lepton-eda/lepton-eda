@@ -303,8 +303,8 @@ o_undo_savestate (SchematicWindow *w_current,
   }
   else if (w_current->undo_type == UNDO_MEMORY && !only_viewport)
   {
-    object_list = o_glist_copy_all (lepton_page_objects (page),
-                                    object_list);
+    object_list = lepton_object_list_copy (lepton_page_objects (page),
+                                           object_list);
   }
 
   /* Clear Anything above current */

@@ -92,7 +92,7 @@ removed from the selection and the hook won't be run."
     (lepton_object_list_delete (buffer-list-ref buffer-number))
 
     ;; Make a copy of selected objects.
-    (let ((*objects (o_glist_copy_all *selection %null-pointer)))
+    (let ((*objects (lepton_object_list_copy *selection %null-pointer)))
       (buffer-list-set! buffer-number *objects)
       (if cut?
           (delete-selection *window)
@@ -131,8 +131,8 @@ place list at the point ANCHOR."
     (schematic_window_delete_place_list *window)
     ;; Replace it with a list from buffer.
     (schematic_window_set_place_list *window
-                                     (o_glist_copy_all (buffer-list-ref buffer-n)
-                                                       %null-pointer))
+                                     (lepton_object_list_copy (buffer-list-ref buffer-n)
+                                                              %null-pointer))
     ;; Return the current place list.
     (schematic_window_get_place_list *window))
 

@@ -264,8 +264,8 @@ success, #f on failure."
               (when (and (eq? (undo-type window) 'memory)
                          (not (null-pointer? (lepton_undo_get_object_list *undo-to-do))))
                 (lepton_page_append_list *page
-                                         (o_glist_copy_all (lepton_undo_get_object_list *undo-to-do)
-                                                           %null-pointer))))
+                                         (lepton_object_list_copy (lepton_undo_get_object_list *undo-to-do)
+                                                                  %null-pointer))))
 
           ;; Restore hierarchy.
           (restore-hierarchy-by-undo *page *undo-to-do)

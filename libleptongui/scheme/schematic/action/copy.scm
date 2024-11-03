@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023 Lepton EDA Contributors
+;;; Copyright (C) 2023-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -60,8 +60,8 @@ position, with future motion relative to the mouse origin, (X
 
       (schematic_window_set_place_list
        *window
-       (o_glist_copy_all *selection
-                         (schematic_window_get_place_list *window)))
+       (lepton_object_list_copy *selection
+                                (schematic_window_get_place_list *window)))
 
       (let ((objects
              (glist->list (schematic_window_get_place_list *window)

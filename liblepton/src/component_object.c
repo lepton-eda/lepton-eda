@@ -1244,7 +1244,7 @@ lepton_component_copy (LeptonObject *o_current)
   /* Copy contents and set the parent pointers on the copied objects. */
   primitives = lepton_component_object_get_contents (o_current);
   lepton_component_object_set_contents (o_new,
-                                        o_glist_copy_all (primitives, NULL));
+                                        lepton_object_list_copy (primitives, NULL));
 
   for (iter = lepton_component_object_get_contents (o_new);
        iter != NULL;

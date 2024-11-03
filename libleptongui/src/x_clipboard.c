@@ -190,7 +190,7 @@ x_clipboard_set (SchematicWindow *w_current,
 
   /* Copy the objects to the clipboard buffer */
   w_current->clipboard_buffer =
-    o_glist_copy_all (object_list, w_current->clipboard_buffer);
+    lepton_object_list_copy (object_list, w_current->clipboard_buffer);
 
   /* Advertise that the data is available */
   result = gtk_clipboard_set_with_data (cb, &target, 1,
