@@ -396,6 +396,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *button_box;
   GtkWidget *cancel_button;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
+  GtkWidget *entry = gtk_entry_new ();
   GtkCellRenderer *text_cell;
 
   g_return_if_fail (widget != NULL);
@@ -412,9 +413,8 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->combo), text_cell, TRUE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (widget->combo), text_cell, "text", COLUMN_NAME);
 
-  widget->entry = gtk_entry_new ();
-  gtk_widget_set_visible (widget->entry, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->entry, TRUE, TRUE, 0);
+  gtk_widget_set_visible (entry, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), entry, TRUE, TRUE, 0);
 
   widget->descend_button = gtk_check_button_new_with_label(_("descend into hierarchy"));
   gtk_widget_set_visible (widget->descend_button, TRUE);
@@ -440,7 +440,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (widget->entry),
+  g_signal_connect (G_OBJECT (entry),
                     "activate",
                     G_CALLBACK (activate_entry),
                     widget);
@@ -460,10 +460,12 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
                     G_CALLBACK (click_find),
                     widget);
 
-  g_signal_connect (G_OBJECT (widget->entry),
+  g_signal_connect (G_OBJECT (entry),
                     "notify::text",
                     G_CALLBACK (notify_entry_text),
                     widget);
+
+  schematic_find_text_widget_set_entry (widget, entry);
 }
 
 
