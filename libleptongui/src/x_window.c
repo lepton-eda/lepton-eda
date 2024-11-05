@@ -431,7 +431,6 @@ schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                NULL);
 
   GtkWidget *hide_text_widget = GTK_WIDGET (obj);
-  schematic_window_set_hide_text_widget (w_current, hide_text_widget);
 
   gtk_box_pack_start (GTK_BOX (work_box),
                       hide_text_widget,
