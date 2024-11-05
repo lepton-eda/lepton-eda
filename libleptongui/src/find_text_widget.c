@@ -342,14 +342,16 @@ schematic_find_text_widget_changed_type (GtkWidget *combo,
 {
   g_return_if_fail (widget != NULL);
 
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
   if (schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
   {
     gtk_widget_set_sensitive (widget->find_button, TRUE);
-    gtk_widget_set_visible (widget->entry, FALSE);
+    gtk_widget_set_visible (entry, FALSE);
     gtk_widget_set_visible (widget->descend_button, FALSE);
   } else {
     gtk_widget_set_sensitive (widget->find_button, FALSE);
-    gtk_widget_set_visible (widget->entry, TRUE);
+    gtk_widget_set_visible (entry, TRUE);
     gtk_widget_set_visible (widget->descend_button, TRUE);
   }
 }
