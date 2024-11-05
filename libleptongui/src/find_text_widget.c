@@ -690,22 +690,24 @@ schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
 
   g_return_if_fail (widget != NULL);
 
+  GtkTreeModel *find_type_model =
+    schematic_find_text_widget_get_find_type_model (widget);
   GtkWidget *combo = schematic_find_text_widget_get_combo (widget);
 
   if (type >= 0) {
     gboolean success;
     GValue value = {0};
 
-    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (widget->find_type_model), &iter);
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (find_type_model), &iter);
     while (success) {
-      gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
+      gtk_tree_model_get_value (GTK_TREE_MODEL (find_type_model), &iter, COLUMN_INDEX, &value);
       if (g_value_get_int (&value) == type) {
         g_value_unset (&value);
         active = &iter;
         break;
       }
       g_value_unset (&value);
-      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(widget->find_type_model), &iter);
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(find_type_model), &iter);
     }
   }
 
