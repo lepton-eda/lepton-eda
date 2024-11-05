@@ -791,7 +791,10 @@ schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_widget_set_sensitive (widget->find_button,
+  GtkWidget *find_button =
+    schematic_find_text_widget_get_find_button (widget);
+
+  gtk_widget_set_sensitive (find_button,
                             (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0));
 }
 
