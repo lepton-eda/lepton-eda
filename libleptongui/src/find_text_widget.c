@@ -144,7 +144,8 @@ activate_entry (GtkWidget *entry,
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0) {
+  if (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0)
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
   }
   else {
