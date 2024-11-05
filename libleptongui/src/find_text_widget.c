@@ -690,6 +690,8 @@ schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
 
   g_return_if_fail (widget != NULL);
 
+  GtkWidget *combo = schematic_find_text_widget_get_combo (widget);
+
   if (type >= 0) {
     gboolean success;
     GValue value = {0};
@@ -707,7 +709,7 @@ schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
     }
   }
 
-  gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget->combo), active);
+  gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), active);
 
   g_object_notify (G_OBJECT (widget), "find-type");
 }
