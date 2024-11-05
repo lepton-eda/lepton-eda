@@ -554,10 +554,14 @@ schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
   int index = -1;
   GtkTreeIter iter;
   GValue value = {0};
+  GtkWidget *combo = NULL;
 
   g_return_val_if_fail (widget != NULL, 0);
 
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget->combo), &iter)) {
+  combo = schematic_find_text_widget_get_combo (widget);
+
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
+  {
     gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
     index = g_value_get_int (&value);
     g_value_unset (&value);
