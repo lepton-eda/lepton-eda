@@ -536,7 +536,10 @@ schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->descend_button));
+  GtkWidget *descend_button =
+    schematic_find_text_widget_get_descend_button (widget);
+
+  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (descend_button));
 }
 
 
