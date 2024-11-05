@@ -79,6 +79,12 @@ schematic_find_text_widget_new ();
 
 /* Accessors */
 GtkWidget*
+schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
+                                      GtkWidget *combo);
+GtkWidget*
 schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
 
 void

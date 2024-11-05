@@ -84,6 +84,41 @@ G_DEFINE_TYPE (SchematicFindTextWidget,
                GTK_TYPE_INFO_BAR);
 
 
+/*! \brief Get the combo widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the combo widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The combo widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->combo;
+}
+
+
+/*! \brief Set the combo widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the combo widget of the Find text widget to \p combo.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] combo The combo widget.
+ */
+void
+schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
+                                      GtkWidget *combo)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->combo = combo;
+}
+
+
 /*! \brief Get the entry widget of the Find text widget.
  *
  *  \par Function Description
