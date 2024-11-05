@@ -559,6 +559,14 @@ create_find_type_store ()
 
 
 /*! \brief Update the sensitivity of the find button
+ *  \par Function Description
+ *  This callback makes the Find text button sensitive or
+ *  insensitive depending on the contents of the \a entry field of
+ *  the Find text widget.
+ *
+ *  \param [in] entry The entry widget.
+ *  \param [in] pspec The parameter spec (unused).
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
 static void
 notify_entry_text (GtkWidget *entry,
