@@ -450,13 +450,14 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
   GtkWidget *entry = gtk_entry_new ();
   GtkCellRenderer *text_cell;
+  GtkTreeModel *find_type_model = NULL;
 
   g_return_if_fail (widget != NULL);
 
   gtk_widget_set_no_show_all (GTK_WIDGET (widget), TRUE);
 
-  widget->find_type_model = GTK_TREE_MODEL (create_find_type_store ());
-  widget->combo = gtk_combo_box_new_with_model (widget->find_type_model);
+  find_type_model = GTK_TREE_MODEL (create_find_type_store ());
+  widget->combo = gtk_combo_box_new_with_model (find_type_model);
   gtk_widget_set_visible (widget->combo, TRUE);
   gtk_box_pack_start (GTK_BOX (content), widget->combo, FALSE, FALSE, 0);
 
@@ -508,6 +509,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
                     widget);
 
   schematic_find_text_widget_set_entry (widget, entry);
+  schematic_find_text_widget_set_find_type_model (widget, find_type_model);
 }
 
 
