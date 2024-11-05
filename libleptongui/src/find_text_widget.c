@@ -602,6 +602,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *button_box;
   GtkWidget *cancel_button;
   GtkWidget *combo = NULL;
+  GtkWidget *descend_button = NULL;
   GtkWidget *find_button = NULL;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
   GtkWidget *entry = gtk_entry_new ();
@@ -625,9 +626,9 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_visible (entry, TRUE);
   gtk_box_pack_start (GTK_BOX (content), entry, TRUE, TRUE, 0);
 
-  widget->descend_button = gtk_check_button_new_with_label(_("descend into hierarchy"));
-  gtk_widget_set_visible (widget->descend_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->descend_button, FALSE, FALSE, 0);
+  descend_button = gtk_check_button_new_with_label(_("descend into hierarchy"));
+  gtk_widget_set_visible (descend_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), descend_button, FALSE, FALSE, 0);
 
 #ifdef ENABLE_GTK3
   button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -653,6 +654,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   schematic_find_text_widget_set_find_type_model (widget, find_type_model);
   schematic_find_text_widget_set_combo (widget, combo);
   schematic_find_text_widget_set_cancel_button (widget, cancel_button);
+  schematic_find_text_widget_set_descend_button (widget, descend_button);
   schematic_find_text_widget_set_find_button (widget, find_button);
 }
 
