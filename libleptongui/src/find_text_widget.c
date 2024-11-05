@@ -573,7 +573,9 @@ schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
-  return gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  return gtk_entry_get_text (GTK_ENTRY (entry));
 }
 
 
