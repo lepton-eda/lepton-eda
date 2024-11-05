@@ -549,6 +549,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *button_box;
   GtkWidget *cancel_button;
   GtkWidget *combo = NULL;
+  GtkWidget *find_button = NULL;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
   GtkWidget *entry = gtk_entry_new ();
   GtkCellRenderer *text_cell;
@@ -583,10 +584,10 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
 
-  widget->find_button = gtk_button_new_with_label (_("Find"));
-  gtk_widget_set_sensitive (widget->find_button, FALSE);
-  gtk_widget_set_visible (widget->find_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (button_box), widget->find_button, FALSE, FALSE, 0);
+  find_button = gtk_button_new_with_label (_("Find"));
+  gtk_widget_set_sensitive (find_button, FALSE);
+  gtk_widget_set_visible (find_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (button_box), find_button, FALSE, FALSE, 0);
 
   cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
   gtk_widget_set_visible (cancel_button, TRUE);
@@ -595,7 +596,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (widget->find_button),
+  g_signal_connect (G_OBJECT (find_button),
                     "clicked",
                     G_CALLBACK (click_find),
                     widget);
@@ -604,6 +605,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   schematic_find_text_widget_set_find_type_model (widget, find_type_model);
   schematic_find_text_widget_set_combo (widget, combo);
   schematic_find_text_widget_set_cancel_button (widget, cancel_button);
+  schematic_find_text_widget_set_find_button (widget, find_button);
 }
 
 
