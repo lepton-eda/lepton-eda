@@ -1912,6 +1912,35 @@ schematic_window_set_hide_text_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get show text widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The widget.
+ */
+GtkWidget*
+schematic_window_get_show_text_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->show_text_widget;
+}
+
+
+/*! \brief Set show text widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_show_text_widget (SchematicWindow *w_current,
+                                       GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->show_text_widget = widget;
+}
+
+
 /*! \brief Set color edit widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
