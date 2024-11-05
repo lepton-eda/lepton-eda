@@ -319,6 +319,25 @@ schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
 
 
 
+/*! \brief Set the entry widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the entry widget of the Find text widget to \p entry.
+ *
+ *  \param [in] widget This SchematicFindTextWidget.
+ *  \param [in] entry The entry widget.
+ */
+void
+schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
+                                      GtkWidget *entry)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->entry = entry;
+}
+
+
+
 /*! \brief Get the type of find to perform
  *
  *  \param [in] widget This SchematicFindTextWidget
