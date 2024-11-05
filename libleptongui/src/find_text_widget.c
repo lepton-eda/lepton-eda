@@ -466,11 +466,6 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
                     G_CALLBACK (click_find),
                     widget);
 
-  g_signal_connect (G_OBJECT (entry),
-                    "notify::text",
-                    G_CALLBACK (schematic_find_text_widget_notify_entry_text),
-                    widget);
-
   schematic_find_text_widget_set_entry (widget, entry);
 }
 

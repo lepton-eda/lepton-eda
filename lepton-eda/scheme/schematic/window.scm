@@ -1360,6 +1360,10 @@ GtkApplication structure of the program (when compiled with
           (g_signal_connect *entry
                             (string->pointer "activate")
                             *schematic_find_text_widget_activate_entry
+                            *find-text-widget)
+          (g_signal_connect *entry
+                            (string->pointer "notify::text")
+                            *schematic_find_text_widget_notify_entry_text
                             *find-text-widget)))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
