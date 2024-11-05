@@ -184,6 +184,42 @@ schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
 }
 
 
+/*! \brief Get the Find button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the Find button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The Find button widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_find_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->find_button;
+}
+
+
+/*! \brief Set the Find button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the Find button widget of the Find text widget to the
+ *   given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] find_button The new Find button widget value.
+ */
+void
+schematic_find_text_widget_set_find_button (SchematicFindTextWidget *widget,
+                                            GtkWidget *find_button)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->find_button = find_button;
+}
+
+
 /*! \brief Get the field \c find_type_model of the Find text
  *   widget.
  *
