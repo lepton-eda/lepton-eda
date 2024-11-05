@@ -613,7 +613,7 @@ notify_entry_text (GtkWidget *entry,
   g_return_if_fail (widget != NULL);
 
   gtk_widget_set_sensitive (widget->find_button,
-                            (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0));
+                            (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0));
 }
 
 
