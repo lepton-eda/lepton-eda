@@ -443,9 +443,12 @@ find_text_dialog (GtkWidget *find_text_widget,
                                                      str);
   }
 
+  GtkWidget *entry =
+    schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget));
+
   gtk_widget_show (GTK_WIDGET (find_text_widget));
-  gtk_widget_grab_focus (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget))), 0, -1);
+  gtk_widget_grab_focus (entry);
+  gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);
 }
 
 
