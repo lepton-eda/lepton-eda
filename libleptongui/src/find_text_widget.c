@@ -482,6 +482,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
   GtkWidget *cancel_button;
+  GtkWidget *combo = NULL;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
   GtkWidget *entry = gtk_entry_new ();
   GtkCellRenderer *text_cell;
@@ -492,14 +493,14 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (GTK_WIDGET (widget), TRUE);
 
   find_type_model = GTK_TREE_MODEL (create_find_type_store ());
-  widget->combo = gtk_combo_box_new_with_model (find_type_model);
-  gtk_widget_set_visible (widget->combo, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->combo, FALSE, FALSE, 0);
+  combo = gtk_combo_box_new_with_model (find_type_model);
+  gtk_widget_set_visible (combo, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), combo, FALSE, FALSE, 0);
 
   text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
   g_object_set (text_cell, "xpad", 5, NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->combo), text_cell, TRUE);
-  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (widget->combo), text_cell, "text", COLUMN_NAME);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), text_cell, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), text_cell, "text", COLUMN_NAME);
 
   gtk_widget_set_visible (entry, TRUE);
   gtk_box_pack_start (GTK_BOX (content), entry, TRUE, TRUE, 0);
@@ -528,7 +529,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (widget->combo),
+  g_signal_connect (G_OBJECT (combo),
                     "changed",
                     G_CALLBACK (changed_type),
                     widget);
@@ -545,6 +546,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   schematic_find_text_widget_set_entry (widget, entry);
   schematic_find_text_widget_set_find_type_model (widget, find_type_model);
+  schematic_find_text_widget_set_combo (widget, combo);
 }
 
 
