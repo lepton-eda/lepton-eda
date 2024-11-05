@@ -146,6 +146,44 @@ schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
 }
 
 
+/*! \brief Get the \c descend_button widget of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *  Returns the \c descend_button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The \c descend_button widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_descend_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->descend_button;
+}
+
+
+/*! \brief Set the \c descend_button widget of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *  Sets the \c descend_button widget of the Find text widget to
+ *  the given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] descend_button The new \c descend_button value.
+ */
+void
+schematic_find_text_widget_set_descend_button (SchematicFindTextWidget *widget,
+                                               GtkWidget *descend_button)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->descend_button = descend_button;
+}
+
+
 /*! \brief Get the entry widget of the Find text widget.
  *
  *  \par Function Description

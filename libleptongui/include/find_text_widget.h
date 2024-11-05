@@ -92,6 +92,12 @@ void
 schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
                                       GtkWidget *combo);
 GtkWidget*
+schematic_find_text_widget_get_descend_button (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_descend_button (SchematicFindTextWidget *widget,
+                                               GtkWidget *descend_button);
+GtkWidget*
 schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
 
 void
