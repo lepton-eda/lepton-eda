@@ -84,6 +84,12 @@ schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
 void
 schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
                                       GtkWidget *entry);
+GtkTreeModel*
+schematic_find_text_widget_get_find_type_model (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_find_type_model (SchematicFindTextWidget *widget,
+                                                GtkTreeModel *find_type_model);
 /* Callbacks */
 void
 schematic_find_text_widget_activate_entry (GtkWidget *entry,

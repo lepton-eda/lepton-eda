@@ -119,6 +119,47 @@ schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
 }
 
 
+/*! \brief Get the field \c find_type_model of the Find text
+ *   widget.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c find_type_model field the Find
+ *  text widget instance.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The \c find_type_model field value.
+ */
+GtkTreeModel*
+schematic_find_text_widget_get_find_type_model (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->find_type_model;
+}
+
+
+/*! \brief Set the field \c find_type_model of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *   Sets the field \c find_type_model of the Find text widget
+ *   instance to the given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] find_type_model The new value of the \c
+ *                              find_type_model field.
+ */
+void
+schematic_find_text_widget_set_find_type_model (SchematicFindTextWidget *widget,
+                                                GtkTreeModel *find_type_model)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->find_type_model = find_type_model;
+}
+
+
+
 /*! \brief Callback called on Enter press in the entry widget.
  *  \par Function Description
  *  This function emits an appropriate response ID depending on
