@@ -716,7 +716,9 @@ schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_entry_set_text (GTK_ENTRY (widget->entry), str);
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  gtk_entry_set_text (GTK_ENTRY (entry), str);
 
   g_object_notify (G_OBJECT (widget), "find-text-string");
 }
