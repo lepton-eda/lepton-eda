@@ -367,7 +367,9 @@ schematic_find_text_widget_click_find (GtkWidget *find_button,
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0 ||
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  if (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0 ||
       schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
   {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
