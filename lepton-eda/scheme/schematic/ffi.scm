@@ -245,6 +245,7 @@
             schematic_find_text_widget_new
             schematic_find_text_widget_get_entry
             schematic_find_text_widget_set_entry
+            *schematic_find_text_widget_activate_entry
 
             find_text_dialog
             hide_text_dialog
@@ -1016,6 +1017,7 @@
 (define-lff schematic_find_text_widget_new '* '())
 (define-lff schematic_find_text_widget_get_entry '* '(*))
 (define-lff schematic_find_text_widget_set_entry void '(* *))
+(define-lfc *schematic_find_text_widget_activate_entry)
 (define-lff find_text_dialog void '(* *))
 
 ;;; show_hide_text_widget.c

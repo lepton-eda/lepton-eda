@@ -48,10 +48,6 @@ enum
 
 
 
-
-static void
-activate_entry (GtkWidget *entry,
-                SchematicFindTextWidget *widget);
 static void
 click_cancel (GtkWidget *button,
               SchematicFindTextWidget *widget);
@@ -138,9 +134,9 @@ schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
  *  \param [in] entry The entry widget pointer.
  *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-activate_entry (GtkWidget *entry,
-                SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_activate_entry (GtkWidget *entry,
+                                           SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -462,7 +458,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   g_signal_connect (G_OBJECT (entry),
                     "activate",
-                    G_CALLBACK (activate_entry),
+                    G_CALLBACK (schematic_find_text_widget_activate_entry),
                     widget);
 
   g_signal_connect (G_OBJECT (widget->combo),
