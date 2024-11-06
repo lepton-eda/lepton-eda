@@ -526,11 +526,6 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (combo),
-                    "changed",
-                    G_CALLBACK (schematic_find_text_widget_changed_type),
-                    widget);
-
   g_signal_connect (G_OBJECT (cancel_button),
                     "clicked",
                     G_CALLBACK (click_cancel),
