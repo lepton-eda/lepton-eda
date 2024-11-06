@@ -52,9 +52,6 @@ static void
 click_cancel (GtkWidget *button,
               SchematicFindTextWidget *widget);
 static void
-changed_type (GtkWidget *entry,
-              SchematicFindTextWidget *widget);
-static void
 click_find (GtkWidget *entry,
             SchematicFindTextWidget *widget);
 static GtkListStore*
@@ -235,9 +232,9 @@ click_cancel (GtkWidget *button,
 
 /* Callback for when the user changes combo box active item
  */
-static void
-changed_type (GtkWidget *combo,
-              SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_changed_type (GtkWidget *combo,
+                                         SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -531,7 +528,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   g_signal_connect (G_OBJECT (combo),
                     "changed",
-                    G_CALLBACK (changed_type),
+                    G_CALLBACK (schematic_find_text_widget_changed_type),
                     widget);
 
   g_signal_connect (G_OBJECT (cancel_button),
