@@ -243,6 +243,8 @@
             schematic_find_text_state_new
 
             schematic_find_text_widget_new
+            schematic_find_text_widget_get_combo
+            schematic_find_text_widget_set_combo
             schematic_find_text_widget_get_entry
             schematic_find_text_widget_set_entry
             *schematic_find_text_widget_activate_entry
@@ -1017,6 +1019,8 @@
 
 ;;; find_text_widget.c
 (define-lff schematic_find_text_widget_new '* '())
+(define-lff schematic_find_text_widget_get_combo '* '(*))
+(define-lff schematic_find_text_widget_set_combo void '(* *))
 (define-lff schematic_find_text_widget_get_entry '* '(*))
 (define-lff schematic_find_text_widget_set_entry void '(* *))
 (define-lfc *schematic_find_text_widget_activate_entry)
