@@ -93,6 +93,41 @@ G_DEFINE_TYPE (SchematicFindTextWidget,
                GTK_TYPE_INFO_BAR);
 
 
+/*! \brief Get the entry widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the entry widget of the Find text widget.
+ *
+ *  \param [in] widget This #SchematicFindTextWidget.
+ *  \return The entry widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->entry;
+}
+
+
+/*! \brief Set the entry widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the entry widget of the Find text widget to \p entry.
+ *
+ *  \param [in] widget This SchematicFindTextWidget.
+ *  \param [in] entry The entry widget.
+ */
+void
+schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
+                                      GtkWidget *entry)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->entry = entry;
+}
+
+
 
 /* Callback for when the user presses enter in the entry widget
  */
@@ -301,44 +336,6 @@ schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 
   return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->descend_button));
 }
-
-
-
-/*! \brief Get the entry widget of the Find text widget.
- *
- *  \par Function Description
- *  Returns the entry widget of the Find text widget.
- *
- *  \param [in] widget This #SchematicFindTextWidget.
- *  \return The entry widget.
- */
-GtkWidget*
-schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
-{
-  g_return_val_if_fail (widget != NULL, NULL);
-
-  return widget->entry;
-}
-
-
-
-/*! \brief Set the entry widget of the Find text widget.
- *
- *  \par Function Description
- *   Sets the entry widget of the Find text widget to \p entry.
- *
- *  \param [in] widget This SchematicFindTextWidget.
- *  \param [in] entry The entry widget.
- */
-void
-schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
-                                      GtkWidget *entry)
-{
-  g_return_if_fail (widget != NULL);
-
-  widget->entry = entry;
-}
-
 
 
 /*! \brief Get the type of find to perform
