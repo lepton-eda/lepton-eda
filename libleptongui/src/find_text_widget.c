@@ -128,8 +128,15 @@ schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
 }
 
 
-
-/* Callback for when the user presses enter in the entry widget
+/*! \brief Callback called on Enter press in the entry widget.
+ *  \par Function Description
+ *  This function emits an appropriate response ID depending on
+ *  the contents of the entry widget.  It emits \a GTK_RESPONSE_OK
+ *  if any text is present in the entry, otherwise it emits \a
+ *  GTK_RESPONSE_CANCEL.
+ *
+ *  \param [in] entry The entry widget pointer.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
 static void
 activate_entry (GtkWidget *entry,
