@@ -88,4 +88,8 @@ schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
 void
 schematic_find_text_widget_activate_entry (GtkWidget *entry,
                                            SchematicFindTextWidget *widget);
+void
+schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
+                                              GParamSpec *pspec,
+                                              SchematicFindTextWidget *widget);
 G_END_DECLS

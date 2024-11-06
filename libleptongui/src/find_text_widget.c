@@ -78,11 +78,6 @@ schematic_find_text_widget_init (SchematicFindTextWidget *view);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
-static void
-notify_entry_text (GtkWidget *entry,
-                   GParamSpec *pspec,
-                   SchematicFindTextWidget *widget);
-
 
 G_DEFINE_TYPE (SchematicFindTextWidget,
                schematic_find_text_widget,
@@ -473,7 +468,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   g_signal_connect (G_OBJECT (entry),
                     "notify::text",
-                    G_CALLBACK (notify_entry_text),
+                    G_CALLBACK (schematic_find_text_widget_notify_entry_text),
                     widget);
 
   schematic_find_text_widget_set_entry (widget, entry);
@@ -605,10 +600,10 @@ create_find_type_store ()
  *  \param [in] pspec The parameter spec (unused).
  *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-notify_entry_text (GtkWidget *entry,
-                   GParamSpec *pspec,
-                   SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
+                                              GParamSpec *pspec,
+                                              SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
