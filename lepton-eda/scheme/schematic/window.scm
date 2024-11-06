@@ -1355,7 +1355,12 @@ GtkApplication structure of the program (when compiled with
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
                           *x_window_find_text
-                          *window))
+                          *window)
+        (let ((*entry (schematic_find_text_widget_get_entry *find-text-widget)))
+          (g_signal_connect *entry
+                            (string->pointer "activate")
+                            *schematic_find_text_widget_activate_entry
+                            *find-text-widget)))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
       (schematic_window_create_macro_widget *window *work-box)
