@@ -54,12 +54,6 @@ struct _SchematicFindTextWidget
 int
 schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget);
 
-GtkWidget*
-schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
-
-void
-schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
-                                      GtkWidget *entry);
 const char*
 schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
 
@@ -83,4 +77,10 @@ G_BEGIN_DECLS
 GtkWidget*
 schematic_find_text_widget_new ();
 
+GtkWidget*
+schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
+                                      GtkWidget *entry);
 G_END_DECLS
