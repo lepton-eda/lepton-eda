@@ -69,6 +69,9 @@ schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
 GType
 schematic_find_text_widget_get_type ();
 
+GtkWidget*
+schematic_find_text_widget_new ();
+
 void
 schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
                                         int descend);

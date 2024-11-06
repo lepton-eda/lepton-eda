@@ -202,6 +202,25 @@ click_find (GtkWidget *entry,
 }
 
 
+/*! \brief Create a new Find text widget instance.
+ *
+ *  \par Function Description
+ *  This function creates a new #SchematicFindTextWidget instance,
+ *  casts it to \c GtkWidget, and returns the pointer to the
+ *  widget.
+ *
+ *  \return The new Find text widget.
+ */
+GtkWidget*
+schematic_find_text_widget_new ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
+
+  GtkWidget *find_text_widget = GTK_WIDGET (obj);
+
+  return find_text_widget;
+}
+
 
 /*! \brief Dispose of the object
  */

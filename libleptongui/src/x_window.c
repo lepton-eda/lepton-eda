@@ -657,9 +657,7 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 GtkWidget*
 schematic_window_create_find_text_widget (GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
-
-  GtkWidget *find_text_widget = GTK_WIDGET (obj);
+  GtkWidget *find_text_widget = schematic_find_text_widget_new ();
 
   gtk_box_pack_start (GTK_BOX (work_box), find_text_widget, FALSE, FALSE, 0);
 
