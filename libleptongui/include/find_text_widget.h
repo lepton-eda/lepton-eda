@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,9 +69,6 @@ schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
 GType
 schematic_find_text_widget_get_type ();
 
-GtkWidget*
-schematic_find_text_widget_new ();
-
 void
 schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
                                         int descend);
@@ -81,3 +78,9 @@ schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget
 void
 schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
                                           int type);
+G_BEGIN_DECLS
+
+GtkWidget*
+schematic_find_text_widget_new ();
+
+G_END_DECLS

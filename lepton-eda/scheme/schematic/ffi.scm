@@ -242,6 +242,8 @@
 
             schematic_find_text_state_new
 
+            schematic_find_text_widget_new
+
             find_text_dialog
             hide_text_dialog
             show_text_dialog
@@ -296,7 +298,6 @@
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
             schematic_window_create_canvas
-            schematic_window_create_find_text_widget
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
             schematic_window_create_macro_widget
@@ -304,6 +305,7 @@
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
+            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_show_all
@@ -949,7 +951,6 @@
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_canvas '* '(* *))
-(define-lff schematic_window_create_find_text_widget '* '(*))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_macro_widget void '(* *))
@@ -957,6 +958,7 @@
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
+(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_show_all void '(* *))
@@ -1009,6 +1011,7 @@
 (define-lff schematic_find_text_state_new '* '())
 
 ;;; find_text_widget.c
+(define-lff schematic_find_text_widget_new '* '())
 (define-lff find_text_dialog void '(* *))
 
 ;;; show_hide_text_widget.c

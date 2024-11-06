@@ -1129,9 +1129,9 @@ void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
-GtkWidget*
-schematic_window_create_find_text_widget (GtkWidget *work_box);
-
+void
+schematic_window_pack_widget (GtkWidget *work_box,
+                              GtkWidget *find_text_widget);
 void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
