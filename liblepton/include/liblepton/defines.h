@@ -39,9 +39,9 @@
 /* out there */
 
 /* Set this string to something interesting to create a custom */
-/* version of gEDA/gaf.  This string is prepended to all messages that */
+/* version of Lepton EDA.  This string is prepended to all messages that */
 /* output the program's version output.  You would set this if you are */
-/* creating a specific custom version of gEDA/gaf.  */
+/* creating a specific custom version of Lepton EDA.  */
 /* For example, if you set this string to "FIX-", the resulting output is:  */
 /* FIX-1.0.0.20060906. */
 #define PREPEND_VERSION_STRING ""
