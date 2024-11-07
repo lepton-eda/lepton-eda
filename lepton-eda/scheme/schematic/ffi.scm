@@ -243,6 +243,8 @@
             schematic_find_text_state_new
 
             schematic_find_text_widget_new
+            schematic_find_text_widget_get_cancel_button
+            schematic_find_text_widget_set_cancel_button
             schematic_find_text_widget_get_combo
             schematic_find_text_widget_set_combo
             schematic_find_text_widget_get_entry
@@ -1019,6 +1021,8 @@
 
 ;;; find_text_widget.c
 (define-lff schematic_find_text_widget_new '* '())
+(define-lff schematic_find_text_widget_get_cancel_button '* '(*))
+(define-lff schematic_find_text_widget_set_cancel_button void '(* *))
 (define-lff schematic_find_text_widget_get_combo '* '(*))
 (define-lff schematic_find_text_widget_set_combo void '(* *))
 (define-lff schematic_find_text_widget_get_entry '* '(*))
