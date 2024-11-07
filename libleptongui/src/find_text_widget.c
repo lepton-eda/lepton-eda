@@ -593,11 +593,6 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (find_button),
-                    "clicked",
-                    G_CALLBACK (schematic_find_text_widget_click_find),
-                    widget);
-
   schematic_find_text_widget_set_entry (widget, entry);
   schematic_find_text_widget_set_find_type_model (widget, find_type_model);
   schematic_find_text_widget_set_combo (widget, combo);
