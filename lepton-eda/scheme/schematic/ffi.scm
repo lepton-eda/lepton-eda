@@ -251,6 +251,7 @@
             schematic_find_text_widget_set_entry
             *schematic_find_text_widget_activate_entry
             *schematic_find_text_widget_changed_type
+            *schematic_find_text_widget_click_cancel
             *schematic_find_text_widget_notify_entry_text
 
             find_text_dialog
@@ -1029,6 +1030,7 @@
 (define-lff schematic_find_text_widget_set_entry void '(* *))
 (define-lfc *schematic_find_text_widget_activate_entry)
 (define-lfc *schematic_find_text_widget_changed_type)
+(define-lfc *schematic_find_text_widget_click_cancel)
 (define-lfc *schematic_find_text_widget_notify_entry_text)
 (define-lff find_text_dialog void '(* *))
 
