@@ -48,9 +48,6 @@ enum
 
 
 
-static void
-click_find (GtkWidget *entry,
-            SchematicFindTextWidget *widget);
 static GtkListStore*
 create_find_type_store ();
 
@@ -321,9 +318,9 @@ schematic_find_text_widget_changed_type (GtkWidget *combo,
 
 /* Callback for when the user clicks the find button
  */
-static void
-click_find (GtkWidget *entry,
-            SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_click_find (GtkWidget *entry,
+                                       SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -598,7 +595,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   g_signal_connect (G_OBJECT (find_button),
                     "clicked",
-                    G_CALLBACK (click_find),
+                    G_CALLBACK (schematic_find_text_widget_click_find),
                     widget);
 
   schematic_find_text_widget_set_entry (widget, entry);
