@@ -49,9 +49,6 @@ enum
 
 
 static void
-click_cancel (GtkWidget *button,
-              SchematicFindTextWidget *widget);
-static void
 click_find (GtkWidget *entry,
             SchematicFindTextWidget *widget);
 static GtkListStore*
@@ -221,9 +218,9 @@ schematic_find_text_widget_activate_entry (GtkWidget *entry,
 
 /* Callback for when the user clicks the cancel button
  */
-static void
-click_cancel (GtkWidget *button,
-              SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_click_cancel (GtkWidget *button,
+                                         SchematicFindTextWidget *widget)
 {
   gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
 }
@@ -528,7 +525,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
 
   g_signal_connect (G_OBJECT (cancel_button),
                     "clicked",
-                    G_CALLBACK (click_cancel),
+                    G_CALLBACK (schematic_find_text_widget_click_cancel),
                     widget);
 
   g_signal_connect (G_OBJECT (widget->find_button),
