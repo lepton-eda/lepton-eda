@@ -46,15 +46,21 @@
 /* FIX-1.0.0.20060906. */
 #define PREPEND_VERSION_STRING ""
 
-/* for show_name_value in st_objects */
+/* Possible values of the 'show' field in the LeptonText
+   structure. */
 #define SHOW_NAME_VALUE         0
 #define SHOW_VALUE              1
 #define SHOW_NAME               2
+/* This value is used in lepton-attrib to omit processing of the
+   field. */
 #define LEAVE_NAME_VALUE_ALONE  -1
 
-/* for visibility in st_objects */
+/* Possible values of the 'visibility' field in the LeptonText
+   structure. */
 #define INVISIBLE               0
 #define VISIBLE                 1
+/* This value is used in lepton-attrib to omit processing of the
+   field. */
 #define LEAVE_VISIBILITY_ALONE  -1
 
 /* various thicknesses (in mils) */
