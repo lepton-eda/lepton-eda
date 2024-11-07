@@ -362,7 +362,7 @@ schematic_find_text_widget_changed_type (GtkWidget *combo,
 /* Callback for when the user clicks the find button
  */
 void
-schematic_find_text_widget_click_find (GtkWidget *entry,
+schematic_find_text_widget_click_find (GtkWidget *find_button,
                                        SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);

@@ -126,7 +126,7 @@ void
 schematic_find_text_widget_click_cancel (GtkWidget *button,
                                          SchematicFindTextWidget *widget);
 void
-schematic_find_text_widget_click_find (GtkWidget *entry,
+schematic_find_text_widget_click_find (GtkWidget *find_button,
                                        SchematicFindTextWidget *widget);
 void
 schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
