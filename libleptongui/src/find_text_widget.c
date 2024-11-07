@@ -126,7 +126,7 @@ click_cancel (GtkWidget *button,
 /* Callback for when the user changes combo box active item
  */
 static void
-changed_type (GtkWidget *entry,
+changed_type (GtkWidget *combo,
               SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
