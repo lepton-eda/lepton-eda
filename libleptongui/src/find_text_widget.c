@@ -78,6 +78,42 @@ G_DEFINE_TYPE (SchematicFindTextWidget,
                GTK_TYPE_INFO_BAR);
 
 
+/*! \brief Get the Cancel button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the Cancel button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The Cancel button widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_cancel_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->cancel_button;
+}
+
+
+/*! \brief Set the Cancel button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the Cancel button widget of the Find text widget to \p
+ *   cancel_button.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] cancel_button The Cancel button widget.
+ */
+void
+schematic_find_text_widget_set_cancel_button (SchematicFindTextWidget *widget,
+                                              GtkWidget *cancel_button)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->cancel_button = cancel_button;
+}
+
+
 /*! \brief Get the combo widget of the Find text widget.
  *
  *  \par Function Description

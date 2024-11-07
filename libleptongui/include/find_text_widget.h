@@ -43,6 +43,7 @@ struct _SchematicFindTextWidget
 
   GtkTreeModel *find_type_model;
 
+  GtkWidget *cancel_button;
   GtkWidget *combo;
   GtkWidget *descend_button;
   GtkWidget *entry;
@@ -78,6 +79,12 @@ GtkWidget*
 schematic_find_text_widget_new ();
 
 /* Accessors */
+GtkWidget*
+schematic_find_text_widget_get_cancel_button (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_cancel_button (SchematicFindTextWidget *widget,
+                                              GtkWidget *cancel_button);
 GtkWidget*
 schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget);
 
