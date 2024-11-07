@@ -120,7 +120,7 @@ void
 schematic_find_text_widget_activate_entry (GtkWidget *entry,
                                            SchematicFindTextWidget *widget);
 void
-schematic_find_text_widget_changed_type (GtkWidget *entry,
+schematic_find_text_widget_changed_type (GtkWidget *combo,
                                          SchematicFindTextWidget *widget);
 void
 schematic_find_text_widget_click_cancel (GtkWidget *button,
