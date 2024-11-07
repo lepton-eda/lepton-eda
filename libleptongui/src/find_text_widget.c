@@ -352,7 +352,8 @@ schematic_find_text_widget_changed_type (GtkWidget *combo,
     gtk_widget_set_visible (entry, FALSE);
     gtk_widget_set_visible (descend_button, FALSE);
   } else {
-    gtk_widget_set_sensitive (find_button, FALSE);
+    gtk_widget_set_sensitive (find_button,
+                              (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0));
     gtk_widget_set_visible (entry, TRUE);
     gtk_widget_set_visible (descend_button, TRUE);
   }
