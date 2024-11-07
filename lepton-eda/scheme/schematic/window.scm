@@ -1357,7 +1357,8 @@ GtkApplication structure of the program (when compiled with
                           *x_window_find_text
                           *window)
         (let ((*entry (schematic_find_text_widget_get_entry *find-text-widget))
-              (*combo (schematic_find_text_widget_get_combo *find-text-widget)))
+              (*combo (schematic_find_text_widget_get_combo *find-text-widget))
+              (*cancel-button (schematic_find_text_widget_get_cancel_button *find-text-widget)))
           (g_signal_connect *entry
                             (string->pointer "activate")
                             *schematic_find_text_widget_activate_entry
@@ -1369,6 +1370,10 @@ GtkApplication structure of the program (when compiled with
           (g_signal_connect *combo
                             (string->pointer "changed")
                             *schematic_find_text_widget_changed_type
+                            *find-text-widget)
+          (g_signal_connect *cancel-button
+                            (string->pointer "clicked")
+                            *schematic_find_text_widget_click_cancel
                             *find-text-widget)))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)

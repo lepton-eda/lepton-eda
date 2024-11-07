@@ -559,11 +559,6 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (cancel_button),
-                    "clicked",
-                    G_CALLBACK (schematic_find_text_widget_click_cancel),
-                    widget);
-
   g_signal_connect (G_OBJECT (widget->find_button),
                     "clicked",
                     G_CALLBACK (click_find),
@@ -572,6 +567,7 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   schematic_find_text_widget_set_entry (widget, entry);
   schematic_find_text_widget_set_find_type_model (widget, find_type_model);
   schematic_find_text_widget_set_combo (widget, combo);
+  schematic_find_text_widget_set_cancel_button (widget, cancel_button);
 }
 
 
