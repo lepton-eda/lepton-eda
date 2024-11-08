@@ -158,10 +158,10 @@ x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current,
                         SchematicCanvas *view,
-                        LeptonPage *page,
-                        LeptonPage *object_page)
+                        LeptonPage *object_page,
+                        gboolean same_page)
 {
-  if (page != object_page)
+  if (!same_page)
   {
     /* open object's page: */
     x_window_set_current_page (w_current, object_page);

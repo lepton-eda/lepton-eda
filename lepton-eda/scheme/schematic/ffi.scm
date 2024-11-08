@@ -979,7 +979,7 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_select_object void '(* * * * * *))
+(define-lff x_window_select_object void (list '* '* '* '* '* int))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
