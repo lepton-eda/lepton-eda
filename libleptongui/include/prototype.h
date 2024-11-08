@@ -1188,7 +1188,8 @@ x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
                         SchematicWindow *w_current,
                         SchematicCanvas *canvas,
-                        LeptonPage *page);
+                        LeptonPage *page,
+                        LeptonPage *object_page);
 void
 x_window_setup_scrolling (SchematicWindow *w_current,
                           GtkWidget *scrolled);
