@@ -1463,6 +1463,9 @@ for *PAGE page will be created and set active."
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
+  (when (null-pointer? *object)
+    (error "NULL object."))
+
   (let ((*page (schematic_canvas_get_page *canvas)))
     (when (null-pointer? *page)
       (error "NULL page."))
