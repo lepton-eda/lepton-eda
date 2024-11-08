@@ -160,7 +160,6 @@ x_window_select_object (SchematicFindTextState *state,
                         SchematicCanvas *view,
                         LeptonPage *page)
 {
-  g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
 
   LeptonPage *object_page = object->page;
