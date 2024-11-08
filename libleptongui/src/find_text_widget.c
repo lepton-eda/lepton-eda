@@ -451,11 +451,11 @@ finalize (GObject *object)
 }
 
 
-/*! \brief Populate and show the text find dialog.
+/*! \brief Show the Find text widget.
+ *
  *  \par Function Description
- *  This function populates \a find_text_widget with child widgets
- *  and adds \p str as an initial string to search for if it is
- *  not NULL.
+ *  This function shows the Find text widget and adds \p str as an
+ *  initial string to search for if the string is not NULL.
  *
  *  \param [in] find_text_widget The Find text dialog widget.
  *  \param [in] str The string to search for.
