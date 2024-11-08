@@ -461,8 +461,8 @@ finalize (GObject *object)
  *  \param [in] str The string to search for.
  */
 void
-find_text_dialog (GtkWidget *find_text_widget,
-                  const gchar *str)
+schematic_find_text_widget_show (GtkWidget *find_text_widget,
+                                 const gchar *str)
 {
   if (str != NULL)
   {

@@ -256,8 +256,8 @@
             *schematic_find_text_widget_click_cancel
             *schematic_find_text_widget_click_find
             *schematic_find_text_widget_notify_entry_text
+            schematic_find_text_widget_show
 
-            find_text_dialog
             hide_text_dialog
             show_text_dialog
 
@@ -1038,7 +1038,7 @@
 (define-lfc *schematic_find_text_widget_click_cancel)
 (define-lfc *schematic_find_text_widget_click_find)
 (define-lfc *schematic_find_text_widget_notify_entry_text)
-(define-lff find_text_dialog void '(* *))
+(define-lff schematic_find_text_widget_show void '(* *))
 
 ;;; show_hide_text_widget.c
 (define-lff hide_text_dialog void '(*))
