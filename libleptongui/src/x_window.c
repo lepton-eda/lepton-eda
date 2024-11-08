@@ -156,11 +156,9 @@ x_window_show_text (GtkWidget *widget,
 void
 x_window_select_object (SchematicFindTextState *state,
                         LeptonObject *object,
-                        SchematicWindow *w_current)
+                        SchematicWindow *w_current,
+                        SchematicCanvas *view)
 {
-  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (view != NULL);
-
   LeptonPage *page = schematic_canvas_get_page (view);
   g_return_if_fail (page != NULL);
 
