@@ -1463,7 +1463,11 @@ for *PAGE page will be created and set active."
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (x_window_select_object *state *object *window *canvas))
+  (let ((*page (schematic_canvas_get_page *canvas)))
+    (when (null-pointer? *page)
+      (error "NULL page."))
+
+    (x_window_select_object *state *object *window *canvas *page)))
 
 (define *callback-select-object
   (procedure->pointer void select-object '(* * *)))
