@@ -35,8 +35,8 @@
   (define *find-text-widget
     (schematic_window_get_find_text_widget *window))
   (define *object (o_select_return_first_object *window))
+  (define *str (if (true? (lepton_object_is_text *object))
+                   (lepton_text_object_get_string *object)
+                   %null-pointer))
 
-  (schematic_find_text_widget_show *find-text-widget
-                                   (if (true? (lepton_object_is_text *object))
-                                       (lepton_text_object_get_string *object)
-                                       %null-pointer)))
+  (schematic_find_text_widget_show *find-text-widget *str))
