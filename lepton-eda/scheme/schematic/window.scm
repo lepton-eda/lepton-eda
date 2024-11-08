@@ -1459,7 +1459,11 @@ for *PAGE page will be created and set active."
 
 
 (define (select-object *state *object *window)
-  (x_window_select_object *state *object *window))
+  (define *canvas (schematic_window_get_current_canvas *window))
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (x_window_select_object *state *object *window *canvas))
 
 (define *callback-select-object
   (procedure->pointer void select-object '(* * *)))
