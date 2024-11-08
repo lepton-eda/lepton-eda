@@ -1458,6 +1458,13 @@ for *PAGE page will be created and set active."
   (procedure->pointer void find-text (list '* int '*)))
 
 
+(define (select-object *state *object *window)
+  (x_window_select_object *state *object *window))
+
+(define *callback-select-object
+  (procedure->pointer void select-object '(* * *)))
+
+
 (define (callback-page-manager-selection-changed *selection *widget)
   (define *page
     (pagesel_callback_selection_changed *selection *widget))
@@ -1733,7 +1740,7 @@ GtkApplication structure of the program (when compiled with
         (schematic_window_set_find_text_state_widget *window *find-text-state-widget)
         (g_signal_connect *find-text-state-widget
                           (string->pointer "select-object")
-                          *x_window_select_object
+                          *callback-select-object
                           *window)
         ;; Attach signal to detect user selection.
         (let ((*selection
