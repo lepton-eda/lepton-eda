@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -167,10 +167,12 @@ x_window_select_object (SchematicFindTextState *state,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
 
-  if (page != object->page)
+  LeptonPage *object_page = object->page;
+
+  if (page != object_page)
   {
     /* open object's page: */
-    x_window_set_current_page (w_current, object->page);
+    x_window_set_current_page (w_current, object_page);
 
     /* tabbed GUI: current page view may be different here: */
     view = schematic_window_get_current_canvas (w_current);
