@@ -1466,15 +1466,18 @@ for *PAGE page will be created and set active."
   (when (null-pointer? *object)
     (error "NULL object."))
 
-  (let ((*page (schematic_canvas_get_page *canvas))
-        (*object-page (lepton_object_get_page *object)))
+  (let* ((*page (schematic_canvas_get_page *canvas))
+         (*object-page (lepton_object_get_page *object))
+         (same-page? (equal? *page *object-page)))
     (when (null-pointer? *page)
       (error "NULL page."))
 
     (when (null-pointer? *object-page)
       (error "NULL object page."))
 
-    (x_window_select_object *state *object *window *canvas *page *object-page)))
+    (x_window_select_object *state *object *window *canvas *object-page (if same-page?
+                                                                            TRUE
+                                                                            FALSE))))
 
 (define *callback-select-object
   (procedure->pointer void select-object '(* * *)))
