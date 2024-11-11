@@ -163,9 +163,6 @@ x_window_select_object (SchematicFindTextState *state,
 {
   if (!same_page)
   {
-    /* open object's page: */
-    x_window_set_current_page (w_current, object_page);
-
     /* tabbed GUI: current page view may be different here: */
     view = schematic_window_get_current_canvas (w_current);
   }

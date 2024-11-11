@@ -1475,9 +1475,13 @@ for *PAGE page will be created and set active."
     (when (null-pointer? *object-page)
       (error "NULL object page."))
 
-    (x_window_select_object *state *object *window *canvas *object-page (if same-page?
-                                                                            TRUE
-                                                                            FALSE))))
+    (begin
+      (unless same-page?
+        ;; Open object's page.
+        (x_window_set_current_page *window *object-page))
+      (x_window_select_object *state *object *window *canvas *object-page (if same-page?
+                                                                              TRUE
+                                                                              FALSE)))))
 
 (define *callback-select-object
   (procedure->pointer void select-object '(* * *)))
