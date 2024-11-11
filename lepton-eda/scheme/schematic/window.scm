@@ -1479,9 +1479,16 @@ for *PAGE page will be created and set active."
       (unless same-page?
         ;; Open object's page.
         (x_window_set_current_page *window *object-page))
-      (x_window_select_object *state *object *window *canvas *object-page (if same-page?
-                                                                              TRUE
-                                                                              FALSE)))))
+      (begin
+        (unless same-page?
+          ;; Open object's page.
+          (x_window_set_current_page *window *object-page))
+        ;; In tabbed GUI the current canvas may be
+        ;; different.
+        (let ((*current-canvas (if same-page?
+                                   *canvas
+                                   (schematic_window_get_current_canvas *window))))
+          (schematic_canvas_zoom_object *current-canvas *object))))))
 
 (define *callback-select-object
   (procedure->pointer void select-object '(* * *)))
