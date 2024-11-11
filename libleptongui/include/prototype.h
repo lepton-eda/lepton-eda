@@ -1184,13 +1184,6 @@ SchematicWindow*
 x_window_new (LeptonToplevel *toplevel);
 
 void
-x_window_select_object (SchematicFindTextState *state,
-                        LeptonObject *object,
-                        SchematicWindow *w_current,
-                        SchematicCanvas *canvas,
-                        LeptonPage *object_page,
-                        gboolean same_page);
-void
 x_window_setup_scrolling (SchematicWindow *w_current,
                           GtkWidget *scrolled);
 gboolean

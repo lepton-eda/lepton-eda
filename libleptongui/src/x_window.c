@@ -153,23 +153,6 @@ x_window_show_text (GtkWidget *widget,
 }
 
 
-void
-x_window_select_object (SchematicFindTextState *state,
-                        LeptonObject *object,
-                        SchematicWindow *w_current,
-                        SchematicCanvas *view,
-                        LeptonPage *object_page,
-                        gboolean same_page)
-{
-  if (!same_page)
-  {
-    /* tabbed GUI: current page view may be different here: */
-    view = schematic_window_get_current_canvas (w_current);
-  }
-
-  schematic_canvas_zoom_object (view, object);
-}
-
 static void
 x_window_translate_response (SchematicTranslateWidget *widget,
                              gint response,

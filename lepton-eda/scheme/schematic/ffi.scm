@@ -300,7 +300,6 @@
             untitled_filename
             recent_manager_add
             x_window_save_page
-            x_window_select_object
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
@@ -429,6 +428,7 @@
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_zoom_extents
             schematic_canvas_grab_focus
+            schematic_canvas_zoom_object
 
             schematic_preview_new
             *schematic_preview_callback_realize
@@ -802,6 +802,7 @@
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_grab_focus void '(*))
+(define-lff schematic_canvas_zoom_object void '(* *))
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
@@ -979,7 +980,6 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_select_object void (list '* '* '* '* '* int))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
