@@ -391,6 +391,13 @@
 
             x_dialog_hotkeys
 
+            schematic_macro_widget_get_cancel_button
+            schematic_macro_widget_get_entry
+            schematic_macro_widget_get_evaluate_button
+            *schematic_macro_widget_activate_entry
+            *schematic_macro_widget_click_cancel
+            *schematic_macro_widget_click_evaluate
+            *schematic_macro_widget_notify_entry_text
             schematic_macro_widget_new
             schematic_macro_widget_show
 
@@ -759,6 +766,13 @@
 (define-lff x_dialog_hotkeys void '(*))
 
 ;;; macro_widget.c
+(define-lff schematic_macro_widget_get_cancel_button '* '(*))
+(define-lff schematic_macro_widget_get_entry '* '(*))
+(define-lff schematic_macro_widget_get_evaluate_button '* '(*))
+(define-lfc *schematic_macro_widget_activate_entry)
+(define-lfc *schematic_macro_widget_click_cancel)
+(define-lfc *schematic_macro_widget_click_evaluate)
+(define-lfc *schematic_macro_widget_notify_entry_text)
 (define-lff schematic_macro_widget_new '* '(*))
 (define-lff schematic_macro_widget_show void '(*))
 

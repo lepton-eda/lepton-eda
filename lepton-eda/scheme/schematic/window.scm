@@ -1336,7 +1336,27 @@ for *PAGE page will be created and set active."
   (define *widget (schematic_macro_widget_new *window))
 
   (schematic_window_set_macro_widget *window *widget)
-  (gtk_box_pack_start *work-box *widget FALSE FALSE 0))
+  (gtk_box_pack_start *work-box *widget FALSE FALSE 0)
+
+  (let ((*entry (schematic_macro_widget_get_entry *widget))
+        (*cancel-button (schematic_macro_widget_get_cancel_button *widget))
+        (*evaluate-button (schematic_macro_widget_get_evaluate_button *widget)))
+    (g_signal_connect *entry
+                      (string->pointer "activate")
+                      *schematic_macro_widget_activate_entry
+                      *widget)
+    (g_signal_connect *cancel-button
+                      (string->pointer "clicked")
+                      *schematic_macro_widget_click_cancel
+                      *widget)
+    (g_signal_connect *evaluate-button
+                      (string->pointer "clicked")
+                      *schematic_macro_widget_click_evaluate
+                      *widget)
+    (g_signal_connect *entry
+                      (string->pointer "notify::text")
+                      *schematic_macro_widget_notify_entry_text
+                      *widget)))
 
 
 (define (make-schematic-window *app *toplevel)
