@@ -478,13 +478,19 @@ static void
 macro_widget_exec_macro (SchematicMacroWidget* widget,
                          const gchar* macro_text)
 {
+  g_return_if_fail (widget != NULL);
+
   if (macro_text == NULL || strlen(macro_text) <= 0)
   {
     return;
   }
 
   GtkListStore *store = schematic_macro_widget_get_store (widget);
+  g_return_if_fail (store != NULL);
+
   SchematicWindow *window = schematic_macro_widget_get_window (widget);
+  g_return_if_fail (window != NULL);
+
   /* save history and hide widget BEFORE executing macro code,
    * since that code may terminate the program:
   */
