@@ -42,10 +42,6 @@ set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* 
 
 
 static void
-on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
-
-
-static void
 exec_macro (SchematicWindow* toplevel,
             const gchar* macro_text);
 
@@ -372,8 +368,10 @@ schematic_macro_widget_click_cancel (GtkButton* button,
 
 /*! \brief GtkEntry's "text" property change notification signal handler
  */
-static void
-on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
+void
+schematic_macro_widget_notify_entry_text (GtkWidget* entry,
+                                          GParamSpec* pspec,
+                                          gpointer data)
 {
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -598,7 +596,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   g_signal_connect (G_OBJECT (entry),
                     "notify::text",
-                    G_CALLBACK (&on_entry_notify_text),
+                    G_CALLBACK (&schematic_macro_widget_notify_entry_text),
                     widget);
 
 } /* macro_widget_create() */
