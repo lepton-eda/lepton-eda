@@ -113,6 +113,10 @@ schematic_macro_widget_click_cancel (GtkButton* button,
 void
 schematic_macro_widget_click_evaluate (GtkButton* button,
                                        gpointer data);
+void
+schematic_macro_widget_notify_entry_text (GtkWidget* entry,
+                                          GParamSpec* pspec,
+                                          gpointer data);
 G_END_DECLS
 
 GType
