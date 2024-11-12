@@ -355,7 +355,9 @@ on_evaluate_clicked (GtkButton* button, gpointer data)
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
-  const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  GtkWidget *entry = schematic_macro_widget_get_entry (widget);
+
+  const gchar* text = gtk_entry_get_text (GTK_ENTRY (entry));
   macro_widget_exec_macro (widget, text);
 }
 
