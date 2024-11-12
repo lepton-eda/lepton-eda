@@ -421,11 +421,12 @@ schematic_macro_widget_show (GtkWidget* widget)
   g_return_if_fail (widget != NULL);
 
   SchematicMacroWidget* macro_widget = SCHEMATIC_MACRO_WIDGET (widget);
+  GtkWidget *entry = schematic_macro_widget_get_entry (macro_widget);
 
-  g_return_if_fail (macro_widget->entry != NULL);
+  g_return_if_fail (entry != NULL);
 
   gtk_widget_show (widget);
-  gtk_widget_grab_focus (macro_widget->entry);
+  gtk_widget_grab_focus (entry);
 }
 
 
