@@ -69,7 +69,7 @@ schematic_macro_widget_new (SchematicWindow* toplevel);
 G_BEGIN_DECLS
 
 void
-macro_widget_show (GtkWidget* widget);
+schematic_macro_widget_show (GtkWidget* widget);
 
 G_END_DECLS
 

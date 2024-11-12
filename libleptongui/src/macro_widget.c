@@ -264,7 +264,7 @@ schematic_macro_widget_new (SchematicWindow* toplevel)
 
 
 void
-macro_widget_show (GtkWidget* widget)
+schematic_macro_widget_show (GtkWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
