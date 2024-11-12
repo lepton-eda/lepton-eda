@@ -1608,11 +1608,12 @@ GtkApplication structure of the program (when compiled with
                                            (schematic_options_widget_new *window))
       (schematic_window_set_log_widget *window
                                        (schematic_log_widget_new))
-      (schematic_window_set_find_text_state_widget *window (schematic_find_text_state_new))
-      (g_signal_connect (schematic_window_get_find_text_state_widget *window)
-                        (string->pointer "select-object")
-                        *x_window_select_object
-                        *window)
+      (let ((*find-text-state-widget (schematic_find_text_state_new)))
+        (schematic_window_set_find_text_state_widget *window *find-text-state-widget)
+        (g_signal_connect *find-text-state-widget
+                          (string->pointer "select-object")
+                          *x_window_select_object
+                          *window))
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window
