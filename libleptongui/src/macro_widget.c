@@ -534,11 +534,12 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* GtkEntry inside the combo box:
   */
-  widget->entry = gtk_bin_get_child (GTK_BIN (combo));
+  GtkWidget *entry = gtk_bin_get_child (GTK_BIN (combo));
+  schematic_macro_widget_set_entry (widget, entry);
 
   /* set font for the command entry:
   */
-  command_entry_set_font (widget->entry);
+  command_entry_set_font (entry);
 
 
   /* load command history:
@@ -552,7 +553,7 @@ macro_widget_create (SchematicMacroWidget* widget)
   GtkEntryCompletion* comp = gtk_entry_completion_new();
   gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (store));
   gtk_entry_completion_set_text_column (comp, 0);
-  gtk_entry_set_completion (GTK_ENTRY (widget->entry), comp);
+  gtk_entry_set_completion (GTK_ENTRY (entry), comp);
 
 
 #ifdef ENABLE_GTK3
@@ -575,7 +576,7 @@ macro_widget_create (SchematicMacroWidget* widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (widget->entry),
+  g_signal_connect (G_OBJECT (entry),
                     "activate",
                     G_CALLBACK (&on_entry_activate),
                     widget);
@@ -590,7 +591,7 @@ macro_widget_create (SchematicMacroWidget* widget)
                     G_CALLBACK (&on_evaluate_clicked),
                     widget);
 
-  g_signal_connect (G_OBJECT (widget->entry),
+  g_signal_connect (G_OBJECT (entry),
                     "notify::text",
                     G_CALLBACK (&on_entry_notify_text),
                     widget);
