@@ -62,6 +62,7 @@ struct _SchematicMacroWidget
 };
 
 
+G_BEGIN_DECLS
 
 GtkWidget*
 schematic_macro_widget_new (SchematicWindow* toplevel);
@@ -100,8 +101,6 @@ schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *widget);
 void
 schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *widget,
                                             GtkWidget *evaluate_button);
-G_BEGIN_DECLS
-
 void
 schematic_macro_widget_show (GtkWidget* widget);
 

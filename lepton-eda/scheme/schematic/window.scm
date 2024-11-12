@@ -1333,7 +1333,10 @@ for *PAGE page will be created and set active."
 
 (define (make-macro-widget *window *work-box)
   "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
-  (schematic_window_create_macro_widget *window *work-box))
+  (define *widget (schematic_macro_widget_new *window))
+
+  (schematic_window_set_macro_widget *window *widget)
+  (gtk_box_pack_start *work-box *widget FALSE FALSE 0))
 
 
 (define (make-schematic-window *app *toplevel)
