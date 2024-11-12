@@ -613,27 +613,6 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
-
-  g_signal_connect (G_OBJECT (entry),
-                    "activate",
-                    G_CALLBACK (&schematic_macro_widget_activate_entry),
-                    widget);
-
-  g_signal_connect (G_OBJECT (cancel_button),
-                    "clicked",
-                    G_CALLBACK (&schematic_macro_widget_click_cancel),
-                    widget);
-
-  g_signal_connect (G_OBJECT (evaluate_button),
-                    "clicked",
-                    G_CALLBACK (&schematic_macro_widget_click_evaluate),
-                    widget);
-
-  g_signal_connect (G_OBJECT (entry),
-                    "notify::text",
-                    G_CALLBACK (&schematic_macro_widget_notify_entry_text),
-                    widget);
-
 } /* macro_widget_create() */
 
 
