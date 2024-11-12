@@ -480,12 +480,13 @@ macro_widget_exec_macro (SchematicMacroWidget* widget,
     return;
   }
 
+  GtkListStore *store = schematic_macro_widget_get_store (widget);
   /* save history and hide widget BEFORE executing macro code,
    * since that code may terminate the program:
   */
-  history_add (widget->store, macro_text);
-  history_truncate (widget->store);
-  history_save (widget->store);
+  history_add (store, macro_text);
+  history_truncate (store);
+  history_save (store);
 
   macro_widget_hide (widget);
 
