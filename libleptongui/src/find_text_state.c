@@ -770,7 +770,6 @@ schematic_find_text_state_init (SchematicFindTextState *state)
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkWidget *scrolled;
-  GtkTreeSelection *selection;
   GtkWidget *tree_widget;
 
   g_return_if_fail (state != NULL);
@@ -815,14 +814,6 @@ schematic_find_text_state_init (SchematicFindTextState *state)
   renderer = gtk_cell_renderer_text_new();
   gtk_tree_view_column_pack_start(column, renderer, TRUE);
   gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
-
-  /* attach signal to detect user selection */
-
-  selection = schematic_find_text_state_get_selection (state);
-  g_signal_connect (selection,
-                    "changed",
-                    G_CALLBACK (schematic_find_text_state_select),
-                    state);
 }
 
 

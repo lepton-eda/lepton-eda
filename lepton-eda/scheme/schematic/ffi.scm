@@ -240,6 +240,8 @@
 
             schematic_find_text_state_find
             schematic_find_text_state_new
+            schematic_find_text_state_get_selection
+            *schematic_find_text_state_select
 
             schematic_find_text_widget_new
             schematic_find_text_widget_get_cancel_button
@@ -1052,6 +1054,8 @@
 ;;; find_text_state.c
 (define-lff schematic_find_text_state_find int (list '* '* '* int '* int int))
 (define-lff schematic_find_text_state_new '* '())
+(define-lff schematic_find_text_state_get_selection '* '(*))
+(define-lfc *schematic_find_text_state_select)
 
 ;;; find_text_widget.c
 (define-lff schematic_find_text_widget_new '* '())

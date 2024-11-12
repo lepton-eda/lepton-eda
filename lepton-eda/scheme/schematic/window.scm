@@ -1613,7 +1613,14 @@ GtkApplication structure of the program (when compiled with
         (g_signal_connect *find-text-state-widget
                           (string->pointer "select-object")
                           *x_window_select_object
-                          *window))
+                          *window)
+        ;; Attach signal to detect user selection.
+        (let ((*selection
+               (schematic_find_text_state_get_selection *find-text-state-widget)))
+          (g_signal_connect *selection
+                            (string->pointer "changed")
+                            *schematic_find_text_state_select
+                            *find-text-state-widget)))
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window
