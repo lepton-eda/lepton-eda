@@ -384,10 +384,13 @@ on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
+  GtkWidget *evaluate_button =
+    schematic_macro_widget_get_evaluate_button (widget);
+
   /* Update the sensitivity of the evaluate button:
   */
   guint16 len = gtk_entry_get_text_length (GTK_ENTRY (entry));
-  gtk_widget_set_sensitive (widget->evaluate_button, len > 0);
+  gtk_widget_set_sensitive (evaluate_button, len > 0);
 }
 
 
