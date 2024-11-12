@@ -739,6 +739,27 @@ get_subpages (SchematicWindow *w_current,
 }
 
 
+/*! \brief Return the selection of the Find text state widget.
+ *
+ *  \par Function Description
+ *  Returns the current selection of the Find text state widget.
+ *
+ *  \param [in] state The Find text state widget.
+ *  \return The \c GtkTreeSelection instance.
+ */
+GtkTreeSelection*
+schematic_find_text_state_get_selection (SchematicFindTextState *state)
+{
+  g_return_val_if_fail (state != NULL, NULL);
+
+  GtkWidget *tree_widget = state->tree_widget;
+
+  g_return_val_if_fail (tree_widget != NULL, NULL);
+
+  return gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
+}
+
+
 /*! \brief initialize a new instance
  *
  *  \param [in] state the new instance
@@ -768,6 +789,7 @@ schematic_find_text_state_init (SchematicFindTextState *state)
                                   GTK_POLICY_AUTOMATIC);
 
   tree_widget = gtk_tree_view_new_with_model (GTK_TREE_MODEL (state->store));
+  state->tree_widget = tree_widget;
   gtk_container_add (GTK_CONTAINER (scrolled), tree_widget);
 
   /* filename column */
@@ -796,7 +818,7 @@ schematic_find_text_state_init (SchematicFindTextState *state)
 
   /* attach signal to detect user selection */
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
+  selection = schematic_find_text_state_get_selection (state);
   g_signal_connect (selection,
                     "changed",
                     G_CALLBACK (schematic_find_text_state_select),

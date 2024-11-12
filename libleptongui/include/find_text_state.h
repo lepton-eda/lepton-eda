@@ -56,6 +56,7 @@ struct _SchematicFindTextState
   SchematicBin parent;
 
   GtkListStore *store;
+  GtkWidget *tree_widget;
 };
 
 
@@ -74,6 +75,9 @@ schematic_find_text_state_find (SchematicWindow *w_current,
                                 gboolean include_hidden);
 GtkWidget*
 schematic_find_text_state_new ();
+
+GtkTreeSelection*
+schematic_find_text_state_get_selection (SchematicFindTextState *state);
 
 void
 schematic_find_text_state_select (GtkTreeSelection *selection,
