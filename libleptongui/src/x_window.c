@@ -652,7 +652,7 @@ void
 schematic_window_create_macro_widget (SchematicWindow *w_current,
                                       GtkWidget *work_box)
 {
-  GtkWidget *widget = macro_widget_new (w_current);
+  GtkWidget *widget = schematic_macro_widget_new (w_current);
   schematic_window_set_macro_widget (w_current, widget);
 
   gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
