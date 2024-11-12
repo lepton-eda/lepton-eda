@@ -392,7 +392,7 @@
 
             x_dialog_hotkeys
 
-            macro_widget_show
+            schematic_macro_widget_show
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
@@ -758,7 +758,7 @@
 (define-lff x_dialog_hotkeys void '(*))
 
 ;;; macro_widget.c
-(define-lff macro_widget_show void '(*))
+(define-lff schematic_macro_widget_show void '(*))
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))

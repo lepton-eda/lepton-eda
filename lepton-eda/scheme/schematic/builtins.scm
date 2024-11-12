@@ -493,7 +493,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
-  (macro_widget_show (schematic_window_get_macro_widget (*current-window))))
+  (schematic_macro_widget_show (schematic_window_get_macro_widget (*current-window))))
 
 
 ;;; Embed all objects in the current selection list.
