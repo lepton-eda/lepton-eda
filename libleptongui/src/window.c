@@ -1215,6 +1215,21 @@ schematic_window_get_macro_widget (SchematicWindow *w_current)
 }
 
 
+/*! \brief Set the macro widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] macro_widget The macro widget.
+ */
+void
+schematic_window_set_macro_widget (SchematicWindow *w_current,
+                                   GtkWidget *macro_widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->macro_widget = macro_widget;
+}
+
+
 /*! \brief Get stored state of schematic window's Alt key.
  *
  *  \param [in] w_current The schematic window.

@@ -365,6 +365,9 @@ schematic_window_set_selection_list (SchematicWindow *w_current,
 GtkWidget*
 schematic_window_get_macro_widget (SchematicWindow *w_current);
 
+void
+schematic_window_set_macro_widget (SchematicWindow *w_current,
+                                   GtkWidget *macro_widget);
 int
 schematic_window_get_alt_key_pressed (SchematicWindow *w_current);
 
