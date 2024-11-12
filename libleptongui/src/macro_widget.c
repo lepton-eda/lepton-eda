@@ -281,8 +281,11 @@ macro_widget_show (GtkWidget* widget)
 static void
 macro_widget_hide (SchematicMacroWidget* widget)
 {
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (widget->toplevel);
+
   gtk_widget_hide (GTK_WIDGET (widget));
-  gtk_widget_grab_focus (widget->toplevel->drawing_area);
+  gtk_widget_grab_focus (drawing_area);
 }
 
 
