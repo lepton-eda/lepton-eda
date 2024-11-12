@@ -42,9 +42,6 @@ set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* 
 
 
 static void
-on_evaluate_clicked (GtkButton* button, gpointer data);
-
-static void
 on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
 
 
@@ -344,8 +341,9 @@ schematic_macro_widget_activate_entry (GtkEntry* entry,
 
 /*! \brief Callback for when the user clicks the evaluate button
  */
-static void
-on_evaluate_clicked (GtkButton* button, gpointer data)
+void
+schematic_macro_widget_click_evaluate (GtkButton* button,
+                                       gpointer data)
 {
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -595,7 +593,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   g_signal_connect (G_OBJECT (evaluate_button),
                     "clicked",
-                    G_CALLBACK (&on_evaluate_clicked),
+                    G_CALLBACK (&schematic_macro_widget_click_evaluate),
                     widget);
 
   g_signal_connect (G_OBJECT (entry),
