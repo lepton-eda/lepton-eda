@@ -305,11 +305,13 @@ set_property (GObject* object,
               GParamSpec* pspec)
 {
   SchematicMacroWidget* widget = SCHEMATIC_MACRO_WIDGET (object);
+  SchematicWindow *window;
 
   switch (param_id)
   {
     case PROP_TOPLEVEL:
-      widget->toplevel = SCHEMATIC_WINDOW (g_value_get_pointer (value));
+      window = SCHEMATIC_WINDOW (g_value_get_pointer (value));
+      schematic_macro_widget_set_window (widget, window);
       break;
 
     default:
