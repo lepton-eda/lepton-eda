@@ -104,6 +104,9 @@ schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *widget,
 void
 schematic_macro_widget_show (GtkWidget* widget);
 
+void
+schematic_macro_widget_activate_entry (GtkEntry* entry,
+                                       gpointer data);
 G_END_DECLS
 
 GType

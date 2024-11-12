@@ -42,9 +42,6 @@ set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* 
 
 
 static void
-on_entry_activate (GtkEntry* entry, gpointer data);
-
-static void
 on_evaluate_clicked (GtkButton* button, gpointer data);
 
 static void
@@ -329,8 +326,9 @@ set_property (GObject* object,
 
 /*! \brief Callback for when the user presses enter in the entry widget
  */
-static void
-on_entry_activate (GtkEntry* entry, gpointer data)
+void
+schematic_macro_widget_activate_entry (GtkEntry* entry,
+                                       gpointer data)
 {
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -589,7 +587,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   g_signal_connect (G_OBJECT (entry),
                     "activate",
-                    G_CALLBACK (&on_entry_activate),
+                    G_CALLBACK (&schematic_macro_widget_activate_entry),
                     widget);
 
   g_signal_connect (G_OBJECT (cancel_button),
