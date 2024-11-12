@@ -1331,6 +1331,11 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+(define (make-macro-widget *window *work-box)
+  "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
+  (schematic_window_create_macro_widget *window *work-box))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1437,7 +1442,7 @@ GtkApplication structure of the program (when compiled with
                             *find-text-widget)))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
-      (schematic_window_create_macro_widget *window *work-box)
+      (make-macro-widget *window *work-box)
       (schematic_window_create_translate_widget *window *work-box)
 
       ;; Setup various widgets.
