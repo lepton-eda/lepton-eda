@@ -45,9 +45,6 @@ static void
 on_evaluate_clicked (GtkButton* button, gpointer data);
 
 static void
-on_cancel_clicked (GtkButton* button, gpointer data);
-
-static void
 on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
 
 
@@ -363,8 +360,9 @@ on_evaluate_clicked (GtkButton* button, gpointer data)
 
 /*! \brief Callback for when the user clicks the cancel button
  */
-static void
-on_cancel_clicked (GtkButton* button, gpointer data)
+void
+schematic_macro_widget_click_cancel (GtkButton* button,
+                                     gpointer data)
 {
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -592,7 +590,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   g_signal_connect (G_OBJECT (cancel_button),
                     "clicked",
-                    G_CALLBACK (&on_cancel_clicked),
+                    G_CALLBACK (&schematic_macro_widget_click_cancel),
                     widget);
 
   g_signal_connect (G_OBJECT (evaluate_button),

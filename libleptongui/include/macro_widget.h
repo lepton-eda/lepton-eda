@@ -107,6 +107,9 @@ schematic_macro_widget_show (GtkWidget* widget);
 void
 schematic_macro_widget_activate_entry (GtkEntry* entry,
                                        gpointer data);
+void
+schematic_macro_widget_click_cancel (GtkButton* button,
+                                     gpointer data);
 G_END_DECLS
 
 GType
