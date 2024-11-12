@@ -430,7 +430,7 @@ schematic_window_get_current_canvas (SchematicWindow *w_current)
 
 /*! \brief Get the selection adapter
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return The selection adapter
  */
 SchematicSelectionAdapter*
@@ -466,7 +466,7 @@ schematic_window_get_selection_adapter (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used dash lengths
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used dash_lengths
  */
 GtkListStore*
@@ -485,7 +485,7 @@ schematic_window_get_dash_length_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used dash spacing
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used dash spacing
  */
 GtkListStore*
@@ -504,7 +504,7 @@ schematic_window_get_dash_space_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used fill angles
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used fill angles
  */
 GtkListStore*
@@ -523,7 +523,7 @@ schematic_window_get_fill_angle_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used fill pitches
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used fill pitches
  */
 GtkListStore*
@@ -542,7 +542,7 @@ schematic_window_get_fill_pitch_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used fill line widths
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used fill line widths
  */
 GtkListStore*
@@ -561,7 +561,7 @@ schematic_window_get_fill_width_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used line widths
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used line widths
  */
 GtkListStore*
@@ -580,7 +580,7 @@ schematic_window_get_line_width_list_store (SchematicWindow *w_current)
 
 /*! \brief Get a list of the commonly used text sizes
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return A list of the commonly used text sizes
  */
 GtkListStore*
@@ -656,7 +656,7 @@ schematic_window_notify_page_callback (SchematicCanvas *page_view,
  *  This function is temporary until the toplevel can emit a
  *  "notify::page_current" signal.
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  */
 void
 schematic_window_page_changed (SchematicWindow *w_current)
@@ -677,7 +677,7 @@ schematic_window_page_changed (SchematicWindow *w_current)
  *
  *  This function is temporary until library functions can emit signals.
  *
- *  \param [in] w_current The current gschem toplevel.
+ *  \param [in] w_current The SchematicWindow instance pointer..
  *  \param [in] page      The page that underwent changes.
  */
 void
@@ -791,7 +791,7 @@ renderer_load_font (EdaRenderer* renderer)
 
 /*! \brief Get visibility of hidden text
  *
- *  \param [in] w_current The current gschem toplevel
+ *  \param [in] w_current The SchematicWindow instance pointer.
  *  \return TRUE if hidden text should be visible, otherwise FALSE
  */
 gboolean
