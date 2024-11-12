@@ -481,6 +481,7 @@ macro_widget_exec_macro (SchematicMacroWidget* widget,
   }
 
   GtkListStore *store = schematic_macro_widget_get_store (widget);
+  SchematicWindow *window = schematic_macro_widget_get_window (widget);
   /* save history and hide widget BEFORE executing macro code,
    * since that code may terminate the program:
   */
@@ -490,7 +491,7 @@ macro_widget_exec_macro (SchematicMacroWidget* widget,
 
   macro_widget_hide (widget);
 
-  exec_macro (widget->toplevel, macro_text);
+  exec_macro (window, macro_text);
 }
 
 
