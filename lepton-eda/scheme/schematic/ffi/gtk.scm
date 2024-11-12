@@ -34,6 +34,8 @@
 
             gtk_bin_get_child
 
+            gtk_box_pack_start
+
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
@@ -119,6 +121,8 @@
 (define-lff gtk_adjustment_set_value void (list '* double))
 
 (define-lff gtk_bin_get_child '* '(*))
+
+(define-lff gtk_box_pack_start void (list '* '* int int int))
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))

@@ -288,7 +288,6 @@
             schematic_window_create_find_text_widget
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
-            schematic_window_create_macro_widget
             schematic_window_create_translate_widget
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
@@ -363,6 +362,7 @@
 
             x_dialog_hotkeys
 
+            schematic_macro_widget_new
             schematic_macro_widget_show
 
             schematic_keys_get_event_keyval
@@ -434,6 +434,7 @@
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
+            schematic_window_set_macro_widget
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
             schematic_window_set_multiattrib_widget
@@ -725,6 +726,7 @@
 (define-lff x_dialog_hotkeys void '(*))
 
 ;;; macro_widget.c
+(define-lff schematic_macro_widget_new '* '(*))
 (define-lff schematic_macro_widget_show void '(*))
 
 ;;; canvas.c
@@ -812,6 +814,7 @@
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
+(define-lff schematic_window_set_macro_widget void '(* *))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_set_multiattrib_widget void '(* *))
@@ -935,7 +938,6 @@
 (define-lff schematic_window_create_find_text_widget void '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
-(define-lff schematic_window_create_macro_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
