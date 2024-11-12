@@ -564,10 +564,12 @@ macro_widget_create (SchematicMacroWidget* widget)
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
 
-  widget->evaluate_button = gtk_button_new_with_label (_("Evaluate"));
-  gtk_widget_set_sensitive (widget->evaluate_button, FALSE);
-  gtk_widget_set_visible (widget->evaluate_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (button_box), widget->evaluate_button, FALSE, FALSE, 0);
+  GtkWidget *evaluate_button = gtk_button_new_with_label (_("Evaluate"));
+  schematic_macro_widget_set_evaluate_button (widget, evaluate_button);
+
+  gtk_widget_set_sensitive (evaluate_button, FALSE);
+  gtk_widget_set_visible (evaluate_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (button_box), evaluate_button, FALSE, FALSE, 0);
 
   cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
   gtk_widget_set_visible (cancel_button, TRUE);
@@ -586,7 +588,7 @@ macro_widget_create (SchematicMacroWidget* widget)
                     G_CALLBACK (&on_cancel_clicked),
                     widget);
 
-  g_signal_connect (G_OBJECT (widget->evaluate_button),
+  g_signal_connect (G_OBJECT (evaluate_button),
                     "clicked",
                     G_CALLBACK (&on_evaluate_clicked),
                     widget);
