@@ -2343,3 +2343,32 @@ schematic_window_set_main_window (SchematicWindow *w_current,
 
   return w_current;
 }
+
+
+/*! \brief Get the drawing area widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The drawing area widget.
+ */
+GtkWidget*
+schematic_window_get_drawing_area (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->drawing_area;
+}
+
+
+/*! \brief Set the drawing area widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] drawing_area The drawing area widget.
+ */
+void
+schematic_window_set_drawing_area (SchematicWindow *w_current,
+                                   GtkWidget *drawing_area)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->drawing_area = drawing_area;
+}

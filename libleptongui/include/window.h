@@ -599,4 +599,10 @@ schematic_window_get_main_window (SchematicWindow *w_current);
 SchematicWindow*
 schematic_window_set_main_window (SchematicWindow *w_current,
                                   GtkWidget *main_window);
+GtkWidget*
+schematic_window_get_drawing_area (SchematicWindow *w_current);
+
+void
+schematic_window_set_drawing_area (SchematicWindow *w_current,
+                                   GtkWidget *drawing_area);
 G_END_DECLS
