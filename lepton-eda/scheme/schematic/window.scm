@@ -1264,6 +1264,13 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+(define (find-text *widget response *window)
+  (x_window_find_text *widget response *window))
+
+(define *callback-find-text
+  (procedure->pointer void find-text (list '* int '*)))
+
+
 (define (callback-page-manager-selection-changed *selection *widget)
   (define *page
     (pagesel_callback_selection_changed *selection *widget))
@@ -1354,7 +1361,7 @@ GtkApplication structure of the program (when compiled with
         (schematic_window_pack_widget *work-box *find-text-widget)
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
-                          *x_window_find_text
+                          *callback-find-text
                           *window)
         (let ((*entry (schematic_find_text_widget_get_entry *find-text-widget))
               (*combo (schematic_find_text_widget_get_combo *find-text-widget))

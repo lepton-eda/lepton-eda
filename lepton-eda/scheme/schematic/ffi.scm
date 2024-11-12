@@ -296,7 +296,7 @@
             untitled_filename
             recent_manager_add
             x_window_save_page
-            *x_window_find_text
+            x_window_find_text
             *x_window_select_object
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
@@ -949,7 +949,7 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lfc *x_window_find_text)
+(define-lff x_window_find_text void (list '* int '*))
 (define-lfc *x_window_select_object)
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
