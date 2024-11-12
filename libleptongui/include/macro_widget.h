@@ -66,6 +66,40 @@ struct _SchematicMacroWidget
 GtkWidget*
 schematic_macro_widget_new (SchematicWindow* toplevel);
 
+GtkListStore*
+schematic_macro_widget_get_store (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_store (SchematicMacroWidget *widget,
+                                  GtkListStore *store);
+
+SchematicWindow*
+schematic_macro_widget_get_window (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_window (SchematicMacroWidget *widget,
+                                   SchematicWindow *window);
+
+GtkWidget*
+schematic_macro_widget_get_combo (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_combo (SchematicMacroWidget *widget,
+                                  GtkWidget *combo);
+
+GtkWidget*
+schematic_macro_widget_get_entry (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_entry (SchematicMacroWidget *widget,
+                                  GtkWidget *entry);
+
+GtkWidget*
+schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *widget,
+                                            GtkWidget *evaluate_button);
 G_BEGIN_DECLS
 
 void

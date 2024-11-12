@@ -103,6 +103,149 @@ G_DEFINE_TYPE (SchematicMacroWidget,
                schematic_macro_widget,
                GTK_TYPE_INFO_BAR);
 
+
+/*! \brief Get the \c store field of the Macro widget instance.
+ *
+ *  \par Function Description
+ *  Returns the \c store field of the Macro widget instance.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \return The \c store field value.
+ */
+GtkListStore*
+schematic_macro_widget_get_store (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->store;
+}
+
+
+/*! \brief Set the \c store field of the Macro widget instance.
+ *
+ *  \par Function Description
+ *  Sets the \c store field of the Macro widget instance to the
+ *  given value.
+ *
+ *  \param [in] macro_widget The Macro widget.
+ *  \param [in] store The new store widget value.
+ */
+void
+schematic_macro_widget_set_store (SchematicMacroWidget *macro_widget,
+                                  GtkListStore *store)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->store = store;
+}
+
+
+/*! \brief Get the schematic window of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The schematic window.
+ */
+SchematicWindow*
+schematic_macro_widget_get_window (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->toplevel;
+}
+
+
+/*! \brief Set the schematic window for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] window The schematic window.
+ */
+void
+schematic_macro_widget_set_window (SchematicMacroWidget *macro_widget,
+                                   SchematicWindow *window)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->toplevel = window;
+}
+
+
+/*! \brief Get the combo widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The combo widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_combo (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->combo;
+}
+
+
+/*! \brief Set the combo widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] combo The combo widget.
+ */
+void
+schematic_macro_widget_set_combo (SchematicMacroWidget *macro_widget,
+                                  GtkWidget *combo)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->combo = combo;
+}
+
+
+/*! \brief Get the entry widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The entry widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_entry (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->entry;
+}
+
+
+/*! \brief Set the entry widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] entry The entry widget.
+ */
+void
+schematic_macro_widget_set_entry (SchematicMacroWidget *macro_widget,
+                                  GtkWidget *entry)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->entry = entry;
+}
+
+
+/*! \brief Get the evaluate button widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The evaluate button widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->evaluate_button;
+}
+
+
+/*! \brief Set the evaluate button widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] evaluate_button The evaluate button widget.
+ */
+void
+schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *macro_widget,
+                                            GtkWidget *evaluate_button)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->evaluate_button = evaluate_button;
+}
+
+
 /*! \brief Initialize gobject class
  */
 static void
