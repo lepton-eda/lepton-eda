@@ -413,10 +413,10 @@ schematic_window_free (SchematicWindow *w_current)
 
 
 
-/*! \brief Get the selection adapter
+/*! \brief Get the active window canvas
  *
- *  \param [in] w_current The current gschem toplevel
- *  \return The selection adapter
+ *  \param [in] w_current The SchematicWindow instance pointer.
+ *  \return The SchematicCanvas instance.
  */
 SchematicCanvas*
 schematic_window_get_current_canvas (SchematicWindow *w_current)
