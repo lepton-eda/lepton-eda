@@ -517,8 +517,9 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* command history list store:
   */
-  widget->store = gtk_list_store_new (1, G_TYPE_STRING);
-  GtkTreeModel* model = GTK_TREE_MODEL (widget->store);
+  GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+  schematic_macro_widget_set_store (widget, store);
+  GtkTreeModel* model = GTK_TREE_MODEL (store);
 
 
   /* command entry combo box:
@@ -542,14 +543,14 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* load command history:
   */
-  history_load (widget->store);
-  history_truncate (widget->store);
+  history_load (store);
+  history_truncate (store);
 
 
   /* enable text completion in the command entry:
   */
   GtkEntryCompletion* comp = gtk_entry_completion_new();
-  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (widget->store));
+  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (store));
   gtk_entry_completion_set_text_column (comp, 0);
   gtk_entry_set_completion (GTK_ENTRY (widget->entry), comp);
 
