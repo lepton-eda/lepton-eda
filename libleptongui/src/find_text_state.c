@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,9 +88,6 @@ object_weakref_cb (LeptonObject *object,
 static void
 remove_object (SchematicFindTextState *state,
                LeptonObject *object);
-static void
-select_cb (GtkTreeSelection *selection,
-           SchematicFindTextState *state);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
@@ -800,7 +797,10 @@ schematic_find_text_state_init (SchematicFindTextState *state)
   /* attach signal to detect user selection */
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
-  g_signal_connect (selection, "changed", G_CALLBACK (select_cb), state);
+  g_signal_connect (selection,
+                    "changed",
+                    G_CALLBACK (schematic_find_text_state_select),
+                    state);
 }
 
 
@@ -872,9 +872,9 @@ remove_object (SchematicFindTextState *state,
  *  \param [in] selection
  *  \param [in] state
  */
-static void
-select_cb (GtkTreeSelection *selection,
-           SchematicFindTextState *state)
+void
+schematic_find_text_state_select (GtkTreeSelection *selection,
+                                  SchematicFindTextState *state)
 {
   GtkTreeIter iter;
   gboolean success;
