@@ -524,17 +524,17 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* command entry combo box:
   */
-  widget->combo = gtk_combo_box_new_with_model_and_entry (model);
+  GtkWidget *combo = gtk_combo_box_new_with_model_and_entry (model);
+  schematic_macro_widget_set_combo (widget, combo);
 
-  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget->combo), 0);
-  gtk_box_pack_start (GTK_BOX (content), widget->combo, TRUE, TRUE, 0);
-  gtk_widget_set_visible (widget->combo, TRUE);
+  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (combo), 0);
+  gtk_box_pack_start (GTK_BOX (content), combo, TRUE, TRUE, 0);
+  gtk_widget_set_visible (combo, TRUE);
 
 
   /* GtkEntry inside the combo box:
   */
-  widget->entry = gtk_bin_get_child (GTK_BIN (widget->combo));
-
+  widget->entry = gtk_bin_get_child (GTK_BIN (combo));
 
   /* set font for the command entry:
   */
