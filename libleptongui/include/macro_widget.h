@@ -59,6 +59,7 @@ struct _SchematicMacroWidget
   GtkWidget *combo;
   GtkWidget *entry;
   GtkWidget *evaluate_button;
+  GtkWidget *cancel_button;
 };
 
 
