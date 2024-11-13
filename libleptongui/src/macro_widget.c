@@ -343,20 +343,6 @@ set_property (GObject* object,
 
 
 
-/*! \brief Callback for when the user clicks the cancel button
- */
-void
-schematic_macro_widget_click_cancel (GtkButton* button,
-                                     gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  schematic_macro_widget_hide (widget);
-}
-
-
-
 /*! \brief GtkEntry's "text" property change notification signal handler
  */
 void

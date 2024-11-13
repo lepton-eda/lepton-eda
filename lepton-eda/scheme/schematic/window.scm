@@ -1345,8 +1345,11 @@ for *PAGE page will be created and set active."
   (procedure->pointer void activate-macro-widget-entry '(* *)))
 
 
+;;; Callback for when the user clicks the Cancel button.
 (define (click-macro-widget-cancel-button *button *widget)
-  (schematic_macro_widget_click_cancel *button *widget))
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (schematic_macro_widget_hide *widget))
 
 (define *callback-click-macro-widget-cancel-button
   (procedure->pointer void click-macro-widget-cancel-button '(* *)))
