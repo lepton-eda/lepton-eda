@@ -47,9 +47,6 @@ exec_macro (SchematicWindow* toplevel,
 static void
 macro_widget_create (SchematicMacroWidget* widget);
 
-static void
-command_entry_set_font (GtkWidget* entry);
-
 
 
 /*
@@ -467,7 +464,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* set font for the command entry:
   */
-  command_entry_set_font (entry);
+  schematic_macro_widget_set_command_entry_font (entry);
 
 
   /* load command history:
@@ -731,8 +728,8 @@ schematic_macro_widget_load_history (GtkListStore* store)
  *
  *  \param entry  GtkEntry widget inside macro command combo box
  */
-static void
-command_entry_set_font (GtkWidget* entry)
+void
+schematic_macro_widget_set_command_entry_font (GtkWidget* entry)
 {
   g_return_if_fail (entry != NULL);
 
@@ -801,4 +798,4 @@ command_entry_set_font (GtkWidget* entry)
 
   g_clear_error (&err);
 
-} /* command_entry_set_font() */
+} /* schematic_macro_widget_set_command_entry_font() */
