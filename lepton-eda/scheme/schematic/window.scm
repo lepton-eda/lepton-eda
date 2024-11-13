@@ -1331,6 +1331,13 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+(define (activate-macro-widget-entry *entry *widget)
+  (schematic_macro_widget_activate_entry *entry *widget))
+
+(define *callback-activate-macro-widget-entry
+  (procedure->pointer void activate-macro-widget-entry '(* *)))
+
+
 (define (make-macro-widget *window *work-box)
   "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
   (define *widget (schematic_macro_widget_new *window))
@@ -1343,7 +1350,7 @@ for *PAGE page will be created and set active."
         (*evaluate-button (schematic_macro_widget_get_evaluate_button *widget)))
     (g_signal_connect *entry
                       (string->pointer "activate")
-                      *schematic_macro_widget_activate_entry
+                      *callback-activate-macro-widget-entry
                       *widget)
     (g_signal_connect *cancel-button
                       (string->pointer "clicked")
