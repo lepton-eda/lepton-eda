@@ -54,9 +54,6 @@ static void
 history_load (GtkListStore* store);
 
 static void
-history_truncate (GtkListStore* store);
-
-static void
 command_entry_set_font (GtkWidget* entry);
 
 
@@ -424,7 +421,7 @@ schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
    * since that code may terminate the program:
   */
   schematic_macro_widget_add_history (store, macro_text);
-  history_truncate (store);
+  schematic_macro_widget_truncate_history (store);
   history_save (store);
 
   schematic_macro_widget_hide (widget);
@@ -482,7 +479,7 @@ macro_widget_create (SchematicMacroWidget* widget)
   /* load command history:
   */
   history_load (store);
-  history_truncate (store);
+  schematic_macro_widget_truncate_history (store);
 
 
   /* enable text completion in the command entry:
@@ -573,8 +570,8 @@ schematic_macro_widget_add_history (GtkListStore* store,
  *
  *  \param store GtkListStore history container
  */
-static void
-history_truncate (GtkListStore* store)
+void
+schematic_macro_widget_truncate_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -623,7 +620,7 @@ history_truncate (GtkListStore* store)
     }
   }
 
-} /* history_truncate() */
+} /* schematic_macro_widget_truncate_history() */
 
 
 

@@ -112,6 +112,9 @@ void
 schematic_macro_widget_add_history (GtkListStore* store,
                                     const gchar* line);
 void
+schematic_macro_widget_truncate_history (GtkListStore* store);
+
+void
 schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
                                    const gchar* macro_text);
 void
