@@ -117,10 +117,6 @@ schematic_macro_widget_hide (SchematicMacroWidget* widget);
 void
 schematic_macro_widget_show (GtkWidget* widget);
 
-void
-schematic_macro_widget_notify_entry_text (GtkWidget* entry,
-                                          GParamSpec* pspec,
-                                          gpointer data);
 G_END_DECLS
 
 GType

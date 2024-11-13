@@ -1367,8 +1367,17 @@ for *PAGE page will be created and set active."
   (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
 
 
+;;; GtkEntry's "text" property change notification signal handler.
 (define (notify-macro-widget-entry-text *entry *param-spec *widget)
-  (schematic_macro_widget_notify_entry_text *entry *param-spec *widget))
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*evaluate-button
+         (schematic_macro_widget_get_evaluate_button *widget))
+        ;; gtk_entry_get_text_length() returns guint16.
+        (len (gtk_entry_get_text_length *entry)))
+    ;; Update the sensitivity of the evaluate button.
+    (gtk_widget_set_sensitive *evaluate-button
+                              (if (zero? len) FALSE TRUE))))
 
 (define *callback-notify-macro-widget-entry-text
   (procedure->pointer void notify-macro-widget-entry-text '(* * *)))

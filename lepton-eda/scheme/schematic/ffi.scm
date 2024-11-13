@@ -394,7 +394,6 @@
             schematic_macro_widget_get_cancel_button
             schematic_macro_widget_get_entry
             schematic_macro_widget_get_evaluate_button
-            schematic_macro_widget_notify_entry_text
             schematic_macro_widget_exec_macro
             schematic_macro_widget_hide
             schematic_macro_widget_new
@@ -768,7 +767,6 @@
 (define-lff schematic_macro_widget_get_cancel_button '* '(*))
 (define-lff schematic_macro_widget_get_entry '* '(*))
 (define-lff schematic_macro_widget_get_evaluate_button '* '(*))
-(define-lff schematic_macro_widget_notify_entry_text void '(* * *))
 (define-lff schematic_macro_widget_exec_macro void '(* *))
 (define-lff schematic_macro_widget_hide void '(*))
 (define-lff schematic_macro_widget_new '* '(*))
