@@ -109,6 +109,12 @@ void
 schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
                                           GtkWidget *cancel_button);
 void
+schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
+                                   const gchar* macro_text);
+void
+schematic_macro_widget_hide (SchematicMacroWidget* widget);
+
+void
 schematic_macro_widget_show (GtkWidget* widget);
 
 void
