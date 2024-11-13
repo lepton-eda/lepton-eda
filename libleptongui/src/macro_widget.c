@@ -341,25 +341,6 @@ set_property (GObject* object,
  *
  */
 
-/*! \brief Callback for when the user presses enter in the entry widget
- */
-void
-schematic_macro_widget_activate_entry (GtkEntry* entry,
-                                       gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  if (gtk_entry_get_text_length (entry) <= 0)
-  {
-    schematic_macro_widget_hide (widget);
-    return;
-  }
-
-  const gchar* text = gtk_entry_get_text (entry);
-  schematic_macro_widget_exec_macro (widget, text);
-}
-
 
 
 /*! \brief Callback for when the user clicks the evaluate button
