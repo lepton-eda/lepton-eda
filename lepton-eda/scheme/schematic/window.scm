@@ -1367,6 +1367,13 @@ for *PAGE page will be created and set active."
   (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
 
 
+(define (notify-macro-widget-entry-text *entry *param-spec *widget)
+  (schematic_macro_widget_notify_entry_text *entry *param-spec *widget))
+
+(define *callback-notify-macro-widget-entry-text
+  (procedure->pointer void notify-macro-widget-entry-text '(* * *)))
+
+
 (define (make-macro-widget *window *work-box)
   "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
   (define *widget (schematic_macro_widget_new *window))
@@ -1391,7 +1398,7 @@ for *PAGE page will be created and set active."
                       *widget)
     (g_signal_connect *entry
                       (string->pointer "notify::text")
-                      *schematic_macro_widget_notify_entry_text
+                      *callback-notify-macro-widget-entry-text
                       *widget)))
 
 
