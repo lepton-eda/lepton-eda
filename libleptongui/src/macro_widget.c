@@ -233,6 +233,40 @@ schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *macro_widget,
 }
 
 
+/*! \brief Get the Cancel button widget of the Macro widget.
+ *
+ *  \par Function Description
+ *  Returns the Cancel button widget of the Macro widget.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \return The Cancel button widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_cancel_button (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->cancel_button;
+}
+
+
+/*! \brief Set the Cancel button widget for the Macro widget.
+ *
+ *  \par Function Description
+ *  Sets the \c cancel_button field of the Macro widget instance
+ *  to the given value.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \param [in] cancel_button The new Cancel button widget value.
+ */
+void
+schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
+                                          GtkWidget *cancel_button)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->cancel_button = cancel_button;
+}
+
+
 /*! \brief Initialize gobject class
  */
 static void

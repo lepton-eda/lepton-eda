@@ -102,6 +102,12 @@ schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *widget);
 void
 schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *widget,
                                             GtkWidget *evaluate_button);
+GtkWidget*
+schematic_macro_widget_get_cancel_button (SchematicMacroWidget *macro_widget);
+
+void
+schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
+                                          GtkWidget *cancel_button);
 void
 schematic_macro_widget_show (GtkWidget* widget);
 
