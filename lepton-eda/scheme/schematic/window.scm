@@ -1345,6 +1345,14 @@ for *PAGE page will be created and set active."
   (procedure->pointer void activate-macro-widget-entry '(* *)))
 
 
+;;; Callback for when the user clicks the Evaluate button.
+(define (click-macro-widget-evaluate-button *button *widget)
+  (schematic_macro_widget_click_evaluate *button *widget))
+
+(define *callback-click-macro-widget-evaluate-button
+  (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
+
+
 (define (make-macro-widget *window *work-box)
   "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
   (define *widget (schematic_macro_widget_new *window))
@@ -1365,7 +1373,7 @@ for *PAGE page will be created and set active."
                       *widget)
     (g_signal_connect *evaluate-button
                       (string->pointer "clicked")
-                      *schematic_macro_widget_click_evaluate
+                      *callback-click-macro-widget-evaluate-button
                       *widget)
     (g_signal_connect *entry
                       (string->pointer "notify::text")
