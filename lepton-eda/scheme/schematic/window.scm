@@ -1332,6 +1332,8 @@ for *PAGE page will be created and set active."
 
 
 (define (exec-macro! *macro-widget *text)
+  (when (null-pointer? *macro-widget)
+    (error "NULL widget."))
   (schematic_macro_widget_exec_macro *macro-widget *text))
 
 
