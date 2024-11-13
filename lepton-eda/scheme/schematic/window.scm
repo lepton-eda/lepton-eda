@@ -1331,6 +1331,10 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+(define (exec-macro! *macro-widget *text)
+  (schematic_macro_widget_exec_macro *macro-widget *text))
+
+
 ;;; Callback for when the user presses Enter in the entry widget.
 (define (activate-macro-widget-entry *entry *widget)
   (when (null-pointer? *widget)
@@ -1339,7 +1343,7 @@ for *PAGE page will be created and set active."
   (if (zero? (gtk_entry_get_text_length *entry))
       (schematic_macro_widget_hide *widget)
       (let ((*text (gtk_entry_get_text *entry)))
-        (schematic_macro_widget_exec_macro *widget *text))))
+        (exec-macro! *widget *text))))
 
 (define *callback-activate-macro-widget-entry
   (procedure->pointer void activate-macro-widget-entry '(* *)))
@@ -1361,7 +1365,7 @@ for *PAGE page will be created and set active."
     (error "NULL widget."))
   (let* ((*entry (schematic_macro_widget_get_entry *widget))
          (*text (gtk_entry_get_text *entry)))
-    (schematic_macro_widget_exec_macro *widget *text)))
+    (exec-macro! *widget *text)))
 
 (define *callback-click-macro-widget-evaluate-button
   (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
