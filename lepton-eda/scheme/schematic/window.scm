@@ -1347,7 +1347,11 @@ for *PAGE page will be created and set active."
 
 ;;; Callback for when the user clicks the Evaluate button.
 (define (click-macro-widget-evaluate-button *button *widget)
-  (schematic_macro_widget_click_evaluate *button *widget))
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let* ((*entry (schematic_macro_widget_get_entry *widget))
+         (*text (gtk_entry_get_text *entry)))
+    (schematic_macro_widget_exec_macro *widget *text)))
 
 (define *callback-click-macro-widget-evaluate-button
   (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
