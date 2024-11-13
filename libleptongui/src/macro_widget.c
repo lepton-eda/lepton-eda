@@ -392,32 +392,6 @@ schematic_macro_widget_eval_string (SchematicWindow* toplevel,
 
 
 
-/*! \brief Execute Guile code passed in [macro_text]
-*/
-void
-schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
-                                   const gchar* macro_text)
-{
-  GtkListStore *store = schematic_macro_widget_get_store (widget);
-  g_return_if_fail (store != NULL);
-
-  SchematicWindow *window = schematic_macro_widget_get_window (widget);
-  g_return_if_fail (window != NULL);
-
-  /* save history and hide widget BEFORE executing macro code,
-   * since that code may terminate the program:
-  */
-  schematic_macro_widget_add_history (store, macro_text);
-  schematic_macro_widget_truncate_history (store);
-  schematic_macro_widget_save_history (store);
-
-  schematic_macro_widget_hide (widget);
-
-  schematic_macro_widget_eval_string (window, macro_text);
-}
-
-
-
 /*! \brief Create the macro widget
 */
 static void
