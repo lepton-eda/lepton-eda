@@ -109,6 +109,9 @@ void
 schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
                                           GtkWidget *cancel_button);
 void
+schematic_macro_widget_add_history (GtkListStore* store,
+                                    const gchar* line);
+void
 schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
                                    const gchar* macro_text);
 void
