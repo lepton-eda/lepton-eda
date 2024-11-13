@@ -394,7 +394,12 @@
             schematic_macro_widget_get_cancel_button
             schematic_macro_widget_get_entry
             schematic_macro_widget_get_evaluate_button
-            schematic_macro_widget_exec_macro
+            schematic_macro_widget_get_store
+            schematic_macro_widget_get_window
+            schematic_macro_widget_add_history
+            schematic_macro_widget_truncate_history
+            schematic_macro_widget_save_history
+            schematic_macro_widget_eval_string
             schematic_macro_widget_hide
             schematic_macro_widget_new
             schematic_macro_widget_show
@@ -767,7 +772,12 @@
 (define-lff schematic_macro_widget_get_cancel_button '* '(*))
 (define-lff schematic_macro_widget_get_entry '* '(*))
 (define-lff schematic_macro_widget_get_evaluate_button '* '(*))
-(define-lff schematic_macro_widget_exec_macro void '(* *))
+(define-lff schematic_macro_widget_get_store '* '(*))
+(define-lff schematic_macro_widget_get_window '* '(*))
+(define-lff schematic_macro_widget_add_history void '(* *))
+(define-lff schematic_macro_widget_truncate_history void '(*))
+(define-lff schematic_macro_widget_save_history '* '(*))
+(define-lff schematic_macro_widget_eval_string void '(* *))
 (define-lff schematic_macro_widget_hide void '(*))
 (define-lff schematic_macro_widget_new '* '(*))
 (define-lff schematic_macro_widget_show void '(*))

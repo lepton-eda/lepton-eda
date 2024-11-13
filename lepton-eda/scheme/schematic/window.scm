@@ -1331,12 +1331,30 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
+;;; argument.
 (define (exec-macro! *macro-widget *text)
   (when (null-pointer? *macro-widget)
     (error "NULL widget."))
-  (unless (or (null-pointer? *text)
-              (zero? (string-length (pointer->string *text))))
-    (schematic_macro_widget_exec_macro *macro-widget *text)))
+  (let ((*store (schematic_macro_widget_get_store *macro-widget))
+        (*window (schematic_macro_widget_get_window *macro-widget)))
+    (when (null-pointer? *store)
+      (error "NULL list store."))
+    (when (null-pointer? *window)
+      (error "NULL window."))
+
+    (unless (or (null-pointer? *text)
+                (zero? (string-length (pointer->string *text))))
+      ;; Save the history and hide the Macro widget BEFORE
+      ;; evaluating the macro code provided by the user, since
+      ;; that code may terminate the program.
+      (schematic_macro_widget_add_history *store *text)
+      (schematic_macro_widget_truncate_history *store)
+      (schematic_macro_widget_save_history *store)
+      ;; Hide the widget and go to the canvas.
+      (schematic_macro_widget_hide *macro-widget)
+      ;; Evaluate the provided macro string.
+      (schematic_macro_widget_eval_string *window *text))))
 
 
 ;;; Callback for when the user presses Enter in the entry widget.
