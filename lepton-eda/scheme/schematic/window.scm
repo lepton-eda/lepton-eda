@@ -1345,6 +1345,13 @@ for *PAGE page will be created and set active."
   (procedure->pointer void activate-macro-widget-entry '(* *)))
 
 
+(define (click-macro-widget-cancel-button *button *widget)
+  (schematic_macro_widget_click_cancel *button *widget))
+
+(define *callback-click-macro-widget-cancel-button
+  (procedure->pointer void click-macro-widget-cancel-button '(* *)))
+
+
 ;;; Callback for when the user clicks the Evaluate button.
 (define (click-macro-widget-evaluate-button *button *widget)
   (when (null-pointer? *widget)
@@ -1373,7 +1380,7 @@ for *PAGE page will be created and set active."
                       *widget)
     (g_signal_connect *cancel-button
                       (string->pointer "clicked")
-                      *schematic_macro_widget_click_cancel
+                      *callback-click-macro-widget-cancel-button
                       *widget)
     (g_signal_connect *evaluate-button
                       (string->pointer "clicked")
