@@ -538,7 +538,6 @@ macro_widget_create (SchematicMacroWidget* widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
-  GtkWidget *cancel_button;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
 
   g_return_if_fail (widget != NULL);
@@ -606,7 +605,9 @@ macro_widget_create (SchematicMacroWidget* widget)
   gtk_widget_set_visible (evaluate_button, TRUE);
   gtk_box_pack_start (GTK_BOX (button_box), evaluate_button, FALSE, FALSE, 0);
 
-  cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
+  GtkWidget *cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
+  schematic_macro_widget_set_cancel_button (widget, cancel_button);
+
   gtk_widget_set_visible (cancel_button, TRUE);
   gtk_box_pack_start (GTK_BOX (button_box), cancel_button, FALSE, FALSE, 0);
 
