@@ -417,11 +417,6 @@ void
 schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
                                    const gchar* macro_text)
 {
-  if (macro_text == NULL || strlen(macro_text) <= 0)
-  {
-    return;
-  }
-
   GtkListStore *store = schematic_macro_widget_get_store (widget);
   g_return_if_fail (store != NULL);
 

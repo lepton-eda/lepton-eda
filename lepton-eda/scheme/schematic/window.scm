@@ -1334,7 +1334,9 @@ for *PAGE page will be created and set active."
 (define (exec-macro! *macro-widget *text)
   (when (null-pointer? *macro-widget)
     (error "NULL widget."))
-  (schematic_macro_widget_exec_macro *macro-widget *text))
+  (unless (or (null-pointer? *text)
+              (zero? (string-length (pointer->string *text))))
+    (schematic_macro_widget_exec_macro *macro-widget *text)))
 
 
 ;;; Callback for when the user presses Enter in the entry widget.
