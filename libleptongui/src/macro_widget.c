@@ -343,23 +343,6 @@ set_property (GObject* object,
 
 
 
-/*! \brief Callback for when the user clicks the evaluate button
- */
-void
-schematic_macro_widget_click_evaluate (GtkButton* button,
-                                       gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  GtkWidget *entry = schematic_macro_widget_get_entry (widget);
-
-  const gchar* text = gtk_entry_get_text (GTK_ENTRY (entry));
-  schematic_macro_widget_exec_macro (widget, text);
-}
-
-
-
 /*! \brief Callback for when the user clicks the cancel button
  */
 void
