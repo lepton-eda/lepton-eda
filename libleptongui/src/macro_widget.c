@@ -44,13 +44,6 @@ set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* 
 static void
 exec_macro (SchematicWindow* toplevel,
             const gchar* macro_text);
-
-static void
-macro_widget_exec_macro (SchematicMacroWidget* widget,
-                         const gchar* macro_text);
-static void
-macro_widget_hide (SchematicMacroWidget* widget);
-
 static void
 macro_widget_create (SchematicMacroWidget* widget);
 
@@ -359,12 +352,12 @@ schematic_macro_widget_activate_entry (GtkEntry* entry,
 
   if (gtk_entry_get_text_length (entry) <= 0)
   {
-    macro_widget_hide (widget);
+    schematic_macro_widget_hide (widget);
     return;
   }
 
   const gchar* text = gtk_entry_get_text (entry);
-  macro_widget_exec_macro (widget, text);
+  schematic_macro_widget_exec_macro (widget, text);
 }
 
 
@@ -381,7 +374,7 @@ schematic_macro_widget_click_evaluate (GtkButton* button,
   GtkWidget *entry = schematic_macro_widget_get_entry (widget);
 
   const gchar* text = gtk_entry_get_text (GTK_ENTRY (entry));
-  macro_widget_exec_macro (widget, text);
+  schematic_macro_widget_exec_macro (widget, text);
 }
 
 
@@ -395,7 +388,7 @@ schematic_macro_widget_click_cancel (GtkButton* button,
   SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
-  macro_widget_hide (widget);
+  schematic_macro_widget_hide (widget);
 }
 
 
@@ -457,8 +450,8 @@ schematic_macro_widget_show (GtkWidget* widget)
 
 
 
-static void
-macro_widget_hide (SchematicMacroWidget* widget)
+void
+schematic_macro_widget_hide (SchematicMacroWidget* widget)
 {
   g_return_if_fail (widget != NULL);
 
@@ -500,9 +493,9 @@ exec_macro (SchematicWindow* toplevel,
 
 /*! \brief Execute Guile code passed in [macro_text]
 */
-static void
-macro_widget_exec_macro (SchematicMacroWidget* widget,
-                         const gchar* macro_text)
+void
+schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
+                                   const gchar* macro_text)
 {
   g_return_if_fail (widget != NULL);
 
@@ -524,7 +517,7 @@ macro_widget_exec_macro (SchematicMacroWidget* widget,
   history_truncate (store);
   history_save (store);
 
-  macro_widget_hide (widget);
+  schematic_macro_widget_hide (widget);
 
   exec_macro (window, macro_text);
 }
