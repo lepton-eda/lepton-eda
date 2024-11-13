@@ -132,6 +132,9 @@ schematic_macro_widget_show (GtkWidget* widget);
 void
 schematic_macro_widget_set_command_entry_font (GtkWidget* entry);
 
+void
+schematic_macro_widget_eval_string (SchematicWindow* toplevel,
+                                    const gchar* macro_text);
 G_END_DECLS
 
 GType

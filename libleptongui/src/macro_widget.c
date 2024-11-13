@@ -40,10 +40,6 @@ get_property (GObject* object, guint param_id, GValue* value, GParamSpec* pspec)
 static void
 set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* pspec);
 
-
-static void
-exec_macro (SchematicWindow* toplevel,
-            const gchar* macro_text);
 static void
 macro_widget_create (SchematicMacroWidget* widget);
 
@@ -376,9 +372,9 @@ schematic_macro_widget_hide (SchematicMacroWidget* widget)
 /*! \brief Invoke liblepton code to execute macro [macro_text]
  * Execution output and result will be logged.
 */
-static void
-exec_macro (SchematicWindow* toplevel,
-            const gchar* macro_text)
+void
+schematic_macro_widget_eval_string (SchematicWindow* toplevel,
+                                    const gchar* macro_text)
 {
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (toplevel);
@@ -417,7 +413,7 @@ schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
 
   schematic_macro_widget_hide (widget);
 
-  exec_macro (window, macro_text);
+  schematic_macro_widget_eval_string (window, macro_text);
 }
 
 
