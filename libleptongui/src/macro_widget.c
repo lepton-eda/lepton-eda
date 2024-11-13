@@ -48,9 +48,6 @@ static void
 macro_widget_create (SchematicMacroWidget* widget);
 
 static void
-history_load (GtkListStore* store);
-
-static void
 command_entry_set_font (GtkWidget* entry);
 
 
@@ -475,7 +472,7 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* load command history:
   */
-  history_load (store);
+  schematic_macro_widget_load_history (store);
   schematic_macro_widget_truncate_history (store);
 
 
@@ -684,8 +681,8 @@ schematic_macro_widget_save_history (GtkListStore* store)
  *
  *  \param store GtkListStore history container
  */
-static void
-history_load (GtkListStore* store)
+void
+schematic_macro_widget_load_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -719,7 +716,7 @@ history_load (GtkListStore* store)
     g_strfreev (lines);
   }
 
-} /* history_load() */
+} /* schematic_macro_widget_load_history() */
 
 
 
