@@ -48,9 +48,6 @@ static void
 macro_widget_create (SchematicMacroWidget* widget);
 
 static void
-history_save (GtkListStore* store);
-
-static void
 history_load (GtkListStore* store);
 
 static void
@@ -422,7 +419,7 @@ schematic_macro_widget_exec_macro (SchematicMacroWidget* widget,
   */
   schematic_macro_widget_add_history (store, macro_text);
   schematic_macro_widget_truncate_history (store);
-  history_save (store);
+  schematic_macro_widget_save_history (store);
 
   schematic_macro_widget_hide (widget);
 
@@ -628,8 +625,8 @@ schematic_macro_widget_truncate_history (GtkListStore* store)
  *
  *  \param store GtkListStore history container
  */
-static void
-history_save (GtkListStore* store)
+void
+schematic_macro_widget_save_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -679,7 +676,7 @@ history_save (GtkListStore* store)
   */
   g_strfreev (lines);
 
-} /* history_save() */
+} /* schematic_macro_widget_save_history() */
 
 
 
