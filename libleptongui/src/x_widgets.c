@@ -188,18 +188,18 @@ void x_widgets_show_object_properties (SchematicWindow* w_current)
 void x_widgets_show_log (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
+  GtkWidget *log_widget = schematic_window_get_log_widget (w_current);
 
   if (x_widgets_use_docks())
   {
     GtkWidget *bottom_notebook =
       schematic_window_get_bottom_notebook (w_current);
-    x_widgets_show_in_dock (bottom_notebook,
-                            w_current->log_widget);
+    x_widgets_show_in_dock (bottom_notebook, log_widget);
   }
   else
   {
     x_widgets_show_in_dialog (w_current,
-                              GTK_WIDGET (w_current->log_widget),
+                              log_widget,
                               &w_current->log_widget_dialog,
                               _("Log"),
                               "log");
