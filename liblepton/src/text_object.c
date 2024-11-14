@@ -686,7 +686,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_text_object_get_show (object),
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
-                          o_text_num_lines (string),
+                          lepton_str_line_count (string),
                           string);
 }
 

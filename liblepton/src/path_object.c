@@ -322,7 +322,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   pitch2       = lepton_object_get_fill_pitch2 (object);
 
   path_string = lepton_path_string_from_path (object->path);
-  num_lines = o_text_num_lines (path_string);
+  num_lines = lepton_str_line_count (path_string);
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n%s",
                          lepton_object_get_type (object),
                          lepton_object_get_color (object),
