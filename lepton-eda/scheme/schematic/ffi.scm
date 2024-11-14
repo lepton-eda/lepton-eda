@@ -400,7 +400,6 @@
             schematic_macro_widget_truncate_history
             schematic_macro_widget_save_history
             schematic_macro_widget_new
-            schematic_macro_widget_show
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
@@ -776,7 +775,6 @@
 (define-lff schematic_macro_widget_truncate_history void '(*))
 (define-lff schematic_macro_widget_save_history '* '(*))
 (define-lff schematic_macro_widget_new '* '(*))
-(define-lff schematic_macro_widget_show void '(*))
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))

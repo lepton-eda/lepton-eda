@@ -76,6 +76,7 @@
             make-schematic-window
             active-page
             set-active-page!
+            show-macro-widget
             snap-point
             window-canvas
             window-close-page!
@@ -1353,6 +1354,17 @@ for *PAGE page will be created and set active."
     (let ((*drawing_area (schematic_window_get_drawing_area *window)))
       (gtk_widget_hide *widget)
       (gtk_widget_grab_focus *drawing_area))))
+
+
+;;; Show the Macro widget.
+(define (show-macro-widget *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*entry (schematic_macro_widget_get_entry *widget)))
+    (when (null-pointer? *entry)
+      (error "NULL entry widget."))
+    (gtk_widget_show *widget)
+    (gtk_widget_grab_focus *entry)))
 
 
 ;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT

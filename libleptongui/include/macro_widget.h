@@ -121,9 +121,6 @@ void
 schematic_macro_widget_truncate_history (GtkListStore* store);
 
 void
-schematic_macro_widget_show (GtkWidget* widget);
-
-void
 schematic_macro_widget_set_command_entry_font (GtkWidget* entry);
 
 G_END_DECLS
