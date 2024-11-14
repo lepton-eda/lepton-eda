@@ -537,7 +537,6 @@
 
             o_undo_savestate
             o_undo_savestate_old
-            o_undo_savestate_viewport
             schematic_undo_get_file_index
             schematic_undo_index_to_filename
             schematic_undo_set_tmp_path
@@ -1240,7 +1239,6 @@
 ;;; o_undo.c
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_old void '(*))
-(define-lff o_undo_savestate_viewport void '(*))
 (define-lff schematic_undo_get_file_index int '())
 (define-lff schematic_undo_index_to_filename '* (list int))
 (define-lff schematic_undo_set_tmp_path void '(*))

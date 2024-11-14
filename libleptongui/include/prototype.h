@@ -727,9 +727,6 @@ o_undo_savestate (SchematicWindow *w_current,
 void
 o_undo_savestate_old (SchematicWindow *w_current);
 
-void
-o_undo_savestate_viewport (SchematicWindow *w_current);
-
 int
 schematic_undo_get_file_index ();
 
