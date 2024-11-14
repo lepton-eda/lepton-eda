@@ -1219,7 +1219,7 @@ o_grips_end_picture (SchematicWindow *w_current,
  *
  *  The last value of the radius is in <B>w_current->distance</B> in screen units.
  *
- *  \param [in] w_current  The SchematicWindow object.
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] o_current  Circle LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
