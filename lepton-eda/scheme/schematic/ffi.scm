@@ -370,7 +370,6 @@
             schematic_macro_widget_add_history
             schematic_macro_widget_truncate_history
             schematic_macro_widget_save_history
-            schematic_macro_widget_hide
             schematic_macro_widget_new
             schematic_macro_widget_show
 
@@ -426,6 +425,7 @@
             schematic_window_set_color_edit_widget
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
+            schematic_window_get_drawing_area
             schematic_window_get_enforce_hierarchy
             schematic_window_get_file_preview
             schematic_window_set_file_preview
@@ -743,7 +743,6 @@
 (define-lff schematic_macro_widget_add_history void '(* *))
 (define-lff schematic_macro_widget_truncate_history void '(*))
 (define-lff schematic_macro_widget_save_history '* '(*))
-(define-lff schematic_macro_widget_hide void '(*))
 (define-lff schematic_macro_widget_new '* '(*))
 (define-lff schematic_macro_widget_show void '(*))
 
@@ -815,6 +814,7 @@
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
+(define-lff schematic_window_get_drawing_area '* '(*))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_file_preview int '(*))
 (define-lff schematic_window_set_file_preview void (list int '*))

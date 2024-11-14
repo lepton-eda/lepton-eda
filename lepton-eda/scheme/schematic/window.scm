@@ -1288,6 +1288,18 @@ for *PAGE page will be created and set active."
        (log! 'message (format #f "~A" result))))))
 
 
+;;; Hide the Macro widget.
+(define (hide-macro-widget *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*window (schematic_macro_widget_get_window *widget)))
+    (when (null-pointer? *window)
+      (error "NULL window."))
+    (let ((*drawing_area (schematic_window_get_drawing_area *window)))
+      (gtk_widget_hide *widget)
+      (gtk_widget_grab_focus *drawing_area))))
+
+
 ;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
 ;;; argument.
 (define (exec-macro! *macro-widget *text)
@@ -1309,7 +1321,7 @@ for *PAGE page will be created and set active."
       (schematic_macro_widget_truncate_history *store)
       (schematic_macro_widget_save_history *store)
       ;; Hide the widget and go to the canvas.
-      (schematic_macro_widget_hide *macro-widget)
+      (hide-macro-widget *macro-widget)
       ;; Evaluate the provided macro string.
       (eval-macro-string! *window *text))))
 
@@ -1320,7 +1332,7 @@ for *PAGE page will be created and set active."
     (error "NULL widget."))
   ;; gtk_entry_get_text_length() returns guint16.
   (if (zero? (gtk_entry_get_text_length *entry))
-      (schematic_macro_widget_hide *widget)
+      (hide-macro-widget *widget)
       (let ((*text (gtk_entry_get_text *entry)))
         (exec-macro! *widget *text))))
 
@@ -1332,7 +1344,7 @@ for *PAGE page will be created and set active."
 (define (click-macro-widget-cancel-button *button *widget)
   (when (null-pointer? *widget)
     (error "NULL widget."))
-  (schematic_macro_widget_hide *widget))
+  (hide-macro-widget *widget))
 
 (define *callback-click-macro-widget-cancel-button
   (procedure->pointer void click-macro-widget-cancel-button '(* *)))
