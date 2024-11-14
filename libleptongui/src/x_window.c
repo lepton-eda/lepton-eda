@@ -1473,8 +1473,8 @@ schematic_window_restore_geometry (SchematicWindow *w_current,
 
   if (x_widgets_use_docks())
   {
-    gtk_widget_set_size_request (w_current->find_text_state,
-                                 -1,
-                                 height / 4);
+    GtkWidget *find_text_state =
+      schematic_window_get_find_text_state_widget (w_current);
+    gtk_widget_set_size_request (find_text_state, -1, height / 4);
   }
 }
