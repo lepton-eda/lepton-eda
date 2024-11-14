@@ -42,7 +42,7 @@
                     (display-error #f port subr message message-args rest)))))))
 
        ;; Send long message to log.
-       (log! 'message "~A" long-message)
+       (log! 'warning "~A" long-message)
        (format #t (G_ "ERROR: ~A\nPlease see log file for more information.\n")
                (apply format #f message message-args))))
     (_ #f)))
