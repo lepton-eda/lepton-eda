@@ -64,12 +64,12 @@ set_verbose_mode () {
 void verbose_print (const char *string)
 {
     if (verbose_mode) {
-	printf("%s", string);
-	char_index++;
-	if ((char_index + 1) >= 78) {
-	    printf("\n");
-	    char_index = 0;
-	}
+        printf("%s", string);
+        char_index++;
+        if ((char_index + 1) >= 78) {
+            printf("\n");
+            char_index = 0;
+        }
     }
 }
 
@@ -83,13 +83,13 @@ void verbose_print (const char *string)
 void verbose_done(void)
 {
     if (verbose_mode) {
-	if (char_index >= 70) {
-	    printf(_("\nDONE\n"));
-	} else {
-	    printf(_(" DONE\n"));
-	}
+        if (char_index >= 70) {
+            printf(_("\nDONE\n"));
+        } else {
+            printf(_(" DONE\n"));
+        }
 
-	char_index = 0;
+        char_index = 0;
     }
 }
 
