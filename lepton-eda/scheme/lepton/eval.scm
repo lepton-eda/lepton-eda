@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@
                     (display-error #f port subr message message-args rest)))))))
 
        ;; Send long message to log.
-       (log! 'message "~A\n" long-message)
+       (log! 'message "~A" long-message)
        (format #t (G_ "ERROR: ~A\nPlease see log file for more information.\n")
                (apply format #f message message-args))))
     (_ #f)))
