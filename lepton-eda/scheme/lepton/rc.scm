@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -76,14 +76,27 @@ path (rather than the regular Scheme load path)."
     (if rc-file (primitive-load rc-file))))
 
 
+;;; General RC file parsing function.
+;;;
+;;; Calls the default error handler. If any error other than
+;;; ENOENT occurs while loading or running a Scheme initialisation
+;;; file, prints an informative message and calls exit(1).
+;;;
+;;; \bug liblepton shouldn't call exit() - this function calls
+;;;      g_rc_parse__process_error(), which does.
+;;;
+;;; \warning Since this function may not return, it should only be
+;;; used on application startup or when there is no chance of data
+;;; loss from an unexpected exit().
 (define (parse-rc program-name rc-name)
   "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
-  (g_rc_parse (toplevel->pointer (current-toplevel))
-              (string->pointer program-name)
-              (string->pointer rc-name)
-              %null-pointer))
+  (g_rc_parse_handler (toplevel->pointer (current-toplevel))
+                      (string->pointer rc-name)
+                      %null-pointer
+                      (procedure->pointer void g_rc_parse__process_error '(* *))
+                      (string->pointer program-name)))
 
 
 ;;; List of processed rc directories.
