@@ -157,6 +157,11 @@ void verbose_done(void);
 void verbose_reset_index(void);
 char *s_misc_remaining_string(char *string, char delimiter, int count);
 
+char*
+u_basic_breakup_string (char *string,
+                        char delimiter,
+                        int count);
+
 /* ------------- s_visibility.c ------------- */
 #ifdef ENABLE_GTK3
 void

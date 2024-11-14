@@ -31,7 +31,4 @@ lepton_str_remove_ending_newline (gchar *string);
 gchar*
 lepton_str_get_first_line (gchar *string);
 
-char*
-u_basic_breakup_string (char *string, char delimiter, int count);
-
 G_END_DECLS
