@@ -1856,6 +1856,20 @@ schematic_window_set_options_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the log widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The log widget pointer.
+ */
+GtkWidget*
+schematic_window_get_log_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->log_widget;
+}
+
+
 /*! \brief Set log widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
