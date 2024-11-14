@@ -1337,12 +1337,9 @@ for *PAGE page will be created and set active."
 (define (eval-macro-string! *window *macro-text)
   (with-window
    *window
-   (let ((macro-command (string-append
-                         "(use-modules (lepton log))"
-                         "(log! 'message (format #f \"~A\" "
-                         (pointer->string *macro-text)
-                         "))")))
-     (eval-string-protected macro-command))))
+   (let ((result
+          (eval-string-protected (pointer->string *macro-text))))
+     (log! 'message (format #f "~A" result)))))
 
 
 ;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
