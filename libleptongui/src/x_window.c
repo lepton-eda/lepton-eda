@@ -167,7 +167,9 @@ x_window_find_text (GtkWidget *widget,
   int count;
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
+
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
 
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
@@ -177,7 +179,7 @@ x_window_find_text (GtkWidget *widget,
     count =
       schematic_find_text_state_find (w_current,
                                       SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
-                                      lepton_list_get_glist (w_current->toplevel->pages),
+                                      lepton_list_get_glist (toplevel->pages),
                                       schematic_find_text_widget_get_find_type (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
                                       schematic_find_text_widget_get_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
                                       schematic_find_text_widget_get_descend (SCHEMATIC_FIND_TEXT_WIDGET (w_current->find_text_widget)),
