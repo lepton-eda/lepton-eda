@@ -25,6 +25,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton config)
+  #:use-module (lepton eval)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
@@ -1331,6 +1332,19 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+;;; Evaluate macro defined in the C string *MACRO-TEXT.  Output
+;;; the macro and the result of its evaluation to log.
+(define (eval-macro-string! *window *macro-text)
+  (with-window
+   *window
+   (let ((macro-command (string-append
+                         "(use-modules (lepton log))"
+                         "(log! 'message (format #f \"~A\" "
+                         (pointer->string *macro-text)
+                         "))")))
+     (eval-string-protected macro-command))))
+
+
 ;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
 ;;; argument.
 (define (exec-macro! *macro-widget *text)
@@ -1354,7 +1368,7 @@ for *PAGE page will be created and set active."
       ;; Hide the widget and go to the canvas.
       (schematic_macro_widget_hide *macro-widget)
       ;; Evaluate the provided macro string.
-      (schematic_macro_widget_eval_string *window *text))))
+      (eval-macro-string! *window *text))))
 
 
 ;;; Callback for when the user presses Enter in the entry widget.

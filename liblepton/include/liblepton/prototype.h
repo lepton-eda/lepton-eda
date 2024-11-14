@@ -40,8 +40,6 @@ f_backup_message (gchar *backup_filename,
 
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
-SCM g_scm_eval_string_protected (SCM str);
-SCM g_scm_c_eval_string_protected (const gchar *str);
 
 gboolean
 g_read_file (LeptonToplevel *toplevel,

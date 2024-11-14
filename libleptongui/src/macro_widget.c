@@ -369,29 +369,6 @@ schematic_macro_widget_hide (SchematicMacroWidget* widget)
 
 
 
-/*! \brief Invoke liblepton code to execute macro [macro_text]
- * Execution output and result will be logged.
-*/
-void
-schematic_macro_widget_eval_string (SchematicWindow* toplevel,
-                                    const gchar* macro_text)
-{
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (toplevel);
-
-  gchar* cmd = g_strdup_printf(
-    "(use-modules (lepton log)) (log! 'message (format #f \"~A\" %s))",
-    macro_text);
-
-  g_scm_c_eval_string_protected (cmd);
-
-  g_free (cmd);
-
-  scm_dynwind_end();
-}
-
-
-
 /*! \brief Create the macro widget
 */
 static void

@@ -399,7 +399,6 @@
             schematic_macro_widget_add_history
             schematic_macro_widget_truncate_history
             schematic_macro_widget_save_history
-            schematic_macro_widget_eval_string
             schematic_macro_widget_hide
             schematic_macro_widget_new
             schematic_macro_widget_show
@@ -777,7 +776,6 @@
 (define-lff schematic_macro_widget_add_history void '(* *))
 (define-lff schematic_macro_widget_truncate_history void '(*))
 (define-lff schematic_macro_widget_save_history '* '(*))
-(define-lff schematic_macro_widget_eval_string void '(* *))
 (define-lff schematic_macro_widget_hide void '(*))
 (define-lff schematic_macro_widget_new '* '(*))
 (define-lff schematic_macro_widget_show void '(*))

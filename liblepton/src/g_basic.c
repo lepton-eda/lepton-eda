@@ -117,43 +117,6 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
   return result;
 }
 
-/*! \brief Evaluate a C string as a Scheme expression safely
- *  \par Function Description
- *
- *  Evaluates a C string like scm_c_eval_string().  Simple wrapper for
- *  g_scm_eval_string_protected().
- *
- *  \param str  String to evaluate.
- *
- *  \returns Evaluation results or SCM_BOOL_F if exception caught.
- */
-SCM g_scm_c_eval_string_protected (const gchar *str) {
-  SCM s_str;
-  g_return_val_if_fail ((str != NULL), SCM_BOOL_F);
-  s_str = scm_from_utf8_string (str);
-  return g_scm_eval_string_protected (s_str);
-}
-
-/*! \brief Evaluate a string as a Scheme expression safely
- *  \par Function Description
- *
- *  Evaluates a string similarly to scm_eval_string(), but catching
- *  any errors or exceptions and reporting them via the liblepton
- *  logging mechanism.
- *
- *  See also g_scm_eval_protected() and g_scm_c_eval_string_protected().
- *
- *  \param str  String to evaluate.
- *
- *  \returns Evaluation results or SCM_BOOL_F if exception caught.
- */
-SCM g_scm_eval_string_protected (SCM str)
-{
-  SCM expr = scm_list_2 (scm_from_utf8_symbol ("eval-string"),
-                         str);
-
-  return g_scm_eval_protected (expr, SCM_UNDEFINED);
-}
 
 /* Data to be passed to g_read_file()'s worker functions. */
 struct g_read_file_data_t
