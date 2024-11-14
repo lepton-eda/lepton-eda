@@ -1339,7 +1339,8 @@ for *PAGE page will be created and set active."
    *window
    (let ((result
           (eval-string-protected (pointer->string *macro-text))))
-     (log! 'message (format #f "~A" result)))))
+     (unless (eq? result 'error)
+       (log! 'message (format #f "~A" result))))))
 
 
 ;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
