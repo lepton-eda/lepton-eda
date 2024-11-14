@@ -183,7 +183,7 @@ SchematicWindow *schematic_window_new ()
 
   /* bottom dock: widgets: */
   schematic_window_set_find_text_state_widget (w_current, NULL);
-  w_current->log_widget      = NULL;
+  schematic_window_set_log_widget (w_current, NULL);
 
   /* right dock: widgets: */
   w_current->object_properties = NULL;
