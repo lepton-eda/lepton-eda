@@ -167,6 +167,7 @@ x_window_find_text (GtkWidget *widget,
   gint close = FALSE;
   int count;
   GtkWidget *find_text_widget;
+  GtkWidget *find_text_state;
 
   g_return_if_fail (w_current != NULL);
 
@@ -179,9 +180,10 @@ x_window_find_text (GtkWidget *widget,
   switch (response) {
   case GTK_RESPONSE_OK:
     find_text_widget = schematic_window_get_find_text_widget (w_current);
+    find_text_state = schematic_window_get_find_text_state_widget (w_current);
     count =
       schematic_find_text_state_find (w_current,
-                                      SCHEMATIC_FIND_TEXT_STATE (w_current->find_text_state),
+                                      SCHEMATIC_FIND_TEXT_STATE (find_text_state),
                                       lepton_list_get_glist (toplevel->pages),
                                       schematic_find_text_widget_get_find_type (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
                                       schematic_find_text_widget_get_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
