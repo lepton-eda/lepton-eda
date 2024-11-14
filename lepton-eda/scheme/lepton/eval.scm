@@ -28,6 +28,7 @@
 
 
 (define (process-error-stack stack key args)
+  (define unknown-error (G_ "ERROR: Unknown error"))
   (match args
     ((subr message message-args rest)
      ;; Capture long error message (including possible backtrace).
@@ -45,7 +46,9 @@
        (log! 'warning "~A" long-message)
        (format #t (G_ "ERROR: ~A\nPlease see log file for more information.\n")
                (apply format #f message message-args))))
-    (_ #f)))
+    (_ (log! 'warning "~A" unknown-error)
+       (format #t "~A" unknown-error)))
+  'error)
 
 
 (define* (eval-protected exp #:optional env)
