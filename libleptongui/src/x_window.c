@@ -1111,8 +1111,10 @@ create_notebook_bottom (SchematicWindow* w_current)
 
   if ( x_widgets_use_docks() )
   {
+    GtkWidget *find_text_state =
+      schematic_window_get_find_text_state_widget (w_current);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              GTK_WIDGET (w_current->find_text_state),
+                              find_text_state,
                               gtk_label_new(_("Find Text")));
 
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
