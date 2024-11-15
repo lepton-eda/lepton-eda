@@ -2713,3 +2713,34 @@ schematic_window_set_bottom_widget (SchematicWindow *w_current,
 
   w_current->bottom_widget = bottom_widget;
 }
+
+
+/*! \brief Get the dialog widget of the options widget of this
+ *  schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The dialog widget of the options widget.
+ */
+GtkWidget*
+schematic_window_get_options_widget_dialog (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->options_widget_dialog;
+}
+
+
+/*! \brief Set the dialog widget for the options widget of this
+ *  schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The dialog widget for the options widget.
+ */
+void
+schematic_window_set_options_widget_dialog (SchematicWindow *w_current,
+                                            GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->options_widget_dialog = widget;
+}
