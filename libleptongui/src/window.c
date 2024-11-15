@@ -186,7 +186,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_log_widget (w_current, NULL);
 
   /* right dock: widgets: */
-  w_current->object_properties = NULL;
+  schematic_window_set_object_properties_widget (w_current, NULL);
   w_current->text_properties   = NULL;
   w_current->options_widget    = NULL;
 
