@@ -74,29 +74,34 @@ x_multiattrib_open (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  if ( w_current->mawindow == NULL ) {
-    w_current->mawindow =
+  GtkWidget *multiattrib_widget =
+    schematic_window_get_multiattrib_widget (w_current);
+
+  if (multiattrib_widget == NULL)
+  {
+    multiattrib_widget =
       GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
                                 "object_list", active_page->selection_list,
                                 /* SchematicDialog */
                                 "settings-name", "multiattrib",
                                 "schematic-window", w_current,
                                 NULL));
-
+    schematic_window_set_multiattrib_widget (w_current,
+                                             multiattrib_widget);
     GtkWidget *main_window =
       schematic_window_get_main_window (w_current);
 
-    gtk_window_set_transient_for (GTK_WINDOW(w_current->mawindow),
+    gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
                                   GTK_WINDOW (main_window));
 
-    g_signal_connect (w_current->mawindow,
+    g_signal_connect (multiattrib_widget,
                       "response",
                       G_CALLBACK (multiattrib_callback_response),
                       w_current);
 
-    gtk_widget_show (w_current->mawindow);
+    gtk_widget_show (multiattrib_widget);
   } else {
-    gtk_window_present (GTK_WINDOW(w_current->mawindow));
+    gtk_window_present (GTK_WINDOW (multiattrib_widget));
   }
 }
 
