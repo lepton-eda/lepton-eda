@@ -393,7 +393,9 @@ static void
 x_tabs_tl_page_cur_set (SchematicWindow* w_current,
                         LeptonPage* page)
 {
-  lepton_toplevel_goto_page (w_current->toplevel, page);
+  LeptonToplevel *toplevel =
+    schematic_window_get_toplevel (w_current);
+  lepton_toplevel_goto_page (toplevel, page);
 
   /* NOTE: schematic_window_page_changed() after
    * lepton_toplevel_goto_page():
