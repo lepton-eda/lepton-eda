@@ -2072,6 +2072,20 @@ schematic_window_set_color_edit_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get font select widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The font select widget.
+ */
+GtkWidget*
+schematic_window_get_font_select_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->font_select_widget;
+}
+
+
 /*! \brief Set font select widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
