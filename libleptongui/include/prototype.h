@@ -1209,12 +1209,6 @@ schematic_window_save_geometry (SchematicWindow* w_current);
 void
 schematic_window_show_all (SchematicWindow *w_current,
                            GtkWidget *main_window);
-GtkWidget*
-schematic_window_get_main_window (SchematicWindow *w_current);
-
-SchematicWindow*
-schematic_window_set_main_window (SchematicWindow *w_current,
-                                  GtkWidget *main_window);
 LeptonPage*
 x_window_open_page (SchematicWindow *w_current,
                     const gchar *filename);

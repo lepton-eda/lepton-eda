@@ -590,4 +590,10 @@ schematic_window_get_text_size (SchematicWindow *w_current);
 void
 schematic_window_set_text_size (SchematicWindow *w_current,
                                 int val);
+GtkWidget*
+schematic_window_get_main_window (SchematicWindow *w_current);
+
+SchematicWindow*
+schematic_window_set_main_window (SchematicWindow *w_current,
+                                  GtkWidget *main_window);
 G_END_DECLS

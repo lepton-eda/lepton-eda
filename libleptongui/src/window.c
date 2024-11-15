@@ -2290,3 +2290,37 @@ schematic_window_set_text_size (SchematicWindow *w_current,
 
   w_current->text_size = val;
 }
+
+
+/*! \brief Get the main window widget of this schematic window.
+ *
+ * \param [in] w_current The schematic window structure.
+ * \return The main window widget.
+ */
+GtkWidget*
+schematic_window_get_main_window (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->main_window;
+}
+
+
+/*! \brief Set main window widget of schematic window
+ *  \par Function Description
+ *  Sets the main window widget of #SchematicWindow instance \a
+ *  w_current to \a main_window.
+ *
+ * \param [in] w_current The #SchematicWindow object.
+ * \param [in] main_window The main window widget.
+ */
+SchematicWindow*
+schematic_window_set_main_window (SchematicWindow *w_current,
+                                  GtkWidget *main_window)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  w_current->main_window = main_window;
+
+  return w_current;
+}
