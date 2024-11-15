@@ -82,7 +82,6 @@ hide_text_dialog (SchematicWindow *w_current)
   LeptonObject *object;
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
 
   object = o_select_return_first_object (w_current);
 
@@ -106,7 +105,6 @@ show_text_dialog (SchematicWindow *w_current)
   LeptonObject *object;
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
 
   object = o_select_return_first_object (w_current);
 
