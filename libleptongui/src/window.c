@@ -179,7 +179,7 @@ SchematicWindow *schematic_window_new ()
 
   /* docks: */
   schematic_window_set_bottom_notebook (w_current, NULL);
-  w_current->right_notebook  = NULL;
+  schematic_window_set_right_notebook (w_current, NULL);
 
   /* bottom dock: widgets: */
   schematic_window_set_find_text_state_widget (w_current, NULL);
