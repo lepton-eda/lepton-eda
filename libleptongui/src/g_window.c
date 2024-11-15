@@ -37,9 +37,10 @@ void
 g_dynwind_window (SchematicWindow *w_current)
 {
   g_assert (w_current != NULL);
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   SCM window_s = scm_from_pointer (w_current, NULL);
   scm_dynwind_fluid (scheme_window_fluid, window_s);
-  edascm_dynwind_toplevel (w_current->toplevel);
+  edascm_dynwind_toplevel (toplevel);
 }
 
 /*!
