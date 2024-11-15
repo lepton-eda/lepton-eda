@@ -716,4 +716,11 @@ schematic_window_get_font_select_dialog (SchematicWindow *w_current);
 void
 schematic_window_set_font_select_dialog (SchematicWindow *w_current,
                                          GtkWidget *widget);
+GtkWidget*
+schematic_window_get_page_select_dialog (SchematicWindow *w_current);
+
+void
+schematic_window_set_page_select_dialog (SchematicWindow *w_current,
+                                         GtkWidget *widget);
+
 G_END_DECLS

@@ -2935,3 +2935,35 @@ schematic_window_set_font_select_dialog (SchematicWindow *w_current,
 
   w_current->font_select_dialog = widget;
 }
+
+
+/*! \brief Get the dialog widget of the page select widget of this
+ *  schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The dialog widget of the page select widget.
+ */
+GtkWidget*
+schematic_window_get_page_select_dialog (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->page_select_dialog;
+}
+
+
+/*! \brief Set the dialog widget for the page select widget of
+ *  this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The dialog widget for the page select
+ *                     widget.
+ */
+void
+schematic_window_set_page_select_dialog (SchematicWindow *w_current,
+                                         GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->page_select_dialog = widget;
+}
