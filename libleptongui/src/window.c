@@ -2408,3 +2408,32 @@ schematic_window_set_menubar (SchematicWindow *w_current,
 
   w_current->menubar = menubar;
 }
+
+
+/*! \brief Get the popup menu widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The popup menu widget.
+ */
+GtkWidget*
+schematic_window_get_popup_menu (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->popup_menu;
+}
+
+
+/*! \brief Set the popup menu widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] popup_menu The popup menu widget.
+ */
+void
+schematic_window_set_popup_menu (SchematicWindow *w_current,
+                                 GtkWidget *popup_menu)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->popup_menu = popup_menu;
+}

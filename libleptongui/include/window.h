@@ -611,4 +611,10 @@ schematic_window_get_menubar (SchematicWindow *w_current);
 void
 schematic_window_set_menubar (SchematicWindow *w_current,
                               GtkWidget *menubar);
+GtkWidget*
+schematic_window_get_popup_menu (SchematicWindow *w_current);
+
+void
+schematic_window_set_popup_menu (SchematicWindow *w_current,
+                                 GtkWidget *popup_menu);
 G_END_DECLS
