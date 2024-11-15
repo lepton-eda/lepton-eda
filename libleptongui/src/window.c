@@ -3157,3 +3157,40 @@ schematic_window_set_handleboxes (SchematicWindow *w_current,
 
   w_current->handleboxes = val;
 }
+
+
+/*! \brief Get schematic window's field \a zoom_gain.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a zoom_gain field of the schematic
+ *  window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field \a zoom_gain.
+ */
+int
+schematic_window_get_zoom_gain (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->zoom_gain;
+}
+
+
+/*! \brief Set schematic window's field \a zoom_gain.
+ *
+ *  \par Function Description
+ *  Sets the \a zoom_gain field of the schematic window to the given
+ *  value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field \a zoom_gain.
+ */
+void
+schematic_window_set_zoom_gain (SchematicWindow *w_current,
+                                int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->zoom_gain = val;
+}

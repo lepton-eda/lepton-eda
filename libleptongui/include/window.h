@@ -752,4 +752,10 @@ schematic_window_get_handleboxes (SchematicWindow *w_current);
 void
 schematic_window_set_handleboxes (SchematicWindow *w_current,
                                   int val);
+int
+schematic_window_get_zoom_gain (SchematicWindow *w_current);
+
+void
+schematic_window_set_zoom_gain (SchematicWindow *w_current,
+                                int val);
 G_END_DECLS
