@@ -171,7 +171,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_translate_widget (w_current, NULL);
 
   /* tabbed GUI: notebook: */
-  w_current->xtabs_nbook = NULL;
+  schematic_window_set_tab_notebook (w_current, NULL);
 
   /* tabbed GUI: data structures: */
   w_current->xtabs_info_list = NULL;
