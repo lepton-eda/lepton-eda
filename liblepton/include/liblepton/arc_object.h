@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,9 @@
 
 G_BEGIN_DECLS
 
+/* Constants used in arc modification functions to mark the
+ * parameter to change.
+ */
 #define ARC_CENTER      0
 #define ARC_RADIUS      1
 #define ARC_START_ANGLE 2
