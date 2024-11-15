@@ -117,9 +117,13 @@ x_multiattrib_open (SchematicWindow *w_current)
 void
 x_multiattrib_close (SchematicWindow *w_current)
 {
-  if (w_current->mawindow != NULL) {
-    gtk_widget_destroy (w_current->mawindow);
-    w_current->mawindow = NULL;
+  GtkWidget *multiattrib_widget =
+    schematic_window_get_multiattrib_widget (w_current);
+
+  if (multiattrib_widget != NULL)
+  {
+    gtk_widget_destroy (multiattrib_widget);
+    schematic_window_set_multiattrib_widget (w_current, NULL);
   }
 }
 
