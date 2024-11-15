@@ -605,4 +605,10 @@ schematic_window_get_drawing_area (SchematicWindow *w_current);
 void
 schematic_window_set_drawing_area (SchematicWindow *w_current,
                                    GtkWidget *drawing_area);
+GtkWidget*
+schematic_window_get_menubar (SchematicWindow *w_current);
+
+void
+schematic_window_set_menubar (SchematicWindow *w_current,
+                              GtkWidget *menubar);
 G_END_DECLS

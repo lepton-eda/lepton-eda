@@ -2379,3 +2379,32 @@ schematic_window_set_drawing_area (SchematicWindow *w_current,
 
   w_current->drawing_area = drawing_area;
 }
+
+
+/*! \brief Get the menubar widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The menubar widget.
+ */
+GtkWidget*
+schematic_window_get_menubar (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->menubar;
+}
+
+
+/*! \brief Set the menubar widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] menubar The menubar widget.
+ */
+void
+schematic_window_set_menubar (SchematicWindow *w_current,
+                              GtkWidget *menubar)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->menubar = menubar;
+}
