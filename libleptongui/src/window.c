@@ -2776,3 +2776,35 @@ schematic_window_set_text_properties_dialog (SchematicWindow *w_current,
 
   w_current->text_properties_dialog = widget;
 }
+
+
+/*! \brief Get the dialog widget of the object properties widget
+ *  of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The dialog widget of the object properties widget.
+ */
+GtkWidget*
+schematic_window_get_object_properties_dialog (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->object_properties_dialog;
+}
+
+
+/*! \brief Set the dialog widget for the object properties widget
+ *  of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The dialog widget for the object properties
+ *                     widget.
+ */
+void
+schematic_window_set_object_properties_dialog (SchematicWindow *w_current,
+                                               GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->object_properties_dialog = widget;
+}
