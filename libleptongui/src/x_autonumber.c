@@ -683,8 +683,10 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   GList *o_list = NULL;
   const GList *iter;
   LeptonPage *active_page = NULL;
+  LeptonToplevel *toplevel = NULL;
 
   w_current = autotext->w_current;
+  toplevel = schematic_window_get_toplevel (w_current);
   active_page = schematic_window_get_active_page (w_current);
   autotext->current_searchtext = NULL;
   autotext->root_page = 1;
@@ -724,7 +726,6 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     /* strip of the "*" */
     searchtext = g_strndup(scope_text, strlen(scope_text)-1);
 
-    LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
       lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
@@ -779,8 +780,6 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     autotext->current_searchtext = (gchar*) text_item->data;
     /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
-
-    LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
 
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
       /* renumbering all means that no db is required */
@@ -869,7 +868,6 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
   g_list_free(searchtext_list);
 
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   /* Go back to the root page. */
   lepton_toplevel_goto_page (toplevel, (LeptonPage*) pages->data);
   schematic_window_page_changed (w_current);
