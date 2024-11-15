@@ -779,14 +779,16 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     autotext->current_searchtext = (gchar*) text_item->data;
     /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
+
+    LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
+
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
       /* renumbering all means that no db is required */
       if (!(autotext->scope_number == SCOPE_HIERARCHY
             && autotext->scope_overwrite)) {
         for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
           autotext->root_page = (pages->data == page_item->data);
-          lepton_toplevel_goto_page (w_current->toplevel,
-                                     (LeptonPage*) page_item->data);
+          lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
           schematic_window_page_changed (w_current);
           autonumber_get_used(w_current, autotext);
         }
@@ -795,8 +797,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
     /* renumber the elements */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      lepton_toplevel_goto_page (w_current->toplevel,
-                                 (LeptonPage*) page_item->data);
+      lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
       schematic_window_page_changed (w_current);
       autotext->root_page = (pages->data == page_item->data);
       /* build a page database if we're numbering pagebypage or selection only*/
