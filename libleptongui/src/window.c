@@ -358,9 +358,10 @@ SchematicWindow *schematic_window_new ()
 void
 schematic_window_free (SchematicWindow *w_current)
 {
-  if (w_current->toplevel != NULL) {
-    lepton_toplevel_delete (w_current->toplevel);
-    w_current->toplevel = NULL;
+  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
+  if (toplevel != NULL) {
+    lepton_toplevel_delete (toplevel);
+    schematic_window_set_toplevel (w_current, NULL);
   }
 
   if (w_current->dash_length_list_store != NULL) {
