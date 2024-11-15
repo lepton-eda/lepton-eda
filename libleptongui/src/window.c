@@ -159,7 +159,7 @@ SchematicWindow *schematic_window_new ()
   /* main window widgets */
   /* ------------------- */
   schematic_window_set_main_window (w_current, NULL);
-  w_current->toolbar = NULL;
+  schematic_window_set_toolbar (w_current, NULL);
   w_current->drawing_area = NULL;
   w_current->menubar      = NULL;
   w_current->popup_menu   = NULL;
