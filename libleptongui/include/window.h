@@ -494,6 +494,9 @@ schematic_window_set_tab_notebook (SchematicWindow *w_current,
 void
 schematic_window_set_object_properties_widget (SchematicWindow *w_current,
                                                GtkWidget *widget);
+GtkWidget*
+schematic_window_get_text_properties_widget (SchematicWindow *w_current);
+
 void
 schematic_window_set_text_properties_widget (SchematicWindow *w_current,
                                              GtkWidget *widget);

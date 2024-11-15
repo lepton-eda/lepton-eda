@@ -1840,6 +1840,20 @@ schematic_window_set_object_properties_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get text properties widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The text properties widget pointer.
+ */
+GtkWidget*
+schematic_window_get_text_properties_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->text_properties;
+}
+
+
 /*! \brief Set text properties widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
