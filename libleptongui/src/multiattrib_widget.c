@@ -147,13 +147,14 @@ schematic_multiattrib_widget_update (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
   GtkWidget *multiattrib_widget =
     schematic_window_get_multiattrib_widget (w_current);
 
   if (multiattrib_widget != NULL)
   {
+    LeptonSelection *selection =
+      schematic_window_get_selection_list (w_current);
     g_object_set (G_OBJECT (multiattrib_widget),
                   "object_list", selection,
                   NULL);
