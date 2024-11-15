@@ -911,7 +911,6 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   int origin_x, origin_y, bottom, right;
   SchematicWindow new_w_current;
   SchematicOptions options;
-  LeptonToplevel toplevel;
   GdkRectangle rect;
   SchematicViewport *old_geometry, *new_geometry;
   GdkPixmap *window = NULL;
@@ -924,10 +923,10 @@ x_image_get_pixbuf (SchematicWindow *w_current,
   memcpy (&new_w_current, w_current, sizeof (SchematicWindow));
   /* Do a copy of the options struct and work with it */
   memcpy (&options, w_current->options, sizeof (SchematicOptions));
-  /* Do a copy of the toplevel struct and work with it */
-  memcpy(&toplevel, w_current->toplevel, sizeof(LeptonToplevel));
 
-  new_w_current.toplevel = &toplevel;
+  /* Get the current page. */
+  LeptonPage *page = schematic_window_get_active_page (w_current);
+
   new_w_current.options = &options;
 
   window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), width, height, -1);
@@ -965,7 +964,7 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   o_redraw_rect (&new_w_current,
                  window,
-                 toplevel.page_current,
+                 page,
                  new_geometry,
                  &rect);
 
