@@ -207,7 +207,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_find_text_state_dialog (w_current, NULL);
   schematic_window_set_color_edit_dialog (w_current, NULL);
   schematic_window_set_font_select_dialog (w_current, NULL);
-  w_current->page_select_dialog       = NULL;
+  schematic_window_set_page_select_dialog (w_current, NULL);
 
 
   schematic_window_set_keyaccel_string (w_current, NULL);
