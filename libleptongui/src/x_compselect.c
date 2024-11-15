@@ -737,8 +737,10 @@ create_inuse_tree_model (Compselect *compselect)
 
   store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
 
-  symhead =
-    s_toplevel_get_symbols (SCHEMATIC_DIALOG (compselect)->w_current->toplevel);
+  LeptonToplevel *toplevel =
+    schematic_window_get_toplevel (SCHEMATIC_DIALOG (compselect)->w_current);
+
+  symhead = s_toplevel_get_symbols (toplevel);
 
   for (symlist = symhead;
        symlist != NULL;
