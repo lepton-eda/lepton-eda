@@ -2043,6 +2043,20 @@ schematic_window_set_show_text_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the color edit widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The color edit widget.
+ */
+GtkWidget*
+schematic_window_get_color_edit_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->color_edit_widget;
+}
+
+
 /*! \brief Set color edit widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
