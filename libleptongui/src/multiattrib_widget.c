@@ -58,7 +58,7 @@ multiattrib_callback_response (GtkDialog *dialog,
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
         gtk_widget_hide (GTK_WIDGET (dialog));
-        w_current->mawindow = NULL;
+        schematic_window_set_multiattrib_widget (w_current, NULL);
         break;
   }
 }
