@@ -53,14 +53,15 @@ a_zoom (SchematicWindow *w_current,
   double top, bottom, right, left;
 
 
-  /* NB: w_current->zoom_gain is a percentage increase */
+  /* NB: zoom_gain is a percentage increase */
+  int zoom_gain = schematic_window_get_zoom_gain (w_current);
   switch(dir) {
   case(ZOOM_IN):
-    relativ_zoom_factor = (100.0 + w_current->zoom_gain) / 100.0;
+    relativ_zoom_factor = (100.0 + zoom_gain) / 100.0;
     break;
 
   case(ZOOM_OUT):
-    relativ_zoom_factor = 100.0 / (100.0 + w_current->zoom_gain);
+    relativ_zoom_factor = 100.0 / (100.0 + zoom_gain);
     break;
 
   case(ZOOM_FULL):
