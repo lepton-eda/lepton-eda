@@ -204,7 +204,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_text_properties_dialog (w_current, NULL);
   schematic_window_set_object_properties_dialog (w_current, NULL);
   schematic_window_set_log_widget_dialog (w_current, NULL);
-  w_current->find_text_state_dialog   = NULL;
+  schematic_window_set_find_text_state_dialog (w_current, NULL);
   w_current->color_edit_dialog        = NULL;
   w_current->font_select_dialog       = NULL;
   w_current->page_select_dialog       = NULL;
