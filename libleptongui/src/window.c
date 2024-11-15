@@ -201,7 +201,7 @@ SchematicWindow *schematic_window_new ()
 
   /* dialogs for widgets */
   schematic_window_set_options_widget_dialog (w_current, NULL);
-  w_current->text_properties_dialog   = NULL;
+  schematic_window_set_text_properties_dialog (w_current, NULL);
   w_current->object_properties_dialog = NULL;
   w_current->log_widget_dialog        = NULL;
   w_current->find_text_state_dialog   = NULL;
