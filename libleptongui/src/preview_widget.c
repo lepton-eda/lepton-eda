@@ -239,9 +239,11 @@ schematic_preview_init (SchematicPreview *preview)
   preview->filename = NULL;
   preview->buffer   = NULL;
 
+  LeptonToplevel *toplevel =
+    schematic_window_get_toplevel (preview->window);
+
   schematic_canvas_set_page (SCHEMATIC_CANVAS (preview),
-                             lepton_page_new (preview->window->toplevel,
-                                              "preview"));
+                             lepton_page_new (toplevel, "preview"));
 
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |
