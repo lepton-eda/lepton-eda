@@ -2570,3 +2570,32 @@ schematic_window_set_translate_widget (SchematicWindow *w_current,
 
   w_current->translate_widget = translate_widget;
 }
+
+
+/*! \brief Get the bottom widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The bottom widget.
+ */
+GtkWidget*
+schematic_window_get_bottom_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->bottom_widget;
+}
+
+
+/*! \brief Set the bottom widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] bottom_widget The bottom widget.
+ */
+void
+schematic_window_set_bottom_widget (SchematicWindow *w_current,
+                                    GtkWidget *bottom_widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->bottom_widget = bottom_widget;
+}

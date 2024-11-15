@@ -644,4 +644,10 @@ schematic_window_get_translate_widget (SchematicWindow *w_current);
 void
 schematic_window_set_translate_widget (SchematicWindow *w_current,
                                        GtkWidget *translate_widget);
+GtkWidget*
+schematic_window_get_bottom_widget (SchematicWindow *w_current);
+
+void
+schematic_window_set_bottom_widget (SchematicWindow *w_current,
+                                    GtkWidget *bottom_widget);
 G_END_DECLS
