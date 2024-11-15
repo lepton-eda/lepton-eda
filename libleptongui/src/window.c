@@ -197,7 +197,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_font_select_widget (w_current, NULL);
 
   /* page selection widget: */
-  w_current->page_select_widget = NULL;
+  schematic_window_set_page_select_widget (w_current, NULL);
 
   /* dialogs for widgets */
   w_current->options_widget_dialog    = NULL;
