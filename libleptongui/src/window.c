@@ -1811,6 +1811,20 @@ schematic_window_set_tab_notebook (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the object properties widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The object properties widget.
+ */
+GtkWidget*
+schematic_window_get_object_properties_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->object_properties;
+}
+
+
 /*! \brief Set object properties widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
