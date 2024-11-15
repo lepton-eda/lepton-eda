@@ -194,7 +194,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_color_edit_widget (w_current, NULL);
 
   /* font selection widget: */
-  w_current->font_select_widget = NULL;
+  schematic_window_set_font_select_widget (w_current, NULL);
 
   /* page selection widget: */
   w_current->page_select_widget = NULL;
