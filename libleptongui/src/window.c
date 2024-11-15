@@ -218,7 +218,7 @@ SchematicWindow *schematic_window_new ()
   /* ------------ */
   schematic_window_set_compselect_widget (w_current, NULL);
   schematic_window_set_newtext_dialog (w_current, NULL);
-  w_current->sewindow     = NULL;
+  schematic_window_set_slot_edit_widget (w_current, NULL);
   w_current->aawindow     = NULL;
   w_current->mawindow     = NULL;
   w_current->aewindow     = NULL;
