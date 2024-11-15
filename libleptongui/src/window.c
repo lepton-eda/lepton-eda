@@ -151,7 +151,7 @@ SchematicWindow *schematic_window_new ()
 
   w_current = g_new0 (SchematicWindow, 1);
 
-  w_current->toplevel = NULL;
+  schematic_window_set_toplevel (w_current, NULL);
 
   schematic_window_set_dont_invalidate (w_current, FALSE);
 
