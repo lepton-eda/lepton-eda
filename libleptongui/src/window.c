@@ -216,7 +216,7 @@ SchematicWindow *schematic_window_new ()
   /* ------------ */
   /* Dialog boxes */
   /* ------------ */
-  w_current->cswindow     = NULL;
+  schematic_window_set_compselect_widget (w_current, NULL);
   w_current->tiwindow     = NULL;
   w_current->sewindow     = NULL;
   w_current->aawindow     = NULL;
