@@ -188,7 +188,7 @@ SchematicWindow *schematic_window_new ()
   /* right dock: widgets: */
   schematic_window_set_object_properties_widget (w_current, NULL);
   w_current->text_properties   = NULL;
-  w_current->options_widget    = NULL;
+  schematic_window_set_options_widget (w_current, NULL);
 
   /* color scheme editor widget: */
   w_current->color_edit_widget = NULL;
