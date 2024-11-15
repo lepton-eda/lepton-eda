@@ -1637,6 +1637,37 @@ schematic_window_set_arc_edit_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the Multiattrib dialog widget of this schematic
+ *  window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The Multiattrib widget instance.
+ */
+GtkWidget*
+schematic_window_get_multiattrib_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->mawindow;
+}
+
+
+/*! \brief Set the Multiattrib dialog widget for this schematic
+ *  window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The Multiattrib widget instance.
+ */
+void
+schematic_window_set_multiattrib_widget (SchematicWindow *w_current,
+                                         GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->mawindow = widget;
+}
+
+
 /*! \brief Get attrib edit widget of this schematic window.
  *
  *  \param [in] w_current The schematic window.

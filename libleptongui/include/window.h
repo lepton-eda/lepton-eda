@@ -453,6 +453,12 @@ void
 schematic_window_set_arc_edit_widget (SchematicWindow *w_current,
                                       GtkWidget *widget);
 GtkWidget*
+schematic_window_get_multiattrib_widget (SchematicWindow *w_current);
+
+void
+schematic_window_set_multiattrib_widget (SchematicWindow *w_current,
+                                         GtkWidget *dialog);
+GtkWidget*
 schematic_window_get_attrib_edit_widget (SchematicWindow *w_current);
 
 void
