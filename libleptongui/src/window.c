@@ -178,7 +178,7 @@ SchematicWindow *schematic_window_new ()
 
 
   /* docks: */
-  w_current->bottom_notebook = NULL;
+  schematic_window_set_bottom_notebook (w_current, NULL);
   w_current->right_notebook  = NULL;
 
   /* bottom dock: widgets: */
