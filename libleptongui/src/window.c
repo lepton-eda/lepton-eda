@@ -2808,3 +2808,34 @@ schematic_window_set_object_properties_dialog (SchematicWindow *w_current,
 
   w_current->object_properties_dialog = widget;
 }
+
+
+/*! \brief Get the dialog widget of the log widget of this
+ *  schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The dialog widget of the log widget.
+ */
+GtkWidget*
+schematic_window_get_log_widget_dialog (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->log_widget_dialog;
+}
+
+
+/*! \brief Set the dialog widget for the log widget of this
+ *  schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The dialog widget for the log widget.
+ */
+void
+schematic_window_set_log_widget_dialog (SchematicWindow *w_current,
+                                        GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->log_widget_dialog = widget;
+}
