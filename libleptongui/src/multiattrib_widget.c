@@ -144,6 +144,8 @@ schematic_multiattrib_widget_close (SchematicWindow *w_current)
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current)
 {
+  g_return_if_fail (w_current != NULL);
+
   LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
   GtkWidget *multiattrib_widget =
