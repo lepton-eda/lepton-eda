@@ -1781,6 +1781,21 @@ schematic_window_get_tab_notebook (SchematicWindow *w_current)
 }
 
 
+/*! \brief Set the field 'x_tabs_nbook' for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] notebook The tabs notebook widget.
+ */
+void
+schematic_window_set_tab_notebook (SchematicWindow *w_current,
+                                   GtkNotebook *notebook)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->xtabs_nbook = notebook;
+}
+
+
 /*! \brief Set object properties widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.

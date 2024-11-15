@@ -483,6 +483,9 @@ GtkNotebook*
 schematic_window_get_tab_notebook (SchematicWindow *w_current);
 
 void
+schematic_window_set_tab_notebook (SchematicWindow *w_current,
+                                   GtkNotebook* notebook);
+void
 schematic_window_set_object_properties_widget (SchematicWindow *w_current,
                                                GtkWidget *widget);
 void
