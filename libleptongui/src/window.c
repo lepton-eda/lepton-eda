@@ -1767,6 +1767,21 @@ schematic_window_get_tab_info_list (SchematicWindow *w_current)
 }
 
 
+/*! \brief Set the field 'xtabs_info_list' for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] tab_info_list The new value of the field 'xtabs_info_list'.
+ */
+void
+schematic_window_set_tab_info_list (SchematicWindow *w_current,
+                                    GList* tab_info_list)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->xtabs_info_list = tab_info_list;
+}
+
+
 /*! \brief Get the field 'xtabs_nbook' for this schematic window.
  *
  *  \param [in] w_current The schematic window.

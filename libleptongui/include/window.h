@@ -479,6 +479,9 @@ schematic_window_set_slot_edit_widget (SchematicWindow *w_current,
 GList*
 schematic_window_get_tab_info_list (SchematicWindow *w_current);
 
+void
+schematic_window_set_tab_info_list (SchematicWindow *w_current,
+                                    GList* tab_info_list);
 GtkNotebook*
 schematic_window_get_tab_notebook (SchematicWindow *w_current);
 
