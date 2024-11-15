@@ -698,4 +698,10 @@ schematic_window_get_log_widget_dialog (SchematicWindow *w_current);
 void
 schematic_window_set_log_widget_dialog (SchematicWindow *w_current,
                                         GtkWidget *widget);
+GtkWidget*
+schematic_window_get_find_text_state_dialog (SchematicWindow *w_current);
+
+void
+schematic_window_set_find_text_state_dialog (SchematicWindow *w_current,
+                                             GtkWidget *widget);
 G_END_DECLS
