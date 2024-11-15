@@ -200,7 +200,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_page_select_widget (w_current, NULL);
 
   /* dialogs for widgets */
-  w_current->options_widget_dialog    = NULL;
+  schematic_window_set_options_widget_dialog (w_current, NULL);
   w_current->text_properties_dialog   = NULL;
   w_current->object_properties_dialog = NULL;
   w_current->log_widget_dialog        = NULL;
