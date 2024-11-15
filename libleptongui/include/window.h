@@ -638,4 +638,10 @@ schematic_window_get_popup_menu (SchematicWindow *w_current);
 void
 schematic_window_set_popup_menu (SchematicWindow *w_current,
                                  GtkWidget *popup_menu);
+GtkWidget*
+schematic_window_get_translate_widget (SchematicWindow *w_current);
+
+void
+schematic_window_set_translate_widget (SchematicWindow *w_current,
+                                       GtkWidget *translate_widget);
 G_END_DECLS

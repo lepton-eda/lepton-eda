@@ -2541,3 +2541,32 @@ schematic_window_set_popup_menu (SchematicWindow *w_current,
 
   w_current->popup_menu = popup_menu;
 }
+
+
+/*! \brief Get the translate widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The translate widget.
+ */
+GtkWidget*
+schematic_window_get_translate_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->translate_widget;
+}
+
+
+/*! \brief Set the translate widget for this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] translate_widget The translate widget.
+ */
+void
+schematic_window_set_translate_widget (SchematicWindow *w_current,
+                                       GtkWidget *translate_widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->translate_widget = translate_widget;
+}
