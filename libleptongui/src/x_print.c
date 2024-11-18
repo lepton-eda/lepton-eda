@@ -436,14 +436,16 @@ x_print (SchematicWindow *w_current)
   */
   gtk_print_operation_set_embed_page_setup (print, TRUE);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
 
   res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-                                 GTK_WINDOW (w_current->main_window), &err);
+                                 GTK_WINDOW (main_window), &err);
 
   if (res == GTK_PRINT_OPERATION_RESULT_ERROR) {
     /* If printing failed due to an error, show an error dialog */
     GtkWidget *error_dialog =
-      gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+      gtk_message_dialog_new (GTK_WINDOW (main_window),
                               GTK_DIALOG_DESTROY_WITH_PARENT,
                               GTK_MESSAGE_ERROR,
                               GTK_BUTTONS_CLOSE,
