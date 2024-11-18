@@ -223,7 +223,8 @@ static void
 update_state_menu_items (SchematicWindow* w_current,
                          SchematicActionMode newstate)
 {
-  x_menus_sensitivity (w_current->menubar, "&edit-select", newstate != SELECT);
+  GtkWidget *menubar = schematic_window_get_menubar (w_current);
+  x_menus_sensitivity (menubar, "&edit-select", newstate != SELECT);
 }
 
 
