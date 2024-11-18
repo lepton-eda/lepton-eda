@@ -803,7 +803,8 @@ schematic_window_get_show_hidden_text (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
 
-  SchematicCanvas *view = SCHEMATIC_CANVAS (w_current->drawing_area);
+  SchematicCanvas *view =
+    schematic_window_get_current_canvas (w_current);
 
   /* On early stage, page view may not be created yet, so just
      return FALSE in such cases. */
