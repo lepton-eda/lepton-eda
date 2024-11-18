@@ -754,7 +754,10 @@ notify_options (SchematicWindow *w_current)
 
   /* Events can occur before the drawing area is created */
 
-  if (w_current->drawing_area != NULL)
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
+
+  if (drawing_area != NULL)
   {
     i_update_grid_info (w_current);
     schematic_canvas_invalidate_all (schematic_window_get_current_canvas (w_current));
