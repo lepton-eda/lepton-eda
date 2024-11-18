@@ -455,7 +455,10 @@ i_set_filename (SchematicWindow* w_current,
                 gboolean changed)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->main_window != NULL);
+
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+  g_return_if_fail (main_window != NULL);
   g_return_if_fail (filename);
 
   gchar* cwd = g_get_current_dir();
@@ -488,8 +491,7 @@ i_set_filename (SchematicWindow* w_current,
                                   changed ? "* " : "",
                                   fname);
 
-  gtk_window_set_title (GTK_WINDOW (w_current->main_window),
-                        title);
+  gtk_window_set_title (GTK_WINDOW (main_window), title);
 
   g_free (title);
   g_free (fname);
