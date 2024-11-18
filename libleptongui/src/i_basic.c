@@ -273,7 +273,8 @@ i_set_state_msg (SchematicWindow *w_current,
     schematic_window_set_action_mode (w_current, newstate);
     if (w_current->toolbars)
     {
-      schematic_toolbar_update (w_current->toolbar, newstate);
+      GtkWidget *toolbar = schematic_window_get_toolbar (w_current);
+      schematic_toolbar_update (toolbar, newstate);
     }
   }
   i_show_state(w_current, message);
