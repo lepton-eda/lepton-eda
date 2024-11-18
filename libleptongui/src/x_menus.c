@@ -275,7 +275,7 @@ schematic_window_create_main_popup_menu (SchematicWindow* w_current)
 
   gtk_widget_show_all (menu);
 
-  w_current->popup_menu = menu;
+  schematic_window_set_popup_menu (w_current, menu);
 
   return menu;
 }
