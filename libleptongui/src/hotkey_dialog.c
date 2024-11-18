@@ -190,10 +190,10 @@ x_dialog_hotkeys (SchematicWindow *w_current)
     return;
   }
 
-
+  GtkWidget *main_window = schematic_window_get_main_window (w_current);
   w_current->hkwindow =
     schematic_dialog_new_with_buttons (_("Hotkeys"),
-                                       GTK_WINDOW (w_current->main_window),
+                                       GTK_WINDOW (main_window),
                                        (GtkDialogFlags) 0, /* not modal */
                                        "hotkeys", w_current,
                                        _("_Close"), GTK_RESPONSE_REJECT,
