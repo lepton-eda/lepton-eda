@@ -24,9 +24,11 @@ G_BEGIN_DECLS
 
 struct st_undo
 {
-  /* one of these is used, depending on if you are doing in-memory */
-  /* or file based undo state saving */
+  /* One of these fields is used, depending on if you are doing
+   * in-memory or file based undo state saving. */
+  /* The name of the file to save the undo information to. */
   char *filename;
+  /* The list of objects to save in memory. */
   GList *object_list;
 
   /* TRUE if only viewport size has to be saved.  Otherwise,
