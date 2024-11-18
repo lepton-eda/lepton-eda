@@ -40,6 +40,9 @@ schematic_page_revert_dialog (SchematicWindow *w_current,
 
   g_return_val_if_fail (w_current != NULL, FALSE);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   const gchar* msg =
     _("<b>Revert page:</b>"
       "\n"
@@ -51,7 +54,7 @@ schematic_page_revert_dialog (SchematicWindow *w_current,
       "This action will also reload all component libraries.");
 
   dialog = gtk_message_dialog_new_with_markup
-    ((GtkWindow*) w_current->main_window,
+    ((GtkWindow*) main_window,
      GTK_DIALOG_DESTROY_WITH_PARENT,
      GTK_MESSAGE_WARNING,
      GTK_BUTTONS_YES_NO,
