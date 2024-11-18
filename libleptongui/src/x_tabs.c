@@ -236,7 +236,7 @@ schematic_tabs_set_callback (char *name,
 TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current)
 {
-  SchematicCanvas* pview = x_tabs_tl_pview_cur (w_current);
+  SchematicCanvas* pview = schematic_window_get_current_canvas (w_current);
   GList *info_list = schematic_window_get_tab_info_list (w_current);
   TabInfo* nfo = x_tabs_info_find_by_pview (info_list, pview);
   return nfo;
@@ -375,16 +375,6 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
  * implementation: SchematicWindow accessors:
  *
  */
-
-SchematicCanvas*
-x_tabs_tl_pview_cur (SchematicWindow* w_current)
-{
-  GtkWidget *wview = schematic_window_get_drawing_area (w_current);
-  SchematicCanvas* view  = SCHEMATIC_CANVAS (wview);
-
-  return view;
-}
-
 
 
 void
