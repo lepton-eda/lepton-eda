@@ -404,7 +404,7 @@ schematic_window_create_canvas (SchematicWindow *w_current,
   x_window_create_drawing (scrolled, w_current);
   x_window_setup_scrolling (w_current, scrolled);
 
-  return SCHEMATIC_CANVAS (w_current->drawing_area);
+  return schematic_window_get_current_canvas (w_current);
 }
 
 
