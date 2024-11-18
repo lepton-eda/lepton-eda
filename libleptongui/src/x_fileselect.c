@@ -324,8 +324,11 @@ schematic_file_select_dialog_new (SchematicWindow *w_current)
 {
   GtkWidget *dialog;
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   dialog = gtk_file_chooser_dialog_new (_("Open"),
-                                        GTK_WINDOW(w_current->main_window),
+                                        GTK_WINDOW (main_window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
                                         _("_Open"), GTK_RESPONSE_ACCEPT,
