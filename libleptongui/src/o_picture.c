@@ -185,14 +185,18 @@ picture_selection_dialog (SchematicWindow *w_current)
   GdkPixbuf *pixbuf;
   GError *error = NULL;
 
-  GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
-                                                      GTK_WINDOW(w_current->main_window),
-                                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-                                                      _("_Cancel"),
-                                                      GTK_RESPONSE_CANCEL,
-                                                      _("_Open"),
-                                                      GTK_RESPONSE_ACCEPT,
-                                                      NULL);
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
+  GtkWidget *pfswindow =
+    gtk_file_chooser_dialog_new (_("Add Picture"),
+                                 GTK_WINDOW (main_window),
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+                                 _("_Cancel"),
+                                 GTK_RESPONSE_CANCEL,
+                                 _("_Open"),
+                                 GTK_RESPONSE_ACCEPT,
+                                 NULL);
 
   setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
@@ -216,7 +220,7 @@ picture_selection_dialog (SchematicWindow *w_current)
     if (!pixbuf) {
       GtkWidget *dialog;
 
-      dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+      dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
                                        GTK_DIALOG_DESTROY_WITH_PARENT,
                                        GTK_MESSAGE_ERROR,
                                        GTK_BUTTONS_CLOSE,
