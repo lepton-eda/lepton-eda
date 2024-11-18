@@ -77,9 +77,10 @@ coord_dialog (SchematicWindow *w_current,
   GtkWidget *vbox;
 
   if (!w_current->cowindow) {
+    GtkWidget *main_window = schematic_window_get_main_window (w_current);
     w_current->cowindow =
       schematic_dialog_new_with_buttons (_("Coords"),
-                                         GTK_WINDOW(w_current->main_window),
+                                         GTK_WINDOW (main_window),
                                          (GtkDialogFlags) 0, /* Not modal GTK_DIALOG_MODAL */
                                          "coord", w_current,
                                          _("_Close"), GTK_RESPONSE_REJECT,
