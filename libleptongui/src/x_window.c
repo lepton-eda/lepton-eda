@@ -1363,13 +1363,16 @@ x_window_untitled_page (LeptonPage* page)
 void
 schematic_window_save_geometry (SchematicWindow* w_current)
 {
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   gint x = 0;
   gint y = 0;
-  gtk_window_get_position (GTK_WINDOW (w_current->main_window), &x, &y);
+  gtk_window_get_position (GTK_WINDOW (main_window), &x, &y);
 
   gint width = 0;
   gint height = 0;
-  gtk_window_get_size (GTK_WINDOW (w_current->main_window), &width, &height);
+  gtk_window_get_size (GTK_WINDOW (main_window), &width, &height);
 
   EdaConfig* cfg = eda_config_get_cache_context();
 
