@@ -831,14 +831,15 @@ x_dialog_close_window (SchematicWindow *w_current)
     /* no page with unsaved changes, close window */
     return TRUE;
   }
+  GtkWidget *main_window;
 
   dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
                                      "unsaved-pages", unsaved_pages,
                                      NULL));
-
+  main_window = schematic_window_get_main_window (w_current);
   gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (w_current->main_window));
+                                GTK_WINDOW (main_window));
 
   g_list_free (unsaved_pages);
   switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
