@@ -1096,7 +1096,7 @@ for *PAGE page will be created and set active."
             (process-pending-events)
 
             ;; Zoom new page view created for existing page.
-            (schematic_canvas_zoom_extents (x_tabs_tl_pview_cur *window)
+            (schematic_canvas_zoom_extents (schematic_window_get_current_canvas *window)
                                            %null-pointer))))))
 
 
@@ -1252,7 +1252,7 @@ for *PAGE page will be created and set active."
 ;;; GtkNotebook "switch-page" signal handler.
 (define (callback-tabs-switch-page *notebook *wtab id *window)
   (define *current-page (schematic_window_get_active_page *window))
-  (define *current-canvas (x_tabs_tl_pview_cur *window) )
+  (define *current-canvas (schematic_window_get_current_canvas *window) )
 
   (unless (and (null-pointer? *current-page)
                (null-pointer? *current-canvas))
