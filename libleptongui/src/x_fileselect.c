@@ -595,7 +595,9 @@ x_fileselect_load_backup (SchematicWindow *w_current,
 "\n\n"
 "Do you want to load the backup file?\n"));
 
-  dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+  dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
                                    GTK_DIALOG_MODAL,
                                    GTK_MESSAGE_QUESTION,
                                    GTK_BUTTONS_YES_NO,
