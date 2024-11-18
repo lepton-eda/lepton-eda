@@ -326,7 +326,7 @@ schematic_preview_dispose (GObject *self)
   SchematicWindow *preview_w_current = preview->window;
 
   if (preview_w_current != NULL) {
-    preview_w_current->drawing_area = NULL;
+    schematic_window_set_drawing_area (preview_w_current, NULL);
 
     schematic_window_free (preview_w_current);
 
