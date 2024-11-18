@@ -1261,9 +1261,12 @@ autonumber_create_dialog (SchematicWindow *w_current)
   GtkWidget *label3;
 
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   autonumber_text =
     schematic_dialog_new_with_buttons (_("Autonumber Text"),
-                                       GTK_WINDOW(w_current->main_window),
+                                       GTK_WINDOW (main_window),
                                        (GtkDialogFlags) 0, /* not modal */
                                        "autonumber", w_current,
                                        _("_Close"), GTK_RESPONSE_REJECT,
