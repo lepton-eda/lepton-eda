@@ -829,7 +829,7 @@ schematic_window_create_menubar (SchematicWindow *w_current,
   }
 #endif
 
-  w_current->menubar = menubar;
+  schematic_window_set_menubar (w_current, menubar);
 }
 
 
