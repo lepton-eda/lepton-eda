@@ -38,9 +38,11 @@ schematic_execute_script (SchematicWindow *w_current)
 {
   char* filename = NULL;
 
+  GtkWidget *main_window = schematic_window_get_main_window (w_current);
+
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
     _("Execute Script"),
-    GTK_WINDOW (w_current->main_window),
+    GTK_WINDOW (main_window),
     GTK_FILE_CHOOSER_ACTION_OPEN,
     _("_Cancel"), GTK_RESPONSE_CANCEL,
     _("_Run"), GTK_RESPONSE_ACCEPT,
