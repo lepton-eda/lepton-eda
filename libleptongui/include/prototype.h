@@ -1277,9 +1277,6 @@ gboolean
 x_tabs_tl_page_find (SchematicWindow* w_current,
                      LeptonPage* page);
 void
-x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
-                         SchematicCanvas* pview);
-void
 x_tabs_next (SchematicWindow* w_current);
 
 void
