@@ -249,7 +249,9 @@ x_window_show_text (GtkWidget *widget,
                                schematic_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
-  gtk_widget_grab_focus (w_current->drawing_area);
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
+  gtk_widget_grab_focus (drawing_area);
   gtk_widget_hide (GTK_WIDGET (widget));
 }
 
