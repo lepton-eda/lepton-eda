@@ -1175,8 +1175,11 @@ open_page_error_dialog (SchematicWindow* w_current,
       "You may also launch lepton-schematic with --verbose command"
       " line switch and monitor program's output in terminal window.");
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   GtkWidget* dialog = gtk_message_dialog_new_with_markup
-    (GTK_WINDOW (w_current->main_window),
+    (GTK_WINDOW (main_window),
     GTK_DIALOG_DESTROY_WITH_PARENT,
     GTK_MESSAGE_ERROR,
     GTK_BUTTONS_CLOSE,
