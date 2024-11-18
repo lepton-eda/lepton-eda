@@ -309,9 +309,12 @@ x_widgets_show_in_dialog (SchematicWindow* w_current,
     return;
   }
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   GtkWidget* dlg =
     schematic_dialog_new_with_buttons (title,
-                                       GTK_WINDOW (w_current->main_window),
+                                       GTK_WINDOW (main_window),
                                        (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
                                        ini_group,
                                        w_current,
