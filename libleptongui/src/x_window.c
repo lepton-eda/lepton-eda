@@ -629,9 +629,11 @@ x_window_save_page (SchematicWindow *w_current,
     log_msg   = _("Could NOT save page [%1$s]");
     state_msg = _("Error while trying to save");
 
-    GtkWidget *dialog;
+    GtkWidget *main_window =
+      schematic_window_get_main_window (w_current);
 
-    dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+    GtkWidget *dialog;
+    dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      GTK_MESSAGE_ERROR,
                                      GTK_BUTTONS_CLOSE,
