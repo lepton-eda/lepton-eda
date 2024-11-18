@@ -383,7 +383,7 @@ i_update_menus (SchematicWindow* w_current)
   gboolean has_parent    = s_hierarchy_find_up_page (page) != NULL;
   gboolean parent        = comp_selected && parent_comp_selected (page);
 
-  GtkWidget* mmenu = w_current->menubar;
+  GtkWidget* mmenu = schematic_window_get_menubar (w_current);
 
   x_menus_sensitivity (mmenu, "&clipboard-cut", selected);
   x_menus_sensitivity (mmenu, "&clipboard-copy", selected);
