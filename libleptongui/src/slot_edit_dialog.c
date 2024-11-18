@@ -107,10 +107,12 @@ slot_edit_dialog (SchematicWindow *w_current,
   GtkWidget *vbox;
   GtkWidget *widget[2];
 
+  GtkWidget *main_window = schematic_window_get_main_window (w_current);
+
   if (!w_current->sewindow) {
     w_current->sewindow =
       schematic_dialog_new_with_buttons (_("Edit Slot"),
-                                         GTK_WINDOW(w_current->main_window),
+                                         GTK_WINDOW (main_window),
                                          GTK_DIALOG_MODAL,
                                          "slot-edit", w_current,
                                          _("_Cancel"), GTK_RESPONSE_REJECT,
