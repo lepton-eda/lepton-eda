@@ -620,9 +620,12 @@ x_image_setup (SchematicWindow *w_current)
   gtk_widget_show (type_combo);
   gtk_widget_show(vbox2);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   /* Create the dialog */
   dialog = gtk_file_chooser_dialog_new (_("Write Image"),
-                                        GTK_WINDOW(w_current->main_window),
+                                        GTK_WINDOW (main_window),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
                                         _("_Save"), GTK_RESPONSE_ACCEPT,
