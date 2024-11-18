@@ -116,14 +116,17 @@ x_show_uri (SchematicWindow *w_current,
   g_assert (w_current);
   g_assert (uri);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
 #ifdef ENABLE_GTK3
-  return gtk_show_uri_on_window (GTK_WINDOW (w_current->main_window),
+  return gtk_show_uri_on_window (GTK_WINDOW (main_window),
                                  uri,
                                  GDK_CURRENT_TIME,
                                  error);
 #else /* GTK2 */
   GdkScreen *screen =
-    gtk_window_get_screen (GTK_WINDOW (w_current->main_window));
+    gtk_window_get_screen (GTK_WINDOW (main_window));
   return gtk_show_uri (screen, uri, GDK_CURRENT_TIME, error);
 #endif
 
