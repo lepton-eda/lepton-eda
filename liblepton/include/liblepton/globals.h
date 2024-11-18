@@ -25,13 +25,18 @@
 #ifndef _GLOBALS_H_INCL
 #define _GLOBALS_H_INCL
 
+/* Whether the legacy configuration file names (geda-*.conf) have
+ * to be used. */
 extern gboolean config_legacy_mode;
 
+/* Extra verbose output when loading schematic files. */
 extern int verbose_mode;
 
+/* Whether logging is enabled. */
 extern int do_logging;
 
-/* Size of a tab in characters */
+/* Size of a tab in characters to calculate the visible size of
+ * text objects to display them properly. */
 extern int tab_in_chars;
 
 #endif
