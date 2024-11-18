@@ -89,9 +89,11 @@ void o_redraw_rect (SchematicWindow *w_current,
   world_rect = g_new (LeptonBox, 1);
 
 #ifdef ENABLE_GTK3
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
   gint wx, wy;
-  gtk_widget_translate_coordinates (w_current->drawing_area,
-                                    gtk_widget_get_toplevel (w_current->drawing_area),
+  gtk_widget_translate_coordinates (drawing_area,
+                                    gtk_widget_get_toplevel (drawing_area),
                                     0, 0, &wx, &wy);
 
   gint x = 0;
