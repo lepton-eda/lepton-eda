@@ -429,8 +429,11 @@ x_image_lowlevel (SchematicWindow *w_current,
                    filetype, filename);
         g_message ("%s", gerror->message);
 
+        GtkWidget *main_window =
+          schematic_window_get_main_window (w_current);
+
         /* Warn the user */
-        dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
+        dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
                                          (GtkDialogFlags) (GTK_DIALOG_MODAL
                                                            | GTK_DIALOG_DESTROY_WITH_PARENT),
                                          GTK_MESSAGE_ERROR,
