@@ -424,7 +424,10 @@ schematic_window_get_current_canvas (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  return SCHEMATIC_CANVAS (w_current->drawing_area);
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
+
+  return SCHEMATIC_CANVAS (drawing_area);
 }
 
 
