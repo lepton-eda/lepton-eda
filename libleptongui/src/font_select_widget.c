@@ -586,10 +586,12 @@ save_settings_dlg (FontSelectWidget* widget)
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (widget->toplevel_ != NULL, FALSE);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (widget->toplevel_);
   /* create dialog: */
   GtkWidget* dlg = gtk_dialog_new_with_buttons(
     _("Save configuration"),
-    GTK_WINDOW (widget->toplevel_->main_window),
+    GTK_WINDOW (main_window),
     GTK_DIALOG_MODAL,
     _("_OK"), GTK_RESPONSE_ACCEPT,
     _("_Cancel"), GTK_RESPONSE_REJECT,
