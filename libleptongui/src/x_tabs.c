@@ -381,6 +381,8 @@ void
 x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
                          SchematicCanvas* pview)
 {
+  g_return_if_fail (w_current != NULL);
+
   schematic_window_set_drawing_area (w_current, GTK_WIDGET (pview));
 }
 
