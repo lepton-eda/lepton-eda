@@ -424,9 +424,12 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
     _("Save As"),
-    GTK_WINDOW(w_current->main_window),
+    GTK_WINDOW (main_window),
     GTK_FILE_CHOOSER_ACTION_SAVE,
     _("_Cancel"), GTK_RESPONSE_CANCEL,
     _("_Save"),   GTK_RESPONSE_ACCEPT,
