@@ -232,7 +232,7 @@ schematic_preview_init (SchematicPreview *preview)
   preview_w_current->handleboxes = FALSE;
   preview_w_current->toolbars    = FALSE;
 
-  preview_w_current->drawing_area = GTK_WIDGET (preview);
+  schematic_window_set_drawing_area (preview_w_current, GTK_WIDGET (preview));
   preview->window = preview_w_current;
 
   preview->active   = FALSE;
