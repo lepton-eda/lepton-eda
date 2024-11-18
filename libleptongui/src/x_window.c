@@ -481,8 +481,10 @@ schematic_window_show_all (SchematicWindow *w_current,
   }
 
 
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
   /* focus page view: */
-  gtk_widget_grab_focus (w_current->drawing_area);
+  gtk_widget_grab_focus (drawing_area);
 }
 
 
