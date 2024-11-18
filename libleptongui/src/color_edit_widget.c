@@ -544,8 +544,11 @@ on_btn_save (GtkWidget* btn, gpointer p)
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->toplevel_ != NULL);
 
+  GtkWidget *main_window =
+    schematic_window_get_main_window (widget->toplevel_);
+
   /* open "save as" dialog: */
-  GtkWidget* dlg = dlg_save_as (widget->toplevel_->main_window);
+  GtkWidget* dlg = dlg_save_as (main_window);
   if (dlg == NULL)
     return;
 
@@ -586,7 +589,7 @@ on_btn_save (GtkWidget* btn, gpointer p)
   if (!ok)
   {
     GtkWidget* dlg = gtk_message_dialog_new(
-      GTK_WINDOW (widget->toplevel_->main_window),
+      GTK_WINDOW (main_window),
       GTK_DIALOG_MODAL,
       GTK_MESSAGE_ERROR,
       GTK_BUTTONS_OK,
