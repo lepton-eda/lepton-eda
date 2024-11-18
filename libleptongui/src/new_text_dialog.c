@@ -583,18 +583,18 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
                               "schematic-window",  w_current,
                               NULL));
 
-    gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                  GTK_WINDOW (w_current->main_window));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                GTK_WINDOW (w_current->main_window));
 
-    schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
-                                           schematic_window_get_text_size_list_store (w_current));
+  schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+                                         schematic_window_get_text_size_list_store (w_current));
 
-    schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
-                                           schematic_window_get_text_size (w_current));
+  schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+                                         schematic_window_get_text_size (w_current));
 
-    gtk_widget_show_all (dialog);
+  gtk_widget_show_all (dialog);
 
-    return dialog;
+  return dialog;
 }
 
 
