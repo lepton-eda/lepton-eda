@@ -835,7 +835,10 @@ schematic_window_get_gdk_display (SchematicWindow *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  return gtk_widget_get_display (w_current->main_window);
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
+  return gtk_widget_get_display (main_window);
 }
 
 
