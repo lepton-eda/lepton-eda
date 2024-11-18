@@ -226,10 +226,11 @@ major_changed_dialog (SchematicWindow* w_current)
                         -1);
   }
 
-
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
   dialog = gtk_dialog_new_with_buttons(
     _("Symbol version changes"),
-    GTK_WINDOW (w_current->main_window),
+    GTK_WINDOW (main_window),
     (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
     _("_OK"), GTK_RESPONSE_OK,
     NULL);
