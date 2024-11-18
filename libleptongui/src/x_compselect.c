@@ -217,8 +217,10 @@ schematic_compselect_new (SchematicWindow *w_current)
                                             "settings-name", "compselect",
                                             "schematic-window", w_current,
                                             NULL));
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
   gtk_window_set_transient_for (GTK_WINDOW (cs),
-                                GTK_WINDOW (w_current->main_window));
+                                GTK_WINDOW (main_window));
 
   gtk_widget_show (cs);
 
