@@ -282,8 +282,9 @@ schematic_dialog_misc_show_non_modal (SchematicWindow *w_current,
                       G_CALLBACK (schematic_dialog_misc_response_non_modal),
                       NULL);
 
+    GtkWidget *main_window = schematic_window_get_main_window (w_current);
     gtk_window_set_transient_for (GTK_WINDOW (*widget),
-                                  GTK_WINDOW (w_current->main_window));
+                                  GTK_WINDOW (main_window));
 
     gtk_widget_show_all (*widget);
   }
