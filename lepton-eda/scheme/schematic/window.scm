@@ -850,7 +850,7 @@ tab notebook.  Returns a C TabInfo structure."
   (let ((*canvas (schematic_canvas_new_with_page *page)))
     (schematic_tabs_add_canvas *canvas *wtab)
     (setup-canvas-draw-events *window *canvas)
-    (x_tabs_tl_pview_cur_set *window *canvas)
+    (schematic_window_set_current_canvas *window *canvas)
     (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))
 
       (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
@@ -1269,7 +1269,7 @@ for *PAGE page will be created and set active."
         ;; page.
         (callback-cancel *window)
 
-        (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
+        (schematic_window_set_current_canvas *window (schematic_tab_info_get_canvas *tab-info))
         (let ((*page (schematic_tab_info_get_page *tab-info)))
           (window-set-toplevel-page! (pointer->window *window)
                                      (pointer->page *page))

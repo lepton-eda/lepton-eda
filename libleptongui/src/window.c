@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -430,6 +430,21 @@ schematic_window_get_current_canvas (SchematicWindow *w_current)
     schematic_window_get_drawing_area (w_current);
 
   return SCHEMATIC_CANVAS (drawing_area);
+}
+
+
+/*! \brief Set the active window canvas widget
+ *
+ *  \param [in] w_current The SchematicWindow instance pointer.
+ *  \param [in] canvas The SchematicCanvas instance.
+ */
+void
+schematic_window_set_current_canvas (SchematicWindow* w_current,
+                                     SchematicCanvas* canvas)
+{
+  g_return_if_fail (w_current != NULL);
+
+  schematic_window_set_drawing_area (w_current, GTK_WIDGET (canvas));
 }
 
 
