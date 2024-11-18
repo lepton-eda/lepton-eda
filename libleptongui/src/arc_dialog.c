@@ -104,9 +104,11 @@ arc_angle_dialog (SchematicWindow *w_current,
   GtkWidget *widget[3];
 
   if (!w_current->aawindow) {
+    GtkWidget *main_window = schematic_window_get_main_window (w_current);
+
     w_current->aawindow =
       schematic_dialog_new_with_buttons (_("Arc Params"),
-                                         GTK_WINDOW(w_current->main_window),
+                                         GTK_WINDOW (main_window),
                                          GTK_DIALOG_MODAL,
                                          "arc-angle", w_current,
                                          _("_Cancel"), GTK_RESPONSE_REJECT,
