@@ -66,13 +66,14 @@ void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
   gtk_widget_set_valign (GTK_WIDGET (view), GTK_ALIGN_FILL);
 #endif
 
-  w_current->drawing_area = GTK_WIDGET (view);
+  GtkWidget *drawing_area = GTK_WIDGET (view);
+  schematic_window_set_drawing_area (w_current, drawing_area);
 
-  gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
+  gtk_container_add (GTK_CONTAINER(scrolled), drawing_area);
 
-  gtk_widget_set_can_focus (w_current->drawing_area, TRUE);
-  gtk_widget_grab_focus (w_current->drawing_area);
-  gtk_widget_show (w_current->drawing_area);
+  gtk_widget_set_can_focus (drawing_area, TRUE);
+  gtk_widget_grab_focus (drawing_area);
+  gtk_widget_show (drawing_area);
 }
 
 
