@@ -317,6 +317,9 @@ schematic_window_get_action_mode (SchematicWindow *w_current);
 void
 schematic_window_set_action_mode (SchematicWindow *w_current,
                                   SchematicActionMode mode);
+GtkWidget*
+schematic_window_get_toolbar (SchematicWindow *w_current);
+
 void
 schematic_window_set_toolbar (SchematicWindow *w_current,
                               GtkWidget *toolbar);

@@ -947,6 +947,22 @@ schematic_window_set_action_mode (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the toolbar widget pointer of the current schematic
+ *  window
+ *
+ * \param [in] w_current The pointer to the schematic window
+ *                       instance.
+ * \return The toolbar widget pointer.
+ */
+GtkWidget*
+schematic_window_get_toolbar (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->toolbar;
+}
+
+
 /*! \brief Set toolbar of the current schematic window instance.
  *  \par Function Description
  *
