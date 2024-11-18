@@ -293,7 +293,9 @@ x_window_translate_response (SchematicTranslateWidget *widget,
   }
 
   i_set_state (w_current, SELECT);
-  gtk_widget_grab_focus (w_current->drawing_area);
+  GtkWidget *drawing_area =
+    schematic_window_get_drawing_area (w_current);
+  gtk_widget_grab_focus (drawing_area);
   gtk_widget_hide (GTK_WIDGET (widget));
 }
 
