@@ -83,8 +83,11 @@ x_multiattrib_open (SchematicWindow *w_current)
                                 "schematic-window", w_current,
                                 NULL));
 
+    GtkWidget *main_window =
+      schematic_window_get_main_window (w_current);
+
     gtk_window_set_transient_for (GTK_WINDOW(w_current->mawindow),
-                                  GTK_WINDOW(w_current->main_window));
+                                  GTK_WINDOW (main_window));
 
     g_signal_connect (w_current->mawindow,
                       "response",
