@@ -289,7 +289,7 @@ gint
 do_popup (SchematicWindow *w_current,
           GdkEvent *event)
 {
-  GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
+  GtkWidget *menu = schematic_window_get_popup_menu (w_current);
   g_return_val_if_fail (menu != NULL, FALSE);
 
 #ifdef ENABLE_GTK3
