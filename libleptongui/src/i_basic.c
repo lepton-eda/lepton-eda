@@ -293,7 +293,9 @@ static void clipboard_usable_cb (int usable, void *userdata)
   SchematicWindow *w_current = SCHEMATIC_WINDOW (userdata);
   GtkWidget *menubar = schematic_window_get_menubar (w_current);
   x_menus_sensitivity (menubar, "&clipboard-paste", usable);
-  x_menus_sensitivity (w_current->popup_menu, "&clipboard-paste", usable);
+  GtkWidget *popup_menu =
+    schematic_window_get_popup_menu (w_current);
+  x_menus_sensitivity (popup_menu, "&clipboard-paste", usable);
 }
 
 
