@@ -422,7 +422,7 @@ i_update_menus (SchematicWindow* w_current)
   x_menus_sensitivity (mmenu, "&page-revert", !x_window_untitled_page (page));
 
 
-  GtkWidget* pmenu = w_current->popup_menu;
+  GtkWidget* pmenu = schematic_window_get_popup_menu (w_current);
 
   x_menus_sensitivity (pmenu, "&clipboard-cut", selected);
   x_menus_sensitivity (pmenu, "&clipboard-copy", selected);
