@@ -408,7 +408,7 @@ x_tabs_tl_page_cur_set (SchematicWindow* w_current,
 SchematicCanvas*
 x_tabs_tl_pview_cur (SchematicWindow* w_current)
 {
-  GtkWidget*      wview = w_current->drawing_area;
+  GtkWidget *wview = schematic_window_get_drawing_area (w_current);
   SchematicCanvas* view  = SCHEMATIC_CANVAS (wview);
 
   return view;
