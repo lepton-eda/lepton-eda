@@ -420,7 +420,7 @@ void
 x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
                          SchematicCanvas* pview)
 {
-  w_current->drawing_area = GTK_WIDGET (pview);
+  schematic_window_set_drawing_area (w_current, GTK_WIDGET (pview));
 }
 
 
