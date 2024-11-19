@@ -226,7 +226,7 @@ o_read_attribs (LeptonPage *page,
         break;
 
       case(OBJ_BUS):
-        if ((new_obj = o_bus_read (line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = lepton_bus_object_read (line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

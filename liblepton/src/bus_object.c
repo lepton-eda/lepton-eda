@@ -317,10 +317,10 @@ lepton_bus_object_new (gint color,
  *  \return The object list, or NULL on error.
  */
 LeptonObject*
-o_bus_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err)
+lepton_bus_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err)
 {
   LeptonObject *new_obj;
   char type;

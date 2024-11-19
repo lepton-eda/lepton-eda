@@ -161,7 +161,7 @@ GList
         break;
 
       case(OBJ_BUS):
-        if ((new_obj = o_bus_read (line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = lepton_bus_object_read (line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
         break;

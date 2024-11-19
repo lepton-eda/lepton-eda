@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,9 +100,8 @@ lepton_bus_object_translate (LeptonObject *object,
                              gint dx,
                              gint dy);
 LeptonObject*
-o_bus_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err);
-
+lepton_bus_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err);
 G_END_DECLS
