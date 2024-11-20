@@ -1021,11 +1021,10 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
 
   g_free (text_right_button);
 
-  w_current->bottom_widget = GTK_WIDGET (obj);
+  GtkWidget *bottom_widget = GTK_WIDGET (obj);
+  schematic_window_set_bottom_widget (w_current, bottom_widget);
 
-  gtk_box_pack_start (GTK_BOX (main_box),
-                      w_current->bottom_widget,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_box), bottom_widget, FALSE, FALSE, 0);
 
 } /* schematic_window_create_statusbar */
 
