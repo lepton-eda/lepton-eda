@@ -916,13 +916,12 @@ schematic_window_create_translate_widget (SchematicWindow *w_current,
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
 
-  w_current->translate_widget = GTK_WIDGET (obj);
+  GtkWidget *widget = GTK_WIDGET (obj);
+  schematic_window_set_translate_widget (w_current, widget);
 
-  gtk_box_pack_start( GTK_BOX (work_box),
-                      w_current->translate_widget,
-                      FALSE, FALSE, 0 );
+  gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
 
-  g_signal_connect (w_current->translate_widget, "response",
+  g_signal_connect (widget, "response",
                     G_CALLBACK (&x_window_translate_response), w_current);
 }
 
