@@ -562,11 +562,14 @@ i_update_grid_info_callback (SchematicCanvas *view,
 void
 i_update_net_options_status (SchematicWindow* w_current)
 {
+  GtkWidget *bottom_widget =
+    schematic_window_get_bottom_widget (w_current);
+
   schematic_bottom_widget_set_rubber_band_mode(
-    SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
+    SCHEMATIC_BOTTOM_WIDGET (bottom_widget),
     schematic_options_get_net_rubber_band_mode (w_current->options));
 
   schematic_bottom_widget_set_magnetic_net_mode(
-    SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
+    SCHEMATIC_BOTTOM_WIDGET (bottom_widget),
     schematic_options_get_magnetic_net_mode (w_current->options));
 }
