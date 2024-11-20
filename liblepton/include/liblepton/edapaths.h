@@ -24,7 +24,7 @@
 G_BEGIN_DECLS
 
 /* ----------------------------------------------------------------
- * gEDA standard directories
+ * Lepton EDA standard directories
  * ---------------------------------------------------------------- */
 
 const gchar * const *eda_get_system_data_dirs(void);
