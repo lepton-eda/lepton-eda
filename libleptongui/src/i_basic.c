@@ -38,13 +38,18 @@ static void
 i_update_status (SchematicWindow *w_current,
                  const char *string)
 {
-  if (!w_current->bottom_widget) {
+  GtkWidget *bottom_widget =
+    schematic_window_get_bottom_widget (w_current);
+
+  if (bottom_widget == NULL)
+  {
     return;
   }
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    schematic_bottom_widget_set_status_text (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget), string);
+    schematic_bottom_widget_set_status_text (SCHEMATIC_BOTTOM_WIDGET (bottom_widget),
+                                             string);
   }
 }
 
