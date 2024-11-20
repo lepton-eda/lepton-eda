@@ -638,7 +638,10 @@ update_magnetic_net_mode_model (SchematicOptionsWidget *widget)
   schematic_options_set_magnetic_net_mode (w_current->options,
                                            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->magnetic_net_widget)));
 
-  if (w_current->bottom_widget != NULL)
+  GtkWidget *bottom_widget =
+    schematic_window_get_bottom_widget (w_current);
+
+  if (bottom_widget != NULL)
   {
     i_update_net_options_status (w_current);
   }
