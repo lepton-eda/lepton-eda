@@ -525,8 +525,12 @@ i_update_grid_info (SchematicWindow *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->bottom_widget != NULL) {
-    g_object_set (SCHEMATIC_BOTTOM_WIDGET (w_current->bottom_widget),
+  GtkWidget *bottom_widget =
+    schematic_window_get_bottom_widget (w_current);
+
+  if (bottom_widget != NULL)
+  {
+    g_object_set (SCHEMATIC_BOTTOM_WIDGET (bottom_widget),
                   "snap-mode", schematic_options_get_snap_mode (w_current->options),
                   "snap-size", schematic_options_get_snap_size (w_current->options),
                   "grid-mode", schematic_options_get_grid_mode (w_current->options),
