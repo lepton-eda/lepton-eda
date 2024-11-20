@@ -885,13 +885,14 @@ schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                "label-text", _("Show text starting with:"),
                                NULL);
 
-  w_current->show_text_widget = GTK_WIDGET (obj);
+  GtkWidget *show_text_widget = GTK_WIDGET (obj);
+  schematic_window_set_show_text_widget (w_current, show_text_widget);
 
   gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->show_text_widget,
+                      show_text_widget,
                       FALSE, FALSE, 0);
 
-  g_signal_connect (w_current->show_text_widget, "response",
+  g_signal_connect (show_text_widget, "response",
                     G_CALLBACK (&x_window_show_text), w_current);
 }
 
