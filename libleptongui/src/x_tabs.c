@@ -287,14 +287,18 @@ void
 x_tabs_info_rm (SchematicWindow* w_current,
                 TabInfo* nfo)
 {
-  GList* node = g_list_find (w_current->xtabs_info_list, nfo);
+  GList *current_info_list =
+    schematic_window_get_tab_info_list (w_current);
+  GList* node = g_list_find (current_info_list, nfo);
 
   g_return_if_fail (node != NULL);
 
   if (node != NULL)
   {
-    w_current->xtabs_info_list = g_list_delete_link (w_current->xtabs_info_list,
-                                                     node);
+    GList *new_info_list =
+      g_list_delete_link (current_info_list, node);
+    schematic_window_set_tab_info_list (w_current, new_info_list);
+
     g_free (nfo);
   }
 }
