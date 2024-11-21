@@ -534,9 +534,10 @@ x_tabs_nbook_page_add (SchematicWindow* w_current,
   printf( "x_tabs_nbook_page_add()\n" );
 #endif
 
-  gint ndx = gtk_notebook_append_page (w_current->xtabs_nbook,
-                                       wtab,
-                                       NULL);
+  GtkNotebook *notebook =
+    schematic_window_get_tab_notebook (w_current);
+
+  gint ndx = gtk_notebook_append_page (notebook, wtab, NULL);
 
   return ndx;
 
