@@ -1057,7 +1057,10 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
   if (p_cur == NULL && pv_cur == NULL)
     return;
 
-  TabInfo* nfo = x_tabs_info_find_by_wtab (w_current->xtabs_info_list, wtab);
+  GList *info_list =
+    schematic_window_get_tab_info_list (w_current);
+
+  TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
 
   if (nfo == NULL)
     return;
