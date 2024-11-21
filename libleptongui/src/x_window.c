@@ -437,7 +437,8 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
   hpaned = gtk_hpaned_new ();
 #endif
 
-  w_current->right_notebook = create_notebook_right (w_current);
+  GtkWidget *right_notebook = create_notebook_right (w_current);
+  schematic_window_set_right_notebook (w_current, right_notebook);
 
   GtkWidget *bottom_notebook = create_notebook_bottom (w_current);
   schematic_window_set_bottom_notebook (w_current, bottom_notebook);
@@ -455,7 +456,7 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
   gtk_paned_pack1 (GTK_PANED (hpaned), work_box,
                    TRUE, TRUE);
 
-  gtk_paned_pack2 (GTK_PANED (hpaned), w_current->right_notebook,
+  gtk_paned_pack2 (GTK_PANED (hpaned), right_notebook,
                    FALSE, TRUE);
 }
 
