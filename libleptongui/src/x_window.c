@@ -479,8 +479,10 @@ schematic_window_show_all (SchematicWindow *w_current,
 
   if ( !x_widgets_use_docks() )
   {
+    GtkWidget *bottom_notebook =
+      schematic_window_get_bottom_notebook (w_current);
     gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook),  FALSE);
-    gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), FALSE);
+    gtk_widget_set_visible (bottom_notebook, FALSE);
   }
 
 
