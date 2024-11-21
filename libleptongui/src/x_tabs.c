@@ -1100,7 +1100,10 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->pages != NULL);
 
-  TabInfo* nfo = x_tabs_info_find_by_wtab (w_current->xtabs_info_list, wtab);
+  GList *info_list =
+    schematic_window_get_tab_info_list (w_current);
+
+  TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
   g_return_if_fail (nfo != NULL);
 
   LeptonPageList* pages = toplevel->pages;
