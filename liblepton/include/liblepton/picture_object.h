@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+/* These constants are for unique identification of the picture
+ * corner whose grip is being dragged by the user. */
 #define PICTURE_UPPER_LEFT  0
 #define PICTURE_LOWER_RIGHT 1
 #define PICTURE_UPPER_RIGHT 2
