@@ -149,7 +149,9 @@ void x_widgets_show_text_properties (SchematicWindow* w_current)
 
   if (x_widgets_use_docks())
   {
-    x_widgets_show_in_dock (w_current->right_notebook,
+    GtkWidget *right_notebook =
+      schematic_window_get_right_notebook (w_current);
+    x_widgets_show_in_dock (right_notebook,
                             w_current->text_properties);
   }
   else
