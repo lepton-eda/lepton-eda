@@ -273,7 +273,10 @@ x_tabs_info_add (SchematicWindow* w_current,
   nfo->wtab_  = wtab;
   nfo->tl_    = w_current;
 
-  w_current->xtabs_info_list = g_list_append (w_current->xtabs_info_list, nfo);
+  GList *current_info_list =
+    schematic_window_get_tab_info_list (w_current);
+  GList *new_info_list = g_list_append (current_info_list, nfo);
+  schematic_window_set_tab_info_list (w_current, new_info_list);
 
   return nfo;
 }
