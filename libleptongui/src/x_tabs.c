@@ -557,7 +557,9 @@ void
 x_tabs_nbook_page_close (SchematicWindow* w_current,
                          LeptonPage* page)
 {
-  TabInfo* nfo = x_tabs_info_find_by_page (w_current->xtabs_info_list, page);
+  GList *info_list =
+    schematic_window_get_tab_info_list (w_current);
+  TabInfo* nfo = x_tabs_info_find_by_page (info_list, page);
   if (!nfo)
   {
     return;
