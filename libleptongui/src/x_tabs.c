@@ -555,9 +555,12 @@ x_tabs_nbook_page_close (SchematicWindow* w_current,
     return;
   }
 
-  gint ndx = gtk_notebook_page_num (w_current->xtabs_nbook, nfo->wtab_);
+  GtkNotebook *notebook =
+    schematic_window_get_tab_notebook (w_current);
 
-  gtk_notebook_remove_page (w_current->xtabs_nbook, ndx);
+  gint ndx = gtk_notebook_page_num (notebook, nfo->wtab_);
+
+  gtk_notebook_remove_page (notebook, ndx);
 
 } /* x_tabs_nbook_page_close() */
 
