@@ -212,17 +212,19 @@ void x_widgets_show_find_text_state (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
+  GtkWidget *find_text_state =
+    schematic_window_get_find_text_state_widget (w_current);
+
   if (x_widgets_use_docks())
   {
     GtkWidget *bottom_notebook =
       schematic_window_get_bottom_notebook (w_current);
-    x_widgets_show_in_dock (bottom_notebook,
-                            w_current->find_text_state);
+    x_widgets_show_in_dock (bottom_notebook, find_text_state);
   }
   else
   {
     x_widgets_show_in_dialog (w_current,
-                              GTK_WIDGET (w_current->find_text_state),
+                              find_text_state,
                               &w_current->find_text_state_dialog,
                               _("Find Text"),
                               "findtext");
