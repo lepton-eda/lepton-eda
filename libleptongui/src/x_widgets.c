@@ -214,7 +214,9 @@ void x_widgets_show_find_text_state (SchematicWindow* w_current)
 
   if (x_widgets_use_docks())
   {
-    x_widgets_show_in_dock (w_current->bottom_notebook,
+    GtkWidget *bottom_notebook =
+      schematic_window_get_bottom_notebook (w_current);
+    x_widgets_show_in_dock (bottom_notebook,
                             w_current->find_text_state);
   }
   else
