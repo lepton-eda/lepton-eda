@@ -1017,7 +1017,10 @@ x_tabs_prev (SchematicWindow* w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  gtk_notebook_prev_page (w_current->xtabs_nbook);
+  GtkNotebook *notebook =
+    schematic_window_get_tab_notebook (w_current);
+
+  gtk_notebook_prev_page (notebook);
 }
 
 
