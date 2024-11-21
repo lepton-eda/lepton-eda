@@ -463,16 +463,17 @@ x_tabs_nbook_create (SchematicWindow* w_current,
                      GtkWidget* work_box)
 {
   GtkWidget* nbook = gtk_notebook_new();
+  GtkNotebook *notebook = GTK_NOTEBOOK (nbook);
 
-  w_current->xtabs_nbook = GTK_NOTEBOOK (nbook);
+  schematic_window_set_tab_notebook (w_current, notebook);
 
   gtk_container_add (GTK_CONTAINER (work_box), nbook);
 
-  gtk_notebook_set_scrollable (w_current->xtabs_nbook, TRUE);
+  gtk_notebook_set_scrollable (notebook, TRUE);
 
   /* TODO: [ask folks]: configurable tabs position:
   *
-  * gtk_notebook_set_tab_pos (w_current->xtabs_nbook, GTK_POS_BOTTOM);
+  * gtk_notebook_set_tab_pos (notebook, GTK_POS_BOTTOM);
   *
   */
 
