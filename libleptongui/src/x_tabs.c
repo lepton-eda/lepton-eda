@@ -250,7 +250,8 @@ TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current)
 {
   SchematicCanvas* pview = x_tabs_tl_pview_cur (w_current);
-  TabInfo* nfo = x_tabs_info_find_by_pview(w_current->xtabs_info_list, pview);
+  GList *info_list = schematic_window_get_tab_info_list (w_current);
+  TabInfo* nfo = x_tabs_info_find_by_pview (info_list, pview);
   return nfo;
 }
 
