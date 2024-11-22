@@ -1084,8 +1084,10 @@ create_notebook_right (SchematicWindow* w_current)
 
   if ( x_widgets_use_docks() )
   {
+    GtkWidget *object_properties =
+      schematic_window_get_object_properties_widget (w_current);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              GTK_WIDGET (w_current->object_properties),
+                              object_properties,
                               gtk_label_new(_("Object")));
 
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
