@@ -393,10 +393,13 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
   if (!x_widgets_use_toplevel_windows())
     return;
 
-  if (w_current->options_widget_dialog != NULL)
+  GtkWidget *options_widget_dialog =
+    schematic_window_get_options_widget_dialog (w_current);
+
+  if (options_widget_dialog != NULL)
   {
-    gtk_widget_destroy (w_current->options_widget_dialog);
-    w_current->options_widget_dialog = NULL;
+    gtk_widget_destroy (options_widget_dialog);
+    schematic_window_set_options_widget_dialog (w_current, NULL);
   }
 
   if (w_current->text_properties_dialog != NULL)
