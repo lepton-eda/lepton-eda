@@ -380,7 +380,8 @@ color_edit_widget_update (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  ColorEditWidget* widget = COLOR_EDIT_WIDGET (w_current->color_edit_widget);
+  ColorEditWidget* widget =
+    COLOR_EDIT_WIDGET (schematic_window_get_color_edit_widget (w_current));
   g_return_if_fail (widget != NULL);
 
   color_sel_update (widget);
