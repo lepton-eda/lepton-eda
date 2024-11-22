@@ -1855,6 +1855,20 @@ schematic_window_set_text_properties_widget (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get options widget of this schematic window
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The options widget pointer.
+ */
+GtkWidget*
+schematic_window_get_options_widget (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->options_widget;
+}
+
+
 /*! \brief Set options widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.
