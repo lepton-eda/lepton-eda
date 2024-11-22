@@ -136,9 +136,12 @@ void x_widgets_show_options (SchematicWindow* w_current)
   }
   else
   {
+    GtkWidget *options_widget_dialog =
+      schematic_window_get_options_widget_dialog (w_current);
+
     x_widgets_show_in_dialog (w_current,
                               options_widget,
-                              &w_current->options_widget_dialog,
+                              &options_widget_dialog,
                               _("Options"),
                               "options");
   }
