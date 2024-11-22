@@ -1086,6 +1086,8 @@ create_notebook_right (SchematicWindow* w_current)
   {
     GtkWidget *object_properties =
       schematic_window_get_object_properties_widget (w_current);
+    GtkWidget *text_properties =
+      schematic_window_get_text_properties_widget (w_current);
     GtkWidget *options_widget =
       schematic_window_get_options_widget (w_current);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1093,7 +1095,7 @@ create_notebook_right (SchematicWindow* w_current)
                               gtk_label_new(_("Object")));
 
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              GTK_WIDGET (w_current->text_properties),
+                              text_properties,
                               gtk_label_new(_("Text")));
 
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
