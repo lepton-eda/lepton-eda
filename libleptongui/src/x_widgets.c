@@ -195,9 +195,11 @@ void x_widgets_show_object_properties (SchematicWindow* w_current)
   }
   else
   {
+    GtkWidget *object_properties_dialog =
+      schematic_window_get_object_properties_dialog (w_current);
     x_widgets_show_in_dialog (w_current,
                               object_properties,
-                              &w_current->object_properties_dialog,
+                              &object_properties_dialog,
                               _("Object Properties"),
                               "objprops");
   }
