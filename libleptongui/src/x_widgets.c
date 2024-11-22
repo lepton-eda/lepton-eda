@@ -439,10 +439,13 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
     schematic_window_set_log_widget_dialog (w_current, NULL);
   }
 
-  if (w_current->find_text_state_dialog != NULL)
+  GtkWidget *find_text_state_dialog =
+    schematic_window_get_find_text_state_dialog (w_current);
+
+  if (find_text_state_dialog != NULL)
   {
-    gtk_widget_destroy (w_current->find_text_state_dialog);
-    w_current->find_text_state_dialog = NULL;
+    gtk_widget_destroy (find_text_state_dialog);
+    schematic_window_set_find_text_state_dialog (w_current, NULL);
   }
 
   if (w_current->color_edit_dialog != NULL)
