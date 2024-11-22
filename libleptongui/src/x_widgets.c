@@ -220,9 +220,12 @@ void x_widgets_show_log (SchematicWindow* w_current)
   }
   else
   {
+    GtkWidget *log_widget_dialog =
+      schematic_window_get_log_widget_dialog (w_current);
+
     x_widgets_show_in_dialog (w_current,
                               log_widget,
-                              &w_current->log_widget_dialog,
+                              &log_widget_dialog,
                               _("Log"),
                               "log");
   }
