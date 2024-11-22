@@ -172,17 +172,19 @@ void x_widgets_show_object_properties (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
+  GtkWidget *object_properties =
+    schematic_window_get_object_properties_widget (w_current);
+
   if (x_widgets_use_docks())
   {
     GtkWidget *right_notebook =
       schematic_window_get_right_notebook (w_current);
-    x_widgets_show_in_dock (right_notebook,
-                            w_current->object_properties);
+    x_widgets_show_in_dock (right_notebook, object_properties);
   }
   else
   {
     x_widgets_show_in_dialog (w_current,
-                              w_current->object_properties,
+                              object_properties,
                               &w_current->object_properties_dialog,
                               _("Object Properties"),
                               "objprops");
