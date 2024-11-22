@@ -248,9 +248,11 @@ void x_widgets_show_find_text_state (SchematicWindow* w_current)
   }
   else
   {
+    GtkWidget *find_text_state_dialog =
+      schematic_window_get_find_text_state_dialog (w_current);
     x_widgets_show_in_dialog (w_current,
                               find_text_state,
-                              &w_current->find_text_state_dialog,
+                              &find_text_state_dialog,
                               _("Find Text"),
                               "findtext");
   }
