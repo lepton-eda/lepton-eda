@@ -165,9 +165,12 @@ void x_widgets_show_text_properties (SchematicWindow* w_current)
   }
   else
   {
+    GtkWidget *text_properties_dialog =
+      schematic_window_get_text_properties_dialog (w_current);
+
     x_widgets_show_in_dialog (w_current,
                               text_properties,
-                              &w_current->text_properties_dialog,
+                              &text_properties_dialog,
                               _("Edit Text"),
                               "txtprops");
   }
