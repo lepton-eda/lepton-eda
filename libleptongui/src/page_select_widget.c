@@ -179,7 +179,8 @@ page_select_widget_init (PageSelectWidget* widget)
 void
 page_select_widget_update (SchematicWindow* w_current)
 {
-  GtkWidget* widget = w_current->page_select_widget;
+  GtkWidget* widget =
+    schematic_window_get_page_select_widget (w_current);
 
   g_return_if_fail (widget != NULL);
   g_return_if_fail (IS_PAGE_SELECT_WIDGET (widget));
