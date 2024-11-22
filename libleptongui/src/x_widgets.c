@@ -416,10 +416,13 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
     schematic_window_set_text_properties_dialog (w_current, NULL);
   }
 
-  if (w_current->object_properties_dialog != NULL)
+  GtkWidget *object_properties_dialog =
+    schematic_window_get_object_properties_dialog (w_current);
+
+  if (object_properties_dialog != NULL)
   {
-    gtk_widget_destroy (w_current->object_properties_dialog);
-    w_current->object_properties_dialog = NULL;
+    gtk_widget_destroy (object_properties_dialog);
+    schematic_window_set_object_properties_dialog (w_current, NULL);
   }
 
   if (w_current->log_widget_dialog != NULL)
