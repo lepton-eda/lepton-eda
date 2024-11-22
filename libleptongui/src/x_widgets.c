@@ -283,8 +283,11 @@ void x_widgets_show_page_select (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
+  GtkWidget *page_select_widget =
+    schematic_window_get_page_select_widget (w_current);
+
   x_widgets_show_in_dialog (w_current,
-                            GTK_WIDGET (w_current->page_select_widget),
+                            page_select_widget,
                             &w_current->page_select_dialog,
                             _("Page Manager"),
                             "pagesel");
