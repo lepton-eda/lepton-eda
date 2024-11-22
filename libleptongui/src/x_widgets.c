@@ -267,8 +267,11 @@ void x_widgets_show_font_select (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
+  GtkWidget *font_select_widget =
+    schematic_window_get_font_select_widget (w_current);
+
   x_widgets_show_in_dialog (w_current,
-                            GTK_WIDGET (w_current->font_select_widget),
+                            font_select_widget,
                             &w_current->font_select_dialog,
                             _("Select Schematic Font"),
                             "fontsel");
