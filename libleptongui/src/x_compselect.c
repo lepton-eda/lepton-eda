@@ -109,6 +109,7 @@ x_compselect_callback_response (GtkDialog *dialog,
   Compselect *compselect = (Compselect*)dialog;
   SchematicWindow *w_current = (SchematicWindow *)user_data;
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
+  GtkWidget *compselect_widget;
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
@@ -176,9 +177,11 @@ x_compselect_callback_response (GtkDialog *dialog,
 
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
-        g_assert (GTK_WIDGET (dialog) == w_current->cswindow);
+        compselect_widget =
+          schematic_window_get_compselect_widget (w_current);
+        g_assert (GTK_WIDGET (dialog) == compselect_widget);
         gtk_widget_destroy (GTK_WIDGET (dialog));
-        w_current->cswindow = NULL;
+        schematic_window_set_compselect_widget (w_current, NULL);
 
         if (action_mode == COMPMODE)
         {
