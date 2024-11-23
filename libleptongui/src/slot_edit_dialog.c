@@ -39,9 +39,11 @@
 void
 slot_edit_dialog_quit (SchematicWindow *w_current)
 {
+  GtkWidget *slot_edit_widget =
+    schematic_window_get_slot_edit_widget (w_current);
   i_set_state (w_current, SELECT);
-  gtk_widget_destroy (w_current->sewindow);
-  w_current->sewindow = NULL;
+  gtk_widget_destroy (slot_edit_widget);
+  schematic_window_set_slot_edit_widget (w_current, NULL);
 }
 
 
