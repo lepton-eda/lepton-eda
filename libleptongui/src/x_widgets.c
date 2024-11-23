@@ -475,10 +475,13 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
     schematic_window_set_font_select_dialog (w_current, NULL);
   }
 
-  if (w_current->page_select_dialog != NULL)
+  GtkWidget *page_select_dialog =
+    schematic_window_get_page_select_dialog (w_current);
+
+  if (page_select_dialog != NULL)
   {
-    gtk_widget_destroy (w_current->page_select_dialog);
-    w_current->page_select_dialog = NULL;
+    gtk_widget_destroy (page_select_dialog);
+    schematic_window_set_page_select_dialog (w_current, NULL);
   }
 
 } /* x_widgets_destroy_dialogs() */
