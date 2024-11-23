@@ -939,7 +939,10 @@ x_tabs_cancel_all (SchematicWindow* w_current)
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
 
-  if (action_mode == COMPMODE && w_current->cswindow)
+  GtkWidget *compselect_widget =
+    schematic_window_get_compselect_widget (w_current);
+
+  if ((action_mode == COMPMODE) && (compselect_widget != NULL))
   {
     o_place_invalidate_rubber (w_current, FALSE);
     schematic_window_set_rubber_visible (w_current, 0);
@@ -949,7 +952,7 @@ x_tabs_cancel_all (SchematicWindow* w_current)
     GValue value = G_VALUE_INIT;
     g_value_init (&value, G_TYPE_BOOLEAN);
     g_value_set_boolean (&value, FALSE);
-    g_object_set_property (G_OBJECT (w_current->cswindow), "hidden", &value);
+    g_object_set_property (G_OBJECT (compselect_widget), "hidden", &value);
   }
 
   if (schematic_window_get_inside_action (w_current))
