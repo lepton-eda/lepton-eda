@@ -267,9 +267,12 @@ void x_widgets_show_color_edit (SchematicWindow* w_current)
   GtkWidget *color_edit_widget =
     schematic_window_get_color_edit_widget (w_current);
 
+  GtkWidget *color_edit_dialog =
+    schematic_window_get_color_edit_dialog (w_current);
+
   x_widgets_show_in_dialog (w_current,
                             GTK_WIDGET (color_edit_widget),
-                            &w_current->color_edit_dialog,
+                            &color_edit_dialog,
                             _("Color Scheme Editor"),
                             "colored");
 }
