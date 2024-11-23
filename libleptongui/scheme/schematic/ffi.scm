@@ -362,8 +362,6 @@
             schematic_window_get_bottom_notebook
             schematic_window_set_bottom_notebook
             schematic_window_set_color_edit_widget
-            schematic_window_get_compselect
-            schematic_window_set_compselect
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
@@ -404,6 +402,7 @@
             schematic_window_get_arc_edit_widget
             schematic_window_get_attrib_edit_widget
             schematic_window_get_compselect_widget
+            schematic_window_set_compselect_widget
             schematic_window_get_coord_widget
             schematic_window_get_hotkey_widget
             schematic_window_get_slot_edit_widget
@@ -701,8 +700,6 @@
 (define-lff schematic_window_get_bottom_notebook '* '(*))
 (define-lff schematic_window_set_bottom_notebook void '(* *))
 (define-lff schematic_window_set_color_edit_widget void '(* *))
-(define-lff schematic_window_get_compselect '* '(*))
-(define-lff schematic_window_set_compselect void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
@@ -743,6 +740,7 @@
 (define-lff schematic_window_get_arc_edit_widget '* '(*))
 (define-lff schematic_window_get_attrib_edit_widget '* '(*))
 (define-lff schematic_window_get_compselect_widget '* '(*))
+(define-lff schematic_window_set_compselect_widget void '(* *))
 (define-lff schematic_window_get_coord_widget '* '(*))
 (define-lff schematic_window_get_hotkey_widget '* '(*))
 (define-lff schematic_window_get_slot_edit_widget '* '(*))

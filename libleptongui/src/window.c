@@ -2101,35 +2101,6 @@ schematic_window_set_font_select_widget (SchematicWindow *w_current,
 }
 
 
-/*! \brief Get component selector widget of this schematic window.
- *
- *  \param [in] w_current The schematic window.
- *  \return The Compselect widget.
- */
-GtkWidget*
-schematic_window_get_compselect (SchematicWindow *w_current)
-{
-  g_return_val_if_fail (w_current != NULL, NULL);
-
-  return w_current->cswindow;
-}
-
-
-/*! \brief Set component selector widget for this schematic window.
- *
- *  \param [in] w_current The schematic window.
- *  \param [in] widget The widget.
- */
-void
-schematic_window_set_compselect (SchematicWindow *w_current,
-                                 GtkWidget *widget)
-{
-  g_return_if_fail (w_current != NULL);
-
-  w_current->cswindow = widget;
-}
-
-
 /*! \brief Get schematic window's field 'rubber_visible'.
  *
  *  \param [in] w_current The schematic window.

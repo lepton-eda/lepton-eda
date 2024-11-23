@@ -548,12 +548,6 @@ schematic_window_get_font_select_widget (SchematicWindow *w_current);
 void
 schematic_window_set_font_select_widget (SchematicWindow *w_current,
                                          GtkWidget *widget);
-GtkWidget*
-schematic_window_get_compselect (SchematicWindow *w_current);
-
-void
-schematic_window_set_compselect (SchematicWindow *w_current,
-                                 GtkWidget *widget);
 int
 schematic_window_get_rubber_visible (SchematicWindow *w_current);
 
