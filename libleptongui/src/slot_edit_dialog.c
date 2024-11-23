@@ -111,8 +111,12 @@ slot_edit_dialog (SchematicWindow *w_current,
 
   GtkWidget *main_window = schematic_window_get_main_window (w_current);
 
-  if (!w_current->sewindow) {
-    w_current->sewindow =
+  GtkWidget *slot_edit_widget =
+    schematic_window_get_slot_edit_widget (w_current);
+
+  if (slot_edit_widget == NULL)
+  {
+    slot_edit_widget =
       schematic_dialog_new_with_buttons (_("Edit Slot"),
                                          GTK_WINDOW (main_window),
                                          GTK_DIALOG_MODAL,
@@ -120,23 +124,24 @@ slot_edit_dialog (SchematicWindow *w_current,
                                          _("_Cancel"), GTK_RESPONSE_REJECT,
                                          _("_OK"), GTK_RESPONSE_ACCEPT,
                                          NULL);
+    schematic_window_set_slot_edit_widget (w_current, slot_edit_widget);
 
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
-    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sewindow),
-                                            GTK_RESPONSE_ACCEPT,
-                                            GTK_RESPONSE_REJECT,
-                                            -1);
+    gtk_dialog_set_alternative_button_order (GTK_DIALOG (slot_edit_widget),
+                                             GTK_RESPONSE_ACCEPT,
+                                             GTK_RESPONSE_REJECT,
+                                             -1);
 #endif
 
-    gtk_window_set_position (GTK_WINDOW (w_current->sewindow), GTK_WIN_POS_MOUSE);
+    gtk_window_set_position (GTK_WINDOW (slot_edit_widget), GTK_WIN_POS_MOUSE);
 
-    gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow),
+    gtk_dialog_set_default_response (GTK_DIALOG (slot_edit_widget),
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_container_set_border_width (GTK_CONTAINER (w_current->sewindow),
+    gtk_container_set_border_width (GTK_CONTAINER (slot_edit_widget),
                                     DIALOG_BORDER_SPACING);
-    vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->sewindow));
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (slot_edit_widget));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label[0] = schematic_dialog_misc_create_property_label (_("Number of Slots:"));
@@ -159,29 +164,29 @@ slot_edit_dialog (SchematicWindow *w_current,
                         FALSE,                                   /* fill    */
                         0);                                      /* padding */
 
-    GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[0], "countentry");
-    GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[1], "textentry");
-    gtk_widget_show_all (w_current->sewindow);
+    GLADE_HOOKUP_OBJECT (slot_edit_widget, widget[0], "countentry");
+    GLADE_HOOKUP_OBJECT (slot_edit_widget, widget[1], "textentry");
+    gtk_widget_show_all (slot_edit_widget);
   }
 
   else { /* dialog already created */
-    gtk_window_present (GTK_WINDOW(w_current->sewindow));
+    gtk_window_present (GTK_WINDOW (slot_edit_widget));
   }
 
   if (count != NULL) {
-    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
+    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (slot_edit_widget),
                                                "countentry"));
     gtk_entry_set_text(GTK_ENTRY(widget[0]), count);
   }
 
   /* always set the current text and select the number of the slot */
   if (string != NULL) {
-    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
+    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (slot_edit_widget),
                                                "textentry"));
     gtk_entry_set_text(GTK_ENTRY(widget[1]), string);
     gtk_editable_select_region (GTK_EDITABLE(widget[1]), 0, -1);
   }
-  return GTK_WIDGET (w_current->sewindow);
+  return slot_edit_widget;
 }
 
 /***************** End of Slot Edit dialog box ***********************/
