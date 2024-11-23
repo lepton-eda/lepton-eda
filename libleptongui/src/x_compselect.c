@@ -263,7 +263,8 @@ x_compselect_open (GtkWidget *cswindow)
 void
 x_compselect_deselect (SchematicWindow *w_current)
 {
-  Compselect *compselect = COMPSELECT (w_current->cswindow);
+  Compselect *compselect =
+    COMPSELECT (schematic_window_get_compselect_widget (w_current));
 
   if (compselect == NULL)
     return;
