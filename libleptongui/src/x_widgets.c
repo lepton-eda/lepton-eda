@@ -463,10 +463,13 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
     schematic_window_set_color_edit_dialog (w_current, NULL);
   }
 
-  if (w_current->font_select_dialog != NULL)
+  GtkWidget *font_select_dialog =
+    schematic_window_get_font_select_dialog (w_current);
+
+  if (font_select_dialog != NULL)
   {
-    gtk_widget_destroy (w_current->font_select_dialog);
-    w_current->font_select_dialog = NULL;
+    gtk_widget_destroy (font_select_dialog);
+    schematic_window_set_font_select_dialog (w_current, NULL);
   }
 
   if (w_current->page_select_dialog != NULL)
