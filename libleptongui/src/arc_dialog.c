@@ -107,10 +107,14 @@ arc_angle_dialog (SchematicWindow *w_current,
   GtkWidget *table;
   GtkWidget *widget[3];
 
-  if (!w_current->aawindow) {
+  GtkWidget *arc_edit_widget =
+    schematic_window_get_arc_edit_widget (w_current);
+
+  if (arc_edit_widget == NULL)
+  {
     GtkWidget *main_window = schematic_window_get_main_window (w_current);
 
-    w_current->aawindow =
+    arc_edit_widget =
       schematic_dialog_new_with_buttons (_("Arc Params"),
                                          GTK_WINDOW (main_window),
                                          GTK_DIALOG_MODAL,
@@ -118,27 +122,28 @@ arc_angle_dialog (SchematicWindow *w_current,
                                          _("_Cancel"), GTK_RESPONSE_REJECT,
                                          _("_OK"), GTK_RESPONSE_ACCEPT,
                                          NULL);
+    schematic_window_set_arc_edit_widget (w_current, arc_edit_widget);
 
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
-    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->aawindow),
-                                            GTK_RESPONSE_ACCEPT,
-                                            GTK_RESPONSE_REJECT,
-                                            -1);
+    gtk_dialog_set_alternative_button_order (GTK_DIALOG (arc_edit_widget),
+                                             GTK_RESPONSE_ACCEPT,
+                                             GTK_RESPONSE_REJECT,
+                                             -1);
 #endif
 
-    gtk_window_set_position (GTK_WINDOW (w_current->aawindow), GTK_WIN_POS_MOUSE);
+    gtk_window_set_position (GTK_WINDOW (arc_edit_widget), GTK_WIN_POS_MOUSE);
 
-    g_signal_connect (G_OBJECT (w_current->aawindow), "response",
+    g_signal_connect (G_OBJECT (arc_edit_widget), "response",
                       G_CALLBACK (arc_angle_dialog_response),
                       w_current);
 
-    gtk_dialog_set_default_response(GTK_DIALOG(w_current->aawindow),
-                                    GTK_RESPONSE_ACCEPT);
+    gtk_dialog_set_default_response (GTK_DIALOG (arc_edit_widget),
+                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_set_border_width (GTK_CONTAINER (w_current->aawindow),
+    gtk_container_set_border_width (GTK_CONTAINER (arc_edit_widget),
                                     DIALOG_BORDER_SPACING);
-    vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->aawindow));
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (arc_edit_widget));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
 #ifndef ENABLE_GTK3
@@ -169,20 +174,20 @@ arc_angle_dialog (SchematicWindow *w_current,
     gtk_container_add (GTK_CONTAINER(alignment), table);
 #endif
 
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[0], "radius");
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[1],"spin_start");
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[2],"spin_sweep");
-    g_object_set_data(G_OBJECT(w_current->aawindow), "arc_object", arc_object);
-    gtk_widget_show_all (w_current->aawindow);
+    GLADE_HOOKUP_OBJECT (arc_edit_widget, widget[0], "radius");
+    GLADE_HOOKUP_OBJECT (arc_edit_widget, widget[1], "spin_start");
+    GLADE_HOOKUP_OBJECT (arc_edit_widget, widget[2], "spin_sweep");
+    g_object_set_data (G_OBJECT (arc_edit_widget), "arc_object", arc_object);
+    gtk_widget_show_all (arc_edit_widget);
   }
 
   else {  /* dialog already created */
-    gtk_window_present (GTK_WINDOW(w_current->aawindow));
-    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    gtk_window_present (GTK_WINDOW (arc_edit_widget));
+    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "radius"));
-    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "spin_start"));
-    widget[2] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    widget[2] = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "spin_sweep"));
   }
 
