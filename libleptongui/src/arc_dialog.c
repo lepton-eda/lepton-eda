@@ -51,22 +51,26 @@ arc_angle_dialog_response (GtkWidget *w,
   gint radius, start_angle, sweep_angle;
   LeptonObject *arc_object = NULL;
 
+  GtkWidget *arc_edit_widget =
+    schematic_window_get_arc_edit_widget (w_current);
+
   switch (response) {
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
     /* void */
     break;
   case GTK_RESPONSE_ACCEPT:
-    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "radius"));
     radius = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "spin_start"));
     start_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (arc_edit_widget),
                                                "spin_sweep"));
     sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    arc_object = (LeptonObject*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
+    arc_object =
+      (LeptonObject*) g_object_get_data (G_OBJECT (arc_edit_widget), "arc_object");
 
     if (arc_object != NULL) {
       lepton_arc_object_modify (arc_object, radius, 0, ARC_RADIUS);
@@ -80,8 +84,8 @@ arc_angle_dialog_response (GtkWidget *w,
     printf("arc_angle_dialog_response(): strange signal %d\n",response);
   }
 
-  gtk_widget_destroy(w_current->aawindow);
-  w_current->aawindow = NULL;
+  gtk_widget_destroy (arc_edit_widget);
+  schematic_window_set_arc_edit_widget (w_current, NULL);
 }
 
 /*! \brief Creates the arc angle dialog
