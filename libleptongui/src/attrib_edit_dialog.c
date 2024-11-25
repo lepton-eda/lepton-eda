@@ -327,8 +327,10 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  /* gschem specific */
-  if (w_current->aewindow)
+  aewindow = schematic_window_get_attrib_edit_widget (w_current);
+
+  /* Return if the widget has already been created. */
+  if (aewindow != NULL)
     return;
 
   /* gschem specific: What do we count here? (Werner)  */
@@ -683,9 +685,9 @@ attrib_edit_dialog (SchematicWindow *w_current,
 
   /* gschem specific */
   gtk_widget_show_all(aewindow);
-  w_current->aewindow = aewindow;
+  schematic_window_set_attrib_edit_widget (w_current, aewindow);
 
-  gtk_grab_add(w_current->aewindow);
+  gtk_grab_add (aewindow);
 
   if (attrib || (name && strcmp(name, "netname") == 0)) {
     gtk_widget_grab_focus(value_entry);
