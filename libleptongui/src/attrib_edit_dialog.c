@@ -61,24 +61,27 @@ attrib_edit_dialog_ok (GtkWidget * w,
   int option_index;
   gint wx, wy;
 
+  GtkWidget *aewindow =
+    schematic_window_get_attrib_edit_widget (w_current);
+
   value_entry =
-    GTK_ENTRY (g_object_get_data (G_OBJECT (w_current->aewindow),
+    GTK_ENTRY (g_object_get_data (G_OBJECT (aewindow),
                                   "value_entry"));
   name_entry =
-    GTK_ENTRY (g_object_get_data (G_OBJECT (w_current->aewindow),
+    GTK_ENTRY (g_object_get_data (G_OBJECT (aewindow),
                                   "attrib_combo_entry"));
   visbutton =
-    GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+    GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                    "visbutton"));
   show_options =
-    GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+    GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                    "show_options"));
 
   value = gtk_entry_get_text(value_entry);
   label = gtk_entry_get_text(name_entry);
   newtext = g_strconcat (label, "=", value, NULL);
 
-  if (!x_dialog_validate_attribute(GTK_WINDOW(w_current->aewindow), newtext))
+  if (!x_dialog_validate_attribute (GTK_WINDOW (aewindow), newtext))
   {
     g_free(newtext);
     return;
@@ -110,7 +113,7 @@ attrib_edit_dialog_ok (GtkWidget * w,
   }
 
   attribptr =
-    (LeptonObject*) g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
+    (LeptonObject*) g_object_get_data (G_OBJECT (aewindow), "attrib");
   if (!attribptr)
   {
     s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
@@ -130,19 +133,19 @@ attrib_edit_dialog_ok (GtkWidget * w,
     if (nsel > 1) {
 
       addtoallbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                        "addtoallbutton"));
 
       addtocompsbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                        "addtocompsbutton"));
 
       addtonetsbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                        "addtonetsbutton"));
 
       overwritebutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
                                        "overwritebutton"));
 
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(overwritebutton))) {
@@ -221,13 +224,13 @@ attrib_edit_dialog_ok (GtkWidget * w,
        * o_attrib_add_attrib() in choosing some reasonable
        * strategy for this.*/
       wx =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
                                             "position_wx"));
       wy =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
                                             "position_wy"));
       invocation_flag =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
                                             "invocation_flag"));
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
@@ -254,9 +257,9 @@ attrib_edit_dialog_ok (GtkWidget * w,
     schematic_window_active_page_changed (w_current);
     o_undo_savestate_old (w_current);
   }
-  gtk_grab_remove(w_current->aewindow);
-  gtk_widget_destroy(w_current->aewindow);
-  w_current->aewindow = NULL;
+  gtk_grab_remove (aewindow);
+  gtk_widget_destroy (aewindow);
+  schematic_window_set_attrib_edit_widget (w_current, NULL);
   g_free(newtext);
 }
 
