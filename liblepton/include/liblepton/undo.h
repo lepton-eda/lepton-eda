@@ -35,8 +35,10 @@ struct st_undo
      FALSE. */
   gboolean type;
 
-  /* viewport information */
+  /* Viewport information */
+  /* The coordinates of the viewport center. */
   int x, y;
+  /* The scale factor of the viewport. */
   double scale;
 
   /* up and down the hierarchy */
