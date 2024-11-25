@@ -273,15 +273,18 @@ attribute_edit_dialog_response (GtkWidget *w,
                                 gint response,
                                 SchematicWindow *w_current)
 {
+  GtkWidget *aewindow;
+
   switch(response) {
   case GTK_RESPONSE_APPLY:
     attrib_edit_dialog_ok(NULL, w_current);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
-    gtk_grab_remove(w_current->aewindow);
-    gtk_widget_destroy(w_current->aewindow);
-    w_current->aewindow = NULL;
+    aewindow = schematic_window_get_attrib_edit_widget (w_current);
+    gtk_grab_remove (aewindow);
+    gtk_widget_destroy (aewindow);
+    schematic_window_set_attrib_edit_widget (w_current, NULL);
     break;
   default:
     printf("attrib_edit_dialog_response(): strange signal %d\n", response);
