@@ -288,8 +288,6 @@ SchematicWindow *schematic_window_new ()
   /* --------------------- */
   w_current->num_untitled = 0;
   schematic_window_set_action_mode (w_current, SELECT);
-  w_current->min_zoom = 0;
-  w_current->max_zoom = 8;
   w_current->drawbounding_action_mode = FREE;
   schematic_window_set_control_key_pressed (w_current, 0);
   schematic_window_set_shift_key_pressed (w_current, 0);
