@@ -41,12 +41,16 @@ struct st_undo
   /* The scale factor of the viewport. */
   double scale;
 
-  /* up and down the hierarchy */
+  /* Hierarchy information of the current page */
+  /* The pid of the parent page in the hierarchy. */
   int up;
-  /* used to control which pages are viewable when moving around */
+  /* The control value that defines which pages are viewable when
+   * moving around in the hierarchy. */
   int page_control;
 
+  /* The previous element in the undo list, if any. */
   LeptonUndo *prev;
+  /* The next element in the undo list, if any. */
   LeptonUndo *next;
 };
 
