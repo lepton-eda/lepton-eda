@@ -145,7 +145,8 @@ GType cellrenderermultilinetext_get_type (void);
 G_BEGIN_DECLS
 
 void
-schematic_multiattrib_widget_open (SchematicWindow *w_current);
+schematic_multiattrib_widget_open (SchematicWindow *w_current,
+                                   GtkWidget *multiattrib_widget);
 
 void
 schematic_multiattrib_widget_close (SchematicWindow *w_current);

@@ -417,6 +417,7 @@
             schematic_window_set_newtext_dialog
             schematic_window_set_dont_invalidate
             schematic_window_set_log_widget
+            schematic_window_get_multiattrib_widget
             schematic_window_set_object_properties_widget
             schematic_window_set_options_widget
             schematic_window_set_text_properties_widget
@@ -775,6 +776,7 @@
 (define-lff schematic_window_set_newtext_dialog void '(* *))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
 (define-lff schematic_window_set_log_widget void '(* *))
+(define-lff schematic_window_get_multiattrib_widget '* '(*))
 (define-lff schematic_window_set_object_properties_widget void '(* *))
 (define-lff schematic_window_set_options_widget void '(* *))
 (define-lff schematic_window_set_text_properties_widget void '(* *))
@@ -1090,7 +1092,7 @@
 
 ;;; multiattrib_widget.c
 (define-lff schematic_multiattrib_widget_close void '(*))
-(define-lff schematic_multiattrib_widget_open void '(*))
+(define-lff schematic_multiattrib_widget_open void '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c

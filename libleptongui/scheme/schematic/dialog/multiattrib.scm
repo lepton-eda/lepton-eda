@@ -27,5 +27,6 @@
   "Open multiple attribute editor dialog to edit selected objects in
 WINDOW."
   (define *window (check-window window 1))
+  (define *widget (schematic_window_get_multiattrib_widget *window))
 
-  (schematic_multiattrib_widget_open *window))
+  (schematic_multiattrib_widget_open *window *widget))

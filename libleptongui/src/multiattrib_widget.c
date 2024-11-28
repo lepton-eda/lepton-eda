@@ -69,13 +69,13 @@ multiattrib_callback_response (GtkDialog *dialog,
  *  <B>SchematicWindow</B>.
  *
  *  \param [in] w_current  The SchematicWindow object.
+ *  \param [in] multiattrib_widget The Multiattrib widget of the
+ *                                 schematic window object.
  */
 void
-schematic_multiattrib_widget_open (SchematicWindow *w_current)
+schematic_multiattrib_widget_open (SchematicWindow *w_current,
+                                   GtkWidget *multiattrib_widget)
 {
-  GtkWidget *multiattrib_widget =
-    schematic_window_get_multiattrib_widget (w_current);
-
   if (multiattrib_widget == NULL)
   {
     LeptonSelection *selection =
