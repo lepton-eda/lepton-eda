@@ -89,7 +89,7 @@ schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
  *  \param [in] w_current  The SchematicWindow object.
  */
 void
-schematic_multiattrib_widget_open (SchematicWindow *w_current)
+schematic_multiattrib_widget_new (SchematicWindow *w_current)
 {
     LeptonSelection *selection =
       schematic_window_get_selection_list (w_current);
