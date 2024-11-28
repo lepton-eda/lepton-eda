@@ -1094,7 +1094,7 @@
 ;;; multiattrib_widget.c
 (define-lff schematic_multiattrib_widget_get_gtk_window '* '(*))
 (define-lff schematic_multiattrib_widget_close void '(*))
-(define-lff schematic_multiattrib_widget_new void '(*))
+(define-lff schematic_multiattrib_widget_new '* '(*))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c

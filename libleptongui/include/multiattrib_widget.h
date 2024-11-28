@@ -147,7 +147,7 @@ G_BEGIN_DECLS
 GtkWindow*
 schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget);
 
-void
+GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current);
 
 void
