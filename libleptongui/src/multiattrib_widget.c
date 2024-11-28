@@ -91,29 +91,29 @@ schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
 void
 schematic_multiattrib_widget_new (SchematicWindow *w_current)
 {
-    LeptonSelection *selection =
-      schematic_window_get_selection_list (w_current);
-    GtkWidget *multiattrib_widget =
-      GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
-                                "object_list", selection,
-                                /* SchematicDialog */
-                                "settings-name", "multiattrib",
-                                "schematic-window", w_current,
-                                NULL));
-    schematic_window_set_multiattrib_widget (w_current,
-                                             multiattrib_widget);
-    GtkWidget *main_window =
-      schematic_window_get_main_window (w_current);
+  LeptonSelection *selection =
+    schematic_window_get_selection_list (w_current);
+  GtkWidget *multiattrib_widget =
+    GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
+                              "object_list", selection,
+                              /* SchematicDialog */
+                              "settings-name", "multiattrib",
+                              "schematic-window", w_current,
+                              NULL));
+  schematic_window_set_multiattrib_widget (w_current,
+                                           multiattrib_widget);
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
 
-    gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
-                                  GTK_WINDOW (main_window));
+  gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
+                                GTK_WINDOW (main_window));
 
-    g_signal_connect (multiattrib_widget,
-                      "response",
-                      G_CALLBACK (multiattrib_callback_response),
-                      w_current);
+  g_signal_connect (multiattrib_widget,
+                    "response",
+                    G_CALLBACK (multiattrib_callback_response),
+                    w_current);
 
-    gtk_widget_show (multiattrib_widget);
+  gtk_widget_show (multiattrib_widget);
 }
 
 
