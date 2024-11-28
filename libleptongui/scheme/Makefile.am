@@ -26,6 +26,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/canvas/foreign.scm \
 	schematic/dialog.scm \
 	schematic/dialog/file-select.scm \
+	schematic/dialog/multiattrib.scm \
 	schematic/dialog/new-text.scm \
 	schematic/dialog/slot-edit.scm \
 	schematic/doc.scm \

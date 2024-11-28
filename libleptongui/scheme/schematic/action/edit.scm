@@ -22,6 +22,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -30,12 +31,6 @@
 ;; Definitions from "schematic_defines.h".
 (define FROM_MENU 0)
 (define FROM_HOTKEY 1)
-
-
-(define (multiattrib-dialog *window)
-  "Open multiple attribute editor dialog to edit selected objects in
-*WINDOW."
-  (schematic_multiattrib_widget_open *window))
 
 
 (define (edit-objects window objects)
