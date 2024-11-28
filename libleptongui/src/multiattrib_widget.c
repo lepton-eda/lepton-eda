@@ -63,6 +63,24 @@ multiattrib_callback_response (GtkDialog *dialog,
   }
 }
 
+
+/*! \brief Cast a widget to GtkWindow
+ *  \par Function Description
+ *  The helper function casts a \a GtkWidget instance to \a
+ *  GtkWindow and returns the result.  Its only purpose is to be
+ *  used in Scheme FFI which doesn't support C macros.  While not
+ *  strongly necessary, it is an additional check, just in case.
+ *
+ *  \param [in] widget The GtkWidget object.
+ *  \return The resulting GtkWindow object.
+ */
+GtkWindow*
+schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
+{
+  return GTK_WINDOW (widget);
+}
+
+
 /*! \brief Open multiple attribute editor dialog.
  *  \par Function Description
  *  Opens the multiple attribute editor dialog for objects in this
@@ -102,7 +120,9 @@ schematic_multiattrib_widget_open (SchematicWindow *w_current,
 
     gtk_widget_show (multiattrib_widget);
   } else {
-    gtk_window_present (GTK_WINDOW (multiattrib_widget));
+    GtkWindow *dialog_window =
+      schematic_multiattrib_widget_get_gtk_window (multiattrib_widget);
+    gtk_window_present (dialog_window);
   }
 }
 
