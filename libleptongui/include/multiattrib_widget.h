@@ -148,7 +148,9 @@ GtkWindow*
 schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget);
 
 GtkWidget*
-schematic_multiattrib_widget_new (SchematicWindow *w_current);
+schematic_multiattrib_widget_new (SchematicWindow *w_current,
+                                  LeptonSelection *selection,
+                                  GtkWidget *main_window);
 
 void
 schematic_multiattrib_widget_close (SchematicWindow *w_current);

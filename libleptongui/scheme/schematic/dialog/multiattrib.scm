@@ -31,9 +31,11 @@
 WINDOW."
   (define *window (check-window window 1))
   (define *widget (schematic_window_get_multiattrib_widget *window))
+  (define *selection (schematic_window_get_selection_list *window))
+  (define *main-window (schematic_window_get_main_window *window))
 
   (if (null-pointer? *widget)
-      (schematic_multiattrib_widget_new *window)
+      (schematic_multiattrib_widget_new *window *selection *main-window)
       (let ((*dialog-window
              (schematic_multiattrib_widget_get_gtk_window *widget)))
         (gtk_window_present *dialog-window))))

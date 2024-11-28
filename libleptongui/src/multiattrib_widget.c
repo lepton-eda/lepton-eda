@@ -87,13 +87,16 @@ schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
  *  #SchematicWindow.
  *
  *  \param [in] w_current  The SchematicWindow object.
+ *  \param [in] selection The list of currently selected objects.
+ *  \param [in] main_window The main window widget of the
+ *                          schematic window.
  *  \return The new Multiattrib widget object pointer.
  */
 GtkWidget*
-schematic_multiattrib_widget_new (SchematicWindow *w_current)
+schematic_multiattrib_widget_new (SchematicWindow *w_current,
+                                  LeptonSelection *selection,
+                                  GtkWidget *main_window)
 {
-  LeptonSelection *selection =
-    schematic_window_get_selection_list (w_current);
   GtkWidget *multiattrib_widget =
     GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
                               "object_list", selection,
@@ -103,9 +106,6 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current)
                               NULL));
   schematic_window_set_multiattrib_widget (w_current,
                                            multiattrib_widget);
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
-
   gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
                                 GTK_WINDOW (main_window));
 
