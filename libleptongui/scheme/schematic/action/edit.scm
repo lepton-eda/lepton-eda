@@ -48,7 +48,7 @@ depends of the type of the first object in the object list."
          (case (object-type object)
            ;; Also add the ability to multi attrib edit: nets, busses,
            ;; pins.
-           ((complex net pin bus) (multiattrib-dialog *window))
+           ((complex net pin bus) (multiattrib-dialog window))
            ((picture) (picture_change_filename_dialog *window))
            ((arc) (arc_angle_dialog *window *object))
            ((text)

@@ -18,11 +18,14 @@
 
 (define-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (multiattrib-dialog))
 
 
-(define (multiattrib-dialog *window)
+(define (multiattrib-dialog window)
   "Open multiple attribute editor dialog to edit selected objects in
-*WINDOW."
+WINDOW."
+  (define *window (check-window window 1))
+
   (schematic_multiattrib_widget_open *window))
