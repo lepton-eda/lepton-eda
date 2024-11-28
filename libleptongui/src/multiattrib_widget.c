@@ -81,24 +81,19 @@ schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
 }
 
 
-/*! \brief Open multiple attribute editor dialog.
+/*! \brief Create a new multiple attribute editor dialog
  *  \par Function Description
- *  Opens the multiple attribute editor dialog for objects in this
- *  <B>SchematicWindow</B>.
+ *  Creates a new multiple attribute editor dialog in this
+ *  #SchematicWindow.
  *
  *  \param [in] w_current  The SchematicWindow object.
- *  \param [in] multiattrib_widget The Multiattrib widget of the
- *                                 schematic window object.
  */
 void
-schematic_multiattrib_widget_open (SchematicWindow *w_current,
-                                   GtkWidget *multiattrib_widget)
+schematic_multiattrib_widget_open (SchematicWindow *w_current)
 {
-  if (multiattrib_widget == NULL)
-  {
     LeptonSelection *selection =
       schematic_window_get_selection_list (w_current);
-    multiattrib_widget =
+    GtkWidget *multiattrib_widget =
       GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
                                 "object_list", selection,
                                 /* SchematicDialog */
@@ -119,11 +114,6 @@ schematic_multiattrib_widget_open (SchematicWindow *w_current,
                       w_current);
 
     gtk_widget_show (multiattrib_widget);
-  } else {
-    GtkWindow *dialog_window =
-      schematic_multiattrib_widget_get_gtk_window (multiattrib_widget);
-    gtk_window_present (dialog_window);
-  }
 }
 
 

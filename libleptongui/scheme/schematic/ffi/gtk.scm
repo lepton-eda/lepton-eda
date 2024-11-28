@@ -48,6 +48,8 @@
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
 
+            gtk_window_present
+
             gdk_event_get_coords
             gdk_event_get_state))
 
@@ -94,6 +96,7 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_show void '(*))
 
+(define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))
 
 ;;; gdk_event_get_button() can only be used for GTK3.

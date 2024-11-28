@@ -17,6 +17,9 @@
 
 
 (define-module (schematic dialog multiattrib)
+  #:use-module (system foreign)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -29,4 +32,8 @@ WINDOW."
   (define *window (check-window window 1))
   (define *widget (schematic_window_get_multiattrib_widget *window))
 
-  (schematic_multiattrib_widget_open *window *widget))
+  (if (null-pointer? *widget)
+      (schematic_multiattrib_widget_open *window)
+      (let ((*dialog-window
+             (schematic_multiattrib_widget_get_gtk_window *widget)))
+        (gtk_window_present *dialog-window))))
