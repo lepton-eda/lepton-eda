@@ -365,43 +365,6 @@ schematic_window_show_all (SchematicWindow *w_current,
 }
 
 
-/*! \brief Changes the current page.
- *  \private
- *  \par Function Description
- *  This function displays the specified page <B>page</B> in the
- *  window attached to <B>toplevel</B>.
- *
- *  It changes the <B>toplevel</B>'s current page to <B>page</B>,
- *  draws it and updates the user interface.
- *
- *  <B>page</B> has to be in the list of PAGEs attached to <B>toplevel</B>.
- *
- *  \param [in] w_current The toplevel environment.
- *  \param [in] page      The page to become current page.
- */
-void
-x_window_set_current_page (SchematicWindow *w_current,
-                           LeptonPage *page)
-{
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  g_return_if_fail (page != NULL);
-
-  o_redraw_cleanstates (w_current);
-
-  schematic_canvas_set_page (page_view, page);
-
-  i_update_menus (w_current);
-  /* i_set_filename (w_current, page->page_filename); */
-
-  page_select_widget_update (w_current);
-  schematic_multiattrib_widget_update (w_current);
-
-} /* x_window_set_current_page() */
-
-
-
 /*! \brief Saves a page to a file.
  *  \par Function Description
  *  This function saves the page <B>page</B> to a file named

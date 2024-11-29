@@ -297,7 +297,6 @@
             untitled_filename
             recent_manager_add
             x_window_save_page
-            x_window_set_current_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
             x_window_untitled_page
@@ -411,6 +410,7 @@
             lepton_menu_set_action_data
 
             schematic_canvas_get_page
+            schematic_canvas_set_page
             schematic_canvas_get_viewport
             schematic_canvas_get_hadjustment
             schematic_canvas_get_vadjustment
@@ -788,6 +788,7 @@
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
+(define-lff schematic_canvas_set_page void '(* *))
 (define-lff schematic_canvas_get_viewport '* '(*))
 (define-lff schematic_canvas_get_hadjustment '* '(*))
 (define-lff schematic_canvas_get_vadjustment '* '(*))
@@ -981,7 +982,6 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
