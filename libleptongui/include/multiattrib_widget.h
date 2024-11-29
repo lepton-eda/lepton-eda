@@ -144,6 +144,10 @@ GType cellrenderermultilinetext_get_type (void);
 
 G_BEGIN_DECLS
 
+void
+schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
+                                                gint arg1,
+                                                gpointer user_data);
 GtkWindow*
 schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget);
 

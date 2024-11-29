@@ -47,10 +47,10 @@ snv_shows_value (int snv)
  *  \param [in] arg1      The response ID.
  *  \param [in] user_data A pointer on the SchematicWindow environment.
  */
-static void
-multiattrib_callback_response (GtkDialog *dialog,
-                               gint arg1,
-                               gpointer user_data)
+void
+schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
+                                                gint arg1,
+                                                gpointer user_data)
 {
   SchematicWindow *w_current = SCHEMATIC_WINDOW (user_data);
 
@@ -111,7 +111,7 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
 
   g_signal_connect (multiattrib_widget,
                     "response",
-                    G_CALLBACK (multiattrib_callback_response),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_response),
                     w_current);
 
   return multiattrib_widget;
