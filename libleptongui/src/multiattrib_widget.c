@@ -89,8 +89,8 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
                               NULL));
   schematic_window_set_multiattrib_widget (w_current,
                                            multiattrib_widget);
-  gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
-                                GTK_WINDOW (main_window));
+  gtk_window_set_transient_for (gtk_widget_get_gtk_window (multiattrib_widget),
+                                gtk_widget_get_gtk_window (main_window));
 
   return multiattrib_widget;
 }
