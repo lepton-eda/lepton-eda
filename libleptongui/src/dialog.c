@@ -234,7 +234,7 @@ schematic_dialog_finalize (GObject *object)
  *
  *  \par Function Description
  *  Setter function for SchematicDialog's GObject properties,
- *  "settings-name" and "toplevel".
+ *  "settings-name" and "schematic-window".
  *
  *  \param [in]  object       The GObject whose properties we are setting
  *  \param [in]  property_id  The numeric id. under which the property was
@@ -269,7 +269,7 @@ schematic_dialog_set_property (GObject *object,
  *
  *  \par Function Description
  *  Getter function for SchematicDialog's GObject properties,
- *  "settings-name" and "toplevel".
+ *  "settings-name" and "schematic-window".
  *
  *  \param [in]  object       The GObject whose properties we are getting
  *  \param [in]  property_id  The numeric id. under which the property was
