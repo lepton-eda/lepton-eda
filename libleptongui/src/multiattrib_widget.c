@@ -64,23 +64,6 @@ schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
 }
 
 
-/*! \brief Cast a widget to GtkWindow
- *  \par Function Description
- *  The helper function casts a \a GtkWidget instance to \a
- *  GtkWindow and returns the result.  Its only purpose is to be
- *  used in Scheme FFI which doesn't support C macros.  While not
- *  strongly necessary, it is an additional check, just in case.
- *
- *  \param [in] widget The GtkWidget object.
- *  \return The resulting GtkWindow object.
- */
-GtkWindow*
-schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget)
-{
-  return GTK_WINDOW (widget);
-}
-
-
 /*! \brief Create a new multiple attribute editor dialog
  *  \par Function Description
  *  Creates a new multiple attribute editor dialog in this

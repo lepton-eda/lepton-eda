@@ -24,6 +24,9 @@ G_BEGIN_DECLS
 const char*
 gtk_response_to_string (int response);
 
+GtkWindow*
+gtk_widget_get_gtk_window (GtkWidget *widget);
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */

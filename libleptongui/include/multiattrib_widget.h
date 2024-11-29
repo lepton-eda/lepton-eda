@@ -148,9 +148,6 @@ void
 schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
                                                 gint arg1,
                                                 gpointer user_data);
-GtkWindow*
-schematic_multiattrib_widget_get_gtk_window (GtkWidget *widget);
-
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection,

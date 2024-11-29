@@ -43,6 +43,5 @@ WINDOW."
                                   *schematic_multiattrib_widget_callback_response
                                   *window)
         (gtk_widget_show *new-widget))
-      (let ((*dialog-window
-             (schematic_multiattrib_widget_get_gtk_window *widget)))
+      (let ((*dialog-window (gtk_widget_get_gtk_window *widget)))
         (gtk_window_present *dialog-window))))

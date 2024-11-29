@@ -39,6 +39,7 @@
             g_read_file
 
             gtk_response_to_string
+            gtk_widget_get_gtk_window
 
             generic_confirm_dialog
             generic_error_dialog
@@ -518,7 +519,6 @@
             x_image_setup
 
             *schematic_multiattrib_widget_callback_response
-            schematic_multiattrib_widget_get_gtk_window
             schematic_multiattrib_widget_close
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_update
@@ -583,6 +583,7 @@
 
 ;;; gtk_helper.c
 (define-lff gtk_response_to_string '* (list int))
+(define-lff gtk_widget_get_gtk_window '* '(*))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -1094,7 +1095,6 @@
 
 ;;; multiattrib_widget.c
 (define-lfc *schematic_multiattrib_widget_callback_response)
-(define-lff schematic_multiattrib_widget_get_gtk_window '* '(*))
 (define-lff schematic_multiattrib_widget_close void '(*))
 (define-lff schematic_multiattrib_widget_new '* '(* * *))
 (define-lff schematic_multiattrib_widget_update void '(*))
