@@ -966,6 +966,10 @@ tab notebook.  Returns a C TabInfo structure."
             *page))))
 
 
+(define (set-window-current-page! *window *page)
+  (x_window_set_current_page *window *page))
+
+
 (define (open-tab! *window *filename)
   "Creates a new page, page view and tab for *FILENAME in *WINDOW.
 If *FILENAME is %null-pointer, the page will be blank.  If there
@@ -978,7 +982,7 @@ the new or found page."
   (define (open-new-page *tab-info)
     (let ((*page (window-open-file! *window *filename)))
       (schematic_tab_info_set_page *tab-info *page)
-      (x_window_set_current_page *window *page)
+      (set-window-current-page! *window *page)
 
       (setup-tab-header *tab-info)
       (grab-focus *tab-info)
@@ -1147,7 +1151,7 @@ for *PAGE page will be created and set active."
                        ;; Use found page.
                        *new-current-page)))
               ;; Change to the new current page and update display.
-              (x_window_set_current_page *window *really-new-current-page)
+              (set-window-current-page! *window *really-new-current-page)
               ;; Return the page.
               *really-new-current-page))
         ;; Return the page if it is not NULL.
@@ -1270,7 +1274,7 @@ for *PAGE page will be created and set active."
         (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
         (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))
 
-        (x_window_set_current_page *window (schematic_tab_info_get_page *tab-info))))))
+        (set-window-current-page! *window (schematic_tab_info_get_page *tab-info))))))
 
 (define *callback-tabs-switch-page
   (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))
@@ -1280,7 +1284,7 @@ for *PAGE page will be created and set active."
   "Sets current page of *WINDOW to *PAGE."
   (if (true? (x_tabs_enabled))
       (set-tab-page! *window *page)
-      (x_window_set_current_page *window *page)))
+      (set-window-current-page! *window *page)))
 
 
 (define (search-text *window *toplevel)
@@ -1357,11 +1361,11 @@ for *PAGE page will be created and set active."
     (begin
       (unless same-page?
         ;; Open object's page.
-        (x_window_set_current_page *window *object-page))
+        (set-window-current-page! *window *object-page))
       (begin
         (unless same-page?
           ;; Open object's page.
-          (x_window_set_current_page *window *object-page))
+          (set-window-current-page! *window *object-page))
         ;; In tabbed GUI the current canvas may be
         ;; different.
         (let ((*current-canvas (if same-page?
