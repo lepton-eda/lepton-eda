@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1061,7 +1061,7 @@ schematic_canvas_set_hadjustment (SchematicCanvas *view,
  *  Be careful when calling this function when tabbed GUI
  *  is enabled (see x_tabs.c) to not disrupt 1:1 relationship
  *  between page and page view objects which that code tries to maintain.
- *  Most likely you want to call x_window_set_current_page() instead.
+ *  Most likely you want to call set-window-current-page!() instead.
  *
  *  The toplevel property must be set and the page must belong to that
  *  toplevel.
