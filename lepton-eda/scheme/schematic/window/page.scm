@@ -40,6 +40,11 @@
 
 
 (define (file-select-save-page! *window *page *result)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+
   (x_fileselect_save *window *page *result))
 
 

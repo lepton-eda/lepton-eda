@@ -415,9 +415,6 @@ x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result)
 {
-  g_return_val_if_fail (w_current != NULL, FALSE);
-  g_return_val_if_fail (page != NULL, FALSE);
-
   gboolean ret = FALSE;
   if (result != NULL)
   {
