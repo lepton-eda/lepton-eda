@@ -38,6 +38,10 @@ WINDOW."
       (let ((*new-widget (schematic_multiattrib_widget_new *window
                                                            *selection
                                                            *main-window)))
+        (schematic_signal_connect *new-widget
+                                  (string->pointer "response")
+                                  *schematic_multiattrib_widget_callback_response
+                                  *window)
         (gtk_widget_show *new-widget))
       (let ((*dialog-window
              (schematic_multiattrib_widget_get_gtk_window *widget)))

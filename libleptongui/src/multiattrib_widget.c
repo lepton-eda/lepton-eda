@@ -109,11 +109,6 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
   gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
                                 GTK_WINDOW (main_window));
 
-  g_signal_connect (multiattrib_widget,
-                    "response",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_response),
-                    w_current);
-
   return multiattrib_widget;
 }
 

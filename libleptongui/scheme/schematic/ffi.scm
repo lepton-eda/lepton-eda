@@ -517,6 +517,7 @@
 
             x_image_setup
 
+            *schematic_multiattrib_widget_callback_response
             schematic_multiattrib_widget_get_gtk_window
             schematic_multiattrib_widget_close
             schematic_multiattrib_widget_new
@@ -1092,6 +1093,7 @@
 (define-lff x_image_setup void '(*))
 
 ;;; multiattrib_widget.c
+(define-lfc *schematic_multiattrib_widget_callback_response)
 (define-lff schematic_multiattrib_widget_get_gtk_window '* '(*))
 (define-lff schematic_multiattrib_widget_close void '(*))
 (define-lff schematic_multiattrib_widget_new '* '(* * *))
