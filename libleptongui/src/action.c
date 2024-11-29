@@ -58,11 +58,10 @@ static void schematic_action_finalize (GObject *object)
 }
 
 
-/*! \brief GObject property setter function
+/*! \brief #SchematicAction property setter function
  *
  *  \par Function Description
- *  Setter function for SchematicAction's GObject properties,
- *  "settings-name" and "toplevel".
+ *  Setter function for #SchematicAction's GObject properties.
  *
  *  \param [in]  object       The GObject whose properties we are setting
  *  \param [in]  property_id  The numeric id. under which the property was
@@ -89,11 +88,10 @@ schematic_action_set_property (GObject *object,
 }
 
 
-/*! \brief GObject property getter function
+/*! \brief #SchematicAction property getter function
  *
  *  \par Function Description
- *  Getter function for SchematicAction's GObject properties,
- *  "settings-name" and "toplevel".
+ *  Getter function for #SchematicAction's GObject properties.
  *
  *  \param [in]  object       The GObject whose properties we are getting
  *  \param [in]  property_id  The numeric id. under which the property was
