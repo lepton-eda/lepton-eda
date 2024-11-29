@@ -35,7 +35,10 @@ WINDOW."
   (define *main-window (schematic_window_get_main_window *window))
 
   (if (null-pointer? *widget)
-      (schematic_multiattrib_widget_new *window *selection *main-window)
+      (let ((*new-widget (schematic_multiattrib_widget_new *window
+                                                           *selection
+                                                           *main-window)))
+        (gtk_widget_show *new-widget))
       (let ((*dialog-window
              (schematic_multiattrib_widget_get_gtk_window *widget)))
         (gtk_window_present *dialog-window))))

@@ -114,8 +114,6 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
                     G_CALLBACK (multiattrib_callback_response),
                     w_current);
 
-  gtk_widget_show (multiattrib_widget);
-
   return multiattrib_widget;
 }
 
