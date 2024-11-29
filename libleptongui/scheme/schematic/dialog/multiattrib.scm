@@ -36,8 +36,11 @@ WINDOW."
 
   (if (null-pointer? *widget)
       (let ((*new-widget (schematic_multiattrib_widget_new *window
-                                                           *selection
-                                                           *main-window)))
+                                                           *selection)))
+        (schematic_window_set_multiattrib_widget *window *new-widget)
+        (gtk_window_set_transient_for (gtk_widget_get_gtk_window *new-widget)
+                                      (gtk_widget_get_gtk_window *main-window))
+
         (schematic_signal_connect *new-widget
                                   (string->pointer "response")
                                   *schematic_multiattrib_widget_callback_response

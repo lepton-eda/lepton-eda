@@ -391,6 +391,7 @@
             schematic_window_get_macro_widget
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
+            schematic_window_set_multiattrib_widget
             schematic_window_get_options
             schematic_window_delete_place_list
             schematic_window_get_place_list
@@ -752,6 +753,7 @@
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
+(define-lff schematic_window_set_multiattrib_widget void '(* *))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_delete_place_list void '(*))
 (define-lff schematic_window_get_place_list '* '(*))
@@ -1096,7 +1098,7 @@
 ;;; multiattrib_widget.c
 (define-lfc *schematic_multiattrib_widget_callback_response)
 (define-lff schematic_multiattrib_widget_close void '(*))
-(define-lff schematic_multiattrib_widget_new '* '(* * *))
+(define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
