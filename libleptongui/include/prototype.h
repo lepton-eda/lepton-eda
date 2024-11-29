@@ -941,6 +941,9 @@ schematic_compselect_new (SchematicWindow *w_current);
 GtkWidget*
 schematic_file_select_dialog_new (SchematicWindow *w_current);
 
+GtkWidget*
+schematic_file_select_dialog_save_as (GtkWindow *parent);
+
 void
 x_fileselect_add_preview (GtkWidget *dialog,
                           GtkWidget *preview);

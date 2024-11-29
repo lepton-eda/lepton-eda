@@ -392,6 +392,36 @@ x_fileselect_open (SchematicWindow *w_current,
 }
 
 
+GtkWidget*
+schematic_file_select_dialog_save_as (GtkWindow *parent)
+{
+  GtkWidget* dialog =
+    gtk_file_chooser_dialog_new (_("Save As"),
+                                 GTK_WINDOW (parent),
+                                 GTK_FILE_CHOOSER_ACTION_SAVE,
+                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                 _("_Save"), GTK_RESPONSE_ACCEPT,
+                                 NULL);
+#ifndef ENABLE_GTK3
+  /* Set the alternative button order (ok, cancel, help) for other
+   * systems. */
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+#endif
+  /* Set default response signal. This is usually triggered by the
+   * "Return" key. */
+  gtk_dialog_set_default_response (GTK_DIALOG(dialog),
+                                   GTK_RESPONSE_ACCEPT);
+  g_object_set (dialog,
+                /* GtkFileChooser */
+                "select-multiple", FALSE,
+                NULL);
+
+  return dialog;
+}
+
 
 /*! \brief Opens a file chooser for saving the current page.
  *  \par Function Description
@@ -424,34 +454,8 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  GtkWidget* dialog = gtk_file_chooser_dialog_new(
-    _("Save As"),
-    GTK_WINDOW (main_window),
-    GTK_FILE_CHOOSER_ACTION_SAVE,
-    _("_Cancel"), GTK_RESPONSE_CANCEL,
-    _("_Save"),   GTK_RESPONSE_ACCEPT,
-    NULL);
-
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems:
-  */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_ACCEPT,
-                                          GTK_RESPONSE_CANCEL,
-                                          -1);
-#endif
-
-  /* set default response signal. This is usually triggered by the
-   * "Return" key:
-  */
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-
-  g_object_set (dialog,
-                /* GtkFileChooser */
-                "select-multiple", FALSE,
-                /* only in GTK 2.8 */
-                /* "do-overwrite-confirmation", TRUE, */
-                NULL);
+  GtkWidget *dialog =
+    schematic_file_select_dialog_save_as (GTK_WINDOW (main_window));
 
   /* add file filters to dialog:
   */
