@@ -38,31 +38,6 @@ snv_shows_value (int snv)
   return snv == SHOW_NAME_VALUE || snv == SHOW_VALUE;
 }
 
-/*! \brief Process the response returned by the multi-attribte dialog.
- *  \par Function Description
- *  This function handles the response <B>arg1</B> of the multi-attribute
- *  editor dialog <B>dialog</B>.
- *
- *  \param [in] dialog    The multi-attribute editor dialog.
- *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the SchematicWindow environment.
- */
-void
-schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
-                                                gint arg1,
-                                                gpointer user_data)
-{
-  SchematicWindow *w_current = SCHEMATIC_WINDOW (user_data);
-
-  switch (arg1) {
-      case GTK_RESPONSE_CLOSE:
-      case GTK_RESPONSE_DELETE_EVENT:
-        gtk_widget_hide (GTK_WIDGET (dialog));
-        schematic_window_set_multiattrib_widget (w_current, NULL);
-        break;
-  }
-}
-
 
 /*! \brief Create a new multiple attribute editor dialog
  *  \par Function Description

@@ -144,10 +144,6 @@ GType cellrenderermultilinetext_get_type (void);
 
 G_BEGIN_DECLS
 
-void
-schematic_multiattrib_widget_callback_response (GtkDialog *dialog,
-                                                gint arg1,
-                                                gpointer user_data);
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);

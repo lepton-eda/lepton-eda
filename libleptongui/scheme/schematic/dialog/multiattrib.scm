@@ -21,13 +21,19 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
 
   #:export (multiattrib-dialog))
 
-
-(define (response-callback *widget response *data)
-  (schematic_multiattrib_widget_callback_response *widget response *data))
+;;; Process the "response" signal returned by the Multiattrib
+;;; widget.
+(define (response-callback *widget response-id *window)
+  (define response (gtk-response->symbol response-id))
+  (when (or (eq? response 'close)
+            (eq? response 'delete-event))
+    (gtk_widget_hide *widget)
+    (schematic_window_set_multiattrib_widget *window %null-pointer)))
 
 (define *response-callback
   (procedure->pointer void response-callback (list '* int '*)))

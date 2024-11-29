@@ -37,6 +37,7 @@
             gtk_menu_item_new_with_mnemonic
             gtk_widget_destroy
             gtk_widget_grab_focus
+            gtk_widget_hide
             gtk_widget_show
             gtk_menu_new
             gtk_menu_bar_new
@@ -95,6 +96,7 @@
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
+(define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_show void '(*))
 
 (define-lff gtk_window_present void '(*))
