@@ -1170,9 +1170,6 @@ open_page_error_dialog (SchematicWindow *w_current,
 gchar*
 untitled_filename (SchematicWindow *w_current);
 
-void
-x_window_set_current_page (SchematicWindow *w_current,
-                           LeptonPage *page);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,

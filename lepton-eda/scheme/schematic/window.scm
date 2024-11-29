@@ -987,7 +987,23 @@ tab notebook.  Returns a C TabInfo structure."
 
 
 (define (set-window-current-page! *window *page)
-  (x_window_set_current_page *window *page))
+  "Change the current page in *WINDOW to *PAGE, draw it, and update
+the user interface.  *PAGE has to be in the list of pages of the
+window."
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (o_redraw_cleanstates *window)
+  (schematic_canvas_set_page *canvas *page)
+  (i_update_menus *window)
+  (page_select_widget_update *window)
+  (schematic_multiattrib_widget_update *window))
 
 
 (define (open-tab! *window *filename)
