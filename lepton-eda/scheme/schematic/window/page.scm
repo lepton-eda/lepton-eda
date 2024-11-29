@@ -26,7 +26,8 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (window-set-toplevel-page!
+  #:export (file-select-save-page!
+            window-set-toplevel-page!
             window-save-active-page!))
 
 (define (window-set-toplevel-page! window page)
@@ -38,6 +39,10 @@
   (schematic_window_page_changed *window))
 
 
+(define (file-select-save-page! *window *page *result)
+  (x_fileselect_save *window *page *result))
+
+
 (define (window-save-active-page! window)
   (define *window (check-window window 1))
   (define *page (schematic_window_get_active_page *window))
@@ -45,6 +50,6 @@
   (unless (null-pointer? *page)
     (if (true? (x_window_untitled_page *page))
         ;; Open "Save as..." dialog.
-        (x_fileselect_save *window *page %null-pointer)
+        (file-select-save-page! *window *page %null-pointer)
         ;; Save page.
         (x_window_save_page *window *page (lepton_page_get_filename *page)))))
