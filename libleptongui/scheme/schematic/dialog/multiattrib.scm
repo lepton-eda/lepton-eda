@@ -26,6 +26,13 @@
   #:export (multiattrib-dialog))
 
 
+(define (response-callback *widget response *data)
+  (schematic_multiattrib_widget_callback_response *widget response *data))
+
+(define *response-callback
+  (procedure->pointer void response-callback (list '* int '*)))
+
+
 (define (multiattrib-dialog window)
   "Open multiple attribute editor dialog to edit selected objects in
 WINDOW."
@@ -43,7 +50,7 @@ WINDOW."
 
         (schematic_signal_connect *new-widget
                                   (string->pointer "response")
-                                  *schematic_multiattrib_widget_callback_response
+                                  *response-callback
                                   *window)
         (gtk_widget_show *new-widget))
       (let ((*dialog-window (gtk_widget_get_gtk_window *widget)))
