@@ -951,7 +951,8 @@ x_fileselect_open (SchematicWindow *w_current,
 gboolean
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
-                   gboolean* result);
+                   gboolean* result,
+                   GtkWidget *main_window);
 gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,

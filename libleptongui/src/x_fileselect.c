@@ -408,21 +408,21 @@ x_fileselect_open (SchematicWindow *w_current,
  *  \param  [in]     w_current The SchematicWindow environment.
  *  \param  [in]     page      The page to be saved.
  *  \param  [in,out] result    If not NULL, will be filled with save operation result.
+ *  \param [in] main_window The main_window widget of the
+ *                          schematic window.
  *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
 gboolean
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
-                   gboolean* result)
+                   gboolean* result,
+                   GtkWidget *main_window)
 {
   gboolean ret = FALSE;
   if (result != NULL)
   {
     *result = FALSE;
   }
-
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
 
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
     _("Save As"),

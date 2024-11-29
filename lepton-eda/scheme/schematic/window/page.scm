@@ -45,7 +45,8 @@
   (when (null-pointer? *page)
     (error "NULL page."))
 
-  (x_fileselect_save *window *page *result))
+  (let ((*main-window (schematic_window_get_main_window *window)))
+    (x_fileselect_save *window *page *result *main-window)))
 
 
 (define (window-save-active-page! window)
