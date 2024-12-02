@@ -1268,7 +1268,11 @@ for *PAGE page will be created and set active."
   (when (null-pointer? *window)
     (error "NULL window."))
 
-  (x_window_find_text *widget response *window))
+  (let ((*toplevel (schematic_window_get_toplevel *window)))
+    (when (null-pointer? *toplevel)
+      (error "NULL toplevel."))
+
+    (x_window_find_text *widget response *window *toplevel)))
 
 (define *callback-find-text
   (procedure->pointer void find-text (list '* int '*)))

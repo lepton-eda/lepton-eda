@@ -1109,7 +1109,8 @@ x_window_create_drawing (GtkWidget *drawbox,
 void
 x_window_find_text (GtkWidget *widget,
                     gint response,
-                    SchematicWindow *w_current);
+                    SchematicWindow *w_current,
+                    LeptonToplevel *toplevel);
 void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                          SchematicCanvas* drawing_area);

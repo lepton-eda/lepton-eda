@@ -113,15 +113,13 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 void
 x_window_find_text (GtkWidget *widget,
                     gint response,
-                    SchematicWindow *w_current)
+                    SchematicWindow *w_current,
+                    LeptonToplevel *toplevel)
 {
   gint close = FALSE;
   int count;
   GtkWidget *find_text_widget;
   GtkWidget *find_text_state;
-
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
 
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
