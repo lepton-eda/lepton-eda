@@ -120,8 +120,6 @@ x_window_find_text (GtkWidget *widget,
   GtkWidget *find_text_widget;
   GtkWidget *find_text_state;
 
-  g_return_if_fail (w_current != NULL);
-
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 

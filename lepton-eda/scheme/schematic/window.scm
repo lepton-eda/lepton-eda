@@ -1265,6 +1265,9 @@ for *PAGE page will be created and set active."
 
 
 (define (find-text *widget response *window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
   (x_window_find_text *widget response *window))
 
 (define *callback-find-text
