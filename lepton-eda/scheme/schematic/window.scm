@@ -52,6 +52,7 @@
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic gui keymap)
   #:use-module (schematic gui stroke)
   #:use-module (schematic hook)
@@ -1272,7 +1273,16 @@ for *PAGE page will be created and set active."
     (when (null-pointer? *toplevel)
       (error "NULL toplevel."))
 
-    (x_window_find_text *widget response *window *toplevel)))
+    (let ((close?
+           (case (gtk-response->symbol response)
+             ((ok) (true? (schematic_window_find_text *window *toplevel)))
+             ((cancel delete-event) #t)
+             (else (log! 'warning "find-text(): strange-signal ~A" response)
+                   #f))))
+      (when close?
+        (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+          (gtk_widget_grab_focus *drawing-area)
+          (gtk_widget_hide *widget))))))
 
 (define *callback-find-text
   (procedure->pointer void find-text (list '* int '*)))

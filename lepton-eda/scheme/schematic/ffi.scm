@@ -296,7 +296,6 @@
             untitled_filename
             recent_manager_add
             x_window_save_page
-            x_window_find_text
             *x_window_select_object
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
@@ -307,6 +306,7 @@
             schematic_window_create_work_box
             schematic_window_create_menubar
             schematic_window_find_new_current_page
+            schematic_window_find_text
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
@@ -951,7 +951,6 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_find_text void (list '* int '* '*))
 (define-lfc *x_window_select_object)
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
@@ -963,6 +962,7 @@
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_find_new_current_page '* '(* *))
+(define-lff schematic_window_find_text int '(* *))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_canvas '* '(* *))

@@ -145,37 +145,6 @@ schematic_window_find_text (SchematicWindow *w_current,
 }
 
 
-void
-x_window_find_text (GtkWidget *widget,
-                    gint response,
-                    SchematicWindow *w_current,
-                    LeptonToplevel *toplevel)
-{
-  gint close = FALSE;
-
-  switch (response) {
-  case GTK_RESPONSE_OK:
-    close = schematic_window_find_text (w_current, toplevel);
-    break;
-
-  case GTK_RESPONSE_CANCEL:
-  case GTK_RESPONSE_DELETE_EVENT:
-    close = TRUE;
-    break;
-
-  default:
-    printf("x_window_find_text(): strange signal %d\n", response);
-  }
-
-  if (close) {
-    GtkWidget *drawing_area =
-      schematic_window_get_drawing_area (w_current);
-    gtk_widget_grab_focus (drawing_area);
-    gtk_widget_hide (GTK_WIDGET (widget));
-  }
-}
-
-
 static void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
