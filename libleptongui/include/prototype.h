@@ -1106,9 +1106,6 @@ x_stroke_translate_and_execute (SchematicWindow *w_current);
 void
 x_window_create_drawing (GtkWidget *drawbox,
                          SchematicWindow *w_current);
-int
-schematic_window_find_text (SchematicWindow *w_current,
-                            LeptonToplevel *toplevel);
 void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                          SchematicCanvas* drawing_area);

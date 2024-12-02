@@ -109,42 +109,6 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 } /* x_window_setup_draw_events_drawing_area() */
 
 
-int
-schematic_window_find_text (SchematicWindow *w_current,
-                            LeptonToplevel *toplevel)
-{
-  int count;
-  GtkWidget *find_text_widget;
-  GtkWidget *find_text_state;
-  LeptonPageList *pages;
-
-  gboolean show_hidden_text =
-    schematic_window_get_show_hidden_text (w_current);
-
-  find_text_widget = schematic_window_get_find_text_widget (w_current);
-  find_text_state = schematic_window_get_find_text_state_widget (w_current);
-  pages = lepton_toplevel_get_pages (toplevel);
-  count =
-    schematic_find_text_state_find (w_current,
-                                    SCHEMATIC_FIND_TEXT_STATE (find_text_state),
-                                    lepton_list_get_glist (pages),
-                                    schematic_find_text_widget_get_find_type (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                    schematic_find_text_widget_get_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                    schematic_find_text_widget_get_descend (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                    show_hidden_text);
-
-  if (count > 0)
-  {
-    x_widgets_show_find_text_state (w_current);
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
-}
-
-
 static void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {

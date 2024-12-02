@@ -240,6 +240,7 @@
             x_stroke_record
             x_stroke_translate_and_execute
 
+            schematic_find_text_state_find
             schematic_find_text_state_new
 
             schematic_find_text_widget_new
@@ -247,10 +248,13 @@
             schematic_find_text_widget_set_cancel_button
             schematic_find_text_widget_get_combo
             schematic_find_text_widget_set_combo
+            schematic_find_text_widget_get_descend
             schematic_find_text_widget_get_entry
             schematic_find_text_widget_set_entry
             schematic_find_text_widget_get_find_button
             schematic_find_text_widget_set_find_button
+            schematic_find_text_widget_get_find_text_string
+            schematic_find_text_widget_get_find_type
             *schematic_find_text_widget_activate_entry
             *schematic_find_text_widget_changed_type
             *schematic_find_text_widget_click_cancel
@@ -306,7 +310,6 @@
             schematic_window_create_work_box
             schematic_window_create_menubar
             schematic_window_find_new_current_page
-            schematic_window_find_text
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
@@ -962,7 +965,6 @@
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_find_new_current_page '* '(* *))
-(define-lff schematic_window_find_text int '(* *))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_canvas '* '(* *))
@@ -1023,6 +1025,7 @@
 (define-lff schematic_tabs_set_callback void '(* *))
 
 ;;; find_text_state.c
+(define-lff schematic_find_text_state_find int (list '* '* '* int '* int int))
 (define-lff schematic_find_text_state_new '* '())
 
 ;;; find_text_widget.c
@@ -1031,10 +1034,13 @@
 (define-lff schematic_find_text_widget_set_cancel_button void '(* *))
 (define-lff schematic_find_text_widget_get_combo '* '(*))
 (define-lff schematic_find_text_widget_set_combo void '(* *))
+(define-lff schematic_find_text_widget_get_descend int '(*))
 (define-lff schematic_find_text_widget_get_entry '* '(*))
 (define-lff schematic_find_text_widget_set_entry void '(* *))
 (define-lff schematic_find_text_widget_get_find_button '* '(*))
 (define-lff schematic_find_text_widget_set_find_button void '(* *))
+(define-lff schematic_find_text_widget_get_find_text_string '* '(*))
+(define-lff schematic_find_text_widget_get_find_type int '(*))
 (define-lfc *schematic_find_text_widget_activate_entry)
 (define-lfc *schematic_find_text_widget_changed_type)
 (define-lfc *schematic_find_text_widget_click_cancel)

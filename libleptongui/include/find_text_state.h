@@ -59,6 +59,11 @@ struct _SchematicFindTextState
 };
 
 
+GType
+schematic_find_text_state_get_type ();
+
+G_BEGIN_DECLS
+
 int
 schematic_find_text_state_find (SchematicWindow *w_current,
                                 SchematicFindTextState *state,
@@ -67,12 +72,6 @@ schematic_find_text_state_find (SchematicWindow *w_current,
                                 const char *text,
                                 gboolean descend,
                                 gboolean include_hidden);
-
-GType
-schematic_find_text_state_get_type ();
-
-G_BEGIN_DECLS
-
 GtkWidget*
 schematic_find_text_state_new ();
 

@@ -1265,6 +1265,29 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+(define (search-text *window *toplevel)
+  (define show-hidden-text?
+    (schematic_window_get_show_hidden_text *window))
+  (define *find-text-widget
+    (schematic_window_get_find_text_widget *window))
+  (define *find-text-state-widget
+    (schematic_window_get_find_text_state_widget *window))
+  (define *pages (lepton_toplevel_get_pages *toplevel))
+  (define count
+    (schematic_find_text_state_find *window
+                                    *find-text-state-widget
+                                    (lepton_list_get_glist *pages)
+                                    (schematic_find_text_widget_get_find_type *find-text-widget)
+                                    (schematic_find_text_widget_get_find_text_string *find-text-widget)
+                                    (schematic_find_text_widget_get_descend *find-text-widget)
+                                    show-hidden-text?))
+  (if (> count 0)
+      (begin
+        (x_widgets_show_find_text_state *window)
+        TRUE)
+      FALSE))
+
+
 (define (find-text *widget response *window)
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -1275,7 +1298,7 @@ for *PAGE page will be created and set active."
 
     (let ((close?
            (case (gtk-response->symbol response)
-             ((ok) (true? (schematic_window_find_text *window *toplevel)))
+             ((ok) (true? (search-text *window *toplevel)))
              ((cancel delete-event) #t)
              (else (log! 'warning "find-text(): strange-signal ~A" response)
                    #f))))

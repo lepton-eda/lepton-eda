@@ -52,27 +52,9 @@ struct _SchematicFindTextWidget
 
 
 /* Helpers */
-int
-schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget);
-
-const char*
-schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
-
-int
-schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
-
 GType
 schematic_find_text_widget_get_type ();
 
-void
-schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
-                                        int descend);
-void
-schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget,
-                                                 const char *str);
-void
-schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
-                                          int type);
 G_BEGIN_DECLS
 
 GtkWidget*
@@ -91,6 +73,12 @@ schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget);
 void
 schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
                                       GtkWidget *combo);
+int
+schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
+                                        int descend);
 GtkWidget*
 schematic_find_text_widget_get_descend_button (SchematicFindTextWidget *widget);
 
@@ -109,6 +97,18 @@ schematic_find_text_widget_get_find_button (SchematicFindTextWidget *widget);
 void
 schematic_find_text_widget_set_find_button (SchematicFindTextWidget *widget,
                                             GtkWidget *find_button);
+const char*
+schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget,
+                                                 const char *str);
+int
+schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
+                                          int type);
 GtkTreeModel*
 schematic_find_text_widget_get_find_type_model (SchematicFindTextWidget *widget);
 
