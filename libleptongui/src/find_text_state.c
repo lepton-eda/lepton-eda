@@ -94,7 +94,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *
  *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] state The SchematicFindTextState structure.
- *  \param [in] pages a list of pages to search
+ *  \param [in] all_pages The list of all pages in the hierarchy.
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
  *  \param [in] descend Descend the page hierarchy
@@ -104,7 +104,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 int
 schematic_find_text_state_find (SchematicWindow *w_current,
                                 SchematicFindTextState *state,
-                                GList *pages,
+                                GSList *all_pages,
                                 int type,
                                 const char *text,
                                 gboolean descend,
@@ -112,10 +112,7 @@ schematic_find_text_state_find (SchematicWindow *w_current,
 {
   int count;
   GSList *objects = NULL;
-  GSList *all_pages;
   gboolean filter_text = TRUE;
-
-  all_pages = schematic_find_text_state_get_pages (w_current, pages, descend);
 
   switch (type) {
     case FIND_TYPE_SUBSTRING:
@@ -138,8 +135,6 @@ schematic_find_text_state_find (SchematicWindow *w_current,
     default:
       break;
   }
-
-  g_slist_free (all_pages);
 
   assign_store (state, objects, filter_text);
   count = g_slist_length (objects);

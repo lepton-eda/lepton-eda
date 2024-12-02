@@ -1299,14 +1299,18 @@ for *PAGE page will be created and set active."
     (schematic_find_text_widget_get_find_text_string *find-text-widget))
   (define descend?
     (schematic_find_text_widget_get_descend *find-text-widget))
+  (define *all-pages
+    (schematic_find_text_state_get_pages *window *pages descend?))
   (define count
     (schematic_find_text_state_find *window
                                     *find-text-state-widget
-                                    *pages
+                                    *all-pages
                                     find-type
                                     *text-string
                                     descend?
                                     show-hidden-text?))
+  (g_slist_free *all-pages)
+
   (if (> count 0)
       (begin
         (x_widgets_show_find_text_state *window)

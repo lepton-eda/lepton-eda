@@ -36,6 +36,8 @@
             g_log
             g_strdup
 
+            g_slist_free
+
             ;; Mock glib functions.
 
             gslist-data
@@ -71,6 +73,7 @@
 
 (define-lff g_strdup '* '(*))
 
+(define-lff g_slist_free void '(*))
 (define-lff g_slist_free_full void '(*))
 
 

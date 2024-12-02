@@ -68,7 +68,7 @@ G_BEGIN_DECLS
 int
 schematic_find_text_state_find (SchematicWindow *w_current,
                                 SchematicFindTextState *state,
-                                GList *pages,
+                                GSList *all_pages,
                                 int type,
                                 const char *text,
                                 gboolean descend,
