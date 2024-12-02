@@ -1272,14 +1272,22 @@ for *PAGE page will be created and set active."
     (schematic_window_get_find_text_widget *window))
   (define *find-text-state-widget
     (schematic_window_get_find_text_state_widget *window))
-  (define *pages (lepton_toplevel_get_pages *toplevel))
+  (define *pages
+    (lepton_list_get_glist
+     (lepton_toplevel_get_pages *toplevel)))
+  (define find-type
+    (schematic_find_text_widget_get_find_type *find-text-widget))
+  (define *text-string
+    (schematic_find_text_widget_get_find_text_string *find-text-widget))
+  (define descend?
+    (schematic_find_text_widget_get_descend *find-text-widget))
   (define count
     (schematic_find_text_state_find *window
                                     *find-text-state-widget
-                                    (lepton_list_get_glist *pages)
-                                    (schematic_find_text_widget_get_find_type *find-text-widget)
-                                    (schematic_find_text_widget_get_find_text_string *find-text-widget)
-                                    (schematic_find_text_widget_get_descend *find-text-widget)
+                                    *pages
+                                    find-type
+                                    *text-string
+                                    descend?
                                     show-hidden-text?))
   (if (> count 0)
       (begin
