@@ -70,11 +70,6 @@ find_objects_using_substring (GSList *pages,
 static GSList*
 find_objects_using_check (GSList *pages);
 
-static GSList*
-get_pages (SchematicWindow *w_current,
-           GList *pages,
-           gboolean descend);
-
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
@@ -120,7 +115,7 @@ schematic_find_text_state_find (SchematicWindow *w_current,
   GSList *all_pages;
   gboolean filter_text = TRUE;
 
-  all_pages = get_pages (w_current, pages, descend);
+  all_pages = schematic_find_text_state_get_pages (w_current, pages, descend);
 
   switch (type) {
     case FIND_TYPE_SUBSTRING:
@@ -609,10 +604,10 @@ find_objects_using_check (GSList *pages)
  *  \param [in] descend alose locates subpages
  *  \return a list of all the pages
  */
-static GSList*
-get_pages (SchematicWindow *w_current,
-           GList *pages,
-           gboolean descend)
+GSList*
+schematic_find_text_state_get_pages (SchematicWindow *w_current,
+                                     GList *pages,
+                                     gboolean descend)
 {
   GList *input_list = g_list_copy (pages);
   GSList *output_list = NULL;
