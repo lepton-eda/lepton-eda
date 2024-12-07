@@ -1283,6 +1283,10 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+(define (find-text-get-all-pages *window *pages descend?)
+  (schematic_find_text_state_get_pages *window *pages descend?))
+
+
 (define (search-text *window *toplevel)
   (define show-hidden-text?
     (schematic_window_get_show_hidden_text *window))
@@ -1300,7 +1304,7 @@ for *PAGE page will be created and set active."
   (define descend?
     (schematic_find_text_widget_get_descend *find-text-widget))
   (define *all-pages
-    (schematic_find_text_state_get_pages *window *pages descend?))
+    (find-text-get-all-pages *window *pages descend?))
   (define count
     (schematic_find_text_state_find *window
                                     *find-text-state-widget
