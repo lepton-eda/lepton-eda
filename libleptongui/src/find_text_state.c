@@ -73,10 +73,6 @@ find_objects_using_check (GSList *pages);
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
-static GList*
-get_subpages (SchematicWindow *w_current,
-              LeptonPage *page);
-
 static void
 object_weakref_cb (LeptonObject *object,
                    SchematicFindTextState *state);
@@ -629,7 +625,7 @@ schematic_find_text_state_get_pages (SchematicWindow *w_current,
     g_hash_table_insert (visit_list, page, NULL);
 
     if (descend) {
-      input_list = g_list_concat (input_list, get_subpages (w_current, page));
+      input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
     }
   }
 
@@ -666,9 +662,9 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in] page the parent page
  *  \return a list of all the subpages
  */
-static GList*
-get_subpages (SchematicWindow *w_current,
-              LeptonPage *page)
+GList*
+schematic_find_text_state_get_subpages (SchematicWindow *w_current,
+                                        LeptonPage *page)
 {
   const GList *object_iter;
   GList *page_list = NULL;

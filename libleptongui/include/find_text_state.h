@@ -83,6 +83,9 @@ schematic_find_text_state_get_pages (SchematicWindow *w_current,
 GtkTreeSelection*
 schematic_find_text_state_get_selection (SchematicFindTextState *state);
 
+GList*
+schematic_find_text_state_get_subpages (SchematicWindow *w_current,
+                                        LeptonPage *page);
 void
 schematic_find_text_state_select (GtkTreeSelection *selection,
                                   SchematicFindTextState *state);
