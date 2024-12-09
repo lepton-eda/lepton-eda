@@ -625,11 +625,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
     char **filenames;
     char **iter;
 
-    if (object == NULL) {
-      g_warning ("NULL object encountered");
-    }
-    else
-    {
       if (lepton_object_is_component (object))
       {
         attrib = lepton_attrib_search_attached_attribs_by_name (object,
@@ -660,7 +655,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
           }
         }
       }
-    }
 
   return page_list;
 }
