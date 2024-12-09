@@ -611,14 +611,15 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *
  *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page the parent page
+ *  \param [in] page_list The initial page list.
  *  \return a list of all the subpages
  */
 GList*
 schematic_find_text_state_get_subpages (SchematicWindow *w_current,
-                                        LeptonPage *page)
+                                        LeptonPage *page,
+                                        GList *page_list)
 {
   const GList *object_iter;
-  GList *page_list = NULL;
 
   object_iter = lepton_page_objects (page);
 
