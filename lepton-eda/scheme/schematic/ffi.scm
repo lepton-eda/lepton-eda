@@ -1056,7 +1056,7 @@
 (define-lff schematic_find_text_state_find int (list '* '* '* int '* int int))
 (define-lff schematic_find_text_state_new '* '())
 (define-lff schematic_find_text_state_get_selection '* '(*))
-(define-lff schematic_find_text_state_get_subpages '* '(* * *))
+(define-lff schematic_find_text_state_get_subpages '* '(* * * *))
 (define-lfc *schematic_find_text_state_select)
 
 ;;; find_text_widget.c

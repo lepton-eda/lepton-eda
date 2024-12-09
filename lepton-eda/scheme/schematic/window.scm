@@ -1285,10 +1285,20 @@ for *PAGE page will be created and set active."
 
 (define (page-subpages *window page)
   (define *page (page->pointer page))
+  (define objects (page-contents page))
 
   (reverse
    (glist->list
-    (schematic_find_text_state_get_subpages *window *page %null-pointer)
+    (let loop ((objects objects)
+               (*page-ls %null-pointer))
+      (if (null? objects)
+          *page-ls
+          (let ((*new-page-ls
+                 (schematic_find_text_state_get_subpages *window
+                                                         *page
+                                                         *page-ls
+                                                         (object->pointer (car objects)))))
+            (loop (cdr objects) *new-page-ls))))
     pointer->page)))
 
 

@@ -612,24 +612,18 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page the parent page
  *  \param [in] page_list The initial page list.
+ *  \param [in] object The object to find pages for.
  *  \return a list of all the subpages
  */
 GList*
 schematic_find_text_state_get_subpages (SchematicWindow *w_current,
                                         LeptonPage *page,
-                                        GList *page_list)
+                                        GList *page_list,
+                                        LeptonObject *object)
 {
-  const GList *object_iter;
-
-  object_iter = lepton_page_objects (page);
-
-  while (object_iter != NULL) {
     char *attrib;
     char **filenames;
     char **iter;
-    LeptonObject *object = (LeptonObject*) object_iter->data;
-
-    object_iter = g_list_next (object_iter);
 
     if (object == NULL) {
       g_warning ("NULL object encountered");
@@ -667,7 +661,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
         }
       }
     }
-  }
 
   return page_list;
 }
