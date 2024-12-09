@@ -1287,21 +1287,18 @@ for *PAGE page will be created and set active."
 ;;; Descends the hierarchy of *PAGES in *WINDOW forming a flat
 ;;; list if DESCEND? is not #f, and removes duplicate pages.
 (define (find-text-get-all-pages *window *pages descend?)
-  (define page-ls (glist->list *pages identity))
-
-  (when (any null-pointer? page-ls)
-    (error "NULL page."))
+  (define page-ls (glist->list *pages pointer->page))
 
   (let loop ((input-ls page-ls)
-             (*output-list %null-pointer)
+             (output-ls '())
              (visit-ls '()))
     (if (null? input-ls)
         ;; Return the output list.
-        (g_slist_reverse *output-list)
+        (reverse output-ls)
 
-        (let* ((*page (car input-ls))
+        (let* ((page (car input-ls))
                (new-input-ls (cdr input-ls))
-               (page-visited? (member *page visit-ls)))
+               (page-visited? (memq page visit-ls)))
           (loop (if page-visited?
                     new-input-ls
                     (if (true? descend?)
@@ -1309,15 +1306,15 @@ for *PAGE page will be created and set active."
                                 (glist->list
                                  (schematic_find_text_state_get_subpages
                                   *window
-                                  *page)
-                                 identity))
+                                  (page->pointer page))
+                                 pointer->page))
                         new-input-ls))
                 (if page-visited?
-                    *output-list
-                    (g_slist_prepend *output-list *page))
+                    output-ls
+                    (cons page output-ls))
                 (if page-visited?
                     visit-ls
-                    (cons *page visit-ls)))))))
+                    (cons page visit-ls)))))))
 
 
 (define (search-text *window *toplevel)
@@ -1336,8 +1333,15 @@ for *PAGE page will be created and set active."
     (schematic_find_text_widget_get_find_text_string *find-text-widget))
   (define descend?
     (schematic_find_text_widget_get_descend *find-text-widget))
-  (define *all-pages
+  (define all-pages
     (find-text-get-all-pages *window *pages descend?))
+  (define *all-pages
+    (let loop ((pages all-pages)
+               (*pages-gslist %null-pointer))
+      (if (null? pages)
+          *pages-gslist
+          (loop (cdr pages)
+                (g_slist_prepend *pages-gslist (page->pointer (car pages)))))))
   (define count
     (schematic_find_text_state_find *window
                                     *find-text-state-widget
