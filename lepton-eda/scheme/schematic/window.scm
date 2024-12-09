@@ -1283,7 +1283,9 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
-(define (page-subpages *window *page)
+(define (page-subpages *window page)
+  (define *page (page->pointer page))
+
   (schematic_find_text_state_get_subpages *window *page))
 
 
@@ -1309,8 +1311,7 @@ for *PAGE page will be created and set active."
                     (if (true? descend?)
                         (append new-input-ls
                                 (glist->list
-                                 (page-subpages *window
-                                                (page->pointer page))
+                                 (page-subpages *window page)
                                  pointer->page))
                         new-input-ls))
                 (if page-visited?
