@@ -671,7 +671,7 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
     g_strfreev (filenames);
   }
 
-  return g_list_reverse (page_list);
+  return page_list;
 }
 
 

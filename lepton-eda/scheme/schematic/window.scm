@@ -1286,9 +1286,10 @@ for *PAGE page will be created and set active."
 (define (page-subpages *window page)
   (define *page (page->pointer page))
 
-  (glist->list
-   (schematic_find_text_state_get_subpages *window *page %null-pointer)
-   pointer->page))
+  (reverse
+   (glist->list
+    (schematic_find_text_state_get_subpages *window *page %null-pointer)
+    pointer->page)))
 
 
 ;;; The function obtains a list of pages for an operation.  It
