@@ -108,25 +108,16 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
                           GError **error,
                           LeptonToplevel *toplevel)
 {
-  char *string;
   LeptonPage *subpage = NULL;
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
-                                               "get-source-library-file"),
-                             scm_from_utf8_string (filename));
-
-  if (scm_is_false (string_s)) {
-    schematic_hierarchy_set_error_nolib (error);
-  } else {
-    string = scm_to_utf8_string (string_s);
-    gchar *normalized = f_normalize_filename (string, error);
+    gchar *normalized = f_normalize_filename (filename, error);
 
     subpage = lepton_toplevel_search_page (toplevel, normalized);
 
     if (subpage == NULL) {
       int success;
 
-      subpage = lepton_page_new (toplevel, string);
+      subpage = lepton_page_new (toplevel, filename);
       success = schematic_file_open (w_current,
                                      subpage,
                                      lepton_page_get_filename (subpage),
@@ -143,7 +134,6 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
     }
 
     g_free (normalized);
-  }
 
   return subpage;
 }

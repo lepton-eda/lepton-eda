@@ -35,6 +35,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
+  #:use-module (lepton library)
   #:use-module (lepton log)
   #:use-module (lepton m4)
   #:use-module (lepton object foreign)
@@ -1557,11 +1558,16 @@ for *PAGE page will be created and set active."
     (when (null-pointer? *toplevel)
       (error "NULL toplevel."))
 
-    (s_hierarchy_load_subpage *window
-                              *page
-                              *filename
-                              **err
-                              *toplevel)))
+    (let ((source-filename (get-source-library-file filename)))
+      (if source-filename
+          (s_hierarchy_load_subpage *window
+                                    *page
+                                    (string->pointer source-filename)
+                                    **err
+                                    *toplevel)
+          (begin
+            (schematic_hierarchy_set_error_nolib **err)
+            %null-pointer)))))
 
 
 ;;; Return the subpages of PAGE in WINDOW.  If any subpages are
