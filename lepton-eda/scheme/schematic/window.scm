@@ -1283,6 +1283,10 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+(define (page-subpages *window *page)
+  (schematic_find_text_state_get_subpages *window *page))
+
+
 ;;; The function obtains a list of pages for an operation.  It
 ;;; processes the list of *PAGES in *WINDOW, descending the
 ;;; hierarchy of pages if DESCEND? is not #f, adding all subpages,
@@ -1305,9 +1309,8 @@ for *PAGE page will be created and set active."
                     (if (true? descend?)
                         (append new-input-ls
                                 (glist->list
-                                 (schematic_find_text_state_get_subpages
-                                  *window
-                                  (page->pointer page))
+                                 (page-subpages *window
+                                                (page->pointer page))
                                  pointer->page))
                         new-input-ls))
                 (if page-visited?
