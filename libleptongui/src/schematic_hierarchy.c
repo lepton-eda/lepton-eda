@@ -108,7 +108,6 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
   char *string;
   LeptonPage *subpage = NULL;
 
-  g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (page != NULL, NULL);
 
   LeptonToplevel *toplevel = lepton_page_get_toplevel (page);
