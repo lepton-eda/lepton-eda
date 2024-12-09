@@ -97,22 +97,19 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
  *  \param [in]  filename  The name of the subpage to open.
  *  \param [in,out] error \c GError structure for error reporting,
  *                        or NULL to disable error reporting.
+ *  \param [in] toplevel The \c LeptonToplevel environment of the
+ *                       current page.
  *  \return A pointer to the subpage or NULL if an error occured.
  */
 LeptonPage*
 s_hierarchy_load_subpage (SchematicWindow *w_current,
                           LeptonPage *page,
                           const char *filename,
-                          GError **error)
+                          GError **error,
+                          LeptonToplevel *toplevel)
 {
   char *string;
   LeptonPage *subpage = NULL;
-
-  g_return_val_if_fail (page != NULL, NULL);
-
-  LeptonToplevel *toplevel = lepton_page_get_toplevel (page);
-
-  g_return_val_if_fail (toplevel != NULL, NULL);
 
   SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
                                                "get-source-library-file"),

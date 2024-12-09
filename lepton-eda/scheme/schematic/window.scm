@@ -1547,7 +1547,21 @@ for *PAGE page will be created and set active."
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
 
-  (s_hierarchy_load_subpage *window *page *filename **err))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+
+  (let ((*toplevel (lepton_page_get_toplevel *page)))
+
+    (when (null-pointer? *toplevel)
+      (error "NULL toplevel."))
+
+    (s_hierarchy_load_subpage *window
+                              *page
+                              *filename
+                              **err
+                              *toplevel)))
 
 
 ;;; Return the subpages of PAGE in WINDOW.  If any subpages are

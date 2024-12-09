@@ -1037,7 +1037,8 @@ LeptonPage*
 s_hierarchy_load_subpage (SchematicWindow *w_current,
                           LeptonPage *page,
                           const char *filename,
-                          GError **error);
+                          GError **error,
+                          LeptonToplevel *toplevel);
 G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */
