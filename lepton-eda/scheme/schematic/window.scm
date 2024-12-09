@@ -1543,6 +1543,10 @@ for *PAGE page will be created and set active."
         (set-window-current-page! *window *page))))
 
 
+(define (load-subpage *window *page *filename **err)
+  (s_hierarchy_load_subpage *window *page *filename **err))
+
+
 ;;; Return the subpages of PAGE in *WINDOW.  If any subpages are
 ;;; not loaded, this function will load them.
 (define (page-subpages *window page)
@@ -1573,10 +1577,10 @@ for *PAGE page will be created and set active."
                (page-ls page-ls))
       (if (null? filenames)
           page-ls
-          (let ((*subpage (s_hierarchy_load_subpage *window
-                                                    *page
-                                                    (string->pointer (car filenames))
-                                                    %null-pointer)))
+          (let ((*subpage (load-subpage *window
+                                        *page
+                                        (string->pointer (car filenames))
+                                        %null-pointer)))
             (loop (cdr filenames)
                   (if (null-pointer? *subpage)
                       page-ls
