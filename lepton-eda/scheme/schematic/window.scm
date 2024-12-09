@@ -37,6 +37,7 @@
   #:use-module (lepton log)
   #:use-module (lepton m4)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
   #:use-module (lepton toplevel foreign)
@@ -1289,7 +1290,7 @@ for *PAGE page will be created and set active."
 
   (reverse
    (glist->list
-    (let loop ((objects objects)
+    (let loop ((objects (filter component? objects))
                (*page-ls %null-pointer))
       (if (null? objects)
           *page-ls

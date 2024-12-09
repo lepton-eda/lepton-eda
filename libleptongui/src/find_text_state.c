@@ -625,8 +625,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
     char **filenames;
     char **iter;
 
-      if (lepton_object_is_component (object))
-      {
         attrib = lepton_attrib_search_attached_attribs_by_name (object,
                                                                 "source",
                                                                 0);
@@ -654,7 +652,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
             g_strfreev (filenames);
           }
         }
-      }
 
   return page_list;
 }
