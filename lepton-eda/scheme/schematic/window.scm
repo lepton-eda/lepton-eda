@@ -1566,7 +1566,9 @@ for *PAGE page will be created and set active."
                                     **err
                                     *toplevel)
           (begin
-            (schematic_hierarchy_set_error_nolib **err)
+            (log! 'warning
+                  (G_ "Schematic ~S has not been found in source library.")
+                  filename)
             %null-pointer)))))
 
 
