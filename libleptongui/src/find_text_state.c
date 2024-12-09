@@ -620,8 +620,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
   const GList *object_iter;
   GList *page_list = NULL;
 
-  g_return_val_if_fail (page != NULL, NULL);
-
   object_iter = lepton_page_objects (page);
 
   while (object_iter != NULL) {
