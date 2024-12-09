@@ -1032,7 +1032,7 @@ s_hierarchy_find_up_page (LeptonPage *current_page);
 
 LeptonPage*
 s_hierarchy_load_subpage (SchematicWindow *w_current,
-                          LeptonPage *page,
+                          LeptonPage *subpage,
                           const char *filename,
                           GError **error,
                           LeptonToplevel *toplevel);

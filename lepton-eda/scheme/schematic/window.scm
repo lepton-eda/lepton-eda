@@ -1545,6 +1545,12 @@ for *PAGE page will be created and set active."
 
 
 (define (load-subpage *window *page filename **err)
+  (define (canonicalize filename)
+    (catch 'system-error
+      (lambda () (canonicalize-path filename))
+      (lambda (key subr message args rest)
+        (log! 'message (apply format #f message args)))))
+
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
 
@@ -1560,11 +1566,15 @@ for *PAGE page will be created and set active."
 
     (let ((source-filename (get-source-library-file filename)))
       (if source-filename
-          (s_hierarchy_load_subpage *window
-                                    *page
-                                    (string->pointer source-filename)
-                                    **err
-                                    *toplevel)
+          (let* ((normalized-name (canonicalize source-filename))
+                 (*subpage (lepton_toplevel_search_page
+                            *toplevel
+                            (string->pointer normalized-name))))
+            (s_hierarchy_load_subpage *window
+                                      *subpage
+                                      (string->pointer source-filename)
+                                      **err
+                                      *toplevel))
           (begin
             (log! 'warning
                   (G_ "Schematic ~S has not been found in source library.")
