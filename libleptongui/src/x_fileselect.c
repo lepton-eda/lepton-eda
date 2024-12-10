@@ -554,20 +554,13 @@ gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
                      const gchar *filename,
-                     GError **err)
+                     GError **err,
+                     gboolean active_backup,
+                     gboolean stat_error)
 {
   g_return_val_if_fail ((w_current != NULL), FALSE);
 
-  GError *tmp_err = NULL;
-  gboolean stat_error = FALSE;
   gint flags = F_OPEN_RC;
-  gboolean active_backup = f_has_active_autosave (filename, &tmp_err);
-
-  if (tmp_err != NULL) {
-    g_warning ("%s\n", tmp_err->message);
-    g_error_free (tmp_err);
-    stat_error = TRUE;
-  }
 
   if (active_backup) {
     gchar *backup_filename = f_get_autosave_filename (filename);
