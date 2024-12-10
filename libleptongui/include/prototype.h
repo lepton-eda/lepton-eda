@@ -780,8 +780,6 @@ schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
                      const gchar *filename,
                      GError **err,
-                     gboolean active_backup,
-                     GString *message,
                      int flags);
 void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,

@@ -68,10 +68,11 @@
                            (true? (x_fileselect_load_backup *window *message)))
                       (logior F_OPEN_RC F_OPEN_FORCE_BACKUP)
                       F_OPEN_RC)))
+      (when (true? active_backup)
+        (g_string_free *message TRUE))
+
       (schematic_file_open *window
                            *page
                            *filename
                            **gerror
-                           active_backup
-                           *message
                            flags))))

@@ -551,14 +551,8 @@ schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
                      const gchar *filename,
                      GError **err,
-                     gboolean active_backup,
-                     GString *message,
                      int flags)
 {
-  if (active_backup) {
-    g_string_free (message, TRUE);
-  }
-
   return f_open (schematic_window_get_toplevel (w_current),
                  page,
                  filename,
