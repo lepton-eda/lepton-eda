@@ -556,21 +556,20 @@ schematic_file_open (SchematicWindow *w_current,
                      const gchar *filename,
                      GError **err,
                      gboolean active_backup,
-                     gboolean stat_error)
+                     gboolean stat_error,
+                     gchar *backup_filename)
 {
   g_return_val_if_fail ((w_current != NULL), FALSE);
 
   gint flags = F_OPEN_RC;
 
   if (active_backup) {
-    gchar *backup_filename = f_get_autosave_filename (filename);
     GString *message = f_backup_message (backup_filename, stat_error);
     if (x_fileselect_load_backup (w_current, message)) {
       flags |= F_OPEN_FORCE_BACKUP;
     }
 
     g_string_free (message, TRUE);
-    g_free (backup_filename);
   }
 
   return f_open (schematic_window_get_toplevel (w_current),
