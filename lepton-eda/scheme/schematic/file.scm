@@ -47,13 +47,16 @@
 
     (gerror-error *tmp-error)
 
-    (let ((*backup-filename (if (true? active_backup)
-                                (f_get_autosave_filename *filename)
-                                %null-pointer)))
+    (let* ((*backup-filename (if (true? active_backup)
+                                 (f_get_autosave_filename *filename)
+                                 %null-pointer))
+           (*message (if (true? active_backup)
+                         (f_backup_message *backup-filename stat_error)
+                         %null-pointer)))
       (schematic_file_open *window
                            *page
                            *filename
                            **gerror
                            active_backup
-                           stat_error
-                           *backup-filename))))
+                           *backup-filename
+                           *message))))
