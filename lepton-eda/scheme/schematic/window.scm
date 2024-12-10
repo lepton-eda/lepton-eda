@@ -64,6 +64,7 @@
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
+  #:use-module (schematic file)
   #:use-module (schematic gtk geometry)
   #:use-module (schematic gtk helper)
   #:use-module (schematic gui keymap)
@@ -1084,7 +1085,7 @@ tab notebook.  Returns a C TabInfo structure."
       (load-schematic-message)
       (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
         ;; Try to load *FILENAME.
-        (if (false? (schematic_file_open *window *new-page *filename *error))
+        (if (false? (open-schematic *window *new-page *filename *error))
             (let ((error-message (gerror-error-message *error)))
               (log! 'warning "~A" error-message)
               (schematic_dialog_load_file_error *main-window
@@ -1551,7 +1552,7 @@ for *PAGE page will be created and set active."
   (define (open-new-page filename)
     (let* ((*new-page
             (lepton_page_new *toplevel (string->pointer filename)))
-           (success? (true? (schematic_file_open
+           (success? (true? (open-schematic
                              *window
                              *new-page
                              (lepton_page_get_filename *new-page)
