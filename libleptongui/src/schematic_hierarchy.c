@@ -140,7 +140,7 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
                                      error);
 
       if (success) {
-        subpage->page_control = ++page_control_counter;
+        lepton_page_set_page_control (subpage, ++page_control_counter);
       } else {
         lepton_page_delete (toplevel, subpage);
         subpage = NULL;
