@@ -408,6 +408,7 @@
 
             o_read_buffer
 
+            f_has_active_autosave
             f_open
             f_save
 
@@ -798,6 +799,7 @@
 (define-lff o_read_buffer '* (list '* '* '* int '* '*))
 
 ;;; f_basic.c
+(define-lff f_has_active_autosave int '(* *))
 (define-lff f_open int (list '* '* '* int '*))
 (define-lff f_save int '(* * *))
 

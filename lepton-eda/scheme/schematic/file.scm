@@ -17,9 +17,39 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic file)
+  #:use-module (rnrs bytevectors)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
+  #:use-module (lepton log)
+
   #:use-module (schematic ffi)
 
   #:export (open-schematic))
 
 (define (open-schematic *window *page *filename **gerror)
-  (schematic_file_open *window *page *filename **gerror))
+  (define (gerror-error *error)
+    (unless (null-pointer? *error)
+      (let ((*err (dereference-pointer *error)))
+        (unless (null-pointer? *err)
+          (let ((message (gerror-message *err)))
+            (g_clear_error *error)
+            (log! 'warning "~A" message))))))
+
+  (let* ((*tmp-error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (active_backup (f_has_active_autosave *filename *tmp-error))
+         (stat_error (if (null-pointer? (dereference-pointer *tmp-error))
+                         FALSE
+                         TRUE)))
+
+    (gerror-error *tmp-error)
+
+    (schematic_file_open *window
+                         *page
+                         *filename
+                         **gerror
+                         active_backup
+                         stat_error)))

@@ -776,7 +776,9 @@ gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
                      const gchar *filename,
-                     GError **err);
+                     GError **err,
+                     gboolean active_backup,
+                     gboolean stat_error);
 void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data);
