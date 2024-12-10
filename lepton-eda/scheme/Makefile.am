@@ -177,6 +177,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/event/handler.scm \
 	schematic/ffi.scm \
 	schematic/ffi/gtk.scm \
+	schematic/file.scm \
 	schematic/gtk/geometry.scm \
 	schematic/gtk/helper.scm \
 	schematic/gui/keymap.scm \
