@@ -1570,11 +1570,13 @@ for *PAGE page will be created and set active."
                  (*subpage (lepton_toplevel_search_page
                             *toplevel
                             (string->pointer normalized-name))))
-            (s_hierarchy_load_subpage *window
-                                      *subpage
-                                      (string->pointer source-filename)
-                                      **err
-                                      *toplevel))
+            (if (null-pointer? *subpage)
+                (s_hierarchy_load_subpage *window
+                                          *subpage
+                                          (string->pointer source-filename)
+                                          **err
+                                          *toplevel)
+                *subpage))
           (begin
             (log! 'warning
                   (G_ "Schematic ~S has not been found in source library.")

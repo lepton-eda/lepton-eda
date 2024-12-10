@@ -91,7 +91,6 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
                           GError **error,
                           LeptonToplevel *toplevel)
 {
-    if (subpage == NULL) {
       int success;
 
       subpage = lepton_page_new (toplevel, filename);
@@ -108,7 +107,6 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
         lepton_page_delete (toplevel, subpage);
         subpage = NULL;
       }
-    }
 
   return subpage;
 }
