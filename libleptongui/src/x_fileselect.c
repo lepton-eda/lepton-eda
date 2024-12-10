@@ -556,15 +556,14 @@ schematic_file_open (SchematicWindow *w_current,
                      const gchar *filename,
                      GError **err,
                      gboolean active_backup,
-                     gboolean stat_error,
-                     gchar *backup_filename)
+                     gchar *backup_filename,
+                     GString *message)
 {
   g_return_val_if_fail ((w_current != NULL), FALSE);
 
   gint flags = F_OPEN_RC;
 
   if (active_backup) {
-    GString *message = f_backup_message (backup_filename, stat_error);
     if (x_fileselect_load_backup (w_current, message)) {
       flags |= F_OPEN_FORCE_BACKUP;
     }
