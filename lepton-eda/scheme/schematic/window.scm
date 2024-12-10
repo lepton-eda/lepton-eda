@@ -1544,6 +1544,16 @@ for *PAGE page will be created and set active."
         (set-window-current-page! *window *page))))
 
 
+;;; Load and return a subpage having FILENAME for *PAGE in *WINDOW
+;;; or NULL if an error occured.  Any errors are returned in
+;;; GError **ERR.  It has to be NULL to disable error reporting.
+;;;
+;;; The function implements hierarchy-down-schematic(), but
+;;; without changing variables related to the UI:
+;;;
+;;; - Ensures a duplicate page is not loaded
+;;; - Does not change the current page
+;;; - Does not modify the most recent "up" page
 (define (load-subpage *window *page filename **err)
   (define (canonicalize filename)
     (catch 'system-error
@@ -1571,13 +1581,24 @@ for *PAGE page will be created and set active."
                             *toplevel
                             (string->pointer normalized-name))))
             (if (null-pointer? *subpage)
-                (let ((*subpage (lepton_page_new
-                                 *toplevel
-                                 (string->pointer source-filename))))
-                  (s_hierarchy_load_subpage *window
-                                            *subpage
-                                            **err
-                                            *toplevel))
+                (let* ((*subpage (lepton_page_new
+                                  *toplevel
+                                  (string->pointer source-filename)))
+                       (success? (true? (schematic_file_open
+                                         *window
+                                         *subpage
+                                         (lepton_page_get_filename *subpage)
+                                         **err))))
+                  (if success?
+                      (begin
+                        (schematic_hierarchy_increment_page_control_counter)
+                        (lepton_page_set_page_control
+                         *subpage
+                         (schematic_hierarchy_get_page_control_counter))
+                        *subpage)
+                      (begin
+                        (lepton_page_delete *toplevel *subpage)
+                        %null-pointer)))
                 *subpage))
           (begin
             (log! 'warning

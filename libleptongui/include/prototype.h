@@ -1030,11 +1030,6 @@ schematic_hierarchy_increment_page_control_counter ();
 LeptonPage*
 s_hierarchy_find_up_page (LeptonPage *current_page);
 
-LeptonPage*
-s_hierarchy_load_subpage (SchematicWindow *w_current,
-                          LeptonPage *subpage,
-                          GError **error,
-                          LeptonToplevel *toplevel);
 G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */
