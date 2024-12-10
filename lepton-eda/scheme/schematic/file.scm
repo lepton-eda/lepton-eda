@@ -47,6 +47,9 @@
             (g_clear_error *error)
             (log! 'warning "~A" message))))))
 
+  (when (null-pointer? *window)
+    (error "NULL window"))
+
   (let* ((*tmp-error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
          (active_backup (f_has_active_autosave *filename *tmp-error))
          (stat_error (if (null-pointer? (dereference-pointer *tmp-error))

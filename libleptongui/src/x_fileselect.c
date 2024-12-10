@@ -555,8 +555,6 @@ schematic_file_open (SchematicWindow *w_current,
                      GString *message,
                      int flags)
 {
-  g_return_val_if_fail ((w_current != NULL), FALSE);
-
   if (active_backup) {
     g_string_free (message, TRUE);
   }
