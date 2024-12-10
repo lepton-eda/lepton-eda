@@ -769,6 +769,9 @@ schematic_file_select_dialog_save_as (GtkWindow *parent);
 void
 x_fileselect_add_preview (GtkWidget *dialog,
                           GtkWidget *preview);
+int
+x_fileselect_load_backup (SchematicWindow *w_current,
+                          GString *message);
 GSList*
 x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog);
@@ -778,8 +781,8 @@ schematic_file_open (SchematicWindow *w_current,
                      const gchar *filename,
                      GError **err,
                      gboolean active_backup,
-                     gchar *backup_filename,
-                     GString *message);
+                     GString *message,
+                     int flags);
 void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data);

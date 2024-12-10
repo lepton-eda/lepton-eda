@@ -30,6 +30,14 @@
 
   #:export (open-schematic))
 
+
+;;; Flags defined in struct.h.
+(define F_OPEN_RC 1)
+(define F_OPEN_CHECK_BACKUP 2)
+(define F_OPEN_FORCE_BACKUP 4)
+(define F_OPEN_RESTORE_CWD 8)
+
+
 (define (open-schematic *window *page *filename **gerror)
   (define (gerror-error *error)
     (unless (null-pointer? *error)
@@ -52,11 +60,16 @@
                                  %null-pointer))
            (*message (if (true? active_backup)
                          (f_backup_message *backup-filename stat_error)
-                         %null-pointer)))
+                         %null-pointer))
+           (flags (if (false? active_backup)
+                      F_OPEN_RC
+                      (if (true? (x_fileselect_load_backup *window *message))
+                          (logior F_OPEN_RC F_OPEN_FORCE_BACKUP)
+                          F_OPEN_RC))))
       (schematic_file_open *window
                            *page
                            *filename
                            **gerror
                            active_backup
-                           *backup-filename
-                           *message))))
+                           *message
+                           flags))))
