@@ -546,22 +546,6 @@ x_fileselect_load_backup (SchematicWindow *w_current,
 }
 
 
-gboolean
-schematic_file_open (SchematicWindow *w_current,
-                     LeptonPage *page,
-                     const gchar *filename,
-                     GError **err,
-                     int flags)
-{
-  return f_open (schematic_window_get_toplevel (w_current),
-                 page,
-                 filename,
-                 flags,
-                 err);
-}
-
-
-
 /*! \brief Add a file chooser filter.
  *
  *  \param [in]      filechooser  GtkFileChooser
