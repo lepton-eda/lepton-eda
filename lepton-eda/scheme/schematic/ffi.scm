@@ -861,7 +861,7 @@
 (define-lff schematic_hierarchy_get_page_control_counter int '())
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff s_hierarchy_find_up_page '* '(*))
-(define-lff s_hierarchy_load_subpage '* '(* * * * *))
+(define-lff s_hierarchy_load_subpage '* '(* * * *))
 
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))

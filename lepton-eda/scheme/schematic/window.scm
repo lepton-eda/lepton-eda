@@ -1571,11 +1571,13 @@ for *PAGE page will be created and set active."
                             *toplevel
                             (string->pointer normalized-name))))
             (if (null-pointer? *subpage)
-                (s_hierarchy_load_subpage *window
-                                          *subpage
-                                          (string->pointer source-filename)
-                                          **err
-                                          *toplevel)
+                (let ((*subpage (lepton_page_new
+                                 *toplevel
+                                 (string->pointer source-filename))))
+                  (s_hierarchy_load_subpage *window
+                                            *subpage
+                                            **err
+                                            *toplevel))
                 *subpage))
           (begin
             (log! 'warning

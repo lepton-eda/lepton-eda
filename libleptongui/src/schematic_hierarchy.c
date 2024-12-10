@@ -77,7 +77,6 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
  *
  *  \param [in]  w_current The current #SchematicWindow environment.
  *  \param [in]  subpage   The subpage to process.
- *  \param [in]  filename  The name of the subpage to open.
  *  \param [in,out] error \c GError structure for error reporting,
  *                        or NULL to disable error reporting.
  *  \param [in] toplevel The \c LeptonToplevel environment of the
@@ -87,13 +86,11 @@ s_hierarchy_find_up_page (LeptonPage *current_page)
 LeptonPage*
 s_hierarchy_load_subpage (SchematicWindow *w_current,
                           LeptonPage *subpage,
-                          const char *filename,
                           GError **error,
                           LeptonToplevel *toplevel)
 {
       int success;
 
-      subpage = lepton_page_new (toplevel, filename);
       success = schematic_file_open (w_current,
                                      subpage,
                                      lepton_page_get_filename (subpage),
