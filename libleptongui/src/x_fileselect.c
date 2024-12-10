@@ -34,10 +34,6 @@ static GtkFileFilter* filter_all      = NULL;
  */
 static GtkFileFilter* filter_last_opendlg = NULL;
 
-static int
-x_fileselect_load_backup (SchematicWindow *w_current,
-                          GString *message);
-
 static void
 add_filter (GtkFileChooser* filechooser,
             GtkFileFilter** filter,
@@ -508,7 +504,7 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
-static int
+int
 x_fileselect_load_backup (SchematicWindow *w_current,
                           GString *message)
 {
@@ -556,18 +552,12 @@ schematic_file_open (SchematicWindow *w_current,
                      const gchar *filename,
                      GError **err,
                      gboolean active_backup,
-                     gchar *backup_filename,
-                     GString *message)
+                     GString *message,
+                     int flags)
 {
   g_return_val_if_fail ((w_current != NULL), FALSE);
 
-  gint flags = F_OPEN_RC;
-
   if (active_backup) {
-    if (x_fileselect_load_backup (w_current, message)) {
-      flags |= F_OPEN_FORCE_BACKUP;
-    }
-
     g_string_free (message, TRUE);
   }
 
