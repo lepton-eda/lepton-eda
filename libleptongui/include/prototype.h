@@ -778,7 +778,8 @@ schematic_file_open (SchematicWindow *w_current,
                      const gchar *filename,
                      GError **err,
                      gboolean active_backup,
-                     gboolean stat_error);
+                     gboolean stat_error,
+                     gchar *backup_filename);
 void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data);

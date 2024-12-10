@@ -47,9 +47,13 @@
 
     (gerror-error *tmp-error)
 
-    (schematic_file_open *window
-                         *page
-                         *filename
-                         **gerror
-                         active_backup
-                         stat_error)))
+    (let ((*backup-filename (if (true? active_backup)
+                                (f_get_autosave_filename *filename)
+                                %null-pointer)))
+      (schematic_file_open *window
+                           *page
+                           *filename
+                           **gerror
+                           active_backup
+                           stat_error
+                           *backup-filename))))
