@@ -775,12 +775,6 @@ x_fileselect_load_backup (SchematicWindow *w_current,
 GSList*
 x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog);
-gboolean
-schematic_file_open (SchematicWindow *w_current,
-                     LeptonPage *page,
-                     const gchar *filename,
-                     GError **err,
-                     int flags);
 void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data);

@@ -71,8 +71,8 @@
       (when (true? active_backup)
         (g_string_free *message TRUE))
 
-      (schematic_file_open *window
-                           *page
-                           *filename
-                           **gerror
-                           flags))))
+      (f_open (schematic_window_get_toplevel *window)
+              *page
+              *filename
+              flags
+              **gerror))))
