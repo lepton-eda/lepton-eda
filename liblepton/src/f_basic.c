@@ -188,6 +188,7 @@ f_backup_message (gchar *backup_filename,
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
+ *  \param [in] saved_cwd Cached value of the current working directory.
  *
  *  \return 0 on failure, 1 on success.
  */
@@ -196,20 +197,15 @@ f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
         const gchar *filename,
         const gint flags,
-        GError **err)
+        GError **err,
+        char *saved_cwd)
 {
   int opened=FALSE;
   char *full_filename = NULL;
   char *file_directory = NULL;
-  char *saved_cwd = NULL;
   char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
-
-  /* Cache the cwd so we can restore it later. */
-  if (flags & F_OPEN_RESTORE_CWD) {
-    saved_cwd = g_get_current_dir();
-  }
 
   /* get full, absolute path to file */
   full_filename = f_normalize_filename (filename, &tmp_err);
@@ -319,7 +315,6 @@ f_open (LeptonToplevel *toplevel,
          * chdir() call, then the error needs to be handled and/or
          * reported. */
       }
-      g_free(saved_cwd);
     }
 
     return opened;

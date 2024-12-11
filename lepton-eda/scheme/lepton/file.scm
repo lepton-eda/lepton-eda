@@ -17,6 +17,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton file)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
 
@@ -37,6 +39,12 @@
 
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
+  ;; Cache the cwd so we can restore it later.
+  (define *saved-cwd
+    (if (logtest flags F_OPEN_RESTORE_CWD)
+        (string->pointer (getcwd))
+        %null-pointer))
+
   (and (true?
-        (f_open *toplevel *page *filename flags **gerror))
+        (f_open *toplevel *page *filename flags **gerror *saved-cwd))
        *page))
