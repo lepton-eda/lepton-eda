@@ -55,11 +55,6 @@
 ;;; Variables defined in schematic_defines.h.
 (define UNDO_DISK 0)
 (define UNDO_MEMORY 1)
-;;; Flags defined in struct.h.
-(define F_OPEN_RC 1)
-(define F_OPEN_CHECK_BACKUP 2)
-(define F_OPEN_FORCE_BACKUP 4)
-(define F_OPEN_RESTORE_CWD 8)
 
 
 (define (undo-panzoom?)
