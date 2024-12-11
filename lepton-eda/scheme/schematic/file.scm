@@ -32,13 +32,6 @@
   #:export (open-schematic))
 
 
-;;; Flags defined in struct.h.
-(define F_OPEN_RC 1)
-(define F_OPEN_CHECK_BACKUP 2)
-(define F_OPEN_FORCE_BACKUP 4)
-(define F_OPEN_RESTORE_CWD 8)
-
-
 (define (open-schematic *window *page *filename **gerror)
   (define (gerror-error *error)
     (unless (null-pointer? *error)

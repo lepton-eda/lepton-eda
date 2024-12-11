@@ -50,13 +50,6 @@
 (define %over-zoom-factor 0.1)
 
 
-;;; Flags defined in struct.h.
-(define F_OPEN_RC 1)
-(define F_OPEN_CHECK_BACKUP 2)
-(define F_OPEN_FORCE_BACKUP 4)
-(define F_OPEN_RESTORE_CWD 8)
-
-
 (define (update-preview *preview *user-data)
   "Update the preview widget *PREVIEW if it is 'active' and either a
 filename or a buffer is associated with it.  The argument

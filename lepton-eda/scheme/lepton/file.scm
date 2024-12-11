@@ -19,7 +19,21 @@
 (define-module (lepton file)
   #:use-module (lepton ffi)
 
-  #:export (load-schematic))
+  #:export (load-schematic
+
+            ;; Flags
+            F_OPEN_RC
+            F_OPEN_CHECK_BACKUP
+            F_OPEN_FORCE_BACKUP
+            F_OPEN_RESTORE_CWD))
+
+
+;;; Flags defined in struct.h.
+(define F_OPEN_RC 1)
+(define F_OPEN_CHECK_BACKUP 2)
+(define F_OPEN_FORCE_BACKUP 4)
+(define F_OPEN_RESTORE_CWD 8)
+
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
   (f_open *toplevel *page *filename flags **gerror))
