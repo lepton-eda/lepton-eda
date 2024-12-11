@@ -223,107 +223,110 @@ f_open (LeptonToplevel *toplevel,
     g_error_free(tmp_err);
     return 0;
   }
-
-  /* write full, absolute filename into page->page_filename */
-  lepton_page_set_filename (page, full_filename);
-
-  /* Before we open the page, let's load the corresponding gafrc. */
-  /* First cd into file's directory. */
-  file_directory = g_path_get_dirname (full_filename);
-
-  if (file_directory) {
-    if (chdir (file_directory)) {
-      /* Error occurred with chdir */
-      /* FIXME[2017-02-21] Libraries should not be changing the
-       * current working directory.  If it is not possible to avoid a
-       * chdir() call, then the error needs to be handled and/or
-       * reported. */
-    }
-  }
-
-  /* Now open RC and process file */
-  if (flags & F_OPEN_RC) {
-    g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
-    if (tmp_err != NULL) {
-      /* RC files are allowed to be missing or skipped; check for
-       * this. */
-      if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
-          !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
-        g_message ("%s", tmp_err->message);
-      }
-      g_error_free (tmp_err);
-      tmp_err = NULL;
-    }
-  }
-
-  g_free (file_directory);
-
-  if (flags & F_OPEN_FORCE_BACKUP) {
-    backup_filename = f_get_autosave_filename (full_filename);
-    load_backup_file = TRUE;
-  }
-  else if (flags & F_OPEN_CHECK_BACKUP) {
-    /* Check if there is a newer autosave backup file */
-    gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
-    backup_filename = f_get_autosave_filename (full_filename);
-
-    gboolean stat_error = (tmp_err != NULL);
-    if (stat_error) {
-      g_warning ("%s\n", tmp_err->message);
-      g_error_free (tmp_err);
-    }
-
-    if (active_backup) {
-      GString *message =
-        f_backup_message (backup_filename, stat_error);
-      g_warning ("%s", message->str);
-      g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
-      g_string_free (message, TRUE);
-      /* load_backup_file = FALSE; */
-    }
-  }
-
-  /* Now that we have set the current directory and read
-   * the RC file, it's time to read in the file. */
-  if (load_backup_file) {
-    /* Load the backup file */
-    o_read (page, backup_filename, &tmp_err);
-  } else {
-    /* Load the original file */
-    o_read (page, full_filename, &tmp_err);
-  }
-
-  if (tmp_err == NULL)
-    opened = TRUE;
   else
-    g_propagate_error (err, tmp_err);
+  {
 
-  if (!load_backup_file) {
-    /* If it's not the backup file */
-    lepton_page_set_changed (page, 0);
-  } else {
-    /* We are loading the backup file, so lepton should ask
-       the user if save it or not when closing the page. */
-    lepton_page_set_changed (page, 1);
-  }
+    /* write full, absolute filename into page->page_filename */
+    lepton_page_set_filename (page, full_filename);
 
-  g_free(full_filename);
-  g_free (backup_filename);
+    /* Before we open the page, let's load the corresponding gafrc. */
+    /* First cd into file's directory. */
+    file_directory = g_path_get_dirname (full_filename);
 
-  /* Reset the directory to the value it had when f_open was
-   * called. */
-  if (flags & F_OPEN_RESTORE_CWD) {
-    if (chdir (saved_cwd)) {
-      /* Error occurred with chdir */
-      /* FIXME[2017-02-21] Libraries should not be changing the
-       * current working directory.  If it is not possible to avoid a
-       * chdir() call, then the error needs to be handled and/or
-       * reported. */
+    if (file_directory) {
+      if (chdir (file_directory)) {
+        /* Error occurred with chdir */
+        /* FIXME[2017-02-21] Libraries should not be changing the
+         * current working directory.  If it is not possible to avoid a
+         * chdir() call, then the error needs to be handled and/or
+         * reported. */
+      }
     }
-    g_free(saved_cwd);
-  }
 
-  return opened;
+    /* Now open RC and process file */
+    if (flags & F_OPEN_RC) {
+      g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
+      if (tmp_err != NULL) {
+        /* RC files are allowed to be missing or skipped; check for
+         * this. */
+        if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
+            !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
+          g_message ("%s", tmp_err->message);
+        }
+        g_error_free (tmp_err);
+        tmp_err = NULL;
+      }
+    }
+
+    g_free (file_directory);
+
+    if (flags & F_OPEN_FORCE_BACKUP) {
+      backup_filename = f_get_autosave_filename (full_filename);
+      load_backup_file = TRUE;
+    }
+    else if (flags & F_OPEN_CHECK_BACKUP) {
+      /* Check if there is a newer autosave backup file */
+      gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
+      backup_filename = f_get_autosave_filename (full_filename);
+
+      gboolean stat_error = (tmp_err != NULL);
+      if (stat_error) {
+        g_warning ("%s\n", tmp_err->message);
+        g_error_free (tmp_err);
+      }
+
+      if (active_backup) {
+        GString *message =
+          f_backup_message (backup_filename, stat_error);
+        g_warning ("%s", message->str);
+        g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
+        g_string_free (message, TRUE);
+        /* load_backup_file = FALSE; */
+      }
+    }
+
+    /* Now that we have set the current directory and read
+     * the RC file, it's time to read in the file. */
+    if (load_backup_file) {
+      /* Load the backup file */
+      o_read (page, backup_filename, &tmp_err);
+    } else {
+      /* Load the original file */
+      o_read (page, full_filename, &tmp_err);
+    }
+
+    if (tmp_err == NULL)
+      opened = TRUE;
+    else
+      g_propagate_error (err, tmp_err);
+
+    if (!load_backup_file) {
+      /* If it's not the backup file */
+      lepton_page_set_changed (page, 0);
+    } else {
+      /* We are loading the backup file, so lepton should ask
+         the user if save it or not when closing the page. */
+      lepton_page_set_changed (page, 1);
+    }
+
+    g_free(full_filename);
+    g_free (backup_filename);
+
+    /* Reset the directory to the value it had when f_open was
+     * called. */
+    if (flags & F_OPEN_RESTORE_CWD) {
+      if (chdir (saved_cwd)) {
+        /* Error occurred with chdir */
+        /* FIXME[2017-02-21] Libraries should not be changing the
+         * current working directory.  If it is not possible to avoid a
+         * chdir() call, then the error needs to be handled and/or
+         * reported. */
+      }
+      g_free(saved_cwd);
+    }
+
+    return opened;
+  }
 }
 
 
