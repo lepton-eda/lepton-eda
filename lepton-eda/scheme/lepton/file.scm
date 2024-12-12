@@ -45,6 +45,15 @@
         (string->pointer (getcwd))
         %null-pointer))
 
-  (and (true?
-        (f_open *toplevel *page *filename flags **gerror *saved-cwd))
+  (define filename (pointer->string *filename))
+  ;; Get absolute path to the file.
+  (define full-filename (canonicalize-path filename))
+  (define *full-filename (string->pointer full-filename))
+
+  (and (true? (f_open *toplevel
+                      *page
+                      *full-filename
+                      flags
+                      **gerror
+                      *saved-cwd))
        *page))
