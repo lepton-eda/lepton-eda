@@ -183,8 +183,7 @@ f_backup_message (gchar *backup_filename,
  *
  *  \param [in,out] toplevel   The #LeptonToplevel object to load the schematic into.
  *  \param [in,out] page       The #LeptonPage instance to load the schematic into.
- *  \param [in]     filename   A character string containing the file name
- *                             to open.
+ *  \param [in]     full_filename The absolute file name to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
@@ -195,29 +194,16 @@ f_backup_message (gchar *backup_filename,
 int
 f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
-        const gchar *filename,
+        char *full_filename,
         const gint flags,
         GError **err,
         char *saved_cwd)
 {
   int opened=FALSE;
-  char *full_filename = NULL;
   char *file_directory = NULL;
   char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
-
-  /* get full, absolute path to file */
-  full_filename = f_normalize_filename (filename, &tmp_err);
-  if (full_filename == NULL) {
-    g_set_error (err, G_FILE_ERROR, tmp_err->code,
-                 _("Cannot find file %1$s: %2$s"),
-                 filename, tmp_err->message);
-    g_error_free(tmp_err);
-    return 0;
-  }
-  else
-  {
 
     /* write full, absolute filename into page->page_filename */
     lepton_page_set_filename (page, full_filename);
@@ -302,7 +288,6 @@ f_open (LeptonToplevel *toplevel,
       lepton_page_set_changed (page, 1);
     }
 
-    g_free(full_filename);
     g_free (backup_filename);
 
     /* Reset the directory to the value it had when f_open was
@@ -318,7 +303,6 @@ f_open (LeptonToplevel *toplevel,
     }
 
     return opened;
-  }
 }
 
 

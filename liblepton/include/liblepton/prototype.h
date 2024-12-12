@@ -23,7 +23,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err);
 int
 f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
-        const gchar *filename,
+        char *full_filename,
         const gint flags,
         GError **err,
         char *saved_cwd);
