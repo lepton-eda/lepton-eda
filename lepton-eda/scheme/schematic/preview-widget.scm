@@ -90,13 +90,13 @@ buffer should be displayed, the widget displays the error message."
               (unless (null-pointer? *preview_filename)
                 ;; Open up file in current page.
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-                       (result
+                       (success?
                         (load-schematic *toplevel
                                         *page
                                         *preview_filename
                                         (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
                                         *error)))
-                  (when (false? result)
+                  (unless success?
                     (report-gerror *error *page))))
               (unless (null-pointer? *preview_buffer)
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))

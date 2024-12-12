@@ -17,6 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton file)
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
 
   #:export (load-schematic
@@ -36,4 +37,5 @@
 
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
-  (f_open *toplevel *page *filename flags **gerror))
+  (true?
+   (f_open *toplevel *page *filename flags **gerror)))

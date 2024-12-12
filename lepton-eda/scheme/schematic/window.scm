@@ -1085,7 +1085,7 @@ tab notebook.  Returns a C TabInfo structure."
       (load-schematic-message)
       (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
         ;; Try to load *FILENAME.
-        (if (false? (open-schematic *new-page *error))
+        (if (not (open-schematic *new-page *error))
             (let ((error-message (gerror-error-message *error)))
               (log! 'warning "~A" error-message)
               (schematic_dialog_load_file_error *main-window
@@ -1552,8 +1552,7 @@ for *PAGE page will be created and set active."
   (define (open-new-page filename)
     (let* ((*new-page
             (lepton_page_new *toplevel (string->pointer filename)))
-           (success?
-            (true? (open-schematic *new-page **err))))
+           (success? (open-schematic *new-page **err)))
       (if success?
           (update-page-control-counter *new-page)
           (delete-page *new-page))))
