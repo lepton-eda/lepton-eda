@@ -51,6 +51,9 @@
   (define *full-filename (string->pointer full-filename))
 
   (define (open-file)
+    ;; Set page filename to the absolute path to the file.
+    (lepton_page_set_filename *page *full-filename)
+
     (true? (f_open *toplevel
                    *page
                    *full-filename
