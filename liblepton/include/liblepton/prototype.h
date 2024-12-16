@@ -26,7 +26,6 @@ f_open (LeptonToplevel *toplevel,
         char *full_filename,
         const gint flags,
         GError **err,
-        char *saved_cwd,
         char *file_directory);
 int
 f_save (LeptonPage *page,
