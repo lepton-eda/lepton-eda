@@ -40,10 +40,7 @@
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
   ;; Cache the cwd so we can restore it later.
-  (define *saved-cwd
-    (if (logtest flags F_OPEN_RESTORE_CWD)
-        (string->pointer (getcwd))
-        %null-pointer))
+  (define saved-cwd (getcwd))
 
   (define filename (pointer->string *filename))
   ;; Get absolute path to the file.
@@ -58,13 +55,27 @@
     ;; Set page filename to the absolute path to the file.
     (lepton_page_set_filename *page *full-filename)
 
-    (true? (f_open *toplevel
-                   *page
-                   *full-filename
-                   flags
-                   **gerror
-                   *saved-cwd
-                   *file-directory)))
+    ;; Before we open the page, let's load the corresponding
+    ;; gafrc.  First cd into file's directory.  Possible errors
+    ;; should be handled in the caller of the function.
+    (and file-directory
+         ;; FIXME[2017-02-21] Libraries should not be changing the
+         ;; current working directory.
+         (chdir file-directory))
+
+    (let ((opened? (true? (f_open *toplevel
+                                  *page
+                                  *full-filename
+                                  flags
+                                  **gerror
+                                  *file-directory))))
+      ;; Reset the directory to the value it had when f_open() was
+      ;; called.
+      (when (logtest flags F_OPEN_RESTORE_CWD)
+        ;; FIXME[2017-02-21] Libraries should not be changing the
+        ;; current working directory.
+        (chdir saved-cwd))
+      opened?))
 
   (and (open-file)
        *page))

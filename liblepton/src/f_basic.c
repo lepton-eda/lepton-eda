@@ -187,7 +187,6 @@ f_backup_message (gchar *backup_filename,
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
- *  \param [in] saved_cwd Cached value of the current working directory.
  *  \param [in] file_directory Directory of the file.
  *
  *  \return 0 on failure, 1 on success.
@@ -198,25 +197,12 @@ f_open (LeptonToplevel *toplevel,
         char *full_filename,
         const gint flags,
         GError **err,
-        char *saved_cwd,
         char *file_directory)
 {
   int opened=FALSE;
   char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
-
-    /* Before we open the page, let's load the corresponding gafrc. */
-    /* First cd into file's directory. */
-    if (file_directory) {
-      if (chdir (file_directory)) {
-        /* Error occurred with chdir */
-        /* FIXME[2017-02-21] Libraries should not be changing the
-         * current working directory.  If it is not possible to avoid a
-         * chdir() call, then the error needs to be handled and/or
-         * reported. */
-      }
-    }
 
     /* Now open RC and process file */
     if (flags & F_OPEN_RC) {
@@ -283,18 +269,6 @@ f_open (LeptonToplevel *toplevel,
     }
 
     g_free (backup_filename);
-
-    /* Reset the directory to the value it had when f_open was
-     * called. */
-    if (flags & F_OPEN_RESTORE_CWD) {
-      if (chdir (saved_cwd)) {
-        /* Error occurred with chdir */
-        /* FIXME[2017-02-21] Libraries should not be changing the
-         * current working directory.  If it is not possible to avoid a
-         * chdir() call, then the error needs to be handled and/or
-         * reported. */
-      }
-    }
 
     return opened;
 }
