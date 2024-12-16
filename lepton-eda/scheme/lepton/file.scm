@@ -50,6 +50,10 @@
   (define full-filename (canonicalize-path filename))
   (define *full-filename (string->pointer full-filename))
 
+  (define file-directory (and=> full-filename dirname))
+  (define *file-directory (if file-directory
+                              (string->pointer file-directory)
+                              %null-pointer))
   (define (open-file)
     ;; Set page filename to the absolute path to the file.
     (lepton_page_set_filename *page *full-filename)
@@ -59,7 +63,8 @@
                    *full-filename
                    flags
                    **gerror
-                   *saved-cwd)))
+                   *saved-cwd
+                   *file-directory)))
 
   (and (open-file)
        *page))

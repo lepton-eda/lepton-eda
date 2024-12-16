@@ -188,6 +188,7 @@ f_backup_message (gchar *backup_filename,
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
  *  \param [in] saved_cwd Cached value of the current working directory.
+ *  \param [in] file_directory Directory of the file.
  *
  *  \return 0 on failure, 1 on success.
  */
@@ -197,18 +198,16 @@ f_open (LeptonToplevel *toplevel,
         char *full_filename,
         const gint flags,
         GError **err,
-        char *saved_cwd)
+        char *saved_cwd,
+        char *file_directory)
 {
   int opened=FALSE;
-  char *file_directory = NULL;
   char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
 
     /* Before we open the page, let's load the corresponding gafrc. */
     /* First cd into file's directory. */
-    file_directory = g_path_get_dirname (full_filename);
-
     if (file_directory) {
       if (chdir (file_directory)) {
         /* Error occurred with chdir */
@@ -233,8 +232,6 @@ f_open (LeptonToplevel *toplevel,
         tmp_err = NULL;
       }
     }
-
-    g_free (file_directory);
 
     if (flags & F_OPEN_FORCE_BACKUP) {
       backup_filename = f_get_autosave_filename (full_filename);
