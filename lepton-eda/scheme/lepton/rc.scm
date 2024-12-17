@@ -78,6 +78,20 @@ path (rather than the regular Scheme load path)."
 
 ;;; General RC file parsing function.
 ;;;
+;;; Attempt to load and run system, user and local (current
+;;; working directory) Scheme initialisation files in *TOPLEVEL,
+;;; first with the default "gafrc" basename and then with the
+;;; basename *RCNAME, if it is NULL.  Additionally, attempt to
+;;; load and run *RCFILE if it is not NULL.
+;;;
+;;; If an error occurs, the function calls HANDLER with the
+;;; provided *USER_DATA and a GError.
+(define (parse-rc-handler *rcname *rcfile handler *user-data *toplevel)
+  (g_rc_parse_handler *toplevel *rcname *rcfile handler *user-data))
+
+
+;;; General RC file parsing function.
+;;;
 ;;; Calls the default error handler. If any error other than
 ;;; ENOENT occurs while loading or running a Scheme initialisation
 ;;; file, prints an informative message and calls exit(1).
@@ -92,11 +106,11 @@ path (rather than the regular Scheme load path)."
   "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
-  (g_rc_parse_handler (toplevel->pointer (current-toplevel))
-                      (string->pointer rc-name)
-                      %null-pointer
-                      (procedure->pointer void g_rc_parse__process_error '(* *))
-                      (string->pointer program-name)))
+  (parse-rc-handler (string->pointer rc-name)
+                    %null-pointer       ; rc-file
+                    (procedure->pointer void g_rc_parse__process_error '(* *))
+                    (string->pointer program-name)
+                    (toplevel->pointer (current-toplevel))))
 
 
 ;;; List of processed rc directories.
