@@ -50,6 +50,11 @@ g_read_file (LeptonToplevel *toplevel,
 
 /* g_rc.c */
 gboolean
+g_rc_parse_file (LeptonToplevel *toplevel,
+                 const gchar *rcfile,
+                 gpointer conf,
+                 GError **err);
+gboolean
 g_rc_parse_system (LeptonToplevel *toplevel,
                    const gchar *rcname,
                    GError **err);

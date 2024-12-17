@@ -88,14 +88,14 @@ g_rc_try_mark_read (LeptonToplevel *toplevel,
  *
  * \param toplevel  The current #LeptonToplevel structure.
  * \param rcfile    The filename of the RC file to load.
- * \param cfg       The configuration context to use while loading.
+ * \param conf      The configuration context to use while loading.
  * \param err       Return location for errors, or NULL;
  * \return TRUE on success, FALSE on failure.
  */
-static gboolean
+gboolean
 g_rc_parse_file (LeptonToplevel *toplevel,
                  const gchar *rcfile,
-                 EdaConfig *cfg,
+                 gpointer conf,
                  GError **err)
 {
   gchar *name_norm = NULL;
@@ -103,6 +103,8 @@ g_rc_parse_file (LeptonToplevel *toplevel,
   gboolean status = FALSE;
   g_return_val_if_fail ((toplevel != NULL), FALSE);
   g_return_val_if_fail ((rcfile != NULL), FALSE);
+
+  EdaConfig *cfg = (EdaConfig *) conf;
 
   /* If no configuration file was specified, get the default
    * configuration file for the rc file. */
