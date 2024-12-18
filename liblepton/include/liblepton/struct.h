@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -86,9 +86,5 @@ struct st_conn {
 
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, LeptonObject *);
-
-/*! \brief Type of RC file parse error functions used by
-    g_rc_parse_handler() and similar functions. */
-typedef void (*ConfigParseErrorFunc)(GError **, void *);
 
 #endif
