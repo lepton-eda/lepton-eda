@@ -38,6 +38,7 @@
             load-scheme-dir
             load-rc-from-sys-config-dirs
             parse-rc
+            parse-rc-handler
             process-gafrc))
 
 (define path-sep file-name-separator-string)

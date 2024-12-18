@@ -19,7 +19,7 @@
 (define-module (schematic rc)
   #:use-module (system foreign)
 
-  #:use-module (lepton ffi)
+  #:use-module (lepton rc)
 
   #:use-module (schematic ffi)
 
@@ -35,10 +35,10 @@ LeptonToplevel structure *TOPLEVEL and returns it.  Instead of
 exiting on error as CLI tools do, displays error dialogs with
 explanatory messages."
   (unless toplevel-initialized?
-    (g_rc_parse_handler *toplevel
-                        (string->pointer "gschemrc")
-                        %null-pointer
-                        (procedure->pointer void x_rc_parse_gschem_error '(* *))
-                        *toplevel)
+    (parse-rc-handler (string->pointer "gschemrc")
+                      %null-pointer
+                      (procedure->pointer void x_rc_parse_gschem_error '(* *))
+                      *toplevel
+                      *toplevel)
     (set! toplevel-initialized? #t))
   *toplevel)
