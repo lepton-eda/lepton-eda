@@ -47,22 +47,6 @@ typedef struct _CLibSource CLibSource;
  * as defined above and name. */
 typedef struct _CLibSymbol CLibSymbol;
 
-/* f_open() behaviour flags */
-typedef enum {
-          /* Execute RC files found in the target directory. */
-          F_OPEN_RC           = 1,
-          /* Warn the user if a backup is found for the file being
-             loaded and possibly prompt the user for whether to
-             load the backup instead. */
-          F_OPEN_CHECK_BACKUP = 2,
-          /* Load a last autosaved file backup if it is newer than
-             the file itself. */
-          F_OPEN_FORCE_BACKUP = 4,
-          /* Do not change the working directory to that of the
-             file being loaded. */
-          F_OPEN_RESTORE_CWD  = 8
-} FOpenFlags;
-
 
 /*! \brief Structure for connections between LeptonObjects
  *
