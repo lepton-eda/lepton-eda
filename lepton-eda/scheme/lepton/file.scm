@@ -33,10 +33,18 @@
             F_OPEN_RESTORE_CWD))
 
 
-;;; Flags defined in struct.h.
+
+;;; Behaviour flags when opening files.
+
+;;; Execute RC files found in the target directory.
 (define F_OPEN_RC 1)
+;;; Log a warning if a backup is found for the file being loaded.
 (define F_OPEN_CHECK_BACKUP 2)
+;;; Load the last autosaved file backup if it is newer than the
+;;; file itself.
 (define F_OPEN_FORCE_BACKUP 4)
+;;; Do not restore the previous working directory after loading
+;;; file.
 (define F_OPEN_RESTORE_CWD 8)
 
 
