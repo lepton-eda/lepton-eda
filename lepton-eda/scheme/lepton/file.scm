@@ -75,21 +75,24 @@
         (f_process_error (dereference-pointer **err))
         (g_clear_error **err)))
 
-    (let* ((*backup-filename (f_get_autosave_filename *full-filename))
-           (load-backup? (logtest flags F_OPEN_FORCE_BACKUP))
-           (opened? (true? (f_open *page
-                                   *full-filename
-                                   flags
-                                   **gerror
-                                   *backup-filename
-                                   (if load-backup? TRUE FALSE)))))
-      ;; Reset the directory to the value it had when f_open() was
-      ;; called.
-      (when (logtest flags F_OPEN_RESTORE_CWD)
-        ;; FIXME[2017-02-21] Libraries should not be changing the
-        ;; current working directory.
-        (chdir saved-cwd))
-      opened?))
+    (let ((*backup-filename (f_get_autosave_filename *full-filename))
+          (load-backup? (logtest flags F_OPEN_FORCE_BACKUP)))
+      (when (and (logtest flags F_OPEN_CHECK_BACKUP)
+                 (not load-backup?))
+        (f_check_backup *full-filename *backup-filename))
+
+      (let ((opened? (true? (f_open *page
+                                    *full-filename
+                                    **gerror
+                                    *backup-filename
+                                    (if load-backup? TRUE FALSE)))))
+        ;; Reset the directory to the value it had when f_open()
+        ;; was called.
+        (when (logtest flags F_OPEN_RESTORE_CWD)
+          ;; FIXME[2017-02-21] Libraries should not be changing
+          ;; the current working directory.
+          (chdir saved-cwd))
+        opened?)))
 
   (and (open-file)
        *page))

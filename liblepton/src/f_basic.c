@@ -223,7 +223,6 @@ f_check_backup (char *full_filename,
  *
  *  \param [in,out] page       The #LeptonPage instance to load the schematic into.
  *  \param [in]     full_filename The absolute file name to open.
- *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
  *  \param [in]     backup_filename The name of the backup file.
@@ -235,18 +234,12 @@ f_check_backup (char *full_filename,
 int
 f_open (LeptonPage *page,
         char *full_filename,
-        const gint flags,
         GError **err,
         char *backup_filename,
         gboolean load_backup_file)
 {
   int opened=FALSE;
   GError *tmp_err = NULL;
-
-  if (flags & F_OPEN_CHECK_BACKUP && !load_backup_file)
-  {
-    f_check_backup (full_filename, backup_filename);
-  }
 
     /* Now that we have set the current directory and read
      * the RC file, it's time to read in the file. */
