@@ -42,6 +42,9 @@ char *follow_symlinks (const gchar *filename, GError **error);
 GString*
 f_backup_message (gchar *backup_filename,
                   gboolean stat_error);
+void
+f_check_backup (char *full_filename,
+                char *backup_filename);
 
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
