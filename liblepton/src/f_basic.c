@@ -212,18 +212,17 @@ f_open (LeptonPage *page,
         GError **err)
 {
   int opened=FALSE;
-  char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
 
+  char *backup_filename = f_get_autosave_filename (full_filename);
+
     if (flags & F_OPEN_FORCE_BACKUP) {
-      backup_filename = f_get_autosave_filename (full_filename);
       load_backup_file = TRUE;
     }
     else if (flags & F_OPEN_CHECK_BACKUP) {
       /* Check if there is a newer autosave backup file */
       gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
-      backup_filename = f_get_autosave_filename (full_filename);
 
       gboolean stat_error = (tmp_err != NULL);
       if (stat_error) {
