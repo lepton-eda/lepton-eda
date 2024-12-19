@@ -203,6 +203,8 @@ f_process_error (GError *err)
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
  *  \param [in]     backup_filename The name of the backup file.
+ *  \param [in] load_backup_file Whether the backup file has to be
+ *              loaded instead of the file itself.
  *
  *  \return 0 on failure, 1 on success.
  */
@@ -211,14 +213,13 @@ f_open (LeptonPage *page,
         char *full_filename,
         const gint flags,
         GError **err,
-        char *backup_filename)
+        char *backup_filename,
+        gboolean load_backup_file)
 {
   int opened=FALSE;
-  gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
 
     if (flags & F_OPEN_FORCE_BACKUP) {
-      load_backup_file = TRUE;
     }
     else if (flags & F_OPEN_CHECK_BACKUP) {
       /* Check if there is a newer autosave backup file */
