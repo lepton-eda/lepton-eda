@@ -25,12 +25,10 @@ void
 f_process_error (GError *err);
 
 int
-f_open (LeptonToplevel *toplevel,
-        LeptonPage *page,
+f_open (LeptonPage *page,
         char *full_filename,
         const gint flags,
-        GError **err,
-        char *file_directory);
+        GError **err);
 int
 f_save (LeptonPage *page,
         const char *filename,

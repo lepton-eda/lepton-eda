@@ -197,35 +197,24 @@ f_process_error (GError *err)
  *  If #F_OPEN_RESTORE_CWD is set, does not change the working
  *  directory to that of the file being loaded.
  *
- *  \param [in,out] toplevel   The #LeptonToplevel object to load the schematic into.
  *  \param [in,out] page       The #LeptonPage instance to load the schematic into.
  *  \param [in]     full_filename The absolute file name to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
- *  \param [in] file_directory Directory of the file.
  *
  *  \return 0 on failure, 1 on success.
  */
 int
-f_open (LeptonToplevel *toplevel,
-        LeptonPage *page,
+f_open (LeptonPage *page,
         char *full_filename,
         const gint flags,
-        GError **err,
-        char *file_directory)
+        GError **err)
 {
   int opened=FALSE;
   char *backup_filename = NULL;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
-
-    /* Now open RC and process file */
-    if (flags & F_OPEN_RC) {
-      g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
-      f_process_error (tmp_err);
-      g_clear_error (&tmp_err);
-    }
 
     if (flags & F_OPEN_FORCE_BACKUP) {
       backup_filename = f_get_autosave_filename (full_filename);

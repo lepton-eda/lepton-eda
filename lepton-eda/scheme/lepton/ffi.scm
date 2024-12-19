@@ -412,6 +412,7 @@
             f_get_autosave_filename
             f_has_active_autosave
             f_open
+            f_process_error
             f_save
 
             lepton_coord_snap))
@@ -804,7 +805,8 @@
 (define-lff f_backup_message '* (list '* int))
 (define-lff f_get_autosave_filename '* '(*))
 (define-lff f_has_active_autosave int '(* *))
-(define-lff f_open int (list '* '* '* int '* '*))
+(define-lff f_open int (list '* '* int '*))
+(define-lff f_process_error void '(*))
 (define-lff f_save int '(* * *))
 
 ;;; g_basic.c

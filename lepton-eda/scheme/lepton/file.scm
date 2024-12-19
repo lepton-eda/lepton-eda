@@ -17,9 +17,11 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton file)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
 
   #:export (load-schematic
@@ -63,12 +65,20 @@
          ;; current working directory.
          (chdir file-directory))
 
-    (let ((opened? (true? (f_open *toplevel
-                                  *page
+    ;; Now open RC and process file.
+    (when (logtest flags F_OPEN_RC)
+      (let ((**err (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+        (g_rc_parse_local *toplevel
+                          (string->pointer "gafrc")
+                          *file-directory
+                          **err)
+        (f_process_error (dereference-pointer **err))
+        (g_clear_error **err)))
+
+    (let ((opened? (true? (f_open *page
                                   *full-filename
                                   flags
-                                  **gerror
-                                  *file-directory))))
+                                  **gerror))))
       ;; Reset the directory to the value it had when f_open() was
       ;; called.
       (when (logtest flags F_OPEN_RESTORE_CWD)
