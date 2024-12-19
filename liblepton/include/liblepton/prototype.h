@@ -20,6 +20,10 @@ o_read (LeptonPage *page,
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
+
+void
+f_process_error (GError *err);
+
 int
 f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
