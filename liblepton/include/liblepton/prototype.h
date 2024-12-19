@@ -28,7 +28,8 @@ int
 f_open (LeptonPage *page,
         char *full_filename,
         const gint flags,
-        GError **err);
+        GError **err,
+        char *backup_filename);
 int
 f_save (LeptonPage *page,
         const char *filename,

@@ -202,6 +202,7 @@ f_process_error (GError *err)
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \param [in,out] err  \c GError structure for error reporting, or
  *                       NULL to disable error reporting
+ *  \param [in]     backup_filename The name of the backup file.
  *
  *  \return 0 on failure, 1 on success.
  */
@@ -209,13 +210,12 @@ int
 f_open (LeptonPage *page,
         char *full_filename,
         const gint flags,
-        GError **err)
+        GError **err,
+        char *backup_filename)
 {
   int opened=FALSE;
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
-
-  char *backup_filename = f_get_autosave_filename (full_filename);
 
     if (flags & F_OPEN_FORCE_BACKUP) {
       load_backup_file = TRUE;
@@ -263,8 +263,6 @@ f_open (LeptonPage *page,
          the user if save it or not when closing the page. */
       lepton_page_set_changed (page, 1);
     }
-
-    g_free (backup_filename);
 
     return opened;
 }
