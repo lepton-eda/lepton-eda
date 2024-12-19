@@ -171,6 +171,22 @@ f_backup_message (gchar *backup_filename,
 }
 
 
+void
+f_process_error (GError *err)
+{
+  if (err != NULL)
+  {
+    /* RC files are allowed to be missing or skipped; check for
+     * this. */
+    if (!g_error_matches (err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
+        !g_error_matches (err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
+      g_message ("%s", err->message);
+    }
+  }
+}
+
+
+
 /*! \brief Opens the schematic file with fine-grained control over behaviour.
  *  \par Function Description
  *  Opens the schematic file and carries out a number of actions
@@ -207,16 +223,8 @@ f_open (LeptonToplevel *toplevel,
     /* Now open RC and process file */
     if (flags & F_OPEN_RC) {
       g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
-      if (tmp_err != NULL) {
-        /* RC files are allowed to be missing or skipped; check for
-         * this. */
-        if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
-            !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
-          g_message ("%s", tmp_err->message);
-        }
-        g_error_free (tmp_err);
-        tmp_err = NULL;
-      }
+      f_process_error (tmp_err);
+      g_clear_error (&tmp_err);
     }
 
     if (flags & F_OPEN_FORCE_BACKUP) {
