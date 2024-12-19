@@ -219,9 +219,8 @@ f_open (LeptonPage *page,
   int opened=FALSE;
   GError *tmp_err = NULL;
 
-    if (flags & F_OPEN_FORCE_BACKUP) {
-    }
-    else if (flags & F_OPEN_CHECK_BACKUP) {
+  if (flags & F_OPEN_CHECK_BACKUP && !load_backup_file)
+    {
       /* Check if there is a newer autosave backup file */
       gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
 
