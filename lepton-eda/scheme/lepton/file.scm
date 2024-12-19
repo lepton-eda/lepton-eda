@@ -78,7 +78,9 @@
     (let ((opened? (true? (f_open *page
                                   *full-filename
                                   flags
-                                  **gerror))))
+                                  **gerror
+                                  ;; Backup filename.
+                                  (f_get_autosave_filename *full-filename)))))
       ;; Reset the directory to the value it had when f_open() was
       ;; called.
       (when (logtest flags F_OPEN_RESTORE_CWD)
