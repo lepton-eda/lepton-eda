@@ -75,12 +75,12 @@
         (f_process_error (dereference-pointer **err))
         (g_clear_error **err)))
 
-    (let ((opened? (true? (f_open *page
-                                  *full-filename
-                                  flags
-                                  **gerror
-                                  ;; Backup filename.
-                                  (f_get_autosave_filename *full-filename)))))
+    (let* ((*backup-filename (f_get_autosave_filename *full-filename))
+           (opened? (true? (f_open *page
+                                   *full-filename
+                                   flags
+                                   **gerror
+                                   *backup-filename))))
       ;; Reset the directory to the value it had when f_open() was
       ;; called.
       (when (logtest flags F_OPEN_RESTORE_CWD)
