@@ -76,11 +76,13 @@
         (g_clear_error **err)))
 
     (let* ((*backup-filename (f_get_autosave_filename *full-filename))
+           (load-backup? (logtest flags F_OPEN_FORCE_BACKUP))
            (opened? (true? (f_open *page
                                    *full-filename
                                    flags
                                    **gerror
-                                   *backup-filename))))
+                                   *backup-filename
+                                   (if load-backup? TRUE FALSE)))))
       ;; Reset the directory to the value it had when f_open() was
       ;; called.
       (when (logtest flags F_OPEN_RESTORE_CWD)
