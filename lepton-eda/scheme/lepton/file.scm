@@ -48,6 +48,10 @@
 (define F_OPEN_RESTORE_CWD 8)
 
 
+(define (check-backup *full-filename *backup-filename)
+  (f_check_backup *full-filename *backup-filename))
+
+
 (define (load-schematic *toplevel *page *filename flags **gerror)
   "Loads the schematic file *FILENAME to *PAGE in the toplevel
 environment *TOPLEVEL.  The file is loaded with fine-grained
@@ -99,7 +103,7 @@ success."
           (load-backup? (logtest flags F_OPEN_FORCE_BACKUP)))
       (when (and (logtest flags F_OPEN_CHECK_BACKUP)
                  (not load-backup?))
-        (f_check_backup *full-filename *backup-filename))
+        (check-backup *full-filename *backup-filename))
 
       ;; Now that we have set the current directory and read
       ;; the RC file, it's time to read in the file.
