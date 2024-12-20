@@ -25,12 +25,6 @@ void
 f_process_error (GError *err);
 
 int
-f_open (LeptonPage *page,
-        char *full_filename,
-        GError **err,
-        char *backup_filename,
-        gboolean load_backup_file);
-int
 f_save (LeptonPage *page,
         const char *filename,
         GError **error);
