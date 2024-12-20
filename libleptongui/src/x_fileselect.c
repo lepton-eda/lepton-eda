@@ -506,16 +506,9 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  */
 int
 x_fileselect_load_backup (SchematicWindow *w_current,
-                          GString *message)
+                          char *message)
 {
   GtkWidget *dialog;
-
-  g_string_append(message, _(
-"\n"
-"If you load the original file, the backup file "
-"will be overwritten in the next autosave timeout and it will be lost."
-"\n\n"
-"Do you want to load the backup file?\n"));
 
   GtkWidget *main_window =
     schematic_window_get_main_window (w_current);
@@ -523,7 +516,7 @@ x_fileselect_load_backup (SchematicWindow *w_current,
                                    GTK_DIALOG_MODAL,
                                    GTK_MESSAGE_QUESTION,
                                    GTK_BUTTONS_YES_NO,
-                                   "%s", message->str);
+                                   "%s", message);
 
   gtk_window_set_title (GTK_WINDOW (dialog), "Load Backup");
 #ifndef ENABLE_GTK3

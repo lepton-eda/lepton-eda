@@ -28,6 +28,7 @@
   #:use-module (lepton log)
 
   #:export (load-schematic
+            backup-message
 
             ;; Flags
             F_OPEN_RC
@@ -53,8 +54,6 @@
 
 
 
-;;; The function analogous to f_backup_message() but returning a
-;;; Scheme string.
 (define (backup-message backup-filename stat-error?)
   (string-append
    (format #f

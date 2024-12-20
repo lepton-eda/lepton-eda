@@ -409,7 +409,6 @@
             o_read
             o_read_buffer
 
-            f_backup_message
             f_get_autosave_filename
             f_has_active_autosave
             f_process_error
@@ -803,7 +802,6 @@
 (define-lff o_read_buffer '* (list '* '* '* int '* '*))
 
 ;;; f_basic.c
-(define-lff f_backup_message '* (list '* int))
 (define-lff f_get_autosave_filename '* '(*))
 (define-lff f_has_active_autosave int '(* *))
 (define-lff f_process_error void '(*))
