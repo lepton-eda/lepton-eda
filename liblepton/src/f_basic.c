@@ -145,31 +145,6 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   return result;
 }
 
-GString*
-f_backup_message (gchar *backup_filename,
-                  gboolean stat_error)
-{
-  GString *message = g_string_new ("");
-
-  g_string_append_printf (message,
-                          _("\nWARNING: Found an autosave backup file:\n  %1$s.\n\n"),
-                          backup_filename);
-
-  if (stat_error) {
-    g_string_append (message,
-                     _("I could not guess if it is newer, so you have to do it manually.\n"));
-  } else {
-    g_string_append (message,
-                     _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
-  }
-
-  g_string_append (message,
-                   _("lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
-
-  /* The user must g_string_free the message. */
-  return message;
-}
-
 
 void
 f_process_error (GError *err)

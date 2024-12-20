@@ -80,14 +80,16 @@
                                  (f_get_autosave_filename *full-filename)
                                  %null-pointer))
            (*message (if (true? active_backup)
-                         (f_backup_message *backup-filename stat_error)
+                         (string->pointer
+                          (string-append
+                           (backup-message (pointer->string *backup-filename)
+                                           (true? stat_error))
+                           (G_ "\nIf you load the original file, the backup file will be overwritten in the next autosave timeout and it will be lost.\n\nDo you want to load the backup file?\n")))
                          %null-pointer))
            (flags (if (and (true? active_backup)
                            (true? (x_fileselect_load_backup *window *message)))
                       (logior F_OPEN_RC F_OPEN_FORCE_BACKUP)
                       F_OPEN_RC)))
-      (when (true? active_backup)
-        (g_string_free *message TRUE))
 
       (let* ((**gerror
               (bytevector->pointer (make-bytevector (sizeof '*) 0)))

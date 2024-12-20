@@ -771,7 +771,7 @@ x_fileselect_add_preview (GtkWidget *dialog,
                           GtkWidget *preview);
 int
 x_fileselect_load_backup (SchematicWindow *w_current,
-                          GString *message);
+                          char *message);
 GSList*
 x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog);
