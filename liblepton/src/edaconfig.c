@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2012 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2181,6 +2181,40 @@ gboolean
 config_error_file_not_found (GError *error)
 {
   return g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND);
+}
+
+
+/*! \brief Test if \c GError code matches \c G_FILE_ERROR_NOENT.
+ *
+ * \par Function Description
+ * Tests if the error code of \p error matches \c
+ * G_FILE_ERROR_NOENT.
+ *
+ * \param error The \c GError value.
+ * \return TRUE if \c GError matches \c G_FILE_ERROR_NOENT,
+ * \return FALSE otherwise.
+ */
+gboolean
+config_error_file_noent (GError *error)
+{
+  return g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_NOENT);
+}
+
+
+/*! \brief Test if \c GError code matches \c EDA_ERROR_RC_TWICE.
+ *
+ * \par Function Description
+ * Tests if the error code of \p error matches \c
+ * EDA_ERROR_RC_TWICE.
+ *
+ * \param error The \c GError value.
+ * \return TRUE if \c GError matches \c EDA_ERROR_RC_TWICE,
+ * \return FALSE otherwise.
+ */
+gboolean
+config_error_rc_twice (GError *error)
+{
+  return g_error_matches (error, EDA_ERROR, EDA_ERROR_RC_TWICE);
 }
 
 
