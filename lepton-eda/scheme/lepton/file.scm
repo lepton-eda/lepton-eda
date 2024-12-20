@@ -23,6 +23,9 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
 
   #:export (load-schematic
 
@@ -48,8 +51,41 @@
 (define F_OPEN_RESTORE_CWD 8)
 
 
+
+
+;;; The function analogous to f_backup_message() but returning a
+;;; Scheme string.
+(define (backup-message backup-filename stat-error?)
+  (string-append
+   (format #f
+           (G_ "\nWARNING: Found an autosave backup file:\n  ~S.\n\n")
+           backup-filename)
+   (if stat-error?
+       (G_ "I could not guess if it is newer, so you have to do it manually.\n")
+       (G_ "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"))
+   (G_ "lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.")))
+
+
 (define (check-backup *full-filename *backup-filename)
-  (f_check_backup *full-filename *backup-filename))
+  (define **err (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+  ;; Check if there is a newer autosave backup file.
+  (define active-backup?
+    (true? (f_has_active_autosave *full-filename **err)))
+
+  (define stat-error?
+    (not (null-pointer? (dereference-pointer **err))))
+
+  (when stat-error?
+    (log! 'warning "~A" (gerror-message **err))
+    (g_clear_error **err))
+
+  (when active-backup?
+    (log! 'warning
+          "~A"
+          (backup-message (pointer->string *backup-filename)
+                          stat-error?))
+    (log! 'warning
+          (G_ "\nRun lepton-schematic and correct the situation.\n"))))
 
 
 (define (load-schematic *toplevel *page *filename flags **gerror)

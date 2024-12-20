@@ -186,31 +186,6 @@ f_process_error (GError *err)
 }
 
 
-void
-f_check_backup (char *full_filename,
-                char *backup_filename)
-{
-  GError *tmp_err = NULL;
-
-  /* Check if there is a newer autosave backup file */
-  gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
-
-  gboolean stat_error = (tmp_err != NULL);
-  if (stat_error) {
-    g_warning ("%s\n", tmp_err->message);
-    g_error_free (tmp_err);
-  }
-
-  if (active_backup) {
-    GString *message =
-      f_backup_message (backup_filename, stat_error);
-    g_warning ("%s", message->str);
-    g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
-    g_string_free (message, TRUE);
-  }
-}
-
-
 /*! \brief Save the schematic file
  *  \par Function Description
  *
