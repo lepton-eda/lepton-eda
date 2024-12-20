@@ -211,64 +211,6 @@ f_check_backup (char *full_filename,
 }
 
 
-/*! \brief Opens the schematic file with fine-grained control over behaviour.
- *  \par Function Description
- *  Opens the schematic file and carries out a number of actions
- *  depending on the \a flags set.  If #F_OPEN_RC is set, executes RC
- *  files found in the target directory.  If #F_OPEN_CHECK_BACKUP is
- *  set, warns user if a backup is found for the file being loaded,
- *  and possibly prompts user for whether to load the backup instead.
- *  If #F_OPEN_RESTORE_CWD is set, does not change the working
- *  directory to that of the file being loaded.
- *
- *  \param [in,out] page       The #LeptonPage instance to load the schematic into.
- *  \param [in]     full_filename The absolute file name to open.
- *  \param [in,out] err  \c GError structure for error reporting, or
- *                       NULL to disable error reporting
- *  \param [in]     backup_filename The name of the backup file.
- *  \param [in] load_backup_file Whether the backup file has to be
- *              loaded instead of the file itself.
- *
- *  \return 0 on failure, 1 on success.
- */
-int
-f_open (LeptonPage *page,
-        char *full_filename,
-        GError **err,
-        char *backup_filename,
-        gboolean load_backup_file)
-{
-  int opened=FALSE;
-  GError *tmp_err = NULL;
-
-    /* Now that we have set the current directory and read
-     * the RC file, it's time to read in the file. */
-    if (load_backup_file) {
-      /* Load the backup file */
-      o_read (page, backup_filename, &tmp_err);
-    } else {
-      /* Load the original file */
-      o_read (page, full_filename, &tmp_err);
-    }
-
-    if (tmp_err == NULL)
-      opened = TRUE;
-    else
-      g_propagate_error (err, tmp_err);
-
-    if (!load_backup_file) {
-      /* If it's not the backup file */
-      lepton_page_set_changed (page, 0);
-    } else {
-      /* We are loading the backup file, so lepton should ask
-         the user if save it or not when closing the page. */
-      lepton_page_set_changed (page, 1);
-    }
-
-    return opened;
-}
-
-
 /*! \brief Save the schematic file
  *  \par Function Description
  *

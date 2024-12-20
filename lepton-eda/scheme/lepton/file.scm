@@ -49,6 +49,18 @@
 
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
+  "Loads the schematic file *FILENAME to *PAGE in the toplevel
+environment *TOPLEVEL.  The file is loaded with fine-grained
+control over behaviour.  The function carries out a number of
+actions depending on the FLAGS set.  If F_OPEN_RC is set, executes
+RC files found in the target directory.  If F_OPEN_CHECK_BACKUP is
+set, warns user if a backup is found for the file being loaded.
+If F_OPEN_FORCE_BACKUP is set, unconditionally loads the backup
+instead of the file.  If F_OPEN_RESTORE_CWD is set, restores the
+working directory to that which was current before file loading.
+Errors are reported via **GERROR.  Use NULL to disable error
+reporting.  The function returns #f on failure, updated *PAGE on
+success."
   ;; Cache the cwd so we can restore it later.
   (define saved-cwd (getcwd))
 
@@ -89,13 +101,27 @@
                  (not load-backup?))
         (f_check_backup *full-filename *backup-filename))
 
-      (let ((opened? (true? (f_open *page
-                                    *full-filename
-                                    **gerror
-                                    *backup-filename
-                                    (if load-backup? TRUE FALSE)))))
-        ;; Reset the directory to the value it had when f_open()
-        ;; was called.
+      ;; Now that we have set the current directory and read
+      ;; the RC file, it's time to read in the file.
+      (if load-backup?
+          ;; Load the backup file.
+          (o_read *page *backup-filename **gerror)
+          ;; Load the original file.
+          (o_read *page *full-filename **gerror))
+
+      (let ((opened?
+             (or (null-pointer? **gerror)
+                 (null-pointer? (dereference-pointer **gerror)))))
+        (if (not load-backup?)
+            ;; If it's not the backup file.
+            (lepton_page_set_changed *page 0)
+            ;; We are loading the backup file, so the program
+            ;; should ask the user if save it or not when closing
+            ;; the page.
+            (lepton_page_set_changed *page 1))
+
+        ;; Reset the directory to the value it had when the
+        ;; function was called.
         (when (logtest flags F_OPEN_RESTORE_CWD)
           ;; FIXME[2017-02-21] Libraries should not be changing
           ;; the current working directory.
