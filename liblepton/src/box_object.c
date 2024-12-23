@@ -438,7 +438,7 @@ lepton_box_object_read (const char buf[],
 
   /*! \note
    *  A box is internally described by its lower right and upper left corner
-   *  whereas the line describe it with the lower left corner and the width
+   *  whereas the line describes it with the lower left corner and the width
    *  and height.
    *
    *  A new object is allocated, initialized and added to the object list.
@@ -479,8 +479,8 @@ lepton_box_object_read (const char buf[],
  *  \par Function Description
  *  This function formats a string in the buffer <B>*buff</B> to describe the
  *  box object <B>*object</B>.
- *  It follows the post-20000704 release file format that handle the line type
- *  and fill options.
+ *  It follows the post-20000704 release file format that handles
+ *  the line type and fill options.
  *
  *  \param [in] object  The box #LeptonObject to create string from.
  *  \return A pointer to the box character string.
