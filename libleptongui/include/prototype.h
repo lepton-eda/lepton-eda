@@ -1171,6 +1171,11 @@ x_window_setup_scrolling (SchematicWindow *w_current,
 gboolean
 x_window_untitled_page (LeptonPage* page);
 
+void
+x_window_translate_response (GtkWidget *widget,
+                             gint response,
+                             SchematicWindow *w_current);
+
 /* x_widgets.c */
 gboolean
 x_widgets_use_docks();

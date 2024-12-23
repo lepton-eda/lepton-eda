@@ -1868,8 +1868,12 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
       (make-macro-widget *window *work-box)
-      (schematic_window_create_translate_widget *window *work-box)
-
+      (let ((*translate-widget
+             (schematic_window_create_translate_widget *window *work-box)))
+        (g_signal_connect *translate-widget
+                          (string->pointer "response")
+                          *x_window_translate_response
+                          *window))
       ;; Setup various widgets.
       (x_widgets_init)
       (schematic_window_set_object_properties_widget *window

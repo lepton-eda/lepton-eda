@@ -304,6 +304,7 @@
             x_window_save_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
+            *x_window_translate_response
             x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
@@ -988,6 +989,7 @@
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
+(define-lfc *x_window_translate_response)
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
