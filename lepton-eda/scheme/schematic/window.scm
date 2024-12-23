@@ -1547,9 +1547,10 @@ for *PAGE page will be created and set active."
   (s_hierarchy_load_subpage *window *page *filename **err))
 
 
-;;; Return the subpages of PAGE in *WINDOW.  If any subpages are
+;;; Return the subpages of PAGE in WINDOW.  If any subpages are
 ;;; not loaded, this function will load them.
-(define (page-subpages *window page)
+(define (page-subpages window page)
+  (define *window (check-window window 1))
   (define *page (page->pointer page))
   (define objects (page-contents page))
 
@@ -1603,8 +1604,6 @@ for *PAGE page will be created and set active."
 ;;; and removing duplicate pages.  The function returns a new list
 ;;; of all found pages.
 (define (find-text-get-all-pages window pages descend?)
-  (define *window (check-window window 1))
-
   (let loop ((input-ls pages)
              (output-ls '()))
     (if (null? input-ls)
@@ -1618,7 +1617,7 @@ for *PAGE page will be created and set active."
                     new-input-ls
                     (if (true? descend?)
                         (append new-input-ls
-                                (page-subpages *window page))
+                                (page-subpages window page))
                         new-input-ls))
                 (if page-visited?
                     output-ls
