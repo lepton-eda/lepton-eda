@@ -1625,7 +1625,8 @@ for *PAGE page will be created and set active."
                     (cons page output-ls)))))))
 
 
-(define (search-text *window *toplevel)
+(define (search-text window *toplevel)
+  (define *window (check-window window 1))
   (define show-hidden-text?
     (schematic_window_get_show_hidden_text *window))
   (define *find-text-widget
@@ -1668,8 +1669,7 @@ for *PAGE page will be created and set active."
 
 
 (define (find-text *widget response *window)
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define window (pointer->window *window))
 
   (let ((*toplevel (schematic_window_get_toplevel *window)))
     (when (null-pointer? *toplevel)
@@ -1677,7 +1677,7 @@ for *PAGE page will be created and set active."
 
     (let ((close?
            (case (gtk-response->symbol response)
-             ((ok) (true? (search-text *window *toplevel)))
+             ((ok) (true? (search-text window *toplevel)))
              ((cancel delete-event) #t)
              (else (log! 'warning "find-text(): strange-signal ~A" response)
                    #f))))
