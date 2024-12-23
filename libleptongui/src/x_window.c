@@ -30,14 +30,14 @@ static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
 
-static void
-x_window_translate_response (SchematicTranslateWidget *widget,
+void
+x_window_translate_response (GtkWidget *widget,
                              gint response,
                              SchematicWindow *w_current)
 {
   if (response == GTK_RESPONSE_OK) {
     o_component_translate_all (w_current,
-                               schematic_translate_widget_get_value (widget));
+                               schematic_translate_widget_get_value (SCHEMATIC_TRANSLATE_WIDGET (widget)));
   }
 
   i_set_state (w_current, SELECT);
@@ -265,8 +265,6 @@ schematic_window_create_translate_widget (SchematicWindow *w_current,
 
   gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
 
-  g_signal_connect (widget, "response",
-                    G_CALLBACK (&x_window_translate_response), w_current);
   return widget;
 }
 
