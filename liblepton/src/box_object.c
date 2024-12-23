@@ -164,7 +164,7 @@ lepton_box_object_set_lower_y (LeptonObject *object, int val)
  *  \param [in]     y1           Upper y coordinate.
  *  \param [in]     x2           Lower x coordinate.
  *  \param [in]     y2           Lower y coordinate.
- *  \return The new LeptonObject
+ *  \return The new #LeptonObject
  */
 LeptonObject*
 lepton_box_object_new (int color,
@@ -213,8 +213,8 @@ lepton_box_object_new (int color,
  *  The function #lepton_box_object_copy() creates a verbatim copy
  *  of the object pointed by <B>o_current</B> describing a box.
  *
- *  \param [in]      o_current  Box LeptonObject to copy.
- *  \return The new LeptonObject
+ *  \param [in]      o_current  Box #LeptonObject to copy.
+ *  \return The new #LeptonObject
  */
 LeptonObject*
 lepton_box_object_copy (LeptonObject *o_current)
@@ -267,7 +267,7 @@ lepton_box_object_copy (LeptonObject *o_current)
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in,out] object     Box LeptonObject to be modified.
+ *  \param [in,out] object     Box #LeptonObject to be modified.
  *  \param [in]     x          x coordinate.
  *  \param [in]     y          y coordinate.
  *  \param [in]     whichone   coordinate to change.
@@ -482,7 +482,7 @@ lepton_box_object_read (const char buf[],
  *  It follows the post-20000704 release file format that handle the line type
  *  and fill options.
  *
- *  \param [in] object  The box LeptonObject to create string from.
+ *  \param [in] object  The box #LeptonObject to create string from.
  *  \return A pointer to the box character string.
  *
  *  \warning
@@ -554,7 +554,7 @@ lepton_box_object_to_buffer (const LeptonObject *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the box
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     Box LeptonObject to translate.
+ *  \param [in,out] object     Box #LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
@@ -588,7 +588,7 @@ lepton_box_object_translate (LeptonObject *object,
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         Box LeptonObject to rotate.
+ *  \param [in,out]  object         Box #LeptonObject to rotate.
  *
  */
 void
@@ -655,7 +655,7 @@ lepton_box_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         Box LeptonObject to mirror.
+ *  \param [in,out] object         Box #LeptonObject to mirror.
  */
 void
 lepton_box_object_mirror (int world_centerx,
@@ -699,7 +699,7 @@ lepton_box_object_mirror (int world_centerx,
  *  world units and stores them in the given #LeptonBounds
  *  instance \a bounds.
  *
- *  \param [in]  object     Box LeptonObject to read coordinates from.
+ *  \param [in]  object     Box #LeptonObject to read coordinates from.
  *  \param [out] bounds     The resulting object bounds.
  */
 void
@@ -754,7 +754,7 @@ lepton_box_object_get_position (const LeptonObject *object,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the box.
  *
- *  \param [in] object         The box LeptonObject.
+ *  \param [in] object         The box #LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
