@@ -1598,11 +1598,12 @@ for *PAGE page will be created and set active."
 
 
 ;;; The function obtains a list of pages for an operation.  It
-;;; processes the list of *PAGES in *WINDOW, descending the
+;;; processes the list of *PAGES in WINDOW, descending the
 ;;; hierarchy of pages if DESCEND? is not #f, adding all subpages,
 ;;; and removing duplicate pages.  The function returns a new list
 ;;; of all found pages.
-(define (find-text-get-all-pages *window *pages descend?)
+(define (find-text-get-all-pages window *pages descend?)
+  (define *window (check-window window 1))
   (define page-ls (glist->list *pages pointer->page))
 
   (let loop ((input-ls page-ls)
@@ -1648,7 +1649,7 @@ for *PAGE page will be created and set active."
   (define descend?
     (schematic_find_text_widget_get_descend *find-text-widget))
   (define all-pages
-    (find-text-get-all-pages *window *pages descend?))
+    (find-text-get-all-pages window *pages descend?))
   (define *all-pages
     (let loop ((pages all-pages)
                (*pages-gslist %null-pointer))
