@@ -116,7 +116,7 @@ schematic_multiattrib_widget_open (SchematicWindow *w_current)
  *  \param [in] w_current  The SchematicWindow object.
  */
 void
-x_multiattrib_close (SchematicWindow *w_current)
+schematic_multiattrib_widget_close (SchematicWindow *w_current)
 {
   GtkWidget *multiattrib_widget =
     schematic_window_get_multiattrib_widget (w_current);

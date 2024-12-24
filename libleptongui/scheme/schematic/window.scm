@@ -118,7 +118,7 @@
         (unless (null-pointer? *cswindow) (gtk_widget_destroy *cswindow))
         (unless (null-pointer? *tiwindow) (gtk_widget_destroy *tiwindow))
         (unless (null-pointer? *aawindow) (gtk_widget_destroy *aawindow))
-        (x_multiattrib_close *window)
+        (schematic_multiattrib_widget_close *window)
         (unless (null-pointer? *aewindow) (gtk_widget_destroy *aewindow))
         (unless (null-pointer? *hkwindow) (gtk_widget_destroy *hkwindow))
         (unless (null-pointer? *cowindow) (gtk_widget_destroy *cowindow))
