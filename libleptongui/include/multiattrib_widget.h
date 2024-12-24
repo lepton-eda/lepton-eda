@@ -27,21 +27,21 @@
  * Multiattrib
  */
 
-#define TYPE_MULTIATTRIB         (multiattrib_get_type())
-#define MULTIATTRIB(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_MULTIATTRIB, Multiattrib))
-#define MULTIATTRIB_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_MULTIATTRIB, MultiattribClass))
-#define IS_MULTIATTRIB(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_MULTIATTRIB))
+#define SCHEMATIC_TYPE_MULTIATTRIB_WIDGET         (schematic_multiattrib_widget_get_type())
+#define SCHEMATIC_MULTIATTRIB_WIDGET(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCHEMATIC_TYPE_MULTIATTRIB_WIDGET, SchematicMultiattribWidget))
+#define SCHEMATIC_MULTIATTRIB_WIDGET_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass),  SCHEMATIC_TYPE_MULTIATTRIB_WIDGET, SchematicMultiattribWidgetClass))
+#define SCHEMATIC_IS_MULTIATTRIB_WIDGET(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCHEMATIC_TYPE_MULTIATTRIB_WIDGET))
 
 
-typedef struct _MultiattribClass MultiattribClass;
-typedef struct _Multiattrib      Multiattrib;
+typedef struct _SchematicMultiattribWidgetClass SchematicMultiattribWidgetClass;
+typedef struct _SchematicMultiattribWidget      SchematicMultiattribWidget;
 
 
-struct _MultiattribClass {
+struct _SchematicMultiattribWidgetClass {
   SchematicDialogClass parent_class;
 };
 
-struct _Multiattrib {
+struct _SchematicMultiattribWidget {
   SchematicDialog parent_instance;
 
   LeptonList *object_list;
@@ -80,7 +80,7 @@ struct _Multiattrib {
 };
 
 
-GType multiattrib_get_type (void);
+GType schematic_multiattrib_widget_get_type (void);
 
 
 /*

@@ -23,7 +23,8 @@
 #include <gdk/gdkkeysyms.h>
 
 
-static void multiattrib_update (Multiattrib *multiattrib);
+static void
+multiattrib_update (SchematicMultiattribWidget *multiattrib);
 
 static gboolean
 snv_shows_name (int snv)
@@ -80,7 +81,7 @@ x_multiattrib_open (SchematicWindow *w_current)
   if (multiattrib_widget == NULL)
   {
     multiattrib_widget =
-      GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
+      GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
                                 "object_list", active_page->selection_list,
                                 /* SchematicDialog */
                                 "settings-name", "multiattrib",
@@ -498,12 +499,14 @@ enum {
   NUM_COLUMNS
 };
 
-G_DEFINE_TYPE (Multiattrib,
-               multiattrib,
+G_DEFINE_TYPE (SchematicMultiattribWidget,
+               schematic_multiattrib_widget,
                SCHEMATIC_TYPE_DIALOG);
 
-static void multiattrib_class_init (MultiattribClass *klass);
-static void multiattrib_init       (Multiattrib *multiattrib);
+static void
+schematic_multiattrib_widget_class_init (SchematicMultiattribWidgetClass *klass);
+static void
+schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib);
 static void multiattrib_set_property (GObject *object,
                                       guint property_id,
                                       const GValue *value,
@@ -513,8 +516,9 @@ static void multiattrib_get_property (GObject *object,
                                       GValue *value,
                                       GParamSpec *pspec);
 
-static void multiattrib_popup_menu (Multiattrib *multiattrib,
-                                    GdkEventButton *event);
+static void
+multiattrib_popup_menu (SchematicMultiattribWidget *multiattrib,
+                        GdkEventButton *event);
 
 
 /*! \brief Returns TRUE/FALSE if the given object may have attributes attached.
@@ -545,7 +549,7 @@ static gboolean is_multiattrib_object (LeptonObject *object)
  *
  */
 static void
-multiattrib_action_add_attribute (Multiattrib *multiattrib,
+multiattrib_action_add_attribute (SchematicMultiattribWidget *multiattrib,
                                   const gchar *name,
                                   const gchar *value,
                                   gint visible,
@@ -594,7 +598,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
+multiattrib_action_duplicate_attributes (SchematicMultiattribWidget *multiattrib,
                                          GList *attr_list)
 {
   SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
@@ -626,7 +630,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_promote_attributes (Multiattrib *multiattrib,
+multiattrib_action_promote_attributes (SchematicMultiattribWidget *multiattrib,
                                        GList *attr_list)
 {
   SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
@@ -673,7 +677,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_delete_attributes (Multiattrib *multiattrib,
+multiattrib_action_delete_attributes (SchematicMultiattribWidget *multiattrib,
                                       GList *attr_list)
 {
   SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
@@ -696,7 +700,7 @@ multiattrib_action_delete_attributes (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
+multiattrib_action_copy_attribute_to_all (SchematicMultiattribWidget *multiattrib,
                                           GList *attr_list)
 {
   SchematicWindow *w_current = SCHEMATIC_DIALOG (multiattrib)->w_current;
@@ -754,7 +758,8 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                                   GtkTreeIter *iter,
                                   gpointer data)
 {
-  Multiattrib *dialog = (Multiattrib *) data;
+  SchematicMultiattribWidget *dialog =
+    SCHEMATIC_MULTIATTRIB_WIDGET (data);
   gchar *name;
   gboolean present_in_all;
   int inherited;
@@ -793,7 +798,8 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
                                    GtkTreeIter *iter,
                                    gpointer data)
 {
-  Multiattrib *dialog = (Multiattrib *) data;
+  SchematicMultiattribWidget *dialog =
+    SCHEMATIC_MULTIATTRIB_WIDGET (data);
   gchar *value;
   gboolean identical_value;
   int inherited;
@@ -921,7 +927,8 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
                                   gchar *new_name,
                                   gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1018,7 +1025,8 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
                                    gchar *new_value,
                                    gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1109,7 +1117,8 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
                                       gchar *path,
                                       gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonObject *o_attrib;
@@ -1164,7 +1173,8 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
                                         gchar *path,
                                         gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   SchematicWindow *w_current;
@@ -1228,7 +1238,8 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
                                          gchar *path,
                                          gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   SchematicWindow *w_current;
@@ -1292,7 +1303,8 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
                                   GdkEventKey *event,
                                   gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
 
   if (event->state == 0 &&
       (event->keyval == GDK_KEY_Delete || event->keyval == GDK_KEY_KP_Delete)) {
@@ -1339,12 +1351,14 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
  * NB: The coordinates must be relative to the tree view's bin window, IE.. have
  *     come from en event where event->window == gtk_tree_view_get_bin_window ().
  *
- *  \param [in] multiattrib  The Multiattrib object.
+ *  \param [in] multiattrib  The #SchematicMultiattribWidget object.
  *  \param [in] x            The x coordinate of the mouse event.
  *  \param [in] y            The y coordinate of the mouse event.
  */
 static void
-multiattrib_edit_cell_at_pos (Multiattrib *multiattrib, gint x, gint y)
+multiattrib_edit_cell_at_pos (SchematicMultiattribWidget *multiattrib,
+                              gint x,
+                              gint y)
 {
   GtkTreePath *path;
   GtkTreeViewColumn *column;
@@ -1368,7 +1382,8 @@ multiattrib_callback_button_pressed (GtkWidget *widget,
                                      GdkEventButton *event,
                                      gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   gboolean ret = FALSE;
 
   /* popup menu on right click */
@@ -1400,7 +1415,8 @@ static gboolean
 multiattrib_callback_popup_menu (GtkWidget *widget,
                                  gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
 
   multiattrib_popup_menu (multiattrib, NULL);
 
@@ -1416,7 +1432,8 @@ static void
 multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
                                       gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1447,7 +1464,8 @@ static void
 multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
                                     gpointer user_data)
 {
-  Multiattrib *multiattrib = MULTIATTRIB (user_data);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1478,7 +1496,8 @@ static void
 multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
                                    gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1509,7 +1528,8 @@ static void
 multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
                                         gpointer user_data)
 {
-  Multiattrib *multiattrib = MULTIATTRIB (user_data);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   LeptonList *attr_list;
@@ -1541,7 +1561,8 @@ multiattrib_callback_value_key_pressed (GtkWidget *widget,
                                         GdkEventKey *event,
                                         gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)widget;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (widget);
   gboolean retval = FALSE;
 
   /* ends editing of cell if one of these keys are pressed: */
@@ -1596,7 +1617,8 @@ multiattrib_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
 static void
 multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
 {
-  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
   GtkTextBuffer *buffer;
   GtkTextIter start, end;
   const gchar *name;
@@ -1675,11 +1697,12 @@ multiattrib_init_visible_types (GtkComboBoxText *optionmenu)
  *  <B>event</B> can be NULL if the popup is triggered by a key binding
  *  instead of a mouse click.
  *
- *  \param [in] multiattrib  The Multiattrib object.
+ *  \param [in] multiattrib  The #SchematicMultiattribWidget object.
  *  \param [in] event        Mouse event.
  */
 static void
-multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
+multiattrib_popup_menu (SchematicMultiattribWidget *multiattrib,
+                        GdkEventButton *event)
 {
   GtkTreePath *path;
   GtkWidget *menu;
@@ -1772,16 +1795,16 @@ multiattrib_geometry_save (SchematicDialog *dialog,
   gboolean show_inherited;
 
   /* Call the parent's geometry_save method */
-  SCHEMATIC_DIALOG_CLASS (multiattrib_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (schematic_multiattrib_widget_parent_class)->
     geometry_save (dialog, cfg, group_name);
 
   show_inherited =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited));
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->show_inherited));
   eda_config_set_boolean (cfg, group_name, "show_inherited", show_inherited);
 
 
   gboolean expand_add_attr =
-      gtk_expander_get_expanded (GTK_EXPANDER (MULTIATTRIB (dialog)->add_frame));
+      gtk_expander_get_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame));
 
   eda_config_set_boolean (cfg, group_name, "expand_add_attr", expand_add_attr);
 }
@@ -1806,7 +1829,7 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
   GError *error = NULL;
 
   /* Call the parent's geometry_restore method */
-  SCHEMATIC_DIALOG_CLASS (multiattrib_parent_class)->
+  SCHEMATIC_DIALOG_CLASS (schematic_multiattrib_widget_parent_class)->
     geometry_restore (dialog, cfg, group_name);
 
   show_inherited = eda_config_get_boolean (cfg, group_name, "show_inherited", &error);
@@ -1814,7 +1837,7 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
     show_inherited = TRUE;
   }
   g_clear_error (&error);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited), show_inherited);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->show_inherited), show_inherited);
 
 
   gboolean expand_add_attr =
@@ -1826,7 +1849,7 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
   }
 
   g_clear_error (&error);
-  gtk_expander_set_expanded (GTK_EXPANDER (MULTIATTRIB (dialog)->add_frame),
+  gtk_expander_set_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame),
                              expand_add_attr);
 }
 
@@ -1839,7 +1862,8 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 static void
-object_list_changed_cb (LeptonList *object_list, Multiattrib *multiattrib)
+object_list_changed_cb (LeptonList *object_list,
+                        SchematicMultiattribWidget *multiattrib)
 {
   multiattrib_update (multiattrib);
 }
@@ -1860,7 +1884,8 @@ object_list_changed_cb (LeptonList *object_list, Multiattrib *multiattrib)
 static void
 object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
 {
-  Multiattrib *multiattrib = (Multiattrib *)data;
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (data);
 
   multiattrib->object_list = NULL;
   multiattrib_update (multiattrib);
@@ -1874,11 +1899,12 @@ object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
  *  Connect the "changed" signal and add a weak reference
  *  on the LeptonList object we are going to watch.
  *
- *  \param [in] multiattrib  The Multiattrib dialog.
+ *  \param [in] multiattrib  The #SchematicMultiattribWidget dialog.
  *  \param [in] object_list  The LeptonList object to watch.
  */
 static void
-connect_object_list (Multiattrib *multiattrib, LeptonList *object_list)
+connect_object_list (SchematicMultiattribWidget *multiattrib,
+                     LeptonList *object_list)
 {
   multiattrib->object_list = object_list;
   if (multiattrib->object_list != NULL) {
@@ -1906,10 +1932,10 @@ connect_object_list (Multiattrib *multiattrib, LeptonList *object_list)
  *  If the dialog is watching a LeptonList object, disconnect the
  *  "changed" signal and remove our weak reference on the object.
  *
- *  \param [in] multiattrib  The Multiattrib dialog.
+ *  \param [in] multiattrib The #SchematicMultiattribWidget dialog.
  */
 static void
-disconnect_object_list (Multiattrib *multiattrib)
+disconnect_object_list (SchematicMultiattribWidget *multiattrib)
 {
   if (multiattrib->object_list != NULL) {
     g_signal_handler_disconnect (multiattrib->object_list,
@@ -1925,33 +1951,36 @@ disconnect_object_list (Multiattrib *multiattrib)
  *
  *  \par Function Description
  *
- *  Just before the Multiattrib GObject is finalized, disconnect from
- *  the LeptonList object being watched and then chain up to the parent
- *  class's finalize handler.
+ *  Just before the #SchematicMultiattribWidget GObject is
+ *  finalized, disconnect from the LeptonList object being watched
+ *  and then chain up to the parent class's finalize handler.
  *
  *  \param [in] object  The GObject being finalized.
  */
 static void
 multiattrib_finalize (GObject *object)
 {
-  Multiattrib *multiattrib = MULTIATTRIB(object);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET(object);
 
   disconnect_object_list (multiattrib);
-  G_OBJECT_CLASS (multiattrib_parent_class)->finalize (object);
+  G_OBJECT_CLASS (schematic_multiattrib_widget_parent_class)->finalize (object);
 }
 
 
-/*! \brief GType class initialiser for Multiattrib
+/*! \brief GType class initialiser for #SchematicMultiattribWidget
  *
  *  \par Function Description
  *
- *  GType class initialiser for Multiattrib. We override our parent
- *  virtual class methods as needed and register our GObject properties.
+ *  GType class initialiser for #SchematicMultiattribWidget.  We
+ *  override our parent virtual class methods as needed and
+ *  register our GObject properties.
  *
- *  \param [in]  klass       The MultiattribClass we are initialising
+ *  \param [in] klass The #SchematicMultiattribWidgetClass we are
+ *                    initialising
  */
 static void
-multiattrib_class_init (MultiattribClass *klass)
+schematic_multiattrib_widget_class_init (SchematicMultiattribWidgetClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   SchematicDialogClass *schematic_dialog_class = SCHEMATIC_DIALOG_CLASS (klass);
@@ -1963,7 +1992,8 @@ multiattrib_class_init (MultiattribClass *klass)
   gobject_class->get_property = multiattrib_get_property;
   gobject_class->finalize     = multiattrib_finalize;
 
-  multiattrib_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+  schematic_multiattrib_widget_parent_class =
+    G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   g_object_class_install_property (
     gobject_class, PROP_OBJECT_LIST,
@@ -1980,7 +2010,8 @@ static void
 multiattrib_show_inherited_toggled (GtkToggleButton *button,
                                     gpointer user_data)
 {
-  Multiattrib *multiattrib = MULTIATTRIB (user_data);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1993,24 +2024,26 @@ static void
 multiattrib_callback_expander_activate (GtkExpander* expander,
                                         gpointer     data)
 {
-  Multiattrib* multiattrib = (Multiattrib*) data;
+  SchematicMultiattribWidget* multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (data);
 
   multiattrib->add_attr_section_expanded =
     gtk_expander_get_expanded (expander);
 }
 
 
-/*! \brief GType instance initialiser for Multiattrib
+/*! \brief GType instance initialiser for #SchematicMultiattribWidget
  *
  *  \par Function Description
  *
- *  GType instance initialiser for Multiattrib. Create
- *  and setup the widgets which make up the dialog.
+ *  GType instance initialiser for #SchematicMultiattribWidget.
+ *  Create and setup the widgets which make up the dialog.
  *
- *  \param [in] multiattrib The Multiattrib we are initialising
+ *  \param [in] multiattrib The #SchematicMultiattribWidget we are
+ *                          initialising
  */
 static void
-multiattrib_init (Multiattrib *multiattrib)
+schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
 {
   GtkWidget *label, *scrolled_win, *treeview;
   GtkWidget *textview, *combo, *optionm, *button;
@@ -2453,7 +2486,8 @@ multiattrib_init (Multiattrib *multiattrib)
 /*! \brief GObject property setter function
  *
  *  \par Function Description
- *  Setter function for Multiattrib's GObject property, "object_list".
+ *  Setter function for #SchematicMultiattribWidget's GObject
+ *  property, "object_list".
  *
  *  \param [in]  object       The GObject whose properties we are setting
  *  \param [in]  property_id  The numeric id. under which the property was
@@ -2468,7 +2502,8 @@ multiattrib_set_property (GObject *object,
                           const GValue *value,
                           GParamSpec *pspec)
 {
-  Multiattrib *multiattrib = MULTIATTRIB (object);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (object);
 
   switch(property_id) {
       case PROP_OBJECT_LIST:
@@ -2484,7 +2519,8 @@ multiattrib_set_property (GObject *object,
 /*! \brief GObject property getter function
  *
  *  \par Function Description
- *  Getter function for Multiattrib's GObject property, "object_list".
+ *  Getter function for #SchematicMultiattribWidget's GObject
+ *  property, "object_list".
  *
  *  \param [in]  object       The GObject whose properties we are getting
  *  \param [in]  property_id  The numeric id. under which the property was
@@ -2498,7 +2534,8 @@ multiattrib_get_property (GObject *object,
                           GValue *value,
                           GParamSpec *pspec)
 {
-  Multiattrib *multiattrib = MULTIATTRIB (object);
+  SchematicMultiattribWidget *multiattrib =
+    SCHEMATIC_MULTIATTRIB_WIDGET (object);
 
   switch(property_id) {
       case PROP_OBJECT_LIST:
@@ -2539,7 +2576,8 @@ typedef struct {
  *  \returns  A GList of MODEL_ROW records detailing object's attributes.
  */
 static GList *
-object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
+object_attributes_to_model_rows (SchematicMultiattribWidget *multiattrib,
+                                 LeptonObject *object)
 {
   GList *model_rows = NULL;
   GList *a_iter;
@@ -2603,7 +2641,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
  *  \returns  A GList of MODEL_ROW records detailing all lone selected attributes.
  */
 static GList *
-lone_attributes_to_model_rows (Multiattrib *multiattrib)
+lone_attributes_to_model_rows (SchematicMultiattribWidget *multiattrib)
 {
   GList *o_iter;
   GList *model_rows = NULL;
@@ -2658,7 +2696,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
  *  \param [in] model_rows   A GList of MODEL_ROW data.
  */
 static void
-multiattrib_populate_liststore (Multiattrib *multiattrib,
+multiattrib_populate_liststore (SchematicMultiattribWidget *multiattrib,
                                 GList *model_rows)
 {
   GtkListStore *liststore;
@@ -2718,7 +2756,8 @@ append_dialog_title_extra (GString *title_string,
 }
 
 static void
-update_dialog_title (Multiattrib *multiattrib, const char *component_title_name)
+update_dialog_title (SchematicMultiattribWidget *multiattrib,
+                     const char *component_title_name)
 {
   GString *title_string = g_string_new (_("Edit Attributes"));
   int num_title_extras = 0;
@@ -2780,7 +2819,7 @@ update_dialog_title (Multiattrib *multiattrib, const char *component_title_name)
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 static void
-multiattrib_update (Multiattrib *multiattrib)
+multiattrib_update (SchematicMultiattribWidget *multiattrib)
 {
   GList *o_iter;
   gboolean show_inherited;
