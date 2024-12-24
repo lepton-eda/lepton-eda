@@ -1058,7 +1058,7 @@
 ;;; x_image.c
 (define-lff x_image_setup void '(*))
 
-;;; x_multiattrib.c
+;;; multiattrib_widget.c
 (define-lff x_multiattrib_close void '(*))
 (define-lff x_multiattrib_open void '(*))
 (define-lff x_multiattrib_update void '(*))

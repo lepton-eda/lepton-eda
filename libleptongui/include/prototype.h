@@ -1100,7 +1100,7 @@ x_menu_attach_recent_files_submenu (SchematicWindow* w_current,
                                     GCallback callback_item_activated,
                                     gint max_items);
 
-/* x_multiattrib.c */
+/* multiattrib_widget.c */
 void
 x_multiattrib_open (SchematicWindow *w_current);
 

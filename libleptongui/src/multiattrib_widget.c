@@ -19,7 +19,7 @@
  */
 #include <config.h>
 #include "schematic.h"
-#include "x_multiattrib.h"
+#include "multiattrib_widget.h"
 #include <gdk/gdkkeysyms.h>
 
 

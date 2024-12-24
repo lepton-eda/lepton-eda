@@ -34,6 +34,7 @@ libleptongui_la_SOURCES = \
 	log_widget.c \
 	macro_widget.c \
 	main_window.c \
+	multiattrib_widget.c \
 	object_properties_widget.c \
 	options.c \
 	options_widget.c \
@@ -98,7 +99,6 @@ libleptongui_la_SOURCES = \
 	x_linetypecb.c \
 	x_menus.c \
 	x_misc.c \
-	x_multiattrib.c \
 	new_text_dialog.c \
 	page_select_widget.c \
 	toolbar.c \

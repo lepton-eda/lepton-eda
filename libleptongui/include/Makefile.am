@@ -11,7 +11,6 @@ noinst_HEADERS = \
 	x_tabs.h \
 	gettext.h \
 	x_compselect.h \
-	x_multiattrib.h \
 	schematic.h \
 	hotkey_store.h \
 	accel_label.h \
@@ -29,6 +28,7 @@ noinst_HEADERS = \
 	log_widget.h \
 	macro_widget.h \
 	main_window.h \
+	multiattrib_widget.h \
 	object_properties_widget.h \
 	options.h \
 	options_widget.h \
