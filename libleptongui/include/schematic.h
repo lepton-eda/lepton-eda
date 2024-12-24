@@ -60,6 +60,7 @@ typedef struct st_schematic_window SchematicWindow;
 
 #include "color_edit_widget.h"
 #include "font_select_widget.h"
+#include "multiattrib_widget.h"
 #include "new_text_dialog.h"
 #include "page_select_widget.h"
 #include "toolbar.h"

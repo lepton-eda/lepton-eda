@@ -142,5 +142,18 @@ struct _CellRendererMultiLineText {
 
 GType cellrenderermultilinetext_get_type (void);
 
+G_BEGIN_DECLS
+
+void
+schematic_multiattrib_widget_open (SchematicWindow *w_current);
+
+void
+schematic_multiattrib_widget_close (SchematicWindow *w_current);
+
+void
+schematic_multiattrib_widget_update (SchematicWindow *w_current);
+
+G_END_DECLS
+
 
 #endif /* __MULTIATTRIB_WIDGET_H__ */

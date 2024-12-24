@@ -1100,16 +1100,6 @@ x_menu_attach_recent_files_submenu (SchematicWindow* w_current,
                                     GCallback callback_item_activated,
                                     gint max_items);
 
-/* multiattrib_widget.c */
-void
-schematic_multiattrib_widget_open (SchematicWindow *w_current);
-
-void
-schematic_multiattrib_widget_close (SchematicWindow *w_current);
-
-void
-schematic_multiattrib_widget_update (SchematicWindow *w_current);
-
 /* x_print.c */
 gboolean
 x_print_export_pdf_page (SchematicWindow *w_current,
