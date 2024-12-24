@@ -142,7 +142,7 @@ success, #f on failure."
 
   (define (update-window *window)
     (page_select_widget_update *window)
-    (x_multiattrib_update *window)
+    (schematic_multiattrib_widget_update *window)
     (i_update_menus *window))
 
   (define (debug-print-undo-info *page)

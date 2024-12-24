@@ -138,7 +138,7 @@ schematic_multiattrib_widget_close (SchematicWindow *w_current)
  *  \param [in] w_current  The SchematicWindow object.
  */
 void
-x_multiattrib_update (SchematicWindow *w_current)
+schematic_multiattrib_widget_update (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 

@@ -611,7 +611,7 @@ x_window_set_current_page (SchematicWindow *w_current,
   /* i_set_filename (w_current, page->page_filename); */
 
   page_select_widget_update (w_current);
-  x_multiattrib_update (w_current);
+  schematic_multiattrib_widget_update (w_current);
 
 } /* x_window_set_current_page() */
 

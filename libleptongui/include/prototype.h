@@ -1108,7 +1108,7 @@ void
 schematic_multiattrib_widget_close (SchematicWindow *w_current);
 
 void
-x_multiattrib_update (SchematicWindow *w_current);
+schematic_multiattrib_widget_update (SchematicWindow *w_current);
 
 /* x_print.c */
 gboolean

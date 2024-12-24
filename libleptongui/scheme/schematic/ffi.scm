@@ -501,7 +501,7 @@
 
             schematic_multiattrib_widget_close
             schematic_multiattrib_widget_open
-            x_multiattrib_update
+            schematic_multiattrib_widget_update
 
             x_print
 
@@ -1061,7 +1061,7 @@
 ;;; multiattrib_widget.c
 (define-lff schematic_multiattrib_widget_close void '(*))
 (define-lff schematic_multiattrib_widget_open void '(*))
-(define-lff x_multiattrib_update void '(*))
+(define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog_new '* '(*))
