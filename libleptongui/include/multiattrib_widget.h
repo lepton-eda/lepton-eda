@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __X_MULTIATTRIB_H__
-#define __X_MULTIATTRIB_H__
+#ifndef __MULTIATTRIB_WIDGET_H__
+#define __MULTIATTRIB_WIDGET_H__
 
 
 /*
@@ -143,4 +143,4 @@ struct _CellRendererMultiLineText {
 GType cellrenderermultilinetext_get_type (void);
 
 
-#endif /* __X_MULTIATTRIB_H__ */
+#endif /* __MULTIATTRIB_WIDGET_H__ */
