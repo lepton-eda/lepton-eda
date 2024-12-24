@@ -1102,7 +1102,7 @@ x_menu_attach_recent_files_submenu (SchematicWindow* w_current,
 
 /* multiattrib_widget.c */
 void
-x_multiattrib_open (SchematicWindow *w_current);
+schematic_multiattrib_widget_open (SchematicWindow *w_current);
 
 void
 x_multiattrib_close (SchematicWindow *w_current);

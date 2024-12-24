@@ -500,7 +500,7 @@
             x_image_setup
 
             x_multiattrib_close
-            x_multiattrib_open
+            schematic_multiattrib_widget_open
             x_multiattrib_update
 
             x_print
@@ -1060,7 +1060,7 @@
 
 ;;; multiattrib_widget.c
 (define-lff x_multiattrib_close void '(*))
-(define-lff x_multiattrib_open void '(*))
+(define-lff schematic_multiattrib_widget_open void '(*))
 (define-lff x_multiattrib_update void '(*))
 
 ;;; new_text_dialog.c
