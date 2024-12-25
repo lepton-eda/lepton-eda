@@ -32,8 +32,7 @@
   (define response (gtk-response->symbol response-id))
   (when (or (eq? response 'close)
             (eq? response 'delete-event))
-    (gtk_widget_hide *widget)
-    (schematic_window_set_multiattrib_widget *window %null-pointer)))
+    (gtk_widget_hide *widget)))
 
 (define *response-callback
   (procedure->pointer void response-callback (list '* int '*)))
