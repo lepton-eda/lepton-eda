@@ -64,29 +64,6 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
 }
 
 
-/*! \brief Close the multiattrib dialog.
- *
- *  \par Function Description
- *
- *  Closes the multiattrib dialog associated with <B>w_current</B>.
- *
- *  \param [in] w_current  The SchematicWindow object.
- */
-void
-schematic_multiattrib_widget_close (SchematicWindow *w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *multiattrib_widget =
-    schematic_window_get_multiattrib_widget (w_current);
-
-  if (multiattrib_widget != NULL)
-  {
-    gtk_widget_destroy (multiattrib_widget);
-    schematic_window_set_multiattrib_widget (w_current, NULL);
-  }
-}
-
 /*! \brief Update the multiattrib editor dialog for a SchematicWindow.
  *
  *  \par Function Description

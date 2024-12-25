@@ -147,10 +147,6 @@ G_BEGIN_DECLS
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);
-
-void
-schematic_multiattrib_widget_close (SchematicWindow *w_current);
-
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 

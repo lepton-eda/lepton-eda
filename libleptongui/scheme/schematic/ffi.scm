@@ -519,7 +519,6 @@
 
             x_image_setup
 
-            schematic_multiattrib_widget_close
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_update
 
@@ -1095,7 +1094,6 @@
 (define-lff x_image_setup void '(*))
 
 ;;; multiattrib_widget.c
-(define-lff schematic_multiattrib_widget_close void '(*))
 (define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
