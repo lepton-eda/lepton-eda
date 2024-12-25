@@ -27,7 +27,6 @@
   #:use-module (lepton ffi)
   #:use-module (schematic gettext)
   #:use-module (lepton log)
-  #:use-module (schematic ffi gobject)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
