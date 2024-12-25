@@ -29,7 +29,6 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/slot-edit.scm \
 	schematic/doc.scm \
 	schematic/ffi.scm \
-	schematic/ffi/gobject.scm \
 	schematic/ffi/gtk.scm \
 	schematic/gettext.scm \
 	schematic/gtk/helper.scm \

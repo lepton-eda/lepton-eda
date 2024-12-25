@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2024 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,11 +21,13 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (g_object_unref))
+  #:export (g_object_set_data
+            g_object_unref))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libgobject))
 
+(define-lff g_object_set_data void '(* * *))
 (define-lff g_object_unref void '(*))
