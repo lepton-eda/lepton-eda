@@ -25,10 +25,11 @@
   #:use-module (lepton config)
   #:use-module (lepton eval)
   #:use-module (lepton ffi)
-  #:use-module (schematic gettext)
   #:use-module (lepton log)
+
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gettext)
 
   #:export (add-menu
             make-main-menu))
