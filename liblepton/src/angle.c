@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ lepton_angle_is_normal (gint angle)
   return ((0 <= angle) && (angle < 360));
 }
 
-/*! \brief Checks if an angle is orthographic
+/*! \brief Checks if an angle is orthogonal
  *
  *  \param [in] angle the angle in degrees
  *  \retval TRUE if the angle is a multiple of 90 degrees
@@ -51,12 +51,12 @@ lepton_angle_is_ortho (gint angle)
   return ((angle % 90) == 0);
 }
 
-/*! \brief Make an angle orthographic
+/*! \brief Make an angle orthogonal
  *
  *  Snaps the angle to the nearest 90 degrees
  *
  *  \param [in] angle the angle in degrees
- *  \return the orthographic angle
+ *  \return the orthogonal angle
  */
 gint
 lepton_angle_make_ortho (gint angle)
