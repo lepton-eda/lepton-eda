@@ -1831,21 +1831,34 @@ object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
 }
 
 
-/*! \brief Connect signal handler and weak_ref on the LeptonList object
+/*! \brief Update signal handlers and weak references on the
+ *  LeptonList of objects
  *
  *  \par Function Description
  *
- *  Connect the "changed" signal and add a weak reference
- *  on the LeptonList object we are going to watch.
+ *  If the dialog is watching a LeptonList of objects, disconnect
+ *  the "changed" signal and remove our weak reference on the
+ *  list.  Then, if the new object list to add is not NULL,
+ *  connect the "changed" signal and add a weak reference on the
+ *  given list we are going to watch.
  *
  *  \param [in] multiattrib  The #SchematicMultiattribWidget dialog.
- *  \param [in] object_list  The LeptonList object to watch.
+ *  \param [in] object_list  The LeptonList of objects to watch.
  */
 static void
 connect_object_list (SchematicMultiattribWidget *multiattrib,
                      LeptonList *object_list)
 {
+  if (multiattrib->object_list != NULL) {
+    g_signal_handler_disconnect (multiattrib->object_list,
+                                 multiattrib->object_list_changed_id);
+    g_object_weak_unref (G_OBJECT (multiattrib->object_list),
+                         object_list_weak_ref_cb,
+                         multiattrib);
+  }
+
   multiattrib->object_list = object_list;
+
   if (multiattrib->object_list != NULL) {
     g_object_weak_ref (G_OBJECT (multiattrib->object_list),
                        object_list_weak_ref_cb,
@@ -1860,28 +1873,6 @@ connect_object_list (SchematicMultiattribWidget *multiattrib,
   } else {
     /* Call an update to set the sensitivities */
     multiattrib_update (multiattrib);
-  }
-}
-
-
-/*! \brief Disconnect signal handler and weak_ref on the LeptonList object
- *
- *  \par Function Description
- *
- *  If the dialog is watching a LeptonList object, disconnect the
- *  "changed" signal and remove our weak reference on the object.
- *
- *  \param [in] multiattrib The #SchematicMultiattribWidget dialog.
- */
-static void
-disconnect_object_list (SchematicMultiattribWidget *multiattrib)
-{
-  if (multiattrib->object_list != NULL) {
-    g_signal_handler_disconnect (multiattrib->object_list,
-                                 multiattrib->object_list_changed_id);
-    g_object_weak_unref (G_OBJECT (multiattrib->object_list),
-                         object_list_weak_ref_cb,
-                         multiattrib);
   }
 }
 
@@ -1902,7 +1893,7 @@ multiattrib_finalize (GObject *object)
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET(object);
 
-  disconnect_object_list (multiattrib);
+  connect_object_list (multiattrib, NULL);
   G_OBJECT_CLASS (schematic_multiattrib_widget_parent_class)->finalize (object);
 }
 
@@ -2446,7 +2437,6 @@ multiattrib_set_property (GObject *object,
 
   switch(property_id) {
       case PROP_OBJECT_LIST:
-        disconnect_object_list (multiattrib);
         connect_object_list (multiattrib, LEPTON_LIST (g_value_get_pointer (value)));
         break;
       default:
