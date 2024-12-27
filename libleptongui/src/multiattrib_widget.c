@@ -23,9 +23,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-static void
-multiattrib_update (SchematicMultiattribWidget *multiattrib);
-
 static gboolean
 snv_shows_name (int snv)
 {
@@ -950,7 +947,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
 
   /* Refresh the whole model.. some attribute names may consolidate into one row */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1164,7 +1161,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
 
   /* request an update of display for this row */
   /* Recompute the whole model as the consistency for the show value column may be affected above */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1229,7 +1226,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
 
   /* request an update of display for this row */
   /* Recompute the whole model as the consistency for the show name column may be affected above */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1275,7 +1272,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
     g_object_unref (attr_list);
 
     /* update the treeview contents */
-    multiattrib_update (multiattrib);
+    schematic_multiattrib_widget_refresh (multiattrib);
   }
 
   return FALSE;
@@ -1391,7 +1388,7 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1423,7 +1420,7 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1455,7 +1452,7 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1487,7 +1484,7 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1591,7 +1588,7 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
                                     visible, shownv);
   g_free (value);
 
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1804,7 +1801,7 @@ static void
 object_list_changed_cb (LeptonList *object_list,
                         SchematicMultiattribWidget *multiattrib)
 {
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -1827,7 +1824,7 @@ object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
 
   multiattrib->object_list = NULL;
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -1939,7 +1936,7 @@ multiattrib_show_inherited_toggled (GtkToggleButton *button,
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -2404,7 +2401,7 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
                          _("_Close"), GTK_RESPONSE_CLOSE);
 
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -2434,7 +2431,7 @@ multiattrib_set_property (GObject *object,
       case PROP_OBJECT_LIST:
         connect_object_list (multiattrib, LEPTON_LIST (g_value_get_pointer (value)));
         /* Refresh the view. */
-        multiattrib_update (multiattrib);
+        schematic_multiattrib_widget_refresh (multiattrib);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2744,8 +2741,8 @@ update_dialog_title (SchematicMultiattribWidget *multiattrib,
  *
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
-static void
-multiattrib_update (SchematicMultiattribWidget *multiattrib)
+void
+schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib)
 {
   GList *o_iter;
   gboolean show_inherited;
