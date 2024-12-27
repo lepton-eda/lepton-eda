@@ -1868,11 +1868,6 @@ connect_object_list (SchematicMultiattribWidget *multiattrib,
                         "changed",
                         G_CALLBACK (object_list_changed_cb),
                         multiattrib);
-    /* Synthesise a object_list changed update to refresh the view */
-    object_list_changed_cb (multiattrib->object_list, multiattrib);
-  } else {
-    /* Call an update to set the sensitivities */
-    multiattrib_update (multiattrib);
   }
 }
 
@@ -2438,6 +2433,8 @@ multiattrib_set_property (GObject *object,
   switch(property_id) {
       case PROP_OBJECT_LIST:
         connect_object_list (multiattrib, LEPTON_LIST (g_value_get_pointer (value)));
+        /* Refresh the view. */
+        multiattrib_update (multiattrib);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
