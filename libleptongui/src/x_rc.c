@@ -48,8 +48,8 @@ x_rc_parse_gschem_error (GError **err,
 
     /* Config files are allowed to be missing or skipped; check for
      * this. */
-    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT) ||
-        g_error_matches (*err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
+    if (config_error_file_noent (*err) || config_error_rc_twice (*err))
+    {
       return;
     }
 
