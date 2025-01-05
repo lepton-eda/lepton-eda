@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2021-2025 Lepton EDA Contributors
+;;; Copyright (C) 2021-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,10 @@
   #:export (parse-gschemrc))
 
 
+(define (parse-error **err *program-name)
+  (x_rc_parse_gschem_error **err *program-name))
+
+
 (define toplevel-initialized? #f)
 
 (define (parse-gschemrc *toplevel)
@@ -37,7 +41,7 @@ explanatory messages."
   (unless toplevel-initialized?
     (parse-rc "lepton-schematic"
               "gschemrc"
-              #:handler x_rc_parse_gschem_error
+              #:handler parse-error
               #:*toplevel *toplevel)
     (set! toplevel-initialized? #t))
   *toplevel)
