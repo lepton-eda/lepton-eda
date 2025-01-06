@@ -87,7 +87,6 @@ libleptongui/src/x_misc.c
 libleptongui/src/new_text_dialog.c
 libleptongui/src/page_select_widget.c
 libleptongui/src/x_print.c
-libleptongui/src/x_rc.c
 libleptongui/src/x_stroke.c
 libleptongui/src/x_tabs.c
 libleptongui/src/x_widgets.c

@@ -26,6 +26,7 @@
   #:use-module (lepton log)
   #:use-module (lepton rc)
 
+  #:use-module (schematic dialog)
   #:use-module (schematic ffi)
 
   #:export (parse-gschemrc))
@@ -64,8 +65,9 @@
               (true? (config_error_rc_twice *err)))
     (log! 'message (G_ "ERROR: ~A") error-message)
 
-    (x_rc_parse_gschem_error (string->pointer program-name)
-                             (string->pointer dialog-message))))
+    (schematic-error-dialog (G_ "Cannot load lepton-schematic configuration.")
+                            #:secondary-text dialog-message
+                            #:title program-name)))
 
 
 (define toplevel-initialized? #f)
