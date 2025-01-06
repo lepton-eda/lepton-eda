@@ -650,8 +650,6 @@
 
             g_action_eval_by_name
 
-            x_rc_parse_gschem_error
-
             schematic_world_size_get_default_left
             schematic_world_size_get_default_right
             schematic_world_size_get_default_bottom
@@ -1030,9 +1028,6 @@
 (define-lff lepton_action_create_menu_item '* '(* * *))
 (define-lff lepton_menu_set_action_data void '(* * * *))
 (define-lff schematic_window_create_main_popup_menu '* '(*))
-
-;;; x_rc.c
-(define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
 (define-lff recent_manager_add void '(* *))

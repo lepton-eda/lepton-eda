@@ -103,7 +103,6 @@ libleptongui_la_SOURCES = \
 	toolbar.c \
 	world_size.c \
 	x_print.c \
-	x_rc.c \
 	x_stroke.c \
 	x_window.c \
 	x_widgets.c \
