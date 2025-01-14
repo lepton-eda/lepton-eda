@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -170,14 +171,14 @@
 
       (gtk_dialog_set_default_response *dialog %gtk-response-accept)
 
-      (schematic_signal_connect *dialog
-                                (string->pointer "response")
-                                *autonumber-response-callback
-                                *autotext)
-      (schematic_signal_connect *remove-number-widget
-                                (string->pointer "clicked")
-                                *autonumber-remove-numbers-checkbox-clicked-callback
-                                *dialog)
+      (g_signal_connect *dialog
+                        (string->pointer "response")
+                        *autonumber-response-callback
+                        *autotext)
+      (g_signal_connect *remove-number-widget
+                        (string->pointer "clicked")
+                        *autonumber-remove-numbers-checkbox-clicked-callback
+                        *dialog)
 
       (schematic_autonumber_set_autotext_dialog *autotext *dialog)
       (schematic_autonumber_dialog_restore_state *autotext)
