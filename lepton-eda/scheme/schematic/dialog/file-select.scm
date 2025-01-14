@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2024 Lepton EDA Contributors
+;;; Copyright (C) 2022-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
 
   #:use-module (schematic ffi)
   #:use-module (schematic preview-widget)
@@ -47,10 +48,10 @@ last loaded page."
            *dialog
            (init-preview-widget-signals *preview))
           ;; Connect callback to update preview.
-          (schematic_signal_connect *dialog
-                                    (string->pointer "update-preview")
-                                    *x_fileselect_callback_update_preview
-                                    *preview)))
+          (g_signal_connect *dialog
+                            (string->pointer "update-preview")
+                            *x_fileselect_callback_update_preview
+                            *preview)))
       *dialog))
 
   (define filenames
