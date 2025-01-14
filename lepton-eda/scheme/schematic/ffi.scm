@@ -382,8 +382,6 @@
             schematic_preview_get_filename
             schematic_preview_get_window
 
-            schematic_signal_connect
-
             schematic_window_active_page_changed
             schematic_window_add_timer
             schematic_window_destroy_timer
@@ -1206,9 +1204,6 @@
 
 ;;; slot.c
 (define-lff lepton_slot_update_object void '(*))
-
-;;; signals.c
-(define-lff schematic_signal_connect void '(* * * *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
