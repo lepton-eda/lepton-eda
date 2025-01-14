@@ -76,7 +76,6 @@ libleptongui_la_SOURCES = \
 	o_undo.c \
 	page_revert_dialog.c \
 	preview_widget.c \
-	signals.c \
 	s_stretch.c \
 	schematic_hierarchy.c \
 	slot_edit_dialog.c \
