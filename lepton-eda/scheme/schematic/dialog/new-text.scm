@@ -22,6 +22,7 @@
 
   #:use-module (lepton color-map)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton object text)
@@ -169,10 +170,10 @@ window."
           ;; Store pointer to the widget in the *window structure.
           (schematic_window_set_newtext_dialog *window *widget)
           ;; Connect callback to the widget's "response" signal.
-          (schematic_signal_connect *widget
-                                    (string->pointer "response")
-                                    *newtext-dialog-response
-                                    *window)
+          (g_signal_connect *widget
+                            (string->pointer "response")
+                            *newtext-dialog-response
+                            *window)
           *widget)
         ;; Otherwise just return the widget.
         *newtext-widget))
