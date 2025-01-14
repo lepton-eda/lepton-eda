@@ -26,6 +26,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -164,9 +165,9 @@ buffer should be displayed, the widget displays the error message."
 appropriate signals.  Return *PREVIEW."
   (for-each
    (lambda (element)
-     (schematic_signal_connect *preview
-                               (string->pointer (car element))
-                               (cdr element)
-                               (schematic_preview_get_window *preview)))
+     (g_signal_connect *preview
+                       (string->pointer (car element))
+                       (cdr element)
+                       (schematic_preview_get_window *preview)))
    %signal-callback-list)
   *preview)
