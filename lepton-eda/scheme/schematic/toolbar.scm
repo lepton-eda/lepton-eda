@@ -22,6 +22,7 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
 
@@ -50,10 +51,10 @@
                                        '(* *))))
     (set! %toolbar-button-callbacks
           (assq-set! %toolbar-button-callbacks *button *callback))
-    (schematic_signal_connect *button
-                              (string->pointer signal)
-                              *callback
-                              *window)))
+    (g_signal_connect *button
+                      (string->pointer signal)
+                      *callback
+                      *window)))
 
 
 (define (toolbar-insert! *toolbar *button position)
