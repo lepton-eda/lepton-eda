@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2024 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,11 @@
   #:use-module (lepton ffi lff)
 
   #:export (g_object_set_data
-            g_object_unref))
+            g_object_unref
+            g_signal_connect))
+
+;;; Defined in glib/gtypes.h
+(define gulong unsigned-long)
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -31,3 +35,17 @@
 
 (define-lff g_object_set_data void '(* * *))
 (define-lff g_object_unref void '(*))
+
+;;; Defined in gobject/gsignal.h
+(define-lff g_signal_connect_data gulong (list '* '* '* '* '* int))
+(define-syntax-rule (g_signal_connect *instance
+                                      *detailed-signal
+                                      *c-handler
+                                      *data)
+  (g_signal_connect_data *instance
+                         *detailed-signal
+                         *c-handler
+                         *data
+                         %null-pointer  ; *destroy-data
+                         0              ; connect-flags
+                         ))
