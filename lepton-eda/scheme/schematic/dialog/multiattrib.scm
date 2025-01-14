@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2024 Lepton EDA Contributors
+;;; Copyright (C) 2024-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi gobject)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -70,15 +71,15 @@ WINDOW."
         (gtk_window_set_transient_for (gtk_widget_get_gtk_window *new-widget)
                                       (gtk_widget_get_gtk_window *main-window))
 
-        (schematic_signal_connect *new-widget
-                                  (string->pointer "delete-event")
-                                  *delete-event-callback
-                                  *window)
+        (g_signal_connect *new-widget
+                          (string->pointer "delete-event")
+                          *delete-event-callback
+                          *window)
 
-        (schematic_signal_connect *new-widget
-                                  (string->pointer "response")
-                                  *response-callback
-                                  *window)
+        (g_signal_connect *new-widget
+                          (string->pointer "response")
+                          *response-callback
+                          *window)
         (gtk_widget_show *new-widget))
       (let ((*dialog-window (gtk_widget_get_gtk_window *widget)))
         (gtk_window_present *dialog-window))))
