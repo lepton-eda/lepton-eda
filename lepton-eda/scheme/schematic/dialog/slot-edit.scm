@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022 Lepton EDA Contributors
+;;; Copyright (C) 2022-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
   #:use-module (lepton attrib)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
 
   #:use-module (schematic ffi)
@@ -69,11 +70,11 @@
                                      (string->pointer numslots-value)
                                      (string->pointer slot-value))))
 
-      (schematic_signal_connect *widget
-                                (string->pointer "response")
-                                (procedure->pointer
-                                 void
-                                 (lambda (*widget response *window)
-                                   (slot-edit-dialog-response *widget response *window component))
-                                 (list '* int '*))
-                                *window))))
+      (g_signal_connect *widget
+                        (string->pointer "response")
+                        (procedure->pointer
+                         void
+                         (lambda (*widget response *window)
+                           (slot-edit-dialog-response *widget response *window component))
+                         (list '* int '*))
+                        *window))))
