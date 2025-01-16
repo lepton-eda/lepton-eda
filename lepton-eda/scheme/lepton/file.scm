@@ -50,10 +50,13 @@
   (define full-filename (canonicalize-path filename))
   (define *full-filename (string->pointer full-filename))
 
-  (and (true? (f_open *toplevel
-                      *page
-                      *full-filename
-                      flags
-                      **gerror
-                      *saved-cwd))
+  (define (open-file)
+    (true? (f_open *toplevel
+                   *page
+                   *full-filename
+                   flags
+                   **gerror
+                   *saved-cwd)))
+
+  (and (open-file)
        *page))
