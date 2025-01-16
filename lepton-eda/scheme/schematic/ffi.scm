@@ -422,7 +422,7 @@
             schematic_canvas_zoom_object
 
             schematic_preview_new
-            *schematic_preview_callback_realize
+            schematic_preview_callback_realize
             *schematic_preview_callback_button_press
             schematic_preview_get_active
             schematic_preview_get_buffer
@@ -822,7 +822,7 @@
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
-(define-lfc *schematic_preview_callback_realize)
+(define-lff schematic_preview_callback_realize void '(* *))
 (define-lfc *schematic_preview_callback_button_press)
 (define-lff schematic_preview_get_active int '(*))
 (define-lff schematic_preview_get_buffer '* '(*))

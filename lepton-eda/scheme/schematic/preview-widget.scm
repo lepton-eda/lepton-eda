@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2025 Lepton EDA Contributors
+;;; Copyright (C) 2022-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -148,12 +148,20 @@ buffer should be displayed, the widget displays the error message."
 (define *scroll-preview
   (procedure->pointer int scroll-preview '(* * *)))
 
+
+(define (realize-preview *widget *user-data)
+  (schematic_preview_callback_realize *widget *user-data))
+
+(define *realize-preview
+  (procedure->pointer void realize-preview '(* *)))
+
+
 ;;; The list of pairs (NAME . CALLBACK) for initialization of
 ;;; preview widgets.
 (define %signal-callback-list
   (list
    `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
-   `("realize" . ,*schematic_preview_callback_realize)
+   `("realize" . ,*realize-preview)
    `("button-press-event" . ,*schematic_preview_callback_button_press)
    `("configure-event" . ,*x_event_configure)
    `("scroll-event" . ,*scroll-preview)
