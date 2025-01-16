@@ -1118,6 +1118,10 @@ for *PAGE page will be created and set active."
                                            %null-pointer))))))
 
 
+(define (new-active-page *toplevel *page)
+  (schematic_window_find_new_current_page *toplevel *page))
+
+
 ;;; Closes *PAGE in *WINDOW.  The current page in *WINDOW is
 ;;; changed to the next valid page.  If necessary, a new untitled
 ;;; page is created (unless tabbed GUI is enabled: return NULL in
@@ -1140,7 +1144,7 @@ for *PAGE page will be created and set active."
   ;; the function.
   (let ((*new-current-page
          (if (equal? *page (lepton_toplevel_get_page_current *toplevel))
-             (schematic_window_find_new_current_page *toplevel *page)
+             (new-active-page *toplevel *page)
              %null-pointer)))
 
     (log! 'message
