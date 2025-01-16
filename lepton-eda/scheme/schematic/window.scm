@@ -1149,7 +1149,34 @@ for *PAGE page will be created and set active."
 
 
 (define (new-active-page *toplevel *page)
-  (schematic_window_find_new_current_page *toplevel *page))
+  (define *pages (lepton_toplevel_get_pages *toplevel))
+  ;; As it will delete current page select new current page first
+  ;; look up in page hierarchy.
+  (define id (lepton_page_get_up *page))
+  (define *new-active-page
+    (lepton_toplevel_search_page_by_id *pages id))
+
+  (define (prev-or-next all-items item)
+    (let ((rev-ls (cdr (memq item (reverse all-items)))))
+      (if (null? rev-ls)
+          (let ((ls (cdr (memq item all-items))))
+            (and (not (null? ls))
+                 (car ls)))
+          (car rev-ls))))
+
+  (if (null-pointer? *new-active-page)
+      ;; When no upper page in hierarchy found, find its previous
+      ;; or next page.
+      (let* ((page-ls (glist->list (lepton_list_get_glist *pages)
+                                   pointer->page))
+             (page (pointer->page *page))
+             (new-active-page (prev-or-next page-ls page)))
+        (if new-active-page
+            (page->pointer new-active-page)
+            ;; Need to add a new untitled page.
+            %null-pointer))
+      ;; Found a page upper in hierarchy.
+      *new-active-page))
 
 
 ;;; Closes *PAGE in *WINDOW.  The current page in *WINDOW is
