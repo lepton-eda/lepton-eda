@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,25 +87,6 @@ schematic_preview_get_page_filename (SchematicPreview *preview)
   g_return_val_if_fail (page != NULL, "");
 
   return lepton_page_get_filename (page);
-}
-
-
-/*! \brief Completes initialitation of the widget after realization.
- *  \par Function Description
- *  This function terminates the initialization of the preview widget
- *  after it has been realized.
- *
- *  \param [in] widget    The preview widget.
- *  \param [in] user_data Unused user data.
- */
-void
-schematic_preview_callback_realize (GtkWidget *widget,
-                                    gpointer user_data)
-{
-  g_return_if_fail (widget != NULL);
-
-  gtk_widget_grab_focus (widget);
-  schematic_canvas_zoom_extents (SCHEMATIC_CANVAS (widget), NULL);
 }
 
 

@@ -35,6 +35,7 @@
   #:use-module (lepton object)
 
   #:use-module (schematic canvas)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (init-preview-widget-signals))
@@ -149,8 +150,14 @@ buffer should be displayed, the widget displays the error message."
   (procedure->pointer int scroll-preview '(* * *)))
 
 
+;;; Complete the initialization of the preview *WIDGET after it
+;;; has been realized.  *USER-DATA is currently unused.
 (define (realize-preview *widget *user-data)
-  (schematic_preview_callback_realize *widget *user-data))
+  (when (null-pointer? *widget)
+    (error "NULL preview widget."))
+
+  (gtk_widget_grab_focus *widget)
+  (schematic_canvas_zoom_extents *widget %null-pointer))
 
 (define *realize-preview
   (procedure->pointer void realize-preview '(* *)))

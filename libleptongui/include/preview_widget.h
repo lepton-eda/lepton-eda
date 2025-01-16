@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -44,9 +44,6 @@ gboolean
 schematic_preview_callback_button_press (GtkWidget *widget,
                                          GdkEventButton *event,
                                          gpointer user_data);
-void
-schematic_preview_callback_realize (GtkWidget *widget,
-                                    gpointer user_data);
 gboolean
 schematic_preview_get_active (GtkWidget *preview);
 
