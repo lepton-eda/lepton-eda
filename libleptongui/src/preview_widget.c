@@ -336,11 +336,11 @@ schematic_preview_finalize (GObject *self)
  *  \return The \a active field.
  */
 gboolean
-schematic_preview_get_active (GtkWidget *preview)
+schematic_preview_get_active (SchematicPreview *preview)
 {
   g_return_val_if_fail (preview != NULL, FALSE);
 
-  return SCHEMATIC_PREVIEW (preview)->active;
+  return preview->active;
 }
 
 

@@ -45,7 +45,7 @@ schematic_preview_callback_button_press (GtkWidget *widget,
                                          GdkEventButton *event,
                                          gpointer user_data);
 gboolean
-schematic_preview_get_active (GtkWidget *preview);
+schematic_preview_get_active (SchematicPreview *preview);
 
 gchar*
 schematic_preview_get_buffer (GtkWidget *preview);
