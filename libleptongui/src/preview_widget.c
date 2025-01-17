@@ -111,7 +111,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
     schematic_preview_get_window (preview);
   gint wx, wy;
 
-  if (!preview->active) {
+  if (!schematic_preview_get_active (preview))
+  {
     return TRUE;
   }
 
