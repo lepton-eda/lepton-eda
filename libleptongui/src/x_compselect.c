@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -591,7 +591,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 
   /* update the attributes with the toplevel of the preview widget*/
   w_current =
-    schematic_preview_get_window (GTK_WIDGET (compselect->preview));
+    schematic_preview_get_window (compselect->preview);
   update_attributes_model (compselect, w_current);
 
   /* signal a component has been selected to parent of dialog */

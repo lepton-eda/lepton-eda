@@ -377,9 +377,9 @@ schematic_preview_get_filename (GtkWidget *preview)
  *  \return The field.
  */
 SchematicWindow*
-schematic_preview_get_window (GtkWidget *preview)
+schematic_preview_get_window (SchematicPreview *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);
 
-  return SCHEMATIC_PREVIEW (preview)->window;
+  return preview->window;
 }
