@@ -107,7 +107,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
                                          gpointer user_data)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
-  SchematicWindow *preview_w_current = preview->window;
+  SchematicWindow *preview_w_current =
+    schematic_preview_get_window (preview);
   gint wx, wy;
 
   if (!preview->active) {
