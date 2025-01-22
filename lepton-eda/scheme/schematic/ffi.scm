@@ -96,6 +96,7 @@
             o_circle_start
 
             o_component_place_changed_run_hook
+            o_component_translate_all
 
             schematic_delete
             schematic_delete_dialog
@@ -304,7 +305,6 @@
             x_window_save_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
-            x_window_translate_response
             x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
@@ -624,6 +624,8 @@
             schematic_multiattrib_widget_update
 
             x_print
+
+            schematic_translate_widget_get_value
 
             a_zoom
 
@@ -989,7 +991,6 @@
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
-(define-lff x_window_translate_response void (list '* int '*))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
@@ -1139,6 +1140,7 @@
 
 ;;; o_component.c
 (define-lff o_component_place_changed_run_hook void '(*))
+(define-lff o_component_translate_all void (list '* int))
 
 ;;; delete_dialog.c
 (define-lff schematic_delete void '(* *))
@@ -1330,6 +1332,9 @@
 (define-lff lepton_slot_update_object void '(*))
 
 ;;; x_tabs.c
+
+;;; translate_widget.c
+(define-lff schematic_translate_widget_get_value int '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_savestate void (list '* '* int))

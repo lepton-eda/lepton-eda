@@ -153,24 +153,6 @@ x_window_show_text (GtkWidget *widget,
 }
 
 
-void
-x_window_translate_response (GtkWidget *widget,
-                             gint response,
-                             SchematicWindow *w_current)
-{
-  if (response == GTK_RESPONSE_OK) {
-    o_component_translate_all (w_current,
-                               schematic_translate_widget_get_value (SCHEMATIC_TRANSLATE_WIDGET (widget)));
-  }
-
-  i_set_state (w_current, SELECT);
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
-
 /*! \brief Creates a new main window widget.
  *  \par Function Description
  * Creates a new lepton-schematic window and initializes some of

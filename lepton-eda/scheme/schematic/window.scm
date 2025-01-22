@@ -1762,7 +1762,17 @@ for *PAGE page will be created and set active."
 
 
 (define (translate-response *widget response-id *window)
-  (x_window_translate_response *widget response-id *window))
+  (when (eq? (gtk-response->symbol response-id) 'ok)
+    (o_component_translate_all
+     *window
+     (schematic_translate_widget_get_value *widget)))
+
+  (i_set_state *window (symbol->action-mode 'select-mode))
+
+  (gtk_widget_grab_focus
+   (schematic_window_get_drawing_area *window))
+  (gtk_widget_hide *widget))
+
 
 (define *callback-translate-response
   (procedure->pointer void translate-response (list '* int '*)))
