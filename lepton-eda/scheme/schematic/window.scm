@@ -1761,6 +1761,13 @@ for *PAGE page will be created and set active."
   *window)
 
 
+(define (translate-response *widget response-id *window)
+  (x_window_translate_response *widget response-id *window))
+
+(define *callback-translate-response
+  (procedure->pointer void translate-response (list '* int '*)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1872,7 +1879,7 @@ GtkApplication structure of the program (when compiled with
              (schematic_window_create_translate_widget *window *work-box)))
         (g_signal_connect *translate-widget
                           (string->pointer "response")
-                          *x_window_translate_response
+                          *callback-translate-response
                           *window))
       ;; Setup various widgets.
       (x_widgets_init)
