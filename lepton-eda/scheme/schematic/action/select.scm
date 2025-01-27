@@ -27,7 +27,8 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (continue-selection
+  #:export (continue-box-selection
+            continue-selection
             finish-box-selection
             finish-selection
             start-box-selection
@@ -57,6 +58,23 @@ current coordinate."
 
       (set-action-mode! 'box-select-mode #:window window)
       (i_action_start *window))))
+
+
+(define (continue-box-selection window x y)
+  "Continue box selection in WINDOW.  (X . Y) is the current
+coordinate."
+  (define *window (check-window window 1))
+
+  (check-action-state window)
+
+  (when (true? (schematic_window_get_rubber_visible *window))
+    (o_select_box_invalidate_rubber *window))
+
+  (schematic_window_set_second_wx *window x)
+  (schematic_window_set_second_wy *window y)
+
+  (o_select_box_invalidate_rubber *window)
+  (schematic_window_set_rubber_visible *window 1))
 
 
 (define (finish-box-selection window x y)

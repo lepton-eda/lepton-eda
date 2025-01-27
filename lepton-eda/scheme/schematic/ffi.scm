@@ -605,7 +605,6 @@
             schematic_newtext_dialog_textview_select_all
 
             o_select_box_invalidate_rubber
-            o_select_box_motion
             o_select_box_search
             o_select_return_first_object
             o_select_selected
@@ -1388,7 +1387,6 @@
 
 ;;; selection.c
 (define-lff o_select_box_invalidate_rubber void '(*))
-(define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_box_search void '(*))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
