@@ -218,16 +218,16 @@ o_select_box_start (SchematicWindow *w_current,
 
   int diff_x, diff_y, dist;
 
-  diff_x = abs(w_current->first_wx - w_x);
-  diff_y = abs(w_current->first_wy - w_y);
+  diff_x = abs (schematic_window_get_first_wx (w_current) - w_x);
+  diff_y = abs (schematic_window_get_first_wy (w_current) - w_y);
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
   dist = schematic_canvas_SCREENabs (page_view, MAX(diff_x, diff_y));
 
   if (dist >= 10) {
-    w_current->second_wx = w_x;
-    w_current->second_wy = w_y;
+    schematic_window_set_second_wx (w_current, w_x);
+    schematic_window_set_second_wy (w_current, w_y);
 
     i_set_state (w_current, SBOX);
     i_action_start (w_current);
