@@ -489,10 +489,6 @@ o_select_start (SchematicWindow *w_current,
                 int x,
                 int y);
 void
-o_select_end (SchematicWindow *w_current,
-              int x,
-              int y);
-void
 o_select_motion (SchematicWindow *w_current,
                  int x,
                  int y);

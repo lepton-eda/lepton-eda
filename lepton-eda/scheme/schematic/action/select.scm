@@ -18,10 +18,27 @@
 
 
 (define-module (schematic action select)
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi check-args)
+
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (finish-selection))
 
 
-(define (finish-selection *window x y)
-  (o_select_end *window x y))
+(define (finish-selection window x y)
+  "Finish the process of selection in WINDOW at the world
+coordinate (X . Y) where the function tries to find an object and
+select it.  The function is intended to be called by releasing the
+left mouse button."
+  (define *window (check-window window 1))
+
+  (check-integer x 2)
+  (check-integer y 3)
+  (check-action-state window)
+
+  ;; Look for objects to select.
+  (o_find_object *window x y TRUE)
+  (i_action_stop *window))

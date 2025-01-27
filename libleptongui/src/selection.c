@@ -43,7 +43,7 @@
  *  Chooses the way of how to start the selection process. If no
  *  grip was found at the given coordinates the function sets \a
  *  inside_action of \a w_current to TRUE in order to force other
- *  functions (\a o_select_motion() or \a o_select_end()) to
+ *  functions (\a o_select_motion() or \a finish-selection()) to
  *  decide that.  Otherwise, it switches on the GRIPS mode for
  *  working with the grip found.
  *
@@ -69,32 +69,6 @@ o_select_start (SchematicWindow *w_current,
     w_current->first_wx = w_current->second_wx = wx;
     w_current->first_wy = w_current->second_wy = wy;
   }
-}
-
-/*! \brief End the process of selection
- *  \par Function Description
- *  Finishes the process of selection if the \a o_select_start()
- *  or \a o_select_motion() functions haven't defined other
- *  functions to finish it.  In this case the function tries to
- *  find an object under the mouse pointer and select it.
- *
- *  The function is intended to be called by releasing the left
- *  mouse button.
- *
- *  \param [in] w_current The SchematicWindow structure.
- *  \param [in] wx        The world X coordinate.
- *  \param [in] wy        The world Y coordinate.
- */
-void
-o_select_end (SchematicWindow *w_current,
-              int wx,
-              int wy)
-{
-  g_assert (schematic_window_get_inside_action (w_current) != 0);
-
-  /* look for objects to select */
-  o_find_object(w_current, wx, wy, TRUE);
-  i_action_stop (w_current);
 }
 
 

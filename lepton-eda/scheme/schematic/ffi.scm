@@ -603,7 +603,6 @@
 
             o_select_box_end
             o_select_box_motion
-            o_select_end
             o_select_motion
             o_select_return_first_object
             o_select_selected
@@ -1385,7 +1384,6 @@
 ;;; selection.c
 (define-lff o_select_box_end void (list '* int int))
 (define-lff o_select_box_motion void (list '* int int))
-(define-lff o_select_end void (list '* int int))
 (define-lff o_select_motion void (list '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
