@@ -35,6 +35,22 @@
             start-selection))
 
 
+;;; Invalidate the area of the box selection in WINDOW.
+(define (invalidate-selection-box window)
+  (define *window (check-window window 1))
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (schematic_canvas_invalidate_world_rect
+   *canvas
+   (schematic_window_get_first_wx *window)
+   (schematic_window_get_first_wy *window)
+   (schematic_window_get_second_wx *window)
+   (schematic_window_get_second_wy *window)))
+
+
 (define (start-box-selection window x y)
   "Start the process of box selection in WINDOW.  (X . Y) is the
 current coordinate."
@@ -68,12 +84,12 @@ coordinate."
   (check-action-state window)
 
   (when (true? (schematic_window_get_rubber_visible *window))
-    (o_select_box_invalidate_rubber *window))
+    (invalidate-selection-box window))
 
   (schematic_window_set_second_wx *window x)
   (schematic_window_set_second_wy *window y)
 
-  (o_select_box_invalidate_rubber *window)
+  (invalidate-selection-box window)
   (schematic_window_set_rubber_visible *window 1))
 
 
@@ -84,7 +100,7 @@ unused value of the current world coordinate."
 
   (check-action-state window)
 
-  (o_select_box_invalidate_rubber *window)
+  (invalidate-selection-box window)
   (schematic_window_set_rubber_visible *window 0)
 
   (o_select_box_search *window)

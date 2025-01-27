@@ -494,9 +494,6 @@ o_select_object (SchematicWindow *w_current,
                  int type,
                  int count);
 void
-o_select_box_invalidate_rubber (SchematicWindow *w_current);
-
-void
 o_select_box_search (SchematicWindow *w_current);
 
 void
