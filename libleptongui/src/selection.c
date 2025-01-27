@@ -62,18 +62,21 @@ o_select_motion (SchematicWindow *w_current,
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
+  int first_wx = schematic_window_get_first_wx (w_current);
+  int first_wy = schematic_window_get_first_wy (w_current);
+
   /* Check if a mod key is pressed or there is no selected object
    * under the cursor */
   if (schematic_window_get_shift_key_pressed (w_current)
       || schematic_window_get_control_key_pressed (w_current)
-      || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
-          && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
+      || (!o_find_selected_object (w_current, first_wx, first_wy)
+          && (!o_find_object (w_current, first_wx, first_wy, TRUE)
               || !o_select_selected(w_current)))) {
     /* Start drawing a selection box to select objects */
     o_select_box_start(w_current, wx, wy);
   } else {
     /* Start moving the selected object(s) */
-    o_move_start(w_current, w_current->first_wx, w_current->first_wy);
+    o_move_start (w_current, first_wx, first_wy);
   }
 }
 
