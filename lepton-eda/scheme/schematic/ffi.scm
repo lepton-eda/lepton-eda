@@ -417,6 +417,7 @@
             schematic_canvas_pan_motion
             schematic_canvas_pan_start
             schematic_canvas_redraw
+            schematic_canvas_SCREENabs
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_setup_drawing_area
             schematic_canvas_setup_drawing_area_events
@@ -606,7 +607,6 @@
             o_select_box_invalidate_rubber
             o_select_box_motion
             o_select_box_search
-            o_select_box_start
             o_select_return_first_object
             o_select_selected
             o_select_unselect_all
@@ -830,6 +830,7 @@
 (define-lff schematic_canvas_pan_motion void (list '* int int int))
 (define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff schematic_canvas_redraw void '(* * *))
+(define-lff schematic_canvas_SCREENabs int (list '* int))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_setup_drawing_area void '(*))
 (define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
@@ -1389,7 +1390,6 @@
 (define-lff o_select_box_invalidate_rubber void '(*))
 (define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_box_search void '(*))
-(define-lff o_select_box_start void (list '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))

@@ -18,6 +18,8 @@
 
 
 (define-module (schematic action select)
+  #:use-module (system foreign)
+
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
 
@@ -28,7 +30,33 @@
   #:export (continue-selection
             finish-box-selection
             finish-selection
+            start-box-selection
             start-selection))
+
+
+(define (start-box-selection window x y)
+  "Start the process of box selection in WINDOW.  (X . Y) is the
+current coordinate."
+  (define *window (check-window window 1))
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (check-integer x 2)
+  (check-integer y 3)
+
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  ;; If we are still close to the button press location, then
+  ;; don't enter the selection box mode.
+  (let* ((diff-x (abs (- (schematic_window_get_first_wx *window) x)))
+         (diff-y (abs (- (schematic_window_get_first_wy *window) y)))
+         (dist (schematic_canvas_SCREENabs *canvas (max diff-x diff-y))))
+    (when (>= dist 10)
+      (schematic_window_set_second_wx *window x)
+      (schematic_window_set_second_wy *window y)
+
+      (set-action-mode! 'box-select-mode #:window window)
+      (i_action_start *window))))
 
 
 (define (finish-box-selection window x y)
@@ -97,7 +125,7 @@ the mouse while the left mouse button is pressed."
                (or (false? (o_find_object *window wx1 wy1 TRUE))
                    (false? (o_select_selected *window)))))
       ;; Start drawing a selection box to select objects.
-      (o_select_box_start *window x y)
+      (start-box-selection window x y)
 
       ;; Start moving the selected object(s).
       (o_move_start *window wx1 wy1)))

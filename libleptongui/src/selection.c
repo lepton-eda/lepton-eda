@@ -201,39 +201,6 @@ o_select_object (SchematicWindow *w_current,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_select_box_start (SchematicWindow *w_current,
-                    int w_x,
-                    int w_y)
-{
-  g_return_if_fail (w_current != NULL);
-
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  int diff_x, diff_y, dist;
-
-  diff_x = abs (schematic_window_get_first_wx (w_current) - w_x);
-  diff_y = abs (schematic_window_get_first_wy (w_current) - w_y);
-
-  /* if we are still close to the button press location,
-     then don't enter the selection box mode */
-  dist = schematic_canvas_SCREENabs (page_view, MAX(diff_x, diff_y));
-
-  if (dist >= 10) {
-    schematic_window_set_second_wx (w_current, w_x);
-    schematic_window_set_second_wy (w_current, w_y);
-
-    i_set_state (w_current, SBOX);
-    i_action_start (w_current);
-  }
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
