@@ -66,8 +66,10 @@ o_select_start (SchematicWindow *w_current,
   {
     /* now go into normal SELECT */
     i_action_start (w_current);
-    w_current->first_wx = w_current->second_wx = wx;
-    w_current->first_wy = w_current->second_wy = wy;
+    schematic_window_set_first_wx (w_current, wx);
+    schematic_window_set_first_wy (w_current, wy);
+    schematic_window_set_second_wx (w_current, wx);
+    schematic_window_set_second_wy (w_current, wy);
   }
 }
 
