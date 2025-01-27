@@ -23,10 +23,12 @@
 
 #include "schematic.h"
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Schedule redrawing an arc
  *  \par Function Description
+ *   Redraw the rectangle belonging to an arc during its creation
+ *   or change.
  *
+ *  \param [in] w_current The schematic window.
  */
 void
 o_arc_invalidate_rubber (SchematicWindow *w_current)
