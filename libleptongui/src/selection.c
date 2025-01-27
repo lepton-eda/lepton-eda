@@ -215,10 +215,10 @@ o_select_box_invalidate_rubber (SchematicWindow *w_current)
   g_return_if_fail (page_view != NULL);
 
   schematic_canvas_invalidate_world_rect (page_view,
-                                          w_current->first_wx,
-                                          w_current->first_wy,
-                                          w_current->second_wx,
-                                          w_current->second_wy);
+                                          schematic_window_get_first_wx (w_current),
+                                          schematic_window_get_first_wy (w_current),
+                                          schematic_window_get_second_wx (w_current),
+                                          schematic_window_get_second_wy (w_current));
 }
 
 
