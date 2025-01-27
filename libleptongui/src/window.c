@@ -3231,3 +3231,40 @@ schematic_window_set_zoom_with_pan (SchematicWindow *w_current,
 
   w_current->zoom_with_pan = val;
 }
+
+
+/*! \brief Get schematic window's field \a select_slack_pixels.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a select_slack_pixels field of the
+ *  schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field.
+ */
+int
+schematic_window_get_select_slack_pixels (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->select_slack_pixels;
+}
+
+
+/*! \brief Set schematic window's field \a select_slack_pixels.
+ *
+ *  \par Function Description
+ *  Sets the \a select_slack_pixels field of the schematic window
+ *  to the given value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] pixels The new value of the field.
+ */
+void
+schematic_window_set_select_slack_pixels (SchematicWindow *w_current,
+                                          int pixels)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->select_slack_pixels = pixels;
+}
