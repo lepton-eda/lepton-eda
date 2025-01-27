@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2023 Lepton EDA Contributors
+;;; Copyright (C) 2022-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@
             symbol->action-mode
             action-mode
             set-action-mode!
-            in-action?))
+            in-action?
+            check-action-state))
 
 
 (define* (in-action? #:optional (window (current-window)))
@@ -40,6 +41,11 @@ current window, and #f otherwise.  If optional WINDOW argument is
 specified, the result corresponds to the state of that window
 instead of the current one."
   (true? (schematic_window_get_inside_action (window->pointer window))))
+
+
+(define-syntax-rule (check-action-state window)
+  (unless (in-action? window)
+    (error "The current window is not in action.")))
 
 
 (define (action-mode->symbol mode)
