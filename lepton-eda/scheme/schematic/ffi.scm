@@ -115,6 +115,7 @@
             o_edit_show_specific_text
 
             o_find_object
+            o_find_selected_object
 
             o_grips_cancel
             o_grips_end
@@ -604,7 +605,7 @@
 
             o_select_box_end
             o_select_box_motion
-            o_select_motion
+            o_select_box_start
             o_select_return_first_object
             o_select_selected
             o_select_unselect_all
@@ -1200,6 +1201,7 @@
 
 ;;; o_find.c
 (define-lff o_find_object int (list '* int int int))
+(define-lff o_find_selected_object int (list '* int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))
@@ -1385,7 +1387,7 @@
 ;;; selection.c
 (define-lff o_select_box_end void (list '* int int))
 (define-lff o_select_box_motion void (list '* int int))
-(define-lff o_select_motion void (list '* int int))
+(define-lff o_select_box_start void (list '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))

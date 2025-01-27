@@ -905,7 +905,7 @@ zooming."
                               ('grips-mode (o_grips_motion *window x y))
                               ('box-select-mode (o_select_box_motion *window unsnapped-x unsnapped-y))
                               ('zoom-box-mode (zoom-box-motion window unsnapped-x unsnapped-y))
-                              ('select-mode (o_select_motion *window x y))
+                              ('select-mode (continue-selection window x y))
                               (_ FALSE)))
 
                         ;; Not inside action.

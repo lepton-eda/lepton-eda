@@ -485,10 +485,6 @@ o_place_mirror (SchematicWindow *w_current);
 
 /* selection.c */
 void
-o_select_motion (SchematicWindow *w_current,
-                 int x,
-                 int y);
-void
 o_select_run_hooks (SchematicWindow *w_current,
                     LeptonObject *o_current,
                     int flag);

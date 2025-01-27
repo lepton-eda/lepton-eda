@@ -25,7 +25,8 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (finish-selection
+  #:export (continue-selection
+            finish-selection
             start-selection))
 
 
@@ -51,6 +52,38 @@ pressing the left mouse button."
     (schematic_window_set_first_wy *window y)
     (schematic_window_set_second_wx *window x)
     (schematic_window_set_second_wy *window y)))
+
+
+(define (continue-selection window x y)
+  "Continue selection at world coordinate point (X . Y) in WINDOW.
+The function determines whether objects have to be selected or
+moved.  Checks if the Shift or Control keys are pressed, (that
+means the user definitely wants to drag out a selection box), or
+there are no selected objects under the cursor.  In that case the
+function starts drawing the selection box.  Otherwise, it looks
+for the objects that have been or could be selected and starts
+moving them.  The function is intended to be called by motion of
+the mouse while the left mouse button is pressed."
+  (define *window (check-window window 1))
+  (define wx1 (schematic_window_get_first_wx *window))
+  (define wy1 (schematic_window_get_first_wy *window))
+
+  (check-integer x 2)
+  (check-integer y 3)
+  (check-action-state window)
+
+  ;; Check if a mod key is pressed or there is no selected object
+  ;; under the cursor.
+  (if (or (true? (schematic_window_get_shift_key_pressed *window))
+          (true? (schematic_window_get_control_key_pressed *window))
+          (and (false? (o_find_selected_object *window wx1 wy1))
+               (or (false? (o_find_object *window wx1 wy1 TRUE))
+                   (false? (o_select_selected *window)))))
+      ;; Start drawing a selection box to select objects.
+      (o_select_box_start *window x y)
+
+      ;; Start moving the selected object(s).
+      (o_move_start *window wx1 wy1)))
 
 
 (define (finish-selection window x y)
