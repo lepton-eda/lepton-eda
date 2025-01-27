@@ -26,8 +26,25 @@
   #:use-module (schematic window foreign)
 
   #:export (continue-selection
+            finish-box-selection
             finish-selection
             start-selection))
+
+
+(define (finish-box-selection window x y)
+  "Finish the process of box selection in WINDOW.  (X . Y) is the
+unused value of the current world coordinate."
+  (define *window (check-window window 1))
+
+  (check-action-state window)
+
+  (o_select_box_invalidate_rubber *window)
+  (schematic_window_set_rubber_visible *window 0)
+
+  (o_select_box_search *window)
+
+  (set-action-mode! 'select-mode #:window window)
+  (i_action_stop *window))
 
 
 (define (start-selection window x y)

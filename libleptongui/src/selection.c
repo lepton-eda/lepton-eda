@@ -234,26 +234,6 @@ o_select_box_start (SchematicWindow *w_current,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_select_box_end (SchematicWindow *w_current,
-                  int w_x,
-                  int w_y)
-{
-  g_assert (schematic_window_get_inside_action (w_current) != 0);
-
-  o_select_box_invalidate_rubber (w_current);
-  schematic_window_set_rubber_visible (w_current, 0);
-
-  o_select_box_search(w_current);
-
-  i_set_state(w_current, SELECT);
-  i_action_stop (w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

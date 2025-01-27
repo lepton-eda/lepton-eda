@@ -549,7 +549,7 @@ zooming."
                  (match current-action-mode
                    ('grips-mode (o_grips_end *window))
                    ('path-mode (o_path_end *window x y))
-                   ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
+                   ('box-select-mode (finish-box-selection window unsnapped-x unsnapped-y))
                    ('select-mode (finish-selection window unsnapped-x unsnapped-y))
                    ('zoom-box-mode (zoom-box-end window unsnapped-x unsnapped-y))
                    (_ FALSE)))))
