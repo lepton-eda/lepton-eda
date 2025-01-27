@@ -48,6 +48,7 @@
   #:use-module (schematic action edit)
   #:use-module (schematic action mirror)
   #:use-module (schematic action rotate)
+  #:use-module (schematic action select)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
   #:use-module (schematic callback cancel)
@@ -549,7 +550,7 @@ zooming."
                    ('grips-mode (o_grips_end *window))
                    ('path-mode (o_path_end *window x y))
                    ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
-                   ('select-mode (o_select_end *window unsnapped-x unsnapped-y))
+                   ('select-mode (finish-selection *window unsnapped-x unsnapped-y))
                    ('zoom-box-mode (zoom-box-end window unsnapped-x unsnapped-y))
                    (_ FALSE)))))
 
