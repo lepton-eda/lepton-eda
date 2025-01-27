@@ -38,41 +38,6 @@
 
 #include "schematic.h"
 
-/*! \brief Start the process of selection
- *  \par Function Description
- *  Chooses the way of how to start the selection process. If no
- *  grip was found at the given coordinates the function sets \a
- *  inside_action of \a w_current to TRUE in order to force other
- *  functions (\a o_select_motion() or \a finish-selection()) to
- *  decide that.  Otherwise, it switches on the GRIPS mode for
- *  working with the grip found.
- *
- *  The function is intended to be called by pressing the left
- *  mouse button.
- *
- *  \param [in] w_current The SchematicWindow structure.
- *  \param [in] wx        The world X coordinate.
- *  \param [in] wy        The world Y coordinate.
- */
-void
-o_select_start (SchematicWindow *w_current,
-                int wx,
-                int wy)
-{
-  /* look for grips or fall through if not enabled */
-  o_grips_start(w_current, wx, wy);
-
-  if (schematic_window_get_action_mode (w_current) != GRIPS)
-  {
-    /* now go into normal SELECT */
-    i_action_start (w_current);
-    schematic_window_set_first_wx (w_current, wx);
-    schematic_window_set_first_wy (w_current, wy);
-    schematic_window_set_second_wx (w_current, wx);
-    schematic_window_set_second_wy (w_current, wy);
-  }
-}
-
 
 /*! \brief Determine whether objects have to be selected or moved
  *  \par Function Description

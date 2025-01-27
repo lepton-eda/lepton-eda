@@ -718,7 +718,7 @@ zooming."
                        ('picture-mode (o_picture_start *window x y))
                        ('pin-mode (o_pin_start *window x y))
                        ('zoom-box-mode (zoom-box-start window unsnapped-x unsnapped-y))
-                       ('select-mode (o_select_start *window x y))
+                       ('select-mode (start-selection window x y))
                        ((or 'copy-mode 'multiple-copy-mode) (start-copy *window x y))
                        ('move-mode (o_move_start *window x y))
                        (_ FALSE)))

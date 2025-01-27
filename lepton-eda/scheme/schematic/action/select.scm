@@ -25,7 +25,32 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (finish-selection))
+  #:export (finish-selection
+            start-selection))
+
+
+(define (start-selection window x y)
+  "Choose the way of how to start the selection process.  If no grip
+was found at the given world coordinate (X . Y) the function
+starts an action in WINDOW in order to force other function to
+decide that.  Otherwise, it switches on the grips mode for working
+with the grip found.  The function is intended to be called by
+pressing the left mouse button."
+  (define *window (check-window window 1))
+
+  (check-integer x 2)
+  (check-integer y 3)
+
+  ;; Look for grips or fall through if not enabled.
+  (o_grips_start *window x y)
+
+  (unless (eq? (action-mode window) 'grips-mode)
+    ;; Now go into normal select mode.
+    (i_action_start *window)
+    (schematic_window_set_first_wx *window x)
+    (schematic_window_set_first_wy *window y)
+    (schematic_window_set_second_wx *window x)
+    (schematic_window_set_second_wy *window y)))
 
 
 (define (finish-selection window x y)

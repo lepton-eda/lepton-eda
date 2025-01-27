@@ -119,6 +119,7 @@
             o_grips_cancel
             o_grips_end
             o_grips_motion
+            o_grips_start
 
             o_line_end
             o_line_invalidate_rubber
@@ -606,7 +607,6 @@
             o_select_motion
             o_select_return_first_object
             o_select_selected
-            o_select_start
             o_select_unselect_all
 
             o_slot_end
@@ -1205,6 +1205,7 @@
 (define-lff o_grips_cancel void '(*))
 (define-lff o_grips_end void '(*))
 (define-lff o_grips_motion void (list '* int int))
+(define-lff o_grips_start void (list '* int int))
 
 ;;; o_line.c
 (define-lff o_line_end void (list '* int int))
@@ -1387,7 +1388,6 @@
 (define-lff o_select_motion void (list '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
-(define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
 
 ;;; o_slot.c
