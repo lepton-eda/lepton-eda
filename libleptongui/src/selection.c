@@ -218,11 +218,15 @@ o_select_box_search (SchematicWindow *w_current)
   const GList *iter;
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
+  int first_wx = schematic_window_get_first_wx (w_current);
+  int first_wy = schematic_window_get_first_wy (w_current);
+  int second_wx = schematic_window_get_second_wx (w_current);
+  int second_wy = schematic_window_get_second_wy (w_current);
 
-  left = MIN(w_current->first_wx, w_current->second_wx);
-  right = MAX(w_current->first_wx, w_current->second_wx);
-  top = MIN(w_current->first_wy, w_current->second_wy);
-  bottom = MAX(w_current->first_wy, w_current->second_wy);
+  left = MIN (first_wx, second_wx);
+  right = MAX (first_wx, second_wx);
+  top = MIN (first_wy, second_wy);
+  bottom = MAX (first_wy, second_wy);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
