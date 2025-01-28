@@ -40,7 +40,16 @@
 
 
 (define (find-object *window x y)
-  (o_find_object *window x y))
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (let ((slack (schematic_canvas_WORLDabs
+                *canvas
+                (schematic_window_get_select_slack_pixels *window))))
+
+    (o_find_object *window x y slack)))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

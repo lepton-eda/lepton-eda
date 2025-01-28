@@ -137,23 +137,19 @@ find_single_object (SchematicWindow *w_current,
  *  \param [in] w_current         The SchematicWindow object.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
+ *  \param [in] w_slack The number of slack pixels around the
+ *                      object defining the area in which it still
+ *                      can be selected.
  *  \returns TRUE if the object was hit at the given coordinates,
  *           otherwise FALSE.
  */
 gboolean
 o_find_object (SchematicWindow *w_current,
                int w_x,
-               int w_y)
+               int w_y,
+               int w_slack)
 {
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_val_if_fail (page_view != NULL, FALSE);
-
-  int w_slack;
   const GList *iter = NULL;
-
-  w_slack =
-    schematic_canvas_WORLDabs (page_view,
-                               schematic_window_get_select_slack_pixels (w_current));
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
