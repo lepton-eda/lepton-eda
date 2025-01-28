@@ -40,12 +40,12 @@
  *
  *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
-static gboolean
-is_object_hit (SchematicWindow *w_current,
-               LeptonObject *object,
-               int w_x,
-               int w_y,
-               int w_slack)
+gboolean
+schematic_selection_is_object_hit (SchematicWindow *w_current,
+                                   LeptonObject *object,
+                                   int w_x,
+                                   int w_y,
+                                   int w_slack)
 {
   int left, top, right, bottom;
 
@@ -107,7 +107,7 @@ find_single_object (SchematicWindow *w_current,
                     int w_y,
                     int w_slack)
 {
-  if (!is_object_hit (w_current, object, w_x, w_y, w_slack))
+  if (!schematic_selection_is_object_hit (w_current, object, w_x, w_y, w_slack))
     return FALSE;
 
   /* FIXME: should this be moved to o_select_object()? (Werner) */
@@ -233,7 +233,7 @@ o_find_selected_object (SchematicWindow *w_current,
        s_current != NULL; s_current = g_list_next (s_current)) {
     LeptonObject *o_current = (LeptonObject*) s_current->data;
 
-    if (is_object_hit (w_current, o_current, w_x, w_y, w_slack))
+    if (schematic_selection_is_object_hit (w_current, o_current, w_x, w_y, w_slack))
       return TRUE;
   }
 
