@@ -98,7 +98,6 @@ is_object_hit (SchematicWindow *w_current,
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack           The slack applied to the hit-test.
- *  \param [in] change_selection  Whether to select the found object or not.
  *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
 static gboolean
@@ -106,19 +105,16 @@ find_single_object (SchematicWindow *w_current,
                     LeptonObject *object,
                     int w_x,
                     int w_y,
-                    int w_slack,
-                    int change_selection)
+                    int w_slack)
 {
   if (!is_object_hit (w_current, object, w_x, w_y, w_slack))
     return FALSE;
 
-  if (change_selection) {
-    /* FIXME: should this be moved to o_select_object()? (Werner) */
-    if (lepton_object_is_net (object) && w_current->net_selection_mode)
-      o_select_connected_nets (w_current, object);
-    else
-      o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
-  }
+  /* FIXME: should this be moved to o_select_object()? (Werner) */
+  if (lepton_object_is_net (object) && w_current->net_selection_mode)
+    o_select_connected_nets (w_current, object);
+  else
+    o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
 
   LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   LeptonPage *active_page = toplevel->page_current;
@@ -178,8 +174,7 @@ o_find_object (SchematicWindow *w_current,
   /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (find_single_object (w_current, o_current,
-                            w_x, w_y, w_slack, TRUE))
+    if (find_single_object (w_current, o_current, w_x, w_y, w_slack))
     {
       return TRUE;
     }
@@ -190,8 +185,7 @@ o_find_object (SchematicWindow *w_current,
   for (iter = lepton_page_objects (active_page);
        iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (find_single_object (w_current, o_current,
-                            w_x, w_y, w_slack, TRUE))
+    if (find_single_object (w_current, o_current, w_x, w_y, w_slack))
     {
       return TRUE;
     }
