@@ -154,7 +154,9 @@ o_find_object (SchematicWindow *w_current,
   int w_slack;
   const GList *iter = NULL;
 
-  w_slack = schematic_canvas_WORLDabs (page_view, w_current->select_slack_pixels);
+  w_slack =
+    schematic_canvas_WORLDabs (page_view,
+                               schematic_window_get_select_slack_pixels (w_current));
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
