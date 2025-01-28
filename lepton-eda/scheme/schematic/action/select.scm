@@ -47,9 +47,11 @@
 
   (let ((slack (schematic_canvas_WORLDabs
                 *canvas
-                (schematic_window_get_select_slack_pixels *window))))
+                (schematic_window_get_select_slack_pixels *window)))
+        (*objects (lepton_page_objects
+                   (schematic_window_get_active_page *window))))
 
-    (o_find_object *window x y slack)))
+    (o_find_object *window *objects x y slack)))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

@@ -1205,7 +1205,7 @@
 
 ;;; o_find.c
 (define-lff schematic_selection_is_object_hit int (list '* '* int int int))
-(define-lff o_find_object int (list '* int int int))
+(define-lff o_find_object int (list '* '* int int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))

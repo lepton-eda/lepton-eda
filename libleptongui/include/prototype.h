@@ -268,6 +268,7 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
                                    int w_slack);
 gboolean
 o_find_object (SchematicWindow *w_current,
+               const GList *objects,
                int x,
                int y,
                int w_slack);

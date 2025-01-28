@@ -135,6 +135,7 @@ find_single_object (SchematicWindow *w_current,
  *  through any objects on top of each other at this location.
  *
  *  \param [in] w_current         The SchematicWindow object.
+ *  \param [in] objects The list of objects of the active page.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack The number of slack pixels around the
@@ -145,13 +146,12 @@ find_single_object (SchematicWindow *w_current,
  */
 gboolean
 o_find_object (SchematicWindow *w_current,
+               const GList *objects,
                int w_x,
                int w_y,
                int w_slack)
 {
   const GList *iter = NULL;
-
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* Decide whether to iterate over all object or start at the last
      found object. If there is more than one object below the
@@ -164,8 +164,7 @@ o_find_object (SchematicWindow *w_current,
   if (object_lastplace != NULL)
   {
     /* NB: g_list_find doesn't declare its input const, so we cast */
-    iter = g_list_find ((GList *)lepton_page_objects (active_page),
-                        object_lastplace);
+    iter = g_list_find ((GList *) objects, object_lastplace);
     iter = g_list_next (iter);
   }
 
@@ -180,7 +179,7 @@ o_find_object (SchematicWindow *w_current,
   }
 
   /* now search from the beginning up until the object_lastplace */
-  for (iter = lepton_page_objects (active_page);
+  for (iter = objects;
        iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current, w_x, w_y, w_slack))
