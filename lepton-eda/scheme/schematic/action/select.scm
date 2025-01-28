@@ -32,10 +32,15 @@
 
   #:export (continue-box-selection
             continue-selection
+            find-object
             finish-box-selection
             finish-selection
             start-box-selection
             start-selection))
+
+
+(define (find-object *window x y change-selection?)
+  (o_find_object *window x y change-selection?))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.
@@ -252,7 +257,7 @@ the mouse while the left mouse button is pressed."
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window))
           (and (false? (o_find_selected_object *window wx1 wy1))
-               (or (false? (o_find_object *window wx1 wy1 TRUE))
+               (or (false? (find-object *window wx1 wy1 TRUE))
                    (false? (o_select_selected *window)))))
       ;; Start drawing a selection box to select objects.
       (start-box-selection window x y)
@@ -273,5 +278,5 @@ left mouse button."
   (check-action-state window)
 
   ;; Look for objects to select.
-  (o_find_object *window x y TRUE)
+  (find-object *window x y TRUE)
   (i_action_stop *window))

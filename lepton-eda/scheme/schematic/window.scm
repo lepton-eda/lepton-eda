@@ -753,7 +753,7 @@ zooming."
                          ;; Don't want to search an object under
                          ;; mouse cursor if Shift key is pressed.
                          (unless (true? (schematic_window_get_shift_key_pressed *window))
-                           (o_find_object *window unsnapped-x unsnapped-y TRUE))
+                           (find-object *window unsnapped-x unsnapped-y TRUE))
 
                          ;; Make sure the selection list is not empty.
                          (if (not (true? (o_select_selected *window)))
