@@ -100,12 +100,12 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
  *  \param [in] w_slack           The slack applied to the hit-test.
  *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
-static gboolean
-find_single_object (SchematicWindow *w_current,
-                    LeptonObject *object,
-                    int w_x,
-                    int w_y,
-                    int w_slack)
+gboolean
+schematic_selection_find_single_object (SchematicWindow *w_current,
+                                        LeptonObject *object,
+                                        int w_x,
+                                        int w_y,
+                                        int w_slack)
 {
   if (!schematic_selection_is_object_hit (w_current, object, w_x, w_y, w_slack))
     return FALSE;
@@ -171,7 +171,7 @@ o_find_object (SchematicWindow *w_current,
   /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (find_single_object (w_current, o_current, w_x, w_y, w_slack))
+    if (schematic_selection_find_single_object (w_current, o_current, w_x, w_y, w_slack))
     {
       return TRUE;
     }
@@ -182,7 +182,7 @@ o_find_object (SchematicWindow *w_current,
   for (iter = objects;
        iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (find_single_object (w_current, o_current, w_x, w_y, w_slack))
+    if (schematic_selection_find_single_object (w_current, o_current, w_x, w_y, w_slack))
     {
       return TRUE;
     }
