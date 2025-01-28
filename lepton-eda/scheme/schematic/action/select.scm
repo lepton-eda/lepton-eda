@@ -234,6 +234,10 @@ pressing the left mouse button."
     (schematic_window_set_second_wy *window y)))
 
 
+(define (find-selected-object *window x y)
+  (o_find_selected_object *window x y))
+
+
 (define (continue-selection window x y)
   "Continue selection at world coordinate point (X . Y) in WINDOW.
 The function determines whether objects have to be selected or
@@ -256,7 +260,7 @@ the mouse while the left mouse button is pressed."
   ;; under the cursor.
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window))
-          (and (false? (o_find_selected_object *window wx1 wy1))
+          (and (false? (find-selected-object *window wx1 wy1))
                (or (false? (find-object *window wx1 wy1))
                    (false? (o_select_selected *window)))))
       ;; Start drawing a selection box to select objects.
