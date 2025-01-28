@@ -208,34 +208,3 @@ o_find_object (SchematicWindow *w_current,
   i_update_menus(w_current);
   return FALSE;
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gboolean
-o_find_selected_object (SchematicWindow *w_current,
-                        int w_x,
-                        int w_y)
-{
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_val_if_fail (page_view != NULL, FALSE);
-
-  int w_slack =
-    schematic_canvas_WORLDabs (page_view,
-                               schematic_window_get_select_slack_pixels (w_current));
-  GList *s_current;
-
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-
-  for (s_current = lepton_list_get_glist (selection);
-       s_current != NULL; s_current = g_list_next (s_current)) {
-    LeptonObject *o_current = (LeptonObject*) s_current->data;
-
-    if (schematic_selection_is_object_hit (w_current, o_current, w_x, w_y, w_slack))
-      return TRUE;
-  }
-
-  return FALSE;
-}

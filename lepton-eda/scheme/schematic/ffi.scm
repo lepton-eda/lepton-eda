@@ -114,8 +114,8 @@
             o_edit_show_hidden
             o_edit_show_specific_text
 
+            schematic_selection_is_object_hit
             o_find_object
-            o_find_selected_object
 
             o_grips_cancel
             o_grips_end
@@ -421,6 +421,7 @@
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_setup_drawing_area
             schematic_canvas_setup_drawing_area_events
+            schematic_canvas_WORLDabs
             schematic_canvas_zoom_extents
             schematic_canvas_zoom_object
 
@@ -557,6 +558,7 @@
             schematic_window_set_text_properties_dialog
             schematic_window_get_zoom_gain
             schematic_window_get_zoom_with_pan
+            schematic_window_get_select_slack_pixels
 
             font_select_widget_new
 
@@ -832,6 +834,7 @@
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_setup_drawing_area void '(*))
 (define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
+(define-lff schematic_canvas_WORLDabs int (list '* int))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
@@ -995,6 +998,7 @@
 (define-lff schematic_window_set_text_properties_dialog void '(* *))
 (define-lff schematic_window_get_zoom_gain int '(*))
 (define-lff schematic_window_get_zoom_with_pan int '(*))
+(define-lff schematic_window_get_select_slack_pixels int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1200,8 +1204,8 @@
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
+(define-lff schematic_selection_is_object_hit int (list '* '* int int int))
 (define-lff o_find_object int (list '* int int))
-(define-lff o_find_selected_object int (list '* int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))

@@ -234,8 +234,31 @@ pressing the left mouse button."
     (schematic_window_set_second_wy *window y)))
 
 
+;;; Test if there is a selected object under cursor in *WINDOW at
+;;; the coordinate (X . Y).  Return TRUE on success, otherwise
+;;; return FALSE.
 (define (find-selected-object *window x y)
-  (o_find_selected_object *window x y))
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (let ((slack
+         (schematic_canvas_WORLDabs *canvas
+                                    (schematic_window_get_select_slack_pixels *window)))
+        (*selection (schematic_window_get_selection_list *window)))
+
+    (let loop ((*selected-objects (glist->list (lepton_list_get_glist *selection)
+                                               identity)))
+      (if (null? *selected-objects)
+          FALSE
+          (if (true? (schematic_selection_is_object_hit *window
+                                                        (car *selected-objects)
+                                                        x
+                                                        y
+                                                        slack))
+              TRUE
+              (loop (cdr *selected-objects)))))))
 
 
 (define (continue-selection window x y)
