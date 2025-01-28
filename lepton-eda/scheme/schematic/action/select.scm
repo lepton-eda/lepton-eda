@@ -40,7 +40,7 @@
 
 
 (define (find-object *window x y)
-  (o_find_object *window x y TRUE))
+  (o_find_object *window x y))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

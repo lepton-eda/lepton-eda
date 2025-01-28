@@ -1200,7 +1200,7 @@
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
-(define-lff o_find_object int (list '* int int int))
+(define-lff o_find_object int (list '* int int))
 (define-lff o_find_selected_object int (list '* int int))
 
 ;;; o_grips.c

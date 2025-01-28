@@ -263,8 +263,7 @@ schematic_delete_dialog ();
 gboolean
 o_find_object (SchematicWindow *w_current,
                int x,
-               int y,
-               gboolean deselect_afterwards);
+               int y);
 gboolean
 o_find_selected_object (SchematicWindow *w_current,
                         int x,

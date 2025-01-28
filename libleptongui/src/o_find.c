@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,8 +131,8 @@ find_single_object (SchematicWindow *w_current,
 /*! \brief Find an LeptonObject at a given set of coordinates
  *
  *  \par Function Description
- *  Tests for OBJECTS hit at a given set of coordinates. If
- *  change_selection is TRUE, it updates the page's selection.
+ *  Tests for OBJECTS hit at a given set of coordinates and
+ *  updates the page's selection.
  *
  *  Find operations resume searching after the last object which was
  *  found, so multiple find operations at the same point will cycle
@@ -141,15 +141,13 @@ find_single_object (SchematicWindow *w_current,
  *  \param [in] w_current         The SchematicWindow object.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
- *  \param [in] change_selection  Whether to select the found object or not.
  *  \returns TRUE if the object was hit at the given coordinates,
  *           otherwise FALSE.
  */
 gboolean
 o_find_object (SchematicWindow *w_current,
                int w_x,
-               int w_y,
-               gboolean change_selection)
+               int w_y)
 {
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
@@ -181,7 +179,8 @@ o_find_object (SchematicWindow *w_current,
   while (iter != NULL) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current,
-                            w_x, w_y, w_slack, change_selection)) {
+                            w_x, w_y, w_slack, TRUE))
+    {
       return TRUE;
     }
     iter = g_list_next (iter);
@@ -192,7 +191,8 @@ o_find_object (SchematicWindow *w_current,
        iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current,
-                            w_x, w_y, w_slack, change_selection)) {
+                            w_x, w_y, w_slack, TRUE))
+    {
       return TRUE;
     }
     /* break once we've inspected up to where we started the first loop */
@@ -203,10 +203,8 @@ o_find_object (SchematicWindow *w_current,
   /* didn't find anything.... reset lastplace */
   lepton_page_set_object_lastplace (active_page, NULL);
 
-  /* deselect everything only if shift key isn't pressed and
-     the caller allows it */
-  if (change_selection
-      && (!schematic_window_get_shift_key_pressed (w_current)))
+  /* Deselect everything only if shift key isn't pressed. */
+  if (!schematic_window_get_shift_key_pressed (w_current))
   {
     o_select_unselect_all (w_current);
   }
