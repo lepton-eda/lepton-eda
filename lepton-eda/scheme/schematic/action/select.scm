@@ -61,44 +61,43 @@
     (schematic_window_get_show_hidden_text *window))
 
   (and (true? (lepton_object_get_selectable *object))
-       (if (and (true? (lepton_object_is_text *object))
-                (false? (lepton_text_object_is_visible *object))
-                ;; We can't hit invisible (text) objects unless
-                ;; show_hidden_text is active.
-                (false? show_hidden_text))
-           #f
+       (or (false? (lepton_object_is_text *object))
+           (true? (lepton_text_object_is_visible *object))
+           ;; We can't hit invisible (text) objects unless
+           ;; show_hidden_text is active.
+           (true? show_hidden_text))
 
-           (let ((left-bv (make-bytevector (sizeof int) 0))
-                 (top-bv (make-bytevector (sizeof int) 0))
-                 (right-bv (make-bytevector (sizeof int) 0))
-                 (bottom-bv (make-bytevector (sizeof int) 0)))
-             ;; Do a coarse test first to avoid computing distances
-             ;; for objects ouside of the hit range.
-             (if (or (false? (lepton_object_calculate_visible_bounds
-                              *object
-                              show_hidden_text
-                              (bytevector->pointer left-bv)
-                              (bytevector->pointer top-bv)
-                              (bytevector->pointer right-bv)
-                              (bytevector->pointer bottom-bv)))
+       (let ((left-bv (make-bytevector (sizeof int) 0))
+             (top-bv (make-bytevector (sizeof int) 0))
+             (right-bv (make-bytevector (sizeof int) 0))
+             (bottom-bv (make-bytevector (sizeof int) 0)))
+         ;; Do a coarse test first to avoid computing distances
+         ;; for objects ouside of the hit range.
+         (if (or (false? (lepton_object_calculate_visible_bounds
+                          *object
+                          show_hidden_text
+                          (bytevector->pointer left-bv)
+                          (bytevector->pointer top-bv)
+                          (bytevector->pointer right-bv)
+                          (bytevector->pointer bottom-bv)))
 
-                     (let ((left (bv->int left-bv))
-                           (top (bv->int top-bv))
-                           (right (bv->int right-bv))
-                           (bottom (bv->int bottom-bv)))
-                       (false? (inside_region (- left slack)
-                                              (- top slack)
-                                              (+ right slack)
-                                              (+ bottom slack)
-                                              x
-                                              y))))
-                 #f
+                 (let ((left (bv->int left-bv))
+                       (top (bv->int top-bv))
+                       (right (bv->int right-bv))
+                       (bottom (bv->int bottom-bv)))
+                   (false? (inside_region (- left slack)
+                                          (- top slack)
+                                          (+ right slack)
+                                          (+ bottom slack)
+                                          x
+                                          y))))
+             #f
 
-                 (< (lepton_object_shortest_distance *object
-                                                     x
-                                                     y
-                                                     show_hidden_text)
-                    slack))))))
+             (< (lepton_object_shortest_distance *object
+                                                 x
+                                                 y
+                                                 show_hidden_text)
+                slack)))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
