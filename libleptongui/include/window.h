@@ -776,4 +776,10 @@ schematic_window_get_select_slack_pixels (SchematicWindow *w_current);
 void
 schematic_window_set_select_slack_pixels (SchematicWindow *w_current,
                                           int pixels);
+int
+schematic_window_get_net_selection_mode (SchematicWindow *w_current);
+
+void
+schematic_window_set_net_selection_mode (SchematicWindow *w_current,
+                                         int mode);
 G_END_DECLS
