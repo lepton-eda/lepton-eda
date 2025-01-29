@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -467,12 +467,16 @@ o_select_box_search (SchematicWindow *w_current)
   i_update_menus(w_current);
 }
 
+
 /*! \brief Select all nets connected to the current net
- *  \par Depending on the state of the w_current->net_selection_mode variable
- *   and the net_selection_state of the current net this function will either
- *   select the single net, all directly connected nets or all nets connected
- *   with netname labels.
- *  \param [in] w_current  SchematicWindow struct.
+ *  \par Function Description
+ *   Depending on the state of the \a net_selection_mode variable
+ *   of the #SchematicWindow instance and the state of the current
+ *   net selection defined in the variable \a net_selection_state
+ *   this function will either select the single net, all directly
+ *   connected nets or all nets connected with netname labels.
+ *
+ *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] o_net      Pointer to a single net object
  */
 void
