@@ -114,7 +114,6 @@
             o_edit_show_hidden
             o_edit_show_specific_text
 
-            schematic_selection_find_single_object
             schematic_selection_is_object_hit
 
             o_grips_cancel
@@ -561,6 +560,7 @@
             schematic_window_get_select_slack_pixels
             schematic_window_get_object_lastplace
             schematic_window_set_object_lastplace
+            schematic_window_get_net_selection_mode
 
             font_select_widget_new
 
@@ -608,6 +608,7 @@
             schematic_newtext_dialog_get_textsizecb
             schematic_newtext_dialog_textview_select_all
 
+            o_select_connected_nets
             o_select_object
             o_select_return_first_object
             o_select_selected
@@ -1003,6 +1004,7 @@
 (define-lff schematic_window_get_select_slack_pixels int '(*))
 (define-lff schematic_window_get_object_lastplace '* '(*))
 (define-lff schematic_window_set_object_lastplace void '(* *))
+(define-lff schematic_window_get_net_selection_mode int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1208,7 +1210,6 @@
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
-(define-lff schematic_selection_find_single_object int (list '* '* int int int))
 (define-lff schematic_selection_is_object_hit int (list '* '* int int int))
 
 ;;; o_grips.c
@@ -1393,6 +1394,7 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
+(define-lff o_select_connected_nets void '(* *))
 (define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))

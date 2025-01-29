@@ -41,6 +41,32 @@
             start-selection))
 
 
+;;; Definitions from schematic_defines.h
+(define SINGLE 0)
+(define MULTIPLE 1)
+
+;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
+;;; . Y) taken into account the permissible pixel slack SLACK.
+;;; If so, the function changes selection as appropriate for the
+;;; found object and saves a pointer to it so future find
+;;; operations resume after this object.  Return TRUE if the
+;;; LeptonObject was hit, otherwise FALSE.
+(define (find-single-object *window *object x y slack)
+  (if (false? (schematic_selection_is_object_hit *window *object x y slack))
+      FALSE
+
+      (begin
+        (if (and (true? (lepton_object_is_net *object))
+                 (true? (schematic_window_get_net_selection_mode *window)))
+            (o_select_connected_nets *window *object)
+            ;; 0 is count.
+            (o_select_object *window *object SINGLE 0))
+
+        (schematic_window_set_object_lastplace *window *object)
+        (i_update_menus *window)
+        TRUE)))
+
+
 (define (find-object *window x y)
   "Find and select an object in *WINDOW at the given world
 coordinates (X . Y) taking into account the number of slack pixels
@@ -97,11 +123,7 @@ otherwise FALSE."
             (i_update_menus *window)
             FALSE)
 
-          (if (true? (schematic_selection_find_single_object *window
-                                                             (car ls)
-                                                             x
-                                                             y
-                                                             slack))
+          (if (true? (find-single-object *window (car ls) x y slack))
               TRUE
               (loop (cdr ls)))))))
 
@@ -163,10 +185,6 @@ coordinate."
   (invalidate-selection-box window)
   (schematic_window_set_rubber_visible *window 1))
 
-
-;;; Definitions from schematic_defines.h.
-(define SINGLE 0)
-(define MULTIPLE 1)
 
 (define (search-visible-objects window)
   (define *window (check-window window 1))
