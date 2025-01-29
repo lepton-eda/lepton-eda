@@ -111,7 +111,8 @@ schematic_selection_find_single_object (SchematicWindow *w_current,
     return FALSE;
 
   /* FIXME: should this be moved to o_select_object()? (Werner) */
-  if (lepton_object_is_net (object) && w_current->net_selection_mode)
+  if (lepton_object_is_net (object) &&
+      schematic_window_get_net_selection_mode (w_current))
     o_select_connected_nets (w_current, object);
   else
     o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
