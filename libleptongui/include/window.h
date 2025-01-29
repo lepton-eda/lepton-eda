@@ -782,4 +782,10 @@ schematic_window_get_net_selection_mode (SchematicWindow *w_current);
 void
 schematic_window_set_net_selection_mode (SchematicWindow *w_current,
                                          int mode);
+int
+schematic_window_get_net_selection_state (SchematicWindow *w_current);
+
+void
+schematic_window_set_net_selection_state (SchematicWindow *w_current,
+                                          int state);
 G_END_DECLS

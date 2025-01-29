@@ -3351,3 +3351,40 @@ schematic_window_set_net_selection_mode (SchematicWindow *w_current,
 
   w_current->net_selection_mode = mode;
 }
+
+
+/*! \brief Get schematic window's field \a net_selection_state.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a net_selection_state field of the
+ *  schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field.
+ */
+int
+schematic_window_get_net_selection_state (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->net_selection_state;
+}
+
+
+/*! \brief Set schematic window's field \a net_selection_state.
+ *
+ *  \par Function Description
+ *  Sets the \a net_selection_state field of the schematic window
+ *  to the given value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] state The new value of the field.
+ */
+void
+schematic_window_set_net_selection_state (SchematicWindow *w_current,
+                                          int state)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->net_selection_state = state;
+}
