@@ -310,7 +310,8 @@ o_select_connected_nets (SchematicWindow *w_current,
   }
 
   w_current->net_selection_state += 1;
-  if (w_current->net_selection_state > w_current->net_selection_mode)
+  if (w_current->net_selection_state >
+      schematic_window_get_net_selection_mode (w_current))
     w_current->net_selection_state = 1;
 
   for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
