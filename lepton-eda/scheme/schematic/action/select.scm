@@ -51,8 +51,8 @@
 ;;; SLACK.  To be hit, the object has to be selectable and visible
 ;;; as well.  If it is either not around that coordinate, is not
 ;;; selectable (locked), or invisible and not being rendered, this
-;;; function will return FALSE.  If the object was hit, it returns
-;;; TRUE.
+;;; function will return #f.  If the object was hit, it returns
+;;; #t.
 (define (is-hit? *window *object x y slack)
   (define (bv->int bv)
     (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
@@ -61,14 +61,14 @@
     (schematic_window_get_show_hidden_text *window))
 
   (if (false? (lepton_object_get_selectable *object))
-      FALSE
+      #f
 
       (if (and (true? (lepton_object_is_text *object))
                (false? (lepton_text_object_is_visible *object))
                ;; We can't hit invisible (text) objects unless
                ;; show_hidden_text is active.
                (false? show_hidden_text))
-          FALSE
+          #f
 
           (let ((left-bv (make-bytevector (sizeof int) 0))
                 (top-bv (make-bytevector (sizeof int) 0))
@@ -93,15 +93,13 @@
                                              (+ bottom slack)
                                              x
                                              y))))
-                FALSE
+                #f
 
-                (if (< (lepton_object_shortest_distance *object
-                                                        x
-                                                        y
-                                                        show_hidden_text)
-                       slack)
-                    TRUE
-                    FALSE))))))
+                (< (lepton_object_shortest_distance *object
+                                                    x
+                                                    y
+                                                    show_hidden_text)
+                   slack))))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
@@ -111,7 +109,7 @@
 ;;; operations resume after this object.  Return TRUE if the
 ;;; LeptonObject was hit, otherwise FALSE.
 (define (find-single-object *window *object x y slack)
-  (if (false? (is-hit? *window *object x y slack))
+  (if (not (is-hit? *window *object x y slack))
       FALSE
 
       (begin
@@ -392,8 +390,7 @@ pressing the left mouse button."
                                                identity)))
       (if (null? *selected-objects)
           FALSE
-          (if (true?
-               (is-hit? *window (car *selected-objects) x y slack))
+          (if (is-hit? *window (car *selected-objects) x y slack)
               TRUE
               (loop (cdr *selected-objects)))))))
 
