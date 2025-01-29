@@ -67,37 +67,44 @@
            ;; show_hidden_text is active.
            (true? show_hidden_text))
 
+       ;; Do a coarse test first to avoid computing distances for
+       ;; objects ouside of the hit range.
        (let ((left-bv (make-bytevector (sizeof int) 0))
              (top-bv (make-bytevector (sizeof int) 0))
              (right-bv (make-bytevector (sizeof int) 0))
              (bottom-bv (make-bytevector (sizeof int) 0)))
-         ;; Do a coarse test first to avoid computing distances
-         ;; for objects ouside of the hit range.
-         (if (or (false? (lepton_object_calculate_visible_bounds
-                          *object
-                          show_hidden_text
-                          (bytevector->pointer left-bv)
-                          (bytevector->pointer top-bv)
-                          (bytevector->pointer right-bv)
-                          (bytevector->pointer bottom-bv)))
 
-                 (let ((left (bv->int left-bv))
-                       (top (bv->int top-bv))
-                       (right (bv->int right-bv))
-                       (bottom (bv->int bottom-bv)))
-                   (false? (inside_region (- left slack)
-                                          (- top slack)
-                                          (+ right slack)
-                                          (+ bottom slack)
-                                          x
-                                          y))))
-             #f
+         ;; First off, we have to be able to get bounds of the
+         ;; object.
+         (and (true? (lepton_object_calculate_visible_bounds
+                      *object
+                      show_hidden_text
+                      (bytevector->pointer left-bv)
+                      (bytevector->pointer top-bv)
+                      (bytevector->pointer right-bv)
+                      (bytevector->pointer bottom-bv)))
 
-             (< (lepton_object_shortest_distance *object
-                                                 x
-                                                 y
-                                                 show_hidden_text)
-                slack)))))
+              (let ((left (bv->int left-bv))
+                    (top (bv->int top-bv))
+                    (right (bv->int right-bv))
+                    (bottom (bv->int bottom-bv)))
+                ;; And the position has to be inside the object
+                ;; rectangle bounds or at least closer to it than
+                ;; the given slack.
+                (true? (inside_region (- left slack)
+                                      (- top slack)
+                                      (+ right slack)
+                                      (+ bottom slack)
+                                      x
+                                      y)))))
+       ;; And eventually, an object may be a circle, and the
+       ;; corners of its bounding box may be a bit far from its
+       ;; circumference to be selected.  Let's check this.
+       (< (lepton_object_shortest_distance *object
+                                           x
+                                           y
+                                           show_hidden_text)
+          slack)))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
