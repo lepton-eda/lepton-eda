@@ -61,7 +61,6 @@ libleptongui_la_SOURCES = \
 	o_circle.c \
 	o_component.c \
 	delete_dialog.c \
-	o_find.c \
 	o_grips.c \
 	o_line.c \
 	o_misc.c \

@@ -46,6 +46,13 @@
 (define MULTIPLE 1)
 
 
+;;; Test if *OBJECT in *WINDOW was hit at the given world
+;;; coordinates (X . Y) taking into account the given pixel slack
+;;; SLACK.  To be hit, the object has to be selectable and visible
+;;; as well.  If it is either not around that coordinate, is not
+;;; selectable (locked), or invisible and not being rendered, this
+;;; function will return FALSE.  If the object was hit, it returns
+;;; TRUE.
 (define (is-hit? *window *object x y slack)
   (define (bv->int bv)
     (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
@@ -88,12 +95,13 @@
                                              y))))
                 FALSE
 
-                (schematic_selection_is_object_hit *window
-                                                   *object
-                                                   x
-                                                   y
-                                                   slack
-                                                   show_hidden_text))))))
+                (if (< (lepton_object_shortest_distance *object
+                                                        x
+                                                        y
+                                                        show_hidden_text)
+                       slack)
+                    TRUE
+                    FALSE))))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X

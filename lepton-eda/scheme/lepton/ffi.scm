@@ -166,6 +166,7 @@
             lepton_object_emit_pre_change_notify
             lepton_object_mirror
             lepton_object_rotate
+            lepton_object_shortest_distance
             lepton_object_translate
             lepton_object_visibility_from_string
 
@@ -580,6 +581,7 @@
 (define-lff lepton_object_emit_pre_change_notify void '(*))
 (define-lff lepton_object_mirror void (list int int '*))
 (define-lff lepton_object_rotate void (list int int int '*))
+(define-lff lepton_object_shortest_distance double (list '* int int int))
 (define-lff lepton_object_translate void (list '* int int))
 (define-lff lepton_object_visibility_from_string int '(*))
 

@@ -114,8 +114,6 @@
             o_edit_show_hidden
             o_edit_show_specific_text
 
-            schematic_selection_is_object_hit
-
             o_grips_cancel
             o_grips_end
             o_grips_motion
@@ -1208,9 +1206,6 @@
 ;;; delete_dialog.c
 (define-lff schematic_delete void '(* *))
 (define-lff schematic_delete_dialog int '())
-
-;;; o_find.c
-(define-lff schematic_selection_is_object_hit int (list '* '* int int int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))
