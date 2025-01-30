@@ -227,6 +227,9 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *netnamestack = NULL;
   GList *netnameiter;
 
+  int net_selection_state =
+    schematic_window_get_net_selection_state (w_current);
+
   /* the current net is the startpoint for the stack */
   netstack = g_list_prepend(netstack, o_net);
 
@@ -241,12 +244,12 @@ o_select_connected_nets (SchematicWindow *w_current,
           (!lepton_object_get_selected (o_current) || count == 0))
       {
         o_select_object (w_current, o_current, SINGLE, count);
-        if (schematic_window_get_net_selection_state (w_current) > 1)
+        if (net_selection_state > 1)
         {
           /* collect nets */
           netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
         }
-        if (schematic_window_get_net_selection_state (w_current) > 2)
+        if (net_selection_state > 2)
         {
           /* collect netnames */
           netname = lepton_attrib_search_object_attribs_by_name (o_current, "netname", 0);
@@ -293,8 +296,8 @@ o_select_connected_nets (SchematicWindow *w_current,
     }
   }
 
-  int state = schematic_window_get_net_selection_state (w_current);
-  schematic_window_set_net_selection_state (w_current, state + 1);
+  schematic_window_set_net_selection_state (w_current,
+                                            net_selection_state + 1);
   if (schematic_window_get_net_selection_state (w_current) >
       schematic_window_get_net_selection_mode (w_current))
     schematic_window_set_net_selection_state (w_current, 1);
