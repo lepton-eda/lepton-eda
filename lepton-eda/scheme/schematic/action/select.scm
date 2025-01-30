@@ -46,6 +46,10 @@
 (define MULTIPLE 1)
 
 
+(define (select-connected-nets *window *net)
+  (o_select_connected_nets *window *net))
+
+
 ;;; Test if *OBJECT in *WINDOW was hit at the given world
 ;;; coordinates (X . Y) taking into account the given pixel slack
 ;;; SLACK.  To be hit, the object has to be selectable and visible
@@ -116,7 +120,7 @@
       (begin
         (if (and (true? (lepton_object_is_net *object))
                  (true? (schematic_window_get_net_selection_mode *window)))
-            (o_select_connected_nets *window *object)
+            (select-connected-nets *window *object)
             ;; 0 is count.
             (o_select_object *window *object SINGLE 0))
 
