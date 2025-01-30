@@ -307,15 +307,19 @@ o_select_connected_nets (SchematicWindow *w_current,
     netstack = NULL;
 
     if (netnameiter == g_list_last(netnamestack))
-      break; /* no new netnames in the stack --> finished */
-
-    netstack =
-      schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
+    {
+      /* no new netnames in the stack --> finished */
+      for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
+        g_free(iter1->data);
+      g_list_free(netnamestack);
+      return;
+    }
+    else
+    {
+      netstack =
+        schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
+    }
   }
-
-  for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
-    g_free(iter1->data);
-  g_list_free(netnamestack);
 }
 
 /* This is a wrapper for o_selection_return_first_object */
