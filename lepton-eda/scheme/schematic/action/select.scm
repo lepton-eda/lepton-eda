@@ -46,6 +46,11 @@
 (define MULTIPLE 1)
 
 
+;;; Select all nets connected to *NET in *WINDOW.  Depending on
+;;; the state of the net selection mode of the window and
+;;; selection state of the current net this function will either
+;;; select the single net, all directly connected nets or all nets
+;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
   (o_select_connected_nets *window *net))
 
