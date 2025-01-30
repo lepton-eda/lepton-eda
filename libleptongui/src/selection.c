@@ -202,6 +202,47 @@ o_select_object (SchematicWindow *w_current,
 }
 
 
+GList*
+schematic_selection_get_net_stack_by_netname (SchematicWindow *w_current,
+                                              GList *netnamestack)
+{
+  const GList *o_iter;
+  LeptonObject *o_current;
+  char *netname;
+  GList *netstack = NULL;
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  /* get all the nets of the stacked netnames */
+  for (o_iter = lepton_page_objects (active_page);
+       o_iter != NULL;
+       o_iter = g_list_next (o_iter))
+  {
+    o_current = (LeptonObject*) o_iter->data;
+    LeptonObject *attachment = lepton_object_get_attached_to (o_current);
+
+    if (lepton_object_is_text (o_current)
+        && attachment != NULL)
+    {
+      if (lepton_object_is_net (attachment))
+      {
+        netname = lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
+        if (netname != NULL)
+        {
+          if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
+          {
+            netstack = g_list_prepend (netstack, attachment);
+          }
+          g_free (netname);
+        }
+      }
+    }
+  }
+
+  return netstack;
+}
+
+
 /*! \brief Select all nets connected to the current net
  *  \par Function Description
  *   Depending on the state of the \a net_selection_mode variable
@@ -219,7 +260,6 @@ o_select_connected_nets (SchematicWindow *w_current,
                          LeptonObject* o_net,
                          int net_selection_state)
 {
-  const GList *o_iter;
   GList *iter1;
   LeptonObject *o_current;
   int count=0;
@@ -269,30 +309,8 @@ o_select_connected_nets (SchematicWindow *w_current,
     if (netnameiter == g_list_last(netnamestack))
       break; /* no new netnames in the stack --> finished */
 
-    LeptonPage *active_page = schematic_window_get_active_page (w_current);
-
-    /* get all the nets of the stacked netnames */
-    for (o_iter = lepton_page_objects (active_page);
-         o_iter != NULL;
-         o_iter = g_list_next (o_iter)) {
-      o_current = (LeptonObject*) o_iter->data;
-      LeptonObject *attachment = lepton_object_get_attached_to (o_current);
-
-      if (lepton_object_is_text (o_current)
-          && attachment != NULL)
-      {
-        if (lepton_object_is_net (attachment))
-        {
-          netname = lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
-          if (netname != NULL) {
-            if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
-              netstack = g_list_prepend (netstack, attachment);
-            }
-            g_free(netname);
-          }
-        }
-      }
-    }
+    netstack =
+      schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
   }
 
   for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
