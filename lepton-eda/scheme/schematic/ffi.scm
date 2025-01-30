@@ -559,6 +559,7 @@
             schematic_window_get_object_lastplace
             schematic_window_set_object_lastplace
             schematic_window_get_net_selection_mode
+            schematic_window_get_net_selection_state
             schematic_window_set_net_selection_state
 
             font_select_widget_new
@@ -1004,6 +1005,7 @@
 (define-lff schematic_window_get_object_lastplace '* '(*))
 (define-lff schematic_window_set_object_lastplace void '(* *))
 (define-lff schematic_window_get_net_selection_mode int '(*))
+(define-lff schematic_window_get_net_selection_state int '(*))
 (define-lff schematic_window_set_net_selection_state void (list '* int))
 
 ;;; font_select_widget.c
@@ -1391,7 +1393,7 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
-(define-lff o_select_connected_nets void '(* *))
+(define-lff o_select_connected_nets void (list '* '* int))
 (define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))

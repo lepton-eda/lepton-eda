@@ -485,7 +485,8 @@ o_select_object (SchematicWindow *w_current,
                  int count);
 void
 o_select_connected_nets (SchematicWindow *w_current,
-                         LeptonObject* o_current);
+                         LeptonObject* o_current,
+                         int net_selection_state);
 LeptonObject*
 o_select_return_first_object (SchematicWindow *w_current);
 

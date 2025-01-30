@@ -59,10 +59,18 @@
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window)))
       (o_select_object *window *net SINGLE 0)
-      (begin
+      (let ((net-selection-state
+             (schematic_window_get_net_selection_state *window)))
         (unless (true? (lepton_object_get_selected *net))
           (schematic_window_set_net_selection_state *window 1))
-        (o_select_connected_nets *window *net))))
+        (o_select_connected_nets *window *net net-selection-state)
+        (let ((net-selection-mode
+               (schematic_window_get_net_selection_mode *window)))
+          (schematic_window_set_net_selection_state *window
+                                                    (1+ net-selection-state))
+          (when (> (schematic_window_get_net_selection_state *window)
+                   net-selection-mode)
+            (schematic_window_set_net_selection_state *window 1))))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given world

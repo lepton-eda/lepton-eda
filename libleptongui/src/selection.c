@@ -212,10 +212,12 @@ o_select_object (SchematicWindow *w_current,
  *
  *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] o_net      Pointer to a single net object
+ *  \param [in] net_selection_state The state of net selection.
  */
 void
 o_select_connected_nets (SchematicWindow *w_current,
-                         LeptonObject* o_net)
+                         LeptonObject* o_net,
+                         int net_selection_state)
 {
   const GList *o_iter;
   GList *iter1;
@@ -226,9 +228,6 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *netstack = NULL;
   GList *netnamestack = NULL;
   GList *netnameiter;
-
-  int net_selection_state =
-    schematic_window_get_net_selection_state (w_current);
 
   /* the current net is the startpoint for the stack */
   netstack = g_list_prepend(netstack, o_net);
@@ -295,12 +294,6 @@ o_select_connected_nets (SchematicWindow *w_current,
       }
     }
   }
-
-  schematic_window_set_net_selection_state (w_current,
-                                            net_selection_state + 1);
-  if (schematic_window_get_net_selection_state (w_current) >
-      schematic_window_get_net_selection_mode (w_current))
-    schematic_window_set_net_selection_state (w_current, 1);
 
   for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
     g_free(iter1->data);
