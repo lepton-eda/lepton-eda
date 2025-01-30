@@ -227,24 +227,6 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *netnamestack = NULL;
   GList *netnameiter;
 
-  g_assert (lepton_object_is_net (o_net));
-
-  /* If either SHIFT or CTRL are pressed, behave exactly the same as a
-   * single object selection.  This makes it possible to <mouse-1> on
-   * a net segment to select it and then Shift+<mouse-1> on it to
-   * deselect it. */
-  if (schematic_window_get_shift_key_pressed (w_current)
-      || schematic_window_get_control_key_pressed (w_current))
-  {
-    o_select_object (w_current, o_net, SINGLE, 0);
-    return;
-  }
-
-  if (!lepton_object_get_selected (o_net))
-  {
-    schematic_window_set_net_selection_state (w_current, 1);
-  }
-
   /* the current net is the startpoint for the stack */
   netstack = g_list_prepend(netstack, o_net);
 

@@ -559,6 +559,7 @@
             schematic_window_get_object_lastplace
             schematic_window_set_object_lastplace
             schematic_window_get_net_selection_mode
+            schematic_window_set_net_selection_state
 
             font_select_widget_new
 
@@ -1003,6 +1004,7 @@
 (define-lff schematic_window_get_object_lastplace '* '(*))
 (define-lff schematic_window_set_object_lastplace void '(* *))
 (define-lff schematic_window_get_net_selection_mode int '(*))
+(define-lff schematic_window_set_net_selection_state void (list '* int))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))

@@ -52,7 +52,17 @@
 ;;; select the single net, all directly connected nets or all nets
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
-  (o_select_connected_nets *window *net))
+  ;; If either Shift or Ctrl are pressed, behave exactly the same
+  ;; as a single object selection.  This makes it possible to
+  ;; <mouse-1> on a net segment to select it and then
+  ;; Shift+<mouse-1> on it to deselect it.
+  (if (or (true? (schematic_window_get_shift_key_pressed *window))
+          (true? (schematic_window_get_control_key_pressed *window)))
+      (o_select_object *window *net SINGLE 0)
+      (begin
+        (unless (true? (lepton_object_get_selected *net))
+          (schematic_window_set_net_selection_state *window 1))
+        (o_select_connected_nets *window *net))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given world
