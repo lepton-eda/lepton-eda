@@ -243,6 +243,13 @@ schematic_selection_get_net_stack_by_netname (SchematicWindow *w_current,
 }
 
 
+GList*
+schematic_selection_object_to_netstack (LeptonObject *object)
+{
+  return g_list_prepend (NULL, object);
+}
+
+
 /*! \brief Select all nets connected to the current net
  *  \par Function Description
  *   Depending on the state of the \a net_selection_mode variable
@@ -273,7 +280,7 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *netnameiter;
 
   /* the current net is the startpoint for the stack */
-  netstack = g_list_prepend(netstack, o_net);
+  netstack = schematic_selection_object_to_netstack (o_net);
 
   while (1) {
     netnameiter = g_list_last(netnamestack);
