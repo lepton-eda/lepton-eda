@@ -63,12 +63,13 @@
              (schematic_window_get_net_selection_state *window)))
         (unless (true? (lepton_object_get_selected *net))
           (schematic_window_set_net_selection_state *window 1))
-        (o_select_connected_nets *window
-                                 *net
-                                 %null-pointer
-                                 %null-pointer
-                                 net-selection-state
-                                 0)
+        ;; The current net is the startpoint for the net stack.
+        (let ((*netstack (schematic_selection_object_to_netstack *net)))
+          (o_select_connected_nets *window
+                                   *netstack
+                                   %null-pointer
+                                   net-selection-state
+                                   0))
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window

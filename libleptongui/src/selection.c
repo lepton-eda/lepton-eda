@@ -259,7 +259,6 @@ schematic_selection_object_to_netstack (LeptonObject *object)
  *   connected nets or all nets connected with netname labels.
  *
  *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] o_net      Pointer to a single net object
  *  \param [in,out] netstack The set of processed nets.
  *  \param [in,out] netnamestack The set of processed "netname"
  *                               attributes.
@@ -268,7 +267,6 @@ schematic_selection_object_to_netstack (LeptonObject *object)
  */
 void
 o_select_connected_nets (SchematicWindow *w_current,
-                         LeptonObject* o_net,
                          GList *netstack,
                          GList *netnamestack,
                          int net_selection_state,
@@ -278,9 +276,6 @@ o_select_connected_nets (SchematicWindow *w_current,
   LeptonObject *o_current;
   gchar* netname;
   GList *netnameiter;
-
-  /* the current net is the startpoint for the stack */
-  netstack = schematic_selection_object_to_netstack (o_net);
 
   while (1) {
     netnameiter = g_list_last(netnamestack);
