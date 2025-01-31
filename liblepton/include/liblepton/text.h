@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,19 @@ typedef struct _LeptonText LeptonText;
 
 struct _LeptonText
 {
-  int x, y;             /* world origin */
+  int x, y;             /* World origin */
 
-  char *string;         /* text stuff */
-  int length;
-  int size;
-  int alignment;
-  int angle;
+  char *string;         /* String to be displayed */
+  int length;           /* The length of the string */
+  int size;             /* Text character height in points */
+  int alignment;        /* Position around the origin (see defines.h) */
+  int angle;            /* Rotation angle */
 
   /* Attribute stuff. */
-  const gchar *name;    /* not owned by _LeptonText */
-  char *value;
-  int show;
-  int visibility;
+  const gchar *name;    /* Attribute name, not owned by _LeptonText */
+  char *value;          /* Attribute value */
+  int show;             /* What to display in GUI: name, value, or both */
+  int visibility;       /* Whether the text is visible or hidden in GUI */
 };
 
 void
