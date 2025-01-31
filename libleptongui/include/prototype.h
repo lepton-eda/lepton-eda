@@ -492,7 +492,7 @@ o_select_object (SchematicWindow *w_current,
                  LeptonObject *o_current,
                  int type,
                  int count);
-void
+GList*
 o_select_connected_nets (SchematicWindow *w_current,
                          GList *netstack,
                          GList *netnamestack,

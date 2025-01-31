@@ -56,11 +56,22 @@
                             *netname-stack
                             net-selection-state
                             count)
-    (o_select_connected_nets *window
-                             *net-stack
-                             *netname-stack
-                             net-selection-state
-                             count))
+    (let ((*new-netname-stack
+           (o_select_connected_nets *window
+                                    *net-stack
+                                    *netname-stack
+                                    net-selection-state
+                                    count)))
+      (if (null-pointer? *new-netname-stack)
+          %null-pointer
+          (let ((*new-net-stack
+                 (schematic_selection_get_net_stack_by_netname *window
+                                                               *new-netname-stack)))
+            (select-next-nets *new-net-stack
+                              *new-netname-stack
+                              net-selection-state
+                              1)))))
+
   ;; If either Shift or Ctrl are pressed, behave exactly the same
   ;; as a single object selection.  This makes it possible to
   ;; <mouse-1> on a net segment to select it and then

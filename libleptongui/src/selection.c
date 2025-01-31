@@ -273,8 +273,9 @@ schematic_selection_free_netname_stack (GList *netname_stack)
  *                               attributes.
  *  \param [in] net_selection_state The state of net selection.
  *  \param [in] count The counter of selected objects.
+ *  \return [in] The modified netname stack, or NULL when done.
  */
-void
+GList*
 o_select_connected_nets (SchematicWindow *w_current,
                          GList *netstack,
                          GList *netnamestack,
@@ -327,17 +328,12 @@ o_select_connected_nets (SchematicWindow *w_current,
   {
     /* no new netnames in the stack --> finished */
     schematic_selection_free_netname_stack (netnamestack);
+
+    return NULL;
   }
   else
   {
-    netstack =
-      schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
-
-    o_select_connected_nets (w_current,
-                             netstack,
-                             netnamestack,
-                             net_selection_state,
-                             1);
+    return netnamestack;
   }
 }
 
