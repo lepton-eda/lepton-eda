@@ -301,6 +301,16 @@ o_select_connected_nets (SchematicWindow *w_current,
         /* collect nets */
         netstack = g_list_concat (s_conn_return_others (NULL, o_current), netstack);
       }
+    }
+  }
+
+  for (iter1 = g_list_last (netstack);
+       iter1 != NULL;
+       iter1 = g_list_previous (iter1))
+  {
+    o_current = (LeptonObject*) iter1->data;
+    if (lepton_object_is_net (o_current))
+    {
       if (net_selection_state > 2)
       {
         /* collect netnames */
@@ -319,6 +329,7 @@ o_select_connected_nets (SchematicWindow *w_current,
       }
     }
   }
+
   g_list_free (netstack);
   netstack = NULL;
 
