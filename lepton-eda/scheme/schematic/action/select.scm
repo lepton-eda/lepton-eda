@@ -52,6 +52,15 @@
 ;;; select the single net, all directly connected nets or all nets
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
+  (define (select-next-nets *net-stack
+                            *netname-stack
+                            net-selection-state
+                            count)
+    (o_select_connected_nets *window
+                             *net-stack
+                             *netname-stack
+                             net-selection-state
+                             count))
   ;; If either Shift or Ctrl are pressed, behave exactly the same
   ;; as a single object selection.  This makes it possible to
   ;; <mouse-1> on a net segment to select it and then
@@ -65,11 +74,10 @@
           (schematic_window_set_net_selection_state *window 1))
         ;; The current net is the startpoint for the net stack.
         (let ((*netstack (schematic_selection_object_to_netstack *net)))
-          (o_select_connected_nets *window
-                                   *netstack
-                                   %null-pointer
-                                   net-selection-state
-                                   0))
+          (select-next-nets *netstack
+                            %null-pointer
+                            net-selection-state
+                            0))
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window
