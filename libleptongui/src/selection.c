@@ -277,56 +277,60 @@ o_select_connected_nets (SchematicWindow *w_current,
   gchar* netname;
   GList *netnameiter;
 
-    netnameiter = g_list_last(netnamestack);
-    for (iter1 = g_list_last(netstack);
-         iter1 != NULL;
-         iter1 = g_list_previous(iter1), count++) {
-      o_current = (LeptonObject*) iter1->data;
-      if (lepton_object_is_net (o_current) &&
-          (!lepton_object_get_selected (o_current) || count == 0))
+  netnameiter = g_list_last (netnamestack);
+  for (iter1 = g_list_last (netstack);
+       iter1 != NULL;
+       iter1 = g_list_previous (iter1), count++)
+  {
+    o_current = (LeptonObject*) iter1->data;
+    if (lepton_object_is_net (o_current) &&
+        (!lepton_object_get_selected (o_current) || count == 0))
+    {
+      o_select_object (w_current, o_current, SINGLE, count);
+      if (net_selection_state > 1)
       {
-        o_select_object (w_current, o_current, SINGLE, count);
-        if (net_selection_state > 1)
+        /* collect nets */
+        netstack = g_list_concat (s_conn_return_others (NULL, o_current), netstack);
+      }
+      if (net_selection_state > 2)
+      {
+        /* collect netnames */
+        netname = lepton_attrib_search_object_attribs_by_name (o_current, "netname", 0);
+        if (netname != NULL)
         {
-          /* collect nets */
-          netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
-        }
-        if (net_selection_state > 2)
-        {
-          /* collect netnames */
-          netname = lepton_attrib_search_object_attribs_by_name (o_current, "netname", 0);
-          if (netname != NULL) {
-            if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
-              netnamestack = g_list_append(netnamestack, netname);
-            }
-            else {
-              g_free(netname);
-            }
+          if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) == NULL)
+          {
+            netnamestack = g_list_append (netnamestack, netname);
+          }
+          else
+          {
+            g_free (netname);
           }
         }
       }
     }
-    g_list_free(netstack);
-    netstack = NULL;
+  }
+  g_list_free (netstack);
+  netstack = NULL;
 
-    if (netnameiter == g_list_last(netnamestack))
-    {
-      /* no new netnames in the stack --> finished */
-      for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
-        g_free(iter1->data);
-      g_list_free(netnamestack);
-    }
-    else
-    {
-      netstack =
-        schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
+  if (netnameiter == g_list_last (netnamestack))
+  {
+    /* no new netnames in the stack --> finished */
+    for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next (iter1))
+      g_free (iter1->data);
+    g_list_free (netnamestack);
+  }
+  else
+  {
+    netstack =
+      schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
 
-      o_select_connected_nets (w_current,
-                               netstack,
-                               netnamestack,
-                               net_selection_state,
-                               count);
-    }
+    o_select_connected_nets (w_current,
+                             netstack,
+                             netnamestack,
+                             net_selection_state,
+                             count);
+  }
 }
 
 /* This is a wrapper for o_selection_return_first_object */
