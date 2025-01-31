@@ -285,9 +285,7 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *iter1;
   LeptonObject *o_current;
   gchar* netname;
-  GList *netnameiter;
 
-  netnameiter = g_list_last (netnamestack);
   for (iter1 = g_list_last (netstack);
        iter1 != NULL;
        iter1 = g_list_previous (iter1))
@@ -324,17 +322,7 @@ o_select_connected_nets (SchematicWindow *w_current,
   g_list_free (netstack);
   netstack = NULL;
 
-  if (netnameiter == g_list_last (netnamestack))
-  {
-    /* no new netnames in the stack --> finished */
-    schematic_selection_free_netname_stack (netnamestack);
-
-    return NULL;
-  }
-  else
-  {
-    return netnamestack;
-  }
+  return netnamestack;
 }
 
 /* This is a wrapper for o_selection_return_first_object */

@@ -55,22 +55,27 @@
   (define (select-next-nets *net-stack
                             *netname-stack
                             net-selection-state
-                            count)
-    (let ((*new-netname-stack
-           (o_select_connected_nets *window
-                                    *net-stack
-                                    *netname-stack
-                                    net-selection-state
-                                    count)))
-      (if (null-pointer? *new-netname-stack)
-          %null-pointer
+                            count
+                            netname-list)
+    (let* ((*new-netname-stack
+            (o_select_connected_nets *window
+                                     *net-stack
+                                     *netname-stack
+                                     net-selection-state
+                                     count))
+           (new-netname-list (glist->list *new-netname-stack
+                                          pointer->string)))
+      (if (equal? netname-list new-netname-list)
+          ;; No new netnames in the stack, free it and exit.
+          (schematic_selection_free_netname_stack *new-netname-stack)
           (let ((*new-net-stack
                  (schematic_selection_get_net_stack_by_netname *window
                                                                *new-netname-stack)))
             (select-next-nets *new-net-stack
                               *new-netname-stack
                               net-selection-state
-                              1)))))
+                              1
+                              new-netname-list)))))
 
   ;; If either Shift or Ctrl are pressed, behave exactly the same
   ;; as a single object selection.  This makes it possible to
@@ -88,7 +93,8 @@
           (select-next-nets *netstack
                             %null-pointer
                             net-selection-state
-                            0))
+                            0
+                            '()))
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window
