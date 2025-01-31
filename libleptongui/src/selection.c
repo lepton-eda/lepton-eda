@@ -253,26 +253,28 @@ schematic_selection_get_net_stack_by_netname (SchematicWindow *w_current,
  *
  *  \param [in] w_current  The #SchematicWindow object.
  *  \param [in] o_net      Pointer to a single net object
+ *  \param [in,out] netstack The set of processed nets.
+ *  \param [in,out] netnamestack The set of processed "netname"
+ *                               attributes.
  *  \param [in] net_selection_state The state of net selection.
+ *  \param [in] count The counter of selected objects.
  */
 void
 o_select_connected_nets (SchematicWindow *w_current,
                          LeptonObject* o_net,
-                         int net_selection_state)
+                         GList *netstack,
+                         GList *netnamestack,
+                         int net_selection_state,
+                         int count)
 {
   GList *iter1;
   LeptonObject *o_current;
-  int count=0;
   gchar* netname;
-
-  GList *netstack = NULL;
-  GList *netnamestack = NULL;
   GList *netnameiter;
 
   /* the current net is the startpoint for the stack */
   netstack = g_list_prepend(netstack, o_net);
 
-  count = 0;
   while (1) {
     netnameiter = g_list_last(netnamestack);
     for (iter1 = g_list_last(netstack);

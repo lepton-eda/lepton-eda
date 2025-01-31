@@ -1393,7 +1393,7 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
-(define-lff o_select_connected_nets void (list '* '* int))
+(define-lff o_select_connected_nets void (list '* '* '* '* int int))
 (define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
