@@ -474,6 +474,9 @@ void
 o_place_mirror (SchematicWindow *w_current);
 
 /* selection.c */
+void
+schematic_selection_free_netname_stack (GList *netname_stack);
+
 GList*
 schematic_selection_get_net_stack_by_netname (SchematicWindow *w_current,
                                               GList *netnamestack);

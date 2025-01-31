@@ -249,6 +249,15 @@ schematic_selection_object_to_netstack (LeptonObject *object)
   return g_list_prepend (NULL, object);
 }
 
+void
+schematic_selection_free_netname_stack (GList *netname_stack)
+{
+  GList *iter;
+  for (iter = netname_stack; iter != NULL; iter = g_list_next (iter))
+    g_free (iter->data);
+  g_list_free (netname_stack);
+}
+
 
 /*! \brief Select all nets connected to the current net
  *  \par Function Description
@@ -316,9 +325,7 @@ o_select_connected_nets (SchematicWindow *w_current,
   if (netnameiter == g_list_last (netnamestack))
   {
     /* no new netnames in the stack --> finished */
-    for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next (iter1))
-      g_free (iter1->data);
-    g_list_free (netnamestack);
+    schematic_selection_free_netname_stack (netnamestack);
   }
   else
   {
