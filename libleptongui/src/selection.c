@@ -277,7 +277,6 @@ o_select_connected_nets (SchematicWindow *w_current,
   gchar* netname;
   GList *netnameiter;
 
-  while (1) {
     netnameiter = g_list_last(netnamestack);
     for (iter1 = g_list_last(netstack);
          iter1 != NULL;
@@ -316,14 +315,18 @@ o_select_connected_nets (SchematicWindow *w_current,
       for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
         g_free(iter1->data);
       g_list_free(netnamestack);
-      return;
     }
     else
     {
       netstack =
         schematic_selection_get_net_stack_by_netname (w_current, netnamestack);
+
+      o_select_connected_nets (w_current,
+                               netstack,
+                               netnamestack,
+                               net_selection_state,
+                               count);
     }
-  }
 }
 
 /* This is a wrapper for o_selection_return_first_object */
