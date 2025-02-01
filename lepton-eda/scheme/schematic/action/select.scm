@@ -62,10 +62,16 @@
                (*net-stack %null-pointer))
       (if (null? ls)
           *net-stack
-          (loop (cdr ls)
-                (schematic_selection_get_net_stack_by_netname (car ls)
-                                                              *netname-stack
-                                                              *net-stack)))))
+          (let ((*object (car ls)))
+            (loop (cdr ls)
+                  (let ((*attachment (lepton_object_get_attached_to *object)))
+                    (if (and (true? (lepton_object_is_text *object))
+                             (not (null-pointer? *attachment))
+                             (true? (lepton_object_is_net *attachment)))
+                        (schematic_selection_get_net_stack_by_netname *attachment
+                                                                      *netname-stack
+                                                                      *net-stack)
+                        *net-stack)))))))
   (define (select-next-nets *net-stack
                             *netname-stack
                             net-selection-state

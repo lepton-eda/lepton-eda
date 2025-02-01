@@ -203,30 +203,20 @@ o_select_object (SchematicWindow *w_current,
 
 
 GList*
-schematic_selection_get_net_stack_by_netname (LeptonObject *o_current,
+schematic_selection_get_net_stack_by_netname (LeptonObject *attachment,
                                               GList *netnamestack,
                                               GList *netstack)
 {
-  char *netname;
-
-    LeptonObject *attachment = lepton_object_get_attached_to (o_current);
-
-    if (lepton_object_is_text (o_current)
-        && attachment != NULL)
+  char *netname =
+    lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
+  if (netname != NULL)
+  {
+    if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
     {
-      if (lepton_object_is_net (attachment))
-      {
-        netname = lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
-        if (netname != NULL)
-        {
-          if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
-          {
-            netstack = g_list_prepend (netstack, attachment);
-          }
-          g_free (netname);
-        }
-      }
+      netstack = g_list_prepend (netstack, attachment);
     }
+    g_free (netname);
+  }
 
   return netstack;
 }
