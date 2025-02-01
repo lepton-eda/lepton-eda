@@ -52,6 +52,9 @@
 ;;; select the single net, all directly connected nets or all nets
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
+  (define (netname-stack->net-stack *netname-stack)
+    (schematic_selection_get_net_stack_by_netname *window
+                                                  *netname-stack))
   (define (select-next-nets *net-stack
                             *netname-stack
                             net-selection-state
@@ -69,8 +72,7 @@
           ;; No new netnames in the stack, free it and exit.
           (schematic_selection_free_netname_stack *new-netname-stack)
           (let ((*new-net-stack
-                 (schematic_selection_get_net_stack_by_netname *window
-                                                               *new-netname-stack)))
+                 (netname-stack->net-stack *new-netname-stack)))
             (select-next-nets *new-net-stack
                               *new-netname-stack
                               net-selection-state
