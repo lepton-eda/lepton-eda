@@ -203,20 +203,12 @@ o_select_object (SchematicWindow *w_current,
 
 
 GList*
-schematic_selection_get_net_stack_by_netname (GList *objects,
-                                              GList *netnamestack)
+schematic_selection_get_net_stack_by_netname (LeptonObject *o_current,
+                                              GList *netnamestack,
+                                              GList *netstack)
 {
-  const GList *o_iter;
-  LeptonObject *o_current;
   char *netname;
-  GList *netstack = NULL;
 
-  /* get all the nets of the stacked netnames */
-  for (o_iter = objects;
-       o_iter != NULL;
-       o_iter = g_list_next (o_iter))
-  {
-    o_current = (LeptonObject*) o_iter->data;
     LeptonObject *attachment = lepton_object_get_attached_to (o_current);
 
     if (lepton_object_is_text (o_current)
@@ -235,7 +227,6 @@ schematic_selection_get_net_stack_by_netname (GList *objects,
         }
       }
     }
-  }
 
   return netstack;
 }

@@ -53,10 +53,19 @@
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
   (define *active-page (schematic_window_get_active_page *window))
-  (define *objects (lepton_page_objects *active-page))
-  (define (netname-stack->net-stack *netname-stack)
-    (schematic_selection_get_net_stack_by_netname *objects *netname-stack))
+  (define *objects
+    (glist->list (lepton_page_objects *active-page) identity))
 
+  ;; Get all the nets of the stacked netnames.
+  (define (netname-stack->net-stack *netname-stack)
+    (let loop ((ls *objects)
+               (*net-stack %null-pointer))
+      (if (null? ls)
+          *net-stack
+          (loop (cdr ls)
+                (schematic_selection_get_net_stack_by_netname (car ls)
+                                                              *netname-stack
+                                                              *net-stack)))))
   (define (select-next-nets *net-stack
                             *netname-stack
                             net-selection-state
