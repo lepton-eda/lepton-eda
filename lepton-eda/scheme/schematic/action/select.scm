@@ -52,8 +52,9 @@
 ;;; select the single net, all directly connected nets or all nets
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
+  (define *active-page (schematic_window_get_active_page *window))
   (define (netname-stack->net-stack *netname-stack)
-    (schematic_selection_get_net_stack_by_netname *window
+    (schematic_selection_get_net_stack_by_netname *active-page
                                                   *netname-stack))
   (define (select-next-nets *net-stack
                             *netname-stack

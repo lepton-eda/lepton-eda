@@ -478,7 +478,7 @@ void
 schematic_selection_free_netname_stack (GList *netname_stack);
 
 GList*
-schematic_selection_get_net_stack_by_netname (SchematicWindow *w_current,
+schematic_selection_get_net_stack_by_netname (LeptonPage *active_page,
                                               GList *netnamestack);
 GList*
 schematic_selection_object_to_netstack (LeptonObject *object);
