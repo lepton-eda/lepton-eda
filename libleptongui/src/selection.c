@@ -203,7 +203,7 @@ o_select_object (SchematicWindow *w_current,
 
 
 GList*
-schematic_selection_get_net_stack_by_netname (LeptonPage *active_page,
+schematic_selection_get_net_stack_by_netname (GList *objects,
                                               GList *netnamestack)
 {
   const GList *o_iter;
@@ -212,7 +212,7 @@ schematic_selection_get_net_stack_by_netname (LeptonPage *active_page,
   GList *netstack = NULL;
 
   /* get all the nets of the stacked netnames */
-  for (o_iter = lepton_page_objects (active_page);
+  for (o_iter = objects;
        o_iter != NULL;
        o_iter = g_list_next (o_iter))
   {
