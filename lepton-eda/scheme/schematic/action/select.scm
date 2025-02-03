@@ -60,8 +60,9 @@
   (define *active-page (schematic_window_get_active_page *window))
   (define active-page (pointer->page *active-page))
   (define objects
-    (filter-map attrib-attachment
-                (filter attribute? (page-contents active-page))))
+    (filter net?
+            (filter-map attrib-attachment
+                        (filter attribute? (page-contents active-page)))))
 
   (define (netname-value object)
     (let ((netname-attribs
@@ -78,14 +79,12 @@
           net-object-ls
           (let ((attachment (car ls)))
             (loop (cdr ls)
-                  (if (net? attachment)
-                      (let ((netname (netname-value attachment)))
-                        (if netname
-                            (if (member netname netname-ls)
-                                (cons attachment net-object-ls)
-                                net-object-ls)
-                            net-object-ls))
-                      net-object-ls))))))
+                  (let ((netname (netname-value attachment)))
+                    (if netname
+                        (if (member netname netname-ls)
+                            (cons attachment net-object-ls)
+                            net-object-ls)
+                        net-object-ls)))))))
 
   (define (process-object object
                           net-object-ls
