@@ -63,7 +63,7 @@
            (filter (lambda (o) (string= (attrib-name o) "netname"))
                    (object-attribs (pointer->object *object)))))
       (and (not (null? netname-attribs))
-           (string->pointer (attrib-value (car netname-attribs))))))
+           (attrib-value (car netname-attribs)))))
 
   ;; Get all the nets of the stacked netnames.
   (define (netname-stack->net-stack *netname-stack)
@@ -77,12 +77,13 @@
                     (if (and (true? (lepton_object_is_text *object))
                              (not (null-pointer? *attachment))
                              (true? (lepton_object_is_net *attachment)))
-                        (let ((*netname (netname-value *attachment)))
-                          (if *netname
-                              (schematic_selection_get_net_stack_by_netname *attachment
-                                                                            *netname-stack
-                                                                            *net-stack
-                                                                            *netname)
+                        (let ((netname (netname-value *attachment)))
+                          (if netname
+                              (let ((netname-ls (glist->list *netname-stack pointer->string)))
+                                (if (member netname netname-ls)
+                                    (schematic_selection_get_net_stack_by_netname *attachment
+                                                                                  *net-stack)
+                                    *net-stack))
                               *net-stack))
                         *net-stack)))))))
   (define (select-next-nets *net-stack

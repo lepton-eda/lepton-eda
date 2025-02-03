@@ -479,9 +479,7 @@ schematic_selection_free_netname_stack (GList *netname_stack);
 
 GList*
 schematic_selection_get_net_stack_by_netname (LeptonObject *attachment,
-                                              GList *netnamestack,
-                                              GList *netstack,
-                                              char *netname);
+                                              GList *netstack);
 GList*
 schematic_selection_object_to_netstack (LeptonObject *object);
 

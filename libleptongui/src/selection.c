@@ -204,16 +204,9 @@ o_select_object (SchematicWindow *w_current,
 
 GList*
 schematic_selection_get_net_stack_by_netname (LeptonObject *attachment,
-                                              GList *netnamestack,
-                                              GList *netstack,
-                                              char *netname)
+                                              GList *netstack)
 {
-  if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
-  {
-    netstack = g_list_prepend (netstack, attachment);
-  }
-
-  return netstack;
+  return g_list_prepend (netstack, attachment);
 }
 
 
