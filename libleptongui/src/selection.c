@@ -265,9 +265,6 @@ o_select_connected_nets (SchematicWindow *w_current,
     }
   }
 
-  g_list_free (netstack);
-  netstack = NULL;
-
   return netnamestack;
 }
 

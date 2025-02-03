@@ -127,15 +127,18 @@
                        *netname-stack
                        net-selection-state
                        count)
-    (o_select_connected_nets *window
-                             (make-new-net-stack *net-stack
-                                                 *netname-stack
-                                                 net-selection-state
-                                                 count
-                                                 '())
-                             *netname-stack
-                             net-selection-state
-                             count))
+    (let ((result
+           (o_select_connected_nets *window
+                                    (make-new-net-stack *net-stack
+                                                        *netname-stack
+                                                        net-selection-state
+                                                        count
+                                                        '())
+                                    *netname-stack
+                                    net-selection-state
+                                    count)))
+      (g_list_free *net-stack)
+      result))
 
   (define (select-next-nets *net-stack
                             *netname-stack
