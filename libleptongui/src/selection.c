@@ -202,16 +202,6 @@ o_select_object (SchematicWindow *w_current,
 }
 
 
-void
-schematic_selection_free_netname_stack (GList *netname_stack)
-{
-  GList *iter;
-  for (iter = netname_stack; iter != NULL; iter = g_list_next (iter))
-    g_free (iter->data);
-  g_list_free (netname_stack);
-}
-
-
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */
 LeptonObject*

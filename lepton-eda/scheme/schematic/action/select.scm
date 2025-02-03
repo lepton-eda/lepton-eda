@@ -66,7 +66,7 @@
            (attrib-value (car netname-attribs)))))
 
   ;; Get all the nets of the stacked netnames.
-  (define (netname-stack->net-stack *netname-stack)
+  (define (netname-stack->net-stack netname-ls)
     (let loop ((ls *objects)
                (*net-stack %null-pointer))
       (if (null? ls)
@@ -79,10 +79,9 @@
                              (true? (lepton_object_is_net *attachment)))
                         (let ((netname (netname-value *attachment)))
                           (if netname
-                              (let ((netname-ls (glist->list *netname-stack pointer->string)))
-                                (if (member netname netname-ls)
-                                    (g_list_prepend *net-stack *attachment)
-                                    *net-stack))
+                              (if (member netname netname-ls)
+                                  (g_list_prepend *net-stack *attachment)
+                                  *net-stack)
                               *net-stack))
                         *net-stack)))))))
 
@@ -103,7 +102,7 @@
         *net-stack))
 
   (define (make-new-net-stack *net-stack
-                              *netname-stack
+                              netname-ls
                               net-selection-state
                               count
                               *processed-objects)
@@ -118,18 +117,18 @@
                                                 *net-stack
                                                 net-selection-state
                                                 count)
-                                *netname-stack
+                                netname-ls
                                 net-selection-state
                                 1
                                 (cons *object *processed-objects))))))
 
   (define (collect-netnames *net-stack
-                            *netname-stack
+                            netnames
                             net-selection-state)
     (let loop ((*net-ls (reverse (glist->list *net-stack identity)))
-               (*netname-ls *netname-stack))
+               (netname-ls netnames))
       (if (null? *net-ls)
-          *netname-ls
+          netname-ls
           (let ((*object (car *net-ls)))
             (loop (cdr *net-ls)
                   (if (and (true? (lepton_object_is_net *object))
@@ -137,48 +136,40 @@
                       ;; Collect netnames.
                       (let ((netname (netname-value *object)))
                         (if (and netname
-                                 (not (member netname
-                                              (glist->list *netname-ls pointer->string))))
-                            (g_list_append *netname-ls (string->pointer netname))
-                            *netname-ls))
-                      *netname-ls))))))
+                                 (not (member netname netname-ls)))
+                            (cons netname netname-ls)
+                            netname-ls))
+                      netname-ls))))))
 
   (define (select-nets *net-stack
-                       *netname-stack
+                       netname-ls
                        net-selection-state
                        count)
     (let ((result (collect-netnames (make-new-net-stack *net-stack
-                                                        *netname-stack
+                                                        netname-ls
                                                         net-selection-state
                                                         count
                                                         '())
-                                    *netname-stack
+                                    netname-ls
                                     net-selection-state)))
       (g_list_free *net-stack)
       result))
 
   (define (select-next-nets *net-stack
-                            *netname-stack
+                            netname-ls
                             net-selection-state
-                            count
-                            netname-list)
-    (let* ((*new-netname-stack
-            (select-nets *net-stack
-                         *netname-stack
-                         net-selection-state
-                         count))
-           (new-netname-list (glist->list *new-netname-stack
-                                          pointer->string)))
-      (if (equal? netname-list new-netname-list)
-          ;; No new netnames in the stack, free it and exit.
-          (schematic_selection_free_netname_stack *new-netname-stack)
-          (let ((*new-net-stack
-                 (netname-stack->net-stack *new-netname-stack)))
-            (select-next-nets *new-net-stack
-                              *new-netname-stack
-                              net-selection-state
-                              1
-                              new-netname-list)))))
+                            count)
+    (let ((new-netname-ls (select-nets *net-stack
+                                       netname-ls
+                                       net-selection-state
+                                       count)))
+      (unless (equal? netname-ls new-netname-ls)
+        (let ((*new-net-stack
+               (netname-stack->net-stack new-netname-ls)))
+          (select-next-nets *new-net-stack
+                            new-netname-ls
+                            net-selection-state
+                            1)))))
 
   ;; If either Shift or Ctrl are pressed, behave exactly the same
   ;; as a single object selection.  This makes it possible to
@@ -193,10 +184,9 @@
           (schematic_window_set_net_selection_state *window 1))
         ;; The current net is the startpoint for the net stack.
         (select-next-nets (g_list_prepend %null-pointer *net)
-                          %null-pointer
+                          '()
                           net-selection-state
-                          0
-                          '())
+                          0)
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window
