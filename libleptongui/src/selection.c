@@ -203,14 +203,6 @@ o_select_object (SchematicWindow *w_current,
 
 
 GList*
-schematic_selection_get_net_stack_by_netname (LeptonObject *attachment,
-                                              GList *netstack)
-{
-  return g_list_prepend (netstack, attachment);
-}
-
-
-GList*
 schematic_selection_object_to_netstack (LeptonObject *object)
 {
   return g_list_prepend (NULL, object);

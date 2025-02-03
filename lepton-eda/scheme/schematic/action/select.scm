@@ -81,8 +81,7 @@
                           (if netname
                               (let ((netname-ls (glist->list *netname-stack pointer->string)))
                                 (if (member netname netname-ls)
-                                    (schematic_selection_get_net_stack_by_netname *attachment
-                                                                                  *net-stack)
+                                    (g_list_prepend *net-stack *attachment)
                                     *net-stack))
                               *net-stack))
                         *net-stack)))))))
