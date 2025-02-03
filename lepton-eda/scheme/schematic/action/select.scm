@@ -29,6 +29,7 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -58,10 +59,10 @@
   (define *objects
     (glist->list (lepton_page_objects *active-page) identity))
 
-  (define (netname-value *object)
+  (define (netname-value object)
     (let ((netname-attribs
            (filter (lambda (o) (string= (attrib-name o) "netname"))
-                   (object-attribs (pointer->object *object)))))
+                   (object-attribs object))))
       (and (not (null? netname-attribs))
            (attrib-value (car netname-attribs)))))
 
@@ -75,53 +76,56 @@
             (loop (cdr ls)
                   (let ((*attachment (lepton_object_get_attached_to *object)))
                     (if (and (true? (lepton_object_is_text *object))
-                             (not (null-pointer? *attachment))
-                             (true? (lepton_object_is_net *attachment)))
-                        (let ((netname (netname-value *attachment)))
-                          (if netname
-                              (if (member netname netname-ls)
-                                  (cons *attachment net-object-ls)
-                                  net-object-ls)
+                             (not (null-pointer? *attachment)))
+                        (let ((attachment (pointer->object *attachment)))
+                          (if (net? attachment)
+                              (let ((netname (netname-value attachment)))
+                                (if netname
+                                    (if (member netname netname-ls)
+                                        (cons attachment net-object-ls)
+                                        net-object-ls)
+                                    net-object-ls))
                               net-object-ls))
                         net-object-ls)))))))
 
-  (define (process-object *object
+  (define (process-object object
                           net-object-ls
                           net-selection-state
                           count)
-    (if (and (true? (lepton_object_is_net *object))
-             (or (false? (lepton_object_get_selected *object))
-                 (zero? count)))
-        (begin
-          (o_select_object *window *object SINGLE count)
-          (if (> net-selection-state 1)
-              ;; Collect nets.
-              (append (glist->list (s_conn_return_others %null-pointer *object)
-                                   identity)
-                      net-object-ls)
-              net-object-ls))
-        net-object-ls))
+    (let ((*object (object->pointer object)))
+      (if (and (true? (lepton_object_is_net *object))
+               (or (false? (lepton_object_get_selected *object))
+                   (zero? count)))
+          (begin
+            (o_select_object *window *object SINGLE count)
+            (if (> net-selection-state 1)
+                ;; Collect nets.
+                (append (glist->list (s_conn_return_others %null-pointer *object)
+                                     pointer->object)
+                        net-object-ls)
+                net-object-ls))
+          net-object-ls)))
 
   (define (make-new-net-stack net-object-ls
                               netname-ls
                               net-selection-state
                               count
-                              *processed-objects)
+                              processed-objects)
     (let ((net-ls (filter
                    ;; Check if the object has already been processed.
-                   (lambda (*obj) (not (member *obj *processed-objects)))
+                   (lambda (obj) (not (member obj processed-objects)))
                    (reverse net-object-ls))))
       (if (null? net-ls)
           net-object-ls
-          (let ((*object (car net-ls)))
-            (make-new-net-stack (process-object *object
+          (let ((object (car net-ls)))
+            (make-new-net-stack (process-object object
                                                 net-object-ls
                                                 net-selection-state
                                                 count)
                                 netname-ls
                                 net-selection-state
                                 1
-                                (cons *object *processed-objects))))))
+                                (cons object processed-objects))))))
 
   (define (collect-netnames net-object-ls
                             netnames
@@ -130,12 +134,12 @@
                (netname-ls netnames))
       (if (null? net-ls)
           netname-ls
-          (let ((*object (car net-ls)))
+          (let ((object (car net-ls)))
             (loop (cdr net-ls)
-                  (if (and (true? (lepton_object_is_net *object))
+                  (if (and (net? object)
                            (> net-selection-state 2))
                       ;; Collect netnames.
-                      (let ((netname (netname-value *object)))
+                      (let ((netname (netname-value object)))
                         (if (and netname
                                  (not (member netname netname-ls)))
                             (cons netname netname-ls)
@@ -182,7 +186,7 @@
         (unless (true? (lepton_object_get_selected *net))
           (schematic_window_set_net_selection_state *window 1))
         ;; The current net is the startpoint for the net stack.
-        (select-next-nets (list *net) '() net-selection-state 0)
+        (select-next-nets (list (pointer->object *net)) '() net-selection-state 0)
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window
