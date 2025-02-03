@@ -30,6 +30,8 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
+  #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -56,8 +58,8 @@
 ;;; connected with netname attribute.
 (define (select-connected-nets *window *net)
   (define *active-page (schematic_window_get_active_page *window))
-  (define *objects
-    (glist->list (lepton_page_objects *active-page) identity))
+  (define active-page (pointer->page *active-page))
+  (define objects (page-contents active-page))
 
   (define (netname-value object)
     (let ((netname-attribs
@@ -68,13 +70,14 @@
 
   ;; Get all the nets of the stacked netnames.
   (define (netname-stack->net-stack netname-ls)
-    (let loop ((ls *objects)
+    (let loop ((ls objects)
                (net-object-ls '()))
       (if (null? ls)
           net-object-ls
-          (let ((*object (car ls)))
+          (let ((object (car ls)))
             (loop (cdr ls)
-                  (let ((*attachment (lepton_object_get_attached_to *object)))
+                  (let* ((*object (object->pointer object))
+                         (*attachment (lepton_object_get_attached_to *object)))
                     (if (and (true? (lepton_object_is_text *object))
                              (not (null-pointer? *attachment)))
                         (let ((attachment (pointer->object *attachment)))
