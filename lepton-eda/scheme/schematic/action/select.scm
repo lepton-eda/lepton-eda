@@ -23,10 +23,12 @@
   #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -56,6 +58,13 @@
   (define *objects
     (glist->list (lepton_page_objects *active-page) identity))
 
+  (define (netname-value *object)
+    (let ((netname-attribs
+           (filter (lambda (o) (string= (attrib-name o) "netname"))
+                   (object-attribs (pointer->object *object)))))
+      (and (not (null? netname-attribs))
+           (string->pointer (attrib-value (car netname-attribs))))))
+
   ;; Get all the nets of the stacked netnames.
   (define (netname-stack->net-stack *netname-stack)
     (let loop ((ls *objects)
@@ -68,9 +77,13 @@
                     (if (and (true? (lepton_object_is_text *object))
                              (not (null-pointer? *attachment))
                              (true? (lepton_object_is_net *attachment)))
-                        (schematic_selection_get_net_stack_by_netname *attachment
-                                                                      *netname-stack
-                                                                      *net-stack)
+                        (let ((*netname (netname-value *attachment)))
+                          (if *netname
+                              (schematic_selection_get_net_stack_by_netname *attachment
+                                                                            *netname-stack
+                                                                            *net-stack
+                                                                            *netname)
+                              *net-stack))
                         *net-stack)))))))
   (define (select-next-nets *net-stack
                             *netname-stack

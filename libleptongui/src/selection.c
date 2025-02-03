@@ -205,17 +205,12 @@ o_select_object (SchematicWindow *w_current,
 GList*
 schematic_selection_get_net_stack_by_netname (LeptonObject *attachment,
                                               GList *netnamestack,
-                                              GList *netstack)
+                                              GList *netstack,
+                                              char *netname)
 {
-  char *netname =
-    lepton_attrib_search_object_attribs_by_name (attachment, "netname", 0);
-  if (netname != NULL)
+  if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
   {
-    if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) != NULL)
-    {
-      netstack = g_list_prepend (netstack, attachment);
-    }
-    g_free (netname);
+    netstack = g_list_prepend (netstack, attachment);
   }
 
   return netstack;
