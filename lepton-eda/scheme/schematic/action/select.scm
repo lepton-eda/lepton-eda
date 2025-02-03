@@ -123,20 +123,37 @@
                                 1
                                 (cons *object *processed-objects))))))
 
+  (define (collect-netnames *net-stack
+                            *netname-stack
+                            net-selection-state)
+    (let loop ((*net-ls (reverse (glist->list *net-stack identity)))
+               (*netname-ls *netname-stack))
+      (if (null? *net-ls)
+          *netname-ls
+          (let ((*object (car *net-ls)))
+            (loop (cdr *net-ls)
+                  (if (and (true? (lepton_object_is_net *object))
+                           (> net-selection-state 2))
+                      ;; Collect netnames.
+                      (let ((netname (netname-value *object)))
+                        (if (and netname
+                                 (not (member netname
+                                              (glist->list *netname-ls pointer->string))))
+                            (g_list_append *netname-ls (string->pointer netname))
+                            *netname-ls))
+                      *netname-ls))))))
+
   (define (select-nets *net-stack
                        *netname-stack
                        net-selection-state
                        count)
-    (let ((result
-           (o_select_connected_nets *window
-                                    (make-new-net-stack *net-stack
+    (let ((result (collect-netnames (make-new-net-stack *net-stack
                                                         *netname-stack
                                                         net-selection-state
                                                         count
                                                         '())
                                     *netname-stack
-                                    net-selection-state
-                                    count)))
+                                    net-selection-state)))
       (g_list_free *net-stack)
       result))
 

@@ -486,12 +486,6 @@ o_select_object (SchematicWindow *w_current,
                  LeptonObject *o_current,
                  int type,
                  int count);
-GList*
-o_select_connected_nets (SchematicWindow *w_current,
-                         GList *netstack,
-                         GList *netnamestack,
-                         int net_selection_state,
-                         int count);
 LeptonObject*
 o_select_return_first_object (SchematicWindow *w_current);
 

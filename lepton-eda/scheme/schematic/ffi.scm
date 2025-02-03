@@ -609,7 +609,6 @@
             schematic_newtext_dialog_textview_select_all
 
             schematic_selection_free_netname_stack
-            o_select_connected_nets
             o_select_object
             o_select_return_first_object
             o_select_selected
@@ -1395,7 +1394,6 @@
 
 ;;; selection.c
 (define-lff schematic_selection_free_netname_stack void '(*))
-(define-lff o_select_connected_nets '* (list '* '* '* int int))
 (define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))

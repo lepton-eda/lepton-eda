@@ -212,62 +212,6 @@ schematic_selection_free_netname_stack (GList *netname_stack)
 }
 
 
-/*! \brief Select all nets connected to the current net
- *  \par Function Description
- *   Depending on the state of the \a net_selection_mode variable
- *   of the #SchematicWindow instance and the state of the current
- *   net selection defined in the variable \a net_selection_state
- *   this function will either select the single net, all directly
- *   connected nets or all nets connected with netname labels.
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in,out] netstack The set of processed nets.
- *  \param [in,out] netnamestack The set of processed "netname"
- *                               attributes.
- *  \param [in] net_selection_state The state of net selection.
- *  \param [in] count The counter of selected objects.
- *  \return [in] The modified netname stack, or NULL when done.
- */
-GList*
-o_select_connected_nets (SchematicWindow *w_current,
-                         GList *netstack,
-                         GList *netnamestack,
-                         int net_selection_state,
-                         int count)
-{
-  GList *iter1;
-  LeptonObject *o_current;
-  gchar* netname;
-
-  for (iter1 = g_list_last (netstack);
-       iter1 != NULL;
-       iter1 = g_list_previous (iter1))
-  {
-    o_current = (LeptonObject*) iter1->data;
-    if (lepton_object_is_net (o_current))
-    {
-      if (net_selection_state > 2)
-      {
-        /* collect netnames */
-        netname = lepton_attrib_search_object_attribs_by_name (o_current, "netname", 0);
-        if (netname != NULL)
-        {
-          if (g_list_find_custom (netnamestack, netname, (GCompareFunc) strcmp) == NULL)
-          {
-            netnamestack = g_list_append (netnamestack, netname);
-          }
-          else
-          {
-            g_free (netname);
-          }
-        }
-      }
-    }
-  }
-
-  return netnamestack;
-}
-
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */
 LeptonObject*
