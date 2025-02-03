@@ -477,6 +477,12 @@ o_place_mirror (SchematicWindow *w_current);
 void
 schematic_selection_free_netname_stack (GList *netname_stack);
 
+GList*
+schematic_selection_process_object (SchematicWindow *w_current,
+                                    LeptonObject *o_current,
+                                    GList *netstack,
+                                    int net_selection_state,
+                                    int count);
 void
 o_select_run_hooks (SchematicWindow *w_current,
                     LeptonObject *o_current,

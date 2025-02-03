@@ -212,6 +212,29 @@ schematic_selection_free_netname_stack (GList *netname_stack)
 }
 
 
+GList*
+schematic_selection_process_object (SchematicWindow *w_current,
+                                    LeptonObject *o_current,
+                                    GList *netstack,
+                                    int net_selection_state,
+                                    int count)
+{
+  if (lepton_object_is_net (o_current) &&
+      (!lepton_object_get_selected (o_current) || count == 0))
+  {
+    o_select_object (w_current, o_current, SINGLE, count);
+    count = 1;
+    if (net_selection_state > 1)
+    {
+      /* collect nets */
+      netstack = g_list_concat (s_conn_return_others (NULL, o_current), netstack);
+    }
+  }
+
+  return netstack;
+}
+
+
 /*! \brief Select all nets connected to the current net
  *  \par Function Description
  *   Depending on the state of the \a net_selection_mode variable
@@ -238,24 +261,6 @@ o_select_connected_nets (SchematicWindow *w_current,
   GList *iter1;
   LeptonObject *o_current;
   gchar* netname;
-
-  for (iter1 = g_list_last (netstack);
-       iter1 != NULL;
-       iter1 = g_list_previous (iter1))
-  {
-    o_current = (LeptonObject*) iter1->data;
-    if (lepton_object_is_net (o_current) &&
-        (!lepton_object_get_selected (o_current) || count == 0))
-    {
-      o_select_object (w_current, o_current, SINGLE, count);
-      count = 1;
-      if (net_selection_state > 1)
-      {
-        /* collect nets */
-        netstack = g_list_concat (s_conn_return_others (NULL, o_current), netstack);
-      }
-    }
-  }
 
   for (iter1 = g_list_last (netstack);
        iter1 != NULL;

@@ -86,12 +86,38 @@
                               *net-stack))
                         *net-stack)))))))
 
+  (define (make-new-net-stack *net-stack
+                              *netname-stack
+                              net-selection-state
+                              count
+                              *processed-objects)
+    (let ((*net-ls (filter
+                    ;; Check if the object has already been processed.
+                    (lambda (*obj) (not (member *obj *processed-objects)))
+                    (reverse (glist->list *net-stack identity)))))
+      (if (null? *net-ls)
+          *net-stack
+          (let ((*object (car *net-ls)))
+            (make-new-net-stack (schematic_selection_process_object *window
+                                                                    *object
+                                                                    *net-stack
+                                                                    net-selection-state
+                                                                    count)
+                                *netname-stack
+                                net-selection-state
+                                1
+                                (cons *object *processed-objects))))))
+
   (define (select-nets *net-stack
                        *netname-stack
                        net-selection-state
                        count)
     (o_select_connected_nets *window
-                             *net-stack
+                             (make-new-net-stack *net-stack
+                                                 *netname-stack
+                                                 net-selection-state
+                                                 count
+                                                 '())
                              *netname-stack
                              net-selection-state
                              count))
