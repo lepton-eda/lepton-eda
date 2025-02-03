@@ -85,17 +85,27 @@
                                     *net-stack))
                               *net-stack))
                         *net-stack)))))))
+
+  (define (select-nets *net-stack
+                       *netname-stack
+                       net-selection-state
+                       count)
+    (o_select_connected_nets *window
+                             *net-stack
+                             *netname-stack
+                             net-selection-state
+                             count))
+
   (define (select-next-nets *net-stack
                             *netname-stack
                             net-selection-state
                             count
                             netname-list)
     (let* ((*new-netname-stack
-            (o_select_connected_nets *window
-                                     *net-stack
-                                     *netname-stack
-                                     net-selection-state
-                                     count))
+            (select-nets *net-stack
+                         *netname-stack
+                         net-selection-state
+                         count))
            (new-netname-list (glist->list *new-netname-stack
                                           pointer->string)))
       (if (equal? netname-list new-netname-list)
