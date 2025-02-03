@@ -86,6 +86,22 @@
                               *net-stack))
                         *net-stack)))))))
 
+  (define (process-object *object
+                          *net-stack
+                          net-selection-state
+                          count)
+    (if (and (true? (lepton_object_is_net *object))
+             (or (false? (lepton_object_get_selected *object))
+                 (zero? count)))
+        (begin
+          (o_select_object *window *object SINGLE count)
+          (if (> net-selection-state 1)
+              ;; Collect nets.
+              (g_list_concat (s_conn_return_others %null-pointer *object)
+                             *net-stack)
+              *net-stack))
+        *net-stack))
+
   (define (make-new-net-stack *net-stack
                               *netname-stack
                               net-selection-state
@@ -98,11 +114,10 @@
       (if (null? *net-ls)
           *net-stack
           (let ((*object (car *net-ls)))
-            (make-new-net-stack (schematic_selection_process_object *window
-                                                                    *object
-                                                                    *net-stack
-                                                                    net-selection-state
-                                                                    count)
+            (make-new-net-stack (process-object *object
+                                                *net-stack
+                                                net-selection-state
+                                                count)
                                 *netname-stack
                                 net-selection-state
                                 1
