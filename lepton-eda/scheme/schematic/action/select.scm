@@ -68,9 +68,9 @@
   ;; Get all the nets of the stacked netnames.
   (define (netname-stack->net-stack netname-ls)
     (let loop ((ls *objects)
-               (*net-stack %null-pointer))
+               (net-object-ls '()))
       (if (null? ls)
-          *net-stack
+          net-object-ls
           (let ((*object (car ls)))
             (loop (cdr ls)
                   (let ((*attachment (lepton_object_get_attached_to *object)))
@@ -80,13 +80,13 @@
                         (let ((netname (netname-value *attachment)))
                           (if netname
                               (if (member netname netname-ls)
-                                  (g_list_prepend *net-stack *attachment)
-                                  *net-stack)
-                              *net-stack))
-                        *net-stack)))))))
+                                  (cons *attachment net-object-ls)
+                                  net-object-ls)
+                              net-object-ls))
+                        net-object-ls)))))))
 
   (define (process-object *object
-                          *net-stack
+                          net-object-ls
                           net-selection-state
                           count)
     (if (and (true? (lepton_object_is_net *object))
@@ -96,25 +96,26 @@
           (o_select_object *window *object SINGLE count)
           (if (> net-selection-state 1)
               ;; Collect nets.
-              (g_list_concat (s_conn_return_others %null-pointer *object)
-                             *net-stack)
-              *net-stack))
-        *net-stack))
+              (append (glist->list (s_conn_return_others %null-pointer *object)
+                                   identity)
+                      net-object-ls)
+              net-object-ls))
+        net-object-ls))
 
-  (define (make-new-net-stack *net-stack
+  (define (make-new-net-stack net-object-ls
                               netname-ls
                               net-selection-state
                               count
                               *processed-objects)
-    (let ((*net-ls (filter
-                    ;; Check if the object has already been processed.
-                    (lambda (*obj) (not (member *obj *processed-objects)))
-                    (reverse (glist->list *net-stack identity)))))
-      (if (null? *net-ls)
-          *net-stack
-          (let ((*object (car *net-ls)))
+    (let ((net-ls (filter
+                   ;; Check if the object has already been processed.
+                   (lambda (*obj) (not (member *obj *processed-objects)))
+                   (reverse net-object-ls))))
+      (if (null? net-ls)
+          net-object-ls
+          (let ((*object (car net-ls)))
             (make-new-net-stack (process-object *object
-                                                *net-stack
+                                                net-object-ls
                                                 net-selection-state
                                                 count)
                                 netname-ls
@@ -122,15 +123,15 @@
                                 1
                                 (cons *object *processed-objects))))))
 
-  (define (collect-netnames *net-stack
+  (define (collect-netnames net-object-ls
                             netnames
                             net-selection-state)
-    (let loop ((*net-ls (reverse (glist->list *net-stack identity)))
+    (let loop ((net-ls (reverse net-object-ls))
                (netname-ls netnames))
-      (if (null? *net-ls)
+      (if (null? net-ls)
           netname-ls
-          (let ((*object (car *net-ls)))
-            (loop (cdr *net-ls)
+          (let ((*object (car net-ls)))
+            (loop (cdr net-ls)
                   (if (and (true? (lepton_object_is_net *object))
                            (> net-selection-state 2))
                       ;; Collect netnames.
@@ -141,32 +142,30 @@
                             netname-ls))
                       netname-ls))))))
 
-  (define (select-nets *net-stack
+  (define (select-nets net-object-ls
                        netname-ls
                        net-selection-state
                        count)
-    (let ((result (collect-netnames (make-new-net-stack *net-stack
-                                                        netname-ls
-                                                        net-selection-state
-                                                        count
-                                                        '())
-                                    netname-ls
-                                    net-selection-state)))
-      (g_list_free *net-stack)
-      result))
+    (collect-netnames (make-new-net-stack net-object-ls
+                                          netname-ls
+                                          net-selection-state
+                                          count
+                                          '())
+                      netname-ls
+                      net-selection-state))
 
-  (define (select-next-nets *net-stack
+  (define (select-next-nets net-object-ls
                             netname-ls
                             net-selection-state
                             count)
-    (let ((new-netname-ls (select-nets *net-stack
+    (let ((new-netname-ls (select-nets net-object-ls
                                        netname-ls
                                        net-selection-state
                                        count)))
       (unless (equal? netname-ls new-netname-ls)
-        (let ((*new-net-stack
+        (let ((new-net-object-ls
                (netname-stack->net-stack new-netname-ls)))
-          (select-next-nets *new-net-stack
+          (select-next-nets new-net-object-ls
                             new-netname-ls
                             net-selection-state
                             1)))))
@@ -183,10 +182,7 @@
         (unless (true? (lepton_object_get_selected *net))
           (schematic_window_set_net_selection_state *window 1))
         ;; The current net is the startpoint for the net stack.
-        (select-next-nets (g_list_prepend %null-pointer *net)
-                          '()
-                          net-selection-state
-                          0)
+        (select-next-nets (list *net) '() net-selection-state 0)
         (let ((net-selection-mode
                (schematic_window_get_net_selection_mode *window)))
           (schematic_window_set_net_selection_state *window
