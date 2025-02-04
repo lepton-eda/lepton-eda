@@ -91,7 +91,7 @@
                           net-selection-state
                           count)
     (let ((*object (object->pointer object)))
-      (if (and (true? (lepton_object_is_net *object))
+      (if (and (net? object)
                (or (false? (lepton_object_get_selected *object))
                    (zero? count)))
           (begin
