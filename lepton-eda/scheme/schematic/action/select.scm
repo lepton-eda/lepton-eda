@@ -98,8 +98,7 @@
             (o_select_object *window *object SINGLE count)
             (if (> net-selection-state 1)
                 ;; Collect nets.
-                (append (glist->list (s_conn_return_others %null-pointer *object)
-                                     pointer->object)
+                (append (object-connections object)
                         net-object-ls)
                 net-object-ls))
           net-object-ls)))
