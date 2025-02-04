@@ -35,6 +35,7 @@
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic selection)
   #:use-module (schematic window foreign)
 
   #:export (continue-box-selection
@@ -92,7 +93,7 @@
                           count)
     (let ((*object (object->pointer object)))
       (if (and (net? object)
-               (or (false? (lepton_object_get_selected *object))
+               (or (not (object-selected? object))
                    (zero? count)))
           (begin
             (o_select_object *window *object SINGLE count)
@@ -180,7 +181,7 @@
       (o_select_object *window *net SINGLE 0)
       (let ((net-selection-state
              (schematic_window_get_net_selection_state *window)))
-        (unless (true? (lepton_object_get_selected *net))
+        (unless (object-selected? (pointer->object *net))
           (schematic_window_set_net_selection_state *window 1))
         ;; The current net is the startpoint for the net stack.
         (select-next-nets (list (pointer->object *net)) '() net-selection-state 0)
