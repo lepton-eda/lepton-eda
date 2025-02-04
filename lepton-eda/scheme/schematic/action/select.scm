@@ -60,6 +60,8 @@
     (true? (schematic_window_get_control_key_pressed *window)))
   (define object-selected?
     (true? (lepton_object_get_selected *object)))
+  (define *selection
+    (schematic_window_get_selection_list *window))
 
   (if (not object-selected?)
       ;; The object is not selected.
@@ -77,8 +79,7 @@
         ;; The object is not selected, add it to the selection
         ;; list.
         (o_select_run_hooks *window *object 1)
-        (o_selection_add (schematic_window_get_selection_list *window)
-                         *object))
+        (o_selection_add *selection *object))
 
       ;; The object was already selected.
       (if shift-pressed?
@@ -86,8 +87,7 @@
           ;; result: Remove object from selection.
           (when (not (= type MULTIPLE))
             (o_select_run_hooks *window *object 0)
-            (o_selection_remove (schematic_window_get_selection_list *window)
-                                *object))
+            (o_selection_remove *selection *object))
 
           (begin
             ;; condition: Doing multiple.
@@ -101,8 +101,7 @@
               (o_select_unselect_all *window)
 
               (o_select_run_hooks *window *object 1)
-              (o_selection_add (schematic_window_get_selection_list *window)
-                               *object))
+              (o_selection_add *selection *object))
 
             ;; condition: Doing single object add.
             ;; condition: Control key is not pressed.
@@ -113,13 +112,11 @@
               (o_select_unselect_all *window)
 
               (o_select_run_hooks *window *object 1)
-              (o_selection_add (schematic_window_get_selection_list *window)
-                               *object))
+              (o_selection_add *selection *object))
 
             (when control-pressed?
               (o_select_run_hooks *window *object 0)
-              (o_selection_remove (schematic_window_get_selection_list *window)
-                                  *object)))))
+              (o_selection_remove *selection *object)))))
 
   ;; Deal with attributes.
   (let ((remove-object-from-selection?
@@ -133,9 +130,7 @@
         ;; Remove the invisible attributes from the object list as
         ;; well so they don't remain selected without the user
         ;; knowing.
-        (o_attrib_deselect_invisible *window
-                                     (schematic_window_get_selection_list *window)
-                                     *object)
+        (o_attrib_deselect_invisible *window *selection *object)
 
         ;; If the type is MULTIPLE (meaning a select box was/is
         ;; being used) only select invisible attributes on objects.
@@ -143,14 +138,10 @@
         ;; them to remain unselected if using invert-selection
         ;; (Control is pressed).
         (if (= type MULTIPLE)
-            (o_attrib_select_invisible *window
-                                       (schematic_window_get_selection_list *window)
-                                       *object)
+            (o_attrib_select_invisible *window *selection *object)
             ;; Select all attributes of the object for a single
             ;; click select.
-            (o_attrib_add_selected *window
-                                   (schematic_window_get_selection_list *window)
-                                   *object)))))
+            (o_attrib_add_selected *window *selection *object)))))
 
 
 ;;; Select all nets connected to *NET in *WINDOW.  Depending on
