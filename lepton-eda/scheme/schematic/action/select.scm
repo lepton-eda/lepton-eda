@@ -47,13 +47,7 @@
             start-selection))
 
 
-;;; Selection types.  SINGLE means an object is selected with a
-;;; single mouse click.  MULTIPLE means several objects are
-;;; selected using a selection box.
-(define SINGLE 0)
-(define MULTIPLE 1)
-
-(define (select! *window *object type first-object?)
+(define (select! *window *object box-selection? first-object?)
   (define shift-pressed?
     (true? (schematic_window_get_shift_key_pressed *window)))
   (define control-pressed?
@@ -69,7 +63,8 @@
         ;; condition: First object being added.
         ;; condition: Shift key is not pressed.
         ;; condition: Control key is not pressed.
-        ;; condition: For both multiple and single object addition.
+        ;; condition: For both simple mouse click and box
+        ;; selection.
         ;; result: Remove all objects from selection.
         (when (and first-object?
                    (not shift-pressed?)
@@ -83,19 +78,19 @@
 
       ;; The object was already selected.
       (if shift-pressed?
-          ;; condition: Not doing multiple.
+          ;; condition: Select a single object.
           ;; result: Remove object from selection.
-          (when (not (= type MULTIPLE))
+          (when (not box-selection?)
             (o_select_run_hooks *window *object 0)
             (o_selection_remove *selection *object))
 
           (begin
-            ;; condition: Doing multiple.
+            ;; condition: Use box selection.
             ;; condition: First object being added.
             ;; condition: Control key is not pressed.
             ;; 1st result: Remove all objects from selection.
             ;; 2nd result: Add object to selection.
-            (when (and (= type MULTIPLE)
+            (when (and box-selection?
                        first-object?
                        (not control-pressed?))
               (o_select_unselect_all *window)
@@ -103,11 +98,11 @@
               (o_select_run_hooks *window *object 1)
               (o_selection_add *selection *object))
 
-            ;; condition: Doing single object add.
+            ;; condition: Select a single object.
             ;; condition: Control key is not pressed.
             ;; 1st result: Remove all objects from selection.
             ;; 2nd result: Add object to selection list.
-            (when (and (= type SINGLE)
+            (when (and (not box-selection?)
                        (not control-pressed?))
               (o_select_unselect_all *window)
 
@@ -122,9 +117,9 @@
   (let ((remove-object-from-selection?
          (and object-selected?
               (or (and shift-pressed?
-                       (not (= type MULTIPLE)))
+                       (not box-selection?))
                   (and (not shift-pressed?)
-                       (= type MULTIPLE)
+                       box-selection?
                        control-pressed?)))))
     (if remove-object-from-selection?
         ;; Remove the invisible attributes from the object list as
@@ -132,12 +127,12 @@
         ;; knowing.
         (o_attrib_deselect_invisible *window *selection *object)
 
-        ;; If the type is MULTIPLE (meaning a select box was/is
-        ;; being used) only select invisible attributes on objects.
-        ;; Otherwise attributes will be "double selected" causing
-        ;; them to remain unselected if using invert-selection
-        ;; (Control is pressed).
-        (if (= type MULTIPLE)
+        ;; If the select box was/is being used, only select
+        ;; invisible attributes on objects.  Otherwise attributes
+        ;; will be "double selected" causing them to remain
+        ;; unselected if using invert-selection (Control is
+        ;; pressed).
+        (if box-selection?
             (o_attrib_select_invisible *window *selection *object)
             ;; Select all attributes of the object for a single
             ;; click select.
@@ -188,7 +183,7 @@
                (or (not (object-selected? object))
                    (zero? count)))
           (begin
-            (select! *window *object SINGLE (zero? count))
+            (select! *window *object #f (zero? count))
             (if (> net-selection-state 1)
                 ;; Collect nets.
                 (append (object-connections object)
@@ -270,7 +265,7 @@
   ;; Shift+<mouse-1> on it to deselect it.
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window)))
-      (select! *window *net SINGLE #t)
+      (select! *window *net #f #t)
       (let ((net-selection-state
              (schematic_window_get_net_selection_state *window)))
         (unless (object-selected? (pointer->object *net))
@@ -358,7 +353,7 @@
                  (true? (schematic_window_get_net_selection_mode *window)))
             (select-connected-nets *window *object)
             ;; 0 is count.
-            (select! *window *object SINGLE #t))
+            (select! *window *object #f #t))
 
         (schematic_window_set_object_lastplace *window *object)
         (i_update_menus *window)
@@ -548,7 +543,7 @@ coordinate."
                                         (sizeof int))
                    bottom))
           (begin
-            (select! *window *object MULTIPLE (zero? count))
+            (select! *window *object #t (zero? count))
             (1+ count))
           count)))
 
