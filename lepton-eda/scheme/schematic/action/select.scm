@@ -35,8 +35,10 @@
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic hook)
   #:use-module (schematic selection)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
 
   #:export (continue-box-selection
             continue-selection
@@ -56,6 +58,7 @@
     (true? (lepton_object_get_selected *object)))
   (define *selection
     (schematic_window_get_selection_list *window))
+  (define object (pointer->object *object))
 
   (if (not object-selected?)
       ;; The object is not selected.
@@ -73,7 +76,8 @@
 
         ;; The object is not selected, add it to the selection
         ;; list.
-        (o_select_run_hooks *window *object 1)
+        (with-window *window
+         (run-hook select-objects-hook (list object)))
         (o_selection_add *selection *object))
 
       ;; The object was already selected.
@@ -81,7 +85,9 @@
           ;; condition: Select a single object.
           ;; result: Remove object from selection.
           (when (not box-selection?)
-            (o_select_run_hooks *window *object 0)
+            (with-window *window
+             (run-hook deselect-objects-hook (list object)))
+
             (o_selection_remove *selection *object))
 
           (begin
@@ -95,7 +101,8 @@
                        (not control-pressed?))
               (o_select_unselect_all *window)
 
-              (o_select_run_hooks *window *object 1)
+              (with-window *window
+               (run-hook select-objects-hook (list object)))
               (o_selection_add *selection *object))
 
             ;; condition: Select a single object.
@@ -106,11 +113,13 @@
                        (not control-pressed?))
               (o_select_unselect_all *window)
 
-              (o_select_run_hooks *window *object 1)
+              (with-window *window
+               (run-hook select-objects-hook (list object)))
               (o_selection_add *selection *object))
 
             (when control-pressed?
-              (o_select_run_hooks *window *object 0)
+              (with-window *window
+               (run-hook deselect-objects-hook (list object)))
               (o_selection_remove *selection *object)))))
 
   ;; Deal with attributes.

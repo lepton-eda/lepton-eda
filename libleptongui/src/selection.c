@@ -29,31 +29,6 @@
 #include "schematic.h"
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_select_run_hooks (SchematicWindow *w_current,
-                    LeptonObject *o_current,
-                    int flag)
-{
-  switch (flag) {
-  /* If flag == 0, then we are deselecting something. */
-  case 0:
-    g_run_hook_object (w_current, "deselect-objects-hook", o_current);
-    break;
-  /* If flag == 1, then we are selecting something. */
-  case 1:
-    g_run_hook_object (w_current, "select-objects-hook", o_current);
-    break;
-  default:
-    g_assert_not_reached ();
-  }
-}
-
-
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */
 LeptonObject*

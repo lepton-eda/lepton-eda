@@ -612,7 +612,6 @@
             schematic_newtext_dialog_textview_select_all
 
             o_select_return_first_object
-            o_select_run_hooks
             o_select_selected
             o_select_unselect_all
 
@@ -1399,7 +1398,6 @@
 
 ;;; selection.c
 (define-lff o_select_return_first_object '* '(*))
-(define-lff o_select_run_hooks void (list '* '* int))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))
 
