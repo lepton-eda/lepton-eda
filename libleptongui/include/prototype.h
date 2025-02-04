@@ -478,11 +478,6 @@ void
 o_select_run_hooks (SchematicWindow *w_current,
                     LeptonObject *o_current,
                     int flag);
-void
-o_select_object (SchematicWindow *w_current,
-                 LeptonObject *o_current,
-                 int type,
-                 int count);
 LeptonObject*
 o_select_return_first_object (SchematicWindow *w_current);
 

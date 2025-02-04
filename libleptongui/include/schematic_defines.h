@@ -56,11 +56,6 @@
 #define UNDO_DISK               0
 #define UNDO_MEMORY             1
 
-/* selection types */
-/* used in o_select_object */
-#define SINGLE                  0
-#define MULTIPLE                1
-
 /* for dots_grid_mode */
 #define DOTS_GRID_VARIABLE_MODE 0
 #define DOTS_GRID_FIXED_MODE    1

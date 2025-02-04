@@ -47,12 +47,110 @@
             start-selection))
 
 
-;;; Definitions from schematic_defines.h
+;;; Selection types.  SINGLE means an object is selected with a
+;;; single mouse click.  MULTIPLE means several objects are
+;;; selected using a selection box.
 (define SINGLE 0)
 (define MULTIPLE 1)
 
 (define (select! *window *object type count)
-  (o_select_object *window *object type count))
+  (define shift-pressed?
+    (true? (schematic_window_get_shift_key_pressed *window)))
+  (define control-pressed?
+    (true? (schematic_window_get_control_key_pressed *window)))
+  (define object-selected?
+    (true? (lepton_object_get_selected *object)))
+
+  (if (not object-selected?)
+      ;; The object is not selected.
+      (begin
+        ;; condition: First object being added.
+        ;; condition: Shift key is not pressed.
+        ;; condition: Control key is not pressed.
+        ;; condition: For both multiple and single object addition.
+        ;; result: Remove all objects from selection.
+        (when (and (not shift-pressed?)
+                   (zero? count)
+                   (not control-pressed?))
+          (o_select_unselect_all *window))
+
+        ;; The object is not selected, add it to the selection
+        ;; list.
+        (o_select_run_hooks *window *object 1)
+        (o_selection_add (schematic_window_get_selection_list *window)
+                         *object))
+
+      ;; The object was already selected.
+      (if shift-pressed?
+          ;; condition: Not doing multiple.
+          ;; result: Remove object from selection.
+          (when (not (= type MULTIPLE))
+            (o_select_run_hooks *window *object 0)
+            (o_selection_remove (schematic_window_get_selection_list *window)
+                                *object))
+
+          (begin
+            ;; condition: Doing multiple.
+            ;; condition: First object being added.
+            ;; condition: Control key is not pressed.
+            ;; 1st result: Remove all objects from selection.
+            ;; 2nd result: Add object to selection.
+            (when (and (= type MULTIPLE)
+                       (zero? count)
+                       (not control-pressed?))
+              (o_select_unselect_all *window)
+
+              (o_select_run_hooks *window *object 1)
+              (o_selection_add (schematic_window_get_selection_list *window)
+                               *object))
+
+            ;; condition: Doing single object add.
+            ;; condition: Control key is not pressed.
+            ;; 1st result: Remove all objects from selection.
+            ;; 2nd result: Add object to selection list.
+            (when (and (= type SINGLE)
+                       (not control-pressed?))
+              (o_select_unselect_all *window)
+
+              (o_select_run_hooks *window *object 1)
+              (o_selection_add (schematic_window_get_selection_list *window)
+                               *object))
+
+            (when control-pressed?
+              (o_select_run_hooks *window *object 0)
+              (o_selection_remove (schematic_window_get_selection_list *window)
+                                  *object)))))
+
+  ;; Deal with attributes.
+  (let ((remove-object-from-selection?
+         (and object-selected?
+              (or (and shift-pressed?
+                       (not (= type MULTIPLE)))
+                  (and (not shift-pressed?)
+                       (= type MULTIPLE)
+                       control-pressed?)))))
+    (if remove-object-from-selection?
+        ;; Remove the invisible attributes from the object list as
+        ;; well so they don't remain selected without the user
+        ;; knowing.
+        (o_attrib_deselect_invisible *window
+                                     (schematic_window_get_selection_list *window)
+                                     *object)
+
+        ;; If the type is MULTIPLE (meaning a select box was/is
+        ;; being used) only select invisible attributes on objects.
+        ;; Otherwise attributes will be "double selected" causing
+        ;; them to remain unselected if using invert-selection
+        ;; (Control is pressed).
+        (if (= type MULTIPLE)
+            (o_attrib_select_invisible *window
+                                       (schematic_window_get_selection_list *window)
+                                       *object)
+            ;; Select all attributes of the object for a single
+            ;; click select.
+            (o_attrib_add_selected *window
+                                   (schematic_window_get_selection_list *window)
+                                   *object)))))
 
 
 ;;; Select all nets connected to *NET in *WINDOW.  Depending on

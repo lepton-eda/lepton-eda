@@ -78,6 +78,9 @@
             schematic_window_create_main_popup_menu
 
             o_attrib_add_attrib
+            o_attrib_add_selected
+            o_attrib_deselect_invisible
+            o_attrib_select_invisible
 
             schematic_draw_clear
             *schematic_draw_invalidate_object
@@ -608,8 +611,8 @@
             schematic_newtext_dialog_get_textsizecb
             schematic_newtext_dialog_textview_select_all
 
-            o_select_object
             o_select_return_first_object
+            o_select_run_hooks
             o_select_selected
             o_select_unselect_all
 
@@ -726,6 +729,9 @@
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
+(define-lff o_attrib_add_selected void '(* * *))
+(define-lff o_attrib_deselect_invisible void '(* * *))
+(define-lff o_attrib_select_invisible void '(* * *))
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
@@ -1392,8 +1398,8 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
-(define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
+(define-lff o_select_run_hooks void (list '* '* int))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))
 
