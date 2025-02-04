@@ -977,7 +977,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           cairo_restore (cr);
           break;
         case GRIPS      : schematic_draw_object (w_current, renderer); break;
-        case SBOX       : schematic_draw_box (w_current, renderer);
+        case SBOX       : schematic_draw_box (w_current, renderer); break;
         case ZOOMBOX    : schematic_draw_zoom_box (w_current, renderer); break;
         default: break;
       }
