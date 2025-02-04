@@ -51,6 +51,9 @@
 (define SINGLE 0)
 (define MULTIPLE 1)
 
+(define (select! *window *object type count)
+  (o_select_object *window *object type count))
+
 
 ;;; Select all nets connected to *NET in *WINDOW.  Depending on
 ;;; the state of the net selection mode of the window and
@@ -96,7 +99,7 @@
                (or (not (object-selected? object))
                    (zero? count)))
           (begin
-            (o_select_object *window *object SINGLE count)
+            (select! *window *object SINGLE count)
             (if (> net-selection-state 1)
                 ;; Collect nets.
                 (append (object-connections object)
@@ -178,7 +181,7 @@
   ;; Shift+<mouse-1> on it to deselect it.
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window)))
-      (o_select_object *window *net SINGLE 0)
+      (select! *window *net SINGLE 0)
       (let ((net-selection-state
              (schematic_window_get_net_selection_state *window)))
         (unless (object-selected? (pointer->object *net))
@@ -266,7 +269,7 @@
                  (true? (schematic_window_get_net_selection_mode *window)))
             (select-connected-nets *window *object)
             ;; 0 is count.
-            (o_select_object *window *object SINGLE 0))
+            (select! *window *object SINGLE 0))
 
         (schematic_window_set_object_lastplace *window *object)
         (i_update_menus *window)
@@ -456,7 +459,7 @@ coordinate."
                                         (sizeof int))
                    bottom))
           (begin
-            (o_select_object *window *object MULTIPLE count)
+            (select! *window *object MULTIPLE count)
             (1+ count))
           count)))
 
