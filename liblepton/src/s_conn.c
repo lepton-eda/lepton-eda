@@ -320,6 +320,23 @@ static int check_direct_compat (LeptonObject *object1, LeptonObject *object2)
 }
 
 
+/*! \brief Add a new connection to the connection list of an object
+ *  \par Function Description
+ *  The function creates a new connection with given parameters,
+ *  checks that it is unique in the connection list of the given
+ *  object, and if it is, it is added to the list.
+ *
+ *  \param [in] object The object owning the connection list.
+ *  \param [in] other_object The other object to connect to via
+ *                           the new connection.
+ *  \param [in] type The connection type.
+ *  \param [in] x The X coordinate of the connection.
+ *  \param [in] y The Y coordinate of the connection.
+ *  \param [in] whichone Which point of the object the connection
+ *                       belongs to.
+ *  \param [in] other_whichone Which point of the other object the
+ *                             connection belongs to.
+ */
 static void add_connection (LeptonObject *object, LeptonObject *other_object,
                             int type, int x, int y,
                             int whichone, int other_whichone)
