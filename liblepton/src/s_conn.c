@@ -32,7 +32,7 @@
  *
  *  The connection system stores and tracks the connections between
  *  connected <b>OBJECTS</b>. The connected OBJECTS are either
- *  <b>pins</b>, <b>nets</b> and <b>busses</b>.
+ *  <b>pins</b>, <b>nets</b> and <b>buses</b>.
  *
  *  Each connection object with the type <b>st_conn</b> represents a
  *  single unidirectional relation to another object.
