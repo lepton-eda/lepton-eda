@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +45,22 @@ static int attrib_index=0;
 /* hack hack */
 static struct st_attrib_names attrib[MAX_ATTRIBS];
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Add an attribute to the list of attributes shown in
+ *  dialogs
+ *
  *  \par Function Description
  *
+ *  The function adds a new attribute to the list of attributes
+ *  that will be shown in the "Add attribute" and "Edit attribute"
+ *  dialogs in lepton-schematic.  Returns the index of the
+ *  attribute in the array of known attributes, or -1 if the
+ *  attribute cannot be added, that is, the attribute is NULL or
+ *  the array is full and the new index is greater than the
+ *  maximum allowed value.
+ *
+ * \param [in] new_attrib The new attribute string.
+ * \return The index in the attribute array, or -1 if the
+ *         attribute cannot be added to the array.
  */
 int
 s_attrib_add_entry (char *new_attrib)
