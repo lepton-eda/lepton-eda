@@ -190,7 +190,7 @@ settings_save (GtkFileChooser* dialog,
  *  This function is only used in this file, there are other
  *  create_menus...
  *
- *  \param combo [in] the combobox to add the options to.
+ *  \param [in] combo The combobox to add the options to.
  */
 static void create_size_menu (GtkComboBox *combo)
 {
