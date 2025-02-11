@@ -489,7 +489,7 @@ x_image_lowlevel (SchematicWindow *w_current,
  *  set several options, like image size and image type.  When the
  *  user hits "ok", then it writes the image file.
  *
- *  \param w_current [in] the SchematicWindow structure.
+ *  \param [in] w_current The SchematicWindow structure.
  */
 void
 x_image_setup (SchematicWindow *w_current)
