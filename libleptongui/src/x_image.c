@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,14 +296,17 @@ x_image_get_type_from_description (const char *description)
   return image_type;
 }
 
-/*! \brief Update the filename of a file dialog, when the image type has changed.
+
+/*! \brief Update the filename in the image file chooser dialog
+ *         when the image type has changed.
  *  \par Function description
- *  Given a combobox inside a file chooser dialog, this function
- *  updates the filename displayed by the dialog, removing the
- *  current extension, and adding the extension of the image type
- *  selected.
- *  \param combo     [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
- *  \param w_current [in] the SchematicWindow structure.
+ *  Update the filename displayed in the image file chooser
+ *  dialog, removing the current extension, and adding the
+ *  extension of the selected image type when it is changed using
+ *  the provided image type combobox.
+ *  \param [in] combo The combobox in the file chooser dialog,
+ *                    with gdk-pixbuf image type descriptions.
+ *  \param [in] w_current The #SchematicWindow instance.
  */
 static void
 x_image_update_dialog_filename (GtkComboBoxText *combo,
