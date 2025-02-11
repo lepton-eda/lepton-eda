@@ -376,15 +376,18 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
   g_free(new_image_filename);
 }
 
+
 /*! \brief Write the image file, with the desired options.
- *  \par This function writes the image file, with the options set in the
- *  dialog by the user.
- *  \param w_current [in] the SchematicWindow structure.
- *  \param filename  [in] the image filename.
- *  \param width     [in] the image width chosen by the user.
- *  \param height    [in] the image height chosen by the user.
- *  \param filetype  [in] image filetype.
- *  \param is_color  [in] write image using colors (TRUE) or in grayscale (FALSE).
+ *  \par Function description
+ *  This function writes the image file, with the options set in
+ *  the dialog by the user.
+ *  \param [in] w_current The SchematicWindow structure.
+ *  \param [in] filename The image filename.
+ *  \param [in] width The image width chosen by the user.
+ *  \param [in] height The image height chosen by the user.
+ *  \param [in] filetype The image filetype.
+ *  \param [in] is_color If the image has to be written using
+ *                       colors (TRUE) or in grayscale (FALSE).
  */
 void
 x_image_lowlevel (SchematicWindow *w_current,
