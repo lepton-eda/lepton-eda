@@ -224,7 +224,7 @@ static void create_size_menu (GtkComboBox *combo)
  *  This function is only used in this file, there are other
  *  create_menus...
  *
- *  \param combo [in] the combobox to add the options to.
+ *  \param [in] combo the combobox to add the options to.
  */
 static void create_type_menu (GtkComboBoxText *combo)
 {
