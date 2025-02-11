@@ -46,7 +46,15 @@ static const char *x_image_sizes[] =
 /*! \brief Restore last selected item in \a combo combobox
  *
  *  \par Function Description
- *  Helper function used in settings_restore().
+ *  Helper function used in settings_restore().  It obtains a
+ *  parameter from the configuration context \a cfg for the \a key
+ *  of the given \a group, and sets active the corresponding item
+ *  of the combobox.
+ *
+ * \param [in] cfg The config context.
+ * \param [in] combo The combobox.
+ * \param [in] group The config group.
+ * \param [in] key The config group key.
  */
 static void
 settings_restore_combo (EdaConfig*   cfg,
