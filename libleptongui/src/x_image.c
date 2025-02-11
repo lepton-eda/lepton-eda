@@ -258,10 +258,14 @@ static void create_type_menu (GtkComboBoxText *combo)
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
 }
 
-/*! \brief Given a gdk-pixbuf image type description, it returns the type,
- *  or extension of the image.
- *  \par Return the gdk-pixbuf image type, or extension, which has the
+
+/*! \brief Given a gdk-pixbuf image type description, it returns
+ *         the type, or extension of the image.
+ *
+ *  \par Function description
+ *  Return the gdk-pixbuf image type, or extension, which has the
  *  given gdk-pixbuf description.
+ *
  *  \param description The gdk-pixbuf image type description.
  *  \return The gdk-pixbuf type, or extension, of the image.
  *  \note This function is only used in this file.
