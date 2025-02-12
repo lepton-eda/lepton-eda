@@ -723,10 +723,14 @@ x_image_setup (SchematicWindow *w_current)
   gtk_widget_destroy (dialog);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Convert a colored image into grayscale
  *  \par Function Description
+ *  Transform a pixbuf into a grayscale image converting each
+ *  pixel into gray one using the simple algorithm:
+ *  [R][G][B] => (X = 0.3R + 0.59G + 0.11B) => [X][X][X]
  *
+ *  \param [in] pixbuf The image pixbuf.
  */
 static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
 {
