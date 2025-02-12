@@ -775,10 +775,21 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Transform the current window canvas viewport into an
+ *         image pixbuf
  *  \par Function Description
- *
+ *  Transform the currently visible canvas viewport into an image
+ *  pixbuf with the given width and height.  The output image will
+ *  be color or grayscale, depending on the \a is_color argument.
+ *  The viewport is modified to preserve its width to height ratio
+ *  while transforming into the image with the new sizes.
+ *  \param [in] w_current The schematic window.
+ *  \param [in] width The width of the output image.
+ *  \param [in] height The height of the output image
+ *  \param [in] is_color Whether the output image has to be color
+ *                       or grayscale.
+ *  \return The image pixbuf.
  */
 #ifdef ENABLE_GTK3
 GdkPixbuf*
