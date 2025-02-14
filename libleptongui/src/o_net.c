@@ -77,8 +77,8 @@ o_net_reset (SchematicWindow *w_current)
  *  It determines the best drawing direction for each quadrant of the
  *  possible net endpoint.
  *
- *  The directions are stored in the SchematicWindow->net_direction variable
- *  as a bitfield.
+ *  The directions are stored in the #SchematicWindow's field
+ *  \a net_direction as a bitfield.
  */
 void
 o_net_guess_direction (SchematicWindow *w_current,
