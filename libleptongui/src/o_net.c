@@ -206,9 +206,9 @@ o_net_guess_direction (SchematicWindow *w_current,
  *  and searches the closest connection point.
  *  It searches for pins, nets and busses.
  *
- *  The connection point is stored in SchematicWindow->magnetic_wx and
- *  SchematicWindow->magnetic_wy. If no connection is found. Both variables
- *  are set to -1.
+ *  The connection point is stored in #SchematicWindow's fields \a
+ *  magnetic_wx and \a magnetic_wy. If no connection is
+ *  found, both variables are set to -1.
  */
 void
 o_net_find_magnetic (SchematicWindow *w_current,
