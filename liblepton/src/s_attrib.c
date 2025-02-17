@@ -82,12 +82,18 @@ s_attrib_add_entry (char *new_attrib)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Check uniqueness of an attribute
+ *
  *  \par Function Description
  *
+ *  Check if the attribute \a name is already present in the
+ *  current attribute array \a attrib.  Return 1 if it is missing
+ *  there, otherwise 0.
+ *
+ *  \param [in] name The attribute name.
+ *  \return TRUE (1) if the attribute is unique, FALSE (0) if it
+ *          is duplicate.
  */
-/* true for uniqueness, zero for duplication */
 int s_attrib_uniq(char *name)
 {
   int i;
