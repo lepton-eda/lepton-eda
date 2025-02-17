@@ -150,6 +150,11 @@ G_DEBUG=fatal_criticals gdb --args \
   guile -s /usr/local/bin/lepton-schematic
 @end example
 
+If you want to see a lot of lowlevel debugging info, run
+@example
+G_MESSAGES_DEBUG=all lepton-schematic
+@end example
+
 @node Doxygen documentation, Collaboration, Debugging, Development
 @section Developer documentation
 The @code{doxygen} files are used by developers to learn better the
