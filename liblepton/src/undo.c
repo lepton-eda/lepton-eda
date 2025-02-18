@@ -340,10 +340,27 @@ lepton_undo_return_tail (LeptonUndo *head)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Add a new undo element into an undo list
+ *
  *  \par Function Description
  *
+ *  Create a new undo element initializing it with given
+ *  parameters and add it to the end of the undo list \a head.
+ *
+ *  \param [in,out] head The head of the undo list.
+ *  \param [in] type The type of info to save, either only info on
+ *                   the current viewport, or the complete info.
+ *  \param [in] filename The name of the file to save the undo
+ *                       information to.
+ *  \param [in] object_list The list of objects if the undo
+ *                          element is saved in memory.
+ *  \param [in] x The X coordinate of the viewport center.
+ *  \param [in] y The Y coordinate of the viewport center.
+ *  \param [in] scale The scale factor of the viewport.
+ *  \param [in] page_control The page hierarchical level for
+ *                           moving around in the hierarchy.
+ *  \param [in] up The page ID of the parent page in the
+ *                 hierarchy.
  */
 LeptonUndo*
 lepton_undo_add (LeptonUndo *head,
