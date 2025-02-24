@@ -138,10 +138,13 @@ void s_attrib_init()
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Obtain an attrib name by index
  *  \par Function Description
+ *  Get the name of an attribute with the given index from the
+ *  array \a attrib.
  *
+ *  \param [in] counter The attribute index.
+ *  \return The attribute string.
  */
 char *s_attrib_get(int counter)
 {
