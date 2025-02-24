@@ -107,10 +107,10 @@ int s_attrib_uniq(char *name)
   return(1);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Free the array of attributes
  *  \par Function Description
- *
+ *  Free the \a attrib array on program exit.
  */
 void s_attrib_free()
 {
