@@ -404,10 +404,15 @@ lepton_undo_add (LeptonUndo *head,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Debug print the last undo information
  *  \par Function Description
+ *  Print the last stored undo information:
+ *  - the undo filename or the list of objects if the undo
+ *    information is stored in memory,
+ *  - the undo viewport info,
+ *  - the current number of undo levels.
  *
+ *  \param [in] head The head of the current undo list.
  */
 void
 lepton_undo_print_all (LeptonUndo *head)
