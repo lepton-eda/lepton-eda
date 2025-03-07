@@ -448,10 +448,12 @@ lepton_undo_print_all (LeptonUndo *head)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Destroy all undo information from undo list
  *  \par Function Description
+ *  Destroy all undo information from the given undo list freeing
+ *  either the filenames affected or the object lists.
  *
+ * \param [in] head The undo list to destroy.
  */
 void
 lepton_undo_destroy_all (LeptonUndo *head)
