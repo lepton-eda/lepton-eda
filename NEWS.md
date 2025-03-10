@@ -116,6 +116,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   back to lower level functions to determine the path if the
   `$HOME` environment variable is not set.
 
+- Fixed wrong argument types in several FFI definitions which
+  trigger `make distcheck` failures when used with recent versions
+  of `gcc`/`g++`.
+
 ### Changes in `libleptongui`:
 - The prefix `Gschem` in the names of the library object types has
   been replaced with `Schematic`.  Some other types have been
