@@ -532,10 +532,16 @@ lepton_undo_levels (LeptonUndo *head)
   return(count);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Initialize the undo list pointers
+ *
  *  \par Function Description
  *
+ *  Initialize the top, bottom, and current pointer of the undo
+ *  list by setting them to NULL.
+ *
+ *  \param [in,out] p_current The page to initialize the undo list
+ *                            pointers for.
  */
 void
 lepton_undo_init (LeptonPage *p_current)
