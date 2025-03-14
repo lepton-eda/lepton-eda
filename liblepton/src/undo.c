@@ -544,10 +544,15 @@ lepton_undo_init (LeptonPage *p_current)
   p_current->undo_current = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Free the undo list of a page
+ *
  *  \par Function Description
  *
+ *  Wholly destroy the undo list for the given page \a p_current.
+ *  The function has to be called when a page is closed.
+ *
+ *  \param [in,out] p_current The page to free the undo list for.
  */
 void
 lepton_undo_free_all (LeptonPage *p_current)
