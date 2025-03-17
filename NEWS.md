@@ -33,6 +33,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   of the `inkscape` program used for creating Doxygen developer
   documentation have been replaced with their modern variants.
 
+- All toplevel executable Scheme tools in the suite, including the
+  GUI programs and CLI utilities, are now compiled beforehand if
+  the option `--enable-guild` is provided on the `configure`
+  stage.
+
+
 ### Changes in `liblepton`:
 
 - A new Scheme type, `<toplevel>`, has been introduced.  This is a
