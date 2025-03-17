@@ -1294,6 +1294,47 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin,
 and the first point being the active connection end.
 
 
+@subsubsection Old pin formats
+Up to the version @samp{20020825} the format of the pin record was as
+follows:
+
+@verbatim
+type x1 y1 x2 y2 color pintype whichend
+@end verbatim
+
+@multitable @columnfractions .2 .2 .2 .4
+@headitem
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab P
+
+@item
+ 1 @tab x1 @tab int/mils @tab First X coordinate
+
+@item
+ 2 @tab y1 @tab int/mils @tab First Y coordinate
+
+@item
+ 3 @tab x2 @tab int/mils @tab Second X coordinate
+
+@item
+ 4 @tab y2 @tab int/mils @tab Second Y coordinate
+
+@item
+ 5 @tab color @tab int @tab Color index
+
+@end multitable
+
+In this format, the point of a pin nearest to the bounding box of all
+objects or all pins of the symbol containing the pin is considered
+connectible.  Which bounding box should be used to decide on the
+connectible point is set using the @samp{force-boundingbox}
+configuration setting (@pxref{force-boundingbox}).  Its default value,
+@samp{false}, means that only pins are taken into account.  If it is
+@samp{true}, the bounding box of all symbol objects is considered.
+
+
 @node component, path, pin, Object types
 @subsection component
 
