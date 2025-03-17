@@ -1263,7 +1263,7 @@ The pintype is an enumerated type:
 NORMAL PIN = 0
 
 @item
-BUS PIN = 1 unused
+BUS PIN = 1
 
 @end itemize
 
