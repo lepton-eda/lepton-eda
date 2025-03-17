@@ -517,10 +517,14 @@ lepton_undo_remove_rest (LeptonUndo *head)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Count the number of currently stored undo levels
  *  \par Function Description
+ *  Count the length of the current undo list in order to trim the
+ *  excessive items and stay within limits set in the
+ *  configuration.
  *
+ * \param [in] head The pointer to the undo list head.
  */
 int
 lepton_undo_levels (LeptonUndo *head)
