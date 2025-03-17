@@ -1268,13 +1268,13 @@ BUS PIN = 1
 @end itemize
 
 @item
-The whichend specifies which end point of the pin is the active
+The @code{whichend} specifies which end point of the pin is the active
 connection port. Only this end point can have other pins or nets
 connected to it.
 
 @item
-To make the first end point active, whichend should be 0, else to
-specify the other end, whichend should be 1.
+To make the first end point active, @code{whichend} should be 0, else
+to specify the other end, @code{whichend} should be 1.
 
 @item
 Pins can only appear in symbol files.
