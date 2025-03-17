@@ -478,10 +478,18 @@ lepton_undo_destroy_all (LeptonUndo *head)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Remove all undo information from undo list from some
+ *         point in the past
  *  \par Function Description
+ *  Remove all recent undo information from the undo list starting
+ *  with the item \a head.  This is usually done when the undo
+ *  information is no longer needed after several redo commands
+ *  when a new undo history is started.  If the undo information
+ *  is stored in temporary files, the affected files are unlinked.
+ *  If the undo information is stored in memory, the affected
+ *  object lists are freed.
  *
+ * \param [in] head The pointer to the first undo item to remove.
  */
 void
 lepton_undo_remove_rest (LeptonUndo *head)
