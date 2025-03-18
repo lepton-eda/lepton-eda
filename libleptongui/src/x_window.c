@@ -761,7 +761,9 @@ recent_manager_add (SchematicWindow* w_current,
 int
 untitled_next_index (SchematicWindow* w_current)
 {
-  return ++w_current->num_untitled;
+  int num = schematic_window_get_num_untitled (w_current);
+  schematic_window_set_num_untitled (w_current, ++num);
+  return num;
 }
 
 
