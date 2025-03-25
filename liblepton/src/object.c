@@ -1678,13 +1678,23 @@ lepton_object_set_parent (LeptonObject *object,
 }
 
 
-/* Structure for each entry in a LeptonToplevel's list of
- * registered change notification handlers */
+/*! #LeptonToplevel's change notification struct */
 struct change_notify_entry {
   ChangeNotifyFunc pre_change_func;
   ChangeNotifyFunc change_func;
   void *user_data;
 };
+/*! \struct change_notify_entry
+ * \brief The struct representing an item of #LeptonToplevel's
+ * change notification function list
+ *
+ * The structure is used for entries in a #LeptonToplevel's list
+ * of registered change notification handlers.  The first handler
+ * \a pre_change_func is usually called before changing \a
+ * user_data while the second handler \a change_func is called
+ * after the data change.
+ */
+
 
 /*! \brief Add change notification handlers to a LeptonToplevel.
  * \par Function Description
