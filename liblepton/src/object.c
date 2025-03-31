@@ -54,7 +54,14 @@
 
 #include "liblepton_priv.h"
 
-/*! this is modified here and in o_list.c */
+
+/*! \var int global_sid
+ * \brief Next global ID for creating a #LeptonObject.
+ *
+ * \details Global variable for assigning ID's for new
+ * #LeptonObject instances incremented each time a new object is
+ * created.  The variable is used in lepton_object_new() and
+ * lepton_object_list_copy(). */
 int global_sid=0;
 
 /* Deprecated variables for Scheme code. */

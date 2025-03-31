@@ -38,7 +38,8 @@ static gchar*
 o_save_objects (const GList *object_list, gboolean save_attribs);
 
 
-/*! global which is used in o_list_copy_all */
+/*! \var extern int global_sid
+ */
 extern int global_sid;
 
 
