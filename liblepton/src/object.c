@@ -1584,7 +1584,7 @@ lepton_object_shortest_distance_full (LeptonObject *object,
 
 /*! \brief Change the color of an object
  *
- *  \param [in] object    The LeptonObject to change color.
+ *  \param [in] object    The #LeptonObject to change color.
  *  \param [in] color     The new color.
  */
 void
