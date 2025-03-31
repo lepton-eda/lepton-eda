@@ -1605,17 +1605,17 @@ lepton_object_set_color (LeptonObject *object,
 }
 
 
-/*! \brief Get an object's parent LeptonPage.
+/*! \brief Get an object's parent #LeptonPage.
  *
  * \par Function Description
- * Returns the LeptonPage structure which owns \a object. If \a
- * object is not currently associated with a LeptonPage, returns
+ * Returns the #LeptonPage structure which owns \a object. If \a
+ * object is not currently associated with a #LeptonPage, returns
  * NULL. If \a object is part of a compound object, recurses
  * upward.
  *
- * \param [in] object The LeptonObject for which to retrieve the
- *                    parent LeptonPage.
- * \return The LeptonPage which owns \a object or NULL.
+ * \param [in] object The #LeptonObject for which to retrieve the
+ *                    parent #LeptonPage.
+ * \return The #LeptonPage which owns \a object or NULL.
  */
 LeptonPage *
 lepton_object_get_page (LeptonObject *object)
