@@ -1726,7 +1726,8 @@ lepton_object_add_change_notify (LeptonToplevel *toplevel,
     g_list_prepend (toplevel->change_notify_funcs, entry);
 }
 
-/*! \brief Remove change notification handlers from a LeptonToplevel.
+/*! \brief Remove change notification handlers from a
+ *         #LeptonToplevel.
  * \par Function Description
  * Removes a set of change notification handlers and their associated
  * \a user_data from \a toplevel.  If no registered set of handlers
