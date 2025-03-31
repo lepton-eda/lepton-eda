@@ -1479,7 +1479,7 @@ lepton_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         The LeptonObject to mirror.
+ *  \param [in,out] object         The #LeptonObject to mirror.
  */
 void
 lepton_object_mirror (int world_centerx,
