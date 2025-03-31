@@ -1652,8 +1652,10 @@ lepton_object_page_set_changed (LeptonObject *object)
  * If \a object is part of a component #LeptonObject, returns that
  * #LeptonObject. Otherwise, returns NULL.
  *
- * \param [in] object    The LeptonObject for which to get the containing LeptonObject.
- * \return The component LeptonObject which owns \a object, or NULL.
+ * \param [in] object The #LeptonObject for which to get the
+ *                    containing #LeptonObject.
+ * \return The component #LeptonObject which owns \a object, or
+ *         NULL.
  */
 LeptonObject *
 lepton_object_get_parent (const LeptonObject *object)
