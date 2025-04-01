@@ -946,10 +946,22 @@ lepton_object_copy (LeptonObject *object)
   return new_object;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Delete a #LeptonObject instance
  *
+ *  \par Function Description
+ *  Removes a #LeptonObject instance and carries out all cleanup
+ *  procedures for it:
+ * * Removes it from the page it was appended to, if any, before
+ *   any other action.
+ * * Removes all its connections.
+ * * Detaches it from the object it was attached to, if any.
+ * * Detaches the list of attributes of the object.
+ * * Frees the object along with all data associated with it.
+ * * For a component, removes all its primitives, and frees the
+ *   component instance.
+ * * Removes all weak references of the object.
+ *
+ * \param [in] o_current The object to delete.
  */
 void
 lepton_object_delete (LeptonObject *o_current)
