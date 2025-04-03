@@ -104,20 +104,32 @@ lepton_object_list_bounds (const GList *head,
 }
 
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *  you need to pass in a head_node for dest_list_head
- *  flag is either NORMAL_FLAG or SELECTION_FLAG
- *  this function copies the objects in the src GList src_list
- *  to the destination GList dest_list
- *  this routine assumes that objects in src_list are selected
- *  objects are unselected before they are copied and then reselected
- *  this is necessary to preserve the color info
+/*! \brief Copy a list of objects
  *
- *  \param [in] src_list       The GList to copy from.
- *  \param [in] dest_list      The GList to copy to.
- *  \return the dest_list GList with objects appended to it.
+ *  \par Function Description
+ *  Appends the objects from the source \c GList \p src_list to
+ *  the destination \c GList \p dest_list and returns the modified
+ *  destination list.
+ *
+ *  The destination list is first reversed, the elements of the
+ *  source list are prepended to it, and the resulting list is
+ *  again reversed to have the same head.
+ *
+ *  Selected source list objects are deselected before copying (as
+ *  otherwise their clones would be also selected after copying)
+ *  and then re-selected again to restore their initial state and
+ *  look.  The new object copies get new global object IDs.
+ *
+ *  Copied text objects are processed separately as apart from
+ *  their selection state and getting a new ID for copies, the new
+ *  objects have to mimic the attachment relationships of their
+ *  sources as well as update their slotting info for "slot"
+ *  attributes, which the function attempts to do maximally
+ *  careful.
+ *
+ *  \param [in] src_list  The \c GList to copy from.
+ *  \param [in] dest_list The \c GList to copy to.
+ *  \return The destination list with objects appended to it.
  */
 GList*
 lepton_object_list_copy (const GList *src_list,
