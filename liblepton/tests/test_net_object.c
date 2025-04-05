@@ -11,7 +11,7 @@ check_construction ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
 
     LeptonObject *object0 = lepton_net_object_new (color,
                                                    x0,
@@ -56,7 +56,7 @@ check_accessors ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
 
     LeptonObject *object0 = lepton_net_object_new (color,
                                                    x0,
@@ -71,7 +71,7 @@ check_accessors ()
     y0 = g_test_rand_int ();
     x1 = g_test_rand_int ();
     y1 = g_test_rand_int ();
-    color = g_test_rand_int_range (0, colors_count());
+    color = g_test_rand_int_range (0, lepton_color_get_color_count ());
 
     lepton_net_object_set_x0 (object0, x0);
     lepton_net_object_set_y0 (object0, y0);
@@ -104,7 +104,7 @@ check_serialization ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
 
     LeptonObject *object0 = lepton_net_object_new (color,
                                                    x0,

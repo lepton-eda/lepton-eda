@@ -9,7 +9,7 @@ check_construction ()
   for (count = 0; count < 1000; count++) {
     gint center_x = g_test_rand_int ();
     gint center_y = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
@@ -58,7 +58,7 @@ check_accessors ()
   for (count = 0; count < 1000; count++) {
     gint center_x = g_test_rand_int ();
     gint center_y = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
@@ -75,7 +75,7 @@ check_accessors ()
 
     center_x = g_test_rand_int ();
     center_y = g_test_rand_int ();
-    color = g_test_rand_int_range (0, colors_count());
+    color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     radius = g_test_rand_int_range (0, G_MAXINT);
     start_angle = g_test_rand_int_range (0, 359);
     sweep_angle = g_test_rand_int_range (0, 360);
@@ -111,7 +111,7 @@ check_serialization ()
   for (count = 0; count < 1000; count++) {
     gint center_x = g_test_rand_int ();
     gint center_y = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);

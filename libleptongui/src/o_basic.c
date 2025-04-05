@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,17 +141,26 @@ void o_redraw_rect (SchematicWindow *w_current,
 
   /* This color map is used for "normal" rendering. */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+    g_array_sized_new (FALSE,
+                       FALSE,
+                       sizeof (LeptonColor),
+                       lepton_color_get_color_count ());
   render_color_map =
-    g_array_append_vals (render_color_map, display_colors, colors_count());
+    g_array_append_vals (render_color_map,
+                         display_colors,
+                         lepton_color_get_color_count());
 
   /* This color map is used for rendering rubberbanding nets and
      buses, and objects which are in the process of being placed. */
   render_outline_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+    g_array_sized_new (FALSE,
+                       FALSE,
+                       sizeof(LeptonColor),
+                       lepton_color_get_color_count());
   render_outline_color_map =
-    g_array_append_vals (render_outline_color_map, display_outline_colors,
-                         colors_count());
+    g_array_append_vals (render_outline_color_map,
+                         display_outline_colors,
+                         lepton_color_get_color_count());
 
   /* Set up renderer */
   renderer = EDA_RENDERER (g_object_ref (w_current->renderer));

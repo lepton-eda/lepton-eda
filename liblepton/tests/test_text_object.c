@@ -25,7 +25,7 @@ check_construction ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -84,7 +84,7 @@ check_accessors ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -107,7 +107,7 @@ check_accessors ()
     y = g_test_rand_int ();
     alignment = g_test_rand_int_range (0, 9);
     angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
-    color = g_test_rand_int_range (0, colors_count());
+    color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     show_name_value = g_test_rand_int_range (0, 3);
     size = g_test_rand_int_range (0, G_MAXINT);
     string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -156,7 +156,7 @@ check_serialization ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count());
+    gint color = g_test_rand_int_range (0, lepton_color_get_color_count ());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];

@@ -303,7 +303,7 @@
             lepton_stroke_type_to_string
 
             set_render_placeholders
-            colors_count
+            lepton_color_get_color_count
             lepton_color_default_id
             g_rc_parse
             lepton_colormap_color_by_id
@@ -390,7 +390,7 @@
 (define-lff liblepton_init void '())
 
 (define-lff set_render_placeholders void '())
-(define-lff colors_count size_t '())
+(define-lff lepton_color_get_color_count size_t '())
 (define-lff lepton_color_default_id size_t '())
 (define-lff lepton_colormap_color_by_id '* (list '* size_t))
 (define-lff lepton_colormap_disable_color void (list '* size_t))

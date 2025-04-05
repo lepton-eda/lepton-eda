@@ -76,7 +76,7 @@ static LeptonColor default_colors[] =
 
 
 size_t
-colors_count()
+lepton_color_get_color_count ()
 {
   return COLORS_COUNT;
 }
@@ -96,7 +96,7 @@ colors_count()
 gboolean
 lepton_color_id_is_valid (size_t id)
 {
-  return id >= 0 && id < colors_count();
+  return id >= 0 && id < lepton_color_get_color_count ();
 }
 
 
@@ -222,7 +222,7 @@ lepton_color_get_alpha_double (const LeptonColor *color)
 void
 lepton_color_map_init (LeptonColorMap map)
 {
-  for (size_t i = 0; i < colors_count(); ++i)
+  for (size_t i = 0; i < lepton_color_get_color_count (); ++i)
   {
     map[ i ] = default_colors[ i ];
   }

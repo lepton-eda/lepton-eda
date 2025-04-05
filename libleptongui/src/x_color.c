@@ -168,7 +168,9 @@ x_color_map2str (LeptonColorMap cmap)
 
   g_string_append (str, "'(\n");
 
-  for (size_t color_index = 0; color_index < colors_count(); color_index++)
+  for (size_t color_index = 0;
+       color_index < lepton_color_get_color_count ();
+       color_index++)
   {
     LeptonColor color = cmap[ color_index ];
 

@@ -64,7 +64,9 @@ create_color_list_store ()
   store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_COLOR);
 #endif
 
-  for (size_t color_index = 0; color_index < colors_count(); color_index++)
+  for (size_t color_index = 0;
+       color_index < lepton_color_get_color_count ();
+       color_index++)
   {
     gtk_list_store_append (store, &iter);
 

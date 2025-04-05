@@ -2,7 +2,7 @@
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2014-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,10 +211,15 @@ lepton_export_make_color_map (gboolean color,
 
   /* Create color map */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+    g_array_sized_new (FALSE,
+                       FALSE,
+                       sizeof(LeptonColor),
+                       lepton_color_get_color_count ());
   LeptonColor* print_colors = print_colors_array();
   render_color_map =
-    g_array_append_vals (render_color_map, print_colors, colors_count());
+    g_array_append_vals (render_color_map,
+                         print_colors,
+                         lepton_color_get_color_count ());
 
   /* If no color exporting is desired, transform the color map
    * into a black-and-white color map by making the background
@@ -225,7 +230,8 @@ lepton_export_make_color_map (gboolean color,
      * are black. */
     LeptonColor white = {1.0, 1.0, 1.0, 1.0};
     LeptonColor black = {0.0, 0.0, 0.0, 1.0};
-    for (i = 0; i < colors_count(); i++) {
+    for (i = 0; i < lepton_color_get_color_count (); i++)
+    {
       LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
       /* Skip disabled (fully-transparent) colors. */
       if (!lepton_color_enabled (c)) continue;

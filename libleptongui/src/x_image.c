@@ -879,9 +879,14 @@ x_image_get_pixbuf (SchematicWindow *w_current,
 
   /* This color map is used for "normal" rendering. */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+    g_array_sized_new (FALSE,
+                       FALSE,
+                       sizeof (LeptonColor),
+                       lepton_color_get_color_count ());
   render_color_map =
-    g_array_append_vals (render_color_map, display_colors, colors_count());
+    g_array_append_vals (render_color_map,
+                         display_colors,
+                         lepton_color_get_color_count ());
 
   /* Set up renderer */
   renderer = eda_renderer_new (NULL, NULL);

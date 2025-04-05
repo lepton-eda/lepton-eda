@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ Returns #f (false) if wrong index is specified."
                   (G_ "Wrong C color struct: ~S")
                   color)))))
 
-  (map id->color (iota (colors_count))))
+  (map id->color (iota (lepton_color_get_color_count))))
 
 
 ;;; Decode a hexadecimal RGB or RGBA color code.
@@ -136,7 +136,7 @@ Returns #f (false) if wrong index is specified."
 
 (define (valid-color-id? id)
   (and (>= id 0)
-       (< id (colors_count))))
+       (< id (lepton_color_get_color_count))))
 
 (define (scm->color-map color-map ls)
 

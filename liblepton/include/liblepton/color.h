@@ -77,7 +77,7 @@ typedef LeptonColor LeptonColorMap[ COLORS_COUNT ];
 
 
 size_t
-colors_count();
+lepton_color_get_color_count ();
 
 gboolean
 lepton_color_id_is_valid (size_t id);
