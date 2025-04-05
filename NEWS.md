@@ -126,6 +126,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   trigger `make distcheck` failures when used with recent versions
   of `gcc`/`g++`.
 
+- Several functions have been renamed so their names are now
+  prefixed with `lepton_`.
+
 ### Changes in `libleptongui`:
 - The prefix `Gschem` in the names of the library object types has
   been replaced with `Schematic`.  Some other types have been
