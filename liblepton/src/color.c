@@ -83,7 +83,15 @@ colors_count()
 
 
 
-/* \brief Check if a color \id is valid (one of the defined *_COLOR constants).
+/*! \brief Check if a color index is valid
+ *
+ *  \par Function description
+ *  Checks if a color index is in the allowed range which is
+ *  strictly set by the constant \ref COLORS_COUNT.
+ *
+ * \param [in] id The color index to check.
+ * \retval TRUE if the color index is within the allowed range.
+ * \retval FALSE if the color index is out of range.
  */
 gboolean
 lepton_color_id_is_valid (size_t id)
