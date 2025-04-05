@@ -75,6 +75,19 @@ static LeptonColor default_colors[] =
 };
 
 
+/*! \brief Get the available color count
+ *
+ *  \par Function description
+ *  Returns the count of colors avaliable for processing in the
+ *  code and defined in the constant \ref COLORS_COUNT.  The
+ *  number is currently strictly limited by some other constants,
+ *  and creation of internal color arrays depends on this value.
+ *  The function name resembles a getter name and in time, if the
+ *  color count will be variable, it may be transformed into a
+ *  real getter.
+ *
+ * \return The color count.
+ */
 size_t
 lepton_color_get_color_count ()
 {
