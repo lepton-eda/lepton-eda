@@ -217,7 +217,7 @@ lepton_color_get_alpha_double (const LeptonColor *color)
  *  Initialises a color map to a simple default: black features on a
  *  white background, with "special" colors as gray.
  *
- *  \param map Color map to initialise.
+ *  \param [in] map Color map to initialise.
  */
 void
 lepton_color_map_init (LeptonColorMap map)
