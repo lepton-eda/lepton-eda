@@ -1472,15 +1472,15 @@ returns #f."
            (toplevel->pointer (current-toplevel)))))
     (and (not (null-pointer? clib))
          (pointer->object
-          (lepton_component_new active-page
-                                (lepton_color_default_id)
-                                0
-                                0
-                                0
-                                FALSE
-                                clib
-                                basename-pointer
-                                TRUE)))))
+          (lepton_component_object_new active-page
+                                       (lepton_color_default_id)
+                                       0
+                                       0
+                                       0
+                                       FALSE
+                                       clib
+                                       basename-pointer
+                                       TRUE)))))
 
 (define (make-component/library basename . args)
   "Searches the component library for a component with given

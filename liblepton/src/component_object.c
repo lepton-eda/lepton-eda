@@ -899,15 +899,15 @@ create_placeholder (LeptonObject* node, int x, int y)
  *
  */
 LeptonObject*
-lepton_component_new (LeptonPage *page,
-                      int color,
-                      int x,
-                      int y,
-                      int angle,
-                      int mirror,
-                      const CLibSymbol *clib,
-                      const gchar *basename,
-                      int selectable)
+lepton_component_object_new (LeptonPage *page,
+                             int color,
+                             int x,
+                             int y,
+                             int angle,
+                             int mirror,
+                             const CLibSymbol *clib,
+                             const gchar *basename,
+                             int selectable)
 {
   LeptonObject *new_node=NULL;
   GList *iter;
@@ -1120,15 +1120,15 @@ lepton_component_read (LeptonPage *page,
 
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
-    new_obj = lepton_component_new (page,
-                                    lepton_color_default_id (),
-                                    x1,
-                                    y1,
-                                    angle,
-                                    mirror,
-                                    clib,
-                                    basename,
-                                    selectable);
+    new_obj = lepton_component_object_new (page,
+                                           lepton_color_default_id(),
+                                           x1,
+                                           y1,
+                                           angle,
+                                           mirror,
+                                           clib,
+                                           basename,
+                                           selectable);
     /* Delete or hide attributes eligible for promotion inside the
        component. */
     if (new_obj)

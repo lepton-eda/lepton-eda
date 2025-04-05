@@ -1098,15 +1098,15 @@ o_net_add_busrippers (SchematicWindow *w_current,
       } else {
 
         if (rippersym != NULL) {
-          new_obj = lepton_component_new (page,
-                                          lepton_color_default_id (),
-                                          rippers[i].x[0],
-                                          rippers[i].y[0],
-                                          component_angle,
-                                          0,
-                                          rippersym,
-                                          w_current->bus_ripper_symname,
-                                          1);
+          new_obj = lepton_component_object_new (page,
+                                                 lepton_color_default_id (),
+                                                 rippers[i].x[0],
+                                                 rippers[i].y[0],
+                                                 component_angle,
+                                                 0,
+                                                 rippersym,
+                                                 w_current->bus_ripper_symname,
+                                                 1);
           lepton_page_append_list (page,
                               lepton_component_promote_attribs (new_obj));
           lepton_page_append (page, new_obj);

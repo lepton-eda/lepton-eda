@@ -199,7 +199,7 @@
             lepton_circle_object_set_radius
             lepton_circle_object_new
 
-            lepton_component_new
+            lepton_component_object_new
             lepton_component_new_embedded
             lepton_component_object_get_angle
             lepton_component_object_set_angle
@@ -582,9 +582,9 @@
 (define-lff lepton_circle_object_set_radius void (list '* int))
 (define-lff lepton_circle_object_new '* (list int int int int))
 
+(define-lff lepton_component_object_new '* (list '* int int int int int '* '* int))
 (define-lff lepton_component_object_get_angle int '(*))
 (define-lff lepton_component_object_set_angle void (list '* int))
-(define-lff lepton_component_new '* (list '* int int int int int '* '* int))
 (define-lff lepton_component_new_embedded '* (list int int int int int '* int))
 (define-lff lepton_component_object_get_basename '* '(*))
 (define-lff lepton_component_object_get_contents '* '(*))
