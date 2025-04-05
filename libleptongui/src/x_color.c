@@ -82,7 +82,7 @@ x_color_lookup_gdk (size_t color_id)
 LeptonColor*
 x_color_lookup (size_t color_id)
 {
-  g_return_val_if_fail (color_id_valid (color_id),
+  g_return_val_if_fail (lepton_color_id_is_valid (color_id),
                         &display_colors [lepton_color_default_id ()]);
 
 

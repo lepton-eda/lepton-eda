@@ -80,7 +80,7 @@ size_t
 colors_count();
 
 gboolean
-color_id_valid (size_t id);
+lepton_color_id_is_valid (size_t id);
 
 size_t
 lepton_color_default_id ();

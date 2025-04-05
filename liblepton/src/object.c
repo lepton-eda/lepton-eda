@@ -295,8 +295,8 @@ gint
 lepton_object_get_color (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, lepton_color_default_id ());
-  g_return_val_if_fail (color_id_valid (object->color), lepton_color_default_id ());
-
+  g_return_val_if_fail (lepton_color_id_is_valid (object->color),
+                        lepton_color_default_id ());
   return object->color;
 }
 
@@ -320,8 +320,8 @@ lepton_object_get_drawing_color (const LeptonObject *object)
 
   color = lepton_object_get_selectable (object) ? lepton_object_get_color (object) : LOCK_COLOR;
 
-  g_return_val_if_fail (color_id_valid (color), lepton_color_default_id ());
-
+  g_return_val_if_fail (lepton_color_id_is_valid (color),
+                        lepton_color_default_id ());
   return color;
 }
 

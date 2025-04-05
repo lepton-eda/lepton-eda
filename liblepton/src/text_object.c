@@ -598,7 +598,8 @@ lepton_text_object_read (const char *first_line,
       break;
   }
 
-  if (!color_id_valid (color)) {
+  if (!lepton_color_id_is_valid (color))
+  {
     g_message(_("Found an invalid color [ %1$s ]"), first_line);
     color = lepton_color_default_id ();
     g_message(_("Setting color to default color."));

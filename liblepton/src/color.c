@@ -86,7 +86,7 @@ colors_count()
 /* \brief Check if a color \id is valid (one of the defined *_COLOR constants).
  */
 gboolean
-color_id_valid (size_t id)
+lepton_color_id_is_valid (size_t id)
 {
   return id >= 0 && id < colors_count();
 }

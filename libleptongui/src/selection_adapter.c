@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1630,7 +1630,7 @@ schematic_selection_adapter_set_object_color (SchematicSelectionAdapter *adapter
                                               int color)
 {
   g_return_if_fail (adapter != NULL);
-  g_return_if_fail (color_id_valid (color));
+  g_return_if_fail (lepton_color_id_is_valid (color));
 
   lepton_object_list_set_color (lepton_list_get_glist (adapter->selection),
                                 color);
@@ -1774,7 +1774,7 @@ schematic_selection_adapter_set_text_color (SchematicSelectionAdapter *adapter,
   GList *iter;
 
   g_return_if_fail (adapter != NULL);
-  g_return_if_fail (color_id_valid (color));
+  g_return_if_fail (lepton_color_id_is_valid (color));
 
   iter = lepton_list_get_glist (adapter->selection);
 

@@ -434,7 +434,8 @@ lepton_pin_object_read (const char buf[],
     whichend = 0;
   }
 
-  if (!color_id_valid (color)) {
+  if (!lepton_color_id_is_valid (color))
+  {
     g_message (_("Found an invalid color [ %1$s ]"), buf);
     g_message (_("Setting color to default color."));
     color = lepton_color_default_id ();
