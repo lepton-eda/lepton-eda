@@ -21,6 +21,13 @@
 /*!
  * \file  color.c
  * \brief Colors and color maps
+ *
+ * \details
+ * The file contains the general code and variables dealing with
+ * schematic object colors used both for displaying objects in GUI
+ * and on exporting schematics to other formats or for printing.
+ * Some of the functions are aimed for conversion of the color
+ * data between C and Scheme worlds.
  */
 
 #include <config.h>
