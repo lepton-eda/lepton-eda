@@ -83,7 +83,7 @@ gboolean
 color_id_valid (size_t id);
 
 size_t
-default_color_id();
+lepton_color_default_id ();
 
 const LeptonColor*
 lepton_colormap_color_by_id (const LeptonColor *color_map,

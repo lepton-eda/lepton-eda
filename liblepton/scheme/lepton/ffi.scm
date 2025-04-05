@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2024 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -304,7 +304,7 @@
 
             set_render_placeholders
             colors_count
-            default_color_id
+            lepton_color_default_id
             g_rc_parse
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
@@ -391,7 +391,7 @@
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())
-(define-lff default_color_id size_t '())
+(define-lff lepton_color_default_id size_t '())
 (define-lff lepton_colormap_color_by_id '* (list '* size_t))
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))

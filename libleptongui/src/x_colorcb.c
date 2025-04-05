@@ -133,7 +133,7 @@ x_colorcb_update_colors()
      */
     if (!x_color_display_enabled (color_index))
     {
-      color_index = default_color_id();
+      color_index = lepton_color_default_id ();
     }
 
 #ifdef ENABLE_GTK3

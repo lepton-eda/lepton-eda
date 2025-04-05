@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -294,8 +294,8 @@ lepton_object_is_attrib (const LeptonObject *obj)
 gint
 lepton_object_get_color (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, default_color_id());
-  g_return_val_if_fail (color_id_valid (object->color), default_color_id());
+  g_return_val_if_fail (object != NULL, lepton_color_default_id ());
+  g_return_val_if_fail (color_id_valid (object->color), lepton_color_default_id ());
 
   return object->color;
 }
@@ -316,11 +316,11 @@ lepton_object_get_drawing_color (const LeptonObject *object)
 {
   gint color;
 
-  g_return_val_if_fail (object != NULL, default_color_id());
+  g_return_val_if_fail (object != NULL, lepton_color_default_id ());
 
   color = lepton_object_get_selectable (object) ? lepton_object_get_color (object) : LOCK_COLOR;
 
-  g_return_val_if_fail (color_id_valid (color), default_color_id());
+  g_return_val_if_fail (color_id_valid (color), lepton_color_default_id ());
 
   return color;
 }
@@ -2007,7 +2007,7 @@ lepton_object_new (int type,
   lepton_object_set_parent (new_node, NULL);
 
   /* Setup the color */
-  lepton_object_set_color (new_node, default_color_id());
+  lepton_object_set_color (new_node, lepton_color_default_id ());
   new_node->dont_redraw = FALSE;
   lepton_object_set_selectable (new_node, TRUE);
   lepton_object_set_selected (new_node, FALSE);

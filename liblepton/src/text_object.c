@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -600,7 +600,7 @@ lepton_text_object_read (const char *first_line,
 
   if (!color_id_valid (color)) {
     g_message(_("Found an invalid color [ %1$s ]"), first_line);
-    color = default_color_id();
+    color = lepton_color_default_id ();
     g_message(_("Setting color to default color."));
   }
 

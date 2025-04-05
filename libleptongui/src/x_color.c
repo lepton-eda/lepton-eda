@@ -83,7 +83,7 @@ LeptonColor*
 x_color_lookup (size_t color_id)
 {
   g_return_val_if_fail (color_id_valid (color_id),
-                        &display_colors[ default_color_id() ]);
+                        &display_colors [lepton_color_default_id ()]);
 
 
   return &display_colors[ color_id ];

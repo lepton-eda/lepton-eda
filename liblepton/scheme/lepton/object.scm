@@ -1,7 +1,7 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2012-2016 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -305,7 +305,7 @@ values."
         (y1 (cdr start))
         (x2 (car end))
         (y2 (cdr end))
-        (color (or color (default_color_id))))
+        (color (or color (lepton_color_default_id))))
     (pointer->object
      (lepton_line_object_new color x1 y1 x2 y2))))
 
@@ -513,7 +513,7 @@ form '(x . y), and BOTTOM-RIGHT is the position of the bottom
 right of the box.  If optional COLOR is specified, it should be
 the integer color map index of the color with which to draw the
 box.  If COLOR is not specified, the default box color is used."
-  (define default-box-color (default_color_id))
+  (define default-box-color (lepton_color_default_id))
 
   (check-coord top-left 1)
   (check-coord bottom-right 2)
@@ -598,7 +598,7 @@ parameters set to default values."
 
   (pointer->object
    (lepton_circle_object_new (or color
-                                 (default_color_id))
+                                 (lepton_color_default_id))
                              (car center)
                              (cdr center)
                              radius)))
@@ -672,7 +672,7 @@ SWEEP-ANGLE is the number of degrees between the start and end
 angles.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
 is not specified, the default arc color is used."
-  (define default-arc-color (default_color_id))
+  (define default-arc-color (lepton_color_default_id))
 
   (check-coord center 1)
   (check-integer radius 2)
@@ -741,7 +741,7 @@ stroke and fill options.  If COLOR is specified, it should be the
 integer color map index of the color with which to draw the path.
 If COLOR is not specified, the default path color is used."
   (pointer->object
-   (lepton_path_object_new (or color (default_color_id))
+   (lepton_path_object_new (or color (lepton_color_default_id))
                            (string->pointer ""))))
 
 (define (path-length object)
@@ -1216,7 +1216,7 @@ the default text color is used."
         (show (symbol->text-attribute-show-mode show)))
     (pointer->object
      (lepton_text_object_new (or color
-                                 (default_color_id))
+                                 (lepton_color_default_id))
                              x
                              y
                              align
@@ -1442,7 +1442,7 @@ embedded."
   (check-boolean mirror 4)
   (check-boolean locked 5)
 
-  (let ((color (default_color_id))
+  (let ((color (lepton_color_default_id))
         (x (car position))
         (y (cdr position))
         (mirror? (if mirror TRUE FALSE))
@@ -1473,7 +1473,7 @@ returns #f."
     (and (not (null-pointer? clib))
          (pointer->object
           (lepton_component_new active-page
-                                (default_color_id)
+                                (lepton_color_default_id)
                                 0
                                 0
                                 0

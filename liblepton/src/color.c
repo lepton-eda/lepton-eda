@@ -94,7 +94,7 @@ color_id_valid (size_t id)
 
 
 size_t
-default_color_id()
+lepton_color_default_id ()
 {
   return DEFAULT_COLOR;
 }

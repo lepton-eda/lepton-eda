@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1109,7 +1109,7 @@ lepton_component_read (LeptonPage *page,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
-    new_obj = lepton_component_new_embedded (default_color_id(),
+    new_obj = lepton_component_new_embedded (lepton_color_default_id (),
                                              x1,
                                              y1,
                                              angle,
@@ -1121,7 +1121,7 @@ lepton_component_read (LeptonPage *page,
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
     new_obj = lepton_component_new (page,
-                                    default_color_id(),
+                                    lepton_color_default_id (),
                                     x1,
                                     y1,
                                     angle,

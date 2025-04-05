@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ o_component_prepare_place (SchematicWindow *w_current,
     LeptonObject *new_object;
 
     new_object = lepton_component_new (active_page,
-                                       default_color_id(),
+                                       lepton_color_default_id (),
                                        0,
                                        0,
                                        0,
