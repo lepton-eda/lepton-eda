@@ -277,7 +277,7 @@ lepton_color_get_name (int color_index)
 /*! \brief: For a given \a color_index, get (localized) human readable name
  */
 const char*
-color_get_strname (int color_index)
+lepton_color_get_strname (int color_index)
 {
   switch(color_index)
   {
@@ -310,4 +310,4 @@ color_get_strname (int color_index)
   }
   return _("Unknown");
 
-} /* color_get_strname() */
+} /* lepton_color_get_strname() */

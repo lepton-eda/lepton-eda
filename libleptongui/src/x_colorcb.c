@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ create_color_list_store ()
   {
     gtk_list_store_append (store, &iter);
 
-    const gchar* name = color_get_strname (color_index);
+    const gchar* name = lepton_color_get_strname (color_index);
     gchar* str = x_color_display_enabled (color_index)
                  ? g_strdup (name)
                  : g_strdup_printf (_("%s [ disabled ]"), name);
@@ -120,7 +120,7 @@ x_colorcb_update_colors()
     int color_index = -1;
     gtk_tree_model_get (model, &iter, COLUMN_INDEX, &color_index, -1);
 
-    const gchar* name = color_get_strname (color_index);
+    const gchar* name = lepton_color_get_strname (color_index);
     gchar* str = x_color_display_enabled (color_index)
                  ? g_strdup (name)
                  : g_strdup_printf (_("%s [ disabled ]"), name);
