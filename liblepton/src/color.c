@@ -233,7 +233,14 @@ print_colors_array ()
 }
 
 
-/*! \brief: For a given \a color_index, get Scheme symbol name
+/*! \brief Get Scheme symbolic color name by a color index
+ *
+ *  \par Function description
+ *  Returns the string name of a color by \p color_index in order
+ *  to get then a symbol representing the color in Scheme code.
+ *
+ * \param [in] color_index A color index.
+ * \return The color name string.
  */
 const gchar*
 lepton_color_get_name (int color_index)
