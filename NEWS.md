@@ -465,6 +465,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   extracting archives.
 
 
+### Changes in `lepton-export`:
+
+- The wrong error message on bad command line arguments that
+  inherited C format code after rewriting it in Scheme has been
+  fixed.
+
 ### Changes in `lepton-netlist`:
 
 - Previously, the program used to output a backtrace when the file
