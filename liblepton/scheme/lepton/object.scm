@@ -1448,13 +1448,13 @@ embedded."
         (mirror? (if mirror TRUE FALSE))
         (selectable? (if locked FALSE TRUE)))
     (pointer->object
-     (lepton_component_new_embedded color
-                                    x
-                                    y
-                                    angle
-                                    mirror?
-                                    (string->pointer basename)
-                                    selectable?))))
+     (lepton_component_object_new_embedded color
+                                           x
+                                           y
+                                           angle
+                                           mirror?
+                                           (string->pointer basename)
+                                           selectable?))))
 
 
 (define (%make-component/library basename)
