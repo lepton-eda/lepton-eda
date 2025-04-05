@@ -281,7 +281,15 @@ lepton_color_get_name (int color_index)
 
 
 
-/*! \brief: For a given \a color_index, get (localized) human readable name
+/*! \brief Get a human readable description by a color index
+ *
+ *  \par Function description
+ *  Returns the localized human readable color description for \p
+ *  color_index.  Such descriptions are used to represent
+ *  available colors in dialog comboboxes in GUI.
+ *
+ * \param [in] color_index A color index.
+ * \return The description string for the index.
  */
 const char*
 lepton_color_get_strname (int color_index)
