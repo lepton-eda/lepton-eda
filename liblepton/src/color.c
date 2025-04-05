@@ -207,9 +207,11 @@ lepton_color_map_init (LeptonColorMap map)
 
 
 
-/*! \brief Initialises the color subsystem
+/*! \brief Initialise the color subsystem.
+ *
  *  \par Function Description
- *  At the moment, just initialises the print color map.
+ *  At the moment, just initialises the print color map
+ *  #print_colors.
  */
 void
 lepton_color_init ()
