@@ -236,7 +236,7 @@ print_colors_array ()
 /*! \brief: For a given \a color_index, get Scheme symbol name
  */
 const gchar*
-color_get_name (int color_index)
+lepton_color_get_name (int color_index)
 {
   switch (color_index)
   {
@@ -270,7 +270,7 @@ color_get_name (int color_index)
 
   return "";
 
-} /* color_get_name() */
+} /* lepton_color_get_name() */
 
 
 

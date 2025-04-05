@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ x_color_map2str (LeptonColorMap cmap)
   {
     LeptonColor color = cmap[ color_index ];
 
-    const gchar* scm_str = color_get_name (color_index);
+    const gchar* scm_str = lepton_color_get_name (color_index);
 
     if (lepton_color_enabled (&color))
     {
