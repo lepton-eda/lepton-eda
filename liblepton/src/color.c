@@ -93,6 +93,14 @@ color_id_valid (size_t id)
 
 
 
+/*! \brief Get the default color index for a new object
+ *
+ *  \par Function description
+ *  Returns the default color index for newly created objects.  It
+ *  is mainly aimed for initialization of graphic primitives.
+ *
+ * \return The default object color.
+ */
 size_t
 lepton_color_default_id ()
 {
