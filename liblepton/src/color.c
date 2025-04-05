@@ -34,6 +34,8 @@
 #include "liblepton_priv.h"
 
 
+/*! \brief The default color for new primitive objects.
+ */
 #define DEFAULT_COLOR GRAPHIC_COLOR
 
 
@@ -42,8 +44,17 @@ LeptonColorMap display_colors;
 LeptonColorMap display_outline_colors;
 
 
+/*! \brief The RGBA values for white color in the array
+ *  #default_colors.
+ */
 #define WHITE   {1.0, 1.0, 1.0, 1.0}
+/*! \brief The RGBA values for gray color in the array
+ *  #default_colors.
+ */
 #define GRAY    {0.5, 0.5, 0.5, 1.0}
+/*! \brief The RGBA values for black color in the array
+ *  #default_colors.
+ */
 #define BLACK   {0.0, 0.0, 0.0, 1.0}
 
 static LeptonColor default_colors[] =
