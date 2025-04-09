@@ -329,6 +329,7 @@
             s_clib_add_command
             s_clib_add_directory
             s_clib_add_scm
+            s_clib_free
             s_clib_get_symbol_by_name
             s_clib_init
             s_clib_symbol_get_filename
@@ -426,6 +427,7 @@
 (define-lff s_clib_add_command '* '(* * *))
 (define-lff s_clib_add_directory '* '(* *))
 (define-lff s_clib_add_scm '* '(* * *))
+(define-lff s_clib_free void '())
 (define-lff s_clib_get_symbol_by_name '* '(*))
 (define-lff s_clib_init void '())
 (define-lff s_clib_symbol_get_filename '* '(*))

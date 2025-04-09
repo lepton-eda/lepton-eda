@@ -172,7 +172,6 @@
             pagesel_callback_selection_changed
 
             s_clib_refresh
-            s_clib_free
 
             get_quiet_mode
             set_quiet_mode
@@ -751,7 +750,6 @@
 
 ;;; s_clib.c
 (define-lff s_clib_refresh void '())
-(define-lff s_clib_free void '())
 
 ;;; color_edit_widget.c
 (define-lff color_edit_widget_new '* '(*))
