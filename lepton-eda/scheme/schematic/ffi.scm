@@ -171,8 +171,6 @@
             schematic_page_select_widget_set_callback
             pagesel_callback_selection_changed
 
-            s_clib_refresh
-
             get_quiet_mode
             set_quiet_mode
             set_verbose_mode
@@ -747,9 +745,6 @@
 
 ;;; x_color.c
 (define-lff x_color_init void '())
-
-;;; s_clib.c
-(define-lff s_clib_refresh void '())
 
 ;;; color_edit_widget.c
 (define-lff color_edit_widget_new '* '(*))

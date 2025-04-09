@@ -332,6 +332,7 @@
             s_clib_free
             s_clib_get_symbol_by_name
             s_clib_init
+            s_clib_refresh
             s_clib_symbol_get_filename
             s_clib_symbol_invalidate_data
 
@@ -430,6 +431,7 @@
 (define-lff s_clib_free void '())
 (define-lff s_clib_get_symbol_by_name '* '(*))
 (define-lff s_clib_init void '())
+(define-lff s_clib_refresh void '())
 (define-lff s_clib_symbol_get_filename '* '(*))
 (define-lff s_clib_symbol_invalidate_data void '(*))
 
