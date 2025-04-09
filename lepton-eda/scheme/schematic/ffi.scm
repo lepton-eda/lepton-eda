@@ -171,8 +171,6 @@
             schematic_page_select_widget_set_callback
             pagesel_callback_selection_changed
 
-            s_attrib_free
-
             s_clib_refresh
             s_clib_free
 
@@ -750,9 +748,6 @@
 
 ;;; x_color.c
 (define-lff x_color_init void '())
-
-;;; s_attrib.c
-(define-lff s_attrib_free void '())
 
 ;;; s_clib.c
 (define-lff s_clib_refresh void '())

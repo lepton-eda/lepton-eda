@@ -321,6 +321,7 @@
             print_colors_array
             lepton_color_init
 
+            s_attrib_free
             s_attrib_init
             s_attrib_uniq
             s_attrib_add_entry
@@ -455,6 +456,7 @@
 (define-lff g_rc_parse_local int '(* * * *))
 
 ;;; s_attrib.c
+(define-lff s_attrib_free void '())
 (define-lff s_attrib_init void '())
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
