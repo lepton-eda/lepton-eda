@@ -112,10 +112,5 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
 SchematicHotkeyStore*
 schematic_hotkey_store_new ()
 {
-  SchematicHotkeyStore *store =
-    SCHEMATIC_HOTKEY_STORE (g_object_new (SCHEMATIC_TYPE_HOTKEY_STORE, NULL));
-
-  schematic_hotkey_store_rebuild (store);
-
-  return store;
+  return SCHEMATIC_HOTKEY_STORE (g_object_new (SCHEMATIC_TYPE_HOTKEY_STORE, NULL));
 }
