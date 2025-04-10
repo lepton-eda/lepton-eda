@@ -854,7 +854,8 @@ coord_dialog (SchematicWindow *w_current,
               int x,
               int y);
 void
-x_dialog_hotkeys (SchematicWindow *w_current);
+x_dialog_hotkeys (SchematicWindow *w_current,
+                  SchematicHotkeyStore* store);
 
 void
 schematic_find_text_widget_show (GtkWidget *find_text_widget,

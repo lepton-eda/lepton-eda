@@ -391,6 +391,8 @@
 
             x_dialog_hotkeys
 
+            schematic_hotkey_store_new
+
             schematic_macro_widget_get_cancel_button
             schematic_macro_widget_get_entry
             schematic_macro_widget_get_evaluate_button
@@ -763,7 +765,10 @@
 (define-lff coord_display_update void (list '* int int))
 
 ;;; hotkey_dialog.c
-(define-lff x_dialog_hotkeys void '(*))
+(define-lff x_dialog_hotkeys void '(* *))
+
+;;; hotkey_store.c
+(define-lff schematic_hotkey_store_new '* '())
 
 ;;; macro_widget.c
 (define-lff schematic_macro_widget_get_cancel_button '* '(*))
