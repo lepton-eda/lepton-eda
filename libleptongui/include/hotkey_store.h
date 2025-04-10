@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -62,8 +62,11 @@ struct _SchematicHotkeyStore
 GType
 schematic_hotkey_store_get_type();
 
+G_BEGIN_DECLS
+
 SchematicHotkeyStore*
 schematic_hotkey_store_new ();
 
+G_END_DECLS
 
 #endif /* _HOTKEY_STORE_H__ */

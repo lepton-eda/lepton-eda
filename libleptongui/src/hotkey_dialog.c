@@ -175,7 +175,8 @@ response (GtkWidget* widget, gint response, gpointer data)
  *  into it.
  */
 void
-x_dialog_hotkeys (SchematicWindow *w_current)
+x_dialog_hotkeys (SchematicWindow *w_current,
+                  SchematicHotkeyStore* store)
 {
   GtkWidget *vbox = NULL;
   GtkWidget *scrolled_win = NULL;
@@ -239,7 +240,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
                                   GTK_POLICY_AUTOMATIC);
 
   /* the model */
-  store_model = GTK_TREE_MODEL (schematic_hotkey_store_new ());
+  store_model = GTK_TREE_MODEL (store);
 
   /* the tree view */
   treeview = gtk_tree_view_new_with_model (store_model);
