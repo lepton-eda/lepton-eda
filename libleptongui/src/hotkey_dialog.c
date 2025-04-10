@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,7 +180,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
   GtkWidget *vbox = NULL;
   GtkWidget *scrolled_win = NULL;
   GtkWidget *treeview = NULL;
-  GtkTreeModel *store = NULL;
+  GtkTreeModel *store_model = NULL;
   GtkCellRenderer *renderer = NULL;
   GtkTreeViewColumn *column = NULL;
 
@@ -239,10 +239,10 @@ x_dialog_hotkeys (SchematicWindow *w_current)
                                   GTK_POLICY_AUTOMATIC);
 
   /* the model */
-  store = GTK_TREE_MODEL (schematic_hotkey_store_new ());
+  store_model = GTK_TREE_MODEL (schematic_hotkey_store_new ());
 
   /* the tree view */
-  treeview = gtk_tree_view_new_with_model (store);
+  treeview = gtk_tree_view_new_with_model (store_model);
   gtk_container_add(GTK_CONTAINER(scrolled_win), treeview);
 
   /* the columns */
@@ -281,7 +281,7 @@ x_dialog_hotkeys (SchematicWindow *w_current)
   gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
 
   /* setup tree filtering: */
-  filter_setup (GTK_TREE_VIEW (treeview), store, GTK_ENTRY (entry));
+  filter_setup (GTK_TREE_VIEW (treeview), store_model, GTK_ENTRY (entry));
 
   /* show all recursively */
   gtk_widget_show_all(w_current->hkwindow);
