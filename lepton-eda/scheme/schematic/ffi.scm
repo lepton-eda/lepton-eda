@@ -364,6 +364,7 @@
             x_dialog_hotkeys
 
             schematic_hotkey_store_new
+            schematic_hotkey_store_rebuild
 
             macro_widget_show
 
@@ -728,6 +729,7 @@
 
 ;;; hotkey_store.c
 (define-lff schematic_hotkey_store_new '* '())
+(define-lff schematic_hotkey_store_rebuild int '(*))
 
 ;;; macro_widget.c
 (define-lff macro_widget_show void '(*))
