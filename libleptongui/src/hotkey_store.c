@@ -25,10 +25,6 @@
 #define HELPER_FUNC_NAME "%gschem-hotkey-store/dump-global-keymap"
 
 
-static gboolean
-schematic_hotkey_store_rebuild (SchematicHotkeyStore *store);
-
-
 G_DEFINE_TYPE (SchematicHotkeyStore,
                schematic_hotkey_store,
                GTK_TYPE_LIST_STORE);
@@ -60,7 +56,7 @@ schematic_hotkey_store_init (SchematicHotkeyStore *store)
 /*! Rebuild the list view. Calls into Scheme to generate a list of
  * current keybindings, and uses it to update the GtkListStore that
  * backs the list of key bindings. */
-static gboolean
+gboolean
 schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
 {
   SCM s_expr = SCM_UNDEFINED;
