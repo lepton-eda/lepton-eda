@@ -652,7 +652,11 @@ schematic_newtext_dialog_run (GtkWidget *widget)
 {
   gtk_window_present (GTK_WINDOW (widget));
 
+  SchematicNewText *dialog = SCHEMATIC_NEWTEXT (widget);
+  GtkTextView *text_view =
+    GTK_TEXT_VIEW (schematic_newtext_dialog_get_text_view (dialog));
+
   /* always select the text in the entry */
-  select_all_text_in_textview (GTK_TEXT_VIEW (SCHEMATIC_NEWTEXT (widget)->text_view));
-  gtk_widget_grab_focus (SCHEMATIC_NEWTEXT (widget)->text_view);
+  select_all_text_in_textview (text_view);
+  gtk_widget_grab_focus (GTK_WIDGET (text_view));
 }
