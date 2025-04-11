@@ -66,6 +66,35 @@ schematic_hotkey_store_clear (SchematicHotkeyStore *store)
 }
 
 
+/*! \brief Append a row with given data to a hotkey list store
+ *  \par Function description
+ *  Appends a new row with given values to \a store.  The data
+ *  defines the name of a function to describe, the shortcut set
+ *  for calling it, and the name of an icon which will be
+ *  displayed in the list store row for that function.
+ *
+ *  \param [in,out] store The #SchematicHotkeyStore instance.
+ *  \param [in] binding The function name.
+ *  \param [in] keys The shortcut.
+ *  \param [in] icon The icon name.
+ */
+void
+schematic_hotkey_store_append_row (SchematicHotkeyStore *store,
+                                   char *binding,
+                                   char *keys,
+                                   char *icon)
+{
+  GtkTreeIter iter;
+
+  gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, -1,
+                                     SCHEMATIC_HOTKEY_STORE_COLUMN_LABEL, binding,
+                                     SCHEMATIC_HOTKEY_STORE_COLUMN_KEYS, keys,
+                                     SCHEMATIC_HOTKEY_STORE_COLUMN_ICON, icon,
+                                     -1);
+
+}
+
+
 /*! Rebuild the list view. Calls into Scheme to generate a list of
  * current keybindings, and uses it to update the GtkListStore that
  * backs the list of key bindings. */
@@ -92,7 +121,6 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
     SCM s_keys = scm_cadr (s_info);
     SCM s_icon = scm_caddr (s_info);
     char *binding, *keys, *icon = NULL;
-    GtkTreeIter iter;
 
     scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
@@ -107,11 +135,7 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
       scm_dynwind_free (icon);
     }
 
-    gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, -1,
-                                       SCHEMATIC_HOTKEY_STORE_COLUMN_LABEL, binding,
-                                       SCHEMATIC_HOTKEY_STORE_COLUMN_KEYS, keys,
-                                       SCHEMATIC_HOTKEY_STORE_COLUMN_ICON, icon,
-                                       -1);
+    schematic_hotkey_store_append_row (store, binding, keys, icon);
 
     scm_dynwind_end ();
   }
