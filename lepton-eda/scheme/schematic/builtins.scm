@@ -1490,13 +1490,16 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; Configuration actions
 
-(define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
-  (define (make-hotkey-store)
-    (let ((*store (schematic_hotkey_store_new)))
-      (schematic_hotkey_store_rebuild *store)
-      *store))
+(define (rebuild-hotkey-store *store)
+  "Rebuild the hotkey list store view by calling a Scheme function to
+generate a list of current key bindings and then updating *STORE
+that backs the list of key bindings.  Return the modified *STORE."
+  (schematic_hotkey_store_rebuild *store)
+  *store)
 
-  (x_dialog_hotkeys (*current-window) (make-hotkey-store)))
+(define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
+  (x_dialog_hotkeys (*current-window)
+                    (rebuild-hotkey-store (schematic_hotkey_store_new))))
 
 
 ;;; Cycle grid mode.
