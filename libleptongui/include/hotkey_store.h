@@ -67,6 +67,9 @@ G_BEGIN_DECLS
 SchematicHotkeyStore*
 schematic_hotkey_store_new ();
 
+void
+schematic_hotkey_store_clear (SchematicHotkeyStore *store);
+
 gboolean
 schematic_hotkey_store_rebuild (SchematicHotkeyStore *store);
 

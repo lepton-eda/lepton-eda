@@ -52,6 +52,19 @@ schematic_hotkey_store_init (SchematicHotkeyStore *store)
 }
 
 
+/*! \brief Clear the hotkey list store.
+ *  \par Function description
+ *  Removes all rows from the hotkey list store.
+ *
+ *  \param [in,out] store The #SchematicHotkeyStore instance to
+ *                        clear.
+ */
+void
+schematic_hotkey_store_clear (SchematicHotkeyStore *store)
+{
+  gtk_list_store_clear (GTK_LIST_STORE (store));
+}
+
 
 /*! Rebuild the list view. Calls into Scheme to generate a list of
  * current keybindings, and uses it to update the GtkListStore that
@@ -71,7 +84,7 @@ schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
   g_return_val_if_fail (scm_is_true (scm_list_p (s_lst)), FALSE);
 
   /* If it worked, then rebuild the keymap */
-  gtk_list_store_clear (GTK_LIST_STORE (store));
+  schematic_hotkey_store_clear (store);
 
   for (s_iter = s_lst; !scm_is_null (s_iter); s_iter = scm_cdr (s_iter)) {
     SCM s_info = scm_car (s_iter);
