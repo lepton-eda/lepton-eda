@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,9 @@ schematic_newtext_dialog_get_textsizecb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_textsizecb (SchematicNewText *dialog,
                                          GtkWidget *textsizecb);
+char*
+schematic_newtext_dialog_get_text (GtkWidget *text_view);
+
 GtkWidget*
 schematic_newtext_dialog_get_text_view (SchematicNewText *dialog);
 
