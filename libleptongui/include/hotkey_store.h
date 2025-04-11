@@ -75,9 +75,6 @@ schematic_hotkey_store_append_row (SchematicHotkeyStore *store,
                                    char *binding,
                                    char *keys,
                                    char *icon);
-gboolean
-schematic_hotkey_store_rebuild (SchematicHotkeyStore *store);
-
 G_END_DECLS
 
 #endif /* _HOTKEY_STORE_H__ */
