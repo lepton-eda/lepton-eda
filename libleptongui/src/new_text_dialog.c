@@ -226,8 +226,8 @@ text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
 
 
 
-static void
-select_all_text_in_textview (GtkWidget *textview)
+void
+schematic_newtext_dialog_textview_select_all (GtkWidget *textview)
 {
   GtkTextBuffer *textbuffer =
     gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
@@ -330,7 +330,7 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
   }
 
   /* select the text, so you can continue immediatly writing the next text */
-  select_all_text_in_textview (text_view);
+  schematic_newtext_dialog_textview_select_all (text_view);
   gtk_widget_grab_focus (text_view);
 
   o_text_prepare_place (w_current,
@@ -577,7 +577,7 @@ schematic_newtext_init (SchematicNewText *dialog)
 
   dialog->text_view = gtk_text_view_new();
   gtk_text_view_set_editable(GTK_TEXT_VIEW(dialog->text_view), TRUE);
-  select_all_text_in_textview (dialog->text_view);
+  schematic_newtext_dialog_textview_select_all (dialog->text_view);
 
   /* Set the tab width, using pango tab array */
   /*! \bug FIXME: This doesn't work. Why? */
@@ -657,6 +657,6 @@ schematic_newtext_dialog_run (GtkWidget *widget)
     schematic_newtext_dialog_get_text_view (dialog);
 
   /* always select the text in the entry */
-  select_all_text_in_textview (text_view);
+  schematic_newtext_dialog_textview_select_all (text_view);
   gtk_widget_grab_focus (text_view);
 }

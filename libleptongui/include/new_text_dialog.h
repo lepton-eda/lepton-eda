@@ -60,6 +60,9 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
 void
 schematic_newtext_dialog_run (GtkWidget *widget);
 
+void
+schematic_newtext_dialog_textview_select_all (GtkWidget *textview);
+
 GtkWidget*
 schematic_newtext_dialog_new (SchematicWindow *w_current);
 
