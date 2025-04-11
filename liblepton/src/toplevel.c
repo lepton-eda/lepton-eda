@@ -92,10 +92,11 @@ lepton_toplevel_delete_pages (LeptonToplevel *toplevel)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Delete a toplevel.
  *  \par Function Description
+ *  Free all data \p toplevel references and the toplevel itself.
  *
+ *  \param [in] toplevel The #LeptonToplevel instance.
  */
 void
 lepton_toplevel_delete (LeptonToplevel *toplevel)
