@@ -25,6 +25,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton attrib)
+  #:use-module (lepton eval)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
@@ -1494,8 +1495,23 @@ the snap grid size should be set to 100")))
   "Rebuild the hotkey list store view by calling a Scheme function to
 generate a list of current key bindings and then updating *STORE
 that backs the list of key bindings.  Return the modified *STORE."
-  (schematic_hotkey_store_rebuild *store)
-  *store)
+  (define (string->pointer* s)
+    (if s (string->pointer s) %null-pointer))
+  ;; First dump the global keymap.
+  (let ((ls (eval-protected '(%gschem-hotkey-store/dump-global-keymap))))
+    (and ls
+         (begin
+           ;; If it worked then rebuild the keymap.
+           (schematic_hotkey_store_clear *store)
+           (let loop ((ls ls))
+             (match ls
+               (((binding keys icon) . rest)
+                (schematic_hotkey_store_append_row *store
+                                                   (string->pointer* binding)
+                                                   (string->pointer* keys)
+                                                   (string->pointer* icon))
+                (loop rest))
+               (_ *store)))))))
 
 (define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
   (x_dialog_hotkeys (*current-window)

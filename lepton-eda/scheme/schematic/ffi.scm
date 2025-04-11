@@ -392,7 +392,8 @@
             x_dialog_hotkeys
 
             schematic_hotkey_store_new
-            schematic_hotkey_store_rebuild
+            schematic_hotkey_store_clear
+            schematic_hotkey_store_append_row
 
             schematic_macro_widget_get_cancel_button
             schematic_macro_widget_get_entry
@@ -770,7 +771,8 @@
 
 ;;; hotkey_store.c
 (define-lff schematic_hotkey_store_new '* '())
-(define-lff schematic_hotkey_store_rebuild int '(*))
+(define-lff schematic_hotkey_store_clear void '(*))
+(define-lff schematic_hotkey_store_append_row void '(* * * *))
 
 ;;; macro_widget.c
 (define-lff schematic_macro_widget_get_cancel_button '* '(*))

@@ -22,9 +22,6 @@
 #include "schematic.h"
 
 
-#define HELPER_FUNC_NAME "%gschem-hotkey-store/dump-global-keymap"
-
-
 G_DEFINE_TYPE (SchematicHotkeyStore,
                schematic_hotkey_store,
                GTK_TYPE_LIST_STORE);
@@ -93,57 +90,6 @@ schematic_hotkey_store_append_row (SchematicHotkeyStore *store,
                                      -1);
 
 }
-
-
-/*! Rebuild the list view. Calls into Scheme to generate a list of
- * current keybindings, and uses it to update the GtkListStore that
- * backs the list of key bindings. */
-gboolean
-schematic_hotkey_store_rebuild (SchematicHotkeyStore *store)
-{
-  SCM s_expr = SCM_UNDEFINED;
-  SCM s_lst, s_iter;
-
-  g_assert (SCHEMATIC_IS_HOTKEY_STORE (store));
-
-  /* First run the Scheme function to dump the global keymap */
-  s_expr = scm_list_1 (scm_from_utf8_symbol (HELPER_FUNC_NAME));
-  s_lst = g_scm_eval_protected (s_expr, SCM_UNDEFINED);
-
-  g_return_val_if_fail (scm_is_true (scm_list_p (s_lst)), FALSE);
-
-  /* If it worked, then rebuild the keymap */
-  schematic_hotkey_store_clear (store);
-
-  for (s_iter = s_lst; !scm_is_null (s_iter); s_iter = scm_cdr (s_iter)) {
-    SCM s_info = scm_car (s_iter);
-    SCM s_binding = scm_car (s_info);
-    SCM s_keys = scm_cadr (s_info);
-    SCM s_icon = scm_caddr (s_info);
-    char *binding, *keys, *icon = NULL;
-
-    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-    binding = scm_to_utf8_string (s_binding);
-    scm_dynwind_free (binding);
-
-    keys = scm_to_utf8_string (s_keys);
-    scm_dynwind_free (keys);
-
-    if (scm_is_true (s_icon)) {
-      icon = scm_to_utf8_string (s_icon);
-      scm_dynwind_free (icon);
-    }
-
-    schematic_hotkey_store_append_row (store, binding, keys, icon);
-
-    scm_dynwind_end ();
-  }
-
-  return FALSE;
-
-} /* schematic_hotkey_store_rebuild() */
-
 
 
 SchematicHotkeyStore*
