@@ -238,6 +238,28 @@ select_all_text_in_textview (GtkTextView *textview)
 }
 
 
+/*! \brief Get text string from the New text dialog.
+ *  \par Function description
+ *  Gets the text string from the text view widget of the New text
+ *  dialog.
+ *
+ *  \note The caller must g_free() return value.
+ *
+ *  \param [in] text_view The widget to get the string from.
+ *  \return The text string.
+ */
+char*
+schematic_newtext_dialog_get_text (GtkWidget *text_view)
+{
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+
+  textbuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+
+  return gtk_text_iter_get_text (&start, &end);
+}
+
 
 /*! \brief Handles the user response when apply is selected
  *
@@ -258,15 +280,11 @@ schematic_newtext_dialog_response_apply (SchematicNewText *dialog,
   int rotate = 0;
   gchar *string = NULL;
   gchar *tmp = NULL;
-  GtkTextBuffer *textbuffer;
-  GtkTextIter start, end;
   int value;
 
   GtkWidget *text_view = schematic_newtext_dialog_get_text_view (dialog);
 
-  textbuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
-  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  string =  gtk_text_iter_get_text (&start, &end);
+  string = schematic_newtext_dialog_get_text (text_view);
 
   if (string[0] == '\0' )
     return;
