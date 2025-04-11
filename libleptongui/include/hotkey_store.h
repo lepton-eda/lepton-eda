@@ -70,6 +70,11 @@ schematic_hotkey_store_new ();
 void
 schematic_hotkey_store_clear (SchematicHotkeyStore *store);
 
+void
+schematic_hotkey_store_append_row (SchematicHotkeyStore *store,
+                                   char *binding,
+                                   char *keys,
+                                   char *icon);
 gboolean
 schematic_hotkey_store_rebuild (SchematicHotkeyStore *store);
 
