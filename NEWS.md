@@ -166,8 +166,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   All accessor, helper, and other functions and macros related to
   those types have been renamed accordingly.
 
-- The structure of the type `SchematicPreview` has been made an
-  opaque one and its data is now available only via accessors.
+- The following structures have been made opaque and their data
+  are now available only via accessors:
+  - the structure of the type `SchematicNewText`,
+  - the structure of the type `SchematicPreview`.
 
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
