@@ -176,6 +176,9 @@
     (string->symbol (pointer->string
                      (schematic_window_text_caps_to_string caps))))
 
+  (define (prepare-text-placement *window *str color align angle size)
+    (o_text_prepare_place *window *str color align angle size))
+
   ;; Apply the text from the text entry dialog.
   (define (apply-changes!)
     (if (null-pointer? *dialog)
@@ -223,13 +226,12 @@
                     ;; immediatly writing the next text.
                     (schematic_newtext_dialog_textview_select_all *text-view)
                     (gtk_widget_grab_focus *text-view)
-
-                    (o_text_prepare_place *window
-                                          (string->pointer text-str)
-                                          color
-                                          align
-                                          angle
-                                          size))))))))
+                    (prepare-text-placement *window
+                                            (string->pointer text-str)
+                                            color
+                                            align
+                                            angle
+                                            size))))))))
 
   (case (gtk-response->symbol response)
     ((apply) (apply-changes!))
