@@ -565,10 +565,12 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (main_window));
 
-  schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+  GtkWidget *textsizecb =
+    schematic_newtext_dialog_get_textsizecb (SCHEMATIC_NEWTEXT (dialog));
+  schematic_integer_combo_box_set_model (textsizecb,
                                          schematic_window_get_text_size_list_store (w_current));
 
-  schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+  schematic_integer_combo_box_set_value (textsizecb,
                                          schematic_window_get_text_size (w_current));
 
   gtk_widget_show_all (dialog);
