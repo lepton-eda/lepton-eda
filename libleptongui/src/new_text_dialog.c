@@ -395,16 +395,17 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->colorcb = x_colorcb_new ();
-  x_colorcb_set_index(dialog->colorcb, TEXT_COLOR);
+  GtkWidget *colorcb = x_colorcb_new ();
+  schematic_newtext_dialog_set_colorcb (dialog, colorcb);
+  x_colorcb_set_index (colorcb, TEXT_COLOR);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->colorcb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorcb);
 
 #ifdef ENABLE_GTK3
-  gtk_widget_set_hexpand (GTK_WIDGET (dialog->colorcb), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), dialog->colorcb, 1, 0, 1, 1);
+  gtk_widget_set_hexpand (colorcb, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), colorcb, 1, 0, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
+  gtk_table_attach_defaults (GTK_TABLE(table), colorcb, 1, 2, 0, 1);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("_Size:"));
@@ -426,14 +427,15 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->textsizecb = schematic_integer_combo_box_new ();
+  GtkWidget *textsizecb = schematic_integer_combo_box_new ();
+  schematic_newtext_dialog_set_textsizecb (dialog, textsizecb);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->textsizecb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textsizecb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->textsizecb, 1, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), textsizecb, 1, 1, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
+  gtk_table_attach_defaults (GTK_TABLE(table), textsizecb, 1, 2, 1, 2);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("Ali_gnment:"));
@@ -455,15 +457,16 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->aligncb = schematic_alignment_combo_new ();
-  schematic_alignment_combo_set_align (dialog->aligncb, LOWER_LEFT);
+  GtkWidget *aligncb = schematic_alignment_combo_new ();
+  schematic_newtext_dialog_set_aligncb (dialog, aligncb);
+  schematic_alignment_combo_set_align (aligncb, LOWER_LEFT);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->aligncb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), aligncb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->aligncb, 1, 2, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), aligncb, 1, 2, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
+  gtk_table_attach_defaults(GTK_TABLE(table), aligncb, 1, 2, 2, 3);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("Ro_tation:"));
@@ -485,15 +488,16 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->rotatecb = schematic_rotation_combo_new ();
-  schematic_rotation_combo_set_angle (dialog->rotatecb, 0);
+  GtkWidget *rotatecb = schematic_rotation_combo_new ();
+  schematic_newtext_dialog_set_rotatecb (dialog, rotatecb);
+  schematic_rotation_combo_set_angle (rotatecb, 0);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->rotatecb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), rotatecb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->rotatecb, 1, 3, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), rotatecb, 1, 3, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
+  gtk_table_attach_defaults (GTK_TABLE(table), rotatecb, 1, 2, 3, 4);
 #endif
 
   viewport1 = gtk_viewport_new (NULL, NULL);
@@ -506,19 +510,21 @@ schematic_newtext_init (SchematicNewText *dialog)
   gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
   gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 0);
 
-  dialog->text_view = gtk_text_view_new();
-  gtk_text_view_set_editable(GTK_TEXT_VIEW(dialog->text_view), TRUE);
-  schematic_newtext_dialog_textview_select_all (dialog->text_view);
+  GtkWidget *text_view = gtk_text_view_new();
+  schematic_newtext_dialog_set_text_view (dialog, text_view);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), TRUE);
+  schematic_newtext_dialog_textview_select_all (text_view);
 
   /* Set the tab width, using pango tab array */
   /*! \bug FIXME: This doesn't work. Why? */
   tab_array = pango_tab_array_new (1, TRUE);
-  real_tab_width = text_view_calculate_real_tab_width(GTK_TEXT_VIEW(dialog->text_view),
-                                                        tab_in_chars);
+  real_tab_width =
+    text_view_calculate_real_tab_width (GTK_TEXT_VIEW (text_view),
+                                        tab_in_chars);
   if (real_tab_width >= 0) {
     pango_tab_array_set_tab (tab_array, 0, PANGO_TAB_LEFT, real_tab_width);
     /* printf("Real tab width: %i\n", real_tab_width);*/
-    gtk_text_view_set_tabs (GTK_TEXT_VIEW (dialog->text_view),
+    gtk_text_view_set_tabs (GTK_TEXT_VIEW (text_view),
                             tab_array);
   }
   else {
@@ -526,7 +532,7 @@ schematic_newtext_init (SchematicNewText *dialog)
   }
 
   pango_tab_array_free (tab_array);
-  gtk_container_add(GTK_CONTAINER(scrolled_window), dialog->text_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
 }
 
 
