@@ -37,21 +37,6 @@
 typedef struct _SchematicNewTextClass SchematicNewTextClass;
 typedef struct _SchematicNewText SchematicNewText;
 
-struct _SchematicNewTextClass {
-  SchematicDialogClass parent_class;
-};
-
-struct _SchematicNewText {
-    SchematicDialog parent;
-
-    GtkWidget *aligncb;
-    GtkWidget *colorcb;
-    GtkWidget *rotatecb;
-    GtkWidget *textsizecb;
-    GtkWidget *text_view;
-};
-
-
 G_BEGIN_DECLS
 
 void

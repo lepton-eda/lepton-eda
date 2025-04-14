@@ -37,6 +37,21 @@
 #include <gdk/gdkkeysyms.h>
 
 
+struct _SchematicNewTextClass {
+  SchematicDialogClass parent_class;
+};
+
+struct _SchematicNewText {
+    SchematicDialog parent;
+
+    GtkWidget *aligncb;
+    GtkWidget *colorcb;
+    GtkWidget *rotatecb;
+    GtkWidget *textsizecb;
+    GtkWidget *text_view;
+};
+
+
 G_DEFINE_TYPE (SchematicNewText,
                schematic_newtext,
                SCHEMATIC_TYPE_DIALOG);
