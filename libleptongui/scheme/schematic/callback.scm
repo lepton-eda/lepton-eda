@@ -21,11 +21,14 @@
   #:use-module (ice-9 match)
   #:use-module (system foreign)
 
+  #:use-module (lepton color-map)
   #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton m4)
+  #:use-module (lepton object text)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic action)
@@ -169,13 +172,64 @@
     (gtk_widget_destroy *dialog)
     (schematic_window_set_newtext_dialog *window %null-pointer))
 
+  (define (text-caps->symbol caps)
+    (string->symbol (pointer->string
+                     (schematic_window_text_caps_to_string caps))))
+
+  ;; Apply the text from the text entry dialog.
   (define (apply-changes!)
     (if (null-pointer? *dialog)
         (error "NULL dialog")
         (let ((*window (schematic_newtext_dialog_get_window *dialog)))
           (if (null-pointer? *window)
               (error "NULL window")
-              (schematic_newtext_dialog_response_apply *dialog *window)))))
+              (let* ((*text-view (schematic_newtext_dialog_get_text_view *dialog))
+                     (*str (schematic_newtext_dialog_get_text *text-view))
+                     (str (pointer->string *str)))
+                ;; We own the string so have to free it.
+                (g_free *str)
+                (unless (string-null? str)
+                  (let* ((text-str
+                          (case (schematic_window_get_text_caps *window)
+                            ((lower) (string-downcase str))
+                            ((upper) (string-upcase str))
+                            (else str)))
+                         (dialog-color-value
+                          (x_colorcb_get_index
+                           (schematic_newtext_dialog_get_colorcb *dialog)))
+                         (color (if (>= dialog-color-value 0)
+                                    dialog-color-value
+                                    (color-map-name-to-index 'text)))
+                         (dialog-align-value
+                          (schematic_alignment_combo_get_align
+                           (schematic_newtext_dialog_get_aligncb *dialog)))
+                         (align (if (>= dialog-align-value 0)
+                                    dialog-align-value
+                                    (symbol->text-alignment 'lower-left)))
+                         (dialog-size-value
+                          (schematic_integer_combo_box_get_value
+                           (schematic_newtext_dialog_get_textsizecb *dialog)))
+                         (size (if (> dialog-size-value 0)
+                                   dialog-size-value
+                                   (schematic_window_get_text_size *window)))
+                         (dialog-angle-value
+                          (schematic_rotation_combo_get_angle
+                           (schematic_newtext_dialog_get_rotatecb *dialog)))
+                         (angle (if (>= dialog-angle-value 0)
+                                    dialog-angle-value
+                                    0)))
+
+                    ;; Select the text, so you can continue
+                    ;; immediatly writing the next text.
+                    (schematic_newtext_dialog_textview_select_all *text-view)
+                    (gtk_widget_grab_focus *text-view)
+
+                    (o_text_prepare_place *window
+                                          (string->pointer text-str)
+                                          color
+                                          align
+                                          angle
+                                          size))))))))
 
   (case (gtk-response->symbol response)
     ((apply) (apply-changes!))

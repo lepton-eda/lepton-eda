@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2024 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,6 +27,12 @@
 
   #:export (lepton_schematic_run
             lepton_schematic_app
+
+            schematic_alignment_combo_get_align
+
+            schematic_integer_combo_box_get_value
+
+            schematic_rotation_combo_get_angle
 
             g_init_window
 
@@ -145,6 +151,8 @@
             o_place_rotate
             o_place_start
 
+            o_text_prepare_place
+
             page_select_widget_new
             page_select_widget_update
             schematic_page_select_widget_get_window
@@ -163,6 +171,7 @@
             color_edit_widget_new
             color_edit_widget_update
 
+            x_colorcb_get_index
             x_colorcb_update_colors
 
             schematic_menu_recent_chooser_get_filename
@@ -418,6 +427,9 @@
             schematic_window_set_control_key_pressed
             schematic_window_get_shift_key_pressed
             schematic_window_set_shift_key_pressed
+            schematic_window_get_text_caps
+            schematic_window_text_caps_to_string
+            schematic_window_get_text_size
 
             font_select_widget_new
 
@@ -450,10 +462,16 @@
             schematic_text_properties_widget_new
             text_edit_dialog
 
+            schematic_newtext_dialog_get_aligncb
+            schematic_newtext_dialog_get_colorcb
+            schematic_newtext_dialog_get_rotatecb
             schematic_newtext_dialog_get_window
             schematic_newtext_dialog_new
-            schematic_newtext_dialog_response_apply
             schematic_newtext_dialog_run
+            schematic_newtext_dialog_get_text
+            schematic_newtext_dialog_get_text_view
+            schematic_newtext_dialog_get_textsizecb
+            schematic_newtext_dialog_textview_select_all
 
             o_select_box_end
             o_select_box_motion
@@ -547,6 +565,15 @@
 (define-lff lepton_schematic_run int '(*))
 (define-lff lepton_schematic_app '* '())
 
+;;; alignment_combo.c
+(define-lff schematic_alignment_combo_get_align int '(*))
+
+;;; integer_combo_box.c
+(define-lff schematic_integer_combo_box_get_value int '(*))
+
+;;; rotation_combo.c
+(define-lff schematic_rotation_combo_get_angle int '(*))
+
 ;;; g_basic.c
 (define-lff g_read_file int '(* * *))
 
@@ -585,6 +612,7 @@
 (define-lff color_edit_widget_update void '(*))
 
 ;;; x_colorcb.c
+(define-lff x_colorcb_get_index int '(*))
 (define-lff x_colorcb_update_colors void '())
 
 ;;; x_compselect.c
@@ -757,6 +785,9 @@
 (define-lff schematic_window_set_control_key_pressed void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_set_shift_key_pressed void (list '* int))
+(define-lff schematic_window_get_text_caps int '(*))
+(define-lff schematic_window_text_caps_to_string '* (list int))
+(define-lff schematic_window_get_text_size int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1019,6 +1050,9 @@
 (define-lff o_place_rotate void '(*))
 (define-lff o_place_start void (list '* int int))
 
+;;; o_text.c
+(define-lff o_text_prepare_place void (list '* '* int int int int))
+
 ;;; x_attribedit.c
 (define-lff attrib_edit_dialog void (list '* '* int))
 
@@ -1065,10 +1099,16 @@
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
+(define-lff schematic_newtext_dialog_get_aligncb '* '(*))
+(define-lff schematic_newtext_dialog_get_colorcb '* '(*))
+(define-lff schematic_newtext_dialog_get_rotatecb '* '(*))
 (define-lff schematic_newtext_dialog_get_window '* '(*))
 (define-lff schematic_newtext_dialog_new '* '(*))
-(define-lff schematic_newtext_dialog_response_apply void '(* *))
 (define-lff schematic_newtext_dialog_run void '(*))
+(define-lff schematic_newtext_dialog_get_text '* '(*))
+(define-lff schematic_newtext_dialog_get_text_view '* '(*))
+(define-lff schematic_newtext_dialog_get_textsizecb '* '(*))
+(define-lff schematic_newtext_dialog_textview_select_all void '(*))
 
 ;;; x_print.c
 (define-lff x_print void '(*))
