@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,55 +30,6 @@
 #endif
 
 #include "schematic.h"
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_text_prepare_place (SchematicWindow *w_current,
-                      char *text,
-                      int color,
-                      int align,
-                      int rotate,
-                      int size)
-{
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  LeptonPage *page = schematic_canvas_get_page (page_view);
-  if (page == NULL) {
-    return;
-  }
-
-  /* Insert the new object into the buffer at world coordinates (0,0).
-   * It will be translated to the mouse coordinates during placement. */
-
-  schematic_window_set_first_wx (w_current, 0);
-  schematic_window_set_first_wy (w_current, 0);
-
-  /* remove the old place list if it exists */
-  schematic_window_delete_place_list (w_current);
-
-  /* here you need to add OBJ_TEXT when it's done */
-  schematic_window_set_place_list (w_current,
-                                   g_list_append (schematic_window_get_place_list (w_current),
-                                                  lepton_text_object_new (color,
-                                                                          0,
-                                                                          0,
-                                                                          align,
-                                                                          rotate, /* zero is angle */
-                                                                          text,
-                                                                          size,
-                                                                          /* has to be visible so you can place it */
-                                                                          /* visibility is set when you create the object */
-                                                                          VISIBLE,
-                                                                          SHOW_NAME_VALUE)));
-
-  i_action_start (w_current);
-  i_set_state (w_current, TEXTMODE);
-}
 
 
 /*! \todo Finish function documentation!!!

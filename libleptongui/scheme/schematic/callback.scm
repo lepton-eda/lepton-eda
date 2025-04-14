@@ -177,7 +177,40 @@
                      (schematic_window_text_caps_to_string caps))))
 
   (define (prepare-text-placement *window *str color align angle size)
-    (o_text_prepare_place *window *str color align angle size))
+    (let ((*canvas (schematic_window_get_current_canvas *window)))
+      (if (null-pointer? *canvas)
+          (error "~A(): NULL canvas" 'prepare-text-placement)
+          (let ((*page (schematic_canvas_get_page *canvas)))
+            (unless (null-pointer? *page)
+              ;; Insert the new object into the buffer at world
+              ;; coordinates (0,0).  It will be translated to the
+              ;; mouse coordinates during placement.
+              (schematic_window_set_first_wx *window 0)
+              (schematic_window_set_first_wy *window 0)
+
+              ;; Remove the old place list if it exists.
+              (schematic_window_delete_place_list *window)
+
+              ;; Add a new text object.
+              (schematic_window_set_place_list
+               *window
+               (g_list_append
+                (schematic_window_get_place_list *window)
+                (lepton_text_object_new color
+                                        0 ; x
+                                        0 ; y
+                                        align
+                                        angle
+                                        *str
+                                        size
+                                        ;; The object has to be
+                                        ;; visible so it can be
+                                        ;; placed.
+                                        (text-visibility->integer #t)
+                                        (symbol->text-attribute-show-mode 'both))))
+
+              (i_action_start *window)
+              (set-action-mode! 'text-mode #:window (pointer->window *window)))))))
 
   ;; Apply the text from the text entry dialog.
   (define (apply-changes!)
