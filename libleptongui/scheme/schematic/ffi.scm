@@ -151,8 +151,6 @@
             o_place_rotate
             o_place_start
 
-            o_text_prepare_place
-
             page_select_widget_new
             page_select_widget_update
             schematic_page_select_widget_get_window
@@ -1049,9 +1047,6 @@
 (define-lff o_place_motion void (list '* int int))
 (define-lff o_place_rotate void '(*))
 (define-lff o_place_start void (list '* int int))
-
-;;; o_text.c
-(define-lff o_text_prepare_place void (list '* '* int int int int))
 
 ;;; x_attribedit.c
 (define-lff attrib_edit_dialog void (list '* '* int))

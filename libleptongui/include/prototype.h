@@ -732,13 +732,6 @@ o_slot_end (SchematicWindow *w_current,
 
 /* o_text.c */
 void
-o_text_prepare_place (SchematicWindow *w_current,
-                      char *text,
-                      int color,
-                      int align,
-                      int rotate,
-                      int size);
-void
 o_text_change (SchematicWindow *w_current,
                LeptonObject *object,
                char *string,
