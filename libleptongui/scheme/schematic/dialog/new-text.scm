@@ -31,6 +31,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
 
   #:export (new-text-dialog))
 
@@ -152,8 +153,10 @@
   (procedure->pointer void newtext-dialog-response (list '* int '*)))
 
 
-(define (new-text-dialog window)
-  "Run the New text dialog in WINDOW."
+(define* (new-text-dialog #:optional (window (current-window)))
+  "Run the New text dialog.  The optional argument WINDOW defines the
+window the dialog should be run for.  By default it is the current
+window."
   (define *window (check-window window 1))
 
   (define *newtext-widget
