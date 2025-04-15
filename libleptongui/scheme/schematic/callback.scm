@@ -155,4 +155,4 @@
 
 
 (define (callback-add-text *widget *window)
-  (new-text-dialog *window))
+  (new-text-dialog (pointer->window *window)))
