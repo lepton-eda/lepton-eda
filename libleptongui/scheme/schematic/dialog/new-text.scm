@@ -152,7 +152,9 @@
   (procedure->pointer void newtext-dialog-response (list '* int '*)))
 
 
-(define (new-text-dialog *window)
+(define (new-text-dialog window)
+  (define *window (check-window window 1))
+
   (define *newtext-widget
     (schematic_window_get_newtext_dialog *window))
 
@@ -175,6 +177,6 @@
   (o_invalidate_rubber *window)
 
   (i_action_stop *window)
-  (set-action-mode! 'select-mode #:window (pointer->window *window))
+  (set-action-mode! 'select-mode #:window window)
 
   (schematic_newtext_dialog_run (get-newtext-widget)))
