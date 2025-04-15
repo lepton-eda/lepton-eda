@@ -153,6 +153,7 @@
 
 
 (define (new-text-dialog window)
+  "Run the New text dialog in WINDOW."
   (define *window (check-window window 1))
 
   (define *newtext-widget
