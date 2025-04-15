@@ -239,6 +239,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `(schematic dialog edit-slot)`, has been added to localize the
   functionality of the dialog.
 
+- A new module for **New text** dialog code, `(schematic dialog
+  new-text)`, has been created.  It exports a new function,
+  `new-text-dialog()`, that invokes the dialog.
+
 - Several actions in the module `(schematic builtins)` have been
   simplified so that a few intermediate `i_callback_*()` functions
   are no longer used.
