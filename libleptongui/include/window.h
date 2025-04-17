@@ -267,6 +267,9 @@ schematic_window_get_selection_adapter (SchematicWindow *w_current);
 GtkListStore*
 schematic_window_get_text_size_list_store (SchematicWindow *w_current);
 
+const char*
+schematic_window_text_caps_to_string (int val);
+
 LeptonToplevel*
 schematic_window_get_toplevel (SchematicWindow *w_current);
 
@@ -632,6 +635,12 @@ schematic_window_get_scrollpan_steps (SchematicWindow *w_current);
 void
 schematic_window_set_scrollpan_steps (SchematicWindow *w_current,
                                       int val);
+int
+schematic_window_get_text_caps (SchematicWindow *w_current);
+
+void
+schematic_window_set_text_caps (SchematicWindow *w_current,
+                                int val);
 int
 schematic_window_get_text_size (SchematicWindow *w_current);
 

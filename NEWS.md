@@ -166,8 +166,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   All accessor, helper, and other functions and macros related to
   those types have been renamed accordingly.
 
-- The structure of the type `SchematicPreview` has been made an
-  opaque one and its data is now available only via accessors.
+- The following structures have been made opaque and their data
+  are now available only via accessors:
+  - the structure of the type `SchematicNewText`,
+  - the structure of the type `SchematicPreview`.
 
 - The module `(schematic core gettext)` has been renamed to
   `(schematic gettext)`.
@@ -236,6 +238,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A separate Scheme module for **Slot edit** dialog code,
   `(schematic dialog edit-slot)`, has been added to localize the
   functionality of the dialog.
+
+- A new module for **New text** dialog code, `(schematic dialog
+  new-text)`, has been created.  It exports a new function,
+  `new-text-dialog()`, that invokes the dialog.
 
 - Several actions in the module `(schematic builtins)` have been
   simplified so that a few intermediate `i_callback_*()` functions

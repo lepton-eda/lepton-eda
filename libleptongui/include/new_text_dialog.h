@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,31 +37,19 @@
 typedef struct _SchematicNewTextClass SchematicNewTextClass;
 typedef struct _SchematicNewText SchematicNewText;
 
-struct _SchematicNewTextClass {
-  SchematicDialogClass parent_class;
-};
-
-struct _SchematicNewText {
-    SchematicDialog parent;
-
-    GtkWidget *aligncb;
-    GtkWidget *colorcb;
-    GtkWidget *rotatecb;
-    GtkWidget *textsizecb;
-    GtkWidget *text_view;
-};
-
-
 G_BEGIN_DECLS
-
-void
-schematic_newtext_dialog_response_apply (SchematicNewText *dialog);
 
 void
 schematic_newtext_dialog_run (GtkWidget *widget);
 
+void
+schematic_newtext_dialog_textview_select_all (GtkWidget *textview);
+
 GtkWidget*
 schematic_newtext_dialog_new (SchematicWindow *w_current);
+
+SchematicWindow*
+schematic_newtext_dialog_get_window (SchematicNewText *dialog);
 
 GtkWidget*
 schematic_newtext_dialog_get_aligncb (SchematicNewText *dialog);
@@ -87,6 +75,9 @@ schematic_newtext_dialog_get_textsizecb (SchematicNewText *dialog);
 void
 schematic_newtext_dialog_set_textsizecb (SchematicNewText *dialog,
                                          GtkWidget *textsizecb);
+char*
+schematic_newtext_dialog_get_text (GtkWidget *text_view);
+
 GtkWidget*
 schematic_newtext_dialog_get_text_view (SchematicNewText *dialog);
 

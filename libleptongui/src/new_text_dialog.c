@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,45 @@
 #include <gdk/gdkkeysyms.h>
 
 
+struct _SchematicNewTextClass {
+  SchematicDialogClass parent_class;
+};
+
+struct _SchematicNewText {
+    SchematicDialog parent;
+
+    GtkWidget *aligncb;
+    GtkWidget *colorcb;
+    GtkWidget *rotatecb;
+    GtkWidget *textsizecb;
+    GtkWidget *text_view;
+};
+
+
 G_DEFINE_TYPE (SchematicNewText,
                schematic_newtext,
                SCHEMATIC_TYPE_DIALOG);
+
+
+/*! \brief Get the parent window instance of a Newtext dialog.
+ *  \par Function description
+ *  Gets the parent #SchematicWindow instance of a
+ *  #SchematicNewText dialog.
+ *
+ *  \param [in] dialog The #SchematicNewText dialog instance.
+ *  \return The parent schematic window of the dialog.
+ */
+SchematicWindow*
+schematic_newtext_dialog_get_window (SchematicNewText *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, NULL);
+
+  SchematicWindow *w_current = NULL;
+  g_object_get (SCHEMATIC_DIALOG (dialog),
+                "schematic-window", &w_current,
+                NULL);
+  return w_current;
+}
 
 
 /*! \brief Get the field 'aligncb' of #SchematicNewText instance.
@@ -205,8 +241,8 @@ text_view_calculate_real_tab_width (GtkTextView *textview, int tab_size)
 
 
 
-static void
-select_all_text_in_textview (GtkTextView *textview)
+void
+schematic_newtext_dialog_textview_select_all (GtkWidget *textview)
 {
   GtkTextBuffer *textbuffer =
     gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview));
@@ -217,91 +253,26 @@ select_all_text_in_textview (GtkTextView *textview)
 }
 
 
-
-/*! \brief Handles the user response when apply is selected
+/*! \brief Get text string from the New text dialog.
+ *  \par Function description
+ *  Gets the text string from the text view widget of the New text
+ *  dialog.
  *
- *  \par Function Description
- *  This function applies the text from the text entry dialog.
+ *  \note The caller must g_free() return value.
  *
- *  \param [in] dialog The new text dialog
+ *  \param [in] text_view The widget to get the string from.
+ *  \return The text string.
  */
-void
-schematic_newtext_dialog_response_apply (SchematicNewText *dialog)
+char*
+schematic_newtext_dialog_get_text (GtkWidget *text_view)
 {
-  g_return_if_fail (dialog != NULL);
-
-  SchematicWindow *w_current = NULL;
-  g_object_get (SCHEMATIC_DIALOG (dialog),
-                "schematic-window", &w_current,
-                NULL);
-  g_return_if_fail (w_current != NULL);
-
-  int size = schematic_window_get_text_size (w_current);
-
-  int align = LOWER_LEFT;
-  int color = TEXT_COLOR;
-  int rotate = 0;
-  gchar *string = NULL;
-  gchar *tmp = NULL;
   GtkTextBuffer *textbuffer;
   GtkTextIter start, end;
-  int value;
 
-  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(dialog->text_view));
+  textbuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
   gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  string =  gtk_text_iter_get_text (&start, &end);
 
-  if (string[0] == '\0' )
-    return;
-
-  switch(dialog->parent.w_current->text_caps) {
-    case(LOWER):
-      tmp = g_utf8_strdown (string, -1);
-      break;
-
-    case(UPPER):
-      tmp = g_utf8_strup (string, -1);
-      break;
-
-    case(BOTH):
-    default:
-      /* do nothing */
-      break;
-  }
-
-  value = x_colorcb_get_index (dialog->colorcb);
-  if (value >= 0) {
-    color = value;
-  }
-
-  value = schematic_alignment_combo_get_align (dialog->aligncb);
-  if (value >= 0) {
-    align = value;
-  }
-
-  value = schematic_integer_combo_box_get_value (dialog->textsizecb);
-  if (value > 0) {
-    size = value;
-  }
-
-  value = schematic_rotation_combo_get_angle (dialog->rotatecb);
-  if (value >= 0) {
-    rotate = value;
-  }
-
-  /* select the text, so you can continue immediatly writing the next text */
-  select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
-  gtk_widget_grab_focus(dialog->text_view);
-
-  o_text_prepare_place (dialog->parent.w_current,
-                        tmp == NULL ? string : tmp,
-                        color,
-                        align,
-                        rotate,
-                        size);
-
-  g_free (string);
-  g_free (tmp);
+  return gtk_text_iter_get_text (&start, &end);
 }
 
 
@@ -424,16 +395,17 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->colorcb = x_colorcb_new ();
-  x_colorcb_set_index(dialog->colorcb, TEXT_COLOR);
+  GtkWidget *colorcb = x_colorcb_new ();
+  schematic_newtext_dialog_set_colorcb (dialog, colorcb);
+  x_colorcb_set_index (colorcb, TEXT_COLOR);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->colorcb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorcb);
 
 #ifdef ENABLE_GTK3
-  gtk_widget_set_hexpand (GTK_WIDGET (dialog->colorcb), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), dialog->colorcb, 1, 0, 1, 1);
+  gtk_widget_set_hexpand (colorcb, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), colorcb, 1, 0, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
+  gtk_table_attach_defaults (GTK_TABLE(table), colorcb, 1, 2, 0, 1);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("_Size:"));
@@ -455,14 +427,15 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->textsizecb = schematic_integer_combo_box_new ();
+  GtkWidget *textsizecb = schematic_integer_combo_box_new ();
+  schematic_newtext_dialog_set_textsizecb (dialog, textsizecb);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->textsizecb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textsizecb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->textsizecb, 1, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), textsizecb, 1, 1, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
+  gtk_table_attach_defaults (GTK_TABLE(table), textsizecb, 1, 2, 1, 2);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("Ali_gnment:"));
@@ -484,15 +457,16 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->aligncb = schematic_alignment_combo_new ();
-  schematic_alignment_combo_set_align (dialog->aligncb, LOWER_LEFT);
+  GtkWidget *aligncb = schematic_alignment_combo_new ();
+  schematic_newtext_dialog_set_aligncb (dialog, aligncb);
+  schematic_alignment_combo_set_align (aligncb, LOWER_LEFT);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->aligncb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), aligncb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->aligncb, 1, 2, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), aligncb, 1, 2, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
+  gtk_table_attach_defaults(GTK_TABLE(table), aligncb, 1, 2, 2, 3);
 #endif
 
   label = gtk_label_new_with_mnemonic (_("Ro_tation:"));
@@ -514,15 +488,16 @@ schematic_newtext_init (SchematicNewText *dialog)
                     0);
 #endif
 
-  dialog->rotatecb = schematic_rotation_combo_new ();
-  schematic_rotation_combo_set_angle (dialog->rotatecb, 0);
+  GtkWidget *rotatecb = schematic_rotation_combo_new ();
+  schematic_newtext_dialog_set_rotatecb (dialog, rotatecb);
+  schematic_rotation_combo_set_angle (rotatecb, 0);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->rotatecb);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), rotatecb);
 
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), dialog->rotatecb, 1, 3, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), rotatecb, 1, 3, 1, 1);
 #else
-  gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
+  gtk_table_attach_defaults (GTK_TABLE(table), rotatecb, 1, 2, 3, 4);
 #endif
 
   viewport1 = gtk_viewport_new (NULL, NULL);
@@ -535,19 +510,21 @@ schematic_newtext_init (SchematicNewText *dialog)
   gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
   gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 0);
 
-  dialog->text_view = gtk_text_view_new();
-  gtk_text_view_set_editable(GTK_TEXT_VIEW(dialog->text_view), TRUE);
-  select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
+  GtkWidget *text_view = gtk_text_view_new();
+  schematic_newtext_dialog_set_text_view (dialog, text_view);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), TRUE);
+  schematic_newtext_dialog_textview_select_all (text_view);
 
   /* Set the tab width, using pango tab array */
   /*! \bug FIXME: This doesn't work. Why? */
   tab_array = pango_tab_array_new (1, TRUE);
-  real_tab_width = text_view_calculate_real_tab_width(GTK_TEXT_VIEW(dialog->text_view),
-                                                        tab_in_chars);
+  real_tab_width =
+    text_view_calculate_real_tab_width (GTK_TEXT_VIEW (text_view),
+                                        tab_in_chars);
   if (real_tab_width >= 0) {
     pango_tab_array_set_tab (tab_array, 0, PANGO_TAB_LEFT, real_tab_width);
     /* printf("Real tab width: %i\n", real_tab_width);*/
-    gtk_text_view_set_tabs (GTK_TEXT_VIEW (dialog->text_view),
+    gtk_text_view_set_tabs (GTK_TEXT_VIEW (text_view),
                             tab_array);
   }
   else {
@@ -555,7 +532,7 @@ schematic_newtext_init (SchematicNewText *dialog)
   }
 
   pango_tab_array_free (tab_array);
-  gtk_container_add(GTK_CONTAINER(scrolled_window), dialog->text_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
 }
 
 
@@ -588,10 +565,12 @@ schematic_newtext_dialog_new (SchematicWindow *w_current)
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (main_window));
 
-  schematic_integer_combo_box_set_model (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+  GtkWidget *textsizecb =
+    schematic_newtext_dialog_get_textsizecb (SCHEMATIC_NEWTEXT (dialog));
+  schematic_integer_combo_box_set_model (textsizecb,
                                          schematic_window_get_text_size_list_store (w_current));
 
-  schematic_integer_combo_box_set_value (SCHEMATIC_NEWTEXT (dialog)->textsizecb,
+  schematic_integer_combo_box_set_value (textsizecb,
                                          schematic_window_get_text_size (w_current));
 
   gtk_widget_show_all (dialog);
@@ -612,7 +591,11 @@ schematic_newtext_dialog_run (GtkWidget *widget)
 {
   gtk_window_present (GTK_WINDOW (widget));
 
+  SchematicNewText *dialog = SCHEMATIC_NEWTEXT (widget);
+  GtkWidget *text_view =
+    schematic_newtext_dialog_get_text_view (dialog);
+
   /* always select the text in the entry */
-  select_all_text_in_textview (GTK_TEXT_VIEW (SCHEMATIC_NEWTEXT (widget)->text_view));
-  gtk_widget_grab_focus (SCHEMATIC_NEWTEXT (widget)->text_view);
+  schematic_newtext_dialog_textview_select_all (text_view);
+  gtk_widget_grab_focus (text_view);
 }

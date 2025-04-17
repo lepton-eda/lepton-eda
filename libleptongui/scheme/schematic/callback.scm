@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2022-2024 Lepton EDA Contributors
+;;; Copyright (C) 2022-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -25,13 +25,12 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
-  #:use-module (lepton m4)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic dialog file-select)
-  #:use-module (schematic ffi gtk)
+  #:use-module (schematic dialog new-text)
   #:use-module (schematic ffi)
   #:use-module (schematic gettext)
   #:use-module (schematic preview-widget)
@@ -155,54 +154,5 @@
   (set-action-mode! 'select-mode #:window window))
 
 
-;;; Callback function for the text entry dialog that handles user
-;;; responses.
-(define (newtext-dialog-response *dialog response *window)
-  (define (log-warning)
-    (log! 'warning
-          "newtext-dialog-response(): strange signal: ~A" response)
-    #f)
-  (define *response-string (gtk_response_to_string response))
-  (define response-sym
-    (string->symbol (pointer->string *response-string)))
-
-  (define (close-dialog!)
-    (i_callback_cancel %null-pointer *window)
-    (gtk_widget_destroy *dialog)
-    (schematic_window_set_newtext_dialog *window %null-pointer))
-
-  (case response-sym
-    ((apply) (schematic_newtext_dialog_response_apply *dialog))
-    ((close delete-event) (close-dialog!))
-    (else (log-warning))))
-
-
-(define *newtext-dialog-response
-  (procedure->pointer void newtext-dialog-response (list '* int '*)))
-
 (define (callback-add-text *widget *window)
-  (define *newtext-widget
-    (schematic_window_get_newtext_dialog *window))
-
-  (define (get-newtext-widget)
-    (if (null-pointer? *newtext-widget)
-        ;; Widget not created yet, create it.
-        (let ((*widget (schematic_newtext_dialog_new *window)))
-          ;; Store pointer to the widget in the *window structure.
-          (schematic_window_set_newtext_dialog *window *widget)
-          ;; Connect callback to the widget's "response" signal.
-          (schematic_signal_connect *widget
-                                    (string->pointer "response")
-                                    *newtext-dialog-response
-                                    *window)
-          *widget)
-        ;; Otherwise just return the widget.
-        *newtext-widget))
-
-  (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
-
-  (i_action_stop *window)
-  (set-action-mode! 'select-mode #:window (pointer->window *window))
-
-  (schematic_newtext_dialog_run (get-newtext-widget)))
+  (new-text-dialog (pointer->window *window)))
