@@ -12,7 +12,7 @@ on:
 jobs:
   # This workflow contains a single job called "job-1":
   job-1:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       # Checks-out repository under $GITHUB_WORKSPACE:
