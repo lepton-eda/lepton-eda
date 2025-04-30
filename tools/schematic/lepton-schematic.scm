@@ -109,8 +109,8 @@ Options:
   -q, --quiet              Quiet mode.
   -v, --verbose            Verbose mode.
   -L DIR                   Add DIR to Scheme search path.
-  -c EXPR, --command=EXPR  Scheme expression to run at startup.
-  -s FILE                  Scheme script to run at startup.
+  -c EXPR, --command=EXPR  Scheme expression to run after startup.
+  -s FILE                  Scheme script to run after startup.
   -V, --version            Show version information.
   -h, --help               Help; this message.
   --                       Treat all remaining arguments as filenames.
