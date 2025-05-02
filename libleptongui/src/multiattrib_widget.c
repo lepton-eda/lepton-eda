@@ -23,9 +23,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-static void
-multiattrib_update (SchematicMultiattribWidget *multiattrib);
-
 static gboolean
 snv_shows_name (int snv)
 {
@@ -38,100 +35,31 @@ snv_shows_value (int snv)
   return snv == SHOW_NAME_VALUE || snv == SHOW_VALUE;
 }
 
-/*! \brief Process the response returned by the multi-attribte dialog.
- *  \par Function Description
- *  This function handles the response <B>arg1</B> of the multi-attribute
- *  editor dialog <B>dialog</B>.
- *
- *  \param [in] dialog    The multi-attribute editor dialog.
- *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the SchematicWindow environment.
- */
-static void
-multiattrib_callback_response (GtkDialog *dialog,
-                               gint arg1,
-                               gpointer user_data)
-{
-  SchematicWindow *w_current = SCHEMATIC_WINDOW (user_data);
 
-  switch (arg1) {
-      case GTK_RESPONSE_CLOSE:
-      case GTK_RESPONSE_DELETE_EVENT:
-        gtk_widget_hide (GTK_WIDGET (dialog));
-        schematic_window_set_multiattrib_widget (w_current, NULL);
-        break;
-  }
-}
-
-/*! \brief Open multiple attribute editor dialog.
+/*! \brief Create a new multiple attribute editor dialog
  *  \par Function Description
- *  Opens the multiple attribute editor dialog for objects in this
- *  <B>SchematicWindow</B>.
+ *  Creates a new multiple attribute editor dialog in this
+ *  #SchematicWindow.
  *
  *  \param [in] w_current  The SchematicWindow object.
+ *  \param [in] selection The list of currently selected objects.
+ *  \return The new Multiattrib widget object pointer.
  */
-void
-schematic_multiattrib_widget_open (SchematicWindow *w_current)
+GtkWidget*
+schematic_multiattrib_widget_new (SchematicWindow *w_current,
+                                  LeptonSelection *selection)
 {
-  g_return_if_fail (w_current != NULL);
-
-
   GtkWidget *multiattrib_widget =
-    schematic_window_get_multiattrib_widget (w_current);
+    GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
+                              "object_list", selection,
+                              /* SchematicDialog */
+                              "settings-name", "multiattrib",
+                              "schematic-window", w_current,
+                              NULL));
 
-  if (multiattrib_widget == NULL)
-  {
-    LeptonSelection *selection =
-      schematic_window_get_selection_list (w_current);
-    multiattrib_widget =
-      GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
-                                "object_list", selection,
-                                /* SchematicDialog */
-                                "settings-name", "multiattrib",
-                                "schematic-window", w_current,
-                                NULL));
-    schematic_window_set_multiattrib_widget (w_current,
-                                             multiattrib_widget);
-    GtkWidget *main_window =
-      schematic_window_get_main_window (w_current);
-
-    gtk_window_set_transient_for (GTK_WINDOW (multiattrib_widget),
-                                  GTK_WINDOW (main_window));
-
-    g_signal_connect (multiattrib_widget,
-                      "response",
-                      G_CALLBACK (multiattrib_callback_response),
-                      w_current);
-
-    gtk_widget_show (multiattrib_widget);
-  } else {
-    gtk_window_present (GTK_WINDOW (multiattrib_widget));
-  }
+  return multiattrib_widget;
 }
 
-
-/*! \brief Close the multiattrib dialog.
- *
- *  \par Function Description
- *
- *  Closes the multiattrib dialog associated with <B>w_current</B>.
- *
- *  \param [in] w_current  The SchematicWindow object.
- */
-void
-schematic_multiattrib_widget_close (SchematicWindow *w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *multiattrib_widget =
-    schematic_window_get_multiattrib_widget (w_current);
-
-  if (multiattrib_widget != NULL)
-  {
-    gtk_widget_destroy (multiattrib_widget);
-    schematic_window_set_multiattrib_widget (w_current, NULL);
-  }
-}
 
 /*! \brief Update the multiattrib editor dialog for a SchematicWindow.
  *
@@ -1019,7 +947,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
 
   /* Refresh the whole model.. some attribute names may consolidate into one row */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1233,7 +1161,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
 
   /* request an update of display for this row */
   /* Recompute the whole model as the consistency for the show value column may be affected above */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1298,7 +1226,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
 
   /* request an update of display for this row */
   /* Recompute the whole model as the consistency for the show name column may be affected above */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1344,7 +1272,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
     g_object_unref (attr_list);
 
     /* update the treeview contents */
-    multiattrib_update (multiattrib);
+    schematic_multiattrib_widget_refresh (multiattrib);
   }
 
   return FALSE;
@@ -1460,7 +1388,7 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1492,7 +1420,7 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1524,7 +1452,7 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1556,7 +1484,7 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
   g_object_unref (attr_list);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1660,7 +1588,7 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
                                     visible, shownv);
   g_free (value);
 
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1873,7 +1801,7 @@ static void
 object_list_changed_cb (LeptonList *object_list,
                         SchematicMultiattribWidget *multiattrib)
 {
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -1896,25 +1824,38 @@ object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
 
   multiattrib->object_list = NULL;
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
-/*! \brief Connect signal handler and weak_ref on the LeptonList object
+/*! \brief Update signal handlers and weak references on the
+ *  LeptonList of objects
  *
  *  \par Function Description
  *
- *  Connect the "changed" signal and add a weak reference
- *  on the LeptonList object we are going to watch.
+ *  If the dialog is watching a LeptonList of objects, disconnect
+ *  the "changed" signal and remove our weak reference on the
+ *  list.  Then, if the new object list to add is not NULL,
+ *  connect the "changed" signal and add a weak reference on the
+ *  given list we are going to watch.
  *
  *  \param [in] multiattrib  The #SchematicMultiattribWidget dialog.
- *  \param [in] object_list  The LeptonList object to watch.
+ *  \param [in] object_list  The LeptonList of objects to watch.
  */
 static void
 connect_object_list (SchematicMultiattribWidget *multiattrib,
                      LeptonList *object_list)
 {
+  if (multiattrib->object_list != NULL) {
+    g_signal_handler_disconnect (multiattrib->object_list,
+                                 multiattrib->object_list_changed_id);
+    g_object_weak_unref (G_OBJECT (multiattrib->object_list),
+                         object_list_weak_ref_cb,
+                         multiattrib);
+  }
+
   multiattrib->object_list = object_list;
+
   if (multiattrib->object_list != NULL) {
     g_object_weak_ref (G_OBJECT (multiattrib->object_list),
                        object_list_weak_ref_cb,
@@ -1924,33 +1865,6 @@ connect_object_list (SchematicMultiattribWidget *multiattrib,
                         "changed",
                         G_CALLBACK (object_list_changed_cb),
                         multiattrib);
-    /* Synthesise a object_list changed update to refresh the view */
-    object_list_changed_cb (multiattrib->object_list, multiattrib);
-  } else {
-    /* Call an update to set the sensitivities */
-    multiattrib_update (multiattrib);
-  }
-}
-
-
-/*! \brief Disconnect signal handler and weak_ref on the LeptonList object
- *
- *  \par Function Description
- *
- *  If the dialog is watching a LeptonList object, disconnect the
- *  "changed" signal and remove our weak reference on the object.
- *
- *  \param [in] multiattrib The #SchematicMultiattribWidget dialog.
- */
-static void
-disconnect_object_list (SchematicMultiattribWidget *multiattrib)
-{
-  if (multiattrib->object_list != NULL) {
-    g_signal_handler_disconnect (multiattrib->object_list,
-                                 multiattrib->object_list_changed_id);
-    g_object_weak_unref (G_OBJECT (multiattrib->object_list),
-                         object_list_weak_ref_cb,
-                         multiattrib);
   }
 }
 
@@ -1971,7 +1885,7 @@ multiattrib_finalize (GObject *object)
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET(object);
 
-  disconnect_object_list (multiattrib);
+  connect_object_list (multiattrib, NULL);
   G_OBJECT_CLASS (schematic_multiattrib_widget_parent_class)->finalize (object);
 }
 
@@ -2022,7 +1936,7 @@ multiattrib_show_inherited_toggled (GtkToggleButton *button,
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
 
   /* update the treeview contents */
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -2487,7 +2401,7 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
                          _("_Close"), GTK_RESPONSE_CLOSE);
 
-  multiattrib_update (multiattrib);
+  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
@@ -2515,8 +2429,9 @@ multiattrib_set_property (GObject *object,
 
   switch(property_id) {
       case PROP_OBJECT_LIST:
-        disconnect_object_list (multiattrib);
         connect_object_list (multiattrib, LEPTON_LIST (g_value_get_pointer (value)));
+        /* Refresh the view. */
+        schematic_multiattrib_widget_refresh (multiattrib);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2826,8 +2741,8 @@ update_dialog_title (SchematicMultiattribWidget *multiattrib,
  *
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
-static void
-multiattrib_update (SchematicMultiattribWidget *multiattrib)
+void
+schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib)
 {
   GList *o_iter;
   gboolean show_inherited;

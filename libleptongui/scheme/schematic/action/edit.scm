@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2024 Lepton EDA Contributors
+;;; Copyright (C) 2023-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -30,6 +31,7 @@
 ;; Definitions from "schematic_defines.h".
 (define FROM_MENU 0)
 (define FROM_HOTKEY 1)
+
 
 (define (edit-objects window objects)
   "Start editing action in WINDOW for OBJECTS.  The type of action
@@ -46,7 +48,7 @@ depends of the type of the first object in the object list."
          (case (object-type object)
            ;; Also add the ability to multi attrib edit: nets, busses,
            ;; pins.
-           ((complex net pin bus) (schematic_multiattrib_widget_open *window))
+           ((complex net pin bus) (multiattrib-dialog window))
            ((picture) (picture_change_filename_dialog *window))
            ((arc) (arc_angle_dialog *window *object))
            ((text)
@@ -57,4 +59,7 @@ depends of the type of the first object in the object list."
                        (= (line-number str) 1))
                   (attrib_edit_dialog *window *object FROM_MENU)
                   (text_edit_dialog *window))))
-           (else #f)))))
+           ;; All other primitives may have attributes attached to
+           ;; them.  Show the Multiattrib dialog instead of simply
+           ;; ignoring such primitives.
+           (else (multiattrib-dialog window))))))

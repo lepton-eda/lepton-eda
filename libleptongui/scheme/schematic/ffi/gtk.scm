@@ -37,6 +37,7 @@
             gtk_menu_item_new_with_mnemonic
             gtk_widget_destroy
             gtk_widget_grab_focus
+            gtk_widget_hide
             gtk_widget_show
             gtk_menu_new
             gtk_menu_bar_new
@@ -47,6 +48,9 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+
+            gtk_window_set_transient_for
+            gtk_window_present
 
             gdk_event_get_coords
             gdk_event_get_state))
@@ -92,9 +96,12 @@
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
+(define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_show void '(*))
 
+(define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))
+(define-lff gtk_window_set_transient_for void '(* *))
 
 ;;; gdk_event_get_button() can only be used for GTK3.
 ;; (define-lff gdk_event_get_button int '(* *))

@@ -39,6 +39,7 @@
             g_read_file
 
             gtk_response_to_string
+            gtk_widget_get_gtk_window
 
             generic_confirm_dialog
             generic_error_dialog
@@ -390,6 +391,7 @@
             schematic_window_get_macro_widget
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
+            schematic_window_set_multiattrib_widget
             schematic_window_get_options
             schematic_window_delete_place_list
             schematic_window_get_place_list
@@ -417,6 +419,7 @@
             schematic_window_set_newtext_dialog
             schematic_window_set_dont_invalidate
             schematic_window_set_log_widget
+            schematic_window_get_multiattrib_widget
             schematic_window_set_object_properties_widget
             schematic_window_set_options_widget
             schematic_window_set_text_properties_widget
@@ -516,8 +519,7 @@
 
             x_image_setup
 
-            schematic_multiattrib_widget_close
-            schematic_multiattrib_widget_open
+            schematic_multiattrib_widget_new
             schematic_multiattrib_widget_update
 
             x_print
@@ -580,6 +582,7 @@
 
 ;;; gtk_helper.c
 (define-lff gtk_response_to_string '* (list int))
+(define-lff gtk_widget_get_gtk_window '* '(*))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -748,6 +751,7 @@
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
+(define-lff schematic_window_set_multiattrib_widget void '(* *))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_delete_place_list void '(*))
 (define-lff schematic_window_get_place_list '* '(*))
@@ -775,6 +779,7 @@
 (define-lff schematic_window_set_newtext_dialog void '(* *))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
 (define-lff schematic_window_set_log_widget void '(* *))
+(define-lff schematic_window_get_multiattrib_widget '* '(*))
 (define-lff schematic_window_set_object_properties_widget void '(* *))
 (define-lff schematic_window_set_options_widget void '(* *))
 (define-lff schematic_window_set_text_properties_widget void '(* *))
@@ -1089,8 +1094,7 @@
 (define-lff x_image_setup void '(*))
 
 ;;; multiattrib_widget.c
-(define-lff schematic_multiattrib_widget_close void '(*))
-(define-lff schematic_multiattrib_widget_open void '(*))
+(define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
