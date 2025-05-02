@@ -214,6 +214,23 @@ Dialog boxes and widgets
 * Log window::
 * Macro widget::
 
+Editing schematics
+
+* Objects to edit::
+* Undo and redo editing actions::
+* Copy::
+* Using OS clipboard::
+* Moving objects::
+* Rotating objects::
+* Mirroring objects::
+* Edit object properties::
+* Edit attributes and plain text::
+* Slot editing::
+* Lock and unlock objects::
+* Embed components or pictures::
+* Update components::
+* Translate page contents::
+
 Selecting objects
 
 * Simple object selection::

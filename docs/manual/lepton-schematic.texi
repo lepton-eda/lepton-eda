@@ -974,8 +974,33 @@ there using the configuration key @ref{max-recent-files}.
 @cindex schematic, edit
 @cindex schematic, editing
 
+@menu
+* Objects to edit::
+* Undo and redo editing actions::
+* Copy::
+* Using OS clipboard::
+* Moving objects::
+* Rotating objects::
+* Mirroring objects::
+* Edit object properties::
+* Edit attributes and plain text::
+* Slot editing::
+* Lock and unlock objects::
+* Embed components or pictures::
+* Update components::
+* Translate page contents::
+@end menu
+
+@node Objects to edit, Undo and redo editing actions, Editing schematics, Editing schematics
+@subsection Objects to edit
+@cindex objects to edit
+
 In order to do any action on some object, you have to select it first.
 @xref{Selecting objects} if you don't know how to do it.
+
+@node Undo and redo editing actions, Copy, Objects to edit, Editing schematics
+@subsection Undo and redo editing actions
+@cindex undo and redo
 
 When editing schematics, you can undo and redo several last actions
 using @clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z}, @kbd{U},
@@ -985,6 +1010,10 @@ Shift-R}).  The latter restores the results of the last editing action
 undone with @clicksequence{Edit @click{} Undo}.  The number of
 possible actions for undo/redo is limited in the configuration setting
 @ref{undo-levels}.
+
+@node Copy, Using OS clipboard, Undo and redo editing actions, Editing schematics
+@subsection Copy, cut, and paste objects
+@cindex copy, cut, and paste
 
 If you need to copy some objects, select them and do
 @clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C}).  The
@@ -1001,6 +1030,9 @@ clicking at the net mode button in the toolbar.  In both cases (one or
 multiple copies), the current selection does not change during the
 process.
 
+@node Using OS clipboard, Moving objects, Copy, Editing schematics
+@subsection Using OS clipboard
+
 The objects on canvas can also be copied or cut to clipboard, and
 pasted from it using @clicksequence{Edit @click{} Copy}
 (@kbd{Ctrl-C}), @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}),
@@ -1010,6 +1042,10 @@ To delete all currently selected objects use @clicksequence{Edit
 objects are locked, the dialog prompting for deletion of all selected
 objects or only unlocked ones will appear, in which you can also
 cancel the deletion.
+
+@node Moving objects, Rotating objects, Using OS clipboard, Editing schematics
+@subsection Moving objects
+@cindex move
 
 You can move objects on the canvas using the left mouse button: click
 on the object you want to move, keep the button depressed, drag the
@@ -1022,9 +1058,17 @@ move objects without depressing the mouse button.  Select
 move the selected objects where you want to, then use left click once
 to place them on the canvas.
 
+@node Rotating objects, Mirroring objects, Moving objects, Editing schematics
+@subsection Rotating objects
+@cindex rotate
+
 @clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
 selected objects by 90 degrees counter-clockwise each time.  The
 objects are rotated around the mouse cursor.
+
+@node Mirroring objects, Edit object properties, Rotating objects, Editing schematics
+@subsection Mirroring objects
+@cindex mirror
 
 @clicksequence{Edit @click{} Mirror mode} (@kbd{E I}) can be used to
 mirror objects such as components and pictures around the X axis.
@@ -1035,6 +1079,9 @@ workaround to get the look you want.
 
 You can also rotate or mirror objects while moving them, using one of
 the ways described above, or when inserting a component.
+@node Edit object properties, Edit attributes and plain text, Mirroring objects, Editing schematics
+@subsection Edit object properties
+@cindex edit object properties
 
 @clicksequence{Edit @click{} Object Properties...} (@kbd{E O}) opens a
 dialog where you can see and change the properties of primitives such
@@ -1046,6 +1093,10 @@ it.
 If @ref{use-docks, , docks} are enabled in your configuration, the
 properties widget will be shown as the first tab in the right dock.
 
+@node Edit attributes and plain text, Slot editing, Edit object properties, Editing schematics
+@subsection Edit attributes and plain text
+@cindex edit attributes
+@cindex edit text
 
 Apart from editing properties of primitive objects for which the
 @emph{Object Properties...} dialog described above is used, you can
@@ -1076,6 +1127,10 @@ If @ref{use-docks, , docks} are enabled in your configuration, the
 @emph{Edit Text} widget will be shown as the second tab in the right
 dock.
 
+@node Slot editing, Lock and unlock objects, Edit attributes and plain text, Editing schematics
+@subsection Slot editing
+@cindex edit slot
+
 Sometimes a symbol may represent components with different pin numbers
 without changing it in any other aspect.  For example, quad-opamp has
 four same opamps in one package for which only pin numbers differ on
@@ -1092,6 +1147,10 @@ much to your schematics unless you change the component symbol to
 support slots by adding both ``numslots'' attribute and ``slotdef''
 attributes which determine how many slots will be used at all and what
 pin numbers will be used for each particular slot.
+
+@node Lock and unlock objects, Embed components or pictures, Slot editing, Editing schematics
+@subsection Lock and unlock objects
+@cindex lock objects
 
 Sometimes you want some objects on the page to not get in your way
 while editing schematics.  It is particularly true for big symbols
@@ -1126,6 +1185,11 @@ not supported in the current file format (@pxref{gEDA file format}).
 However, a Scheme extension may be used in Lepton to achieve that.
 @end quotation
 
+@node Embed components or pictures, Update components, Lock and unlock objects, Editing schematics
+@subsection Embed components or pictures
+@cindex embed components
+@cindex embed pictures
+
 There are two special actions that allow you to save data of a
 component or a picture within schematic or undo such a change.
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
@@ -1150,11 +1214,19 @@ schematic.  Remember to open the log window and see what could went
 wrong if your schematic file did not change after this action and
 saving it.
 
+@node Update components, Translate page contents, Embed components or pictures, Editing schematics
+@subsection Update components
+@cindex update components
+
 If you edit a symbol and save it, schematics containing it are not
 updated automatically.  You have to update component instances
 manually.  Select the components you want to update and use
 @clicksequence{Edit @click{} Update Component} (@kbd{E U}) to actually
 do it.
+
+@node Translate page contents,  , Update components, Editing schematics
+@subsection Translate page contents
+@cindex translate objects
 
 Another useful action is translation of the page contents to origin,
 that is, to the coordinate (0, 0) of the page.  It is usually
