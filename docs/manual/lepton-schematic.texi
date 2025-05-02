@@ -1131,6 +1131,14 @@ If @ref{use-docks, , docks} are enabled in your configuration, the
 @emph{Edit Text} widget will be shown as the second tab in the right
 dock.
 
+In the dialogs mentioned above, some special shortcuts can be used to
+tabulate text or enter newlines as just pressing the keys @key{TAB} or
+@key{RET} doesn't work since those are special in GTK and used for
+triggering some widget actions.  Use @kbd{C-@key{TAB}} to tabulate or
+indent the text, and @kbd{M-@key{RET}} to insert newlines.  The
+behaviour may differ in different widgets so this may not work in some
+of them.
+
 @node Slot editing, Lock and unlock objects, Edit attributes and plain text, Editing schematics
 @subsection Slot editing
 @cindex edit slot
