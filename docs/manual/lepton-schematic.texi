@@ -1066,6 +1066,9 @@ to place them on the canvas.
 selected objects by 90 degrees counter-clockwise each time.  The
 objects are rotated around the mouse cursor.
 
+You can also rotate objects while moving them, using one of the ways
+described above, or when inserting a component.
+
 @node Mirroring objects, Edit object properties, Rotating objects, Editing schematics
 @subsection Mirroring objects
 @cindex mirror
@@ -1077,8 +1080,9 @@ rarely useful.  Mirroring around the Y axis is not yet supported.
 However, you can use a sequence of mirrorings and rotations as a
 workaround to get the look you want.
 
-You can also rotate or mirror objects while moving them, using one of
-the ways described above, or when inserting a component.
+You can also mirror objects while moving them, using one of the ways
+described above, or when inserting a component.
+
 @node Edit object properties, Edit attributes and plain text, Mirroring objects, Editing schematics
 @subsection Edit object properties
 @cindex edit object properties
