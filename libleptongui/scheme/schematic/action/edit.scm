@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2024 Lepton EDA Contributors
+;;; Copyright (C) 2023-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -59,4 +59,7 @@ depends of the type of the first object in the object list."
                        (= (line-number str) 1))
                   (attrib_edit_dialog *window *object FROM_MENU)
                   (text_edit_dialog *window))))
-           (else #f)))))
+           ;; All other primitives may have attributes attached to
+           ;; them.  Show the Multiattrib dialog instead of simply
+           ;; ignoring such primitives.
+           (else (multiattrib-dialog window))))))
