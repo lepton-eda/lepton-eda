@@ -254,6 +254,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `(schematic dialog edit-slot)`, has been added to localize the
   functionality of the dialog.
 
+- A new module for **Multiattrib** dialog code, `(schematic dialog
+  multiattrib)`, has been created.  It exports a new function,
+  `multiattrib-dialog()`, that invokes the dialog.
+
 - A new module for **New text** dialog code, `(schematic dialog
   new-text)`, has been created.  It exports a new function,
   `new-text-dialog()`, that invokes the dialog.
@@ -460,6 +464,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   action, the locked components on the current page can be
   selected one by one.  The information about selected components
   is shown in the log and, briefly, in the status bar.
+
+- Previously, if the user started an edit action using *Edit* →
+  *Edit...* on some simple primitives like lines, boxes, or the
+  like, having no special dialogs to edit them, the command was
+  silently ignored.  Now, in such a case the command launches the
+  Multiattrib dialog as the primitives may have attributes
+  attached to them.  Besides, the user always has some visual
+  feedback that the command is evaluated.
 
 ### Changes in `lepton-archive`:
 
