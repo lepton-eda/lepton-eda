@@ -16,6 +16,7 @@ nobase_dist_scmdata_DATA = \
 	backend/gossip.scm \
 	backend/liquidpcb.scm \
 	backend/makedepend.scm \
+	backend/mathematica.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \

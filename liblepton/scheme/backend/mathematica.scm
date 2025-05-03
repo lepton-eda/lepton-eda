@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2007-2010 John P. Doty
 ;;; Copyright (C) 2007-2017 gEDA Contributors
-;;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,9 +21,14 @@
 ;; See the Mathematica notebook gEDA.nb (obtainable at www.noqsi.com)
 ;; for usage.
 
-(use-modules (srfi srfi-1)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend mathematica)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (mathematica))
 
 (define (netname-connections->pin-voltages netname)
   (define package car)
@@ -104,7 +109,7 @@
                ",\n"))
 
 
-(define (mathematica output-filename)
+(define (mathematica)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic))))
     (display (netnames->pin-voltages nets))
