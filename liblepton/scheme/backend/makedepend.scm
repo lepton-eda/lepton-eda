@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2011-2012 Dan White <dan@whiteaudio.com>
 ;;; Copyright (C) 2016-2017 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -78,14 +78,19 @@
 ;;
 
 
-(use-modules (ice-9 regex)
-             (srfi srfi-1)
-             (sxml transform)
-             (sxml match)
-             (lepton page)
-             (netlist schematic)
-             (netlist schematic-component)
-             (netlist schematic toplevel))
+(define-module (backend makedepend)
+  #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
+  #:use-module (sxml transform)
+  #:use-module (sxml match)
+
+  #:use-module (lepton page)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic-component)
+
+  #:export (makedepend))
 
 
 ; Split a filename into 3 parts:
@@ -208,7 +213,7 @@
                            (string-join (cadr x))))
             ls))
 
-(define (makedepend output-filename)
+(define (makedepend)
   (let ((dep-list (schematic-sxml->dependency-list
                    (schematic-tree (toplevel-schematic)))))
     (format-dependency-list dep-list)))
