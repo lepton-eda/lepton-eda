@@ -763,5 +763,36 @@ solve some net renaming issues.
 @subsubsection symbol=schematic-port
 @emph{Not implemented yet.}
 
-The attribute could be used to mark ports in hierarchical schematics
-in order to simplify the netlister logic.
+The attribute should be used to mark ports in hierarchical schematics in order
+to simplify the logic. A port symbol declares a pin; instances may carry tool
+specific user data as attributes.
+
+@example
+symbol=schematic-port
+P 600 100 800 100 1 0 1
+{
+T 450 50 5 6 0 1 0 0 1
+pinnumber=1
+T 450 50 5 6 0 0 0 0 1
+pinseq=1
+}
+refdes=p?
+device=none
+@end example
+
+@subsubsection symbol=schematic-parameter
+@emph{Not implemented yet.}
+
+The attribute should be used to mark parameters in hierarchical schematics.
+See e.g. Ngspice manual Section 2.9.3, IEEE 1364 Section 4.10.1, Verilog-AMS
+Section 3.4 for common use cases. Parameters are referred to as "constants" in
+VHDL-AMS.
+
+@example
+symbol=schematic-parameter
+refdes=val2
+value=42.
+spice-position=2
+verilog-datatype=real
+verilog-range=from [0:inf)
+@end example
