@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,8 +19,12 @@
 
 ;; MAXASCII netlist format
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend maxascii)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (maxascii))
 
 (define maxascii:components
    (lambda (packages)
@@ -78,7 +82,7 @@
               490 netname)))
    netnames))
 
-(define (maxascii output-filename)
+(define (maxascii)
   (display "*OrCAD\n*START\n")
 
   (maxascii:components (schematic-package-names (toplevel-schematic)))

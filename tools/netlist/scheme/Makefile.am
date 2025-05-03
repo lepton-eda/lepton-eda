@@ -14,7 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
-	backend/gnet-maxascii.scm \
 	backend/gnet-osmond.scm \
 	backend/gnet-pads.scm \
 	backend/gnet-partslist1.scm \
