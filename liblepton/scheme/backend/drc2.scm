@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -138,13 +138,19 @@
 ;; IMPORTANT: Don't modify anything below unless you know what you are doing.
 ;; -------------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1)
-             (srfi srfi-26)
-             (lepton object)
-             (lepton page)
-             (netlist schematic-component)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend drc2)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+
+  #:use-module (lepton object)
+  #:use-module (lepton page)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic-component)
+  #:use-module (netlist)
+
+  #:export (drc2))
 
 
 (define-syntax define-undefined
@@ -735,7 +741,7 @@
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
-(define (drc2 output-filename)
+(define* (drc2 #:optional (output-filename (netlist-output-filename)))
   (let ((nets (schematic-nets (toplevel-schematic)))
         (nc-nets (schematic-nc-nets (toplevel-schematic)))
         (non-unique-packages (schematic-non-unique-package-names
