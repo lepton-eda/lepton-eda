@@ -12,6 +12,7 @@ nobase_dist_scmdata_DATA = \
 	backend/drc2.scm \
 	backend/eagle.scm \
 	backend/ewnet.scm \
+	backend/futurenet2.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \

@@ -2,7 +2,7 @@
 ;;; FutureNet2 backend
 ;;; Copyright (C) 2003, 2005-2010 Dan McMahill
 ;;; Copyright (C) 2003-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -57,8 +57,12 @@
 ;;;    has something to do with sheet number in a multipage schematic.
 ;;;
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend futurenet2)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (futurenet2))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid FutureNet2 net name.
@@ -203,7 +207,7 @@
    )
 
 ;; The top level netlister for futurenet2
-(define (futurenet2 output-filename)
+(define (futurenet2)
   (message "\n-------------------------------------------\n")
   (message "Lepton EDA netlister FutureNet2 backend\n")
   (message "This backend is EXPERIMENTAL\n")
