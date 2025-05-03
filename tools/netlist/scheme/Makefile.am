@@ -14,7 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-bom.scm \
-	backend/gnet-bom2.scm \
 	backend/gnet-calay.scm \
 	backend/gnet-cascade.scm \
 	backend/gnet-drc.scm \

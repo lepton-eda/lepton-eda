@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -30,12 +30,17 @@
 ;;; Questions? Contact matt@ettus.com
 ;;; This software is released under the terms of the GNU GPL
 
-(use-modules (ice-9 rdelim)
-             (netlist backend-getopt)
-             (netlist error)
-             (netlist schematic)
-             (srfi srfi-26)
-             (netlist schematic toplevel))
+(define-module (backend bom2)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-26)
+
+  #:use-module (netlist backend-getopt)
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (bom2))
 
 (define bom2:open-input-file
   (lambda (options)
@@ -52,19 +57,18 @@
 "
                filename))))))
 
-(define bom2
-  (lambda (output-filename)
-    (let* ((options (backend-getopt
-                     (gnetlist:get-backend-arguments)
-                     '((attrib_file (value #t)) (attribs (value #t)))))
-           (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
-      (and attriblist
-           (begin
-             (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
-             (newline)
-             (bom2:printbom (bom2:components (schematic-package-names (toplevel-schematic))
-                                             attriblist)
-                            0))))))
+(define (bom2)
+  (let* ((options (backend-getopt
+                   (gnetlist:get-backend-arguments)
+                   '((attrib_file (value #t)) (attribs (value #t)))))
+         (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
+    (and attriblist
+         (begin
+           (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
+           (newline)
+           (bom2:printbom (bom2:components (schematic-package-names (toplevel-schematic))
+                                           attriblist)
+                          0)))))
 
 (define bom2:printbom
   (lambda (bomlist count)
