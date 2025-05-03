@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2008-2010 Ales Hvezda
 ;;; Copyright (C) 2012-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,8 +22,12 @@
 ;; liquid pcb gnetlist backend
 ;;
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend liquidpcb)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (liquidpcb))
 
 ;;
 ;; Write the individual net connections
@@ -52,7 +56,7 @@
 ;;
 ;; Highest level function
 ;;
-(define (liquidpcb output-filename)
+(define (liquidpcb)
   (display "<LiquidPCB>\n")
   (display "\t<netlist name=\"Main netlist\">\n")
   (for-each display

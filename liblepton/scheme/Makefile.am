@@ -14,6 +14,7 @@ nobase_dist_scmdata_DATA = \
 	backend/ewnet.scm \
 	backend/futurenet2.scm \
 	backend/gossip.scm \
+	backend/liquidpcb.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
