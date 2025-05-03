@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,10 +19,15 @@
 
 ;; RACAL-REDAC / Cadstar netlist format by Wojciech Kazubski 2003
 
-(use-modules (srfi srfi-1)
-             (ice-9 receive)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend redac)
+  #:use-module (srfi srfi-1)
+  #:use-module (ice-9 receive)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (redac))
 
 ;;; Transforms LS into list of groups where each group is a list
 ;;; containig NUM elements.
@@ -59,7 +64,7 @@
   (for-each write-net-info netnames))
 
 
-(define (redac output-filename)
+(define (redac)
   (display ".PCB\r\n")
   (display ".REM CREATED BY Lepton EDA netlister\r\n")
   (display ".CON\r\n")
