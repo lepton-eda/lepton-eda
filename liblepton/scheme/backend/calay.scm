@@ -2,7 +2,7 @@
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 2006-2010 John P. Doty
 ;;; Copyright (C) 2006-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,8 +20,13 @@
 
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
 ;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+
+(define-module (backend calay)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (calay))
 
 (define (connections->string connections)
   (define package car)
@@ -62,7 +67,7 @@
 (define (nets->calay-netlist nets)
   (map net->string nets))
 
-(define (calay output-filename)
+(define (calay)
   (let ((nets (schematic-nets (toplevel-schematic))))
     (gnetlist:build-net-aliases calay:translate nets)
     (for-each display (nets->calay-netlist nets))))
