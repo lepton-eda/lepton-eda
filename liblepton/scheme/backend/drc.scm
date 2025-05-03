@@ -46,13 +46,12 @@
           (cons (symbol->string read-from-file) (drc:parseconfig port))
           '()))))
 
-(define drc:attriblist
-  ((lambda (filename)
-     (if (file-exists? filename)
-       (drc:parseconfig
-         (open-input-file filename))
-       (netlist-error 1 "ERROR: Attribute file ~S not found.\n" filename)))
-   "attribs"))
+
+(define (drc:attriblist filename)
+  (if (file-exists? filename)
+      (drc:parseconfig
+       (open-input-file filename))
+      (netlist-error 1 "ERROR: Attribute file ~S not found.\n" filename)))
 
 
 ;;; Checks connections of NETS.
@@ -77,7 +76,8 @@
 
 
 (define (drc)
-  (drc:device-rules drc:attriblist (schematic-package-names (toplevel-schematic)))
+  (drc:device-rules (drc:attriblist "attribs")
+                    (schematic-package-names (toplevel-schematic)))
   (drc:net-rules (schematic-nets (toplevel-schematic))))
 
 ;;
