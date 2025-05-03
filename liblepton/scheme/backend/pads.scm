@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,8 +19,12 @@
 
 ;; PADS netlist format
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend pads)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (pads))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid pads net name.
@@ -98,7 +102,7 @@
                   ""))
         (pads:write-net (cdr netnames)))))
 
-(define (pads output-filename)
+(define (pads)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic))))
     ;; initialize the net-name aliasing
