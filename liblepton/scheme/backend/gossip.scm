@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,8 +23,12 @@
 ;;  For more info see http://gossip.sourceforge.net
 ;;
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend gossip)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (gossip))
 
 (define (gossip:write-top-header)
   (display ";; Gossip Netlist Created by gNetlist
@@ -104,7 +108,7 @@
 (define (gossip:write-block-header blockname)
   (format #t "(define-block (~A (\n" blockname))
 
-(define (gossip output-filename)
+(define (gossip)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic)))
         (blockname (or (schematic-toplevel-attrib (toplevel-schematic) 'blockname)

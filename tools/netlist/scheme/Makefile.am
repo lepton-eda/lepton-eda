@@ -14,7 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
-	backend/gnet-gossip.scm \
 	backend/gnet-liquidpcb.scm \
 	backend/gnet-makedepend.scm \
 	backend/gnet-mathematica.scm \
