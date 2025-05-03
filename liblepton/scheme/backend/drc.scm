@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -28,10 +28,16 @@
 ;; Net rules:  List of predicates of one variable, net name
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
-(use-modules (srfi srfi-26)
-             (netlist error)
-             (netlist schematic)
-             (netlist schematic toplevel))
+
+(define-module (backend drc)
+  #:use-module (srfi srfi-26)
+
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (drc))
 
 (define drc:parseconfig
   (lambda (port)
@@ -70,7 +76,7 @@
   (for-each (cut drc:has-attributes? attribs <>) packages))
 
 
-(define (drc output-filename)
+(define (drc)
   (drc:device-rules drc:attriblist (schematic-package-names (toplevel-schematic)))
   (drc:net-rules (schematic-nets (toplevel-schematic))))
 
