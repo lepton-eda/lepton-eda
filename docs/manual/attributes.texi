@@ -765,17 +765,11 @@ solve some net renaming issues.
 
 The attribute should be used to mark ports in hierarchical schematics in order
 to simplify the logic. A port symbol declares a pin; instances may carry tool
-specific user data as attributes.
+specific user data as attributes. A port symbol should define the following
+attributes, see e.g. io/port-1.sym.
 
 @example
 symbol=schematic-port
-P 600 100 800 100 1 0 1
-{
-T 450 50 5 6 0 1 0 0 1
-pinnumber=1
-T 450 50 5 6 0 0 0 0 1
-pinseq=1
-}
 refdes=p?
 device=none
 @end example
@@ -786,12 +780,19 @@ device=none
 The attribute should be used to mark parameters in hierarchical schematics.
 See e.g. Ngspice manual Section 2.9.3, IEEE 1364 Section 4.10.1, Verilog-AMS
 Section 3.4 for common use cases. Parameters are referred to as "constants" in
-VHDL-AMS.
+VHDL-AMS. A parameter symbol should define the attributes as follows, see e.g.
+io/parameter-1.sym.
 
 @example
 symbol=schematic-parameter
-refdes=val2
-value=42.
+refdes=p?
+value-default=
+@end example
+
+Additional attributes may be set in a parameter symbol instance, to satisfy
+tool specific requirements, such as the following.
+
+@example
 spice-position=2
 verilog-datatype=real
 verilog-range=from [0:inf)
