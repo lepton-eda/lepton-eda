@@ -2,7 +2,7 @@
 ;;; Backend for cascade (http://rfcascade.sourceforge.net)
 ;;; Copyright (C) 2003-2010 Dan McMahill
 ;;; Copyright (C) 2003-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,11 +18,16 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(use-modules (ice-9 match)
-             (srfi srfi-1)
-             (netlist error)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend cascade)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (cascade))
 
 ;; Locate and print out the global defaults if the element exists
 (define cascade:write-defaults-top
@@ -112,48 +117,47 @@
     (cascade:follow-cascade (cascade:next-package pkg "2"))))
 
 ;; The top level netlister for cascade
-(define cascade
-   (lambda (output-filename)
-     (message
-      (format #f
-              "
+(define* (cascade #:optional (output-filename (netlist-output-filename)))
+   (message
+    (format #f
+            "
 ----------------------------------------
 Lepton EDA netlister Cascade Backend
 ----------------------------------------
 
 Writing to ~S...
 "
-              (if output-filename
-                  (string-append "output file " output-filename)
-                  "stdout")))
+            (if output-filename
+                (string-append "output file " output-filename)
+                "stdout")))
 
-     (let ((first_block #f)
-           (packages (schematic-package-names (toplevel-schematic))))
+   (let ((first_block #f)
+         (packages (schematic-package-names (toplevel-schematic))))
 
-        ;; write the header
-        (display "# Cascade (http://rfcascade.sourceforge.net)\n")
-        (display "# Created with Lepton EDA netlister\n\n")
+     ;; write the header
+     (display "# Cascade (http://rfcascade.sourceforge.net)\n")
+     (display "# Created with Lepton EDA netlister\n\n")
 
-        ;; Write out an initial "defaults" line if it exists
-        (cascade:write-defaults-top packages)
+     ;; Write out an initial "defaults" line if it exists
+     (cascade:write-defaults-top packages)
 
-        ;; Write out the "source" line and keep track of what its
-        ;; connected to.  If we couldn't find the source, then
-        ;; exit out.
-        (display "# Source definition\n")
-        (set! first_block (cascade:write-source packages))
-        (when (null? first_block)
-          (netlist-error 1 "You must include a source element in your schematic!~%"))
+     ;; Write out the "source" line and keep track of what its
+     ;; connected to.  If we couldn't find the source, then
+     ;; exit out.
+     (display "# Source definition\n")
+     (set! first_block (cascade:write-source packages))
+     (when (null? first_block)
+       (netlist-error 1 "You must include a source element in your schematic!~%"))
 
-        ;; write the components
-        (display "\n# Cascaded system\n")
-        (cascade:follow-cascade first_block)
+     ;; write the components
+     (display "\n# Cascaded system\n")
+     (cascade:follow-cascade first_block)
 
-        ;; write the footer
-        (newline)
-        (display "# End of netlist created by Lepton EDA netlister\n\n")
-        )
+     ;; write the footer
+     (newline)
+     (display "# End of netlist created by Lepton EDA netlister\n\n")
+     )
 
-      (message "done\n")
-      )
+   (message "done\n")
+
    )
