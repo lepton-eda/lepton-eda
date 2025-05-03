@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,9 +17,12 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(use-modules (ice-9 optargs)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend protelII)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (protelII))
 
 ;; --------------------------------------------------------------------------
 ;;
@@ -245,7 +248,7 @@ LIBRARYFIELD8\r
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define (protelII output-filename)
+(define (protelII)
   (protelII:write-top-header)
   (protelII:components (schematic-package-names (toplevel-schematic)))
   (protelII:nets (schematic-nets (toplevel-schematic))))

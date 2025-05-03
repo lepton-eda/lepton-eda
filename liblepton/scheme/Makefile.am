@@ -25,6 +25,7 @@ nobase_dist_scmdata_DATA = \
 	backend/partslist2.scm \
 	backend/partslist3.scm \
 	backend/pcbpins.scm \
+	backend/protelII.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
