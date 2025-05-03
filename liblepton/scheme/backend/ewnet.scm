@@ -2,7 +2,7 @@
 ;;; Ultiboard (ewnet) backend
 ;;; Copyright (C) 2011 Dan McMahill
 ;;; Copyright (C) 2011-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -29,8 +29,13 @@
 ;;; as to the right way to create these.  Full documentation would
 ;;; help considerably!
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+
+(define-module (backend ewnet)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (ewnet))
 
 ;; Function:  ewnet:map-net-names
 ;;
@@ -263,7 +268,7 @@
 
 ;; The top level netlister for ewnet
 (define ewnet
-  (lambda (output-filename)
+  (lambda ()
     (message "\n--------------------------------------\n")
     (message "Lepton EDA netlister ewnet backend\n")
     (message "This backend is EXPERIMENTAL\n")
