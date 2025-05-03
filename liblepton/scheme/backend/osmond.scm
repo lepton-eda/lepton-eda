@@ -2,7 +2,7 @@
 ;;; lepton-netlist back end for Osmond PCB Design
 ;;; Copyright (C) 2007-2010 John P. Doty
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,10 +20,14 @@
 
 ; Export a design to Osmond PCB
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend osmond)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
 
-(define (osmond output-filename)
+  #:export (osmond))
+
+(define (osmond)
   (for-each osmond:part (schematic-package-names (toplevel-schematic)))
   (for-each osmond:signal (schematic-nets (toplevel-schematic))))
 

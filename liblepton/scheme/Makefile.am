@@ -18,6 +18,7 @@ nobase_dist_scmdata_DATA = \
 	backend/makedepend.scm \
 	backend/mathematica.scm \
 	backend/maxascii.scm \
+	backend/osmond.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
