@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -16,13 +16,16 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(use-modules (netlist partlist)
-             (netlist partlist common)
-             (netlist attrib compare)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend partslist2)
+  #:use-module (netlist attrib compare)
+  #:use-module (netlist partlist common)
+  #:use-module (netlist partlist)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
 
-(define (partslist2 output-filename)
+  #:export (partslist2))
+
+(define (partslist2)
   (display
    (partlist->string
     (make-partlist (schematic-package-names (toplevel-schematic))
