@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -29,8 +29,14 @@
 ;; END.
 ;;
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend bae)
+  #:use-module (netlist)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic toplevel)
+
+  #:export (bae))
+
+
 ;;
 ;; Top level component writing
 ;;
@@ -67,7 +73,7 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define (bae output-filename)
+(define (bae)
   (display "LAYOUT board;\n")
   (display "PARTS\n")
   (bae:components (schematic-package-names (toplevel-schematic)))

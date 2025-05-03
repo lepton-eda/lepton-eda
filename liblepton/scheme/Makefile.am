@@ -3,6 +3,7 @@ godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
 	backend/allegro.scm \
+	backend/bae.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
