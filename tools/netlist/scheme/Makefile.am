@@ -15,7 +15,6 @@ gafrcd_DATA = config-netlist.scm
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
 	backend/gnet-PCB.scm \
-	backend/gnet-pcbpins.scm \
 	backend/gnet-protelII.scm \
 	backend/gnet-redac.scm \
 	backend/gnet-spice-noqsi.scm \

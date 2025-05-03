@@ -23,6 +23,7 @@ nobase_dist_scmdata_DATA = \
 	backend/partslist1.scm \
 	backend/partslist2.scm \
 	backend/partslist3.scm \
+	backend/pcbpins.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \

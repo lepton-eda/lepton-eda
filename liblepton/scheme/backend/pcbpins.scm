@@ -2,7 +2,7 @@
 ;;; Backend for propagating pin names from gschem to footprints in pcb
 ;;; Copyright (C) 2005-2010 Dan McMahill
 ;;; Copyright (C) 2005-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,9 +19,14 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-(use-modules (ice-9 regex)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend pcbpins)
+  #:use-module (ice-9 regex)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (pcbpins))
 
 ;; A comma or close parenthesis will cause problems with the pcb
 ;; action script, so if one of the arguments to ChangePinName contains
@@ -94,7 +99,7 @@
    )
 
 ;; The top level netlister for pcbpins
-(define (pcbpins output-filename)
+(define (pcbpins)
   ;; write the header
   (display "# Pin name action command file\n")
 
