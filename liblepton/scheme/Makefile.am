@@ -27,6 +27,7 @@ nobase_dist_scmdata_DATA = \
 	backend/pcbpins.scm \
 	backend/protelII.scm \
 	backend/redac.scm \
+	backend/spice-noqsi.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \

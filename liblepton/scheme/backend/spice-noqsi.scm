@@ -16,8 +16,6 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
- (use-modules (srfi srfi-1))
-
 ;; Essentially, this back end works by collecting lists of output "cards"
 ;; and then generating output.
 ;;
@@ -27,10 +25,16 @@
 ;; Note that "cards" is constructed backwards (linked list), so
 ;; we do the epilog first!
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend spice-noqsi)
+  #:use-module (srfi srfi-1)
 
-(define (spice-noqsi filename)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (spice-noqsi))
+
+(define (spice-noqsi)
     (write-header)
     (for-each reserve-refdes (schematic-package-names (toplevel-schematic)))
     (for-each collect-file (schematic-package-names (toplevel-schematic)))
