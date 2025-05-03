@@ -3,7 +3,7 @@
 ;;;                                           adapted PCB code to Eagle)
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,9 +21,15 @@
 
 ;; EAGLE netlist format
 
-(use-modules (srfi srfi-1)
-             (netlist schematic)
-             (netlist schematic toplevel))
+
+(define-module (backend eagle)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (eagle))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.
@@ -82,7 +88,7 @@
   (for-each write-netname netnames))
 
 
-(define (eagle output-filename)
+(define (eagle)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic))))
     ;; initialize the net-name aliasing

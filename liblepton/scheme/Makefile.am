@@ -10,6 +10,7 @@ nobase_dist_scmdata_DATA = \
 	backend/cascade.scm \
 	backend/drc.scm \
 	backend/drc2.scm \
+	backend/eagle.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
