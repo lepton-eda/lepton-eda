@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -30,11 +30,16 @@
 ;;; Questions? Contact matt@ettus.com
 ;;; This software is released under the terms of the GNU GPL
 
-(use-modules (ice-9 rdelim)
-             (netlist backend-getopt)
-             (netlist error)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend bom)
+  #:use-module (ice-9 rdelim)
+
+  #:use-module (netlist backend-getopt)
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (bom))
 
 
 (define (bom:error filename)
@@ -102,7 +107,7 @@ are filtered out."
   (for-each output-component-attrib-values ls))
 
 
-(define (bom output-filename)
+(define (bom)
   "Outputs BOM (Bill of Materials) to OUTPUT-FILENAME.
 First line is a list of attribute names, all others are lists of
 corresponding attribute values for all schematic
