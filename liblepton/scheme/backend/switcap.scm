@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2003, 2005-2010 Dan McMahill
 ;;; Copyright (C) 2003-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,10 +24,15 @@
 ;; S. Gieltjes as a starting point.
 
 ;; The following is needed to make guile 1.8.x happy.
-(use-modules (ice-9 rdelim)
-             (netlist error)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend switcap)
+  #:use-module (ice-9 rdelim)
+
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (switcap))
 
 ;; ----------------------------------------------------------------------------
 ;; Utility functions used by this netlister
@@ -474,7 +479,7 @@
 ;; ----------------------------------------------------------------------------
 ;; Switcap netlist generation -- top level
 ;; ----------------------------------------------------------------------------
-(define (switcap output-filename)
+(define (switcap)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic))))
 

@@ -31,6 +31,7 @@ nobase_dist_scmdata_DATA = \
 	backend/spice-sdb.scm \
 	backend/spice.scm \
 	backend/spice/common.scm \
+	backend/switcap.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
