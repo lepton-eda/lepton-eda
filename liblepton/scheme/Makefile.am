@@ -36,6 +36,7 @@ nobase_dist_scmdata_DATA = \
 	backend/tango.scm \
 	backend/tEDAx.scm \
 	backend/vams.scm \
+	backend/verilog.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
