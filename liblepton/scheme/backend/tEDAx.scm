@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; tEDAx plug-in for lepton-netlist
 ;;; Copyright (C) 2018 Bdale Garbee
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,12 +21,18 @@
 ;; The tEDAx format is documented at http://repo.hu/projects/tedax/
 ;; --------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1)
-             (lepton attrib)
-             (lepton object)
-             (netlist schematic)
-             (netlist schematic toplevel)
-             (netlist schematic-connection))
+(define-module (backend tEDAx)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (lepton attrib)
+  #:use-module (lepton object)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic-connection)
+  #:use-module (netlist)
+
+  #:export (tEDAx))
 
 ;;; Escape spaces and tabs in string S.
 (define (escape-whitespaces s)
@@ -154,7 +160,7 @@
 ;;;
 ;;; emit netlist in tEDAx interchange format
 ;;;
-(define (tEDAx output-filename)
+(define (tEDAx)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic)))
         (connections (schematic-connections (toplevel-schematic))))

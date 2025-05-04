@@ -14,7 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
-	backend/gnet-tEDAx.scm \
 	backend/gnet-vams.scm \
 	backend/gnet-verilog.scm \
 	backend/gnet-vhdl.scm \

@@ -34,6 +34,7 @@ nobase_dist_scmdata_DATA = \
 	backend/switcap.scm \
 	backend/systemc.scm \
 	backend/tango.scm \
+	backend/tEDAx.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
