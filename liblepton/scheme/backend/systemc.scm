@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,13 +23,18 @@
 
 ;; some useful regexes for working with net-names
 ;;
-(use-modules (ice-9 regex)
-             (ice-9 match)
-             (srfi srfi-1)
-             (srfi srfi-26)
-             (netlist port)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend systemc)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+
+  #:use-module (netlist port)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (systemc))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -486,7 +491,7 @@ SC_CTOR(~A):
 ;;; Highest level function
 ;;; Write Structural systemc representation of the schematic
 ;;;
-(define (systemc output-filename)
+(define (systemc)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic)))
         ;; top level block name for the module
