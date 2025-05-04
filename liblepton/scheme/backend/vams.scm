@@ -24,16 +24,20 @@
 ;;;
 ;;; --------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1)
-             (srfi srfi-26)
-             (ice-9 format)
+(define-module (backend vams)
+  #:use-module (ice-9 format)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
 
-             (netlist backend-getopt)
-             (netlist option)
-             (netlist port)
-             (netlist schematic-component)
-             (netlist schematic)
-             (netlist schematic toplevel))
+  #:use-module (netlist backend-getopt)
+  #:use-module (netlist option)
+  #:use-module (netlist port)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic-component)
+  #:use-module (netlist)
+
+  #:export (vams))
 
 ;;; ===================================================================================
 ;;;                  TOP LEVEL FUNCTION
@@ -45,7 +49,7 @@
 ;;;   its evaluate things like output-file, generate-mode, top-attribs
 ;;;   and starts the major subroutines.
 
-(define (vams output-filename)
+(define* (vams #:optional (output-filename (netlist-output-filename)))
   (define backend-options (backend-getopt (netlist-option-ref 'backend-option)
                                           '((generate-mode (value #t))
                                             (top-attribs (value #t)))))
