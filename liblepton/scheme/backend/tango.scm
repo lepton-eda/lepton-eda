@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,9 +22,14 @@
 ;; TANGO netlist backend written by Nuno Sucena starts here
 ;;
 
-(use-modules (srfi srfi-1)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend tango)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (tango))
 
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)
@@ -97,7 +102,7 @@
 ;;; Highest level function
 ;;; Write tango netlist format
 ;;;
-(define (tango output-filename)
+(define (tango)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic))))
     (tango:components packages)
