@@ -38,6 +38,7 @@ nobase_dist_scmdata_DATA = \
 	backend/vams.scm \
 	backend/verilog.scm \
 	backend/vhdl.scm \
+	backend/vipec.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \

@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,8 +20,12 @@
 ;;; ViPEC netlist format
 ;;; http://vipec.sourceforge.net/
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend vipec)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (vipec))
 
 ;; ETTUS
 ;; Usage: (number-nets all-unique-nets 1)
@@ -177,7 +181,7 @@
                   (newline)))
             (vipec:analysis-block (cdr packages))))))
 
-(define (vipec output-filename)
+(define (vipec)
   (let ((netnumbers (number-nets (schematic-nets (toplevel-schematic)) 1))
         (packages (schematic-package-names (toplevel-schematic))))
     (vipec:header)
