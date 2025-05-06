@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2019 Lepton EDA Contributors
+;;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,9 +22,14 @@
 ;; SPICE netlist backend written by S. Gieltjes starts here
 ;;
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel)
-             (spice common))
+(define-module (backend spice)
+  #:use-module (backend spice common)
+
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (spice))
 
 
 ;;  write mos transistor
@@ -109,19 +114,10 @@
   (newline))
 
 
-; public:
-; Instruct the netlister to use 'spice mode
-;
-( define ( request-netlist-mode )
-  ; return:
-  'spice
-)
-
-
 ;;
 ;; Spice netlist generation
 ;;
-(define (spice output-filename)
+(define (spice)
   (spice:write-top-header)
   (spice:write-netlist (schematic-package-names (toplevel-schematic)))
   (spice:write-bottom-footer))

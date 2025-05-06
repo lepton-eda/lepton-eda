@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -117,14 +117,20 @@
 ;;************  Program housekeeping, handling calling flags, etc.  ****************
 ;;**********************************************************************************
 
-(use-modules (ice-9 rdelim)
-             (ice-9 match)
-             (srfi srfi-1)
-             (netlist attrib compare)
-             (netlist error)
-             (netlist schematic)
-             (netlist schematic toplevel)
-             (spice common))
+(define-module (backend spice-sdb)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (backend spice common)
+
+  #:use-module (netlist attrib compare)
+  #:use-module (netlist error)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (spice-sdb))
 
 
 ;;; Flags to check.
@@ -907,15 +913,6 @@ the name is changed to canonical."
           subckt-name))
 
 
-; public:
-; Instruct the netlister to use 'spice mode
-;
-( define ( request-netlist-mode )
-  ; return:
-  'spice
-)
-
-
 ;;---------------------------------------------------------------
 ;; Spice netlist generation
 ;;   This is the entry point.
@@ -945,7 +942,7 @@ the name is changed to canonical."
 ;;   5.  If the schematic-type is .SUBCKT:  write out .ENDS,  Otherwise: write out .END
 ;;   6.  Close up the SPICE netlist file and return.
 ;;---------------------------------------------------------------
-(define (spice-sdb output-filename)
+(define (spice-sdb)
   ;; Redefine write-net-names-on-component
   (set! spice:write-net-names-on-component spice-sdb:write-net-names-on-component)
 

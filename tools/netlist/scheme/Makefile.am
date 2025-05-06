@@ -14,8 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
-	backend/gnet-spice-sdb.scm \
-	backend/gnet-spice.scm \
 	backend/gnet-switcap.scm \
 	backend/gnet-systemc.scm \
 	backend/gnet-tango.scm \
@@ -25,10 +23,7 @@ DIST_SCM_BACKENDS = \
 	backend/gnet-vhdl.scm \
 	backend/gnet-vipec.scm
 
-DIST_SCM_BACKENDS_COMMON = \
-	backend/spice/common.scm
-
-EXTRA_DIST = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) config-netlist.scm.in
+EXTRA_DIST = $(DIST_SCM_BACKENDS) $(SCM_SRCS) config-netlist.scm.in
 
 SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 
