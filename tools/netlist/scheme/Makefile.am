@@ -14,7 +14,6 @@ gafrcd_DATA = config-netlist.scm
 
 DIST_SCM_BACKENDS = \
 	backend/gnet-geda.scm \
-	backend/gnet-vhdl.scm \
 	backend/gnet-vipec.scm
 
 EXTRA_DIST = $(DIST_SCM_BACKENDS) $(SCM_SRCS) config-netlist.scm.in

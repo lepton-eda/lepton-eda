@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -35,12 +35,17 @@
 ;;; busses. (Not complete yet!)
 ;;;
 
-(use-modules (srfi srfi-1)
-             (netlist attrib compare)
-             (netlist duplicate)
-             (netlist port)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (backend vhdl)
+  #:use-module (srfi srfi-1)
+
+  #:use-module (netlist attrib compare)
+  #:use-module (netlist duplicate)
+  #:use-module (netlist port)
+  #:use-module (netlist schematic toplevel)
+  #:use-module (netlist schematic)
+  #:use-module (netlist)
+
+  #:export (vhdl))
 
 (define (vhdl:get-top-port-list packages)
   ;; construct list
@@ -715,7 +720,7 @@ use IEEE.Std_Logic_1164.all;
 ;;; Top level function
 ;;; Write structural VHDL representation of the schematic
 ;;;
-(define (vhdl output-filename)
+(define (vhdl)
   (let ((nets (schematic-nets (toplevel-schematic)))
         (packages (schematic-package-names (toplevel-schematic)))
         ;; top level block name for the module
