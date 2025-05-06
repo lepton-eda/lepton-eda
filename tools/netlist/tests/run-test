@@ -236,12 +236,14 @@ spice-sdb-sort-nomunge)
 vams-entity)
     backend=vams
     vamsmode=entity
-    cmd="(define generate-mode 2)"
+    args1="generate-mode=2"
+    args2="generate-mode=2"
     ;;
 vams-device)
     backend=vams
     vamsmode=device
-    cmd="(define generate-mode 2) (define top-attribs '(refdes=U1 device=7404 footprint=DIP14))"
+    args1="generate-mode=2"
+    args2="top-attribs='(refdes=U1 device=7404 footprint=DIP14)"
     ;;
 postload)
     (cd "${rundir}" &&
@@ -258,6 +260,37 @@ postload)
     fi
     ;;
 esac
+
+if test "X${vamsmode}" = "Xentity" || test "X${vamsmode}" = "Xdevice"; then
+# run lepton-netlist
+echo "${NETLISTER} -c ${cmd} -g ${backend} -O ${args1} -O ${args2} ${schematic}"
+(cd "${rundir}" && "${NETLISTER}" -c "${cmd}" \
+                                  -g "${backend}" \
+                                  -O "${args1}" \
+                                  -O "${args2}" \
+                                  ${schematic})
+rc1=$?
+
+echo "${NETLISTER} -c ${cmd} -g ${backend} -o - -O ${args1} -O ${args2} ${schematic} > stdout.net"
+(cd "${rundir}" && "${NETLISTER}" -c "${cmd}" \
+                                  -g "${backend}" \
+                                  -o - \
+                                  -O "${args1}" \
+                                  -O "${args2}" \
+                                  ${schematic} > stdout.net)
+rc2=$?
+
+echo "${NETLISTER} -c ${cmd} -g ${backend} -v -o verbose.net -O ${args1} -O ${args2} ${schematic}"
+(cd "${rundir}" && "${NETLISTER}" -c "${cmd}" \
+                                  -g "${backend}" \
+                                  -v \
+                                  -o verbose.net \
+                                  -O "${args1}" \
+                                  -O "${args2}" \
+                                  ${schematic})
+rc3=$?
+
+else
 
 # run lepton-netlist
 echo "${NETLISTER} -c ${cmd} -g ${backend} ${args} ${schematic}"
@@ -277,6 +310,8 @@ echo "${NETLISTER} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic
                                   -g "${backend}" \
                                   -v -o verbose.net ${args} ${schematic})
 rc3=$?
+
+fi
 
 wait
 

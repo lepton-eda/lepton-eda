@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
              (ice-9 format)
+
+             (netlist backend-getopt)
+             (netlist option)
              (netlist port)
              (netlist schematic-component)
              (netlist schematic)
@@ -43,6 +46,21 @@
 ;;;   and starts the major subroutines.
 
 (define (vams output-filename)
+  (define backend-options (backend-getopt (netlist-option-ref 'backend-option)
+                                          '((generate-mode (value #t))
+                                            (top-attribs (value #t)))))
+  (define generate-mode
+    (or (and=> (backend-option-ref backend-options 'generate-mode)
+               string->number)
+        ;; Set generate-mode to default (1), when not defined
+        ;; before.
+        1))
+
+  (define top-attribs
+    (or (and=> (backend-option-ref backend-options 'top-attribs)
+               eval-string)
+        '()))
+
   (define (architecture-name output-filename entity)
     (string-append
      (dirname output-filename)
@@ -897,13 +915,5 @@ ARCHITECTURE ~A OF ~A IS
           (append (substring (car liste) 7
                              (string-length (car liste))))
           (vams:get-uref (cdr liste)))))
-
-
-;;; set generate-mode to default (1), when not defined before.
-(define generate-mode (if (defined? 'generate-mode) generate-mode '1))
-
-
-;;; set to-attribs list empty, when not needed.
-(define top-attribs (if (defined? 'top-attribs) top-attribs '()))
 
 (message "loaded gnet-vams.scm\n")
