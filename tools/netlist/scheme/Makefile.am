@@ -1,4 +1,3 @@
-M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@
 
 scmdatadir = @LEPTONDATADIR@/scheme
@@ -29,7 +28,6 @@ backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
 		echo "source directory = build directory" ; \
 	fi
 	sed \
-		-e 's;@m4@;${M4};g' \
 		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
 		$(srcdir)/backend/gnet-gsch2pcb.scm.in > $@
 
