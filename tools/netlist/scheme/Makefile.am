@@ -1,8 +1,5 @@
-PCBM4DIR=	@PCBM4DIR@
-
 scmdatadir = @LEPTONDATADIR@/scheme
-nobase_scmdata_DATA = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
-
+nobase_scmdata_DATA = $(DIST_SCM_BACKENDS)
 
 config-netlist.scm: config-netlist.scm.in
 	sed -e 's,[@]backenddir[@],$(scmdatadir)/backend,g' < $(srcdir)/$@.in > $@
@@ -12,23 +9,9 @@ gafrcd_DATA = config-netlist.scm
 
 
 DIST_SCM_BACKENDS = \
-	backend/gnet-geda.scm
+	backend/gnet-geda.scm \
+	backend/gnet-gsch2pcb.scm
 
-EXTRA_DIST = $(DIST_SCM_BACKENDS) $(SCM_SRCS) config-netlist.scm.in
+EXTRA_DIST = $(DIST_SCM_BACKENDS) config-netlist.scm.in
 
-SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
-
-BUILT_SCM=	backend/gnet-gsch2pcb.scm
-
-backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
-	if test "$(srcdir)" != "@builddir@" ; then \
-		echo "creating directories" ; \
-		$(MKDIR_P) @builddir@/backend ; \
-	else \
-		echo "source directory = build directory" ; \
-	fi
-	sed \
-		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
-		$(srcdir)/backend/gnet-gsch2pcb.scm.in > $@
-
-CLEANFILES = backend/gnet-gsch2pcb.scm config-netlist.scm
+CLEANFILES = config-netlist.scm
