@@ -138,7 +138,7 @@
 ;; Let the user override the m4 command, the directory
 ;; where pcb stores its m4 files and the pcb config directory.
 (define-undefined gsch2pcb:pcb-m4-command %m4-command)
-(define-undefined gsch2pcb:pcb-m4-dir "@pcbm4dir@")
+(define-undefined gsch2pcb:pcb-m4-dir %pcb-m4-dir)
 (define-undefined gsch2pcb:m4-files "")
 
 ;; Let the user override the m4 search path
