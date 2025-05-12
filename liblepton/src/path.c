@@ -949,12 +949,16 @@ lepton_path_string_from_path (const LeptonPath *path)
 }
 
 /*! \brief Converts a path to a polygon
+ *  \par Function description
+ *  Converts a path to a polygon in order to apply hatch filling
+ *  afterwards.
  *
- *  \param path [in] The path to convert to a polygon.  This parameter must not
- *  be NULL.
- *  \param points [out] An array of the polygon's vertices.  This parameter
- *  must not be NULL.
- *  \return TRUE if the path is closed, FALSE if it is open.
+ *  \param [in] path The path to convert to a polygon.  This
+ *                   parameter must not be NULL.
+ *  \param [out] points An array of the polygon's vertices.  This
+ *                      parameter must not be NULL.
+ *  \retval TRUE if the path is closed,
+ *  \retval FALSE if it is open.
  */
 int
 lepton_path_to_polygon (LeptonPath *path,
