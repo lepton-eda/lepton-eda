@@ -46,6 +46,7 @@
 
   #:use-module (schematic action copy)
   #:use-module (schematic action edit)
+  #:use-module (schematic action mirror)
   #:use-module (schematic action rotate)
   #:use-module (schematic action-mode)
   #:use-module (schematic buffer)
@@ -726,7 +727,7 @@ zooming."
                     (rotate-objects x y 90 (lepton_list_get_glist *selection)
                                     #:window window))
                    ('mirror-mode
-                    (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
+                    (mirror-objects *window x y (lepton_list_get_glist *selection)))
                    ('pan-mode
                     (schematic_canvas_pan *canvas x y)
                     (set-action-mode! 'select-mode #:window window))

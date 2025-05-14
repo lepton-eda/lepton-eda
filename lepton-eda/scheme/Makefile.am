@@ -142,6 +142,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action/copy.scm \
 	schematic/action/delete.scm \
 	schematic/action/edit.scm \
+	schematic/action/mirror.scm \
 	schematic/action/rotate.scm \
 	schematic/attrib.scm \
 	schematic/buffer.scm \

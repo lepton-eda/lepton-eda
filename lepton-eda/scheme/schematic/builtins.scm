@@ -43,6 +43,7 @@
   #:use-module (schematic action copy)
   #:use-module (schematic action delete)
   #:use-module (schematic action edit)
+  #:use-module (schematic action mirror)
   #:use-module (schematic action rotate)
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
@@ -373,7 +374,7 @@
                 (schematic_draw_clear *window)
                 (unless (null-pointer? *objects)
                   (match (snap-point position)
-                    ((x . y) (o_mirror_world_update *window x y *objects))
+                    ((x . y) (mirror-objects *window x y *objects))
                     (_ #f))))
               ;; Mouse pointer is out of the canvas: just set the
               ;; mirror mode.
