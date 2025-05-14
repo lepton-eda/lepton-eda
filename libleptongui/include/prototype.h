@@ -356,11 +356,6 @@ o_line_visible (SchematicWindow *w_current,
 
 /* o_misc.c */
 void
-o_mirror_world_update (SchematicWindow *w_current,
-                       int centerx,
-                       int centery,
-                       GList *list);
-void
 o_edit_show_hidden_lowlevel (SchematicWindow *w_current,
                              const GList *o_list);
 void

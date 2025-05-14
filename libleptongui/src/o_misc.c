@@ -36,29 +36,6 @@
  *
  */
 void
-o_mirror_world_update (SchematicWindow *w_current,
-                       int centerx,
-                       int centery,
-                       GList *list)
-{
-  /* Run mirror-objects-hook */
-  g_run_hook_object_list (w_current, "mirror-objects-hook", list);
-
-  schematic_window_active_page_changed (w_current);
-  o_undo_savestate_old (w_current);
-
-  if (schematic_window_get_action_mode (w_current) == MIRRORMODE)
-  {
-    i_set_state(w_current, SELECT);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 o_edit_show_hidden_lowlevel (SchematicWindow *w_current,
                              const GList *o_list)
 {

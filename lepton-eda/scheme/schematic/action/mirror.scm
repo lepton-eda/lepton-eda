@@ -22,10 +22,13 @@
 
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic hook)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
 
   #:export (mirror-objects))
 
@@ -62,4 +65,14 @@ coords are in the world units."
 
         (schematic_draw_invalidate_object_list *window *objects)
 
-        (o_mirror_world_update *window x y *objects))))
+        ;; Run mirror-objects-hook.
+        (with-window *window
+          (run-hook mirror-objects-hook
+                    (glist->list *objects pointer->object)))
+
+        (schematic_window_active_page_changed *window)
+        (o_undo_savestate_old *window)
+
+        (when (eq? (action-mode (pointer->window *window))
+                   'mirror-mode)
+          (set-action-mode! 'select-mode #:window (pointer->window *window))))))

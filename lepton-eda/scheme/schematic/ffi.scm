@@ -123,8 +123,6 @@
             o_line_motion
             o_line_start
 
-            o_mirror_world_update
-
             o_move_cancel
             o_move_end
             o_move_invalidate_rubber
@@ -1214,7 +1212,6 @@
 (define-lff o_edit_hide_specific_text void '(* * *))
 (define-lff o_edit_show_hidden void '(* *))
 (define-lff o_edit_show_specific_text void '(* * *))
-(define-lff o_mirror_world_update void (list '* int int '*))
 
 ;;; o_move.c
 (define-lff o_move_cancel void '(*))
