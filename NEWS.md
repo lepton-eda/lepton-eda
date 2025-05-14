@@ -106,6 +106,21 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   set the current toplevel fluid to a given value, which may be
   convenient for working with Lepton modules in REPL.
 
+- A new issue with newest versions of Guile that arised after
+  transition to using wrapped foreign type `<toplevel>`, has been
+  fixed. As it is mentioned in [Guile 3.0.8
+  NEWS](https://git.savannah.gnu.org/cgit/guile.git/tree/NEWS?h=v3.0.8#n8),
+  the version adds new kinds of optimizations that treat Scheme
+  modules as declarative and inline some of their toplevel
+  exported definitions into other modules. This facility is
+  enabled at the default `-O2` optimization level when a module is
+  compiled, that is, it is used during auto-compilation as well.
+  This change caused failures on `make distcheck` in
+  `lepton-netlist` tests.  The issue has been solved by merging
+  the `%lepton-toplevel` fluid initialization code into its
+  definition, which prevents inlining its initial value `#f` into
+  any other module.
+
 - Several new checks have been added for `make-page()`:
   - the procedure now raises an error if if its filename argument
     is an empty string;
