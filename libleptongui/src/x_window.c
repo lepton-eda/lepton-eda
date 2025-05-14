@@ -49,10 +49,15 @@ static LeptonPage*
 x_window_new_page (SchematicWindow* w_current);
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create a schematic drawing canvas.
  *  \par Function Description
+ *  Creates and initializes a schematic drawing canvas widget and
+ *  adds it to the scrolled container of the parent
+ *  #SchematicWindow instance The page of the canvas is set to the
+ *  active page of the window.
  *
+ *  \param [in] scrolled The scrolled container.
+ *  \param [in] w_current The parent window.
  */
 void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
 {
