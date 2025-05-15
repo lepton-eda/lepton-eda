@@ -49,19 +49,25 @@
 ;;;   its evaluate things like output-file, generate-mode, top-attribs
 ;;;   and starts the major subroutines.
 
-(define* (vams #:optional (output-filename (netlist-output-filename)))
+(define* (vams #:optional
+               (output-filename (netlist-output-filename))
+               #:key
+               (mode #f)
+               (attribs #f))
   (define backend-options (backend-getopt (netlist-option-ref 'backend-option)
                                           '((generate-mode (value #t))
                                             (top-attribs (value #t)))))
   (define generate-mode
-    (or (and=> (backend-option-ref backend-options 'generate-mode)
+    (or mode
+        (and=> (backend-option-ref backend-options 'generate-mode)
                string->number)
         ;; Set generate-mode to default (1), when not defined
         ;; before.
         1))
 
   (define top-attribs
-    (or (and=> (backend-option-ref backend-options 'top-attribs)
+    (or attribs
+        (and=> (backend-option-ref backend-options 'top-attribs)
                eval-string)
         '()))
 
