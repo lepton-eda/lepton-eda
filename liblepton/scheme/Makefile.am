@@ -2,7 +2,43 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
+	backend/PCB.scm \
 	backend/allegro.scm \
+	backend/bae.scm \
+	backend/bom.scm \
+	backend/bom2.scm \
+	backend/calay.scm \
+	backend/cascade.scm \
+	backend/drc.scm \
+	backend/drc2.scm \
+	backend/eagle.scm \
+	backend/ewnet.scm \
+	backend/futurenet2.scm \
+	backend/gossip.scm \
+	backend/liquidpcb.scm \
+	backend/makedepend.scm \
+	backend/mathematica.scm \
+	backend/maxascii.scm \
+	backend/osmond.scm \
+	backend/pads.scm \
+	backend/partslist1.scm \
+	backend/partslist2.scm \
+	backend/partslist3.scm \
+	backend/pcbpins.scm \
+	backend/protelII.scm \
+	backend/redac.scm \
+	backend/spice-noqsi.scm \
+	backend/spice-sdb.scm \
+	backend/spice.scm \
+	backend/spice/common.scm \
+	backend/switcap.scm \
+	backend/systemc.scm \
+	backend/tango.scm \
+	backend/tEDAx.scm \
+	backend/vams.scm \
+	backend/verilog.scm \
+	backend/vhdl.scm \
+	backend/vipec.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
@@ -231,6 +267,7 @@ lepton/m4.scm: Makefile
 	echo '(define-public %lepton-docdir "$(docdir)")' >> $@.new && \
 	echo '(define-public %lepton-localedir "$(localedir)")' >> $@.new && \
 	echo '(define-public %lepton-bindir "$(bindir)")' >> $@.new && \
+	echo '(define-public %m4-command "$(M4)")' >> $@.new && \
 	echo '(define-public %m4-use-cygwin #$(USE_CYGWIN))' >> $@.new && \
 	echo '(define-public %m4-use-gtk3 #$(USE_GTK3))' >> $@.new && \
 	echo '(define-public %m4-liblepton-major $(LIBLEPTON_MAJOR))' >> $@.new && \

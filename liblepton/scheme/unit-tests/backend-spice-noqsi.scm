@@ -1,7 +1,13 @@
 (use-modules (ice-9 rdelim)
+
              (lepton library)
              (lepton toplevel)
-             (netlist))
+
+             (netlist schematic toplevel)
+             (netlist schematic)
+             (netlist)
+
+             (backend spice-noqsi))
 
 ;;; Helper functions.
 
@@ -42,7 +48,6 @@
 (define top-srcdir (string-append srcdir "/../../"))
 
 ;;; Paths. Assuming we're in the liblepton/scheme/ directory.
-(define backend (string-append top-srcdir "tools/netlist/scheme/backend/gnet-spice-noqsi.scm"))
 (define symbol-lib (string-append top-srcdir "symbols/sym"))
 (define schematic-base (string-append top-srcdir "tools/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
 (define input-schematic (string-append schematic-base ".sch"))
@@ -51,8 +56,7 @@
 ;;; Load component libraries.
 (reset-component-library)
 (component-library-search symbol-lib)
-;;; Load backend.
-(primitive-load backend)
+
 
 (test-assert (file-exists? input-schematic))
 (test-assert (file-exists? output-circuit))
@@ -64,7 +68,7 @@
        (make-toplevel)
        (λ ()
          (set-toplevel-schematic! (make-toplevel-schematic (list input-schematic)))
-         (spice-noqsi "-"))))))
+         (spice-noqsi))))))
 
 (test-equal
     (with-input-from-string backend-output-string input->line-list)
