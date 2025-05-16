@@ -36,11 +36,16 @@
 
 /***************** Start of Arc dialog box ***************************/
 
-/*! \brief response function for the arc angle dialog
+/*! \brief Response function for the arc angle dialog.
  *  \par Function Description
  *  The response function of the arc angle dialog takes the content of
  *  the dialog and applies it on the current arc.
  *  If the dialog is closed or canceled the function destroys the dialog.
+ *
+ *  \param [in] w The arc angle dialog widget.
+ *  \param [in] response The 'response' signal value to evaluate.
+ *  \param [in] w_current The parent window of the arc dialog
+ *                        widget.
  */
 void
 arc_angle_dialog_response (GtkWidget *w,
