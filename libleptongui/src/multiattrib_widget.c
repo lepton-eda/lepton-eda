@@ -2438,7 +2438,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);
 
-  multiattrib->add_frame =
+  GtkWidget *add_frame =
     schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
                                                  grid);
 #else
@@ -2449,12 +2449,12 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
                     6, 3);
 
 
-  multiattrib->add_frame =
+  GtkWidget *add_frame =
     schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
                                                  table);
 #endif
 
-  g_signal_connect (multiattrib->add_frame,
+  g_signal_connect (add_frame,
                     "activate",
                     G_CALLBACK (multiattrib_callback_expander_activate),
                     multiattrib);
@@ -2462,15 +2462,16 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 
   /* pack the frame in the dialog */
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      multiattrib->add_frame,
+                      add_frame,
                       FALSE, TRUE, 1);
-  gtk_widget_show_all (multiattrib->add_frame);
+  gtk_widget_show_all (add_frame);
 
 
   /* now add the close button to the action area */
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
                          _("_Close"), GTK_RESPONSE_CLOSE);
 
+  schematic_multiattrib_widget_set_add_frame (multiattrib, add_frame);
   schematic_multiattrib_widget_refresh (multiattrib);
 }
 
