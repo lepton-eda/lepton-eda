@@ -1848,8 +1848,10 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
   }
 
   g_clear_error (&error);
-  gtk_expander_set_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame),
-                             expand_add_attr);
+
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (SCHEMATIC_MULTIATTRIB_WIDGET (dialog));
+  gtk_expander_set_expanded (GTK_EXPANDER (add_frame), expand_add_attr);
 }
 
 
