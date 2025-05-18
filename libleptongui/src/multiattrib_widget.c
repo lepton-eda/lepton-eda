@@ -1800,8 +1800,10 @@ multiattrib_geometry_save (SchematicDialog *dialog,
   eda_config_set_boolean (cfg, group_name, "show_inherited", show_inherited);
 
 
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (SCHEMATIC_MULTIATTRIB_WIDGET (dialog));
   gboolean expand_add_attr =
-      gtk_expander_get_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame));
+      gtk_expander_get_expanded (GTK_EXPANDER (add_frame));
 
   eda_config_set_boolean (cfg, group_name, "expand_add_attr", expand_add_attr);
 }
