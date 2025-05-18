@@ -2952,8 +2952,10 @@ schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib)
   update_dialog_title (multiattrib, component_title_name);
 
   /* Update sensitivities */
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (multiattrib);
   gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->list_frame), list_sensitive);
-  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->add_frame),  add_sensitive);
+  gtk_widget_set_sensitive (add_frame, add_sensitive);
 
   /* Work around GtkTextView's stubborn indifference
    * to GTK_STATE_INSENSITIVE when rendering its text. */
