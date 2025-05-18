@@ -57,6 +57,11 @@
   (procedure->pointer int delete-event-callback '(* * *)))
 
 
+;;; Create a new Multiattrib dialog widget.
+(define (make-multiattrib-dialog *window *selection)
+  (schematic_multiattrib_widget_new *window *selection))
+
+
 (define (multiattrib-dialog window)
   "Open multiple attribute editor dialog to edit selected objects in
 WINDOW."
@@ -66,8 +71,8 @@ WINDOW."
   (define *main-window (schematic_window_get_main_window *window))
 
   (if (null-pointer? *widget)
-      (let ((*multiattrib (schematic_multiattrib_widget_new *window
-                                                           *selection)))
+      (let ((*multiattrib (make-multiattrib-dialog *window
+                                                   *selection)))
         (schematic_window_set_multiattrib_widget *window *multiattrib)
         (gtk_window_set_transient_for (gtk_widget_get_gtk_window *multiattrib)
                                       (gtk_widget_get_gtk_window *main-window))
