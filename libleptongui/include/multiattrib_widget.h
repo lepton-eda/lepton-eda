@@ -150,6 +150,12 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);
 
 /* Accessors */
+GtkWidget*
+schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
+                                            GtkWidget *add_frame);
 void
 schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
                                               LeptonSelection *selection);

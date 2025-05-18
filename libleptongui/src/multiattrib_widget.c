@@ -23,6 +23,44 @@
 #include <gdk/gdkkeysyms.h>
 
 
+/*! \brief Get the Add frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Add frame widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Add frame widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->add_frame;
+}
+
+
+/*! \brief Set the Add frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Add frame widget of a Multiattrib widget to the given
+ *  value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] add_frame The new Add frame widget instance.
+ */
+void
+schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
+                                            GtkWidget *add_frame)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->add_frame = add_frame;
+}
+
+
 static gboolean
 snv_shows_name (int snv)
 {
