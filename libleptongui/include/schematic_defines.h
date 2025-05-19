@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,6 +33,7 @@
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
 #define ZOOM_FULL 2
+#define ZOOM_SAME 3
 
 #define ZOOM_EXTENTS_PADDING_PX 5
 

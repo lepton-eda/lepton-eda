@@ -68,6 +68,7 @@
 (define ZOOM_OUT 0)
 (define ZOOM_IN 1)
 (define ZOOM_FULL 2)
+(define ZOOM_SAME 3)
 
 (define DONTCARE 0)
 (define MENU 1)
@@ -207,19 +208,23 @@
                                  ;; event->delta_x seems to be
                                  ;; unused on not touch
                                  ;; devices.
-                                 (if (> (cdr scroll-direction) 0) ZOOM_OUT ZOOM_IN)
+                                 (let ((direction (cdr scroll-direction)))
+                                   (cond
+                                    ((negative? direction) ZOOM_IN)
+                                    ((positive? direction) ZOOM_OUT)
+                                    ((zero? direction) ZOOM_SAME)))
                                  (case (event-scroll-direction->symbol scroll-direction)
                                    ((gdk-scroll-up) ZOOM_IN)
                                    ((gdk-scroll-left) ZOOM_IN)
                                    ((gdk-scroll-down) ZOOM_OUT)
                                    ((gdk-scroll-right) ZOOM_OUT)
-                                   (else ZOOM_IN)))
+                                   (else ZOOM_SAME)))
                              (case (event-scroll-direction->symbol scroll-direction)
                                ((gdk-scroll-up) ZOOM_IN)
                                ((gdk-scroll-left) ZOOM_IN)
                                ((gdk-scroll-down) ZOOM_OUT)
                                ((gdk-scroll-right) ZOOM_OUT)
-                               (else ZOOM_IN)))))
+                               (else ZOOM_SAME)))))
                     (when zoom
                       (a_zoom *window *widget zoom-direction HOTKEY))
 
