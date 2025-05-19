@@ -37,6 +37,8 @@
 
 
 (define (event-state *event)
+  "Get the 'state' field of C *EVENT containing the data of the type
+GdkModifierType."
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
 
   (gdk_event_get_state *event (bytevector->pointer state-bv))
