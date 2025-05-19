@@ -249,5 +249,7 @@
                             ;; Stop further processing of this signal.
                             TRUE)))))))))))
 
+;;; Proxy C function for the scroll-canvas() procedure for using
+;;; in C signal handlers.
 (define *scroll-canvas
   (procedure->pointer int scroll-canvas '(* * *)))
