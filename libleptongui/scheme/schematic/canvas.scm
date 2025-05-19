@@ -94,6 +94,14 @@
       ((gdk-scroll-down gdk-scroll-right) 1)
       (else 0)))
 
+  (define (event-scroll-direction->zoom-direction scroll-direction)
+    (case (event-scroll-direction->symbol scroll-direction)
+      ((gdk-scroll-up) ZOOM_IN)
+      ((gdk-scroll-left) ZOOM_IN)
+      ((gdk-scroll-down) ZOOM_OUT)
+      ((gdk-scroll-right) ZOOM_OUT)
+      (else ZOOM_SAME)))
+
   (define (update-adjustment *adjustment pan-direction)
     (gtk_adjustment_set_value
      *adjustment
@@ -213,18 +221,8 @@
                                     ((negative? direction) ZOOM_IN)
                                     ((positive? direction) ZOOM_OUT)
                                     ((zero? direction) ZOOM_SAME)))
-                                 (case (event-scroll-direction->symbol scroll-direction)
-                                   ((gdk-scroll-up) ZOOM_IN)
-                                   ((gdk-scroll-left) ZOOM_IN)
-                                   ((gdk-scroll-down) ZOOM_OUT)
-                                   ((gdk-scroll-right) ZOOM_OUT)
-                                   (else ZOOM_SAME)))
-                             (case (event-scroll-direction->symbol scroll-direction)
-                               ((gdk-scroll-up) ZOOM_IN)
-                               ((gdk-scroll-left) ZOOM_IN)
-                               ((gdk-scroll-down) ZOOM_OUT)
-                               ((gdk-scroll-right) ZOOM_OUT)
-                               (else ZOOM_SAME)))))
+                                 (event-scroll-direction->zoom-direction scroll-direction))
+                             (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom
                       (a_zoom *window *widget zoom-direction HOTKEY))
 
