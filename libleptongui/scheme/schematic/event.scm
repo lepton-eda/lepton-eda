@@ -106,4 +106,5 @@ symbol SYM."
        schematic_event_get_scroll_direction) *event))
 
 (define (event-time *event)
+  "Get the time stamp of *EVENT."
   (gdk_event_get_time *event))
