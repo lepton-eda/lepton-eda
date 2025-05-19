@@ -74,6 +74,8 @@
 (define MENU 1)
 (define HOTKEY 2)
 
+;;; The time of the last scroll event to check for duplicate
+;;; scroll events.
 (define %last-scroll-event-time 0)
 
 (define (scroll-canvas *widget *event *window)
