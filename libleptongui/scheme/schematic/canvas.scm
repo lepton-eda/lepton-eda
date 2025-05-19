@@ -164,9 +164,9 @@
                  ;; You must have scrollbars enabled if you
                  ;; want to use the scroll wheel to pan.
                  (pan-y-axis (and (true? (schematic_window_get_scrollbars_flag *window))
-                                  ;; If the user has a
-                                  ;; left/right scroll wheel,
-                                  ;; always scroll the y-axis.
+                                  ;; If the user has a left/right
+                                  ;; scroll wheel, never scroll
+                                  ;; the Y axis.
                                   (and (not left-or-right-direction?)
                                        pan-y-by-mods)))
                  (pan-x-by-mods
@@ -179,8 +179,8 @@
                  ;; want to use the scroll wheel to pan.
                  (pan-x-axis (and (true? (schematic_window_get_scrollbars_flag *window))
                                   ;; If the user has a left/right
-                                  ;; scroll wheel, always scroll the
-                                  ;; y-axis.
+                                  ;; scroll wheel, always scroll
+                                  ;; the X axis.
                                   (or left-or-right-direction?
                                       pan-x-by-mods))))
 
