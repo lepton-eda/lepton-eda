@@ -79,6 +79,8 @@
 (define %last-scroll-event-time 0)
 
 (define (scroll-canvas *widget *event *window)
+  "Process scroll *EVENT passed to the canvas *WIDGET from its
+parent *WINDOW."
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
 
