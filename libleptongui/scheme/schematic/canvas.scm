@@ -87,6 +87,12 @@
              (eq? (event-scroll-direction->symbol scroll-direction)
                   'gdk-scroll-right))))
 
+  (define (event-scroll-direction->pan-direction scroll-direction)
+    (case (event-scroll-direction->symbol scroll-direction)
+      ((gdk-scroll-up gdk-scroll-left) -1)
+      ((gdk-scroll-down gdk-scroll-right) 1)
+      (else 0)))
+
   (define (update-adjustment *adjustment pan-direction)
     (gtk_adjustment_set_value
      *adjustment
@@ -193,18 +199,8 @@
                          (if %m4-use-gtk3
                              (if smooth-scroll?
                                  (inexact->exact (round (cdr scroll-direction)))
-                                 (case (event-scroll-direction->symbol scroll-direction)
-                                   ((gdk-scroll-up) -1)
-                                   ((gdk-scroll-left) -1)
-                                   ((gdk-scroll-down) 1)
-                                   ((gdk-scroll-right) 1)
-                                   (else 0)))
-                             (case (event-scroll-direction->symbol scroll-direction)
-                               ((gdk-scroll-up) -1)
-                               ((gdk-scroll-left) -1)
-                               ((gdk-scroll-down) 1)
-                               ((gdk-scroll-right) 1)
-                               (else 0))))
+                                 (event-scroll-direction->pan-direction scroll-direction))
+                             (event-scroll-direction->pan-direction scroll-direction)))
                         (zoom-direction
                          (if %m4-use-gtk3
                              (if smooth-scroll?
