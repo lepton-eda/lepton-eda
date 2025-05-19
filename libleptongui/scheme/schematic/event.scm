@@ -101,6 +101,7 @@ symbol SYM."
                    (bytevector-ieee-double-native-ref delta-y 0))))))
 
 (define (event-direction *event)
+  "Extract the scroll direction from *EVENT."
   ((if %m4-use-gtk3
        event-direction-gtk3
        schematic_event_get_scroll_direction) *event))
