@@ -46,6 +46,8 @@ GdkModifierType."
 
 
 (define (event-coords *event)
+  "Extract the event window relative coordinates from *EVENT in the
+form (X . Y)."
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
 
