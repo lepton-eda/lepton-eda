@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2023-2024 Lepton EDA Contributors
+ * Copyright (C) 2023-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,4 +75,62 @@ GtkWindow*
 gtk_widget_get_gtk_window (GtkWidget *widget)
 {
   return GTK_WINDOW (widget);
+}
+
+
+/*! \brief Return an event scroll direction enum value from
+ *         string.
+ *  \par Function Description
+ *  Returns the \c GdkScrollDirection enum value corresponding to
+ *  the string \p s.  This is mainly intended to be used for value
+ *  conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The scroll direction enum value.
+ */
+GdkScrollDirection
+gdk_event_scroll_direction_from_string (char *s)
+{
+  GdkScrollDirection result = GDK_SCROLL_UP;
+
+  if      (strcmp (s, "gdk-scroll-up") == 0) {result = GDK_SCROLL_UP; }
+  else if (strcmp (s, "gdk-scroll-down") == 0) {result = GDK_SCROLL_DOWN; }
+  else if (strcmp (s, "gdk-scroll-left") == 0) {result = GDK_SCROLL_LEFT; }
+  else if (strcmp (s, "gdk-scroll-right") == 0) {result = GDK_SCROLL_RIGHT; }
+#ifdef GTK3
+  else if (strcmp (s, "gdk-scroll-smooth") == 0) {result = GDK_SCROLL_SMOOTH; }
+#endif
+
+  return result;
+}
+
+
+/*! \brief Get a string holding the representation of \c
+ *         GdkScrollDirection value.
+ *  \par Function Description
+ *  Returns the representation of a \c GdkScrollDirection value as
+ *  a string.  This is mainly intended to be used for value
+ *  conversion in Scheme FFI functions.
+ *
+ *  \param [in] mode The \c GdkScrollDirection value.
+ *  \return The string representation of the value.
+ */
+const char*
+gdk_event_scroll_direction_to_string (GdkScrollDirection mode)
+{
+  const char *result = NULL;
+
+  switch (mode)
+  {
+  case GDK_SCROLL_UP: result = "gdk-scroll-up"; break;
+  case GDK_SCROLL_DOWN: result = "gdk-scroll-down"; break;
+  case GDK_SCROLL_LEFT: result = "gdk-scroll-left"; break;
+  case GDK_SCROLL_RIGHT: result = "gdk-scroll-right"; break;
+#ifdef GTK3
+  case GDK_SCROLL_SMOOTH: result = "gdk-scroll-smooth"; break;
+#endif
+  default: break;
+  }
+
+  return result;
 }

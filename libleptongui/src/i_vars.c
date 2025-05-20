@@ -35,7 +35,7 @@ int   default_embed_component = FALSE;
 int   default_include_component = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
-int   default_scrollbars_flag = TRUE;
+gboolean default_scrollbars_flag = TRUE;
 int   default_third_button = MOUSEBTN_DO_POPUP;
 int   default_third_button_cancel = TRUE;
 int   default_middle_button = MOUSEBTN_DO_PAN;
@@ -205,7 +205,7 @@ i_vars_set (SchematicWindow* w_current)
                        &w_current->actionfeedback_mode);
 
 
-  int scrollbars_flag = 0;
+  gboolean scrollbars_flag = FALSE;
   cfg_read_bool ("schematic.gui", "scrollbars",
                  default_scrollbars_flag, &scrollbars_flag);
   schematic_window_set_scrollbars_flag (w_current, scrollbars_flag);

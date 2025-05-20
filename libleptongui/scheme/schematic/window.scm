@@ -44,6 +44,7 @@
   #:use-module (schematic callback)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
+  #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic gettext)
@@ -231,14 +232,6 @@
 (define MOUSEBTN_DO_PAN    5)
 
 
-(define (event-state *event)
-  (define GdkModifierType uint32)
-  (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
-
-  (gdk_event_get_state *event (bytevector->pointer state-bv))
-  (bytevector-u32-native-ref state-bv 0))
-
-
 (define (window-save-modifiers *window *event)
   (define alt-mask (schematic_event_alt_mask))
   (define control-mask (schematic_event_control_mask))
@@ -255,19 +248,6 @@
                                             (state-contains? state control-mask))
   (schematic_window_set_alt_key_pressed *window
                                         (state-contains? state alt-mask)))
-
-
-(define (event-coords *event)
-  (define window-x-bv (make-bytevector (sizeof double) 0))
-  (define window-y-bv (make-bytevector (sizeof double) 0))
-
-  (gdk_event_get_coords *event
-                        (bytevector->pointer window-x-bv)
-                        (bytevector->pointer window-y-bv))
-
-  (let ((window-x (bytevector-ieee-double-native-ref window-x-bv 0))
-        (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
-    (cons window-x window-y)))
 
 
 (define (zoom-box window)
@@ -786,13 +766,6 @@ zooming."
   (procedure->pointer int callback-motion '(* * *)))
 
 
-(define (callback-scroll *widget *event *window)
-  (x_event_scroll *widget *event *window))
-
-(define *callback-scroll
-  (procedure->pointer int callback-scroll '(* * *)))
-
-
 (define (setup-canvas-draw-events *window *canvas)
   (define signal-callback-list
     (list
@@ -803,7 +776,7 @@ zooming."
      `("configure-event" . ,*x_event_configure)
      `("key-press-event" . ,*process-key-event)
      `("key-release-event" . ,*process-key-event)
-     `("scroll-event" . ,*callback-scroll)
+     `("scroll-event" . ,*scroll-canvas)
      `("update-grid-info" . ,*i_update_grid_info_callback)
      `("notify::page" . ,*schematic_window_notify_page_callback)))
 
