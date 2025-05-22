@@ -8,6 +8,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; module load paths we need before compilation, thus eliminating
 ;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
+  (define %m4-package-name "@PACKAGE_TARNAME@")
   (define %m4-bindir "@leptonbindir@")
   (define %m4-abs-top-srcdir "@abs_top_srcdir@")
   (define %m4-abs-top-builddir "@abs_top_builddir@")
@@ -71,7 +72,7 @@ is not supported for your OS, sorry.\n")
             (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path)))
           (let ((%lepton-scheme-dir
                  (string-join (list %m4-abs-top-srcdir
-                                    "lepton-eda"
+                                    %m4-package-name
                                     "scheme")
                               file-name-separator-string))
                 (%liblepton
