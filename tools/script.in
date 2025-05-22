@@ -13,6 +13,32 @@ exec @GUILE@ -s "$0" "$@"
   (define %m4-abs-top-builddir "@abs_top_builddir@")
   (define %m4-lepton-data-dir "@leptondatadir@")
 
+  (define %program-name (car (program-arguments)))
+  (define %running-program-absolute-file-name
+    ;; If the program name is specified using its absolute or
+    ;; relative path, canonicalize it.
+    (or (false-if-exception
+         (canonicalize-path %program-name))
+        ;; When the program name is just a basename, we have to
+        ;; use special means to obtain the real program path.
+
+        ;; Try to implement a portable way of getting the path the
+        ;; executable started from.
+
+        ;; Linux
+        (and (string-contains %host-type "linux")
+             (readlink "/proc/self/exe"))
+        ;; Other OSes can be added here, see the definition of the
+        ;; variable %platform in the module (lepton-os) for
+        ;; reference.
+
+        ;; FreeBSD: sysctl CTL_KERN KERN_PROC KERN_PROC_PATHNAME -1
+        ;; *BSD: (readlink "/proc/curproc/file")
+        ;; Mac OS X: _NSGetExecutablePath()
+        ;; Solaris: getexecname()
+        ;; Windows: GetModuleFileName() with Module = NULL
+        ))
+
   ;; Check if the program runs from its installation directory.
   (define run-installed-program? #t)
   (if (and run-installed-program?
