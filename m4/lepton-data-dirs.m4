@@ -57,9 +57,4 @@ Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
   AC_SUBST([BITMAP_DIRECTORY], ["$LEPTONDATADIR_expand/bitmap"])
 
-  AC_DEFINE_UNQUOTED([LEPTON_SCHEME_DIR],
-                     ["$LEPTONDATADIR_expand/scheme"],
-                     [directory with scheme modules])
-
-  AC_SUBST([LEPTON_SCHEME_DIR], ["$LEPTONDATADIR_expand/scheme"])
 ])dnl AX_DATA_DIRS
