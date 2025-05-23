@@ -55,38 +55,43 @@ exec @GUILE@ -s "$0" "$@"
          (equal? %installed-program-absolute-file-name
                  %running-program-absolute-file-name)))
 
-  (if (and run-installed-program?
-           (not (getenv "LIBLEPTON")))
-      (let ((%lepton-scheme-dir
-             (string-append %m4-lepton-data-dir
-                            file-name-separator-string
-                            "scheme")))
-        ;; Add directory with Scheme modules to %load-path.
-        (add-to-load-path %lepton-scheme-dir)
-        (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path)))
-      (let ((%lepton-scheme-dir
-             (string-join (list %m4-abs-top-srcdir
-                                "lepton-eda"
-                                "scheme")
-                          file-name-separator-string))
-            (%liblepton
-             (string-join (list %m4-abs-top-builddir
-                                "liblepton"
-                                "src"
-                                "liblepton")
-                          file-name-separator-string))
-            (%libleptongui
-             (string-join (list %m4-abs-top-builddir
-                                "libleptongui"
-                                "src"
-                                "libleptongui")
-                          file-name-separator-string)))
-        ;; Add directory with Scheme modules to %load-path.
-        (add-to-load-path %lepton-scheme-dir)
-        ;; Set paths to the libs in the build directory.
-        (putenv "LIBLEPTON")
-        (setenv "LIBLEPTON" %liblepton)
-        (putenv "LIBLEPTONGUI")
-        (setenv "LIBLEPTONGUI" %libleptongui))))
+  (if (and (not %installed-program-absolute-file-name)
+           (not %running-program-absolute-file-name))
+      (format (current-error-port)
+              "Running the program without installation
+is not supported for your OS, sorry.\n")
+      (if (and run-installed-program?
+               (not (getenv "LIBLEPTON")))
+          (let ((%lepton-scheme-dir
+                 (string-append %m4-lepton-data-dir
+                                file-name-separator-string
+                                "scheme")))
+            ;; Add directory with Scheme modules to %load-path.
+            (add-to-load-path %lepton-scheme-dir)
+            (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path)))
+          (let ((%lepton-scheme-dir
+                 (string-join (list %m4-abs-top-srcdir
+                                    "lepton-eda"
+                                    "scheme")
+                              file-name-separator-string))
+                (%liblepton
+                 (string-join (list %m4-abs-top-builddir
+                                    "liblepton"
+                                    "src"
+                                    "liblepton")
+                              file-name-separator-string))
+                (%libleptongui
+                 (string-join (list %m4-abs-top-builddir
+                                    "libleptongui"
+                                    "src"
+                                    "libleptongui")
+                              file-name-separator-string)))
+            ;; Add directory with Scheme modules to %load-path.
+            (add-to-load-path %lepton-scheme-dir)
+            ;; Set paths to the libs in the build directory.
+            (putenv "LIBLEPTON")
+            (setenv "LIBLEPTON" %liblepton)
+            (putenv "LIBLEPTONGUI")
+            (setenv "LIBLEPTONGUI" %libleptongui)))))
 
 (use-modules (lepton m4))
