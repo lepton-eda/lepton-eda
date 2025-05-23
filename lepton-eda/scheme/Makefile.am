@@ -1,3 +1,5 @@
+SUBDIRS = autoload
+
 scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 

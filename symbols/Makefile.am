@@ -1,3 +1,1 @@
-SUBDIRS = \
-	docs \
-	scheme
+SUBDIRS = docs
