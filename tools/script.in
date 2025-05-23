@@ -8,6 +8,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; module load paths we need before compilation, thus eliminating
 ;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
+  (define %m4-bindir "@leptonbindir@")
+
   ;; Check if the program runs from its installation directory.
   (define run-installed-program? #t)
   (if (and run-installed-program?

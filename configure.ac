@@ -250,7 +250,7 @@ AX_LIBLEPTONGUI([5:0:0])
 # Generate output
 #####################################################################
 
-AC_CONFIG_FILES([tools/schematic/lepton-schematic:tools/script.in:tools/schematic/lepton-schematic.scm],
+AC_CONFIG_FILES([tools/schematic/lepton-schematic.in:tools/script.in:tools/schematic/lepton-schematic.scm],
                 [chmod +x tools/schematic/lepton-schematic])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-cli:tools/script.in:tools/cli/scheme/lepton-cli.scm],
