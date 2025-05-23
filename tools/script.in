@@ -68,8 +68,25 @@ exec @GUILE@ -s "$0" "$@"
              (string-join (list %m4-abs-top-srcdir
                                 "lepton-eda"
                                 "scheme")
+                          file-name-separator-string))
+            (%liblepton
+             (string-join (list %m4-abs-top-builddir
+                                "liblepton"
+                                "src"
+                                "liblepton")
+                          file-name-separator-string))
+            (%libleptongui
+             (string-join (list %m4-abs-top-builddir
+                                "libleptongui"
+                                "src"
+                                "libleptongui")
                           file-name-separator-string)))
         ;; Add directory with Scheme modules to %load-path.
-        (add-to-load-path %lepton-scheme-dir))))
+        (add-to-load-path %lepton-scheme-dir)
+        ;; Set paths to the libs in the build directory.
+        (putenv "LIBLEPTON")
+        (setenv "LIBLEPTON" %liblepton)
+        (putenv "LIBLEPTONGUI")
+        (setenv "LIBLEPTONGUI" %libleptongui))))
 
 (use-modules (lepton m4))
