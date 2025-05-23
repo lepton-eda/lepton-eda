@@ -305,7 +305,6 @@ AC_CONFIG_FILES([Makefile
                  liblepton/docs/Makefile
                  liblepton/docs/images/Makefile
                  liblepton/include/Makefile
-                 liblepton/lib/Makefile
                  liblepton/src/Makefile
                  liblepton/tests/Makefile
 
