@@ -3,4 +3,14 @@ SUBDIRS = \
 	scheme
 
 rcdatadir = $(LEPTONDATADIR)
-dist_rcdata_DATA = lepton-system.conf geda-system.conf system-gafrc print-colormap-lightbg print-colormap-darkbg
+dist_rcdata_DATA = \
+	geda-system.conf \
+	gschem-colormap-bw \
+	gschem-colormap-darkbg \
+	gschem-colormap-lightbg \
+	lepton-gtkrc \
+	lepton-system.conf \
+	print-colormap-darkbg \
+	print-colormap-lightbg \
+	system-gafrc \
+	system-gschemrc
