@@ -7,7 +7,6 @@ SUBDIRS = \
 	data \
 	${DOC_DIR} \
 	include \
-	lib \
 	src \
 	tests
 
