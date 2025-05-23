@@ -17,6 +17,10 @@ GUILE_WARNINGS = \
 	-Wunbound-variable \
 	-Wunsupported-warning
 
+lepton-schematic: lepton-schematic.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' $< > $@
+
+CLEANFILES = lepton-schematic
 
 # This part depends on the configure switch --enable-guild.
 if ENABLE_GUILD
@@ -43,6 +47,6 @@ nobase_go_DATA = lepton-schematic.go
 guile_install_go_files = install-nobase_goDATA
 $(guile_install_go_files): install-binSCRIPTS
 
-CLEANFILES = $(nobase_go_DATA)
+CLEANFILES += $(nobase_go_DATA)
 
 endif
