@@ -321,7 +321,6 @@ AC_CONFIG_FILES([Makefile
                  libleptongui/include/Makefile
                  libleptongui/src/Makefile
                  libleptongui/examples/Makefile
-                 libleptongui/lib/Makefile
                  libleptongui/data/Makefile
                  libleptongui/bitmap/Makefile
                  libleptongui/tests/Makefile
