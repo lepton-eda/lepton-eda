@@ -5,6 +5,7 @@
 
 (use-modules (lepton library)
              (lepton log-rotate)
+             (lepton os)
              ;; Import deprecated Scheme functions.
              (geda deprecated-config)
              (geda deprecated)
@@ -39,13 +40,18 @@
 ; Environment variables in 'dir' are expanded.
 
 
-;;;; Color maps
-;; Load up a color scheme for printing optimised for a white background.
-; Comment out the second line and comment in the first line for a
-; dark background. The dark background is the original look.
-;
-;(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
-(primitive-load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
+;;; Color maps for printing
+;;;
+;;; Load up a color scheme for printing optimised for a white or
+;;; dark background.  Comment out an unused definition and comment
+;;; in the one to use to change the print colormap.
+
+;;; Dark background
+; (define print-colormap "print-colormap-darkbg")
+;;; Light background
+(define print-colormap "print-colormap-lightbg")
+;;; Load the colormap
+(primitive-load (lookup-sys-config-path print-colormap))
 
 
 ;;;; Process configuration script directory

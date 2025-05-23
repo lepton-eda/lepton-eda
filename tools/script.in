@@ -92,6 +92,15 @@ is not supported for your OS, sorry.\n")
             (putenv "LIBLEPTON")
             (setenv "LIBLEPTON" %liblepton)
             (putenv "LIBLEPTONGUI")
-            (setenv "LIBLEPTONGUI" %libleptongui)))))
+            (setenv "LIBLEPTONGUI" %libleptongui)
+            ;; Define directories for configuration and data files.
+            (let ((current-xdg-config-dirs (getenv "XDG_CONFIG_DIRS")))
+              (putenv "XDG_CONFIG_DIRS")
+              (setenv "XDG_CONFIG_DIRS"
+                      (if current-xdg-config-dirs
+                          (string-append %m4-abs-top-srcdir
+                                         ":"
+                                         current-xdg-config-dirs)
+                          %m4-abs-top-srcdir)))))))
 
 (use-modules (lepton m4))
