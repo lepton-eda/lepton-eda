@@ -56,8 +56,10 @@
 
 ;;;; Process configuration script directory
 
-;; The directory containing any extra scheme files to load
-(define autoload-path (build-path geda-data-path "scheme" "autoload"))
+;; Look up for the directory containing any extra scheme files to
+;; load.
+(define autoload-path
+  (lookup-sys-data-path (build-path "scheme" "autoload")))
 
 ;; Execute any scheme files found in the autoload-path directory.
-(load-scheme-dir autoload-path)
+(and=> autoload-path load-scheme-dir)
