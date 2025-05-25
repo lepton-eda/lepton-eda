@@ -2,6 +2,11 @@
 exec @GUILE@ -s "$0" "$@"
 !#
 
+;;; The eval-when() macro allows to suppress compilation warnings
+;;; on not defined variables because it evaluates the code on the
+;;; expand stage before compilation.  This allows us to get Scheme
+;;; module load paths we need before compilation, thus eliminating
+;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
   (unless (getenv "LIBLEPTON")
     (add-to-load-path "@LEPTON_SCHEME_DIR@")
