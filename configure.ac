@@ -437,4 +437,13 @@ AC_CONFIG_FILES([Makefile
                  contrib/renum/src/Makefile
                  contrib/renum/docs/Makefile
 ])
+
+# These icons are used when running lepton-schematic from the
+# builddir.
+AC_CONFIG_LINKS([lepton-eda/icons/insert-bus.png:libleptongui/data/insert-bus-22.png
+                 lepton-eda/icons/insert-net.png:libleptongui/data/insert-net-22.png
+                 lepton-eda/icons/insert-symbol.png:libleptongui/data/insert-symbol-22.png
+                 lepton-eda/icons/insert-text.png:libleptongui/data/insert-text-22.png
+                 lepton-eda/icons/select.png:libleptongui/data/select-22.png])
+
 AC_OUTPUT
