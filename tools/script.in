@@ -9,6 +9,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
   (define %m4-bindir "@leptonbindir@")
+  (define %m4-abs-top-srcdir "@abs_top_srcdir@")
   (define %m4-lepton-data-dir "@leptondatadir@")
 
   ;; Check if the program runs from its installation directory.
