@@ -45,16 +45,22 @@ exec @GUILE@ -s "$0" "$@"
       (string-append %m4-bindir
                      file-name-separator-string
                      (basename %program-name)))))
-  ;; Check if the program runs from its installation directory.
+  ;; Check if the current process has been started from the
+  ;; installation directory defined by autoconf, not from the
+  ;; build directory.
   (define run-installed-program?
-    ;; This works only on Linux, so if the real program binary
-    ;; path cannot be determined, assume the program is installed,
-    ;; anyways.
-    (and %running-program-absolute-file-name
-         ;; Don't use string= here as one of the arguments can be
-         ;; #f.
-         (equal? %installed-program-absolute-file-name
-                 %running-program-absolute-file-name)))
+    ;; First check that the executable exists in the installation
+    ;; directory.
+    (and %installed-program-absolute-file-name
+         ;; The second check is to verify that the running
+         ;; executable file is the same as one in the installation
+         ;; directory.  Currently, we can obtain the executable
+         ;; file name of the running process only on Linux, so if
+         ;; the real program binary path cannot be determined,
+         ;; assume the program is installed, anyways.
+         (or (not %running-program-absolute-file-name)
+             (string= %installed-program-absolute-file-name
+                      %running-program-absolute-file-name))))
 
   (if (and (not %installed-program-absolute-file-name)
            (not %running-program-absolute-file-name))
