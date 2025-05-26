@@ -10,6 +10,7 @@ exec @GUILE@ -s "$0" "$@"
 (eval-when (expand load eval)
   (define %m4-bindir "@leptonbindir@")
   (define %m4-abs-top-srcdir "@abs_top_srcdir@")
+  (define %m4-abs-top-builddir "@abs_top_builddir@")
   (define %m4-lepton-data-dir "@leptondatadir@")
 
   ;; Check if the program runs from its installation directory.
