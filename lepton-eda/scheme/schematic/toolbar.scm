@@ -25,6 +25,7 @@
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
+  #:use-module (lepton m4)
 
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
@@ -158,13 +159,13 @@
     (make-toolbar-separator *toolbar)
     (make-toolbar-button *window
                          *toolbar
-                         "edit-undo"
+                         (if %m4-use-gtk3 "edit-undo" "undo")
                          "Undo"
                          "Undo last operation"
                          callback-edit-undo)
     (make-toolbar-button *window
                          *toolbar
-                         "edit-redo"
+                         (if %m4-use-gtk3 "edit-redo" "redo")
                          "Redo"
                          "Redo last undo"
                          callback-edit-redo)
@@ -213,14 +214,14 @@
     (make-toolbar-separator *toolbar)
 
     (make-toolbar-button *window *toolbar
-                         "gtk-goto-bottom" "Down Symbol" "Down Symbol" ; ico lab tip
+                         "go-bottom" "Down Symbol" "Down Symbol" ; ico lab tip
                          (lambda (*widget *window)
                            (g_action_eval_by_name
                              *window
                              (string->pointer "&hierarchy-down-symbol"))))
 
     (make-toolbar-button *window *toolbar
-                         "gtk-go-down" "Down Schematic" "Down Schematic"
+                         "go-down" "Down Schematic" "Down Schematic"
                          (lambda (*widget *window)
                            (g_action_eval_by_name
                              *window
