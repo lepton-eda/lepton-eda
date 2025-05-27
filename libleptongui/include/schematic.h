@@ -18,6 +18,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "action.h"
 #include "action_mode.h"
 #include "autonumber_dialog.h"
+#include "bitmap.h"
 #include "grid_mode.h"
 #include "gtk_helper.h"
 #include "snap_mode.h"

@@ -5,6 +5,7 @@ libleptongui_la_SOURCES = \
 	action.c \
 	action_mode.c \
 	autonumber_dialog.c \
+	bitmap.c \
 	canvas.c \
 	execute_script.c \
 	g_action.c \
