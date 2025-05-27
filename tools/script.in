@@ -62,6 +62,16 @@ exec @GUILE@ -s "$0" "$@"
              (string= %installed-program-absolute-file-name
                       %running-program-absolute-file-name))))
 
+  (define %bitmap-directory
+    (if run-installed-program?
+        (string-append %m4-lepton-data-dir
+                       file-name-separator-string
+                       "bitmap")
+        (string-join (list %m4-abs-top-srcdir
+                           "libleptongui"
+                           "bitmap")
+                     file-name-separator-string)))
+
   (if (and (not %installed-program-absolute-file-name)
            (not %running-program-absolute-file-name))
       (format (current-error-port)

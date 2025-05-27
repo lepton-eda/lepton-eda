@@ -42,11 +42,4 @@ Only liblepton should use this - apps should use eda_get_system_data_dirs()])
   AC_MSG_CHECKING([where to install Lepton shared data (LEPTONDATADIR)])
   AC_MSG_RESULT([$LEPTONDATADIR])
 
-
-  AC_DEFINE_UNQUOTED([BITMAP_DIRECTORY],
-                     ["$LEPTONDATADIR_expand/bitmap"],
-                     [directory with bitmaps])
-
-  AC_SUBST([BITMAP_DIRECTORY], ["$LEPTONDATADIR_expand/bitmap"])
-
 ])dnl AX_DATA_DIRS

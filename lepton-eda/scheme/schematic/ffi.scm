@@ -336,6 +336,9 @@
             schematic_action_mode_from_string
             schematic_action_mode_to_string
 
+            schematic_bitmap_get_path
+            schematic_bitmap_set_path
+
             schematic_grid_mode_from_string
             schematic_grid_mode_to_string
 
@@ -683,6 +686,10 @@
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
 (define-lff schematic_action_mode_to_string '* (list int))
+
+;;; bitmap.c
+(define-lff schematic_bitmap_get_path '* '())
+(define-lff schematic_bitmap_set_path void '(*))
 
 ;;; grid_mode.c
 (define-lff schematic_grid_mode_from_string int '(*))

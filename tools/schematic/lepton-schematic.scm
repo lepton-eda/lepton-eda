@@ -295,6 +295,9 @@ Run `~A --help' for more information.\n")
 ;;; Parse custom GTK resource files.  Used only for GTK2.
 (parse-gtkrc)
 
+;;; Set path to bitmaps.
+(schematic_bitmap_set_path (string->pointer %bitmap-directory))
+
 ;;; Set default icon theme and make sure we can find our own
 ;;; icons.
 (set-window-default-icon)
