@@ -1672,8 +1672,9 @@ schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order)
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
   for (i=0; filenames[i] != NULL; i++) {
-    path=g_build_filename(BITMAP_DIRECTORY,
-                          filenames[i], NULL);
+    path = g_build_filename (schematic_bitmap_get_path (),
+                             filenames[i],
+                             NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
     gtk_list_store_append(store, &iter);

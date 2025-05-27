@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ void about_dialog (SchematicWindow *w_current)
                                     PACKAGE_DOTTED_VERSION,
                                     PACKAGE_GIT_COMMIT);
 
-  logo_file = g_strconcat (BITMAP_DIRECTORY,
+  logo_file = g_strconcat (schematic_bitmap_get_path (),
                            G_DIR_SEPARATOR_S, "gschem-about-logo.png", NULL);
 
   logo = gdk_pixbuf_new_from_file (logo_file, &error);
