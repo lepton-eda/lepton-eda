@@ -8,8 +8,15 @@ exec @GUILE@ -s "$0" "$@"
 ;;; module load paths we need before compilation, thus eliminating
 ;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path))))
+  ;; Check if the program runs from its installation directory.
+  (define run-installed-program? #t)
+  (if (and run-installed-program?
+           (not (getenv "LIBLEPTON")))
+      (begin
+        (add-to-load-path "@LEPTON_SCHEME_DIR@")
+        (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path)))
+      (begin
+        ;; Do nothing for now.
+        #f)))
 
 (use-modules (lepton m4))
