@@ -66,10 +66,17 @@ is not supported for your OS, sorry.\n")
           (let ((%lepton-scheme-dir
                  (string-append %m4-lepton-data-dir
                                 file-name-separator-string
-                                "scheme")))
+                                "scheme"))
+                (%lepton-ccache-dir
+                 (string-append %m4-lepton-data-dir
+                                file-name-separator-string
+                                "ccache")))
             ;; Add directory with Scheme modules to %load-path.
             (add-to-load-path %lepton-scheme-dir)
-            (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path)))
+            ;; Load compiled code only when the program is
+            ;; installed.
+            (set! %load-compiled-path (cons %lepton-ccache-dir
+                                            %load-compiled-path)))
           (let ((%lepton-scheme-dir
                  (string-join (list %m4-abs-top-srcdir
                                     %m4-package-name

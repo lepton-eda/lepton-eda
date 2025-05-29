@@ -3,7 +3,7 @@
 
 dnl Lepton EDA data and configuration directories
 dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
-dnl Copyright (C) 2018-2022 Lepton EDA Contributors
+dnl Copyright (C) 2018-2025 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -42,14 +42,6 @@ Only liblepton should use this - apps should use eda_get_system_data_dirs()])
   AC_MSG_CHECKING([where to install Lepton shared data (LEPTONDATADIR)])
   AC_MSG_RESULT([$LEPTONDATADIR])
 
-
-  # create #define LEPTON_CCACHE_DIR in config.h:
-  #
-  AC_DEFINE_UNQUOTED([LEPTON_CCACHE_DIR],
-                     ["$LEPTONDATADIR_expand/ccache"],
-                     [precompiled scm files dir])
-
-  AC_SUBST([LEPTON_CCACHE_DIR], ["$LEPTONDATADIR_expand/ccache"])
 
   AC_DEFINE_UNQUOTED([BITMAP_DIRECTORY],
                      ["$LEPTONDATADIR_expand/bitmap"],
