@@ -17,6 +17,12 @@ GUILE_WARNINGS = \
 	-Wunbound-variable \
 	-Wunsupported-warning
 
+lepton-attrib: lepton-attrib.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
+
+CLEANFILES = lepton-attrib
 
 # This part depends on the configure switch --enable-guild.
 if ENABLE_GUILD
@@ -40,6 +46,6 @@ nobase_go_DATA = lepton-attrib.go
 guile_install_go_files = install-nobase_goDATA
 $(guile_install_go_files): install-binSCRIPTS
 
-CLEANFILES = $(nobase_go_DATA)
+CLEANFILES += $(nobase_go_DATA)
 
 endif

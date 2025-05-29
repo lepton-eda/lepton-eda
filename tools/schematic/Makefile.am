@@ -19,7 +19,8 @@ GUILE_WARNINGS = \
 
 lepton-schematic: lepton-schematic.in
 	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
 
 CLEANFILES = lepton-schematic
 

@@ -250,47 +250,33 @@ AX_LIBLEPTONGUI([5:0:0])
 # Generate output
 #####################################################################
 
-AC_CONFIG_FILES([tools/schematic/lepton-schematic.in:tools/script.in:tools/schematic/lepton-schematic.scm],
-                [chmod +x tools/schematic/lepton-schematic])
+AC_CONFIG_FILES([tools/schematic/lepton-schematic.in:tools/script.in:tools/schematic/lepton-schematic.scm])
 
-AC_CONFIG_FILES([tools/cli/scheme/lepton-cli:tools/script.in:tools/cli/scheme/lepton-cli.scm],
-                [chmod +x tools/cli/scheme/lepton-cli])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-cli.in:tools/script.in:tools/cli/scheme/lepton-cli.scm])
 
-AC_CONFIG_FILES([tools/cli/scheme/lepton-config:tools/script.in:tools/cli/scheme/lepton-config.scm],
-                [chmod +x tools/cli/scheme/lepton-config])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-config.in:tools/script.in:tools/cli/scheme/lepton-config.scm])
 
-AC_CONFIG_FILES([tools/cli/scheme/lepton-export:tools/script.in:tools/cli/scheme/lepton-export.scm],
-                [chmod +x tools/cli/scheme/lepton-export])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-export.in:tools/script.in:tools/cli/scheme/lepton-export.scm])
 
-AC_CONFIG_FILES([tools/cli/scheme/lepton-shell:tools/script.in:tools/cli/scheme/lepton-shell.scm],
-                [chmod +x tools/cli/scheme/lepton-shell])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-shell.in:tools/script.in:tools/cli/scheme/lepton-shell.scm])
 
-AC_CONFIG_FILES([tools/archive/lepton-archive:tools/script.in:tools/archive/lepton-archive.scm],
-                [chmod +x tools/archive/lepton-archive])
+AC_CONFIG_FILES([tools/archive/lepton-archive.in:tools/script.in:tools/archive/lepton-archive.scm])
 
-AC_CONFIG_FILES([tools/attrib/lepton-attrib:tools/script.in:tools/attrib/lepton-attrib.scm],
-                [chmod +x tools/attrib/lepton-attrib])
+AC_CONFIG_FILES([tools/attrib/lepton-attrib.in:tools/script.in:tools/attrib/lepton-attrib.scm])
 
-AC_CONFIG_FILES([tools/embed/lepton-embed:tools/script.in:tools/embed/lepton-embed.scm],
-                [chmod +x tools/embed/lepton-embed])
+AC_CONFIG_FILES([tools/embed/lepton-embed.in:tools/script.in:tools/embed/lepton-embed.scm])
 
-AC_CONFIG_FILES([tools/netlist/lepton-netlist:tools/script.in:tools/netlist/lepton-netlist.scm],
-                [chmod +x tools/netlist/lepton-netlist])
+AC_CONFIG_FILES([tools/netlist/lepton-netlist.in:tools/script.in:tools/netlist/lepton-netlist.scm])
 
-AC_CONFIG_FILES([tools/sch2pcb/lepton-sch2pcb:tools/script.in:tools/sch2pcb/lepton-sch2pcb.scm],
-                [chmod +x tools/sch2pcb/lepton-sch2pcb])
+AC_CONFIG_FILES([tools/sch2pcb/lepton-sch2pcb.in:tools/script.in:tools/sch2pcb/lepton-sch2pcb.scm])
 
-AC_CONFIG_FILES([tools/symcheck/lepton-symcheck:tools/script.in:tools/symcheck/lepton-symcheck.scm],
-                [chmod +x tools/symcheck/lepton-symcheck])
+AC_CONFIG_FILES([tools/symcheck/lepton-symcheck.in:tools/script.in:tools/symcheck/lepton-symcheck.scm])
 
-AC_CONFIG_FILES([tools/tragesym/lepton-tragesym:tools/script.in:tools/tragesym/lepton-tragesym.scm],
-                [chmod +x tools/tragesym/lepton-tragesym])
+AC_CONFIG_FILES([tools/tragesym/lepton-tragesym.in:tools/script.in:tools/tragesym/lepton-tragesym.scm])
 
-AC_CONFIG_FILES([tools/upcfg/lepton-upcfg:tools/script.in:tools/upcfg/lepton-upcfg.scm],
-                [chmod +x tools/upcfg/lepton-upcfg])
+AC_CONFIG_FILES([tools/upcfg/lepton-upcfg.in:tools/script.in:tools/upcfg/lepton-upcfg.scm])
 
-AC_CONFIG_FILES([tools/update/lepton-update:tools/script.in:tools/update/lepton-update.scm],
-                [chmod +x tools/update/lepton-update])
+AC_CONFIG_FILES([tools/update/lepton-update.in:tools/script.in:tools/update/lepton-update.scm])
 
 AC_CONFIG_FILES([Makefile
 
