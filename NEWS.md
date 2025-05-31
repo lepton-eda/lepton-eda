@@ -506,6 +506,72 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 ### Changes in `lepton-netlist`:
 
+- A new, **module** netlist backend system has been introduced:
+  - The new backend system removes requirements to naming of
+    backend files though keeps ones for naming their main
+    functions.  The `gnet-` prefix is no longer needed to be used
+    in backend file names to let the files be recognized as
+    backends.  The main function has to be same named as the
+    backend file without the extension.
+  - The system distinctly specifies the structure of backend
+    modules and directory names where backends are expected to
+    reside.  Those are the `backend` subdirectories of the Lepton
+    load path directories.  Thus the modules defining backends
+    have to be named `(backend <module-name>)`, e.g. `(backend
+    spice)`.  See the Lepton texinfo manual for more information.
+  - The system removes necessity of pre-/post-loading
+    functionality as the new backend system doesn't need it.
+  - The backend functions can now be tested by means of Lepton's
+    unit test suite.
+  - A new module, `(netlist backend)`, has been introduced.
+  - A new record, `<backend>`, has been introduced in the
+    module. It is designed to contain basic information on a
+    backend to be loaded and run, such as its name, path, type,
+    and its main *runner* procedure.
+  - A new function, `error-backend-file-name()`, has been
+    introduced.  It returns a full path for the file name it
+    reports the error about.  This is helpful when the file name
+    is not in the current directory (e.g. loaded from
+    `%load-path`) and something went wrong with it.
+  - All legacy backends except two ones, `geda` and `gsch2pcb`,
+    have been transformed into module backends:
+    - The `geda` backend is left yet due to legacy backend testing
+      purposes.
+    - The `gsch2pcb` backend cannot be transformed without fixing
+      the `lepton-sch2pcb` program.
+  - All the transformed legacy backends are now compiled into
+    *.go* files natively by `guild`.
+
+- The sequence of evaluations in the `drc` backend has been fixed.
+  After transforming `drc` into a module backend, running
+  `lepton-netlist --list-backends` started to fail due to early
+  evaluation of the code of one function that looks for the
+  `attribs` config file.  The issue could not be triggered when
+  the backend was legacy as the code of those is primitive loaded
+  and thus evaluated only at run time while for module backends,
+  it is evaluated during their compilation as well.  The issue has
+  been fixed by avoiding early evaluation of the culprit function
+  in the code.
+
+- The code of `spice` and `spice-sdb` backends has been amended
+  due to necessary setting of the *spice* netlist mode as this was
+  not implemented for module backends yet.  The *spice* netlist
+  mode is now set explicitly on an early stage in the module
+  `(backend spice common)`.
+
+- The `vams` backend code has been fixed as functions in the
+  module cannot evaluate toplevel expressions any more, as they
+  cannot see definitions outside their lexical context.  Toplevel
+  expressions that previously specified netlisting mode and an
+  attribute list to be processed could be set either in the
+  schematic capture program, or in the netlister.  In order to
+  keep the same functionality in the schematic capture program,
+  the main backend function has been amended to allow for setting
+  two optional parameters, `mode` and `attribs`.  In order to set
+  the parameters when launching from the netlister, two new
+  backend options, `generate-mode` and `top-attribs` have been
+  introduced.
+
 - Previously, the program used to output a backtrace when the file
   to process was missing.  Now it just reports the issue without
   outputting the backtrace.
