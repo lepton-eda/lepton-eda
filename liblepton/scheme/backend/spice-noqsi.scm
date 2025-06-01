@@ -338,12 +338,6 @@ This may indicate an erroneously duplicated refdes.\n"
         right))
 
 
-;; Replace "unknown" with a default
-
-(define (get-value-or-default refdes attr default)
-    (if (equal? value "unknown") default value))
-
-
 ;; forward and reverse refdes maps
 
 (define munges (make-hash-table))
