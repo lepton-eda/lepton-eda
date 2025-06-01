@@ -554,8 +554,8 @@ ENTITY ~A IS
             (first-pin-netname port-assignment)))
 
   (define (write-inout port-assignment)
-    (write-in-signal port-assignment)
-    (write-out-signal port-assignment))
+    (write-in port-assignment)
+    (write-out port-assignment))
 
   (let ((ins (vhdl:get-top-level-ports packages "IPAD"))
         (outs (vhdl:get-top-level-ports packages "OPAD"))
