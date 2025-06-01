@@ -220,12 +220,6 @@ LIBRARYFIELD8\r
 
   (string-join (map connection->string connections) "\r\n" 'suffix))
 
-;;
-;; Display all nets
-;;
-(define (protelII:display-name-nets nets)
-   (protelII:display-connections nets)
-   (display " \r\n"))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
