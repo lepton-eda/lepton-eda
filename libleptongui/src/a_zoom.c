@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,11 @@ a_zoom (SchematicWindow *w_current,
   case(ZOOM_FULL):
     /* indicate the zoom full with a negative zoomfactor */
     relativ_zoom_factor = -1;
+    break;
+
+    /* Don't zoom. */
+  case(ZOOM_SAME):
+    relativ_zoom_factor = 1;
     break;
   }
 

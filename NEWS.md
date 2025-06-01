@@ -348,6 +348,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   While deprecated, the previous function name is still available
   for users for backwards compatibility.
 
+- Gdk canvas scroll events are now handled in Scheme.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
@@ -472,6 +474,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   Multiattrib dialog as the primitives may have attributes
   attached to them.  Besides, the user always has some visual
   feedback that the command is evaluated.
+
+- A zooming bug in the GTK3 port has been fixed.  Previously, the
+  first *smooth* zooming event was always considered a *zoom in*
+  one.  Now it is skipped, like in panning mode, to calculate
+  correct zooming direction on the next event.
 
 ### Changes in `lepton-archive`:
 

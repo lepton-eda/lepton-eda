@@ -329,6 +329,8 @@
 
             schematic_canvas_get_page
             schematic_canvas_get_viewport
+            schematic_canvas_get_hadjustment
+            schematic_canvas_get_vadjustment
             schematic_canvas_invalidate_all
             schematic_canvas_invalidate_world_rect
             schematic_canvas_new_with_page
@@ -425,9 +427,15 @@
             schematic_window_set_text_properties_widget
             schematic_window_get_alt_key_pressed
             schematic_window_set_alt_key_pressed
+            schematic_window_get_control_key_pressed
             schematic_window_set_control_key_pressed
             schematic_window_get_shift_key_pressed
             schematic_window_set_shift_key_pressed
+            schematic_window_get_scroll_wheel
+            schematic_window_get_scrollbars_flag
+            schematic_window_set_scrollbars_flag
+            schematic_window_get_scrollpan_steps
+            schematic_window_set_scrollpan_steps
             schematic_window_get_text_caps
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
@@ -497,14 +505,17 @@
             lepton_log_set_logging_enabled
             s_log_close
 
+            gdk_event_scroll_direction_from_string
+            gdk_event_scroll_direction_to_string
+            x_event_faked_motion
             x_event_get_pointer_position
             x_event_key
             *x_event_configure
-            x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
             schematic_event_get_doing_stroke
             schematic_event_set_doing_stroke
+            schematic_event_get_scroll_direction
             schematic_event_skip_motion_event
             schematic_event_alt_mask
             schematic_event_control_mask
@@ -670,6 +681,8 @@
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
 (define-lff schematic_canvas_get_viewport '* '(*))
+(define-lff schematic_canvas_get_hadjustment '* '(*))
+(define-lff schematic_canvas_get_vadjustment '* '(*))
 (define-lff schematic_canvas_invalidate_all void '(*))
 (define-lff schematic_canvas_invalidate_world_rect void (list '* int int int int))
 (define-lff schematic_canvas_new_with_page '* '(*))
@@ -785,9 +798,15 @@
 (define-lff schematic_window_set_text_properties_widget void '(* *))
 (define-lff schematic_window_get_alt_key_pressed int '(*))
 (define-lff schematic_window_set_alt_key_pressed void (list '* int))
+(define-lff schematic_window_get_control_key_pressed int '(*))
 (define-lff schematic_window_set_control_key_pressed void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_set_shift_key_pressed void (list '* int))
+(define-lff schematic_window_get_scroll_wheel int '(*))
+(define-lff schematic_window_get_scrollbars_flag int '(*))
+(define-lff schematic_window_set_scrollbars_flag void (list '* int))
+(define-lff schematic_window_get_scrollpan_steps int '(*))
+(define-lff schematic_window_set_scrollpan_steps void (list '* int))
 (define-lff schematic_window_get_text_caps int '(*))
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
@@ -1069,14 +1088,17 @@
 (define-lff x_show_uri int '(* * *))
 
 ;;; x_event.c
+(define-lff gdk_event_scroll_direction_from_string int '(*))
+(define-lff gdk_event_scroll_direction_to_string '* (list int))
+(define-lff x_event_faked_motion int '(* *))
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_configure)
-(define-lff x_event_scroll int '(* * *))
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_get_doing_stroke int '())
 (define-lff schematic_event_set_doing_stroke void (list int))
+(define-lff schematic_event_get_scroll_direction int '(*))
 (define-lff schematic_event_skip_motion_event int '(*))
 (define-lff schematic_event_alt_mask int '())
 (define-lff schematic_event_control_mask int '())

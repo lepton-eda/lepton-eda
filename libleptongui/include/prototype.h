@@ -937,10 +937,10 @@ GdkEventKey*
 x_event_key (SchematicCanvas *page_view,
              GdkEventKey *event,
              SchematicWindow *w_current);
-gint
-x_event_scroll (GtkWidget *widget,
-                GdkEventScroll *event,
-                SchematicWindow *w_current);
+
+GdkScrollDirection
+schematic_event_get_scroll_direction (GdkEventScroll *event);
+
 gboolean
 x_event_get_pointer_position (SchematicWindow *w_current,
                               gboolean snapped,
