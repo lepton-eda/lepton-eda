@@ -4,6 +4,7 @@ libleptongui_la_SOURCES = \
 	a_zoom.c \
 	action.c \
 	action_mode.c \
+	autonumber_dialog.c \
 	canvas.c \
 	execute_script.c \
 	g_action.c \
@@ -82,7 +83,6 @@ libleptongui_la_SOURCES = \
 	snap_mode.c \
 	window.c \
 	x_attribedit.c \
-	x_autonumber.c \
 	x_basic.c \
 	x_clipboard.c \
 	x_color.c \

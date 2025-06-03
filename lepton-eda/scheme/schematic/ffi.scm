@@ -1075,7 +1075,7 @@
 ;;; x_attribedit.c
 (define-lff attrib_edit_dialog void (list '* '* int))
 
-;;; x_autonumber.c
+;;; autonumber_dialog.c
 (define-lff autonumber_text_dialog void '(*))
 
 ;;; x_clipboard.c

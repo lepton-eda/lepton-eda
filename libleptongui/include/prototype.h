@@ -786,7 +786,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
                     int flag);
 
-/* x_autonumber.c */
+/* autonumber_dialog.c */
 void
 autonumber_text_dialog (SchematicWindow *w_current);
 
