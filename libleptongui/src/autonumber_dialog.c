@@ -58,9 +58,12 @@ schematic_autonumber_get_autotext ()
   return autotext;
 }
 
-/*! \brief Set the value of \a autotext variable.
+/*! \brief Set the value of the \c autotext variable.
  *
- *  \param [in] val The new value of \a autotext variable.
+ *  \par Function Description
+ *   Set the static \c autotext variable to the given value.
+ *
+ *  \param [in] val The new value of the \c autotext variable.
  */
 void
 schematic_autonumber_set_autotext (SchematicAutonumber *val)
