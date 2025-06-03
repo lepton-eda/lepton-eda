@@ -45,9 +45,12 @@ static SchematicAutonumber *autotext = NULL;
 
 /* Accessors */
 
-/*! \brief Get the value of \a autotext variable.
+/*! \brief Get the value of the \c autotext variable.
  *
- *  \return The current value of \a autotext variable.
+ *  \par Function Description
+ *   Returns the static \c autotext variable.
+ *
+ *  \return The current value of the \c autotext variable.
  */
 SchematicAutonumber*
 schematic_autonumber_get_autotext ()
