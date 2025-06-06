@@ -1422,15 +1422,13 @@ schematic_autonumber_collect_used_objects (SchematicAutonumber *autotext,
                                            GList *pages)
 {
   GList *page_item;
-  LeptonToplevel *toplevel = NULL;
-
-  toplevel = schematic_window_get_toplevel (w_current);
 
   for (page_item = pages; page_item != NULL; page_item = g_list_next (page_item))
   {
     schematic_autonumber_set_autotext_root_page (autotext,
                                                  (pages->data == page_item->data));
-    lepton_toplevel_goto_page (toplevel, (LeptonPage*) page_item->data);
+    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current),
+                               (LeptonPage*) page_item->data);
     schematic_window_page_changed (w_current);
     schematic_autonumber_get_used (w_current, autotext);
   }
