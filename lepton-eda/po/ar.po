@@ -1,10 +1,18 @@
+# #-#-#-#-#  ar.po (geda)  #-#-#-#-#
 # Arabic translation for liblepton
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the geda package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
+# #-#-#-#-#  ar.po (geda)  #-#-#-#-#
+# Arabic translation for geda
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the geda package.
+# عبدالله شلي (Abdellah Chelli) <abdellahchelli@gmail.com>, 2010.
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 15:00+0300\n"
@@ -17,6 +25,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"Project-Id-Version: geda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"PO-Revision-Date: 2010-02-14 06:08+0000\n"
+"Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Language: Arabic\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -461,6 +484,2347 @@ msgstr ""
 msgid "(use -v to view details)"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏\n"
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"﻿‏o_autosave_backups: تعذر الحصول على اسم الحقيقي للملف %s."
+
+#, fuzzy, c-format
+msgid "Saved [%1$s]"
+msgstr ""
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"‏حفظ [%s]\n"
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"‏حُفظ [‎%s‬]\n"
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr ""
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"لا توجد مخططات فوق المخطط الحالي!\n"
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"يتعذر إيجاد أي مخطط فوق الحالي!\n"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr ""
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"فشل في فتح الدليل [%s]: %s\n"
+"#-#-#-#-#  ar.po (geda)  #-#-#-#-#\n"
+"فشل تحميل الصورة: %s"
+
+#, fuzzy
+msgid "Zoom too small!  Cannot zoom further."
+msgstr "التبعيد كبير جدا! لا يمكن التبعيد أكثر.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "_بدل الرؤية"
+
+msgid "_Apply"
+msgstr ""
+
+#, fuzzy
+msgid "Save As.._."
+msgstr "احفظ _ك‍..."
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not save file [%s]:\n"
+"%s"
+msgstr "تعذر فتح الملف %s\n"
+
+#, fuzzy
+msgid "Failed to save file"
+msgstr "فشل تحميل الملف"
+
+#, fuzzy
+msgid "Save Color Scheme"
+msgstr "مخطط ألوان _فاتحة"
+
+msgid "_Save"
+msgstr "ا_حفظ"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "انتقل/ألغِ"
+
+#, fuzzy, c-format
+msgid ""
+"The selected file `%1$s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+"الملف المنتقى '%s' موجود مسبقا.\n"
+"\n"
+"هل تريد الكتابة فوقه؟"
+
+msgid "Overwrite file?"
+msgstr "اكتب على الملف؟"
+
+msgid "Sa_ve..."
+msgstr ""
+
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
+#, c-format
+msgid "<b>Current:</b> %s"
+msgstr ""
+
+msgid "Save configuration"
+msgstr ""
+
+msgid "_OK"
+msgstr ""
+
+msgid "Local configuration file:"
+msgstr ""
+
+msgid "User configuration file:"
+msgstr ""
+
+#, c-format
+msgid "%s (git: %.7s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "تعذر فتح الملف %s\n"
+
+#, fuzzy
+msgid "Lepton Electronic Design Automation"
+msgstr "gEDA: GPL Electronic Design Automation (أتمتة التصميم الإلكتروني)"
+
+msgid ""
+"Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
+"See AUTHORS, ChangeLog files and consult 'git log' history for details."
+msgstr ""
+
+msgid "Upper Left"
+msgstr "اليسار العلوي"
+
+msgid "Upper Middle"
+msgstr "الوسط العلوي"
+
+#, fuzzy
+msgid "Upper Right"
+msgstr "اليمين السفلي"
+
+msgid "Middle Left"
+msgstr "اليسار الوسطي"
+
+msgid "Middle Middle"
+msgstr "الوسط الوسطي"
+
+msgid "Middle Right"
+msgstr "اليمين الوسطي"
+
+msgid "Lower Left"
+msgstr "اليسار السفلي"
+
+msgid "Lower Middle"
+msgstr "الوسط السفلي"
+
+msgid "Lower Right"
+msgstr "اليمين السفلي"
+
+msgid "Arc Params"
+msgstr "معاملات القوس"
+
+#, fuzzy
+msgid "Arc _Radius:"
+msgstr "﻿شعاع القوس:"
+
+#, fuzzy
+msgid "Start _Angle:"
+msgstr "زاوية البدأ:"
+
+#, fuzzy
+msgid "_Degrees of Sweep:"
+msgstr "درجات الاجتياح:"
+
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>الخيارات</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "شبيكة موقفة\n"
+
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
+
+msgid "Left mouse button"
+msgstr ""
+
+#, fuzzy
+msgid "Middle mouse button"
+msgstr "اليسار الوسطي"
+
+#, fuzzy
+msgid "Right mouse button"
+msgstr ""
+"وضع إضافة شبكات\n"
+"الزر الأيمن للفارة للإلغاء"
+
+#, fuzzy
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
+msgstr "بدّل الشريط الم_طاطي للشبكة"
+
+#, fuzzy
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "وضع الشبكة المغناطيسية: موقف\n"
+
+#, fuzzy
+msgid "Current action mode"
+msgstr "النافذة الحالية"
+
+msgid "S_elect the schematics you want to save:"
+msgstr "انتق المخططات التي تريد حفظها:"
+
+msgid "Name"
+msgstr "اسم"
+
+#, fuzzy
+msgid "Show _full paths"
+msgstr "أظهر الإ_ثنين"
+
+#, fuzzy, c-format
+msgid "Save the changes to schematic \"%1$s\" before closing?"
+msgstr "﻿هل تريد حفظ التغييرات إلى المخطط \"%s\" قبل الإغلاق؟"
+
+#, fuzzy, c-format
+msgid ""
+"There are %1$d schematics with unsaved changes. Save changes before closing?"
+msgstr "﻿هناك %d مخطط مع تغييرات غير محفوظة. هل تريد حفظ التغييرات قبل الإغلاق؟"
+
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr "ستضيع جميع التّغييرات للأبد إذا لم تحفظ."
+
+#, fuzzy
+msgid "Close _without saving"
+msgstr "أ_غلق دون حفظ"
+
+msgid "Coords"
+msgstr "إحداثيات"
+
+msgid "_Close"
+msgstr "أ_غلق"
+
+msgid "Screen"
+msgstr "شاشة"
+
+msgid "World"
+msgstr "عالم"
+
+msgid "Filename"
+msgstr "اسم الملف"
+
+msgid "Text"
+msgstr "نص"
+
+msgid "descend into hierarchy"
+msgstr "﻿انحدر في التسلسل الهرمي"
+
+#, fuzzy
+msgid "Find"
+msgstr "ابحث عن نص"
+
+#, fuzzy
+msgid "Find Text:"
+msgstr "ابحث عن نص"
+
+msgid "Find Pattern:"
+msgstr ""
+
+#, fuzzy
+msgid "Find Regex:"
+msgstr "ابحث عن نص"
+
+msgid "Check symbol:"
+msgstr ""
+
+msgid "Hotkeys"
+msgstr "مفاتيح ساخنة"
+
+msgid ""
+"Start typing action name or keystroke to filter the list.\n"
+"Type hotkeys as they are displayed in \"Keystroke(s)\" column."
+msgstr ""
+
+#, fuzzy
+msgid "_Filter:"
+msgstr "المرشح:"
+
+msgid "Action"
+msgstr "إجراء"
+
+msgid "Keystroke(s)"
+msgstr "ضغطة مفاتيح"
+
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr "‏﻿** UTF-8 غير صالح في رسالة سجل. راجع stderr أو gschem.log.\n"
+
+#, fuzzy
+msgid "Clear log window?"
+msgstr "إغلاق النافذة\n"
+
+#, fuzzy
+msgid "Clear Log"
+msgstr "امسح"
+
+msgid "_Wrap Long Lines"
+msgstr ""
+
+#, fuzzy
+msgid "Clea_r Log Window"
+msgstr "أظهر نافذة ال_سجل..."
+
+msgid "Macro:"
+msgstr ""
+
+msgid "Evaluate"
+msgstr ""
+
+#, fuzzy
+msgid "_Fill Type:"
+msgstr "نوع الملء:"
+
+#, fuzzy
+msgid "Lin_e Width:"
+msgstr "عرض الخط:"
+
+#, fuzzy
+msgid "Angle _1:"
+msgstr "الزاوية 1:"
+
+#, fuzzy
+msgid "P_itch 1:"
+msgstr "الإنحدار 1:"
+
+#, fuzzy
+msgid "Angle _2:"
+msgstr "الزاوية 2:"
+
+#, fuzzy
+msgid "Pitc_h 2:"
+msgstr "الإنحدار 2:"
+
+#, fuzzy
+msgid "<b>Fill Properties</b>"
+msgstr "<b>خصائص النص</b>"
+
+#, fuzzy
+msgid "Colo_r:"
+msgstr "اللون:"
+
+#, fuzzy
+msgid "<b>General Properties</b>"
+msgstr "<b>خصائص النص</b>"
+
+#, fuzzy
+msgid "_Type:"
+msgstr "النّوع:"
+
+#, fuzzy
+msgid "_Width:"
+msgstr "العرض:"
+
+#, fuzzy
+msgid "Dash _Length:"
+msgstr "طول الشرطة:"
+
+#, fuzzy
+msgid "Dash _Space:"
+msgstr "فراغ الشرطة:"
+
+msgid "C_ap style:"
+msgstr ""
+
+#, fuzzy
+msgid "<b>Line Properties</b>"
+msgstr "<b>خصائص النص</b>"
+
+#, fuzzy
+msgid "_Pin Type:"
+msgstr "نوع الدبوس"
+
+#, fuzzy
+msgid "<b>Pin Properties</b>"
+msgstr "<b>خصائص النص</b>"
+
+msgid "_Off"
+msgstr ""
+
+msgid "_Dots"
+msgstr ""
+
+msgid "M_esh"
+msgstr ""
+
+#, fuzzy
+msgid "Net R_ubber Band Mode:"
+msgstr "بدّل الشريط الم_طاطي للشبكة"
+
+#, fuzzy
+msgid "_Magnetic Net Mode:"
+msgstr "وضع الشبكة المغناطيسية"
+
+msgid "Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "<b>Net Options</b>"
+msgstr "<b>الخيارات</b>"
+
+#, fuzzy
+msgid "Grid Mode:"
+msgstr "وضع القوس"
+
+#, fuzzy
+msgid "Snap Mode:"
+msgstr "وضع الإنتقال الإختياري"
+
+#, fuzzy
+msgid "_Snap Size:"
+msgstr "حجم الجذب"
+
+#, fuzzy
+msgid "<b>Snap Options</b>"
+msgstr "<b>الخيارات</b>"
+
+msgid "O_ff"
+msgstr ""
+
+#, fuzzy
+msgid "_Grid"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "_Resnap"
+msgstr "تفعيل إعادة الجذب"
+
+msgid "Net pin"
+msgstr "دبوس لشبكة"
+
+msgid "Bus pin (graphical)"
+msgstr "دبوس لناقل (رسومي)"
+
+msgid "Preview Buffer"
+msgstr "معاينة المخزن"
+
+#, fuzzy
+msgid "Hide"
+msgstr "أخف النص"
+
+msgid "Hide text starting with:"
+msgstr "أخف النص البادئ بـ:"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "لون"
+
+msgid "Number of Slots:"
+msgstr ""
+
+#, fuzzy
+msgid "Slot Number:"
+msgstr "﻿تحرير عدد الشقّ:"
+
+msgid "<b>Text Content</b>"
+msgstr "<b>محتوى النص</b>"
+
+#, fuzzy
+msgid "_Size:"
+msgstr "الحجم:"
+
+#, fuzzy
+msgid "Ali_gnment:"
+msgstr "المحاذاة:"
+
+#, fuzzy
+msgid "Ro_tation:"
+msgstr "الاتّجاه:"
+
+msgid "<b>Text Properties</b>"
+msgstr "<b>خصائص النص</b>"
+
+#, fuzzy
+msgid "Coordinate:"
+msgstr "أظهر نافذة الم_علم..."
+
+msgid "Translate"
+msgstr "اسحب"
+
+msgid "Select Mode"
+msgstr "وضع الانتقاء"
+
+#, fuzzy
+msgid "Select Box Mode"
+msgstr "وضع الانتقاء"
+
+msgid "Text Mode"
+msgstr "وضع النص"
+
+msgid "Pan Mode"
+msgstr "وضع الإنتقال الإختياري"
+
+#, c-format
+msgid "Paste %d Mode"
+msgstr "وضع اللصق %d"
+
+msgid "Magnetic Net Mode"
+msgstr "وضع الشبكة المغناطيسية"
+
+msgid "Net Mode"
+msgstr "وضع الشبكة"
+
+msgid "Arc Mode"
+msgstr "وضع القوس"
+
+msgid "Box Mode"
+msgstr "وضع الإطار"
+
+msgid "Bus Mode"
+msgstr "وضع الناقل"
+
+msgid "Circle Mode"
+msgstr "وضع الدائرة"
+
+msgid "Component Mode"
+msgstr "وضع المكون"
+
+msgid "Copy Mode"
+msgstr "وضع النسخ"
+
+msgid "Multiple Copy Mode"
+msgstr "وضع النسخ المتعدد"
+
+msgid "Line Mode"
+msgstr "وضع الخط"
+
+msgid "Mirror Mode"
+msgstr "وضع المرآة"
+
+msgid "Move Mode"
+msgstr "وضع التّحريك"
+
+#, fuzzy
+msgid "Path Mode"
+msgstr "وضع الإنتقال الإختياري"
+
+msgid "Picture Mode"
+msgstr "وضع الصورة"
+
+msgid "Pin Mode"
+msgstr "وضع الدبوس"
+
+msgid "Rotate Mode"
+msgstr "وضع الإستدارة"
+
+#, fuzzy
+msgid "Modify Mode"
+msgstr "وضع النسخ"
+
+msgid "Zoom Box"
+msgstr "قرّب المربع"
+
+msgid "Show Hidden"
+msgstr "أظهر المخفي"
+
+msgid "Snap Off"
+msgstr "إيقاف الجذب"
+
+msgid "Resnap Active"
+msgstr "تفعيل إعادة الجذب"
+
+#, fuzzy, c-format
+msgid "New page created [%1$s]"
+msgstr "أنشئت صفحة جديدة [‎%s‬]\n"
+
+#, fuzzy, c-format
+msgid "New Window created [%1$s]"
+msgstr "أنشئت نافذة جديدة [‎%s‬]\n"
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "نفذ مخطوطا (سكربت)..."
+
+msgid "_Run"
+msgstr ""
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "مخططات"
+
+msgid "All files"
+msgstr "كل الملفات"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "تنفيذ مخطوط guile [‎%s‬]\n"
+
+msgid "Saved All"
+msgstr "حفظ الكل"
+
+msgid "Failed to Save All"
+msgstr "فشل حفظ الكل"
+
+#, fuzzy
+msgid "Closing Window"
+msgstr "إغلاق النافذة\n"
+
+msgid "Select objs first"
+msgstr "انتق الكائنات أولا"
+
+#, fuzzy
+msgid "WARNING: Do not translate with snap off!"
+msgstr "تحذير: لا تسحب مع جذب موقف!\n"
+
+#, fuzzy
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr "تحذير: تشغيل الجذب و المتابعة مع السحب.\n"
+
+#, fuzzy
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr "تحذير: حجم شبيكة الجذب لا يساوي 100!\n"
+
+#, fuzzy
+msgid ""
+"WARNING: If you are translating a symbol to the origin, the snap grid size "
+"should be set to 100"
+msgstr ""
+"تحذير: إذا كنت تسحب رمزا إلى المبدأ، يجب أن يعيّن حجم شبيكة الجذب إلى 100\n"
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+#, fuzzy
+msgid "Revert"
+msgstr "ت_راجع"
+
+#, fuzzy
+msgid "Empty clipboard"
+msgstr "انسخ إلى الحافظة"
+
+msgid "Empty buffer"
+msgstr "أفرغ المخزن"
+
+#, fuzzy, c-format
+msgid "Searching for source [%1$s]"
+msgstr "البحث عن المنبع [%s]\n"
+
+#, c-format
+msgid ""
+"Failed to descend hierarchy into '%1$s': %2$s\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend into '%1$s': %2$s"
+msgstr "فشل تحميل الصورة: %s"
+
+#, fuzzy
+msgid "Failed to descend hierarchy."
+msgstr "﻿انحدر في التسلسل الهرمي"
+
+#, fuzzy, c-format
+msgid "Searching for symbol [%1$s]"
+msgstr "البحث عن الرمز [%s]\n"
+
+#, fuzzy
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr "الرمز ليس ملفا حقيقيا. يتعذر تحميل الرمز.\n"
+
+#, fuzzy
+msgid "Cannot find any schematics above the current one!"
+msgstr "يتعذر إيجاد أي مخطط فوق الحالي!\n"
+
+#, fuzzy
+msgid "Action feedback mode set to OUTLINE"
+msgstr "وضع ردود الإجراء معيّن إلى حد الخارجي\n"
+
+#, fuzzy
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr "وضع ردود الإجراء معيّن إلى الإطار المحيط\n"
+
+#, fuzzy
+msgid "Grid OFF"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "Dot grid selected"
+msgstr "انتقيت الشبيكة النقطية\n"
+
+#, fuzzy
+msgid "Mesh grid selected"
+msgstr "انتقيت شبيكة الشرط\n"
+
+#, fuzzy
+msgid "Invalid grid mode"
+msgstr "﻿سمة غير صالحة"
+
+#, fuzzy
+msgid "Snap OFF (CAUTION!)"
+msgstr "الجذب موقف (تنبيه)\n"
+
+#, fuzzy
+msgid "Snap ON"
+msgstr "الجذب مشغّل\n"
+
+#, fuzzy
+msgid "Snap back to the grid (CAUTION!)"
+msgstr "جذب نحو الشبيكة (تنبيه!)\n"
+
+#, fuzzy
+msgid "Rubber band ON"
+msgstr "الشريط المطاطي مشغل\n"
+
+#, fuzzy
+msgid "Rubber band OFF"
+msgstr "الشريط المطاطي موقف \n"
+
+#, fuzzy
+msgid "magnetic net mode: ON"
+msgstr "وضع الشبكة المغناطيسية: مشغل\n"
+
+#, fuzzy
+msgid "magnetic net mode: OFF"
+msgstr "وضع الشبكة المغناطيسية: موقف\n"
+
+#, fuzzy, c-format
+msgid "Translating schematic [%1$d %2$d]"
+msgstr "سحب المخطط [%d %d]\n"
+
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "احذف"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "احذف"
+
+#, fuzzy
+msgid "Hidden text is now visible"
+msgstr "أصبح الآن النص المخفي ظاهرا\n"
+
+#, fuzzy
+msgid "Hidden text is now invisible"
+msgstr "أصبح الآن النص المخفي مستترا\n"
+
+#, fuzzy, c-format
+msgid "Could not find symbol [%1$s] in library. Update failed."
+msgstr "﻿تعذر العثور على الرمز [%s] في المكتبة. فشل التحديث.\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr "تعذر تعيين الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr "تعذر تعيين الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr "تعذر حفظ الملف الاحتياطي [‎%s‬]\n"
+
+#, c-format
+msgid "DOH! tried to find the whichone, but didn't find it!\n"
+msgstr "عجبا! حاولت العثور على أيّ-واحد ولكن لم أعثر عليه!\n"
+
+#, fuzzy
+msgid "Warning: Starting net at off grid coordinate"
+msgstr "﻿تحذير: بدء الشبكة خارج إحداثيات الشبيكة\n"
+
+#, fuzzy
+msgid "Warning: Ending net at off grid coordinate"
+msgstr "﻿تحذير: إنهاء الشبكة خارج إحداثيات الشبيكة\n"
+
+#, c-format
+msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
+msgstr "﻿حاولت إضافة أكثر من اثنين من كسارات الناقل. خطأ داخلي ل‍ gschem.\n"
+
+#, fuzzy, c-format
+msgid "Bus ripper symbol [%1$s] was not found in any component library"
+msgstr "﻿لم يتم العثور على رمز كسار الناقل [%s] في أي مكتبة مكون\n"
+
+msgid "All supported formats"
+msgstr ""
+
+#, fuzzy
+msgid "Add Picture"
+msgstr "صورة"
+
+#, fuzzy
+msgid "_Open"
+msgstr "افتح"
+
+#, fuzzy, c-format
+msgid "Failed to load picture: %1$s"
+msgstr "فشل تحميل الصورة: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "انتق اسم ملف بوست-سكريبت..."
+
+#, fuzzy, c-format
+msgid "Failed to replace pictures: %s"
+msgstr "فشل تحميل الصورة: %s"
+
+#, fuzzy
+msgid "Slot attribute malformed"
+msgstr "سمة ﻿الشقّ تالفة\n"
+
+#, fuzzy
+msgid "numslots attribute missing"
+msgstr "السمة numslots (عدد الشقوق) مفقودة\n"
+
+#, fuzzy
+msgid "Slotting not allowed for this component"
+msgstr "التقسيم (الشقّ) غير مسموح لهذا المكون\n"
+
+#, fuzzy
+msgid "New slot number out of range"
+msgstr "عدد شق جديد خارج النطاق\n"
+
+#, fuzzy
+msgid "Undo/Redo is disabled in configuration"
+msgstr "التراجع/الإعادة معطلين في الملف rc\n"
+
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, c-format
+msgid "Got invalid show option; defaulting to show both\n"
+msgstr "﻿حصلت على خيار عرض غير صحيح ؛تعيين الافتراضي لإظهار كليهما\n"
+
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "حرّر المواصفات"
+
+msgid "Add Attribute"
+msgstr "أضف سمة"
+
+#, fuzzy
+msgid "N_ame:"
+msgstr "الاسم:"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "القيمة:"
+
+#, fuzzy
+msgid "Vi_sible"
+msgstr "مرئي"
+
+msgid "Show Value Only"
+msgstr "أظهر القيمة فقط"
+
+msgid "Show Name Only"
+msgstr "أظهر الاسم فقط"
+
+msgid "Show Name & Value"
+msgstr "أظهر الاسم و القيمة"
+
+msgid "<b>Attach Options</b>"
+msgstr "﻿<b>أرفق الخيارات</b>"
+
+msgid "All"
+msgstr "الكل"
+
+msgid "Components"
+msgstr "مكونات"
+
+msgid "Nets"
+msgstr "شبكات"
+
+msgid "Replace existing attributes"
+msgstr "﻿استبدل السمات الموجودة"
+
+#, fuzzy
+msgid ""
+"slotted object without slot attribute may cause problems when autonumbering "
+"slots"
+msgstr ""
+"﻿كائن مقسم (مشقوق) بدون سمة الشقّ قد يسبب مشاكل عند الترقيم الآلي للشقوق\n"
+
+#, fuzzy, c-format
+msgid ""
+"duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
+msgstr "﻿شقّ مكرر قد يسبب مشاكل: [اسم​الرمز=%s، العدد=%d، الشقّ=%d]\n"
+
+#, fuzzy
+msgid "No search string given in autonumber text."
+msgstr "لا يوجد نص بحث في نص الترقيم الآلي.\n"
+
+#, fuzzy
+msgid "No '*' or '?' given at the end of the autonumber text."
+msgstr "لا توجد '*' و لا '؟' في نهاية نص الترقيم الآلي.\n"
+
+msgid "Diagonal"
+msgstr "قطري"
+
+msgid "Top to bottom"
+msgstr "من الأعلى للأسفل"
+
+msgid "Bottom to top"
+msgstr "من الأسفل للأعلى"
+
+msgid "Left to right"
+msgstr "من اليسار لليمين"
+
+msgid "Right to left"
+msgstr "من اليمين لليسار"
+
+msgid "File order"
+msgstr "ترتيب الملف"
+
+#, fuzzy
+msgid "Autonumber Text"
+msgstr "نص تعداد آلي"
+
+msgid "<b>Scope</b>"
+msgstr "<b>المجال</b>"
+
+msgid "Search for:"
+msgstr "البحث عن:"
+
+msgid "Autonumber text in:"
+msgstr "نص تعداد آلي في:"
+
+msgid "Skip numbers found in:"
+msgstr "﻿تخطي الأرقام الموجودة في:"
+
+msgid "Selected objects"
+msgstr "الكائنات المنتقاة"
+
+msgid "Current page"
+msgstr "الصفحة الحالية"
+
+msgid "Whole hierarchy"
+msgstr "التسلسل الهرمي الكامل"
+
+msgid "Overwrite existing numbers"
+msgstr "أكتب فوق الأرقام الموجودة"
+
+msgid "<b>Options</b>"
+msgstr "<b>الخيارات</b>"
+
+msgid "Starting number:"
+msgstr "رقم البدأ:"
+
+msgid "Sort order:"
+msgstr "الترتيب:"
+
+msgid "Remove numbers"
+msgstr "أزل الأعداد"
+
+msgid "Automatic slotting"
+msgstr "شقّ آلي"
+
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+msgid "Clipboard insertion failed"
+msgstr ""
+
+#, c-format
+msgid "%s [ disabled ]"
+msgstr ""
+
+#, fuzzy
+msgid "Reset filter"
+msgstr "آخر الملفات"
+
+msgid "Reload all libraries"
+msgstr ""
+
+msgid "Value"
+msgstr "قيمة"
+
+msgid "Default behavior - reference component"
+msgstr "﻿السلوك الافتراضي - العنصر المرجعي"
+
+msgid "Embed component in schematic"
+msgstr "﻿ضمّن المكون في المخطط"
+
+msgid "Include component as individual objects"
+msgstr "ضمّن المكون ككائنات فردية"
+
+#, fuzzy
+msgid "Add Component"
+msgstr "/أضف مكونا..."
+
+#, fuzzy
+msgid "In Us_e"
+msgstr "قيد الاستخدام"
+
+#, fuzzy
+msgid "Lib_raries"
+msgstr "مكتبات"
+
+msgid "Preview"
+msgstr "معاينة"
+
+msgid "Attributes"
+msgstr "سمات"
+
+msgid "Symbol version changes"
+msgstr ""
+
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "مخططات"
+
+msgid ""
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
+msgstr ""
+
+#, fuzzy
+msgid "Symbol"
+msgstr "رموز"
+
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
+"Please correct in order to continue</span>\n"
+"\n"
+"The name and value must be non-empty.\n"
+"The name cannot end with a space.\n"
+"The value cannot start with a space."
+msgstr ""
+"‏﻿<span weight=\"bold\" size=\"larger\">سمة الإدخال \"%s\" غير صالحة\n"
+"الرجاء تصحيحها من أجل الاستمرار</span>\n"
+"\n"
+"يجب أن يكون الاسم و القيمة غير فارغين.\n"
+"لا يمكن أن ينتهي الاسم بمسافة.\n"
+"لا يمكن بدء القيمة بمسافة."
+
+msgid "Invalid Attribute"
+msgstr "﻿سمة غير صالحة"
+
+#, fuzzy
+msgid "Schematics (*.sch)"
+msgstr "مخططات"
+
+#, fuzzy
+msgid "Symbols (*.sym)"
+msgstr "رموز"
+
+#, fuzzy
+msgid "Schematics and symbols (*.sch *.sym)"
+msgstr "مخططات و رموز"
+
+msgid "Open"
+msgstr "افتح"
+
+#, fuzzy
+msgid "Save As"
+msgstr "احفظ الكل"
+
+#, fuzzy
+msgid "Save cancelled on user request"
+msgstr "ألغي الحفظ بناء على طلب المستخدم\n"
+
+msgid ""
+"\n"
+"If you load the original file, the backup file will be overwritten in the "
+"next autosave timeout and it will be lost.\n"
+"\n"
+"Do you want to load the backup file?\n"
+msgstr ""
+
+msgid "Hollow"
+msgstr "مجوّف"
+
+msgid "Filled"
+msgstr "مملوء"
+
+msgid "Mesh"
+msgstr "خيط الشبكة"
+
+msgid "Hatch"
+msgstr "تهشير"
+
+#, fuzzy, c-format
+msgid "Unable to write %1$s file %2$s."
+msgstr "‏﻿x_image_lowlevel: غير قادر على كتابة ملف ‬%s %s.\n"
+
+#, fuzzy, c-format
+msgid ""
+"There was the following error when saving image with type %1$s to filename:\n"
+"%2$s\n"
+"\n"
+"%3$s.\n"
+msgstr ""
+"﻿حدث الخطأ التالي عند حفظ صورة مع النوع %s تحت اسم الملف:\n"
+"%s\n"
+"\n"
+"%s.\n"
+
+#, fuzzy, c-format
+msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
+msgstr "كتب صورة ملونة إلى [%s] [%d x %d]\n"
+
+#, fuzzy, c-format
+msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
+msgstr "﻿كتب صورة بالأبيض والأسود إلى [%s] [%d x %d]\n"
+
+#, fuzzy
+msgid "Unable to get pixbuf from lepton-schematic's window."
+msgstr "﻿‏x_image_lowlevel: تعذر الحصول على pixbuf من نافذة gschem.\n"
+
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
+msgid "Width x Height"
+msgstr "عرض × ارتفاع"
+
+msgid "Image type"
+msgstr "نوع الصورة"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "تحرير اللون"
+
+msgid "Color"
+msgstr "لون"
+
+msgid "Grayscale"
+msgstr ""
+
+#, fuzzy
+msgid "Write Image"
+msgstr "أكتب _صورة..."
+
+msgid "Butt"
+msgstr ""
+
+msgid "Square"
+msgstr ""
+
+msgid "Round"
+msgstr ""
+
+msgid "Solid"
+msgstr "متواصل"
+
+msgid "Dotted"
+msgstr "منقط"
+
+msgid "Dashed"
+msgstr "شُرَط"
+
+msgid "Center"
+msgstr "وسط"
+
+msgid "Phantom"
+msgstr "وهم"
+
+#, fuzzy
+msgid "Add Co_mponent..."
+msgstr "/أضف مكونا..."
+
+#, fuzzy
+msgid "Add Te_xt..."
+msgstr "أضف نصا..."
+
+#, fuzzy
+msgid "Add _Attribute..."
+msgstr "/أضف سمة..."
+
+#, fuzzy
+msgid "Add _Net"
+msgstr "/أضف شبكة"
+
+#, fuzzy
+msgid "Add _Bus"
+msgstr "/أضف ناقلا"
+
+msgid "Cu_t"
+msgstr "_قصّ"
+
+msgid "_Copy"
+msgstr "ا_نسخ"
+
+msgid "_Paste"
+msgstr "أ_لصق"
+
+msgid "_Delete"
+msgstr "ا_حذف"
+
+#, fuzzy
+msgid "_Edit..."
+msgstr "حرّر..."
+
+#, fuzzy
+msgid "Ed_it Text..."
+msgstr "حرّر النص..."
+
+#, fuzzy
+msgid "_Object Properties..."
+msgstr "<b>خصائص النص</b>"
+
+#, fuzzy
+msgid "Hierarchy: Down _Schematic"
+msgstr "/انزل إلى المخطط"
+
+#, fuzzy
+msgid "Hierarchy: Down S_ymbol"
+msgstr "/انزل إلى الرمز"
+
+#, fuzzy
+msgid "Hierarchy: _Up"
+msgstr "تسلسل​_هرمي"
+
+msgid "The operating system is out of memory or resources."
+msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr "غير مسموح بسمات مع اسم فارغ. الرجاء تعيين اسم."
+
+msgid "Show Value only"
+msgstr "أظهر القيمة فقط"
+
+msgid "Show Name only"
+msgstr "أظهر الاسم فقط"
+
+msgid "Promote"
+msgstr "رَقِّ"
+
+msgid "Duplicate"
+msgstr "ضاعف"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "انسخ إلى 1"
+
+msgid "Edit Attributes"
+msgstr "حرّر المواصفات"
+
+msgid "Vis?"
+msgstr "ظاهر؟"
+
+msgid "N"
+msgstr "N"
+
+msgid "V"
+msgstr "V"
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "أظهر السمات الموروثة"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "الاسم:"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+msgid "_Add"
+msgstr "_أضف"
+
+msgid "<b>Add Attribute</b>"
+msgstr "<b>أضف سمة</b>"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] "دبوس لشبكة"
+msgstr[1] "دبوس لشبكة"
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "سمة"
+msgstr[1] "سمة"
+
+#, fuzzy
+msgid "Add Text"
+msgstr "/أضف نصا"
+
+msgid "Refresh"
+msgstr ""
+
+msgid "New Page"
+msgstr "صفحة جديدة"
+
+msgid "Open Page..."
+msgstr "افتح صفحة..."
+
+msgid "Save Page"
+msgstr "احفظ الصفحة"
+
+msgid "Close Page"
+msgstr "أغلق الصفحة"
+
+msgid "Changed"
+msgstr "غُيّر"
+
+#, fuzzy, c-format
+msgid "Failed to write PDF to '%s': %s\n"
+msgstr "فشل تحميل الصورة: %s"
+
+#, fuzzy, c-format
+msgid "Failed to write PDF to '%1$s': %2$s\n"
+msgstr "فشل تحميل الصورة: %s"
+
+#, c-format
+msgid ""
+"Error printing file:\n"
+"%1$s"
+msgstr ""
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+msgid ""
+"An unknown error occurred while parsing configuration files.\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%1$s\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+msgid "Cannot load lepton-schematic configuration."
+msgstr ""
+
+#, fuzzy
+msgid "Close"
+msgstr "أ_غلق"
+
+msgid "Save"
+msgstr "احفظ"
+
+#, fuzzy, c-format
+msgid "Hierarchy up: %s"
+msgstr "تسلسل​_هرمي"
+
+#, fuzzy
+msgid "Hierarchy up"
+msgstr "تسلسل​_هرمي"
+
+msgid "_New"
+msgstr "_جديد"
+
+msgid "_Open..."
+msgstr "ا_فتح..."
+
+msgid "Save _As..."
+msgstr "احفظ _ك‍..."
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "مدير الصفحات"
+
+msgid "Options"
+msgstr "خيارات"
+
+msgid "Edit Text"
+msgstr "حرّر النص"
+
+#, fuzzy
+msgid "Object Properties"
+msgstr "<b>خصائص النص</b>"
+
+msgid "Log"
+msgstr ""
+
+msgid "Find Text"
+msgstr "ابحث عن نص"
+
+#, fuzzy
+msgid "Color Scheme Editor"
+msgstr "مخطط ألوان _فاتحة"
+
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "انتق المخططات التي تريد حفظها:"
+
+msgid "Page Manager"
+msgstr "مدير الصفحات"
+
+#, fuzzy, c-format
+msgid "Loading schematic [%1$s]"
+msgstr "تحميل المخطط [‎%s‬]\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save page [%1$s]\n"
+msgstr "تعذّر حفظ الصفحة [‎%s‬]\n"
+
+msgid "Error while trying to save"
+msgstr "خطا عند محاولة الحفظ"
+
+#, fuzzy, c-format
+msgid "Saved as [%1$s]"
+msgstr "حُفظ كـ [‎%s‬]\n"
+
+msgid "Saved"
+msgstr "محفوظ"
+
+#, fuzzy, c-format
+msgid "Discarding page [%1$s]"
+msgstr "إهمال الصفحة [‎%s‬]\n"
+
+#, fuzzy, c-format
+msgid "Closing [%1$s]"
+msgstr "غلق [‎%s‬]\n"
+
+msgid "New"
+msgstr "جديد"
+
+msgid "New file"
+msgstr "ملف جديد"
+
+#, fuzzy
+msgid "Open file"
+msgstr "افتح ملفا..."
+
+msgid "Save file"
+msgstr "احفظ الملف"
+
+msgid "Undo"
+msgstr "تراجع"
+
+msgid "Undo last operation"
+msgstr "تراجع عن العملية الأخيرة"
+
+msgid "Redo"
+msgstr "كرّر"
+
+msgid "Redo last undo"
+msgstr "أعد آخر عملية متراجع عنها"
+
+msgid ""
+"Add component...\n"
+"Select library and component from list, move the mouse into main window, "
+"click to place\n"
+"Right mouse button to cancel"
+msgstr ""
+"أضف مكونا...\n"
+"انتق مكتبة و مكونا من القائمة، حرك الفأرة إلى داخل النافذة الرئيسية،ثم انقر "
+"لوضعه\n"
+"الزر الأيمن للفارة للإلغاء"
+
+msgid "Component"
+msgstr "مكوّن"
+
+msgid ""
+"Add nets mode\n"
+"Right mouse button to cancel"
+msgstr ""
+"وضع إضافة شبكات\n"
+"الزر الأيمن للفارة للإلغاء"
+
+msgid ""
+"Add buses mode\n"
+"Right mouse button to cancel"
+msgstr ""
+"وضع إضافة النواقل\n"
+"الزر الأيمن للفارة للإلغاء"
+
+msgid "Bus"
+msgstr "ناقل"
+
+msgid "Add Text..."
+msgstr "أضف نصا..."
+
+msgid "Select"
+msgstr "انتق"
+
+msgid "Select mode"
+msgstr "وضع الإنتقاء"
+
+#, fuzzy
+msgid "Show"
+msgstr "أظهرN"
+
+msgid "Show text starting with:"
+msgstr "أظهر النص البادئ بـ:"
+
+msgid "none"
+msgstr "لا شيء"
+
+msgid "Stroke"
+msgstr "جرة (Stroke)"
+
+#, fuzzy
+msgid "Repeat"
+msgstr "كرّر/"
+
+msgid "Pan"
+msgstr "انتقل"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
+msgstr "انتقل/ألغِ"
+
+msgid "Pick"
+msgstr "التقط"
+
+#, fuzzy
+msgid "Object"
+msgstr "لون الكائن:"
+
+#, fuzzy, c-format
+msgid "New file [%s]"
+msgstr "ملف جديد [‎%s‬]\n"
+
+#, c-format
+msgid ""
+"<b>An error occurred while loading the requested file.</b>\n"
+"\n"
+"Loading from '%1$s' failed. Error message:\n"
+"\n"
+"%2$s.\n"
+"\n"
+"The lepton-schematic log may contain more information.\n"
+"You may also launch lepton-schematic with --verbose command line switch and "
+"monitor program's output in terminal window."
+msgstr ""
+
+msgid "Failed to load file"
+msgstr "فشل تحميل الملف"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Schematic Editor"
+msgstr "محرّر المخططات gEDA"
+
+#, fuzzy
+msgid "Create and edit electrical schematics and symbols with lepton-schematic"
+msgstr "أنشء و حرّر المخططات الكهربائية والرموز مع gschem"
+
+msgid "Open Recen_t"
+msgstr "افتح الأح_دث"
+
+msgid "Save All"
+msgstr "احفظ الكل"
+
+msgid "_Print..."
+msgstr "ا_طبع..."
+
+#, fuzzy
+msgid "Write _Image..."
+msgstr "أكتب _صورة..."
+
+#, fuzzy
+msgid "Invoke Macro..."
+msgstr "استدع ماكرو"
+
+msgid "Execute Script..."
+msgstr "نفذ مخطوطا (سكربت)..."
+
+msgid "REPL..."
+msgstr ""
+
+msgid "New Window"
+msgstr "نافذة جديدة"
+
+#, fuzzy
+msgid "_Close Window"
+msgstr "أغلق النافذة"
+
+msgid "_Quit"
+msgstr "أ_خرج"
+
+msgid "_Undo"
+msgstr "ت_راجع"
+
+msgid "_Redo"
+msgstr "_كرّر"
+
+#, fuzzy
+msgid "Select All"
+msgstr "انتق"
+
+#, fuzzy
+msgid "Deselect"
+msgstr "انتق"
+
+msgid "Rotate 90 Mode"
+msgstr "وضع الاستدارة 90"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>خصائص النص</b>"
+
+msgid "Edit..."
+msgstr "حرّر..."
+
+msgid "Edit Text..."
+msgstr "حرّر النص..."
+
+msgid "Slot..."
+msgstr "شقّ..."
+
+msgid "Lock"
+msgstr "أقفل"
+
+msgid "Unlock"
+msgstr "فكّ القفل"
+
+msgid "Embed Component/Picture"
+msgstr "ضمّن المكون/الصورة"
+
+msgid "Unembed Component/Picture"
+msgstr "لا تضمّن المكون/الصورة"
+
+msgid "Update Component"
+msgstr "حدّث المكون"
+
+msgid "Symbol Translate..."
+msgstr "سحب الرمز..."
+
+msgid "Copy into 1"
+msgstr "انسخ إلى 1"
+
+msgid "Copy into 2"
+msgstr "انسخ إلى 2"
+
+msgid "Copy into 3"
+msgstr "انسخ إلى 3"
+
+msgid "Copy into 4"
+msgstr "انسخ إلى 4"
+
+msgid "Copy into 5"
+msgstr "انسخ إلى 5"
+
+msgid "Cut into 1"
+msgstr "قص إلى 1"
+
+msgid "Cut into 2"
+msgstr "قص إلى 2"
+
+msgid "Cut into 3"
+msgstr "قص إلى 3"
+
+msgid "Cut into 4"
+msgstr "قص إلى 4"
+
+msgid "Cut into 5"
+msgstr "قص إلى 5"
+
+msgid "Paste from 1"
+msgstr "ألصق من 1"
+
+msgid "Paste from 2"
+msgstr "ألصق من 2"
+
+msgid "Paste from 3"
+msgstr "ألصق من 3"
+
+msgid "Paste from 4"
+msgstr "ألصق من 4"
+
+msgid "Paste from 5"
+msgstr "ألصق من 5"
+
+msgid "Side Dock"
+msgstr ""
+
+#, fuzzy
+msgid "Bottom Dock"
+msgstr "من الأسفل للأعلى"
+
+#, fuzzy
+msgid "Find Text Results"
+msgstr "ابحث عن نص"
+
+msgid "_Redraw"
+msgstr "أ_عد الرسم"
+
+msgid "_Pan"
+msgstr "ا_نتقل"
+
+msgid "Zoom _Box"
+msgstr "قرّب الم_ربع"
+
+msgid "Zoom _Extents"
+msgstr "قرّب مع شمل الا_متدادات"
+
+msgid "Zoom _In"
+msgstr "_قرّب"
+
+msgid "Zoom _Out"
+msgstr "_بعّد"
+
+msgid "Zoom _Full"
+msgstr "بعّد لل_حد الأقصى"
+
+#, fuzzy
+msgid "_Dark Color Scheme"
+msgstr "مخطط ألوان _داكنة"
+
+#, fuzzy
+msgid "_Light Color Scheme"
+msgstr "مخطط ألوان _فاتحة"
+
+#, fuzzy
+msgid "B_W Color Scheme"
+msgstr "مخطط ألوان _داكنة"
+
+#, fuzzy
+msgid "Color Scheme Editor..."
+msgstr "مخطط ألوان _فاتحة"
+
+msgid "_Manager..."
+msgstr "م_دير..."
+
+msgid "_Previous"
+msgstr "ال_سّابقة"
+
+msgid "_Next"
+msgstr "ال_تّالية"
+
+#, fuzzy
+msgid "_Revert..."
+msgstr "ت_راجع"
+
+#, fuzzy
+msgid "Next Tab"
+msgstr "صفحة جديدة"
+
+#, fuzzy
+msgid "Previous Tab"
+msgstr "ال_سّابقة"
+
+msgid "_Component..."
+msgstr "م_كون..."
+
+msgid "_Net"
+msgstr "_شبكة"
+
+msgid "B_us"
+msgstr "نا_قل"
+
+msgid "_Attribute..."
+msgstr "_سمة..."
+
+msgid "_Text..."
+msgstr "_نص..."
+
+msgid "_Line"
+msgstr "_خط"
+
+msgid "Pat_h"
+msgstr ""
+
+msgid "_Box"
+msgstr "_إطار"
+
+msgid "C_ircle"
+msgstr "_دائرة"
+
+msgid "A_rc"
+msgstr "ق_وس"
+
+msgid "_Pin"
+msgstr "د_بوس"
+
+msgid "Pictu_re..."
+msgstr "_صورة..."
+
+msgid "_Up"
+msgstr "ا_صعد"
+
+msgid "_Down Schematic"
+msgstr "ا_نزل إلى المخطّط"
+
+msgid "Down _Symbol"
+msgstr "انزل إلى ال_رمز"
+
+msgid "_Attach"
+msgstr "أ_رفق"
+
+msgid "_Detach"
+msgstr "ا_فصل"
+
+msgid "Show _Value"
+msgstr "أظهر ال_قيمة"
+
+msgid "Show _Name"
+msgstr "أظهر ال_اسم"
+
+msgid "Show _Both"
+msgstr "أظهر الإ_ثنين"
+
+msgid "_Toggle Visibility"
+msgstr "_بدل الرؤية"
+
+msgid "_Hide Specific Text..."
+msgstr "أ_خف نصا معينا..."
+
+msgid "_Show Specific Text..."
+msgstr "أ_ظهر نصا معينا..."
+
+#, fuzzy
+msgid "Show/Hide Hidden Text"
+msgstr "أظهر/أخف النص الخفي"
+
+msgid "_Find Text/Check Symbol..."
+msgstr ""
+
+msgid "A_utonumber Text..."
+msgstr "_نص الترقيم الآلي..."
+
+#, fuzzy
+msgid "_Options..."
+msgstr "_خيارات"
+
+#, fuzzy
+msgid "_Font..."
+msgstr "ا_طبع..."
+
+#, fuzzy
+msgid "Grid +"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "Grid -"
+msgstr "شبيكة موقفة\n"
+
+msgid "Grid Style: Cycle Dots/Mesh/Off"
+msgstr ""
+
+msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
+msgstr ""
+
+#, fuzzy
+msgid "Feedback Mode: Outline/Box"
+msgstr "بدّل ال_حد الخارجي/الإطار"
+
+#, fuzzy
+msgid "Net: Rubberband On/Off"
+msgstr "الشريط المطاطي مشغل\n"
+
+msgid "Net: Magnetic On/Off"
+msgstr ""
+
+#, fuzzy
+msgid "_Coord Window"
+msgstr "أغلق النافذة"
+
+#, fuzzy
+msgid "_Log Window"
+msgstr "أظهر نافذة ال_سجل..."
+
+msgid "_1 allegro"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Reference _Manual"
+msgstr "يدوي"
+
+#, fuzzy
+msgid "gEDA _Wiki Documentation"
+msgstr "تو_ثيق gEDA"
+
+#, fuzzy
+msgid "Find Component D_ocumentation"
+msgstr "توثيق الم_كونات"
+
+msgid "_Hotkeys..."
+msgstr "مفاتيح _ساخنة"
+
+#, fuzzy
+msgid "_About"
+msgstr "_عن..."
+
+msgid "_File"
+msgstr "_ملف"
+
+msgid "_Edit"
+msgstr "_تحرير"
+
+msgid "_View"
+msgstr "_عرض"
+
+msgid "_Page"
+msgstr "_صفحة"
+
+msgid "Hie_rarchy"
+msgstr "تسلسل​_هرمي"
+
+msgid "A_ttributes"
+msgstr "_سمات"
+
+msgid "_Options"
+msgstr "_خيارات"
+
+#, fuzzy
+msgid "_Netlist"
+msgstr "_شبكة"
+
+msgid "_Help"
+msgstr "مساع_دة"
+
+#, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
+msgstr ""
+
+msgid "Repeat Last Action"
+msgstr ""
+
+#, fuzzy
+msgid "Cancel"
+msgstr "انتقل/ألغِ"
+
+#, fuzzy
+msgid "New File"
+msgstr "ملف جديد"
+
+#, fuzzy
+msgid "Open File"
+msgstr "افتح ملفا..."
+
+#, fuzzy
+msgid "Print"
+msgstr "اطبع..."
+
+msgid "Export Image"
+msgstr ""
+
+msgid "Run Script"
+msgstr ""
+
+#, fuzzy
+msgid "Close Window"
+msgstr "أغلق النافذة"
+
+#, fuzzy
+msgid "Quit"
+msgstr "أ_خرج"
+
+msgid "Terminal REPL"
+msgstr ""
+
+msgid "Choose Slot"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Object Properties"
+msgstr "حرّر خصائص النص"
+
+#, fuzzy
+msgid "Translate Symbol"
+msgstr "اسحب"
+
+msgid "Invoke Macro"
+msgstr "استدع ماكرو"
+
+#, fuzzy
+msgid "Show/Hide Invisible Text"
+msgstr "أظهر/أخف النص الخفي"
+
+#, fuzzy
+msgid "Cut"
+msgstr "_قصّ"
+
+msgid "Copy"
+msgstr "انسخ"
+
+#, fuzzy
+msgid "Paste"
+msgstr "أ_لصق"
+
+msgid "Sidebar"
+msgstr ""
+
+msgid "Status"
+msgstr "الحالة"
+
+#, fuzzy
+msgid "Find Text State"
+msgstr "ابحث عن نص"
+
+#, fuzzy
+msgid "Redraw"
+msgstr "أ_عد الرسم"
+
+#, fuzzy
+msgid "Pan Left"
+msgstr "وضع الإنتقال الإختياري"
+
+#, fuzzy
+msgid "Pan Right"
+msgstr "اليمين العلوي"
+
+msgid "Pan Up"
+msgstr ""
+
+#, fuzzy
+msgid "Pan Down"
+msgstr "وضع الإنتقال الإختياري"
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "/قرّب مع شمل الامتدادات"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "/قرّب"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "/بعّد"
+
+#, fuzzy
+msgid "Zoom Full"
+msgstr "بعّد لل_حد الأقصى"
+
+#, fuzzy
+msgid "Dark Color Scheme"
+msgstr "مخطط ألوان _داكنة"
+
+#, fuzzy
+msgid "Light Color Scheme"
+msgstr "مخطط ألوان _فاتحة"
+
+msgid "Monochrome Color Scheme"
+msgstr ""
+
+#, fuzzy
+msgid "Show Color Scheme Editor"
+msgstr "مخطط ألوان _فاتحة"
+
+#, fuzzy
+msgid "Revert Changes"
+msgstr "أعد الصفحة"
+
+#, fuzzy
+msgid "Previous Page"
+msgstr "ال_سّابقة"
+
+#, fuzzy
+msgid "Next Page"
+msgstr "صفحة جديدة"
+
+#, fuzzy
+msgid "Print Page"
+msgstr "ال_سّابقة"
+
+#, fuzzy
+msgid "Add Net"
+msgstr "/أضف شبكة"
+
+#, fuzzy
+msgid "Add Bus"
+msgstr "/أضف ناقلا"
+
+#, fuzzy
+msgid "Add Line"
+msgstr "خط"
+
+#, fuzzy
+msgid "Add Path"
+msgstr "/أضف شبكة"
+
+#, fuzzy
+msgid "Add Box"
+msgstr "/أضف ناقلا"
+
+#, fuzzy
+msgid "Add Circle"
+msgstr "دائرة"
+
+#, fuzzy
+msgid "Add Arc"
+msgstr "أضف سمة"
+
+msgid "Add Pin"
+msgstr ""
+
+#, fuzzy
+msgid "Down Schematic"
+msgstr "/انزل إلى المخطط"
+
+#, fuzzy
+msgid "Down Symbol"
+msgstr "/انزل إلى الرمز"
+
+#, fuzzy
+msgid "Up Hierarchy"
+msgstr "تسلسل هرمي"
+
+#, fuzzy
+msgid "Attach Attributes"
+msgstr "حرّر المواصفات"
+
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Detach Attributes"
+msgstr "سمة مفصولة"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Show Attribute Value"
+msgstr "سمة ﻿الشقّ تالفة\n"
+
+#, fuzzy
+msgid "Show Attribute Name"
+msgstr "سمة ﻿الشقّ تالفة\n"
+
+#, fuzzy
+msgid "Toggle Text Visibility"
+msgstr "_بدل الرؤية"
+
+#, fuzzy
+msgid "Find Specific Text"
+msgstr "اب_حث عن نص معين..."
+
+#, fuzzy
+msgid "Hide Specific Text"
+msgstr "أ_خف نصا معينا..."
+
+#, fuzzy
+msgid "Show Specific Text"
+msgstr "أ_ظهر نصا معينا..."
+
+#, fuzzy
+msgid "Show Hotkeys"
+msgstr "مفاتيح ساخنة"
+
+msgid "Switch Grid Style"
+msgstr ""
+
+msgid "Switch Snap Mode"
+msgstr ""
+
+#, fuzzy
+msgid "Set Grid Spacing"
+msgstr "_كبّر تباعد الشبيكة"
+
+#, fuzzy
+msgid "Increase Grid Spacing"
+msgstr "_كبّر تباعد الشبيكة"
+
+#, fuzzy
+msgid "Decrease Grid Spacing"
+msgstr "_كبّر تباعد الشبيكة"
+
+#, fuzzy
+msgid "Toggle Outline Drawing"
+msgstr "بدّل ال_حد الخارجي/الإطار"
+
+#, fuzzy
+msgid "Toggle Net Rubber Band"
+msgstr "بدّل الشريط الم_طاطي للشبكة"
+
+#, fuzzy
+msgid "Toggle Magnetic Nets"
+msgstr "وضع الشبكة الم_غناطيسية"
+
+#, fuzzy
+msgid "Show Log Window"
+msgstr "أظهر نافذة ال_سجل..."
+
+#, fuzzy
+msgid "Show Coordinate Window"
+msgstr "أظهر نافذة الم_علم..."
+
+#, fuzzy
+msgid "Toggle Grips"
+msgstr "_بدل الرؤية"
+
+#, fuzzy
+msgid "Component Documentation"
+msgstr "توثيق الم_كونات"
+
+msgid "View documentation for selected component"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Manual"
+msgstr "يدوي"
+
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA wiki"
+msgstr "_ويكي gEDA..."
+
+msgid "View the front page of the Lepton EDA wiki in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "About lepton-schematic"
+msgstr "عن gschem"
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "توثيق الم_كونات"
+
+#, fuzzy
+msgid "No documentation found"
+msgstr "ت_وثيق"
+
+#, scheme-format
+msgid "~S is not a prefix key sequence."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
 #, fuzzy
 #~ msgid "Lepton EDA circuit schematic"
 #~ msgstr "‏مخطّط دارة gEDA"
@@ -833,10 +3197,6 @@ msgstr ""
 #~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
 #, fuzzy, c-format
-#~ msgid "Can't get the real filename of %1$s."
-#~ msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
-
-#, fuzzy, c-format
 #~ msgid "Unable to delete backup file %1$s."
 #~ msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
 
@@ -937,10 +3297,6 @@ msgstr ""
 #~ msgstr "يجب أن تكون القيمة في إدخال خارطة اللون f# أو نص"
 
 #, fuzzy
-#~ msgid "Saved [%1$s]"
-#~ msgstr "‏حفظ [%s]\n"
-
-#, fuzzy
 #~ msgid "Could NOT save [%1$s]"
 #~ msgstr "تعذّر حفظ [‎%s‬]\n"
 
@@ -975,14 +3331,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
 #~ msgstr "\t‏\tتغيير ثانوي في الإصدار (الملف %.3f، المثيل %.3f)\n"
-
-#, fuzzy
-#~ msgid "There are no schematics above the current one!"
-#~ msgstr "لا توجد مخططات فوق المخطط الحالي!\n"
-
-#, fuzzy
-#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
-#~ msgstr "فشل في فتح الدليل [%s]: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"
@@ -1069,3 +3417,808 @@ msgstr ""
 
 #~ msgid "Could not find [%s] in any SourceLibrary\n"
 #~ msgstr "تعذر العثور على [%s] في أي مكتبة مصدر\n"
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "حجم الجذب"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "وضع الشبكة المغناطيسية"
+
+#~ msgid "OFF"
+#~ msgstr "إيقاف"
+
+#~ msgid "NONE"
+#~ msgstr "لا شيئ"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "شبيكة(%s, %s)"
+
+#~ msgid "Edit slot number"
+#~ msgstr "﻿حرّر عدد الشقّ"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "عذرا خيار القائمة هذا غير فعّال\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "نص تعداد آلي"
+
+#, fuzzy
+#~ msgid "User _Guide"
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
+#, fuzzy
+#~ msgid "Docu_mentation"
+#~ msgstr "ت_وثيق"
+
+#, fuzzy
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "انتق المخططات التي تريد حفظها:"
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "إصدار gEDA/gschem‫ %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "إصدار gEDA/gschem‫ %s%s.%s\n"
+
+#~ msgid "This is the MINGW32 port.\n"
+#~ msgstr "هذا نقل(Port) عن طريق MINGW32.\n"
+
+#, fuzzy
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "الإعدادات المحلية الحالية: %s\n"
+
+#, fuzzy
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "الكائنات المنتقاة"
+#~ msgstr[1] "الكائنات المنتقاة"
+
+#, fuzzy
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "حاول الحصول على لون غير صالح: %d\n"
+
+#~ msgid "Background"
+#~ msgstr "خلفيّة"
+
+#~ msgid "Pin"
+#~ msgstr "دبوس"
+
+#~ msgid "Net endpoint"
+#~ msgstr "﻿نقطة النهاية للشبكة"
+
+#~ msgid "Graphic"
+#~ msgstr "رسم"
+
+#~ msgid "Net"
+#~ msgstr "شبكة"
+
+#~ msgid "Attribute"
+#~ msgstr "سمة"
+
+#~ msgid "Logic bubble"
+#~ msgstr "﻿فقاعة المنطق"
+
+#~ msgid "Grid point"
+#~ msgstr "﻿نقطة شبيكة"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "سمة مفصولة"
+
+#~ msgid "Selection"
+#~ msgstr "منتقى"
+
+#~ msgid "Bounding box"
+#~ msgstr "مربع إحاطة"
+
+#~ msgid "Zoom box"
+#~ msgstr "قرّب المربع"
+
+#~ msgid "Output background"
+#~ msgstr "﻿خلفية الإخراج"
+
+#~ msgid "Net junction"
+#~ msgstr "وصلة شبكة"
+
+#~ msgid "Mesh grid major"
+#~ msgstr "أساسي - خيط الشبيكة"
+
+#~ msgid "Mesh grid minor"
+#~ msgstr "ثانوي - خيط الشبيكة"
+
+#~ msgid "Unknown"
+#~ msgstr "مجهول"
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "محرّر سمة منفردة"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>حرّر السّمة</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "انتق مكونا..."
+
+#~ msgid "Open..."
+#~ msgstr "افتح..."
+
+#~ msgid "Save as..."
+#~ msgstr "احفظ كـ..."
+
+#~ msgid "Write image..."
+#~ msgstr "أكتب صورة..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "مدخل نص..."
+
+#~ msgid "Got a non line object in o_move_check_endpoint\n"
+#~ msgstr "﻿حصلت على كائن غير مشكّل من خط في o_move_check_endpoint\n"
+
+#, fuzzy
+#~ msgid "Save settings to:"
+#~ msgstr "إعدادات"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "مرّر حجم غير صالح [%d] إلى 'حجم النص'\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "مرّر حجم غير صالح [%d] إلى 'حجم الجذب'\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "مرّر عدد مستويات غير صالح [%d] إلى 'مستويات التراجع'\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "مرّر حجم غير صالح [%d] إلى 'حجم كسار الناقل'\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "مرّر حجم نقط غير صالح [%d] إلى 'حجم النقط للشبيكة النقطية'\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "مرّر تباعد بكسل غير صالح [%d] إلى 'العتبة الثابتة للشبيكة النقطية'\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
+#~ msgstr "مرّر تباعد بكسل غير صالح [%d] إلى 'عتبة العرض لشبيكة الشُرَط'\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr "مرّر عدد ثواني غير صالح [%d] إلى 'مدّة الحفظ الآلي'\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح الفأرة'\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح لوحة المفاتيح'\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "مرّر عدد بكسلات غير صالح [%d] إلى 'بكسلات مهملة للانتقاء'\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح التقريب'\n"
+
+#, fuzzy
+#~ msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
+#~ msgstr "مرّر عدد خطوات غير صالح [%d] إلى 'خطوات شريط التمرير'\n"
+
+#~ msgid "Got an unexpected NULL in o_edit\n"
+#~ msgstr "حصلت على NULL غير متوقع في o_edit\n"
+
+#~ msgid "ERROR: NULL object in o_move_end!\n"
+#~ msgstr "﻿خطأ: كائن فارغ (NULL) في o_move_end!\n"
+
+#~ msgid "ERROR: NULL object!\n"
+#~ msgstr "﻿خطأ: كائن فارغ (NULL)!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "﻿تعذر تعيين اللون %s!\n"
+
+#~ msgid "black"
+#~ msgstr "أسود"
+
+#~ msgid "white"
+#~ msgstr "أبيض"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "﻿تعذر تعيين لون العرض %i!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "﻿تعذر تعيين لون الخط الخارجي %i!\n"
+
+#~ msgid "Move"
+#~ msgstr "حرّك"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "/اصعد"
+
+#, fuzzy
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+#~ msgstr "محاولة تعيين الحساسية على عنصر قائمة غير موجود '%s'\n"
+
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+#~ msgstr "محاولة تعيين الحساسية على عنصر قائمة غير موجود '%s'\n"
+
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "مرّرت قيمة إزاحة غير صالحة [%d] إلى 'إزاحة إضافة السمة'\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "تعذّر العثور على ملف الاستهلال [‎%s‬]\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "قراءة ملف الاستهلال [‎%s‬]\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "فشل قراءة ملف الاستهلال [‎%s‬]\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "كرّر/لا شيء"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "نسخ متعدد"
+
+#~ msgid "Edit"
+#~ msgstr "تحرير"
+
+#~ msgid "Slot"
+#~ msgstr "شقّ"
+
+#~ msgid "Rotate"
+#~ msgstr "أدر"
+
+#~ msgid "Mirror"
+#~ msgstr "مرآة"
+
+#~ msgid "Embed"
+#~ msgstr "ضمّن"
+
+#~ msgid "Unembed"
+#~ msgstr "لا تضمّن"
+
+#~ msgid "Update"
+#~ msgstr "حدّث"
+
+#~ msgid "ShowHidden"
+#~ msgstr "أظهر المخفي"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "انسخ إلى الحافظة"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "قصّ إلى الحافظة"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "ألصق من الحافظة"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "انسخ 1"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "قص 1"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "ألصق 1"
+
+#~ msgid "Line"
+#~ msgstr "خط"
+
+#~ msgid "Box"
+#~ msgstr "إطار"
+
+#~ msgid "Circle"
+#~ msgstr "دائرة"
+
+#~ msgid "Arc"
+#~ msgstr "قوس"
+
+#~ msgid "Attach"
+#~ msgstr "أرفق"
+
+#~ msgid "Detach"
+#~ msgstr "افصل"
+
+#~ msgid "ShowN"
+#~ msgstr "أظهرN"
+
+#~ msgid "ShowV"
+#~ msgstr "أظهرV"
+
+#~ msgid "ShowB"
+#~ msgstr "أظهرB"
+
+#~ msgid "VisToggle"
+#~ msgstr "تبديل الرؤية"
+
+#~ msgid "Picture"
+#~ msgstr "صورة"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr "نقرة يمنى فوق اسم الملف للحصول على المزيد من الخيارات..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "قائمة/ألغِ"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "انتقل/ألغِ"
+
+#, fuzzy
+#~ msgid "gschem FAQ"
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
+#~ msgid "Really revert page?"
+#~ msgstr "تريد استعادة الصفحة حقا؟"
+
+#~ msgid "Filter:"
+#~ msgstr "المرشح:"
+
+#~ msgid "Edit pin type"
+#~ msgstr "حرّر نوع الدبوس"
+
+#, fuzzy
+#~ msgid "Edit Pin Type..."
+#~ msgstr "/حرّر نوع الدبوس"
+
+#~ msgid "Color..."
+#~ msgstr "لون..."
+
+#~ msgid "Line Width & Type..."
+#~ msgstr "عرض و نوع الخط..."
+
+#~ msgid "Fill Type..."
+#~ msgstr "نوع الملء..."
+
+#, fuzzy
+#~ msgid "Pin Type..."
+#~ msgstr "نوع الملء..."
+
+#~ msgid "_Dark color scheme"
+#~ msgstr "مخطط ألوان _داكنة"
+
+#~ msgid "_Light color scheme"
+#~ msgstr "مخطط ألوان _فاتحة"
+
+#~ msgid "_Find Specific Text..."
+#~ msgstr "اب_حث عن نص معين..."
+
+#, fuzzy
+#~ msgid "Text Size..."
+#~ msgstr "حجم ال_نص..."
+
+#~ msgid "Cycle _grid styles"
+#~ msgstr "دوّر أنماط ال_شبيكة"
+
+#~ msgid "Toggle _Snap On/Off"
+#~ msgstr "شغل/أوقف ال_جذب"
+
+#~ msgid "Snap Grid S_pacing..."
+#~ msgstr "ت_باعد شبيكة الجذب..."
+
+#~ msgid "Scale _up Grid Spacing"
+#~ msgstr "_كبّر تباعد الشبيكة"
+
+#~ msgid "Scale _down Grid Spacing"
+#~ msgstr "_صغّر تباعد الشبيكة"
+
+#~ msgid "Toggle Net _Rubberband"
+#~ msgstr "بدّل الشريط الم_طاطي للشبكة"
+
+#~ msgid "Toggle _Magnetic Net"
+#~ msgstr "وضع الشبكة الم_غناطيسية"
+
+#~ msgid "Show _Log Window..."
+#~ msgstr "أظهر نافذة ال_سجل..."
+
+#~ msgid "Show _Coord Window..."
+#~ msgstr "أظهر نافذة الم_علم..."
+
+#, fuzzy
+#~ msgid "gschem User _Guide..."
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
+#~ msgid "gschem _FAQ..."
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
+#~ msgid "gEDA _Wiki..."
+#~ msgstr "_ويكي gEDA..."
+
+#~ msgid "Component D_ocumentation..."
+#~ msgstr "توثيق الم_كونات"
+
+#~ msgid "Edit Line Width & Type"
+#~ msgstr "حرّر عرض و نوع الخط"
+
+#~ msgid "Edit Fill Type"
+#~ msgstr "حرّر نوع الملء"
+
+#, fuzzy
+#~ msgid "Edit Pin Type"
+#~ msgstr "حرّر نوع الدبوس"
+
+#, fuzzy
+#~ msgid "Set Default Text Size"
+#~ msgstr "حجم النص"
+
+#~ msgid ""
+#~ "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ msgstr "يقدم gEDA/gschem بلا أي ضمان، راجع COPYING لتفاصيل أكثر.\n"
+
+#~ msgid ""
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ msgstr "هذا برنامج حر، مرحب بإعادة توزيعه مع بعض الشروط،\n"
+
+#, fuzzy
+#~ msgid "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "من فضلك راجع الملف COPYING لتفاصيل أكثر.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "You must set the GEDADATA environment variable!\n"
+#~ "\n"
+#~ "gschem cannot locate its data files. You must set the GEDADATA\n"
+#~ "environment variable to point to the correct location.\n"
+#~ msgstr ""
+#~ "يجب أن تعيّن متغيّر البيئة GEDADATA!\n"
+#~ "\n"
+#~ "لا يمكن لـ gschem تحديد مكان ملفات البيانات خاصته. يجب أن تعيّن متغيّر "
+#~ "البيئة\n"
+#~ "‏GEDADATA ليشير إلى المكان الصّحيح.\n"
+
+#~ msgid "Object already locked\n"
+#~ msgstr "تم إقفال الكائن مسبقا\n"
+
+#~ msgid "Object already unlocked\n"
+#~ msgstr "تم فك قفل الكائن مسبقا\n"
+
+#~ msgid "o_buffer_copy: Invalid buffer %i\n"
+#~ msgstr "‏o_buffer_copy: مخزن‏ %i غير صالح\n"
+
+#~ msgid "o_buffer_cut: Invalid buffer %i\n"
+#~ msgstr "‏o_buffer_cut: مخزن‏ %i غير صالح\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
+#~ msgstr "حصلت على buffer_number غير صالح [o_buffer_paste_start]\n"
+
+#~ msgid "Tried to get an invalid outline color: %d\n"
+#~ msgstr "حاول الحصول على لون خط خارجي غير صالح: %d\n"
+
+#~ msgid ""
+#~ "Offset to translate?\n"
+#~ "(0 for origin)"
+#~ msgstr ""
+#~ "قيمة الإزاحة من أجل السحب؟\n"
+#~ "(0 من أجل المبدأ)"
+
+#~ msgid "Text Size"
+#~ msgstr "حجم النص"
+
+#~ msgid "Enter new text size:"
+#~ msgstr "أدخل حجم نص جديد:"
+
+#~ msgid "Enter new snap grid spacing:"
+#~ msgstr "﻿أدخل تباعد جديد لشبيكة الجذب:"
+
+#~ msgid "Text to find:"
+#~ msgstr "النص المطلوب:"
+
+#~ msgid "Show Text"
+#~ msgstr "أظهر النص"
+
+#~ msgid "Couldn't allocate gc\n"
+#~ msgstr "تعذر تحديد موقع gc\n"
+
+#~ msgid "Open file..."
+#~ msgstr "افتح ملفا..."
+
+#, fuzzy
+#~ msgid "Edit Attributes - %s"
+#~ msgstr "حرّر المواصفات"
+
+#, fuzzy
+#~ msgid "Embed Component/Pictore"
+#~ msgstr "ضمّن المكون/الصورة"
+
+#~ msgid "Function"
+#~ msgstr "وظيفة"
+
+#~ msgid "/Zoom Box"
+#~ msgstr "/قرب الإطار"
+
+#~ msgid "/Select"
+#~ msgstr "/انتق"
+
+#~ msgid "/Edit..."
+#~ msgstr "/حرّر..."
+
+#~ msgid "/Copy"
+#~ msgstr "/انسخ"
+
+#~ msgid "/Move"
+#~ msgstr "/حرّك"
+
+#~ msgid "/Delete"
+#~ msgstr "/احذف"
+
+#~ msgid "Popup_menu_item_factory doesn't exist!\n"
+#~ msgstr "مصنع-عنصر-القائمة-المنبثقة غير موجود!\n"
+
+#~ msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
+#~ msgstr "محاولة تعيين الحساسية على عنصر قائمة منبثقة غير موجود '%s'\n"
+
+#~ msgid "Ne_w"
+#~ msgstr "_جديدة"
+
+#~ msgid "_Buffer"
+#~ msgstr "م_خزن"
+
+#~ msgid "Invalid zoomfactor [%d] passed to %s\n"
+#~ msgstr "مرّر معامل تقريب غير صالح [%d] إلى %s\n"
+
+#~ msgid "Copy 2"
+#~ msgstr "انسخ 2"
+
+#~ msgid "Copy 3"
+#~ msgstr "انسخ 3"
+
+#~ msgid "Copy 4"
+#~ msgstr "انسخ 4"
+
+#~ msgid "Copy 5"
+#~ msgstr "انسخ 5"
+
+#~ msgid "Cut 2"
+#~ msgstr "قص 2"
+
+#~ msgid "Cut 3"
+#~ msgstr "قص 3"
+
+#~ msgid "Cut 4"
+#~ msgstr "قص 4"
+
+#~ msgid "Cut 5"
+#~ msgstr "قص 5"
+
+#~ msgid "Paste 2"
+#~ msgstr "ألصق 2"
+
+#~ msgid "Paste 3"
+#~ msgstr "ألصق 3"
+
+#~ msgid "Paste 4"
+#~ msgstr "ألصق 4"
+
+#~ msgid "Paste 5"
+#~ msgstr "ألصق 5"
+
+#~ msgid ""
+#~ "Enter text, click apply,\n"
+#~ "move cursor into window, click to place text.\n"
+#~ "Middle button to rotate while placing."
+#~ msgstr ""
+#~ "﻿أدخل النص، انقر فوق تطبيق،\n"
+#~ "حرّك المؤشر إلى داخل النافذة،ثم انقر لوضع النص.\n"
+#~ "الزر الأوسط للتدوير عند الوضع."
+
+#~ msgid "*unchanged*"
+#~ msgstr "*لم يغيّر*"
+
+#~ msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
+#~ msgstr "﻿خطأ: كائن فارغ (NULL) في color_edit_dialog_apply!\n"
+
+#~ msgid "Discard Page"
+#~ msgstr "أهمل الصفحة"
+
+#~ msgid "_Discard"
+#~ msgstr "أ_همل"
+
+#~ msgid "Unknown end for line (%d)\n"
+#~ msgstr "نهاية السطر (%d) مجهولة\n"
+
+#~ msgid "Unknown type for stroke (%d) !\n"
+#~ msgstr "نوع مجهول للجرّة-‪stroke‬ (%d) !\n"
+
+#~ msgid "Cannot find source [%s]\n"
+#~ msgstr "يتعذر العثور على المنبع [%s]\n"
+
+#~ msgid "Unknown type for box (fill)!\n"
+#~ msgstr "نوع مجهول للإطار (الملء)!\n"
+
+#~ msgid "Got an invalid which one in o_bus_draw_stretch\n"
+#~ msgstr "﻿حصلت على أيّ-واحد غير صالح في o_bus_draw_stretch\n"
+
+#~ msgid "Unknown type for circle (fill)!\n"
+#~ msgstr "نوع مجهول للدائرة (الملء)!\n"
+
+#~ msgid "Got an invalid which one in o_net_draw_stretch\n"
+#~ msgstr "﻿حصلت على أيّ-واحد غير صالح في o_net_draw_stretch\n"
+
+#~ msgid "Unknown type for path (fill)!\n"
+#~ msgstr "﻿نوع مجهول للمسار (ملء)!\n"
+
+#~ msgid "Encapsulated Postscript"
+#~ msgstr "بوست-سكريبت مغلف"
+
+#~ msgid "x_image_lowlevel: Unable to write eps file %s.\n"
+#~ msgstr "‏﻿x_image_lowlevel: غير قادر على كتابة ملف ‬eps %s.\n"
+
+#~ msgid "Extents with margins"
+#~ msgstr "امتدادات مع هوامش"
+
+#~ msgid "Extents no margins"
+#~ msgstr "امتدادات بلا هوامش"
+
+#~ msgid "Landscape"
+#~ msgstr "عرضيّ"
+
+#~ msgid "Portrait"
+#~ msgstr "طوليّ"
+
+#~ msgid "Output paper size:"
+#~ msgstr "حجم ورق الإخراج:"
+
+#~ msgid "Destination"
+#~ msgstr "الوجهة"
+
+#~ msgid "File:"
+#~ msgstr "الملف:"
+
+#~ msgid "Command:"
+#~ msgstr "الأمر:"
+
+#~ msgid "No print destination specified\n"
+#~ msgstr "لم تعيّن وجهة للطباعة\n"
+
+#~ msgid "Cannot print current schematic to [%s]\n"
+#~ msgstr "لا يمكن طباعة المخطط الحالي إلى [‎%s‬]\n"
+
+#~ msgid ""
+#~ "Error printing to file '%s'\n"
+#~ "Check the log window for more information"
+#~ msgstr ""
+#~ "خطأ في الطباعة إلى الملف '%s'\n"
+#~ "تحقق من نافذة السجل للمزيد من المعلومات"
+
+#~ msgid "Printed current schematic to [%s]\n"
+#~ msgstr "طُبع المخطط الحالي إلى [‎%s‬]\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "The config option postscript-font-scale is deprecated and will be removed "
+#~ "in gEDA 1.8.0.\n"
+#~ "Printed text is fixed to match on-screen sizes. Please remove this option "
+#~ "from your config files.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "تمّ احتضار خيار الإعداد 'حجم الخط لـ postscript' و سيُزال في gEDA 1.8.0.\n"
+#~ "ثُبّت النص المطبوع ليطابق الحجم على الشاشة. الرجاء إزالة هذا الخيار من "
+#~ "ملفات الإعداد لديك.\n"
+#~ "\n"
+
+#~ msgid "Could not fork\n"
+#~ msgstr "تعذّر التشعيب\n"
+
+#~ msgid "Could not invoke %s\n"
+#~ msgstr "تعذّر استحضار %s\n"
+
+#~ msgid "Documentation commands not supported under MinGW.\n"
+#~ msgstr "أوامر التوثيق غير مدعومة تحت MinGW.\n"
+
+#~ msgid "Documentation for [%s,%s,%s,%s]\n"
+#~ msgstr "التوثيق لأجل [%s,%s,%s,%s]\n"
+
+#~ msgid ""
+#~ "This command retrieves the component documentation from the web, but "
+#~ "there is no component selected"
+#~ msgstr "هذا الأمر يستردّ توثيق المكوّن من الموقع، لكن لا يوجد أي مكوّن منتقى"
+
+#~ msgid "Scheme directory NOT set!\n"
+#~ msgstr "دليل المخطط غير معين!\n"
+
+#~ msgid "MakeVisible"
+#~ msgstr "أظهر"
+
+#~ msgid ""
+#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
+#~ "  -q            Quiet mode\n"
+#~ "  -v            Verbose mode on\n"
+#~ "  -r filename   Rc filename\n"
+#~ "  -s filename   Script (guile) filename\n"
+#~ "  -o filename   Output filename (for printing)\n"
+#~ "  -p            Automatically place the window\n"
+#~ "  -t            Print stroke information\n"
+#~ "  -h            Help; this message\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
+#~ "  -q            Quiet mode\n"
+#~ "  -v            Verbose mode on\n"
+#~ "  -r filename   Rc filename\n"
+#~ "  -s filename   Script (guile) filename\n"
+#~ "  -o filename   Output filename (for printing)\n"
+#~ "  -p            Automatically place the window\n"
+#~ "  -t            Print stroke information\n"
+#~ "  -h            Help; this message\n"
+#~ "\n"
+
+#~ msgid "Make Inv Text Vis"
+#~ msgstr "إجعل النص الخفي ظاهرا"
+
+#~ msgid "Update Cues"
+#~ msgstr "حدّث الإشارات"
+
+#~ msgid "About..."
+#~ msgstr "عن..."
+
+#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
+#~ msgstr ""
+#~ "<b>gEDA: GPL Electronic Design Automation (أتمتة التصميم الإلكتروني)</b>"
+
+#~ msgid "<b>gschem version %s%s.%s</b>"
+#~ msgstr "‏<b>إصدار gschem %s%s.%s</b>"
+
+#~ msgid ""
+#~ "Written by:\n"
+#~ "Ales Hvezda\n"
+#~ "ahvezda@geda.seul.org\n"
+#~ "And many others (See AUTHORS file)"
+#~ msgstr ""
+#~ "كتبه:\n"
+#~ "‫Ales Hvezda\n"
+#~ "‫ahvezda@geda.seul.org\n"
+#~ "وكثيرين غيره (طالع الملف AUTHORS)"
+
+#~ msgid "Save Page As..."
+#~ msgstr "إحفظ الصفحة كـ..."
+
+#~ msgid "File"
+#~ msgstr "ملف"
+
+#~ msgid "Buffer"
+#~ msgstr "ذاكرة وسيطة"
+
+#~ msgid "View"
+#~ msgstr "عرض"
+
+#~ msgid "Page"
+#~ msgstr "الصفحة"
+
+#~ msgid "Add"
+#~ msgstr "أضف"
+
+#~ msgid "Help"
+#~ msgstr "مساعدة"

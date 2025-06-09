@@ -9,7 +9,7 @@ subdir = lepton-eda/po
 top_builddir = ../..
 
 # These options get passed to xgettext.
-XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --keyword=G_ --from-code=UTF-8
+XGETTEXT_OPTIONS = --keyword=N_ --keyword=G_ --from-code=UTF-8
 
 MSGMERGE_OPTIONS = --no-location
 

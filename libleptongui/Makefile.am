@@ -11,7 +11,6 @@ SUBDIRS = \
 	lib \
 	po \
 	src \
-	scheme \
 	tests
 
 pkgconfigdir   = $(libdir)/pkgconfig

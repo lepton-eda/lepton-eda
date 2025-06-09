@@ -40,6 +40,11 @@ nobase_dist_scmdata_DATA = \
 	backend/vhdl.scm \
 	backend/vipec.scm \
 	color-map.scm \
+	conf/schematic/attribs.scm \
+	conf/schematic/deprecated.scm \
+	conf/schematic/keys.scm \
+	conf/schematic/menu.scm \
+	conf/schematic/stroke.scm \
 	geda/object.scm \
 	geda/page.scm \
 	geda/attrib.scm \
@@ -49,6 +54,17 @@ nobase_dist_scmdata_DATA = \
 	geda/config.scm \
 	geda/log.scm \
 	geda/library.scm \
+	gschem/action.scm \
+	gschem/attrib.scm \
+	gschem/builtins.scm \
+	gschem/gschemdoc.scm \
+	gschem/hook.scm \
+	gschem/keymap.scm \
+	gschem/selection.scm \
+	gschem/symbol/check.scm \
+	gschem/util.scm \
+	gschem/window.scm \
+	gschem/deprecated.scm \
 	lepton/attrib.scm \
 	lepton/autoplace.scm \
 	lepton/bounds.scm \
@@ -115,6 +131,51 @@ nobase_dist_scmdata_DATA = \
 	netlist/verbose.scm \
 	sch2pcb/element.scm \
 	sch2pcb/format.scm \
+	schematic/action.scm \
+	schematic/action-mode.scm \
+	schematic/action/copy.scm \
+	schematic/action/delete.scm \
+	schematic/action/edit.scm \
+	schematic/attrib.scm \
+	schematic/buffer.scm \
+	schematic/builtins.scm \
+	schematic/callback.scm \
+	schematic/canvas.scm \
+	schematic/canvas/foreign.scm \
+	schematic/dialog.scm \
+	schematic/dialog/file-select.scm \
+	schematic/dialog/multiattrib.scm \
+	schematic/dialog/new-text.scm \
+	schematic/dialog/slot-edit.scm \
+	schematic/doc.scm \
+	schematic/event.scm \
+	schematic/ffi.scm \
+	schematic/ffi/gtk.scm \
+	schematic/gettext.scm \
+	schematic/gtk/helper.scm \
+	schematic/gui/keymap.scm \
+	schematic/gui/stroke.scm \
+	schematic/hook.scm \
+	schematic/keymap.scm \
+	schematic/menu.scm \
+	schematic/mouse-pointer.scm \
+	schematic/netlist.scm \
+	schematic/pcb.scm \
+	schematic/precompile.scm \
+	schematic/preview-widget.scm \
+	schematic/refdes.scm \
+	schematic/repl.scm \
+	schematic/selection.scm \
+	schematic/sellock.scm \
+	schematic/symbol/check.scm \
+	schematic/toolbar.scm \
+	schematic/util.scm \
+	schematic/undo.scm \
+	schematic/viewport/foreign.scm \
+	schematic/window.scm \
+	schematic/window/foreign.scm \
+	schematic/window/global.scm \
+	schematic/window/list.scm \
 	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/check/alignment.scm \
@@ -320,6 +381,7 @@ SUFFIXES = .scm .go
 .scm.go:
 	$(AM_V_GEN) \
 	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
+	LIBLEPTONGUI="${abs_top_builddir}/libleptongui/src/libleptongui" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

@@ -1,0 +1,2947 @@
+# Afrikaans translation for the gEDA gschem package.
+# Copyright (C) 2008 Bernd Jendrissek <bernd.jendrissek@gmail.com>
+# This file is distributed under the same license as the gschem package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda-gschem\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"PO-Revision-Date: 2010-02-14 01:03+0000\n"
+"Last-Translator: Bernd Jendrissek <Unknown>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: af\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#, fuzzy
+msgid "Zoom too small!  Cannot zoom further."
+msgstr "Zoem is te klein!  Kan nie verder zoem nie.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Kleurbewerking"
+
+msgid "_Apply"
+msgstr ""
+
+#, fuzzy
+msgid "Save As.._."
+msgstr "Bewaar as..."
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not save file [%s]:\n"
+"%s"
+msgstr "Kon nie lêer %s oopmaak nie\n"
+
+#, fuzzy
+msgid "Failed to save file"
+msgstr "Misluk om lêer te laai"
+
+#, fuzzy
+msgid "Save Color Scheme"
+msgstr "Kleurbewerking"
+
+msgid "_Save"
+msgstr ""
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Menu/Kanselleer"
+
+#, c-format
+msgid ""
+"The selected file `%1$s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+msgid "Overwrite file?"
+msgstr "Vervang lêer?"
+
+msgid "Sa_ve..."
+msgstr ""
+
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
+#, c-format
+msgid "<b>Current:</b> %s"
+msgstr ""
+
+msgid "Save configuration"
+msgstr ""
+
+msgid "_OK"
+msgstr ""
+
+msgid "Local configuration file:"
+msgstr ""
+
+msgid "User configuration file:"
+msgstr ""
+
+#, c-format
+msgid "%s (git: %.7s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "Kon nie lêer %s oopmaak nie\n"
+
+#, fuzzy
+msgid "Lepton Electronic Design Automation"
+msgstr "gEDA: GPL Elektroniese Ontwerp Outomatisering"
+
+msgid ""
+"Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
+"See AUTHORS, ChangeLog files and consult 'git log' history for details."
+msgstr ""
+
+msgid "Upper Left"
+msgstr "Links Bo"
+
+msgid "Upper Middle"
+msgstr "Middel Bo"
+
+#, fuzzy
+msgid "Upper Right"
+msgstr "Regs Onder"
+
+msgid "Middle Left"
+msgstr "Middel Links"
+
+msgid "Middle Middle"
+msgstr "Middel Middel"
+
+msgid "Middle Right"
+msgstr "Middel Regs"
+
+msgid "Lower Left"
+msgstr "Links Onder"
+
+msgid "Lower Middle"
+msgstr "Middel Onder"
+
+msgid "Lower Right"
+msgstr "Regs Onder"
+
+msgid "Arc Params"
+msgstr "Boogparameters"
+
+msgid "Arc _Radius:"
+msgstr ""
+
+#, fuzzy
+msgid "Start _Angle:"
+msgstr "Beginhoek:"
+
+#, fuzzy
+msgid "_Degrees of Sweep:"
+msgstr "Grade van Kromming:"
+
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opsies</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Rooster AF\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Rooster AF\n"
+
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
+
+msgid "Left mouse button"
+msgstr ""
+
+#, fuzzy
+msgid "Middle mouse button"
+msgstr "Middel Links"
+
+msgid "Right mouse button"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
+msgstr "Rubberband AAN\n"
+
+#, fuzzy
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "Netmodus"
+
+#, fuzzy
+msgid "Current action mode"
+msgstr "Lopende bladsy"
+
+msgid "S_elect the schematics you want to save:"
+msgstr "Kies die stroombaandiagramme wat jy wil bewaar:"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Show _full paths"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Save the changes to schematic \"%1$s\" before closing?"
+msgstr ""
+"Wil jy veranderinge aan stroombaandiagram \"%s\" bewaar voor jy afsluit?"
+
+#, fuzzy, c-format
+msgid ""
+"There are %1$d schematics with unsaved changes. Save changes before closing?"
+msgstr ""
+"Daar is %d stroombaandiagramme met onbewaarde veranderinge.  Wil jy die "
+"veranderinge bewaar voor jy afsluit?"
+
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr "As jy nie bewaar nie, sal al jou veranderinge permanent verloregaan."
+
+#, fuzzy
+msgid "Close _without saving"
+msgstr "Sluit sonder om te bewaar"
+
+# FIXME: May need to have a deëlteken on second 'o'.
+msgid "Coords"
+msgstr "Koordinate"
+
+msgid "_Close"
+msgstr ""
+
+msgid "Screen"
+msgstr "Skerm"
+
+msgid "World"
+msgstr "Wêreld"
+
+msgid "Filename"
+msgstr "Lêernaam"
+
+msgid "Text"
+msgstr "Teks"
+
+msgid "descend into hierarchy"
+msgstr "daal in hierargie af"
+
+#, fuzzy
+msgid "Find"
+msgstr "Vind Teks"
+
+#, fuzzy
+msgid "Find Text:"
+msgstr "Vind Teks"
+
+msgid "Find Pattern:"
+msgstr ""
+
+#, fuzzy
+msgid "Find Regex:"
+msgstr "Vind Teks"
+
+msgid "Check symbol:"
+msgstr ""
+
+msgid "Hotkeys"
+msgstr ""
+
+msgid ""
+"Start typing action name or keystroke to filter the list.\n"
+"Type hotkeys as they are displayed in \"Keystroke(s)\" column."
+msgstr ""
+
+#, fuzzy
+msgid "_Filter:"
+msgstr "Deursyfer:"
+
+msgid "Action"
+msgstr "Handeling"
+
+msgid "Keystroke(s)"
+msgstr "Sleutelslae"
+
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr ""
+
+#, fuzzy
+msgid "Clear log window?"
+msgstr "Sluit Venster\n"
+
+#, fuzzy
+msgid "Clear Log"
+msgstr "Maak Skoon"
+
+msgid "_Wrap Long Lines"
+msgstr ""
+
+#, fuzzy
+msgid "Clea_r Log Window"
+msgstr "Nuwe Venster"
+
+msgid "Macro:"
+msgstr ""
+
+msgid "Evaluate"
+msgstr ""
+
+#, fuzzy
+msgid "_Fill Type:"
+msgstr "Vultipe:"
+
+#, fuzzy
+msgid "Lin_e Width:"
+msgstr "Lynwydte:"
+
+#, fuzzy
+msgid "Angle _1:"
+msgstr "Hoek 1:"
+
+#, fuzzy
+msgid "P_itch 1:"
+msgstr "Steek 1:"
+
+#, fuzzy
+msgid "Angle _2:"
+msgstr "Hoek 2:"
+
+#, fuzzy
+msgid "Pitc_h 2:"
+msgstr "Steek 2:"
+
+#, fuzzy
+msgid "<b>Fill Properties</b>"
+msgstr "<b>Tekseienskappe</b>"
+
+#, fuzzy
+msgid "Colo_r:"
+msgstr "Kleur:"
+
+#, fuzzy
+msgid "<b>General Properties</b>"
+msgstr "<b>Tekseienskappe</b>"
+
+#, fuzzy
+msgid "_Type:"
+msgstr "Styl:"
+
+#, fuzzy
+msgid "_Width:"
+msgstr "Wydte:"
+
+#, fuzzy
+msgid "Dash _Length:"
+msgstr "Streeplengte"
+
+#, fuzzy
+msgid "Dash _Space:"
+msgstr "Streepspasie"
+
+msgid "C_ap style:"
+msgstr ""
+
+#, fuzzy
+msgid "<b>Line Properties</b>"
+msgstr "<b>Tekseienskappe</b>"
+
+#, fuzzy
+msgid "_Pin Type:"
+msgstr "Vultipe"
+
+#, fuzzy
+msgid "<b>Pin Properties</b>"
+msgstr "<b>Tekseienskappe</b>"
+
+msgid "_Off"
+msgstr ""
+
+msgid "_Dots"
+msgstr ""
+
+msgid "M_esh"
+msgstr ""
+
+#, fuzzy
+msgid "Net R_ubber Band Mode:"
+msgstr "Rubberband AAN\n"
+
+#, fuzzy
+msgid "_Magnetic Net Mode:"
+msgstr "Netmodus"
+
+msgid "Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "<b>Net Options</b>"
+msgstr "<b>Opsies</b>"
+
+#, fuzzy
+msgid "Grid Mode:"
+msgstr "Boogmodus"
+
+#, fuzzy
+msgid "Snap Mode:"
+msgstr "Aansigskuifmodus"
+
+#, fuzzy
+msgid "_Snap Size:"
+msgstr "Grootte:"
+
+#, fuzzy
+msgid "<b>Snap Options</b>"
+msgstr "<b>Opsies</b>"
+
+msgid "O_ff"
+msgstr ""
+
+#, fuzzy
+msgid "_Grid"
+msgstr "Rooster AAN\n"
+
+msgid "_Resnap"
+msgstr ""
+
+msgid "Net pin"
+msgstr ""
+
+msgid "Bus pin (graphical)"
+msgstr ""
+
+msgid "Preview Buffer"
+msgstr ""
+
+#, fuzzy
+msgid "Hide"
+msgstr "Verskuil Teks"
+
+msgid "Hide text starting with:"
+msgstr "Verskuil teks beginnende met:"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Kleur"
+
+msgid "Number of Slots:"
+msgstr ""
+
+#, fuzzy
+msgid "Slot Number:"
+msgstr "Bewerk gleufnommer:"
+
+msgid "<b>Text Content</b>"
+msgstr "<b>Teksinhoud</b>"
+
+#, fuzzy
+msgid "_Size:"
+msgstr "Grootte:"
+
+#, fuzzy
+msgid "Ali_gnment:"
+msgstr "Sporing:"
+
+#, fuzzy
+msgid "Ro_tation:"
+msgstr "Orientasie"
+
+msgid "<b>Text Properties</b>"
+msgstr "<b>Tekseienskappe</b>"
+
+#, fuzzy
+msgid "Coordinate:"
+msgstr "Huidige Venster"
+
+msgid "Translate"
+msgstr "Verskuif"
+
+msgid "Select Mode"
+msgstr "Uitsoekmodus"
+
+#, fuzzy
+msgid "Select Box Mode"
+msgstr "Uitsoekmodus"
+
+msgid "Text Mode"
+msgstr "Teksmodues"
+
+msgid "Pan Mode"
+msgstr "Aansigskuifmodus"
+
+#, c-format
+msgid "Paste %d Mode"
+msgstr "Plak %d Modus"
+
+msgid "Magnetic Net Mode"
+msgstr ""
+
+msgid "Net Mode"
+msgstr "Netmodus"
+
+msgid "Arc Mode"
+msgstr "Boogmodus"
+
+msgid "Box Mode"
+msgstr "Reghoekmodus"
+
+msgid "Bus Mode"
+msgstr "Busmodus"
+
+msgid "Circle Mode"
+msgstr "Sirkelmodus"
+
+msgid "Component Mode"
+msgstr "Komponentmodus"
+
+msgid "Copy Mode"
+msgstr "Kopieermodus"
+
+msgid "Multiple Copy Mode"
+msgstr "Meervoudige Kopieermodus"
+
+msgid "Line Mode"
+msgstr "Lynmodus"
+
+msgid "Mirror Mode"
+msgstr "Weerkaatsmodus"
+
+msgid "Move Mode"
+msgstr "Skuifmodus"
+
+#, fuzzy
+msgid "Path Mode"
+msgstr "Aansigskuifmodus"
+
+msgid "Picture Mode"
+msgstr "Afbeeldingmodus"
+
+msgid "Pin Mode"
+msgstr "Penmodus"
+
+msgid "Rotate Mode"
+msgstr "Roteermodus"
+
+#, fuzzy
+msgid "Modify Mode"
+msgstr "Kopieermodus"
+
+msgid "Zoom Box"
+msgstr "Zoem Reghoek"
+
+msgid "Show Hidden"
+msgstr "Toon Verskuilde"
+
+msgid "Snap Off"
+msgstr ""
+
+msgid "Resnap Active"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "New page created [%1$s]"
+msgstr "Nuwe bladsy geskep [%s]\n"
+
+#, fuzzy, c-format
+msgid "New Window created [%1$s]"
+msgstr "Nuwe Venster geskep [%s]\n"
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "Voer Script Uit..."
+
+msgid "_Run"
+msgstr ""
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Stroombaandiagramme"
+
+msgid "All files"
+msgstr "Alle lêers"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "Voer guile script [%s] uit\n"
+
+msgid "Saved All"
+msgstr "Alles Bewaar"
+
+msgid "Failed to Save All"
+msgstr "Misluk om alles te bewaar"
+
+#, fuzzy
+msgid "Closing Window"
+msgstr "Sluit Venster\n"
+
+msgid "Select objs first"
+msgstr "Kies eers voorwerpe"
+
+msgid "WARNING: Do not translate with snap off!"
+msgstr ""
+
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr ""
+
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr ""
+
+msgid ""
+"WARNING: If you are translating a symbol to the origin, the snap grid size "
+"should be set to 100"
+msgstr ""
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+#, fuzzy
+msgid "Revert"
+msgstr "Gaan Bladsy Terug"
+
+msgid "Empty clipboard"
+msgstr ""
+
+msgid "Empty buffer"
+msgstr "Maak buffer leeg"
+
+#, fuzzy, c-format
+msgid "Searching for source [%1$s]"
+msgstr "Soek vir bron [%s]\n"
+
+#, c-format
+msgid ""
+"Failed to descend hierarchy into '%1$s': %2$s\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend into '%1$s': %2$s"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, fuzzy
+msgid "Failed to descend hierarchy."
+msgstr "daal in hierargie af"
+
+#, fuzzy, c-format
+msgid "Searching for symbol [%1$s]"
+msgstr "Soek vir simbool [%s]\n"
+
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr ""
+
+msgid "Cannot find any schematics above the current one!"
+msgstr ""
+
+#, fuzzy
+msgid "Action feedback mode set to OUTLINE"
+msgstr "Handelingsterugvoermodus na SKETS gestel\n"
+
+#, fuzzy
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr "Handelingsterugvoermodus na OMTREKREGHOEK\n"
+
+#, fuzzy
+msgid "Grid OFF"
+msgstr "Rooster AF\n"
+
+msgid "Dot grid selected"
+msgstr ""
+
+msgid "Mesh grid selected"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid grid mode"
+msgstr "Ongeldige Eienskap"
+
+msgid "Snap OFF (CAUTION!)"
+msgstr ""
+
+msgid "Snap ON"
+msgstr ""
+
+msgid "Snap back to the grid (CAUTION!)"
+msgstr ""
+
+#, fuzzy
+msgid "Rubber band ON"
+msgstr "Rubberband AAN\n"
+
+#, fuzzy
+msgid "Rubber band OFF"
+msgstr "Rubberband AF \n"
+
+#, fuzzy
+msgid "magnetic net mode: ON"
+msgstr "Netmodus"
+
+#, fuzzy
+msgid "magnetic net mode: OFF"
+msgstr "Netmodus"
+
+#, fuzzy, c-format
+msgid "Translating schematic [%1$d %2$d]"
+msgstr "Verskuif stroombaandiagram [%d %d]\n"
+
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Verwyder"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Verwyder"
+
+#, fuzzy
+msgid "Hidden text is now visible"
+msgstr "Verskuilde teks is nou sigbaar\n"
+
+#, fuzzy
+msgid "Hidden text is now invisible"
+msgstr "Verskuilde teks is nou onsigbaar\n"
+
+#, c-format
+msgid "Could not find symbol [%1$s] in library. Update failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "o_autosave_backups: Kan nie die egte lêernaam van %s kry nie."
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr "Kon NIE vorige bestandlêer [%s] lees-skryf stel nie\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr "Kon NIE bestandlêer [%s] lees-slegs stel nie\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr "Kon NIE bestandlêer [%s] bewaar nie\n"
+
+# Thanks to Frank Shearar for reminding me of BLIKSEM!
+#, c-format
+msgid "DOH! tried to find the whichone, but didn't find it!\n"
+msgstr ""
+"BLIKSEM!  Het probeer om die whichone te vind, maar kon dit nie kry nie!\n"
+
+msgid "Warning: Starting net at off grid coordinate"
+msgstr ""
+
+msgid "Warning: Ending net at off grid coordinate"
+msgstr ""
+
+#, c-format
+msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
+msgstr ""
+"Het probeer om meer as twee busrippers bytevoeg.  Interne gschem fout.\n"
+
+#, fuzzy, c-format
+msgid "Bus ripper symbol [%1$s] was not found in any component library"
+msgstr "Busrippersimbool [%s] is nie in enige komponentbiblioteek gevind nie\n"
+
+msgid "All supported formats"
+msgstr ""
+
+#, fuzzy
+msgid "Add Picture"
+msgstr "Afbeelding"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Maak Oop"
+
+#, fuzzy, c-format
+msgid "Failed to load picture: %1$s"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Kies PostScript Lêernaam"
+
+#, fuzzy, c-format
+msgid "Failed to replace pictures: %s"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, fuzzy
+msgid "Slot attribute malformed"
+msgstr "\"slot\" eienskap is misvorm\n"
+
+#, fuzzy
+msgid "numslots attribute missing"
+msgstr "\"numslots\" eienskap bestaan nie\n"
+
+#, fuzzy
+msgid "Slotting not allowed for this component"
+msgstr "Gleuwe is nie toegelaat vir hierdie komponent nie\n"
+
+#, fuzzy
+msgid "New slot number out of range"
+msgstr "Nuwe gleufnommer buite bereik\n"
+
+msgid "Undo/Redo is disabled in configuration"
+msgstr ""
+
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+msgid "There are no schematics above the current one!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, c-format
+msgid "Got invalid show option; defaulting to show both\n"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Bewerk Eienskappe"
+
+msgid "Add Attribute"
+msgstr "Voeg Eienskap By"
+
+#, fuzzy
+msgid "N_ame:"
+msgstr "Naam:"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "Waarde:"
+
+#, fuzzy
+msgid "Vi_sible"
+msgstr "Sigbaar"
+
+msgid "Show Value Only"
+msgstr "Toon Slegs Waarde"
+
+msgid "Show Name Only"
+msgstr "Toon Slegs Naam"
+
+msgid "Show Name & Value"
+msgstr "Toon Naam & Waarde"
+
+msgid "<b>Attach Options</b>"
+msgstr "<b>AAnhegopsies</b>"
+
+msgid "All"
+msgstr "Alles"
+
+msgid "Components"
+msgstr "Komponente"
+
+# FIXME: "Nette"
+msgid "Nets"
+msgstr "Nette"
+
+msgid "Replace existing attributes"
+msgstr "Vervang bestaande eienskappe"
+
+msgid ""
+"slotted object without slot attribute may cause problems when autonumbering "
+"slots"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
+msgstr ""
+"duplikaatgleuf mag probleme veroorsaak: [symbolname=%s, number=%d, slot=%d]\n"
+
+msgid "No search string given in autonumber text."
+msgstr ""
+
+msgid "No '*' or '?' given at the end of the autonumber text."
+msgstr ""
+
+msgid "Diagonal"
+msgstr "Diagonaal"
+
+msgid "Top to bottom"
+msgstr "Bo to onder"
+
+msgid "Bottom to top"
+msgstr "Onder tot bo"
+
+msgid "Left to right"
+msgstr "Links tot regs"
+
+msgid "Right to left"
+msgstr "Regs tot links"
+
+msgid "File order"
+msgstr "Lêerorde"
+
+msgid "Autonumber Text"
+msgstr ""
+
+msgid "<b>Scope</b>"
+msgstr "<b>Bestek</b>"
+
+msgid "Search for:"
+msgstr "Soek vir:"
+
+msgid "Autonumber text in:"
+msgstr ""
+
+msgid "Skip numbers found in:"
+msgstr "Slaan nommers oor in:"
+
+msgid "Selected objects"
+msgstr ""
+
+msgid "Current page"
+msgstr "Lopende bladsy"
+
+msgid "Whole hierarchy"
+msgstr "Hele hierargie"
+
+msgid "Overwrite existing numbers"
+msgstr "Vervang bestaande nommers"
+
+msgid "<b>Options</b>"
+msgstr "<b>Opsies</b>"
+
+msgid "Starting number:"
+msgstr "Begin by nommer:"
+
+msgid "Sort order:"
+msgstr "Rangskikkingsorde:"
+
+msgid "Remove numbers"
+msgstr "Verwyder syfers"
+
+msgid "Automatic slotting"
+msgstr "Outomatiese begleuwing"
+
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+msgid "Clipboard insertion failed"
+msgstr ""
+
+#, c-format
+msgid "%s [ disabled ]"
+msgstr ""
+
+#, fuzzy
+msgid "Reset filter"
+msgstr "Onlangse lêers"
+
+msgid "Reload all libraries"
+msgstr ""
+
+msgid "Value"
+msgstr "Waarde"
+
+msgid "Default behavior - reference component"
+msgstr "Verstekgedrag - verwys na komponent"
+
+msgid "Embed component in schematic"
+msgstr "Lê komponent in stroombaandiagram in"
+
+msgid "Include component as individual objects"
+msgstr "Sluit komponent as afsonderlike voorwerpe in"
+
+#, fuzzy
+msgid "Add Component"
+msgstr "/Voeg Komponent By"
+
+#, fuzzy
+msgid "In Us_e"
+msgstr "In Gebruik"
+
+#, fuzzy
+msgid "Lib_raries"
+msgstr "Biblioteke"
+
+msgid "Preview"
+msgstr "Voorskou"
+
+msgid "Attributes"
+msgstr "Eienskappe"
+
+msgid "Symbol version changes"
+msgstr ""
+
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Stroombaandiagramme"
+
+msgid ""
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
+msgstr ""
+
+#, fuzzy
+msgid "Symbol"
+msgstr "Simbole"
+
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
+"Please correct in order to continue</span>\n"
+"\n"
+"The name and value must be non-empty.\n"
+"The name cannot end with a space.\n"
+"The value cannot start with a space."
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Die ingevoerde eienskap \"%s\" is "
+"ongeldig\n"
+"Verbeter asseblief om voort te gaan</span>\n"
+"\n"
+"Die naam en waarde mag nie leeg wees nie.\n"
+"Die naam mag nie met 'n spasie eindig nie.\n"
+"Die waarde mag nie met 'n spasie begin nie."
+
+msgid "Invalid Attribute"
+msgstr "Ongeldige Eienskap"
+
+#, fuzzy
+msgid "Schematics (*.sch)"
+msgstr "Stroombaandiagramme"
+
+#, fuzzy
+msgid "Symbols (*.sym)"
+msgstr "Simbole"
+
+#, fuzzy
+msgid "Schematics and symbols (*.sch *.sym)"
+msgstr "Stroombaandiagramme en simbole"
+
+msgid "Open"
+msgstr "Maak Oop"
+
+#, fuzzy
+msgid "Save As"
+msgstr "Bewaar Alles"
+
+msgid "Save cancelled on user request"
+msgstr ""
+
+msgid ""
+"\n"
+"If you load the original file, the backup file will be overwritten in the "
+"next autosave timeout and it will be lost.\n"
+"\n"
+"Do you want to load the backup file?\n"
+msgstr ""
+
+msgid "Hollow"
+msgstr "Hol"
+
+msgid "Filled"
+msgstr "Gevul"
+
+msgid "Mesh"
+msgstr "Rooster"
+
+msgid "Hatch"
+msgstr "Arseer"
+
+#, fuzzy, c-format
+msgid "Unable to write %1$s file %2$s."
+msgstr "x_image_lowlevel: Kon nie %s-lêer %s skryf nie.\n"
+
+#, fuzzy, c-format
+msgid ""
+"There was the following error when saving image with type %1$s to filename:\n"
+"%2$s\n"
+"\n"
+"%3$s.\n"
+msgstr ""
+"Die volgende fout het gebeur gedurende die bewaring van %s-lêer:\n"
+"%s\n"
+"\n"
+"%s.\n"
+
+#, fuzzy, c-format
+msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
+msgstr "Het kleurafbeelding na [%s] [%d x %d] geskryf\n"
+
+#, fuzzy, c-format
+msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
+msgstr "Het swart-en-witafbeelding na [%s] [%d x %d] geskryf\n"
+
+#, fuzzy
+msgid "Unable to get pixbuf from lepton-schematic's window."
+msgstr "x_image_lowlevel: Kon nie pixbuf van gschem se venster kry nie.\n"
+
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
+msgid "Width x Height"
+msgstr "Wydte x Hoogte"
+
+msgid "Image type"
+msgstr "Afbeeldingsoort"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Kleur"
+
+msgid "Color"
+msgstr "Kleur"
+
+msgid "Grayscale"
+msgstr ""
+
+#, fuzzy
+msgid "Write Image"
+msgstr "Skryf afbeelding..."
+
+msgid "Butt"
+msgstr ""
+
+msgid "Square"
+msgstr ""
+
+msgid "Round"
+msgstr ""
+
+msgid "Solid"
+msgstr "Solied"
+
+msgid "Dotted"
+msgstr "Gestippeld"
+
+msgid "Dashed"
+msgstr "Gebroke"
+
+msgid "Center"
+msgstr "Sentreer"
+
+msgid "Phantom"
+msgstr "Spook"
+
+#, fuzzy
+msgid "Add Co_mponent..."
+msgstr "/Voeg Komponent By"
+
+#, fuzzy
+msgid "Add Te_xt..."
+msgstr "Voeg Teks By..."
+
+#, fuzzy
+msgid "Add _Attribute..."
+msgstr "/Voeg Eienskap By"
+
+#, fuzzy
+msgid "Add _Net"
+msgstr "/Voeg Net By"
+
+#, fuzzy
+msgid "Add _Bus"
+msgstr "/Voeg Bus By"
+
+msgid "Cu_t"
+msgstr ""
+
+msgid "_Copy"
+msgstr ""
+
+msgid "_Paste"
+msgstr ""
+
+msgid "_Delete"
+msgstr ""
+
+#, fuzzy
+msgid "_Edit..."
+msgstr "Bewerk..."
+
+#, fuzzy
+msgid "Ed_it Text..."
+msgstr "Bewerk Teks..."
+
+#, fuzzy
+msgid "_Object Properties..."
+msgstr "<b>Tekseienskappe</b>"
+
+#, fuzzy
+msgid "Hierarchy: Down _Schematic"
+msgstr "/Stroombaandiagram Af"
+
+#, fuzzy
+msgid "Hierarchy: Down S_ymbol"
+msgstr "/Simbool Af"
+
+#, fuzzy
+msgid "Hierarchy: _Up"
+msgstr "Hierargie"
+
+msgid "The operating system is out of memory or resources."
+msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr "Eienskappe met 'n leë naam word verbied.  Kies asseblief 'n naam."
+
+msgid "Show Value only"
+msgstr "Toon slegs waarde"
+
+msgid "Show Name only"
+msgstr "Toon slegs naam"
+
+msgid "Promote"
+msgstr ""
+
+msgid "Duplicate"
+msgstr "Dupliseer"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "Kopieer in 1 in"
+
+msgid "Edit Attributes"
+msgstr "Bewerk Eienskappe"
+
+msgid "Vis?"
+msgstr "Sig?"
+
+msgid "N"
+msgstr "N"
+
+msgid "V"
+msgstr "W"
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "Bewerk Eienskappe"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "Naam:"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+msgid "_Add"
+msgstr "Voeg By"
+
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Voeg Eienskap By</b>"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "Eienskap"
+msgstr[1] "Eienskap"
+
+#, fuzzy
+msgid "Add Text"
+msgstr "/Voeg Teks By"
+
+msgid "Refresh"
+msgstr ""
+
+msgid "New Page"
+msgstr "Nuwe Bladsy"
+
+msgid "Open Page..."
+msgstr "Maak Bladsy Oop..."
+
+msgid "Save Page"
+msgstr "Bewaar Bladsy"
+
+msgid "Close Page"
+msgstr "Sluit Bladsy"
+
+msgid "Changed"
+msgstr "Veranderd"
+
+#, fuzzy, c-format
+msgid "Failed to write PDF to '%s': %s\n"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, fuzzy, c-format
+msgid "Failed to write PDF to '%1$s': %2$s\n"
+msgstr "Kon nie afbeelding laai nie: %s"
+
+#, c-format
+msgid ""
+"Error printing file:\n"
+"%1$s"
+msgstr ""
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+msgid ""
+"An unknown error occurred while parsing configuration files.\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%1$s\n"
+"\n"
+"The lepton-schematic log may contain more information."
+msgstr ""
+
+msgid "Cannot load lepton-schematic configuration."
+msgstr ""
+
+#, fuzzy
+msgid "Close"
+msgstr "Sluit Bladsy"
+
+msgid "Save"
+msgstr "Bewaar"
+
+#, fuzzy, c-format
+msgid "Hierarchy up: %s"
+msgstr "Hierargie"
+
+#, fuzzy
+msgid "Hierarchy up"
+msgstr "Hierargie"
+
+msgid "_New"
+msgstr ""
+
+msgid "_Open..."
+msgstr ""
+
+msgid "Save _As..."
+msgstr ""
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "Bladsybestuurder"
+
+msgid "Options"
+msgstr "Opsies"
+
+msgid "Edit Text"
+msgstr "Bewerk Teks"
+
+#, fuzzy
+msgid "Object Properties"
+msgstr "<b>Tekseienskappe</b>"
+
+msgid "Log"
+msgstr ""
+
+msgid "Find Text"
+msgstr "Vind Teks"
+
+#, fuzzy
+msgid "Color Scheme Editor"
+msgstr "Kleurbewerking"
+
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "Kies die stroombaandiagramme wat jy wil bewaar:"
+
+msgid "Page Manager"
+msgstr "Bladsybestuurder"
+
+#, fuzzy, c-format
+msgid "Loading schematic [%1$s]"
+msgstr "Laai stroombaandiagram [%s]\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save page [%1$s]\n"
+msgstr "Kon nie bladsy [%s] bewaar nie\n"
+
+msgid "Error while trying to save"
+msgstr "Fout gedurende poging om te bewaar"
+
+#, fuzzy, c-format
+msgid "Saved as [%1$s]"
+msgstr "Bewaar as [%s]\n"
+
+#, fuzzy, c-format
+msgid "Saved [%1$s]"
+msgstr "Bewaar [%s]\n"
+
+msgid "Saved"
+msgstr "Bewaar"
+
+#, fuzzy, c-format
+msgid "Discarding page [%1$s]"
+msgstr "Werp bladsy [%s] weg\n"
+
+#, fuzzy, c-format
+msgid "Closing [%1$s]"
+msgstr "Sluit [%s]\n"
+
+msgid "New"
+msgstr "Nuwe"
+
+msgid "New file"
+msgstr "Nuwe lêer"
+
+#, fuzzy
+msgid "Open file"
+msgstr "Maak lêer oop..."
+
+msgid "Save file"
+msgstr "Bewaar lêer"
+
+msgid "Undo"
+msgstr "Maak Ongedaan"
+
+msgid "Undo last operation"
+msgstr "Maak laaste handeling ongedaan"
+
+msgid "Redo"
+msgstr "Herstel"
+
+msgid "Redo last undo"
+msgstr "Herhaal laas-ongedane handeling"
+
+msgid ""
+"Add component...\n"
+"Select library and component from list, move the mouse into main window, "
+"click to place\n"
+"Right mouse button to cancel"
+msgstr ""
+
+msgid "Component"
+msgstr "Komponent"
+
+msgid ""
+"Add nets mode\n"
+"Right mouse button to cancel"
+msgstr ""
+
+msgid ""
+"Add buses mode\n"
+"Right mouse button to cancel"
+msgstr ""
+
+msgid "Bus"
+msgstr "Bus"
+
+msgid "Add Text..."
+msgstr "Voeg Teks By..."
+
+msgid "Select"
+msgstr "Kies"
+
+msgid "Select mode"
+msgstr "Kiesmodus"
+
+#, fuzzy
+msgid "Show"
+msgstr "ToonN"
+
+msgid "Show text starting with:"
+msgstr "Toon Teks beginnende met:"
+
+msgid "none"
+msgstr "geen"
+
+msgid "Stroke"
+msgstr "Wyserslag"
+
+#, fuzzy
+msgid "Repeat"
+msgstr "Herhaal/"
+
+msgid "Pan"
+msgstr "Skuif Aansig"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
+msgstr "Menu/Kanselleer"
+
+msgid "Pick"
+msgstr "Kies"
+
+#, fuzzy
+msgid "Object"
+msgstr "Voorwerpkleur:"
+
+#, fuzzy, c-format
+msgid "New file [%s]"
+msgstr "Nuwe lêer [%s]\n"
+
+#, c-format
+msgid ""
+"<b>An error occurred while loading the requested file.</b>\n"
+"\n"
+"Loading from '%1$s' failed. Error message:\n"
+"\n"
+"%2$s.\n"
+"\n"
+"The lepton-schematic log may contain more information.\n"
+"You may also launch lepton-schematic with --verbose command line switch and "
+"monitor program's output in terminal window."
+msgstr ""
+
+msgid "Failed to load file"
+msgstr "Misluk om lêer te laai"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Schematic Editor"
+msgstr "gEDA Stroombaandiagram Bewerker"
+
+#, fuzzy
+msgid "Create and edit electrical schematics and symbols with lepton-schematic"
+msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
+
+msgid "Open Recen_t"
+msgstr ""
+
+msgid "Save All"
+msgstr "Bewaar Alles"
+
+msgid "_Print..."
+msgstr ""
+
+#, fuzzy
+msgid "Write _Image..."
+msgstr "Skryf afbeelding..."
+
+msgid "Invoke Macro..."
+msgstr ""
+
+msgid "Execute Script..."
+msgstr "Voer Script Uit..."
+
+msgid "REPL..."
+msgstr ""
+
+msgid "New Window"
+msgstr "Nuwe Venster"
+
+#, fuzzy
+msgid "_Close Window"
+msgstr "Sluit Venster"
+
+msgid "_Quit"
+msgstr ""
+
+msgid "_Undo"
+msgstr ""
+
+msgid "_Redo"
+msgstr ""
+
+#, fuzzy
+msgid "Select All"
+msgstr "Kies"
+
+#, fuzzy
+msgid "Deselect"
+msgstr "Kies"
+
+msgid "Rotate 90 Mode"
+msgstr "Roteer-90-modus"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>Tekseienskappe</b>"
+
+msgid "Edit..."
+msgstr "Bewerk..."
+
+msgid "Edit Text..."
+msgstr "Bewerk Teks..."
+
+msgid "Slot..."
+msgstr "Gleuf..."
+
+msgid "Lock"
+msgstr "Sluit"
+
+msgid "Unlock"
+msgstr "Ontsluit"
+
+msgid "Embed Component/Picture"
+msgstr "Lê Komponent/Afbeelding In"
+
+# FIXME: too klunky!
+msgid "Unembed Component/Picture"
+msgstr "Ont-lê Komponent/Afbeelding In"
+
+msgid "Update Component"
+msgstr "Vernuwe Komponent"
+
+msgid "Symbol Translate..."
+msgstr "Simboolverskuiwing..."
+
+msgid "Copy into 1"
+msgstr "Kopieer in 1 in"
+
+msgid "Copy into 2"
+msgstr "Kopieer in 2 in"
+
+msgid "Copy into 3"
+msgstr "Kopieer in 3 in"
+
+msgid "Copy into 4"
+msgstr "Kopieer in 4 in"
+
+msgid "Copy into 5"
+msgstr "Kopieer in 5 in"
+
+msgid "Cut into 1"
+msgstr "Sny in 1 in"
+
+msgid "Cut into 2"
+msgstr "Sny in 2 in"
+
+msgid "Cut into 3"
+msgstr "Sny in 3 in"
+
+msgid "Cut into 4"
+msgstr "Sny in 4 in"
+
+msgid "Cut into 5"
+msgstr "Sny in 5 in"
+
+msgid "Paste from 1"
+msgstr "Plak vanuit 1"
+
+msgid "Paste from 2"
+msgstr "Plak vanuit 2"
+
+msgid "Paste from 3"
+msgstr "Plak vanuit 3"
+
+msgid "Paste from 4"
+msgstr "Plak vanuit 4"
+
+msgid "Paste from 5"
+msgstr "Plak vanuit 5"
+
+msgid "Side Dock"
+msgstr ""
+
+#, fuzzy
+msgid "Bottom Dock"
+msgstr "Onder tot bo"
+
+#, fuzzy
+msgid "Find Text Results"
+msgstr "Vind Teks"
+
+msgid "_Redraw"
+msgstr ""
+
+msgid "_Pan"
+msgstr ""
+
+msgid "Zoom _Box"
+msgstr ""
+
+msgid "Zoom _Extents"
+msgstr ""
+
+msgid "Zoom _In"
+msgstr ""
+
+msgid "Zoom _Out"
+msgstr ""
+
+msgid "Zoom _Full"
+msgstr ""
+
+msgid "_Dark Color Scheme"
+msgstr ""
+
+msgid "_Light Color Scheme"
+msgstr ""
+
+msgid "B_W Color Scheme"
+msgstr ""
+
+#, fuzzy
+msgid "Color Scheme Editor..."
+msgstr "Kleurbewerking"
+
+msgid "_Manager..."
+msgstr ""
+
+msgid "_Previous"
+msgstr ""
+
+msgid "_Next"
+msgstr ""
+
+msgid "_Revert..."
+msgstr ""
+
+#, fuzzy
+msgid "Next Tab"
+msgstr "Nuwe Bladsy"
+
+#, fuzzy
+msgid "Previous Tab"
+msgstr "Sluit Bladsy"
+
+msgid "_Component..."
+msgstr ""
+
+msgid "_Net"
+msgstr ""
+
+msgid "B_us"
+msgstr ""
+
+msgid "_Attribute..."
+msgstr ""
+
+msgid "_Text..."
+msgstr ""
+
+msgid "_Line"
+msgstr ""
+
+msgid "Pat_h"
+msgstr ""
+
+msgid "_Box"
+msgstr ""
+
+msgid "C_ircle"
+msgstr ""
+
+msgid "A_rc"
+msgstr ""
+
+msgid "_Pin"
+msgstr ""
+
+msgid "Pictu_re..."
+msgstr ""
+
+msgid "_Up"
+msgstr ""
+
+msgid "_Down Schematic"
+msgstr ""
+
+msgid "Down _Symbol"
+msgstr ""
+
+msgid "_Attach"
+msgstr ""
+
+msgid "_Detach"
+msgstr ""
+
+msgid "Show _Value"
+msgstr ""
+
+msgid "Show _Name"
+msgstr ""
+
+msgid "Show _Both"
+msgstr ""
+
+msgid "_Toggle Visibility"
+msgstr ""
+
+msgid "_Hide Specific Text..."
+msgstr ""
+
+msgid "_Show Specific Text..."
+msgstr ""
+
+#, fuzzy
+msgid "Show/Hide Hidden Text"
+msgstr "Toon/Verberg Onsigbare Teks"
+
+msgid "_Find Text/Check Symbol..."
+msgstr ""
+
+msgid "A_utonumber Text..."
+msgstr ""
+
+#, fuzzy
+msgid "_Options..."
+msgstr "Opsies"
+
+#, fuzzy
+msgid "_Font..."
+msgstr "Gleuf..."
+
+#, fuzzy
+msgid "Grid +"
+msgstr "Rooster AAN\n"
+
+#, fuzzy
+msgid "Grid -"
+msgstr "Rooster AAN\n"
+
+msgid "Grid Style: Cycle Dots/Mesh/Off"
+msgstr ""
+
+msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
+msgstr ""
+
+msgid "Feedback Mode: Outline/Box"
+msgstr ""
+
+#, fuzzy
+msgid "Net: Rubberband On/Off"
+msgstr "Rubberband AAN\n"
+
+msgid "Net: Magnetic On/Off"
+msgstr ""
+
+#, fuzzy
+msgid "_Coord Window"
+msgstr "Sluit Venster"
+
+#, fuzzy
+msgid "_Log Window"
+msgstr "Nuwe Venster"
+
+msgid "_1 allegro"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Reference _Manual"
+msgstr "Handleiding"
+
+#, fuzzy
+msgid "gEDA _Wiki Documentation"
+msgstr "Komponentmodus"
+
+#, fuzzy
+msgid "Find Component D_ocumentation"
+msgstr "Komponentmodus"
+
+msgid "_Hotkeys..."
+msgstr ""
+
+#, fuzzy
+msgid "_About"
+msgstr "Omtrent..."
+
+msgid "_File"
+msgstr "Lêer"
+
+msgid "_Edit"
+msgstr "Bewerk"
+
+msgid "_View"
+msgstr "Aansig"
+
+msgid "_Page"
+msgstr "Bladsy"
+
+msgid "Hie_rarchy"
+msgstr "Hierargie"
+
+msgid "A_ttributes"
+msgstr "Eienskappe"
+
+msgid "_Options"
+msgstr "Opsies"
+
+msgid "_Netlist"
+msgstr ""
+
+msgid "_Help"
+msgstr "Help"
+
+#, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
+msgstr ""
+
+msgid "Repeat Last Action"
+msgstr ""
+
+#, fuzzy
+msgid "Cancel"
+msgstr "Menu/Kanselleer"
+
+#, fuzzy
+msgid "New File"
+msgstr "Nuwe lêer"
+
+#, fuzzy
+msgid "Open File"
+msgstr "Maak lêer oop..."
+
+#, fuzzy
+msgid "Print"
+msgstr "Druk..."
+
+msgid "Export Image"
+msgstr ""
+
+msgid "Run Script"
+msgstr ""
+
+#, fuzzy
+msgid "Close Window"
+msgstr "Sluit Venster"
+
+msgid "Quit"
+msgstr ""
+
+msgid "Terminal REPL"
+msgstr ""
+
+msgid "Choose Slot"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Object Properties"
+msgstr "Bewerk Tekseienskappe"
+
+#, fuzzy
+msgid "Translate Symbol"
+msgstr "Verskuif"
+
+msgid "Invoke Macro"
+msgstr ""
+
+#, fuzzy
+msgid "Show/Hide Invisible Text"
+msgstr "Toon/Verberg Onsigbare Teks"
+
+#, fuzzy
+msgid "Cut"
+msgstr "Sny 2"
+
+msgid "Copy"
+msgstr "Kopieer"
+
+#, fuzzy
+msgid "Paste"
+msgstr "Plak 2"
+
+msgid "Sidebar"
+msgstr ""
+
+msgid "Status"
+msgstr "Stand"
+
+#, fuzzy
+msgid "Find Text State"
+msgstr "Vind Teks"
+
+msgid "Redraw"
+msgstr ""
+
+#, fuzzy
+msgid "Pan Left"
+msgstr "Aansigskuifmodus"
+
+#, fuzzy
+msgid "Pan Right"
+msgstr "Regs Bo"
+
+msgid "Pan Up"
+msgstr ""
+
+#, fuzzy
+msgid "Pan Down"
+msgstr "Aansigskuifmodus"
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "/Zoem Uitmate"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "/Zoem In"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "/Zoem Uit"
+
+#, fuzzy
+msgid "Zoom Full"
+msgstr "/Zoem Uit"
+
+msgid "Dark Color Scheme"
+msgstr ""
+
+msgid "Light Color Scheme"
+msgstr ""
+
+msgid "Monochrome Color Scheme"
+msgstr ""
+
+msgid "Show Color Scheme Editor"
+msgstr ""
+
+#, fuzzy
+msgid "Revert Changes"
+msgstr "Gaan Bladsy Terug"
+
+#, fuzzy
+msgid "Previous Page"
+msgstr "Sluit Bladsy"
+
+#, fuzzy
+msgid "Next Page"
+msgstr "Nuwe Bladsy"
+
+#, fuzzy
+msgid "Print Page"
+msgstr "Sluit Bladsy"
+
+#, fuzzy
+msgid "Add Net"
+msgstr "/Voeg Net By"
+
+#, fuzzy
+msgid "Add Bus"
+msgstr "/Voeg Bus By"
+
+#, fuzzy
+msgid "Add Line"
+msgstr "Lyn"
+
+#, fuzzy
+msgid "Add Path"
+msgstr "/Voeg Net By"
+
+#, fuzzy
+msgid "Add Box"
+msgstr "/Voeg Bus By"
+
+#, fuzzy
+msgid "Add Circle"
+msgstr "Sirkel"
+
+#, fuzzy
+msgid "Add Arc"
+msgstr "Voeg Eienskap By"
+
+msgid "Add Pin"
+msgstr ""
+
+#, fuzzy
+msgid "Down Schematic"
+msgstr "/Stroombaandiagram Af"
+
+#, fuzzy
+msgid "Down Symbol"
+msgstr "/Simbool Af"
+
+#, fuzzy
+msgid "Up Hierarchy"
+msgstr "Hierargie"
+
+#, fuzzy
+msgid "Attach Attributes"
+msgstr "Bewerk Eienskappe"
+
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Detach Attributes"
+msgstr "Bewerk Eienskappe"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Show Attribute Value"
+msgstr "\"slot\" eienskap is misvorm\n"
+
+#, fuzzy
+msgid "Show Attribute Name"
+msgstr "\"slot\" eienskap is misvorm\n"
+
+msgid "Toggle Text Visibility"
+msgstr ""
+
+#, fuzzy
+msgid "Find Specific Text"
+msgstr "Vind Teks"
+
+#, fuzzy
+msgid "Hide Specific Text"
+msgstr "Verskuil Teks"
+
+#, fuzzy
+msgid "Show Specific Text"
+msgstr "Toon Teks"
+
+#, fuzzy
+msgid "Show Hotkeys"
+msgstr "Toon Verskuilde"
+
+msgid "Switch Grid Style"
+msgstr ""
+
+msgid "Switch Snap Mode"
+msgstr ""
+
+msgid "Set Grid Spacing"
+msgstr ""
+
+msgid "Increase Grid Spacing"
+msgstr ""
+
+msgid "Decrease Grid Spacing"
+msgstr ""
+
+msgid "Toggle Outline Drawing"
+msgstr ""
+
+msgid "Toggle Net Rubber Band"
+msgstr ""
+
+msgid "Toggle Magnetic Nets"
+msgstr ""
+
+#, fuzzy
+msgid "Show Log Window"
+msgstr "Nuwe Venster"
+
+#, fuzzy
+msgid "Show Coordinate Window"
+msgstr "Huidige Venster"
+
+msgid "Toggle Grips"
+msgstr ""
+
+#, fuzzy
+msgid "Component Documentation"
+msgstr "Komponentmodus"
+
+msgid "View documentation for selected component"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Manual"
+msgstr "Handleiding"
+
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA wiki"
+msgstr "gEDA Stroombaandiagram Bewerker"
+
+msgid "View the front page of the Lepton EDA wiki in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "About lepton-schematic"
+msgstr "Oor gschem"
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "Komponentmodus"
+
+msgid "No documentation found"
+msgstr ""
+
+#, scheme-format
+msgid "~S is not a prefix key sequence."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "Grootte:"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Rooster AAN\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "Netmodus"
+
+#~ msgid "OFF"
+#~ msgstr "AF"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Rooster(%s, %s)"
+
+#~ msgid "Edit slot number"
+#~ msgstr "Bewerk gleufnommer"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Jammer, maar hierdie opsie werk nie\n"
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "Kies die stroombaandiagramme wat jy wil bewaar:"
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "gEDA/gschem uitgawe %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem uitgawe %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "Het probeer om 'n ongeldige kleur te kry: %d\n"
+
+#~ msgid "Pin"
+#~ msgstr "Pen"
+
+#~ msgid "Net"
+#~ msgstr "Skakeling"
+
+#~ msgid "Attribute"
+#~ msgstr "Eienskap"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Bewerk Eienskappe"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Kies"
+
+#~ msgid "Zoom box"
+#~ msgstr "Zoem Reghoek"
+
+#, fuzzy
+#~ msgid "Net junction"
+#~ msgstr "Funksie"
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Enkeleienskap-Bewerker"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Bewerk Eienskap</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Kies Komponent..."
+
+#~ msgid "Open..."
+#~ msgstr "Open..."
+
+#~ msgid "Save as..."
+#~ msgstr "Bewaar as..."
+
+#~ msgid "Write image..."
+#~ msgstr "Skryf afbeelding..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Teksaantekening..."
+
+#~ msgid "Got a non line object in o_move_check_endpoint\n"
+#~ msgstr ""
+#~ "Het 'n voorwerp wat nie 'n lyn is nie in o_move_check_endpoint gekry\n"
+
+#, fuzzy
+#~ msgid "Save settings to:"
+#~ msgstr "Instellinge"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Ongeldige grootte [%d] gegee aan text-size\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "Ongeldige grootte [%d] aan snap-size gegee\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "Ongeldige getal vlakke [%d] gegee aan undo-levels\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "Ongeldige grootte [%d] gegee aan bus-ripper-size\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Ongeldige puntgrootte [%d] gegee aan dots-grid-dot-size\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "Ongeldige puntgrootte [%d] gegee aan dots-grid-dot-size\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
+#~ msgstr "Ongeldige puntgrootte [%d] gegee aan dots-grid-dot-size\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr "Ongeldige hoeveelheid sekondes [%d] gegee aan auto-save-interval\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "Ongeldige versterking [%d] gegee aan mousepan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "Ongeldige versterking [%d] gegee aan keyboardpan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "Ongeldige hoeveelheid sekondes [%d] gegee aan auto-save-interval\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Ongeldige versterking [%d] gegee aan zoom-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
+#~ msgstr "Ongeldige hoeveelheid sekondes [%d] gegee aan auto-save-interval\n"
+
+#~ msgid "Got an unexpected NULL in o_edit\n"
+#~ msgstr "Het 'n onverwagte NULL in o_edit gekry\n"
+
+#~ msgid "ERROR: NULL object in o_move_end!\n"
+#~ msgstr "FOUT: NULL voorwerp in o_move_end!\n"
+
+#~ msgid "ERROR: NULL object!\n"
+#~ msgstr "FOUT: NULL voorwerp!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
+
+#~ msgid "black"
+#~ msgstr "swart"
+
+#~ msgid "white"
+#~ msgstr "wit"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
+
+#~ msgid "Move"
+#~ msgstr "Beweeg"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "/Op"
+
+#, fuzzy
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+#~ msgstr "Het probeer om gevoeligheid op nie-bestaande menu-artikel '%s'\n"
+
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+#~ msgstr "Het probeer om gevoeligheid op nie-bestaande menu-artikel '%s'\n"
+
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "Ongeldige verkuiwing [%d] gegee aan add-attribute-offset\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "Het misluk of scm-aanvangslêer [%s] te lees\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "Het scm-aanvangslêer [%s] gelees\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "Het misluk of scm-aanvangslêer [%s] te lees\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "Herhaal/geen"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "Veelvoudige Kopieer"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerk"
+
+#~ msgid "Slot"
+#~ msgstr "Gleuf"
+
+#~ msgid "Rotate"
+#~ msgstr "Roteer"
+
+#~ msgid "Mirror"
+#~ msgstr "Weerkaats"
+
+#~ msgid "Embed"
+#~ msgstr "Lê In"
+
+# FIXME: too klunky!
+#~ msgid "Unembed"
+#~ msgstr "Ont-lê In"
+
+#~ msgid "ShowHidden"
+#~ msgstr "ToonVerskuil"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "Kopieer 1"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "Sny 1"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "Plak 1"
+
+#~ msgid "Line"
+#~ msgstr "Lyn"
+
+#~ msgid "Box"
+#~ msgstr "Reghoek"
+
+#~ msgid "Circle"
+#~ msgstr "Sirkel"
+
+#~ msgid "Arc"
+#~ msgstr "Boog"
+
+#~ msgid "Attach"
+#~ msgstr "Heg aan"
+
+#~ msgid "Detach"
+#~ msgstr "Heg af"
+
+#~ msgid "ShowN"
+#~ msgstr "ToonN"
+
+#~ msgid "ShowV"
+#~ msgstr "ToonW"
+
+#~ msgid "ShowB"
+#~ msgstr "ToonB"
+
+#~ msgid "VisToggle"
+#~ msgstr "SigSkakel"
+
+#~ msgid "Picture"
+#~ msgstr "Afbeelding"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr "Regs-klik op die lêernaam vir meer opsies..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "Menu/Kanselleer"
+
+#~ msgid "Filter:"
+#~ msgstr "Deursyfer:"
+
+#, fuzzy
+#~ msgid "Edit Pin Type..."
+#~ msgstr "Bewerk Vultipe"
+
+#~ msgid "Color..."
+#~ msgstr "Kleur..."
+
+#~ msgid "Line Width & Type..."
+#~ msgstr "Lynwydte en -tipe..."
+
+#~ msgid "Fill Type..."
+#~ msgstr "Vultipe"
+
+#, fuzzy
+#~ msgid "Pin Type..."
+#~ msgstr "Vultipe"
+
+#, fuzzy
+#~ msgid "Text Size..."
+#~ msgstr "Teksgrootte"
+
+#~ msgid "Edit Line Width & Type"
+#~ msgstr "Bewerk Lynwyddte & -styl"
+
+#~ msgid "Edit Fill Type"
+#~ msgstr "Bewerk Vultipe"
+
+#, fuzzy
+#~ msgid "Edit Pin Type"
+#~ msgstr "Bewerk Vultipe"
+
+#, fuzzy
+#~ msgid "Set Default Text Size"
+#~ msgstr "Teksgrootte"
+
+# FIXME: Best to get a real lawyer to translate this into Afrikaans legalese.
+#~ msgid ""
+#~ "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ msgstr ""
+#~ "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+
+#~ msgid "Object already locked\n"
+#~ msgstr "Voorwerp klaar gesluit\n"
+
+#~ msgid "Object already unlocked\n"
+#~ msgstr "Voorwerp klaar ontsluit\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
+#~ msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_paste_start]\n"
+
+#~ msgid ""
+#~ "Offset to translate?\n"
+#~ "(0 for origin)"
+#~ msgstr ""
+#~ "Afwyking om te verskuif?\n"
+#~ "(0 vir oorsprong)"
+
+#~ msgid "Enter new text size:"
+#~ msgstr "Gee nuwe teksgrootte aan:"
+
+#~ msgid "Text to find:"
+#~ msgstr "Teks om te vind:"
+
+#~ msgid "Show Text"
+#~ msgstr "Toon Teks"
+
+#~ msgid "Couldn't allocate gc\n"
+#~ msgstr "Kon nie aanspraak maak op gc nie\n"
+
+#~ msgid "Open file..."
+#~ msgstr "Maak lêer oop..."
+
+#, fuzzy
+#~ msgid "Edit Attributes - %s"
+#~ msgstr "Bewerk Eienskappe"
+
+#, fuzzy
+#~ msgid "Embed Component/Pictore"
+#~ msgstr "Lê Komponent/Afbeelding In"
+
+#~ msgid "/Zoom Box"
+#~ msgstr "/Zoem Reghoek"
+
+#~ msgid "/Select"
+#~ msgstr "/Kies"
+
+#~ msgid "/Edit..."
+#~ msgstr "/Bewerk"
+
+#~ msgid "/Copy"
+#~ msgstr "/Kopieer"
+
+#~ msgid "/Move"
+#~ msgstr "/Skuif"
+
+#~ msgid "/Delete"
+#~ msgstr "/Verwyder"
+
+#~ msgid "Popup_menu_item_factory doesn't exist!\n"
+#~ msgstr "popup_menu artikelfabriek bestaan nie!\n"
+
+#~ msgid "_Buffer"
+#~ msgstr "Buffer"
+
+#~ msgid "Invalid zoomfactor [%d] passed to %s\n"
+#~ msgstr "Ongeldige zoemmaat [%d] aan %s gegee\n"
+
+#~ msgid "Copy 2"
+#~ msgstr "Kopieer 2"
+
+#~ msgid "Copy 3"
+#~ msgstr "Kopieer 3"
+
+#~ msgid "Copy 4"
+#~ msgstr "Kopieer 4"
+
+#~ msgid "Copy 5"
+#~ msgstr "Kopieer 5"
+
+#~ msgid "Cut 3"
+#~ msgstr "Sny 3"
+
+#~ msgid "Cut 4"
+#~ msgstr "Sny 4"
+
+#~ msgid "Cut 5"
+#~ msgstr "Sny 5"
+
+#~ msgid "Paste 3"
+#~ msgstr "Plak 3"
+
+#~ msgid "Paste 4"
+#~ msgstr "Plak 4"
+
+#~ msgid "Paste 5"
+#~ msgstr "Plak 5"
+
+#~ msgid "*unchanged*"
+#~ msgstr "*onveranderd*"
+
+#~ msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
+#~ msgstr "FOUT: NULL voorwerp in color_edit_dialog_apply!\n"
+
+#~ msgid "Discard Page"
+#~ msgstr "Werp Bladsy Weg"
+
+#~ msgid "Unknown end for line (%d)\n"
+#~ msgstr "Onbekende einde vir lyn (%d)\n"
+
+#~ msgid "Cannot find source [%s]\n"
+#~ msgstr "Kan nie bron [%s] vind nie\n"
+
+#~ msgid "Unknown type for box (fill)!\n"
+#~ msgstr "Onbekende tipe vir reghoek (vul)!\n"
+
+#~ msgid "Got an invalid which one in o_bus_draw_stretch\n"
+#~ msgstr "Het 'n ongeldige whichone in o_bus_draw_stretch gekry\n"
+
+#~ msgid "Unknown type for circle (fill)!\n"
+#~ msgstr "Onbekende tipe vir sirkel (vul)!\n"
+
+#~ msgid "Got an invalid which one in o_net_draw_stretch\n"
+#~ msgstr "Het 'n ongeldige whichone in o_net_draw_stretch gekry\n"
+
+#~ msgid "x_image_lowlevel: Unable to write eps file %s.\n"
+#~ msgstr "x_image_lowlevel: Kon nie eps-lêer %s skryf nie.\n"
+
+#~ msgid "Extents with margins"
+#~ msgstr "Uitmate met kantlyn"
+
+#~ msgid "Extents no margins"
+#~ msgstr "Uitmate sonder kantlyn"
+
+#~ msgid "Landscape"
+#~ msgstr "Landskap"
+
+#~ msgid "Portrait"
+#~ msgstr "Portret"
+
+#~ msgid "Output paper size:"
+#~ msgstr "Uitset-papiergrootte:"
+
+#~ msgid "Destination"
+#~ msgstr "Bestemming"
+
+#~ msgid "File:"
+#~ msgstr "Lêer:"
+
+#~ msgid "Command:"
+#~ msgstr "Opdrag:"
+
+#~ msgid "No print destination specified\n"
+#~ msgstr "Geen drukbestemming aangegee nie\n"
+
+#~ msgid "Cannot print current schematic to [%s]\n"
+#~ msgstr "Kan nie huidige stroombaandiagram na [%s] druk nie\n"
+
+#~ msgid ""
+#~ "Error printing to file '%s'\n"
+#~ "Check the log window for more information"
+#~ msgstr ""
+#~ "Fout gedurende lêerdruk na '%s'\n"
+#~ "Ondersoek die log-venster vir meer inligting"
+
+#~ msgid "Printed current schematic to [%s]\n"
+#~ msgstr "Het lopende stroombaandiagram na [%s] gedruk\n"
+
+#~ msgid "Could not fork\n"
+#~ msgstr "Kon nie vertak nie\n"
+
+#~ msgid "Could not invoke %s\n"
+#~ msgstr "Kon nie %s oproep nie\n"
+
+#~ msgid "Documentation commands not supported under MinGW.\n"
+#~ msgstr "Dokumentasieopdragte werk nie onder MinGW nie.\n"
+
+#~ msgid "Documentation for [%s,%s,%s,%s]\n"
+#~ msgstr "Documentasie vir [%s,%s,%s,%s]\n"
+
+# FIXME: "aangeduide".
+#~ msgid ""
+#~ "This command retrieves the component documentation from the web, but "
+#~ "there is no component selected"
+#~ msgstr ""
+#~ "Hierdie opdrag haal die komponentdokumentasie van die web, maar daar is "
+#~ "geen aangeduide komponent nie"
+
+#~ msgid "Scheme directory NOT set!\n"
+#~ msgstr "Scheme-gids is NIE gestel nie!\n"
+
+#~ msgid "MakeVisible"
+#~ msgstr "MaakSigbaar"
+
+#~ msgid "Make Inv Text Vis"
+#~ msgstr "Maak Onsigbare Teks Sigbaar"
+
+#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
+#~ msgstr "<b>gEDA: GPL Elektroniese Ontwerp Outomatisering</b>"
+
+#~ msgid "<b>gschem version %s%s.%s</b>"
+#~ msgstr "<b>gschem uitgawe %s%s.%s</b>"
+
+#~ msgid ""
+#~ "Written by:\n"
+#~ "Ales Hvezda\n"
+#~ "ahvezda@geda.seul.org\n"
+#~ "And many others (See AUTHORS file)"
+#~ msgstr ""
+#~ "Geskryf deur:\n"
+#~ "Ales Hvezda\n"
+#~ "ahvezda@geda.seul.org\n"
+#~ "en vele andere (Sien AUTHORS lêer)"
+
+#~ msgid "Save Page As..."
+#~ msgstr "Bewaar Bladsy As..."
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr ""
+#~ "uggg!  Jy het probeer om iets as 'n gleuf te bewerk, maar dit bestaan "
+#~ "nie!\n"
+
+#~ msgid "Slot Chooser"
+#~ msgstr "Gleufkieser"
+
+#~ msgid "Draw slot %s which is in %s\n"
+#~ msgstr "Teken gleuf %s wat in %s is\n"
+
+#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
+#~ msgstr "Ongeldige grootte [%f] aan postscript-font-scale gegee\n"
+
+#~ msgid "Cut Buffer"
+#~ msgstr "Sny Buffer"
+
+#~ msgid "Copy Buffer"
+#~ msgstr "Kopieer Buffer"
+
+#~ msgid "Invalid color [%s] passed to %s\n"
+#~ msgstr "Ongeldige kleur [%s] aan %s gegee\n"
+
+#~ msgid "You must set the GEDADATA environment variable!\n"
+#~ msgstr "Jy moet die GEDADATA omgewingswaarde stel!\n"
+
+#~ msgid "Unknown end for arc (%d)\n"
+#~ msgstr "Onbekende einde vir boog (%d)\n"
+
+#~ msgid "Unknown type for arc !\n"
+#~ msgstr "Onbekende tipe vir boog!\n"
+
+#~ msgid "Unknown end for box (%d)\n"
+#~ msgstr "Onbekende einde vir reghoek (%d)\n"
+
+#~ msgid "Unknown type for box !\n"
+#~ msgstr "Onbekende tipe vir reghoek!\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
+#~ msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_copy]\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
+#~ msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_cut]\n"
+
+#~ msgid "Unknown end for circle\n"
+#~ msgstr "Onbekende einde vir sirkel\n"
+
+#~ msgid "Unknown type for circle!\n"
+#~ msgstr "Onbekende tipe vir sirkel!\n"
+
+#~ msgid "Could not find the color %s!\n"
+#~ msgstr "Kon nie die kleur %s vind nie!\n"
+
+#~ msgid "Ack! Cannot allocate white!\n"
+#~ msgstr "Ag! Kon nie aanspraak maak op wit nie!\n"
+
+#~ msgid "Couldn't allocate xor_gc\n"
+#~ msgstr "Kon nie aanspraak maak op xor_gc nie\n"
+
+#~ msgid "Couldn't allocate outline_xor_gc\n"
+#~ msgstr "Kon nie aanspraak maak op outline_xor_gc nie\n"
+
+#~ msgid "Couldn't allocate bounding_xor_gc\n"
+#~ msgstr "Kon nie aanspraak maak op bounding_xor_gc nie\n"
+
+#~ msgid "Couldn't allocate bus_gc\n"
+#~ msgstr "Kon nie aanspraak maak op bus_gc nie\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
+#~ msgstr "Kry NULL in o_attrib_toggle_visibility\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
+#~ msgstr "Kry NULL in o_attrib_toggle_show_name_value\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
+#~ msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_paste_end]\n"
+
+#~ msgid "ERROR: NULL object in o_copy_end!\n"
+#~ msgstr "FOUT: NULL voorwerp in o_copy_end!\n"
+
+#~ msgid "File"
+#~ msgstr "Lêer"
+
+#~ msgid "Buffer"
+#~ msgstr "Buffer"
+
+#~ msgid "View"
+#~ msgstr "Aansig"
+
+#~ msgid "Page"
+#~ msgstr "Bladsy"
+
+#~ msgid "Add"
+#~ msgstr "Voeg By"
+
+#~ msgid "Help"
+#~ msgstr "Help"
+
+#, fuzzy
+#~ msgid "Unknown end for path (%d)\n"
+#~ msgstr "Onbekende einde vir boog (%d)\n"
+
+#, fuzzy
+#~ msgid "Unknown type for path !\n"
+#~ msgstr "Onbekende tipe vir boog!\n"
+
+#, fuzzy
+#~ msgid "Could not find complex in new component placement!\n"
+#~ msgstr "Kon nie kompleks in nuwe komponentplasing vind nie!\n"

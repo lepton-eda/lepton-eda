@@ -1,519 +1,36 @@
-# #-#-#-#-#  tr.po (geda)  #-#-#-#-#
-# Turkish translation for liblepton
-# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# Finnish translation for geda
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the geda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
-# cemalettin kara <cemalettinkara@gmail.com>, 2008.
-# #-#-#-#-#  tr.po (geda)  #-#-#-#-#
-# Turkish translation for geda
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2025-06-09 15:00+0300\n"
-"PO-Revision-Date: 2012-01-31 12:11+0000\n"
-"Last-Translator: Peter TB Brett <Unknown>\n"
-"Language-Team: gEDA developers <geda-dev@seul.org>\n"
-"Language: tr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
-"X-Generator: Launchpad (build 16265)\n"
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-01-27 14:22+0000\n"
+"PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
-"Language-Team: gEDA developers <geda-dev@seul.org>\n"
-"Language: tr\n"
+"Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, scheme-format
-msgid "Object ~A is not part of a page"
-msgstr ""
-
-#, scheme-format
-msgid "Invalid path ~S or source not readable.\n"
-msgstr ""
-
-#, scheme-format
-msgid "File ~S is not readable.\n"
-msgstr ""
-
-#, scheme-format
-msgid "Library at ~S has been already added."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid path ~S passed to component-library."
-msgstr ""
-
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Possible attribute conflict for refdes: ~A\n"
-"  name: ~A\n"
-"  values: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid "Refdes ~a: Bad slot number: ~a.\n"
-msgstr ""
-
-msgid "Couldn't wrap string  at requested position\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"There is a net name collision!\n"
-"The net called \"~A\" will be remapped\n"
-"to \"~A\" which is already used\n"
-"by the net called \"~A\".\n"
-"This may be caused by netname attributes colliding with other netnames\n"
-"due to truncation of the name, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"There is a refdes name collision!\n"
-"The refdes \"~A\" will be mapped\n"
-"to \"~A\" which is already used\n"
-"by \"~A\".\n"
-"This may be caused by refdes attributes colliding with others\n"
-"due to truncation of the refdes, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
-"\n"
-"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
-"\n"
-"General options:\n"
-"  -q, --quiet             Quiet mode.\n"
-"  -v, --verbose           Verbose mode.\n"
-"  -o, --output=FILE       Filename for netlist data output.\n"
-"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
-"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
-"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
-"  -O, --backend-option=STRING\n"
-"                          Pass an option string to backend.\n"
-"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
-"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
-"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
-"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends     Print a list of available netlist backends.\n"
-"  -h, --help              Help; this message.\n"
-"  -V, --version           Show version information.\n"
-"  --                      Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-
-#, fuzzy, scheme-format
-msgid "Failed to open schematic files: ~?\n"
-msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, scheme-format
-msgid ""
-"\n"
-"Just got an error '~A':\n"
-"        ~A\n"
-"\n"
-msgstr ""
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr ""
-
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"No schematic files specified for processing.\n"
-"~\n"
-"                         Run `~A --help' for more information.\n"
-msgstr ""
-
-#, scheme-format
-msgid "Invalid hierarchy tag: ~S"
-msgstr ""
-
-#, scheme-format
-msgid "Netlist mode ~S is not supported."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"\n"
-"Non-graphical symbol ~S\n"
-"at ~A on page ~S\n"
-"has neither refdes= nor net=."
-msgstr ""
-
-#, scheme-format
-msgid "Attached net ~A:~A overrides inherited net ~A:~A"
-msgstr ""
-
-#, scheme-format
-msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
-msgstr ""
-
-#, scheme-format
-msgid "Loading subcircuit ~S."
-msgstr ""
-
-#, scheme-format
-msgid "Failed to load subcircuit ~S."
-msgstr ""
-
-#, scheme-format
-msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
-msgstr ""
-
-#, scheme-format
-msgid "Port component ~S has no pins."
-msgstr ""
-
-#, scheme-format
-msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"There are several subschematic components for the pin with \"pinlabel=~A\" "
-"of the component ~S."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
-"attribute."
-msgstr ""
-
-#, scheme-format
-msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Zero radius arc at ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero angle arc at ~A"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
-msgstr ""
-
-msgid "Graphical symbols should have device=none"
-msgstr ""
-
-#, scheme-format
-msgid "Forbidden attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Obsolete attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Misplaced pin attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Wrongly attached attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Unknown attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate floating attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Missing required attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero sized box at ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero radius circle at ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Object with forbidden connections: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Object forbidden inside symbols: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero length ~A at ~A"
-msgstr ""
-
-msgid "Wrong check log destination!"
-msgstr ""
-
-#, scheme-format
-msgid "Missing pin number after \":\" or \",\": ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate pin number in one net= attribute ~A: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Invalid net attribute: net=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate pin number in net= attribute ~A: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate pin number ~A: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Obsolete pin#=# attribute: ~A=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Obsolete slot#=# attribute: ~A=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero length path element: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Zero sized picture at ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Picture file ~S does not exist or is not readable."
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate pin attribute on one pin: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Prohibited zero value pin attribute: ~A=0"
-msgstr ""
-
-#, scheme-format
-msgid "Invalid pin attribute value: pintype=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Missing pin attribute: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate pin attribute in the symbol: ~A=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Object: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Found ~A=~A attribute"
-msgstr ""
-
-#, scheme-format
-msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
-msgstr ""
-
-#, scheme-format
-msgid "Negative attribute: numslots=~A"
-msgstr ""
-
-msgid "numslots set to 0, symbol does not have slots"
-msgstr ""
-
-#, scheme-format
-msgid "Zero pin number in slotdef=~A"
-msgstr ""
-
-#, scheme-format
-msgid "Found a zero slot in slotdef=~A"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
-msgstr ""
-
-#, scheme-format
-msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
-msgstr ""
-
-#, scheme-format
-msgid "Not enough pins in slotdef=~A (must be ~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Too many pins in slotdef=~A (must be ~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Duplicate slot number ~A: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Found ~A distinct pins in slots"
-msgstr ""
-
-#, scheme-format
-msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTIONS] FILE ...\n"
-"\n"
-"Check one or more Lepton EDA symbol FILEs.\n"
-"\n"
-"General options:\n"
-"  -h, --help        Print usage\n"
-"  -V, --version     Show version information\n"
-"  -q, --quiet       Quiet mode\n"
-"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
-"                    messages, -vv will show errors and warnings, and\n"
-"                    -vvv displays also informational messages)\n"
-"\n"
-"Report bugs at <~A>\n"
-"Lepton EDA homepage: <~A>\n"
-msgstr ""
-
-#, scheme-format
-msgid "Loading schematic ~S"
-msgstr ""
-
-#, scheme-format
-msgid "Checking: ~A\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"No schematic files specified for processing.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
-
-#, scheme-format
-msgid "Info: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Warning: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "ERROR: ~A"
-msgstr ""
-
-#, scheme-format
-msgid "Unrecognized info: ~A\n"
-msgstr ""
-
-#, scheme-format
-msgid "~A warning found"
-msgstr ""
-
-msgid "(use -vv to view details)"
-msgstr ""
-
-msgid "No errors found"
-msgstr ""
-
-#, scheme-format
-msgid "~A ERROR found"
-msgstr ""
-
-msgid "(use -v to view details)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"\n"
-"UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
-"  %s.\n"
-"\n"
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr ""
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"[%s] kaydedildi\n"
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"Tümünü kaydet"
 
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 
 #, fuzzy
 msgid "Toggle _Editor"
-msgstr "gEDA Şematik Editörü"
+msgstr "Vaihda Näk_yvyys"
 
 msgid "_Apply"
 msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
-msgstr "Tümünü kaydet"
+msgstr "Tallenna _nimellä..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
@@ -531,12 +48,11 @@ msgstr ""
 msgid "Failed to save file"
 msgstr ""
 
-#, fuzzy
 msgid "Save Color Scheme"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 msgid "_Save"
-msgstr ""
+msgstr "_Tallenna"
 
 msgid "_Cancel"
 msgstr ""
@@ -661,11 +177,13 @@ msgid ""
 "Click to change the snapping mode."
 msgstr ""
 
+#, fuzzy
 msgid "Grid: OFF"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
+#, fuzzy
 msgid "Grid: NONE"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
 msgid ""
 "Grid size.\n"
@@ -700,8 +218,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#, fuzzy
 msgid "Show _full paths"
-msgstr ""
+msgstr "Näytä _Molemmat"
 
 #, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -722,7 +241,7 @@ msgid "Coords"
 msgstr ""
 
 msgid "_Close"
-msgstr ""
+msgstr "Sul_je"
 
 msgid "Screen"
 msgstr ""
@@ -744,7 +263,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Find Text:"
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
 msgid "Find Pattern:"
 msgstr ""
@@ -756,7 +275,7 @@ msgid "Check symbol:"
 msgstr ""
 
 msgid "Hotkeys"
-msgstr "Kısayollar"
+msgstr ""
 
 msgid ""
 "Start typing action name or keystroke to filter the list.\n"
@@ -765,7 +284,7 @@ msgstr ""
 
 #, fuzzy
 msgid "_Filter:"
-msgstr "Dosya"
+msgstr "_Tiedosto"
 
 msgid "Action"
 msgstr ""
@@ -778,18 +297,18 @@ msgstr ""
 
 #, fuzzy
 msgid "Clear log window?"
-msgstr "Pencere kapatılıyor\n"
+msgstr "Uusi ikkuna"
 
 #, fuzzy
 msgid "Clear Log"
-msgstr "Yeni pencere"
+msgstr "Näytä _Loki-ikkuna..."
 
 msgid "_Wrap Long Lines"
 msgstr ""
 
 #, fuzzy
 msgid "Clea_r Log Window"
-msgstr "Yeni pencere"
+msgstr "Näytä _Loki-ikkuna..."
 
 msgid "Macro:"
 msgstr ""
@@ -799,11 +318,11 @@ msgstr ""
 
 #, fuzzy
 msgid "_Fill Type:"
-msgstr "doldurma tipi.."
+msgstr "Täyttö"
 
 #, fuzzy
 msgid "Lin_e Width:"
-msgstr "Çizgi Kalınlığı & Tipi"
+msgstr "viivan leveys ja tyyppi"
 
 msgid "Angle _1:"
 msgstr ""
@@ -822,18 +341,18 @@ msgstr ""
 
 #, fuzzy
 msgid "Colo_r:"
-msgstr "Renk"
+msgstr "Väri..."
 
 msgid "<b>General Properties</b>"
 msgstr ""
 
 #, fuzzy
 msgid "_Type:"
-msgstr "doldurma tipi.."
+msgstr "Täyttö"
 
 #, fuzzy
 msgid "_Width:"
-msgstr "Çizgi Kalınlığı & Tipi"
+msgstr "viivan leveys ja tyyppi"
 
 msgid "Dash _Length:"
 msgstr ""
@@ -849,7 +368,7 @@ msgstr ""
 
 #, fuzzy
 msgid "_Pin Type:"
-msgstr "doldurma tipi.."
+msgstr "Täyttö"
 
 msgid "<b>Pin Properties</b>"
 msgstr ""
@@ -880,11 +399,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Snap Mode:"
-msgstr "Kopyalama Kipi"
+msgstr "Kopiointi"
 
 #, fuzzy
 msgid "_Snap Size:"
-msgstr "Kopyalama Kipi"
+msgstr "Kopiointi"
 
 msgid "<b>Snap Options</b>"
 msgstr ""
@@ -892,8 +411,9 @@ msgstr ""
 msgid "O_ff"
 msgstr ""
 
+#, fuzzy
 msgid "_Grid"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
 msgid "_Resnap"
 msgstr ""
@@ -913,9 +433,8 @@ msgstr ""
 msgid "Hide text starting with:"
 msgstr ""
 
-#, fuzzy
 msgid "Edit Slot"
-msgstr "Renk"
+msgstr ""
 
 msgid "Number of Slots:"
 msgstr ""
@@ -934,26 +453,27 @@ msgstr ""
 
 #, fuzzy
 msgid "Ro_tation:"
-msgstr "Döndür"
+msgstr "D_okumentaatio..."
 
 msgid "<b>Text Properties</b>"
 msgstr ""
 
+#, fuzzy
 msgid "Coordinate:"
-msgstr ""
+msgstr "Näytä _Koordinaatti-ikkuna..."
 
 msgid "Translate"
-msgstr "Çevir"
+msgstr ""
 
 msgid "Select Mode"
-msgstr "Seçim Kipi"
+msgstr "Valintatila"
 
 #, fuzzy
 msgid "Select Box Mode"
-msgstr "Seçim Kipi"
+msgstr "Valintatila"
 
 msgid "Text Mode"
-msgstr "Metin kipi"
+msgstr ""
 
 msgid "Pan Mode"
 msgstr ""
@@ -984,23 +504,23 @@ msgid "Component Mode"
 msgstr ""
 
 msgid "Copy Mode"
-msgstr "Kopyalama Kipi"
+msgstr "Kopiointi"
 
 msgid "Multiple Copy Mode"
-msgstr "Çoklu Kopyalama Kipi"
+msgstr "Kopioi useita"
 
 msgid "Line Mode"
 msgstr ""
 
 msgid "Mirror Mode"
-msgstr "Ayna modu"
+msgstr "Peilaa"
 
 msgid "Move Mode"
-msgstr "Taşıma Kipi"
+msgstr "Siirrä"
 
 #, fuzzy
 msgid "Path Mode"
-msgstr "Döndürme kipi"
+msgstr "Käännä 90 astetta"
 
 msgid "Picture Mode"
 msgstr ""
@@ -1009,17 +529,17 @@ msgid "Pin Mode"
 msgstr ""
 
 msgid "Rotate Mode"
-msgstr "Döndürme kipi"
+msgstr ""
 
 #, fuzzy
 msgid "Modify Mode"
-msgstr "Kopyalama Kipi"
+msgstr "Kopiointi"
 
 msgid "Zoom Box"
 msgstr ""
 
 msgid "Show Hidden"
-msgstr "Gizlileri Göster"
+msgstr ""
 
 msgid "Snap Off"
 msgstr ""
@@ -1027,17 +547,17 @@ msgstr ""
 msgid "Resnap Active"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "New page created [%1$s]"
-msgstr "Yeni sayfa oluşturuldu [%s]\n"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "New Window created [%1$s]"
-msgstr "Yeni pencere oluşturuldu [%s]\n"
+msgstr ""
 
 #, fuzzy
 msgid "Execute Script"
-msgstr "Betik Çalıştır..."
+msgstr "Aja skripti"
 
 msgid "_Run"
 msgstr ""
@@ -1053,14 +573,14 @@ msgid "Executing Guile script [%s]"
 msgstr ""
 
 msgid "Saved All"
-msgstr "Hepsi kaydedildi"
+msgstr ""
 
 msgid "Failed to Save All"
 msgstr ""
 
 #, fuzzy
 msgid "Closing Window"
-msgstr "Pencere kapatılıyor\n"
+msgstr "Uusi ikkuna"
 
 msgid "Select objs first"
 msgstr ""
@@ -1090,8 +610,9 @@ msgid ""
 "This action will also reload all component libraries."
 msgstr ""
 
+#, fuzzy
 msgid "Revert"
-msgstr ""
+msgstr "_Hylkää muutokset"
 
 msgid "Empty clipboard"
 msgstr ""
@@ -1177,13 +698,13 @@ msgstr ""
 
 #, fuzzy
 msgid "Delete _all"
-msgstr "Sil"
+msgstr "_Poista"
 
 msgid "All, _except locked"
 msgstr ""
 
 msgid "Delete"
-msgstr "Sil"
+msgstr ""
 
 msgid "Hidden text is now visible"
 msgstr ""
@@ -1193,6 +714,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not find symbol [%1$s] in library. Update failed."
+msgstr ""
+
+#, c-format
+msgid "Can't get the real filename of %1$s."
 msgstr ""
 
 #, c-format
@@ -1228,11 +753,13 @@ msgstr ""
 msgid "All supported formats"
 msgstr ""
 
+#, fuzzy
 msgid "Add Picture"
-msgstr ""
+msgstr "Kuva..."
 
+#, fuzzy
 msgid "_Open"
-msgstr ""
+msgstr "_Avaa…"
 
 #, c-format
 msgid "Failed to load picture: %1$s"
@@ -1240,7 +767,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Select Picture"
-msgstr "Seçim Kipi"
+msgstr "Kuva..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -1248,7 +775,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Slot attribute malformed"
-msgstr "Öznitelikler"
+msgstr "Näytä _Nimi"
 
 msgid "numslots attribute missing"
 msgstr ""
@@ -1281,7 +808,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Edit Attribute"
-msgstr "Öznitelikler"
+msgstr "Määri_tteet..."
 
 msgid "Add Attribute"
 msgstr ""
@@ -1289,8 +816,9 @@ msgstr ""
 msgid "N_ame:"
 msgstr ""
 
+#, fuzzy
 msgid "_Value:"
-msgstr ""
+msgstr "Näytä _Arvo"
 
 msgid "Vi_sible"
 msgstr ""
@@ -1353,8 +881,9 @@ msgstr ""
 msgid "File order"
 msgstr ""
 
+#, fuzzy
 msgid "Autonumber Text"
-msgstr ""
+msgstr "A_utonumeroi määritteet tekstillä..."
 
 msgid "<b>Scope</b>"
 msgstr ""
@@ -1429,7 +958,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Add Component"
-msgstr "Bileşen Güncelle"
+msgstr "Päivitä komponentti"
 
 msgid "In Us_e"
 msgstr ""
@@ -1441,7 +970,7 @@ msgid "Preview"
 msgstr ""
 
 msgid "Attributes"
-msgstr "Öznitelikler"
+msgstr ""
 
 msgid "Symbol version changes"
 msgstr ""
@@ -1449,9 +978,9 @@ msgstr ""
 msgid "Major symbol version changes detected."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Schematic: %s"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 msgid ""
 "Changes have occurred to the symbols shown\n"
@@ -1489,7 +1018,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Save As"
-msgstr "Tümünü kaydet"
+msgstr "Tallenna _kaikki"
 
 msgid "Save cancelled on user request"
 msgstr ""
@@ -1546,19 +1075,19 @@ msgstr ""
 msgid "Image type"
 msgstr ""
 
-#, fuzzy
 msgid "Color mode"
-msgstr "Renk"
+msgstr ""
 
+#, fuzzy
 msgid "Color"
-msgstr "Renk"
+msgstr "Väri..."
 
 msgid "Grayscale"
 msgstr ""
 
 #, fuzzy
 msgid "Write Image"
-msgstr "imaj olarak yaz"
+msgstr "_Vie kuvaksi..."
 
 msgid "Butt"
 msgstr ""
@@ -1586,56 +1115,54 @@ msgstr ""
 
 #, fuzzy
 msgid "Add Co_mponent..."
-msgstr "Bileşen Güncelle"
+msgstr "Päivitä komponentti"
 
 #, fuzzy
 msgid "Add Te_xt..."
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
 #, fuzzy
 msgid "Add _Attribute..."
-msgstr "Öznitelikler"
+msgstr "_Määrite..."
 
 #, fuzzy
 msgid "Add _Net"
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
 msgid "Add _Bus"
 msgstr ""
 
 msgid "Cu_t"
-msgstr ""
+msgstr "_Leikkaa"
 
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopioi"
 
 msgid "_Paste"
-msgstr ""
+msgstr "L_iitä"
 
 msgid "_Delete"
-msgstr ""
+msgstr "_Poista"
 
 #, fuzzy
 msgid "_Edit..."
-msgstr "Düzenle..."
+msgstr "Muokkaa..."
 
 #, fuzzy
 msgid "Ed_it Text..."
-msgstr "Metin Düzenle..."
+msgstr "Muokkaa tekstiä..."
 
 msgid "_Object Properties..."
 msgstr ""
 
-#, fuzzy
 msgid "Hierarchy: Down _Schematic"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 msgid "Hierarchy: Down S_ymbol"
 msgstr ""
 
-#, fuzzy
 msgid "Hierarchy: _Up"
-msgstr "Hiyerarşi"
+msgstr ""
 
 msgid "The operating system is out of memory or resources."
 msgstr ""
@@ -1660,7 +1187,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Copy to all"
-msgstr "1'e kopyala"
+msgstr "Kopioi puskuriin 1"
 
 msgid "Edit Attributes"
 msgstr ""
@@ -1676,20 +1203,21 @@ msgstr ""
 
 #, fuzzy
 msgid "Sho_w inherited attributes"
-msgstr "Öznitelikler"
+msgstr "Määri_tteet..."
 
+#, fuzzy
 msgid "_Name:"
-msgstr ""
+msgstr "Näytä _Nimi"
 
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
 msgid "_Add"
-msgstr "Ekle"
+msgstr "_Lisää"
 
 #, fuzzy
 msgid "<b>Add Attribute</b>"
-msgstr "Öznitelikler"
+msgstr "_Määrite..."
 
 #, c-format
 msgid "%2$i symbol (%1$s)"
@@ -1718,27 +1246,27 @@ msgstr[1] ""
 #, fuzzy, c-format
 msgid "%1$i attribute"
 msgid_plural "%1$i attributes"
-msgstr[0] "Öznitelikler"
-msgstr[1] "Öznitelikler"
+msgstr[0] "Määri_tteet..."
+msgstr[1] "Määri_tteet..."
 
 #, fuzzy
 msgid "Add Text"
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
 msgid "Refresh"
 msgstr ""
 
 msgid "New Page"
-msgstr "Yeni Sayfa"
+msgstr ""
 
 msgid "Open Page..."
-msgstr "Sayfa Aç..."
+msgstr ""
 
 msgid "Save Page"
-msgstr "Sayfayı Kaydet"
+msgstr ""
 
 msgid "Close Page"
-msgstr "Sayfayı Kapat"
+msgstr ""
 
 msgid "Changed"
 msgstr ""
@@ -1782,37 +1310,35 @@ msgstr ""
 
 #, fuzzy
 msgid "Close"
-msgstr "Sayfayı Kapat"
+msgstr "Sul_je"
 
 msgid "Save"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Hierarchy up: %s"
-msgstr "Hiyerarşi"
+msgstr ""
 
-#, fuzzy
 msgid "Hierarchy up"
-msgstr "Hiyerarşi"
+msgstr ""
 
 msgid "_New"
-msgstr ""
+msgstr "_Uusi"
 
 msgid "_Open..."
-msgstr ""
+msgstr "_Avaa…"
 
 msgid "Save _As..."
-msgstr ""
+msgstr "Tallenna _nimellä..."
 
 msgid "Page _Manager..."
 msgstr ""
 
-#, fuzzy
 msgid "Options"
-msgstr "Seçenekler"
+msgstr ""
 
 msgid "Edit Text"
-msgstr "Metni Düzenle"
+msgstr ""
 
 msgid "Object Properties"
 msgstr ""
@@ -1823,13 +1349,12 @@ msgstr ""
 msgid "Find Text"
 msgstr ""
 
-#, fuzzy
 msgid "Color Scheme Editor"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 #, fuzzy
 msgid "Select Schematic Font"
-msgstr "Seçim Kipi"
+msgstr "Valintatila"
 
 msgid "Page Manager"
 msgstr ""
@@ -1847,7 +1372,11 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
-msgstr "Tümünü kaydet"
+msgstr "Tallenna _kaikki"
+
+#, fuzzy, c-format
+msgid "Saved [%1$s]"
+msgstr "Tallenna _kaikki"
 
 msgid "Saved"
 msgstr ""
@@ -1861,7 +1390,7 @@ msgid "Closing [%1$s]"
 msgstr ""
 
 msgid "New"
-msgstr "Yeni"
+msgstr ""
 
 msgid "New file"
 msgstr ""
@@ -1873,13 +1402,13 @@ msgid "Save file"
 msgstr ""
 
 msgid "Undo"
-msgstr "Geri Al"
+msgstr ""
 
 msgid "Undo last operation"
 msgstr ""
 
 msgid "Redo"
-msgstr "Yinele"
+msgstr ""
 
 msgid "Redo last undo"
 msgstr ""
@@ -1905,7 +1434,7 @@ msgid ""
 msgstr ""
 
 msgid "Bus"
-msgstr "Veriyolu"
+msgstr ""
 
 msgid "Add Text..."
 msgstr ""
@@ -1932,7 +1461,7 @@ msgid "Repeat"
 msgstr ""
 
 msgid "Pan"
-msgstr "Kaydırma"
+msgstr ""
 
 msgid "Menu"
 msgstr ""
@@ -1948,7 +1477,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "New file [%s]"
-msgstr "Yeni Sayfa"
+msgstr "_Tiedosto"
 
 #, c-format
 msgid ""
@@ -1970,49 +1499,49 @@ msgstr ""
 msgid "Skipping existing file [%s]"
 msgstr ""
 
-#, fuzzy
 msgid "Lepton EDA Schematic Editor"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
 msgid "Open Recen_t"
-msgstr ""
+msgstr "_Viimeisimmät tiedostot"
 
 msgid "Save All"
-msgstr "Tümünü kaydet"
+msgstr "Tallenna _kaikki"
 
 msgid "_Print..."
-msgstr ""
+msgstr "T_ulosta…"
 
 #, fuzzy
 msgid "Write _Image..."
-msgstr "imaj olarak yaz"
+msgstr "_Vie kuvaksi..."
 
+#, fuzzy
 msgid "Invoke Macro..."
-msgstr ""
+msgstr "Suorita makro"
 
 msgid "Execute Script..."
-msgstr "Betik Çalıştır..."
+msgstr "Aja skripti"
 
 msgid "REPL..."
 msgstr ""
 
 msgid "New Window"
-msgstr "Yeni pencere"
+msgstr "Uusi ikkuna"
 
 msgid "_Close Window"
 msgstr ""
 
 msgid "_Quit"
-msgstr ""
+msgstr "L_opeta"
 
 msgid "_Undo"
-msgstr ""
+msgstr "K_umoa"
 
 msgid "_Redo"
-msgstr ""
+msgstr "_Tee uudelleen"
 
 msgid "Select All"
 msgstr ""
@@ -2021,82 +1550,82 @@ msgid "Deselect"
 msgstr ""
 
 msgid "Rotate 90 Mode"
-msgstr "90 derece döndür kipi"
+msgstr "Käännä 90 astetta"
 
 msgid "Object Properties..."
 msgstr ""
 
 msgid "Edit..."
-msgstr "Düzenle..."
+msgstr "Muokkaa..."
 
 msgid "Edit Text..."
-msgstr "Metin Düzenle..."
+msgstr "Muokkaa tekstiä..."
 
 msgid "Slot..."
-msgstr "Yuva..."
+msgstr ""
 
 msgid "Lock"
-msgstr "Kilitle"
+msgstr "Lukitse"
 
 msgid "Unlock"
-msgstr "Kilidi Aç"
+msgstr "Vapauta"
 
 msgid "Embed Component/Picture"
-msgstr "Bileşen/Resim göm"
+msgstr ""
 
 msgid "Unembed Component/Picture"
-msgstr "Bileşen/resim gömme"
+msgstr ""
 
 msgid "Update Component"
-msgstr "Bileşen Güncelle"
+msgstr "Päivitä komponentti"
 
 msgid "Symbol Translate..."
-msgstr "Sembölü çevir.."
+msgstr ""
 
 msgid "Copy into 1"
-msgstr "1'e kopyala"
+msgstr "Kopioi puskuriin 1"
 
 msgid "Copy into 2"
-msgstr "2'ye kopyala"
+msgstr "Kopioi puskuriin 2"
 
 msgid "Copy into 3"
-msgstr "3'e kopyala"
+msgstr "Kopioi puskuriin 3"
 
 msgid "Copy into 4"
-msgstr "4'e kopyala"
+msgstr "Kopioi puskuriin 4"
 
 msgid "Copy into 5"
-msgstr "5'e kopyala"
+msgstr "Kopioi puskuriin 5"
 
 msgid "Cut into 1"
-msgstr "1'e Kes"
+msgstr "Leikkaa puskuriin 1"
 
 msgid "Cut into 2"
-msgstr "2'ye Kes"
+msgstr "Leikkaa puskuriin 2"
 
 msgid "Cut into 3"
-msgstr "3'e Kes"
+msgstr "Leikkaa puskuriin 3"
 
 msgid "Cut into 4"
-msgstr "4'e Kes"
+msgstr "Leikkaa puskuriin 4"
 
 msgid "Cut into 5"
-msgstr "5'e Kes"
+msgstr "Leikkaa puskuriin 5"
 
 msgid "Paste from 1"
-msgstr "1'den yapıştır"
+msgstr "Liitä puskurista 1"
 
 msgid "Paste from 2"
-msgstr "2'den yapıştır"
+msgstr "Liitä puskurista 2"
 
 msgid "Paste from 3"
-msgstr "3'ten yapıştır"
+msgstr "Liitä puskurista 3"
 
 msgid "Paste from 4"
-msgstr "4'ten yapıştır"
+msgstr "Liitä puskurista 4"
 
 msgid "Paste from 5"
-msgstr "5'ten yapıştır"
+msgstr "Liitä puskurista 5"
 
 msgid "Side Dock"
 msgstr ""
@@ -2106,10 +1635,10 @@ msgstr ""
 
 #, fuzzy
 msgid "Find Text Results"
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
 msgid "_Redraw"
-msgstr ""
+msgstr "_Päivitä näkymä"
 
 msgid "_Pan"
 msgstr ""
@@ -2121,10 +1650,10 @@ msgid "Zoom _Extents"
 msgstr ""
 
 msgid "Zoom _In"
-msgstr ""
+msgstr "_Lähennä"
 
 msgid "Zoom _Out"
-msgstr ""
+msgstr "L_oitonna"
 
 msgid "Zoom _Full"
 msgstr ""
@@ -2145,39 +1674,40 @@ msgid "_Manager..."
 msgstr ""
 
 msgid "_Previous"
-msgstr ""
+msgstr "_Edellinen"
 
 msgid "_Next"
-msgstr ""
+msgstr "_Seuraava"
 
+#, fuzzy
 msgid "_Revert..."
-msgstr ""
+msgstr "_Hylkää muutokset"
 
 #, fuzzy
 msgid "Next Tab"
-msgstr "Yeni Sayfa"
+msgstr "_Seuraava"
 
 #, fuzzy
 msgid "Previous Tab"
-msgstr "Sayfayı Kapat"
+msgstr "_Edellinen"
 
 msgid "_Component..."
-msgstr ""
+msgstr "_komponentti..."
 
 msgid "_Net"
-msgstr ""
+msgstr "Johdi_n"
 
 msgid "B_us"
-msgstr ""
+msgstr "Väy_lä"
 
 msgid "_Attribute..."
-msgstr ""
+msgstr "_Määrite..."
 
 msgid "_Text..."
-msgstr ""
+msgstr "_Teksti..."
 
 msgid "_Line"
-msgstr ""
+msgstr "_Viiva"
 
 msgid "Pat_h"
 msgstr ""
@@ -2186,19 +1716,19 @@ msgid "_Box"
 msgstr ""
 
 msgid "C_ircle"
-msgstr ""
+msgstr "Ympyrä"
 
 msgid "A_rc"
-msgstr ""
+msgstr "Kaa_ri"
 
 msgid "_Pin"
 msgstr ""
 
 msgid "Pictu_re..."
-msgstr ""
+msgstr "Kuva..."
 
 msgid "_Up"
-msgstr ""
+msgstr "_Ylös"
 
 msgid "_Down Schematic"
 msgstr ""
@@ -2213,46 +1743,46 @@ msgid "_Detach"
 msgstr ""
 
 msgid "Show _Value"
-msgstr ""
+msgstr "Näytä _Arvo"
 
 msgid "Show _Name"
-msgstr ""
+msgstr "Näytä _Nimi"
 
 msgid "Show _Both"
-msgstr ""
+msgstr "Näytä _Molemmat"
 
 msgid "_Toggle Visibility"
-msgstr ""
+msgstr "Vaihda Näk_yvyys"
 
 msgid "_Hide Specific Text..."
-msgstr ""
+msgstr "_Piilota"
 
 msgid "_Show Specific Text..."
-msgstr ""
+msgstr "_Näytä Maarite tekstillä..."
 
-#, fuzzy
 msgid "Show/Hide Hidden Text"
-msgstr "Metni Göster/Gizle"
+msgstr ""
 
 msgid "_Find Text/Check Symbol..."
 msgstr ""
 
 msgid "A_utonumber Text..."
-msgstr ""
+msgstr "A_utonumeroi määritteet tekstillä..."
 
-#, fuzzy
 msgid "_Options..."
-msgstr "Seçenekler"
+msgstr ""
 
 #, fuzzy
 msgid "_Font..."
-msgstr "Yuva..."
+msgstr "T_ulosta…"
 
+#, fuzzy
 msgid "Grid +"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
+#, fuzzy
 msgid "Grid -"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
 msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
@@ -2263,8 +1793,9 @@ msgstr ""
 msgid "Grips: On/Off"
 msgstr ""
 
+#, fuzzy
 msgid "Feedback Mode: Outline/Box"
-msgstr ""
+msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
 
 msgid "Net: Rubberband On/Off"
 msgstr ""
@@ -2274,58 +1805,61 @@ msgstr ""
 
 #, fuzzy
 msgid "_Coord Window"
-msgstr "Pencere kapatılıyor\n"
+msgstr "Näytä _Koordinaatti-ikkuna..."
 
 #, fuzzy
 msgid "_Log Window"
-msgstr "Yeni pencere"
+msgstr "Näytä _Loki-ikkuna..."
 
 msgid "_1 allegro"
 msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Reference _Manual"
-msgstr "gEDA Şematik Editörü"
+msgstr "gEDA _Wiki..."
 
 #, fuzzy
 msgid "gEDA _Wiki Documentation"
-msgstr "Döndür"
+msgstr "gEDA Dokumentaatio..."
 
+#, fuzzy
 msgid "Find Component D_ocumentation"
-msgstr ""
+msgstr "Komponentin D_okumentaatio..."
 
 msgid "_Hotkeys..."
-msgstr ""
+msgstr "_Pikanäppäimet"
 
+#, fuzzy
 msgid "_About"
-msgstr ""
+msgstr "_Tietoja..."
 
 msgid "_File"
-msgstr "Dosya"
+msgstr "_Tiedosto"
 
 msgid "_Edit"
-msgstr "Düzenle"
+msgstr "_Muokkaa"
 
 msgid "_View"
-msgstr "Görüntüle"
+msgstr "_Näytä"
 
 msgid "_Page"
-msgstr "Sayfa"
+msgstr "_Sivu"
 
 msgid "Hie_rarchy"
-msgstr "Hiyerarşi"
-
-msgid "A_ttributes"
-msgstr "Öznitelikler"
-
-msgid "_Options"
-msgstr "Seçenekler"
-
-msgid "_Netlist"
 msgstr ""
 
+msgid "A_ttributes"
+msgstr "Määri_tteet..."
+
+msgid "_Options"
+msgstr ""
+
+#, fuzzy
+msgid "_Netlist"
+msgstr "Johdi_n"
+
 msgid "_Help"
-msgstr "Yardım"
+msgstr "O_hje"
 
 #, scheme-format
 msgid "[~A] is not a valid lepton-schematic action."
@@ -2342,14 +1876,14 @@ msgstr ""
 
 #, fuzzy
 msgid "New File"
-msgstr "Yeni Sayfa"
+msgstr "_Tiedosto"
 
 msgid "Open File"
 msgstr ""
 
 #, fuzzy
 msgid "Print"
-msgstr "Yazdır..."
+msgstr "T_ulosta…"
 
 msgid "Export Image"
 msgstr ""
@@ -2359,10 +1893,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Close Window"
-msgstr "Pencere kapatılıyor\n"
+msgstr "Uusi ikkuna"
 
+#, fuzzy
 msgid "Quit"
-msgstr ""
+msgstr "L_opeta"
 
 msgid "Terminal REPL"
 msgstr ""
@@ -2373,27 +1908,25 @@ msgstr ""
 msgid "Edit Object Properties"
 msgstr ""
 
-#, fuzzy
 msgid "Translate Symbol"
-msgstr "Çevir"
+msgstr ""
 
 msgid "Invoke Macro"
+msgstr "Suorita makro"
+
+msgid "Show/Hide Invisible Text"
 msgstr ""
 
 #, fuzzy
-msgid "Show/Hide Invisible Text"
-msgstr "Metni Göster/Gizle"
-
-#, fuzzy
 msgid "Cut"
-msgstr "1'e Kes"
+msgstr "_Leikkaa"
 
 msgid "Copy"
-msgstr "Kopyala"
+msgstr ""
 
 #, fuzzy
 msgid "Paste"
-msgstr "1'den yapıştır"
+msgstr "L_iitä"
 
 msgid "Sidebar"
 msgstr ""
@@ -2403,10 +1936,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Find Text State"
-msgstr "Metni Düzenle"
+msgstr "Muokkaa tekstiä..."
 
+#, fuzzy
 msgid "Redraw"
-msgstr ""
+msgstr "_Päivitä näkymä"
 
 msgid "Pan Left"
 msgstr ""
@@ -2420,17 +1954,21 @@ msgstr ""
 msgid "Pan Down"
 msgstr ""
 
+#, fuzzy
 msgid "Zoom Extents"
-msgstr ""
+msgstr "_Lähennä"
 
+#, fuzzy
 msgid "Zoom In"
-msgstr ""
+msgstr "_Lähennä"
 
+#, fuzzy
 msgid "Zoom Out"
-msgstr ""
+msgstr "L_oitonna"
 
+#, fuzzy
 msgid "Zoom Full"
-msgstr ""
+msgstr "L_oitonna"
 
 msgid "Dark Color Scheme"
 msgstr ""
@@ -2449,15 +1987,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Previous Page"
-msgstr "Sayfayı Kapat"
+msgstr "_Edellinen"
 
-#, fuzzy
 msgid "Next Page"
-msgstr "Yeni Sayfa"
+msgstr ""
 
 #, fuzzy
 msgid "Print Page"
-msgstr "Sayfayı Kapat"
+msgstr "_Edellinen"
 
 msgid "Add Net"
 msgstr ""
@@ -2467,7 +2004,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Add Line"
-msgstr "Satır"
+msgstr "_Viiva"
 
 msgid "Add Path"
 msgstr ""
@@ -2477,7 +2014,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Add Circle"
-msgstr "Daire"
+msgstr "Ympyrä"
 
 msgid "Add Arc"
 msgstr ""
@@ -2485,20 +2022,18 @@ msgstr ""
 msgid "Add Pin"
 msgstr ""
 
-#, fuzzy
 msgid "Down Schematic"
-msgstr "gEDA Şematik Editörü"
+msgstr ""
 
 msgid "Down Symbol"
 msgstr ""
 
-#, fuzzy
 msgid "Up Hierarchy"
-msgstr "Hiyerarşi"
+msgstr ""
 
 #, fuzzy
 msgid "Attach Attributes"
-msgstr "Öznitelikler"
+msgstr "Määri_tteet..."
 
 #, scheme-format
 msgid "Attribute attached: [~a]"
@@ -2506,7 +2041,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Detach Attributes"
-msgstr "Öznitelikler"
+msgstr "Määri_tteet..."
 
 #, scheme-format
 msgid "Attribute detached: [~a]"
@@ -2514,27 +2049,31 @@ msgstr ""
 
 #, fuzzy
 msgid "Show Attribute Value"
-msgstr "Öznitelikler"
+msgstr "Näytä _Arvo"
 
 #, fuzzy
 msgid "Show Attribute Name"
-msgstr "Öznitelikler"
+msgstr "Näytä _Nimi"
 
+#, fuzzy
 msgid "Toggle Text Visibility"
-msgstr ""
+msgstr "Vaihda Näk_yvyys"
 
+#, fuzzy
 msgid "Find Specific Text"
-msgstr ""
+msgstr "_Piilota"
 
+#, fuzzy
 msgid "Hide Specific Text"
-msgstr ""
+msgstr "_Piilota"
 
+#, fuzzy
 msgid "Show Specific Text"
-msgstr ""
+msgstr "_Näytä Maarite tekstillä..."
 
 #, fuzzy
 msgid "Show Hotkeys"
-msgstr "Kısayollar"
+msgstr "Näytä _Molemmat"
 
 msgid "Switch Grid Style"
 msgstr ""
@@ -2542,17 +2081,21 @@ msgstr ""
 msgid "Switch Snap Mode"
 msgstr ""
 
+#, fuzzy
 msgid "Set Grid Spacing"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
+#, fuzzy
 msgid "Increase Grid Spacing"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
+#, fuzzy
 msgid "Decrease Grid Spacing"
-msgstr ""
+msgstr "Nosta Ruudukon Tiheyttä"
 
+#, fuzzy
 msgid "Toggle Outline Drawing"
-msgstr ""
+msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
 
 msgid "Toggle Net Rubber Band"
 msgstr ""
@@ -2562,40 +2105,43 @@ msgstr ""
 
 #, fuzzy
 msgid "Show Log Window"
-msgstr "Yeni pencere"
+msgstr "Näytä _Loki-ikkuna..."
 
+#, fuzzy
 msgid "Show Coordinate Window"
-msgstr ""
+msgstr "Näytä _Koordinaatti-ikkuna..."
 
+#, fuzzy
 msgid "Toggle Grips"
-msgstr ""
+msgstr "Vaihda Näk_yvyys"
 
+#, fuzzy
 msgid "Component Documentation"
-msgstr ""
+msgstr "Komponentin D_okumentaatio..."
 
 msgid "View documentation for selected component"
 msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Manual"
-msgstr "gEDA Şematik Editörü"
+msgstr "gEDA _Wiki..."
 
 msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA wiki"
-msgstr "gEDA Şematik Editörü"
+msgstr "gEDA _Wiki..."
 
 msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-#, fuzzy
 msgid "About lepton-schematic"
-msgstr "gschem Hakkında"
-
-msgid "Could not show documentation:"
 msgstr ""
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "Komponentin D_okumentaatio..."
 
 msgid "No documentation found"
 msgstr ""
@@ -2637,266 +2183,179 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid "Lepton EDA schematic symbol"
-#~ msgstr "gEDA şematik sembol"
-
-#, fuzzy
-#~ msgid "Lepton EDA sch2pcb project"
-#~ msgstr "gEDA gsch2pcb projesi"
-
-#, fuzzy
-#~ msgid "Lepton EDA sch2pcb Project"
-#~ msgstr "gEDA Gsch2pcb Projesi"
-
-#, fuzzy
-#~ msgid "Lepton EDA Schematic Symbol"
-#~ msgstr "gEDA şematik sembol"
-
-#, fuzzy, c-format
-#~ msgid "Found an invalid color [ %1$s ]"
-#~ msgstr "Geçersiz bir renk bulundu [ %s ]\n"
-
-#, fuzzy, c-format
-#~ msgid "Found an invalid bus ripper direction [ %1$s ]"
-#~ msgstr "Geçersiz bir renk bulundu [ %s ]\n"
-
-#, fuzzy, c-format
-#~ msgid ""
-#~ "Component not found:\n"
-#~ " %1$s"
-#~ msgstr ""
-#~ "bileşen bulanamadı:\n"
-#~ " %s"
-
-#, fuzzy, c-format
-#~ msgid "Found an unsupported picture angle [ %1$d ]"
-#~ msgstr "Desteklenmeyen yazı açısı bulundu [ %c %d %d %d %d %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-#~ msgid "Found an invalid text size [ %1$s ]"
-#~ msgstr "Geçersiz bir renk bulundu [ %s ]\n"
-
-#, fuzzy, c-format
-#~ msgid "Found an unsupported text angle [ %1$s ]"
-#~ msgstr "Desteklenmeyen yazı açısı bulundu [ %c %d %d %d %d %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-#~ msgid "Found an unsupported text alignment [ %1$s ]"
-#~ msgstr ""
-#~ "Desteklenmeyen yazı hizlanması bulundu [ %c %d %d %d %d %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: Found an autosave backup file:\n"
-#~ "  %1$s.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
-#~ "  %s.\n"
-#~ "\n"
-
-#~ msgid "I could not guess if it is newer, so you have to do it manually.\n"
-#~ msgstr "Yeniyse tahmin edemiyorum, bunu elle yapın.\n"
-
-#~ msgid ""
-#~ "The backup copy is newer than the schematic, so it seems you should load "
-#~ "it instead of the original file.\n"
-#~ msgstr ""
-#~ "Yedek kopyası şematikten yeni bu nedenle asıl dosya yerine onu "
-#~ "yükleyeceğiz gözküyor.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Run lepton-schematic and correct the situation.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "gschem'i çalıştırın ve bu durumu düzeltin\n"
-#~ "\n"
-
-#, fuzzy, c-format
-#~ msgid "Could NOT set previous backup file [%1$s] read-write."
-#~ msgstr "sadece okunabilir [%s] yedekleme dosyası oluşturulamadı\n"
-
-#, fuzzy, c-format
-#~ msgid "Can't save backup file: %1$s."
-#~ msgstr ""
-#~ "\n"
-#~ "UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
-#~ "  %s.\n"
-#~ "\n"
-
-#, fuzzy, c-format
-#~ msgid "Could NOT set backup file [%1$s] readonly."
-#~ msgstr "sadece okunabilir [%s] yedekleme dosyası oluşturulamadı\n"
-
-#, fuzzy, c-format
-#~ msgid "Could NOT save file: %1$s"
-#~ msgstr "[%s] kaydedilemedi.\n"
-
-#, fuzzy, c-format
-#~ msgid "Loaded RC file [%1$s]"
-#~ msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, fuzzy, c-format
-#~ msgid "Failed to load RC file [%1$s]: "
-#~ msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, fuzzy, c-format
-#~ msgid "Unable to delete backup file %1$s."
-#~ msgstr ""
-#~ "\n"
-#~ "UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
-#~ "  %s.\n"
-#~ "\n"
-
-#, fuzzy, c-format
-#~ msgid "Library command failed [%1$s]: %2$s"
-#~ msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, fuzzy, c-format
-#~ msgid "Library command failed [%1$s]: Uncaught signal %2$i."
-#~ msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, fuzzy, c-format
-#~ msgid "Library command failed [%1$s]"
-#~ msgstr "Kütüphane komutu başarısız [%s]<br>\n"
-
-#, fuzzy, c-format
-#~ msgid "Library name [%1$s] already in use.  Using [%2$s]."
-#~ msgstr "Kütüphane adı [%s] zaten kullanımda.  [%s].\n"
-
-#, fuzzy
-#~ msgid "Could NOT save [%1$s]"
-#~ msgstr "[%s] kaydedilemedi.\n"
-
-#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
-#~ msgstr "o_save_objects: %p nesnesi bilinmeyen tip '%c'\n"
-
-#~ msgid "Invalid space specified, setting to 100\n"
-#~ msgstr "Geçersiz alan(boşluk) tanımlandı.100'e ayarlanıyor\n"
-
-#~ msgid "Could not open [%s] for printing\n"
-#~ msgstr "[%s] yazdırma işlemi için açılamıyor\n"
-
-#~ msgid "Could not execute command [%s] for printing\n"
-#~ msgstr "yazdırmak için [%s] komutu çalıştırılamadı\n"
-
-#~ msgid "Too many UTF-8 characters, cannot print\n"
-#~ msgstr "çok fazla UTF-8 karakteri var, yazdırılamaz\n"
-
-#, fuzzy
 #~ msgid "Snap size"
-#~ msgstr "Kopyalama Kipi"
+#~ msgstr "Kopiointi"
 
-#~ msgid "OFF"
-#~ msgstr "KAPALI"
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
+
+#, fuzzy
+#~ msgid "User _Guide"
+#~ msgstr "gschem _UKK..."
+
+#, fuzzy
+#~ msgid "Docu_mentation"
+#~ msgstr "D_okumentaatio..."
+
+#, fuzzy
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "gschem _UKK..."
 
 #, fuzzy
 #~ msgid "lepton-schematic FAQ"
-#~ msgstr "Seçim Kipi"
+#~ msgstr "Valintatila"
 
 #, fuzzy
-#~ msgid "Current locale settings: %1$s\n"
-#~ msgstr "Şu andaki yerel ayarlar: %s\n"
-
-#~ msgid "Net"
-#~ msgstr "Ağ"
+#~ msgid "Grid point"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
 #~ msgid "Detached attribute"
-#~ msgstr "Öznitelikler"
+#~ msgstr "Määri_tteet..."
 
 #, fuzzy
 #~ msgid "Selection"
-#~ msgstr "Seçim Kipi"
+#~ msgstr "Valintatila"
 
-#~ msgid "Write image..."
-#~ msgstr "imaj olarak yaz"
+#, fuzzy
+#~ msgid "Zoom box"
+#~ msgstr "_Lähennä"
 
-#~ msgid "Move"
-#~ msgstr "Taşı"
+#, fuzzy
+#~ msgid "Text Entry..."
+#~ msgstr "_Teksti..."
 
-#~ msgid "Multiple Copy"
-#~ msgstr "Çoklu kopyala"
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
 
-#~ msgid "Edit"
-#~ msgstr "Düzenle"
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
 
-#~ msgid "Slot"
-#~ msgstr "Slot"
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
 
-#~ msgid "Rotate"
-#~ msgstr "Döndür"
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
 
-#~ msgid "Update"
-#~ msgstr "Güncelle"
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "_Ylös"
+
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
 
 #, fuzzy
 #~ msgid "Copy %i"
-#~ msgstr "Kopyala"
+#~ msgstr "Kopioi puskuriin 1"
 
 #, fuzzy
 #~ msgid "Cut %i"
-#~ msgstr "1'e Kes"
+#~ msgstr "Leikkaa puskuriin 1"
 
 #, fuzzy
 #~ msgid "Paste %i"
-#~ msgstr "1'den yapıştır"
+#~ msgstr "L_iitä"
 
-#~ msgid "Line"
-#~ msgstr "Satır"
-
-#~ msgid "Box"
-#~ msgstr "Kutu"
-
-#~ msgid "Circle"
-#~ msgstr "Daire"
-
-#~ msgid "Arc"
-#~ msgstr "Eğri"
-
-#~ msgid "Attach"
-#~ msgstr "Ekle"
-
-#~ msgid "Detach"
-#~ msgstr "Ayır"
+#, fuzzy
+#~ msgid "gschem FAQ"
+#~ msgstr "gschem _UKK..."
 
 #, fuzzy
 #~ msgid "Edit Pin Type..."
-#~ msgstr "Metin Düzenle..."
+#~ msgstr "Muokkaa tekstiä..."
 
 #~ msgid "Color..."
-#~ msgstr "Renk..."
+#~ msgstr "Väri..."
 
 #~ msgid "Line Width & Type..."
-#~ msgstr "Çizgi Kalınlığı & Tipi"
+#~ msgstr "viivan leveys ja tyyppi"
 
 #~ msgid "Fill Type..."
-#~ msgstr "doldurma tipi.."
+#~ msgstr "Täyttö"
 
 #, fuzzy
 #~ msgid "Pin Type..."
-#~ msgstr "doldurma tipi.."
+#~ msgstr "Täyttö"
+
+#, fuzzy
+#~ msgid "Text Size..."
+#~ msgstr "_Tekstin Koko"
+
+#~ msgid "Cycle _grid styles"
+#~ msgstr "_Vaihda Ruudukon tyyliä"
+
+#~ msgid "Toggle _Snap On/Off"
+#~ msgstr "Kinnity Ruudukkoon Päälle/Pois"
+
+#~ msgid "Scale _down Grid Spacing"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
+
+#~ msgid "Show _Log Window..."
+#~ msgstr "Näytä _Loki-ikkuna..."
+
+#, fuzzy
+#~ msgid "gschem User _Guide..."
+#~ msgstr "gschem _UKK..."
+
+#~ msgid "gschem _FAQ..."
+#~ msgstr "gschem _UKK..."
+
+#~ msgid "gEDA _Wiki..."
+#~ msgstr "gEDA _Wiki..."
+
+#~ msgid "Component D_ocumentation..."
+#~ msgstr "Komponentin D_okumentaatio..."
 
 #, fuzzy
 #~ msgid "Edit Line Width & Type"
-#~ msgstr "Çizgi Kalınlığı & Tipi"
+#~ msgstr "viivan leveys ja tyyppi"
 
 #, fuzzy
 #~ msgid "Edit Fill Type"
-#~ msgstr "doldurma tipi.."
+#~ msgstr "Täyttö"
 
-#, fuzzy
-#~ msgid "Edit Pin Type"
-#~ msgstr "Metni Düzenle"
-
-#, fuzzy
-#~ msgid "Embed Component/Pictore"
-#~ msgstr "Bileşen/Resim göm"
+#~ msgid "Ne_w"
+#~ msgstr "_Uusi"
 
 #~ msgid "_Buffer"
-#~ msgstr "Tampon"
+#~ msgstr "_Puskuri"
+
+#~ msgid "Invalid zoomfactor [%d] passed to %s\n"
+#~ msgstr "Virheellinen suurennuskerroin [%d] annettu %s\n"
+
+#~ msgid "_Discard"
+#~ msgstr "_Hylkää"

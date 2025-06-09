@@ -34,3 +34,14 @@ lepton-eda/scheme/symbol/check/text.scm
 lepton-eda/scheme/symcheck/check.scm
 lepton-eda/scheme/symcheck/option.scm
 lepton-eda/scheme/symcheck/report.scm
+
+lepton-eda/scheme/conf/schematic/menu.scm
+
+lepton-eda/scheme/schematic/action.scm
+lepton-eda/scheme/schematic/buffer.scm
+lepton-eda/scheme/schematic/builtins.scm
+lepton-eda/scheme/schematic/doc.scm
+lepton-eda/scheme/schematic/keymap.scm
+lepton-eda/scheme/gschem/deprecated.scm
+
+tools/schematic/lepton-schematic.scm

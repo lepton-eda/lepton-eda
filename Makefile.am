@@ -13,8 +13,8 @@ endif
 SUBDIRS = \
 	liblepton \
 	${ATTRIB_DIR} \
-	lepton-eda \
 	libleptongui \
+	lepton-eda \
 	tools \
 	symbols \
 	${DOC_DIR} \
