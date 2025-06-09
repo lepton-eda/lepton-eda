@@ -1,0 +1,1310 @@
+# Greek translation for geda
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the geda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"PO-Revision-Date: 2012-09-01 18:46+0000\n"
+"Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
+"Language-Team: Greek <el@li.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
+
+#, fuzzy
+msgid "Lepton EDA circuit schematic"
+msgstr "Σχεδιάγραμμα κυκλώματος gEDA"
+
+#, fuzzy
+msgid "Lepton EDA schematic symbol"
+msgstr "Σύμβολο σχεδίου gEDA"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb project"
+msgstr "Έργο gEDA gsch2pcb"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb Project"
+msgstr "Έργο gEDA Gsch2pcb"
+
+#, fuzzy
+msgid "Lepton EDA Circuit Schematic"
+msgstr "Σχεδιάγραμμα Κυκλώματος gEDA"
+
+#, fuzzy
+msgid "Lepton EDA Schematic Symbol"
+msgstr "Σύμβολο Σχεδίου gEDA"
+
+#, fuzzy, c-format
+msgid "File %1$s is read-only"
+msgstr "Το αρχείο %s είναι μόνο για ανάγνωση"
+
+msgid "Schematic data was not valid UTF-8"
+msgstr ""
+
+#, c-format
+msgid ""
+"Read unexpected attach symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Read unexpected embedded symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Read unexpected embedded symbol end marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Read an old format sym/sch file!\n"
+"Please run g[sym|sch]update on:\n"
+"[%1$s]"
+msgstr ""
+"Ανάγνωση παλιάς μορφής αρχείου sym/sch!\n"
+"Παρακαλούμε εκτελέστε το g[sym|sch]update σε:\n"
+"[%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read garbage in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Ανάγνωση σκουπιδιών σε [%s] :\n"
+">>\n"
+"%s<<\n"
+
+msgid "Failed to parse arc object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid color [ %1$s ]"
+msgstr "Βρέθηκε ένα μη έγκυρο χρώμα [ %s ]\n"
+
+#, fuzzy
+msgid "Setting color to default color."
+msgstr "Ρύθμιση χρώματος στο προκαθορισμένο\n"
+
+msgid "Failed to parse box object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+msgid "Failed to parse bus object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid bus ripper direction [ %1$s ]"
+msgstr "Βρέθηκε ένα μη έγκυρο χρώμα [ %s ]\n"
+
+#, fuzzy
+msgid "Resetting direction to neutral (no direction)."
+msgstr "Επαναφορά κατεύθυνσης στη φυσική (χωρίς κατεύθυνση)\n"
+
+msgid "Failed to parse circle object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+#, fuzzy
+msgid "Setting radius to 0."
+msgstr "Ρύθμιση γωνίας σε 0\n"
+
+#, fuzzy, c-format
+msgid ""
+"Component not found:\n"
+" %1$s"
+msgstr ""
+"Το στοιχείο δε βρέθηκε:\n"
+" %s"
+
+msgid "Failed to parse component object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
+"%7$s ]"
+msgstr "Βρέθηκε στοιχείο με μη έγκυρη περιστροφή [ %c %d %d %d %d %d %s ]\n"
+
+#, fuzzy
+msgid "Setting angle to 0."
+msgstr "Ρύθμιση γωνίας σε 0\n"
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+"%6$d %7$s ]"
+msgstr ""
+"Βρέθηκε στοιχείο με μη έγκυρη σημαία καθρεπτισμού [ %c %d %d %d %d %d %s ]\n"
+
+#, fuzzy
+msgid "Setting mirror to 0."
+msgstr "Ρύθμιση καθρεπτισμού σε 0\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+msgstr ""
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been embedded."
+msgstr "Το στοιχείο [%s] ενσωματώθηκε\n"
+
+#, fuzzy, c-format
+msgid ""
+"Could not find component [%1$s], while trying to unembed. Component is still "
+"embedded."
+msgstr ""
+"Δεν ήταν δυνατή η εύρεση του στοιχείου [%s], κατά τη διάρκεια "
+"αποενσωμάτωσης. Το στοιχείο είναι ακόμα ενσωματωμένο\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been successfully unembedded."
+msgstr "Το στοιχείο [%s] αποενσωματώθηκε επιτυχώς\n"
+
+msgid "Failed to parse line object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+msgid "Failed to parse net object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+msgid "Failed to parse path object"
+msgstr ""
+
+msgid "Unexpected end-of-file when reading path"
+msgstr ""
+
+msgid "Failed to parse picture definition"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
+msgstr "Βρέθηκε εικόνα με λανθασμένη παράμετρο καθρεπτισμού: %d.\n"
+
+#, fuzzy
+msgid "Setting mirrored to 0."
+msgstr "Ρύθμιση καθρεπτισμού σε 0\n"
+
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
+msgstr "Βρέθηκε εικόνα με λανθασμένη παράμετρο ενσωματωμένου: %d.\n"
+
+#, fuzzy
+msgid "Setting embedded to 0."
+msgstr "Ρύθμιση ενσωματωμένου σε 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported picture angle [ %1$d ]"
+msgstr "Βρέθηκε μη υποστηριζόμενη γωνία εικόνας [ %d ]\n"
+
+msgid "Found an image with no filename."
+msgstr "Βρέθηκε εικόνα χωρίς όνομα αρχείου."
+
+#, fuzzy, c-format
+msgid "Failed to load image from embedded data [%1$s]: %2$s"
+msgstr "Αποτυχία φορτώματος εικόνας από τα ενσωματωμένα δεδομένα [%s]: %s\n"
+
+msgid "Base64 decoding failed."
+msgstr "Η αποκωδικοποίηση Base64 απέτυχε."
+
+#, fuzzy
+msgid "Falling back to file loading. Picture unembedded."
+msgstr "Επιστροφή στο φόρτωμα αρχείου. Η εικόνα αποενσωματώθηκε.\n"
+
+#, fuzzy
+msgid "ERROR: unable to encode the picture."
+msgstr "ΣΦΑΛΜΑ: o_picture_save: αδυναμία κωδικοποίησης εικόνας.\n"
+
+#, fuzzy, c-format
+msgid "Failed to load buffer image [%1$s]: %2$s"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from [%1$s]: %2$s"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Picture %1$p has invalid angle %2$i\n"
+msgstr "Η εικόνα %p έχει μη έγκυρη γωνία %i\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has no image data."
+msgstr "Η εικόνα %p έχει μη έγκυρη γωνία %i\n"
+
+#, fuzzy
+msgid "Falling back to file loading. Picture is still unembedded."
+msgstr "Επιστροφή στο φόρτωμα αρχείου. Η εικόνα αποενσωματώθηκε.\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been embedded."
+msgstr "Το στοιχείο [%s] ενσωματώθηκε\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from file [%1$s]: %2$s"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+msgid "Picture is still embedded."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been unembedded."
+msgstr "Το στοιχείο [%s] ενσωματώθηκε\n"
+
+msgid "Failed to parse pin object"
+msgstr ""
+
+msgid ""
+"Found a pin which did not have the whichend field set.\n"
+"Verify and correct manually."
+msgstr ""
+
+#, c-format
+msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+msgstr ""
+
+msgid "Failed to parse text object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found an invalid text size [ %1$s ]"
+msgstr "Βρέθηκε ένα μη έγκυρο χρώμα [ %s ]\n"
+
+#, fuzzy, c-format
+msgid "Setting text size to %1$d."
+msgstr "Ρύθμιση καθρεπτισμού σε 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text angle [ %1$s ]"
+msgstr "Βρέθηκε μη υποστηριζόμενη γωνία εικόνας [ %d ]\n"
+
+#, fuzzy, c-format
+msgid "Setting angle to %1$d."
+msgstr "Ρύθμιση γωνίας σε 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text alignment [ %1$s ]"
+msgstr "Βρέθηκε μη υποστηριζόμενη γωνία εικόνας [ %d ]\n"
+
+#, fuzzy
+msgid "Setting alignment to LOWER_LEFT."
+msgstr "Ρύθμιση στοίχισης σε LOWER_LEFT\n"
+
+#, fuzzy, c-format
+msgid "Unexpected end-of-file after %1$d lines"
+msgstr "Απροσδόκητο τέλος αρχείου στη λίστα γνωρισμάτων"
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Βρέθηκε ένα αντίγραφο ασφαλείας αυτόματης αποθήκευσης:\n"
+"  %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr ""
+"Δεν μπόρεσα να καταλάβω αν είναι νεότερο, οπότε πρέπει να το κάνετε με το "
+"χέρι.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"Το αντίγραφο ασφαλείας είναι νεότερο από το σχεδιάγραμμα, άρα μάλλον πρέπει "
+"να φορτώσετε αυτό αντί για το αρχικό αρχείο.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Το gschem συνήθως δημιουργεί αντίγραφα ασφαλείας αυτόματα, και αυτή η "
+"περίπτωση συμβαίνει όταν κατέρρευσε ή έγινε βίαιη έξοδος.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Αδυναμία εύρεσης του αρχείου %s: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Εκτελέστε το gschem και διορθώστε την κατάσταση.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Αδυναμία αποθήκευσης αντιγράφου ασφαλείας: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+#, fuzzy
+msgid "RC file already loaded"
+msgstr "Το αρχείο ρυθμίσεων έχει ήδη φορτωθεί"
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Αποτυχία φορτώματος του συμβόλου από το αρχείο [%s]: %s\n"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "ΣΦΑΛΜΑ: Η καταγραφή %s μπορεί να περιέχει περισσότερες πληροφορίες.\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Αδυναμία διαγραφής αντιγράφου ασφαλείας %s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr ""
+"Προσπάθεια προσθήκης γνωρίσματος [%s] σε περισσότερα από ένα αντικείμενα\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Απροσδόκητο τέλος αρχείου στη λίστα γνωρισμάτων"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: %2$s"
+msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]"
+msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error output was:\n"
+"%1$s"
+msgstr ""
+"Η έξοδος σφάλματος ήταν:\n"
+"%s\n"
+
+#, fuzzy, c-format
+msgid "Library name [%1$s] already in use.  Using [%2$s]."
+msgstr "Η ονομασία βιβλιοθήκης [%s] χρησιμοποιείται ήδη.  Χρήση [%s].\n"
+
+#, fuzzy, c-format
+msgid "Failed to open directory [%1$s]: %2$s"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, c-format
+msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+msgstr ""
+
+#, c-format
+msgid "Non-string symbol name while scanning library [%1$s]"
+msgstr ""
+
+#, fuzzy
+msgid "Cannot add library: name not specified."
+msgstr "Αδυναμία προσθήκης βιβλιοθήκης: το όνομα δεν έχει οριστεί\n"
+
+#, fuzzy, c-format
+msgid ""
+"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
+msgstr ""
+"Δεν είναι δυνατή η προσθήκη της βιβλιοθήκης [%s]: πρέπει να καθοριστούν οι "
+"εντολές 'list' και 'get'.\n"
+
+#, fuzzy, c-format
+msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+msgstr ""
+"Δεν είναι δυνατή η προσθήκη της βιβλιοθήκης [%s]: πρέπει να καθοριστούν οι "
+"εντολές 'list' και 'get'.\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol from file [%1$s]: %2$s"
+msgstr "Αποτυχία φορτώματος του συμβόλου από το αρχείο [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+msgstr "Αποτυχία φορτώματος των δεδομένων συμβόλου [%s] από την πηγή [%s]\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] was not found in the component library."
+msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+#, fuzzy, c-format
+msgid "More than one component found with name [%1$s]."
+msgstr "Βρέθηκαν περισσότερα από ένα στοιχεία με το όνομα [%s]\n"
+
+#, fuzzy
+msgid "Did not find slotdef=#:#,#,#... attribute."
+msgstr "Δε βρέθηκε γνώρισμα slotdef=#:#,#,#...\n"
+
+msgid "Improper slotdef syntax: missing \":\"."
+msgstr ""
+
+#, fuzzy
+msgid "Did not find proper slotdef=#:#,#,#... attribute."
+msgstr "Δε βρέθηκε κατάλληλο γνώρισμα slotdef=#:#,#,#...\n"
+
+#, fuzzy
+msgid "component missing pinseq= attribute."
+msgstr "Λείπει το γνώρισμα pinseq= από το στοιχείο\n"
+
+msgid "Undefined configuration filename"
+msgstr ""
+
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr "Το αντικείμενο ~A δεν είναι μέρος καμίας σελίδας"
+
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr "Το αρχείο %s είναι μόνο για ανάγνωση"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q                  Quiet mode.\n"
+"  -v, --verbose       Verbose mode.\n"
+"  -o FILE             Filename for netlist data output.\n"
+"  -L DIR              Add DIR to Scheme search path.\n"
+"  -g BACKEND          Specify netlist backend to use.\n"
+"  -f FILE             Specify path to netlist backend file to use.\n"
+"  -O STRING           Pass an option string to backend.\n"
+"  -l FILE             Load Scheme file before loading backend.\n"
+"  -m FILE             Load Scheme file after loading backend.\n"
+"  -c EXPR             Evaluate Scheme expression at startup.\n"
+"  -i                  Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends Print a list of available netlist backends.\n"
+"  -h, --help          Help; this message.\n"
+"  -V, --version       Show version information.\n"
+"  --                  Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode requested by backend is not supported: ~A\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load backend file.\n"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr "Λείπει το γνώρισμα pinseq= από το στοιχείο\n"
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+
+msgid "Graphical symbols should have device=none"
+msgstr ""
+
+#, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+#, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr ""
+
+msgid "Wrong check log destination!"
+msgstr ""
+
+#, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
+
+#, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+#, fuzzy, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr "Το αρχείο %s είναι μόνο για ανάγνωση"
+
+#, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr "Λείπει το γνώρισμα pinseq= από το στοιχείο\n"
+
+#, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr ""
+
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr ""
+
+msgid "numslots set to 0, symbol does not have slots"
+msgstr ""
+
+#, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr ""
+
+#, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Checking: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Info: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Warning: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "ERROR: ~A"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "~A warning found"
+msgstr ""
+
+msgid "(use -vv to view details)"
+msgstr ""
+
+msgid "No errors found"
+msgstr ""
+
+#, scheme-format
+msgid "~A ERROR found"
+msgstr ""
+
+msgid "(use -v to view details)"
+msgstr ""
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "Το ~A δεν είναι έγκυρο γνώρισμα: μη έγκυρη συμβολοσειρά '~A'."
+
+#, fuzzy
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr ""
+#~ "Τα αντικείμενα ~A και ~A δεν είναι μέρη της ίδια σελίδας ή/και πολύπλοκου "
+#~ "αντικειμένου"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Το αντικείμενο Object ~A είναι ήδη συνδεδεμένο με ένα γνώρισμα"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Το αντικείμενο ~A είναι γνώρισμα του λάθος αντικειμένου"
+
+#, fuzzy
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Μη έγκυρη γωνία κειμένου ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Το αντικείμενο ~A είναι ήδη συνδεδεμένο με κάτι"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο ως γνώρισμα"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "Το αντικείμενο ~A έχει μη έγκυρο τύπο ακροδεκτών."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Μη έγκυρη γωνία κειμένου ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Μη έγκυρο όνομα/τιμή ορατότητας ~A."
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "Το αντικείμενο κειμένου ~A έχει μη έγκυρη στοίχιση κειμένου ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "Το αντικείμενο κειμένου ~A έχει μη έγκυρη ορατότητα ~A"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr ""
+#~ "Το αντικείμενο κειμένου ~A έχει μη έγκυρο γνώρισμα ορατότητας κειμένου ~A"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται σε κάποια σελίδα."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Μη έγκυρη γωνία εικόνας ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Αποθηκεύτηκε [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "ΔΕΝ αποθηκεύτηκε [%s]\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Δεν υπάρχουν σχεδιαγράμματα πάνω από το τρέχον!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "s_page_delete: Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s."
+
+#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
+#~ msgstr "o_save_objects: το αντικείμενο %p έχει άγνωστο τύπο '%c'\n"
+
+#~ msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Βρέθηκε μία μη υποστηριζόμενη γωνία κειμένου [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Βρέθηκε μία μη υποστηριζόμενη στοίχιση κειμένου [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Invalid space specified, setting to 100\n"
+#~ msgstr "Καθορίστηκε μη έγκυρο διάστημα, ορισμός σε 100\n"
+
+#~ msgid "Invalid length specified, setting to 100\n"
+#~ msgstr "Καθορίστηκε μη έγκυρο μήκος, ορισμός σε 100\n"
+
+#~ msgid "Giving up on printing\n"
+#~ msgstr "Εγκατάλειψη εκτύπωσης\n"
+
+#~ msgid "Could not open [%s] for printing\n"
+#~ msgstr "Δεν ήταν δυνατό το άνοιγμα του [%s] για εκτύπωση\n"
+
+#~ msgid "Could not execute command [%s] for printing\n"
+#~ msgstr "Δεν ήταν δυνατή η εκτέλεση της εντολής [%s] για εκτύπωση\n"
+
+#~ msgid "Too many UTF-8 characters, cannot print\n"
+#~ msgstr "Πάρα πολλοί χαρακτήρες UTF-8, δεν είναι δυνατή η εκτύπωση\n"
+
+#~ msgid ""
+#~ "hierarchy loop detected while visiting page:\n"
+#~ "  \"%s\"\n"
+#~ msgstr ""
+#~ "βρέθηκε βρόγχος ιεραρχίας κατά την επίσκεψη στην ιστοσελίδα:\n"
+#~ "  \"%s\"\n"
+
+#~ msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
+#~ msgstr "ΣΦΑΛΜΑ στο s_hierarchy_traverse: το σχεδιάγραμμα δε βρέθηκε: %s\n"
+
+#~ msgid "Found [%s]\n"
+#~ msgstr "Βρέθηκε [%s]\n"
+
+#~ msgid "Could not find [%s] in any SourceLibrary\n"
+#~ msgstr "Αδυναμία εύρεσης [%s] σε κανένα SourceLibrary\n"

@@ -10,7 +10,7 @@ export LIBLEPTON
 
 NETLISTER="${abs_top_builddir}/tools/netlist/lepton-netlist"
 
-export GUILE_LOAD_PATH="${abs_top_srcdir}/tools/netlist/scheme:${abs_top_builddir}/tools/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
+export GUILE_LOAD_PATH="${abs_top_srcdir}/tools/netlist/scheme:${abs_top_builddir}/tools/netlist/scheme:${abs_top_srcdir}/lepton-eda/scheme:${abs_top_builddir}/lepton-eda/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
 
 export LEPTON_INHIBIT_RC_FILES=yes
 
@@ -41,8 +41,8 @@ cat > "${rundir}/gafrc" << EOF
 (scheme-directory "${abs_top_builddir}/tools/netlist/scheme")
 (scheme-directory "${abs_top_srcdir}/tools/netlist/scheme/backend")
 (scheme-directory "${abs_top_builddir}/tools/netlist/scheme/backend")
-(scheme-directory "${abs_top_srcdir}/liblepton/scheme")
-(scheme-directory "${abs_top_builddir}/liblepton/scheme")
+(scheme-directory "${abs_top_srcdir}/lepton-eda/scheme")
+(scheme-directory "${abs_top_builddir}/lepton-eda/scheme")
 
 
 (component-library "${abs_top_srcdir}/tools/netlist/tests/symcache")

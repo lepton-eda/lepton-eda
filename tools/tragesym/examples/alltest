@@ -2,7 +2,7 @@
 
 # run tragesym over all test and example files
 
-export GUILE_LOAD_PATH=../../../liblepton/scheme
+export GUILE_LOAD_PATH=../../../lepton-eda/scheme
 export LIBLEPTON=../../../liblepton/src/.libs/liblepton.so
 exe=../lepton-tragesym
 

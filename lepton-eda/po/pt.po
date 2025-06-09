@@ -1,0 +1,1345 @@
+# Portuguese translation for geda
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the geda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"PO-Revision-Date: 2012-01-27 14:12+0000\n"
+"Last-Translator: Launchpad Translators\n"
+"Language-Team: Portuguese <pt@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
+
+#, fuzzy
+msgid "Lepton EDA circuit schematic"
+msgstr "esquema de circuito gEDA"
+
+#, fuzzy
+msgid "Lepton EDA schematic symbol"
+msgstr "símbolo de esquema gEDA"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb project"
+msgstr "projecto gEDA gsch2pcb"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb Project"
+msgstr "Projecto gEDA Gsch2pcb"
+
+#, fuzzy
+msgid "Lepton EDA Circuit Schematic"
+msgstr "Esquema de circuito gEDA"
+
+#, fuzzy
+msgid "Lepton EDA Schematic Symbol"
+msgstr "Símbolo de Esquema gEDA"
+
+#, c-format
+msgid "File %1$s is read-only"
+msgstr ""
+
+msgid "Schematic data was not valid UTF-8"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Read unexpected attach symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Leitura de símbolo embutido inesperado marcador de início em [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read unexpected embedded symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Leitura de símbolo embutido inesperado marcador de início em [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, c-format
+msgid ""
+"Read unexpected embedded symbol end marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Leitura de símbolo embutido inesperado marcador de fim em [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read an old format sym/sch file!\n"
+"Please run g[sym|sch]update on:\n"
+"[%1$s]"
+msgstr ""
+"Leitura de um ficheiro sym/sch de formato antigo!\n"
+"Por favor execute g[sym|sch]update em:\n"
+"[%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read garbage in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Leitura de lixo em [%s] :\n"
+">>\n"
+"%s<<\n"
+
+msgid "Failed to parse arc object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+msgstr "Foi encontrado um arco com raio zero [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid color [ %1$s ]"
+msgstr "Foi encontrada uma cor inválida [ %s ]\n"
+
+#, fuzzy
+msgid "Setting color to default color."
+msgstr "Definindo a cor para cor padrão\n"
+
+msgid "Failed to parse box object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Encontrada caixa de largura/altura zero [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse bus object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Encontrado barramento com comprimento zero [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid bus ripper direction [ %1$s ]"
+msgstr ""
+"Encontrado um símbolo de extracção de barramento com direcção invalida "
+"[ %s ]\n"
+
+#, fuzzy
+msgid "Resetting direction to neutral (no direction)."
+msgstr "Alterando a direcção para neutral (sem direcção)\n"
+
+msgid "Failed to parse circle object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr "Foi encontrado um arco com raio zero [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy
+msgid "Setting radius to 0."
+msgstr "Definindo ângulo para 0\n"
+
+#, fuzzy, c-format
+msgid ""
+"Component not found:\n"
+" %1$s"
+msgstr ""
+"Componente não encontrado:\n"
+" %s"
+
+msgid "Failed to parse component object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
+"%7$s ]"
+msgstr ""
+"Foi encontrado um componente com uma rotação inválida [ %c %d %d %d %d %d "
+"%s ]\n"
+
+#, fuzzy
+msgid "Setting angle to 0."
+msgstr "Definindo ângulo para 0\n"
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+"%6$d %7$s ]"
+msgstr ""
+"Foi encontrado um componente com atributo de simetria inválido [ %c %d %d %d "
+"%d %d %s ]\n"
+
+#, fuzzy
+msgid "Setting mirror to 0."
+msgstr "Defenindo simetria para 0\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+msgstr ""
+"AVISO: Erro na procura da versão do símbolo em refdes %s:\n"
+"\tNão foi possível verificar ficheiro anexado symversion=%s\n"
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+msgstr ""
+"AVISO: Versão de símbolo estranha em refdes %s:\n"
+"\tsymversion=%s anexado ao símbolo instanciado, mas não existe symversion= "
+"dentro do ficheiro de simbolo\n"
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+msgstr ""
+"AVISO: Versão de símbolo estranha em refdes %s:\n"
+"\tSimbolo instanciado é mais recente que o símbolo na biblioteca\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been embedded."
+msgstr "Componente [%s] foi embutido\n"
+
+#, fuzzy, c-format
+msgid ""
+"Could not find component [%1$s], while trying to unembed. Component is still "
+"embedded."
+msgstr ""
+"Não foi possível encontrar o componente [%s], ao tentar retirar. Componente "
+"permanece embutido\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been successfully unembedded."
+msgstr "Componente [%s] foi retirado com sucesso\n"
+
+msgid "Failed to parse line object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Foi encontrada uma linha de comprimento zero [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse net object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr ""
+"Foi encontrada uma ligação com comprimento zero [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse path object"
+msgstr ""
+
+msgid "Unexpected end-of-file when reading path"
+msgstr ""
+
+msgid "Failed to parse picture definition"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr "Foi encontrada uma imagem com largura/altura zero [ %c %d %d %d %d ]\n"
+
+#, c-format
+msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
+msgstr ""
+
+#, fuzzy
+msgid "Setting mirrored to 0."
+msgstr "Defenindo simetria para 0\n"
+
+#, c-format
+msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
+msgstr ""
+
+#, fuzzy
+msgid "Setting embedded to 0."
+msgstr "Definindo valor embutido para 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported picture angle [ %1$d ]"
+msgstr "Foi encontrado um valor não suportado para ângulo de imagem [%d]\n"
+
+msgid "Found an image with no filename."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to load image from embedded data [%1$s]: %2$s"
+msgstr "Falha ao carregar a imagem a partir dos dados embutidos [%s]:%s\n"
+
+msgid "Base64 decoding failed."
+msgstr "Descodificação Base64 falhou."
+
+#, fuzzy
+msgid "Falling back to file loading. Picture unembedded."
+msgstr "A recuar ao modo de carregamento de ficheiro. Imagem removida.\n"
+
+#, fuzzy
+msgid "ERROR: unable to encode the picture."
+msgstr "ERRO: o_picture_save: não é possível codificar a imagem.\n"
+
+#, fuzzy, c-format
+msgid "Failed to load buffer image [%1$s]: %2$s"
+msgstr "Falhou ao carregar símbolo a partir do ficheiro  [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from [%1$s]: %2$s"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, c-format
+msgid "Picture %1$p has invalid angle %2$i\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has no image data."
+msgstr "Imagem [%s] foi embutida\n"
+
+#, fuzzy
+msgid "Falling back to file loading. Picture is still unembedded."
+msgstr "A recuar ao modo de carregamento de ficheiro. Imagem removida.\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been embedded."
+msgstr "Imagem [%s] foi embutida\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from file [%1$s]: %2$s"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, fuzzy
+msgid "Picture is still embedded."
+msgstr "Imagem [%s] foi embutida\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been unembedded."
+msgstr "Imagem [%s] foi removida\n"
+
+msgid "Failed to parse pin object"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Found a pin which did not have the whichend field set.\n"
+"Verify and correct manually."
+msgstr ""
+"Foi encontrado um pino que não tinha o campo 'whichone' atribuído.\n"
+"Verifique e corrija manualmente.\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+msgstr ""
+"Foi encontrado campo invalido 'whichend' num pino (alterando para zero): %d\n"
+
+msgid "Failed to parse text object"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Found an invalid text size [ %1$s ]"
+msgstr "Foi encontrada uma cor inválida [ %s ]\n"
+
+#, fuzzy, c-format
+msgid "Setting text size to %1$d."
+msgstr "Defenindo simetria para 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text angle [ %1$s ]"
+msgstr "Foi encontrado um valor não suportado para ângulo de imagem [%d]\n"
+
+#, fuzzy, c-format
+msgid "Setting angle to %1$d."
+msgstr "Definindo ângulo para 0\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text alignment [ %1$s ]"
+msgstr "Foi encontrado um valor não suportado para ângulo de imagem [%d]\n"
+
+#, fuzzy
+msgid "Setting alignment to LOWER_LEFT."
+msgstr "A definir alinhamento para 'em baixo à esquerda'\n"
+
+#, c-format
+msgid "Unexpected end-of-file after %1$d lines"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Falhou em stat [%s]: %s"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"AVISO: Foi encontrado um ficheiro de salvaguarda automatica:\n"
+"  %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr ""
+"Não pude adivinhar se é mais recente, por isso terá de o fazer manualmente.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"A cópia de salvaguarda é mais recente que o esquema, parece então que deverá "
+"abri-la em vez do ficheiro original.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem normalmente faz cópias de salvaguarda automaticamente, e esta "
+"situação acontece quando encrava ou foi forçado a sair abruptamente.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Não é possível encontrar o ficheiro %s: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Execute gschem e corrija a situação.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr ""
+"s_page_delete: Não foi possível obter o nome de ficheiro verdadeiro de %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+"NÃO foi possível definir o ficheiro de salvaguarda anterior [%s] como "
+"leitura e escrita\n"
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Não é possível guardar o ficheiro de salvaguarda: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr ""
+"Não foi possível definir o ficheiro de salvaguarda [%s] apenas como leitura\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Falha ao abrir directoria [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Falha ao abrir directoria [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "NÃO foi possível guardar [%s]\n"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+msgid "RC file already loaded"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Comando de biblioteca falhou [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s\n"
+msgstr ""
+
+#, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+"s_page_delete: Não foi possível obter o nome de ficheiro verdadeiro de %s."
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Não foi possível apagar ficheiro de salvaguarda %s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Tentativa de anexar item não textual como um atributo!\n"
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "Tentativa de anexar atributo [%s] a mais de um objecto\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+msgid "Detached attribute"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: %2$s"
+msgstr "Comando de biblioteca falhou [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+msgstr "Comando de biblioteca falhou [%s]: Sinal não alcançado %i.\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]"
+msgstr "Comando de biblioteca falhou [%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error output was:\n"
+"%1$s"
+msgstr ""
+"Erro de saida foi:\n"
+"%s\n"
+
+#, fuzzy, c-format
+msgid "Library name [%1$s] already in use.  Using [%2$s]."
+msgstr "Nome de biblioteca [%s] já em uso.  A usar [%s].\n"
+
+#, fuzzy, c-format
+msgid "Failed to open directory [%1$s]: %2$s"
+msgstr "Falha ao abrir directoria [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+msgstr ""
+"Falha ao verificar biblioteca [%s]: Função 'scheme' devolveu algo que não é "
+"lista\n"
+
+#, fuzzy, c-format
+msgid "Non-string symbol name while scanning library [%1$s]"
+msgstr ""
+"Nome de símbolo que não é faixa de caracteres encontrado enquanto se "
+"verificava a biblioteca [%s]\n"
+
+#, fuzzy
+msgid "Cannot add library: name not specified."
+msgstr "Não é possível adicionar biblioteca: nome não foi especificado\n"
+
+#, fuzzy, c-format
+msgid ""
+"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
+msgstr ""
+"Não é possível adicionar biblioteca [%s]: ambos os comandos 'list' e 'get' "
+"têm de ser especificados.\n"
+
+#, fuzzy, c-format
+msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+msgstr ""
+"Não é possível adicionar biblioteca Scheme [%s]: rotinas de chamada devem "
+"ser de encerramento\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol from file [%1$s]: %2$s"
+msgstr "Falhou ao carregar símbolo a partir do ficheiro  [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+msgstr "Falhou ao carregar dados do símbolo [%s] a partir da fonte [%s]\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] was not found in the component library."
+msgstr "Componente [%s] não foi encontrado na biblioteca de componentes\n"
+
+#, fuzzy, c-format
+msgid "More than one component found with name [%1$s]."
+msgstr "Mais de um componente encontrado com o nome [%s]\n"
+
+msgid "Did not find slotdef=#:#,#,#... attribute."
+msgstr ""
+
+msgid "Improper slotdef syntax: missing \":\"."
+msgstr ""
+
+msgid "Did not find proper slotdef=#:#,#,#... attribute."
+msgstr ""
+
+msgid "component missing pinseq= attribute."
+msgstr ""
+
+msgid "Undefined configuration filename"
+msgstr ""
+
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "Componente [%s] não foi encontrado na biblioteca de componentes\n"
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q                  Quiet mode.\n"
+"  -v, --verbose       Verbose mode.\n"
+"  -o FILE             Filename for netlist data output.\n"
+"  -L DIR              Add DIR to Scheme search path.\n"
+"  -g BACKEND          Specify netlist backend to use.\n"
+"  -f FILE             Specify path to netlist backend file to use.\n"
+"  -O STRING           Pass an option string to backend.\n"
+"  -l FILE             Load Scheme file before loading backend.\n"
+"  -m FILE             Load Scheme file after loading backend.\n"
+"  -c EXPR             Evaluate Scheme expression at startup.\n"
+"  -i                  Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends Print a list of available netlist backends.\n"
+"  -h, --help          Help; this message.\n"
+"  -V, --version       Show version information.\n"
+"  --                  Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode requested by backend is not supported: ~A\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load backend file.\n"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+
+msgid "Graphical symbols should have device=none"
+msgstr ""
+
+#, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr "Círculos de raio nulo não são permitidos\n"
+
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr ""
+
+msgid "Wrong check log destination!"
+msgstr ""
+
+#, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr ""
+
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr ""
+
+msgid "numslots set to 0, symbol does not have slots"
+msgstr ""
+
+#, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr ""
+
+#, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Checking: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Info: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Warning: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "ERROR: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "~A warning found"
+msgstr ""
+
+msgid "(use -vv to view details)"
+msgstr ""
+
+msgid "No errors found"
+msgstr ""
+
+#, scheme-format
+msgid "~A ERROR found"
+msgstr ""
+
+msgid "(use -v to view details)"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Falha ao carregar imagem a partir do ficheiro [%s]: %s\n"
+
+#~ msgid "Color map entry must be a two-element list"
+#~ msgstr "Entrada do mapa de cor  tem de ser uma lista de dois elementos"
+
+#~ msgid "Index in color map entry must be an integer"
+#~ msgstr "Índice no na entrada do mapa de cor tem de ser um inteiro"
+
+#~ msgid "Value in color map entry must be #f or a string"
+#~ msgstr ""
+#~ "Valor na entrada do mapa de cor tem de ser #f ou uma faixa de caracteres"
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Guardado [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "NÃO foi possível guardar [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "AVISO: Erro na procura da versão do símbolo em refdes %s:\n"
+#~ "\tNão foi possível verificar ficheiro de símbolo symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "AVISO: Erro na procura da versão do símbolo em refdes %s:\n"
+#~ "\tNão foi possível verificar ficheiro de símbolo symversion=\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "AVISO: Versão de símbolo não coincidente em refdes %s (%s):\n"
+#~ "\tSimbolo na biblioteca é mais recente que o símbolo instanciado\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr ""
+#~ "\tALTERAÇÃO DE VERSÃO IMPORTANTE (ficheiro %.3f, instanciado %.3f, %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\tAlteração de versão menor (ficheiro %.3f, instanciado %.3f)\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Não existem esquemas acima do esquema presente!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Falha ao abrir directoria [%s]: %s\n"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Componente [%s] não foi encontrado na biblioteca de componentes\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Componente [%s] não foi encontrado na biblioteca de componentes\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "s_page_delete: Não foi possível obter o nome de ficheiro verdadeiro de %s."
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "AVISO: usar uma faixa para 'always-promote-attributes' esta ultrapassado. "
+#~ "Use uma lista de faixas em seu lugar\n"
+
+#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
+#~ msgstr "o_save_objects: objecto %p tem tipo desconhecido '%c'\n"
+
+#~ msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Foi encontrada uma faixa de tamanho zero [ %c %d %d %d %d %d %d %d %d ]\n"
+
+#~ msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Foi encontrado um ângulo para texto não suportado [ %c %d %d %d %d %d %d "
+#~ "%d %d ]\n"
+
+#~ msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Foi encontrado um alinhamento de texto não suportado [ %c %d %d %d %d %d "
+#~ "%d %d %d ]\n"
+
+#~ msgid "Invalid space specified, setting to 100\n"
+#~ msgstr "Especificado espaço inválido, definindo para 100\n"
+
+#~ msgid "Invalid length specified, setting to 100\n"
+#~ msgstr "Especificado comprimento inválido, definindo para 100\n"
+
+#~ msgid "Unable to get time of day in f_print_header()\n"
+#~ msgstr "Não é possível obter a hora em f_print_header()\n"
+
+#~ msgid ""
+#~ "Unable to open the prolog file `%s' for reading in f_print_header()\n"
+#~ msgstr ""
+#~ "Não é possível abrir o ficheiro prolog `%s' para leitura em "
+#~ "f_print_header()\n"
+
+#~ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
+#~ msgstr ""
+#~ "Erro durante a leitura do ficheiro prolog `%s' em f_print_header()\n"
+
+#~ msgid ""
+#~ "Error during writing of the output postscript file in f_print_header()\n"
+#~ msgstr ""
+#~ "Erro durante a escrita do ficheiro de saída postscript em "
+#~ "f_print_header()\n"
+
+#~ msgid "Giving up on printing\n"
+#~ msgstr "A desistir da impressão\n"
+
+#~ msgid "Could not open [%s] for printing\n"
+#~ msgstr "Não foi possível abrir [%s] para impressão\n"
+
+#~ msgid "Could not execute command [%s] for printing\n"
+#~ msgstr "Não foi possível executar o comando [%s] para impressão\n"
+
+#~ msgid "Too many UTF-8 characters, cannot print\n"
+#~ msgstr "Demasiados caracteres UTF-8, não é possível imprimir\n"
+
+#~ msgid "Color index out of range"
+#~ msgstr "Índice de cor fora do alcance"
+
+#~ msgid ""
+#~ "hierarchy loop detected while visiting page:\n"
+#~ "  \"%s\"\n"
+#~ msgstr ""
+#~ "Ciclo hierárquico detectado enquanto visitava pagina:\n"
+#~ "  \"%s\"\n"
+
+#~ msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
+#~ msgstr "ERRO em s_hierarchy_traverse: esquema não encontrado: %s\n"
+
+#~ msgid "Found [%s]\n"
+#~ msgstr "Encontrado [%s]\n"
+
+#~ msgid "Could not find [%s] in any SourceLibrary\n"
+#~ msgstr "Não foi possível encontrar [%s] em nenhuma biblioteca fonte\n"

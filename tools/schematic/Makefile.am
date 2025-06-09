@@ -27,8 +27,8 @@ lepton-schematic.go: lepton-schematic
 	LIBLEPTONGUI="${abs_top_builddir}/libleptongui/src/libleptongui" \
 	$(GUILD) compile \
 	-L . \
-	-L $(abs_top_srcdir)/liblepton/scheme \
-	-L $(abs_top_builddir)/liblepton/scheme \
+	-L $(abs_top_srcdir)/lepton-eda/scheme \
+	-L $(abs_top_builddir)/lepton-eda/scheme \
 	-L $(abs_top_srcdir)/libleptongui/scheme \
 	-L $(abs_top_builddir)/libleptongui/scheme \
 	$(GUILE_WARNINGS) -o "$@" "$<"

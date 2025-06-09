@@ -11,7 +11,7 @@
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "sch2pcb-tmp"))
 
-(define repo-module-path (build-filename "liblepton" "scheme"))
+(define repo-module-path (build-filename "lepton-eda" "scheme"))
 (define repo-backend-path (build-filename "tools" "netlist" "scheme" "backend"))
 ;;; Where built modules live.
 (define built-module-path (build-filename *abs-top-builddir* repo-module-path))

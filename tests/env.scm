@@ -173,10 +173,10 @@
 (putenv (string-append "LIBLEPTON" "=" *liblepton*))
 
 (define %src-scheme-dir%
-  (build-filename *abs-top-srcdir* "liblepton" "scheme"))
+  (build-filename *abs-top-srcdir* "lepton-eda" "scheme"))
 
 (define %build-scheme-dir%
-  (build-filename *abs-top-builddir* "liblepton" "scheme"))
+  (build-filename *abs-top-builddir* "lepton-eda" "scheme"))
 
 ;;; Now set up %load-path to include local scheme directory.
 (putenv (string-append "GUILE_LOAD_PATH" "="

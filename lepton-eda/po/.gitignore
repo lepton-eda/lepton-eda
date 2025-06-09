@@ -1,0 +1,9 @@
+Makefile.in.in
+Makevars.template
+POTFILES
+Rules-quot
+stamp-po
+*.header
+*.sin
+*.gmo
+*.sed

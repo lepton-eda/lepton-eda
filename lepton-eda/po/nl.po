@@ -1,0 +1,1939 @@
+# Dutch translation for liblepton
+# Copyright (C) 1998-2008 Ales Hvezda and the respective original
+# authors (which are listed on the respective files).
+# Copyright (C) 2012 gEDA Developers
+# Copyright (C) 2007, 2008, 2012 Bert Timmerman <bert.timmerman@xs4all.nl>
+#
+# This file is distributed under the same license as the
+# lepton-eda package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"PO-Revision-Date: 2014-08-31 23:03+0100\n"
+"Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
+"Language-Team: gEDA Developers\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-Language: Dutch\n"
+
+#, fuzzy
+msgid "Lepton EDA circuit schematic"
+msgstr "gEDA schakeling schema"
+
+#, fuzzy
+msgid "Lepton EDA schematic symbol"
+msgstr "gEDA schema symbool"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb project"
+msgstr "gEDA gsch2pcb project"
+
+#, fuzzy
+msgid "Lepton EDA sch2pcb Project"
+msgstr "gEDA Gsch2pcb Project"
+
+#, fuzzy
+msgid "Lepton EDA Circuit Schematic"
+msgstr "gEDA Schakeling Schema"
+
+#, fuzzy
+msgid "Lepton EDA Schematic Symbol"
+msgstr "gEDA Schema Symbool"
+
+#, fuzzy, c-format
+msgid "File %1$s is read-only"
+msgstr "Bestand %s is alleen-lezen"
+
+msgid "Schematic data was not valid UTF-8"
+msgstr "Schema gegevens waren geen geldige UTF-8"
+
+#, fuzzy, c-format
+msgid ""
+"Read unexpected attach symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Lees een onverwacht toegevoegd symbool start merkteken in [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read unexpected embedded symbol start marker in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Lees een onverwacht ingesloten symbool start teken in [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, c-format
+msgid ""
+"Read unexpected embedded symbol end marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Lees een onverwacht ingesloten symbool einde teken in [%s] :\n"
+">>\n"
+"%s<<\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read an old format sym/sch file!\n"
+"Please run g[sym|sch]update on:\n"
+"[%1$s]"
+msgstr ""
+"Lees een oud formaat sym/sch bestand!\n"
+"Voer g[sym|sch]update uit op:\n"
+"[%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Read garbage in [%1$s] :\n"
+">>\n"
+"%2$s<<\n"
+msgstr ""
+"Lees onzin in [%s] :\n"
+">>\n"
+"%s<<\n"
+
+msgid "Failed to parse arc object"
+msgstr "Faalde bij het ontleden van een boog object"
+
+#, fuzzy, c-format
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+msgstr "Boog met een straal van nul gevonden [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid color [ %1$s ]"
+msgstr "Ongeldige kleur [ %s ] gevonden\n"
+
+#, fuzzy
+msgid "Setting color to default color."
+msgstr "Stel de kleur in op standaard kleur\n"
+
+msgid "Failed to parse box object"
+msgstr "Faalde bij het ontleden van een rechthoek object"
+
+#, fuzzy, c-format
+msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr ""
+"Rechthoek met een breedte/hoogte van nul gevonden [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse bus object"
+msgstr "Faalde bij het ontleden van een bus object"
+
+#, fuzzy, c-format
+msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Bus met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid bus ripper direction [ %1$s ]"
+msgstr "Ongeldige bus ripper richting gevonden [ %s ]\n"
+
+#, fuzzy
+msgid "Resetting direction to neutral (no direction)."
+msgstr "Neutrale richting ingesteld (geen richting)\n"
+
+msgid "Failed to parse circle object"
+msgstr "Faalde bij het ontleden van een cirkel object"
+
+#, fuzzy, c-format
+msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
+
+#, fuzzy
+msgid "Setting radius to 0."
+msgstr "Radius op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid ""
+"Component not found:\n"
+" %1$s"
+msgstr ""
+"Komponent niet gevonden:\n"
+" %s"
+
+#, fuzzy
+msgid "Failed to parse component object"
+msgstr "Faalde bij het ontleden van een complex object"
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
+"%7$s ]"
+msgstr ""
+"Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
+
+#, fuzzy
+msgid "Setting angle to 0."
+msgstr "Hoek op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+"%6$d %7$s ]"
+msgstr ""
+"Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d "
+"%s ]\n"
+
+#, fuzzy
+msgid "Setting mirror to 0."
+msgstr "Spiegelen op 0 ingesteld\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+msgstr ""
+"WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
+"\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+msgstr ""
+"WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
+"\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
+"het symbool bestand\n"
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, c-format
+msgid ""
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+msgstr ""
+"WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
+"\tbedoeld symbool is nieuwer dan het symbool in de bibliotheek\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been embedded."
+msgstr "Komponent [%s] is ingevoegd\n"
+
+#, fuzzy, c-format
+msgid ""
+"Could not find component [%1$s], while trying to unembed. Component is still "
+"embedded."
+msgstr ""
+"Kan komponent [%s] niet vinden, tijdens het uitvoegen. Komponent is nog "
+"steeds ingevoegd\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] has been successfully unembedded."
+msgstr "Komponent [%s] is succesvol uitgevoegd\n"
+
+msgid "Failed to parse line object"
+msgstr "Faalde bij het ontleden van een lijn object"
+
+#, fuzzy, c-format
+msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse net object"
+msgstr "Faalde bij het ontleden van een net object"
+
+#, fuzzy, c-format
+msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
+
+msgid "Failed to parse path object"
+msgstr "Faalde bij het ontleden van een pad object"
+
+msgid "Unexpected end-of-file when reading path"
+msgstr "Onverwacht einde-bestand tijdens het lezen van een pad"
+
+msgid "Failed to parse picture definition"
+msgstr "Faalde bij het ontleden van een afbeelding definitie"
+
+#, fuzzy, c-format
+msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+msgstr ""
+"Afbeelding met een breedte/hoogte van nul gevonden [ %c %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
+msgstr "Afbeelding met een verkeerde 'gespiegelde' parameter gevonden: %d.\n"
+
+#, fuzzy
+msgid "Setting mirrored to 0."
+msgstr "Spiegelen op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
+msgstr "Afbeelding met een verkeerd 'ingevoegde' waarde gevonden: %d.\n"
+
+#, fuzzy
+msgid "Setting embedded to 0."
+msgstr "Invoegen op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported picture angle [ %1$d ]"
+msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
+
+msgid "Found an image with no filename."
+msgstr "Vond een afbeelding zonder bestandsnaam."
+
+#, fuzzy, c-format
+msgid "Failed to load image from embedded data [%1$s]: %2$s"
+msgstr "Laden van afbeelding uit ingesloten data faalde [%s]: %s\n"
+
+msgid "Base64 decoding failed."
+msgstr "Base64 decodering faalde."
+
+#, fuzzy
+msgid "Falling back to file loading. Picture unembedded."
+msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
+
+#, fuzzy
+msgid "ERROR: unable to encode the picture."
+msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
+
+#, fuzzy, c-format
+msgid "Failed to load buffer image [%1$s]: %2$s"
+msgstr "Laden van afbeelding [%s] uit buffer faalde: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from [%1$s]: %2$s"
+msgstr "Laden van afbeelding uit [%s] faalde: %s\n"
+
+#, fuzzy, c-format
+msgid "Picture %1$p has invalid angle %2$i\n"
+msgstr "Afbeelding %p heeft een ongeldige hoek %i\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has no image data."
+msgstr "Afbeelding [%s] heeft geen beeldinformatie.\n"
+
+#, fuzzy
+msgid "Falling back to file loading. Picture is still unembedded."
+msgstr ""
+"Val terug op het laden van bestand. Afbeelding is nog steeds uitgevoegd.\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been embedded."
+msgstr "Afbeelding [%s] is ingevoegd\n"
+
+#, fuzzy, c-format
+msgid "Failed to load image from file [%1$s]: %2$s"
+msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
+
+#, fuzzy
+msgid "Picture is still embedded."
+msgstr "Afbeelding is nog steeds ingevoegd.\n"
+
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been unembedded."
+msgstr "Afbeelding [%s] is uitgevoegd\n"
+
+msgid "Failed to parse pin object"
+msgstr "Faalde bij het ontleden van een pin object"
+
+#, fuzzy
+msgid ""
+"Found a pin which did not have the whichend field set.\n"
+"Verify and correct manually."
+msgstr ""
+"Pen gevonden die geen whichone veld ingesteld heeft.\n"
+"Verifieer en corrigeer handmatig.\n"
+
+#, fuzzy, c-format
+msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+msgstr "Pen met een ongeldige whichend gevonden (instellen op nul): %d\n"
+
+msgid "Failed to parse text object"
+msgstr "Faalde bij het ontleden van een tekst object"
+
+#, fuzzy, c-format
+msgid "Found an invalid text size [ %1$s ]"
+msgstr "Ongeldige kleur [ %s ] gevonden\n"
+
+#, fuzzy, c-format
+msgid "Setting text size to %1$d."
+msgstr "Spiegelen op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text angle [ %1$s ]"
+msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
+
+#, fuzzy, c-format
+msgid "Setting angle to %1$d."
+msgstr "Hoek op 0 ingesteld\n"
+
+#, fuzzy, c-format
+msgid "Found an unsupported text alignment [ %1$s ]"
+msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
+
+#, fuzzy
+msgid "Setting alignment to LOWER_LEFT."
+msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
+
+#, fuzzy, c-format
+msgid "Unexpected end-of-file after %1$d lines"
+msgstr "Onverwacht einde-bestand na %d lijnen"
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Status niet gelukt [%s]: %s"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"WAARSCHUWING: een autosave reserve bestand gevonden:\n"
+" %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr "Ik kan niet raden of het nieuwer is, je moet het dus handmatig doen.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"De reservekopie is nieuwer dan het schema, het lijkt erop dat je deze zou "
+"moeten laden in plaats van het orginele bestand.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem maakt gewoonlijk automatisch reservekopieen, en deze situatie komt "
+"voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
+"was.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Kan bestand %s niet vinden: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Voer gschem uit en corrigeer de situatie.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Kan reservekopie niet opslaan: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Faalde om permissies te herstellen op '%s: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Faalde om eigenaarschap te herstellen op '%s: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "Kan bestand: %s NIET opslaan"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+"\n"
+"Traceren:\n"
+
+# We hebben deze al ingelezen.
+msgid "RC file already loaded"
+msgstr "RC bestand is reeds geladen"
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Laden van config uit [%s] faalde: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "RC bestand geladen [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Laden van RC bestand faalde [%s]: "
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+"FOUT: Een onbekende fout trad op tijdens het doorlopen van configuratie "
+"bestanden."
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "FOUT: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "FOUT: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
+
+#, fuzzy, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr "Attribuut [%s] is al bevestigd\n"
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr "Probeerde een niet tekst item toe te voegen als een attribuut"
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Onverwacht einde-bestand in attribuutlijst"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "%s attribuut gevonden\n"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: %2$s"
+msgstr "Bibliotheek opdracht faalde [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+msgstr "Bibliotheek opdracht faalde [%s]: Niet opgevangen signaal %i.\n"
+
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]"
+msgstr "Bibliotheek opdracht faalde [%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error output was:\n"
+"%1$s"
+msgstr ""
+"Fout uitvoer was:\n"
+"%s\n"
+
+#, fuzzy, c-format
+msgid "Library name [%1$s] already in use.  Using [%2$s]."
+msgstr "Bibliotheeknaam [%s] is al in gebruik.  Gebruik nu [%s].\n"
+
+#, fuzzy, c-format
+msgid "Failed to open directory [%1$s]: %2$s"
+msgstr "Openen van directory faalde [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+msgstr ""
+"Doorzoeken van bibliotheek [%s] faalde: Scheme functie retourneerde non-"
+"list\n"
+
+#, fuzzy, c-format
+msgid "Non-string symbol name while scanning library [%1$s]"
+msgstr ""
+"Niet string symboolnaam tijdens het doorzoeken van de bibliotheek [%s]\n"
+
+#, fuzzy
+msgid "Cannot add library: name not specified."
+msgstr "Kan bibliotheek niet toevoegen: naam niet gespecificeerd\n"
+
+#, fuzzy, c-format
+msgid ""
+"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
+msgstr ""
+"Kan bibliotheek niet toevoegen [%s]: zowel 'list' en 'get' opdrachten moeten "
+"gespecificeerd zijn.\n"
+
+#, fuzzy, c-format
+msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+msgstr ""
+"Kan scheme bibliotheek niet toevoegen [%s]: callbacks moeten afsluitingen "
+"zijn\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol from file [%1$s]: %2$s"
+msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+msgstr "Laden van symbool gegevens [%s] uit bron [%s] faalde\n"
+
+#, fuzzy, c-format
+msgid "Component [%1$s] was not found in the component library."
+msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
+
+# Meer dan een symbool
+#, fuzzy, c-format
+msgid "More than one component found with name [%1$s]."
+msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
+
+#, fuzzy
+msgid "Did not find slotdef=#:#,#,#... attribute."
+msgstr "Geen slotdef=#:#,#,#... attribuut gevonden\n"
+
+#, fuzzy
+msgid "Improper slotdef syntax: missing \":\"."
+msgstr "Goed slotdef syntax: ontbreekt \":\".\n"
+
+#, fuzzy
+msgid "Did not find proper slotdef=#:#,#,#... attribute."
+msgstr "Geen goed slotdef=#:#,#,#... attribuut gevonden\n"
+
+#, fuzzy
+msgid "component missing pinseq= attribute."
+msgstr "component mist een pinseq- attribuut\n"
+
+msgid "Undefined configuration filename"
+msgstr "Ongedefinieerde configuratie bestandsnaam"
+
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr "Configuratie heeft geen groep '%s'"
+
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr "Configuratie heeft geen toets '%s'"
+
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "FOUT: %s\n"
+
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr "Object ~A is geen deel van een pagina"
+
+#, fuzzy, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr "Ongeldig pad [%s] overgedragen aan source-library\n"
+
+#, fuzzy, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr "Bestand %s is alleen-lezen"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr "Kan bestandenmap ~S niet openen\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q                  Quiet mode.\n"
+"  -v, --verbose       Verbose mode.\n"
+"  -o FILE             Filename for netlist data output.\n"
+"  -L DIR              Add DIR to Scheme search path.\n"
+"  -g BACKEND          Specify netlist backend to use.\n"
+"  -f FILE             Specify path to netlist backend file to use.\n"
+"  -O STRING           Pass an option string to backend.\n"
+"  -l FILE             Load Scheme file before loading backend.\n"
+"  -m FILE             Load Scheme file after loading backend.\n"
+"  -c EXPR             Evaluate Scheme expression at startup.\n"
+"  -i                  Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends Print a list of available netlist backends.\n"
+"  -h, --help          Help; this message.\n"
+"  -V, --version       Show version information.\n"
+"  --                  Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+"Gebruik: %s [OPTIE ...] [-g BACKEND] [--] BESTAND ...\n"
+"\n"
+"Genereer een netlijst van een of meer gEDA schema BESTANDen.\n"
+"\n"
+"Algemene opties:\n"
+"  -q              Stille modus.\n"
+"  -v, --verbose   Woordenrijke modus.\n"
+"  -o BESTAND      Bestandnaam voor netlijst gegevensuitvoer.\n"
+"  -L MAP          Voeg MAP toe aan Scheme zoekpad.\n"
+"  -g BACKEND      Specificeer het te gebruiken netlijst backend.\n"
+"  -O STRENG       Geef een optie streng aan de backend.\n"
+"  -l BESTAND      Laad Scheme bestand voor het laden van de backend.\n"
+"  -m BESTAND      Laad Scheme bestand na het laden van de backend.\n"
+"  -c EXPR         Evalueer de Scheme expressie tijdens opstarten.\n"
+"  -i              Ga in interactieve Scheme REPL na het laden.\n"
+"  --list-backends Druk een lijst met beschikbare netlijst backends.\n"
+"  -h, --help      Help; dit bericht.\n"
+"  -V, --version   Toon versie informatie.\n"
+"  --              Behandel alle overblijvende argumenten als bestandsnamen.\n"
+"\n"
+"Rapporteer gebreken op <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf huispagina: <http://www.geda-project.org/>\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+"\n"
+"Kreeg net een fout; tag is\n"
+"        "
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+"Geen schema bestanden gespecificeerd voor verwerking.\n"
+"\n"
+"Doe `~A --help' voor meer informatie.\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+"Kan backend `~A' niet vinden in het laadpad.\n"
+"\n"
+"Doe `~A --list-backends' voor een volledige lijst van beschikbare backends.\n"
+
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode requested by backend is not supported: ~A\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr ""
+
+msgid "Failed to load backend file.\n"
+msgstr ""
+
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr "Laden van schema ~S\n"
+
+#, fuzzy, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr "Faalde bij het laden van subcircuit '%s': %s\n"
+
+#, fuzzy, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr "component mist een pinseq- attribuut\n"
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+
+#, fuzzy
+msgid "Graphical symbols should have device=none"
+msgstr "Grafisch symbool gevonden, device=none\n"
+
+#, fuzzy, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr "Verboden %s= attribuut: [%s=%s] gevonden\n"
+
+#, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr "Misplaatst pen attribuut: [%s=%s] gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
+
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr "Meerdere footprint= attributen gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr "Ontbrekend refdes= attribuut\n"
+
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr ""
+
+msgid "Wrong check log destination!"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr "Ontbrekend pinnumber= attribuut\n"
+
+#, fuzzy, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr "Pen met nummer 0 in net= attribuut gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr "Slecht net= attribuut [net=%s]\n"
+
+#, fuzzy, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr "Pen met nummer 0 in net= attribuut gevonden\n"
+
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr "Misplaatst pen attribuut: [%s=%s] gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr "Oud slot#=# attribuut gevonden: %s\n"
+
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr "Meerdere pinseq=%s attributen op een pen gevonden\n"
+
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr "Ongeldig pintype=%s attribuut\n"
+
+#, fuzzy, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr "Ontbrekend pinseq= attribuut\n"
+
+#, fuzzy, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr "Dubbel pinseq=%s attribuut in het symbool gevonden\n"
+
+#, scheme-format
+msgid "Object: ~A"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr "%s attribuut gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr "Misvormd slotdef= (het formaat is #:#,#,#,...)\n"
+
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr ""
+
+#, fuzzy
+msgid "numslots set to 0, symbol does not have slots"
+msgstr "numslots op nul ingesteld, symbool heeft geen slots\n"
+
+#, fuzzy, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr "Dubbel slot nummer in slotdef=%s\n"
+
+#, fuzzy, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr "Een nul slot gevonden in slotdef=%s\n"
+
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr "Ontbrekend slotdef= (er zouden %s slotdef= attributen moeten zijn)\n"
+
+#, fuzzy, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr "Ontbrekend slotdef= (er zouden %s slotdef= attributen moeten zijn)\n"
+
+#, fuzzy, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr "Niet genoeg pennen in slotdef=%s\n"
+
+#, fuzzy, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr "Teveel pennen in slotdef=%s\n"
+
+#, fuzzy, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr "Dubbel slot nummer in slotdef=%s\n"
+
+#, fuzzy, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr "%d aparte pennen in slots gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+"Een eenvoudig tekst object gevonden met alleen SHOW_NAME of SHOW_VALUE "
+"ingesteld [%s]\n"
+
+#, fuzzy, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+"Tekst met een achterblijvende '': overweeg om met een '\\\\' stuurcode te "
+"ontkomen [%s]\n"
+
+#, fuzzy, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr "Tekst met ongebalanceerde overstreep merkers '\\_' gevonden' [%s]\n"
+
+#, fuzzy, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+"Tekst met een '\\' gevonden: overweeg om met een '\\\\' stuurcode te "
+"ontkomen [%s]\n"
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Checking: ~A\n"
+msgstr "Controleer: %s\n"
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Info: ~A"
+msgstr "Info: %s"
+
+#, fuzzy, scheme-format
+msgid "Warning: ~A"
+msgstr "Waarschuwing: %s"
+
+#, fuzzy, scheme-format
+msgid "ERROR: ~A"
+msgstr "FOUT: %s"
+
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "~A warning found"
+msgstr "%d waarschuwingen gevonden "
+
+#, fuzzy
+msgid "(use -vv to view details)"
+msgstr "(gebruik -vv om details te zien)\n"
+
+#, fuzzy
+msgid "No errors found"
+msgstr "Geen fouten gevonden\n"
+
+#, fuzzy, scheme-format
+msgid "~A ERROR found"
+msgstr "1 FOUT gevonden "
+
+#, fuzzy
+msgid "(use -v to view details)"
+msgstr "(gebruik -v om details te zien)\n"
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "~A is een ongeldige attribuut: ongeldige rij '~A'."
+
+#, fuzzy
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr ""
+#~ "Objecten ~A en ~A zijn geen onderdeel van dezelfde pagina en/of complex "
+#~ "object"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Object ~A is reeds bevestigd als een attribuut"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Object ~A is attribuut van een fout object"
+
+#, fuzzy
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige complex hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Object ~A is reeds bevestigd aan iets"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Object ~A is bevestigd aan een andere complex"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Object ~A is bevestigd aan een pagina"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Object ~A is bevestigd als een attribuut"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "Object ~A heeft attributen"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
+
+#~ msgid "Parse error: ~s"
+#~ msgstr "Ontleedfout: ~s"
+
+#~ msgid "Scheme hook"
+#~ msgstr "Scheme haak"
+
+#~ msgid "The Scheme-level hook to proxy"
+#~ msgstr "De Scheme-level haak naar proxy"
+
+#~ msgid "Object ~A has invalid stroke cap style ~A"
+#~ msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"
+
+#~ msgid "Object ~A has invalid stroke dash style ~A"
+#~ msgstr "Object ~A heeft een ongeldige slag streep stijl ~A"
+
+#~ msgid "Invalid stroke cap style ~A."
+#~ msgstr "Ongeldige slag cap stijl ~A."
+
+#~ msgid "Invalid stroke dash style ~A."
+#~ msgstr "Ongeldige slag streep stijl ~A."
+
+#~ msgid "Missing dash length parameter for dash style ~A."
+#~ msgstr "Ontbrekende streeplengte parameter voor streep sijl ~A."
+
+#~ msgid "Missing dot/dash space parameter for dash style ~A."
+#~ msgstr "Ontbrekende punt/streep ruimte parameter voor streep stijl ~A."
+
+#~ msgid "Object ~A has invalid fill style ~A"
+#~ msgstr "Object ~A heeft een ongeldige opvul stijl ~A"
+
+#~ msgid "Invalid fill style ~A."
+#~ msgstr "Ongeldige opvul stijl ~A."
+
+#~ msgid "Missing second space parameter for fill style ~A."
+#~ msgstr "Ontbrekende tweede ruimte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing second angle parameter for fill style ~A."
+#~ msgstr "Ontbrekende tweede hoek parameter voor opvul stijl ~A."
+
+#~ msgid "Missing stroke width parameter for fill style ~A."
+#~ msgstr "Ontbrekende slag breedte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing space parameter for fill style ~A."
+#~ msgstr "Ontbrekende ruimte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing angle parameter for fill style ~A."
+#~ msgstr "Ontbrekende hoek parameter voor opvul stijl ~A."
+
+#~ msgid "Invalid pin type ~A, must be 'net or 'bus"
+#~ msgstr "Ongeldig pen type ~A, moet een 'net of 'bus zijn"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "Object ~A heeft een ongeldig pen type."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Ongeldige tekst uitlijning ~A."
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige tekst hoek ~A. moet 0, 90, 180, of 270 graden zijn"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "Tekst object ~A heeft een ongeldige tekst uitlijning ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "Tekst object ~A heeft een ongeldige zichtbaarheid ~A"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr ""
+#~ "Tekst object ~A heeft een ongeldige tekst attribuut zichtbaarheid ~A"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "Object ~A is niet opgenomen in een pagina."
+
+#~ msgid "Path object ~A has invalid element type ~A at index ~A"
+#~ msgstr "Pad object ~A heeft een ongeldige element type ~A bij index ~A"
+
+#~ msgid "Invalid path element type ~A."
+#~ msgstr "Ongeldig pad element type ~A."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige afbeelding hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
+
+#~ msgid "Object ~A has bad type '~A'"
+#~ msgstr "Object ~A heeft een slecht type '~A'"
+
+#~ msgid "Color map entry must be a two-element list"
+#~ msgstr "Kleuren map invoer moet een twee-element lijst zijn"
+
+#~ msgid "Index in color map entry must be an integer"
+#~ msgstr "Index in kleuren map invoer moet een integer zijn"
+
+#~ msgid "Value in color map entry must be #f or a string"
+#~ msgstr "Waarde in kleuren map invoer moet een #f of een string zijn"
+
+#, fuzzy
+#~ msgid ""
+#~ "Copyright (C) 1998-2016 gEDA developers\n"
+#~ "Copyright (C) 2017-2020 Lepton EDA Contributors\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "gEDA %s (g%.7s)\n"
+#~ "Copyright (C) 1998-2012 gEDA developers\n"
+#~ "Dit is vrije software, en u bent welkom om deze te herdistribueren onder\n"
+#~ "bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
+#~ "bijgesloten in de gEDA distributie.\n"
+#~ "Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "[%s] opgeslagen\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "Kan [%s] NIET opslaan\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
+#~ "\tKan symboolbestand niet doorzoeken symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
+#~ "\tKan symboolbestand niet doorzoeken symversion=\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
+#~ "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
+
+#~ msgid "Schematic not found in source library."
+#~ msgstr "Schema niet gevonden in bron bibliotheek."
+
+#~ msgid "Hierarchy contains a circular dependency."
+#~ msgstr "Hierarchie bevat een rondgaande afhankelijkheid."
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Er zijn geen schema's boven de huidige!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Faalde om af te dalen in hierarchie '%s: %s\n"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Ongeldige modus [%s] overgedragen aan %s\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Ongeldig pad [%s] overgedragen aan bitmap-directory\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen."
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "WAARSCHUWING: gebruik van een string voor 'always-promote-attributes' is "
+#~ "vervallen, gebruik hiervoor in de plaats een lijst van strings\n"
+
+#~ msgid "always-promote-attribute: list element is not a string"
+#~ msgstr "always-promote-attribute: lijst element is geen string"
+
+#~ msgid "Invalid path [%s] passed to source-library-search\n"
+#~ msgstr "Ongeldig pad [%s] overgedragen aan source-library-search\n"
+
+#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
+#~ msgstr "o_save_objects: object %p heeft een onbekend type '%c'\n"
+
+#~ msgid "Null radius circles are not allowed\n"
+#~ msgstr "Cirkels met een radius van nul zijn niet toegestaan\n"
+
+#~ msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Tekst string met een afmeting van nul gevonden [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Niet ondersteunde teksthoek gevonden [ %c %d %d %d %d %d %d %d %d ]\n"
+
+#~ msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Niet ondersteunde tekst uitlijning gevonden [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Invalid space specified, setting to 100\n"
+#~ msgstr "Ongeldige ruimte gespecificeerd, ingesteld op 100\n"
+
+#~ msgid "Invalid length specified, setting to 100\n"
+#~ msgstr "Ongeldige lengte gespecificeerd, ingesteld op 100\n"
+
+#~ msgid "Parsed config from [%s]\n"
+#~ msgstr "Lees configuratie van [%s]\n"
+
+#~ msgid "Unable to parse config from [%s]: %s"
+#~ msgstr "Kan configuratie niet uitlezen van [%s]: %s"
+
+#~ msgid "Unable to get time of day in f_print_header()\n"
+#~ msgstr "Kan geen tijd van de dag krijgen in f_print_header()\n"
+
+#~ msgid ""
+#~ "Unable to open the prolog file `%s' for reading in f_print_header()\n"
+#~ msgstr ""
+#~ "Kan het prolog bestand `%s' niet openen tijdens lezen in "
+#~ "f_print_header()\n"
+
+#~ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
+#~ msgstr ""
+#~ "Fout tijdens het lezen van prolog bestand `%s' in f_print_header()\n"
+
+#~ msgid ""
+#~ "Error during writing of the output postscript file in f_print_header()\n"
+#~ msgstr ""
+#~ "Fout tijdens het schrijven van het postscript uitvoerbestand in "
+#~ "f_print_header()\n"
+
+#~ msgid "Giving up on printing\n"
+#~ msgstr "Geef het afdrukken op\n"
+
+#~ msgid "Could not open [%s] for printing\n"
+#~ msgstr "Kan [%s] niet openen voor afdrukken\n"
+
+#~ msgid "Could not execute command [%s] for printing\n"
+#~ msgstr "Kan opdracht [%s] niet uitvoeren voor afdrukken\n"
+
+#~ msgid "Too many UTF-8 characters, cannot print\n"
+#~ msgstr "Te veel UTF-8 karakters, kan niet afdrukken\n"
+
+#~ msgid "Color index out of range"
+#~ msgstr "Kleuren index buiten bereik"
+
+#~ msgid ""
+#~ "hierarchy loop detected while visiting page:\n"
+#~ "  \"%s\"\n"
+#~ msgstr ""
+#~ "hierarchie lus gedetecteerd tijdens het bezoeken van pagina:\n"
+#~ "  \"%s\"\n"
+
+#~ msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
+#~ msgstr "FOUT in s_hierarchy_traverse: schema niet gevonden: %s\n"
+
+#~ msgid "Found [%s]\n"
+#~ msgstr "[%s] gevonden\n"
+
+#~ msgid "Could not find [%s] in any SourceLibrary\n"
+#~ msgstr "Kan geen [%s] vinden in welke BronBibliotheek dan ook!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Usage: ~A [OPTIONS] FILENAME ...\n"
+#~ "  -h, --help        Print usage\n"
+#~ "  -q, --quiet       Quiet mode\n"
+#~ "  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)\n"
+#~ "                    Use this to get the actual symbol error messages\n"
+#~ "FILENAME ... are the symbols to check.\n"
+#~ msgstr ""
+#~ "Gebruik: %s [OPTIES] bestandsnaam1 ... bestandsnaamN\n"
+#~ "  -h, --help           Druk gebruik af\n"
+#~ "  -q, --quiet          Stille modus\n"
+#~ "  -v, --verbose        Woordrijke modus (cumulatief: fouten, "
+#~ "waarschuwingen, info)\n"
+#~ "                       Gebruik dit om een actuele symbool fout bericht te "
+#~ "krijgen\n"
+#~ "\n"
+#~ "bestandsnaam1 ... bestandsnaamN zijn de te controleren symbolen\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+#~ "but you have a version [%4$s] gsymcheckrc file:\n"
+#~ "[%5$s]\n"
+#~ "Please be sure that you have the latest rc file.\n"
+#~ msgstr ""
+#~ "U heeft gEDA/gaf versie [%s%s.%s],\n"
+#~ "maar U heeft een versie [%s] gsymcheckrc bestand:\n"
+#~ "[%s]\n"
+#~ "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
+
+#, fuzzy
+#~ msgid "Loaded file [%1$s]\n"
+#~ msgstr "Laadde bestand [%s]\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "ERROR! You must specify at least one filename\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "FOUT! U moet tenminste een bestandsnaam specificeren\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "%2$d warnings found %1$s"
+#~ msgstr "%d waarschuwingen gevonden "
+
+#, fuzzy
+#~ msgid "%2$d ERROR found %1$s"
+#~ msgstr "%d FOUTEN gevonden "
+
+#, fuzzy
+#~ msgid "%2$d ERRORS found %1$s"
+#~ msgstr "%d FOUTEN gevonden "
+
+#, fuzzy
+#~ msgid "Found obsolete %1$s= attribute: [%2$s=%3$s]\n"
+#~ msgstr "Overbodige %s= attribuut: [%s=%s] gevonden\n"
+
+#, fuzzy
+#~ msgid "Found unknown %1$s= attribute: [%2$s=%3$s]\n"
+#~ msgstr "Onbekend %s= attribuut: [%s=%s] gevonden\n"
+
+#~ msgid "Missing device= attribute\n"
+#~ msgstr "Ontbrekend device= attribuut\n"
+
+#, fuzzy
+#~ msgid "Found device=%1$s\n"
+#~ msgstr "device=%s gevonden\n"
+
+#~ msgid "Found graphical symbol, device= should be set to none\n"
+#~ msgstr ""
+#~ "Grafisch symbool gevonden, device= dient op none te worden ingesteld\n"
+
+#, fuzzy
+#~ msgid "Found pinseq=%1$s attribute\n"
+#~ msgstr "pinseq=%s attribuut gevonden\n"
+
+#~ msgid "Found pinseq=0 attribute\n"
+#~ msgstr "pinseq=0 attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid "Found net=%1$s attribute\n"
+#~ msgstr "net=%s attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid "Found pin number %1$s in net attribute\n"
+#~ msgstr "Pen met nummer %s gevonden in een net attribuut\n"
+
+#, fuzzy
+#~ msgid "Found duplicate pin in net= attributes [%1$s]\n"
+#~ msgstr "Dubbele pen in een net= attribuut gevonden [%s]\n"
+
+#, fuzzy
+#~ msgid "Found pinnumber=%1$s attribute\n"
+#~ msgstr "pinnumber=%s attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid "Found multiple pinnumber=%1$s attributes on one pin\n"
+#~ msgstr "Meerdere pinnumber=%s attributen gevonden in een pen\n"
+
+#, fuzzy
+#~ msgid "Found duplicate pinnumber=%1$s attribute in the symbol\n"
+#~ msgstr "Dubbel pinnumber=%s attribuut gevonden in het symbool\n"
+
+#~ msgid "Found pinnumber=0 attribute\n"
+#~ msgstr "pinnumber=0 attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found the same number in a pinnumber attribute and in a net attribute "
+#~ "[%1$s]\n"
+#~ msgstr ""
+#~ "Hetzelfde nummer in een pen nummer attribuut en in een net attribuut [%s] "
+#~ "gevonden\n"
+
+#, fuzzy
+#~ msgid "Found %1$d pins inside symbol\n"
+#~ msgstr "%d pennen gevonden in een symbool\n"
+
+#, fuzzy
+#~ msgid "Found offgrid pin at location (x1=%1$d,y1=%2$d)\n"
+#~ msgstr "Pen naast het raster gevonden op locatie (x1=%d,y1=%d)\n"
+
+#, fuzzy
+#~ msgid "Found offgrid pin at location (x2=%1$d,y2=%2$d)\n"
+#~ msgstr "Pen naast het raster gevonden op locatie (x2=%d,y2=%d)\n"
+
+#, fuzzy
+#~ msgid "Found numslots=%1$s attribute\n"
+#~ msgstr "numslots=%s attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found %1$s slotdef= attributes.  Expecting %2$s slotdef= attributes\n"
+#~ msgstr ""
+#~ "%s slotdef= attributen gevonden.  Verwachtte %s slotdef= attributen\n"
+
+#, fuzzy
+#~ msgid "Found slotdef=%1$s attribute\n"
+#~ msgstr "slotdef=%s attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid "Invalid slotdef=%1$s attributes, not continuing\n"
+#~ msgstr "Ongeldige slotdef=%s attributen, ga niet door\n"
+
+#, fuzzy
+#~ msgid "Slot %1$s is larger then the maximum number (%2$s) of slots\n"
+#~ msgstr "Slot %s is groter dan het maximum aantal (%s) slots\n"
+
+#, fuzzy
+#~ msgid "Found a zero pin in slotdef=%1$s\n"
+#~ msgstr "Nul pen gevonden in slotdef=%s\n"
+
+#, fuzzy
+#~ msgid "Found old pin#=# attribute: %1$s\n"
+#~ msgstr "Oud pin#=# attribuut gevonden: %s\n"
+
+#~ msgid "Found a net inside a symbol\n"
+#~ msgstr "Een net binnen in een symbool gevonden\n"
+
+#~ msgid "Found a bus inside a symbol\n"
+#~ msgstr "Een bus binnen in een symbool gevonden\n"
+
+#~ msgid "Found a connection inside a symbol\n"
+#~ msgstr "Een verbinding binnen in een symbool gevonden\n"
+
+#, fuzzy
+#~ msgid "Missing %1$s= attribute\n"
+#~ msgstr "Ontbrekend %s= attribuut\n"
+
+#, fuzzy
+#~ msgid "Found multiple %1$s=%2$s attributes on one pin\n"
+#~ msgstr "Meerdere  %s=%s attributen op een pen gevonden\n"
+
+#, fuzzy
+#~ msgid "Found %1$s=%2$s attribute\n"
+#~ msgstr "%s=%s attribuut gevonden\n"
+
+#~ msgid "Missing footprint= attribute\n"
+#~ msgstr "Ontbrekend footprint= attribuut\n"
+
+#~ msgid "Multiple refdes= attributes found\n"
+#~ msgstr "Meerdere refdes= attributen gevonden\n"
+
+#, fuzzy
+#~ msgid "Found pintype=%1$s attribute\n"
+#~ msgstr "pintype=%s attribuut gevonden\n"
+
+#, fuzzy
+#~ msgid "Found duplicate net name, renaming ~A to ~A"
+#~ msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Trying to rename something twice:\n"
+#~ "\t~A and ~A\n"
+#~ "are both a src and dest name\n"
+#~ "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: Probeer iets dubbel te hernoemen:\n"
+#~ "\t%s en %s\n"
+#~ "zijn beide een bron- en bestemmingnaam\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "gEDA/gnetlist version ~A~A.~A\n"
+#~ "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "gEDA/gnetlist versie %s%s.%s\n"
+#~ "gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer "
+#~ "details.\n"
+#~ "Dit is vrije software, en U bent welkom om dit te verspreiden onder "
+#~ "bepaalde \n"
+#~ "condities; zie alstublieft het COPYING bestand voor meer details.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "List of available backends: \n"
+#~ "\n"
+#~ msgstr ""
+#~ "Lijst van beschikbare backends:\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This is the MINGW32 port.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Dit is de MINGW32 versie.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: -%c option requires an argument.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: -%c optie vereist een argument.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: Unknown option -%c.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: Onbekende optie -%c.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: Unknown option character `\\x%x'.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: Onbekend optie karakter `\\x%x'.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Run `%s --help' for more information.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Doe `%s --help' voor meer informatie.\n"
+
+#, fuzzy
+#~ msgid "Going to traverse source [%1$s]"
+#~ msgstr "Ga de bron doorkruisen [%s]\n"
+
+#, fuzzy
+#~ msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
+#~ msgstr "FOUT: Faalde om subcircuit '%s': %s te laden\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
+#~ msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
+#~ msgstr ""
+#~ "Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "DONE\n"
+#~ msgstr ""
+#~ "\n"
+#~ "GEDAAN\n"
+
+#~ msgid " DONE\n"
+#~ msgstr " GEDAAN\n"
+
+#, fuzzy
+#~ msgid "ERROR: `%1$s' is reserved for internal use."
+#~ msgstr "FOUT: `%s' is gereserveerd voor intern gebruik."
+
+#~ msgid "Found malformed net attribute\n"
+#~ msgstr "Vond een misvormd net attribuut\n"
+
+#, fuzzy
+#~ msgid "Found a cpinlist head with a netname! [%1$s]\n"
+#~ msgstr "Vond een cpinlist kop met een netnaam! [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Got an invalid net= attrib [net=%1$s]\n"
+#~ "Missing : in net= attrib\n"
+#~ msgstr ""
+#~ "Kreeg een ongeldig= attrib [net=%s]\n"
+#~ "Ontbrekend : in net= attrib\n"
+
+#~ msgid "Missing Attributes (refdes and pin number)\n"
+#~ msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
+
+#, fuzzy
+#~ msgid "s_net_name: incorrect connectivity type %1$i\n"
+#~ msgstr "s_net_name: incorrect verbinding type %i\n"
+
+#~ msgid "Increase number of unnamed nets (s_net.c)\n"
+#~ msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Found a placeholder/missing component, are you missing a symbol "
+#~ "file? [%1$s]\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een "
+#~ "symbool bestand? [%s]\n"
+
+#~ msgid ""
+#~ "Could not find refdes on component and could not find any special "
+#~ "attributes!\n"
+#~ msgstr ""
+#~ "Kon geen refdes vinden op component en kon geen speciaal attributen "
+#~ "vinden!\n"
+
+#~ msgid "Non-connectable object being queried for connection type\n"
+#~ msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+#~ "netname=\n"
+
+#~ msgid "Found a possible net/pin infinite connection\n"
+#~ msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
+
+#, fuzzy
+#~ msgid "uref= is deprecated, please use refdes=~A"
+#~ msgstr ""
+#~ "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+#~ "netname=\n"
+
+#~ msgid "ERROR: Overwriting a valid rename list.\n"
+#~ msgstr "FOUT: Overschrijf een geldige hernoem-lijst.\n"
+
+#~ msgid "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "Deze waarschuwing is in orde als je meervoudige niveaus van hiërarchie "
+#~ "hebt!\n"
+
+#~ msgid "ERROR: Failed to load '%s': %s\n"
+#~ msgstr "FOUT: Faalde bij het laden van '%s': %s\n"
+
+#~ msgid ""
+#~ "You are running gEDA/gaf version [%s%s.%s],\n"
+#~ "but you have a version [%s] gnetlistrc file:\n"
+#~ "[%s]\n"
+#~ "Please be sure that you have the latest rc file.\n"
+#~ msgstr ""
+#~ "U heeft gEDA/gaf versie [%s%s.%s],\n"
+#~ "maar U heeft een versie [%s] gnetlistrc bestand:\n"
+#~ "[%s]\n"
+#~ "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
+
+#~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
+#~ msgstr "Ongeldige refdes ('%s') en pen ('%s') overgedragen aan get-nets\n"

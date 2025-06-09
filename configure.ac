@@ -294,6 +294,10 @@ AC_CONFIG_FILES([tools/update/lepton-update:tools/script.in:tools/update/lepton-
 
 AC_CONFIG_FILES([Makefile
 
+                 lepton-eda/Makefile
+                 lepton-eda/po/Makefile.in
+                 lepton-eda/scheme/Makefile
+
                  liblepton/Makefile
                  liblepton/liblepton.pc
                  liblepton/po/Makefile.in
@@ -302,7 +306,6 @@ AC_CONFIG_FILES([Makefile
                  liblepton/docs/images/Makefile
                  liblepton/include/Makefile
                  liblepton/lib/Makefile
-                 liblepton/scheme/Makefile
                  liblepton/src/Makefile
                  liblepton/tests/Makefile
 
