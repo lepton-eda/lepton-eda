@@ -1,0 +1,557 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Lepton Developers
+# This file is distributed under the same license as the lepton-eda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda 1.9.18\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2025-06-09 15:00+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lepton-eda/scheme/lepton/attrib.scm:149
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr ""
+
+#: lepton-eda/scheme/lepton/library.scm:112
+#: lepton-eda/scheme/lepton/library.scm:171
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#: lepton-eda/scheme/lepton/library.scm:231
+#, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr ""
+
+#: lepton-eda/scheme/lepton/library/component.scm:90
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+#: lepton-eda/scheme/lepton/library/component.scm:101
+#, scheme-format
+msgid "Invalid path ~S passed to component-library."
+msgstr ""
+
+#: lepton-eda/scheme/lepton/repl.scm:47
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+#: lepton-eda/scheme/lepton/repl.scm:52
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:158
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"  name: ~A\n"
+"  values: ~S\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:224
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:267
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:593
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:630
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:787
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q, --quiet             Quiet mode.\n"
+"  -v, --verbose           Verbose mode.\n"
+"  -o, --output=FILE       Filename for netlist data output.\n"
+"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
+"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
+"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
+"  -O, --backend-option=STRING\n"
+"                          Pass an option string to backend.\n"
+"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
+"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
+"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
+"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends     Print a list of available netlist backends.\n"
+"  -h, --help              Help; this message.\n"
+"  -V, --version           Show version information.\n"
+"  --                      Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:845
+#, scheme-format
+msgid "Failed to open schematic files: ~?\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:852
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:864
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:886
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist.scm:890
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist/attrib/refdes.scm:41
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#: lepton-eda/scheme/netlist/attrib/refdes.scm:56
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/attrib/refdes.scm:76
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/net.scm:83
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#: lepton-eda/scheme/netlist/package.scm:124
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:215
+#, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:218
+#, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:246
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:253
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:260
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:268
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#: lepton-eda/scheme/netlist/subschematic.scm:277
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/alignment.scm:56
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/alignment.scm:60
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/arc.scm:34
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/arc.scm:46
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:52
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:69
+msgid "Graphical symbols should have device=none"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:81
+#, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:86
+#, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:94
+#, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:106
+#, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:111
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:119
+#, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/attrib.scm:156
+#, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/box.scm:35
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/circle.scm:33
+#, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/connection.scm:32
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/forbidden.scm:38
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/line.scm:35
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/log.scm:35
+msgid "Wrong check log destination!"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/net-attrib.scm:56
+#, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/net-attrib.scm:74
+#, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/net-attrib.scm:104
+#, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/net-attrib.scm:116
+#, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/net-attrib.scm:154
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/obsolete.scm:55
+#, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/obsolete.scm:63
+#, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/path.scm:49
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/picture.scm:36
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/picture.scm:52
+#, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/pin.scm:108
+#, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/pin.scm:126
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/pin.scm:133
+#, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/pin.scm:147
+#, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/pin-attrib.scm:62
+#, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/primitive.scm:59
+#, scheme-format
+msgid "Object: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:90
+#, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:96
+#, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:111
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:114
+msgid "numslots set to 0, symbol does not have slots"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:123
+#, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:140
+#, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:144
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:193
+#, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:204
+#, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:219
+#, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:225
+#, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:239
+#, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/slot.scm:259
+#, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/text.scm:41
+#, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/text.scm:80
+#, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/text.scm:82
+#, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symbol/check/text.scm:84
+#, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/check.scm:38
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/check.scm:64
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/check.scm:71
+#, scheme-format
+msgid "Checking: ~A\n"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/check.scm:76
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:42
+#, scheme-format
+msgid "Info: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:46
+#, scheme-format
+msgid "Warning: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:50
+#, scheme-format
+msgid "ERROR: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:53
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:78
+#, scheme-format
+msgid "~A warning found"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:83
+msgid "(use -vv to view details)"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:86
+msgid "No errors found"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:88
+#, scheme-format
+msgid "~A ERROR found"
+msgstr ""
+
+#: lepton-eda/scheme/symcheck/report.scm:93
+msgid "(use -v to view details)"
+msgstr ""
