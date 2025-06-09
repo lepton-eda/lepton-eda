@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-09 15:00+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -35,680 +35,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid "Lepton EDA circuit schematic"
-msgstr "Принципиальная схема Lepton EDA"
-
-msgid "Lepton EDA schematic symbol"
-msgstr "Символ схемы Lepton EDA"
-
-msgid "Lepton EDA sch2pcb project"
-msgstr "Проект sch2pcb Lepton EDA"
-
-msgid "Lepton EDA sch2pcb Project"
-msgstr "Проект sch2pcb Lepton EDA"
-
-msgid "Lepton EDA Circuit Schematic"
-msgstr "Принципиальная схема Lepton EDA"
-
-msgid "Lepton EDA Schematic Symbol"
-msgstr "Символ схемы Lepton EDA"
-
-#, c-format
-msgid "File %1$s is read-only"
-msgstr "Файл %1$s только для чтения"
-
-msgid "Schematic data was not valid UTF-8"
-msgstr "Недопустимый код UTF-8 в данных принципиальной схемы"
-
-#, c-format
-msgid ""
-"Read unexpected attach symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"Неуместный маркер начала списка прикреплённых атрибутов в «%1$s»:\n"
-">>\n"
-"%2$s<<\n"
-
-#, c-format
-msgid ""
-"Read unexpected embedded symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"Неуместный маркер начала внедрённого символа в «%1$s»:\n"
-">>\n"
-"%2$s<<\n"
-
-#, c-format
-msgid ""
-"Read unexpected embedded symbol end marker in [%s] :\n"
-">>\n"
-"%s<<\n"
-msgstr ""
-"Неуместный маркер конца внедрённого символа в «%s»:\n"
-">>\n"
-"%s<<\n"
-
-#, c-format
-msgid ""
-"Read an old format sym/sch file!\n"
-"Please run g[sym|sch]update on:\n"
-"[%1$s]"
-msgstr ""
-"Обнаружен файл символа или схемы в старом формате!\n"
-"Выполните g[sym|sch]update для:\n"
-"«%1$s»"
-
-#, c-format
-msgid ""
-"Read garbage in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"Некорректные данные в «%1$s»:\n"
-">>\n"
-"%2$s<<\n"
-
-msgid "Failed to parse arc object"
-msgstr "Ошибка в определении дуги"
-
-#, c-format
-msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
-msgstr "Дуга с нулевым радиусом «%1$c %2$d %3$d %4$d %5$d %6$d %7$d»"
-
-#, c-format
-msgid "Found an invalid color [ %1$s ]"
-msgstr "Недопустимое значение цветового индекса «%1$s»"
-
-msgid "Setting color to default color."
-msgstr "Установка цвета по умолчанию."
-
-msgid "Failed to parse box object"
-msgstr "Ошибка в определении прямоугольника"
-
-#, c-format
-msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr ""
-"Прямоугольник нулевой ширины или высоты «%1$c %2$d %3$d %4$d %5$d %6$d»"
-
-msgid "Failed to parse bus object"
-msgstr "Ошибка в определении шины"
-
-#, c-format
-msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "Шина нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
-
-#, c-format
-msgid "Found an invalid bus ripper direction [ %1$s ]"
-msgstr ""
-"Недопустимое значение поля «ripperdir» (направление ответвления от шины) "
-"«%1$s»"
-
-msgid "Resetting direction to neutral (no direction)."
-msgstr "Сброс направления в нейтральное значение (направление не задано)."
-
-msgid "Failed to parse circle object"
-msgstr "Ошибка в определении окружности"
-
-#, c-format
-msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr ""
-"Окружность с нулевым или отрицательным радиусом «%1$c %2$d %3$d %4$d %5$d»"
-
-msgid "Setting radius to 0."
-msgstr "Установка радиуса в 0."
-
-#, c-format
-msgid ""
-"Component not found:\n"
-" %1$s"
-msgstr ""
-"Не найден компонент:\n"
-" %1$s"
-
-msgid "Failed to parse component object"
-msgstr "Ошибка в определении компонента"
-
-#, c-format
-msgid ""
-"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
-"%7$s ]"
-msgstr ""
-"Недопустимое значение угла поворота в определении компонента «%1$c %2$d %3$d "
-"%4$d %5$d %6$d %7$s»"
-
-msgid "Setting angle to 0."
-msgstr "Установка угла поворота в 0."
-
-#, c-format
-msgid ""
-"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
-"%6$d %7$s ]"
-msgstr ""
-"Недопустимое значение поля «mirror» в определении компонента «%1$c %2$d %3$d "
-"%4$d %5$d %6$d %7$s»"
-
-msgid "Setting mirror to 0."
-msgstr "Установка «mirror» в 0."
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
-msgstr ""
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion in symbol file"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
-msgstr ""
-"ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. обозначением "
-"%1$s:\n"
-"\tПрикреплён некорректный атрибут «symversion=%2$s»"
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
-msgstr ""
-"ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
-"\tК экземпляру символа прикреплён атрибут «symversion=%2$s», но в файле "
-"символа «symversion» отсутствует."
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
-msgstr ""
-"ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
-"\tЭкземпляр в схеме новее символа в библиотеке."
-
-#, c-format
-msgid "Component [%1$s] has been embedded."
-msgstr "Компонент «%1$s» внедрён."
-
-#, c-format
-msgid ""
-"Could not find component [%1$s], while trying to unembed. Component is still "
-"embedded."
-msgstr ""
-"Не удалось найти библиотечный символ для исключаемого компонента «%1$s». "
-"Компонент останется внедрённым."
-
-#, c-format
-msgid "Component [%1$s] has been successfully unembedded."
-msgstr "Компонент «%1$s» успешно исключён."
-
-msgid "Failed to parse line object"
-msgstr "Ошибка в определении линии"
-
-#, c-format
-msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "Линия нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
-
-msgid "Failed to parse net object"
-msgstr "Ошибка в определении соединения"
-
-#, c-format
-msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "Соединение нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
-
-msgid "Failed to parse path object"
-msgstr "Ошибка в определении контура"
-
-msgid "Unexpected end-of-file when reading path"
-msgstr "Неожиданный конец файла при обработке контура"
-
-msgid "Failed to parse picture definition"
-msgstr "Ошибка в определении изображения"
-
-#, c-format
-msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr "Изображение нулевой ширины или высоты «%1$c %2$d %3$d %4$d %5$d»"
-
-#, c-format
-msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
-msgstr "Недопустимое значение поля «mirror» в определении изображения: %1$d."
-
-msgid "Setting mirrored to 0."
-msgstr "Установка «mirror» в 0."
-
-#, c-format
-msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
-msgstr "Недопустимое значение поля «embedded» в определении изображения: %1$d."
-
-msgid "Setting embedded to 0."
-msgstr "Установка «embedded» в 0."
-
-#, c-format
-msgid "Found an unsupported picture angle [ %1$d ]"
-msgstr "Неподдерживаемое значение угла поворота изображения «%1$d»"
-
-msgid "Found an image with no filename."
-msgstr "Обнаружено изображение без имени файла"
-
-#, c-format
-msgid "Failed to load image from embedded data [%1$s]: %2$s"
-msgstr "Не удалось загрузить изображение из внедрённых данных «%1$s»: %2$s"
-
-msgid "Base64 decoding failed."
-msgstr "Ошибка расшифровки данных в формате base64."
-
-msgid "Falling back to file loading. Picture unembedded."
-msgstr "Возврат к загрузке из файла. Изображение исключено."
-
-msgid "ERROR: unable to encode the picture."
-msgstr "ОШИБКА: Невозможно закодировать изображение."
-
-# Ошибка, если данные изображения уже есть во внутреннем буфере
-#, c-format
-msgid "Failed to load buffer image [%1$s]: %2$s"
-msgstr "Не удалось загрузить изображение «%1$s» из буфера: %2$s"
-
-#, c-format
-msgid "Failed to load image from [%1$s]: %2$s"
-msgstr "Не удалось загрузить изображение из файла «%1$s»: %2$s"
-
-#, c-format
-msgid "Picture %1$p has invalid angle %2$i\n"
-msgstr "Недопустимое значение угла поворота изображения «%1$p»: %2$i\n"
-
-# Указатель на данные возвращает NULL
-#, c-format
-msgid "Picture [%1$s] has no image data."
-msgstr "Файл «%1$s» не содержит данных изображения."
-
-msgid "Falling back to file loading. Picture is still unembedded."
-msgstr "Возврат к загрузке из файла. Изображение всё ещё исключено."
-
-#, c-format
-msgid "Picture [%1$s] has been embedded."
-msgstr "Изображение «%1$s» внедрено."
-
-#, c-format
-msgid "Failed to load image from file [%1$s]: %2$s"
-msgstr "Не удалось загрузить изображение из файла «%1$s»: %2$s"
-
-msgid "Picture is still embedded."
-msgstr "Изображение всё ещё внедрено."
-
-#, c-format
-msgid "Picture [%1$s] has been unembedded."
-msgstr "Изображение «%1$s» исключено."
-
-msgid "Failed to parse pin object"
-msgstr "Ошибка в определении вывода"
-
-msgid ""
-"Found a pin which did not have the whichend field set.\n"
-"Verify and correct manually."
-msgstr ""
-"Вывод с неустановленным полем «whichend» (сторона соединения).\n"
-"Проверьте и исправьте вручную."
-
-#, c-format
-msgid "Found an invalid whichend on a pin (reseting to zero): %d"
-msgstr ""
-"Недопустимое значение поля «whichend» (сторона соединения) в определении "
-"вывода (сброс в 0): %d"
-
-msgid "Failed to parse text object"
-msgstr "Ошибка в определении текстового объекта"
-
-#, c-format
-msgid "Found an invalid text size [ %1$s ]"
-msgstr "Недопустимое значение цветового индекса «%1$s»"
-
-#, c-format
-msgid "Setting text size to %1$d."
-msgstr "Установка размера текста в %1$d."
-
-#, c-format
-msgid "Found an unsupported text angle [ %1$s ]"
-msgstr "Неподдерживаемое значение угла поворота текста «%1$s»"
-
-#, c-format
-msgid "Setting angle to %1$d."
-msgstr "Установка угла поворота в %1$d."
-
-#, c-format
-msgid "Found an unsupported text alignment [ %1$s ]"
-msgstr "Неподдерживаемое значение выравнивания текста «%1$s»"
-
-msgid "Setting alignment to LOWER_LEFT."
-msgstr "Установка выравнивания по левому нижнему углу."
-
-#, c-format
-msgid "Unexpected end-of-file after %1$d lines"
-msgstr "Неожиданный конец файла после %1$d строк"
-
-#, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Ошибка чтения статуса (stat) «%1$s»: %2$s"
-
-#, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"ВНИМАНИЕ: обнаружен файл автоматической резервной копии:\n"
-"  %1$s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "Не удалось определить новее ли он, решите это сами.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"Резервная копия новее схемы, поэтому, видимо, следует загрузить её вместо "
-"оригинального файла.\n"
-
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Обычно lepton-schematic автоматически создаёт резервные копии, и такая "
-"ситуация может быть результатом фатального сбоя или неожиданного "
-"принудительного завершения программы.\n"
-
-#, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Файл «%1$s» не найден: %2$s"
-
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Запустите lepton-schematic и устраните проблему.\n"
-"\n"
-
-# Эта функция пытается найти для указанного имени реальный файл (не являющийся
-# ссылкой).
-#, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "Не удалось определить имя реального файла для %1$s: %2$s"
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-"Не удалось установить режим чтения-записи для файла предыдущей резервной  "
-"копии «%1$s»."
-
-#, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "Не удалось сохранить файл резервной копии: %1$s."
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr ""
-"Не удалось установить режим доступа только на чтение для резервной копии "
-"файла «%1$s»."
-
-#, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Не удалось восстановить права для «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Не удалось восстановить владельца для «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "Не удалось сохранить файл: %1$s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-"\n"
-"Последовательность вызовов подпрограмм:\n"
-
-msgid "RC file already loaded"
-msgstr "Файл настроек уже загружен"
-
-#, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Не удалось загрузить настройки из файла «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Загружен RC-файл «%1$s»"
-
-#, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Не удалось загрузить RC-файл «%1$s»: "
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
-
-#, c-format
-msgid "ERROR: %1$s"
-msgstr "ОШИБКА: %1$s"
-
-#, c-format
-msgid "ERROR: %1$s\n"
-msgstr "ОШИБКА: %1$s\n"
-
-#, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "ОШИБКА: В файле журнала «%1$s» может быть больше информации.\n"
-
-# Эта функция пытается найти для указанного имени реальный файл (не являющийся
-# ссылкой).
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "Не удалось определить имя реального файла для %1$s."
-
-#, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "Не удалось удалить файл резервной копии %1$s."
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr "Атрибут «%1$s» уже прикреплён\n"
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "Попытка прикрепить нетекстовый элемент как атрибут!\n"
-
-#, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "Попытка прикрепить атрибут «%1$s» к более чем одному объекту\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr "Попытка прикрепить нетекстовый элемент как атрибут!"
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Неожиданный конец файла при обработке списка атрибутов"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-#, fuzzy
-msgid "Attribute"
-msgstr "Найден атрибут ~A=~A"
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Неправильно прикреплённый атрибут: ~A"
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
-
-#, c-format
-msgid "Library command failed [%1$s]: %2$s"
-msgstr "Сбой команды создания библиотеки «%1$s»: %2$s"
-
-#, c-format
-msgid "Library command failed [%1$s]: Uncaught signal %2$i."
-msgstr "Сбой команды создания библиотеки «%1$s»: необработанный сигнал %2$i."
-
-#, c-format
-msgid "Library command failed [%1$s]"
-msgstr "Сбой команды создания библиотеки «%1$s»"
-
-#, c-format
-msgid ""
-"Error output was:\n"
-"%1$s"
-msgstr ""
-"Вывод ошибки:\n"
-"%1$s"
-
-#, c-format
-msgid "Library name [%1$s] already in use.  Using [%2$s]."
-msgstr "Библиотека с именем «%1$s» уже используется. Новое имя: «%2$s»."
-
-#, c-format
-msgid "Failed to open directory [%1$s]: %2$s"
-msgstr "Не удалось открыть каталог «%1$s»: %2$s"
-
-#, c-format
-msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
-msgstr ""
-"Ошибка сканирования библиотеки «%1$s»: функция Scheme возвратила не список."
-
-#, c-format
-msgid "Non-string symbol name while scanning library [%1$s]"
-msgstr ""
-"При сканировании библиотеки обнаружено имя символа, не являющееся строкой "
-"«%1$s»"
-
-msgid "Cannot add library: name not specified."
-msgstr "Невозможно добавить библиотеку: не указано имя."
-
-#, c-format
-msgid ""
-"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
-msgstr ""
-"Невозможно добавить библиотеку «%1$s»: должны быть указаны обе команды "
-"«list» и «get»."
-
-#, c-format
-msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
-msgstr ""
-"Невозможно добавить библиотеку Scheme «%1$s»: функции обратного вызова "
-"должны быть замыканиями."
-
-#, c-format
-msgid "Failed to load symbol from file [%1$s]: %2$s"
-msgstr "Ошибка загрузки символа из файла «%1$s»: %2$s"
-
-#, c-format
-msgid "Failed to load symbol data [%1$s] from source [%2$s]"
-msgstr "Ошибка загрузки данных символа «%1$s» из источника «%2$s»"
-
-#, c-format
-msgid "Component [%1$s] was not found in the component library."
-msgstr "Компонент «%1$s» не найден в библиотеке компонентов."
-
-#, c-format
-msgid "More than one component found with name [%1$s]."
-msgstr "Обнаружено несколько компонентов с именем «%1$s»."
-
-msgid "Did not find slotdef=#:#,#,#... attribute."
-msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...»."
-
-msgid "Improper slotdef syntax: missing \":\"."
-msgstr "Неверный синтаксис атрибута «slotdef»: отсутствует «:»."
-
-msgid "Did not find proper slotdef=#:#,#,#... attribute."
-msgstr "Не найден атрибут «slotdef=#:#,#,#...» в допустимом формате."
-
-msgid "component missing pinseq= attribute."
-msgstr "Отсутствует атрибут «pinseq» у вывода компонента."
-
-msgid "Undefined configuration filename"
-msgstr "Не определено имя файла настроек"
-
-#, c-format
-msgid "Configuration does not have group '%s'"
-msgstr "В настройках не обнаружено группы «%s»"
-
-#, c-format
-msgid "Configuration does not have key '%s'"
-msgstr "В настройках не обнаружено ключа «%s»"
-
-#, fuzzy, c-format
-msgid "ERROR: %s.\n"
-msgstr "ОШИБКА: %1$s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -727,7 +53,7 @@ msgid "Library at ~S has been already added."
 msgstr "Библиотека в ~S уже добавлена."
 
 #, fuzzy, scheme-format
-msgid "Invalid path ~S passed to component-library.\n"
+msgid "Invalid path ~S passed to component-library."
 msgstr "component-library: недопустимый путь «%1$s»\n"
 
 msgid "Welcome to Lepton REPL!\n"
@@ -736,11 +62,11 @@ msgstr "Добро пожаловать в Lepton REPL!\n"
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr "ВНИМАНИЕ: Библиотека readline не поддерживается в ваших настройках.\n"
 
-#, scheme-format
+#, fuzzy, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
+"  name: ~A\n"
+"  values: ~S\n"
 msgstr ""
 "Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
 "имя: ~A\n"
@@ -787,32 +113,29 @@ msgstr ""
 "регистронезависимости или других ограничений, накладываемых данным\n"
 "форматом списка соединений.\n"
 
-#, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr "Не удалось открыть каталог ~S.\n"
-
-#, scheme-format
+#, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
 "Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
 "\n"
 "General options:\n"
-"  -q                  Quiet mode.\n"
-"  -v, --verbose       Verbose mode.\n"
-"  -o FILE             Filename for netlist data output.\n"
-"  -L DIR              Add DIR to Scheme search path.\n"
-"  -g BACKEND          Specify netlist backend to use.\n"
-"  -f FILE             Specify path to netlist backend file to use.\n"
-"  -O STRING           Pass an option string to backend.\n"
-"  -l FILE             Load Scheme file before loading backend.\n"
-"  -m FILE             Load Scheme file after loading backend.\n"
-"  -c EXPR             Evaluate Scheme expression at startup.\n"
-"  -i                  Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends Print a list of available netlist backends.\n"
-"  -h, --help          Help; this message.\n"
-"  -V, --version       Show version information.\n"
-"  --                  Treat all remaining arguments as filenames.\n"
+"  -q, --quiet             Quiet mode.\n"
+"  -v, --verbose           Verbose mode.\n"
+"  -o, --output=FILE       Filename for netlist data output.\n"
+"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
+"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
+"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
+"  -O, --backend-option=STRING\n"
+"                          Pass an option string to backend.\n"
+"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
+"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
+"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
+"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends     Print a list of available netlist backends.\n"
+"  -h, --help              Help; this message.\n"
+"  -V, --version           Show version information.\n"
+"  --                      Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
@@ -844,6 +167,10 @@ msgstr ""
 "issues\n"
 "Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
 
+#, fuzzy, scheme-format
+msgid "Failed to open schematic files: ~?\n"
+msgstr "Не удалось загрузить файл драйвера.\n"
+
 #, scheme-format
 msgid ""
 "\n"
@@ -855,6 +182,9 @@ msgstr ""
 "Обнаружена ошибка «~A»:\n"
 "        ~A\n"
 "\n"
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
 
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
@@ -868,51 +198,6 @@ msgstr ""
 "Не заданы файлы схем для обработки.\n"
 "~\n"
 "Подробности см. в выводе команды «~A --help».\n"
-
-#, scheme-format
-msgid ""
-"Could not find backend `~A' in load path.\n"
-"~\n"
-"                         Run `~A --list-backends' for a full list of "
-"available backends.\n"
-msgstr ""
-"Не удалось найти драйвер «~A» в пути загрузки.\n"
-"~\n"
-"Список всех доступных драйверов можно узнать по команде «~A --list-"
-"backends».\n"
-
-#, scheme-format
-msgid ""
-"Can't load backend file ~S.\n"
-"~\n"
-"                         Backend files are expected to have names like "
-"\"gnet-NAME.scm\"\n"
-"~\n"
-"                         and contain entry point function NAME (where NAME "
-"is the backend's name).\n"
-msgstr ""
-"Не удалось загрузить файл драйвера ~S.\n"
-"Ожидается, что имя файла драйвера имеет формат\n"
-"«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
-"является названием драйвера).\n"
-
-#, scheme-format
-msgid "Netlist mode requested by backend is not supported: ~A\n"
-msgstr ""
-"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
-"~A\n"
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
-
-msgid "Failed to load Scheme file before loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
-
-msgid "Failed to load backend file.\n"
-msgstr "Не удалось загрузить файл драйвера.\n"
-
-msgid "Failed to load Scheme file after loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
 
 #, scheme-format
 msgid "Invalid hierarchy tag: ~S"
@@ -931,10 +216,6 @@ msgid ""
 "at ~A on page ~S\n"
 "has neither refdes= nor net=."
 msgstr ""
-
-#, scheme-format
-msgid "Invalid attribute (missing ':'): net=~A"
-msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
 
 #, scheme-format
 msgid "Attached net ~A:~A overrides inherited net ~A:~A"
@@ -1279,6 +560,646 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Lepton EDA circuit schematic"
+#~ msgstr "Принципиальная схема Lepton EDA"
+
+#~ msgid "Lepton EDA schematic symbol"
+#~ msgstr "Символ схемы Lepton EDA"
+
+#~ msgid "Lepton EDA sch2pcb project"
+#~ msgstr "Проект sch2pcb Lepton EDA"
+
+#~ msgid "Lepton EDA sch2pcb Project"
+#~ msgstr "Проект sch2pcb Lepton EDA"
+
+#~ msgid "Lepton EDA Circuit Schematic"
+#~ msgstr "Принципиальная схема Lepton EDA"
+
+#~ msgid "Lepton EDA Schematic Symbol"
+#~ msgstr "Символ схемы Lepton EDA"
+
+#, c-format
+#~ msgid "File %1$s is read-only"
+#~ msgstr "Файл %1$s только для чтения"
+
+#~ msgid "Schematic data was not valid UTF-8"
+#~ msgstr "Недопустимый код UTF-8 в данных принципиальной схемы"
+
+#, c-format
+#~ msgid ""
+#~ "Read unexpected attach symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "Неуместный маркер начала списка прикреплённых атрибутов в «%1$s»:\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+
+#, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "Неуместный маркер начала внедрённого символа в «%1$s»:\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+
+#, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol end marker in [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+#~ msgstr ""
+#~ "Неуместный маркер конца внедрённого символа в «%s»:\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, c-format
+#~ msgid ""
+#~ "Read an old format sym/sch file!\n"
+#~ "Please run g[sym|sch]update on:\n"
+#~ "[%1$s]"
+#~ msgstr ""
+#~ "Обнаружен файл символа или схемы в старом формате!\n"
+#~ "Выполните g[sym|sch]update для:\n"
+#~ "«%1$s»"
+
+#, c-format
+#~ msgid ""
+#~ "Read garbage in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "Некорректные данные в «%1$s»:\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+
+#~ msgid "Failed to parse arc object"
+#~ msgstr "Ошибка в определении дуги"
+
+#, c-format
+#~ msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+#~ msgstr "Дуга с нулевым радиусом «%1$c %2$d %3$d %4$d %5$d %6$d %7$d»"
+
+#, c-format
+#~ msgid "Found an invalid color [ %1$s ]"
+#~ msgstr "Недопустимое значение цветового индекса «%1$s»"
+
+#~ msgid "Setting color to default color."
+#~ msgstr "Установка цвета по умолчанию."
+
+#~ msgid "Failed to parse box object"
+#~ msgstr "Ошибка в определении прямоугольника"
+
+#, c-format
+#~ msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr ""
+#~ "Прямоугольник нулевой ширины или высоты «%1$c %2$d %3$d %4$d %5$d %6$d»"
+
+#~ msgid "Failed to parse bus object"
+#~ msgstr "Ошибка в определении шины"
+
+#, c-format
+#~ msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "Шина нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
+
+#, c-format
+#~ msgid "Found an invalid bus ripper direction [ %1$s ]"
+#~ msgstr ""
+#~ "Недопустимое значение поля «ripperdir» (направление ответвления от шины) "
+#~ "«%1$s»"
+
+#~ msgid "Resetting direction to neutral (no direction)."
+#~ msgstr "Сброс направления в нейтральное значение (направление не задано)."
+
+#~ msgid "Failed to parse circle object"
+#~ msgstr "Ошибка в определении окружности"
+
+#, c-format
+#~ msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr ""
+#~ "Окружность с нулевым или отрицательным радиусом «%1$c %2$d %3$d %4$d %5$d»"
+
+#~ msgid "Setting radius to 0."
+#~ msgstr "Установка радиуса в 0."
+
+#, c-format
+#~ msgid ""
+#~ "Component not found:\n"
+#~ " %1$s"
+#~ msgstr ""
+#~ "Не найден компонент:\n"
+#~ " %1$s"
+
+#~ msgid "Failed to parse component object"
+#~ msgstr "Ошибка в определении компонента"
+
+#, c-format
+#~ msgid ""
+#~ "Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr ""
+#~ "Недопустимое значение угла поворота в определении компонента «%1$c %2$d "
+#~ "%3$d %4$d %5$d %6$d %7$s»"
+
+#~ msgid "Setting angle to 0."
+#~ msgstr "Установка угла поворота в 0."
+
+#, c-format
+#~ msgid ""
+#~ "Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr ""
+#~ "Недопустимое значение поля «mirror» в определении компонента «%1$c %2$d "
+#~ "%3$d %4$d %5$d %6$d %7$s»"
+
+#~ msgid "Setting mirror to 0."
+#~ msgstr "Установка «mirror» в 0."
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. "
+#~ "обозначением %1$s:\n"
+#~ "\tПрикреплён некорректный атрибут «symversion=%2$s»"
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
+#~ "\tК экземпляру символа прикреплён атрибут «symversion=%2$s», но в файле "
+#~ "символа «symversion» отсутствует."
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
+#~ "\tЭкземпляр в схеме новее символа в библиотеке."
+
+#, c-format
+#~ msgid "Component [%1$s] has been embedded."
+#~ msgstr "Компонент «%1$s» внедрён."
+
+#, c-format
+#~ msgid ""
+#~ "Could not find component [%1$s], while trying to unembed. Component is "
+#~ "still embedded."
+#~ msgstr ""
+#~ "Не удалось найти библиотечный символ для исключаемого компонента «%1$s». "
+#~ "Компонент останется внедрённым."
+
+#, c-format
+#~ msgid "Component [%1$s] has been successfully unembedded."
+#~ msgstr "Компонент «%1$s» успешно исключён."
+
+#~ msgid "Failed to parse line object"
+#~ msgstr "Ошибка в определении линии"
+
+#, c-format
+#~ msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "Линия нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
+
+#~ msgid "Failed to parse net object"
+#~ msgstr "Ошибка в определении соединения"
+
+#, c-format
+#~ msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "Соединение нулевой длины «%1$c %2$d %3$d %4$d %5$d %6$d»"
+
+#~ msgid "Failed to parse path object"
+#~ msgstr "Ошибка в определении контура"
+
+#~ msgid "Unexpected end-of-file when reading path"
+#~ msgstr "Неожиданный конец файла при обработке контура"
+
+#~ msgid "Failed to parse picture definition"
+#~ msgstr "Ошибка в определении изображения"
+
+#, c-format
+#~ msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr "Изображение нулевой ширины или высоты «%1$c %2$d %3$d %4$d %5$d»"
+
+#, c-format
+#~ msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
+#~ msgstr ""
+#~ "Недопустимое значение поля «mirror» в определении изображения: %1$d."
+
+#~ msgid "Setting mirrored to 0."
+#~ msgstr "Установка «mirror» в 0."
+
+#, c-format
+#~ msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
+#~ msgstr ""
+#~ "Недопустимое значение поля «embedded» в определении изображения: %1$d."
+
+#~ msgid "Setting embedded to 0."
+#~ msgstr "Установка «embedded» в 0."
+
+#, c-format
+#~ msgid "Found an unsupported picture angle [ %1$d ]"
+#~ msgstr "Неподдерживаемое значение угла поворота изображения «%1$d»"
+
+#~ msgid "Found an image with no filename."
+#~ msgstr "Обнаружено изображение без имени файла"
+
+#, c-format
+#~ msgid "Failed to load image from embedded data [%1$s]: %2$s"
+#~ msgstr "Не удалось загрузить изображение из внедрённых данных «%1$s»: %2$s"
+
+#~ msgid "Base64 decoding failed."
+#~ msgstr "Ошибка расшифровки данных в формате base64."
+
+#~ msgid "Falling back to file loading. Picture unembedded."
+#~ msgstr "Возврат к загрузке из файла. Изображение исключено."
+
+#~ msgid "ERROR: unable to encode the picture."
+#~ msgstr "ОШИБКА: Невозможно закодировать изображение."
+
+# Ошибка, если данные изображения уже есть во внутреннем буфере
+#, c-format
+#~ msgid "Failed to load buffer image [%1$s]: %2$s"
+#~ msgstr "Не удалось загрузить изображение «%1$s» из буфера: %2$s"
+
+#, c-format
+#~ msgid "Failed to load image from [%1$s]: %2$s"
+#~ msgstr "Не удалось загрузить изображение из файла «%1$s»: %2$s"
+
+#, c-format
+#~ msgid "Picture %1$p has invalid angle %2$i\n"
+#~ msgstr "Недопустимое значение угла поворота изображения «%1$p»: %2$i\n"
+
+# Указатель на данные возвращает NULL
+#, c-format
+#~ msgid "Picture [%1$s] has no image data."
+#~ msgstr "Файл «%1$s» не содержит данных изображения."
+
+#~ msgid "Falling back to file loading. Picture is still unembedded."
+#~ msgstr "Возврат к загрузке из файла. Изображение всё ещё исключено."
+
+#, c-format
+#~ msgid "Picture [%1$s] has been embedded."
+#~ msgstr "Изображение «%1$s» внедрено."
+
+#, c-format
+#~ msgid "Failed to load image from file [%1$s]: %2$s"
+#~ msgstr "Не удалось загрузить изображение из файла «%1$s»: %2$s"
+
+#~ msgid "Picture is still embedded."
+#~ msgstr "Изображение всё ещё внедрено."
+
+#, c-format
+#~ msgid "Picture [%1$s] has been unembedded."
+#~ msgstr "Изображение «%1$s» исключено."
+
+#~ msgid "Failed to parse pin object"
+#~ msgstr "Ошибка в определении вывода"
+
+#~ msgid ""
+#~ "Found a pin which did not have the whichend field set.\n"
+#~ "Verify and correct manually."
+#~ msgstr ""
+#~ "Вывод с неустановленным полем «whichend» (сторона соединения).\n"
+#~ "Проверьте и исправьте вручную."
+
+#, c-format
+#~ msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+#~ msgstr ""
+#~ "Недопустимое значение поля «whichend» (сторона соединения) в определении "
+#~ "вывода (сброс в 0): %d"
+
+#~ msgid "Failed to parse text object"
+#~ msgstr "Ошибка в определении текстового объекта"
+
+#, c-format
+#~ msgid "Found an invalid text size [ %1$s ]"
+#~ msgstr "Недопустимое значение цветового индекса «%1$s»"
+
+#, c-format
+#~ msgid "Setting text size to %1$d."
+#~ msgstr "Установка размера текста в %1$d."
+
+#, c-format
+#~ msgid "Found an unsupported text angle [ %1$s ]"
+#~ msgstr "Неподдерживаемое значение угла поворота текста «%1$s»"
+
+#, c-format
+#~ msgid "Setting angle to %1$d."
+#~ msgstr "Установка угла поворота в %1$d."
+
+#, c-format
+#~ msgid "Found an unsupported text alignment [ %1$s ]"
+#~ msgstr "Неподдерживаемое значение выравнивания текста «%1$s»"
+
+#~ msgid "Setting alignment to LOWER_LEFT."
+#~ msgstr "Установка выравнивания по левому нижнему углу."
+
+#, c-format
+#~ msgid "Unexpected end-of-file after %1$d lines"
+#~ msgstr "Неожиданный конец файла после %1$d строк"
+
+#, c-format
+#~ msgid "Failed to stat [%1$s]: %2$s"
+#~ msgstr "Ошибка чтения статуса (stat) «%1$s»: %2$s"
+
+#, c-format
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Found an autosave backup file:\n"
+#~ "  %1$s.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "ВНИМАНИЕ: обнаружен файл автоматической резервной копии:\n"
+#~ "  %1$s.\n"
+#~ "\n"
+
+#~ msgid "I could not guess if it is newer, so you have to do it manually.\n"
+#~ msgstr "Не удалось определить новее ли он, решите это сами.\n"
+
+#~ msgid ""
+#~ "The backup copy is newer than the schematic, so it seems you should load "
+#~ "it instead of the original file.\n"
+#~ msgstr ""
+#~ "Резервная копия новее схемы, поэтому, видимо, следует загрузить её вместо "
+#~ "оригинального файла.\n"
+
+#~ msgid ""
+#~ "lepton-schematic usually makes backup copies automatically, and this "
+#~ "situation happens when it crashed or it was forced to exit abruptly.\n"
+#~ msgstr ""
+#~ "Обычно lepton-schematic автоматически создаёт резервные копии, и такая "
+#~ "ситуация может быть результатом фатального сбоя или неожиданного "
+#~ "принудительного завершения программы.\n"
+
+#, c-format
+#~ msgid "Cannot find file %1$s: %2$s"
+#~ msgstr "Файл «%1$s» не найден: %2$s"
+
+#~ msgid ""
+#~ "\n"
+#~ "Run lepton-schematic and correct the situation.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Запустите lepton-schematic и устраните проблему.\n"
+#~ "\n"
+
+# Эта функция пытается найти для указанного имени реальный файл (не являющийся
+# ссылкой).
+#, c-format
+#~ msgid "Can't get the real filename of %1$s: %2$s"
+#~ msgstr "Не удалось определить имя реального файла для %1$s: %2$s"
+
+#, c-format
+#~ msgid "Could NOT set previous backup file [%1$s] read-write."
+#~ msgstr ""
+#~ "Не удалось установить режим чтения-записи для файла предыдущей резервной  "
+#~ "копии «%1$s»."
+
+#, c-format
+#~ msgid "Can't save backup file: %1$s."
+#~ msgstr "Не удалось сохранить файл резервной копии: %1$s."
+
+#, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly."
+#~ msgstr ""
+#~ "Не удалось установить режим доступа только на чтение для резервной копии "
+#~ "файла «%1$s»."
+
+#, c-format
+#~ msgid "Failed to restore permissions on '%1$s': %2$s\n"
+#~ msgstr "Не удалось восстановить права для «%1$s»: %2$s\n"
+
+#, c-format
+#~ msgid "Failed to restore ownership on '%1$s': %2$s\n"
+#~ msgstr "Не удалось восстановить владельца для «%1$s»: %2$s\n"
+
+#, c-format
+#~ msgid "Could NOT save file: %1$s"
+#~ msgstr "Не удалось сохранить файл: %1$s"
+
+#~ msgid ""
+#~ "\n"
+#~ "Backtrace:\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Последовательность вызовов подпрограмм:\n"
+
+#~ msgid "RC file already loaded"
+#~ msgstr "Файл настроек уже загружен"
+
+#, c-format
+#~ msgid "Failed to load config from '%1$s': %2$s\n"
+#~ msgstr "Не удалось загрузить настройки из файла «%1$s»: %2$s\n"
+
+#, c-format
+#~ msgid "Loaded RC file [%1$s]"
+#~ msgstr "Загружен RC-файл «%1$s»"
+
+#, c-format
+#~ msgid "Failed to load RC file [%1$s]: "
+#~ msgstr "Не удалось загрузить RC-файл «%1$s»: "
+
+#~ msgid "ERROR: An unknown error occurred while parsing configuration files."
+#~ msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
+
+#, c-format
+#~ msgid "ERROR: %1$s"
+#~ msgstr "ОШИБКА: %1$s"
+
+#, c-format
+#~ msgid "ERROR: %1$s\n"
+#~ msgstr "ОШИБКА: %1$s\n"
+
+#, c-format
+#~ msgid "ERROR: The %1$s log may contain more information.\n"
+#~ msgstr "ОШИБКА: В файле журнала «%1$s» может быть больше информации.\n"
+
+# Эта функция пытается найти для указанного имени реальный файл (не являющийся
+# ссылкой).
+#, c-format
+#~ msgid "Can't get the real filename of %1$s."
+#~ msgstr "Не удалось определить имя реального файла для %1$s."
+
+#, c-format
+#~ msgid "Unable to delete backup file %1$s."
+#~ msgstr "Не удалось удалить файл резервной копии %1$s."
+
+#, c-format
+#~ msgid "Attribute [%1$s] already attached\n"
+#~ msgstr "Атрибут «%1$s» уже прикреплён\n"
+
+#~ msgid "Attempt to attach non text item as an attribute!\n"
+#~ msgstr "Попытка прикрепить нетекстовый элемент как атрибут!\n"
+
+#, c-format
+#~ msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+#~ msgstr "Попытка прикрепить атрибут «%1$s» к более чем одному объекту\n"
+
+#~ msgid "Tried to attach a non-text item as an attribute"
+#~ msgstr "Попытка прикрепить нетекстовый элемент как атрибут!"
+
+#~ msgid "Unexpected end-of-file in attribute list"
+#~ msgstr "Неожиданный конец файла при обработке списка атрибутов"
+
+#, fuzzy
+#~ msgid "Attribute"
+#~ msgstr "Найден атрибут ~A=~A"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Неправильно прикреплённый атрибут: ~A"
+
+#, c-format
+#~ msgid "Library command failed [%1$s]: %2$s"
+#~ msgstr "Сбой команды создания библиотеки «%1$s»: %2$s"
+
+#, c-format
+#~ msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+#~ msgstr ""
+#~ "Сбой команды создания библиотеки «%1$s»: необработанный сигнал %2$i."
+
+#, c-format
+#~ msgid "Library command failed [%1$s]"
+#~ msgstr "Сбой команды создания библиотеки «%1$s»"
+
+#, c-format
+#~ msgid ""
+#~ "Error output was:\n"
+#~ "%1$s"
+#~ msgstr ""
+#~ "Вывод ошибки:\n"
+#~ "%1$s"
+
+#, c-format
+#~ msgid "Library name [%1$s] already in use.  Using [%2$s]."
+#~ msgstr "Библиотека с именем «%1$s» уже используется. Новое имя: «%2$s»."
+
+#, c-format
+#~ msgid "Failed to open directory [%1$s]: %2$s"
+#~ msgstr "Не удалось открыть каталог «%1$s»: %2$s"
+
+#, c-format
+#~ msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+#~ msgstr ""
+#~ "Ошибка сканирования библиотеки «%1$s»: функция Scheme возвратила не "
+#~ "список."
+
+#, c-format
+#~ msgid "Non-string symbol name while scanning library [%1$s]"
+#~ msgstr ""
+#~ "При сканировании библиотеки обнаружено имя символа, не являющееся строкой "
+#~ "«%1$s»"
+
+#~ msgid "Cannot add library: name not specified."
+#~ msgstr "Невозможно добавить библиотеку: не указано имя."
+
+#, c-format
+#~ msgid ""
+#~ "Cannot add library [%1$s]: both 'list' and 'get' commands must be "
+#~ "specified."
+#~ msgstr ""
+#~ "Невозможно добавить библиотеку «%1$s»: должны быть указаны обе команды "
+#~ "«list» и «get»."
+
+#, c-format
+#~ msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+#~ msgstr ""
+#~ "Невозможно добавить библиотеку Scheme «%1$s»: функции обратного вызова "
+#~ "должны быть замыканиями."
+
+#, c-format
+#~ msgid "Failed to load symbol from file [%1$s]: %2$s"
+#~ msgstr "Ошибка загрузки символа из файла «%1$s»: %2$s"
+
+#, c-format
+#~ msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+#~ msgstr "Ошибка загрузки данных символа «%1$s» из источника «%2$s»"
+
+#, c-format
+#~ msgid "Component [%1$s] was not found in the component library."
+#~ msgstr "Компонент «%1$s» не найден в библиотеке компонентов."
+
+#, c-format
+#~ msgid "More than one component found with name [%1$s]."
+#~ msgstr "Обнаружено несколько компонентов с именем «%1$s»."
+
+#~ msgid "Did not find slotdef=#:#,#,#... attribute."
+#~ msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...»."
+
+#~ msgid "Improper slotdef syntax: missing \":\"."
+#~ msgstr "Неверный синтаксис атрибута «slotdef»: отсутствует «:»."
+
+#~ msgid "Did not find proper slotdef=#:#,#,#... attribute."
+#~ msgstr "Не найден атрибут «slotdef=#:#,#,#...» в допустимом формате."
+
+#~ msgid "component missing pinseq= attribute."
+#~ msgstr "Отсутствует атрибут «pinseq» у вывода компонента."
+
+#~ msgid "Undefined configuration filename"
+#~ msgstr "Не определено имя файла настроек"
+
+#, c-format
+#~ msgid "Configuration does not have group '%s'"
+#~ msgstr "В настройках не обнаружено группы «%s»"
+
+#, c-format
+#~ msgid "Configuration does not have key '%s'"
+#~ msgstr "В настройках не обнаружено ключа «%s»"
+
+#, fuzzy, c-format
+#~ msgid "ERROR: %s.\n"
+#~ msgstr "ОШИБКА: %1$s\n"
+
+#, scheme-format
+#~ msgid "Can't open directory ~S.\n"
+#~ msgstr "Не удалось открыть каталог ~S.\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "Could not find backend `~A' in load path.\n"
+#~ "~\n"
+#~ "                         Run `~A --list-backends' for a full list of "
+#~ "available backends.\n"
+#~ msgstr ""
+#~ "Не удалось найти драйвер «~A» в пути загрузки.\n"
+#~ "~\n"
+#~ "Список всех доступных драйверов можно узнать по команде «~A --list-"
+#~ "backends».\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "Can't load backend file ~S.\n"
+#~ "~\n"
+#~ "                         Backend files are expected to have names like "
+#~ "\"gnet-NAME.scm\"\n"
+#~ "~\n"
+#~ "                         and contain entry point function NAME (where "
+#~ "NAME is the backend's name).\n"
+#~ msgstr ""
+#~ "Не удалось загрузить файл драйвера ~S.\n"
+#~ "Ожидается, что имя файла драйвера имеет формат\n"
+#~ "«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
+#~ "является названием драйвера).\n"
+
+#, scheme-format
+#~ msgid "Netlist mode requested by backend is not supported: ~A\n"
+#~ msgstr ""
+#~ "Режим создания списка соединений, запрошенный драйвером, не "
+#~ "поддерживается: ~A\n"
+
+#~ msgid "Failed to load Scheme file before loading backend.\n"
+#~ msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
+
+#~ msgid "Failed to load Scheme file after loading backend.\n"
+#~ msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
+
+#, scheme-format
+#~ msgid "Invalid attribute (missing ':'): net=~A"
+#~ msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
 
 #~ msgid "~A is not a valid attribute: invalid string '~A'."
 #~ msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."

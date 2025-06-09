@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-09 15:00+0300\n"
 "PO-Revision-Date: 2012-02-20 00:09+0000\n"
 "Last-Translator: Carlos Nieves <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -18,716 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, fuzzy
-msgid "Lepton EDA circuit schematic"
-msgstr "Esquema de circuito gEDA"
-
-#, fuzzy
-msgid "Lepton EDA schematic symbol"
-msgstr "Símbolo de esquema gEDA"
-
-#, fuzzy
-msgid "Lepton EDA sch2pcb project"
-msgstr "Proyecto de gEDA gsch2pcb"
-
-#, fuzzy
-msgid "Lepton EDA sch2pcb Project"
-msgstr "Proyecto gEDA Gsch2pcb"
-
-#, fuzzy
-msgid "Lepton EDA Circuit Schematic"
-msgstr "Esquema de circuito gEDA"
-
-#, fuzzy
-msgid "Lepton EDA Schematic Symbol"
-msgstr "Símbolo de esquema gEDA"
-
-#, fuzzy, c-format
-msgid "File %1$s is read-only"
-msgstr "Fichero %s es de solo lectura"
-
-msgid "Schematic data was not valid UTF-8"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Read unexpected attach symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"Se ha encontrado un marcador de comienzo de símbolo embebido en un lugar "
-"inesperado en [%s]:\n"
-">>\n"
-"%s<<\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read unexpected embedded symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"No se esperaba un marcador de comienzo de símbolo embebido en [%s]:\n"
-">>\n"
-"%s<<\n"
-
-#, c-format
-msgid ""
-"Read unexpected embedded symbol end marker in [%s] :\n"
-">>\n"
-"%s<<\n"
-msgstr ""
-"No se esperaba un marcador de final de símbolo embebido en [%s]:\n"
-">>\n"
-"%s<<\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read an old format sym/sch file!\n"
-"Please run g[sym|sch]update on:\n"
-"[%1$s]"
-msgstr ""
-"Leído un archivo de símbolo/esquema con un formato antiguo !\n"
-"Por favor ejecute: g[sym|sch]update en: \n"
-"[%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read garbage in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"Se ha encontrado un contenido no válido en [%s] :\n"
-">>\n"
-"%s<<\n"
-
-msgid "Failed to parse arc object"
-msgstr "Falló el procesamiento de objeto arco"
-
-#, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
-msgstr ""
-"Se ha encontrado un arco con radio cero [ %c %d, %d, %d, %d, %d, %d ]\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid color [ %1$s ]"
-msgstr "Se ha encontrado un color no válido [%s]\n"
-
-#, fuzzy
-msgid "Setting color to default color."
-msgstr "Asignando el color por defecto al color\n"
-
-msgid "Failed to parse box object"
-msgstr "Falló el procesamiento de objeto caja"
-
-#, fuzzy, c-format
-msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr ""
-"Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d "
-"%d ]\n"
-
-msgid "Failed to parse bus object"
-msgstr "Falló el procesamiento de objeto bus"
-
-#, fuzzy, c-format
-msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "Se ha encontrado un bus de longitud cero [ %c %d %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid bus ripper direction [ %1$s ]"
-msgstr ""
-"Se ha encontrado una dirección del símbolo de extracción de bus no válida "
-"[ %s ]\n"
-
-#, fuzzy
-msgid "Resetting direction to neutral (no direction)."
-msgstr "Cambiando la dirección al valor por defecto neutro (sin dirección)\n"
-
-msgid "Failed to parse circle object"
-msgstr "Falló el procesamiento de objeto círculo"
-
-#, fuzzy, c-format
-msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr "Se encontró radio menor o igual a cero en círculo [ %c %d %d %d %d ]\n"
-
-#, fuzzy
-msgid "Setting radius to 0."
-msgstr "Asignando radio nulo.\n"
-
-#, fuzzy, c-format
-msgid ""
-"Component not found:\n"
-" %1$s"
-msgstr ""
-"No se ha encontrado el componente:\n"
-" %s"
-
-#, fuzzy
-msgid "Failed to parse component object"
-msgstr "Falló el procesamiento de objeto complejo"
-
-#, fuzzy, c-format
-msgid ""
-"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
-"%7$s ]"
-msgstr ""
-"Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d "
-"%d %d %d %d %s ]\n"
-
-#, fuzzy
-msgid "Setting angle to 0."
-msgstr "Cambiando el parámetro 'ángulo' a 0\n"
-
-#, fuzzy, c-format
-msgid ""
-"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
-"%6$d %7$s ]"
-msgstr ""
-"Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
-"%d %d %d %d %s ]\n"
-
-#, fuzzy
-msgid "Setting mirror to 0."
-msgstr "Estableciendo espejo en 0\n"
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
-msgstr ""
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion in symbol file"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
-msgstr ""
-"ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
-"\tNo se ha podido procesar el atributo añadido symversion=%s\n"
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
-msgstr ""
-"ADVERTENCIA: Se ha encontrado algo extraño en la versión de símbolo de la "
-"referencia %s:\n"
-"\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
-"no hay ningún atributo symversion= dentro del archivo del símbolo\n"
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
-msgstr ""
-"ADVERTENCIA: Se ha encontrado algo extraño en la versión de símbolo de la "
-"referencia %s:\n"
-"\tEl símbolo instanciado es más reciente que el símbolo en la librería\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] has been embedded."
-msgstr "Se ha incrustado el componente [%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Could not find component [%1$s], while trying to unembed. Component is still "
-"embedded."
-msgstr ""
-"No se puede encontrar el componente [%s], al intentar desincrustarlo.El "
-"componente permanece todavía incrustado\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] has been successfully unembedded."
-msgstr "Se ha desincrustado satisfactoriamente el componente [%s]\n"
-
-msgid "Failed to parse line object"
-msgstr "Falló el procesamiento de objeto línea"
-
-#, fuzzy, c-format
-msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "Se ha encontrado una línea con longitud cero [ %c %d %d %d %d %d ]\n"
-
-msgid "Failed to parse net object"
-msgstr "Falló el procesamiento de objeto red"
-
-#, fuzzy, c-format
-msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr ""
-"Se ha encontrado una conexión con longitud cero [ %c %d %d %d %d %d ]\n"
-
-msgid "Failed to parse path object"
-msgstr "Falló el procesamiento de objeto ruta"
-
-msgid "Unexpected end-of-file when reading path"
-msgstr "Fin de fichero inesperado mientras se leía la ruta"
-
-msgid "Failed to parse picture definition"
-msgstr "Falló el procesamiento de la definición de imagen"
-
-#, fuzzy, c-format
-msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr ""
-"Se ha encontrado una imagen con altura ó anchura cero [ %c %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
-msgstr ""
-"Se encontró una imagen con un valor erróneo en el parámetro 'mirrored': %d\n"
-
-#, fuzzy
-msgid "Setting mirrored to 0."
-msgstr "Cambiando el parámetro 'volteado' a 0\n"
-
-#, fuzzy, c-format
-msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
-msgstr ""
-"Se encontró una imagen con un valor erróneo en el parámetro 'embedded': %d\n"
-
-#, fuzzy
-msgid "Setting embedded to 0."
-msgstr "Cambiando el parámetro 'incrustado' a 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported picture angle [ %1$d ]"
-msgstr ""
-"Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
-
-msgid "Found an image with no filename."
-msgstr "Se encontró una iagen sin nombre de archivo."
-
-#, fuzzy, c-format
-msgid "Failed to load image from embedded data [%1$s]: %2$s"
-msgstr "Error al cargar imagen desde los datos embebidos [%s]: %s\n"
-
-msgid "Base64 decoding failed."
-msgstr "Ha fallado la decodificación Base64"
-
-#, fuzzy
-msgid "Falling back to file loading. Picture unembedded."
-msgstr "Volviendo al modo de carga de archivo. Imagen desincrustada.\n"
-
-#, fuzzy
-msgid "ERROR: unable to encode the picture."
-msgstr "ERROR: o_picture_save: imposible codificar la imagen.\n"
-
-#, fuzzy, c-format
-msgid "Failed to load buffer image [%1$s]: %2$s"
-msgstr "Falló la carga de imagen de buffer [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to load image from [%1$s]: %2$s"
-msgstr "Falló la carga de imagen desde [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Picture %1$p has invalid angle %2$i\n"
-msgstr "Imagen %p tiene ángulo inválido: %i\n"
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has no image data."
-msgstr "Imagen [%s] no tiene información de imagen.\n"
-
-#, fuzzy
-msgid "Falling back to file loading. Picture is still unembedded."
-msgstr "Volviendo a la carga de fichero. Imagen aún no está empotrada.\n"
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has been embedded."
-msgstr "Se ha incrustado la imagen [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load image from file [%1$s]: %2$s"
-msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
-
-#, fuzzy
-msgid "Picture is still embedded."
-msgstr "Imagen aún está empotrada.\n"
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has been unembedded."
-msgstr "Se ha desincrustado la imagen [%s]\n"
-
-msgid "Failed to parse pin object"
-msgstr "Falló el procesamiento de objeto pin"
-
-#, fuzzy
-msgid ""
-"Found a pin which did not have the whichend field set.\n"
-"Verify and correct manually."
-msgstr ""
-"Se ha encontrado una pata que no tiene el campo 'whichone'.\n"
-"Por favor, compruébelo y corríjalo manualmente.\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid whichend on a pin (reseting to zero): %d"
-msgstr ""
-"Se ha encontrado un parámetro 'whichone' en una pata (y se cambia a 0): %d\n"
-
-msgid "Failed to parse text object"
-msgstr "Falló el procesamiento de objeto texto"
-
-#, fuzzy, c-format
-msgid "Found an invalid text size [ %1$s ]"
-msgstr "Se ha encontrado un color no válido [%s]\n"
-
-#, fuzzy, c-format
-msgid "Setting text size to %1$d."
-msgstr "Cambiando el parámetro 'volteado' a 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported text angle [ %1$s ]"
-msgstr ""
-"Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
-
-#, fuzzy, c-format
-msgid "Setting angle to %1$d."
-msgstr "Cambiando el parámetro 'ángulo' a 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported text alignment [ %1$s ]"
-msgstr ""
-"Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
-
-#, fuzzy
-msgid "Setting alignment to LOWER_LEFT."
-msgstr "Cambiando el alineamiento a 'Abajo a la izquierda'\n"
-
-#, fuzzy, c-format
-msgid "Unexpected end-of-file after %1$d lines"
-msgstr "Fin de fichero inesperado luego de %d líneas"
-
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "No se ha podido determinar [%s]: %s"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"ADVERTENCIA: Se ha encontrado un archivo de copia de seguridad:\n"
-"  %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr ""
-"No se ha podido averiguar si es más reciente, así que lo tendrá que hacer "
-"usted manualmente.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"La copia de seguridad es más reciente que el esquema. Parece que debería "
-"cargar la copia de seguridad en vez del archivo original.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Gschem normalmente realiza copias de seguridad automáticamente y esta "
-"situaciónocurre cuando ha fallado o se ha forzado una salida abrupta.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "No se puede encontrar el archivo %s: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Ejecute gschem y corrija la situación.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "No se puede obtener el nombre de fichero real de %s: %s"
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-"No se ha podido poner el archivo de copia de seguridad anterior [%s] en modo "
-"de lectura-escritura\n"
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "No se puede guardar la copia de seguridad: %s"
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr ""
-"No se ha podido poner el archivo de copia de seguridad [%s] en modo de sólo "
-"lectura\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Error al abrir la carpeta [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Error al abrir la carpeta [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "No se pudo guardar el fichero: %s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-"\n"
-"Backtrace:\n"
-
-#, fuzzy
-msgid "RC file already loaded"
-msgstr "Fichero de Configuración ya está cargado"
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Falló la carga de imagen desde [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Un comando de librería ha fallado [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-"ERROR: Un error desconocido ocurrió mientras se procesaban los ficheros de "
-"configuración."
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr "ERROR: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s\n"
-msgstr "ERROR: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "ERROR: El log %s puede contener más información.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "No se puede obtener el nombre de fichero real de %s: %s"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr ""
-"s_page_delete: No se ha podido borrar el archivo de copia de seguridad %s."
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "¡Se ha intentado añadir un objeto que no es texto como un attributo!\n"
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "Se ha intentado añadir el attributo [%s] a más de un objeto\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr "Se trató de ajuntar un item de texto inválido como atributo."
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Fin de Fichero inesperado en lista de atributos."
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Objeto ~A tiene atributos"
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]: %2$s"
-msgstr "Un comando de librería ha fallado [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]: Uncaught signal %2$i."
-msgstr "Un comando de librería ha fallado [%s]: Señal no manejada %i.\n"
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]"
-msgstr "Un comando de librería ha fallado [%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Error output was:\n"
-"%1$s"
-msgstr ""
-"La salida de error fue:\n"
-"%s\n"
-
-#, fuzzy, c-format
-msgid "Library name [%1$s] already in use.  Using [%2$s]."
-msgstr ""
-"Ya se está usando el nombre de la librería [%s]. Se usará [%s] en su lugar.\n"
-
-#, fuzzy, c-format
-msgid "Failed to open directory [%1$s]: %2$s"
-msgstr "Error al abrir la carpeta [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
-msgstr ""
-"Error al buscar en la librería [%s]: la función de Scheme devolvió algo que "
-"no es una lista\n"
-
-#, fuzzy, c-format
-msgid "Non-string symbol name while scanning library [%1$s]"
-msgstr ""
-"Se ha encontrado un nombre de símbolo que no es una cadena de texto al "
-"buscar en la librería [%s]\n"
-
-#, fuzzy
-msgid "Cannot add library: name not specified."
-msgstr "No se puede añadir la librería: nombre sin especificar\n"
-
-#, fuzzy, c-format
-msgid ""
-"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
-msgstr ""
-"No se puede añadir la librería [%s]: se tienen que especificar los comandos "
-"'list' y 'get'.\n"
-
-#, fuzzy, c-format
-msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
-msgstr ""
-"No se puede añadir la librería de Scheme [%s]: las funciones de llamada "
-"deben ser cierres (closures)\n"
-
-#, fuzzy, c-format
-msgid "Failed to load symbol from file [%1$s]: %2$s"
-msgstr "Error al cargar símbolo desde el archivo [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to load symbol data [%1$s] from source [%2$s]"
-msgstr "Error al cargar los datos del símbolo [%s] desde la fuente [%s]\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] was not found in the component library."
-msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
-
-#, fuzzy, c-format
-msgid "More than one component found with name [%1$s]."
-msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
-
-#, fuzzy
-msgid "Did not find slotdef=#:#,#,#... attribute."
-msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
-
-#, fuzzy
-msgid "Improper slotdef syntax: missing \":\"."
-msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
-
-#, fuzzy
-msgid "Did not find proper slotdef=#:#,#,#... attribute."
-msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
-
-#, fuzzy
-msgid "component missing pinseq= attribute."
-msgstr "El componente no tiene el atributo pinseq\n"
-
-msgid "Undefined configuration filename"
-msgstr ""
-
-#, c-format
-msgid "Configuration does not have group '%s'"
-msgstr ""
-
-#, c-format
-msgid "Configuration does not have key '%s'"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "ERROR: %s.\n"
-msgstr "ERROR: %s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -746,7 +36,7 @@ msgid "Library at ~S has been already added."
 msgstr ""
 
 #, fuzzy, scheme-format
-msgid "Invalid path ~S passed to component-library.\n"
+msgid "Invalid path ~S passed to component-library."
 msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 
 msgid "Welcome to Lepton REPL!\n"
@@ -758,8 +48,8 @@ msgstr ""
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
+"  name: ~A\n"
+"  values: ~S\n"
 msgstr ""
 
 #, scheme-format
@@ -792,35 +82,36 @@ msgid ""
 msgstr ""
 
 #, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr ""
-
-#, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
 "Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
 "\n"
 "General options:\n"
-"  -q                  Quiet mode.\n"
-"  -v, --verbose       Verbose mode.\n"
-"  -o FILE             Filename for netlist data output.\n"
-"  -L DIR              Add DIR to Scheme search path.\n"
-"  -g BACKEND          Specify netlist backend to use.\n"
-"  -f FILE             Specify path to netlist backend file to use.\n"
-"  -O STRING           Pass an option string to backend.\n"
-"  -l FILE             Load Scheme file before loading backend.\n"
-"  -m FILE             Load Scheme file after loading backend.\n"
-"  -c EXPR             Evaluate Scheme expression at startup.\n"
-"  -i                  Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends Print a list of available netlist backends.\n"
-"  -h, --help          Help; this message.\n"
-"  -V, --version       Show version information.\n"
-"  --                  Treat all remaining arguments as filenames.\n"
+"  -q, --quiet             Quiet mode.\n"
+"  -v, --verbose           Verbose mode.\n"
+"  -o, --output=FILE       Filename for netlist data output.\n"
+"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
+"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
+"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
+"  -O, --backend-option=STRING\n"
+"                          Pass an option string to backend.\n"
+"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
+"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
+"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
+"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends     Print a list of available netlist backends.\n"
+"  -h, --help              Help; this message.\n"
+"  -V, --version           Show version information.\n"
+"  --                      Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to open schematic files: ~?\n"
+msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
 
 #, scheme-format
 msgid ""
@@ -828,6 +119,9 @@ msgid ""
 "Just got an error '~A':\n"
 "        ~A\n"
 "\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
 msgid "You gave neither backend to execute nor interactive mode!\n"
@@ -839,44 +133,6 @@ msgid ""
 "~\n"
 "                         Run `~A --help' for more information.\n"
 msgstr ""
-
-#, scheme-format
-msgid ""
-"Could not find backend `~A' in load path.\n"
-"~\n"
-"                         Run `~A --list-backends' for a full list of "
-"available backends.\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Can't load backend file ~S.\n"
-"~\n"
-"                         Backend files are expected to have names like "
-"\"gnet-NAME.scm\"\n"
-"~\n"
-"                         and contain entry point function NAME (where NAME "
-"is the backend's name).\n"
-msgstr ""
-
-#, scheme-format
-msgid "Netlist mode requested by backend is not supported: ~A\n"
-msgstr ""
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr ""
-
-#, fuzzy
-msgid "Failed to load Scheme file before loading backend.\n"
-msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
-
-#, fuzzy
-msgid "Failed to load backend file.\n"
-msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
-
-#, fuzzy
-msgid "Failed to load Scheme file after loading backend.\n"
-msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
 
 #, scheme-format
 msgid "Invalid hierarchy tag: ~S"
@@ -892,10 +148,6 @@ msgid ""
 "Non-graphical symbol ~S\n"
 "at ~A on page ~S\n"
 "has neither refdes= nor net=."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid attribute (missing ':'): net=~A"
 msgstr ""
 
 #, scheme-format
@@ -1209,6 +461,627 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Lepton EDA circuit schematic"
+#~ msgstr "Esquema de circuito gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA schematic symbol"
+#~ msgstr "Símbolo de esquema gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA sch2pcb project"
+#~ msgstr "Proyecto de gEDA gsch2pcb"
+
+#, fuzzy
+#~ msgid "Lepton EDA sch2pcb Project"
+#~ msgstr "Proyecto gEDA Gsch2pcb"
+
+#, fuzzy
+#~ msgid "Lepton EDA Circuit Schematic"
+#~ msgstr "Esquema de circuito gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA Schematic Symbol"
+#~ msgstr "Símbolo de esquema gEDA"
+
+#, fuzzy, c-format
+#~ msgid "File %1$s is read-only"
+#~ msgstr "Fichero %s es de solo lectura"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read unexpected attach symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "Se ha encontrado un marcador de comienzo de símbolo embebido en un lugar "
+#~ "inesperado en [%s]:\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "No se esperaba un marcador de comienzo de símbolo embebido en [%s]:\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol end marker in [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+#~ msgstr ""
+#~ "No se esperaba un marcador de final de símbolo embebido en [%s]:\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read an old format sym/sch file!\n"
+#~ "Please run g[sym|sch]update on:\n"
+#~ "[%1$s]"
+#~ msgstr ""
+#~ "Leído un archivo de símbolo/esquema con un formato antiguo !\n"
+#~ "Por favor ejecute: g[sym|sch]update en: \n"
+#~ "[%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read garbage in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "Se ha encontrado un contenido no válido en [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#~ msgid "Failed to parse arc object"
+#~ msgstr "Falló el procesamiento de objeto arco"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado un arco con radio cero [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid color [ %1$s ]"
+#~ msgstr "Se ha encontrado un color no válido [%s]\n"
+
+#, fuzzy
+#~ msgid "Setting color to default color."
+#~ msgstr "Asignando el color por defecto al color\n"
+
+#~ msgid "Failed to parse box object"
+#~ msgstr "Falló el procesamiento de objeto caja"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Failed to parse bus object"
+#~ msgstr "Falló el procesamiento de objeto bus"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "Se ha encontrado un bus de longitud cero [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid bus ripper direction [ %1$s ]"
+#~ msgstr ""
+#~ "Se ha encontrado una dirección del símbolo de extracción de bus no válida "
+#~ "[ %s ]\n"
+
+#, fuzzy
+#~ msgid "Resetting direction to neutral (no direction)."
+#~ msgstr ""
+#~ "Cambiando la dirección al valor por defecto neutro (sin dirección)\n"
+
+#~ msgid "Failed to parse circle object"
+#~ msgstr "Falló el procesamiento de objeto círculo"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr ""
+#~ "Se encontró radio menor o igual a cero en círculo [ %c %d %d %d %d ]\n"
+
+#, fuzzy
+#~ msgid "Setting radius to 0."
+#~ msgstr "Asignando radio nulo.\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Component not found:\n"
+#~ " %1$s"
+#~ msgstr ""
+#~ "No se ha encontrado el componente:\n"
+#~ " %s"
+
+#, fuzzy
+#~ msgid "Failed to parse component object"
+#~ msgstr "Falló el procesamiento de objeto complejo"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr ""
+#~ "Se ha encontrado un componente con un ángulo de rotación no válido [ %c "
+#~ "%d %d %d %d %d %s ]\n"
+
+#, fuzzy
+#~ msgid "Setting angle to 0."
+#~ msgstr "Cambiando el parámetro 'ángulo' a 0\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr ""
+#~ "Se ha encontrado un componente con un atributo de simetría no válido [ %c "
+#~ "%d %d %d %d %d %s ]\n"
+
+#, fuzzy
+#~ msgid "Setting mirror to 0."
+#~ msgstr "Estableciendo espejo en 0\n"
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+#~ msgstr ""
+#~ "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
+#~ "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+#~ msgstr ""
+#~ "ADVERTENCIA: Se ha encontrado algo extraño en la versión de símbolo de la "
+#~ "referencia %s:\n"
+#~ "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, "
+#~ "pero no hay ningún atributo symversion= dentro del archivo del símbolo\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+#~ msgstr ""
+#~ "ADVERTENCIA: Se ha encontrado algo extraño en la versión de símbolo de la "
+#~ "referencia %s:\n"
+#~ "\tEl símbolo instanciado es más reciente que el símbolo en la librería\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] has been embedded."
+#~ msgstr "Se ha incrustado el componente [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not find component [%1$s], while trying to unembed. Component is "
+#~ "still embedded."
+#~ msgstr ""
+#~ "No se puede encontrar el componente [%s], al intentar desincrustarlo.El "
+#~ "componente permanece todavía incrustado\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] has been successfully unembedded."
+#~ msgstr "Se ha desincrustado satisfactoriamente el componente [%s]\n"
+
+#~ msgid "Failed to parse line object"
+#~ msgstr "Falló el procesamiento de objeto línea"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado una línea con longitud cero [ %c %d %d %d %d %d ]\n"
+
+#~ msgid "Failed to parse net object"
+#~ msgstr "Falló el procesamiento de objeto red"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado una conexión con longitud cero [ %c %d %d %d %d %d ]\n"
+
+#~ msgid "Failed to parse path object"
+#~ msgstr "Falló el procesamiento de objeto ruta"
+
+#~ msgid "Unexpected end-of-file when reading path"
+#~ msgstr "Fin de fichero inesperado mientras se leía la ruta"
+
+#~ msgid "Failed to parse picture definition"
+#~ msgstr "Falló el procesamiento de la definición de imagen"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado una imagen con altura ó anchura cero [ %c %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
+#~ msgstr ""
+#~ "Se encontró una imagen con un valor erróneo en el parámetro 'mirrored': "
+#~ "%d\n"
+
+#, fuzzy
+#~ msgid "Setting mirrored to 0."
+#~ msgstr "Cambiando el parámetro 'volteado' a 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
+#~ msgstr ""
+#~ "Se encontró una imagen con un valor erróneo en el parámetro 'embedded': "
+#~ "%d\n"
+
+#, fuzzy
+#~ msgid "Setting embedded to 0."
+#~ msgstr "Cambiando el parámetro 'incrustado' a 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported picture angle [ %1$d ]"
+#~ msgstr ""
+#~ "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
+
+#~ msgid "Found an image with no filename."
+#~ msgstr "Se encontró una iagen sin nombre de archivo."
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from embedded data [%1$s]: %2$s"
+#~ msgstr "Error al cargar imagen desde los datos embebidos [%s]: %s\n"
+
+#~ msgid "Base64 decoding failed."
+#~ msgstr "Ha fallado la decodificación Base64"
+
+#, fuzzy
+#~ msgid "Falling back to file loading. Picture unembedded."
+#~ msgstr "Volviendo al modo de carga de archivo. Imagen desincrustada.\n"
+
+#, fuzzy
+#~ msgid "ERROR: unable to encode the picture."
+#~ msgstr "ERROR: o_picture_save: imposible codificar la imagen.\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load buffer image [%1$s]: %2$s"
+#~ msgstr "Falló la carga de imagen de buffer [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from [%1$s]: %2$s"
+#~ msgstr "Falló la carga de imagen desde [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture %1$p has invalid angle %2$i\n"
+#~ msgstr "Imagen %p tiene ángulo inválido: %i\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has no image data."
+#~ msgstr "Imagen [%s] no tiene información de imagen.\n"
+
+#, fuzzy
+#~ msgid "Falling back to file loading. Picture is still unembedded."
+#~ msgstr "Volviendo a la carga de fichero. Imagen aún no está empotrada.\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has been embedded."
+#~ msgstr "Se ha incrustado la imagen [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from file [%1$s]: %2$s"
+#~ msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
+
+#, fuzzy
+#~ msgid "Picture is still embedded."
+#~ msgstr "Imagen aún está empotrada.\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has been unembedded."
+#~ msgstr "Se ha desincrustado la imagen [%s]\n"
+
+#~ msgid "Failed to parse pin object"
+#~ msgstr "Falló el procesamiento de objeto pin"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found a pin which did not have the whichend field set.\n"
+#~ "Verify and correct manually."
+#~ msgstr ""
+#~ "Se ha encontrado una pata que no tiene el campo 'whichone'.\n"
+#~ "Por favor, compruébelo y corríjalo manualmente.\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+#~ msgstr ""
+#~ "Se ha encontrado un parámetro 'whichone' en una pata (y se cambia a 0): "
+#~ "%d\n"
+
+#~ msgid "Failed to parse text object"
+#~ msgstr "Falló el procesamiento de objeto texto"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid text size [ %1$s ]"
+#~ msgstr "Se ha encontrado un color no válido [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Setting text size to %1$d."
+#~ msgstr "Cambiando el parámetro 'volteado' a 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text angle [ %1$s ]"
+#~ msgstr ""
+#~ "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Setting angle to %1$d."
+#~ msgstr "Cambiando el parámetro 'ángulo' a 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text alignment [ %1$s ]"
+#~ msgstr ""
+#~ "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
+
+#, fuzzy
+#~ msgid "Setting alignment to LOWER_LEFT."
+#~ msgstr "Cambiando el alineamiento a 'Abajo a la izquierda'\n"
+
+#, fuzzy, c-format
+#~ msgid "Unexpected end-of-file after %1$d lines"
+#~ msgstr "Fin de fichero inesperado luego de %d líneas"
+
+#, fuzzy, c-format
+#~ msgid "Failed to stat [%1$s]: %2$s"
+#~ msgstr "No se ha podido determinar [%s]: %s"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Found an autosave backup file:\n"
+#~ "  %1$s.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "ADVERTENCIA: Se ha encontrado un archivo de copia de seguridad:\n"
+#~ "  %s.\n"
+#~ "\n"
+
+#~ msgid "I could not guess if it is newer, so you have to do it manually.\n"
+#~ msgstr ""
+#~ "No se ha podido averiguar si es más reciente, así que lo tendrá que hacer "
+#~ "usted manualmente.\n"
+
+#~ msgid ""
+#~ "The backup copy is newer than the schematic, so it seems you should load "
+#~ "it instead of the original file.\n"
+#~ msgstr ""
+#~ "La copia de seguridad es más reciente que el esquema. Parece que debería "
+#~ "cargar la copia de seguridad en vez del archivo original.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "lepton-schematic usually makes backup copies automatically, and this "
+#~ "situation happens when it crashed or it was forced to exit abruptly.\n"
+#~ msgstr ""
+#~ "Gschem normalmente realiza copias de seguridad automáticamente y esta "
+#~ "situaciónocurre cuando ha fallado o se ha forzado una salida abrupta.\n"
+
+#, fuzzy, c-format
+#~ msgid "Cannot find file %1$s: %2$s"
+#~ msgstr "No se puede encontrar el archivo %s: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Run lepton-schematic and correct the situation.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Ejecute gschem y corrija la situación.\n"
+#~ "\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s: %2$s"
+#~ msgstr "No se puede obtener el nombre de fichero real de %s: %s"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set previous backup file [%1$s] read-write."
+#~ msgstr ""
+#~ "No se ha podido poner el archivo de copia de seguridad anterior [%s] en "
+#~ "modo de lectura-escritura\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't save backup file: %1$s."
+#~ msgstr "No se puede guardar la copia de seguridad: %s"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly."
+#~ msgstr ""
+#~ "No se ha podido poner el archivo de copia de seguridad [%s] en modo de "
+#~ "sólo lectura\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to restore permissions on '%1$s': %2$s\n"
+#~ msgstr "Error al abrir la carpeta [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to restore ownership on '%1$s': %2$s\n"
+#~ msgstr "Error al abrir la carpeta [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save file: %1$s"
+#~ msgstr "No se pudo guardar el fichero: %s"
+
+#~ msgid ""
+#~ "\n"
+#~ "Backtrace:\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Backtrace:\n"
+
+#, fuzzy
+#~ msgid "RC file already loaded"
+#~ msgstr "Fichero de Configuración ya está cargado"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load config from '%1$s': %2$s\n"
+#~ msgstr "Falló la carga de imagen desde [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Loaded RC file [%1$s]"
+#~ msgstr "Un comando de librería ha fallado [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load RC file [%1$s]: "
+#~ msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
+
+#~ msgid "ERROR: An unknown error occurred while parsing configuration files."
+#~ msgstr ""
+#~ "ERROR: Un error desconocido ocurrió mientras se procesaban los ficheros "
+#~ "de configuración."
+
+#, fuzzy, c-format
+#~ msgid "ERROR: %1$s"
+#~ msgstr "ERROR: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "ERROR: %1$s\n"
+#~ msgstr "ERROR: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "ERROR: The %1$s log may contain more information.\n"
+#~ msgstr "ERROR: El log %s puede contener más información.\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s."
+#~ msgstr "No se puede obtener el nombre de fichero real de %s: %s"
+
+#, fuzzy, c-format
+#~ msgid "Unable to delete backup file %1$s."
+#~ msgstr ""
+#~ "s_page_delete: No se ha podido borrar el archivo de copia de seguridad %s."
+
+#~ msgid "Attempt to attach non text item as an attribute!\n"
+#~ msgstr ""
+#~ "¡Se ha intentado añadir un objeto que no es texto como un attributo!\n"
+
+#, fuzzy, c-format
+#~ msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+#~ msgstr "Se ha intentado añadir el attributo [%s] a más de un objeto\n"
+
+#~ msgid "Tried to attach a non-text item as an attribute"
+#~ msgstr "Se trató de ajuntar un item de texto inválido como atributo."
+
+#~ msgid "Unexpected end-of-file in attribute list"
+#~ msgstr "Fin de Fichero inesperado en lista de atributos."
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Objeto ~A tiene atributos"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]: %2$s"
+#~ msgstr "Un comando de librería ha fallado [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+#~ msgstr "Un comando de librería ha fallado [%s]: Señal no manejada %i.\n"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]"
+#~ msgstr "Un comando de librería ha fallado [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Error output was:\n"
+#~ "%1$s"
+#~ msgstr ""
+#~ "La salida de error fue:\n"
+#~ "%s\n"
+
+#, fuzzy, c-format
+#~ msgid "Library name [%1$s] already in use.  Using [%2$s]."
+#~ msgstr ""
+#~ "Ya se está usando el nombre de la librería [%s]. Se usará [%s] en su "
+#~ "lugar.\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to open directory [%1$s]: %2$s"
+#~ msgstr "Error al abrir la carpeta [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+#~ msgstr ""
+#~ "Error al buscar en la librería [%s]: la función de Scheme devolvió algo "
+#~ "que no es una lista\n"
+
+#, fuzzy, c-format
+#~ msgid "Non-string symbol name while scanning library [%1$s]"
+#~ msgstr ""
+#~ "Se ha encontrado un nombre de símbolo que no es una cadena de texto al "
+#~ "buscar en la librería [%s]\n"
+
+#, fuzzy
+#~ msgid "Cannot add library: name not specified."
+#~ msgstr "No se puede añadir la librería: nombre sin especificar\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Cannot add library [%1$s]: both 'list' and 'get' commands must be "
+#~ "specified."
+#~ msgstr ""
+#~ "No se puede añadir la librería [%s]: se tienen que especificar los "
+#~ "comandos 'list' y 'get'.\n"
+
+#, fuzzy, c-format
+#~ msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+#~ msgstr ""
+#~ "No se puede añadir la librería de Scheme [%s]: las funciones de llamada "
+#~ "deben ser cierres (closures)\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load symbol from file [%1$s]: %2$s"
+#~ msgstr "Error al cargar símbolo desde el archivo [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+#~ msgstr "Error al cargar los datos del símbolo [%s] desde la fuente [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] was not found in the component library."
+#~ msgstr ""
+#~ "No se ha encontrado el componente [%s] en la librería de componentes\n"
+
+#, fuzzy, c-format
+#~ msgid "More than one component found with name [%1$s]."
+#~ msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
+
+#, fuzzy
+#~ msgid "Did not find slotdef=#:#,#,#... attribute."
+#~ msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
+
+#, fuzzy
+#~ msgid "Improper slotdef syntax: missing \":\"."
+#~ msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
+
+#, fuzzy
+#~ msgid "Did not find proper slotdef=#:#,#,#... attribute."
+#~ msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
+
+#, fuzzy
+#~ msgid "component missing pinseq= attribute."
+#~ msgstr "El componente no tiene el atributo pinseq\n"
+
+#, fuzzy, c-format
+#~ msgid "ERROR: %s.\n"
+#~ msgstr "ERROR: %s\n"
+
+#, fuzzy
+#~ msgid "Failed to load Scheme file before loading backend.\n"
+#~ msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
+
+#, fuzzy
+#~ msgid "Failed to load Scheme file after loading backend.\n"
+#~ msgstr "Falló la carga de imagen de respaldo %s: %s.\n"
 
 #~ msgid "~A is not a valid attribute: invalid string '~A'."
 #~ msgstr "~A no es un atributo válido: cadena de caracteres inválida '~A'."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-09 15:00+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -17,671 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, fuzzy
-msgid "Lepton EDA circuit schematic"
-msgstr "‏مخطّط دارة gEDA"
-
-#, fuzzy
-msgid "Lepton EDA schematic symbol"
-msgstr "رمز مخطّط gEDA"
-
-#, fuzzy
-msgid "Lepton EDA sch2pcb project"
-msgstr "مشروع gEDA gsch2pcb"
-
-#, fuzzy
-msgid "Lepton EDA sch2pcb Project"
-msgstr "مشروع gEDA Gsch2pcb"
-
-#, fuzzy
-msgid "Lepton EDA Circuit Schematic"
-msgstr "مخطط دارة gEDA"
-
-#, fuzzy
-msgid "Lepton EDA Schematic Symbol"
-msgstr "رمز مخطّط gEDA"
-
-#, c-format
-msgid "File %1$s is read-only"
-msgstr ""
-
-msgid "Schematic data was not valid UTF-8"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Read unexpected attach symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"﻿قراءة علامة بداية غير متوقعة لرمز مضمّن في [%s] :\n"
-">>\n"
-"%s<<\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read unexpected embedded symbol start marker in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"﻿قراءة علامة بداية غير متوقعة لرمز مضمّن في [%s] :\n"
-">>\n"
-"%s<<\n"
-
-#, c-format
-msgid ""
-"Read unexpected embedded symbol end marker in [%s] :\n"
-">>\n"
-"%s<<\n"
-msgstr ""
-"﻿قراءة علامة نهاية غير متوقعة لرمز مضمن في [%s] :\n"
-">>\n"
-"%s<<\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read an old format sym/sch file!\n"
-"Please run g[sym|sch]update on:\n"
-"[%1$s]"
-msgstr ""
-"﻿قراءة ملف تنسيق sym/sch قديم!\n"
-"الرجاء تشغيل g[sym|sch]update في:\n"
-"[%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Read garbage in [%1$s] :\n"
-">>\n"
-"%2$s<<\n"
-msgstr ""
-"﻿قراءة القمامة في [%s] :\n"
-">>\n"
-"%s<<\n"
-
-msgid "Failed to parse arc object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
-msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid color [ %1$s ]"
-msgstr "عثر على لون غير صالح [ %s ]\n"
-
-#, fuzzy
-msgid "Setting color to default color."
-msgstr "تغيير لون إلى اللون الإفتراضي\n"
-
-msgid "Failed to parse box object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "عثر على إطار صفر العرض/الارتفاع [ %c %d %d %d %d %d ]\n"
-
-msgid "Failed to parse bus object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "عثر على ناقل صفر الطول [ %c %d %d %d %d %d ]\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid bus ripper direction [ %1$s ]"
-msgstr "عثر على اتجاه غير صالح لمموج الناقل [ %s ]\n"
-
-#, fuzzy
-msgid "Resetting direction to neutral (no direction)."
-msgstr "إعادة تعيين الاتجاه إلى محايد (دون اتجاه)\n"
-
-msgid "Failed to parse circle object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
-
-#, fuzzy
-msgid "Setting radius to 0."
-msgstr "تعيين 'زاوية' إلى 0\n"
-
-#, fuzzy, c-format
-msgid ""
-"Component not found:\n"
-" %1$s"
-msgstr ""
-"لم يعثر على مكون:\n"
-" %s"
-
-msgid "Failed to parse component object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
-"%7$s ]"
-msgstr "عثر على مكون باستدارة غير صالحة [ %c %d %d %d %d %d %s ]\n"
-
-#, fuzzy
-msgid "Setting angle to 0."
-msgstr "تعيين 'زاوية' إلى 0\n"
-
-#, fuzzy, c-format
-msgid ""
-"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
-"%6$d %7$s ]"
-msgstr "عثر على مكون بعلامة مرآة غير صالحة [ %c %d %d %d %d %d %s ]\n"
-
-#, fuzzy
-msgid "Setting mirror to 0."
-msgstr "تعيين 'معكوس' إلى 0\n"
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
-msgstr ""
-
-#, c-format
-msgid "WARNING: %s (%s): could not parse symversion in symbol file"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
-msgstr ""
-"تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
-"‏\tتعذر تحليل المرفق symversion=%s\n"
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
-msgstr ""
-"‏تحذير:  غرابة إصدار الرمز في refdes %s:\n"
-"‏\t‏symversion=%s مرفق إلى رمز مماثل، و لكن لا symversion= ضمن ملف الرمز\n"
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, c-format
-msgid ""
-"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
-msgstr ""
-"تحذير:  غرابة إصدار الرمز في refdes %s:\n"
-"‏\tالمثيل أحدث من الرمز في المكتبة\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] has been embedded."
-msgstr "تم تضمين المكون [‪%s‬]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Could not find component [%1$s], while trying to unembed. Component is still "
-"embedded."
-msgstr ""
-"﻿تعذر العثور على المكون [%s]، عند محاولة إلغاء التضمين. لا يزال المكون مضمنا\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] has been successfully unembedded."
-msgstr "ألغي تضمين المكون [%s] بنجاح\n"
-
-msgid "Failed to parse line object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "عثر على خط صفر الطول [ %c %d %d %d %d %d ]\n"
-
-msgid "Failed to parse net object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
-msgstr "عثر على شبكة صفر الطول [ %c %d %d %d %d %d ]\n"
-
-msgid "Failed to parse path object"
-msgstr ""
-
-msgid "Unexpected end-of-file when reading path"
-msgstr ""
-
-msgid "Failed to parse picture definition"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
-msgstr "﻿عثر على صورة صفر العرض/الارتفاع [ %c %d %d %d %d ]\n"
-
-#, c-format
-msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
-msgstr ""
-
-#, fuzzy
-msgid "Setting mirrored to 0."
-msgstr "تعيين 'معكوس' إلى 0\n"
-
-#, c-format
-msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
-msgstr ""
-
-#, fuzzy
-msgid "Setting embedded to 0."
-msgstr "تعيين 'مضمّن' إلى 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported picture angle [ %1$d ]"
-msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
-
-msgid "Found an image with no filename."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to load image from embedded data [%1$s]: %2$s"
-msgstr "‏تعذر تحميل الصورة من البيانات المضمنّة ‬‪[%s]‬:‪ %s‮\n"
-
-msgid "Base64 decoding failed."
-msgstr "فشل ترميز Base64."
-
-#, fuzzy
-msgid "Falling back to file loading. Picture unembedded."
-msgstr "التراجع لتحميل الملف. ألغي تضمين الصورة.\n"
-
-#, fuzzy
-msgid "ERROR: unable to encode the picture."
-msgstr "﻿خطأ: o_picture_save: غير قادر على ترميز الصورة.\n"
-
-#, fuzzy, c-format
-msgid "Failed to load buffer image [%1$s]: %2$s"
-msgstr "‏تعذر تحميل الرمز من الملف [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to load image from [%1$s]: %2$s"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, c-format
-msgid "Picture %1$p has invalid angle %2$i\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has no image data."
-msgstr "تم تضمين الصورة [‪%s‬]\n"
-
-#, fuzzy
-msgid "Falling back to file loading. Picture is still unembedded."
-msgstr "التراجع لتحميل الملف. ألغي تضمين الصورة.\n"
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has been embedded."
-msgstr "تم تضمين الصورة [‪%s‬]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load image from file [%1$s]: %2$s"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, fuzzy
-msgid "Picture is still embedded."
-msgstr "تم تضمين الصورة [‪%s‬]\n"
-
-#, fuzzy, c-format
-msgid "Picture [%1$s] has been unembedded."
-msgstr "تم إلغاء تضمين الصورة [‪%s‬]\n"
-
-msgid "Failed to parse pin object"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"Found a pin which did not have the whichend field set.\n"
-"Verify and correct manually."
-msgstr ""
-"عثر على دبوس ليس لديه حقل whichone (أيّ-واحد) معين.\n"
-"تحقق منه وصحيحه يدويا.\n"
-
-#, fuzzy, c-format
-msgid "Found an invalid whichend on a pin (reseting to zero): %d"
-msgstr ""
-"عثر على whichend (أيّ-نهاية) غير صالح على دبوس (إعادة تعيين إلى الصفر): %d\n"
-
-msgid "Failed to parse text object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Found an invalid text size [ %1$s ]"
-msgstr "عثر على لون غير صالح [ %s ]\n"
-
-#, fuzzy, c-format
-msgid "Setting text size to %1$d."
-msgstr "تعيين 'معكوس' إلى 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported text angle [ %1$s ]"
-msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
-
-#, fuzzy, c-format
-msgid "Setting angle to %1$d."
-msgstr "تعيين 'زاوية' إلى 0\n"
-
-#, fuzzy, c-format
-msgid "Found an unsupported text alignment [ %1$s ]"
-msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
-
-#, fuzzy
-msgid "Setting alignment to LOWER_LEFT."
-msgstr "تعيين المحاذاة إلى LOWER_LEFT (اليسار-السفلي)\n"
-
-#, c-format
-msgid "Unexpected end-of-file after %1$d lines"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "فشل إلى الحالة  [%s]: %s"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"﻿\n"
-"تحذير: العثور على ملف نسخ احتياطي:\n"
-"  %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "لم أستطع تخمين ما إذا كان أحدث، لذلك عليك أن تفعل ذلك يدويا.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"النسخة الاحتياطية أحدث من المخطّط، لذلك على ما يبدو يجب عليك تحميله بدلا من "
-"الملف الأصلي.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
-"يجبر على الخروج بشكل مفاجئ.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"شغل gschem و صحح الوضع.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr "تعذّر وضع الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "يتعذّر حفظ الملف الاحتياطي: %s."
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr "تعذّر وضع الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "تعذّر حفظ [‎%s‬]\n"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-
-msgid "RC file already loaded"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "فشل أمر المكتبة [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-#, c-format
-msgid "ERROR: %1$s"
-msgstr ""
-
-#, c-format
-msgid "ERROR: %1$s\n"
-msgstr ""
-
-#, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "محاولة إرفاق عنصر غير نصي كسمة!\n"
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "محاولة إرفاق السمة [%s] لأكثر من كائن واحد\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr ""
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr ""
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-msgid "Detached attribute"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]: %2$s"
-msgstr "فشل أمر المكتبة [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]: Uncaught signal %2$i."
-msgstr "فشل أمر المكتبة [%s]: إشارة لم تمسك %i.\n"
-
-#, fuzzy, c-format
-msgid "Library command failed [%1$s]"
-msgstr "فشل أمر المكتبة [%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Error output was:\n"
-"%1$s"
-msgstr ""
-"كان خطأ الإخراج:\n"
-"%s\n"
-
-#, fuzzy, c-format
-msgid "Library name [%1$s] already in use.  Using [%2$s]."
-msgstr "اسم المكتبة [%s] قيد الاستخدام بالفعل.استعمال [%s].\n"
-
-#, fuzzy, c-format
-msgid "Failed to open directory [%1$s]: %2$s"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
-msgstr "فشل في فحص المكتبة [%s]: أرجعت الدالة Scheme كائن آخر ليس قائمة\n"
-
-#, fuzzy, c-format
-msgid "Non-string symbol name while scanning library [%1$s]"
-msgstr "عثر على اسم رمز غير نصي أثناء تفحص المكتبة [%s]\n"
-
-#, fuzzy
-msgid "Cannot add library: name not specified."
-msgstr "يتعذر إضافة المكتبة: لم يحدد الاسم\n"
-
-#, fuzzy, c-format
-msgid ""
-"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
-msgstr ""
-"يتعذر إضافة المكتبة [%s]: يجب تحديد الأوامر 'list' (قائمة) و 'get' (أحصل "
-"على).\n"
-
-#, fuzzy, c-format
-msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
-msgstr "يتعذّر إضافة مكتبة Scheme [%s]: الرد يجب أن يكون الإغلاق.\n"
-
-#, fuzzy, c-format
-msgid "Failed to load symbol from file [%1$s]: %2$s"
-msgstr "‏تعذر تحميل الرمز من الملف [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to load symbol data [%1$s] from source [%2$s]"
-msgstr "تعذر تحميل بيانات الرمز [%s] من المصدر [%s]\n"
-
-#, fuzzy, c-format
-msgid "Component [%1$s] was not found in the component library."
-msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
-
-#, fuzzy, c-format
-msgid "More than one component found with name [%1$s]."
-msgstr "أكثر من مكون واحد عثر عليه باسم [%s]\n"
-
-msgid "Did not find slotdef=#:#,#,#... attribute."
-msgstr ""
-
-msgid "Improper slotdef syntax: missing \":\"."
-msgstr ""
-
-msgid "Did not find proper slotdef=#:#,#,#... attribute."
-msgstr ""
-
-msgid "component missing pinseq= attribute."
-msgstr ""
-
-msgid "Undefined configuration filename"
-msgstr ""
-
-#, c-format
-msgid "Configuration does not have group '%s'"
-msgstr ""
-
-#, c-format
-msgid "Configuration does not have key '%s'"
-msgstr ""
-
-#, c-format
-msgid "ERROR: %s.\n"
-msgstr ""
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -700,7 +35,7 @@ msgid "Library at ~S has been already added."
 msgstr ""
 
 #, fuzzy, scheme-format
-msgid "Invalid path ~S passed to component-library.\n"
+msgid "Invalid path ~S passed to component-library."
 msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
 msgid "Welcome to Lepton REPL!\n"
@@ -712,8 +47,8 @@ msgstr ""
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
+"  name: ~A\n"
+"  values: ~S\n"
 msgstr ""
 
 #, scheme-format
@@ -746,35 +81,36 @@ msgid ""
 msgstr ""
 
 #, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr ""
-
-#, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
 "Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
 "\n"
 "General options:\n"
-"  -q                  Quiet mode.\n"
-"  -v, --verbose       Verbose mode.\n"
-"  -o FILE             Filename for netlist data output.\n"
-"  -L DIR              Add DIR to Scheme search path.\n"
-"  -g BACKEND          Specify netlist backend to use.\n"
-"  -f FILE             Specify path to netlist backend file to use.\n"
-"  -O STRING           Pass an option string to backend.\n"
-"  -l FILE             Load Scheme file before loading backend.\n"
-"  -m FILE             Load Scheme file after loading backend.\n"
-"  -c EXPR             Evaluate Scheme expression at startup.\n"
-"  -i                  Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends Print a list of available netlist backends.\n"
-"  -h, --help          Help; this message.\n"
-"  -V, --version       Show version information.\n"
-"  --                  Treat all remaining arguments as filenames.\n"
+"  -q, --quiet             Quiet mode.\n"
+"  -v, --verbose           Verbose mode.\n"
+"  -o, --output=FILE       Filename for netlist data output.\n"
+"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
+"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
+"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
+"  -O, --backend-option=STRING\n"
+"                          Pass an option string to backend.\n"
+"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
+"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
+"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
+"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends     Print a list of available netlist backends.\n"
+"  -h, --help              Help; this message.\n"
+"  -V, --version           Show version information.\n"
+"  --                      Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to open schematic files: ~?\n"
+msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
 #, scheme-format
 msgid ""
@@ -782,6 +118,9 @@ msgid ""
 "Just got an error '~A':\n"
 "        ~A\n"
 "\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
 msgid "You gave neither backend to execute nor interactive mode!\n"
@@ -793,44 +132,6 @@ msgid ""
 "~\n"
 "                         Run `~A --help' for more information.\n"
 msgstr ""
-
-#, scheme-format
-msgid ""
-"Could not find backend `~A' in load path.\n"
-"~\n"
-"                         Run `~A --list-backends' for a full list of "
-"available backends.\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Can't load backend file ~S.\n"
-"~\n"
-"                         Backend files are expected to have names like "
-"\"gnet-NAME.scm\"\n"
-"~\n"
-"                         and contain entry point function NAME (where NAME "
-"is the backend's name).\n"
-msgstr ""
-
-#, scheme-format
-msgid "Netlist mode requested by backend is not supported: ~A\n"
-msgstr ""
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr ""
-
-#, fuzzy
-msgid "Failed to load Scheme file before loading backend.\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, fuzzy
-msgid "Failed to load backend file.\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, fuzzy
-msgid "Failed to load Scheme file after loading backend.\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
 #, scheme-format
 msgid "Invalid hierarchy tag: ~S"
@@ -846,10 +147,6 @@ msgid ""
 "Non-graphical symbol ~S\n"
 "at ~A on page ~S\n"
 "has neither refdes= nor net=."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid attribute (missing ':'): net=~A"
 msgstr ""
 
 #, scheme-format
@@ -1165,6 +462,468 @@ msgid "(use -v to view details)"
 msgstr ""
 
 #, fuzzy
+#~ msgid "Lepton EDA circuit schematic"
+#~ msgstr "‏مخطّط دارة gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA schematic symbol"
+#~ msgstr "رمز مخطّط gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA sch2pcb project"
+#~ msgstr "مشروع gEDA gsch2pcb"
+
+#, fuzzy
+#~ msgid "Lepton EDA sch2pcb Project"
+#~ msgstr "مشروع gEDA Gsch2pcb"
+
+#, fuzzy
+#~ msgid "Lepton EDA Circuit Schematic"
+#~ msgstr "مخطط دارة gEDA"
+
+#, fuzzy
+#~ msgid "Lepton EDA Schematic Symbol"
+#~ msgstr "رمز مخطّط gEDA"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read unexpected attach symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "﻿قراءة علامة بداية غير متوقعة لرمز مضمّن في [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol start marker in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "﻿قراءة علامة بداية غير متوقعة لرمز مضمّن في [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, c-format
+#~ msgid ""
+#~ "Read unexpected embedded symbol end marker in [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+#~ msgstr ""
+#~ "﻿قراءة علامة نهاية غير متوقعة لرمز مضمن في [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read an old format sym/sch file!\n"
+#~ "Please run g[sym|sch]update on:\n"
+#~ "[%1$s]"
+#~ msgstr ""
+#~ "﻿قراءة ملف تنسيق sym/sch قديم!\n"
+#~ "الرجاء تشغيل g[sym|sch]update في:\n"
+#~ "[%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Read garbage in [%1$s] :\n"
+#~ ">>\n"
+#~ "%2$s<<\n"
+#~ msgstr ""
+#~ "﻿قراءة القمامة في [%s] :\n"
+#~ ">>\n"
+#~ "%s<<\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
+#~ msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid color [ %1$s ]"
+#~ msgstr "عثر على لون غير صالح [ %s ]\n"
+
+#, fuzzy
+#~ msgid "Setting color to default color."
+#~ msgstr "تغيير لون إلى اللون الإفتراضي\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "عثر على إطار صفر العرض/الارتفاع [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "عثر على ناقل صفر الطول [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid bus ripper direction [ %1$s ]"
+#~ msgstr "عثر على اتجاه غير صالح لمموج الناقل [ %s ]\n"
+
+#, fuzzy
+#~ msgid "Resetting direction to neutral (no direction)."
+#~ msgstr "إعادة تعيين الاتجاه إلى محايد (دون اتجاه)\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
+
+#, fuzzy
+#~ msgid "Setting radius to 0."
+#~ msgstr "تعيين 'زاوية' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Component not found:\n"
+#~ " %1$s"
+#~ msgstr ""
+#~ "لم يعثر على مكون:\n"
+#~ " %s"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr "عثر على مكون باستدارة غير صالحة [ %c %d %d %d %d %d %s ]\n"
+
+#, fuzzy
+#~ msgid "Setting angle to 0."
+#~ msgstr "تعيين 'زاوية' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+#~ "%6$d %7$s ]"
+#~ msgstr "عثر على مكون بعلامة مرآة غير صالحة [ %c %d %d %d %d %d %s ]\n"
+
+#, fuzzy
+#~ msgid "Setting mirror to 0."
+#~ msgstr "تعيين 'معكوس' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+#~ msgstr ""
+#~ "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
+#~ "‏\tتعذر تحليل المرفق symversion=%s\n"
+
+#, fuzzy, c-format
+#~ msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
+#~ msgstr ""
+#~ "‏تحذير:  غرابة إصدار الرمز في refdes %s:\n"
+#~ "‏\t‏symversion=%s مرفق إلى رمز مماثل، و لكن لا symversion= ضمن ملف الرمز\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
+#~ msgstr ""
+#~ "تحذير:  غرابة إصدار الرمز في refdes %s:\n"
+#~ "‏\tالمثيل أحدث من الرمز في المكتبة\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] has been embedded."
+#~ msgstr "تم تضمين المكون [‪%s‬]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not find component [%1$s], while trying to unembed. Component is "
+#~ "still embedded."
+#~ msgstr ""
+#~ "﻿تعذر العثور على المكون [%s]، عند محاولة إلغاء التضمين. لا يزال المكون "
+#~ "مضمنا\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] has been successfully unembedded."
+#~ msgstr "ألغي تضمين المكون [%s] بنجاح\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "عثر على خط صفر الطول [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
+#~ msgstr "عثر على شبكة صفر الطول [ %c %d %d %d %d %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
+#~ msgstr "﻿عثر على صورة صفر العرض/الارتفاع [ %c %d %d %d %d ]\n"
+
+#, fuzzy
+#~ msgid "Setting mirrored to 0."
+#~ msgstr "تعيين 'معكوس' إلى 0\n"
+
+#, fuzzy
+#~ msgid "Setting embedded to 0."
+#~ msgstr "تعيين 'مضمّن' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported picture angle [ %1$d ]"
+#~ msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from embedded data [%1$s]: %2$s"
+#~ msgstr "‏تعذر تحميل الصورة من البيانات المضمنّة ‬‪[%s]‬:‪ %s‮\n"
+
+#~ msgid "Base64 decoding failed."
+#~ msgstr "فشل ترميز Base64."
+
+#, fuzzy
+#~ msgid "Falling back to file loading. Picture unembedded."
+#~ msgstr "التراجع لتحميل الملف. ألغي تضمين الصورة.\n"
+
+#, fuzzy
+#~ msgid "ERROR: unable to encode the picture."
+#~ msgstr "﻿خطأ: o_picture_save: غير قادر على ترميز الصورة.\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load buffer image [%1$s]: %2$s"
+#~ msgstr "‏تعذر تحميل الرمز من الملف [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from [%1$s]: %2$s"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has no image data."
+#~ msgstr "تم تضمين الصورة [‪%s‬]\n"
+
+#, fuzzy
+#~ msgid "Falling back to file loading. Picture is still unembedded."
+#~ msgstr "التراجع لتحميل الملف. ألغي تضمين الصورة.\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has been embedded."
+#~ msgstr "تم تضمين الصورة [‪%s‬]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load image from file [%1$s]: %2$s"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy
+#~ msgid "Picture is still embedded."
+#~ msgstr "تم تضمين الصورة [‪%s‬]\n"
+
+#, fuzzy, c-format
+#~ msgid "Picture [%1$s] has been unembedded."
+#~ msgstr "تم إلغاء تضمين الصورة [‪%s‬]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found a pin which did not have the whichend field set.\n"
+#~ "Verify and correct manually."
+#~ msgstr ""
+#~ "عثر على دبوس ليس لديه حقل whichone (أيّ-واحد) معين.\n"
+#~ "تحقق منه وصحيحه يدويا.\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid whichend on a pin (reseting to zero): %d"
+#~ msgstr ""
+#~ "عثر على whichend (أيّ-نهاية) غير صالح على دبوس (إعادة تعيين إلى الصفر): "
+#~ "%d\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid text size [ %1$s ]"
+#~ msgstr "عثر على لون غير صالح [ %s ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Setting text size to %1$d."
+#~ msgstr "تعيين 'معكوس' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text angle [ %1$s ]"
+#~ msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
+
+#, fuzzy, c-format
+#~ msgid "Setting angle to %1$d."
+#~ msgstr "تعيين 'زاوية' إلى 0\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text alignment [ %1$s ]"
+#~ msgstr "عثر على زاوية صورة غير مدعومة [ %d ]\n"
+
+#, fuzzy
+#~ msgid "Setting alignment to LOWER_LEFT."
+#~ msgstr "تعيين المحاذاة إلى LOWER_LEFT (اليسار-السفلي)\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to stat [%1$s]: %2$s"
+#~ msgstr "فشل إلى الحالة  [%s]: %s"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Found an autosave backup file:\n"
+#~ "  %1$s.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "﻿\n"
+#~ "تحذير: العثور على ملف نسخ احتياطي:\n"
+#~ "  %s.\n"
+#~ "\n"
+
+#~ msgid "I could not guess if it is newer, so you have to do it manually.\n"
+#~ msgstr "لم أستطع تخمين ما إذا كان أحدث، لذلك عليك أن تفعل ذلك يدويا.\n"
+
+#~ msgid ""
+#~ "The backup copy is newer than the schematic, so it seems you should load "
+#~ "it instead of the original file.\n"
+#~ msgstr ""
+#~ "النسخة الاحتياطية أحدث من المخطّط، لذلك على ما يبدو يجب عليك تحميله بدلا "
+#~ "من الملف الأصلي.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "lepton-schematic usually makes backup copies automatically, and this "
+#~ "situation happens when it crashed or it was forced to exit abruptly.\n"
+#~ msgstr ""
+#~ "عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
+#~ "يجبر على الخروج بشكل مفاجئ.\n"
+
+#, fuzzy, c-format
+#~ msgid "Cannot find file %1$s: %2$s"
+#~ msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Run lepton-schematic and correct the situation.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "شغل gschem و صحح الوضع.\n"
+#~ "\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s: %2$s"
+#~ msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set previous backup file [%1$s] read-write."
+#~ msgstr "تعذّر وضع الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't save backup file: %1$s."
+#~ msgstr "يتعذّر حفظ الملف الاحتياطي: %s."
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly."
+#~ msgstr "تعذّر وضع الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to restore permissions on '%1$s': %2$s\n"
+#~ msgstr "فشل في فتح الدليل [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to restore ownership on '%1$s': %2$s\n"
+#~ msgstr "فشل في فتح الدليل [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save file: %1$s"
+#~ msgstr "تعذّر حفظ [‎%s‬]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load config from '%1$s': %2$s\n"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy, c-format
+#~ msgid "Loaded RC file [%1$s]"
+#~ msgstr "فشل أمر المكتبة [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load RC file [%1$s]: "
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s."
+#~ msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
+
+#, fuzzy, c-format
+#~ msgid "Unable to delete backup file %1$s."
+#~ msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
+
+#~ msgid "Attempt to attach non text item as an attribute!\n"
+#~ msgstr "محاولة إرفاق عنصر غير نصي كسمة!\n"
+
+#, fuzzy, c-format
+#~ msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+#~ msgstr "محاولة إرفاق السمة [%s] لأكثر من كائن واحد\n"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]: %2$s"
+#~ msgstr "فشل أمر المكتبة [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]: Uncaught signal %2$i."
+#~ msgstr "فشل أمر المكتبة [%s]: إشارة لم تمسك %i.\n"
+
+#, fuzzy, c-format
+#~ msgid "Library command failed [%1$s]"
+#~ msgstr "فشل أمر المكتبة [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Error output was:\n"
+#~ "%1$s"
+#~ msgstr ""
+#~ "كان خطأ الإخراج:\n"
+#~ "%s\n"
+
+#, fuzzy, c-format
+#~ msgid "Library name [%1$s] already in use.  Using [%2$s]."
+#~ msgstr "اسم المكتبة [%s] قيد الاستخدام بالفعل.استعمال [%s].\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to open directory [%1$s]: %2$s"
+#~ msgstr "فشل في فتح الدليل [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
+#~ msgstr "فشل في فحص المكتبة [%s]: أرجعت الدالة Scheme كائن آخر ليس قائمة\n"
+
+#, fuzzy, c-format
+#~ msgid "Non-string symbol name while scanning library [%1$s]"
+#~ msgstr "عثر على اسم رمز غير نصي أثناء تفحص المكتبة [%s]\n"
+
+#, fuzzy
+#~ msgid "Cannot add library: name not specified."
+#~ msgstr "يتعذر إضافة المكتبة: لم يحدد الاسم\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Cannot add library [%1$s]: both 'list' and 'get' commands must be "
+#~ "specified."
+#~ msgstr ""
+#~ "يتعذر إضافة المكتبة [%s]: يجب تحديد الأوامر 'list' (قائمة) و 'get' (أحصل "
+#~ "على).\n"
+
+#, fuzzy, c-format
+#~ msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
+#~ msgstr "يتعذّر إضافة مكتبة Scheme [%s]: الرد يجب أن يكون الإغلاق.\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load symbol from file [%1$s]: %2$s"
+#~ msgstr "‏تعذر تحميل الرمز من الملف [%s]: %s\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load symbol data [%1$s] from source [%2$s]"
+#~ msgstr "تعذر تحميل بيانات الرمز [%s] من المصدر [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Component [%1$s] was not found in the component library."
+#~ msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
+
+#, fuzzy, c-format
+#~ msgid "More than one component found with name [%1$s]."
+#~ msgstr "أكثر من مكون واحد عثر عليه باسم [%s]\n"
+
+#, fuzzy
+#~ msgid "Failed to load Scheme file before loading backend.\n"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy
+#~ msgid "Failed to load Scheme file after loading backend.\n"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy
 #~ msgid "Failed to load fallback image.\n"
 #~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
@@ -1245,8 +1004,8 @@ msgstr ""
 #~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
 #~ "Use a list of strings instead."
 #~ msgstr ""
-#~ "تحذير: تم تغيير استعمال سلسلة نصية من أجل 'always-promote-attributes'."
-#~ "بدلا من ذلك استعمل قائمة سلاسل نصية\n"
+#~ "تحذير: تم تغيير استعمال سلسلة نصية من أجل 'always-promote-"
+#~ "attributes'.بدلا من ذلك استعمل قائمة سلاسل نصية\n"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "﻿‏o_save_objects: يملك الكائن %p نوعا مجهولا '%c'\n"
