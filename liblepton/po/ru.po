@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-09 14:39+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -711,574 +711,538 @@ msgid "ERROR: %s.\n"
 msgstr "ОШИБКА: %1$s\n"
 
 #, scheme-format
-msgid "Object ~A is not part of a page"
-msgstr "Объект ~A не является частью схемы"
+#~ msgid "Object ~A is not part of a page"
+#~ msgstr "Объект ~A не является частью схемы"
 
 #, scheme-format
-msgid "Invalid path ~S or source not readable.\n"
-msgstr "Недопустимый путь ~S или нет доступа на чтение к источнику.\n"
+#~ msgid "Invalid path ~S or source not readable.\n"
+#~ msgstr "Недопустимый путь ~S или нет доступа на чтение к источнику.\n"
 
 #, scheme-format
-msgid "File ~S is not readable.\n"
-msgstr "Нет доступа на чтение к файлу ~S.\n"
+#~ msgid "File ~S is not readable.\n"
+#~ msgstr "Нет доступа на чтение к файлу ~S.\n"
 
 #, scheme-format
-msgid "Library at ~S has been already added."
-msgstr "Библиотека в ~S уже добавлена."
-
-#, fuzzy, scheme-format
-msgid "Invalid path ~S passed to component-library.\n"
-msgstr "component-library: недопустимый путь «%1$s»\n"
-
-msgid "Welcome to Lepton REPL!\n"
-msgstr "Добро пожаловать в Lepton REPL!\n"
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr "ВНИМАНИЕ: Библиотека readline не поддерживается в ваших настройках.\n"
-
-#, scheme-format
-msgid ""
-"Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
-msgstr ""
-"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
-"имя: ~A\n"
-"значения: ~A\n"
-
-#, scheme-format
-msgid "Refdes ~a: Bad slot number: ~a.\n"
-msgstr "Позиционное обозначение ~A: неправильный номер секции: ~A\n"
-
-msgid "Couldn't wrap string  at requested position\n"
-msgstr "Не удалось разбить строку в указанной позиции\n"
-
-#, scheme-format
-msgid ""
-"There is a net name collision!\n"
-"The net called \"~A\" will be remapped\n"
-"to \"~A\" which is already used\n"
-"by the net called \"~A\".\n"
-"This may be caused by netname attributes colliding with other netnames\n"
-"due to truncation of the name, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-"Конфликт имён соединений!\n"
-"Соединение «~A» будет переименовано в «~A», но это имя уже\n"
-"используется для соединения «~A».  Это может быть вызвано\n"
-"конфликтом атрибутов «netname» вследствие сокращения имени,\n"
-"регистронезависимости или других ограничений, накладываемых данным\n"
-"форматом списка соединений.\n"
-
-#, scheme-format
-msgid ""
-"There is a refdes name collision!\n"
-"The refdes \"~A\" will be mapped\n"
-"to \"~A\" which is already used\n"
-"by \"~A\".\n"
-"This may be caused by refdes attributes colliding with others\n"
-"due to truncation of the refdes, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-"Конфликт позиционных обозначений!\n"
-"Позиционное обозначение «~A» будет переименовано в «~A», но это\n"
-"имя уже используется для «~A».  Это может быть вызвано конфликтом\n"
-"атрибутов «refdes» вследствие сокращения обозначения,\n"
-"регистронезависимости или других ограничений, накладываемых данным\n"
-"форматом списка соединений.\n"
-
-#, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr "Не удалось открыть каталог ~S.\n"
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
-"\n"
-"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
-"\n"
-"General options:\n"
-"  -q                  Quiet mode.\n"
-"  -v, --verbose       Verbose mode.\n"
-"  -o FILE             Filename for netlist data output.\n"
-"  -L DIR              Add DIR to Scheme search path.\n"
-"  -g BACKEND          Specify netlist backend to use.\n"
-"  -f FILE             Specify path to netlist backend file to use.\n"
-"  -O STRING           Pass an option string to backend.\n"
-"  -l FILE             Load Scheme file before loading backend.\n"
-"  -m FILE             Load Scheme file after loading backend.\n"
-"  -c EXPR             Evaluate Scheme expression at startup.\n"
-"  -i                  Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends Print a list of available netlist backends.\n"
-"  -h, --help          Help; this message.\n"
-"  -V, --version       Show version information.\n"
-"  --                  Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-"Использование: ~A [ОПЦИЯ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
-"\n"
-"Создание списка соединений из одного или нескольких файлов схем Lepton EDA.\n"
-"\n"
-"Общие опции:\n"
-"  -q                  Без вывода информации.\n"
-"  -v, --verbose       Подробный вывод.\n"
-"  -o ФАЙЛ             Вывести список соединений в файл.\n"
-"  -L КАТАЛОГ          Добавить каталог к пути поиска файлов Scheme.\n"
-"  -g ДРАЙВЕР          Задать драйвер списка соединений.\n"
-"  -f ФАЙЛ             Задать файл драйвера, указав путь к нему.\n"
-"  -O СТРОКА           Задать строку опций для драйвера.\n"
-"  -l ФАЙЛ             Загрузить файл Scheme до загрузки драйвера.\n"
-"  -m ФАЙЛ             Загрузить файл Scheme после загрузки драйвера.\n"
-"  -c ВЫРАЖЕНИЕ        Выполнить выражение Scheme при запуске.\n"
-"  -i                  После загрузки войти в интерактивный цикл Scheme "
-"(REPL).\n"
-"  -b, --list-backends Вывести список доступных драйверов списков "
-"соединений.\n"
-"  -h, --help          Данная справка.\n"
-"  -V, --version       Информация о версии.\n"
-"  --                  Считать все последующие аргументы именами файлов.\n"
-"\n"
-"Страница для отчётов об ошибках: https://github.com/lepton-eda/lepton-eda/"
-"issues\n"
-"Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
-
-#, scheme-format
-msgid ""
-"\n"
-"Just got an error '~A':\n"
-"        ~A\n"
-"\n"
-msgstr ""
-"\n"
-"Обнаружена ошибка «~A»:\n"
-"        ~A\n"
-"\n"
-
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
-
-#, scheme-format
-msgid ""
-"No schematic files specified for processing.\n"
-"~\n"
-"                         Run `~A --help' for more information.\n"
-msgstr ""
-"Не заданы файлы схем для обработки.\n"
-"~\n"
-"Подробности см. в выводе команды «~A --help».\n"
-
-#, scheme-format
-msgid ""
-"Could not find backend `~A' in load path.\n"
-"~\n"
-"                         Run `~A --list-backends' for a full list of "
-"available backends.\n"
-msgstr ""
-"Не удалось найти драйвер «~A» в пути загрузки.\n"
-"~\n"
-"Список всех доступных драйверов можно узнать по команде «~A --list-"
-"backends».\n"
-
-#, scheme-format
-msgid ""
-"Can't load backend file ~S.\n"
-"~\n"
-"                         Backend files are expected to have names like "
-"\"gnet-NAME.scm\"\n"
-"~\n"
-"                         and contain entry point function NAME (where NAME "
-"is the backend's name).\n"
-msgstr ""
-"Не удалось загрузить файл драйвера ~S.\n"
-"Ожидается, что имя файла драйвера имеет формат\n"
-"«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
-"является названием драйвера).\n"
-
-#, scheme-format
-msgid "Netlist mode requested by backend is not supported: ~A\n"
-msgstr ""
-"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
-"~A\n"
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
-
-msgid "Failed to load Scheme file before loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
-
-msgid "Failed to load backend file.\n"
-msgstr "Не удалось загрузить файл драйвера.\n"
-
-msgid "Failed to load Scheme file after loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
-
-#, scheme-format
-msgid "Invalid hierarchy tag: ~S"
-msgstr ""
+#~ msgid "Library at ~S has been already added."
+#~ msgstr "Библиотека в ~S уже добавлена."
 
 #, fuzzy, scheme-format
-msgid "Netlist mode ~S is not supported."
-msgstr ""
-"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
-"~A\n"
+#~ msgid "Invalid path ~S passed to component-library.\n"
+#~ msgstr "component-library: недопустимый путь «%1$s»\n"
+
+#~ msgid "Welcome to Lepton REPL!\n"
+#~ msgstr "Добро пожаловать в Lepton REPL!\n"
+
+#~ msgid "WARNING: Readline library is not supported in your configuration.\n"
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Библиотека readline не поддерживается в ваших настройках.\n"
 
 #, scheme-format
-msgid ""
-"\n"
-"Non-graphical symbol ~S\n"
-"at ~A on page ~S\n"
-"has neither refdes= nor net=."
-msgstr ""
+#~ msgid ""
+#~ "Possible attribute conflict for refdes: ~A\n"
+#~ "name: ~A\n"
+#~ "values: ~A\n"
+#~ msgstr ""
+#~ "Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
+#~ "имя: ~A\n"
+#~ "значения: ~A\n"
 
 #, scheme-format
-msgid "Invalid attribute (missing ':'): net=~A"
-msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
+#~ msgid "Refdes ~a: Bad slot number: ~a.\n"
+#~ msgstr "Позиционное обозначение ~A: неправильный номер секции: ~A\n"
+
+#~ msgid "Couldn't wrap string  at requested position\n"
+#~ msgstr "Не удалось разбить строку в указанной позиции\n"
 
 #, scheme-format
-msgid "Attached net ~A:~A overrides inherited net ~A:~A"
-msgstr "Прикреплённый атрибут «net» ~A:~A замещает унаследованный ~A:~A"
+#~ msgid ""
+#~ "There is a net name collision!\n"
+#~ "The net called \"~A\" will be remapped\n"
+#~ "to \"~A\" which is already used\n"
+#~ "by the net called \"~A\".\n"
+#~ "This may be caused by netname attributes colliding with other netnames\n"
+#~ "due to truncation of the name, case insensitivity, or\n"
+#~ "other limitations imposed by this netlist format.\n"
+#~ msgstr ""
+#~ "Конфликт имён соединений!\n"
+#~ "Соединение «~A» будет переименовано в «~A», но это имя уже\n"
+#~ "используется для соединения «~A».  Это может быть вызвано\n"
+#~ "конфликтом атрибутов «netname» вследствие сокращения имени,\n"
+#~ "регистронезависимости или других ограничений, накладываемых данным\n"
+#~ "форматом списка соединений.\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "There is a refdes name collision!\n"
+#~ "The refdes \"~A\" will be mapped\n"
+#~ "to \"~A\" which is already used\n"
+#~ "by \"~A\".\n"
+#~ "This may be caused by refdes attributes colliding with others\n"
+#~ "due to truncation of the refdes, case insensitivity, or\n"
+#~ "other limitations imposed by this netlist format.\n"
+#~ msgstr ""
+#~ "Конфликт позиционных обозначений!\n"
+#~ "Позиционное обозначение «~A» будет переименовано в «~A», но это\n"
+#~ "имя уже используется для «~A».  Это может быть вызвано конфликтом\n"
+#~ "атрибутов «refdes» вследствие сокращения обозначения,\n"
+#~ "регистронезависимости или других ограничений, накладываемых данным\n"
+#~ "форматом списка соединений.\n"
+
+#, scheme-format
+#~ msgid "Can't open directory ~S.\n"
+#~ msgstr "Не удалось открыть каталог ~S.\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+#~ "\n"
+#~ "Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+#~ "\n"
+#~ "General options:\n"
+#~ "  -q                  Quiet mode.\n"
+#~ "  -v, --verbose       Verbose mode.\n"
+#~ "  -o FILE             Filename for netlist data output.\n"
+#~ "  -L DIR              Add DIR to Scheme search path.\n"
+#~ "  -g BACKEND          Specify netlist backend to use.\n"
+#~ "  -f FILE             Specify path to netlist backend file to use.\n"
+#~ "  -O STRING           Pass an option string to backend.\n"
+#~ "  -l FILE             Load Scheme file before loading backend.\n"
+#~ "  -m FILE             Load Scheme file after loading backend.\n"
+#~ "  -c EXPR             Evaluate Scheme expression at startup.\n"
+#~ "  -i                  Enter interactive Scheme REPL after loading.\n"
+#~ "  -b, --list-backends Print a list of available netlist backends.\n"
+#~ "  -h, --help          Help; this message.\n"
+#~ "  -V, --version       Show version information.\n"
+#~ "  --                  Treat all remaining arguments as filenames.\n"
+#~ "\n"
+#~ "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+#~ "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+#~ msgstr ""
+#~ "Использование: ~A [ОПЦИЯ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
+#~ "\n"
+#~ "Создание списка соединений из одного или нескольких файлов схем Lepton "
+#~ "EDA.\n"
+#~ "\n"
+#~ "Общие опции:\n"
+#~ "  -q                  Без вывода информации.\n"
+#~ "  -v, --verbose       Подробный вывод.\n"
+#~ "  -o ФАЙЛ             Вывести список соединений в файл.\n"
+#~ "  -L КАТАЛОГ          Добавить каталог к пути поиска файлов Scheme.\n"
+#~ "  -g ДРАЙВЕР          Задать драйвер списка соединений.\n"
+#~ "  -f ФАЙЛ             Задать файл драйвера, указав путь к нему.\n"
+#~ "  -O СТРОКА           Задать строку опций для драйвера.\n"
+#~ "  -l ФАЙЛ             Загрузить файл Scheme до загрузки драйвера.\n"
+#~ "  -m ФАЙЛ             Загрузить файл Scheme после загрузки драйвера.\n"
+#~ "  -c ВЫРАЖЕНИЕ        Выполнить выражение Scheme при запуске.\n"
+#~ "  -i                  После загрузки войти в интерактивный цикл Scheme "
+#~ "(REPL).\n"
+#~ "  -b, --list-backends Вывести список доступных драйверов списков "
+#~ "соединений.\n"
+#~ "  -h, --help          Данная справка.\n"
+#~ "  -V, --version       Информация о версии.\n"
+#~ "  --                  Считать все последующие аргументы именами файлов.\n"
+#~ "\n"
+#~ "Страница для отчётов об ошибках: https://github.com/lepton-eda/lepton-eda/"
+#~ "issues\n"
+#~ "Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "\n"
+#~ "Just got an error '~A':\n"
+#~ "        ~A\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Обнаружена ошибка «~A»:\n"
+#~ "        ~A\n"
+#~ "\n"
+
+#~ msgid "You gave neither backend to execute nor interactive mode!\n"
+#~ msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "No schematic files specified for processing.\n"
+#~ "~\n"
+#~ "                         Run `~A --help' for more information.\n"
+#~ msgstr ""
+#~ "Не заданы файлы схем для обработки.\n"
+#~ "~\n"
+#~ "Подробности см. в выводе команды «~A --help».\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "Could not find backend `~A' in load path.\n"
+#~ "~\n"
+#~ "                         Run `~A --list-backends' for a full list of "
+#~ "available backends.\n"
+#~ msgstr ""
+#~ "Не удалось найти драйвер «~A» в пути загрузки.\n"
+#~ "~\n"
+#~ "Список всех доступных драйверов можно узнать по команде «~A --list-"
+#~ "backends».\n"
+
+#, scheme-format
+#~ msgid ""
+#~ "Can't load backend file ~S.\n"
+#~ "~\n"
+#~ "                         Backend files are expected to have names like "
+#~ "\"gnet-NAME.scm\"\n"
+#~ "~\n"
+#~ "                         and contain entry point function NAME (where "
+#~ "NAME is the backend's name).\n"
+#~ msgstr ""
+#~ "Не удалось загрузить файл драйвера ~S.\n"
+#~ "Ожидается, что имя файла драйвера имеет формат\n"
+#~ "«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
+#~ "является названием драйвера).\n"
+
+#, scheme-format
+#~ msgid "Netlist mode requested by backend is not supported: ~A\n"
+#~ msgstr ""
+#~ "Режим создания списка соединений, запрошенный драйвером, не "
+#~ "поддерживается: ~A\n"
+
+#~ msgid "Failed to evaluate Scheme expression at startup.\n"
+#~ msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
+
+#~ msgid "Failed to load Scheme file before loading backend.\n"
+#~ msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
+
+#~ msgid "Failed to load backend file.\n"
+#~ msgstr "Не удалось загрузить файл драйвера.\n"
+
+#~ msgid "Failed to load Scheme file after loading backend.\n"
+#~ msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
 
 #, fuzzy, scheme-format
-msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
-msgstr ""
-"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
-"имя: ~A\n"
-"значения: ~A\n"
+#~ msgid "Netlist mode ~S is not supported."
+#~ msgstr ""
+#~ "Режим создания списка соединений, запрошенный драйвером, не "
+#~ "поддерживается: ~A\n"
+
+#, scheme-format
+#~ msgid "Invalid attribute (missing ':'): net=~A"
+#~ msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
+
+#, scheme-format
+#~ msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+#~ msgstr "Прикреплённый атрибут «net» ~A:~A замещает унаследованный ~A:~A"
 
 #, fuzzy, scheme-format
-msgid "Loading subcircuit ~S."
-msgstr "Загрузка схемы ~S"
+#~ msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+#~ msgstr ""
+#~ "Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
+#~ "имя: ~A\n"
+#~ "значения: ~A\n"
 
 #, fuzzy, scheme-format
-msgid "Failed to load subcircuit ~S."
-msgstr "Не удалось загрузить файл драйвера.\n"
+#~ msgid "Loading subcircuit ~S."
+#~ msgstr "Загрузка схемы ~S"
 
 #, fuzzy, scheme-format
-msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
-msgstr "Отсутствует атрибут «pinseq» у вывода компонента."
-
-#, scheme-format
-msgid "Port component ~S has no pins."
-msgstr ""
-
-#, scheme-format
-msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"There are several subschematic components for the pin with \"pinlabel=~A\" "
-"of the component ~S."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
-"attribute."
-msgstr ""
-
-#, scheme-format
-msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
-msgstr ""
-
-#, scheme-format
-msgid "Zero radius arc at ~A"
-msgstr "Дуга с нулевым радиусом с координатами ~A"
-
-#, scheme-format
-msgid "Zero angle arc at ~A"
-msgstr "Дуга с нулевым углом с координатами ~A"
-
-#, scheme-format
-msgid ""
-"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
-msgstr ""
-"Установите «graphical=1», если нужно, чтобы символ был графическим; текущее "
-"значение: ~A"
-
-msgid "Graphical symbols should have device=none"
-msgstr "В графических символах должен быть атрибут «device=none»"
-
-#, scheme-format
-msgid "Forbidden attribute: ~A"
-msgstr "Запрещённый атрибут: ~A"
-
-#, scheme-format
-msgid "Obsolete attribute: ~A"
-msgstr "Устаревший атрибут: ~A"
-
-#, scheme-format
-msgid "Misplaced pin attribute: ~A"
-msgstr "Неправильно размещённый атрибут вывода: ~A"
-
-#, scheme-format
-msgid "Wrongly attached attribute: ~A"
-msgstr "Неправильно прикреплённый атрибут: ~A"
-
-#, scheme-format
-msgid "Unknown attribute: ~A"
-msgstr "Неизвестный атрибут: ~A"
-
-#, scheme-format
-msgid "Duplicate floating attribute: ~A"
-msgstr "Дублирование плавающего атрибута: ~A"
-
-#, scheme-format
-msgid "Missing required attribute: ~A"
-msgstr "Отсутствует обязательный атрибут: ~A"
-
-#, scheme-format
-msgid "Zero sized box at ~A"
-msgstr "Прямоугольник нулевого размера с координатами ~A"
-
-#, scheme-format
-msgid "Zero radius circle at ~A"
-msgstr "Окружность с нулевым радиусом с координатами ~A"
-
-#, scheme-format
-msgid "Object with forbidden connections: ~A"
-msgstr "Объект с запрещёнными соединениями: ~A"
-
-#, scheme-format
-msgid "Object forbidden inside symbols: ~A"
-msgstr "Объект запрещён внутри символов: ~A"
-
-#, scheme-format
-msgid "Zero length ~A at ~A"
-msgstr "~A нулевой длины с координатами ~A"
-
-msgid "Wrong check log destination!"
-msgstr "Неверное место назначения журнала проверки"
-
-#, scheme-format
-msgid "Missing pin number after \":\" or \",\": ~A"
-msgstr "Отсутствует номер вывода после \":\" или \",\": ~A"
-
-#, scheme-format
-msgid "Duplicate pin number in one net= attribute ~A: ~A"
-msgstr "Дублирование номера вывода «~A» в том же самом атрибуте net=: ~A"
-
-#, scheme-format
-msgid "Invalid net attribute: net=~A"
-msgstr "Недопустимый атрибут соединения: net=~A"
-
-#, scheme-format
-msgid "Duplicate pin number in net= attribute ~A: ~A"
-msgstr "Дублирование номера вывода «~A» в аттрибутах «net=:»: ~A"
-
-#, scheme-format
-msgid "Duplicate pin number ~A: ~A"
-msgstr "Дублирование номера вывода ~A: ~A"
+#~ msgid "Failed to load subcircuit ~S."
+#~ msgstr "Не удалось загрузить файл драйвера.\n"
 
 #, fuzzy, scheme-format
-msgid "Obsolete pin#=# attribute: ~A=~A"
-msgstr "Устаревший атрибут: ~A"
+#~ msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+#~ msgstr "Отсутствует атрибут «pinseq» у вывода компонента."
+
+#, scheme-format
+#~ msgid "Zero radius arc at ~A"
+#~ msgstr "Дуга с нулевым радиусом с координатами ~A"
+
+#, scheme-format
+#~ msgid "Zero angle arc at ~A"
+#~ msgstr "Дуга с нулевым углом с координатами ~A"
+
+#, scheme-format
+#~ msgid ""
+#~ "Set 'graphical=1' if you want the symbol to be graphical, current value: "
+#~ "~A"
+#~ msgstr ""
+#~ "Установите «graphical=1», если нужно, чтобы символ был графическим; "
+#~ "текущее значение: ~A"
+
+#~ msgid "Graphical symbols should have device=none"
+#~ msgstr "В графических символах должен быть атрибут «device=none»"
+
+#, scheme-format
+#~ msgid "Forbidden attribute: ~A"
+#~ msgstr "Запрещённый атрибут: ~A"
+
+#, scheme-format
+#~ msgid "Obsolete attribute: ~A"
+#~ msgstr "Устаревший атрибут: ~A"
+
+#, scheme-format
+#~ msgid "Misplaced pin attribute: ~A"
+#~ msgstr "Неправильно размещённый атрибут вывода: ~A"
+
+#, scheme-format
+#~ msgid "Wrongly attached attribute: ~A"
+#~ msgstr "Неправильно прикреплённый атрибут: ~A"
+
+#, scheme-format
+#~ msgid "Unknown attribute: ~A"
+#~ msgstr "Неизвестный атрибут: ~A"
+
+#, scheme-format
+#~ msgid "Duplicate floating attribute: ~A"
+#~ msgstr "Дублирование плавающего атрибута: ~A"
+
+#, scheme-format
+#~ msgid "Missing required attribute: ~A"
+#~ msgstr "Отсутствует обязательный атрибут: ~A"
+
+#, scheme-format
+#~ msgid "Zero sized box at ~A"
+#~ msgstr "Прямоугольник нулевого размера с координатами ~A"
+
+#, scheme-format
+#~ msgid "Zero radius circle at ~A"
+#~ msgstr "Окружность с нулевым радиусом с координатами ~A"
+
+#, scheme-format
+#~ msgid "Object with forbidden connections: ~A"
+#~ msgstr "Объект с запрещёнными соединениями: ~A"
+
+#, scheme-format
+#~ msgid "Object forbidden inside symbols: ~A"
+#~ msgstr "Объект запрещён внутри символов: ~A"
+
+#, scheme-format
+#~ msgid "Zero length ~A at ~A"
+#~ msgstr "~A нулевой длины с координатами ~A"
+
+#~ msgid "Wrong check log destination!"
+#~ msgstr "Неверное место назначения журнала проверки"
+
+#, scheme-format
+#~ msgid "Missing pin number after \":\" or \",\": ~A"
+#~ msgstr "Отсутствует номер вывода после \":\" или \",\": ~A"
+
+#, scheme-format
+#~ msgid "Duplicate pin number in one net= attribute ~A: ~A"
+#~ msgstr "Дублирование номера вывода «~A» в том же самом атрибуте net=: ~A"
+
+#, scheme-format
+#~ msgid "Invalid net attribute: net=~A"
+#~ msgstr "Недопустимый атрибут соединения: net=~A"
+
+#, scheme-format
+#~ msgid "Duplicate pin number in net= attribute ~A: ~A"
+#~ msgstr "Дублирование номера вывода «~A» в аттрибутах «net=:»: ~A"
+
+#, scheme-format
+#~ msgid "Duplicate pin number ~A: ~A"
+#~ msgstr "Дублирование номера вывода ~A: ~A"
 
 #, fuzzy, scheme-format
-msgid "Obsolete slot#=# attribute: ~A=~A"
-msgstr "Устаревший атрибут: ~A"
+#~ msgid "Obsolete pin#=# attribute: ~A=~A"
+#~ msgstr "Устаревший атрибут: ~A"
+
+#, fuzzy, scheme-format
+#~ msgid "Obsolete slot#=# attribute: ~A=~A"
+#~ msgstr "Устаревший атрибут: ~A"
 
 #, scheme-format
-msgid "Zero length path element: ~A"
-msgstr "Элемент контура нулевой длины: ~A"
+#~ msgid "Zero length path element: ~A"
+#~ msgstr "Элемент контура нулевой длины: ~A"
 
 #, scheme-format
-msgid "Zero sized picture at ~A"
-msgstr "Изображение нулевого размера с координатами ~A"
+#~ msgid "Zero sized picture at ~A"
+#~ msgstr "Изображение нулевого размера с координатами ~A"
 
 #, scheme-format
-msgid "Picture file ~S does not exist or is not readable."
-msgstr "Файл изображения ~S не существует или нет разрешения на чтение."
+#~ msgid "Picture file ~S does not exist or is not readable."
+#~ msgstr "Файл изображения ~S не существует или нет разрешения на чтение."
 
 #, scheme-format
-msgid "Duplicate pin attribute on one pin: ~A"
-msgstr "Дублирование аттрибута для одного вывода: ~A"
+#~ msgid "Duplicate pin attribute on one pin: ~A"
+#~ msgstr "Дублирование аттрибута для одного вывода: ~A"
 
 #, scheme-format
-msgid "Prohibited zero value pin attribute: ~A=0"
-msgstr "Запрещенное нулевое значение для атрибута вывода: ~A=0"
+#~ msgid "Prohibited zero value pin attribute: ~A=0"
+#~ msgstr "Запрещенное нулевое значение для атрибута вывода: ~A=0"
 
 #, scheme-format
-msgid "Invalid pin attribute value: pintype=~A"
-msgstr "Неверное значение атрибута вывода: pintype=~A"
+#~ msgid "Invalid pin attribute value: pintype=~A"
+#~ msgstr "Неверное значение атрибута вывода: pintype=~A"
 
 #, scheme-format
-msgid "Missing pin attribute: ~A"
-msgstr "Отсутствует атрибут вывода: ~A"
+#~ msgid "Missing pin attribute: ~A"
+#~ msgstr "Отсутствует атрибут вывода: ~A"
 
 #, scheme-format
-msgid "Duplicate pin attribute in the symbol: ~A=~A"
-msgstr "Дублирование аттрибута вывода в символе: ~A=~A"
+#~ msgid "Duplicate pin attribute in the symbol: ~A=~A"
+#~ msgstr "Дублирование аттрибута вывода в символе: ~A=~A"
 
 #, scheme-format
-msgid "Object: ~A"
-msgstr "Объект: ~A"
+#~ msgid "Object: ~A"
+#~ msgstr "Объект: ~A"
 
 #, scheme-format
-msgid "Found ~A=~A attribute"
-msgstr "Найден атрибут ~A=~A"
+#~ msgid "Found ~A=~A attribute"
+#~ msgstr "Найден атрибут ~A=~A"
 
 #, scheme-format
-msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
-msgstr "Недопустимый атрибут «slotdef=~A» (формат: «#:#,#,#,...»)"
+#~ msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+#~ msgstr "Недопустимый атрибут «slotdef=~A» (формат: «#:#,#,#,...»)"
 
 #, scheme-format
-msgid "Negative attribute: numslots=~A"
-msgstr "Отрицательное значение атрибута: numslots=~A"
+#~ msgid "Negative attribute: numslots=~A"
+#~ msgstr "Отрицательное значение атрибута: numslots=~A"
 
-msgid "numslots set to 0, symbol does not have slots"
-msgstr "Атрибут numslots установлен в 0, в символе нет секций"
-
-#, scheme-format
-msgid "Zero pin number in slotdef=~A"
-msgstr "Нулевой номер вывода в «slotdef=~A»"
+#~ msgid "numslots set to 0, symbol does not have slots"
+#~ msgstr "Атрибут numslots установлен в 0, в символе нет секций"
 
 #, scheme-format
-msgid "Found a zero slot in slotdef=~A"
-msgstr "Нулевой номер секции в «slotdef=~A»"
+#~ msgid "Zero pin number in slotdef=~A"
+#~ msgstr "Нулевой номер вывода в «slotdef=~A»"
 
 #, scheme-format
-msgid ""
-"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
-msgstr "Номер секции ~A в «slotdef=~A» больше максимального номера секции ~A"
+#~ msgid "Found a zero slot in slotdef=~A"
+#~ msgstr "Нулевой номер секции в «slotdef=~A»"
 
 #, scheme-format
-msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
-msgstr ""
-"Лишний атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» должно быть "
-"равно ~A)"
+#~ msgid ""
+#~ "Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+#~ msgstr ""
+#~ "Номер секции ~A в «slotdef=~A» больше максимального номера секции ~A"
 
 #, scheme-format
-msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
-msgstr ""
-"Отсутствующий атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» "
-"должно быть равно ~A)"
+#~ msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+#~ msgstr ""
+#~ "Лишний атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» должно "
+#~ "быть равно ~A)"
 
 #, scheme-format
-msgid "Not enough pins in slotdef=~A (must be ~A)"
-msgstr "Недостаточное количество выводов в «slotdef=~A» (должно быть ~A)"
+#~ msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+#~ msgstr ""
+#~ "Отсутствующий атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» "
+#~ "должно быть равно ~A)"
 
 #, scheme-format
-msgid "Too many pins in slotdef=~A (must be ~A)"
-msgstr "Избыточное количество выводов в «slotdef=~A» (должно быть ~A)"
+#~ msgid "Not enough pins in slotdef=~A (must be ~A)"
+#~ msgstr "Недостаточное количество выводов в «slotdef=~A» (должно быть ~A)"
 
 #, scheme-format
-msgid "Duplicate slot number ~A: ~A"
-msgstr "Дублирование номера секции ~A: ~A"
+#~ msgid "Too many pins in slotdef=~A (must be ~A)"
+#~ msgstr "Избыточное количество выводов в «slotdef=~A» (должно быть ~A)"
 
 #, scheme-format
-msgid "Found ~A distinct pins in slots"
-msgstr "Найдено ~A отдельных выводов в секциях"
+#~ msgid "Duplicate slot number ~A: ~A"
+#~ msgstr "Дублирование номера секции ~A: ~A"
 
 #, scheme-format
-msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
-msgstr ""
-"Простой текстовый объект с одним установленным флагом SHOW_NAME или "
-"SHOW_VALUE: ~A"
+#~ msgid "Found ~A distinct pins in slots"
+#~ msgstr "Найдено ~A отдельных выводов в секциях"
 
 #, scheme-format
-msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
-msgstr ""
-"Текст с символом '\\' в конце, рассмотрите экранирование символа с помощью "
-"'\\\\': ~A"
+#~ msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+#~ msgstr ""
+#~ "Простой текстовый объект с одним установленным флагом SHOW_NAME или "
+#~ "SHOW_VALUE: ~A"
 
 #, scheme-format
-msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
-msgstr "Текст с несбалансированными маркерами надчёркивания '\\_': ~A"
+#~ msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+#~ msgstr ""
+#~ "Текст с символом '\\' в конце, рассмотрите экранирование символа с "
+#~ "помощью '\\\\': ~A"
 
 #, scheme-format
-msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
-msgstr ""
-"Текст, включающий '\\', рассмотрите экранирование символа с помощью '\\\\': "
-"~A"
+#~ msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+#~ msgstr "Текст с несбалансированными маркерами надчёркивания '\\_': ~A"
 
 #, scheme-format
-msgid ""
-"Usage: ~A [OPTIONS] FILE ...\n"
-"\n"
-"Check one or more Lepton EDA symbol FILEs.\n"
-"\n"
-"General options:\n"
-"  -h, --help        Print usage\n"
-"  -V, --version     Show version information\n"
-"  -q, --quiet       Quiet mode\n"
-"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
-"                    messages, -vv will show errors and warnings, and\n"
-"                    -vvv displays also informational messages)\n"
-"\n"
-"Report bugs at <~A>\n"
-"Lepton EDA homepage: <~A>\n"
-msgstr ""
-"Использование: ~A [ОПЦИИ] ФАЙЛ ...\n"
-"\n"
-"Проверка одного или нескольких файлов символов Lepton EDA.\n"
-"\n"
-"Опции:\n"
-"  -h, --help     Вывод информации об использовании\n"
-"  -V, --version  Вывод информации о версии\n"
-"  -q, --quiet    Без вывода информации\n"
-"  -v, --verbose  Подробный вывод (с накопительным эффектом, т. е.\n"
-"                 -v для вывода ошибок, -vv для вывода ошибок и\n"
-"                 предупреждений, и -vvv также для вывода\n"
-"                 информационных сообщений.)\n"
-"\n"
-"Страница для отчётов об ошибках: ~A\n"
-"Домашняя страница Lepton EDA: ~A\n"
+#~ msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+#~ msgstr ""
+#~ "Текст, включающий '\\', рассмотрите экранирование символа с помощью '\\"
+#~ "\\': ~A"
 
 #, scheme-format
-msgid "Loading schematic ~S"
-msgstr "Загрузка схемы ~S"
+#~ msgid ""
+#~ "Usage: ~A [OPTIONS] FILE ...\n"
+#~ "\n"
+#~ "Check one or more Lepton EDA symbol FILEs.\n"
+#~ "\n"
+#~ "General options:\n"
+#~ "  -h, --help        Print usage\n"
+#~ "  -V, --version     Show version information\n"
+#~ "  -q, --quiet       Quiet mode\n"
+#~ "  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+#~ "                    messages, -vv will show errors and warnings, and\n"
+#~ "                    -vvv displays also informational messages)\n"
+#~ "\n"
+#~ "Report bugs at <~A>\n"
+#~ "Lepton EDA homepage: <~A>\n"
+#~ msgstr ""
+#~ "Использование: ~A [ОПЦИИ] ФАЙЛ ...\n"
+#~ "\n"
+#~ "Проверка одного или нескольких файлов символов Lepton EDA.\n"
+#~ "\n"
+#~ "Опции:\n"
+#~ "  -h, --help     Вывод информации об использовании\n"
+#~ "  -V, --version  Вывод информации о версии\n"
+#~ "  -q, --quiet    Без вывода информации\n"
+#~ "  -v, --verbose  Подробный вывод (с накопительным эффектом, т. е.\n"
+#~ "                 -v для вывода ошибок, -vv для вывода ошибок и\n"
+#~ "                 предупреждений, и -vvv также для вывода\n"
+#~ "                 информационных сообщений.)\n"
+#~ "\n"
+#~ "Страница для отчётов об ошибках: ~A\n"
+#~ "Домашняя страница Lepton EDA: ~A\n"
 
 #, scheme-format
-msgid "Checking: ~A\n"
-msgstr "Проверка: ~A\n"
+#~ msgid "Loading schematic ~S"
+#~ msgstr "Загрузка схемы ~S"
 
 #, scheme-format
-msgid ""
-"No schematic files specified for processing.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
-"Не указаны файлы для обработки.\n"
-"Подробности см. в выводе команды «~A --help».\n"
+#~ msgid "Checking: ~A\n"
+#~ msgstr "Проверка: ~A\n"
 
 #, scheme-format
-msgid "Info: ~A"
-msgstr "Информация: ~A"
+#~ msgid ""
+#~ "No schematic files specified for processing.\n"
+#~ "Run `~A --help' for more information.\n"
+#~ msgstr ""
+#~ "Не указаны файлы для обработки.\n"
+#~ "Подробности см. в выводе команды «~A --help».\n"
 
 #, scheme-format
-msgid "Warning: ~A"
-msgstr "Предупреждение: ~A"
+#~ msgid "Info: ~A"
+#~ msgstr "Информация: ~A"
 
 #, scheme-format
-msgid "ERROR: ~A"
-msgstr "ОШИБКА: ~A"
+#~ msgid "Warning: ~A"
+#~ msgstr "Предупреждение: ~A"
 
 #, scheme-format
-msgid "Unrecognized info: ~A\n"
-msgstr "Непонятная информация: ~A\n"
+#~ msgid "ERROR: ~A"
+#~ msgstr "ОШИБКА: ~A"
 
 #, scheme-format
-msgid "~A warning found"
-msgstr "Количество предупреждений: ~A"
-
-msgid "(use -vv to view details)"
-msgstr "(используйте опцию -vv для вывода подробностей)"
-
-msgid "No errors found"
-msgstr "Ошибок не найдено"
+#~ msgid "Unrecognized info: ~A\n"
+#~ msgstr "Непонятная информация: ~A\n"
 
 #, scheme-format
-msgid "~A ERROR found"
-msgstr "Количество ошибок: ~A"
+#~ msgid "~A warning found"
+#~ msgstr "Количество предупреждений: ~A"
 
-msgid "(use -v to view details)"
-msgstr "(используйте опцию -v для вывода подробностей)"
+#~ msgid "(use -vv to view details)"
+#~ msgstr "(используйте опцию -vv для вывода подробностей)"
+
+#~ msgid "No errors found"
+#~ msgstr "Ошибок не найдено"
+
+#, scheme-format
+#~ msgid "~A ERROR found"
+#~ msgstr "Количество ошибок: ~A"
+
+#~ msgid "(use -v to view details)"
+#~ msgstr "(используйте опцию -v для вывода подробностей)"
 
 #~ msgid "~A is not a valid attribute: invalid string '~A'."
 #~ msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."
