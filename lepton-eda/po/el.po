@@ -1,29 +1,15 @@
-# Greek translation for geda
+# Greek translation for lepton-eda
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  el.po (geda)  #-#-#-#-#\n"
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 15:00+0300\n"
-"PO-Revision-Date: 2012-09-01 18:46+0000\n"
-"Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
-"Language-Team: Greek <el@li.org>\n"
-"Language: el\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
-"X-Generator: Launchpad (build 16265)\n"
-"#-#-#-#-#  el.po (geda)  #-#-#-#-#\n"
-"Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-09-01 20:41+0000\n"
+"PO-Revision-Date: 2025-06-11 14:15+0300\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
 "Language: el\n"
