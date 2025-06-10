@@ -1,14 +1,14 @@
-# Bulgarian translation for geda
+# Bulgarian translation for lepton-eda
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-01-27 14:23+0000\n"
+"PO-Revision-Date: 2025-06-11 14:14+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: bg\n"
