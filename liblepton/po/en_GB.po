@@ -1,15 +1,15 @@
 # British English translation for liblepton
 # Copyright (C) 2007-2008 Peter Clifton
-# This file is distributed under the same license as the liblepton package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Peter Clifton <pcjc2@cam.ac.uk> 2007, 2008
-#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 14:39+0300\n"
-"PO-Revision-Date: 2012-01-31 12:15+0000\n"
+"PO-Revision-Date: 2025-06-11 10:02+0300\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: en_GB\n"
