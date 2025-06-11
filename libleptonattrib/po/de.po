@@ -1,14 +1,15 @@
-# German translation for gattrib
+# German translation for libleptonattrib
 # Copyright (C) 2007-2008 Werner Hoch
-# This file is distributed under the same license as the gattrib package.
-#
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Werner Hoch <werner.ho@gmx.de>, 2007.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2010-01-29 16:46+0000\n"
+"PO-Revision-Date: 2025-06-11 11:56+0300\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: de\n"
