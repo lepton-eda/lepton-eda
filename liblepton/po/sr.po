@@ -1,14 +1,14 @@
-# Serbian translation for geda
+# Serbian translation for liblepton
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 14:39+0300\n"
-"PO-Revision-Date: 2012-01-27 14:12+0000\n"
+"PO-Revision-Date: 2025-06-11 10:48+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "Language: sr\n"
