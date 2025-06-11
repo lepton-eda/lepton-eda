@@ -1,13 +1,15 @@
-# Arabic translation for geda
+# Arabic translation for libleptongui
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the geda package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 # عبدالله شلي (Abdellah Chelli) <abdellahchelli@gmail.com>, 2010.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2010-02-14 06:08+0000\n"
+"PO-Revision-Date: 2025-06-11 13:02+0300\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ar\n"
