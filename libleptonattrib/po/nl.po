@@ -1,14 +1,13 @@
-# Dutch translation for the lepton-attrib package.
-# Copyright (C) 2003-2008 Stuart D. Brorson and the respective original authors (which are listed on the respective files).
-# This file is distributed under the same license as the geda-gattrib package.
+# Dutch translation for libleptonattrib
+# This file is distributed under the same license as the lepton-eda package.
 # Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2014-08-31 20:31+0100\n"
+"PO-Revision-Date: 2025-06-11 12:22+0300\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: nl\n"
