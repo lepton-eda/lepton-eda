@@ -2,16 +2,15 @@
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # Copyright (C) 2014 gEDA Developers
 # Copyright (C) 2014 Marco Ciampa <ciampix@libero.it>
-#
 # This file is distributed under the same license as the
 # lepton-eda package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 14:39+0300\n"
-"PO-Revision-Date: 2015-01-12 10:15+0300\n"
+"PO-Revision-Date: 2025-06-11 10:24+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
