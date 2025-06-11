@@ -1,4 +1,4 @@
-# Russian translation for lepton-attrib
+# Russian translation for libleptonattrib
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # Copyright (c) 2011, 2014, 2020 Vladimir Zhbanov <vzhbanov@gmail.com>
 #
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2020-05-29 17:36+0300\n"
+"PO-Revision-Date: 2025-06-10 10:07+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
