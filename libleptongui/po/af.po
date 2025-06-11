@@ -1,13 +1,13 @@
-# Afrikaans translation for the gEDA gschem package.
+# Afrikaans translation for libleptongui
 # Copyright (C) 2008 Bernd Jendrissek <bernd.jendrissek@gmail.com>
-# This file is distributed under the same license as the gschem package.
-#
+# This file is distributed under the same license as the lepton-eda
+# package.
 msgid ""
 msgstr ""
-"Project-Id-Version: geda-gschem\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2010-02-14 01:03+0000\n"
+"PO-Revision-Date: 2025-06-10 10:10+0300\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: af\n"
