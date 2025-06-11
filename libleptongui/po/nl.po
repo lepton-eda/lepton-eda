@@ -1,13 +1,13 @@
-# Dutch translation for the gEDA gschem package.
+# Dutch translation for libleptongui
 # Copyright (C) 2002-2012 Bert Timmerman <bert.timmerman@xs4all.nl>
-# This file is distributed under the same license as the gEDA gschem package.
-#
+# This file is distributed under the same license as the lepton-eda
+# package.
 msgid ""
 msgstr ""
-"Project-Id-Version: geda-gschem\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2014-08-31 22:35+0100\n"
+"PO-Revision-Date: 2025-06-10 10:04+0300\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: nl\n"
