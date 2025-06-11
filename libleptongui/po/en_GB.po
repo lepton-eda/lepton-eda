@@ -1,14 +1,15 @@
-# British English translation for gschem.
+# British English translation for libleptongui
 # Copyright (C) 2007-2010 Peter Clifton <pcjc2@cam.ac.uk>
-# This file is distributed under the same license as the gschem package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Peter Clifton <pcjc2@cam.ac.uk>, 2007-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-01-31 12:14+0000\n"
+"PO-Revision-Date: 2025-06-11 13:32+0300\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: en_GB\n"
