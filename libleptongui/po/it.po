@@ -1,16 +1,17 @@
-# Italian translation for gschem
-# This file is distributed under the same license as the gschem package.
+# Italian translation for libleptongui
 # Copyright (C) 2004-2008 Michele Petrecca
-#
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Michele Petrecca <petrecca@interfree.it>, 2004.
 # Michele Petrecca <michelinux@alice.it>, 2005, 2006, 2007.
 # Marco Ciampa <ciampix@libero.it>, 2014
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2014-12-29 20:06+0300\n"
+"PO-Revision-Date: 2025-06-11 13:56+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: it\n"
