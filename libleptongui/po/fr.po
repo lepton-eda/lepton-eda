@@ -1,17 +1,17 @@
-# gEDA/gaf gschem french translation
+# French translation for libleptongui
 # Copyright (C) 2005-2008 Iznogood
 # Copyright (C) 2006-2008 Patrick Bernaud
-# This file is distributed under the same license as the gEDA/gaf package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Iznogood <iznogood@iznogood-factory.org>, 2005.
 # Patrick Bernaud <b-patrick@wanadoo.fr>, 2006.
 #
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: fr_FR\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-10-28 15:46+0000\n"
+"PO-Revision-Date: 2025-06-11 13:37+0300\n"
 "Last-Translator: Penegal <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: fr\n"
