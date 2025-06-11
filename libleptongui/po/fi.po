@@ -1,14 +1,14 @@
-# Finnish translation for geda
+# Finnish translation for libleptongui
 # Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-01-27 14:18+0000\n"
+"PO-Revision-Date: 2025-06-11 13:36+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "Language: fi\n"
