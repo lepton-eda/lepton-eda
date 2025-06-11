@@ -1,15 +1,15 @@
-# Spanish/Spain translation of gschem.
-# Copyright (C) 2005-2008 Carlos Nieves Onega
-# This file is distributed under the same license as the gschem package.
-#
-#
+# Spanish translation for libleptongui
+# Copyright (C) 2005-2008 Carlos Nieves Ónega
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2010.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gschem VERSION\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-03-23 03:04+0000\n"
+"PO-Revision-Date: 2025-06-11 13:35+0300\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: es\n"
