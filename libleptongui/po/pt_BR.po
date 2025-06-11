@@ -1,14 +1,15 @@
-# Brazilian Portuguese translation for gschem
-# This file is distributed under the same license as the gschem package.
+# Brazilian Portuguese translation for libleptongui
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Copyright (C) 2003-2008 Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>
 # Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>, 2003, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2012-01-31 12:08+0000\n"
+"PO-Revision-Date: 2025-06-10 13:34+0300\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <atodobom@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: pt_BR\n"
