@@ -1,14 +1,14 @@
-# Traditional Chinese translation for geda
+# Traditional Chinese translation for liblepton
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2025-06-09 14:39+0300\n"
-"PO-Revision-Date: 2012-01-27 14:12+0000\n"
+"PO-Revision-Date: 2025-06-11 11:04+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: zh_TW\n"
