@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.18\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: tools/attrib/lepton-attrib.scm:77
+#: tools/attrib/lepton-attrib.scm:70
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] FILE ...\n"
@@ -74,12 +74,12 @@ msgstr ""
 msgid " DONE\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:234 libleptonattrib/src/s_object.c:293
+#: libleptonattrib/src/s_object.c:235 libleptonattrib/src/s_object.c:294
 #, c-format
 msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:344
+#: libleptonattrib/src/s_object.c:345
 #, c-format
 msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
@@ -163,17 +163,17 @@ msgstr ""
 msgid "Can't get attrib name\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:565
+#: libleptonattrib/src/s_toplevel.c:566
 #, c-format
 msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:892
+#: libleptonattrib/src/s_toplevel.c:894
 #, c-format
 msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:901
+#: libleptonattrib/src/s_toplevel.c:903
 #, c-format
 msgid "We didn't find the refdes:pin in the master list.\n"
 msgstr ""
@@ -187,7 +187,7 @@ msgid "_OK"
 msgstr ""
 
 #: libleptonattrib/src/x_dialog.c:78 libleptonattrib/src/x_dialog.c:238
-#: libleptonattrib/src/x_dialog.c:420 libleptonattrib/src/x_fileselect.c:129
+#: libleptonattrib/src/x_dialog.c:421 libleptonattrib/src/x_fileselect.c:129
 msgid "_Cancel"
 msgstr ""
 
@@ -246,11 +246,11 @@ msgstr ""
 msgid "Close without saving"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:239 libleptonattrib/src/x_dialog.c:421
+#: libleptonattrib/src/x_dialog.c:239 libleptonattrib/src/x_dialog.c:422
 msgid "_Save"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:288
+#: libleptonattrib/src/x_dialog.c:289
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
@@ -264,41 +264,41 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:296
+#: libleptonattrib/src/x_dialog.c:297
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:323
+#: libleptonattrib/src/x_dialog.c:324
 msgid "Fatal error"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:348
+#: libleptonattrib/src/x_dialog.c:349
 msgid ""
 "Lepton Electronic Design Automation\n"
 "\n"
 "lepton-attrib is Lepton's successor of gEDA gattrib"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:351
+#: libleptonattrib/src/x_dialog.c:352
 #, c-format
 msgid "%s (git: %.7s)"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:357
+#: libleptonattrib/src/x_dialog.c:358
 msgid ""
 "Copyright © 2003-2006 Stuart D. Brorson\n"
 "Copyright © 2003-2016 gEDA Contributors\n"
 "Copyright © 2017-2022 Lepton EDA Contributors"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:362
+#: libleptonattrib/src/x_dialog.c:363
 msgid ""
 "Lepton EDA is freely distributable under the\n"
 "GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
 "See the COPYING file for the full text of the license."
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:393
+#: libleptonattrib/src/x_dialog.c:394
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -306,11 +306,11 @@ msgid ""
 "Would you like to overwrite it?"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:397
+#: libleptonattrib/src/x_dialog.c:398
 msgid "Overwrite file?"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:418
+#: libleptonattrib/src/x_dialog.c:419
 msgid "Export CSV"
 msgstr ""
 
