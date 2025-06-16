@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 14:09+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, fuzzy
-msgid "Zoom too small!  Cannot zoom further."
-msgstr "已經縮到最小了，無法再縮小囉！\n"
 
 #, fuzzy
 msgid "Toggle _Editor"
@@ -39,6 +35,10 @@ msgid ""
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
+
+#, fuzzy
+msgid "<b>Help</b>"
+msgstr "<b>選項</b>"
 
 #, fuzzy, c-format
 msgid ""
@@ -68,6 +68,19 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "覆蓋檔案？"
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "執行命令稿"
+
+msgid "_Run"
+msgstr ""
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
+msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -108,7 +121,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -294,7 +307,7 @@ msgstr ""
 msgid "Keystroke(s)"
 msgstr ""
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
 
 #, fuzzy
@@ -317,6 +330,103 @@ msgstr ""
 
 msgid "Evaluate"
 msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+
+msgid "Show Name & Value"
+msgstr "顯示名稱與數值"
+
+msgid "Show Value only"
+msgstr ""
+
+msgid "Show Name only"
+msgstr ""
+
+msgid "Promote"
+msgstr ""
+
+msgid "Duplicate"
+msgstr ""
+
+msgid "Delete"
+msgstr "刪除"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "複製到 緩衝區1"
+
+msgid "Edit Attributes"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Vis?"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "屬性"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "名稱："
+
+#, fuzzy
+msgid "_Value:"
+msgstr "數值："
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+msgid "Vi_sible"
+msgstr ""
+
+msgid "_Add"
+msgstr "新增"
+
+msgid "<b>Add Attribute</b>"
+msgstr "<b>增加屬性</b>"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "屬性"
+msgstr[1] "屬性"
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -432,23 +542,10 @@ msgstr ""
 msgid "Bus pin (graphical)"
 msgstr ""
 
-msgid "Preview Buffer"
-msgstr ""
-
 msgid "Hide"
 msgstr ""
 
 msgid "Hide text starting with:"
-msgstr ""
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "編輯文字"
-
-msgid "Number of Slots:"
-msgstr ""
-
-msgid "Slot Number:"
 msgstr ""
 
 #, fuzzy
@@ -558,148 +655,6 @@ msgid "Resnap Active"
 msgstr ""
 
 #, c-format
-msgid "New page created [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "New Window created [%1$s]"
-msgstr ""
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "執行命令稿"
-
-msgid "_Run"
-msgstr ""
-
-msgid "Scheme files (*.scm)"
-msgstr ""
-
-msgid "All files"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Executing Guile script [%s]"
-msgstr "正在執行guile腳本 [%s]\n"
-
-msgid "Saved All"
-msgstr "儲存全部"
-
-msgid "Failed to Save All"
-msgstr "儲存全部失敗"
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "開新視窗"
-
-msgid "Select objs first"
-msgstr "請先選擇物件"
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr ""
-
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "還原"
-
-#, fuzzy
-msgid "Empty clipboard"
-msgstr "複製到剪貼簿"
-
-msgid "Empty buffer"
-msgstr ""
-
-#, c-format
-msgid "Searching for source [%1$s]"
-msgstr ""
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr "無法讀取圖片: %s"
-
-msgid "Failed to descend hierarchy."
-msgstr ""
-
-#, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr ""
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-#, fuzzy
-msgid "Grid OFF"
-msgstr "關閉網格\n"
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-msgid "Invalid grid mode"
-msgstr ""
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-msgid "magnetic net mode: ON"
-msgstr ""
-
-msgid "magnetic net mode: OFF"
-msgstr ""
-
-#, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr ""
 
@@ -715,9 +670,6 @@ msgstr "刪除"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr "刪除"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "隱藏的文字現在已經可以看見\n"
@@ -725,26 +677,6 @@ msgstr "隱藏的文字現在已經可以看見\n"
 #, fuzzy
 msgid "Hidden text is now invisible"
 msgstr "隱藏的文字現在無法看見\n"
-
-#, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr "無法設定備份檔[%s]為唯讀\n"
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr "無法設定備份檔[%s]為唯讀\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr "無法儲存備份檔 [%s]\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -800,8 +732,36 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-msgid "Undo/Redo is disabled in configuration"
+#, c-format
+msgid "Can't get the real filename of %1$s."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr "無法儲存備份檔 [%s]\n"
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+#, fuzzy
+msgid "Revert"
+msgstr "還原"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -815,6 +775,16 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "無法讀取圖片: %s"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "編輯文字"
+
+msgid "Number of Slots:"
+msgstr ""
+
+msgid "Slot Number:"
+msgstr ""
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
@@ -831,21 +801,11 @@ msgstr ""
 msgid "N_ame:"
 msgstr "名稱："
 
-#, fuzzy
-msgid "_Value:"
-msgstr "數值："
-
-msgid "Vi_sible"
-msgstr ""
-
 msgid "Show Value Only"
 msgstr "僅顯示數值"
 
 msgid "Show Name Only"
 msgstr "僅顯示名稱"
-
-msgid "Show Name & Value"
-msgstr "顯示名稱與數值"
 
 msgid "<b>Attach Options</b>"
 msgstr ""
@@ -956,9 +916,6 @@ msgid "Reset filter"
 msgstr ""
 
 msgid "Reload all libraries"
-msgstr ""
-
-msgid "Value"
 msgstr ""
 
 msgid "Default behavior - reference component"
@@ -1184,87 +1141,6 @@ msgstr ""
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-
-msgid "Show Value only"
-msgstr ""
-
-msgid "Show Name only"
-msgstr ""
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr ""
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "複製到 緩衝區1"
-
-msgid "Edit Attributes"
-msgstr ""
-
-msgid "Vis?"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "屬性"
-
-#, fuzzy
-msgid "_Name:"
-msgstr "名稱："
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "新增"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>增加屬性</b>"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "屬性"
-msgstr[1] "屬性"
-
 #, fuzzy
 msgid "Add Text"
 msgstr "新增文字"
@@ -1384,7 +1260,7 @@ msgid "Loading schematic [%1$s]"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Could NOT save page [%1$s]\n"
+msgid "Could NOT save page [%1$s]"
 msgstr "無法儲存備份檔 [%s]\n"
 
 msgid "Error while trying to save"
@@ -1408,63 +1284,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Closing [%1$s]"
 msgstr "關閉 [%s]\n"
-
-msgid "New"
-msgstr "新增分頁"
-
-msgid "New file"
-msgstr ""
-
-#, fuzzy
-msgid "Open file"
-msgstr "開啟檔案"
-
-msgid "Save file"
-msgstr "儲存檔案"
-
-msgid "Undo"
-msgstr "復原"
-
-msgid "Undo last operation"
-msgstr "復原上一次操作"
-
-msgid "Redo"
-msgstr "取消上次復原"
-
-msgid "Redo last undo"
-msgstr "取消上一次復原"
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Component"
-msgstr "元件"
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Add Text..."
-msgstr "新增文字"
-
-msgid "Select"
-msgstr "選擇"
-
-msgid "Select mode"
-msgstr "選擇模式"
 
 msgid "Show"
 msgstr ""
@@ -1528,683 +1347,432 @@ msgstr "gEDA 電路圖編輯器"
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr "用 gschem 建立並編輯電子電路圖表及符號"
 
-msgid "Open Recen_t"
-msgstr "最近的檔案"
+#, fuzzy
+#~ msgid "Zoom too small!  Cannot zoom further."
+#~ msgstr "已經縮到最小了，無法再縮小囉！\n"
 
-msgid "Save All"
-msgstr "儲存全部"
+#, fuzzy, c-format
+#~ msgid "Executing Guile script [%s]"
+#~ msgstr "正在執行guile腳本 [%s]\n"
 
-msgid "_Print..."
-msgstr "列印檔案"
+#~ msgid "Saved All"
+#~ msgstr "儲存全部"
+
+#~ msgid "Failed to Save All"
+#~ msgstr "儲存全部失敗"
 
 #, fuzzy
-msgid "Write _Image..."
-msgstr "轉換成圖片"
+#~ msgid "Closing Window"
+#~ msgstr "開新視窗"
 
-msgid "Invoke Macro..."
-msgstr ""
-
-msgid "Execute Script..."
-msgstr "執行命令稿"
-
-msgid "REPL..."
-msgstr ""
-
-msgid "New Window"
-msgstr "開新視窗"
-
-msgid "_Close Window"
-msgstr ""
-
-msgid "_Quit"
-msgstr "結束程式"
-
-msgid "_Undo"
-msgstr "還原"
-
-msgid "_Redo"
-msgstr "取消還原"
-
-msgid "Select All"
-msgstr ""
-
-msgid "Deselect"
-msgstr ""
-
-msgid "Rotate 90 Mode"
-msgstr "逆時針旋轉90度"
+#~ msgid "Select objs first"
+#~ msgstr "請先選擇物件"
 
 #, fuzzy
-msgid "Object Properties..."
-msgstr "<b>選項</b>"
+#~ msgid "Empty clipboard"
+#~ msgstr "複製到剪貼簿"
 
-msgid "Edit..."
-msgstr "編輯"
-
-msgid "Edit Text..."
-msgstr "編輯文字"
-
-msgid "Slot..."
-msgstr ""
-
-msgid "Lock"
-msgstr "鎖定"
-
-msgid "Unlock"
-msgstr "解除鎖定"
-
-msgid "Embed Component/Picture"
-msgstr "嵌入元件/圖片"
-
-msgid "Unembed Component/Picture"
-msgstr "解除嵌入元件/圖片"
-
-msgid "Update Component"
-msgstr "更新元件資訊"
-
-msgid "Symbol Translate..."
-msgstr ""
-
-msgid "Copy into 1"
-msgstr "複製到 緩衝區1"
-
-msgid "Copy into 2"
-msgstr "複製到 緩衝區2"
-
-msgid "Copy into 3"
-msgstr "複製到 緩衝區3"
-
-msgid "Copy into 4"
-msgstr "複製到 緩衝區4"
-
-msgid "Copy into 5"
-msgstr "複製到 緩衝區5"
-
-msgid "Cut into 1"
-msgstr "剪下至 緩衝區1"
-
-msgid "Cut into 2"
-msgstr "剪下至 緩衝區2"
-
-msgid "Cut into 3"
-msgstr "剪下至 緩衝區3"
-
-msgid "Cut into 4"
-msgstr "剪下至 緩衝區4"
-
-msgid "Cut into 5"
-msgstr "剪下至 緩衝區5"
-
-msgid "Paste from 1"
-msgstr "自 緩衝區1 貼上"
-
-msgid "Paste from 2"
-msgstr "自 緩衝區2 貼上"
-
-msgid "Paste from 3"
-msgstr "自 緩衝區3 貼上"
-
-msgid "Paste from 4"
-msgstr "自 緩衝區4 貼上"
-
-msgid "Paste from 5"
-msgstr "自 緩衝區5 貼上"
-
-msgid "Side Dock"
-msgstr ""
-
-msgid "Bottom Dock"
-msgstr ""
+#, fuzzy, c-format
+#~ msgid "Failed to descend into '%1$s': %2$s"
+#~ msgstr "無法讀取圖片: %s"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "新增文字"
+#~ msgid "Grid OFF"
+#~ msgstr "關閉網格\n"
 
-msgid "_Redraw"
-msgstr ""
-
-msgid "_Pan"
-msgstr ""
-
-msgid "Zoom _Box"
-msgstr ""
-
-msgid "Zoom _Extents"
-msgstr ""
-
-msgid "Zoom _In"
-msgstr "放大檢視"
-
-msgid "Zoom _Out"
-msgstr "縮小檢視"
-
-msgid "Zoom _Full"
-msgstr ""
+#~ msgid "New"
+#~ msgstr "新增分頁"
 
 #, fuzzy
-msgid "_Dark Color Scheme"
-msgstr "黑色背景"
+#~ msgid "Open file"
+#~ msgstr "開啟檔案"
+
+#~ msgid "Save file"
+#~ msgstr "儲存檔案"
+
+#~ msgid "Undo"
+#~ msgstr "復原"
+
+#~ msgid "Undo last operation"
+#~ msgstr "復原上一次操作"
+
+#~ msgid "Redo"
+#~ msgstr "取消上次復原"
+
+#~ msgid "Redo last undo"
+#~ msgstr "取消上一次復原"
+
+#~ msgid "Component"
+#~ msgstr "元件"
+
+#~ msgid "Add Text..."
+#~ msgstr "新增文字"
+
+#~ msgid "Select"
+#~ msgstr "選擇"
+
+#~ msgid "Select mode"
+#~ msgstr "選擇模式"
+
+#~ msgid "Open Recen_t"
+#~ msgstr "最近的檔案"
+
+#~ msgid "Save All"
+#~ msgstr "儲存全部"
+
+#~ msgid "_Print..."
+#~ msgstr "列印檔案"
 
 #, fuzzy
-msgid "_Light Color Scheme"
-msgstr "白色背景"
+#~ msgid "Write _Image..."
+#~ msgstr "轉換成圖片"
+
+#~ msgid "Execute Script..."
+#~ msgstr "執行命令稿"
+
+#~ msgid "New Window"
+#~ msgstr "開新視窗"
+
+#~ msgid "_Quit"
+#~ msgstr "結束程式"
+
+#~ msgid "_Undo"
+#~ msgstr "還原"
+
+#~ msgid "_Redo"
+#~ msgstr "取消還原"
+
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "逆時針旋轉90度"
 
 #, fuzzy
-msgid "B_W Color Scheme"
-msgstr "黑色背景"
+#~ msgid "Object Properties..."
+#~ msgstr "<b>選項</b>"
+
+#~ msgid "Edit..."
+#~ msgstr "編輯"
+
+#~ msgid "Edit Text..."
+#~ msgstr "編輯文字"
+
+#~ msgid "Lock"
+#~ msgstr "鎖定"
+
+#~ msgid "Unlock"
+#~ msgstr "解除鎖定"
+
+#~ msgid "Embed Component/Picture"
+#~ msgstr "嵌入元件/圖片"
+
+#~ msgid "Unembed Component/Picture"
+#~ msgstr "解除嵌入元件/圖片"
+
+#~ msgid "Update Component"
+#~ msgstr "更新元件資訊"
+
+#~ msgid "Copy into 1"
+#~ msgstr "複製到 緩衝區1"
+
+#~ msgid "Copy into 2"
+#~ msgstr "複製到 緩衝區2"
+
+#~ msgid "Copy into 3"
+#~ msgstr "複製到 緩衝區3"
+
+#~ msgid "Copy into 4"
+#~ msgstr "複製到 緩衝區4"
+
+#~ msgid "Copy into 5"
+#~ msgstr "複製到 緩衝區5"
+
+#~ msgid "Cut into 1"
+#~ msgstr "剪下至 緩衝區1"
+
+#~ msgid "Cut into 2"
+#~ msgstr "剪下至 緩衝區2"
+
+#~ msgid "Cut into 3"
+#~ msgstr "剪下至 緩衝區3"
+
+#~ msgid "Cut into 4"
+#~ msgstr "剪下至 緩衝區4"
+
+#~ msgid "Cut into 5"
+#~ msgstr "剪下至 緩衝區5"
+
+#~ msgid "Paste from 1"
+#~ msgstr "自 緩衝區1 貼上"
+
+#~ msgid "Paste from 2"
+#~ msgstr "自 緩衝區2 貼上"
+
+#~ msgid "Paste from 3"
+#~ msgstr "自 緩衝區3 貼上"
+
+#~ msgid "Paste from 4"
+#~ msgstr "自 緩衝區4 貼上"
+
+#~ msgid "Paste from 5"
+#~ msgstr "自 緩衝區5 貼上"
 
 #, fuzzy
-msgid "Color Scheme Editor..."
-msgstr "白色背景"
+#~ msgid "Find Text Results"
+#~ msgstr "新增文字"
 
-msgid "_Manager..."
-msgstr "管理分頁"
+#~ msgid "Zoom _In"
+#~ msgstr "放大檢視"
 
-msgid "_Previous"
-msgstr "上一個分頁"
-
-msgid "_Next"
-msgstr "下一個分頁"
+#~ msgid "Zoom _Out"
+#~ msgstr "縮小檢視"
 
 #, fuzzy
-msgid "_Revert..."
-msgstr "還原"
+#~ msgid "_Dark Color Scheme"
+#~ msgstr "黑色背景"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "新增分頁"
+#~ msgid "_Light Color Scheme"
+#~ msgstr "白色背景"
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "上一個分頁"
-
-msgid "_Component..."
-msgstr "元件"
-
-msgid "_Net"
-msgstr ""
-
-msgid "B_us"
-msgstr ""
-
-msgid "_Attribute..."
-msgstr "屬性"
-
-msgid "_Text..."
-msgstr "文字"
-
-msgid "_Line"
-msgstr ""
-
-msgid "Pat_h"
-msgstr ""
-
-msgid "_Box"
-msgstr ""
-
-msgid "C_ircle"
-msgstr ""
-
-msgid "A_rc"
-msgstr ""
-
-msgid "_Pin"
-msgstr ""
-
-msgid "Pictu_re..."
-msgstr ""
-
-msgid "_Up"
-msgstr ""
-
-msgid "_Down Schematic"
-msgstr ""
-
-msgid "Down _Symbol"
-msgstr ""
-
-msgid "_Attach"
-msgstr ""
-
-msgid "_Detach"
-msgstr ""
-
-msgid "Show _Value"
-msgstr ""
-
-msgid "Show _Name"
-msgstr ""
-
-msgid "Show _Both"
-msgstr ""
-
-msgid "_Toggle Visibility"
-msgstr ""
-
-msgid "_Hide Specific Text..."
-msgstr ""
-
-msgid "_Show Specific Text..."
-msgstr ""
-
-msgid "Show/Hide Hidden Text"
-msgstr ""
-
-msgid "_Find Text/Check Symbol..."
-msgstr ""
-
-msgid "A_utonumber Text..."
-msgstr ""
+#~ msgid "B_W Color Scheme"
+#~ msgstr "黑色背景"
 
 #, fuzzy
-msgid "_Options..."
-msgstr "選項"
+#~ msgid "Color Scheme Editor..."
+#~ msgstr "白色背景"
+
+#~ msgid "_Manager..."
+#~ msgstr "管理分頁"
+
+#~ msgid "_Previous"
+#~ msgstr "上一個分頁"
+
+#~ msgid "_Next"
+#~ msgstr "下一個分頁"
 
 #, fuzzy
-msgid "_Font..."
-msgstr "列印檔案"
+#~ msgid "_Revert..."
+#~ msgstr "還原"
 
 #, fuzzy
-msgid "Grid +"
-msgstr "關閉網格\n"
+#~ msgid "Next Tab"
+#~ msgstr "新增分頁"
 
 #, fuzzy
-msgid "Grid -"
-msgstr "關閉網格\n"
+#~ msgid "Previous Tab"
+#~ msgstr "上一個分頁"
 
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
+#~ msgid "_Component..."
+#~ msgstr "元件"
 
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
+#~ msgid "_Attribute..."
+#~ msgstr "屬性"
 
-msgid "Grips: On/Off"
-msgstr ""
-
-msgid "Feedback Mode: Outline/Box"
-msgstr ""
-
-msgid "Net: Rubberband On/Off"
-msgstr ""
-
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "_Text..."
+#~ msgstr "文字"
 
 #, fuzzy
-msgid "_Coord Window"
-msgstr "開新視窗"
+#~ msgid "_Options..."
+#~ msgstr "選項"
 
 #, fuzzy
-msgid "_Log Window"
-msgstr "開新視窗"
-
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "_Font..."
+#~ msgstr "列印檔案"
 
 #, fuzzy
-msgid "Lepton EDA Reference _Manual"
-msgstr "gEDA 電路圖編輯器"
+#~ msgid "Grid +"
+#~ msgstr "關閉網格\n"
 
 #, fuzzy
-msgid "gEDA _Wiki Documentation"
-msgstr "元件模式"
+#~ msgid "Grid -"
+#~ msgstr "關閉網格\n"
 
 #, fuzzy
-msgid "Find Component D_ocumentation"
-msgstr "元件模式"
-
-msgid "_Hotkeys..."
-msgstr "熱鍵"
+#~ msgid "_Coord Window"
+#~ msgstr "開新視窗"
 
 #, fuzzy
-msgid "_About"
-msgstr "關於"
-
-msgid "_File"
-msgstr "檔案"
-
-msgid "_Edit"
-msgstr "編輯"
-
-msgid "_View"
-msgstr "顯示"
-
-msgid "_Page"
-msgstr "分頁"
-
-msgid "Hie_rarchy"
-msgstr ""
-
-msgid "A_ttributes"
-msgstr "屬性"
-
-msgid "_Options"
-msgstr "選項"
-
-msgid "_Netlist"
-msgstr ""
-
-msgid "_Help"
-msgstr "幫助"
-
-#, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr ""
-
-msgid "There is no last action to repeat."
-msgstr ""
-
-msgid "Repeat Last Action"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
+#~ msgid "_Log Window"
+#~ msgstr "開新視窗"
 
 #, fuzzy
-msgid "New File"
-msgstr "新增分頁"
+#~ msgid "Lepton EDA Reference _Manual"
+#~ msgstr "gEDA 電路圖編輯器"
 
 #, fuzzy
-msgid "Open File"
-msgstr "開啟檔案"
+#~ msgid "gEDA _Wiki Documentation"
+#~ msgstr "元件模式"
 
 #, fuzzy
-msgid "Print"
-msgstr "列印"
+#~ msgid "Find Component D_ocumentation"
+#~ msgstr "元件模式"
 
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "_Hotkeys..."
+#~ msgstr "熱鍵"
 
 #, fuzzy
-msgid "Close Window"
-msgstr "開新視窗"
+#~ msgid "_About"
+#~ msgstr "關於"
+
+#~ msgid "_File"
+#~ msgstr "檔案"
+
+#~ msgid "_Edit"
+#~ msgstr "編輯"
+
+#~ msgid "_View"
+#~ msgstr "顯示"
+
+#~ msgid "_Page"
+#~ msgstr "分頁"
+
+#~ msgid "A_ttributes"
+#~ msgstr "屬性"
+
+#~ msgid "_Options"
+#~ msgstr "選項"
+
+#~ msgid "_Help"
+#~ msgstr "幫助"
 
 #, fuzzy
-msgid "Quit"
-msgstr "結束程式"
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
+#~ msgid "New File"
+#~ msgstr "新增分頁"
 
 #, fuzzy
-msgid "Edit Object Properties"
-msgstr "<b>選項</b>"
-
-msgid "Translate Symbol"
-msgstr ""
-
-msgid "Invoke Macro"
-msgstr ""
-
-msgid "Show/Hide Invisible Text"
-msgstr ""
+#~ msgid "Open File"
+#~ msgstr "開啟檔案"
 
 #, fuzzy
-msgid "Cut"
-msgstr "剪下"
-
-msgid "Copy"
-msgstr "複製"
+#~ msgid "Print"
+#~ msgstr "列印"
 
 #, fuzzy
-msgid "Paste"
-msgstr "貼上"
-
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr ""
+#~ msgid "Close Window"
+#~ msgstr "開新視窗"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "新增文字"
-
-msgid "Redraw"
-msgstr ""
-
-msgid "Pan Left"
-msgstr ""
-
-msgid "Pan Right"
-msgstr ""
-
-msgid "Pan Up"
-msgstr ""
-
-msgid "Pan Down"
-msgstr ""
+#~ msgid "Quit"
+#~ msgstr "結束程式"
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "放大檢視"
+#~ msgid "Edit Object Properties"
+#~ msgstr "<b>選項</b>"
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "放大檢視"
+#~ msgid "Cut"
+#~ msgstr "剪下"
+
+#~ msgid "Copy"
+#~ msgstr "複製"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "縮小檢視"
+#~ msgid "Paste"
+#~ msgstr "貼上"
 
 #, fuzzy
-msgid "Zoom Full"
-msgstr "縮小檢視"
+#~ msgid "Find Text State"
+#~ msgstr "新增文字"
 
 #, fuzzy
-msgid "Dark Color Scheme"
-msgstr "黑色背景"
+#~ msgid "Zoom Extents"
+#~ msgstr "放大檢視"
 
 #, fuzzy
-msgid "Light Color Scheme"
-msgstr "白色背景"
-
-msgid "Monochrome Color Scheme"
-msgstr ""
+#~ msgid "Zoom In"
+#~ msgstr "放大檢視"
 
 #, fuzzy
-msgid "Show Color Scheme Editor"
-msgstr "白色背景"
-
-msgid "Revert Changes"
-msgstr ""
+#~ msgid "Zoom Out"
+#~ msgstr "縮小檢視"
 
 #, fuzzy
-msgid "Previous Page"
-msgstr "上一個分頁"
+#~ msgid "Zoom Full"
+#~ msgstr "縮小檢視"
 
 #, fuzzy
-msgid "Next Page"
-msgstr "新增分頁"
+#~ msgid "Dark Color Scheme"
+#~ msgstr "黑色背景"
 
 #, fuzzy
-msgid "Print Page"
-msgstr "上一個分頁"
+#~ msgid "Light Color Scheme"
+#~ msgstr "白色背景"
 
 #, fuzzy
-msgid "Add Net"
-msgstr "新增文字"
-
-msgid "Add Bus"
-msgstr ""
+#~ msgid "Show Color Scheme Editor"
+#~ msgstr "白色背景"
 
 #, fuzzy
-msgid "Add Line"
-msgstr "直線"
-
-msgid "Add Path"
-msgstr ""
-
-msgid "Add Box"
-msgstr ""
+#~ msgid "Previous Page"
+#~ msgstr "上一個分頁"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "圓形"
-
-msgid "Add Arc"
-msgstr ""
-
-msgid "Add Pin"
-msgstr ""
+#~ msgid "Next Page"
+#~ msgstr "新增分頁"
 
 #, fuzzy
-msgid "Down Schematic"
-msgstr "gEDA 電路圖編輯器"
-
-msgid "Down Symbol"
-msgstr ""
-
-msgid "Up Hierarchy"
-msgstr ""
+#~ msgid "Print Page"
+#~ msgstr "上一個分頁"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "屬性"
-
-#, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
+#~ msgid "Add Net"
+#~ msgstr "新增文字"
 
 #, fuzzy
-msgid "Detach Attributes"
-msgstr "屬性"
-
-#, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
+#~ msgid "Add Line"
+#~ msgstr "直線"
 
 #, fuzzy
-msgid "Show Attribute Value"
-msgstr "顯示名稱與數值"
+#~ msgid "Add Circle"
+#~ msgstr "圓形"
 
 #, fuzzy
-msgid "Show Attribute Name"
-msgstr "屬性"
-
-msgid "Toggle Text Visibility"
-msgstr ""
-
-msgid "Find Specific Text"
-msgstr ""
-
-msgid "Hide Specific Text"
-msgstr ""
-
-msgid "Show Specific Text"
-msgstr ""
+#~ msgid "Down Schematic"
+#~ msgstr "gEDA 電路圖編輯器"
 
 #, fuzzy
-msgid "Show Hotkeys"
-msgstr "熱鍵"
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
-
-msgid "Set Grid Spacing"
-msgstr ""
-
-msgid "Increase Grid Spacing"
-msgstr ""
-
-msgid "Decrease Grid Spacing"
-msgstr ""
-
-msgid "Toggle Outline Drawing"
-msgstr ""
-
-msgid "Toggle Net Rubber Band"
-msgstr ""
-
-msgid "Toggle Magnetic Nets"
-msgstr ""
+#~ msgid "Attach Attributes"
+#~ msgstr "屬性"
 
 #, fuzzy
-msgid "Show Log Window"
-msgstr "開新視窗"
-
-msgid "Show Coordinate Window"
-msgstr ""
-
-msgid "Toggle Grips"
-msgstr ""
+#~ msgid "Detach Attributes"
+#~ msgstr "屬性"
 
 #, fuzzy
-msgid "Component Documentation"
-msgstr "元件模式"
-
-msgid "View documentation for selected component"
-msgstr ""
+#~ msgid "Show Attribute Value"
+#~ msgstr "顯示名稱與數值"
 
 #, fuzzy
-msgid "Lepton EDA Manual"
-msgstr "gEDA 電路圖編輯器"
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
+#~ msgid "Show Attribute Name"
+#~ msgstr "屬性"
 
 #, fuzzy
-msgid "Lepton EDA wiki"
-msgstr "gEDA 電路圖編輯器"
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
+#~ msgid "Show Hotkeys"
+#~ msgstr "熱鍵"
 
 #, fuzzy
-msgid "About lepton-schematic"
-msgstr "關於 gschem"
+#~ msgid "Show Log Window"
+#~ msgstr "開新視窗"
 
 #, fuzzy
-msgid "Could not show documentation:"
-msgstr "元件模式"
+#~ msgid "Component Documentation"
+#~ msgstr "元件模式"
 
-msgid "No documentation found"
-msgstr ""
+#, fuzzy
+#~ msgid "Lepton EDA Manual"
+#~ msgstr "gEDA 電路圖編輯器"
 
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr ""
+#, fuzzy
+#~ msgid "Lepton EDA wiki"
+#~ msgstr "gEDA 電路圖編輯器"
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
+#, fuzzy
+#~ msgid "About lepton-schematic"
+#~ msgstr "關於 gschem"
 
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#, fuzzy
+#~ msgid "Could not show documentation:"
+#~ msgstr "元件模式"
 
 #, fuzzy
 #~ msgid "Snap size"

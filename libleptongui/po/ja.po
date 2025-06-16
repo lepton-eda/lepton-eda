@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 13:57+0300\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -18,10 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, fuzzy
-msgid "Zoom too small!  Cannot zoom further."
-msgstr "これ以上ズームできません。\n"
 
 #, fuzzy
 msgid "Toggle _Editor"
@@ -39,6 +35,9 @@ msgid ""
 "button. It can be loaded on startup with the following expression\n"
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
+
+msgid "<b>Help</b>"
 msgstr ""
 
 #, fuzzy, c-format
@@ -69,6 +68,19 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
+msgstr ""
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "スクリプト実行..."
+
+msgid "_Run"
+msgstr ""
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -110,7 +122,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -302,7 +314,7 @@ msgstr "アクション"
 msgid "Keystroke(s)"
 msgstr ""
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
 
 #, fuzzy
@@ -325,6 +337,105 @@ msgstr ""
 
 msgid "Evaluate"
 msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+
+msgid "Show Name & Value"
+msgstr "名前と値を表示"
+
+msgid "Show Value only"
+msgstr "値のみ表示"
+
+msgid "Show Name only"
+msgstr "名前のみ表示"
+
+msgid "Promote"
+msgstr ""
+
+msgid "Duplicate"
+msgstr ""
+
+msgid "Delete"
+msgstr "削除"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "コピー1"
+
+msgid "Edit Attributes"
+msgstr "アトリビュート編集"
+
+msgid "Value"
+msgstr "値"
+
+msgid "Vis?"
+msgstr "表示"
+
+msgid "N"
+msgstr "名前"
+
+msgid "V"
+msgstr "値"
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "アトリビュート編集"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "名前:"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "値:"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+#, fuzzy
+msgid "Vi_sible"
+msgstr "表示"
+
+msgid "_Add"
+msgstr "追加"
+
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "アトリビュート(_A)"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "アトリビュート"
+msgstr[1] "アトリビュート"
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -437,25 +548,11 @@ msgstr ""
 msgid "Bus pin (graphical)"
 msgstr ""
 
-msgid "Preview Buffer"
-msgstr ""
-
 msgid "Hide"
 msgstr ""
 
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "色"
-
-msgid "Number of Slots:"
-msgstr ""
-
-#, fuzzy
-msgid "Slot Number:"
-msgstr "スロット番号編集"
 
 msgid "<b>Text Content</b>"
 msgstr ""
@@ -562,161 +659,6 @@ msgstr "スナップ・オフ"
 msgid "Resnap Active"
 msgstr ""
 
-#, c-format
-msgid "New page created [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "New Window created [%1$s]"
-msgstr ""
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "スクリプト実行..."
-
-msgid "_Run"
-msgstr ""
-
-msgid "Scheme files (*.scm)"
-msgstr ""
-
-msgid "All files"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Executing Guile script [%s]"
-msgstr "guileスクリプトを実行しています。[%s]\n"
-
-msgid "Saved All"
-msgstr "すべて保存"
-
-msgid "Failed to Save All"
-msgstr ""
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "ウィンドウを閉じています。\n"
-
-msgid "Select objs first"
-msgstr "まずオブジェクトを選択してください。"
-
-#, fuzzy
-msgid "WARNING: Do not translate with snap off!"
-msgstr "警告:スナップ・オフで転送しないでください!\n"
-
-#, fuzzy
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr "警告:スナップをオンしてから転送してください。\n"
-
-#, fuzzy
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr "警告:グリッドサイズが100ではありません!\n"
-
-#, fuzzy
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-"警告:原点へ転送するときはスナップのグリッドサイズを\n"
-"100に設定してください。\n"
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "再読み込み(_R)"
-
-msgid "Empty clipboard"
-msgstr ""
-
-msgid "Empty buffer"
-msgstr "バッファが空です。"
-
-#, fuzzy, c-format
-msgid "Searching for source [%1$s]"
-msgstr "ソース検索中[%s]\n"
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
-
-#, fuzzy
-msgid "Failed to descend hierarchy."
-msgstr "下の階層も検索"
-
-#, fuzzy, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr "シンボル検索中[%s]\n"
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-#, fuzzy
-msgid "Grid OFF"
-msgstr "グリッド・オフ\n"
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-msgid "Invalid grid mode"
-msgstr ""
-
-#, fuzzy
-msgid "Snap OFF (CAUTION!)"
-msgstr "スナップ・オフ(注意!)\n"
-
-#, fuzzy
-msgid "Snap ON"
-msgstr "スナップ・オン\n"
-
-#, fuzzy
-msgid "Snap back to the grid (CAUTION!)"
-msgstr "スナップ・オフ(注意!)\n"
-
-#, fuzzy
-msgid "Rubber band ON"
-msgstr "ラバーバンド・オン\n"
-
-#, fuzzy
-msgid "Rubber band OFF"
-msgstr "ラバーバンド・オフ \n"
-
-#, fuzzy
-msgid "magnetic net mode: ON"
-msgstr "ネットモード"
-
-#, fuzzy
-msgid "magnetic net mode: OFF"
-msgstr "ネットモード"
-
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "スケマチックを転送しています。[%d %d]\n"
@@ -733,9 +675,6 @@ msgstr "削除"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr "削除"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "隠しテキストが表示されました。\n"
@@ -743,26 +682,6 @@ msgstr "隠しテキストが表示されました。\n"
 #, fuzzy
 msgid "Hidden text is now invisible"
 msgstr "隠しテキストが非表示になりました。\n"
-
-#, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr ""
-
-#, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr ""
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -821,9 +740,36 @@ msgstr "この部品にスロットは許可されていません。\n"
 msgid "New slot number out of range"
 msgstr "スロット番号が範囲を越えています。\n"
 
+#, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr ""
+
+#, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr ""
+
+#, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr ""
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
 #, fuzzy
-msgid "Undo/Redo is disabled in configuration"
-msgstr "アンドゥ/リドゥはrcファイルで無効に設定されています。\n"
+msgid "Revert"
+msgstr "再読み込み(_R)"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -837,6 +783,17 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "色"
+
+msgid "Number of Slots:"
+msgstr ""
+
+#, fuzzy
+msgid "Slot Number:"
+msgstr "スロット番号編集"
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
@@ -853,22 +810,11 @@ msgstr ""
 msgid "N_ame:"
 msgstr "名前:"
 
-#, fuzzy
-msgid "_Value:"
-msgstr "値:"
-
-#, fuzzy
-msgid "Vi_sible"
-msgstr "表示"
-
 msgid "Show Value Only"
 msgstr "値のみ表示"
 
 msgid "Show Name Only"
 msgstr "名前のみ表示"
-
-msgid "Show Name & Value"
-msgstr "名前と値を表示"
 
 msgid "<b>Attach Options</b>"
 msgstr ""
@@ -982,9 +928,6 @@ msgstr "新規ファイル"
 
 msgid "Reload all libraries"
 msgstr ""
-
-msgid "Value"
-msgstr "値"
 
 msgid "Default behavior - reference component"
 msgstr ""
@@ -1208,88 +1151,6 @@ msgstr "階層"
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-
-msgid "Show Value only"
-msgstr "値のみ表示"
-
-msgid "Show Name only"
-msgstr "名前のみ表示"
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr ""
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "コピー1"
-
-msgid "Edit Attributes"
-msgstr "アトリビュート編集"
-
-msgid "Vis?"
-msgstr "表示"
-
-msgid "N"
-msgstr "名前"
-
-msgid "V"
-msgstr "値"
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "アトリビュート編集"
-
-#, fuzzy
-msgid "_Name:"
-msgstr "名前:"
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "追加"
-
-#, fuzzy
-msgid "<b>Add Attribute</b>"
-msgstr "アトリビュート(_A)"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "アトリビュート"
-msgstr[1] "アトリビュート"
-
 #, fuzzy
 msgid "Add Text"
 msgstr "テキスト追加..."
@@ -1408,9 +1269,9 @@ msgstr "ページマネージャ"
 msgid "Loading schematic [%1$s]"
 msgstr "スケマチックを読み込んでいます。[%s]\n"
 
-#, c-format
-msgid "Could NOT save page [%1$s]\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Could NOT save page [%1$s]"
+msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
 msgid "Error while trying to save"
 msgstr "保存中にエラー発生"
@@ -1433,71 +1294,6 @@ msgstr "ページを破棄しています。[%s]\n"
 #, fuzzy, c-format
 msgid "Closing [%1$s]"
 msgstr "閉じています。[%s]\n"
-
-msgid "New"
-msgstr "新規"
-
-msgid "New file"
-msgstr "新規ファイル"
-
-#, fuzzy
-msgid "Open file"
-msgstr "ファイルを開く..."
-
-msgid "Save file"
-msgstr "ファイルを保存"
-
-msgid "Undo"
-msgstr "アンドゥ"
-
-msgid "Undo last operation"
-msgstr "アンドゥ"
-
-msgid "Redo"
-msgstr "リドゥ"
-
-msgid "Redo last undo"
-msgstr "リドゥ"
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-"部品追加...\n"
-"ライブラリから部品を選択し、メインウィンドウで\n"
-"クリックすると、配置します。\n"
-"右ボタンでキャンセルします。"
-
-msgid "Component"
-msgstr "部品"
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"ネット追加モード\n"
-"右ボタンでキャンセル"
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"バス追加モード\n"
-"右ボタンでキャンセル"
-
-msgid "Bus"
-msgstr "バス"
-
-msgid "Add Text..."
-msgstr "テキスト追加..."
-
-msgid "Select"
-msgstr "選択"
-
-msgid "Select mode"
-msgstr "選択モード"
 
 #, fuzzy
 msgid "Show"
@@ -1562,688 +1358,594 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "Open Recen_t"
-msgstr "最近使用したファイル(_T)"
+#, fuzzy
+#~ msgid "Zoom too small!  Cannot zoom further."
+#~ msgstr "これ以上ズームできません。\n"
 
-msgid "Save All"
-msgstr "すべて保存"
+#, fuzzy, c-format
+#~ msgid "Executing Guile script [%s]"
+#~ msgstr "guileスクリプトを実行しています。[%s]\n"
 
-msgid "_Print..."
-msgstr "印刷(_P)..."
+#~ msgid "Saved All"
+#~ msgstr "すべて保存"
 
 #, fuzzy
-msgid "Write _Image..."
-msgstr "画像として保存(_I)..."
+#~ msgid "Closing Window"
+#~ msgstr "ウィンドウを閉じています。\n"
+
+#~ msgid "Select objs first"
+#~ msgstr "まずオブジェクトを選択してください。"
 
 #, fuzzy
-msgid "Invoke Macro..."
-msgstr "マクロの実行"
-
-msgid "Execute Script..."
-msgstr "スクリプト実行..."
-
-msgid "REPL..."
-msgstr ""
-
-msgid "New Window"
-msgstr "新規ウィンドウ"
-
-msgid "_Close Window"
-msgstr ""
-
-msgid "_Quit"
-msgstr "終了(_Q)"
-
-msgid "_Undo"
-msgstr "元に戻す(_U)"
-
-msgid "_Redo"
-msgstr "やり直す(_R)"
-
-msgid "Select All"
-msgstr ""
-
-msgid "Deselect"
-msgstr ""
-
-msgid "Rotate 90 Mode"
-msgstr "90度回転モード"
-
-msgid "Object Properties..."
-msgstr ""
-
-msgid "Edit..."
-msgstr "編集..."
-
-msgid "Edit Text..."
-msgstr "テキスト編集..."
-
-msgid "Slot..."
-msgstr "スロット..."
-
-msgid "Lock"
-msgstr "ロック"
-
-msgid "Unlock"
-msgstr "ロック解除"
-
-msgid "Embed Component/Picture"
-msgstr "画像・コンポーネントの埋め込み"
-
-msgid "Unembed Component/Picture"
-msgstr "画像・コンポーネントの埋め込み解除"
-
-msgid "Update Component"
-msgstr "部品更新"
-
-msgid "Symbol Translate..."
-msgstr "シンボル転送..."
-
-msgid "Copy into 1"
-msgstr "コピー1"
-
-msgid "Copy into 2"
-msgstr "コピー2"
-
-msgid "Copy into 3"
-msgstr "コピー3"
-
-msgid "Copy into 4"
-msgstr "コピー4"
-
-msgid "Copy into 5"
-msgstr "コピー5"
-
-msgid "Cut into 1"
-msgstr "カット1"
-
-msgid "Cut into 2"
-msgstr "カット2"
-
-msgid "Cut into 3"
-msgstr "カット3"
-
-msgid "Cut into 4"
-msgstr "カット4"
-
-msgid "Cut into 5"
-msgstr "カット5"
-
-msgid "Paste from 1"
-msgstr "ペースト1"
-
-msgid "Paste from 2"
-msgstr "ペースト2"
-
-msgid "Paste from 3"
-msgstr "ペースト3"
-
-msgid "Paste from 4"
-msgstr "ペースト4"
-
-msgid "Paste from 5"
-msgstr "ペースト5"
-
-msgid "Side Dock"
-msgstr ""
-
-msgid "Bottom Dock"
-msgstr ""
+#~ msgid "WARNING: Do not translate with snap off!"
+#~ msgstr "警告:スナップ・オフで転送しないでください!\n"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "テキスト追加..."
-
-msgid "_Redraw"
-msgstr "再描画"
-
-msgid "_Pan"
-msgstr "パン"
-
-msgid "Zoom _Box"
-msgstr "ズームボックス"
-
-msgid "Zoom _Extents"
-msgstr "回路全体の表示(_E)"
-
-msgid "Zoom _In"
-msgstr "拡大(_I)"
-
-msgid "Zoom _Out"
-msgstr "縮小(_O)"
-
-msgid "Zoom _Full"
-msgstr "最縮小して表示(_F)"
+#~ msgid "WARNING: Turning snap on and continuing with translate."
+#~ msgstr "警告:スナップをオンしてから転送してください。\n"
 
 #, fuzzy
-msgid "_Dark Color Scheme"
-msgstr "暗い配色(_D)"
+#~ msgid "WARNING: Snap grid size is not equal to 100!"
+#~ msgstr "警告:グリッドサイズが100ではありません!\n"
 
 #, fuzzy
-msgid "_Light Color Scheme"
-msgstr "明るい配色(_L)"
+#~ msgid ""
+#~ "WARNING: If you are translating a symbol to the origin, the snap grid "
+#~ "size should be set to 100"
+#~ msgstr ""
+#~ "警告:原点へ転送するときはスナップのグリッドサイズを\n"
+#~ "100に設定してください。\n"
+
+#~ msgid "Empty buffer"
+#~ msgstr "バッファが空です。"
+
+#, fuzzy, c-format
+#~ msgid "Searching for source [%1$s]"
+#~ msgstr "ソース検索中[%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to descend into '%1$s': %2$s"
+#~ msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
 #, fuzzy
-msgid "B_W Color Scheme"
-msgstr "暗い配色(_D)"
+#~ msgid "Failed to descend hierarchy."
+#~ msgstr "下の階層も検索"
+
+#, fuzzy, c-format
+#~ msgid "Searching for symbol [%1$s]"
+#~ msgstr "シンボル検索中[%s]\n"
 
 #, fuzzy
-msgid "Color Scheme Editor..."
-msgstr "明るい配色(_L)"
-
-msgid "_Manager..."
-msgstr "管理(_M)"
-
-msgid "_Previous"
-msgstr "前のページ(_P)"
-
-msgid "_Next"
-msgstr "次のページ(_N)"
+#~ msgid "Grid OFF"
+#~ msgstr "グリッド・オフ\n"
 
 #, fuzzy
-msgid "_Revert..."
-msgstr "再読み込み(_R)"
+#~ msgid "Snap OFF (CAUTION!)"
+#~ msgstr "スナップ・オフ(注意!)\n"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "新規ページ"
+#~ msgid "Snap ON"
+#~ msgstr "スナップ・オン\n"
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "前のページ(_P)"
-
-msgid "_Component..."
-msgstr "部品(_C)"
-
-msgid "_Net"
-msgstr "ネット(_N)"
-
-msgid "B_us"
-msgstr "バス(_U)"
-
-msgid "_Attribute..."
-msgstr "アトリビュート(_A)"
-
-msgid "_Text..."
-msgstr "テキスト(_T)..."
-
-msgid "_Line"
-msgstr "直線(_L)"
-
-msgid "Pat_h"
-msgstr ""
-
-msgid "_Box"
-msgstr "ボックス(_B)"
-
-msgid "C_ircle"
-msgstr "円(_I)"
-
-msgid "A_rc"
-msgstr "円弧(_R)"
-
-msgid "_Pin"
-msgstr "ピン(_P)"
-
-msgid "Pictu_re..."
-msgstr "画像(_R)"
-
-msgid "_Up"
-msgstr ""
-
-msgid "_Down Schematic"
-msgstr ""
-
-msgid "Down _Symbol"
-msgstr ""
-
-msgid "_Attach"
-msgstr ""
-
-msgid "_Detach"
-msgstr ""
-
-msgid "Show _Value"
-msgstr ""
-
-msgid "Show _Name"
-msgstr ""
-
-msgid "Show _Both"
-msgstr ""
-
-msgid "_Toggle Visibility"
-msgstr ""
-
-msgid "_Hide Specific Text..."
-msgstr ""
-
-msgid "_Show Specific Text..."
-msgstr ""
+#~ msgid "Snap back to the grid (CAUTION!)"
+#~ msgstr "スナップ・オフ(注意!)\n"
 
 #, fuzzy
-msgid "Show/Hide Hidden Text"
-msgstr "テキスト表示/非表示"
-
-msgid "_Find Text/Check Symbol..."
-msgstr ""
-
-msgid "A_utonumber Text..."
-msgstr ""
+#~ msgid "Rubber band ON"
+#~ msgstr "ラバーバンド・オン\n"
 
 #, fuzzy
-msgid "_Options..."
-msgstr "オプション"
+#~ msgid "Rubber band OFF"
+#~ msgstr "ラバーバンド・オフ \n"
 
 #, fuzzy
-msgid "_Font..."
-msgstr "印刷(_P)..."
+#~ msgid "magnetic net mode: ON"
+#~ msgstr "ネットモード"
 
 #, fuzzy
-msgid "Grid +"
-msgstr "グリッド・オフ\n"
+#~ msgid "magnetic net mode: OFF"
+#~ msgstr "ネットモード"
 
 #, fuzzy
-msgid "Grid -"
-msgstr "グリッド・オフ\n"
+#~ msgid "Undo/Redo is disabled in configuration"
+#~ msgstr "アンドゥ/リドゥはrcファイルで無効に設定されています。\n"
 
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
+#~ msgid "New"
+#~ msgstr "新規"
 
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
-
-msgid "Grips: On/Off"
-msgstr ""
-
-msgid "Feedback Mode: Outline/Box"
-msgstr ""
+#~ msgid "New file"
+#~ msgstr "新規ファイル"
 
 #, fuzzy
-msgid "Net: Rubberband On/Off"
-msgstr "ラバーバンド・オン\n"
+#~ msgid "Open file"
+#~ msgstr "ファイルを開く..."
 
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "Save file"
+#~ msgstr "ファイルを保存"
 
-#, fuzzy
-msgid "_Coord Window"
-msgstr "ウィンドウを閉じています。\n"
+#~ msgid "Undo"
+#~ msgstr "アンドゥ"
 
-#, fuzzy
-msgid "_Log Window"
-msgstr "新規ウィンドウ"
+#~ msgid "Undo last operation"
+#~ msgstr "アンドゥ"
 
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "Redo"
+#~ msgstr "リドゥ"
 
-msgid "Lepton EDA Reference _Manual"
-msgstr ""
+#~ msgid "Redo last undo"
+#~ msgstr "リドゥ"
 
-#, fuzzy
-msgid "gEDA _Wiki Documentation"
-msgstr "部品モード"
+#~ msgid ""
+#~ "Add component...\n"
+#~ "Select library and component from list, move the mouse into main window, "
+#~ "click to place\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "部品追加...\n"
+#~ "ライブラリから部品を選択し、メインウィンドウで\n"
+#~ "クリックすると、配置します。\n"
+#~ "右ボタンでキャンセルします。"
 
-#, fuzzy
-msgid "Find Component D_ocumentation"
-msgstr "部品モード"
+#~ msgid "Component"
+#~ msgstr "部品"
 
-msgid "_Hotkeys..."
-msgstr ""
+#~ msgid ""
+#~ "Add nets mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "ネット追加モード\n"
+#~ "右ボタンでキャンセル"
 
-msgid "_About"
-msgstr ""
+#~ msgid ""
+#~ "Add buses mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "バス追加モード\n"
+#~ "右ボタンでキャンセル"
 
-msgid "_File"
-msgstr "ファイル(_F)"
+#~ msgid "Bus"
+#~ msgstr "バス"
 
-msgid "_Edit"
-msgstr "編集(_E)"
+#~ msgid "Add Text..."
+#~ msgstr "テキスト追加..."
 
-msgid "_View"
-msgstr "表示(_V)"
+#~ msgid "Select"
+#~ msgstr "選択"
 
-msgid "_Page"
-msgstr "ページ(_P)"
+#~ msgid "Select mode"
+#~ msgstr "選択モード"
 
-msgid "Hie_rarchy"
-msgstr "階層"
+#~ msgid "Open Recen_t"
+#~ msgstr "最近使用したファイル(_T)"
 
-msgid "A_ttributes"
-msgstr "アトリビュート"
+#~ msgid "Save All"
+#~ msgstr "すべて保存"
 
-msgid "_Options"
-msgstr "オプション"
-
-#, fuzzy
-msgid "_Netlist"
-msgstr "ネット(_N)"
-
-msgid "_Help"
-msgstr "ヘルプ"
-
-#, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr ""
-
-msgid "There is no last action to repeat."
-msgstr ""
-
-msgid "Repeat Last Action"
-msgstr ""
+#~ msgid "_Print..."
+#~ msgstr "印刷(_P)..."
 
 #, fuzzy
-msgid "Cancel"
-msgstr "パン/キャンセル"
+#~ msgid "Write _Image..."
+#~ msgstr "画像として保存(_I)..."
 
 #, fuzzy
-msgid "New File"
-msgstr "新規ファイル"
+#~ msgid "Invoke Macro..."
+#~ msgstr "マクロの実行"
+
+#~ msgid "Execute Script..."
+#~ msgstr "スクリプト実行..."
+
+#~ msgid "New Window"
+#~ msgstr "新規ウィンドウ"
+
+#~ msgid "_Quit"
+#~ msgstr "終了(_Q)"
+
+#~ msgid "_Undo"
+#~ msgstr "元に戻す(_U)"
+
+#~ msgid "_Redo"
+#~ msgstr "やり直す(_R)"
+
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "90度回転モード"
+
+#~ msgid "Edit..."
+#~ msgstr "編集..."
+
+#~ msgid "Edit Text..."
+#~ msgstr "テキスト編集..."
+
+#~ msgid "Slot..."
+#~ msgstr "スロット..."
+
+#~ msgid "Lock"
+#~ msgstr "ロック"
+
+#~ msgid "Unlock"
+#~ msgstr "ロック解除"
+
+#~ msgid "Embed Component/Picture"
+#~ msgstr "画像・コンポーネントの埋め込み"
+
+#~ msgid "Unembed Component/Picture"
+#~ msgstr "画像・コンポーネントの埋め込み解除"
+
+#~ msgid "Update Component"
+#~ msgstr "部品更新"
+
+#~ msgid "Symbol Translate..."
+#~ msgstr "シンボル転送..."
+
+#~ msgid "Copy into 1"
+#~ msgstr "コピー1"
+
+#~ msgid "Copy into 2"
+#~ msgstr "コピー2"
+
+#~ msgid "Copy into 3"
+#~ msgstr "コピー3"
+
+#~ msgid "Copy into 4"
+#~ msgstr "コピー4"
+
+#~ msgid "Copy into 5"
+#~ msgstr "コピー5"
+
+#~ msgid "Cut into 1"
+#~ msgstr "カット1"
+
+#~ msgid "Cut into 2"
+#~ msgstr "カット2"
+
+#~ msgid "Cut into 3"
+#~ msgstr "カット3"
+
+#~ msgid "Cut into 4"
+#~ msgstr "カット4"
+
+#~ msgid "Cut into 5"
+#~ msgstr "カット5"
+
+#~ msgid "Paste from 1"
+#~ msgstr "ペースト1"
+
+#~ msgid "Paste from 2"
+#~ msgstr "ペースト2"
+
+#~ msgid "Paste from 3"
+#~ msgstr "ペースト3"
+
+#~ msgid "Paste from 4"
+#~ msgstr "ペースト4"
+
+#~ msgid "Paste from 5"
+#~ msgstr "ペースト5"
 
 #, fuzzy
-msgid "Open File"
-msgstr "ファイルを開く..."
+#~ msgid "Find Text Results"
+#~ msgstr "テキスト追加..."
+
+#~ msgid "_Redraw"
+#~ msgstr "再描画"
+
+#~ msgid "_Pan"
+#~ msgstr "パン"
+
+#~ msgid "Zoom _Box"
+#~ msgstr "ズームボックス"
+
+#~ msgid "Zoom _Extents"
+#~ msgstr "回路全体の表示(_E)"
+
+#~ msgid "Zoom _In"
+#~ msgstr "拡大(_I)"
+
+#~ msgid "Zoom _Out"
+#~ msgstr "縮小(_O)"
+
+#~ msgid "Zoom _Full"
+#~ msgstr "最縮小して表示(_F)"
 
 #, fuzzy
-msgid "Print"
-msgstr "印刷..."
-
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "_Dark Color Scheme"
+#~ msgstr "暗い配色(_D)"
 
 #, fuzzy
-msgid "Close Window"
-msgstr "ウィンドウを閉じています。\n"
+#~ msgid "_Light Color Scheme"
+#~ msgstr "明るい配色(_L)"
 
 #, fuzzy
-msgid "Quit"
-msgstr "終了(_Q)"
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
-
-msgid "Edit Object Properties"
-msgstr ""
+#~ msgid "B_W Color Scheme"
+#~ msgstr "暗い配色(_D)"
 
 #, fuzzy
-msgid "Translate Symbol"
-msgstr "転送"
+#~ msgid "Color Scheme Editor..."
+#~ msgstr "明るい配色(_L)"
 
-msgid "Invoke Macro"
-msgstr "マクロの実行"
+#~ msgid "_Manager..."
+#~ msgstr "管理(_M)"
 
-#, fuzzy
-msgid "Show/Hide Invisible Text"
-msgstr "テキスト表示/非表示"
+#~ msgid "_Previous"
+#~ msgstr "前のページ(_P)"
 
-#, fuzzy
-msgid "Cut"
-msgstr "切り取り(_T)"
-
-msgid "Copy"
-msgstr "コピー"
+#~ msgid "_Next"
+#~ msgstr "次のページ(_N)"
 
 #, fuzzy
-msgid "Paste"
-msgstr "貼り付け(_P)"
-
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr "ステータス"
+#~ msgid "_Revert..."
+#~ msgstr "再読み込み(_R)"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "テキスト追加..."
+#~ msgid "Next Tab"
+#~ msgstr "新規ページ"
 
 #, fuzzy
-msgid "Redraw"
-msgstr "再描画"
+#~ msgid "Previous Tab"
+#~ msgstr "前のページ(_P)"
+
+#~ msgid "_Component..."
+#~ msgstr "部品(_C)"
+
+#~ msgid "_Net"
+#~ msgstr "ネット(_N)"
+
+#~ msgid "B_us"
+#~ msgstr "バス(_U)"
+
+#~ msgid "_Attribute..."
+#~ msgstr "アトリビュート(_A)"
+
+#~ msgid "_Text..."
+#~ msgstr "テキスト(_T)..."
+
+#~ msgid "_Line"
+#~ msgstr "直線(_L)"
+
+#~ msgid "_Box"
+#~ msgstr "ボックス(_B)"
+
+#~ msgid "C_ircle"
+#~ msgstr "円(_I)"
+
+#~ msgid "A_rc"
+#~ msgstr "円弧(_R)"
+
+#~ msgid "_Pin"
+#~ msgstr "ピン(_P)"
+
+#~ msgid "Pictu_re..."
+#~ msgstr "画像(_R)"
 
 #, fuzzy
-msgid "Pan Left"
-msgstr "パンモード"
+#~ msgid "Show/Hide Hidden Text"
+#~ msgstr "テキスト表示/非表示"
 
 #, fuzzy
-msgid "Pan Right"
-msgstr "上 右"
-
-msgid "Pan Up"
-msgstr ""
+#~ msgid "_Options..."
+#~ msgstr "オプション"
 
 #, fuzzy
-msgid "Pan Down"
-msgstr "パンモード"
+#~ msgid "_Font..."
+#~ msgstr "印刷(_P)..."
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "回路全体の表示(_E)"
+#~ msgid "Grid +"
+#~ msgstr "グリッド・オフ\n"
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "拡大(_I)"
+#~ msgid "Grid -"
+#~ msgstr "グリッド・オフ\n"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "縮小(_O)"
+#~ msgid "Net: Rubberband On/Off"
+#~ msgstr "ラバーバンド・オン\n"
 
 #, fuzzy
-msgid "Zoom Full"
-msgstr "最縮小して表示(_F)"
+#~ msgid "_Coord Window"
+#~ msgstr "ウィンドウを閉じています。\n"
 
 #, fuzzy
-msgid "Dark Color Scheme"
-msgstr "暗い配色(_D)"
+#~ msgid "_Log Window"
+#~ msgstr "新規ウィンドウ"
 
 #, fuzzy
-msgid "Light Color Scheme"
-msgstr "明るい配色(_L)"
-
-msgid "Monochrome Color Scheme"
-msgstr ""
+#~ msgid "gEDA _Wiki Documentation"
+#~ msgstr "部品モード"
 
 #, fuzzy
-msgid "Show Color Scheme Editor"
-msgstr "明るい配色(_L)"
+#~ msgid "Find Component D_ocumentation"
+#~ msgstr "部品モード"
 
-msgid "Revert Changes"
-msgstr ""
+#~ msgid "_File"
+#~ msgstr "ファイル(_F)"
 
-#, fuzzy
-msgid "Previous Page"
-msgstr "前のページ(_P)"
+#~ msgid "_Edit"
+#~ msgstr "編集(_E)"
 
-#, fuzzy
-msgid "Next Page"
-msgstr "新規ページ"
+#~ msgid "_View"
+#~ msgstr "表示(_V)"
 
-#, fuzzy
-msgid "Print Page"
-msgstr "前のページ(_P)"
+#~ msgid "_Page"
+#~ msgstr "ページ(_P)"
 
-#, fuzzy
-msgid "Add Net"
-msgstr "テキスト追加..."
+#~ msgid "Hie_rarchy"
+#~ msgstr "階層"
 
-msgid "Add Bus"
-msgstr ""
+#~ msgid "A_ttributes"
+#~ msgstr "アトリビュート"
 
-#, fuzzy
-msgid "Add Line"
-msgstr "線"
-
-msgid "Add Path"
-msgstr ""
-
-msgid "Add Box"
-msgstr ""
+#~ msgid "_Options"
+#~ msgstr "オプション"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "円"
+#~ msgid "_Netlist"
+#~ msgstr "ネット(_N)"
 
-msgid "Add Arc"
-msgstr ""
-
-msgid "Add Pin"
-msgstr ""
-
-msgid "Down Schematic"
-msgstr ""
-
-msgid "Down Symbol"
-msgstr ""
+#~ msgid "_Help"
+#~ msgstr "ヘルプ"
 
 #, fuzzy
-msgid "Up Hierarchy"
-msgstr "階層"
+#~ msgid "Cancel"
+#~ msgstr "パン/キャンセル"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "アトリビュート編集"
-
-#, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
+#~ msgid "New File"
+#~ msgstr "新規ファイル"
 
 #, fuzzy
-msgid "Detach Attributes"
-msgstr "アトリビュート編集"
-
-#, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
+#~ msgid "Open File"
+#~ msgstr "ファイルを開く..."
 
 #, fuzzy
-msgid "Show Attribute Value"
-msgstr "スロットアトリビュートが変です。\n"
+#~ msgid "Print"
+#~ msgstr "印刷..."
 
 #, fuzzy
-msgid "Show Attribute Name"
-msgstr "スロットアトリビュートが変です。\n"
-
-msgid "Toggle Text Visibility"
-msgstr ""
-
-msgid "Find Specific Text"
-msgstr ""
-
-msgid "Hide Specific Text"
-msgstr ""
-
-msgid "Show Specific Text"
-msgstr ""
+#~ msgid "Close Window"
+#~ msgstr "ウィンドウを閉じています。\n"
 
 #, fuzzy
-msgid "Show Hotkeys"
-msgstr "隠しテキスト表示"
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
-
-msgid "Set Grid Spacing"
-msgstr ""
-
-msgid "Increase Grid Spacing"
-msgstr ""
-
-msgid "Decrease Grid Spacing"
-msgstr ""
-
-msgid "Toggle Outline Drawing"
-msgstr ""
-
-msgid "Toggle Net Rubber Band"
-msgstr ""
-
-msgid "Toggle Magnetic Nets"
-msgstr ""
+#~ msgid "Quit"
+#~ msgstr "終了(_Q)"
 
 #, fuzzy
-msgid "Show Log Window"
-msgstr "新規ウィンドウ"
+#~ msgid "Translate Symbol"
+#~ msgstr "転送"
+
+#~ msgid "Invoke Macro"
+#~ msgstr "マクロの実行"
 
 #, fuzzy
-msgid "Show Coordinate Window"
-msgstr "現在のウィンドウ"
-
-msgid "Toggle Grips"
-msgstr ""
+#~ msgid "Show/Hide Invisible Text"
+#~ msgstr "テキスト表示/非表示"
 
 #, fuzzy
-msgid "Component Documentation"
-msgstr "部品モード"
+#~ msgid "Cut"
+#~ msgstr "切り取り(_T)"
 
-msgid "View documentation for selected component"
-msgstr ""
-
-msgid "Lepton EDA Manual"
-msgstr ""
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
-
-msgid "Lepton EDA wiki"
-msgstr ""
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
-
-msgid "About lepton-schematic"
-msgstr ""
+#~ msgid "Copy"
+#~ msgstr "コピー"
 
 #, fuzzy
-msgid "Could not show documentation:"
-msgstr "部品モード"
+#~ msgid "Paste"
+#~ msgstr "貼り付け(_P)"
 
-msgid "No documentation found"
-msgstr ""
+#~ msgid "Status"
+#~ msgstr "ステータス"
 
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr ""
+#, fuzzy
+#~ msgid "Find Text State"
+#~ msgstr "テキスト追加..."
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
+#, fuzzy
+#~ msgid "Redraw"
+#~ msgstr "再描画"
 
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
+#, fuzzy
+#~ msgid "Pan Left"
+#~ msgstr "パンモード"
 
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#, fuzzy
+#~ msgid "Pan Right"
+#~ msgstr "上 右"
+
+#, fuzzy
+#~ msgid "Pan Down"
+#~ msgstr "パンモード"
+
+#, fuzzy
+#~ msgid "Zoom Extents"
+#~ msgstr "回路全体の表示(_E)"
+
+#, fuzzy
+#~ msgid "Zoom In"
+#~ msgstr "拡大(_I)"
+
+#, fuzzy
+#~ msgid "Zoom Out"
+#~ msgstr "縮小(_O)"
+
+#, fuzzy
+#~ msgid "Zoom Full"
+#~ msgstr "最縮小して表示(_F)"
+
+#, fuzzy
+#~ msgid "Dark Color Scheme"
+#~ msgstr "暗い配色(_D)"
+
+#, fuzzy
+#~ msgid "Light Color Scheme"
+#~ msgstr "明るい配色(_L)"
+
+#, fuzzy
+#~ msgid "Show Color Scheme Editor"
+#~ msgstr "明るい配色(_L)"
+
+#, fuzzy
+#~ msgid "Previous Page"
+#~ msgstr "前のページ(_P)"
+
+#, fuzzy
+#~ msgid "Next Page"
+#~ msgstr "新規ページ"
+
+#, fuzzy
+#~ msgid "Print Page"
+#~ msgstr "前のページ(_P)"
+
+#, fuzzy
+#~ msgid "Add Net"
+#~ msgstr "テキスト追加..."
+
+#, fuzzy
+#~ msgid "Add Line"
+#~ msgstr "線"
+
+#, fuzzy
+#~ msgid "Add Circle"
+#~ msgstr "円"
+
+#, fuzzy
+#~ msgid "Up Hierarchy"
+#~ msgstr "階層"
+
+#, fuzzy
+#~ msgid "Attach Attributes"
+#~ msgstr "アトリビュート編集"
+
+#, fuzzy
+#~ msgid "Detach Attributes"
+#~ msgstr "アトリビュート編集"
+
+#, fuzzy
+#~ msgid "Show Attribute Value"
+#~ msgstr "スロットアトリビュートが変です。\n"
+
+#, fuzzy
+#~ msgid "Show Attribute Name"
+#~ msgstr "スロットアトリビュートが変です。\n"
+
+#, fuzzy
+#~ msgid "Show Hotkeys"
+#~ msgstr "隠しテキスト表示"
+
+#, fuzzy
+#~ msgid "Show Log Window"
+#~ msgstr "新規ウィンドウ"
+
+#, fuzzy
+#~ msgid "Show Coordinate Window"
+#~ msgstr "現在のウィンドウ"
+
+#, fuzzy
+#~ msgid "Component Documentation"
+#~ msgstr "部品モード"
+
+#, fuzzy
+#~ msgid "Could not show documentation:"
+#~ msgstr "部品モード"
 
 #, fuzzy
 #~ msgid "Snap size"

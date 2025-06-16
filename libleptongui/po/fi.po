@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 13:36+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-msgid "Zoom too small!  Cannot zoom further."
-msgstr ""
 
 #, fuzzy
 msgid "Toggle _Editor"
@@ -37,6 +34,9 @@ msgid ""
 "button. It can be loaded on startup with the following expression\n"
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
+
+msgid "<b>Help</b>"
 msgstr ""
 
 #, c-format
@@ -65,6 +65,19 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
+msgstr ""
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "Aja skripti"
+
+msgid "_Run"
+msgstr ""
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -106,7 +119,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -292,7 +305,7 @@ msgstr ""
 msgid "Keystroke(s)"
 msgstr ""
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
 
 #, fuzzy
@@ -315,6 +328,104 @@ msgstr ""
 
 msgid "Evaluate"
 msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+
+msgid "Show Name & Value"
+msgstr ""
+
+msgid "Show Value only"
+msgstr ""
+
+msgid "Show Name only"
+msgstr ""
+
+msgid "Promote"
+msgstr ""
+
+msgid "Duplicate"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "Kopioi puskuriin 1"
+
+msgid "Edit Attributes"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Vis?"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "Määri_tteet..."
+
+#, fuzzy
+msgid "_Name:"
+msgstr "Näytä _Nimi"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "Näytä _Arvo"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+msgid "Vi_sible"
+msgstr ""
+
+msgid "_Add"
+msgstr "_Lisää"
+
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "_Määrite..."
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "Määri_tteet..."
+msgstr[1] "Määri_tteet..."
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -424,22 +535,10 @@ msgstr ""
 msgid "Bus pin (graphical)"
 msgstr ""
 
-msgid "Preview Buffer"
-msgstr ""
-
 msgid "Hide"
 msgstr ""
 
 msgid "Hide text starting with:"
-msgstr ""
-
-msgid "Edit Slot"
-msgstr ""
-
-msgid "Number of Slots:"
-msgstr ""
-
-msgid "Slot Number:"
 msgstr ""
 
 msgid "<b>Text Content</b>"
@@ -548,146 +647,6 @@ msgid "Resnap Active"
 msgstr ""
 
 #, c-format
-msgid "New page created [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "New Window created [%1$s]"
-msgstr ""
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "Aja skripti"
-
-msgid "_Run"
-msgstr ""
-
-msgid "Scheme files (*.scm)"
-msgstr ""
-
-msgid "All files"
-msgstr ""
-
-#, c-format
-msgid "Executing Guile script [%s]"
-msgstr ""
-
-msgid "Saved All"
-msgstr ""
-
-msgid "Failed to Save All"
-msgstr ""
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "Uusi ikkuna"
-
-msgid "Select objs first"
-msgstr ""
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr ""
-
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "_Hylkää muutokset"
-
-msgid "Empty clipboard"
-msgstr ""
-
-msgid "Empty buffer"
-msgstr ""
-
-#, c-format
-msgid "Searching for source [%1$s]"
-msgstr ""
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr ""
-
-msgid "Failed to descend hierarchy."
-msgstr ""
-
-#, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr ""
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-msgid "Grid OFF"
-msgstr ""
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-msgid "Invalid grid mode"
-msgstr ""
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-msgid "magnetic net mode: ON"
-msgstr ""
-
-msgid "magnetic net mode: OFF"
-msgstr ""
-
-#, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr ""
 
@@ -703,33 +662,10 @@ msgstr "_Poista"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr ""
-
 msgid "Hidden text is now visible"
 msgstr ""
 
 msgid "Hidden text is now invisible"
-msgstr ""
-
-#, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr ""
-
-#, c-format
-msgid "Could NOT save backup file [%1$s]"
 msgstr ""
 
 #, c-format
@@ -786,8 +722,36 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-msgid "Undo/Redo is disabled in configuration"
+#, c-format
+msgid "Can't get the real filename of %1$s."
 msgstr ""
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr ""
+
+#, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr ""
+
+#, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr ""
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+#, fuzzy
+msgid "Revert"
+msgstr "_Hylkää muutokset"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -800,6 +764,15 @@ msgstr ""
 
 #, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr ""
+
+msgid "Edit Slot"
+msgstr ""
+
+msgid "Number of Slots:"
+msgstr ""
+
+msgid "Slot Number:"
 msgstr ""
 
 #, c-format
@@ -816,20 +789,10 @@ msgstr ""
 msgid "N_ame:"
 msgstr ""
 
-#, fuzzy
-msgid "_Value:"
-msgstr "Näytä _Arvo"
-
-msgid "Vi_sible"
-msgstr ""
-
 msgid "Show Value Only"
 msgstr ""
 
 msgid "Show Name Only"
-msgstr ""
-
-msgid "Show Name & Value"
 msgstr ""
 
 msgid "<b>Attach Options</b>"
@@ -942,9 +905,6 @@ msgid "Reset filter"
 msgstr ""
 
 msgid "Reload all libraries"
-msgstr ""
-
-msgid "Value"
 msgstr ""
 
 msgid "Default behavior - reference component"
@@ -1167,88 +1127,6 @@ msgstr ""
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-
-msgid "Show Value only"
-msgstr ""
-
-msgid "Show Name only"
-msgstr ""
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr ""
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "Kopioi puskuriin 1"
-
-msgid "Edit Attributes"
-msgstr ""
-
-msgid "Vis?"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "Määri_tteet..."
-
-#, fuzzy
-msgid "_Name:"
-msgstr "Näytä _Nimi"
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "_Lisää"
-
-#, fuzzy
-msgid "<b>Add Attribute</b>"
-msgstr "_Määrite..."
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "Määri_tteet..."
-msgstr[1] "Määri_tteet..."
-
 #, fuzzy
 msgid "Add Text"
 msgstr "Muokkaa tekstiä..."
@@ -1364,7 +1242,7 @@ msgid "Loading schematic [%1$s]"
 msgstr ""
 
 #, c-format
-msgid "Could NOT save page [%1$s]\n"
+msgid "Could NOT save page [%1$s]"
 msgstr ""
 
 msgid "Error while trying to save"
@@ -1387,62 +1265,6 @@ msgstr ""
 
 #, c-format
 msgid "Closing [%1$s]"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "New file"
-msgstr ""
-
-msgid "Open file"
-msgstr ""
-
-msgid "Save file"
-msgstr ""
-
-msgid "Undo"
-msgstr ""
-
-msgid "Undo last operation"
-msgstr ""
-
-msgid "Redo"
-msgstr ""
-
-msgid "Redo last undo"
-msgstr ""
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Component"
-msgstr ""
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Add Text..."
-msgstr ""
-
-msgid "Select"
-msgstr ""
-
-msgid "Select mode"
 msgstr ""
 
 msgid "Show"
@@ -1505,682 +1327,398 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "Open Recen_t"
-msgstr "_Viimeisimmät tiedostot"
+#, fuzzy
+#~ msgid "Closing Window"
+#~ msgstr "Uusi ikkuna"
 
-msgid "Save All"
-msgstr "Tallenna _kaikki"
+#~ msgid "Open Recen_t"
+#~ msgstr "_Viimeisimmät tiedostot"
 
-msgid "_Print..."
-msgstr "T_ulosta…"
+#~ msgid "Save All"
+#~ msgstr "Tallenna _kaikki"
+
+#~ msgid "_Print..."
+#~ msgstr "T_ulosta…"
 
 #, fuzzy
-msgid "Write _Image..."
-msgstr "_Vie kuvaksi..."
+#~ msgid "Write _Image..."
+#~ msgstr "_Vie kuvaksi..."
 
 #, fuzzy
-msgid "Invoke Macro..."
-msgstr "Suorita makro"
+#~ msgid "Invoke Macro..."
+#~ msgstr "Suorita makro"
 
-msgid "Execute Script..."
-msgstr "Aja skripti"
+#~ msgid "Execute Script..."
+#~ msgstr "Aja skripti"
 
-msgid "REPL..."
-msgstr ""
+#~ msgid "New Window"
+#~ msgstr "Uusi ikkuna"
 
-msgid "New Window"
-msgstr "Uusi ikkuna"
+#~ msgid "_Quit"
+#~ msgstr "L_opeta"
 
-msgid "_Close Window"
-msgstr ""
+#~ msgid "_Undo"
+#~ msgstr "K_umoa"
 
-msgid "_Quit"
-msgstr "L_opeta"
+#~ msgid "_Redo"
+#~ msgstr "_Tee uudelleen"
 
-msgid "_Undo"
-msgstr "K_umoa"
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "Käännä 90 astetta"
 
-msgid "_Redo"
-msgstr "_Tee uudelleen"
+#~ msgid "Edit..."
+#~ msgstr "Muokkaa..."
 
-msgid "Select All"
-msgstr ""
+#~ msgid "Edit Text..."
+#~ msgstr "Muokkaa tekstiä..."
 
-msgid "Deselect"
-msgstr ""
+#~ msgid "Lock"
+#~ msgstr "Lukitse"
 
-msgid "Rotate 90 Mode"
-msgstr "Käännä 90 astetta"
+#~ msgid "Unlock"
+#~ msgstr "Vapauta"
 
-msgid "Object Properties..."
-msgstr ""
+#~ msgid "Update Component"
+#~ msgstr "Päivitä komponentti"
 
-msgid "Edit..."
-msgstr "Muokkaa..."
+#~ msgid "Copy into 1"
+#~ msgstr "Kopioi puskuriin 1"
 
-msgid "Edit Text..."
-msgstr "Muokkaa tekstiä..."
+#~ msgid "Copy into 2"
+#~ msgstr "Kopioi puskuriin 2"
 
-msgid "Slot..."
-msgstr ""
+#~ msgid "Copy into 3"
+#~ msgstr "Kopioi puskuriin 3"
 
-msgid "Lock"
-msgstr "Lukitse"
+#~ msgid "Copy into 4"
+#~ msgstr "Kopioi puskuriin 4"
 
-msgid "Unlock"
-msgstr "Vapauta"
+#~ msgid "Copy into 5"
+#~ msgstr "Kopioi puskuriin 5"
 
-msgid "Embed Component/Picture"
-msgstr ""
+#~ msgid "Cut into 1"
+#~ msgstr "Leikkaa puskuriin 1"
 
-msgid "Unembed Component/Picture"
-msgstr ""
+#~ msgid "Cut into 2"
+#~ msgstr "Leikkaa puskuriin 2"
 
-msgid "Update Component"
-msgstr "Päivitä komponentti"
+#~ msgid "Cut into 3"
+#~ msgstr "Leikkaa puskuriin 3"
 
-msgid "Symbol Translate..."
-msgstr ""
+#~ msgid "Cut into 4"
+#~ msgstr "Leikkaa puskuriin 4"
 
-msgid "Copy into 1"
-msgstr "Kopioi puskuriin 1"
+#~ msgid "Cut into 5"
+#~ msgstr "Leikkaa puskuriin 5"
 
-msgid "Copy into 2"
-msgstr "Kopioi puskuriin 2"
+#~ msgid "Paste from 1"
+#~ msgstr "Liitä puskurista 1"
 
-msgid "Copy into 3"
-msgstr "Kopioi puskuriin 3"
+#~ msgid "Paste from 2"
+#~ msgstr "Liitä puskurista 2"
 
-msgid "Copy into 4"
-msgstr "Kopioi puskuriin 4"
+#~ msgid "Paste from 3"
+#~ msgstr "Liitä puskurista 3"
 
-msgid "Copy into 5"
-msgstr "Kopioi puskuriin 5"
+#~ msgid "Paste from 4"
+#~ msgstr "Liitä puskurista 4"
 
-msgid "Cut into 1"
-msgstr "Leikkaa puskuriin 1"
-
-msgid "Cut into 2"
-msgstr "Leikkaa puskuriin 2"
-
-msgid "Cut into 3"
-msgstr "Leikkaa puskuriin 3"
-
-msgid "Cut into 4"
-msgstr "Leikkaa puskuriin 4"
-
-msgid "Cut into 5"
-msgstr "Leikkaa puskuriin 5"
-
-msgid "Paste from 1"
-msgstr "Liitä puskurista 1"
-
-msgid "Paste from 2"
-msgstr "Liitä puskurista 2"
-
-msgid "Paste from 3"
-msgstr "Liitä puskurista 3"
-
-msgid "Paste from 4"
-msgstr "Liitä puskurista 4"
-
-msgid "Paste from 5"
-msgstr "Liitä puskurista 5"
-
-msgid "Side Dock"
-msgstr ""
-
-msgid "Bottom Dock"
-msgstr ""
+#~ msgid "Paste from 5"
+#~ msgstr "Liitä puskurista 5"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "Muokkaa tekstiä..."
+#~ msgid "Find Text Results"
+#~ msgstr "Muokkaa tekstiä..."
 
-msgid "_Redraw"
-msgstr "_Päivitä näkymä"
+#~ msgid "_Redraw"
+#~ msgstr "_Päivitä näkymä"
 
-msgid "_Pan"
-msgstr ""
+#~ msgid "Zoom _In"
+#~ msgstr "_Lähennä"
 
-msgid "Zoom _Box"
-msgstr ""
+#~ msgid "Zoom _Out"
+#~ msgstr "L_oitonna"
 
-msgid "Zoom _Extents"
-msgstr ""
+#~ msgid "_Previous"
+#~ msgstr "_Edellinen"
 
-msgid "Zoom _In"
-msgstr "_Lähennä"
-
-msgid "Zoom _Out"
-msgstr "L_oitonna"
-
-msgid "Zoom _Full"
-msgstr ""
-
-msgid "_Dark Color Scheme"
-msgstr ""
-
-msgid "_Light Color Scheme"
-msgstr ""
-
-msgid "B_W Color Scheme"
-msgstr ""
-
-msgid "Color Scheme Editor..."
-msgstr ""
-
-msgid "_Manager..."
-msgstr ""
-
-msgid "_Previous"
-msgstr "_Edellinen"
-
-msgid "_Next"
-msgstr "_Seuraava"
+#~ msgid "_Next"
+#~ msgstr "_Seuraava"
 
 #, fuzzy
-msgid "_Revert..."
-msgstr "_Hylkää muutokset"
+#~ msgid "_Revert..."
+#~ msgstr "_Hylkää muutokset"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "_Seuraava"
+#~ msgid "Next Tab"
+#~ msgstr "_Seuraava"
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "_Edellinen"
+#~ msgid "Previous Tab"
+#~ msgstr "_Edellinen"
 
-msgid "_Component..."
-msgstr "_komponentti..."
+#~ msgid "_Component..."
+#~ msgstr "_komponentti..."
 
-msgid "_Net"
-msgstr "Johdi_n"
+#~ msgid "_Net"
+#~ msgstr "Johdi_n"
 
-msgid "B_us"
-msgstr "Väy_lä"
+#~ msgid "B_us"
+#~ msgstr "Väy_lä"
 
-msgid "_Attribute..."
-msgstr "_Määrite..."
+#~ msgid "_Attribute..."
+#~ msgstr "_Määrite..."
 
-msgid "_Text..."
-msgstr "_Teksti..."
+#~ msgid "_Text..."
+#~ msgstr "_Teksti..."
 
-msgid "_Line"
-msgstr "_Viiva"
+#~ msgid "_Line"
+#~ msgstr "_Viiva"
 
-msgid "Pat_h"
-msgstr ""
+#~ msgid "C_ircle"
+#~ msgstr "Ympyrä"
 
-msgid "_Box"
-msgstr ""
+#~ msgid "A_rc"
+#~ msgstr "Kaa_ri"
 
-msgid "C_ircle"
-msgstr "Ympyrä"
+#~ msgid "Pictu_re..."
+#~ msgstr "Kuva..."
 
-msgid "A_rc"
-msgstr "Kaa_ri"
+#~ msgid "_Up"
+#~ msgstr "_Ylös"
 
-msgid "_Pin"
-msgstr ""
+#~ msgid "Show _Value"
+#~ msgstr "Näytä _Arvo"
 
-msgid "Pictu_re..."
-msgstr "Kuva..."
+#~ msgid "Show _Name"
+#~ msgstr "Näytä _Nimi"
 
-msgid "_Up"
-msgstr "_Ylös"
+#~ msgid "Show _Both"
+#~ msgstr "Näytä _Molemmat"
 
-msgid "_Down Schematic"
-msgstr ""
+#~ msgid "_Toggle Visibility"
+#~ msgstr "Vaihda Näk_yvyys"
 
-msgid "Down _Symbol"
-msgstr ""
+#~ msgid "_Hide Specific Text..."
+#~ msgstr "_Piilota"
 
-msgid "_Attach"
-msgstr ""
+#~ msgid "_Show Specific Text..."
+#~ msgstr "_Näytä Maarite tekstillä..."
 
-msgid "_Detach"
-msgstr ""
-
-msgid "Show _Value"
-msgstr "Näytä _Arvo"
-
-msgid "Show _Name"
-msgstr "Näytä _Nimi"
-
-msgid "Show _Both"
-msgstr "Näytä _Molemmat"
-
-msgid "_Toggle Visibility"
-msgstr "Vaihda Näk_yvyys"
-
-msgid "_Hide Specific Text..."
-msgstr "_Piilota"
-
-msgid "_Show Specific Text..."
-msgstr "_Näytä Maarite tekstillä..."
-
-msgid "Show/Hide Hidden Text"
-msgstr ""
-
-msgid "_Find Text/Check Symbol..."
-msgstr ""
-
-msgid "A_utonumber Text..."
-msgstr "A_utonumeroi määritteet tekstillä..."
-
-msgid "_Options..."
-msgstr ""
+#~ msgid "A_utonumber Text..."
+#~ msgstr "A_utonumeroi määritteet tekstillä..."
 
 #, fuzzy
-msgid "_Font..."
-msgstr "T_ulosta…"
+#~ msgid "_Font..."
+#~ msgstr "T_ulosta…"
 
 #, fuzzy
-msgid "Grid +"
-msgstr "Nosta Ruudukon Tiheyttä"
+#~ msgid "Grid +"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
-msgid "Grid -"
-msgstr "Nosta Ruudukon Tiheyttä"
-
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
-
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
-
-msgid "Grips: On/Off"
-msgstr ""
+#~ msgid "Grid -"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
-msgid "Feedback Mode: Outline/Box"
-msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
-
-msgid "Net: Rubberband On/Off"
-msgstr ""
-
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "Feedback Mode: Outline/Box"
+#~ msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
 
 #, fuzzy
-msgid "_Coord Window"
-msgstr "Näytä _Koordinaatti-ikkuna..."
+#~ msgid "_Coord Window"
+#~ msgstr "Näytä _Koordinaatti-ikkuna..."
 
 #, fuzzy
-msgid "_Log Window"
-msgstr "Näytä _Loki-ikkuna..."
-
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "_Log Window"
+#~ msgstr "Näytä _Loki-ikkuna..."
 
 #, fuzzy
-msgid "Lepton EDA Reference _Manual"
-msgstr "gEDA _Wiki..."
+#~ msgid "Lepton EDA Reference _Manual"
+#~ msgstr "gEDA _Wiki..."
 
 #, fuzzy
-msgid "gEDA _Wiki Documentation"
-msgstr "gEDA Dokumentaatio..."
+#~ msgid "gEDA _Wiki Documentation"
+#~ msgstr "gEDA Dokumentaatio..."
 
 #, fuzzy
-msgid "Find Component D_ocumentation"
-msgstr "Komponentin D_okumentaatio..."
+#~ msgid "Find Component D_ocumentation"
+#~ msgstr "Komponentin D_okumentaatio..."
 
-msgid "_Hotkeys..."
-msgstr "_Pikanäppäimet"
-
-#, fuzzy
-msgid "_About"
-msgstr "_Tietoja..."
-
-msgid "_File"
-msgstr "_Tiedosto"
-
-msgid "_Edit"
-msgstr "_Muokkaa"
-
-msgid "_View"
-msgstr "_Näytä"
-
-msgid "_Page"
-msgstr "_Sivu"
-
-msgid "Hie_rarchy"
-msgstr ""
-
-msgid "A_ttributes"
-msgstr "Määri_tteet..."
-
-msgid "_Options"
-msgstr ""
+#~ msgid "_Hotkeys..."
+#~ msgstr "_Pikanäppäimet"
 
 #, fuzzy
-msgid "_Netlist"
-msgstr "Johdi_n"
+#~ msgid "_About"
+#~ msgstr "_Tietoja..."
 
-msgid "_Help"
-msgstr "O_hje"
+#~ msgid "_File"
+#~ msgstr "_Tiedosto"
 
-#, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr ""
+#~ msgid "_Edit"
+#~ msgstr "_Muokkaa"
 
-msgid "There is no last action to repeat."
-msgstr ""
+#~ msgid "_View"
+#~ msgstr "_Näytä"
 
-msgid "Repeat Last Action"
-msgstr ""
+#~ msgid "_Page"
+#~ msgstr "_Sivu"
 
-msgid "Cancel"
-msgstr ""
-
-#, fuzzy
-msgid "New File"
-msgstr "_Tiedosto"
-
-msgid "Open File"
-msgstr ""
+#~ msgid "A_ttributes"
+#~ msgstr "Määri_tteet..."
 
 #, fuzzy
-msgid "Print"
-msgstr "T_ulosta…"
+#~ msgid "_Netlist"
+#~ msgstr "Johdi_n"
 
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "_Help"
+#~ msgstr "O_hje"
 
 #, fuzzy
-msgid "Close Window"
-msgstr "Uusi ikkuna"
+#~ msgid "New File"
+#~ msgstr "_Tiedosto"
 
 #, fuzzy
-msgid "Quit"
-msgstr "L_opeta"
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
-
-msgid "Edit Object Properties"
-msgstr ""
-
-msgid "Translate Symbol"
-msgstr ""
-
-msgid "Invoke Macro"
-msgstr "Suorita makro"
-
-msgid "Show/Hide Invisible Text"
-msgstr ""
+#~ msgid "Print"
+#~ msgstr "T_ulosta…"
 
 #, fuzzy
-msgid "Cut"
-msgstr "_Leikkaa"
-
-msgid "Copy"
-msgstr ""
+#~ msgid "Close Window"
+#~ msgstr "Uusi ikkuna"
 
 #, fuzzy
-msgid "Paste"
-msgstr "L_iitä"
+#~ msgid "Quit"
+#~ msgstr "L_opeta"
 
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr ""
+#~ msgid "Invoke Macro"
+#~ msgstr "Suorita makro"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "Muokkaa tekstiä..."
+#~ msgid "Cut"
+#~ msgstr "_Leikkaa"
 
 #, fuzzy
-msgid "Redraw"
-msgstr "_Päivitä näkymä"
-
-msgid "Pan Left"
-msgstr ""
-
-msgid "Pan Right"
-msgstr ""
-
-msgid "Pan Up"
-msgstr ""
-
-msgid "Pan Down"
-msgstr ""
+#~ msgid "Paste"
+#~ msgstr "L_iitä"
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "_Lähennä"
+#~ msgid "Find Text State"
+#~ msgstr "Muokkaa tekstiä..."
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "_Lähennä"
+#~ msgid "Redraw"
+#~ msgstr "_Päivitä näkymä"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "L_oitonna"
+#~ msgid "Zoom Extents"
+#~ msgstr "_Lähennä"
 
 #, fuzzy
-msgid "Zoom Full"
-msgstr "L_oitonna"
-
-msgid "Dark Color Scheme"
-msgstr ""
-
-msgid "Light Color Scheme"
-msgstr ""
-
-msgid "Monochrome Color Scheme"
-msgstr ""
-
-msgid "Show Color Scheme Editor"
-msgstr ""
-
-msgid "Revert Changes"
-msgstr ""
+#~ msgid "Zoom In"
+#~ msgstr "_Lähennä"
 
 #, fuzzy
-msgid "Previous Page"
-msgstr "_Edellinen"
-
-msgid "Next Page"
-msgstr ""
+#~ msgid "Zoom Out"
+#~ msgstr "L_oitonna"
 
 #, fuzzy
-msgid "Print Page"
-msgstr "_Edellinen"
-
-msgid "Add Net"
-msgstr ""
-
-msgid "Add Bus"
-msgstr ""
+#~ msgid "Zoom Full"
+#~ msgstr "L_oitonna"
 
 #, fuzzy
-msgid "Add Line"
-msgstr "_Viiva"
-
-msgid "Add Path"
-msgstr ""
-
-msgid "Add Box"
-msgstr ""
+#~ msgid "Previous Page"
+#~ msgstr "_Edellinen"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "Ympyrä"
-
-msgid "Add Arc"
-msgstr ""
-
-msgid "Add Pin"
-msgstr ""
-
-msgid "Down Schematic"
-msgstr ""
-
-msgid "Down Symbol"
-msgstr ""
-
-msgid "Up Hierarchy"
-msgstr ""
+#~ msgid "Print Page"
+#~ msgstr "_Edellinen"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "Määri_tteet..."
-
-#, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
+#~ msgid "Add Line"
+#~ msgstr "_Viiva"
 
 #, fuzzy
-msgid "Detach Attributes"
-msgstr "Määri_tteet..."
-
-#, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
+#~ msgid "Add Circle"
+#~ msgstr "Ympyrä"
 
 #, fuzzy
-msgid "Show Attribute Value"
-msgstr "Näytä _Arvo"
+#~ msgid "Attach Attributes"
+#~ msgstr "Määri_tteet..."
 
 #, fuzzy
-msgid "Show Attribute Name"
-msgstr "Näytä _Nimi"
+#~ msgid "Detach Attributes"
+#~ msgstr "Määri_tteet..."
 
 #, fuzzy
-msgid "Toggle Text Visibility"
-msgstr "Vaihda Näk_yvyys"
+#~ msgid "Show Attribute Value"
+#~ msgstr "Näytä _Arvo"
 
 #, fuzzy
-msgid "Find Specific Text"
-msgstr "_Piilota"
+#~ msgid "Show Attribute Name"
+#~ msgstr "Näytä _Nimi"
 
 #, fuzzy
-msgid "Hide Specific Text"
-msgstr "_Piilota"
+#~ msgid "Toggle Text Visibility"
+#~ msgstr "Vaihda Näk_yvyys"
 
 #, fuzzy
-msgid "Show Specific Text"
-msgstr "_Näytä Maarite tekstillä..."
+#~ msgid "Find Specific Text"
+#~ msgstr "_Piilota"
 
 #, fuzzy
-msgid "Show Hotkeys"
-msgstr "Näytä _Molemmat"
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
+#~ msgid "Hide Specific Text"
+#~ msgstr "_Piilota"
 
 #, fuzzy
-msgid "Set Grid Spacing"
-msgstr "Nosta Ruudukon Tiheyttä"
+#~ msgid "Show Specific Text"
+#~ msgstr "_Näytä Maarite tekstillä..."
 
 #, fuzzy
-msgid "Increase Grid Spacing"
-msgstr "Nosta Ruudukon Tiheyttä"
+#~ msgid "Show Hotkeys"
+#~ msgstr "Näytä _Molemmat"
 
 #, fuzzy
-msgid "Decrease Grid Spacing"
-msgstr "Nosta Ruudukon Tiheyttä"
+#~ msgid "Set Grid Spacing"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
-msgid "Toggle Outline Drawing"
-msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
-
-msgid "Toggle Net Rubber Band"
-msgstr ""
-
-msgid "Toggle Magnetic Nets"
-msgstr ""
+#~ msgid "Increase Grid Spacing"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
-msgid "Show Log Window"
-msgstr "Näytä _Loki-ikkuna..."
+#~ msgid "Decrease Grid Spacing"
+#~ msgstr "Nosta Ruudukon Tiheyttä"
 
 #, fuzzy
-msgid "Show Coordinate Window"
-msgstr "Näytä _Koordinaatti-ikkuna..."
+#~ msgid "Toggle Outline Drawing"
+#~ msgstr "Näytä _Liikutettaessa Komponentti/Neliö"
 
 #, fuzzy
-msgid "Toggle Grips"
-msgstr "Vaihda Näk_yvyys"
+#~ msgid "Show Log Window"
+#~ msgstr "Näytä _Loki-ikkuna..."
 
 #, fuzzy
-msgid "Component Documentation"
-msgstr "Komponentin D_okumentaatio..."
-
-msgid "View documentation for selected component"
-msgstr ""
+#~ msgid "Show Coordinate Window"
+#~ msgstr "Näytä _Koordinaatti-ikkuna..."
 
 #, fuzzy
-msgid "Lepton EDA Manual"
-msgstr "gEDA _Wiki..."
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
+#~ msgid "Toggle Grips"
+#~ msgstr "Vaihda Näk_yvyys"
 
 #, fuzzy
-msgid "Lepton EDA wiki"
-msgstr "gEDA _Wiki..."
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
-
-msgid "About lepton-schematic"
-msgstr ""
+#~ msgid "Component Documentation"
+#~ msgstr "Komponentin D_okumentaatio..."
 
 #, fuzzy
-msgid "Could not show documentation:"
-msgstr "Komponentin D_okumentaatio..."
+#~ msgid "Lepton EDA Manual"
+#~ msgstr "gEDA _Wiki..."
 
-msgid "No documentation found"
-msgstr ""
+#, fuzzy
+#~ msgid "Lepton EDA wiki"
+#~ msgstr "gEDA _Wiki..."
 
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#, fuzzy
+#~ msgid "Could not show documentation:"
+#~ msgstr "Komponentin D_okumentaatio..."
 
 #, fuzzy
 #~ msgid "Snap size"

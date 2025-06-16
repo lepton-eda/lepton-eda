@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 13:08+0300\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -18,10 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-#, fuzzy
-msgid "Zoom too small!  Cannot zoom further."
-msgstr "Bereich zu klein! Eine weitere Vergrößerung ist nicht möglich.\n"
 
 #, fuzzy
 msgid "Toggle _Editor"
@@ -40,6 +36,10 @@ msgid ""
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
+
+#, fuzzy
+msgid "<b>Help</b>"
+msgstr "<b>Suchbereich</b>"
 
 #, fuzzy, c-format
 msgid ""
@@ -73,6 +73,20 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Datei überschreiben?"
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "Skript ausführen …"
+
+msgid "_Run"
+msgstr ""
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Schaltpläne"
+
+msgid "All files"
+msgstr "Alle Dateien"
 
 msgid "Sa_ve..."
 msgstr ""
@@ -115,7 +129,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -322,10 +336,11 @@ msgstr "Aktion"
 msgid "Keystroke(s)"
 msgstr "Tastenabfolge"
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+#, fuzzy
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
-"** Diese Fehlermeldung enthält eine ungültige UTF-8 Kodierung. Siehe gschem."
-"log und stderr.\n"
+"** Diese Fehlermeldung enthält eine ungültige UTF-8 Kodierung. Siehe "
+"gschem.log und stderr.\n"
 
 #, fuzzy
 msgid "Clear log window?"
@@ -348,6 +363,105 @@ msgstr ""
 #, fuzzy
 msgid "Evaluate"
 msgstr "Auswerten:"
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+
+msgid "Show Name & Value"
+msgstr "Name & Wert anzeigen"
+
+msgid "Show Value only"
+msgstr "Nur Wert anzeigen"
+
+msgid "Show Name only"
+msgstr "Nur Name anzeigen"
+
+msgid "Promote"
+msgstr "Einsetzen"
+
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+msgid "Delete"
+msgstr "Löschen"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "Kopieren in 1"
+
+msgid "Edit Attributes"
+msgstr "Attribute bearbeiten"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "Vis?"
+msgstr "Sichtbar?"
+
+msgid "N"
+msgstr "Name"
+
+msgid "V"
+msgstr "Wert"
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "Geerbte Attribute anzeigen"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "Name:"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "Wert:"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+#, fuzzy
+msgid "Vi_sible"
+msgstr "Sichtbar"
+
+msgid "_Add"
+msgstr "_Einfügen"
+
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Attribut hinzufügen</b>"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] "Netz-Pin"
+msgstr[1] "Netz-Pin"
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "Attribut"
+msgstr[1] "Attribut"
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -473,26 +587,12 @@ msgstr "Netz-Pin"
 msgid "Bus pin (graphical)"
 msgstr "Bus-Pin (grafisch)"
 
-msgid "Preview Buffer"
-msgstr "Vorschau"
-
 #, fuzzy
 msgid "Hide"
 msgstr "Text verbergen"
 
 msgid "Hide text starting with:"
 msgstr "Text verbergen, der beginnt mit:"
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "Farbe"
-
-msgid "Number of Slots:"
-msgstr ""
-
-#, fuzzy
-msgid "Slot Number:"
-msgstr "Slot-Nummer bearbeiten:"
 
 msgid "<b>Text Content</b>"
 msgstr "<b>Textinhalt</b>"
@@ -602,176 +702,6 @@ msgid "Resnap Active"
 msgstr "Neu Ausrichen"
 
 #, fuzzy, c-format
-msgid "New page created [%1$s]"
-msgstr "Neue Seite erzeugt [%s]\n"
-
-#, fuzzy, c-format
-msgid "New Window created [%1$s]"
-msgstr "Neues Fenster geöffnet [%s]\n"
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "Skript ausführen …"
-
-msgid "_Run"
-msgstr ""
-
-#, fuzzy
-msgid "Scheme files (*.scm)"
-msgstr "Schaltpläne"
-
-msgid "All files"
-msgstr "Alle Dateien"
-
-#, fuzzy, c-format
-msgid "Executing Guile script [%s]"
-msgstr "Führe guile scipt aus [%s]\n"
-
-msgid "Saved All"
-msgstr "Alles gespeichert"
-
-msgid "Failed to Save All"
-msgstr "Alles speichern gescheitert"
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "Schließe Fenster\n"
-
-msgid "Select objs first"
-msgstr "Zuerst Objekte auswählen"
-
-#, fuzzy
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
-
-#, fuzzy
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-"ACHTUNG:\"am Raster ausrichten\" wird aktiviert und mit der Transformation "
-"fortgefahren.\n"
-
-#, fuzzy
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr "ACHTUNG: Das Raster ist ungleich 100!\n"
-
-#, fuzzy
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-"ACHTUNG: Wenn ein Symbol transformiert wird, sollte das Raster auf 100 "
-"gesetzt sein.\n"
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "Neu _laden"
-
-#, fuzzy
-msgid "Empty clipboard"
-msgstr "Kopieren"
-
-msgid "Empty buffer"
-msgstr "Leerer Zwischenspeicher"
-
-#, fuzzy, c-format
-msgid "Searching for source [%1$s]"
-msgstr "Nach der Quelle suchen [%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-"%s\n"
-"\n"
-"Das Log-Fenster von gschem sind eventuell Details eingetragen."
-
-#, fuzzy, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr "Die folgenden Bilder konnten nicht überschrieben werden: %s"
-
-#, fuzzy
-msgid "Failed to descend hierarchy."
-msgstr "In der Hierachie hinabsteigen"
-
-#, fuzzy, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr "Nach dem Symbol suchen [%s]\n"
-
-#, fuzzy
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr "Das Symbol ist keine reale Datei. Symbol kann nicht geöffnet werden.\n"
-
-#, fuzzy
-msgid "Cannot find any schematics above the current one!"
-msgstr "Konnte keinen übergeordneten Schaltplan finden!\n"
-
-#, fuzzy
-msgid "Action feedback mode set to OUTLINE"
-msgstr "Aktions-Rückmeldemodus wurde auf OUTLINE festgelegt.\n"
-
-#, fuzzy
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr "Aktions-Rückmeldemodus wurde auf BOUNDINGBOX festgelegt.\n"
-
-#, fuzzy
-msgid "Grid OFF"
-msgstr "Raster AUS\n"
-
-#, fuzzy
-msgid "Dot grid selected"
-msgstr "Punktraster ausgewählt\n"
-
-#, fuzzy
-msgid "Mesh grid selected"
-msgstr "Linienraster ausgewählt\n"
-
-#, fuzzy
-msgid "Invalid grid mode"
-msgstr "Fehlerhaftes Attribut"
-
-#, fuzzy
-msgid "Snap OFF (CAUTION!)"
-msgstr "Freihandmodus (ACHTUNG! Ausrichten am Raster abgeschaltet)\n"
-
-#, fuzzy
-msgid "Snap ON"
-msgstr "Am Raster ausrichten\n"
-
-#, fuzzy
-msgid "Snap back to the grid (CAUTION!)"
-msgstr "Objekte neu am Raster ausrichten (Achtung!)\n"
-
-#, fuzzy
-msgid "Rubber band ON"
-msgstr "Gummifäden EIN\n"
-
-#, fuzzy
-msgid "Rubber band OFF"
-msgstr "Gummifäden AUS \n"
-
-#, fuzzy
-msgid "magnetic net mode: ON"
-msgstr "Magnetischer Netzmodus: EIN\n"
-
-#, fuzzy
-msgid "magnetic net mode: OFF"
-msgstr "Magnetischer Netzmodus: AUS\n"
-
-#, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Verschiebe Schaltplan [%d %d]\n"
 
@@ -787,9 +717,6 @@ msgstr "Löschen"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr "Löschen"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Verborgener Text ist jetzt sichtbar.\n"
@@ -797,31 +724,6 @@ msgstr "Verborgener Text ist jetzt sichtbar.\n"
 #, fuzzy
 msgid "Hidden text is now invisible"
 msgstr "Verborgener Text ist jetzt unsichbar.\n"
-
-#, fuzzy, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-"Das Symbol [%s] konnte nicht gefunden werden. Aktualisierung "
-"fehlgeschlagen.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-"o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht "
-"ermitteln."
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr "Die Backup-Datei [%s] konnte nicht auf readonly gesetzt werden.\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -887,9 +789,39 @@ msgstr "Bei diesem Bauteil ist nur ein slot erlaubt.\n"
 msgid "New slot number out of range"
 msgstr "Neue slot Nummer außerhalb des gültigen Wertebereichs\n"
 
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+"o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht "
+"ermitteln."
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr ""
+"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr "Die Backup-Datei [%s] konnte nicht auf readonly gesetzt werden.\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
 #, fuzzy
-msgid "Undo/Redo is disabled in configuration"
-msgstr "Rückgängig/Wiederherstellen wurde in der rc Datei deaktiviert.\n"
+msgid "Revert"
+msgstr "Neu _laden"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -904,6 +836,17 @@ msgstr "Konnte keinen übergeordneten Schaltplan finden!\n"
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "Die folgenden Bilder konnten nicht überschrieben werden: %s"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Farbe"
+
+msgid "Number of Slots:"
+msgstr ""
+
+#, fuzzy
+msgid "Slot Number:"
+msgstr "Slot-Nummer bearbeiten:"
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
@@ -920,22 +863,11 @@ msgstr "Attribut hinzufügen"
 msgid "N_ame:"
 msgstr "Name:"
 
-#, fuzzy
-msgid "_Value:"
-msgstr "Wert:"
-
-#, fuzzy
-msgid "Vi_sible"
-msgstr "Sichtbar"
-
 msgid "Show Value Only"
 msgstr "Nur Wert anzeigen"
 
 msgid "Show Name Only"
 msgstr "Nur Name anzeigen"
-
-msgid "Show Name & Value"
-msgstr "Name & Wert anzeigen"
 
 msgid "<b>Attach Options</b>"
 msgstr "<b>Optionen</b>"
@@ -1059,9 +991,6 @@ msgstr "Neue Datei"
 
 msgid "Reload all libraries"
 msgstr ""
-
-msgid "Value"
-msgstr "Wert"
 
 msgid "Default behavior - reference component"
 msgstr "Bauteil referenzieren (Voreinstellung)"
@@ -1307,88 +1236,6 @@ msgstr "Hie_rarchie"
 msgid "The operating system is out of memory or resources."
 msgstr "Zu wenig Speicher, oder andere Resoucen."
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
-
-msgid "Show Value only"
-msgstr "Nur Wert anzeigen"
-
-msgid "Show Name only"
-msgstr "Nur Name anzeigen"
-
-msgid "Promote"
-msgstr "Einsetzen"
-
-msgid "Duplicate"
-msgstr "Duplizieren"
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "Kopieren in 1"
-
-msgid "Edit Attributes"
-msgstr "Attribute bearbeiten"
-
-msgid "Vis?"
-msgstr "Sichtbar?"
-
-msgid "N"
-msgstr "Name"
-
-msgid "V"
-msgstr "Wert"
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "Geerbte Attribute anzeigen"
-
-#, fuzzy
-msgid "_Name:"
-msgstr "Name:"
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "_Einfügen"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Attribut hinzufügen</b>"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] "Netz-Pin"
-msgstr[1] "Netz-Pin"
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "Attribut"
-msgstr[1] "Attribut"
-
 #, fuzzy
 msgid "Add Text"
 msgstr "/Text einfügen"
@@ -1515,7 +1362,7 @@ msgid "Loading schematic [%1$s]"
 msgstr "Lade Schaltplan [%s]\n"
 
 #, fuzzy, c-format
-msgid "Could NOT save page [%1$s]\n"
+msgid "Could NOT save page [%1$s]"
 msgstr "Die Seite [%s] konnte nicht gespeichert werden.\n"
 
 msgid "Error while trying to save"
@@ -1539,71 +1386,6 @@ msgstr "Schließe Schaltplan [%s]\n"
 #, fuzzy, c-format
 msgid "Closing [%1$s]"
 msgstr "Schließe [%s]\n"
-
-msgid "New"
-msgstr "Neu"
-
-msgid "New file"
-msgstr "Neue Datei"
-
-#, fuzzy
-msgid "Open file"
-msgstr "Datei öffnen …"
-
-msgid "Save file"
-msgstr "Datei speichern"
-
-msgid "Undo"
-msgstr "Rückgängig"
-
-msgid "Undo last operation"
-msgstr "Letzte Aktion rückgängig machen"
-
-msgid "Redo"
-msgstr "Wiederherstellen"
-
-msgid "Redo last undo"
-msgstr "Letzte Aktion wiederherstellen"
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-"Bauteil hinzufügen …\n"
-"Wählen Sie Bibliothek und Bauteil aus der Liste, bewegen die Maus ins "
-"Hauptfenster,\n"
-"klicken, um es zu platzieren. Rechtsklick zum abbrechen"
-
-msgid "Component"
-msgstr "Bauteil"
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"Netz einfügen\n"
-"mit rechter Maustaste abbrechen"
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"Bus einfügen\n"
-"mit rechter Maustaste abbrechen"
-
-msgid "Bus"
-msgstr "Bus"
-
-msgid "Add Text..."
-msgstr "Text hinzufügen …"
-
-msgid "Select"
-msgstr "Auswählen"
-
-msgid "Select mode"
-msgstr "Auswahlmodus"
 
 #, fuzzy
 msgid "Show"
@@ -1677,715 +1459,831 @@ msgstr ""
 "Erstellen oder editieren eines elektrischen Schaltplans oder Symbols mit "
 "gschem"
 
-msgid "Open Recen_t"
-msgstr "_Zuletzt  geöffnet"
+#, fuzzy
+#~ msgid "Zoom too small!  Cannot zoom further."
+#~ msgstr "Bereich zu klein! Eine weitere Vergrößerung ist nicht möglich.\n"
 
-msgid "Save All"
-msgstr "_Alles speichern"
+#~ msgid "Preview Buffer"
+#~ msgstr "Vorschau"
 
-msgid "_Print..."
-msgstr "_Drucken …"
+#, fuzzy, c-format
+#~ msgid "New page created [%1$s]"
+#~ msgstr "Neue Seite erzeugt [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "New Window created [%1$s]"
+#~ msgstr "Neues Fenster geöffnet [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Executing Guile script [%s]"
+#~ msgstr "Führe guile scipt aus [%s]\n"
+
+#~ msgid "Saved All"
+#~ msgstr "Alles gespeichert"
+
+#~ msgid "Failed to Save All"
+#~ msgstr "Alles speichern gescheitert"
 
 #, fuzzy
-msgid "Write _Image..."
-msgstr "Bild e_xportieren …"
+#~ msgid "Closing Window"
+#~ msgstr "Schließe Fenster\n"
+
+#~ msgid "Select objs first"
+#~ msgstr "Zuerst Objekte auswählen"
 
 #, fuzzy
-msgid "Invoke Macro..."
-msgstr "Makro ausführen"
-
-msgid "Execute Script..."
-msgstr "Skript ausführen …"
-
-msgid "REPL..."
-msgstr ""
-
-msgid "New Window"
-msgstr "Neues _Fenster"
-
-msgid "_Close Window"
-msgstr "Fenster s_chließen"
-
-msgid "_Quit"
-msgstr "_Beenden"
-
-msgid "_Undo"
-msgstr "_Rückgängig"
-
-msgid "_Redo"
-msgstr "_Wiederherstellen"
-
-msgid "Select All"
-msgstr "Alles auswählen"
-
-msgid "Deselect"
-msgstr "Auswahl aufheben"
-
-msgid "Rotate 90 Mode"
-msgstr "Drehmodus (90°)"
+#~ msgid "WARNING: Do not translate with snap off!"
+#~ msgstr ""
+#~ "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #, fuzzy
-msgid "Object Properties..."
-msgstr "<b>Texteigenschaften</b>"
-
-msgid "Edit..."
-msgstr "Bearbeiten …"
-
-msgid "Edit Text..."
-msgstr "Text bearbeiten …"
-
-msgid "Slot..."
-msgstr "Slot …"
-
-msgid "Lock"
-msgstr "Sperren"
-
-msgid "Unlock"
-msgstr "Entsperren"
-
-msgid "Embed Component/Picture"
-msgstr "Bauteil/Bild einbetten"
-
-msgid "Unembed Component/Picture"
-msgstr "Bauteil/Bild ausbetten"
-
-msgid "Update Component"
-msgstr "Bauteil aktualisieren"
-
-msgid "Symbol Translate..."
-msgstr "Symbol transferieren …"
-
-msgid "Copy into 1"
-msgstr "Kopieren in 1"
-
-msgid "Copy into 2"
-msgstr "Kopieren in 2"
-
-msgid "Copy into 3"
-msgstr "Kopieren in 3"
-
-msgid "Copy into 4"
-msgstr "Kopieren in 4"
-
-msgid "Copy into 5"
-msgstr "Kopieren in 5"
-
-msgid "Cut into 1"
-msgstr "Ausschneiden in 1"
-
-msgid "Cut into 2"
-msgstr "Ausschneiden in 2"
-
-msgid "Cut into 3"
-msgstr "Ausschneiden in 3"
-
-msgid "Cut into 4"
-msgstr "Ausschneiden in 4"
-
-msgid "Cut into 5"
-msgstr "Ausschneiden in 5"
-
-msgid "Paste from 1"
-msgstr "Einfügen aus 1"
-
-msgid "Paste from 2"
-msgstr "Einfügen aus 2"
-
-msgid "Paste from 3"
-msgstr "Einfügen aus 3"
-
-msgid "Paste from 4"
-msgstr "Einfügen aus 4"
-
-msgid "Paste from 5"
-msgstr "Einfügen aus 5"
-
-msgid "Side Dock"
-msgstr ""
+#~ msgid "WARNING: Turning snap on and continuing with translate."
+#~ msgstr ""
+#~ "ACHTUNG:\"am Raster ausrichten\" wird aktiviert und mit der "
+#~ "Transformation fortgefahren.\n"
 
 #, fuzzy
-msgid "Bottom Dock"
-msgstr "Von unten nach oben"
+#~ msgid "WARNING: Snap grid size is not equal to 100!"
+#~ msgstr "ACHTUNG: Das Raster ist ungleich 100!\n"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "Text suchen"
-
-msgid "_Redraw"
-msgstr "Akt_ualisieren"
-
-msgid "_Pan"
-msgstr "Ausschnitt _wechseln"
-
-msgid "Zoom _Box"
-msgstr "_Rechteck auswählen"
-
-msgid "Zoom _Extents"
-msgstr "_Alles anzeigen"
-
-msgid "Zoom _In"
-msgstr "Ver_größern"
-
-msgid "Zoom _Out"
-msgstr "Ver_kleinern"
-
-msgid "Zoom _Full"
-msgstr "Gesamte _Zeichenfläche"
+#~ msgid ""
+#~ "WARNING: If you are translating a symbol to the origin, the snap grid "
+#~ "size should be set to 100"
+#~ msgstr ""
+#~ "ACHTUNG: Wenn ein Symbol transformiert wird, sollte das Raster auf 100 "
+#~ "gesetzt sein.\n"
 
 #, fuzzy
-msgid "_Dark Color Scheme"
-msgstr "_Dunkles Farbschema"
+#~ msgid "Empty clipboard"
+#~ msgstr "Kopieren"
+
+#~ msgid "Empty buffer"
+#~ msgstr "Leerer Zwischenspeicher"
+
+#, fuzzy, c-format
+#~ msgid "Searching for source [%1$s]"
+#~ msgstr "Nach der Quelle suchen [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Failed to descend hierarchy into '%1$s': %2$s\n"
+#~ "\n"
+#~ "The lepton-schematic log may contain more information."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Das Log-Fenster von gschem sind eventuell Details eingetragen."
+
+#, fuzzy, c-format
+#~ msgid "Failed to descend into '%1$s': %2$s"
+#~ msgstr "Die folgenden Bilder konnten nicht überschrieben werden: %s"
 
 #, fuzzy
-msgid "_Light Color Scheme"
-msgstr "_Helles Farbschema"
+#~ msgid "Failed to descend hierarchy."
+#~ msgstr "In der Hierachie hinabsteigen"
+
+#, fuzzy, c-format
+#~ msgid "Searching for symbol [%1$s]"
+#~ msgstr "Nach dem Symbol suchen [%s]\n"
 
 #, fuzzy
-msgid "B_W Color Scheme"
-msgstr "Schwarz/Weiß"
+#~ msgid "Symbol is not a real file. Symbol cannot be loaded."
+#~ msgstr ""
+#~ "Das Symbol ist keine reale Datei. Symbol kann nicht geöffnet werden.\n"
 
 #, fuzzy
-msgid "Color Scheme Editor..."
-msgstr "_Helles Farbschema"
-
-msgid "_Manager..."
-msgstr "Ver_waltung …"
-
-msgid "_Previous"
-msgstr "_Vorherige"
-
-msgid "_Next"
-msgstr "_Nächste"
+#~ msgid "Cannot find any schematics above the current one!"
+#~ msgstr "Konnte keinen übergeordneten Schaltplan finden!\n"
 
 #, fuzzy
-msgid "_Revert..."
-msgstr "Neu _laden"
+#~ msgid "Action feedback mode set to OUTLINE"
+#~ msgstr "Aktions-Rückmeldemodus wurde auf OUTLINE festgelegt.\n"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "Neue Seite"
+#~ msgid "Action feedback mode set to BOUNDINGBOX"
+#~ msgstr "Aktions-Rückmeldemodus wurde auf BOUNDINGBOX festgelegt.\n"
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "_Vorherige"
-
-msgid "_Component..."
-msgstr "_Bauteil …"
-
-msgid "_Net"
-msgstr "_Netz"
-
-msgid "B_us"
-msgstr "B_us"
-
-msgid "_Attribute..."
-msgstr "_Attribut …"
-
-msgid "_Text..."
-msgstr "_Text …"
-
-msgid "_Line"
-msgstr "_Linie"
-
-msgid "Pat_h"
-msgstr ""
-
-msgid "_Box"
-msgstr "_Rechteck"
-
-msgid "C_ircle"
-msgstr "_Kreis"
-
-msgid "A_rc"
-msgstr "Kreisb_ogen"
-
-msgid "_Pin"
-msgstr "_Pin"
-
-msgid "Pictu_re..."
-msgstr "B_ild …"
-
-msgid "_Up"
-msgstr "_Hinauf"
-
-msgid "_Down Schematic"
-msgstr "Zum _Schaltplan hinab"
-
-msgid "Down _Symbol"
-msgstr "Zum S_ymbol hinab"
-
-msgid "_Attach"
-msgstr "_Anbringen"
-
-msgid "_Detach"
-msgstr "_Loslösen"
-
-msgid "Show _Value"
-msgstr "_Wert anzeigen"
-
-msgid "Show _Name"
-msgstr "_Name anzeigen"
-
-msgid "Show _Both"
-msgstr "_Beide anzeigen"
-
-msgid "_Toggle Visibility"
-msgstr "Sichtbarkeit _umschalten"
-
-msgid "_Hide Specific Text..."
-msgstr "Text _verbergen …"
-
-msgid "_Show Specific Text..."
-msgstr "Text an_zeigen …"
+#~ msgid "Grid OFF"
+#~ msgstr "Raster AUS\n"
 
 #, fuzzy
-msgid "Show/Hide Hidden Text"
-msgstr "Unsichtbaren Text anzeigen/verbergen"
-
-msgid "_Find Text/Check Symbol..."
-msgstr ""
-
-msgid "A_utonumber Text..."
-msgstr "Text _durchnummerieren …"
+#~ msgid "Dot grid selected"
+#~ msgstr "Punktraster ausgewählt\n"
 
 #, fuzzy
-msgid "_Options..."
-msgstr "_Optionen"
+#~ msgid "Mesh grid selected"
+#~ msgstr "Linienraster ausgewählt\n"
 
 #, fuzzy
-msgid "_Font..."
-msgstr "_Drucken …"
+#~ msgid "Invalid grid mode"
+#~ msgstr "Fehlerhaftes Attribut"
 
 #, fuzzy
-msgid "Grid +"
-msgstr "Raster AUS\n"
+#~ msgid "Snap OFF (CAUTION!)"
+#~ msgstr "Freihandmodus (ACHTUNG! Ausrichten am Raster abgeschaltet)\n"
 
 #, fuzzy
-msgid "Grid -"
-msgstr "Raster AUS\n"
-
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
-
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
-
-msgid "Grips: On/Off"
-msgstr ""
+#~ msgid "Snap ON"
+#~ msgstr "Am Raster ausrichten\n"
 
 #, fuzzy
-msgid "Feedback Mode: Outline/Box"
-msgstr "_Umrissanzeige umschalten"
+#~ msgid "Snap back to the grid (CAUTION!)"
+#~ msgstr "Objekte neu am Raster ausrichten (Achtung!)\n"
 
 #, fuzzy
-msgid "Net: Rubberband On/Off"
-msgstr "Gummifäden EIN\n"
-
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "Rubber band ON"
+#~ msgstr "Gummifäden EIN\n"
 
 #, fuzzy
-msgid "_Coord Window"
-msgstr "Fenster s_chließen"
+#~ msgid "Rubber band OFF"
+#~ msgstr "Gummifäden AUS \n"
 
 #, fuzzy
-msgid "_Log Window"
-msgstr "Protoko_llfenster anzeigen …"
-
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "magnetic net mode: ON"
+#~ msgstr "Magnetischer Netzmodus: EIN\n"
 
 #, fuzzy
-msgid "Lepton EDA Reference _Manual"
-msgstr "gEDA-_Wiki …"
+#~ msgid "magnetic net mode: OFF"
+#~ msgstr "Magnetischer Netzmodus: AUS\n"
+
+#, fuzzy, c-format
+#~ msgid "Could not find symbol [%1$s] in library. Update failed."
+#~ msgstr ""
+#~ "Das Symbol [%s] konnte nicht gefunden werden. Aktualisierung "
+#~ "fehlgeschlagen.\n"
 
 #, fuzzy
-msgid "gEDA _Wiki Documentation"
-msgstr "gEDA-_Dokumentation …"
+#~ msgid "Undo/Redo is disabled in configuration"
+#~ msgstr "Rückgängig/Wiederherstellen wurde in der rc Datei deaktiviert.\n"
+
+#~ msgid "New"
+#~ msgstr "Neu"
+
+#~ msgid "New file"
+#~ msgstr "Neue Datei"
 
 #, fuzzy
-msgid "Find Component D_ocumentation"
-msgstr "Bauteil-D_okumentation …"
+#~ msgid "Open file"
+#~ msgstr "Datei öffnen …"
 
-msgid "_Hotkeys..."
-msgstr "_Tastenbelegungen …"
+#~ msgid "Save file"
+#~ msgstr "Datei speichern"
+
+#~ msgid "Undo"
+#~ msgstr "Rückgängig"
+
+#~ msgid "Undo last operation"
+#~ msgstr "Letzte Aktion rückgängig machen"
+
+#~ msgid "Redo"
+#~ msgstr "Wiederherstellen"
+
+#~ msgid "Redo last undo"
+#~ msgstr "Letzte Aktion wiederherstellen"
+
+#~ msgid ""
+#~ "Add component...\n"
+#~ "Select library and component from list, move the mouse into main window, "
+#~ "click to place\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Bauteil hinzufügen …\n"
+#~ "Wählen Sie Bibliothek und Bauteil aus der Liste, bewegen die Maus ins "
+#~ "Hauptfenster,\n"
+#~ "klicken, um es zu platzieren. Rechtsklick zum abbrechen"
+
+#~ msgid "Component"
+#~ msgstr "Bauteil"
+
+#~ msgid ""
+#~ "Add nets mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Netz einfügen\n"
+#~ "mit rechter Maustaste abbrechen"
+
+#~ msgid ""
+#~ "Add buses mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Bus einfügen\n"
+#~ "mit rechter Maustaste abbrechen"
+
+#~ msgid "Bus"
+#~ msgstr "Bus"
+
+#~ msgid "Add Text..."
+#~ msgstr "Text hinzufügen …"
+
+#~ msgid "Select"
+#~ msgstr "Auswählen"
+
+#~ msgid "Select mode"
+#~ msgstr "Auswahlmodus"
+
+#~ msgid "Open Recen_t"
+#~ msgstr "_Zuletzt  geöffnet"
+
+#~ msgid "Save All"
+#~ msgstr "_Alles speichern"
+
+#~ msgid "_Print..."
+#~ msgstr "_Drucken …"
 
 #, fuzzy
-msgid "_About"
-msgstr "_Info …"
-
-msgid "_File"
-msgstr "_Datei"
-
-msgid "_Edit"
-msgstr "_Bearbeiten"
-
-msgid "_View"
-msgstr "_Ansicht"
-
-msgid "_Page"
-msgstr "_Seite"
-
-msgid "Hie_rarchy"
-msgstr "Hie_rarchie"
-
-msgid "A_ttributes"
-msgstr "A_ttribut"
-
-msgid "_Options"
-msgstr "_Optionen"
+#~ msgid "Write _Image..."
+#~ msgstr "Bild e_xportieren …"
 
 #, fuzzy
-msgid "_Netlist"
-msgstr "_Netz"
+#~ msgid "Invoke Macro..."
+#~ msgstr "Makro ausführen"
 
-msgid "_Help"
-msgstr "_Hilfe"
+#~ msgid "Execute Script..."
+#~ msgstr "Skript ausführen …"
+
+#~ msgid "New Window"
+#~ msgstr "Neues _Fenster"
+
+#~ msgid "_Close Window"
+#~ msgstr "Fenster s_chließen"
+
+#~ msgid "_Quit"
+#~ msgstr "_Beenden"
+
+#~ msgid "_Undo"
+#~ msgstr "_Rückgängig"
+
+#~ msgid "_Redo"
+#~ msgstr "_Wiederherstellen"
+
+#~ msgid "Select All"
+#~ msgstr "Alles auswählen"
+
+#~ msgid "Deselect"
+#~ msgstr "Auswahl aufheben"
+
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "Drehmodus (90°)"
+
+#, fuzzy
+#~ msgid "Object Properties..."
+#~ msgstr "<b>Texteigenschaften</b>"
+
+#~ msgid "Edit..."
+#~ msgstr "Bearbeiten …"
+
+#~ msgid "Edit Text..."
+#~ msgstr "Text bearbeiten …"
+
+#~ msgid "Slot..."
+#~ msgstr "Slot …"
+
+#~ msgid "Lock"
+#~ msgstr "Sperren"
+
+#~ msgid "Unlock"
+#~ msgstr "Entsperren"
+
+#~ msgid "Embed Component/Picture"
+#~ msgstr "Bauteil/Bild einbetten"
+
+#~ msgid "Unembed Component/Picture"
+#~ msgstr "Bauteil/Bild ausbetten"
+
+#~ msgid "Update Component"
+#~ msgstr "Bauteil aktualisieren"
+
+#~ msgid "Symbol Translate..."
+#~ msgstr "Symbol transferieren …"
+
+#~ msgid "Copy into 1"
+#~ msgstr "Kopieren in 1"
+
+#~ msgid "Copy into 2"
+#~ msgstr "Kopieren in 2"
+
+#~ msgid "Copy into 3"
+#~ msgstr "Kopieren in 3"
+
+#~ msgid "Copy into 4"
+#~ msgstr "Kopieren in 4"
+
+#~ msgid "Copy into 5"
+#~ msgstr "Kopieren in 5"
+
+#~ msgid "Cut into 1"
+#~ msgstr "Ausschneiden in 1"
+
+#~ msgid "Cut into 2"
+#~ msgstr "Ausschneiden in 2"
+
+#~ msgid "Cut into 3"
+#~ msgstr "Ausschneiden in 3"
+
+#~ msgid "Cut into 4"
+#~ msgstr "Ausschneiden in 4"
+
+#~ msgid "Cut into 5"
+#~ msgstr "Ausschneiden in 5"
+
+#~ msgid "Paste from 1"
+#~ msgstr "Einfügen aus 1"
+
+#~ msgid "Paste from 2"
+#~ msgstr "Einfügen aus 2"
+
+#~ msgid "Paste from 3"
+#~ msgstr "Einfügen aus 3"
+
+#~ msgid "Paste from 4"
+#~ msgstr "Einfügen aus 4"
+
+#~ msgid "Paste from 5"
+#~ msgstr "Einfügen aus 5"
+
+#, fuzzy
+#~ msgid "Bottom Dock"
+#~ msgstr "Von unten nach oben"
+
+#, fuzzy
+#~ msgid "Find Text Results"
+#~ msgstr "Text suchen"
+
+#~ msgid "_Redraw"
+#~ msgstr "Akt_ualisieren"
+
+#~ msgid "_Pan"
+#~ msgstr "Ausschnitt _wechseln"
+
+#~ msgid "Zoom _Box"
+#~ msgstr "_Rechteck auswählen"
+
+#~ msgid "Zoom _Extents"
+#~ msgstr "_Alles anzeigen"
+
+#~ msgid "Zoom _In"
+#~ msgstr "Ver_größern"
+
+#~ msgid "Zoom _Out"
+#~ msgstr "Ver_kleinern"
+
+#~ msgid "Zoom _Full"
+#~ msgstr "Gesamte _Zeichenfläche"
+
+#, fuzzy
+#~ msgid "_Dark Color Scheme"
+#~ msgstr "_Dunkles Farbschema"
+
+#, fuzzy
+#~ msgid "_Light Color Scheme"
+#~ msgstr "_Helles Farbschema"
+
+#, fuzzy
+#~ msgid "B_W Color Scheme"
+#~ msgstr "Schwarz/Weiß"
+
+#, fuzzy
+#~ msgid "Color Scheme Editor..."
+#~ msgstr "_Helles Farbschema"
+
+#~ msgid "_Manager..."
+#~ msgstr "Ver_waltung …"
+
+#~ msgid "_Previous"
+#~ msgstr "_Vorherige"
+
+#~ msgid "_Next"
+#~ msgstr "_Nächste"
+
+#, fuzzy
+#~ msgid "_Revert..."
+#~ msgstr "Neu _laden"
+
+#, fuzzy
+#~ msgid "Next Tab"
+#~ msgstr "Neue Seite"
+
+#, fuzzy
+#~ msgid "Previous Tab"
+#~ msgstr "_Vorherige"
+
+#~ msgid "_Component..."
+#~ msgstr "_Bauteil …"
+
+#~ msgid "_Net"
+#~ msgstr "_Netz"
+
+#~ msgid "B_us"
+#~ msgstr "B_us"
+
+#~ msgid "_Attribute..."
+#~ msgstr "_Attribut …"
+
+#~ msgid "_Text..."
+#~ msgstr "_Text …"
+
+#~ msgid "_Line"
+#~ msgstr "_Linie"
+
+#~ msgid "_Box"
+#~ msgstr "_Rechteck"
+
+#~ msgid "C_ircle"
+#~ msgstr "_Kreis"
+
+#~ msgid "A_rc"
+#~ msgstr "Kreisb_ogen"
+
+#~ msgid "_Pin"
+#~ msgstr "_Pin"
+
+#~ msgid "Pictu_re..."
+#~ msgstr "B_ild …"
+
+#~ msgid "_Up"
+#~ msgstr "_Hinauf"
+
+#~ msgid "_Down Schematic"
+#~ msgstr "Zum _Schaltplan hinab"
+
+#~ msgid "Down _Symbol"
+#~ msgstr "Zum S_ymbol hinab"
+
+#~ msgid "_Attach"
+#~ msgstr "_Anbringen"
+
+#~ msgid "_Detach"
+#~ msgstr "_Loslösen"
+
+#~ msgid "Show _Value"
+#~ msgstr "_Wert anzeigen"
+
+#~ msgid "Show _Name"
+#~ msgstr "_Name anzeigen"
+
+#~ msgid "Show _Both"
+#~ msgstr "_Beide anzeigen"
+
+#~ msgid "_Toggle Visibility"
+#~ msgstr "Sichtbarkeit _umschalten"
+
+#~ msgid "_Hide Specific Text..."
+#~ msgstr "Text _verbergen …"
+
+#~ msgid "_Show Specific Text..."
+#~ msgstr "Text an_zeigen …"
+
+#, fuzzy
+#~ msgid "Show/Hide Hidden Text"
+#~ msgstr "Unsichtbaren Text anzeigen/verbergen"
+
+#~ msgid "A_utonumber Text..."
+#~ msgstr "Text _durchnummerieren …"
+
+#, fuzzy
+#~ msgid "_Options..."
+#~ msgstr "_Optionen"
+
+#, fuzzy
+#~ msgid "_Font..."
+#~ msgstr "_Drucken …"
+
+#, fuzzy
+#~ msgid "Grid +"
+#~ msgstr "Raster AUS\n"
+
+#, fuzzy
+#~ msgid "Grid -"
+#~ msgstr "Raster AUS\n"
+
+#, fuzzy
+#~ msgid "Feedback Mode: Outline/Box"
+#~ msgstr "_Umrissanzeige umschalten"
+
+#, fuzzy
+#~ msgid "Net: Rubberband On/Off"
+#~ msgstr "Gummifäden EIN\n"
+
+#, fuzzy
+#~ msgid "_Coord Window"
+#~ msgstr "Fenster s_chließen"
+
+#, fuzzy
+#~ msgid "_Log Window"
+#~ msgstr "Protoko_llfenster anzeigen …"
+
+#, fuzzy
+#~ msgid "Lepton EDA Reference _Manual"
+#~ msgstr "gEDA-_Wiki …"
+
+#, fuzzy
+#~ msgid "gEDA _Wiki Documentation"
+#~ msgstr "gEDA-_Dokumentation …"
+
+#, fuzzy
+#~ msgid "Find Component D_ocumentation"
+#~ msgstr "Bauteil-D_okumentation …"
+
+#~ msgid "_Hotkeys..."
+#~ msgstr "_Tastenbelegungen …"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "_Info …"
+
+#~ msgid "_File"
+#~ msgstr "_Datei"
+
+#~ msgid "_Edit"
+#~ msgstr "_Bearbeiten"
+
+#~ msgid "_View"
+#~ msgstr "_Ansicht"
+
+#~ msgid "_Page"
+#~ msgstr "_Seite"
+
+#~ msgid "Hie_rarchy"
+#~ msgstr "Hie_rarchie"
+
+#~ msgid "A_ttributes"
+#~ msgstr "A_ttribut"
+
+#~ msgid "_Options"
+#~ msgstr "_Optionen"
+
+#, fuzzy
+#~ msgid "_Netlist"
+#~ msgstr "_Netz"
+
+#~ msgid "_Help"
+#~ msgstr "_Hilfe"
 
 #, fuzzy, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr "~S ist keine gültige Tasten-Kombination."
-
-msgid "There is no last action to repeat."
-msgstr ""
-
-msgid "Repeat Last Action"
-msgstr ""
+#~ msgid "[~A] is not a valid lepton-schematic action."
+#~ msgstr "~S ist keine gültige Tasten-Kombination."
 
 #, fuzzy
-msgid "Cancel"
-msgstr "Ausschnitt/Abbrechen"
+#~ msgid "Cancel"
+#~ msgstr "Ausschnitt/Abbrechen"
 
 #, fuzzy
-msgid "New File"
-msgstr "Neue Datei"
+#~ msgid "New File"
+#~ msgstr "Neue Datei"
 
 #, fuzzy
-msgid "Open File"
-msgstr "Datei öffnen …"
+#~ msgid "Open File"
+#~ msgstr "Datei öffnen …"
 
 #, fuzzy
-msgid "Print"
-msgstr "Drucken …"
-
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "Print"
+#~ msgstr "Drucken …"
 
 #, fuzzy
-msgid "Close Window"
-msgstr "Fenster s_chließen"
+#~ msgid "Close Window"
+#~ msgstr "Fenster s_chließen"
 
 #, fuzzy
-msgid "Quit"
-msgstr "_Beenden"
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
+#~ msgid "Quit"
+#~ msgstr "_Beenden"
 
 #, fuzzy
-msgid "Edit Object Properties"
-msgstr "Text Eigenschaften bearbeiten"
+#~ msgid "Edit Object Properties"
+#~ msgstr "Text Eigenschaften bearbeiten"
 
 #, fuzzy
-msgid "Translate Symbol"
-msgstr "Verschieben nach"
+#~ msgid "Translate Symbol"
+#~ msgstr "Verschieben nach"
 
-msgid "Invoke Macro"
-msgstr "Makro ausführen"
-
-#, fuzzy
-msgid "Show/Hide Invisible Text"
-msgstr "Unsichtbaren Text anzeigen/verbergen"
+#~ msgid "Invoke Macro"
+#~ msgstr "Makro ausführen"
 
 #, fuzzy
-msgid "Cut"
-msgstr "_Ausschneiden"
-
-msgid "Copy"
-msgstr "Kopieren"
+#~ msgid "Show/Hide Invisible Text"
+#~ msgstr "Unsichtbaren Text anzeigen/verbergen"
 
 #, fuzzy
-msgid "Paste"
-msgstr "E_infügen"
+#~ msgid "Cut"
+#~ msgstr "_Ausschneiden"
 
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr "Status"
+#~ msgid "Copy"
+#~ msgstr "Kopieren"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "Text suchen"
+#~ msgid "Paste"
+#~ msgstr "E_infügen"
+
+#~ msgid "Status"
+#~ msgstr "Status"
 
 #, fuzzy
-msgid "Redraw"
-msgstr "Akt_ualisieren"
+#~ msgid "Find Text State"
+#~ msgstr "Text suchen"
 
 #, fuzzy
-msgid "Pan Left"
-msgstr "Ausschnittmodus"
+#~ msgid "Redraw"
+#~ msgstr "Akt_ualisieren"
 
 #, fuzzy
-msgid "Pan Right"
-msgstr "0ben Rechts"
-
-msgid "Pan Up"
-msgstr ""
+#~ msgid "Pan Left"
+#~ msgstr "Ausschnittmodus"
 
 #, fuzzy
-msgid "Pan Down"
-msgstr "Ausschnittmodus"
+#~ msgid "Pan Right"
+#~ msgstr "0ben Rechts"
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "/Automatisch"
+#~ msgid "Pan Down"
+#~ msgstr "Ausschnittmodus"
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "/Vergrößern"
+#~ msgid "Zoom Extents"
+#~ msgstr "/Automatisch"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "/Verkleinern"
+#~ msgid "Zoom In"
+#~ msgstr "/Vergrößern"
 
 #, fuzzy
-msgid "Zoom Full"
-msgstr "Gesamte _Zeichenfläche"
+#~ msgid "Zoom Out"
+#~ msgstr "/Verkleinern"
 
 #, fuzzy
-msgid "Dark Color Scheme"
-msgstr "_Dunkles Farbschema"
+#~ msgid "Zoom Full"
+#~ msgstr "Gesamte _Zeichenfläche"
 
 #, fuzzy
-msgid "Light Color Scheme"
-msgstr "_Helles Farbschema"
-
-msgid "Monochrome Color Scheme"
-msgstr ""
+#~ msgid "Dark Color Scheme"
+#~ msgstr "_Dunkles Farbschema"
 
 #, fuzzy
-msgid "Show Color Scheme Editor"
-msgstr "_Helles Farbschema"
+#~ msgid "Light Color Scheme"
+#~ msgstr "_Helles Farbschema"
 
 #, fuzzy
-msgid "Revert Changes"
-msgstr "Seite wirklich wiederherstellen?"
+#~ msgid "Show Color Scheme Editor"
+#~ msgstr "_Helles Farbschema"
 
 #, fuzzy
-msgid "Previous Page"
-msgstr "_Vorherige"
+#~ msgid "Revert Changes"
+#~ msgstr "Seite wirklich wiederherstellen?"
 
 #, fuzzy
-msgid "Next Page"
-msgstr "Neue Seite"
+#~ msgid "Previous Page"
+#~ msgstr "_Vorherige"
 
 #, fuzzy
-msgid "Print Page"
-msgstr "_Vorherige"
+#~ msgid "Next Page"
+#~ msgstr "Neue Seite"
 
 #, fuzzy
-msgid "Add Net"
-msgstr "/Netz einfügen"
+#~ msgid "Print Page"
+#~ msgstr "_Vorherige"
 
 #, fuzzy
-msgid "Add Bus"
-msgstr "/Bus einfügen"
+#~ msgid "Add Net"
+#~ msgstr "/Netz einfügen"
 
 #, fuzzy
-msgid "Add Line"
-msgstr "Linie"
+#~ msgid "Add Bus"
+#~ msgstr "/Bus einfügen"
 
 #, fuzzy
-msgid "Add Path"
-msgstr "/Netz einfügen"
+#~ msgid "Add Line"
+#~ msgstr "Linie"
 
 #, fuzzy
-msgid "Add Box"
-msgstr "/Bus einfügen"
+#~ msgid "Add Path"
+#~ msgstr "/Netz einfügen"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "Kreis"
+#~ msgid "Add Box"
+#~ msgstr "/Bus einfügen"
 
 #, fuzzy
-msgid "Add Arc"
-msgstr "Attribut hinzufügen"
-
-msgid "Add Pin"
-msgstr ""
+#~ msgid "Add Circle"
+#~ msgstr "Kreis"
 
 #, fuzzy
-msgid "Down Schematic"
-msgstr "/Zum Schaltplan hinab"
+#~ msgid "Add Arc"
+#~ msgstr "Attribut hinzufügen"
 
 #, fuzzy
-msgid "Down Symbol"
-msgstr "/Zum Symbol hinab"
+#~ msgid "Down Schematic"
+#~ msgstr "/Zum Schaltplan hinab"
 
 #, fuzzy
-msgid "Up Hierarchy"
-msgstr "Hie_rarchie"
+#~ msgid "Down Symbol"
+#~ msgstr "/Zum Symbol hinab"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "Attribute bearbeiten"
+#~ msgid "Up Hierarchy"
+#~ msgstr "Hie_rarchie"
+
+#, fuzzy
+#~ msgid "Attach Attributes"
+#~ msgstr "Attribute bearbeiten"
+
+#, fuzzy
+#~ msgid "Detach Attributes"
+#~ msgstr "Attribut ablösen"
+
+#, fuzzy
+#~ msgid "Show Attribute Value"
+#~ msgstr "Slot Attribut ist fehlerhaft.\n"
+
+#, fuzzy
+#~ msgid "Show Attribute Name"
+#~ msgstr "Slot Attribut ist fehlerhaft.\n"
+
+#, fuzzy
+#~ msgid "Toggle Text Visibility"
+#~ msgstr "Sichtbarkeit _umschalten"
+
+#, fuzzy
+#~ msgid "Find Specific Text"
+#~ msgstr "Text _suchen …"
+
+#, fuzzy
+#~ msgid "Hide Specific Text"
+#~ msgstr "Text _verbergen …"
+
+#, fuzzy
+#~ msgid "Show Specific Text"
+#~ msgstr "Text an_zeigen …"
+
+#, fuzzy
+#~ msgid "Show Hotkeys"
+#~ msgstr "Tastenbelegungen"
+
+#, fuzzy
+#~ msgid "Set Grid Spacing"
+#~ msgstr "Rasterabstand ver_größern"
+
+#, fuzzy
+#~ msgid "Increase Grid Spacing"
+#~ msgstr "Rasterabstand ver_größern"
+
+#, fuzzy
+#~ msgid "Decrease Grid Spacing"
+#~ msgstr "Rasterabstand ver_größern"
+
+#, fuzzy
+#~ msgid "Toggle Outline Drawing"
+#~ msgstr "_Umrissanzeige umschalten"
+
+#, fuzzy
+#~ msgid "Toggle Net Rubber Band"
+#~ msgstr "_Netzgummifäden umschalten"
+
+#, fuzzy
+#~ msgid "Toggle Magnetic Nets"
+#~ msgstr "_Magnetischen Netzmodus umschalten"
+
+#, fuzzy
+#~ msgid "Show Log Window"
+#~ msgstr "Protoko_llfenster anzeigen …"
+
+#, fuzzy
+#~ msgid "Show Coordinate Window"
+#~ msgstr "K_oordinatenfenster anzeigen …"
+
+#, fuzzy
+#~ msgid "Toggle Grips"
+#~ msgstr "Sichtbarkeit _umschalten"
+
+#, fuzzy
+#~ msgid "Component Documentation"
+#~ msgstr "Bauteil-D_okumentation …"
+
+#, fuzzy
+#~ msgid "Lepton EDA Manual"
+#~ msgstr "gEDA-_Wiki …"
+
+#, fuzzy
+#~ msgid "Lepton EDA wiki"
+#~ msgstr "gEDA-_Wiki …"
+
+#, fuzzy
+#~ msgid "About lepton-schematic"
+#~ msgstr "Über gschem"
+
+#, fuzzy
+#~ msgid "Could not show documentation:"
+#~ msgstr "Bauteil-D_okumentation …"
+
+#~ msgid "No documentation found"
+#~ msgstr "Dokumentation konnte nicht gefunden werden"
 
 #, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
-
-#, fuzzy
-msgid "Detach Attributes"
-msgstr "Attribut ablösen"
+#~ msgid "~S is not a prefix key sequence."
+#~ msgstr "~S ist kein gültiger erster Teil einer Tastenkombination."
 
 #, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
-
-#, fuzzy
-msgid "Show Attribute Value"
-msgstr "Slot Attribut ist fehlerhaft.\n"
-
-#, fuzzy
-msgid "Show Attribute Name"
-msgstr "Slot Attribut ist fehlerhaft.\n"
-
-#, fuzzy
-msgid "Toggle Text Visibility"
-msgstr "Sichtbarkeit _umschalten"
-
-#, fuzzy
-msgid "Find Specific Text"
-msgstr "Text _suchen …"
-
-#, fuzzy
-msgid "Hide Specific Text"
-msgstr "Text _verbergen …"
-
-#, fuzzy
-msgid "Show Specific Text"
-msgstr "Text an_zeigen …"
-
-#, fuzzy
-msgid "Show Hotkeys"
-msgstr "Tastenbelegungen"
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
-
-#, fuzzy
-msgid "Set Grid Spacing"
-msgstr "Rasterabstand ver_größern"
-
-#, fuzzy
-msgid "Increase Grid Spacing"
-msgstr "Rasterabstand ver_größern"
-
-#, fuzzy
-msgid "Decrease Grid Spacing"
-msgstr "Rasterabstand ver_größern"
-
-#, fuzzy
-msgid "Toggle Outline Drawing"
-msgstr "_Umrissanzeige umschalten"
-
-#, fuzzy
-msgid "Toggle Net Rubber Band"
-msgstr "_Netzgummifäden umschalten"
-
-#, fuzzy
-msgid "Toggle Magnetic Nets"
-msgstr "_Magnetischen Netzmodus umschalten"
-
-#, fuzzy
-msgid "Show Log Window"
-msgstr "Protoko_llfenster anzeigen …"
-
-#, fuzzy
-msgid "Show Coordinate Window"
-msgstr "K_oordinatenfenster anzeigen …"
-
-#, fuzzy
-msgid "Toggle Grips"
-msgstr "Sichtbarkeit _umschalten"
-
-#, fuzzy
-msgid "Component Documentation"
-msgstr "Bauteil-D_okumentation …"
-
-msgid "View documentation for selected component"
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA Manual"
-msgstr "gEDA-_Wiki …"
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA wiki"
-msgstr "gEDA-_Wiki …"
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "About lepton-schematic"
-msgstr "Über gschem"
-
-#, fuzzy
-msgid "Could not show documentation:"
-msgstr "Bauteil-D_okumentation …"
-
-msgid "No documentation found"
-msgstr "Dokumentation konnte nicht gefunden werden"
-
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr "~S ist kein gültiger erster Teil einer Tastenkombination."
-
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr "Ungültige Ausrichtung: ~A."
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Ungültige Ausrichtung: ~A."
 
 #, fuzzy
 #~ msgid "Object ~A is not included in the current lepton-schematic page."

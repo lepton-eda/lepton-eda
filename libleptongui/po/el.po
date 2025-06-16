@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 13:31+0300\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-msgid "Zoom too small!  Cannot zoom further."
-msgstr ""
 
 #, fuzzy
 msgid "Toggle _Editor"
@@ -38,6 +35,10 @@ msgid ""
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
+
+#, fuzzy
+msgid "<b>Help</b>"
+msgstr "<b>Σκοπός</b>"
 
 #, fuzzy, c-format
 msgid ""
@@ -71,6 +72,20 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Αντικατάσταση αρχείου;"
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "Εκτέλεση σεναρίου..."
+
+msgid "_Run"
+msgstr ""
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Σχεδιαγράμματα"
+
+msgid "All files"
+msgstr "Όλα τα αρχεία"
 
 msgid "Sa_ve..."
 msgstr ""
@@ -113,7 +128,7 @@ msgstr "gEDA: Ηλεκτρονικός Αυτοματισμός Σχεδίαση
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Πνευματικά δικαιώματα © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -317,7 +332,8 @@ msgstr "Ενέργεια"
 msgid "Keystroke(s)"
 msgstr ""
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+#, fuzzy
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
 "** Μη έγκυρο UTF-8 σε μήνυμα καταγραφής. Δείτε την καταγραφή του stderr ή "
 "του gschem.\n"
@@ -343,6 +359,105 @@ msgstr ""
 #, fuzzy
 msgid "Evaluate"
 msgstr "Εκτίμηση:"
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+"Γνωρίσματα με κενό όνομα δεν επιτρέπονται. Παρακαλούμε ορίστε ένα όνομα."
+
+msgid "Show Name & Value"
+msgstr "Εμφάνιση ονόματος & τιμής"
+
+msgid "Show Value only"
+msgstr "Εμφάνιση τιμής μόνο"
+
+msgid "Show Name only"
+msgstr "Εμφάνιση ονόματος μόνο"
+
+msgid "Promote"
+msgstr "Προώθηση"
+
+msgid "Duplicate"
+msgstr "Αντίγραφο"
+
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "Αντιγραφή σε 1"
+
+msgid "Edit Attributes"
+msgstr "Επεξεργασία γνωρισμάτων"
+
+msgid "Value"
+msgstr "Τιμή"
+
+msgid "Vis?"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "Εμφάνιση κληρονομημένων γνωρισμάτων"
+
+#, fuzzy
+msgid "_Name:"
+msgstr "Όνομα:"
+
+#, fuzzy
+msgid "_Value:"
+msgstr "Τιμή:"
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+#, fuzzy
+msgid "Vi_sible"
+msgstr "Ορατό"
+
+msgid "_Add"
+msgstr "_Προσθήκη"
+
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Προσθήκη γνωρίσματος</b>"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] "Ακροδέκτης δικτύου"
+msgstr[1] "Ακροδέκτης δικτύου"
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "Γνώρισμα"
+msgstr[1] "Γνώρισμα"
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -464,26 +579,12 @@ msgstr "Ακροδέκτης δικτύου"
 msgid "Bus pin (graphical)"
 msgstr "Ακροδέκτης διαύλου (γραφικός)"
 
-msgid "Preview Buffer"
-msgstr "Ενδιάμεση μνήμη προεπισκόπησης"
-
 #, fuzzy
 msgid "Hide"
 msgstr "Απόκρυψη κειμένου"
 
 msgid "Hide text starting with:"
 msgstr "Απόκρυψη κειμένου που ξεκινάει με:"
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "Χρώμα"
-
-msgid "Number of Slots:"
-msgstr ""
-
-#, fuzzy
-msgid "Slot Number:"
-msgstr "Επεξεργασία αριθμού υποδοχής:"
 
 msgid "<b>Text Content</b>"
 msgstr "<b>Περιεχόμενο κειμένου</b>"
@@ -593,158 +694,6 @@ msgid "Resnap Active"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "New page created [%1$s]"
-msgstr "Δημιουργήθηκε νέα σελίδα [%s]\n"
-
-#, fuzzy, c-format
-msgid "New Window created [%1$s]"
-msgstr "Δημιουργήθηκε νέο παράθυρο [%s]\n"
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "Εκτέλεση σεναρίου..."
-
-msgid "_Run"
-msgstr ""
-
-#, fuzzy
-msgid "Scheme files (*.scm)"
-msgstr "Σχεδιαγράμματα"
-
-msgid "All files"
-msgstr "Όλα τα αρχεία"
-
-#, c-format
-msgid "Executing Guile script [%s]"
-msgstr ""
-
-msgid "Saved All"
-msgstr "Αποθήκευση όλων"
-
-msgid "Failed to Save All"
-msgstr "Απέτυχε η αποθήκευση όλων"
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "Κλείσιμο παραθύρου\n"
-
-msgid "Select objs first"
-msgstr "Επιλέξτε αντικείμενα πρώτα"
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr ""
-
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "_Επαναφορά"
-
-#, fuzzy
-msgid "Empty clipboard"
-msgstr "Αντιγραφή στο πρόχειρο"
-
-msgid "Empty buffer"
-msgstr "Άδειασμα ενδιάμεσης μνήμης"
-
-#, fuzzy, c-format
-msgid "Searching for source [%1$s]"
-msgstr "Αναζήτηση πηγής [%s]\n"
-
-#, fuzzy, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-"%s\n"
-"\n"
-"Η καταγραφή του gschem μπορεί να περιέχει περισσότερες πληροφορίες."
-
-#, fuzzy, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr "Αδυναμία αντικατάστασης εικόνων: %s"
-
-#, fuzzy
-msgid "Failed to descend hierarchy."
-msgstr "Αποτυχία αποθήκευσης αρχείου"
-
-#, fuzzy, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr "Αναζήτηση συμβόλου [%s]\n"
-
-#, fuzzy
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-"Το σύμβολο δεν είναι πραγματικό αρχείο. Το σύμβολο δεν μπορεί να φορτωθεί.\n"
-
-#, fuzzy
-msgid "Cannot find any schematics above the current one!"
-msgstr "Δεν μπορούν να βρεθούν σχεδιαγράμματα πάνω από το τρέχον!\n"
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-msgid "Grid OFF"
-msgstr ""
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-#, fuzzy
-msgid "Invalid grid mode"
-msgstr "Μη έγκυρο γνώρισμα"
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-#, fuzzy
-msgid "magnetic net mode: ON"
-msgstr "Λειτουργία μαγνητικού δικτύου"
-
-#, fuzzy
-msgid "magnetic net mode: OFF"
-msgstr "Λειτουργία μαγνητικού δικτύου"
-
-#, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Μετάφραση σχεδιαγράμματος [%d %d]\n"
 
@@ -760,9 +709,6 @@ msgstr "Διαγραφή"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr "Διαγραφή"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Το κρυφό κείμενο είναι πλέον ορατό\n"
@@ -770,31 +716,6 @@ msgstr "Το κρυφό κείμενο είναι πλέον ορατό\n"
 #, fuzzy
 msgid "Hidden text is now invisible"
 msgstr "Το κρυφό κείμενο είναι πλέον αόρατο\n"
-
-#, fuzzy, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr "Αδυναμία εύρεσης συμβόλου [%s] στη βιβλιοθήκη. Η ενημέρωση απέτυχε.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-"o_autosave_backups: Αδυναμία λήψης του πραγματικού ονόματος αρχείου για το "
-"%s."
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-"ΔΕΝ ήταν δυνατός ο ορισμός ανάγνωσης-εγγραφής για το προηγούμενο αντίγραφο "
-"ασφαλείας [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr ""
-"ΔΕΝ ήταν δυνατός ο ορισμός μόνο-ανάγνωσης για το αντίγραφο ασφαλείας [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αντιγράφου ασφαλείας [%s]\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -854,8 +775,41 @@ msgstr "Οι υποδοχές δεν επιτρέπονται σε αυτό το
 msgid "New slot number out of range"
 msgstr "Νέος αριθμός υποδοχής εκτός εύρους\n"
 
-msgid "Undo/Redo is disabled in configuration"
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
 msgstr ""
+"o_autosave_backups: Αδυναμία λήψης του πραγματικού ονόματος αρχείου για το "
+"%s."
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr ""
+"ΔΕΝ ήταν δυνατός ο ορισμός ανάγνωσης-εγγραφής για το προηγούμενο αντίγραφο "
+"ασφαλείας [%s]\n"
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr ""
+"ΔΕΝ ήταν δυνατός ο ορισμός μόνο-ανάγνωσης για το αντίγραφο ασφαλείας [%s]\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αντιγράφου ασφαλείας [%s]\n"
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+#, fuzzy
+msgid "Revert"
+msgstr "_Επαναφορά"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -870,6 +824,17 @@ msgstr "Δεν μπορούν να βρεθούν σχεδιαγράμματα �
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "Αδυναμία αντικατάστασης εικόνων: %s"
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Χρώμα"
+
+msgid "Number of Slots:"
+msgstr ""
+
+#, fuzzy
+msgid "Slot Number:"
+msgstr "Επεξεργασία αριθμού υποδοχής:"
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
@@ -887,22 +852,11 @@ msgstr "Προσθήκη γνωρίσματος"
 msgid "N_ame:"
 msgstr "Όνομα:"
 
-#, fuzzy
-msgid "_Value:"
-msgstr "Τιμή:"
-
-#, fuzzy
-msgid "Vi_sible"
-msgstr "Ορατό"
-
 msgid "Show Value Only"
 msgstr ""
 
 msgid "Show Name Only"
 msgstr "Εμφάνιση τιμής μόνο"
-
-msgid "Show Name & Value"
-msgstr "Εμφάνιση ονόματος & τιμής"
 
 msgid "<b>Attach Options</b>"
 msgstr "<b>Επιλογές σύνδεσης</b>"
@@ -1020,9 +974,6 @@ msgstr "Νέο αρχείο"
 
 msgid "Reload all libraries"
 msgstr ""
-
-msgid "Value"
-msgstr "Τιμή"
 
 msgid "Default behavior - reference component"
 msgstr "Προκαθορισμένη συμπεριφορά - στοιχείο αναφοράς"
@@ -1269,88 +1220,6 @@ msgstr "_Ιεραρχία"
 msgid "The operating system is out of memory or resources."
 msgstr "Το λειτουργικό σύστημα είναι εκτός ορίων μνήμης ή πηγών."
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Γνωρίσματα με κενό όνομα δεν επιτρέπονται. Παρακαλούμε ορίστε ένα όνομα."
-
-msgid "Show Value only"
-msgstr "Εμφάνιση τιμής μόνο"
-
-msgid "Show Name only"
-msgstr "Εμφάνιση ονόματος μόνο"
-
-msgid "Promote"
-msgstr "Προώθηση"
-
-msgid "Duplicate"
-msgstr "Αντίγραφο"
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "Αντιγραφή σε 1"
-
-msgid "Edit Attributes"
-msgstr "Επεξεργασία γνωρισμάτων"
-
-msgid "Vis?"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "Εμφάνιση κληρονομημένων γνωρισμάτων"
-
-#, fuzzy
-msgid "_Name:"
-msgstr "Όνομα:"
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "_Προσθήκη"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Προσθήκη γνωρίσματος</b>"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] "Ακροδέκτης δικτύου"
-msgstr[1] "Ακροδέκτης δικτύου"
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "Γνώρισμα"
-msgstr[1] "Γνώρισμα"
-
 #, fuzzy
 msgid "Add Text"
 msgstr "/Προσθήκη κειμένου"
@@ -1480,7 +1349,7 @@ msgid "Loading schematic [%1$s]"
 msgstr "Φόρτωμα σχεδιαγράμματος [%s]\n"
 
 #, fuzzy, c-format
-msgid "Could NOT save page [%1$s]\n"
+msgid "Could NOT save page [%1$s]"
 msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση της σελίδας [%s]\n"
 
 msgid "Error while trying to save"
@@ -1504,71 +1373,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Closing [%1$s]"
 msgstr "Κλείσιμο [%s]\n"
-
-msgid "New"
-msgstr "Νέο"
-
-msgid "New file"
-msgstr "Νέο αρχείο"
-
-#, fuzzy
-msgid "Open file"
-msgstr "Άνοιγμα αρχείου..."
-
-msgid "Save file"
-msgstr "Αποθήκευση αρχείου"
-
-msgid "Undo"
-msgstr "Αναίρεση"
-
-msgid "Undo last operation"
-msgstr "Αναίρεση τελευταίας ενέργειας"
-
-msgid "Redo"
-msgstr "Επαναφορά"
-
-msgid "Redo last undo"
-msgstr "Ακύρωση τελευταίας αναίρεσης"
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-"Προσθήκη στοιχείου...\n"
-"Επιλέξτε βιβλιοθήκη και στοιχείο από τη λίστα, μετακινείστε το ποντίκι στο "
-"βασικό παράθυρο, κάντε κλικ για τοποθέτηση\n"
-"Δεξί κλικ για ακύρωση"
-
-msgid "Component"
-msgstr "Στοιχείο"
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"Λειτουργία προσθήκης δικτύου\n"
-"Δεξί κλικ για ακύρωση"
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-"Λειτουργία προσθήκης διαύλου\n"
-"Δεξί κλικ για ακύρωση"
-
-msgid "Bus"
-msgstr "Δίαυλος"
-
-msgid "Add Text..."
-msgstr "Προσθήκη κειμένου..."
-
-msgid "Select"
-msgstr "Επιλογή"
-
-msgid "Select mode"
-msgstr "Λειτουργία επιλογής"
 
 #, fuzzy
 msgid "Show"
@@ -1642,703 +1446,680 @@ msgstr ""
 "Δημιουργείστε και επεξεργαστείτε ηλεκτρικά σχεδιαγράμματα και σύμβολα με το "
 "gschem"
 
-msgid "Open Recen_t"
-msgstr "Άνοιγμα _προσφάτου"
+#~ msgid "Preview Buffer"
+#~ msgstr "Ενδιάμεση μνήμη προεπισκόπησης"
 
-msgid "Save All"
-msgstr "Αποθήκευση όλων"
+#, fuzzy, c-format
+#~ msgid "New page created [%1$s]"
+#~ msgstr "Δημιουργήθηκε νέα σελίδα [%s]\n"
 
-msgid "_Print..."
-msgstr "Ε_κτύπωση..."
+#, fuzzy, c-format
+#~ msgid "New Window created [%1$s]"
+#~ msgstr "Δημιουργήθηκε νέο παράθυρο [%s]\n"
 
-#, fuzzy
-msgid "Write _Image..."
-msgstr "Ε_γγραφή εικόνας..."
+#~ msgid "Saved All"
+#~ msgstr "Αποθήκευση όλων"
 
-msgid "Invoke Macro..."
-msgstr ""
-
-msgid "Execute Script..."
-msgstr "Εκτέλεση σεναρίου..."
-
-msgid "REPL..."
-msgstr ""
-
-msgid "New Window"
-msgstr "Νέο παράθυρο"
-
-msgid "_Close Window"
-msgstr "_Κλείσιμο παραθύρου"
-
-msgid "_Quit"
-msgstr "Έ_ξοδος"
-
-msgid "_Undo"
-msgstr "_Αναίρεση"
-
-msgid "_Redo"
-msgstr "Ε_παναφορά"
-
-msgid "Select All"
-msgstr "Επιλογή όλων"
-
-msgid "Deselect"
-msgstr "Αποεπιλογή"
-
-msgid "Rotate 90 Mode"
-msgstr "Λειτουργία περιστροφής 90"
+#~ msgid "Failed to Save All"
+#~ msgstr "Απέτυχε η αποθήκευση όλων"
 
 #, fuzzy
-msgid "Object Properties..."
-msgstr "<b>Ιδιότητες κειμένου</b>"
+#~ msgid "Closing Window"
+#~ msgstr "Κλείσιμο παραθύρου\n"
 
-msgid "Edit..."
-msgstr "Επεξεργασία..."
-
-msgid "Edit Text..."
-msgstr "Επεξεργασία κειμένου..."
-
-msgid "Slot..."
-msgstr "Υποδοχή..."
-
-msgid "Lock"
-msgstr "Κλείδωμα"
-
-msgid "Unlock"
-msgstr "Ξεκλείδωμα"
-
-msgid "Embed Component/Picture"
-msgstr "Ενσωμάτωση στοιχείου/εικόνας"
-
-msgid "Unembed Component/Picture"
-msgstr "Αποενσωμάτωση στοιχείου/εικόνας"
-
-msgid "Update Component"
-msgstr "Ενημέρωση στοιχείου"
-
-msgid "Symbol Translate..."
-msgstr "Μετάφραση συμβόλου..."
-
-msgid "Copy into 1"
-msgstr "Αντιγραφή σε 1"
-
-msgid "Copy into 2"
-msgstr "Αντιγραφή σε 2"
-
-msgid "Copy into 3"
-msgstr "Αντιγραφή σε 3"
-
-msgid "Copy into 4"
-msgstr "Αντιγραφή σε 4"
-
-msgid "Copy into 5"
-msgstr "Αντιγραφή σε 5"
-
-msgid "Cut into 1"
-msgstr "Αποκοπή σε 1"
-
-msgid "Cut into 2"
-msgstr "Αποκοπή σε 2"
-
-msgid "Cut into 3"
-msgstr "Αποκοπή σε 3"
-
-msgid "Cut into 4"
-msgstr "Αποκοπή σε 4"
-
-msgid "Cut into 5"
-msgstr "Αποκοπή σε 5"
-
-msgid "Paste from 1"
-msgstr "Επικόλληση από 1"
-
-msgid "Paste from 2"
-msgstr "Επικόλληση από 2"
-
-msgid "Paste from 3"
-msgstr "Επικόλληση από 3"
-
-msgid "Paste from 4"
-msgstr "Επικόλληση από 4"
-
-msgid "Paste from 5"
-msgstr "Επικόλληση από 5"
-
-msgid "Side Dock"
-msgstr ""
+#~ msgid "Select objs first"
+#~ msgstr "Επιλέξτε αντικείμενα πρώτα"
 
 #, fuzzy
-msgid "Bottom Dock"
-msgstr "Κάτω προς πάνω"
+#~ msgid "Empty clipboard"
+#~ msgstr "Αντιγραφή στο πρόχειρο"
+
+#~ msgid "Empty buffer"
+#~ msgstr "Άδειασμα ενδιάμεσης μνήμης"
+
+#, fuzzy, c-format
+#~ msgid "Searching for source [%1$s]"
+#~ msgstr "Αναζήτηση πηγής [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Failed to descend hierarchy into '%1$s': %2$s\n"
+#~ "\n"
+#~ "The lepton-schematic log may contain more information."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Η καταγραφή του gschem μπορεί να περιέχει περισσότερες πληροφορίες."
+
+#, fuzzy, c-format
+#~ msgid "Failed to descend into '%1$s': %2$s"
+#~ msgstr "Αδυναμία αντικατάστασης εικόνων: %s"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "Εύρεση κειμένου"
+#~ msgid "Failed to descend hierarchy."
+#~ msgstr "Αποτυχία αποθήκευσης αρχείου"
 
-msgid "_Redraw"
-msgstr "_Επανασχεδίαση"
-
-msgid "_Pan"
-msgstr ""
-
-msgid "Zoom _Box"
-msgstr ""
-
-msgid "Zoom _Extents"
-msgstr ""
-
-msgid "Zoom _In"
-msgstr ""
-
-msgid "Zoom _Out"
-msgstr ""
-
-msgid "Zoom _Full"
-msgstr ""
+#, fuzzy, c-format
+#~ msgid "Searching for symbol [%1$s]"
+#~ msgstr "Αναζήτηση συμβόλου [%s]\n"
 
 #, fuzzy
-msgid "_Dark Color Scheme"
-msgstr "Σχήμα _σκοτεινών χρωμάτων"
+#~ msgid "Symbol is not a real file. Symbol cannot be loaded."
+#~ msgstr ""
+#~ "Το σύμβολο δεν είναι πραγματικό αρχείο. Το σύμβολο δεν μπορεί να "
+#~ "φορτωθεί.\n"
 
 #, fuzzy
-msgid "_Light Color Scheme"
-msgstr "Σχήμα _φωτεινών χρωμάτων"
+#~ msgid "Cannot find any schematics above the current one!"
+#~ msgstr "Δεν μπορούν να βρεθούν σχεδιαγράμματα πάνω από το τρέχον!\n"
 
 #, fuzzy
-msgid "B_W Color Scheme"
-msgstr "Σχήμα _σκοτεινών χρωμάτων"
+#~ msgid "Invalid grid mode"
+#~ msgstr "Μη έγκυρο γνώρισμα"
 
 #, fuzzy
-msgid "Color Scheme Editor..."
-msgstr "Σχήμα _φωτεινών χρωμάτων"
-
-msgid "_Manager..."
-msgstr "_Διαχειριστής..."
-
-msgid "_Previous"
-msgstr "_Προηγούμενο"
-
-msgid "_Next"
-msgstr "_Επόμενο"
+#~ msgid "magnetic net mode: ON"
+#~ msgstr "Λειτουργία μαγνητικού δικτύου"
 
 #, fuzzy
-msgid "_Revert..."
-msgstr "_Επαναφορά"
+#~ msgid "magnetic net mode: OFF"
+#~ msgstr "Λειτουργία μαγνητικού δικτύου"
+
+#, fuzzy, c-format
+#~ msgid "Could not find symbol [%1$s] in library. Update failed."
+#~ msgstr ""
+#~ "Αδυναμία εύρεσης συμβόλου [%s] στη βιβλιοθήκη. Η ενημέρωση απέτυχε.\n"
+
+#~ msgid "New"
+#~ msgstr "Νέο"
+
+#~ msgid "New file"
+#~ msgstr "Νέο αρχείο"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "Νέα σελίδα"
+#~ msgid "Open file"
+#~ msgstr "Άνοιγμα αρχείου..."
+
+#~ msgid "Save file"
+#~ msgstr "Αποθήκευση αρχείου"
+
+#~ msgid "Undo"
+#~ msgstr "Αναίρεση"
+
+#~ msgid "Undo last operation"
+#~ msgstr "Αναίρεση τελευταίας ενέργειας"
+
+#~ msgid "Redo"
+#~ msgstr "Επαναφορά"
+
+#~ msgid "Redo last undo"
+#~ msgstr "Ακύρωση τελευταίας αναίρεσης"
+
+#~ msgid ""
+#~ "Add component...\n"
+#~ "Select library and component from list, move the mouse into main window, "
+#~ "click to place\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Προσθήκη στοιχείου...\n"
+#~ "Επιλέξτε βιβλιοθήκη και στοιχείο από τη λίστα, μετακινείστε το ποντίκι "
+#~ "στο βασικό παράθυρο, κάντε κλικ για τοποθέτηση\n"
+#~ "Δεξί κλικ για ακύρωση"
+
+#~ msgid "Component"
+#~ msgstr "Στοιχείο"
+
+#~ msgid ""
+#~ "Add nets mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Λειτουργία προσθήκης δικτύου\n"
+#~ "Δεξί κλικ για ακύρωση"
+
+#~ msgid ""
+#~ "Add buses mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Λειτουργία προσθήκης διαύλου\n"
+#~ "Δεξί κλικ για ακύρωση"
+
+#~ msgid "Bus"
+#~ msgstr "Δίαυλος"
+
+#~ msgid "Add Text..."
+#~ msgstr "Προσθήκη κειμένου..."
+
+#~ msgid "Select"
+#~ msgstr "Επιλογή"
+
+#~ msgid "Select mode"
+#~ msgstr "Λειτουργία επιλογής"
+
+#~ msgid "Open Recen_t"
+#~ msgstr "Άνοιγμα _προσφάτου"
+
+#~ msgid "Save All"
+#~ msgstr "Αποθήκευση όλων"
+
+#~ msgid "_Print..."
+#~ msgstr "Ε_κτύπωση..."
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "_Προηγούμενο"
+#~ msgid "Write _Image..."
+#~ msgstr "Ε_γγραφή εικόνας..."
 
-msgid "_Component..."
-msgstr "_Στοιχείο..."
+#~ msgid "Execute Script..."
+#~ msgstr "Εκτέλεση σεναρίου..."
 
-msgid "_Net"
-msgstr "_Δίκτυο"
+#~ msgid "New Window"
+#~ msgstr "Νέο παράθυρο"
 
-msgid "B_us"
-msgstr "Δ_ίαυλος"
+#~ msgid "_Close Window"
+#~ msgstr "_Κλείσιμο παραθύρου"
 
-msgid "_Attribute..."
-msgstr "_Γνώρισμα..."
+#~ msgid "_Quit"
+#~ msgstr "Έ_ξοδος"
 
-msgid "_Text..."
-msgstr "_Κείμενο..."
+#~ msgid "_Undo"
+#~ msgstr "_Αναίρεση"
 
-msgid "_Line"
-msgstr "_Γραμμή"
+#~ msgid "_Redo"
+#~ msgstr "Ε_παναφορά"
 
-msgid "Pat_h"
-msgstr ""
+#~ msgid "Select All"
+#~ msgstr "Επιλογή όλων"
 
-msgid "_Box"
-msgstr "_Κουτί"
+#~ msgid "Deselect"
+#~ msgstr "Αποεπιλογή"
 
-msgid "C_ircle"
-msgstr "_Κύκλος"
-
-msgid "A_rc"
-msgstr "_Τόξο"
-
-msgid "_Pin"
-msgstr "_Ακροδέκτης"
-
-msgid "Pictu_re..."
-msgstr "_Εικόνα..."
-
-msgid "_Up"
-msgstr "_Πάνω"
-
-msgid "_Down Schematic"
-msgstr "_Κάτω σχεδιάγραμμα"
-
-msgid "Down _Symbol"
-msgstr "Κάτω _σύμβολο"
-
-msgid "_Attach"
-msgstr "_Σύνδεση"
-
-msgid "_Detach"
-msgstr "_Αποσύνδεση"
-
-msgid "Show _Value"
-msgstr "Εμφάνιση _τιμής"
-
-msgid "Show _Name"
-msgstr "Εμφάνιση _ονόματος"
-
-msgid "Show _Both"
-msgstr "Εμφάνιση _και των δύο"
-
-msgid "_Toggle Visibility"
-msgstr "Εναλλαγή ορατότητας"
-
-msgid "_Hide Specific Text..."
-msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
-
-msgid "_Show Specific Text..."
-msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "Λειτουργία περιστροφής 90"
 
 #, fuzzy
-msgid "Show/Hide Hidden Text"
-msgstr "Εμφάνιση κρυφών"
+#~ msgid "Object Properties..."
+#~ msgstr "<b>Ιδιότητες κειμένου</b>"
 
-msgid "_Find Text/Check Symbol..."
-msgstr ""
+#~ msgid "Edit..."
+#~ msgstr "Επεξεργασία..."
 
-msgid "A_utonumber Text..."
-msgstr ""
+#~ msgid "Edit Text..."
+#~ msgstr "Επεξεργασία κειμένου..."
 
-#, fuzzy
-msgid "_Options..."
-msgstr "_Επιλογές"
+#~ msgid "Slot..."
+#~ msgstr "Υποδοχή..."
 
-#, fuzzy
-msgid "_Font..."
-msgstr "Ε_κτύπωση..."
+#~ msgid "Lock"
+#~ msgstr "Κλείδωμα"
 
-#, fuzzy
-msgid "Grid +"
-msgstr "Λειτουργία τόξου"
+#~ msgid "Unlock"
+#~ msgstr "Ξεκλείδωμα"
 
-#, fuzzy
-msgid "Grid -"
-msgstr "Λειτουργία τόξου"
+#~ msgid "Embed Component/Picture"
+#~ msgstr "Ενσωμάτωση στοιχείου/εικόνας"
 
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
+#~ msgid "Unembed Component/Picture"
+#~ msgstr "Αποενσωμάτωση στοιχείου/εικόνας"
 
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
+#~ msgid "Update Component"
+#~ msgstr "Ενημέρωση στοιχείου"
 
-msgid "Grips: On/Off"
-msgstr ""
+#~ msgid "Symbol Translate..."
+#~ msgstr "Μετάφραση συμβόλου..."
 
-#, fuzzy
-msgid "Feedback Mode: Outline/Box"
-msgstr "Εναλλαγή _περιγράμματος/κουτιού"
+#~ msgid "Copy into 1"
+#~ msgstr "Αντιγραφή σε 1"
 
-msgid "Net: Rubberband On/Off"
-msgstr ""
+#~ msgid "Copy into 2"
+#~ msgstr "Αντιγραφή σε 2"
 
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "Copy into 3"
+#~ msgstr "Αντιγραφή σε 3"
 
-#, fuzzy
-msgid "_Coord Window"
-msgstr "_Κλείσιμο παραθύρου"
+#~ msgid "Copy into 4"
+#~ msgstr "Αντιγραφή σε 4"
 
-#, fuzzy
-msgid "_Log Window"
-msgstr "Εμφάνιση παραθύρου καταγραφής..."
+#~ msgid "Copy into 5"
+#~ msgstr "Αντιγραφή σε 5"
 
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "Cut into 1"
+#~ msgstr "Αποκοπή σε 1"
 
-#, fuzzy
-msgid "Lepton EDA Reference _Manual"
-msgstr "gEDA _Wiki..."
+#~ msgid "Cut into 2"
+#~ msgstr "Αποκοπή σε 2"
 
-#, fuzzy
-msgid "gEDA _Wiki Documentation"
-msgstr "_Τεκμηρίωση gEDA..."
+#~ msgid "Cut into 3"
+#~ msgstr "Αποκοπή σε 3"
 
-#, fuzzy
-msgid "Find Component D_ocumentation"
-msgstr "Τεκμηρίωση _στοιχείων"
+#~ msgid "Cut into 4"
+#~ msgstr "Αποκοπή σε 4"
 
-msgid "_Hotkeys..."
-msgstr "_Γρήγορα πλήκτρα"
+#~ msgid "Cut into 5"
+#~ msgstr "Αποκοπή σε 5"
 
-#, fuzzy
-msgid "_About"
-msgstr "_Σχετικά..."
+#~ msgid "Paste from 1"
+#~ msgstr "Επικόλληση από 1"
 
-msgid "_File"
-msgstr "_Αρχείο"
+#~ msgid "Paste from 2"
+#~ msgstr "Επικόλληση από 2"
 
-msgid "_Edit"
-msgstr "_Επεξεργασία"
+#~ msgid "Paste from 3"
+#~ msgstr "Επικόλληση από 3"
 
-msgid "_View"
-msgstr "_Προβολή"
+#~ msgid "Paste from 4"
+#~ msgstr "Επικόλληση από 4"
 
-msgid "_Page"
-msgstr "_Σελίδα"
-
-msgid "Hie_rarchy"
-msgstr "_Ιεραρχία"
-
-msgid "A_ttributes"
-msgstr "_Γνωρίσματα"
-
-msgid "_Options"
-msgstr "_Επιλογές"
+#~ msgid "Paste from 5"
+#~ msgstr "Επικόλληση από 5"
 
 #, fuzzy
-msgid "_Netlist"
-msgstr "_Δίκτυο"
+#~ msgid "Bottom Dock"
+#~ msgstr "Κάτω προς πάνω"
 
-msgid "_Help"
-msgstr "_Βοήθεια"
+#, fuzzy
+#~ msgid "Find Text Results"
+#~ msgstr "Εύρεση κειμένου"
+
+#~ msgid "_Redraw"
+#~ msgstr "_Επανασχεδίαση"
+
+#, fuzzy
+#~ msgid "_Dark Color Scheme"
+#~ msgstr "Σχήμα _σκοτεινών χρωμάτων"
+
+#, fuzzy
+#~ msgid "_Light Color Scheme"
+#~ msgstr "Σχήμα _φωτεινών χρωμάτων"
+
+#, fuzzy
+#~ msgid "B_W Color Scheme"
+#~ msgstr "Σχήμα _σκοτεινών χρωμάτων"
+
+#, fuzzy
+#~ msgid "Color Scheme Editor..."
+#~ msgstr "Σχήμα _φωτεινών χρωμάτων"
+
+#~ msgid "_Manager..."
+#~ msgstr "_Διαχειριστής..."
+
+#~ msgid "_Previous"
+#~ msgstr "_Προηγούμενο"
+
+#~ msgid "_Next"
+#~ msgstr "_Επόμενο"
+
+#, fuzzy
+#~ msgid "_Revert..."
+#~ msgstr "_Επαναφορά"
+
+#, fuzzy
+#~ msgid "Next Tab"
+#~ msgstr "Νέα σελίδα"
+
+#, fuzzy
+#~ msgid "Previous Tab"
+#~ msgstr "_Προηγούμενο"
+
+#~ msgid "_Component..."
+#~ msgstr "_Στοιχείο..."
+
+#~ msgid "_Net"
+#~ msgstr "_Δίκτυο"
+
+#~ msgid "B_us"
+#~ msgstr "Δ_ίαυλος"
+
+#~ msgid "_Attribute..."
+#~ msgstr "_Γνώρισμα..."
+
+#~ msgid "_Text..."
+#~ msgstr "_Κείμενο..."
+
+#~ msgid "_Line"
+#~ msgstr "_Γραμμή"
+
+#~ msgid "_Box"
+#~ msgstr "_Κουτί"
+
+#~ msgid "C_ircle"
+#~ msgstr "_Κύκλος"
+
+#~ msgid "A_rc"
+#~ msgstr "_Τόξο"
+
+#~ msgid "_Pin"
+#~ msgstr "_Ακροδέκτης"
+
+#~ msgid "Pictu_re..."
+#~ msgstr "_Εικόνα..."
+
+#~ msgid "_Up"
+#~ msgstr "_Πάνω"
+
+#~ msgid "_Down Schematic"
+#~ msgstr "_Κάτω σχεδιάγραμμα"
+
+#~ msgid "Down _Symbol"
+#~ msgstr "Κάτω _σύμβολο"
+
+#~ msgid "_Attach"
+#~ msgstr "_Σύνδεση"
+
+#~ msgid "_Detach"
+#~ msgstr "_Αποσύνδεση"
+
+#~ msgid "Show _Value"
+#~ msgstr "Εμφάνιση _τιμής"
+
+#~ msgid "Show _Name"
+#~ msgstr "Εμφάνιση _ονόματος"
+
+#~ msgid "Show _Both"
+#~ msgstr "Εμφάνιση _και των δύο"
+
+#~ msgid "_Toggle Visibility"
+#~ msgstr "Εναλλαγή ορατότητας"
+
+#~ msgid "_Hide Specific Text..."
+#~ msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
+
+#~ msgid "_Show Specific Text..."
+#~ msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
+
+#, fuzzy
+#~ msgid "Show/Hide Hidden Text"
+#~ msgstr "Εμφάνιση κρυφών"
+
+#, fuzzy
+#~ msgid "_Options..."
+#~ msgstr "_Επιλογές"
+
+#, fuzzy
+#~ msgid "_Font..."
+#~ msgstr "Ε_κτύπωση..."
+
+#, fuzzy
+#~ msgid "Grid +"
+#~ msgstr "Λειτουργία τόξου"
+
+#, fuzzy
+#~ msgid "Grid -"
+#~ msgstr "Λειτουργία τόξου"
+
+#, fuzzy
+#~ msgid "Feedback Mode: Outline/Box"
+#~ msgstr "Εναλλαγή _περιγράμματος/κουτιού"
+
+#, fuzzy
+#~ msgid "_Coord Window"
+#~ msgstr "_Κλείσιμο παραθύρου"
+
+#, fuzzy
+#~ msgid "_Log Window"
+#~ msgstr "Εμφάνιση παραθύρου καταγραφής..."
+
+#, fuzzy
+#~ msgid "Lepton EDA Reference _Manual"
+#~ msgstr "gEDA _Wiki..."
+
+#, fuzzy
+#~ msgid "gEDA _Wiki Documentation"
+#~ msgstr "_Τεκμηρίωση gEDA..."
+
+#, fuzzy
+#~ msgid "Find Component D_ocumentation"
+#~ msgstr "Τεκμηρίωση _στοιχείων"
+
+#~ msgid "_Hotkeys..."
+#~ msgstr "_Γρήγορα πλήκτρα"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "_Σχετικά..."
+
+#~ msgid "_File"
+#~ msgstr "_Αρχείο"
+
+#~ msgid "_Edit"
+#~ msgstr "_Επεξεργασία"
+
+#~ msgid "_View"
+#~ msgstr "_Προβολή"
+
+#~ msgid "_Page"
+#~ msgstr "_Σελίδα"
+
+#~ msgid "Hie_rarchy"
+#~ msgstr "_Ιεραρχία"
+
+#~ msgid "A_ttributes"
+#~ msgstr "_Γνωρίσματα"
+
+#~ msgid "_Options"
+#~ msgstr "_Επιλογές"
+
+#, fuzzy
+#~ msgid "_Netlist"
+#~ msgstr "_Δίκτυο"
+
+#~ msgid "_Help"
+#~ msgstr "_Βοήθεια"
 
 #, fuzzy, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
-
-msgid "There is no last action to repeat."
-msgstr ""
-
-msgid "Repeat Last Action"
-msgstr ""
+#~ msgid "[~A] is not a valid lepton-schematic action."
+#~ msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
 
 #, fuzzy
-msgid "Cancel"
-msgstr "Μενού/Άκυρο"
+#~ msgid "Cancel"
+#~ msgstr "Μενού/Άκυρο"
 
 #, fuzzy
-msgid "New File"
-msgstr "Νέο αρχείο"
+#~ msgid "New File"
+#~ msgstr "Νέο αρχείο"
 
 #, fuzzy
-msgid "Open File"
-msgstr "Άνοιγμα αρχείου..."
+#~ msgid "Open File"
+#~ msgstr "Άνοιγμα αρχείου..."
 
 #, fuzzy
-msgid "Print"
-msgstr "Εκτύπωση..."
-
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "Print"
+#~ msgstr "Εκτύπωση..."
 
 #, fuzzy
-msgid "Close Window"
-msgstr "_Κλείσιμο παραθύρου"
+#~ msgid "Close Window"
+#~ msgstr "_Κλείσιμο παραθύρου"
 
 #, fuzzy
-msgid "Quit"
-msgstr "Έ_ξοδος"
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
+#~ msgid "Quit"
+#~ msgstr "Έ_ξοδος"
 
 #, fuzzy
-msgid "Edit Object Properties"
-msgstr "Επεξεργασία ιδιοτήτων κειμένου"
+#~ msgid "Edit Object Properties"
+#~ msgstr "Επεξεργασία ιδιοτήτων κειμένου"
 
 #, fuzzy
-msgid "Translate Symbol"
-msgstr "Μετάφραση"
-
-msgid "Invoke Macro"
-msgstr ""
-
-msgid "Show/Hide Invisible Text"
-msgstr ""
+#~ msgid "Translate Symbol"
+#~ msgstr "Μετάφραση"
 
 #, fuzzy
-msgid "Cut"
-msgstr "Α_ποκοπή"
+#~ msgid "Cut"
+#~ msgstr "Α_ποκοπή"
 
-msgid "Copy"
-msgstr "Αντιγραφή"
-
-#, fuzzy
-msgid "Paste"
-msgstr "Ε_πικόλληση"
-
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr "Κατάσταση"
+#~ msgid "Copy"
+#~ msgstr "Αντιγραφή"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "Εύρεση κειμένου"
+#~ msgid "Paste"
+#~ msgstr "Ε_πικόλληση"
+
+#~ msgid "Status"
+#~ msgstr "Κατάσταση"
 
 #, fuzzy
-msgid "Redraw"
-msgstr "_Επανασχεδίαση"
-
-msgid "Pan Left"
-msgstr ""
+#~ msgid "Find Text State"
+#~ msgstr "Εύρεση κειμένου"
 
 #, fuzzy
-msgid "Pan Right"
-msgstr "Πάνω δεξιά"
-
-msgid "Pan Up"
-msgstr ""
-
-msgid "Pan Down"
-msgstr ""
-
-msgid "Zoom Extents"
-msgstr ""
-
-msgid "Zoom In"
-msgstr ""
-
-msgid "Zoom Out"
-msgstr ""
-
-msgid "Zoom Full"
-msgstr ""
+#~ msgid "Redraw"
+#~ msgstr "_Επανασχεδίαση"
 
 #, fuzzy
-msgid "Dark Color Scheme"
-msgstr "Σχήμα _σκοτεινών χρωμάτων"
+#~ msgid "Pan Right"
+#~ msgstr "Πάνω δεξιά"
 
 #, fuzzy
-msgid "Light Color Scheme"
-msgstr "Σχήμα _φωτεινών χρωμάτων"
-
-msgid "Monochrome Color Scheme"
-msgstr ""
+#~ msgid "Dark Color Scheme"
+#~ msgstr "Σχήμα _σκοτεινών χρωμάτων"
 
 #, fuzzy
-msgid "Show Color Scheme Editor"
-msgstr "Σχήμα _φωτεινών χρωμάτων"
+#~ msgid "Light Color Scheme"
+#~ msgstr "Σχήμα _φωτεινών χρωμάτων"
 
 #, fuzzy
-msgid "Revert Changes"
-msgstr "Σίγουρα επαναφορά σελίδας;"
+#~ msgid "Show Color Scheme Editor"
+#~ msgstr "Σχήμα _φωτεινών χρωμάτων"
 
 #, fuzzy
-msgid "Previous Page"
-msgstr "_Προηγούμενο"
+#~ msgid "Revert Changes"
+#~ msgstr "Σίγουρα επαναφορά σελίδας;"
 
 #, fuzzy
-msgid "Next Page"
-msgstr "Νέα σελίδα"
+#~ msgid "Previous Page"
+#~ msgstr "_Προηγούμενο"
 
 #, fuzzy
-msgid "Print Page"
-msgstr "_Προηγούμενο"
+#~ msgid "Next Page"
+#~ msgstr "Νέα σελίδα"
 
 #, fuzzy
-msgid "Add Net"
-msgstr "/Προσθήκη δικτύου"
+#~ msgid "Print Page"
+#~ msgstr "_Προηγούμενο"
 
 #, fuzzy
-msgid "Add Bus"
-msgstr "/Προσθήκη διαύλου"
+#~ msgid "Add Net"
+#~ msgstr "/Προσθήκη δικτύου"
 
 #, fuzzy
-msgid "Add Line"
-msgstr "Γραμμή"
+#~ msgid "Add Bus"
+#~ msgstr "/Προσθήκη διαύλου"
 
 #, fuzzy
-msgid "Add Path"
-msgstr "/Προσθήκη δικτύου"
+#~ msgid "Add Line"
+#~ msgstr "Γραμμή"
 
 #, fuzzy
-msgid "Add Box"
-msgstr "/Προσθήκη διαύλου"
+#~ msgid "Add Path"
+#~ msgstr "/Προσθήκη δικτύου"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "Κύκλος"
+#~ msgid "Add Box"
+#~ msgstr "/Προσθήκη διαύλου"
 
 #, fuzzy
-msgid "Add Arc"
-msgstr "Προσθήκη γνωρίσματος"
-
-msgid "Add Pin"
-msgstr ""
+#~ msgid "Add Circle"
+#~ msgstr "Κύκλος"
 
 #, fuzzy
-msgid "Down Schematic"
-msgstr "/Κάτω σχεδιάγραμμα"
+#~ msgid "Add Arc"
+#~ msgstr "Προσθήκη γνωρίσματος"
 
 #, fuzzy
-msgid "Down Symbol"
-msgstr "/Κάτω σύμβολο"
+#~ msgid "Down Schematic"
+#~ msgstr "/Κάτω σχεδιάγραμμα"
 
 #, fuzzy
-msgid "Up Hierarchy"
-msgstr "_Ιεραρχία"
+#~ msgid "Down Symbol"
+#~ msgstr "/Κάτω σύμβολο"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "Επεξεργασία γνωρισμάτων"
+#~ msgid "Up Hierarchy"
+#~ msgstr "_Ιεραρχία"
+
+#, fuzzy
+#~ msgid "Attach Attributes"
+#~ msgstr "Επεξεργασία γνωρισμάτων"
+
+#, fuzzy
+#~ msgid "Detach Attributes"
+#~ msgstr "Αποσυνδεδεμένο γνώρισμα"
+
+#, fuzzy
+#~ msgid "Show Attribute Value"
+#~ msgstr "Το γνώρισμα υποδοχής είναι παραμορφωμένο\n"
+
+#, fuzzy
+#~ msgid "Show Attribute Name"
+#~ msgstr "Το γνώρισμα υποδοχής είναι παραμορφωμένο\n"
+
+#, fuzzy
+#~ msgid "Toggle Text Visibility"
+#~ msgstr "Εναλλαγή ορατότητας"
+
+#, fuzzy
+#~ msgid "Find Specific Text"
+#~ msgstr "_Εύρεση συγκεκριμένου κειμένου..."
+
+#, fuzzy
+#~ msgid "Hide Specific Text"
+#~ msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
+
+#, fuzzy
+#~ msgid "Show Specific Text"
+#~ msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
+
+#, fuzzy
+#~ msgid "Show Hotkeys"
+#~ msgstr "Γρήγορα Πλήκτρα"
+
+#, fuzzy
+#~ msgid "Set Grid Spacing"
+#~ msgstr "Σημείο πλέγματος"
+
+#, fuzzy
+#~ msgid "Toggle Outline Drawing"
+#~ msgstr "Εναλλαγή _περιγράμματος/κουτιού"
+
+#, fuzzy
+#~ msgid "Toggle Magnetic Nets"
+#~ msgstr "Εναλλαγή _μαγνητικού δικτύου"
+
+#, fuzzy
+#~ msgid "Show Log Window"
+#~ msgstr "Εμφάνιση παραθύρου καταγραφής..."
+
+#, fuzzy
+#~ msgid "Show Coordinate Window"
+#~ msgstr "Εμφάνιση παραθύρου συντεταγμένων..."
+
+#, fuzzy
+#~ msgid "Toggle Grips"
+#~ msgstr "Εναλλαγή ορατότητας"
+
+#, fuzzy
+#~ msgid "Component Documentation"
+#~ msgstr "Τεκμηρίωση _στοιχείων"
+
+#, fuzzy
+#~ msgid "Lepton EDA Manual"
+#~ msgstr "gEDA _Wiki..."
+
+#, fuzzy
+#~ msgid "Lepton EDA wiki"
+#~ msgstr "gEDA _Wiki..."
+
+#, fuzzy
+#~ msgid "About lepton-schematic"
+#~ msgstr "Σχετικά με το gschem"
+
+#, fuzzy
+#~ msgid "Could not show documentation:"
+#~ msgstr "Τεκμηρίωση _στοιχείων"
+
+#~ msgid "No documentation found"
+#~ msgstr "Δε βρέθηκε τεκμηρίωση"
 
 #, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
-
-#, fuzzy
-msgid "Detach Attributes"
-msgstr "Αποσυνδεδεμένο γνώρισμα"
-
-#, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
-
-#, fuzzy
-msgid "Show Attribute Value"
-msgstr "Το γνώρισμα υποδοχής είναι παραμορφωμένο\n"
-
-#, fuzzy
-msgid "Show Attribute Name"
-msgstr "Το γνώρισμα υποδοχής είναι παραμορφωμένο\n"
-
-#, fuzzy
-msgid "Toggle Text Visibility"
-msgstr "Εναλλαγή ορατότητας"
-
-#, fuzzy
-msgid "Find Specific Text"
-msgstr "_Εύρεση συγκεκριμένου κειμένου..."
-
-#, fuzzy
-msgid "Hide Specific Text"
-msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
-
-#, fuzzy
-msgid "Show Specific Text"
-msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
-
-#, fuzzy
-msgid "Show Hotkeys"
-msgstr "Γρήγορα Πλήκτρα"
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
-
-#, fuzzy
-msgid "Set Grid Spacing"
-msgstr "Σημείο πλέγματος"
-
-msgid "Increase Grid Spacing"
-msgstr ""
-
-msgid "Decrease Grid Spacing"
-msgstr ""
-
-#, fuzzy
-msgid "Toggle Outline Drawing"
-msgstr "Εναλλαγή _περιγράμματος/κουτιού"
-
-msgid "Toggle Net Rubber Band"
-msgstr ""
-
-#, fuzzy
-msgid "Toggle Magnetic Nets"
-msgstr "Εναλλαγή _μαγνητικού δικτύου"
-
-#, fuzzy
-msgid "Show Log Window"
-msgstr "Εμφάνιση παραθύρου καταγραφής..."
-
-#, fuzzy
-msgid "Show Coordinate Window"
-msgstr "Εμφάνιση παραθύρου συντεταγμένων..."
-
-#, fuzzy
-msgid "Toggle Grips"
-msgstr "Εναλλαγή ορατότητας"
-
-#, fuzzy
-msgid "Component Documentation"
-msgstr "Τεκμηρίωση _στοιχείων"
-
-msgid "View documentation for selected component"
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA Manual"
-msgstr "gEDA _Wiki..."
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA wiki"
-msgstr "gEDA _Wiki..."
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "About lepton-schematic"
-msgstr "Σχετικά με το gschem"
-
-#, fuzzy
-msgid "Could not show documentation:"
-msgstr "Τεκμηρίωση _στοιχείων"
-
-msgid "No documentation found"
-msgstr "Δε βρέθηκε τεκμηρίωση"
-
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
 
 #, fuzzy
 #~ msgid "Object ~A is not included in the current lepton-schematic page."

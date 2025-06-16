@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2022-05-29 17:54+0300\n"
+"POT-Creation-Date: 2025-06-16 10:40+0300\n"
 "PO-Revision-Date: 2025-06-11 13:54+0300\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -16,9 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
-
-msgid "Zoom too small!  Cannot zoom further."
-msgstr ""
 
 msgid "Toggle _Editor"
 msgstr ""
@@ -35,6 +32,9 @@ msgid ""
 "button. It can be loaded on startup with the following expression\n"
 "(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
+
+msgid "<b>Help</b>"
 msgstr ""
 
 #, c-format
@@ -63,6 +63,19 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
+msgstr ""
+
+#, fuzzy
+msgid "Execute Script"
+msgstr "בצע תסריט..."
+
+msgid "_Run"
+msgstr ""
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -104,7 +117,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
+"Copyright © 2017-2023 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -287,7 +300,7 @@ msgstr ""
 msgid "Keystroke(s)"
 msgstr ""
 
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgid "** Invalid UTF-8 in log message. See stderr or lepton-schematic log.\n"
 msgstr ""
 
 #, fuzzy
@@ -310,6 +323,102 @@ msgstr ""
 
 msgid "Evaluate"
 msgstr ""
+
+msgid "<various>"
+msgstr ""
+
+msgid "Attributes with empty name are not allowed. Please set a name."
+msgstr ""
+
+msgid "Show Name & Value"
+msgstr ""
+
+msgid "Show Value only"
+msgstr ""
+
+msgid "Show Name only"
+msgstr ""
+
+msgid "Promote"
+msgstr ""
+
+msgid "Duplicate"
+msgstr ""
+
+msgid "Delete"
+msgstr "מחק"
+
+#, fuzzy
+msgid "Copy to all"
+msgstr "העתק אל 1"
+
+msgid "Edit Attributes"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Vis?"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
+#, fuzzy
+msgid "Sho_w inherited attributes"
+msgstr "מאפיינים"
+
+msgid "_Name:"
+msgstr ""
+
+msgid "_Value:"
+msgstr ""
+
+msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
+msgstr ""
+
+msgid "Vi_sible"
+msgstr ""
+
+msgid "_Add"
+msgstr "הוסף"
+
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "מאפיינים"
+
+#, c-format
+msgid "%2$i symbol (%1$s)"
+msgid_plural "%2$i symbols (%1$s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i pin"
+msgid_plural "%1$i pins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i net"
+msgid_plural "%1$i nets"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%1$i bus"
+msgid_plural "%1$i buses"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%1$i attribute"
+msgid_plural "%1$i attributes"
+msgstr[0] "מאפיינים"
+msgstr[1] "מאפיינים"
 
 #, fuzzy
 msgid "_Fill Type:"
@@ -418,23 +527,10 @@ msgstr ""
 msgid "Bus pin (graphical)"
 msgstr ""
 
-msgid "Preview Buffer"
-msgstr ""
-
 msgid "Hide"
 msgstr ""
 
 msgid "Hide text starting with:"
-msgstr ""
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "עריכה"
-
-msgid "Number of Slots:"
-msgstr ""
-
-msgid "Slot Number:"
 msgstr ""
 
 msgid "<b>Text Content</b>"
@@ -541,145 +637,6 @@ msgid "Resnap Active"
 msgstr ""
 
 #, c-format
-msgid "New page created [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "New Window created [%1$s]"
-msgstr ""
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "בצע תסריט..."
-
-msgid "_Run"
-msgstr ""
-
-msgid "Scheme files (*.scm)"
-msgstr ""
-
-msgid "All files"
-msgstr ""
-
-#, c-format
-msgid "Executing Guile script [%s]"
-msgstr ""
-
-msgid "Saved All"
-msgstr ""
-
-msgid "Failed to Save All"
-msgstr ""
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "חלון חדש"
-
-msgid "Select objs first"
-msgstr ""
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr ""
-
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-msgid "Revert"
-msgstr ""
-
-msgid "Empty clipboard"
-msgstr ""
-
-msgid "Empty buffer"
-msgstr ""
-
-#, c-format
-msgid "Searching for source [%1$s]"
-msgstr ""
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr ""
-
-msgid "Failed to descend hierarchy."
-msgstr ""
-
-#, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr ""
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-msgid "Grid OFF"
-msgstr ""
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-msgid "Invalid grid mode"
-msgstr ""
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-msgid "magnetic net mode: ON"
-msgstr ""
-
-msgid "magnetic net mode: OFF"
-msgstr ""
-
-#, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr ""
 
@@ -695,33 +652,10 @@ msgstr "מחק"
 msgid "All, _except locked"
 msgstr ""
 
-msgid "Delete"
-msgstr "מחק"
-
 msgid "Hidden text is now visible"
 msgstr ""
 
 msgid "Hidden text is now invisible"
-msgstr ""
-
-#, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr ""
-
-#, c-format
-msgid "Could NOT save backup file [%1$s]"
 msgstr ""
 
 #, c-format
@@ -776,7 +710,34 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-msgid "Undo/Redo is disabled in configuration"
+#, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write"
+msgstr ""
+
+#, c-format
+msgid "Could NOT set backup file [%1$s] readonly"
+msgstr ""
+
+#, c-format
+msgid "Could NOT save backup file [%1$s]"
+msgstr ""
+
+#, c-format
+msgid ""
+"<b>Revert page:</b>\n"
+"%s\n"
+"\n"
+"Are you sure you want to revert this page?\n"
+"All unsaved changes in current schematic will be\n"
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
+msgstr ""
+
+msgid "Revert"
 msgstr ""
 
 msgid "Schematic not found in source library."
@@ -790,6 +751,16 @@ msgstr ""
 
 #, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Slot"
+msgstr "עריכה"
+
+msgid "Number of Slots:"
+msgstr ""
+
+msgid "Slot Number:"
 msgstr ""
 
 #, c-format
@@ -806,19 +777,10 @@ msgstr ""
 msgid "N_ame:"
 msgstr ""
 
-msgid "_Value:"
-msgstr ""
-
-msgid "Vi_sible"
-msgstr ""
-
 msgid "Show Value Only"
 msgstr ""
 
 msgid "Show Name Only"
-msgstr ""
-
-msgid "Show Name & Value"
 msgstr ""
 
 msgid "<b>Attach Options</b>"
@@ -930,9 +892,6 @@ msgid "Reset filter"
 msgstr ""
 
 msgid "Reload all libraries"
-msgstr ""
-
-msgid "Value"
 msgstr ""
 
 msgid "Default behavior - reference component"
@@ -1156,87 +1115,6 @@ msgstr "היררכיה"
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-
-msgid "Show Value only"
-msgstr ""
-
-msgid "Show Name only"
-msgstr ""
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr ""
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "העתק אל 1"
-
-msgid "Edit Attributes"
-msgstr ""
-
-msgid "Vis?"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "מאפיינים"
-
-msgid "_Name:"
-msgstr ""
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "הוסף"
-
-#, fuzzy
-msgid "<b>Add Attribute</b>"
-msgstr "מאפיינים"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "מאפיינים"
-msgstr[1] "מאפיינים"
-
 #, fuzzy
 msgid "Add Text"
 msgstr "ערוך טקסט"
@@ -1354,7 +1232,7 @@ msgid "Loading schematic [%1$s]"
 msgstr ""
 
 #, c-format
-msgid "Could NOT save page [%1$s]\n"
+msgid "Could NOT save page [%1$s]"
 msgstr ""
 
 msgid "Error while trying to save"
@@ -1377,62 +1255,6 @@ msgstr ""
 
 #, c-format
 msgid "Closing [%1$s]"
-msgstr ""
-
-msgid "New"
-msgstr "חדש"
-
-msgid "New file"
-msgstr ""
-
-msgid "Open file"
-msgstr ""
-
-msgid "Save file"
-msgstr ""
-
-msgid "Undo"
-msgstr "בטל את הפעולה האחרונה"
-
-msgid "Undo last operation"
-msgstr ""
-
-msgid "Redo"
-msgstr "בצע שוב"
-
-msgid "Redo last undo"
-msgstr ""
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Component"
-msgstr ""
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Bus"
-msgstr "אפיק"
-
-msgid "Add Text..."
-msgstr ""
-
-msgid "Select"
-msgstr ""
-
-msgid "Select mode"
 msgstr ""
 
 msgid "Show"
@@ -1495,659 +1317,246 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "Open Recen_t"
-msgstr ""
+#, fuzzy
+#~ msgid "Closing Window"
+#~ msgstr "חלון חדש"
 
-msgid "Save All"
-msgstr "שמור הכל"
+#~ msgid "New"
+#~ msgstr "חדש"
 
-msgid "_Print..."
-msgstr ""
+#~ msgid "Undo"
+#~ msgstr "בטל את הפעולה האחרונה"
+
+#~ msgid "Redo"
+#~ msgstr "בצע שוב"
+
+#~ msgid "Bus"
+#~ msgstr "אפיק"
+
+#~ msgid "Save All"
+#~ msgstr "שמור הכל"
 
 #, fuzzy
-msgid "Write _Image..."
-msgstr "כתוב תמונה..."
+#~ msgid "Write _Image..."
+#~ msgstr "כתוב תמונה..."
 
-msgid "Invoke Macro..."
-msgstr ""
+#~ msgid "Execute Script..."
+#~ msgstr "בצע תסריט..."
 
-msgid "Execute Script..."
-msgstr "בצע תסריט..."
+#~ msgid "New Window"
+#~ msgstr "חלון חדש"
 
-msgid "REPL..."
-msgstr ""
+#~ msgid "Rotate 90 Mode"
+#~ msgstr "מצב סיבוב 90"
 
-msgid "New Window"
-msgstr "חלון חדש"
+#~ msgid "Edit..."
+#~ msgstr "ערוך..."
 
-msgid "_Close Window"
-msgstr ""
+#~ msgid "Edit Text..."
+#~ msgstr "ערוך טקסט"
 
-msgid "_Quit"
-msgstr ""
+#~ msgid "Slot..."
+#~ msgstr "חריץ..."
 
-msgid "_Undo"
-msgstr ""
+#~ msgid "Lock"
+#~ msgstr "נעילה"
 
-msgid "_Redo"
-msgstr ""
+#~ msgid "Unlock"
+#~ msgstr "שחרר נעילה"
 
-msgid "Select All"
-msgstr ""
+#~ msgid "Embed Component/Picture"
+#~ msgstr "שבץ רכיב/תמונה"
 
-msgid "Deselect"
-msgstr ""
+#~ msgid "Unembed Component/Picture"
+#~ msgstr "שחרר משיבוץ רכיב/תמונה"
 
-msgid "Rotate 90 Mode"
-msgstr "מצב סיבוב 90"
+#~ msgid "Update Component"
+#~ msgstr "עדכן רכיב"
 
-msgid "Object Properties..."
-msgstr ""
+#~ msgid "Symbol Translate..."
+#~ msgstr "תרגם סמל..."
 
-msgid "Edit..."
-msgstr "ערוך..."
+#~ msgid "Copy into 1"
+#~ msgstr "העתק אל 1"
 
-msgid "Edit Text..."
-msgstr "ערוך טקסט"
+#~ msgid "Copy into 2"
+#~ msgstr "העתק אל 2"
 
-msgid "Slot..."
-msgstr "חריץ..."
+#~ msgid "Copy into 3"
+#~ msgstr "העתק אל 3"
 
-msgid "Lock"
-msgstr "נעילה"
+#~ msgid "Copy into 4"
+#~ msgstr "העתק אל 4"
 
-msgid "Unlock"
-msgstr "שחרר נעילה"
+#~ msgid "Copy into 5"
+#~ msgstr "העתק אל 5"
 
-msgid "Embed Component/Picture"
-msgstr "שבץ רכיב/תמונה"
+#~ msgid "Cut into 1"
+#~ msgstr "גזור אל 1"
 
-msgid "Unembed Component/Picture"
-msgstr "שחרר משיבוץ רכיב/תמונה"
+#~ msgid "Cut into 2"
+#~ msgstr "גזור אל 2"
 
-msgid "Update Component"
-msgstr "עדכן רכיב"
+#~ msgid "Cut into 3"
+#~ msgstr "גזור אל 3"
 
-msgid "Symbol Translate..."
-msgstr "תרגם סמל..."
+#~ msgid "Cut into 4"
+#~ msgstr "גזור אל 4"
 
-msgid "Copy into 1"
-msgstr "העתק אל 1"
+#~ msgid "Cut into 5"
+#~ msgstr "גזור אל 5"
 
-msgid "Copy into 2"
-msgstr "העתק אל 2"
+#~ msgid "Paste from 1"
+#~ msgstr "הדבק מ-1"
 
-msgid "Copy into 3"
-msgstr "העתק אל 3"
+#~ msgid "Paste from 2"
+#~ msgstr "הדבק מ-2"
 
-msgid "Copy into 4"
-msgstr "העתק אל 4"
+#~ msgid "Paste from 3"
+#~ msgstr "הדבק מ-3"
 
-msgid "Copy into 5"
-msgstr "העתק אל 5"
+#~ msgid "Paste from 4"
+#~ msgstr "הדבק מ-4"
 
-msgid "Cut into 1"
-msgstr "גזור אל 1"
-
-msgid "Cut into 2"
-msgstr "גזור אל 2"
-
-msgid "Cut into 3"
-msgstr "גזור אל 3"
-
-msgid "Cut into 4"
-msgstr "גזור אל 4"
-
-msgid "Cut into 5"
-msgstr "גזור אל 5"
-
-msgid "Paste from 1"
-msgstr "הדבק מ-1"
-
-msgid "Paste from 2"
-msgstr "הדבק מ-2"
-
-msgid "Paste from 3"
-msgstr "הדבק מ-3"
-
-msgid "Paste from 4"
-msgstr "הדבק מ-4"
-
-msgid "Paste from 5"
-msgstr "הדבק מ-5"
-
-msgid "Side Dock"
-msgstr ""
-
-msgid "Bottom Dock"
-msgstr ""
+#~ msgid "Paste from 5"
+#~ msgstr "הדבק מ-5"
 
 #, fuzzy
-msgid "Find Text Results"
-msgstr "ערוך טקסט"
-
-msgid "_Redraw"
-msgstr ""
-
-msgid "_Pan"
-msgstr ""
-
-msgid "Zoom _Box"
-msgstr ""
-
-msgid "Zoom _Extents"
-msgstr ""
-
-msgid "Zoom _In"
-msgstr ""
-
-msgid "Zoom _Out"
-msgstr ""
-
-msgid "Zoom _Full"
-msgstr ""
-
-msgid "_Dark Color Scheme"
-msgstr ""
-
-msgid "_Light Color Scheme"
-msgstr ""
-
-msgid "B_W Color Scheme"
-msgstr ""
-
-msgid "Color Scheme Editor..."
-msgstr ""
-
-msgid "_Manager..."
-msgstr ""
-
-msgid "_Previous"
-msgstr ""
-
-msgid "_Next"
-msgstr ""
-
-msgid "_Revert..."
-msgstr ""
+#~ msgid "Find Text Results"
+#~ msgstr "ערוך טקסט"
 
 #, fuzzy
-msgid "Next Tab"
-msgstr "דף חדש"
+#~ msgid "Next Tab"
+#~ msgstr "דף חדש"
 
 #, fuzzy
-msgid "Previous Tab"
-msgstr "סגור דף"
-
-msgid "_Component..."
-msgstr ""
-
-msgid "_Net"
-msgstr ""
-
-msgid "B_us"
-msgstr ""
-
-msgid "_Attribute..."
-msgstr ""
-
-msgid "_Text..."
-msgstr ""
-
-msgid "_Line"
-msgstr ""
-
-msgid "Pat_h"
-msgstr ""
-
-msgid "_Box"
-msgstr ""
-
-msgid "C_ircle"
-msgstr ""
-
-msgid "A_rc"
-msgstr ""
-
-msgid "_Pin"
-msgstr ""
-
-msgid "Pictu_re..."
-msgstr ""
-
-msgid "_Up"
-msgstr ""
-
-msgid "_Down Schematic"
-msgstr ""
-
-msgid "Down _Symbol"
-msgstr ""
-
-msgid "_Attach"
-msgstr ""
-
-msgid "_Detach"
-msgstr ""
-
-msgid "Show _Value"
-msgstr ""
-
-msgid "Show _Name"
-msgstr ""
-
-msgid "Show _Both"
-msgstr ""
-
-msgid "_Toggle Visibility"
-msgstr ""
-
-msgid "_Hide Specific Text..."
-msgstr ""
-
-msgid "_Show Specific Text..."
-msgstr ""
+#~ msgid "Previous Tab"
+#~ msgstr "סגור דף"
 
 #, fuzzy
-msgid "Show/Hide Hidden Text"
-msgstr "הראה/הסתר טקסט חבוי"
-
-msgid "_Find Text/Check Symbol..."
-msgstr ""
-
-msgid "A_utonumber Text..."
-msgstr ""
+#~ msgid "Show/Hide Hidden Text"
+#~ msgstr "הראה/הסתר טקסט חבוי"
 
 #, fuzzy
-msgid "_Options..."
-msgstr "הגדרות"
+#~ msgid "_Options..."
+#~ msgstr "הגדרות"
 
 #, fuzzy
-msgid "_Font..."
-msgstr "חריץ..."
-
-msgid "Grid +"
-msgstr ""
-
-msgid "Grid -"
-msgstr ""
-
-msgid "Grid Style: Cycle Dots/Mesh/Off"
-msgstr ""
-
-msgid "Grid Snap: Cycle Grid/Resnap/Off"
-msgstr ""
-
-msgid "Grips: On/Off"
-msgstr ""
-
-msgid "Feedback Mode: Outline/Box"
-msgstr ""
-
-msgid "Net: Rubberband On/Off"
-msgstr ""
-
-msgid "Net: Magnetic On/Off"
-msgstr ""
+#~ msgid "_Font..."
+#~ msgstr "חריץ..."
 
 #, fuzzy
-msgid "_Coord Window"
-msgstr "חלון חדש"
+#~ msgid "_Coord Window"
+#~ msgstr "חלון חדש"
 
 #, fuzzy
-msgid "_Log Window"
-msgstr "חלון חדש"
+#~ msgid "_Log Window"
+#~ msgstr "חלון חדש"
 
-msgid "_1 allegro"
-msgstr ""
+#~ msgid "_File"
+#~ msgstr "קובץ"
 
-msgid "Lepton EDA Reference _Manual"
-msgstr ""
+#~ msgid "_Edit"
+#~ msgstr "עריכה"
 
-msgid "gEDA _Wiki Documentation"
-msgstr ""
+#~ msgid "_View"
+#~ msgstr "הצג"
 
-msgid "Find Component D_ocumentation"
-msgstr ""
+#~ msgid "_Page"
+#~ msgstr "דף"
 
-msgid "_Hotkeys..."
-msgstr ""
+#~ msgid "Hie_rarchy"
+#~ msgstr "היררכיה"
 
-msgid "_About"
-msgstr ""
+#~ msgid "A_ttributes"
+#~ msgstr "מאפיינים"
 
-msgid "_File"
-msgstr "קובץ"
-
-msgid "_Edit"
-msgstr "עריכה"
-
-msgid "_View"
-msgstr "הצג"
-
-msgid "_Page"
-msgstr "דף"
-
-msgid "Hie_rarchy"
-msgstr "היררכיה"
-
-msgid "A_ttributes"
-msgstr "מאפיינים"
-
-msgid "_Options"
-msgstr "הגדרות"
-
-msgid "_Netlist"
-msgstr ""
-
-msgid "_Help"
-msgstr ""
-
-#, scheme-format
-msgid "[~A] is not a valid lepton-schematic action."
-msgstr ""
-
-msgid "There is no last action to repeat."
-msgstr ""
-
-msgid "Repeat Last Action"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
+#~ msgid "_Options"
+#~ msgstr "הגדרות"
 
 #, fuzzy
-msgid "New File"
-msgstr "דף חדש"
-
-msgid "Open File"
-msgstr ""
+#~ msgid "New File"
+#~ msgstr "דף חדש"
 
 #, fuzzy
-msgid "Print"
-msgstr "הדפס..."
-
-msgid "Export Image"
-msgstr ""
-
-msgid "Run Script"
-msgstr ""
+#~ msgid "Print"
+#~ msgstr "הדפס..."
 
 #, fuzzy
-msgid "Close Window"
-msgstr "חלון חדש"
-
-msgid "Quit"
-msgstr ""
-
-msgid "Terminal REPL"
-msgstr ""
-
-msgid "Choose Slot"
-msgstr ""
-
-msgid "Edit Object Properties"
-msgstr ""
-
-msgid "Translate Symbol"
-msgstr ""
-
-msgid "Invoke Macro"
-msgstr ""
+#~ msgid "Close Window"
+#~ msgstr "חלון חדש"
 
 #, fuzzy
-msgid "Show/Hide Invisible Text"
-msgstr "הראה/הסתר טקסט חבוי"
+#~ msgid "Show/Hide Invisible Text"
+#~ msgstr "הראה/הסתר טקסט חבוי"
 
 #, fuzzy
-msgid "Cut"
-msgstr "גזור אל 1"
-
-msgid "Copy"
-msgstr ""
+#~ msgid "Cut"
+#~ msgstr "גזור אל 1"
 
 #, fuzzy
-msgid "Paste"
-msgstr "הדבק מ-1"
-
-msgid "Sidebar"
-msgstr ""
-
-msgid "Status"
-msgstr ""
+#~ msgid "Paste"
+#~ msgstr "הדבק מ-1"
 
 #, fuzzy
-msgid "Find Text State"
-msgstr "ערוך טקסט"
-
-msgid "Redraw"
-msgstr ""
-
-msgid "Pan Left"
-msgstr ""
-
-msgid "Pan Right"
-msgstr ""
-
-msgid "Pan Up"
-msgstr ""
-
-msgid "Pan Down"
-msgstr ""
+#~ msgid "Find Text State"
+#~ msgstr "ערוך טקסט"
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "תיבת תקריב"
+#~ msgid "Zoom Extents"
+#~ msgstr "תיבת תקריב"
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "תיבת תקריב"
+#~ msgid "Zoom In"
+#~ msgstr "תיבת תקריב"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "תיבת תקריב"
-
-msgid "Zoom Full"
-msgstr ""
-
-msgid "Dark Color Scheme"
-msgstr ""
-
-msgid "Light Color Scheme"
-msgstr ""
-
-msgid "Monochrome Color Scheme"
-msgstr ""
-
-msgid "Show Color Scheme Editor"
-msgstr ""
-
-msgid "Revert Changes"
-msgstr ""
+#~ msgid "Zoom Out"
+#~ msgstr "תיבת תקריב"
 
 #, fuzzy
-msgid "Previous Page"
-msgstr "סגור דף"
+#~ msgid "Previous Page"
+#~ msgstr "סגור דף"
 
 #, fuzzy
-msgid "Next Page"
-msgstr "דף חדש"
+#~ msgid "Next Page"
+#~ msgstr "דף חדש"
 
 #, fuzzy
-msgid "Print Page"
-msgstr "סגור דף"
-
-msgid "Add Net"
-msgstr ""
-
-msgid "Add Bus"
-msgstr ""
+#~ msgid "Print Page"
+#~ msgstr "סגור דף"
 
 #, fuzzy
-msgid "Add Line"
-msgstr "קו"
-
-msgid "Add Path"
-msgstr ""
-
-msgid "Add Box"
-msgstr ""
+#~ msgid "Add Line"
+#~ msgstr "קו"
 
 #, fuzzy
-msgid "Add Circle"
-msgstr "מעגל"
-
-msgid "Add Arc"
-msgstr ""
-
-msgid "Add Pin"
-msgstr ""
-
-msgid "Down Schematic"
-msgstr ""
-
-msgid "Down Symbol"
-msgstr ""
+#~ msgid "Add Circle"
+#~ msgstr "מעגל"
 
 #, fuzzy
-msgid "Up Hierarchy"
-msgstr "היררכיה"
+#~ msgid "Up Hierarchy"
+#~ msgstr "היררכיה"
 
 #, fuzzy
-msgid "Attach Attributes"
-msgstr "מאפיינים"
-
-#, scheme-format
-msgid "Attribute attached: [~a]"
-msgstr ""
+#~ msgid "Attach Attributes"
+#~ msgstr "מאפיינים"
 
 #, fuzzy
-msgid "Detach Attributes"
-msgstr "מאפיינים"
-
-#, scheme-format
-msgid "Attribute detached: [~a]"
-msgstr ""
+#~ msgid "Detach Attributes"
+#~ msgstr "מאפיינים"
 
 #, fuzzy
-msgid "Show Attribute Value"
-msgstr "מאפיינים"
+#~ msgid "Show Attribute Value"
+#~ msgstr "מאפיינים"
 
 #, fuzzy
-msgid "Show Attribute Name"
-msgstr "מאפיינים"
-
-msgid "Toggle Text Visibility"
-msgstr ""
-
-msgid "Find Specific Text"
-msgstr ""
-
-msgid "Hide Specific Text"
-msgstr ""
-
-msgid "Show Specific Text"
-msgstr ""
-
-msgid "Show Hotkeys"
-msgstr ""
-
-msgid "Switch Grid Style"
-msgstr ""
-
-msgid "Switch Snap Mode"
-msgstr ""
-
-msgid "Set Grid Spacing"
-msgstr ""
-
-msgid "Increase Grid Spacing"
-msgstr ""
-
-msgid "Decrease Grid Spacing"
-msgstr ""
-
-msgid "Toggle Outline Drawing"
-msgstr ""
-
-msgid "Toggle Net Rubber Band"
-msgstr ""
-
-msgid "Toggle Magnetic Nets"
-msgstr ""
+#~ msgid "Show Attribute Name"
+#~ msgstr "מאפיינים"
 
 #, fuzzy
-msgid "Show Log Window"
-msgstr "חלון חדש"
-
-msgid "Show Coordinate Window"
-msgstr ""
-
-msgid "Toggle Grips"
-msgstr ""
-
-msgid "Component Documentation"
-msgstr ""
-
-msgid "View documentation for selected component"
-msgstr ""
-
-msgid "Lepton EDA Manual"
-msgstr ""
-
-msgid "View the main page of the Lepton EDA Reference Manual in a browser."
-msgstr ""
-
-msgid "Lepton EDA wiki"
-msgstr ""
-
-msgid "View the front page of the Lepton EDA wiki in a browser."
-msgstr ""
-
-msgid "About lepton-schematic"
-msgstr ""
-
-msgid "Could not show documentation:"
-msgstr ""
-
-msgid "No documentation found"
-msgstr ""
-
-#, scheme-format
-msgid "~S is not a prefix key sequence."
-msgstr ""
-
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at ~S\n"
-"Lepton EDA homepage: ~S\n"
-msgstr ""
-
-#, scheme-format
-msgid ""
-"ERROR: Unknown option ~A.\n"
-"Run `~A --help' for more information.\n"
-msgstr ""
+#~ msgid "Show Log Window"
+#~ msgstr "חלון חדש"
 
 #, fuzzy
 #~ msgid "Snap size"
