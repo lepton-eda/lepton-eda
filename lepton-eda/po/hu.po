@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2025-06-09 15:00+0300\n"
+"POT-Creation-Date: 2025-06-16 10:25+0300\n"
 "PO-Revision-Date: 2025-06-11 14:16+0300\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -462,1590 +462,20 @@ msgstr ""
 msgid "(use -v to view details)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr ""
-"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
-"HIBA: %s\n"
-"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr ""
-"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
-"Nem látom [%s]: %s\n"
-"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
-"[%s] init scm fájl olvasása sikertelen.\n"
-
-#, fuzzy
-msgid "Zoom too small!  Cannot zoom further."
-msgstr "Túl nagy nagyítás! Nem tudok tovább nagyítani.\n"
-
-#, fuzzy
-msgid "Toggle _Editor"
-msgstr "Lá_thatóság váltása"
-
-msgid "_Apply"
-msgstr ""
-
-#, fuzzy
-msgid "Save As.._."
-msgstr "Mentés másként"
-
-msgid ""
-"Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following expression\n"
-"(including parentheses) in the gschemrc configuration file:\n"
-"( primitive-load \"/path/to/saved-color-scheme-file\" )"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Could not save file [%s]:\n"
-"%s"
-msgstr "A [%s] rajz mentése nem sikerült.\n"
-
-msgid "Failed to save file"
-msgstr ""
-
-#, fuzzy
-msgid "Save Color Scheme"
-msgstr "Világos színséma"
-
-msgid "_Save"
-msgstr "Menté_s"
-
-#, fuzzy
-msgid "_Cancel"
-msgstr "Középre/mégsem"
-
-#, fuzzy, c-format
-msgid ""
-"The selected file `%1$s' already exists.\n"
-"\n"
-"Would you like to overwrite it?"
-msgstr ""
-"A kiválasztott fájl - '%s' - már létezik.\n"
-"Felül szeretnéd írni?"
-
-msgid "Overwrite file?"
-msgstr "Felülírod a fájlt?"
-
-msgid "Sa_ve..."
-msgstr ""
-
-msgid ""
-"After you're done choosing the font, it's recommended\n"
-"to reopen schematics or restart the application."
-msgstr ""
-
-#, c-format
-msgid "<b>Current:</b> %s"
-msgstr ""
-
-msgid "Save configuration"
-msgstr ""
-
-msgid "_OK"
-msgstr ""
-
-msgid "Local configuration file:"
-msgstr ""
-
-msgid "User configuration file:"
-msgstr ""
-
-#, c-format
-msgid "%s (git: %.7s)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Could not load image at file: %1$s\n"
-"%2$s"
-msgstr "A [%s] rajz mentése nem sikerült.\n"
-
-msgid "Lepton Electronic Design Automation"
-msgstr ""
-
-msgid ""
-"Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
-"See AUTHORS, ChangeLog files and consult 'git log' history for details."
-msgstr ""
-
-msgid "Upper Left"
-msgstr "Bal felső"
-
-msgid "Upper Middle"
-msgstr "Közép felső"
-
-#, fuzzy
-msgid "Upper Right"
-msgstr "Jobb alsó"
-
-msgid "Middle Left"
-msgstr "Bal közép"
-
-msgid "Middle Middle"
-msgstr "Közép közép"
-
-msgid "Middle Right"
-msgstr "Jobb közép"
-
-msgid "Lower Left"
-msgstr "Bal alsó"
-
-msgid "Lower Middle"
-msgstr "Közép alsó"
-
-msgid "Lower Right"
-msgstr "Jobb alsó"
-
-msgid "Arc Params"
-msgstr "Ívparaméterek"
-
-msgid "Arc _Radius:"
-msgstr ""
-
-#, fuzzy
-msgid "Start _Angle:"
-msgstr "Kezdőszög:"
-
-#, fuzzy
-msgid "_Degrees of Sweep:"
-msgstr "Ív szöge:"
-
-#, fuzzy
-msgid "<b>Snap: OFF</b>"
-msgstr "<b>Opciók</b>"
-
-#, c-format
-msgid "Snap: <b>%d</b>"
-msgstr ""
-
-#, c-format
-msgid "<u>Re</u>snap: <b>%d</b>"
-msgstr ""
-
-#, c-format
-msgid "<u>Re</u>snap: %d"
-msgstr ""
-
-#, c-format
-msgid ""
-"Snap size.\n"
-"Click to change the snapping mode.\n"
-"Attention: current snap size (%d) differs\n"
-"from the value set in configuration: %d."
-msgstr ""
-
-msgid ""
-"Snap size.\n"
-"Click to change the snapping mode."
-msgstr ""
-
-#, fuzzy
-msgid "Grid: OFF"
-msgstr "Háló ki\n"
-
-#, fuzzy
-msgid "Grid: NONE"
-msgstr "Háló ki\n"
-
-msgid ""
-"Grid size.\n"
-"Click to change the grid style."
-msgstr ""
-
-msgid "Left mouse button"
-msgstr ""
-
-#, fuzzy
-msgid "Middle mouse button"
-msgstr "Bal közép"
-
-#, fuzzy
-msgid "Right mouse button"
-msgstr "Összeköttetések hozzáadása mód"
-
-msgid ""
-"Net rubber band mode.\n"
-"Click to toggle ON/OFF."
-msgstr ""
-
-#, fuzzy
-msgid ""
-"Magnetic net mode.\n"
-"Click to toggle ON/OFF."
-msgstr "Összeköttetés üzemmód"
-
-#, fuzzy
-msgid "Current action mode"
-msgstr "Jelenlegi oldal"
-
-msgid "S_elect the schematics you want to save:"
-msgstr "Válaszd ki a menteni kívánt rajzot:"
-
-msgid "Name"
-msgstr "Név"
-
-#, fuzzy
-msgid "Show _full paths"
-msgstr "Mindkettő mutatása"
-
-#, fuzzy, c-format
-msgid "Save the changes to schematic \"%1$s\" before closing?"
-msgstr "Elmentsem a(z) \"%s\" rajz változásait bezárás előtt?"
-
-#, fuzzy, c-format
-msgid ""
-"There are %1$d schematics with unsaved changes. Save changes before closing?"
-msgstr ""
-"%d megváltoztatott rajz van még megnyitva. Elmentsem őket kilépés előtt?"
-
-msgid "If you don't save, all your changes will be permanently lost."
-msgstr "Ha nem menti, akkor az összes változás véglegesen elveszik."
-
-#, fuzzy
-msgid "Close _without saving"
-msgstr "_Bezárás mentés nélkül"
-
-msgid "Coords"
-msgstr "Koordináták"
-
-msgid "_Close"
-msgstr "_Bezárás"
-
-msgid "Screen"
-msgstr "Képernyő"
-
-msgid "World"
-msgstr "Világ"
-
-msgid "Filename"
-msgstr "Fájlnév"
-
-msgid "Text"
-msgstr "Szöveg"
-
-msgid "descend into hierarchy"
-msgstr ""
-
-#, fuzzy
-msgid "Find"
-msgstr "Szöveg keresése"
-
-#, fuzzy
-msgid "Find Text:"
-msgstr "Szöveg keresése"
-
-msgid "Find Pattern:"
-msgstr ""
-
-#, fuzzy
-msgid "Find Regex:"
-msgstr "Szöveg keresése"
-
-msgid "Check symbol:"
-msgstr ""
-
-msgid "Hotkeys"
-msgstr "Gyorsbillentyűk"
-
-msgid ""
-"Start typing action name or keystroke to filter the list.\n"
-"Type hotkeys as they are displayed in \"Keystroke(s)\" column."
-msgstr ""
-
-#, fuzzy
-msgid "_Filter:"
-msgstr "Szűrő:"
-
-msgid "Action"
-msgstr "Művelet"
-
-msgid "Keystroke(s)"
-msgstr ""
-
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
-msgstr ""
-"** hibás UTF-8 a log üzenetben. Nézd meg az stderr-t vagy a gschem.log-ot.\n"
-
-#, fuzzy
-msgid "Clear log window?"
-msgstr "Ablak bezárása\n"
-
-#, fuzzy
-msgid "Clear Log"
-msgstr "Új ablak"
-
-msgid "_Wrap Long Lines"
-msgstr ""
-
-#, fuzzy
-msgid "Clea_r Log Window"
-msgstr "Új ablak"
-
-msgid "Macro:"
-msgstr ""
-
-msgid "Evaluate"
-msgstr ""
-
-#, fuzzy
-msgid "_Fill Type:"
-msgstr "Kitöltés típusa:"
-
-#, fuzzy
-msgid "Lin_e Width:"
-msgstr "Vonalvastagság:"
-
-#, fuzzy
-msgid "Angle _1:"
-msgstr "Kezdőszög:"
-
-msgid "P_itch 1:"
-msgstr ""
-
-#, fuzzy
-msgid "Angle _2:"
-msgstr "Kezdőszög:"
-
-msgid "Pitc_h 2:"
-msgstr ""
-
-#, fuzzy
-msgid "<b>Fill Properties</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "Colo_r:"
-msgstr "Szín:"
-
-#, fuzzy
-msgid "<b>General Properties</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "_Type:"
-msgstr "Típus:"
-
-#, fuzzy
-msgid "_Width:"
-msgstr "Vastagság:"
-
-#, fuzzy
-msgid "Dash _Length:"
-msgstr "Vonalszakasz hossza:"
-
-#, fuzzy
-msgid "Dash _Space:"
-msgstr "Kihagyás hossza:"
-
-msgid "C_ap style:"
-msgstr ""
-
-#, fuzzy
-msgid "<b>Line Properties</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "_Pin Type:"
-msgstr "Kitöltés típusa"
-
-#, fuzzy
-msgid "<b>Pin Properties</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-msgid "_Off"
-msgstr ""
-
-msgid "_Dots"
-msgstr ""
-
-msgid "M_esh"
-msgstr ""
-
-msgid "Net R_ubber Band Mode:"
-msgstr ""
-
-#, fuzzy
-msgid "_Magnetic Net Mode:"
-msgstr "Összeköttetés üzemmód"
-
-msgid "Enabled"
-msgstr ""
-
-#, fuzzy
-msgid "<b>Net Options</b>"
-msgstr "<b>Opciók</b>"
-
-#, fuzzy
-msgid "Grid Mode:"
-msgstr "Ív üzemmód"
-
-#, fuzzy
-msgid "Snap Mode:"
-msgstr "\"Középre\" üzemmód"
-
-#, fuzzy
-msgid "_Snap Size:"
-msgstr "Méret:"
-
-#, fuzzy
-msgid "<b>Snap Options</b>"
-msgstr "<b>Opciók</b>"
-
-msgid "O_ff"
-msgstr ""
-
-#, fuzzy
-msgid "_Grid"
-msgstr "Háló ki\n"
-
-msgid "_Resnap"
-msgstr ""
-
-msgid "Net pin"
-msgstr ""
-
-msgid "Bus pin (graphical)"
-msgstr ""
-
-msgid "Preview Buffer"
-msgstr ""
-
-#, fuzzy
-msgid "Hide"
-msgstr "Szöveg elrejtése"
-
-msgid "Hide text starting with:"
-msgstr "A következővel kezdődő szöveg elrejtése:"
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "Szín"
-
-msgid "Number of Slots:"
-msgstr ""
-
-#, fuzzy
-msgid "Slot Number:"
-msgstr "Kezdőszám:"
-
-#, fuzzy
-msgid "<b>Text Content</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "_Size:"
-msgstr "Méret:"
-
-#, fuzzy
-msgid "Ali_gnment:"
-msgstr "Igazítás:"
-
-#, fuzzy
-msgid "Ro_tation:"
-msgstr "Tájolás:"
-
-msgid "<b>Text Properties</b>"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "Coordinate:"
-msgstr "Jelenlegi nézet"
-
-msgid "Translate"
-msgstr "Eltolás"
-
-msgid "Select Mode"
-msgstr "Kiválasztás mód"
-
-#, fuzzy
-msgid "Select Box Mode"
-msgstr "Kiválasztás mód"
-
-msgid "Text Mode"
-msgstr "Szövegbeviteli üzemmód"
-
-msgid "Pan Mode"
-msgstr "\"Középre\" üzemmód"
-
-#, c-format
-msgid "Paste %d Mode"
-msgstr "Beillesztés %d üzemmód"
-
-msgid "Magnetic Net Mode"
-msgstr ""
-
-msgid "Net Mode"
-msgstr "Összeköttetés üzemmód"
-
-msgid "Arc Mode"
-msgstr "Ív üzemmód"
-
-msgid "Box Mode"
-msgstr "Téglalap üzemmód"
-
-msgid "Bus Mode"
-msgstr "Busz üzemmód"
-
-msgid "Circle Mode"
-msgstr "Kör üzemmód"
-
-msgid "Component Mode"
-msgstr "Alkatrész mód"
-
-msgid "Copy Mode"
-msgstr "Másolási mód"
-
-msgid "Multiple Copy Mode"
-msgstr "Többszörös másolás mód"
-
-msgid "Line Mode"
-msgstr "Vonal üzemmód"
-
-msgid "Mirror Mode"
-msgstr "Tükrözés"
-
-msgid "Move Mode"
-msgstr "Mozgatási mód"
-
-#, fuzzy
-msgid "Path Mode"
-msgstr "\"Középre\" üzemmód"
-
-msgid "Picture Mode"
-msgstr "Kép üzemmód"
-
-msgid "Pin Mode"
-msgstr "Alkatrészláb üzemmód"
-
-msgid "Rotate Mode"
-msgstr "Forgatás üzemmód"
-
-#, fuzzy
-msgid "Modify Mode"
-msgstr "Másolási mód"
-
-msgid "Zoom Box"
-msgstr "Doboz nagyítás"
-
-msgid "Show Hidden"
-msgstr "Rejtett megjelenítése"
-
-msgid "Snap Off"
-msgstr ""
-
-msgid "Resnap Active"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "New page created [%1$s]"
-msgstr "[%s] oldal létrehozva.\n"
-
-#, fuzzy, c-format
-msgid "New Window created [%1$s]"
-msgstr "[%s] ablak létrehozva.\n"
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "Szkript végrehajtása"
-
-msgid "_Run"
-msgstr ""
-
-#, fuzzy
-msgid "Scheme files (*.scm)"
-msgstr "rajzok"
-
-msgid "All files"
-msgstr "Összes fájl"
-
-#, fuzzy, c-format
-msgid "Executing Guile script [%s]"
-msgstr "[%s] guile szkript végrehajtása.\n"
-
-msgid "Saved All"
-msgstr "Minden oldal elmentve."
-
-msgid "Failed to Save All"
-msgstr "Nem sikerült mindent menteni."
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "Ablak bezárása\n"
-
-msgid "Select objs first"
-msgstr "Először válassz objektumokat"
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-#, fuzzy
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr "Vigyázat, a hálószemméret nem 100!\n"
-
-#, fuzzy
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-"Vigyázat, az alkatrész kezdőponthoz való tolásához a hálószemméretnek 100-"
-"nak kell lennie!\n"
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-#, fuzzy
-msgid "Revert"
-msgstr "_Visszaállítás"
-
-#, fuzzy
-msgid "Empty clipboard"
-msgstr "Kivágás a vágólapra"
-
-msgid "Empty buffer"
-msgstr "Üres buffer"
-
-#, fuzzy, c-format
-msgid "Searching for source [%1$s]"
-msgstr "[%s] forrás keresése\n"
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
-
-msgid "Failed to descend hierarchy."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr "[%s] szimbólum keresése\n"
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-#, fuzzy
-msgid "Grid OFF"
-msgstr "Háló ki\n"
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-#, fuzzy
-msgid "Invalid grid mode"
-msgstr "Hibás attribútum"
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-#, fuzzy
-msgid "magnetic net mode: ON"
-msgstr "Összeköttetés üzemmód"
-
-#, fuzzy
-msgid "magnetic net mode: OFF"
-msgstr "Összeköttetés üzemmód"
-
-#, fuzzy, c-format
-msgid "Translating schematic [%1$d %2$d]"
-msgstr "[%s] rajz betöltése\n"
-
-msgid ""
-"Warning: the selection contains locked objects.\n"
-"Please choose what objects you'd like to delete:"
-msgstr ""
-
-#, fuzzy
-msgid "Delete _all"
-msgstr "Törlés"
-
-msgid "All, _except locked"
-msgstr ""
-
-msgid "Delete"
-msgstr "Törlés"
-
-msgid "Hidden text is now visible"
-msgstr ""
-
-msgid "Hidden text is now invisible"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr "Nem találom a(z) [%s] szimbólumot. A frissítés nem sikerült.\n"
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr "A [%s] rajz mentése nem sikerült.\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr "A [%s] rajz mentése nem sikerült.\n"
-
-#, c-format
-msgid "DOH! tried to find the whichone, but didn't find it!\n"
-msgstr ""
-
-msgid "Warning: Starting net at off grid coordinate"
-msgstr ""
-
-msgid "Warning: Ending net at off grid coordinate"
-msgstr ""
-
-#, c-format
-msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
-msgstr ""
-
-#, c-format
-msgid "Bus ripper symbol [%1$s] was not found in any component library"
-msgstr ""
-
-msgid "All supported formats"
-msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Kép"
-
-#, fuzzy
-msgid "_Open"
-msgstr "Megnyitás"
-
-#, fuzzy, c-format
-msgid "Failed to load picture: %1$s"
-msgstr "Sikertelen a(z) %s kép betöltése"
-
-#, fuzzy
-msgid "Select Picture"
-msgstr "PostScript fájlnév kiválasztása..."
-
-#, c-format
-msgid "Failed to replace pictures: %s"
-msgstr ""
-
-#, fuzzy
-msgid "Slot attribute malformed"
-msgstr "Attribútum"
-
-#, fuzzy
-msgid "numslots attribute missing"
-msgstr "numslots attribútum hiányzik.\n"
-
-msgid "Slotting not allowed for this component"
-msgstr ""
-
-msgid "New slot number out of range"
-msgstr ""
-
-#, fuzzy
-msgid "Undo/Redo is disabled in configuration"
-msgstr "A visszavonás/újra művelet nem használható rc fájlban.\n"
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-msgid "There are no schematics above the current one!"
-msgstr ""
-
-#, c-format
-msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
-
-#, fuzzy
-msgid "Edit Attribute"
-msgstr "Attribútumok szerkesztése"
-
-msgid "Add Attribute"
-msgstr "Attribútum hozzáadása"
-
-#, fuzzy
-msgid "N_ame:"
-msgstr "Név:"
-
-#, fuzzy
-msgid "_Value:"
-msgstr "Érték:"
-
-#, fuzzy
-msgid "Vi_sible"
-msgstr "Látható"
-
-msgid "Show Value Only"
-msgstr "Csak az érték mutatása"
-
-msgid "Show Name Only"
-msgstr "Csak a név mutatása"
-
-msgid "Show Name & Value"
-msgstr "Név és érték mutatása"
-
-msgid "<b>Attach Options</b>"
-msgstr ""
-
-msgid "All"
-msgstr "Mind"
-
-msgid "Components"
-msgstr "Alkatrészek"
-
-msgid "Nets"
-msgstr "Összeköttetések"
-
-msgid "Replace existing attributes"
-msgstr "Meglevő attribútumok cseréje"
-
-msgid ""
-"slotted object without slot attribute may cause problems when autonumbering "
-"slots"
-msgstr ""
-
-#, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
-msgstr ""
-
-#, fuzzy
-msgid "No search string given in autonumber text."
-msgstr "Nincs keresőszöveg megadva az újraszámozáshoz.\n"
-
-#, fuzzy
-msgid "No '*' or '?' given at the end of the autonumber text."
-msgstr "Hiányzik a  '*' vagy '?' a szöveg végéről.\n"
-
-msgid "Diagonal"
-msgstr "Átlós"
-
-msgid "Top to bottom"
-msgstr "Fentről lefelé"
-
-msgid "Bottom to top"
-msgstr "Lentről felfelé"
-
-msgid "Left to right"
-msgstr "Balról jobbra"
-
-msgid "Right to left"
-msgstr "Jobbról balra"
-
-msgid "File order"
-msgstr "Fáljsorrend"
-
-#, fuzzy
-msgid "Autonumber Text"
-msgstr "Automatikus számozás"
-
-msgid "<b>Scope</b>"
-msgstr "<b>Hatáskör</b>"
-
-msgid "Search for:"
-msgstr "Keresés:"
-
-msgid "Autonumber text in:"
-msgstr ""
-
-msgid "Skip numbers found in:"
-msgstr ""
-
-msgid "Selected objects"
-msgstr "Kiválasztott objektumok"
-
-msgid "Current page"
-msgstr "Jelenlegi oldal"
-
-msgid "Whole hierarchy"
-msgstr "Teljes hierarchia"
-
-msgid "Overwrite existing numbers"
-msgstr "Meglevő számok felülírása"
-
-msgid "<b>Options</b>"
-msgstr "<b>Opciók</b>"
-
-msgid "Starting number:"
-msgstr "Kezdőszám:"
-
-msgid "Sort order:"
-msgstr "Rendezési sorrend:"
-
-msgid "Remove numbers"
-msgstr "Számok törlése"
-
-msgid "Automatic slotting"
-msgstr "Automatikus slot-kiválasztás"
-
-#, c-format
-msgid ""
-"<b>Invalid schematic on clipboard.</b>\n"
-"\n"
-"An error occurred while inserting clipboard data: %s."
-msgstr ""
-
-msgid "Clipboard insertion failed"
-msgstr ""
-
-#, c-format
-msgid "%s [ disabled ]"
-msgstr ""
-
-#, fuzzy
-msgid "Reset filter"
-msgstr "Új fájl"
-
-msgid "Reload all libraries"
-msgstr ""
-
-msgid "Value"
-msgstr "Érték"
-
-msgid "Default behavior - reference component"
-msgstr "Alapviselkedés - mutató az alkatrészre"
-
-msgid "Embed component in schematic"
-msgstr "Alkatrész beágyazása a rajzba"
-
-msgid "Include component as individual objects"
-msgstr "Alkatrész hozzáadása mint független objektum"
-
-#, fuzzy
-msgid "Add Component"
-msgstr "/Alkatrész hozzáadása"
-
-#, fuzzy
-msgid "In Us_e"
-msgstr "Használatban"
-
-#, fuzzy
-msgid "Lib_raries"
-msgstr "Könyvtárak"
-
-msgid "Preview"
-msgstr "Előnézet"
-
-msgid "Attributes"
-msgstr "Attribútumok"
-
-msgid "Symbol version changes"
-msgstr ""
-
-msgid "Major symbol version changes detected."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Schematic: %s"
-msgstr "rajzok"
-
-msgid ""
-"Changes have occurred to the symbols shown\n"
-"below, be sure to verify each of these symbols.\n"
-"Consult lepton-schematic log for details."
-msgstr ""
-
-#, fuzzy
-msgid "Symbol"
-msgstr "szimbólumok"
-
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
-"Please correct in order to continue</span>\n"
-"\n"
-"The name and value must be non-empty.\n"
-"The name cannot end with a space.\n"
-"The value cannot start with a space."
-msgstr ""
-
-msgid "Invalid Attribute"
-msgstr "Hibás attribútum"
-
-#, fuzzy
-msgid "Schematics (*.sch)"
-msgstr "rajzok"
-
-#, fuzzy
-msgid "Symbols (*.sym)"
-msgstr "szimbólumok"
-
-#, fuzzy
-msgid "Schematics and symbols (*.sch *.sym)"
-msgstr "rajzok és szimbólumok"
-
-msgid "Open"
-msgstr "Megnyitás"
-
-#, fuzzy
-msgid "Save As"
-msgstr "Mind mentése"
-
-#, fuzzy
-msgid "Save cancelled on user request"
-msgstr "A mentés a felhasználó kérésének megfelelően megszakítva.\n"
-
-msgid ""
-"\n"
-"If you load the original file, the backup file will be overwritten in the "
-"next autosave timeout and it will be lost.\n"
-"\n"
-"Do you want to load the backup file?\n"
-msgstr ""
-
-msgid "Hollow"
-msgstr "Üres"
-
-msgid "Filled"
-msgstr "Kitöltött"
-
-msgid "Mesh"
-msgstr "Háló"
-
-msgid "Hatch"
-msgstr "Sraffozott"
-
-#, fuzzy, c-format
-msgid "Unable to write %1$s file %2$s."
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
-
-#, fuzzy, c-format
-msgid ""
-"There was the following error when saving image with type %1$s to filename:\n"
-"%2$s\n"
-"\n"
-"%3$s.\n"
-msgstr ""
-"A következő hiba lépett fel a %s típusú kép mentésekor az alábbi "
-"fájlnévvel:\n"
-"%s\n"
-"\n"
-"%s\n"
-
-#, fuzzy, c-format
-msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
-msgstr "Színes kép kiírva: [%s] [%d x %d]\n"
-
-#, fuzzy, c-format
-msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
-msgstr "Fekete-fehér kép kiírva: [%s] [%d x %d]\n"
-
-msgid "Unable to get pixbuf from lepton-schematic's window."
-msgstr ""
-
-msgid "NOTE: print-color-map will be used for PDF export"
-msgstr ""
-
-msgid "Width x Height"
-msgstr "szélesség x magasság"
-
-msgid "Image type"
-msgstr "Képtípus"
-
-#, fuzzy
-msgid "Color mode"
-msgstr "Szín szerkesztése"
-
-msgid "Color"
-msgstr "Szín"
-
-msgid "Grayscale"
-msgstr ""
-
-#, fuzzy
-msgid "Write Image"
-msgstr "Képfájl írása..."
-
-msgid "Butt"
-msgstr ""
-
-msgid "Square"
-msgstr ""
-
-msgid "Round"
-msgstr ""
-
-msgid "Solid"
-msgstr "Folytonos"
-
-msgid "Dotted"
-msgstr "Pontvonal"
-
-msgid "Dashed"
-msgstr "Szaggatott"
-
-msgid "Center"
-msgstr "Középre"
-
-msgid "Phantom"
-msgstr ""
-
-#, fuzzy
-msgid "Add Co_mponent..."
-msgstr "/Alkatrész hozzáadása"
-
-#, fuzzy
-msgid "Add Te_xt..."
-msgstr "Szöveg hozzáadása"
-
-#, fuzzy
-msgid "Add _Attribute..."
-msgstr "/Attribútum hozzáadása"
-
-#, fuzzy
-msgid "Add _Net"
-msgstr "/Összeköttetés hozzáadása"
-
-#, fuzzy
-msgid "Add _Bus"
-msgstr "/Busz hozzáadása"
-
-msgid "Cu_t"
-msgstr "Kivágás"
-
-msgid "_Copy"
-msgstr "Másolás (_C)"
-
-msgid "_Paste"
-msgstr "Beillesztés (_P)"
-
-msgid "_Delete"
-msgstr "Törlés (_D)"
-
-#, fuzzy
-msgid "_Edit..."
-msgstr "Szerkesztés..."
-
-#, fuzzy
-msgid "Ed_it Text..."
-msgstr "Szöveg szerkesztése..."
-
-#, fuzzy
-msgid "_Object Properties..."
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-#, fuzzy
-msgid "Hierarchy: Down _Schematic"
-msgstr "Rajz szerkesztése"
-
-#, fuzzy
-msgid "Hierarchy: Down S_ymbol"
-msgstr "/Szimbólum szerkesztése"
-
-#, fuzzy
-msgid "Hierarchy: _Up"
-msgstr "Hie_rarchia"
-
-msgid "The operating system is out of memory or resources."
-msgstr ""
-
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Név nélküli attribútumok nem használhatóak. Kérlek adj nevet az "
-"attribútumnak!"
-
-msgid "Show Value only"
-msgstr "Csak az érték mutatása"
-
-msgid "Show Name only"
-msgstr "Csak a név mutatása"
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr "Megkettőzés"
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "Másolás 1-be"
-
-msgid "Edit Attributes"
-msgstr "Attribútumok szerkesztése"
-
-msgid "Vis?"
-msgstr "Látható?"
-
-msgid "N"
-msgstr "N"
-
-msgid "V"
-msgstr "É"
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "Attribútumok szerkesztése"
-
-#, fuzzy
-msgid "_Name:"
-msgstr "Név:"
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "Hozzá_adás"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Attribútum hozzáadása</b>"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "Attribútum"
-msgstr[1] "Attribútum"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/Szöveg hozzáadása"
-
-msgid "Refresh"
-msgstr ""
-
-msgid "New Page"
-msgstr "Új lap"
-
-msgid "Open Page..."
-msgstr "Lap megnyitása"
-
-msgid "Save Page"
-msgstr "Mentés"
-
-msgid "Close Page"
-msgstr "Lap bezárása"
-
-msgid "Changed"
-msgstr "Módosítva"
-
-#, fuzzy, c-format
-msgid "Failed to write PDF to '%s': %s\n"
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
-
-#, fuzzy, c-format
-msgid "Failed to write PDF to '%1$s': %2$s\n"
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
-
-#, c-format
-msgid ""
-"Error printing file:\n"
-"%1$s"
-msgstr ""
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-msgid ""
-"An unknown error occurred while parsing configuration files.\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, c-format
-msgid ""
-"%1$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-msgid "Cannot load lepton-schematic configuration."
-msgstr ""
-
-#, fuzzy
-msgid "Close"
-msgstr "_Bezárás"
-
-msgid "Save"
-msgstr "Mentés"
-
-#, fuzzy, c-format
-msgid "Hierarchy up: %s"
-msgstr "Hie_rarchia"
-
-#, fuzzy
-msgid "Hierarchy up"
-msgstr "Hie_rarchia"
-
 msgid "_New"
 msgstr "_Új"
 
 msgid "_Open..."
 msgstr "_Megnyitás..."
 
-msgid "Save _As..."
-msgstr "Mentés másként"
-
-#, fuzzy
-msgid "Page _Manager..."
-msgstr "Oldalkiválasztó"
-
-#, fuzzy
-msgid "Options"
-msgstr "Beállítás_ok"
-
-msgid "Edit Text"
-msgstr "Szöveg szerkesztése"
-
-#, fuzzy
-msgid "Object Properties"
-msgstr "<b>Szöveg tulajdonságai</b>"
-
-msgid "Log"
-msgstr ""
-
-msgid "Find Text"
-msgstr "Szöveg keresése"
-
-#, fuzzy
-msgid "Color Scheme Editor"
-msgstr "Világos színséma"
-
-#, fuzzy
-msgid "Select Schematic Font"
-msgstr "Válaszd ki a menteni kívánt rajzot:"
-
-msgid "Page Manager"
-msgstr "Oldalkiválasztó"
-
-#, fuzzy, c-format
-msgid "Loading schematic [%1$s]"
-msgstr "[%s] rajz betöltése\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save page [%1$s]\n"
-msgstr "A [%s] rajz mentése nem sikerült.\n"
-
-msgid "Error while trying to save"
-msgstr "Hiba mentés közben"
-
-#, fuzzy, c-format
-msgid "Saved as [%1$s]"
-msgstr "[%s]-ként elmentve.\n"
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "[%s] elmentve.\n"
-
-msgid "Saved"
-msgstr "Elmentve"
-
-#, fuzzy, c-format
-msgid "Discarding page [%1$s]"
-msgstr "A(z) [%s] rajz eldobása\n"
-
-#, fuzzy, c-format
-msgid "Closing [%1$s]"
-msgstr "[%s] bezárása\n"
-
-msgid "New"
-msgstr "Új"
-
-msgid "New file"
-msgstr "Új fájl"
-
-#, fuzzy
-msgid "Open file"
-msgstr "Fájl megnyitása…"
-
-msgid "Save file"
-msgstr "Fájl mentése"
-
-msgid "Undo"
-msgstr "Visszavonás"
-
-msgid "Undo last operation"
-msgstr "Utolsó művelet visszavonása"
-
-msgid "Redo"
-msgstr "Újra"
-
-msgid "Redo last undo"
-msgstr "Utolsó visszavont művelet újra"
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-"Alkatrész hozzáadása...\n"
-"Válaszd ki a könyvtárt és abból az alkatrészt, mozgasd az egérmutatót a rajz "
-"fölé, lerakás bal klikk."
-
-msgid "Component"
-msgstr "Alkatrész"
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr "Összeköttetések hozzáadása mód"
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr "Busz hozzáadása mód"
-
-msgid "Bus"
-msgstr "Busz"
-
-msgid "Add Text..."
-msgstr "Szöveg hozzáadása"
-
-msgid "Select"
-msgstr "Kiválasztás"
-
-msgid "Select mode"
-msgstr "Kiválasztás mód"
-
-#, fuzzy
-msgid "Show"
-msgstr "Szöveg mutatása"
-
-msgid "Show text starting with:"
-msgstr "A következővel kezdődő szöveg mutatása:"
-
-msgid "none"
-msgstr "semmi"
-
-msgid "Stroke"
-msgstr ""
-
-#, fuzzy
-msgid "Repeat"
-msgstr "Imétlés/"
-
-msgid "Pan"
-msgstr "Középre"
-
-msgid "Menu"
-msgstr ""
-
-#, fuzzy
-msgid "/Cancel"
-msgstr "Középre/mégsem"
-
-msgid "Pick"
-msgstr "Kijelöl"
-
-#, fuzzy
-msgid "Object"
-msgstr "Objektum színe:"
-
-#, fuzzy, c-format
-msgid "New file [%s]"
-msgstr "Új fájl: [%s]\n"
-
-#, c-format
-msgid ""
-"<b>An error occurred while loading the requested file.</b>\n"
-"\n"
-"Loading from '%1$s' failed. Error message:\n"
-"\n"
-"%2$s.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-"You may also launch lepton-schematic with --verbose command line switch and "
-"monitor program's output in terminal window."
-msgstr ""
-
-msgid "Failed to load file"
-msgstr "A fájl betöltése nem sikerült."
-
-#, c-format
-msgid "Skipping existing file [%s]"
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA Schematic Editor"
-msgstr "gEDA kapcsolásirajz-szerkesztő"
-
-#, fuzzy
-msgid "Create and edit electrical schematics and symbols with lepton-schematic"
-msgstr ""
-"Elektromos kapcsolási rajzok és szimbólumok készítése és szerkesztése a "
-"gschemmel"
-
 msgid "Open Recen_t"
 msgstr "Legutóbbi megnyitása"
+
+msgid "_Save"
+msgstr "Menté_s"
+
+msgid "Save _As..."
+msgstr "Mentés másként"
 
 msgid "Save All"
 msgstr "Mind mentése"
@@ -2082,14 +512,41 @@ msgstr "_Visszavonás"
 msgid "_Redo"
 msgstr "Új_ra"
 
+msgid "Cu_t"
+msgstr "Kivágás"
+
+msgid "_Copy"
+msgstr "Másolás (_C)"
+
+msgid "_Paste"
+msgstr "Beillesztés (_P)"
+
+msgid "_Delete"
+msgstr "Törlés (_D)"
+
+msgid "Select Mode"
+msgstr "Kiválasztás mód"
+
 msgid "Select All"
 msgstr ""
 
 msgid "Deselect"
 msgstr ""
 
+msgid "Copy Mode"
+msgstr "Másolási mód"
+
+msgid "Multiple Copy Mode"
+msgstr "Többszörös másolás mód"
+
+msgid "Move Mode"
+msgstr "Mozgatási mód"
+
 msgid "Rotate 90 Mode"
 msgstr "Elforgatás 90 fokkal"
+
+msgid "Mirror Mode"
+msgstr "Tükrözés"
 
 #, fuzzy
 msgid "Object Properties..."
@@ -2109,6 +566,10 @@ msgstr "Zárolás"
 
 msgid "Unlock"
 msgstr "Zárolás feloldása"
+
+#, fuzzy
+msgid "Select Locked"
+msgstr "Kiválasztás mód"
 
 msgid "Embed Component/Picture"
 msgstr "Alkatrész/kép beágyazása"
@@ -2223,6 +684,9 @@ msgstr "Előző"
 
 msgid "_Next"
 msgstr "Következő"
+
+msgid "_Close"
+msgstr "_Bezárás"
 
 #, fuzzy
 msgid "_Revert..."
@@ -2391,6 +855,9 @@ msgstr "Nézet"
 msgid "_Page"
 msgstr "Oldal"
 
+msgid "_Add"
+msgstr "Hozzá_adás"
+
 msgid "Hie_rarchy"
 msgstr "Hie_rarchia"
 
@@ -2418,6 +885,13 @@ msgid "Repeat Last Action"
 msgstr ""
 
 #, fuzzy
+msgid "Empty clipboard"
+msgstr "Kivágás a vágólapra"
+
+msgid "Hit E N to insert invisible objects."
+msgstr ""
+
+#, fuzzy
 msgid "Cancel"
 msgstr "Középre/mégsem"
 
@@ -2429,6 +903,19 @@ msgstr "Új fájl"
 msgid "Open File"
 msgstr "Fájl megnyitása…"
 
+msgid "Save"
+msgstr "Mentés"
+
+#, fuzzy
+msgid "Save As"
+msgstr "Mind mentése"
+
+msgid "Saved All"
+msgstr "Minden oldal elmentve."
+
+msgid "Failed to Save All"
+msgstr "Nem sikerült mindent menteni."
+
 #, fuzzy
 msgid "Print"
 msgstr "Nyomtatás..."
@@ -2439,8 +926,16 @@ msgstr ""
 msgid "Run Script"
 msgstr ""
 
+#, fuzzy, scheme-format
+msgid "Executing Guile script: ~S"
+msgstr "[%s] guile szkript végrehajtása.\n"
+
 #, fuzzy
 msgid "Close Window"
+msgstr "Ablak bezárása\n"
+
+#, fuzzy
+msgid "Closing Window"
 msgstr "Ablak bezárása\n"
 
 #, fuzzy
@@ -2450,7 +945,31 @@ msgstr "Kilépés"
 msgid "Terminal REPL"
 msgstr ""
 
+msgid "Undo"
+msgstr "Visszavonás"
+
+msgid "Redo"
+msgstr "Újra"
+
+msgid "Delete"
+msgstr "Törlés"
+
+msgid "Select objs first"
+msgstr "Először válassz objektumokat"
+
+msgid "Rotate Mode"
+msgstr "Forgatás üzemmód"
+
+msgid "Edit Text"
+msgstr "Szöveg szerkesztése"
+
 msgid "Choose Slot"
+msgstr ""
+
+msgid "Please select only one component!"
+msgstr ""
+
+msgid "Please first select a component!"
 msgstr ""
 
 #, fuzzy
@@ -2461,8 +980,30 @@ msgstr "Szövegtulajdonságok szerkesztése"
 msgid "Translate Symbol"
 msgstr "Eltolás"
 
+msgid "WARNING: Do not translate with snap off!"
+msgstr ""
+
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr ""
+
+#, fuzzy
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr "Vigyázat, a hálószemméret nem 100!\n"
+
+#, fuzzy
+msgid ""
+"WARNING: If you are translating a symbol to the origin,\n"
+"the snap grid size should be set to 100"
+msgstr ""
+"Vigyázat, az alkatrész kezdőponthoz való tolásához a hálószemméretnek 100-"
+"nak kell lennie!\n"
+
 msgid "Invoke Macro"
 msgstr "Makró végrehajtása"
+
+#, fuzzy, scheme-format
+msgid "Could not find symbol ~S in library. Update failed."
+msgstr "Nem találom a(z) [%s] szimbólumot. A frissítés nem sikerült.\n"
 
 #, fuzzy
 msgid "Show/Hide Invisible Text"
@@ -2493,6 +1034,9 @@ msgstr "Szöveg keresése"
 msgid "Redraw"
 msgstr "Újrarajzolás"
 
+msgid "Pan"
+msgstr "Középre"
+
 #, fuzzy
 msgid "Pan Left"
 msgstr "\"Középre\" üzemmód"
@@ -2507,6 +1051,9 @@ msgstr ""
 #, fuzzy
 msgid "Pan Down"
 msgstr "\"Középre\" üzemmód"
+
+msgid "Zoom Box"
+msgstr "Doboz nagyítás"
 
 #, fuzzy
 msgid "Zoom Extents"
@@ -2543,6 +1090,9 @@ msgstr "Világos színséma"
 msgid "Revert Changes"
 msgstr "Biztosan újratöltsem az oldalt?"
 
+msgid "Page Manager"
+msgstr "Oldalkiválasztó"
+
 #, fuzzy
 msgid "Previous Page"
 msgstr "Előző"
@@ -2551,9 +1101,15 @@ msgstr "Előző"
 msgid "Next Page"
 msgstr "Új lap"
 
+msgid "Close Page"
+msgstr "Lap bezárása"
+
 #, fuzzy
-msgid "Print Page"
-msgstr "Előző"
+msgid "Add Component"
+msgstr "/Alkatrész hozzáadása"
+
+msgid "Add Attribute"
+msgstr "Attribútum hozzáadása"
 
 #, fuzzy
 msgid "Add Net"
@@ -2562,6 +1118,10 @@ msgstr "/Összeköttetés hozzáadása"
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Busz hozzáadása"
+
+#, fuzzy
+msgid "Add Text"
+msgstr "/Szöveg hozzáadása"
 
 #, fuzzy
 msgid "Add Line"
@@ -2587,16 +1147,59 @@ msgid "Add Pin"
 msgstr ""
 
 #, fuzzy
+msgid "Add Picture"
+msgstr "Kép"
+
+#, fuzzy, scheme-format
+msgid "Failed to descend into ~S: ~A"
+msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"Failed to descend hierarchy into ~S:\n"
+"~A\n"
+"\n"
+"~A"
+msgstr ""
+"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
+"Nem látom [%s]: %s\n"
+"#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
+"[%s] init scm fájl olvasása sikertelen.\n"
+
+msgid "The lepton-schematic log may contain more information."
+msgstr ""
+
+msgid "Unknown error."
+msgstr ""
+
+msgid "Failed to descend hierarchy."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Searching for source ~S"
+msgstr "[%s] forrás keresése\n"
+
+#, fuzzy
 msgid "Down Schematic"
 msgstr "Rajz szerkesztése"
+
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr ""
 
 #, fuzzy
 msgid "Down Symbol"
 msgstr "/Szimbólum szerkesztése"
 
+#, fuzzy, scheme-format
+msgid "Searching for symbol: ~S"
+msgstr "[%s] szimbólum keresése\n"
+
 #, fuzzy
 msgid "Up Hierarchy"
 msgstr "Hie_rarchia"
+
+msgid "Cannot find any schematics above the current one!"
+msgstr ""
 
 #, fuzzy
 msgid "Attach Attributes"
@@ -2622,6 +1225,9 @@ msgstr "Név és érték mutatása"
 msgid "Show Attribute Name"
 msgstr "Attribútum"
 
+msgid "Show Name & Value"
+msgstr "Név és érték mutatása"
+
 #, fuzzy
 msgid "Toggle Text Visibility"
 msgstr "Lá_thatóság váltása"
@@ -2639,6 +1245,10 @@ msgid "Show Specific Text"
 msgstr "Szöveg mutatása"
 
 #, fuzzy
+msgid "Autonumber Text"
+msgstr "Automatikus számozás"
+
+#, fuzzy
 msgid "Show Hotkeys"
 msgstr "Gyorsbillentyűk"
 
@@ -2646,6 +1256,15 @@ msgid "Switch Grid Style"
 msgstr ""
 
 msgid "Switch Snap Mode"
+msgstr ""
+
+msgid "Snap OFF (CAUTION!)"
+msgstr ""
+
+msgid "Snap ON"
+msgstr ""
+
+msgid "Snap back to the grid (CAUTION!)"
 msgstr ""
 
 msgid "Set Grid Spacing"
@@ -2662,6 +1281,12 @@ msgstr "Új hálóméret:"
 msgid "Toggle Outline Drawing"
 msgstr ""
 
+msgid "Action feedback mode set to OUTLINE"
+msgstr ""
+
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr ""
+
 msgid "Toggle Net Rubber Band"
 msgstr ""
 
@@ -2675,6 +1300,10 @@ msgstr "Új ablak"
 #, fuzzy
 msgid "Show Coordinate Window"
 msgstr "Jelenlegi nézet"
+
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "Válaszd ki a menteni kívánt rajzot:"
 
 #, fuzzy
 msgid "Toggle Grips"
@@ -2709,6 +1338,10 @@ msgstr "Névjegy"
 msgid "Could not show documentation:"
 msgstr "Alkatrész dokumentáció"
 
+#, scheme-format
+msgid "File does not exist:~%~a"
+msgstr ""
+
 msgid "No documentation found"
 msgstr "Nem találtam dokumentumot"
 
@@ -2732,8 +1365,8 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run after startup.\n"
+"  -s FILE                  Scheme script to run after startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
@@ -2747,6 +1380,960 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "ERROR: %1$s"
+#~ msgstr ""
+#~ "#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
+#~ "HIBA: %s\n"
+#~ "#-#-#-#-#  hu.po (geda)  #-#-#-#-#\n"
+
+#, fuzzy
+#~ msgid "Zoom too small!  Cannot zoom further."
+#~ msgstr "Túl nagy nagyítás! Nem tudok tovább nagyítani.\n"
+
+#, fuzzy
+#~ msgid "Toggle _Editor"
+#~ msgstr "Lá_thatóság váltása"
+
+#, fuzzy
+#~ msgid "Save As.._."
+#~ msgstr "Mentés másként"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not save file [%s]:\n"
+#~ "%s"
+#~ msgstr "A [%s] rajz mentése nem sikerült.\n"
+
+#, fuzzy
+#~ msgid "Save Color Scheme"
+#~ msgstr "Világos színséma"
+
+#, fuzzy
+#~ msgid "_Cancel"
+#~ msgstr "Középre/mégsem"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "The selected file `%1$s' already exists.\n"
+#~ "\n"
+#~ "Would you like to overwrite it?"
+#~ msgstr ""
+#~ "A kiválasztott fájl - '%s' - már létezik.\n"
+#~ "Felül szeretnéd írni?"
+
+#~ msgid "Overwrite file?"
+#~ msgstr "Felülírod a fájlt?"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not load image at file: %1$s\n"
+#~ "%2$s"
+#~ msgstr "A [%s] rajz mentése nem sikerült.\n"
+
+#~ msgid "Upper Left"
+#~ msgstr "Bal felső"
+
+#~ msgid "Upper Middle"
+#~ msgstr "Közép felső"
+
+#, fuzzy
+#~ msgid "Upper Right"
+#~ msgstr "Jobb alsó"
+
+#~ msgid "Middle Left"
+#~ msgstr "Bal közép"
+
+#~ msgid "Middle Middle"
+#~ msgstr "Közép közép"
+
+#~ msgid "Middle Right"
+#~ msgstr "Jobb közép"
+
+#~ msgid "Lower Left"
+#~ msgstr "Bal alsó"
+
+#~ msgid "Lower Middle"
+#~ msgstr "Közép alsó"
+
+#~ msgid "Lower Right"
+#~ msgstr "Jobb alsó"
+
+#~ msgid "Arc Params"
+#~ msgstr "Ívparaméterek"
+
+#, fuzzy
+#~ msgid "Start _Angle:"
+#~ msgstr "Kezdőszög:"
+
+#, fuzzy
+#~ msgid "_Degrees of Sweep:"
+#~ msgstr "Ív szöge:"
+
+#, fuzzy
+#~ msgid "<b>Snap: OFF</b>"
+#~ msgstr "<b>Opciók</b>"
+
+#, fuzzy
+#~ msgid "Grid: OFF"
+#~ msgstr "Háló ki\n"
+
+#, fuzzy
+#~ msgid "Grid: NONE"
+#~ msgstr "Háló ki\n"
+
+#, fuzzy
+#~ msgid "Middle mouse button"
+#~ msgstr "Bal közép"
+
+#, fuzzy
+#~ msgid "Right mouse button"
+#~ msgstr "Összeköttetések hozzáadása mód"
+
+#, fuzzy
+#~ msgid ""
+#~ "Magnetic net mode.\n"
+#~ "Click to toggle ON/OFF."
+#~ msgstr "Összeköttetés üzemmód"
+
+#, fuzzy
+#~ msgid "Current action mode"
+#~ msgstr "Jelenlegi oldal"
+
+#~ msgid "S_elect the schematics you want to save:"
+#~ msgstr "Válaszd ki a menteni kívánt rajzot:"
+
+#~ msgid "Name"
+#~ msgstr "Név"
+
+#, fuzzy
+#~ msgid "Show _full paths"
+#~ msgstr "Mindkettő mutatása"
+
+#, fuzzy, c-format
+#~ msgid "Save the changes to schematic \"%1$s\" before closing?"
+#~ msgstr "Elmentsem a(z) \"%s\" rajz változásait bezárás előtt?"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "There are %1$d schematics with unsaved changes. Save changes before "
+#~ "closing?"
+#~ msgstr ""
+#~ "%d megváltoztatott rajz van még megnyitva. Elmentsem őket kilépés előtt?"
+
+#~ msgid "If you don't save, all your changes will be permanently lost."
+#~ msgstr "Ha nem menti, akkor az összes változás véglegesen elveszik."
+
+#, fuzzy
+#~ msgid "Close _without saving"
+#~ msgstr "_Bezárás mentés nélkül"
+
+#~ msgid "Coords"
+#~ msgstr "Koordináták"
+
+#~ msgid "Screen"
+#~ msgstr "Képernyő"
+
+#~ msgid "World"
+#~ msgstr "Világ"
+
+#~ msgid "Filename"
+#~ msgstr "Fájlnév"
+
+#~ msgid "Text"
+#~ msgstr "Szöveg"
+
+#, fuzzy
+#~ msgid "Find"
+#~ msgstr "Szöveg keresése"
+
+#, fuzzy
+#~ msgid "Find Text:"
+#~ msgstr "Szöveg keresése"
+
+#, fuzzy
+#~ msgid "Find Regex:"
+#~ msgstr "Szöveg keresése"
+
+#~ msgid "Hotkeys"
+#~ msgstr "Gyorsbillentyűk"
+
+#, fuzzy
+#~ msgid "_Filter:"
+#~ msgstr "Szűrő:"
+
+#~ msgid "Action"
+#~ msgstr "Művelet"
+
+#~ msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+#~ msgstr ""
+#~ "** hibás UTF-8 a log üzenetben. Nézd meg az stderr-t vagy a gschem.log-"
+#~ "ot.\n"
+
+#, fuzzy
+#~ msgid "Clear log window?"
+#~ msgstr "Ablak bezárása\n"
+
+#, fuzzy
+#~ msgid "Clear Log"
+#~ msgstr "Új ablak"
+
+#, fuzzy
+#~ msgid "Clea_r Log Window"
+#~ msgstr "Új ablak"
+
+#, fuzzy
+#~ msgid "_Fill Type:"
+#~ msgstr "Kitöltés típusa:"
+
+#, fuzzy
+#~ msgid "Lin_e Width:"
+#~ msgstr "Vonalvastagság:"
+
+#, fuzzy
+#~ msgid "Angle _1:"
+#~ msgstr "Kezdőszög:"
+
+#, fuzzy
+#~ msgid "Angle _2:"
+#~ msgstr "Kezdőszög:"
+
+#, fuzzy
+#~ msgid "<b>Fill Properties</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "Colo_r:"
+#~ msgstr "Szín:"
+
+#, fuzzy
+#~ msgid "<b>General Properties</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "_Type:"
+#~ msgstr "Típus:"
+
+#, fuzzy
+#~ msgid "_Width:"
+#~ msgstr "Vastagság:"
+
+#, fuzzy
+#~ msgid "Dash _Length:"
+#~ msgstr "Vonalszakasz hossza:"
+
+#, fuzzy
+#~ msgid "Dash _Space:"
+#~ msgstr "Kihagyás hossza:"
+
+#, fuzzy
+#~ msgid "<b>Line Properties</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "_Pin Type:"
+#~ msgstr "Kitöltés típusa"
+
+#, fuzzy
+#~ msgid "<b>Pin Properties</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "_Magnetic Net Mode:"
+#~ msgstr "Összeköttetés üzemmód"
+
+#, fuzzy
+#~ msgid "<b>Net Options</b>"
+#~ msgstr "<b>Opciók</b>"
+
+#, fuzzy
+#~ msgid "Grid Mode:"
+#~ msgstr "Ív üzemmód"
+
+#, fuzzy
+#~ msgid "Snap Mode:"
+#~ msgstr "\"Középre\" üzemmód"
+
+#, fuzzy
+#~ msgid "_Snap Size:"
+#~ msgstr "Méret:"
+
+#, fuzzy
+#~ msgid "<b>Snap Options</b>"
+#~ msgstr "<b>Opciók</b>"
+
+#, fuzzy
+#~ msgid "_Grid"
+#~ msgstr "Háló ki\n"
+
+#, fuzzy
+#~ msgid "Hide"
+#~ msgstr "Szöveg elrejtése"
+
+#~ msgid "Hide text starting with:"
+#~ msgstr "A következővel kezdődő szöveg elrejtése:"
+
+#, fuzzy
+#~ msgid "Edit Slot"
+#~ msgstr "Szín"
+
+#, fuzzy
+#~ msgid "Slot Number:"
+#~ msgstr "Kezdőszám:"
+
+#, fuzzy
+#~ msgid "<b>Text Content</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "_Size:"
+#~ msgstr "Méret:"
+
+#, fuzzy
+#~ msgid "Ali_gnment:"
+#~ msgstr "Igazítás:"
+
+#, fuzzy
+#~ msgid "Ro_tation:"
+#~ msgstr "Tájolás:"
+
+#~ msgid "<b>Text Properties</b>"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "Coordinate:"
+#~ msgstr "Jelenlegi nézet"
+
+#~ msgid "Translate"
+#~ msgstr "Eltolás"
+
+#, fuzzy
+#~ msgid "Select Box Mode"
+#~ msgstr "Kiválasztás mód"
+
+#~ msgid "Text Mode"
+#~ msgstr "Szövegbeviteli üzemmód"
+
+#~ msgid "Pan Mode"
+#~ msgstr "\"Középre\" üzemmód"
+
+#, c-format
+#~ msgid "Paste %d Mode"
+#~ msgstr "Beillesztés %d üzemmód"
+
+#~ msgid "Net Mode"
+#~ msgstr "Összeköttetés üzemmód"
+
+#~ msgid "Arc Mode"
+#~ msgstr "Ív üzemmód"
+
+#~ msgid "Box Mode"
+#~ msgstr "Téglalap üzemmód"
+
+#~ msgid "Bus Mode"
+#~ msgstr "Busz üzemmód"
+
+#~ msgid "Circle Mode"
+#~ msgstr "Kör üzemmód"
+
+#~ msgid "Component Mode"
+#~ msgstr "Alkatrész mód"
+
+#~ msgid "Line Mode"
+#~ msgstr "Vonal üzemmód"
+
+#, fuzzy
+#~ msgid "Path Mode"
+#~ msgstr "\"Középre\" üzemmód"
+
+#~ msgid "Picture Mode"
+#~ msgstr "Kép üzemmód"
+
+#~ msgid "Pin Mode"
+#~ msgstr "Alkatrészláb üzemmód"
+
+#, fuzzy
+#~ msgid "Modify Mode"
+#~ msgstr "Másolási mód"
+
+#~ msgid "Show Hidden"
+#~ msgstr "Rejtett megjelenítése"
+
+#, fuzzy, c-format
+#~ msgid "New page created [%1$s]"
+#~ msgstr "[%s] oldal létrehozva.\n"
+
+#, fuzzy, c-format
+#~ msgid "New Window created [%1$s]"
+#~ msgstr "[%s] ablak létrehozva.\n"
+
+#, fuzzy
+#~ msgid "Execute Script"
+#~ msgstr "Szkript végrehajtása"
+
+#, fuzzy
+#~ msgid "Scheme files (*.scm)"
+#~ msgstr "rajzok"
+
+#~ msgid "All files"
+#~ msgstr "Összes fájl"
+
+#, fuzzy
+#~ msgid "Revert"
+#~ msgstr "_Visszaállítás"
+
+#~ msgid "Empty buffer"
+#~ msgstr "Üres buffer"
+
+#, fuzzy
+#~ msgid "Grid OFF"
+#~ msgstr "Háló ki\n"
+
+#, fuzzy
+#~ msgid "Invalid grid mode"
+#~ msgstr "Hibás attribútum"
+
+#, fuzzy
+#~ msgid "magnetic net mode: ON"
+#~ msgstr "Összeköttetés üzemmód"
+
+#, fuzzy
+#~ msgid "magnetic net mode: OFF"
+#~ msgstr "Összeköttetés üzemmód"
+
+#, fuzzy, c-format
+#~ msgid "Translating schematic [%1$d %2$d]"
+#~ msgstr "[%s] rajz betöltése\n"
+
+#, fuzzy
+#~ msgid "Delete _all"
+#~ msgstr "Törlés"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly"
+#~ msgstr "A [%s] rajz mentése nem sikerült.\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save backup file [%1$s]"
+#~ msgstr "A [%s] rajz mentése nem sikerült.\n"
+
+#, fuzzy
+#~ msgid "_Open"
+#~ msgstr "Megnyitás"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load picture: %1$s"
+#~ msgstr "Sikertelen a(z) %s kép betöltése"
+
+#, fuzzy
+#~ msgid "Select Picture"
+#~ msgstr "PostScript fájlnév kiválasztása..."
+
+#, fuzzy
+#~ msgid "Slot attribute malformed"
+#~ msgstr "Attribútum"
+
+#, fuzzy
+#~ msgid "numslots attribute missing"
+#~ msgstr "numslots attribútum hiányzik.\n"
+
+#, fuzzy
+#~ msgid "Undo/Redo is disabled in configuration"
+#~ msgstr "A visszavonás/újra művelet nem használható rc fájlban.\n"
+
+#, fuzzy
+#~ msgid "Edit Attribute"
+#~ msgstr "Attribútumok szerkesztése"
+
+#, fuzzy
+#~ msgid "N_ame:"
+#~ msgstr "Név:"
+
+#, fuzzy
+#~ msgid "_Value:"
+#~ msgstr "Érték:"
+
+#, fuzzy
+#~ msgid "Vi_sible"
+#~ msgstr "Látható"
+
+#~ msgid "Show Value Only"
+#~ msgstr "Csak az érték mutatása"
+
+#~ msgid "Show Name Only"
+#~ msgstr "Csak a név mutatása"
+
+#~ msgid "All"
+#~ msgstr "Mind"
+
+#~ msgid "Components"
+#~ msgstr "Alkatrészek"
+
+#~ msgid "Nets"
+#~ msgstr "Összeköttetések"
+
+#~ msgid "Replace existing attributes"
+#~ msgstr "Meglevő attribútumok cseréje"
+
+#, fuzzy
+#~ msgid "No search string given in autonumber text."
+#~ msgstr "Nincs keresőszöveg megadva az újraszámozáshoz.\n"
+
+#, fuzzy
+#~ msgid "No '*' or '?' given at the end of the autonumber text."
+#~ msgstr "Hiányzik a  '*' vagy '?' a szöveg végéről.\n"
+
+#~ msgid "Diagonal"
+#~ msgstr "Átlós"
+
+#~ msgid "Top to bottom"
+#~ msgstr "Fentről lefelé"
+
+#~ msgid "Bottom to top"
+#~ msgstr "Lentről felfelé"
+
+#~ msgid "Left to right"
+#~ msgstr "Balról jobbra"
+
+#~ msgid "Right to left"
+#~ msgstr "Jobbról balra"
+
+#~ msgid "File order"
+#~ msgstr "Fáljsorrend"
+
+#~ msgid "<b>Scope</b>"
+#~ msgstr "<b>Hatáskör</b>"
+
+#~ msgid "Search for:"
+#~ msgstr "Keresés:"
+
+#~ msgid "Selected objects"
+#~ msgstr "Kiválasztott objektumok"
+
+#~ msgid "Current page"
+#~ msgstr "Jelenlegi oldal"
+
+#~ msgid "Whole hierarchy"
+#~ msgstr "Teljes hierarchia"
+
+#~ msgid "Overwrite existing numbers"
+#~ msgstr "Meglevő számok felülírása"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Opciók</b>"
+
+#~ msgid "Starting number:"
+#~ msgstr "Kezdőszám:"
+
+#~ msgid "Sort order:"
+#~ msgstr "Rendezési sorrend:"
+
+#~ msgid "Remove numbers"
+#~ msgstr "Számok törlése"
+
+#~ msgid "Automatic slotting"
+#~ msgstr "Automatikus slot-kiválasztás"
+
+#, fuzzy
+#~ msgid "Reset filter"
+#~ msgstr "Új fájl"
+
+#~ msgid "Value"
+#~ msgstr "Érték"
+
+#~ msgid "Default behavior - reference component"
+#~ msgstr "Alapviselkedés - mutató az alkatrészre"
+
+#~ msgid "Embed component in schematic"
+#~ msgstr "Alkatrész beágyazása a rajzba"
+
+#~ msgid "Include component as individual objects"
+#~ msgstr "Alkatrész hozzáadása mint független objektum"
+
+#, fuzzy
+#~ msgid "In Us_e"
+#~ msgstr "Használatban"
+
+#, fuzzy
+#~ msgid "Lib_raries"
+#~ msgstr "Könyvtárak"
+
+#~ msgid "Preview"
+#~ msgstr "Előnézet"
+
+#~ msgid "Attributes"
+#~ msgstr "Attribútumok"
+
+#, fuzzy, c-format
+#~ msgid "Schematic: %s"
+#~ msgstr "rajzok"
+
+#, fuzzy
+#~ msgid "Symbol"
+#~ msgstr "szimbólumok"
+
+#~ msgid "Invalid Attribute"
+#~ msgstr "Hibás attribútum"
+
+#, fuzzy
+#~ msgid "Schematics (*.sch)"
+#~ msgstr "rajzok"
+
+#, fuzzy
+#~ msgid "Symbols (*.sym)"
+#~ msgstr "szimbólumok"
+
+#, fuzzy
+#~ msgid "Schematics and symbols (*.sch *.sym)"
+#~ msgstr "rajzok és szimbólumok"
+
+#~ msgid "Open"
+#~ msgstr "Megnyitás"
+
+#, fuzzy
+#~ msgid "Save cancelled on user request"
+#~ msgstr "A mentés a felhasználó kérésének megfelelően megszakítva.\n"
+
+#~ msgid "Hollow"
+#~ msgstr "Üres"
+
+#~ msgid "Filled"
+#~ msgstr "Kitöltött"
+
+#~ msgid "Mesh"
+#~ msgstr "Háló"
+
+#~ msgid "Hatch"
+#~ msgstr "Sraffozott"
+
+#, fuzzy, c-format
+#~ msgid "Unable to write %1$s file %2$s."
+#~ msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "There was the following error when saving image with type %1$s to "
+#~ "filename:\n"
+#~ "%2$s\n"
+#~ "\n"
+#~ "%3$s.\n"
+#~ msgstr ""
+#~ "A következő hiba lépett fel a %s típusú kép mentésekor az alábbi "
+#~ "fájlnévvel:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "%s\n"
+
+#, fuzzy, c-format
+#~ msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
+#~ msgstr "Színes kép kiírva: [%s] [%d x %d]\n"
+
+#, fuzzy, c-format
+#~ msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
+#~ msgstr "Fekete-fehér kép kiírva: [%s] [%d x %d]\n"
+
+#~ msgid "Width x Height"
+#~ msgstr "szélesség x magasság"
+
+#~ msgid "Image type"
+#~ msgstr "Képtípus"
+
+#, fuzzy
+#~ msgid "Color mode"
+#~ msgstr "Szín szerkesztése"
+
+#~ msgid "Color"
+#~ msgstr "Szín"
+
+#, fuzzy
+#~ msgid "Write Image"
+#~ msgstr "Képfájl írása..."
+
+#~ msgid "Solid"
+#~ msgstr "Folytonos"
+
+#~ msgid "Dotted"
+#~ msgstr "Pontvonal"
+
+#~ msgid "Dashed"
+#~ msgstr "Szaggatott"
+
+#~ msgid "Center"
+#~ msgstr "Középre"
+
+#, fuzzy
+#~ msgid "Add Co_mponent..."
+#~ msgstr "/Alkatrész hozzáadása"
+
+#, fuzzy
+#~ msgid "Add Te_xt..."
+#~ msgstr "Szöveg hozzáadása"
+
+#, fuzzy
+#~ msgid "Add _Attribute..."
+#~ msgstr "/Attribútum hozzáadása"
+
+#, fuzzy
+#~ msgid "Add _Net"
+#~ msgstr "/Összeköttetés hozzáadása"
+
+#, fuzzy
+#~ msgid "Add _Bus"
+#~ msgstr "/Busz hozzáadása"
+
+#, fuzzy
+#~ msgid "_Edit..."
+#~ msgstr "Szerkesztés..."
+
+#, fuzzy
+#~ msgid "Ed_it Text..."
+#~ msgstr "Szöveg szerkesztése..."
+
+#, fuzzy
+#~ msgid "_Object Properties..."
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#, fuzzy
+#~ msgid "Hierarchy: Down _Schematic"
+#~ msgstr "Rajz szerkesztése"
+
+#, fuzzy
+#~ msgid "Hierarchy: Down S_ymbol"
+#~ msgstr "/Szimbólum szerkesztése"
+
+#, fuzzy
+#~ msgid "Hierarchy: _Up"
+#~ msgstr "Hie_rarchia"
+
+#~ msgid "Attributes with empty name are not allowed. Please set a name."
+#~ msgstr ""
+#~ "Név nélküli attribútumok nem használhatóak. Kérlek adj nevet az "
+#~ "attribútumnak!"
+
+#~ msgid "Show Value only"
+#~ msgstr "Csak az érték mutatása"
+
+#~ msgid "Show Name only"
+#~ msgstr "Csak a név mutatása"
+
+#~ msgid "Duplicate"
+#~ msgstr "Megkettőzés"
+
+#, fuzzy
+#~ msgid "Copy to all"
+#~ msgstr "Másolás 1-be"
+
+#~ msgid "Edit Attributes"
+#~ msgstr "Attribútumok szerkesztése"
+
+#~ msgid "Vis?"
+#~ msgstr "Látható?"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgid "V"
+#~ msgstr "É"
+
+#, fuzzy
+#~ msgid "Sho_w inherited attributes"
+#~ msgstr "Attribútumok szerkesztése"
+
+#, fuzzy
+#~ msgid "_Name:"
+#~ msgstr "Név:"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Attribútum hozzáadása</b>"
+
+#, fuzzy, c-format
+#~ msgid "%1$i attribute"
+#~ msgid_plural "%1$i attributes"
+#~ msgstr[0] "Attribútum"
+#~ msgstr[1] "Attribútum"
+
+#~ msgid "New Page"
+#~ msgstr "Új lap"
+
+#~ msgid "Open Page..."
+#~ msgstr "Lap megnyitása"
+
+#~ msgid "Save Page"
+#~ msgstr "Mentés"
+
+#~ msgid "Changed"
+#~ msgstr "Módosítva"
+
+#, fuzzy, c-format
+#~ msgid "Failed to write PDF to '%s': %s\n"
+#~ msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#, fuzzy, c-format
+#~ msgid "Failed to write PDF to '%1$s': %2$s\n"
+#~ msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "_Bezárás"
+
+#, fuzzy, c-format
+#~ msgid "Hierarchy up: %s"
+#~ msgstr "Hie_rarchia"
+
+#, fuzzy
+#~ msgid "Hierarchy up"
+#~ msgstr "Hie_rarchia"
+
+#, fuzzy
+#~ msgid "Page _Manager..."
+#~ msgstr "Oldalkiválasztó"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Beállítás_ok"
+
+#, fuzzy
+#~ msgid "Object Properties"
+#~ msgstr "<b>Szöveg tulajdonságai</b>"
+
+#~ msgid "Find Text"
+#~ msgstr "Szöveg keresése"
+
+#, fuzzy
+#~ msgid "Color Scheme Editor"
+#~ msgstr "Világos színséma"
+
+#, fuzzy, c-format
+#~ msgid "Loading schematic [%1$s]"
+#~ msgstr "[%s] rajz betöltése\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save page [%1$s]\n"
+#~ msgstr "A [%s] rajz mentése nem sikerült.\n"
+
+#~ msgid "Error while trying to save"
+#~ msgstr "Hiba mentés közben"
+
+#, fuzzy, c-format
+#~ msgid "Saved as [%1$s]"
+#~ msgstr "[%s]-ként elmentve.\n"
+
+#, fuzzy, c-format
+#~ msgid "Saved [%1$s]"
+#~ msgstr "[%s] elmentve.\n"
+
+#~ msgid "Saved"
+#~ msgstr "Elmentve"
+
+#, fuzzy, c-format
+#~ msgid "Discarding page [%1$s]"
+#~ msgstr "A(z) [%s] rajz eldobása\n"
+
+#, fuzzy, c-format
+#~ msgid "Closing [%1$s]"
+#~ msgstr "[%s] bezárása\n"
+
+#~ msgid "New"
+#~ msgstr "Új"
+
+#~ msgid "New file"
+#~ msgstr "Új fájl"
+
+#, fuzzy
+#~ msgid "Open file"
+#~ msgstr "Fájl megnyitása…"
+
+#~ msgid "Save file"
+#~ msgstr "Fájl mentése"
+
+#~ msgid "Undo last operation"
+#~ msgstr "Utolsó művelet visszavonása"
+
+#~ msgid "Redo last undo"
+#~ msgstr "Utolsó visszavont művelet újra"
+
+#~ msgid ""
+#~ "Add component...\n"
+#~ "Select library and component from list, move the mouse into main window, "
+#~ "click to place\n"
+#~ "Right mouse button to cancel"
+#~ msgstr ""
+#~ "Alkatrész hozzáadása...\n"
+#~ "Válaszd ki a könyvtárt és abból az alkatrészt, mozgasd az egérmutatót a "
+#~ "rajz fölé, lerakás bal klikk."
+
+#~ msgid "Component"
+#~ msgstr "Alkatrész"
+
+#~ msgid ""
+#~ "Add nets mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr "Összeköttetések hozzáadása mód"
+
+#~ msgid ""
+#~ "Add buses mode\n"
+#~ "Right mouse button to cancel"
+#~ msgstr "Busz hozzáadása mód"
+
+#~ msgid "Bus"
+#~ msgstr "Busz"
+
+#~ msgid "Add Text..."
+#~ msgstr "Szöveg hozzáadása"
+
+#~ msgid "Select"
+#~ msgstr "Kiválasztás"
+
+#~ msgid "Select mode"
+#~ msgstr "Kiválasztás mód"
+
+#, fuzzy
+#~ msgid "Show"
+#~ msgstr "Szöveg mutatása"
+
+#~ msgid "Show text starting with:"
+#~ msgstr "A következővel kezdődő szöveg mutatása:"
+
+#~ msgid "none"
+#~ msgstr "semmi"
+
+#, fuzzy
+#~ msgid "Repeat"
+#~ msgstr "Imétlés/"
+
+#, fuzzy
+#~ msgid "/Cancel"
+#~ msgstr "Középre/mégsem"
+
+#~ msgid "Pick"
+#~ msgstr "Kijelöl"
+
+#, fuzzy
+#~ msgid "Object"
+#~ msgstr "Objektum színe:"
+
+#, fuzzy, c-format
+#~ msgid "New file [%s]"
+#~ msgstr "Új fájl: [%s]\n"
+
+#~ msgid "Failed to load file"
+#~ msgstr "A fájl betöltése nem sikerült."
+
+#, fuzzy
+#~ msgid "Lepton EDA Schematic Editor"
+#~ msgstr "gEDA kapcsolásirajz-szerkesztő"
+
+#, fuzzy
+#~ msgid ""
+#~ "Create and edit electrical schematics and symbols with lepton-schematic"
+#~ msgstr ""
+#~ "Elektromos kapcsolási rajzok és szimbólumok készítése és szerkesztése a "
+#~ "gschemmel"
+
+#, fuzzy
+#~ msgid "Print Page"
+#~ msgstr "Előző"
 
 #, fuzzy
 #~ msgid "Lepton EDA circuit schematic"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2025-06-09 15:00+0300\n"
+"POT-Creation-Date: 2025-06-16 10:25+0300\n"
 "PO-Revision-Date: 2025-06-10 09:49+0300\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -462,1501 +462,19 @@ msgstr ""
 msgid "(use -v to view details)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"\n"
-"UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
-"  %s.\n"
-"\n"
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr ""
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"[%s] kaydedildi\n"
-"#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
-"Tümünü kaydet"
-
-msgid "Zoom too small!  Cannot zoom further."
-msgstr ""
-
-#, fuzzy
-msgid "Toggle _Editor"
-msgstr "gEDA Şematik Editörü"
-
-msgid "_Apply"
-msgstr ""
-
-#, fuzzy
-msgid "Save As.._."
-msgstr "Tümünü kaydet"
-
-msgid ""
-"Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following expression\n"
-"(including parentheses) in the gschemrc configuration file:\n"
-"( primitive-load \"/path/to/saved-color-scheme-file\" )"
-msgstr ""
-
-#, c-format
-msgid ""
-"Could not save file [%s]:\n"
-"%s"
-msgstr ""
-
-msgid "Failed to save file"
-msgstr ""
-
-#, fuzzy
-msgid "Save Color Scheme"
-msgstr "gEDA Şematik Editörü"
-
-msgid "_Save"
-msgstr ""
-
-msgid "_Cancel"
-msgstr ""
-
-#, c-format
-msgid ""
-"The selected file `%1$s' already exists.\n"
-"\n"
-"Would you like to overwrite it?"
-msgstr ""
-
-msgid "Overwrite file?"
-msgstr ""
-
-msgid "Sa_ve..."
-msgstr ""
-
-msgid ""
-"After you're done choosing the font, it's recommended\n"
-"to reopen schematics or restart the application."
-msgstr ""
-
-#, c-format
-msgid "<b>Current:</b> %s"
-msgstr ""
-
-msgid "Save configuration"
-msgstr ""
-
-msgid "_OK"
-msgstr ""
-
-msgid "Local configuration file:"
-msgstr ""
-
-msgid "User configuration file:"
-msgstr ""
-
-#, c-format
-msgid "%s (git: %.7s)"
-msgstr ""
-
-#, c-format
-msgid ""
-"Could not load image at file: %1$s\n"
-"%2$s"
-msgstr ""
-
-msgid "Lepton Electronic Design Automation"
-msgstr ""
-
-msgid ""
-"Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2022 Lepton Developers.\n"
-"See AUTHORS, ChangeLog files and consult 'git log' history for details."
-msgstr ""
-
-msgid "Upper Left"
-msgstr ""
-
-msgid "Upper Middle"
-msgstr ""
-
-msgid "Upper Right"
-msgstr ""
-
-msgid "Middle Left"
-msgstr ""
-
-msgid "Middle Middle"
-msgstr ""
-
-msgid "Middle Right"
-msgstr ""
-
-msgid "Lower Left"
-msgstr ""
-
-msgid "Lower Middle"
-msgstr ""
-
-msgid "Lower Right"
-msgstr ""
-
-msgid "Arc Params"
-msgstr ""
-
-msgid "Arc _Radius:"
-msgstr ""
-
-msgid "Start _Angle:"
-msgstr ""
-
-msgid "_Degrees of Sweep:"
-msgstr ""
-
-msgid "<b>Snap: OFF</b>"
-msgstr ""
-
-#, c-format
-msgid "Snap: <b>%d</b>"
-msgstr ""
-
-#, c-format
-msgid "<u>Re</u>snap: <b>%d</b>"
-msgstr ""
-
-#, c-format
-msgid "<u>Re</u>snap: %d"
-msgstr ""
-
-#, c-format
-msgid ""
-"Snap size.\n"
-"Click to change the snapping mode.\n"
-"Attention: current snap size (%d) differs\n"
-"from the value set in configuration: %d."
-msgstr ""
-
-msgid ""
-"Snap size.\n"
-"Click to change the snapping mode."
-msgstr ""
-
-msgid "Grid: OFF"
-msgstr ""
-
-msgid "Grid: NONE"
-msgstr ""
-
-msgid ""
-"Grid size.\n"
-"Click to change the grid style."
-msgstr ""
-
-msgid "Left mouse button"
-msgstr ""
-
-msgid "Middle mouse button"
-msgstr ""
-
-msgid "Right mouse button"
-msgstr ""
-
-msgid ""
-"Net rubber band mode.\n"
-"Click to toggle ON/OFF."
-msgstr ""
-
-msgid ""
-"Magnetic net mode.\n"
-"Click to toggle ON/OFF."
-msgstr ""
-
-msgid "Current action mode"
-msgstr ""
-
-msgid "S_elect the schematics you want to save:"
-msgstr ""
-
-msgid "Name"
-msgstr ""
-
-msgid "Show _full paths"
-msgstr ""
-
-#, c-format
-msgid "Save the changes to schematic \"%1$s\" before closing?"
-msgstr ""
-
-#, c-format
-msgid ""
-"There are %1$d schematics with unsaved changes. Save changes before closing?"
-msgstr ""
-
-msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
-
-msgid "Close _without saving"
-msgstr ""
-
-msgid "Coords"
-msgstr ""
-
-msgid "_Close"
-msgstr ""
-
-msgid "Screen"
-msgstr ""
-
-msgid "World"
-msgstr ""
-
-msgid "Filename"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "descend into hierarchy"
-msgstr ""
-
-msgid "Find"
-msgstr ""
-
-#, fuzzy
-msgid "Find Text:"
-msgstr "Metni Düzenle"
-
-msgid "Find Pattern:"
-msgstr ""
-
-msgid "Find Regex:"
-msgstr ""
-
-msgid "Check symbol:"
-msgstr ""
-
-msgid "Hotkeys"
-msgstr "Kısayollar"
-
-msgid ""
-"Start typing action name or keystroke to filter the list.\n"
-"Type hotkeys as they are displayed in \"Keystroke(s)\" column."
-msgstr ""
-
-#, fuzzy
-msgid "_Filter:"
-msgstr "Dosya"
-
-msgid "Action"
-msgstr ""
-
-msgid "Keystroke(s)"
-msgstr ""
-
-msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
-msgstr ""
-
-#, fuzzy
-msgid "Clear log window?"
-msgstr "Pencere kapatılıyor\n"
-
-#, fuzzy
-msgid "Clear Log"
-msgstr "Yeni pencere"
-
-msgid "_Wrap Long Lines"
-msgstr ""
-
-#, fuzzy
-msgid "Clea_r Log Window"
-msgstr "Yeni pencere"
-
-msgid "Macro:"
-msgstr ""
-
-msgid "Evaluate"
-msgstr ""
-
-#, fuzzy
-msgid "_Fill Type:"
-msgstr "doldurma tipi.."
-
-#, fuzzy
-msgid "Lin_e Width:"
-msgstr "Çizgi Kalınlığı & Tipi"
-
-msgid "Angle _1:"
-msgstr ""
-
-msgid "P_itch 1:"
-msgstr ""
-
-msgid "Angle _2:"
-msgstr ""
-
-msgid "Pitc_h 2:"
-msgstr ""
-
-msgid "<b>Fill Properties</b>"
-msgstr ""
-
-#, fuzzy
-msgid "Colo_r:"
-msgstr "Renk"
-
-msgid "<b>General Properties</b>"
-msgstr ""
-
-#, fuzzy
-msgid "_Type:"
-msgstr "doldurma tipi.."
-
-#, fuzzy
-msgid "_Width:"
-msgstr "Çizgi Kalınlığı & Tipi"
-
-msgid "Dash _Length:"
-msgstr ""
-
-msgid "Dash _Space:"
-msgstr ""
-
-msgid "C_ap style:"
-msgstr ""
-
-msgid "<b>Line Properties</b>"
-msgstr ""
-
-#, fuzzy
-msgid "_Pin Type:"
-msgstr "doldurma tipi.."
-
-msgid "<b>Pin Properties</b>"
-msgstr ""
-
-msgid "_Off"
-msgstr ""
-
-msgid "_Dots"
-msgstr ""
-
-msgid "M_esh"
-msgstr ""
-
-msgid "Net R_ubber Band Mode:"
-msgstr ""
-
-msgid "_Magnetic Net Mode:"
-msgstr ""
-
-msgid "Enabled"
-msgstr ""
-
-msgid "<b>Net Options</b>"
-msgstr ""
-
-msgid "Grid Mode:"
-msgstr ""
-
-#, fuzzy
-msgid "Snap Mode:"
-msgstr "Kopyalama Kipi"
-
-#, fuzzy
-msgid "_Snap Size:"
-msgstr "Kopyalama Kipi"
-
-msgid "<b>Snap Options</b>"
-msgstr ""
-
-msgid "O_ff"
-msgstr ""
-
-msgid "_Grid"
-msgstr ""
-
-msgid "_Resnap"
-msgstr ""
-
-msgid "Net pin"
-msgstr ""
-
-msgid "Bus pin (graphical)"
-msgstr ""
-
-msgid "Preview Buffer"
-msgstr ""
-
-msgid "Hide"
-msgstr ""
-
-msgid "Hide text starting with:"
-msgstr ""
-
-#, fuzzy
-msgid "Edit Slot"
-msgstr "Renk"
-
-msgid "Number of Slots:"
-msgstr ""
-
-msgid "Slot Number:"
-msgstr ""
-
-msgid "<b>Text Content</b>"
-msgstr ""
-
-msgid "_Size:"
-msgstr ""
-
-msgid "Ali_gnment:"
-msgstr ""
-
-#, fuzzy
-msgid "Ro_tation:"
-msgstr "Döndür"
-
-msgid "<b>Text Properties</b>"
-msgstr ""
-
-msgid "Coordinate:"
-msgstr ""
-
-msgid "Translate"
-msgstr "Çevir"
-
-msgid "Select Mode"
-msgstr "Seçim Kipi"
-
-#, fuzzy
-msgid "Select Box Mode"
-msgstr "Seçim Kipi"
-
-msgid "Text Mode"
-msgstr "Metin kipi"
-
-msgid "Pan Mode"
-msgstr ""
-
-#, c-format
-msgid "Paste %d Mode"
-msgstr ""
-
-msgid "Magnetic Net Mode"
-msgstr ""
-
-msgid "Net Mode"
-msgstr ""
-
-msgid "Arc Mode"
-msgstr ""
-
-msgid "Box Mode"
-msgstr ""
-
-msgid "Bus Mode"
-msgstr ""
-
-msgid "Circle Mode"
-msgstr ""
-
-msgid "Component Mode"
-msgstr ""
-
-msgid "Copy Mode"
-msgstr "Kopyalama Kipi"
-
-msgid "Multiple Copy Mode"
-msgstr "Çoklu Kopyalama Kipi"
-
-msgid "Line Mode"
-msgstr ""
-
-msgid "Mirror Mode"
-msgstr "Ayna modu"
-
-msgid "Move Mode"
-msgstr "Taşıma Kipi"
-
-#, fuzzy
-msgid "Path Mode"
-msgstr "Döndürme kipi"
-
-msgid "Picture Mode"
-msgstr ""
-
-msgid "Pin Mode"
-msgstr ""
-
-msgid "Rotate Mode"
-msgstr "Döndürme kipi"
-
-#, fuzzy
-msgid "Modify Mode"
-msgstr "Kopyalama Kipi"
-
-msgid "Zoom Box"
-msgstr ""
-
-msgid "Show Hidden"
-msgstr "Gizlileri Göster"
-
-msgid "Snap Off"
-msgstr ""
-
-msgid "Resnap Active"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "New page created [%1$s]"
-msgstr "Yeni sayfa oluşturuldu [%s]\n"
-
-#, fuzzy, c-format
-msgid "New Window created [%1$s]"
-msgstr "Yeni pencere oluşturuldu [%s]\n"
-
-#, fuzzy
-msgid "Execute Script"
-msgstr "Betik Çalıştır..."
-
-msgid "_Run"
-msgstr ""
-
-msgid "Scheme files (*.scm)"
-msgstr ""
-
-msgid "All files"
-msgstr ""
-
-#, c-format
-msgid "Executing Guile script [%s]"
-msgstr ""
-
-msgid "Saved All"
-msgstr "Hepsi kaydedildi"
-
-msgid "Failed to Save All"
-msgstr ""
-
-#, fuzzy
-msgid "Closing Window"
-msgstr "Pencere kapatılıyor\n"
-
-msgid "Select objs first"
-msgstr ""
-
-msgid "WARNING: Do not translate with snap off!"
-msgstr ""
-
-msgid "WARNING: Turning snap on and continuing with translate."
-msgstr ""
-
-msgid "WARNING: Snap grid size is not equal to 100!"
-msgstr ""
-
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Revert page:</b>\n"
-"%s\n"
-"\n"
-"Are you sure you want to revert this page?\n"
-"All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk.\n"
-"This action will also reload all component libraries."
-msgstr ""
-
-msgid "Revert"
-msgstr ""
-
-msgid "Empty clipboard"
-msgstr ""
-
-msgid "Empty buffer"
-msgstr ""
-
-#, c-format
-msgid "Searching for source [%1$s]"
-msgstr ""
-
-#, c-format
-msgid ""
-"Failed to descend hierarchy into '%1$s': %2$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, c-format
-msgid "Failed to descend into '%1$s': %2$s"
-msgstr ""
-
-msgid "Failed to descend hierarchy."
-msgstr ""
-
-#, c-format
-msgid "Searching for symbol [%1$s]"
-msgstr ""
-
-msgid "Symbol is not a real file. Symbol cannot be loaded."
-msgstr ""
-
-msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Action feedback mode set to OUTLINE"
-msgstr ""
-
-msgid "Action feedback mode set to BOUNDINGBOX"
-msgstr ""
-
-msgid "Grid OFF"
-msgstr ""
-
-msgid "Dot grid selected"
-msgstr ""
-
-msgid "Mesh grid selected"
-msgstr ""
-
-msgid "Invalid grid mode"
-msgstr ""
-
-msgid "Snap OFF (CAUTION!)"
-msgstr ""
-
-msgid "Snap ON"
-msgstr ""
-
-msgid "Snap back to the grid (CAUTION!)"
-msgstr ""
-
-msgid "Rubber band ON"
-msgstr ""
-
-msgid "Rubber band OFF"
-msgstr ""
-
-msgid "magnetic net mode: ON"
-msgstr ""
-
-msgid "magnetic net mode: OFF"
-msgstr ""
-
-#, c-format
-msgid "Translating schematic [%1$d %2$d]"
-msgstr ""
-
-msgid ""
-"Warning: the selection contains locked objects.\n"
-"Please choose what objects you'd like to delete:"
-msgstr ""
-
-#, fuzzy
-msgid "Delete _all"
-msgstr "Sil"
-
-msgid "All, _except locked"
-msgstr ""
-
-msgid "Delete"
-msgstr "Sil"
-
-msgid "Hidden text is now visible"
-msgstr ""
-
-msgid "Hidden text is now invisible"
-msgstr ""
-
-#, c-format
-msgid "Could not find symbol [%1$s] in library. Update failed."
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write"
-msgstr ""
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly"
-msgstr ""
-
-#, c-format
-msgid "Could NOT save backup file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "DOH! tried to find the whichone, but didn't find it!\n"
-msgstr ""
-
-msgid "Warning: Starting net at off grid coordinate"
-msgstr ""
-
-msgid "Warning: Ending net at off grid coordinate"
-msgstr ""
-
-#, c-format
-msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
-msgstr ""
-
-#, c-format
-msgid "Bus ripper symbol [%1$s] was not found in any component library"
-msgstr ""
-
-msgid "All supported formats"
-msgstr ""
-
-msgid "Add Picture"
-msgstr ""
-
-msgid "_Open"
-msgstr ""
-
-#, c-format
-msgid "Failed to load picture: %1$s"
-msgstr ""
-
-#, fuzzy
-msgid "Select Picture"
-msgstr "Seçim Kipi"
-
-#, c-format
-msgid "Failed to replace pictures: %s"
-msgstr ""
-
-#, fuzzy
-msgid "Slot attribute malformed"
-msgstr "Öznitelikler"
-
-msgid "numslots attribute missing"
-msgstr ""
-
-msgid "Slotting not allowed for this component"
-msgstr ""
-
-msgid "New slot number out of range"
-msgstr ""
-
-msgid "Undo/Redo is disabled in configuration"
-msgstr ""
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-msgid "There are no schematics above the current one!"
-msgstr ""
-
-#, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr ""
-
-#, c-format
-msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
-
-#, fuzzy
-msgid "Edit Attribute"
-msgstr "Öznitelikler"
-
-msgid "Add Attribute"
-msgstr ""
-
-msgid "N_ame:"
-msgstr ""
-
-msgid "_Value:"
-msgstr ""
-
-msgid "Vi_sible"
-msgstr ""
-
-msgid "Show Value Only"
-msgstr ""
-
-msgid "Show Name Only"
-msgstr ""
-
-msgid "Show Name & Value"
-msgstr ""
-
-msgid "<b>Attach Options</b>"
-msgstr ""
-
-msgid "All"
-msgstr ""
-
-msgid "Components"
-msgstr ""
-
-msgid "Nets"
-msgstr ""
-
-msgid "Replace existing attributes"
-msgstr ""
-
-msgid ""
-"slotted object without slot attribute may cause problems when autonumbering "
-"slots"
-msgstr ""
-
-#, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
-msgstr ""
-
-msgid "No search string given in autonumber text."
-msgstr ""
-
-msgid "No '*' or '?' given at the end of the autonumber text."
-msgstr ""
-
-msgid "Diagonal"
-msgstr ""
-
-msgid "Top to bottom"
-msgstr ""
-
-msgid "Bottom to top"
-msgstr ""
-
-msgid "Left to right"
-msgstr ""
-
-msgid "Right to left"
-msgstr ""
-
-msgid "File order"
-msgstr ""
-
-msgid "Autonumber Text"
-msgstr ""
-
-msgid "<b>Scope</b>"
-msgstr ""
-
-msgid "Search for:"
-msgstr ""
-
-msgid "Autonumber text in:"
-msgstr ""
-
-msgid "Skip numbers found in:"
-msgstr ""
-
-msgid "Selected objects"
-msgstr ""
-
-msgid "Current page"
-msgstr ""
-
-msgid "Whole hierarchy"
-msgstr ""
-
-msgid "Overwrite existing numbers"
-msgstr ""
-
-msgid "<b>Options</b>"
-msgstr ""
-
-msgid "Starting number:"
-msgstr ""
-
-msgid "Sort order:"
-msgstr ""
-
-msgid "Remove numbers"
-msgstr ""
-
-msgid "Automatic slotting"
-msgstr ""
-
-#, c-format
-msgid ""
-"<b>Invalid schematic on clipboard.</b>\n"
-"\n"
-"An error occurred while inserting clipboard data: %s."
-msgstr ""
-
-msgid "Clipboard insertion failed"
-msgstr ""
-
-#, c-format
-msgid "%s [ disabled ]"
-msgstr ""
-
-msgid "Reset filter"
-msgstr ""
-
-msgid "Reload all libraries"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Default behavior - reference component"
-msgstr ""
-
-msgid "Embed component in schematic"
-msgstr ""
-
-msgid "Include component as individual objects"
-msgstr ""
-
-#, fuzzy
-msgid "Add Component"
-msgstr "Bileşen Güncelle"
-
-msgid "In Us_e"
-msgstr ""
-
-msgid "Lib_raries"
-msgstr ""
-
-msgid "Preview"
-msgstr ""
-
-msgid "Attributes"
-msgstr "Öznitelikler"
-
-msgid "Symbol version changes"
-msgstr ""
-
-msgid "Major symbol version changes detected."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Schematic: %s"
-msgstr "gEDA Şematik Editörü"
-
-msgid ""
-"Changes have occurred to the symbols shown\n"
-"below, be sure to verify each of these symbols.\n"
-"Consult lepton-schematic log for details."
-msgstr ""
-
-msgid "Symbol"
-msgstr ""
-
-#, c-format
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
-"Please correct in order to continue</span>\n"
-"\n"
-"The name and value must be non-empty.\n"
-"The name cannot end with a space.\n"
-"The value cannot start with a space."
-msgstr ""
-
-msgid "Invalid Attribute"
-msgstr ""
-
-msgid "Schematics (*.sch)"
-msgstr ""
-
-msgid "Symbols (*.sym)"
-msgstr ""
-
-msgid "Schematics and symbols (*.sch *.sym)"
-msgstr ""
-
-msgid "Open"
-msgstr ""
-
-#, fuzzy
-msgid "Save As"
-msgstr "Tümünü kaydet"
-
-msgid "Save cancelled on user request"
-msgstr ""
-
-msgid ""
-"\n"
-"If you load the original file, the backup file will be overwritten in the "
-"next autosave timeout and it will be lost.\n"
-"\n"
-"Do you want to load the backup file?\n"
-msgstr ""
-
-msgid "Hollow"
-msgstr ""
-
-msgid "Filled"
-msgstr ""
-
-msgid "Mesh"
-msgstr ""
-
-msgid "Hatch"
-msgstr ""
-
-#, c-format
-msgid "Unable to write %1$s file %2$s."
-msgstr ""
-
-#, c-format
-msgid ""
-"There was the following error when saving image with type %1$s to filename:\n"
-"%2$s\n"
-"\n"
-"%3$s.\n"
-msgstr ""
-
-#, c-format
-msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
-msgstr ""
-
-#, c-format
-msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
-msgstr ""
-
-msgid "Unable to get pixbuf from lepton-schematic's window."
-msgstr ""
-
-msgid "NOTE: print-color-map will be used for PDF export"
-msgstr ""
-
-msgid "Width x Height"
-msgstr ""
-
-msgid "Image type"
-msgstr ""
-
-#, fuzzy
-msgid "Color mode"
-msgstr "Renk"
-
-msgid "Color"
-msgstr "Renk"
-
-msgid "Grayscale"
-msgstr ""
-
-#, fuzzy
-msgid "Write Image"
-msgstr "imaj olarak yaz"
-
-msgid "Butt"
-msgstr ""
-
-msgid "Square"
-msgstr ""
-
-msgid "Round"
-msgstr ""
-
-msgid "Solid"
-msgstr ""
-
-msgid "Dotted"
-msgstr ""
-
-msgid "Dashed"
-msgstr ""
-
-msgid "Center"
-msgstr ""
-
-msgid "Phantom"
-msgstr ""
-
-#, fuzzy
-msgid "Add Co_mponent..."
-msgstr "Bileşen Güncelle"
-
-#, fuzzy
-msgid "Add Te_xt..."
-msgstr "Metni Düzenle"
-
-#, fuzzy
-msgid "Add _Attribute..."
-msgstr "Öznitelikler"
-
-#, fuzzy
-msgid "Add _Net"
-msgstr "Metni Düzenle"
-
-msgid "Add _Bus"
-msgstr ""
-
-msgid "Cu_t"
-msgstr ""
-
-msgid "_Copy"
-msgstr ""
-
-msgid "_Paste"
-msgstr ""
-
-msgid "_Delete"
-msgstr ""
-
-#, fuzzy
-msgid "_Edit..."
-msgstr "Düzenle..."
-
-#, fuzzy
-msgid "Ed_it Text..."
-msgstr "Metin Düzenle..."
-
-msgid "_Object Properties..."
-msgstr ""
-
-#, fuzzy
-msgid "Hierarchy: Down _Schematic"
-msgstr "gEDA Şematik Editörü"
-
-msgid "Hierarchy: Down S_ymbol"
-msgstr ""
-
-#, fuzzy
-msgid "Hierarchy: _Up"
-msgstr "Hiyerarşi"
-
-msgid "The operating system is out of memory or resources."
-msgstr ""
-
-msgid "<various>"
-msgstr ""
-
-msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-
-msgid "Show Value only"
-msgstr ""
-
-msgid "Show Name only"
-msgstr ""
-
-msgid "Promote"
-msgstr ""
-
-msgid "Duplicate"
-msgstr ""
-
-#, fuzzy
-msgid "Copy to all"
-msgstr "1'e kopyala"
-
-msgid "Edit Attributes"
-msgstr ""
-
-msgid "Vis?"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "V"
-msgstr ""
-
-#, fuzzy
-msgid "Sho_w inherited attributes"
-msgstr "Öznitelikler"
-
-msgid "_Name:"
-msgstr ""
-
-msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
-msgstr ""
-
-msgid "_Add"
-msgstr "Ekle"
-
-#, fuzzy
-msgid "<b>Add Attribute</b>"
-msgstr "Öznitelikler"
-
-#, c-format
-msgid "%2$i symbol (%1$s)"
-msgid_plural "%2$i symbols (%1$s)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i pin"
-msgid_plural "%1$i pins"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i net"
-msgid_plural "%1$i nets"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%1$i bus"
-msgid_plural "%1$i buses"
-msgstr[0] ""
-msgstr[1] ""
-
-#, fuzzy, c-format
-msgid "%1$i attribute"
-msgid_plural "%1$i attributes"
-msgstr[0] "Öznitelikler"
-msgstr[1] "Öznitelikler"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "Metni Düzenle"
-
-msgid "Refresh"
-msgstr ""
-
-msgid "New Page"
-msgstr "Yeni Sayfa"
-
-msgid "Open Page..."
-msgstr "Sayfa Aç..."
-
-msgid "Save Page"
-msgstr "Sayfayı Kaydet"
-
-msgid "Close Page"
-msgstr "Sayfayı Kapat"
-
-msgid "Changed"
-msgstr ""
-
-#, c-format
-msgid "Failed to write PDF to '%s': %s\n"
-msgstr ""
-
-#, c-format
-msgid "Failed to write PDF to '%1$s': %2$s\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Error printing file:\n"
-"%1$s"
-msgstr ""
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-msgid ""
-"An unknown error occurred while parsing configuration files.\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-#, c-format
-msgid "ERROR: %1$s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%1$s\n"
-"\n"
-"The lepton-schematic log may contain more information."
-msgstr ""
-
-msgid "Cannot load lepton-schematic configuration."
-msgstr ""
-
-#, fuzzy
-msgid "Close"
-msgstr "Sayfayı Kapat"
-
-msgid "Save"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Hierarchy up: %s"
-msgstr "Hiyerarşi"
-
-#, fuzzy
-msgid "Hierarchy up"
-msgstr "Hiyerarşi"
-
 msgid "_New"
 msgstr ""
 
 msgid "_Open..."
 msgstr ""
 
-msgid "Save _As..."
-msgstr ""
-
-msgid "Page _Manager..."
-msgstr ""
-
-#, fuzzy
-msgid "Options"
-msgstr "Seçenekler"
-
-msgid "Edit Text"
-msgstr "Metni Düzenle"
-
-msgid "Object Properties"
-msgstr ""
-
-msgid "Log"
-msgstr ""
-
-msgid "Find Text"
-msgstr ""
-
-#, fuzzy
-msgid "Color Scheme Editor"
-msgstr "gEDA Şematik Editörü"
-
-#, fuzzy
-msgid "Select Schematic Font"
-msgstr "Seçim Kipi"
-
-msgid "Page Manager"
-msgstr ""
-
-#, c-format
-msgid "Loading schematic [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Could NOT save page [%1$s]\n"
-msgstr ""
-
-msgid "Error while trying to save"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Saved as [%1$s]"
-msgstr "Tümünü kaydet"
-
-msgid "Saved"
-msgstr ""
-
-#, c-format
-msgid "Discarding page [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Closing [%1$s]"
-msgstr ""
-
-msgid "New"
-msgstr "Yeni"
-
-msgid "New file"
-msgstr ""
-
-msgid "Open file"
-msgstr ""
-
-msgid "Save file"
-msgstr ""
-
-msgid "Undo"
-msgstr "Geri Al"
-
-msgid "Undo last operation"
-msgstr ""
-
-msgid "Redo"
-msgstr "Yinele"
-
-msgid "Redo last undo"
-msgstr ""
-
-msgid ""
-"Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Component"
-msgstr ""
-
-msgid ""
-"Add nets mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid ""
-"Add buses mode\n"
-"Right mouse button to cancel"
-msgstr ""
-
-msgid "Bus"
-msgstr "Veriyolu"
-
-msgid "Add Text..."
-msgstr ""
-
-msgid "Select"
-msgstr ""
-
-msgid "Select mode"
-msgstr ""
-
-msgid "Show"
-msgstr ""
-
-msgid "Show text starting with:"
-msgstr ""
-
-msgid "none"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Repeat"
-msgstr ""
-
-msgid "Pan"
-msgstr "Kaydırma"
-
-msgid "Menu"
-msgstr ""
-
-msgid "/Cancel"
-msgstr ""
-
-msgid "Pick"
-msgstr ""
-
-msgid "Object"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "New file [%s]"
-msgstr "Yeni Sayfa"
-
-#, c-format
-msgid ""
-"<b>An error occurred while loading the requested file.</b>\n"
-"\n"
-"Loading from '%1$s' failed. Error message:\n"
-"\n"
-"%2$s.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-"You may also launch lepton-schematic with --verbose command line switch and "
-"monitor program's output in terminal window."
-msgstr ""
-
-msgid "Failed to load file"
-msgstr ""
-
-#, c-format
-msgid "Skipping existing file [%s]"
-msgstr ""
-
-#, fuzzy
-msgid "Lepton EDA Schematic Editor"
-msgstr "gEDA Şematik Editörü"
-
-msgid "Create and edit electrical schematics and symbols with lepton-schematic"
-msgstr ""
-
 msgid "Open Recen_t"
+msgstr ""
+
+msgid "_Save"
+msgstr ""
+
+msgid "Save _As..."
 msgstr ""
 
 msgid "Save All"
@@ -1993,14 +511,41 @@ msgstr ""
 msgid "_Redo"
 msgstr ""
 
+msgid "Cu_t"
+msgstr ""
+
+msgid "_Copy"
+msgstr ""
+
+msgid "_Paste"
+msgstr ""
+
+msgid "_Delete"
+msgstr ""
+
+msgid "Select Mode"
+msgstr "Seçim Kipi"
+
 msgid "Select All"
 msgstr ""
 
 msgid "Deselect"
 msgstr ""
 
+msgid "Copy Mode"
+msgstr "Kopyalama Kipi"
+
+msgid "Multiple Copy Mode"
+msgstr "Çoklu Kopyalama Kipi"
+
+msgid "Move Mode"
+msgstr "Taşıma Kipi"
+
 msgid "Rotate 90 Mode"
 msgstr "90 derece döndür kipi"
+
+msgid "Mirror Mode"
+msgstr "Ayna modu"
 
 msgid "Object Properties..."
 msgstr ""
@@ -2019,6 +564,10 @@ msgstr "Kilitle"
 
 msgid "Unlock"
 msgstr "Kilidi Aç"
+
+#, fuzzy
+msgid "Select Locked"
+msgstr "Seçim Kipi"
 
 msgid "Embed Component/Picture"
 msgstr "Bileşen/Resim göm"
@@ -2127,6 +676,9 @@ msgid "_Previous"
 msgstr ""
 
 msgid "_Next"
+msgstr ""
+
+msgid "_Close"
 msgstr ""
 
 msgid "_Revert..."
@@ -2291,6 +843,9 @@ msgstr "Görüntüle"
 msgid "_Page"
 msgstr "Sayfa"
 
+msgid "_Add"
+msgstr "Ekle"
+
 msgid "Hie_rarchy"
 msgstr "Hiyerarşi"
 
@@ -2316,6 +871,12 @@ msgstr ""
 msgid "Repeat Last Action"
 msgstr ""
 
+msgid "Empty clipboard"
+msgstr ""
+
+msgid "Hit E N to insert invisible objects."
+msgstr ""
+
 msgid "Cancel"
 msgstr ""
 
@@ -2324,6 +885,19 @@ msgid "New File"
 msgstr "Yeni Sayfa"
 
 msgid "Open File"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+#, fuzzy
+msgid "Save As"
+msgstr "Tümünü kaydet"
+
+msgid "Saved All"
+msgstr "Hepsi kaydedildi"
+
+msgid "Failed to Save All"
 msgstr ""
 
 #, fuzzy
@@ -2336,8 +910,16 @@ msgstr ""
 msgid "Run Script"
 msgstr ""
 
+#, fuzzy, scheme-format
+msgid "Executing Guile script: ~S"
+msgstr "Betik Çalıştır..."
+
 #, fuzzy
 msgid "Close Window"
+msgstr "Pencere kapatılıyor\n"
+
+#, fuzzy
+msgid "Closing Window"
 msgstr "Pencere kapatılıyor\n"
 
 msgid "Quit"
@@ -2346,7 +928,31 @@ msgstr ""
 msgid "Terminal REPL"
 msgstr ""
 
+msgid "Undo"
+msgstr "Geri Al"
+
+msgid "Redo"
+msgstr "Yinele"
+
+msgid "Delete"
+msgstr "Sil"
+
+msgid "Select objs first"
+msgstr ""
+
+msgid "Rotate Mode"
+msgstr "Döndürme kipi"
+
+msgid "Edit Text"
+msgstr "Metni Düzenle"
+
 msgid "Choose Slot"
+msgstr ""
+
+msgid "Please select only one component!"
+msgstr ""
+
+msgid "Please first select a component!"
 msgstr ""
 
 msgid "Edit Object Properties"
@@ -2356,7 +962,25 @@ msgstr ""
 msgid "Translate Symbol"
 msgstr "Çevir"
 
+msgid "WARNING: Do not translate with snap off!"
+msgstr ""
+
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr ""
+
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr ""
+
+msgid ""
+"WARNING: If you are translating a symbol to the origin,\n"
+"the snap grid size should be set to 100"
+msgstr ""
+
 msgid "Invoke Macro"
+msgstr ""
+
+#, scheme-format
+msgid "Could not find symbol ~S in library. Update failed."
 msgstr ""
 
 #, fuzzy
@@ -2387,6 +1011,9 @@ msgstr "Metni Düzenle"
 msgid "Redraw"
 msgstr ""
 
+msgid "Pan"
+msgstr "Kaydırma"
+
 msgid "Pan Left"
 msgstr ""
 
@@ -2397,6 +1024,9 @@ msgid "Pan Up"
 msgstr ""
 
 msgid "Pan Down"
+msgstr ""
+
+msgid "Zoom Box"
 msgstr ""
 
 msgid "Zoom Extents"
@@ -2426,6 +1056,9 @@ msgstr ""
 msgid "Revert Changes"
 msgstr ""
 
+msgid "Page Manager"
+msgstr ""
+
 #, fuzzy
 msgid "Previous Page"
 msgstr "Sayfayı Kapat"
@@ -2434,15 +1067,25 @@ msgstr "Sayfayı Kapat"
 msgid "Next Page"
 msgstr "Yeni Sayfa"
 
-#, fuzzy
-msgid "Print Page"
+msgid "Close Page"
 msgstr "Sayfayı Kapat"
+
+#, fuzzy
+msgid "Add Component"
+msgstr "Bileşen Güncelle"
+
+msgid "Add Attribute"
+msgstr ""
 
 msgid "Add Net"
 msgstr ""
 
 msgid "Add Bus"
 msgstr ""
+
+#, fuzzy
+msgid "Add Text"
+msgstr "Metni Düzenle"
 
 #, fuzzy
 msgid "Add Line"
@@ -2464,16 +1107,58 @@ msgstr ""
 msgid "Add Pin"
 msgstr ""
 
+msgid "Add Picture"
+msgstr ""
+
+#, scheme-format
+msgid "Failed to descend into ~S: ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Failed to descend hierarchy into ~S:\n"
+"~A\n"
+"\n"
+"~A"
+msgstr ""
+
+#, fuzzy
+msgid "The lepton-schematic log may contain more information."
+msgstr ""
+"\n"
+"gschem'i çalıştırın ve bu durumu düzeltin\n"
+"\n"
+
+msgid "Unknown error."
+msgstr ""
+
+msgid "Failed to descend hierarchy."
+msgstr ""
+
+#, scheme-format
+msgid "Searching for source ~S"
+msgstr ""
+
 #, fuzzy
 msgid "Down Schematic"
 msgstr "gEDA Şematik Editörü"
 
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr ""
+
 msgid "Down Symbol"
+msgstr ""
+
+#, scheme-format
+msgid "Searching for symbol: ~S"
 msgstr ""
 
 #, fuzzy
 msgid "Up Hierarchy"
 msgstr "Hiyerarşi"
+
+msgid "Cannot find any schematics above the current one!"
+msgstr ""
 
 #, fuzzy
 msgid "Attach Attributes"
@@ -2499,6 +1184,9 @@ msgstr "Öznitelikler"
 msgid "Show Attribute Name"
 msgstr "Öznitelikler"
 
+msgid "Show Name & Value"
+msgstr ""
+
 msgid "Toggle Text Visibility"
 msgstr ""
 
@@ -2511,6 +1199,9 @@ msgstr ""
 msgid "Show Specific Text"
 msgstr ""
 
+msgid "Autonumber Text"
+msgstr ""
+
 #, fuzzy
 msgid "Show Hotkeys"
 msgstr "Kısayollar"
@@ -2519,6 +1210,15 @@ msgid "Switch Grid Style"
 msgstr ""
 
 msgid "Switch Snap Mode"
+msgstr ""
+
+msgid "Snap OFF (CAUTION!)"
+msgstr ""
+
+msgid "Snap ON"
+msgstr ""
+
+msgid "Snap back to the grid (CAUTION!)"
 msgstr ""
 
 msgid "Set Grid Spacing"
@@ -2533,6 +1233,12 @@ msgstr ""
 msgid "Toggle Outline Drawing"
 msgstr ""
 
+msgid "Action feedback mode set to OUTLINE"
+msgstr ""
+
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr ""
+
 msgid "Toggle Net Rubber Band"
 msgstr ""
 
@@ -2545,6 +1251,10 @@ msgstr "Yeni pencere"
 
 msgid "Show Coordinate Window"
 msgstr ""
+
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "Seçim Kipi"
 
 msgid "Toggle Grips"
 msgstr ""
@@ -2576,6 +1286,10 @@ msgstr "gschem Hakkında"
 msgid "Could not show documentation:"
 msgstr ""
 
+#, scheme-format
+msgid "File does not exist:~%~a"
+msgstr ""
+
 msgid "No documentation found"
 msgstr ""
 
@@ -2599,8 +1313,8 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run after startup.\n"
+"  -s FILE                  Scheme script to run after startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
@@ -2614,6 +1328,263 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
+#~ "\n"
+#~ "UYARI: Otomatik kayıt yedek dosyası bulundu:\n"
+#~ "  %s.\n"
+#~ "\n"
+#~ "#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
+
+#, fuzzy, c-format
+#~ msgid "Saved [%1$s]"
+#~ msgstr ""
+#~ "#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
+#~ "[%s] kaydedildi\n"
+#~ "#-#-#-#-#  tr.po (geda)  #-#-#-#-#\n"
+#~ "Tümünü kaydet"
+
+#, fuzzy
+#~ msgid "Toggle _Editor"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy
+#~ msgid "Save As.._."
+#~ msgstr "Tümünü kaydet"
+
+#, fuzzy
+#~ msgid "Save Color Scheme"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy
+#~ msgid "Find Text:"
+#~ msgstr "Metni Düzenle"
+
+#~ msgid "Hotkeys"
+#~ msgstr "Kısayollar"
+
+#, fuzzy
+#~ msgid "_Filter:"
+#~ msgstr "Dosya"
+
+#, fuzzy
+#~ msgid "Clear log window?"
+#~ msgstr "Pencere kapatılıyor\n"
+
+#, fuzzy
+#~ msgid "Clear Log"
+#~ msgstr "Yeni pencere"
+
+#, fuzzy
+#~ msgid "Clea_r Log Window"
+#~ msgstr "Yeni pencere"
+
+#, fuzzy
+#~ msgid "_Fill Type:"
+#~ msgstr "doldurma tipi.."
+
+#, fuzzy
+#~ msgid "Lin_e Width:"
+#~ msgstr "Çizgi Kalınlığı & Tipi"
+
+#, fuzzy
+#~ msgid "Colo_r:"
+#~ msgstr "Renk"
+
+#, fuzzy
+#~ msgid "_Type:"
+#~ msgstr "doldurma tipi.."
+
+#, fuzzy
+#~ msgid "_Width:"
+#~ msgstr "Çizgi Kalınlığı & Tipi"
+
+#, fuzzy
+#~ msgid "_Pin Type:"
+#~ msgstr "doldurma tipi.."
+
+#, fuzzy
+#~ msgid "Snap Mode:"
+#~ msgstr "Kopyalama Kipi"
+
+#, fuzzy
+#~ msgid "_Snap Size:"
+#~ msgstr "Kopyalama Kipi"
+
+#, fuzzy
+#~ msgid "Edit Slot"
+#~ msgstr "Renk"
+
+#, fuzzy
+#~ msgid "Ro_tation:"
+#~ msgstr "Döndür"
+
+#~ msgid "Translate"
+#~ msgstr "Çevir"
+
+#, fuzzy
+#~ msgid "Select Box Mode"
+#~ msgstr "Seçim Kipi"
+
+#~ msgid "Text Mode"
+#~ msgstr "Metin kipi"
+
+#, fuzzy
+#~ msgid "Path Mode"
+#~ msgstr "Döndürme kipi"
+
+#, fuzzy
+#~ msgid "Modify Mode"
+#~ msgstr "Kopyalama Kipi"
+
+#~ msgid "Show Hidden"
+#~ msgstr "Gizlileri Göster"
+
+#, fuzzy, c-format
+#~ msgid "New page created [%1$s]"
+#~ msgstr "Yeni sayfa oluşturuldu [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "New Window created [%1$s]"
+#~ msgstr "Yeni pencere oluşturuldu [%s]\n"
+
+#, fuzzy
+#~ msgid "Delete _all"
+#~ msgstr "Sil"
+
+#, fuzzy
+#~ msgid "Select Picture"
+#~ msgstr "Seçim Kipi"
+
+#, fuzzy
+#~ msgid "Slot attribute malformed"
+#~ msgstr "Öznitelikler"
+
+#, fuzzy
+#~ msgid "Edit Attribute"
+#~ msgstr "Öznitelikler"
+
+#~ msgid "Attributes"
+#~ msgstr "Öznitelikler"
+
+#, fuzzy, c-format
+#~ msgid "Schematic: %s"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy
+#~ msgid "Color mode"
+#~ msgstr "Renk"
+
+#~ msgid "Color"
+#~ msgstr "Renk"
+
+#, fuzzy
+#~ msgid "Write Image"
+#~ msgstr "imaj olarak yaz"
+
+#, fuzzy
+#~ msgid "Add Co_mponent..."
+#~ msgstr "Bileşen Güncelle"
+
+#, fuzzy
+#~ msgid "Add Te_xt..."
+#~ msgstr "Metni Düzenle"
+
+#, fuzzy
+#~ msgid "Add _Attribute..."
+#~ msgstr "Öznitelikler"
+
+#, fuzzy
+#~ msgid "Add _Net"
+#~ msgstr "Metni Düzenle"
+
+#, fuzzy
+#~ msgid "_Edit..."
+#~ msgstr "Düzenle..."
+
+#, fuzzy
+#~ msgid "Ed_it Text..."
+#~ msgstr "Metin Düzenle..."
+
+#, fuzzy
+#~ msgid "Hierarchy: Down _Schematic"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy
+#~ msgid "Hierarchy: _Up"
+#~ msgstr "Hiyerarşi"
+
+#, fuzzy
+#~ msgid "Copy to all"
+#~ msgstr "1'e kopyala"
+
+#, fuzzy
+#~ msgid "Sho_w inherited attributes"
+#~ msgstr "Öznitelikler"
+
+#, fuzzy
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "Öznitelikler"
+
+#, fuzzy, c-format
+#~ msgid "%1$i attribute"
+#~ msgid_plural "%1$i attributes"
+#~ msgstr[0] "Öznitelikler"
+#~ msgstr[1] "Öznitelikler"
+
+#~ msgid "New Page"
+#~ msgstr "Yeni Sayfa"
+
+#~ msgid "Open Page..."
+#~ msgstr "Sayfa Aç..."
+
+#~ msgid "Save Page"
+#~ msgstr "Sayfayı Kaydet"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Sayfayı Kapat"
+
+#, fuzzy, c-format
+#~ msgid "Hierarchy up: %s"
+#~ msgstr "Hiyerarşi"
+
+#, fuzzy
+#~ msgid "Hierarchy up"
+#~ msgstr "Hiyerarşi"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#, fuzzy
+#~ msgid "Color Scheme Editor"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy, c-format
+#~ msgid "Saved as [%1$s]"
+#~ msgstr "Tümünü kaydet"
+
+#~ msgid "New"
+#~ msgstr "Yeni"
+
+#~ msgid "Bus"
+#~ msgstr "Veriyolu"
+
+#, fuzzy, c-format
+#~ msgid "New file [%s]"
+#~ msgstr "Yeni Sayfa"
+
+#, fuzzy
+#~ msgid "Lepton EDA Schematic Editor"
+#~ msgstr "gEDA Şematik Editörü"
+
+#, fuzzy
+#~ msgid "Print Page"
+#~ msgstr "Sayfayı Kapat"
 
 #, fuzzy
 #~ msgid "Lepton EDA schematic symbol"
@@ -2685,16 +1656,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Yedek kopyası şematikten yeni bu nedenle asıl dosya yerine onu "
 #~ "yükleyeceğiz gözküyor.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Run lepton-schematic and correct the situation.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "gschem'i çalıştırın ve bu durumu düzeltin\n"
-#~ "\n"
 
 #, fuzzy, c-format
 #~ msgid "Could NOT set previous backup file [%1$s] read-write."

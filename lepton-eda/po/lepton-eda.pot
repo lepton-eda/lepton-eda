@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.18\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2025-06-09 15:00+0300\n"
+"POT-Creation-Date: 2025-06-16 10:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -554,4 +554,1113 @@ msgstr ""
 
 #: lepton-eda/scheme/symcheck/report.scm:93
 msgid "(use -v to view details)"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:30
+msgid "_New"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:31
+msgid "_Open..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:32
+msgid "Open Recen_t"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:34
+msgid "_Save"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:35
+msgid "Save _As..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:36
+#: lepton-eda/scheme/schematic/builtins.scm:114
+msgid "Save All"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:38
+msgid "_Print..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:39
+msgid "Write _Image..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:41
+msgid "Invoke Macro..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:42
+msgid "Execute Script..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:43
+msgid "REPL..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:45
+#: lepton-eda/scheme/schematic/builtins.scm:188
+msgid "New Window"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:46
+msgid "_Close Window"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:47
+msgid "_Quit"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:54
+msgid "_Undo"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:55
+msgid "_Redo"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:57
+msgid "Cu_t"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:58
+msgid "_Copy"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:59
+msgid "_Paste"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:60
+msgid "_Delete"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:62
+#: lepton-eda/scheme/schematic/builtins.scm:216
+msgid "Select Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:63
+#: lepton-eda/scheme/schematic/builtins.scm:223
+msgid "Select All"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:64
+#: lepton-eda/scheme/schematic/builtins.scm:258
+msgid "Deselect"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:65
+#: lepton-eda/scheme/schematic/builtins.scm:299
+msgid "Copy Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:66
+#: lepton-eda/scheme/schematic/builtins.scm:315
+msgid "Multiple Copy Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:67
+#: lepton-eda/scheme/schematic/builtins.scm:283
+msgid "Move Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:68
+msgid "Rotate 90 Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:69
+#: lepton-eda/scheme/schematic/builtins.scm:360
+msgid "Mirror Mode"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:71
+msgid "Object Properties..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:72
+#: lepton-eda/scheme/schematic/builtins.scm:385
+msgid "Edit..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:73
+msgid "Edit Text..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:74
+msgid "Slot..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:76
+#: lepton-eda/scheme/schematic/builtins.scm:436
+msgid "Lock"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:77
+#: lepton-eda/scheme/schematic/builtins.scm:464
+msgid "Unlock"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:78
+#: lepton-eda/scheme/schematic/builtins.scm:485
+msgid "Select Locked"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:80
+#: lepton-eda/scheme/schematic/builtins.scm:494
+msgid "Embed Component/Picture"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:81
+#: lepton-eda/scheme/schematic/builtins.scm:517
+msgid "Unembed Component/Picture"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:82
+#: lepton-eda/scheme/schematic/builtins.scm:540
+msgid "Update Component"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:83
+msgid "Symbol Translate..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:90
+msgid "Copy into 1"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:91
+msgid "Copy into 2"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:92
+msgid "Copy into 3"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:93
+msgid "Copy into 4"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:94
+msgid "Copy into 5"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:95
+msgid "Cut into 1"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:96
+msgid "Cut into 2"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:97
+msgid "Cut into 3"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:98
+msgid "Cut into 4"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:99
+msgid "Cut into 5"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:100
+msgid "Paste from 1"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:101
+msgid "Paste from 2"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:102
+msgid "Paste from 3"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:103
+msgid "Paste from 4"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:104
+msgid "Paste from 5"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:146
+msgid "Side Dock"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:147
+msgid "Bottom Dock"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:149
+msgid "Find Text Results"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:151
+msgid "_Redraw"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:152
+msgid "_Pan"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:153
+msgid "Zoom _Box"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:154
+msgid "Zoom _Extents"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:155
+msgid "Zoom _In"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:156
+msgid "Zoom _Out"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:157
+msgid "Zoom _Full"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:159
+msgid "_Dark Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:160
+msgid "_Light Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:161
+msgid "B_W Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:163
+msgid "Color Scheme Editor..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:207
+msgid "_Manager..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:209
+msgid "_Previous"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:210
+msgid "_Next"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:211
+msgid "_Close"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:213
+msgid "_Revert..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:215
+#: lepton-eda/scheme/schematic/builtins.scm:955
+msgid "Next Tab"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:216
+#: lepton-eda/scheme/schematic/builtins.scm:958
+msgid "Previous Tab"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:225
+msgid "_Component..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:227
+msgid "_Net"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:228
+msgid "B_us"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:230
+msgid "_Attribute..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:231
+msgid "_Text..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:233
+msgid "_Line"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:234
+msgid "Pat_h"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:235
+msgid "_Box"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:236
+msgid "C_ircle"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:237
+msgid "A_rc"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:238
+msgid "_Pin"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:240
+msgid "Pictu_re..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:247
+msgid "_Up"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:249
+msgid "_Down Schematic"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:250
+msgid "Down _Symbol"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:257
+msgid "_Attach"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:258
+msgid "_Detach"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:260
+msgid "Show _Value"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:261
+msgid "Show _Name"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:262
+msgid "Show _Both"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:263
+msgid "_Toggle Visibility"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:265
+msgid "_Hide Specific Text..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:266
+msgid "_Show Specific Text..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:267
+msgid "Show/Hide Hidden Text"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:269
+msgid "_Find Text/Check Symbol..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:270
+msgid "A_utonumber Text..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:277
+msgid "_Options..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:278
+msgid "_Font..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:280
+msgid "Grid +"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:281
+msgid "Grid -"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:283
+msgid "Grid Style: Cycle Dots/Mesh/Off"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:284
+msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:286
+msgid "Grips: On/Off"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:287
+msgid "Feedback Mode: Outline/Box"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:288
+msgid "Net: Rubberband On/Off"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:289
+msgid "Net: Magnetic On/Off"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:291
+msgid "_Coord Window"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:292
+msgid "_Log Window"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:299
+msgid "_1 allegro"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:306
+msgid "Lepton EDA Reference _Manual"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:307
+msgid "gEDA _Wiki Documentation"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:309
+msgid "Find Component D_ocumentation"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:311
+msgid "_Hotkeys..."
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:312
+msgid "_About"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:322
+msgid "_File"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:323
+msgid "_Edit"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:325
+msgid "_View"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:326
+msgid "_Page"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:327
+msgid "_Add"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:328
+msgid "Hie_rarchy"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:329
+msgid "A_ttributes"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:330
+msgid "_Options"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:331
+msgid "_Netlist"
+msgstr ""
+
+#: lepton-eda/scheme/conf/schematic/menu.scm:332
+msgid "_Help"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/action.scm:56
+#, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/action.scm:58
+msgid "There is no last action to repeat."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/action.scm:193
+msgid "Repeat Last Action"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/buffer.scm:170
+msgid "Empty clipboard"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/buffer.scm:186
+msgid "Hit E N to insert invisible objects."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:92
+msgid "Cancel"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:97
+msgid "New File"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:101
+msgid "Open File"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:104
+msgid "Save"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:107
+msgid "Save As"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:160
+msgid "Saved All"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:161
+msgid "Failed to Save All"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:169
+msgid "Print"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:172
+msgid "Export Image"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:176
+msgid "Run Script"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:181
+#, scheme-format
+msgid "Executing Guile script: ~S"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:194
+msgid "Close Window"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:195
+msgid "Closing Window"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:199
+msgid "Quit"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:204
+msgid "Terminal REPL"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:210
+msgid "Undo"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:213
+msgid "Redo"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:270
+msgid "Delete"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:289
+#: lepton-eda/scheme/schematic/builtins.scm:305
+#: lepton-eda/scheme/schematic/builtins.scm:321
+msgid "Select objs first"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:333
+msgid "Rotate Mode"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:393
+msgid "Edit Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:396
+msgid "Choose Slot"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:398
+#: lepton-eda/scheme/schematic/builtins.scm:1183
+#: lepton-eda/scheme/schematic/builtins.scm:1243
+msgid "Please select only one component!"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:400
+#: lepton-eda/scheme/schematic/builtins.scm:1206
+#: lepton-eda/scheme/schematic/builtins.scm:1275
+msgid "Please first select a component!"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:403
+msgid "Edit Object Properties"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:407
+msgid "Translate Symbol"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:417
+msgid "WARNING: Do not translate with snap off!"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:418
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:425
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:426
+msgid ""
+"WARNING: If you are translating a symbol to the origin,\n"
+"the snap grid size should be set to 100"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:489
+msgid "Invoke Macro"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:618
+#, scheme-format
+msgid "Could not find symbol ~S in library. Update failed."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:637
+msgid "Show/Hide Invisible Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:655
+msgid "Cut"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:659
+msgid "Copy"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:663
+msgid "Paste"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:701
+msgid "Sidebar"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:707
+msgid "Status"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:713
+msgid "Find Text State"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:717
+msgid "Redraw"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:721
+msgid "Pan"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:738
+msgid "Pan Left"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:746
+msgid "Pan Right"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:754
+msgid "Pan Up"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:762
+msgid "Pan Down"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:778
+msgid "Zoom Box"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:790
+msgid "Zoom Extents"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:798
+msgid "Zoom In"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:810
+msgid "Zoom Out"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:822
+msgid "Zoom Full"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:840
+msgid "Dark Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:843
+msgid "Light Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:846
+msgid "Monochrome Color Scheme"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:851
+msgid "Show Color Scheme Editor"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:858
+msgid "Revert Changes"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:916
+msgid "Page Manager"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:944
+msgid "Previous Page"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:948
+msgid "Next Page"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:952
+msgid "Close Page"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:964
+msgid "Add Component"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:968
+msgid "Add Attribute"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:984
+msgid "Add Net"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:987
+msgid "Add Bus"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:990
+msgid "Add Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:994
+msgid "Add Line"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1008
+msgid "Add Path"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1021
+msgid "Add Box"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1036
+msgid "Add Circle"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1051
+msgid "Add Arc"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1066
+msgid "Add Pin"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1081
+msgid "Add Picture"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1096
+#, scheme-format
+msgid "Failed to descend into ~S: ~A"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1097
+#, scheme-format
+msgid ""
+"Failed to descend hierarchy into ~S:\n"
+"~A\n"
+"\n"
+"~A"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1100
+msgid "The lepton-schematic log may contain more information."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1123
+msgid "Unknown error."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1126
+msgid "Failed to descend hierarchy."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1134
+#, scheme-format
+msgid "Searching for source ~S"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1178
+msgid "Down Schematic"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1214
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1239
+msgid "Down Symbol"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1247
+#, scheme-format
+msgid "Searching for symbol: ~S"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1281
+msgid "Up Hierarchy"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1288
+msgid "Cannot find any schematics above the current one!"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1303
+msgid "Attach Attributes"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1332
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1375
+msgid "Detach Attributes"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1396
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1435
+msgid "Show Attribute Value"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1440
+msgid "Show Attribute Name"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1445
+msgid "Show Name & Value"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1450
+msgid "Toggle Text Visibility"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1464
+msgid "Find Specific Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1469
+msgid "Hide Specific Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1474
+msgid "Show Specific Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1479
+msgid "Autonumber Text"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1487
+msgid "Show Hotkeys"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1492
+msgid "Switch Grid Style"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1496
+msgid "Switch Snap Mode"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1510
+msgid "Snap OFF (CAUTION!)"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1511
+msgid "Snap ON"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1512
+msgid "Snap back to the grid (CAUTION!)"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1520
+msgid "Set Grid Spacing"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1525
+msgid "Increase Grid Spacing"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1532
+msgid "Decrease Grid Spacing"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1542
+msgid "Toggle Outline Drawing"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1552
+msgid "Action feedback mode set to OUTLINE"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1556
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1563
+msgid "Toggle Net Rubber Band"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1567
+msgid "Toggle Magnetic Nets"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1573
+msgid "Show Log Window"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1576
+msgid "Show Coordinate Window"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1579
+msgid "Select Schematic Font"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1583
+msgid "Toggle Grips"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1595
+msgid "Component Documentation"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1597
+msgid "View documentation for selected component"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1610
+msgid "Lepton EDA Manual"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1611
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1616
+msgid "Lepton EDA wiki"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1617
+msgid "View the front page of the Lepton EDA wiki in a browser."
+msgstr ""
+
+#: lepton-eda/scheme/schematic/builtins.scm:1621
+msgid "About lepton-schematic"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/doc.scm:54
+msgid "Could not show documentation:"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/doc.scm:106
+#: lepton-eda/scheme/schematic/doc.scm:120
+#, scheme-format
+msgid "File does not exist:~%~a"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/doc.scm:272
+msgid "No documentation found"
+msgstr ""
+
+#: lepton-eda/scheme/schematic/keymap.scm:276
+#, scheme-format
+msgid "~S is not a prefix key sequence."
+msgstr ""
+
+#: lepton-eda/scheme/gschem/deprecated.scm:158
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#: tools/schematic/lepton-schematic.scm:102
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run after startup.\n"
+"  -s FILE                  Scheme script to run after startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#: tools/schematic/lepton-schematic.scm:164
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
 msgstr ""
