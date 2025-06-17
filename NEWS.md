@@ -38,6 +38,21 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   the option `--enable-guild` is provided on the `configure`
   stage.
 
+- The directories `scheme/` have been moved from `liblepton/` and
+  `libleptongui/` to a new directory, `lepton-eda/`.  The name of
+  the directory has been chosen to facilitate future launching of
+  the tools after building but without installing them, as the new
+  directory structure in the repository now better resembles the
+  structure of relocatable builds.  Another would-be feature is
+  using the same Scheme test suites for all the library functions
+  used for FFI.  Relative paths to the liblepton library have been
+  amended in relevant test suite drivers and helper files.
+
+- A separate directory for *PO* translation files for Scheme
+  modules has been created. *PO* and *POT* translation files from
+  the `scheme/` directories of the libraries have been merged
+  using **msgcat** and then revised.
+
 
 ### Changes in `liblepton`:
 
