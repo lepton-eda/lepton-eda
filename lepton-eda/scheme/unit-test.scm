@@ -1,6 +1,6 @@
 ;;; Autotools compatible SRFI-64 Scheme unit-test framework
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2018-2022 Lepton EDA Contributors
+;;; Copyright (C) 2018-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@
 
 ;;; Set location of liblepton library.
 (setenv "LIBLEPTON"
-        (string-join '(".." "src" "liblepton")
+        (string-join '(".." ".." "liblepton" "src" "liblepton")
                      file-name-separator-string))
 
 (use-modules (srfi srfi-64)

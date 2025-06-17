@@ -1,16 +1,15 @@
-# Spanish/Spain translation of gattrib
+# Spanish translation of libleptonattrib
 # Copyright (C) 2007-2008 Carlos Nieves Ónega
-# This file is distributed under the same license as the gattrib package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 # Carlos Nieves Ónega <cnieves@iespana.es>, 2007.
-#
-#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2022-05-29 17:54+0300\n"
-"PO-Revision-Date: 2010-01-29 16:49+0000\n"
+"PO-Revision-Date: 2025-06-11 12:00+0300\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: es\n"

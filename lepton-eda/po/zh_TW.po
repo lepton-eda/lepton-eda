@@ -1,0 +1,2041 @@
+# Traditional Chinese translation for geda
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the lepton-eda
+# package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2025-06-16 10:25+0300\n"
+"PO-Revision-Date: 2025-06-11 14:17+0300\n"
+"Last-Translator: Launchpad Translators\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
+
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid path ~S passed to component-library."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"  name: ~A\n"
+"  values: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q, --quiet             Quiet mode.\n"
+"  -v, --verbose           Verbose mode.\n"
+"  -o, --output=FILE       Filename for netlist data output.\n"
+"  -L, --load-path=DIR     Add DIR to Scheme search path.\n"
+"  -g, --backend=BACKEND   Specify netlist backend to use.\n"
+"  -f, --file-backend=FILE Specify path to netlist backend file to use.\n"
+"  -O, --backend-option=STRING\n"
+"                          Pass an option string to backend.\n"
+"  -l, --pre-load=FILE     Load Scheme file before loading backend.\n"
+"  -m, --post-load=FILE    Load Scheme file after loading backend.\n"
+"  -c, --eval-code=EXPR    Evaluate Scheme expression at startup.\n"
+"  -i, --interactive       Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends     Print a list of available netlist backends.\n"
+"  -h, --help              Help; this message.\n"
+"  -V, --version           Show version information.\n"
+"  --                      Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to open schematic files: ~?\n"
+msgstr "無法儲存備份檔：%s."
+
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr ""
+
+#, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr ""
+
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+
+msgid "Graphical symbols should have device=none"
+msgstr ""
+
+#, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr ""
+
+msgid "Wrong check log destination!"
+msgstr ""
+
+#, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Object: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr ""
+
+#, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr ""
+
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr ""
+
+msgid "numslots set to 0, symbol does not have slots"
+msgstr ""
+
+#, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+
+#, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr ""
+
+#, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Checking: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Info: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Warning: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "ERROR: ~A"
+msgstr ""
+
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "~A warning found"
+msgstr ""
+
+msgid "(use -vv to view details)"
+msgstr ""
+
+msgid "No errors found"
+msgstr ""
+
+#, scheme-format
+msgid "~A ERROR found"
+msgstr ""
+
+msgid "(use -v to view details)"
+msgstr ""
+
+msgid "_New"
+msgstr "新增檔案"
+
+msgid "_Open..."
+msgstr "開啟舊檔"
+
+msgid "Open Recen_t"
+msgstr "最近的檔案"
+
+msgid "_Save"
+msgstr "儲存檔案"
+
+msgid "Save _As..."
+msgstr "另存新檔"
+
+msgid "Save All"
+msgstr "儲存全部"
+
+msgid "_Print..."
+msgstr "列印檔案"
+
+#, fuzzy
+msgid "Write _Image..."
+msgstr "轉換成圖片"
+
+msgid "Invoke Macro..."
+msgstr ""
+
+msgid "Execute Script..."
+msgstr "執行命令稿"
+
+msgid "REPL..."
+msgstr ""
+
+msgid "New Window"
+msgstr "開新視窗"
+
+msgid "_Close Window"
+msgstr ""
+
+msgid "_Quit"
+msgstr "結束程式"
+
+msgid "_Undo"
+msgstr "還原"
+
+msgid "_Redo"
+msgstr "取消還原"
+
+msgid "Cu_t"
+msgstr "剪下"
+
+msgid "_Copy"
+msgstr "複製"
+
+msgid "_Paste"
+msgstr "貼上"
+
+msgid "_Delete"
+msgstr "刪除"
+
+msgid "Select Mode"
+msgstr "選擇模式"
+
+msgid "Select All"
+msgstr ""
+
+msgid "Deselect"
+msgstr ""
+
+msgid "Copy Mode"
+msgstr "複製模式"
+
+msgid "Multiple Copy Mode"
+msgstr "多重複製模式"
+
+msgid "Move Mode"
+msgstr "移動元件"
+
+msgid "Rotate 90 Mode"
+msgstr "逆時針旋轉90度"
+
+msgid "Mirror Mode"
+msgstr "水平鏡射"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>選項</b>"
+
+msgid "Edit..."
+msgstr "編輯"
+
+msgid "Edit Text..."
+msgstr "編輯文字"
+
+msgid "Slot..."
+msgstr ""
+
+msgid "Lock"
+msgstr "鎖定"
+
+msgid "Unlock"
+msgstr "解除鎖定"
+
+#, fuzzy
+msgid "Select Locked"
+msgstr "選擇模式"
+
+msgid "Embed Component/Picture"
+msgstr "嵌入元件/圖片"
+
+msgid "Unembed Component/Picture"
+msgstr "解除嵌入元件/圖片"
+
+msgid "Update Component"
+msgstr "更新元件資訊"
+
+msgid "Symbol Translate..."
+msgstr ""
+
+msgid "Copy into 1"
+msgstr "複製到 緩衝區1"
+
+msgid "Copy into 2"
+msgstr "複製到 緩衝區2"
+
+msgid "Copy into 3"
+msgstr "複製到 緩衝區3"
+
+msgid "Copy into 4"
+msgstr "複製到 緩衝區4"
+
+msgid "Copy into 5"
+msgstr "複製到 緩衝區5"
+
+msgid "Cut into 1"
+msgstr "剪下至 緩衝區1"
+
+msgid "Cut into 2"
+msgstr "剪下至 緩衝區2"
+
+msgid "Cut into 3"
+msgstr "剪下至 緩衝區3"
+
+msgid "Cut into 4"
+msgstr "剪下至 緩衝區4"
+
+msgid "Cut into 5"
+msgstr "剪下至 緩衝區5"
+
+msgid "Paste from 1"
+msgstr "自 緩衝區1 貼上"
+
+msgid "Paste from 2"
+msgstr "自 緩衝區2 貼上"
+
+msgid "Paste from 3"
+msgstr "自 緩衝區3 貼上"
+
+msgid "Paste from 4"
+msgstr "自 緩衝區4 貼上"
+
+msgid "Paste from 5"
+msgstr "自 緩衝區5 貼上"
+
+msgid "Side Dock"
+msgstr ""
+
+msgid "Bottom Dock"
+msgstr ""
+
+#, fuzzy
+msgid "Find Text Results"
+msgstr "新增文字"
+
+msgid "_Redraw"
+msgstr ""
+
+msgid "_Pan"
+msgstr ""
+
+msgid "Zoom _Box"
+msgstr ""
+
+msgid "Zoom _Extents"
+msgstr ""
+
+msgid "Zoom _In"
+msgstr "放大檢視"
+
+msgid "Zoom _Out"
+msgstr "縮小檢視"
+
+msgid "Zoom _Full"
+msgstr ""
+
+#, fuzzy
+msgid "_Dark Color Scheme"
+msgstr "黑色背景"
+
+#, fuzzy
+msgid "_Light Color Scheme"
+msgstr "白色背景"
+
+#, fuzzy
+msgid "B_W Color Scheme"
+msgstr "黑色背景"
+
+#, fuzzy
+msgid "Color Scheme Editor..."
+msgstr "白色背景"
+
+msgid "_Manager..."
+msgstr "管理分頁"
+
+msgid "_Previous"
+msgstr "上一個分頁"
+
+msgid "_Next"
+msgstr "下一個分頁"
+
+msgid "_Close"
+msgstr "關閉視窗"
+
+#, fuzzy
+msgid "_Revert..."
+msgstr "還原"
+
+#, fuzzy
+msgid "Next Tab"
+msgstr "新增分頁"
+
+#, fuzzy
+msgid "Previous Tab"
+msgstr "上一個分頁"
+
+msgid "_Component..."
+msgstr "元件"
+
+msgid "_Net"
+msgstr ""
+
+msgid "B_us"
+msgstr ""
+
+msgid "_Attribute..."
+msgstr "屬性"
+
+msgid "_Text..."
+msgstr "文字"
+
+msgid "_Line"
+msgstr ""
+
+msgid "Pat_h"
+msgstr ""
+
+msgid "_Box"
+msgstr ""
+
+msgid "C_ircle"
+msgstr ""
+
+msgid "A_rc"
+msgstr ""
+
+msgid "_Pin"
+msgstr ""
+
+msgid "Pictu_re..."
+msgstr ""
+
+msgid "_Up"
+msgstr ""
+
+msgid "_Down Schematic"
+msgstr ""
+
+msgid "Down _Symbol"
+msgstr ""
+
+msgid "_Attach"
+msgstr ""
+
+msgid "_Detach"
+msgstr ""
+
+msgid "Show _Value"
+msgstr ""
+
+msgid "Show _Name"
+msgstr ""
+
+msgid "Show _Both"
+msgstr ""
+
+msgid "_Toggle Visibility"
+msgstr ""
+
+msgid "_Hide Specific Text..."
+msgstr ""
+
+msgid "_Show Specific Text..."
+msgstr ""
+
+msgid "Show/Hide Hidden Text"
+msgstr ""
+
+msgid "_Find Text/Check Symbol..."
+msgstr ""
+
+msgid "A_utonumber Text..."
+msgstr ""
+
+#, fuzzy
+msgid "_Options..."
+msgstr "選項"
+
+#, fuzzy
+msgid "_Font..."
+msgstr "列印檔案"
+
+#, fuzzy
+msgid "Grid +"
+msgstr "關閉網格\n"
+
+#, fuzzy
+msgid "Grid -"
+msgstr "關閉網格\n"
+
+msgid "Grid Style: Cycle Dots/Mesh/Off"
+msgstr ""
+
+msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
+msgstr ""
+
+msgid "Feedback Mode: Outline/Box"
+msgstr ""
+
+msgid "Net: Rubberband On/Off"
+msgstr ""
+
+msgid "Net: Magnetic On/Off"
+msgstr ""
+
+#, fuzzy
+msgid "_Coord Window"
+msgstr "開新視窗"
+
+#, fuzzy
+msgid "_Log Window"
+msgstr "開新視窗"
+
+msgid "_1 allegro"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Reference _Manual"
+msgstr "gEDA 電路圖編輯器"
+
+#, fuzzy
+msgid "gEDA _Wiki Documentation"
+msgstr "元件模式"
+
+#, fuzzy
+msgid "Find Component D_ocumentation"
+msgstr "元件模式"
+
+msgid "_Hotkeys..."
+msgstr "熱鍵"
+
+#, fuzzy
+msgid "_About"
+msgstr "關於"
+
+msgid "_File"
+msgstr "檔案"
+
+msgid "_Edit"
+msgstr "編輯"
+
+msgid "_View"
+msgstr "顯示"
+
+msgid "_Page"
+msgstr "分頁"
+
+msgid "_Add"
+msgstr "新增"
+
+msgid "Hie_rarchy"
+msgstr ""
+
+msgid "A_ttributes"
+msgstr "屬性"
+
+msgid "_Options"
+msgstr "選項"
+
+msgid "_Netlist"
+msgstr ""
+
+msgid "_Help"
+msgstr "幫助"
+
+#, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
+msgstr ""
+
+msgid "Repeat Last Action"
+msgstr ""
+
+#, fuzzy
+msgid "Empty clipboard"
+msgstr "複製到剪貼簿"
+
+msgid "Hit E N to insert invisible objects."
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "New File"
+msgstr "新增分頁"
+
+#, fuzzy
+msgid "Open File"
+msgstr "開啟檔案"
+
+msgid "Save"
+msgstr "儲存"
+
+#, fuzzy
+msgid "Save As"
+msgstr "儲存全部"
+
+msgid "Saved All"
+msgstr "儲存全部"
+
+msgid "Failed to Save All"
+msgstr "儲存全部失敗"
+
+#, fuzzy
+msgid "Print"
+msgstr "列印"
+
+msgid "Export Image"
+msgstr ""
+
+msgid "Run Script"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Executing Guile script: ~S"
+msgstr "正在執行guile腳本 [%s]\n"
+
+#, fuzzy
+msgid "Close Window"
+msgstr "開新視窗"
+
+#, fuzzy
+msgid "Closing Window"
+msgstr "開新視窗"
+
+#, fuzzy
+msgid "Quit"
+msgstr "結束程式"
+
+msgid "Terminal REPL"
+msgstr ""
+
+msgid "Undo"
+msgstr "復原"
+
+msgid "Redo"
+msgstr "取消上次復原"
+
+msgid "Delete"
+msgstr "刪除"
+
+msgid "Select objs first"
+msgstr "請先選擇物件"
+
+msgid "Rotate Mode"
+msgstr "旋轉模式"
+
+msgid "Edit Text"
+msgstr "編輯文字"
+
+msgid "Choose Slot"
+msgstr ""
+
+msgid "Please select only one component!"
+msgstr ""
+
+msgid "Please first select a component!"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Object Properties"
+msgstr "<b>選項</b>"
+
+msgid "Translate Symbol"
+msgstr ""
+
+msgid "WARNING: Do not translate with snap off!"
+msgstr ""
+
+msgid "WARNING: Turning snap on and continuing with translate."
+msgstr ""
+
+msgid "WARNING: Snap grid size is not equal to 100!"
+msgstr ""
+
+msgid ""
+"WARNING: If you are translating a symbol to the origin,\n"
+"the snap grid size should be set to 100"
+msgstr ""
+
+msgid "Invoke Macro"
+msgstr ""
+
+#, scheme-format
+msgid "Could not find symbol ~S in library. Update failed."
+msgstr ""
+
+msgid "Show/Hide Invisible Text"
+msgstr ""
+
+#, fuzzy
+msgid "Cut"
+msgstr "剪下"
+
+msgid "Copy"
+msgstr "複製"
+
+#, fuzzy
+msgid "Paste"
+msgstr "貼上"
+
+msgid "Sidebar"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+#, fuzzy
+msgid "Find Text State"
+msgstr "新增文字"
+
+msgid "Redraw"
+msgstr ""
+
+msgid "Pan"
+msgstr ""
+
+msgid "Pan Left"
+msgstr ""
+
+msgid "Pan Right"
+msgstr ""
+
+msgid "Pan Up"
+msgstr ""
+
+msgid "Pan Down"
+msgstr ""
+
+msgid "Zoom Box"
+msgstr ""
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "放大檢視"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "放大檢視"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "縮小檢視"
+
+#, fuzzy
+msgid "Zoom Full"
+msgstr "縮小檢視"
+
+#, fuzzy
+msgid "Dark Color Scheme"
+msgstr "黑色背景"
+
+#, fuzzy
+msgid "Light Color Scheme"
+msgstr "白色背景"
+
+msgid "Monochrome Color Scheme"
+msgstr ""
+
+#, fuzzy
+msgid "Show Color Scheme Editor"
+msgstr "白色背景"
+
+msgid "Revert Changes"
+msgstr ""
+
+msgid "Page Manager"
+msgstr ""
+
+#, fuzzy
+msgid "Previous Page"
+msgstr "上一個分頁"
+
+#, fuzzy
+msgid "Next Page"
+msgstr "新增分頁"
+
+msgid "Close Page"
+msgstr "關閉檔案"
+
+#, fuzzy
+msgid "Add Component"
+msgstr "元件"
+
+msgid "Add Attribute"
+msgstr ""
+
+#, fuzzy
+msgid "Add Net"
+msgstr "新增文字"
+
+msgid "Add Bus"
+msgstr ""
+
+#, fuzzy
+msgid "Add Text"
+msgstr "新增文字"
+
+#, fuzzy
+msgid "Add Line"
+msgstr "直線"
+
+msgid "Add Path"
+msgstr ""
+
+msgid "Add Box"
+msgstr ""
+
+#, fuzzy
+msgid "Add Circle"
+msgstr "圓形"
+
+msgid "Add Arc"
+msgstr ""
+
+msgid "Add Pin"
+msgstr ""
+
+#, fuzzy
+msgid "Add Picture"
+msgstr "圖片"
+
+#, fuzzy, scheme-format
+msgid "Failed to descend into ~S: ~A"
+msgstr "無法讀取圖片: %s"
+
+#, fuzzy, scheme-format
+msgid ""
+"Failed to descend hierarchy into ~S:\n"
+"~A\n"
+"\n"
+"~A"
+msgstr "無法讀取圖片: %s"
+
+#, fuzzy
+msgid "The lepton-schematic log may contain more information."
+msgstr ""
+"\n"
+"啟動 gschem 來修正這個問題。\n"
+"\n"
+
+msgid "Unknown error."
+msgstr ""
+
+msgid "Failed to descend hierarchy."
+msgstr ""
+
+#, scheme-format
+msgid "Searching for source ~S"
+msgstr ""
+
+#, fuzzy
+msgid "Down Schematic"
+msgstr "gEDA 電路圖編輯器"
+
+msgid "Symbol is not a real file. Symbol cannot be loaded."
+msgstr ""
+
+msgid "Down Symbol"
+msgstr ""
+
+#, scheme-format
+msgid "Searching for symbol: ~S"
+msgstr ""
+
+msgid "Up Hierarchy"
+msgstr ""
+
+msgid "Cannot find any schematics above the current one!"
+msgstr ""
+
+#, fuzzy
+msgid "Attach Attributes"
+msgstr "屬性"
+
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Detach Attributes"
+msgstr "屬性"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
+
+#, fuzzy
+msgid "Show Attribute Value"
+msgstr "顯示名稱與數值"
+
+#, fuzzy
+msgid "Show Attribute Name"
+msgstr "屬性"
+
+msgid "Show Name & Value"
+msgstr "顯示名稱與數值"
+
+msgid "Toggle Text Visibility"
+msgstr ""
+
+msgid "Find Specific Text"
+msgstr ""
+
+msgid "Hide Specific Text"
+msgstr ""
+
+msgid "Show Specific Text"
+msgstr ""
+
+msgid "Autonumber Text"
+msgstr ""
+
+#, fuzzy
+msgid "Show Hotkeys"
+msgstr "熱鍵"
+
+msgid "Switch Grid Style"
+msgstr ""
+
+msgid "Switch Snap Mode"
+msgstr ""
+
+msgid "Snap OFF (CAUTION!)"
+msgstr ""
+
+msgid "Snap ON"
+msgstr ""
+
+msgid "Snap back to the grid (CAUTION!)"
+msgstr ""
+
+msgid "Set Grid Spacing"
+msgstr ""
+
+msgid "Increase Grid Spacing"
+msgstr ""
+
+msgid "Decrease Grid Spacing"
+msgstr ""
+
+msgid "Toggle Outline Drawing"
+msgstr ""
+
+msgid "Action feedback mode set to OUTLINE"
+msgstr ""
+
+msgid "Action feedback mode set to BOUNDINGBOX"
+msgstr ""
+
+msgid "Toggle Net Rubber Band"
+msgstr ""
+
+msgid "Toggle Magnetic Nets"
+msgstr ""
+
+#, fuzzy
+msgid "Show Log Window"
+msgstr "開新視窗"
+
+msgid "Show Coordinate Window"
+msgstr ""
+
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "選擇"
+
+msgid "Toggle Grips"
+msgstr ""
+
+#, fuzzy
+msgid "Component Documentation"
+msgstr "元件模式"
+
+msgid "View documentation for selected component"
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA Manual"
+msgstr "gEDA 電路圖編輯器"
+
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "Lepton EDA wiki"
+msgstr "gEDA 電路圖編輯器"
+
+msgid "View the front page of the Lepton EDA wiki in a browser."
+msgstr ""
+
+#, fuzzy
+msgid "About lepton-schematic"
+msgstr "關於 gschem"
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "元件模式"
+
+#, scheme-format
+msgid "File does not exist:~%~a"
+msgstr ""
+
+msgid "No documentation found"
+msgstr ""
+
+#, scheme-format
+msgid "~S is not a prefix key sequence."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run after startup.\n"
+"  -s FILE                  Scheme script to run after startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "#-#-#-#-#  zh_TW.po (geda)  #-#-#-#-#\n"
+#~ "無法儲存備份檔：%s.\n"
+#~ "#-#-#-#-#  zh_TW.po (geda)  #-#-#-#-#\n"
+
+#, fuzzy, c-format
+#~ msgid "Saved [%1$s]"
+#~ msgstr "儲存 [%s]\n"
+
+#, fuzzy
+#~ msgid "Zoom too small!  Cannot zoom further."
+#~ msgstr "已經縮到最小了，無法再縮小囉！\n"
+
+#, fuzzy
+#~ msgid "Toggle _Editor"
+#~ msgstr "白色背景"
+
+#, fuzzy
+#~ msgid "Save As.._."
+#~ msgstr "另存新檔"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not save file [%s]:\n"
+#~ "%s"
+#~ msgstr "無法儲存備份檔 [%s]\n"
+
+#, fuzzy
+#~ msgid "Save Color Scheme"
+#~ msgstr "白色背景"
+
+#~ msgid "Overwrite file?"
+#~ msgstr "覆蓋檔案？"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Could not load image at file: %1$s\n"
+#~ "%2$s"
+#~ msgstr "無法儲存備份檔 [%s]\n"
+
+#, fuzzy
+#~ msgid "<b>Snap: OFF</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Grid: OFF"
+#~ msgstr "關閉網格\n"
+
+#, fuzzy
+#~ msgid "Grid: NONE"
+#~ msgstr "關閉網格\n"
+
+#, fuzzy
+#~ msgid "Find Text:"
+#~ msgstr "新增文字"
+
+#~ msgid "Hotkeys"
+#~ msgstr "熱鍵"
+
+#, fuzzy
+#~ msgid "_Filter:"
+#~ msgstr "檔案"
+
+#, fuzzy
+#~ msgid "Clear log window?"
+#~ msgstr "開新視窗"
+
+#, fuzzy
+#~ msgid "Clear Log"
+#~ msgstr "開新視窗"
+
+#, fuzzy
+#~ msgid "Clea_r Log Window"
+#~ msgstr "開新視窗"
+
+#, fuzzy
+#~ msgid "_Fill Type:"
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "Lin_e Width:"
+#~ msgstr "直線模式"
+
+#, fuzzy
+#~ msgid "<b>Fill Properties</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Colo_r:"
+#~ msgstr "變更顏色"
+
+#, fuzzy
+#~ msgid "_Type:"
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "_Width:"
+#~ msgstr "直線模式"
+
+#, fuzzy
+#~ msgid "<b>Line Properties</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "_Pin Type:"
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "<b>Pin Properties</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "<b>Net Options</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Grid Mode:"
+#~ msgstr "弧線模式"
+
+#, fuzzy
+#~ msgid "Snap Mode:"
+#~ msgstr "複製模式"
+
+#, fuzzy
+#~ msgid "_Snap Size:"
+#~ msgstr "複製模式"
+
+#, fuzzy
+#~ msgid "<b>Snap Options</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "_Grid"
+#~ msgstr "關閉網格\n"
+
+#, fuzzy
+#~ msgid "Edit Slot"
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "<b>Text Content</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Ro_tation:"
+#~ msgstr "旋轉"
+
+#, fuzzy
+#~ msgid "<b>Text Properties</b>"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Select Box Mode"
+#~ msgstr "選擇模式"
+
+#~ msgid "Text Mode"
+#~ msgstr "文字模式"
+
+#~ msgid "Arc Mode"
+#~ msgstr "弧線模式"
+
+#~ msgid "Box Mode"
+#~ msgstr "矩形模式"
+
+#~ msgid "Circle Mode"
+#~ msgstr "圓形模式"
+
+#~ msgid "Component Mode"
+#~ msgstr "元件模式"
+
+#~ msgid "Line Mode"
+#~ msgstr "直線模式"
+
+#, fuzzy
+#~ msgid "Path Mode"
+#~ msgstr "旋轉模式"
+
+#~ msgid "Picture Mode"
+#~ msgstr "圖片模式"
+
+#, fuzzy
+#~ msgid "Modify Mode"
+#~ msgstr "複製模式"
+
+#, fuzzy
+#~ msgid "Execute Script"
+#~ msgstr "執行命令稿"
+
+#, fuzzy
+#~ msgid "Revert"
+#~ msgstr "還原"
+
+#, fuzzy
+#~ msgid "Grid OFF"
+#~ msgstr "關閉網格\n"
+
+#, fuzzy
+#~ msgid "Delete _all"
+#~ msgstr "刪除"
+
+#, fuzzy
+#~ msgid "Hidden text is now visible"
+#~ msgstr "隱藏的文字現在已經可以看見\n"
+
+#, fuzzy
+#~ msgid "Hidden text is now invisible"
+#~ msgstr "隱藏的文字現在無法看見\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set previous backup file [%1$s] read-write"
+#~ msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly"
+#~ msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save backup file [%1$s]"
+#~ msgstr "無法儲存備份檔 [%s]\n"
+
+#, fuzzy
+#~ msgid "_Open"
+#~ msgstr "開啟舊檔"
+
+#, fuzzy, c-format
+#~ msgid "Failed to load picture: %1$s"
+#~ msgstr "無法讀取圖片: %s"
+
+#, fuzzy
+#~ msgid "Select Picture"
+#~ msgstr "圖片"
+
+#, fuzzy
+#~ msgid "Slot attribute malformed"
+#~ msgstr "屬性"
+
+#, fuzzy
+#~ msgid "Edit Attribute"
+#~ msgstr "<b>編輯屬性</b>"
+
+#, fuzzy
+#~ msgid "N_ame:"
+#~ msgstr "名稱："
+
+#, fuzzy
+#~ msgid "_Value:"
+#~ msgstr "數值："
+
+#~ msgid "Show Value Only"
+#~ msgstr "僅顯示數值"
+
+#~ msgid "Show Name Only"
+#~ msgstr "僅顯示名稱"
+
+#~ msgid "Components"
+#~ msgstr "元件"
+
+#~ msgid "Selected objects"
+#~ msgstr "選擇物件"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>選項</b>"
+
+#~ msgid "Preview"
+#~ msgstr "預覽"
+
+#~ msgid "Attributes"
+#~ msgstr "屬性"
+
+#, fuzzy, c-format
+#~ msgid "Schematic: %s"
+#~ msgstr "gEDA 電路圖編輯器"
+
+#, fuzzy, c-format
+#~ msgid "Unable to write %1$s file %2$s."
+#~ msgstr "無法讀取圖片: %s"
+
+#~ msgid "Width x Height"
+#~ msgstr "寬度 x 高度"
+
+#~ msgid "Image type"
+#~ msgstr "圖片格式"
+
+#, fuzzy
+#~ msgid "Color mode"
+#~ msgstr "黑色背景"
+
+#, fuzzy
+#~ msgid "Color"
+#~ msgstr "變更顏色"
+
+#, fuzzy
+#~ msgid "Write Image"
+#~ msgstr "轉換成圖片"
+
+#, fuzzy
+#~ msgid "Add Co_mponent..."
+#~ msgstr "元件"
+
+#, fuzzy
+#~ msgid "Add Te_xt..."
+#~ msgstr "新增文字"
+
+#, fuzzy
+#~ msgid "Add _Attribute..."
+#~ msgstr "屬性"
+
+#, fuzzy
+#~ msgid "Add _Net"
+#~ msgstr "新增文字"
+
+#, fuzzy
+#~ msgid "_Edit..."
+#~ msgstr "編輯"
+
+#, fuzzy
+#~ msgid "Ed_it Text..."
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "_Object Properties..."
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Hierarchy: Down _Schematic"
+#~ msgstr "gEDA 電路圖編輯器"
+
+#, fuzzy
+#~ msgid "Copy to all"
+#~ msgstr "複製到 緩衝區1"
+
+#, fuzzy
+#~ msgid "Sho_w inherited attributes"
+#~ msgstr "屬性"
+
+#, fuzzy
+#~ msgid "_Name:"
+#~ msgstr "名稱："
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>增加屬性</b>"
+
+#, fuzzy, c-format
+#~ msgid "%1$i attribute"
+#~ msgid_plural "%1$i attributes"
+#~ msgstr[0] "屬性"
+#~ msgstr[1] "屬性"
+
+#~ msgid "New Page"
+#~ msgstr "新增分頁"
+
+#~ msgid "Open Page..."
+#~ msgstr "開啟舊檔"
+
+#~ msgid "Save Page"
+#~ msgstr "儲存檔案"
+
+#, fuzzy, c-format
+#~ msgid "Failed to write PDF to '%1$s': %2$s\n"
+#~ msgstr "無法讀取圖片: %s"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "關閉視窗"
+
+#, fuzzy
+#~ msgid "Page _Manager..."
+#~ msgstr "管理分頁"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "選項"
+
+#, fuzzy
+#~ msgid "Object Properties"
+#~ msgstr "<b>選項</b>"
+
+#, fuzzy
+#~ msgid "Color Scheme Editor"
+#~ msgstr "白色背景"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save page [%1$s]\n"
+#~ msgstr "無法儲存備份檔 [%s]\n"
+
+#~ msgid "Error while trying to save"
+#~ msgstr "儲存檔案時發生錯誤"
+
+#, fuzzy, c-format
+#~ msgid "Saved as [%1$s]"
+#~ msgstr "另存為 [%s]\n"
+
+#~ msgid "Saved"
+#~ msgstr "儲存"
+
+#, fuzzy, c-format
+#~ msgid "Closing [%1$s]"
+#~ msgstr "關閉 [%s]\n"
+
+#~ msgid "New"
+#~ msgstr "新增分頁"
+
+#, fuzzy
+#~ msgid "Open file"
+#~ msgstr "開啟檔案"
+
+#~ msgid "Save file"
+#~ msgstr "儲存檔案"
+
+#~ msgid "Undo last operation"
+#~ msgstr "復原上一次操作"
+
+#~ msgid "Redo last undo"
+#~ msgstr "取消上一次復原"
+
+#~ msgid "Component"
+#~ msgstr "元件"
+
+#~ msgid "Add Text..."
+#~ msgstr "新增文字"
+
+#~ msgid "Select"
+#~ msgstr "選擇"
+
+#~ msgid "Select mode"
+#~ msgstr "選擇模式"
+
+#, fuzzy, c-format
+#~ msgid "New file [%s]"
+#~ msgstr "新增分頁"
+
+#~ msgid "Failed to load file"
+#~ msgstr "讀取檔案失敗"
+
+#, fuzzy
+#~ msgid "Lepton EDA Schematic Editor"
+#~ msgstr "gEDA 電路圖編輯器"
+
+#, fuzzy
+#~ msgid ""
+#~ "Create and edit electrical schematics and symbols with lepton-schematic"
+#~ msgstr "用 gschem 建立並編輯電子電路圖表及符號"
+
+#, fuzzy
+#~ msgid "Print Page"
+#~ msgstr "上一個分頁"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid color [ %1$s ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid bus ripper direction [ %1$s ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "Component not found:\n"
+#~ " %1$s"
+#~ msgstr ""
+#~ "找不到以下元件：\n"
+#~ "        %s"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported picture angle [ %1$d ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an invalid text size [ %1$s ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text angle [ %1$s ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Found an unsupported text alignment [ %1$s ]"
+#~ msgstr "找尋到無效的顏色 [%s]\n"
+
+#, fuzzy, c-format
+#~ msgid ""
+#~ "\n"
+#~ "WARNING: Found an autosave backup file:\n"
+#~ "  %1$s.\n"
+#~ "\n"
+#~ msgstr "無法儲存備份檔：%s."
+
+#~ msgid "I could not guess if it is newer, so you have to do it manually.\n"
+#~ msgstr "我無法確定這個檔案是否比較新，你必須自己決定。\n"
+
+#, fuzzy, c-format
+#~ msgid "Cannot find file %1$s: %2$s"
+#~ msgstr "無法找到檔案 %s: %s"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set previous backup file [%1$s] read-write."
+#~ msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+#~ msgid "Can't save backup file: %1$s."
+#~ msgstr "無法儲存備份檔：%s."
+
+#, fuzzy, c-format
+#~ msgid "Could NOT set backup file [%1$s] readonly."
+#~ msgstr "無法設定備份檔[%s]為唯讀\n"
+
+#, fuzzy, c-format
+#~ msgid "Could NOT save file: %1$s"
+#~ msgstr "無法儲存[%s]\n"
+
+#, fuzzy, c-format
+#~ msgid "Unable to delete backup file %1$s."
+#~ msgstr "無法儲存備份檔：%s."
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "無法儲存[%s]\n"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "複製模式"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "關閉網格\n"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "網格(%s, %s)"
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "選擇"
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "gEDA/gschem 版本 %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem 版本 %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "目前的語系設定: %s\n"
+
+#, fuzzy
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "選擇物件"
+#~ msgstr[1] "選擇物件"
+
+#~ msgid "Attribute"
+#~ msgstr "屬性"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "屬性"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "選擇"
+
+#, fuzzy
+#~ msgid "Zoom box"
+#~ msgstr "放大檢視"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>編輯屬性</b>"
+
+#~ msgid "Save as..."
+#~ msgstr "另存為..."
+
+#~ msgid "Write image..."
+#~ msgstr "匯出成圖片"
+
+#, fuzzy
+#~ msgid "Text Entry..."
+#~ msgstr "文字"
+
+#~ msgid "Move"
+#~ msgstr "搬移"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "讀取檔案失敗"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "多重複製"
+
+#~ msgid "Edit"
+#~ msgstr "編輯"
+
+#~ msgid "Rotate"
+#~ msgstr "旋轉"
+
+#~ msgid "Embed"
+#~ msgstr "嵌入"
+
+#~ msgid "Unembed"
+#~ msgstr "解除嵌入"
+
+#~ msgid "Update"
+#~ msgstr "更新"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "複製到剪貼簿"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "剪下至剪貼簿"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "從剪貼簿貼上"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "複製"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "剪下至 緩衝區1"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "貼上"
+
+#~ msgid "Line"
+#~ msgstr "直線"
+
+#~ msgid "Box"
+#~ msgstr "矩形"
+
+#~ msgid "Circle"
+#~ msgstr "圓形"
+
+#~ msgid "Arc"
+#~ msgstr "弧線"
+
+#, fuzzy
+#~ msgid "Edit Pin Type..."
+#~ msgstr "編輯文字"
+
+#~ msgid "Color..."
+#~ msgstr "變更顏色"
+
+#~ msgid "_Dark color scheme"
+#~ msgstr "黑色背景"
+
+#~ msgid "_Light color scheme"
+#~ msgstr "白色背景"
+
+#, fuzzy
+#~ msgid "Text Size..."
+#~ msgstr "文字"
+
+#, fuzzy
+#~ msgid "Edit Fill Type"
+#~ msgstr "編輯文字"
+
+#, fuzzy
+#~ msgid "Edit Pin Type"
+#~ msgstr "編輯文字"
+
+#~ msgid "Object already locked\n"
+#~ msgstr "物件已經被固定住了\n"
+
+#~ msgid "Object already unlocked\n"
+#~ msgstr "物件已經被解除固定了\n"
+
+#~ msgid "Open file..."
+#~ msgstr "開啟檔案"
+
+#, fuzzy
+#~ msgid "Embed Component/Pictore"
+#~ msgstr "嵌入元件/圖片"
+
+#~ msgid "Ne_w"
+#~ msgstr "新增分頁"
+
+#~ msgid "_Buffer"
+#~ msgstr "緩衝區"
+
+#~ msgid "_Discard"
+#~ msgstr "捨棄分頁"

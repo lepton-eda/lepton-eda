@@ -43,7 +43,7 @@
 
 (test-begin "spice-noqsi")
 
-;;; Something like "../../../../liblepton/scheme".
+;;; Something like "../../../../lepton-eda/scheme".
 (define srcdir (getenv "srcdir"))
 (define top-srcdir (string-append srcdir "/../../"))
 

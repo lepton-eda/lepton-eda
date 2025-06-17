@@ -95,14 +95,3 @@ libleptongui/src/x_widgets.c
 libleptongui/src/x_window.c
 
 libleptongui/data/lepton-schematic.desktop.in
-
-libleptongui/scheme/conf/schematic/menu.scm
-
-libleptongui/scheme/schematic/action.scm
-libleptongui/scheme/schematic/buffer.scm
-libleptongui/scheme/schematic/builtins.scm
-libleptongui/scheme/schematic/doc.scm
-libleptongui/scheme/schematic/keymap.scm
-libleptongui/scheme/gschem/deprecated.scm
-
-tools/schematic/lepton-schematic.scm

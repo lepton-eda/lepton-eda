@@ -34,8 +34,8 @@ lepton-tragesym.go: lepton-tragesym
 	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
-	-L $(abs_top_srcdir)/liblepton/scheme \
-	-L $(abs_top_builddir)/liblepton/scheme \
+	-L $(abs_top_srcdir)/lepton-eda/scheme \
+	-L $(abs_top_builddir)/lepton-eda/scheme \
 	$(GUILE_WARNINGS) -o "$@" "$<"
 
 nobase_go_DATA = lepton-tragesym.go

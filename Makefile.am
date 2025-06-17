@@ -14,6 +14,7 @@ SUBDIRS = \
 	liblepton \
 	${ATTRIB_DIR} \
 	libleptongui \
+	lepton-eda \
 	tools \
 	symbols \
 	${DOC_DIR} \
