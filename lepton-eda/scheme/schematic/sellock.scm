@@ -1,6 +1,8 @@
 ;; Lepton EDA
+;; Scheme API
 ;; ( schematic sellock ) module: select locked components.
 ;; Copyright (C) 2020-2023 dmn <graahnul.grom@ya.ru>
+;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file.
 ;;
 
@@ -8,6 +10,9 @@
   #:use-module ( ice-9 format )
   #:use-module ( srfi srfi-1 )
   #:use-module ( system foreign )
+
+  #:use-module (lepton gettext)
+
   #:use-module ( schematic window global )
   #:use-module ( schematic ffi )
   #:use-module ( lepton log )
@@ -17,7 +22,6 @@
   #:use-module ( schematic window )
   #:use-module ( schematic selection )
   #:use-module ( schematic dialog )
-  #:use-module ( schematic gettext )
 
   #:export ( select-locked )
 )

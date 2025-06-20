@@ -1,6 +1,6 @@
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
              (lepton eval)
              (lepton ffi)
              (lepton file-system)
+             (lepton gettext)
              (lepton log)
              (lepton m4)
              (lepton os)
@@ -31,7 +32,6 @@
              (lepton page foreign)
              (lepton srfi-37)
              (lepton version)
-             (schematic gettext)
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
@@ -46,6 +46,8 @@
 
 
 ;;; Localization.
+(bindtextdomain %lepton-gettext-domain %lepton-localedir)
+(bind-textdomain-codeset %lepton-gettext-domain "UTF-8")
 (bindtextdomain %schematic-gettext-domain %lepton-localedir)
 (textdomain %schematic-gettext-domain)
 (bind-textdomain-codeset %schematic-gettext-domain "UTF-8")

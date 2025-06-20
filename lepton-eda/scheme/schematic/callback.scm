@@ -24,6 +24,7 @@
   #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
 
@@ -32,7 +33,6 @@
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog new-text)
   #:use-module (schematic ffi)
-  #:use-module (schematic gettext)
   #:use-module (schematic preview-widget)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)

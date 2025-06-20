@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2011-2013 gEDA Contributors
-;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
 
-  #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic hook)

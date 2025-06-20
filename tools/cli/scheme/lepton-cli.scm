@@ -1,7 +1,7 @@
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012-2013 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2012-2014 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -134,12 +134,11 @@ Lepton EDA homepage: <~A>
                   (cons prog-name (cdr %rest-args)))))
        '())))
 
-(define %cli-gettext-domain "lepton-cli")
 
 ;;; Localization.
-(bindtextdomain %cli-gettext-domain %lepton-localedir)
-(textdomain %cli-gettext-domain)
-(bind-textdomain-codeset %cli-gettext-domain "UTF-8")
+(bindtextdomain %lepton-gettext-domain %lepton-localedir)
+(textdomain %lepton-gettext-domain)
+(bind-textdomain-codeset %lepton-gettext-domain "UTF-8")
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
 

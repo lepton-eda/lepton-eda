@@ -186,8 +186,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   - the structure of the type `SchematicNewText`,
   - the structure of the type `SchematicPreview`.
 
-- The module `(schematic core gettext)` has been renamed to
-  `(schematic gettext)`.
+- The module `(schematic core gettext)` has been removed.
+  `(lepton gettext)` is now used for all Scheme files instead.
 
 - A new Scheme module, `(schematic window foreign)`, has been
   introduced.  It contains foreign wrappers and functions for

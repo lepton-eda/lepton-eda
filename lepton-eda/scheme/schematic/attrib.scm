@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,13 +25,13 @@
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton object foreign)
   #:use-module (lepton object text)
   #:use-module (lepton page)
 
-  #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)

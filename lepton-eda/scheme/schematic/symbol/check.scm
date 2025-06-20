@@ -1,6 +1,6 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,10 +20,11 @@
 (define-module (schematic symbol check)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
+
+  #:use-module (lepton gettext)
   #:use-module (lepton object foreign)
   #:use-module (lepton page)
 
-  #:use-module (schematic gettext)
   #:use-module (schematic dialog)
   #:use-module (schematic window)
   #:use-module (symbol blame)

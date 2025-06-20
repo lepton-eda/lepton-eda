@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2024 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
 ;;
 
 (define-module (schematic action)
-  #:use-module (lepton log)
   #:use-module (ice-9 optargs)
 
-  #:use-module (schematic gettext)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
+
   #:use-module (schematic hook)
   #:use-module (schematic mouse-pointer)
 

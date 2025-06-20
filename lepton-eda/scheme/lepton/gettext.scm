@@ -1,6 +1,6 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,12 +24,17 @@
 (define-module (lepton gettext)
   #:use-module (lepton m4)
 
-  #:export (G_
+  #:export (%lepton-gettext-domain
+            %schematic-gettext-domain
+
+            G_
             N_))
 
+(define %lepton-gettext-domain "lepton-eda")
+(define %schematic-gettext-domain "libleptongui")
 
 (define (G_ msg)
-  (gettext msg %m4-liblepton-gettext-domain))
+  (gettext msg %lepton-gettext-domain))
 
 (define (N_ msgid msgid-plural n)
-  (ngettext msgid msgid-plural n %m4-liblepton-gettext-domain))
+  (ngettext msgid msgid-plural n %lepton-gettext-domain))

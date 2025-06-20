@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2024 Lepton EDA Contributors
+;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton gerror)
+  #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
@@ -45,7 +46,6 @@
   #:use-module (schematic buffer)
   #:use-module (schematic callback)
   #:use-module (schematic canvas)
-  #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
   #:use-module (schematic dialog file-select)
