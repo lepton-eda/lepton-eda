@@ -297,6 +297,10 @@ AC_CONFIG_FILES([Makefile
                  lepton-eda/Makefile
                  lepton-eda/po/Makefile.in
                  lepton-eda/scheme/Makefile
+                 lepton-eda/sym/Makefile
+                 lepton-eda/sym-gnetman/Makefile
+                 lepton-eda/sym-verilog/Makefile
+                 lepton-eda/sym-vhdl/Makefile
 
                  liblepton/Makefile
                  liblepton/liblepton.pc
@@ -406,10 +410,6 @@ AC_CONFIG_FILES([Makefile
                  symbols/Makefile
                  symbols/docs/Makefile
                  symbols/scheme/Makefile
-                 symbols/sym/Makefile
-                 symbols/sym-gnetman/Makefile
-                 symbols/sym-verilog/Makefile
-                 symbols/sym-vhdl/Makefile
 
                  docs/Makefile
                  docs/changelogs/Makefile

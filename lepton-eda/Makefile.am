@@ -1,5 +1,9 @@
 SUBDIRS = \
 	po \
+	sym \
+	sym-gnetman \
+	sym-verilog \
+	sym-vhdl \
 	scheme
 
 rcdatadir = $(LEPTONDATADIR)
