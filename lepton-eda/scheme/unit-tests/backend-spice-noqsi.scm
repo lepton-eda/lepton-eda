@@ -48,7 +48,7 @@
 (define top-srcdir (string-append srcdir "/../../"))
 
 ;;; Paths. Assuming we're in the liblepton/scheme/ directory.
-(define symbol-lib (string-append top-srcdir "symbols/sym"))
+(define symbol-lib (string-append top-srcdir "lepton-eda/sym"))
 (define schematic-base (string-append top-srcdir "tools/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
 (define input-schematic (string-append schematic-base ".sch"))
 (define output-circuit (string-append schematic-base ".cir"))
