@@ -94,6 +94,14 @@ is not supported for your OS, sorry.\n")
             (putenv "LIBLEPTONGUI")
             (setenv "LIBLEPTONGUI" %libleptongui)
             ;; Define directories for configuration and data files.
+            (let ((current-xdg-data-dirs (getenv "XDG_DATA_DIRS")))
+              (putenv "XDG_DATA_DIRS")
+              (setenv "XDG_DATA_DIRS"
+                      (if current-xdg-data-dirs
+                          (string-append %m4-abs-top-srcdir
+                                         ":"
+                                         current-xdg-data-dirs)
+                          %m4-abs-top-srcdir)))
             (let ((current-xdg-config-dirs (getenv "XDG_CONFIG_DIRS")))
               (putenv "XDG_CONFIG_DIRS")
               (setenv "XDG_CONFIG_DIRS"
