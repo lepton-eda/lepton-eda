@@ -9,6 +9,9 @@
 
              (backend spice-noqsi))
 
+(define *abs-top-srcdir* (getenv "abs_top_srcdir"))
+
+
 ;;; Helper functions.
 
 ;;; Checks, if a line is a comment or blank line.
@@ -43,13 +46,12 @@
 
 (test-begin "spice-noqsi")
 
-;;; Something like "../../../../lepton-eda/scheme".
-(define srcdir (getenv "srcdir"))
-(define top-srcdir (string-append srcdir "/../../"))
-
 ;;; Paths. Assuming we're in the liblepton/scheme/ directory.
-(define symbol-lib (string-append top-srcdir "lepton-eda/sym"))
-(define schematic-base (string-append top-srcdir "tools/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
+(define symbol-lib (string-append *abs-top-srcdir*
+                                  "/lepton-eda/sym"))
+(define schematic-base
+  (string-append *abs-top-srcdir*
+                 "/tools/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
 (define input-schematic (string-append schematic-base ".sch"))
 (define output-circuit (string-append schematic-base ".cir"))
 

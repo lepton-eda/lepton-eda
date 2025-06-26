@@ -6,6 +6,9 @@
              (lepton object)
              (lepton page))
 
+(define *abs-top-srcdir* (getenv "abs_top_srcdir"))
+
+
 (test-begin "component" 13)
 
 (let* ((a (make-component "test component" '(1 . 2) 0 #t #f))
@@ -201,7 +204,8 @@
 
 ;; Set up component library, making blatant assumptions about the
 ;; directory layout.
-(component-library (string-join (list (getenv "srcdir") "../../lepton-eda/sym/analog") "/")
+(component-library (string-append *abs-top-srcdir*
+                                  "/lepton-eda/sym/analog")
                    "Basic devices")
 
 (define object-type-func-alist
@@ -391,7 +395,7 @@
 
 ;;; Test component-library-command().
 (define script-contents
-  (with-input-from-file (string-append (getenv "abs_top_srcdir")
+  (with-input-from-file (string-append *abs-top-srcdir*
                                        "/docs/manual/cmd-component.sh")
     read-string))
 

@@ -5,6 +5,9 @@
              (lepton page)
              ((geda object) #:renamer (symbol-prefix-proc 'geda:)))
 
+(define *abs-top-srcdir* (getenv "abs_top_srcdir"))
+
+
 (test-begin "geda:component" 13)
 
 (let ((a (geda:make-component "test component" '(1 . 2) 0 #t #f)))
@@ -173,7 +176,8 @@
 
 ;; Set up component library, making blatant assumptions about the
 ;; directory layout.
-(component-library (string-join (list (getenv "srcdir") "../../lepton-eda/sym/analog") "/")
+(component-library (string-append *abs-top-srcdir*
+                                  "/lepton-eda/sym/analog")
                    "Basic devices")
 
 (test-begin "geda:component/library" 8)
