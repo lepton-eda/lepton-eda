@@ -109,6 +109,12 @@ is not supported for your OS, sorry.\n")
                                     "libleptongui"
                                     "src"
                                     "libleptongui")
+                              file-name-separator-string))
+                (%libleptonattrib
+                 (string-join (list %m4-abs-top-builddir
+                                    "libleptonattrib"
+                                    "src"
+                                    "libleptonattrib")
                               file-name-separator-string)))
             ;; Add directory with Scheme modules to %load-path.
             (add-to-load-path %lepton-scheme-dir)
@@ -117,6 +123,8 @@ is not supported for your OS, sorry.\n")
             (setenv "LIBLEPTON" %liblepton)
             (putenv "LIBLEPTONGUI")
             (setenv "LIBLEPTONGUI" %libleptongui)
+            (putenv "LIBLEPTONATTRIB")
+            (setenv "LIBLEPTONATTRIB" %libleptonattrib)
             ;; Define directories for configuration and data files.
             (let ((current-xdg-data-dirs (getenv "XDG_DATA_DIRS")))
               (putenv "XDG_DATA_DIRS")
