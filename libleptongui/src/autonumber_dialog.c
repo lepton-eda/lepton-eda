@@ -1248,12 +1248,18 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 }
 
 
-/*! \brief Gets or generates free numbers for the autonumbering process.
+/*! \brief Handle all the options of the Autonumber text dialog.
  *  \par Function Description
- *  This function gets or generates new numbers for the
- *  <B>LeptonObject o_current</B>.  It uses the element numbers
- *  <B>used_numbers</B> and the list of the free slots
- *  <B>free_slots</B> of the #SchematicAutonumber struct.
+ *  This function receives the options of the the autonumber text
+ *  dialog in an #SchematicAutonumber structure and then gets or
+ *  generates new numbers for the object \p o_current.  It uses
+ *  the element numbers \c used_numbers and the list of the free
+ *  slots \c free_slots of the #SchematicAutonumber struct.  First
+ *  it collects all pages of a hierarchical schematic.  Second it
+ *  gets all matching text elements for the searchtext.  Then it
+ *  renumbers all text elements of all schematic pages. The
+ *  renumbering follows the rules of the parameters given in the
+ *  autonumber text dialog.
  *
  *  The attribute "slot" is set if autoslotting is active, else it
  *  is set to zero.
@@ -1437,32 +1443,6 @@ schematic_autonumber_make_renumber_list (SchematicAutonumber *autotext,
   return o_list;
 }
 
-
-/*! \brief Handles all the options of the autonumber text dialog
- *  \par Function Description
- *  This function is the master of all autonumber code. It
- *  receives the options of the the autonumber text dialog in an
- *  #SchematicAutonumber structure.  First it collects all pages
- *  of a hierarchical schematic.  Second it gets all matching text
- *  elements for the searchtext.  Then it renumbers all text
- *  elements of all schematic pages. The renumbering follows the
- *  rules of the parameters given in the autonumber text dialog.
- *
- *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] o_current The object to renumber.
- */
-void
-schematic_autonumber_run (SchematicAutonumber *autotext,
-                          LeptonObject *o_current)
-{
-  if (schematic_autonumber_get_autotext_removenum (autotext))
-  {
-    schematic_autonumber_remove_number (autotext, o_current);
-  } else {
-    /* get valid numbers from the database */
-    schematic_autonumber_get_new_numbers (autotext, o_current);
-  }
-}
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
 

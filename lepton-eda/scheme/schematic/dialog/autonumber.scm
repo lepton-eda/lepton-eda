@@ -125,7 +125,9 @@
        ;; 3. Renumber/reslot the objects.
        (for-each
         (lambda (*object)
-          (schematic_autonumber_run *autotext *object))
+          (if (true? (schematic_autonumber_get_autotext_removenum *autotext))
+              (schematic_autonumber_remove_number *autotext *object)
+              (schematic_autonumber_get_new_numbers *autotext *object)))
         (glist->list *sorted-objects identity))
        (g_list_free *sorted-objects))
 
