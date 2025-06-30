@@ -223,11 +223,6 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
-schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
-                                     LeptonObject *o_current,
-                                     gint number,
-                                     gint slot);
-void
 schematic_autonumber_clear_database (SchematicAutonumber *autotext);
 
 GtkWidget*
@@ -235,9 +230,7 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current,
-                                      gint *number,
-                                      gint *slot);
+                                      LeptonObject *o_current);
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);

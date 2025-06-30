@@ -1255,18 +1255,15 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  <B>used_numbers</B> and the list of the free slots
  *  <B>free_slots</B> of the #SchematicAutonumber struct.
  *
- *  The new number is returned into the <B>number</B> parameter.
- *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
+ *  The attribute "slot" is set if autoslotting is active, else it
+ *  is set to zero.
+ *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] o_current The \c LeptonObject instance to process.
- *  \param [in,out] number The new number.
- *  \param [in,out] slot The new slot number.
  */
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current,
-                                      gint *number,
-                                      gint *slot)
+                                      LeptonObject *o_current)
 {
   GList *item;
   gint new_number, numslots, i;
@@ -1274,6 +1271,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   LeptonObject *o_parent = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
+  char *str;
+  gint number, slot;
 
   new_number = autotext->startnum;
 
@@ -1292,8 +1291,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {
       freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
-      *number = freeslot->number;
-      *slot = freeslot->slotnr;
+      number = freeslot->number;
+      slot = freeslot->slotnr;
       g_free(freeslot);
       autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
 
@@ -1312,8 +1311,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     else  /* new_number == item->data */
       new_number++;
   }
-  *number = new_number;
-  *slot = 0;
+  number = new_number;
+  slot = 0;
 
   /* insert the new number to the used list */
   autotext->used_numbers = g_list_insert_sorted(autotext->used_numbers,
@@ -1329,7 +1328,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
       g_free(numslot_str);
       if (numslots > 0) {
         /* Yes! -> new number and slot=1; add the other slots to the database */
-        *slot = 1;
+        slot = 1;
         for (i=2; i <=numslots; i++) {
           freeslot = g_new (SchematicAutonumberSlot, 1);
           freeslot->symbolname = lepton_component_object_get_basename (o_parent);
@@ -1342,7 +1341,26 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
       }
     }
   }
+
+  /* Updates the text content of the "slot" attribute of the
+   * object if the slot value is not zero. */
+  if (slot != 0) {
+    /* Update the slot on the owning object. */
+    str = g_strdup_printf ("slot=%d", slot);
+    o_slot_end (autotext->w_current,
+                lepton_object_get_attached_to (o_current),
+                str);
+    g_free (str);
+  }
+
+  /* Replace old text. */
+  str = g_strdup_printf ("%s%d", autotext->current_searchtext, number);
+  lepton_text_object_set_string (o_current, str);
+  g_free (str);
+
+  schematic_window_active_page_changed (autotext->w_current);
 }
+
 
 /** @brief Removes the number from the element.
  *
@@ -1384,37 +1402,6 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
   schematic_window_active_page_changed (autotext->w_current);
 }
 
-/*! \brief Changes the number <B>LeptonObject</B> element. Changes the slot attribute.
- *  \par Function Description
- *  This function updates the text content of the <B>o_current</B> object.
- *  If the <B>slot</B> value is not zero. It updates the slot attribut of the
- *  component element that is also the parent object of the o_current element.
- */
-void
-schematic_autonumber_apply_new_text (SchematicAutonumber *autotext,
-                                     LeptonObject *o_current,
-                                     gint number,
-                                     gint slot)
-{
-  char *str;
-
-  if (slot != 0) {
-    /* update the slot on the owning object */
-    str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (autotext->w_current,
-                lepton_object_get_attached_to (o_current),
-                str);
-    g_free (str);
-  }
-
-  /* replace old text */
-  str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
-  lepton_text_object_set_string (o_current, str);
-  g_free (str);
-
-  schematic_window_active_page_changed (autotext->w_current);
-}
-
 
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
@@ -1435,7 +1422,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 {
   GList *obj_item;
   LeptonObject *o_current;
-  gint number, slot;
+  gint number;
   GList *o_list = NULL;
   const GList *iter;
 
@@ -1486,9 +1473,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     else
     {
       /* get valid numbers from the database */
-      schematic_autonumber_get_new_numbers (autotext, o_current, &number, &slot);
-      /* and apply it. TODO: join these two functions */
-      schematic_autonumber_apply_new_text (autotext, o_current, number, slot);
+      schematic_autonumber_get_new_numbers (autotext, o_current);
     }
   }
   g_list_free(o_list);
