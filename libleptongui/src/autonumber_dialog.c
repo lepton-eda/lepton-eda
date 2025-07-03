@@ -1298,14 +1298,14 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] o_current The \c LeptonObject instance to process.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
- *  \param [in] automatic_slotting Whether the slot renumbering is
- *              enabled in the Autonumber dialog.
+ *  \param [in] renumber_slots Whether slots have to be renumbered
+ *              as well.
  */
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       LeptonObject *o_current,
                                       LeptonObject *o_parent,
-                                      gboolean automatic_slotting)
+                                      gboolean renumber_slots)
 {
   GList *item;
   gint new_number, numslots, i;
@@ -1318,7 +1318,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  if (automatic_slotting && o_parent != NULL)
+  if (renumber_slots)
   {
     freeslot =
       schematic_autonumber_slot_new (0, 0, lepton_component_object_get_basename (o_parent));
@@ -1364,7 +1364,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                           (GCompareFunc) autonumber_sort_numbers));
 
     /* 3. is o_current a slotted object ? */
-    if (automatic_slotting && o_parent != NULL)
+    if (renumber_slots)
     {
       numslot_str =
         lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);

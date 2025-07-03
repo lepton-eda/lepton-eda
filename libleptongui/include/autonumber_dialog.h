@@ -232,7 +232,7 @@ void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       LeptonObject *o_current,
                                       LeptonObject *o_parent,
-                                      gboolean automatic_slotting);
+                                      gboolean renumber_slots);
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);
