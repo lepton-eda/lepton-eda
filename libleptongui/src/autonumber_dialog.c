@@ -1297,15 +1297,16 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] o_current The \c LeptonObject instance to process.
+ *  \param [in] o_parent The parent object of \p o_current, or NULL.
  */
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current)
+                                      LeptonObject *o_current,
+                                      LeptonObject *o_parent)
 {
   GList *item;
   gint new_number, numslots, i;
   SchematicAutonumberSlot *freeslot;
-  LeptonObject *o_parent = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
   char *str;
@@ -1314,7 +1315,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  o_parent = lepton_object_get_attached_to (o_current);
   if (schematic_autonumber_get_autotext_slotting (autotext) &&
       o_parent != NULL)
   {

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,7 +230,8 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current);
+                                      LeptonObject *o_current,
+                                      LeptonObject *o_parent);
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);
