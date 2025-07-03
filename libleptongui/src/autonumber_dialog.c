@@ -1362,7 +1362,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                           (GCompareFunc) autonumber_sort_numbers));
 
     /* 3. is o_current a slotted object ? */
-    if ((autotext->slotting) && o_parent != NULL) {
+    if (schematic_autonumber_get_autotext_slotting (autotext) &&
+        o_parent != NULL)
+    {
       numslot_str =
         lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
       if (numslot_str != NULL) {
