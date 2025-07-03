@@ -176,6 +176,10 @@
    (schematic_autonumber_get_autotext_window *autotext)))
 
 
+(define (renumber! *autotext *object)
+  (schematic_autonumber_get_new_numbers *autotext *object))
+
+
 (define (autonumber-by-template! *autotext *window page-list *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
@@ -256,7 +260,7 @@
         (lambda (*object)
           (if (true? (schematic_autonumber_get_autotext_removenum *autotext))
               (remove-number! *autotext *object)
-              (schematic_autonumber_get_new_numbers *autotext *object)))
+              (renumber! *autotext *object)))
         (glist->list *sorted-objects identity))
        (g_list_free *sorted-objects))
 
