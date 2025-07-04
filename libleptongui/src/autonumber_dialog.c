@@ -1299,6 +1299,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  \param [in] w_current The #SchematicWindow instance the
  *              Autonumber dialog belongs to.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
+ *  \param [in] parent_name The component name of the parent object.
  *  \param [in] renumber_slots Whether slots have to be renumbered
  *              as well.
  *  \return The number for renumbering.
@@ -1307,6 +1308,7 @@ int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
+                                      char *parent_name,
                                       gboolean renumber_slots)
 {
   GList *item;
@@ -1323,7 +1325,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (renumber_slots)
   {
     freeslot =
-      schematic_autonumber_slot_new (0, 0, lepton_component_object_get_basename (o_parent));
+      schematic_autonumber_slot_new (0, 0, parent_name);
     freeslot_item = g_list_find_custom (schematic_autonumber_get_autotext_free_slots (autotext),
                                         freeslot,
                                         (GCompareFunc) freeslot_compare);
@@ -1378,9 +1380,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
           slot = 1;
           for (i=2; i <=numslots; i++) {
             freeslot =
-              schematic_autonumber_slot_new (new_number,
-                                             i,
-                                             lepton_component_object_get_basename (o_parent));
+              schematic_autonumber_slot_new (new_number, i, parent_name);
             schematic_autonumber_set_autotext_free_slots (autotext,
                                                           g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
                                                                                 freeslot,

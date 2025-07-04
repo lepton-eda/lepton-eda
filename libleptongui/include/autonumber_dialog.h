@@ -232,6 +232,7 @@ int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
+                                      char *parent_name,
                                       gboolean renumber_slots);
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
