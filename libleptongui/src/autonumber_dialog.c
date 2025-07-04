@@ -1179,6 +1179,28 @@ schematic_autonumber_slot_new (int number,
 }
 
 
+/*! \brief Find a slot in a list of autonumber slots.
+ *  \par Function Description
+ *
+ *  Searches for \p slot in the \p slots \c GList and returns a
+ *  new \c GList starting with the item pointing to \p slot,
+ *  or NULL if there is no such item in the list.
+ *
+ *  \param [in] slots The list of slots.
+ *  \param [in] slot The slot to search for.
+ *
+ *  \return The \c GList starting with the given slot or NULL.
+ */
+GList*
+schematic_autonumber_find_slot (GList *slots,
+                                SchematicAutonumberSlot *slot)
+{
+  return g_list_find_custom (slots,
+                             slot,
+                             (GCompareFunc) freeslot_compare);
+}
+
+
 /*! \brief Creates a list of already numbered objects and slots
  *  \par Function Description
  *  This function collects the used numbers of a single schematic
@@ -1326,9 +1348,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   {
     freeslot =
       schematic_autonumber_slot_new (0, 0, parent_name);
-    freeslot_item = g_list_find_custom (schematic_autonumber_get_autotext_free_slots (autotext),
-                                        freeslot,
-                                        (GCompareFunc) freeslot_compare);
+    freeslot_item =
+      schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
+                                      freeslot);
     g_free(freeslot);
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {

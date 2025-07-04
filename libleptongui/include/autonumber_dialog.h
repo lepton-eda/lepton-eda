@@ -228,6 +228,9 @@ schematic_autonumber_clear_database (SchematicAutonumber *autotext);
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
+GList*
+schematic_autonumber_find_slot (GList *slots,
+                                SchematicAutonumberSlot *slot);
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
