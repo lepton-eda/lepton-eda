@@ -1328,7 +1328,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     if (freeslot_item != NULL) {
       freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
       number = schematic_autonumber_slot_get_number (freeslot);
-      slot = freeslot->slotnr;
+      slot = schematic_autonumber_slot_get_slot_number (freeslot);
       g_free(freeslot);
       autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
 
