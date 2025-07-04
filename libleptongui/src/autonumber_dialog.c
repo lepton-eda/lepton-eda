@@ -1327,7 +1327,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {
       freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
-      number = freeslot->number;
+      number = schematic_autonumber_slot_get_number (freeslot);
       slot = freeslot->slotnr;
       g_free(freeslot);
       autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
