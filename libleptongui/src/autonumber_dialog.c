@@ -774,6 +774,114 @@ int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
+
+/*! \brief Get the \c number field of a slot object.
+ *
+ * \par Function Description
+ * Returns the \c number field of the object \p slot which is
+ * usually the refdes number of the symbol it belongs to.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \return The number field of the slot object.
+ */
+int
+schematic_autonumber_slot_get_number (SchematicAutonumberSlot *slot)
+{
+  g_return_val_if_fail (slot != NULL, 0);
+
+  return slot->number;
+}
+
+/*! \brief Set the \c number field of a slot object.
+ *
+ * \par Function Description
+ * Sets the \c number field of a #SchematicAutonumberSlot
+ * instance.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \param [in] number A new number.
+ */
+void
+schematic_autonumber_slot_set_number (SchematicAutonumberSlot *slot,
+                                      int number)
+{
+  g_return_if_fail (slot != NULL);
+
+  slot->number = number;
+}
+
+
+/*! \brief Get the slot number value of a slot object.
+ *
+ * \par Function Description
+ * Returns the slot number value of the object \p slot which is
+ * usually the number of the next free slot for the symbol it
+ * belongs to.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \return The number field of the slot object.
+ */
+int
+schematic_autonumber_slot_get_slot_number (SchematicAutonumberSlot *slot)
+{
+  g_return_val_if_fail (slot != NULL, 0);
+
+  return slot->slotnr;
+}
+
+/*! \brief Set the slot number value for a slot object.
+ *
+ * \par Function Description
+ * Sets the slot number field for a #SchematicAutonumberSlot
+ * instance.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \param [in] number A new slot number.
+ */
+void
+schematic_autonumber_slot_set_slot_number (SchematicAutonumberSlot *slot,
+                                           int number)
+{
+  g_return_if_fail (slot != NULL);
+
+  slot->slotnr = number;
+}
+
+
+/*! \brief Get the symbol name of a slot object.
+ *
+ * \par Function Description
+ * Returns the name of the symbol the object \p slot belongs to.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \return The slot symbol name.
+ */
+char*
+schematic_autonumber_slot_get_symbol_name (SchematicAutonumberSlot *slot)
+{
+  g_return_val_if_fail (slot != NULL, NULL);
+
+  return slot->symbolname;
+}
+
+/*! \brief Set the symbol name for a slot object.
+ *
+ * \par Function Description
+ * Sets the symbol name for the \p slot object.
+ *
+ * \param [in] slot The #SchematicAutonumberSlot instance.
+ * \param [in] name A new symbol name.
+ */
+void
+schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
+                                           char *name)
+{
+  g_return_if_fail (slot != NULL);
+
+  slot->symbolname = name;
+}
+
+
 /*! \brief GCompareFunc function to access
  *  #SchematicAutonumberSlot object in a GList
  *  \par Function Description

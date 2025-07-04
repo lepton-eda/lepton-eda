@@ -195,6 +195,24 @@ void
 schematic_autonumber_set_autotext_window (SchematicAutonumber *autotext,
                                           SchematicWindow *w_current);
 
+int
+schematic_autonumber_slot_get_number (SchematicAutonumberSlot *slot);
+
+void
+schematic_autonumber_slot_set_number (SchematicAutonumberSlot *slot,
+                                      int number);
+int
+schematic_autonumber_slot_get_slot_number (SchematicAutonumberSlot *slot);
+
+void
+schematic_autonumber_slot_set_slot_number (SchematicAutonumberSlot *slot,
+                                           int number);
+char*
+schematic_autonumber_slot_get_symbol_name (SchematicAutonumberSlot *slot);
+
+void
+schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
+                                           char *name);
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
