@@ -492,6 +492,45 @@ schematic_autonumber_set_autotext_sort_order (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Get the start number field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c startnum field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The valueo of the \c startnum field.
+ */
+int
+schematic_autonumber_get_autotext_startnum (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, 1);
+
+  return autotext->startnum;
+}
+
+
+/*! \brief Set the start number field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the value of the \c startnum field of a
+ *  #SchematicAutonumber instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the \c startnum field.
+ */
+void
+schematic_autonumber_set_autotext_startnum (SchematicAutonumber *autotext,
+                                            int val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->startnum = val;
+}
+
+
 /*! \brief Get the \c used_numbers field of a #SchematicAutonumber
  *  instance.
  *
