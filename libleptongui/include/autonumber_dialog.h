@@ -149,6 +149,9 @@ schematic_autonumber_set_autotext_scope_overwrite (SchematicAutonumber *autotext
 int
 schematic_autonumber_get_autotext_scope_skip (SchematicAutonumber *autotext);
 
+void
+schematic_autonumber_set_autotext_scope_skip (SchematicAutonumber *autotext,
+                                              int val);
 GList*
 schematic_autonumber_get_autotext_scope_text (SchematicAutonumber *autotext);
 
