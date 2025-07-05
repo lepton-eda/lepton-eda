@@ -1664,6 +1664,7 @@ SchematicAutonumber*
 schematic_autonumber_new ()
 {
   SchematicAutonumber *autotext;
+  GList *scope_text;
 
   /* Default contents of the combo box history */
   const gchar *default_text[] = {
@@ -1688,12 +1689,16 @@ schematic_autonumber_new ()
 
   if(autotext==NULL) return NULL;
 
-  autotext->scope_text = NULL;
+  schematic_autonumber_set_autotext_scope_text (autotext, NULL);
+
   t = default_text;
   while (*t != NULL) {
     /* t is both an array address and the address of its first
        element, it post-increments after we get its value. */
-    autotext->scope_text=g_list_append (autotext->scope_text, g_strdup (*t++));
+    scope_text =
+      schematic_autonumber_get_autotext_scope_text (autotext);
+    schematic_autonumber_set_autotext_scope_text (autotext,
+                                                  g_list_append (scope_text, g_strdup (*t++)));
   }
 
   autotext->scope_skip = SCOPE_PAGE;
