@@ -1784,10 +1784,13 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
   GtkWidget *widget;
   GtkTreeModel *model;
   GList *el;
+
+  GtkWidget *dialog = schematic_autonumber_get_autotext_dialog (autotext);
+
   /* Scope */
 
   /* Search text history */
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_text");
 
   /* Simple way to clear the ComboBox. Owen from #gtk+ says:
@@ -1807,37 +1810,37 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
   widget = gtk_bin_get_child(GTK_BIN(widget));
   gtk_entry_set_text(GTK_ENTRY(widget), (const gchar*) g_list_first(autotext->scope_text)->data);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_skip");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
                            autotext->scope_skip);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
                            autotext->scope_number);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->scope_overwrite);
 
   /* Options */
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_startnum");
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget),
                             autotext->startnum);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "sort_order");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget), autotext->order);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_removenum");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->removenum);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_slotting");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->slotting);
