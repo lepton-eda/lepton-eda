@@ -1342,7 +1342,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     /* get a new number */
     new_number = schematic_autonumber_get_autotext_startnum (autotext);
 
-    item = autotext->used_numbers;
+    item = schematic_autonumber_get_autotext_used_numbers (autotext);
     while (1) {
       while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
         item = g_list_next(item);
