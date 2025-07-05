@@ -1340,7 +1340,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (!unused_slot_found)
   {
     /* get a new number */
-    new_number = autotext->startnum;
+    new_number = schematic_autonumber_get_autotext_startnum (autotext);
 
     item = autotext->used_numbers;
     while (1) {
