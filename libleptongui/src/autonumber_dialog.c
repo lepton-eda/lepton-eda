@@ -1858,43 +1858,46 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
   GtkWidget *widget;
   gchar *text;
 
+  GtkWidget *dialog =
+    schematic_autonumber_get_autotext_dialog (autotext);
+
   /* Scope */
 
   /* Search text history */
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_text");
   widget = gtk_bin_get_child(GTK_BIN(widget));
   text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
 
   autotext->scope_text=autonumber_history_add(autotext->scope_text, text);
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_skip");
   autotext->scope_skip = gtk_combo_box_get_active( GTK_COMBO_BOX(widget) );
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
   autotext->scope_number = gtk_combo_box_get_active(GTK_COMBO_BOX(widget) );
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
   autotext->scope_overwrite = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
   /* Sort order */
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "sort_order");
   autotext->order= gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
 
   /* Options */
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_startnum");
   autotext->startnum=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_removenum");
   autotext->removenum = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
-  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+  widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_slotting");
   autotext->slotting = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 }
