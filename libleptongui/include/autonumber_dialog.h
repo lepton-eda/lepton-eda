@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ struct autonumber_text_t {
   GList *used_slots;   /* list of USED_SLOT objects */
 };
 
-typedef struct autonumber_slot_t AUTONUMBER_SLOT;
+typedef struct autonumber_slot_t SchematicAutonumberSlot;
 
 struct autonumber_slot_t {
   gchar *symbolname;     /* or should I use the device name? (Werner) */

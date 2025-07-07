@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -191,19 +191,23 @@ int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to acces <B>AUTONUMBER_SLOT</B> object in a GList
+/*! \brief GCompareFunc function to access
+ *  #SchematicAutonumberSlot object in a GList
  *  \par Function Description
- *  This function takes two <B>AUTONUMBER_SLOT*</B> arguments and compares them.
- *  Sorting criteria is are the AUTONUMBER_SLOT members: first the symbolname, than the
- *  number and last the slotnr.
- *  If the number or the slotnr is set to zero it acts as a wildcard.
- *  The function is used as GCompareFunc by GList functions.
+
+ *  This function takes two #SchematicAutonumberSlot arguments and
+ *  compares them.  Sorting criteria is the
+ *  #SchematicAutonumberSlot members: first the symbolname, than
+ *  the number and last the slotnr.  If the number or the slotnr
+ *  is set to zero it acts as a wildcard.  The function is used as
+ *  GCompareFunc by GList functions.
  */
 gint freeslot_compare(gconstpointer a, gconstpointer b)
 {
-  AUTONUMBER_SLOT *aa, *bb;
+  SchematicAutonumberSlot *aa, *bb;
   gint res;
-  aa = (AUTONUMBER_SLOT *) a;  bb = (AUTONUMBER_SLOT *) b;
+  aa = (SchematicAutonumberSlot *) a;
+  bb = (SchematicAutonumberSlot *) b;
 
   if ((res = strcmp(aa->symbolname, bb->symbolname)) != 0)
     return res;
@@ -227,18 +231,19 @@ gint freeslot_compare(gconstpointer a, gconstpointer b)
   return 0;
 }
 
-/*! \brief Prints a <B>GList</B> of <B>AUTONUMBER_SLOT</B> elements
+/*! \brief Prints a GList of #SchematicAutonumberSlot elements.
  *  \par Function Description
- *  This function prints the elements of a GList that contains <B>AUTONUMBER_SLOT</B> elements
- *  It is only used for debugging purposes.
+ *  This function prints the elements of a GList that contains
+ *  #SchematicAutonumberSlot elements.  It is only used for
+ *  debugging purposes.
  */
 void freeslot_print(GList *list) {
   GList *item;
-  AUTONUMBER_SLOT *fs;
+  SchematicAutonumberSlot *fs;
 
   printf("freeslot_print(): symname, number, slot\n");
   for (item = list; item != NULL; item = g_list_next(item)) {
-    fs = (AUTONUMBER_SLOT*) item ->data;
+    fs = (SchematicAutonumberSlot*) item ->data;
     printf("  %s, %d, %d\n",fs->symbolname, fs->number, fs->slotnr);
   }
 }
@@ -345,7 +350,7 @@ autonumber_get_used (SchematicWindow *w_current,
 {
   gint number, numslots, slotnr, i;
   LeptonObject *o_current, *o_parent;
-  AUTONUMBER_SLOT *slot;
+  SchematicAutonumberSlot *slot;
   GList *slot_item;
   char *numslot_str, *slot_str;
   const GList *iter;
@@ -375,7 +380,7 @@ autonumber_get_used (SchematicWindow *w_current,
             }
             else {
               sscanf(slot_str, " %d", &slotnr);
-              slot = g_new(AUTONUMBER_SLOT,1);
+              slot = g_new (SchematicAutonumberSlot, 1);
               slot->number = number;
               slot->slotnr = slotnr;
               slot->symbolname = lepton_component_object_get_basename (o_parent);
@@ -402,7 +407,7 @@ autonumber_get_used (SchematicWindow *w_current,
                   /* insert all slots to the list, except of the current one */
                   for (i=1; i <= numslots; i++) {
                     if (i != slotnr) {
-                      slot = (AUTONUMBER_SLOT*) g_memdup2 (slot, sizeof (AUTONUMBER_SLOT));
+                      slot = (SchematicAutonumberSlot*) g_memdup2 (slot, sizeof (SchematicAutonumberSlot));
                       slot->slotnr = i;
                       autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
                                                                   slot,
@@ -446,7 +451,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
 {
   GList *item;
   gint new_number, numslots, i;
-  AUTONUMBER_SLOT *freeslot;
+  SchematicAutonumberSlot *freeslot;
   LeptonObject *o_parent = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
@@ -457,7 +462,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
   /* 1. are there any unused slots in the database? */
   o_parent = lepton_object_get_attached_to (o_current);
   if (autotext->slotting && o_parent != NULL) {
-    freeslot = g_new(AUTONUMBER_SLOT,1);
+    freeslot = g_new (SchematicAutonumberSlot, 1);
     freeslot->symbolname = lepton_component_object_get_basename (o_parent);
     freeslot->number = 0;
     freeslot->slotnr = 0;
@@ -467,7 +472,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
     g_free(freeslot);
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {
-      freeslot = (AUTONUMBER_SLOT*) freeslot_item->data;
+      freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
       *number = freeslot->number;
       *slot = freeslot->slotnr;
       g_free(freeslot);
@@ -507,7 +512,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
         /* Yes! -> new number and slot=1; add the other slots to the database */
         *slot = 1;
         for (i=2; i <=numslots; i++) {
-          freeslot = g_new(AUTONUMBER_SLOT,1);
+          freeslot = g_new (SchematicAutonumberSlot, 1);
           freeslot->symbolname = lepton_component_object_get_basename (o_parent);
           freeslot->number = new_number;
           freeslot->slotnr = i;
