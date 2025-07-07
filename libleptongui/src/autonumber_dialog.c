@@ -66,6 +66,23 @@ schematic_autonumber_set_autotext (SchematicAutonumber *val)
 }
 
 
+/*! \brief Get the window field of a #SchematicAutonumber instance.
+ *
+ *  \par Function Description
+ *  Returns the window field value of \p autotext.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The window field of the instance.
+ */
+SchematicWindow*
+schematic_autonumber_get_autotext_window (SchematicAutonumber *autotext)
+{
+  g_return_val_if_fail (autotext != NULL, NULL);
+
+  return autotext->w_current;
+}
+
+
 /*! \brief Set the window field of a #SchematicAutonumber instance.
  *  \par Function Description
  *  Sets the window field value of \p autotext to \p w_current.
