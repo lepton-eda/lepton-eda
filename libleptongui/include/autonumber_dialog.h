@@ -113,6 +113,9 @@ schematic_autonumber_set_autotext_dialog (SchematicAutonumber *autotext,
 gboolean
 schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext);
 
+void
+schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
+                                             gboolean val);
 SchematicWindow*
 schematic_autonumber_get_autotext_window (SchematicAutonumber *autotext);
 

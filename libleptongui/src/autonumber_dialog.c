@@ -122,6 +122,25 @@ schematic_autonumber_get_autotext_removenum (SchematicAutonumber *autotext)
   return autotext->removenum;
 }
 
+/*! \brief Set the \c removenum field of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \par Function Description
+ *  Sets the \c removenum field value of a #SchematicAutonumber
+ *  instance.
+ *
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] val The new value of the field.
+ */
+void
+schematic_autonumber_set_autotext_removenum (SchematicAutonumber *autotext,
+                                             gboolean val)
+{
+  g_return_if_fail (autotext != NULL);
+
+  autotext->removenum = val;
+}
+
 
 /*! \brief Get the window field of a #SchematicAutonumber instance.
  *
