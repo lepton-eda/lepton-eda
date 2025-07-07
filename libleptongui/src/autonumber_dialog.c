@@ -1707,8 +1707,8 @@ schematic_autonumber_new ()
                                                   SCOPE_SELECTED);
   schematic_autonumber_set_autotext_scope_overwrite (autotext,
                                                      FALSE);
-  autotext->order = AUTONUMBER_SORT_DIAGONAL;
-
+  schematic_autonumber_set_autotext_sort_order (autotext,
+                                                AUTONUMBER_SORT_DIAGONAL);
   autotext->startnum=1;
 
   autotext->removenum = FALSE;
