@@ -45,7 +45,7 @@ enum {
   SCOPE_HIERARCHY
 };
 
-typedef struct autonumber_text_t AUTONUMBER_TEXT;
+typedef struct autonumber_text_t SchematicAutonumber;
 
 /** @brief Stored state of the autonumber text dialog */
 struct autonumber_text_t {
@@ -98,11 +98,11 @@ struct autonumber_slot_t {
 void
 autonumber_text_dialog (SchematicWindow *w_current);
 
-AUTONUMBER_TEXT*
+SchematicAutonumber*
 schematic_autonumber_get_autotext ();
 
 void
-schematic_autonumber_set_autotext (AUTONUMBER_TEXT *val);
+schematic_autonumber_set_autotext (SchematicAutonumber *val);
 
 G_END_DECLS
 

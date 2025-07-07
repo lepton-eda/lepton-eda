@@ -41,7 +41,7 @@
 #define HISTORY_LENGTH 15
 
 
-static AUTONUMBER_TEXT *autotext = NULL;
+static SchematicAutonumber *autotext = NULL;
 
 /* Accessors */
 
@@ -49,7 +49,7 @@ static AUTONUMBER_TEXT *autotext = NULL;
  *
  *  \return The current value of \a autotext variable.
  */
-AUTONUMBER_TEXT*
+SchematicAutonumber*
 schematic_autonumber_get_autotext ()
 {
   return autotext;
@@ -60,7 +60,7 @@ schematic_autonumber_get_autotext ()
  *  \param [in] val The new value of \a autotext variable.
  */
 void
-schematic_autonumber_set_autotext (AUTONUMBER_TEXT *val)
+schematic_autonumber_set_autotext (SchematicAutonumber *val)
 {
   autotext = val;
 }
@@ -253,7 +253,7 @@ void freeslot_print(GList *list) {
  *  \par Function Descriptions
  *  Just remove the list of used numbers, used slots and free slots.
  */
-void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
+void autonumber_clear_database (SchematicAutonumber *autotext)
 {
   /* cleanup everything for the next searchtext */
   if (autotext->used_numbers != NULL) {
@@ -281,7 +281,10 @@ void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
  *  <B>AUTONUMBER_RESPECT</B> or <B>AUTONUMBER_RENUMBER</B> and the current number
  *  of the text object in <B>*number</B>.
  */
-gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *number)
+gint
+autonumber_match (SchematicAutonumber *autotext,
+                  LeptonObject *o_current,
+                  gint *number)
 {
   gint i, isnumbered=1;
   size_t len;
@@ -337,16 +340,17 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *
 
 /*! \brief Creates a list of already numbered objects and slots
  *  \par Function Description
- *  This function collects the used numbers of a single schematic page.
- *  The used element numbers are stored in a GList container
- *  inside the <B>AUTONUMBER_TEXT</B> struct.
- *  The slotting container is a little bit different. It stores free slots of
- *  multislotted symbols, that were used only partially.
- *  The criterias are derivated from the autonumber dialog entries.
+ *  This function collects the used numbers of a single schematic
+ *  page.  The used element numbers are stored in a GList
+ *  container inside the #SchematicAutonumber struct.  The
+ *  slotting container is a little bit different. It stores free
+ *  slots of multislotted symbols, that were used only partially.
+ *  The criterias are derivated from the autonumber dialog
+ *  entries.
  */
 void
 autonumber_get_used (SchematicWindow *w_current,
-                     AUTONUMBER_TEXT *autotext)
+                     SchematicAutonumber *autotext)
 {
   gint number, numslots, slotnr, i;
   LeptonObject *o_current, *o_parent;
@@ -435,19 +439,23 @@ autonumber_get_used (SchematicWindow *w_current,
 
 /*! \brief Gets or generates free numbers for the autonumbering process.
  *  \par Function Description
- *  This function gets or generates new numbers for the <B>LeptonObject o_current</B>.
- *  It uses the element numbers <B>used_numbers</B> and the list of the free slots
- *  <B>free_slots</B> of the <B>AUTONUMBER_TEXT</B> struct.
+ *  This function gets or generates new numbers for the
+ *  <B>LeptonObject o_current</B>.  It uses the element numbers
+ *  <B>used_numbers</B> and the list of the free slots
+ *  <B>free_slots</B> of the #SchematicAutonumber struct.
  *
  *  The new number is returned into the <B>number</B> parameter.
  *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
- *  \param [in,out] autotext The #AUTONUMBER_TEXT instance.
+ *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] o_current The \c LeptonObject instance to process.
  *  \param [in,out] number The new number.
  *  \param [in,out] slot The new slot number.
  */
-void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_current,
-                                gint *number, gint *slot)
+void
+autonumber_get_new_numbers (SchematicAutonumber *autotext,
+                            LeptonObject *o_current,
+                            gint *number,
+                            gint *slot)
 {
   GList *item;
   gint new_number, numslots, i;
@@ -533,7 +541,9 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
  *  @param o_current Pointer to the object from which to remove the number
  *
  */
-void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_current)
+void
+autonumber_remove_number (SchematicAutonumber *autotext,
+                          LeptonObject *o_current)
 {
   LeptonObject *o_parent, *o_slot;
   gchar *slot_str;
@@ -569,8 +579,11 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
  *  If the <B>slot</B> value is not zero. It updates the slot attribut of the
  *  component element that is also the parent object of the o_current element.
  */
-void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_current,
-                               gint number, gint slot)
+void
+autonumber_apply_new_text (SchematicAutonumber *autotext,
+                           LeptonObject *o_current,
+                           gint number,
+                           gint slot)
 {
   char *str;
 
@@ -594,14 +607,16 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_curre
 
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
- *  This function is the master of all autonumber code. It receives the options of
- *  the the autonumber text dialog in an <B>AUTONUMBER_TEXT</B> structure.
- *  First it collects all pages of a hierarchical schematic.
- *  Second it gets all matching text elements for the searchtext.
- *  Then it renumbers all text elements of all schematic pages. The renumbering
- *  follows the rules of the parameters given in the autonumber text dialog.
+ *  This function is the master of all autonumber code. It
+ *  receives the options of the the autonumber text dialog in an
+ *  #SchematicAutonumber structure.  First it collects all pages
+ *  of a hierarchical schematic.  Second it gets all matching text
+ *  elements for the searchtext.  Then it renumbers all text
+ *  elements of all schematic pages. The renumbering follows the
+ *  rules of the parameters given in the autonumber text dialog.
  */
-void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
+void
+autonumber_text_autonumber (SchematicAutonumber *autotext)
 {
   GList *pages;
   GList *searchtext_list=NULL;
@@ -942,9 +957,10 @@ GList *autonumber_history_add(GList *history, gchar *text)
  *
  * @return Pointer to the allocated structure or NULL on error.
  */
-AUTONUMBER_TEXT *autonumber_init_state()
+SchematicAutonumber*
+autonumber_init_state ()
 {
-  AUTONUMBER_TEXT *autotext;
+  SchematicAutonumber *autotext;
 
   /* Default contents of the combo box history */
   const gchar *default_text[] = {
@@ -965,7 +981,7 @@ AUTONUMBER_TEXT *autonumber_init_state()
   };
   const gchar **t;
 
-  autotext = g_new(AUTONUMBER_TEXT, 1);
+  autotext = g_new (SchematicAutonumber, 1);
 
   if(autotext==NULL) return NULL;
 
@@ -997,7 +1013,8 @@ AUTONUMBER_TEXT *autonumber_init_state()
  *
  * @param autotext Pointer to the state struct.
  */
-void autonumber_set_state(AUTONUMBER_TEXT *autotext)
+void
+autonumber_set_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   GtkTreeModel *model;
@@ -1055,12 +1072,13 @@ void autonumber_set_state(AUTONUMBER_TEXT *autotext)
 
 /** @brief Get the settings from the autonumber text dialog
  *
- * Get the settings from the autonumber text dialog and store it in the
- * <B>AUTONUMBER_TEXT</B> structure.
+ * Get the settings from the autonumber text dialog and store it
+ * in the #SchematicAutonumber structure.
  *
  * @param autotext Pointer to the state struct.
  */
-void autonumber_get_state(AUTONUMBER_TEXT *autotext)
+void
+autonumber_get_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   gchar *text;
@@ -1106,8 +1124,10 @@ void autonumber_get_state(AUTONUMBER_TEXT *autotext)
  *  user closes the dialog window.
  *  Triggering the apply button will call the autonumber action functions.
  */
-void autonumber_text_response(GtkWidget * widget, gint response,
-                              AUTONUMBER_TEXT *autotext)
+void
+autonumber_text_response (GtkWidget *widget,
+                          gint response,
+                          SchematicAutonumber *autotext)
 {
   switch (response) {
   case GTK_RESPONSE_ACCEPT:
@@ -1138,8 +1158,9 @@ void autonumber_text_response(GtkWidget * widget, gint response,
  *
  * This gets called each time "remove numbers" check box gets clicked.
  */
-void autonumber_removenum_toggled(GtkWidget * opt_removenum,
-                                  AUTONUMBER_TEXT *autotext)
+void
+autonumber_removenum_toggled (GtkWidget *opt_removenum,
+                              SchematicAutonumber *autotext)
 {
   GtkWidget *scope_overwrite;
 
