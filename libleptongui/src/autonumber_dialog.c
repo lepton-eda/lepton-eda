@@ -1701,7 +1701,8 @@ schematic_autonumber_new ()
                                                   g_list_append (scope_text, g_strdup (*t++)));
   }
 
-  autotext->scope_skip = SCOPE_PAGE;
+  schematic_autonumber_set_autotext_scope_skip (autotext,
+                                                SCOPE_PAGE);
   autotext->scope_number = SCOPE_SELECTED;
 
   autotext->scope_overwrite = FALSE;
