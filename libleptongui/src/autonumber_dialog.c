@@ -1709,7 +1709,7 @@ schematic_autonumber_new ()
                                                      FALSE);
   schematic_autonumber_set_autotext_sort_order (autotext,
                                                 AUTONUMBER_SORT_DIAGONAL);
-  autotext->startnum=1;
+  schematic_autonumber_set_autotext_startnum (autotext, 1);
 
   autotext->removenum = FALSE;
   autotext->slotting = FALSE;
