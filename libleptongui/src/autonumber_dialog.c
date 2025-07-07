@@ -1711,7 +1711,7 @@ schematic_autonumber_new ()
                                                 AUTONUMBER_SORT_DIAGONAL);
   schematic_autonumber_set_autotext_startnum (autotext, 1);
 
-  autotext->removenum = FALSE;
+  schematic_autonumber_set_autotext_removenum (autotext, FALSE);
   autotext->slotting = FALSE;
 
   autotext->dialog = NULL;
