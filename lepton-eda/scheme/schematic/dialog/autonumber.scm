@@ -27,6 +27,21 @@
 
   #:export (autonumber-dialog))
 
+
+(define (autonumber-response *widget response *autotext)
+  (if (true? (schematic_autonumber_dialog_response response))
+      ;; Triggering the apply button will call the autonumber
+      ;; action functions.
+      (schematic_autonumber_start_autonumber *autotext)
+      ;; Close the dialog if the close button is pressed or the
+      ;; user closes the dialog window.
+      (schematic_autonumber_dialog_destroy *autotext)))
+
+;;; Response callback for the autonumber text dialog.
+(define *autonumber-response-callback
+  (procedure->pointer void autonumber-response (list '* int '*)))
+
+
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
@@ -59,7 +74,7 @@
   (let ((*dialog (autonumber-dialog)))
     (schematic_signal_connect *dialog
                               (string->pointer "response")
-                              *schematic_autonumber_dialog_response
+                              *autonumber-response-callback
                               *autotext))
 
   (schematic_autonumber_dialog_show *autotext))

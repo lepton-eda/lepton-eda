@@ -1857,33 +1857,31 @@ schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext)
 }
 
 
-/* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
-
-/*! \brief response  callback for the autonumber text dialog
+/*! \brief Get response signal from the autonumber dialog.
+ *
  *  \par Function Description
- *  The function just closes the dialog if the close button is pressed or the
- *  user closes the dialog window.
- *  Triggering the apply button will call the autonumber action functions.
+ *  The function gets the autonumber dialog response ID and
+ *  returns \c TRUE if it should accept the input, otherwise it
+ *  returns \c FALSE.
+ *
+ *  \param [in] response The GTK response ID.
+ *  \retval TRUE if the response ID is \a GTK_RESPONSE_ACCEPT,
+ *  \retval FALSE otherwise.
  */
-void
-schematic_autonumber_dialog_response (GtkWidget *widget,
-                                      int response,
-                                      SchematicAutonumber *autotext)
+gboolean
+schematic_autonumber_dialog_response (int response)
 {
-  switch (response) {
+  switch (response)
+  {
   case GTK_RESPONSE_ACCEPT:
-    schematic_autonumber_start_autonumber (autotext);
-    break;
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    schematic_autonumber_dialog_destroy (autotext);
-    break;
+    return TRUE;
   default:
-    printf ("ERROR: schematic_autonumber_dialog_response(): strange signal %d\n",
-            response);
+    return FALSE;
   }
 }
 
+
+/* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
 
 /** @brief Callback that activates or deactivates "overwrite existing numbers"
  * check box.

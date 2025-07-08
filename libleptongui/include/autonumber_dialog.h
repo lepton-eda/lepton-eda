@@ -228,10 +228,9 @@ schematic_autonumber_dialog_destroy (SchematicAutonumber *autotext);
 GtkWidget*
 schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
                                   SchematicWindow *w_current);
-void
-schematic_autonumber_dialog_response (GtkWidget *widget,
-                                      int response,
-                                      SchematicAutonumber *autotext);
+gboolean
+schematic_autonumber_dialog_response (int response);
+
 void
 schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
 
