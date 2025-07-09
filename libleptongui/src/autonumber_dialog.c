@@ -1540,7 +1540,7 @@ autonumber_init_state ()
   autotext->startnum=1;
 
   autotext->removenum = FALSE;
-  autotext->slotting=0;
+  autotext->slotting = FALSE;
 
   autotext->dialog = NULL;
 
