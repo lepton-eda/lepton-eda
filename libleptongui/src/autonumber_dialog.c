@@ -1495,7 +1495,7 @@ autonumber_init_state ()
   autotext->scope_skip = SCOPE_PAGE;
   autotext->scope_number = SCOPE_SELECTED;
 
-  autotext->scope_overwrite = 0;
+  autotext->scope_overwrite = FALSE;
   autotext->order = AUTONUMBER_SORT_DIAGONAL;
 
   autotext->startnum=1;
