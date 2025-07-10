@@ -1813,6 +1813,34 @@ autonumber_get_state (SchematicAutonumber *autotext)
 }
 
 
+/*! \brief Actually start autonumbering.
+ *
+ *  \par Function Description
+ *  Starts autonumbering based on settings stored in the \p
+ *  autotext object.
+ *
+ *  \param [in] autotext The #SchematicAutonumber structure storing
+ *                       autonumbering settings.
+ */
+void
+schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
+{
+  autonumber_get_state (autotext);
+  if (autotext->removenum == TRUE
+      && autotext->scope_overwrite == FALSE)
+  {
+    /* Temporarily set the overwrite flag. */
+    autotext->scope_overwrite = TRUE;
+    autonumber_text_autonumber (autotext);
+    autotext->scope_overwrite = FALSE;
+  }
+  else
+  {
+    autonumber_text_autonumber (autotext);
+  }
+}
+
+
 /*! \brief Destroy the Autonumber dialog.
  *
  *  \par Function Description
@@ -1844,16 +1872,7 @@ schematic_autonumber_dialog_response (GtkWidget *widget,
 {
   switch (response) {
   case GTK_RESPONSE_ACCEPT:
-    autonumber_get_state(autotext);
-    if (autotext->removenum == TRUE && autotext->scope_overwrite == FALSE) {
-      /* temporarly set the overwrite flag */
-      autotext->scope_overwrite = TRUE;
-      autonumber_text_autonumber(autotext);
-      autotext->scope_overwrite = FALSE;
-    }
-    else {
-      autonumber_text_autonumber(autotext);
-    }
+    schematic_autonumber_start_autonumber (autotext);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:

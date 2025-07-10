@@ -235,6 +235,9 @@ schematic_autonumber_dialog_response (GtkWidget *widget,
 void
 schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
 
+void
+schematic_autonumber_start_autonumber (SchematicAutonumber *autotext);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
