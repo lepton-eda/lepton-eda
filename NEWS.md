@@ -196,6 +196,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   All accessor, helper, and other functions and macros related to
   those types have been renamed accordingly.
 
+- The type `AUTONUMBER_TEXT` has been renamed to
+  `SchematicAutonumber`.  The type `AUTONUMBER_SLOT` has been
+  renamed to `SchematicAutonumberSlot`.  Accessor functions for
+  all fields of the structs `SchematicAutonumber` and
+  `SchematicAutonumberSlot` have been added.
+
 - The following structures have been made opaque and their data
   are now available only via accessors:
   - the structure of the type `SchematicNewText`,
