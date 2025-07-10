@@ -1883,7 +1883,7 @@ autonumber_removenum_toggled (GtkWidget *opt_removenum,
  * @return Pointer to the dialog window.
  */
 GtkWidget*
-autonumber_create_dialog (SchematicWindow *w_current)
+schematic_autonumber_dialog_new (SchematicWindow *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
@@ -2209,7 +2209,7 @@ schematic_autonumber_dialog (SchematicWindow *w_current)
   if(autotext->dialog == NULL) {
     /* Dialog is not currently displayed - create it */
 
-    autotext->dialog = autonumber_create_dialog(w_current);
+    autotext->dialog = schematic_autonumber_dialog_new (w_current);
 
     opt_removenum = lookup_widget(autotext->dialog, "opt_removenum");
     sort_order = lookup_widget(autotext->dialog, "sort_order");
