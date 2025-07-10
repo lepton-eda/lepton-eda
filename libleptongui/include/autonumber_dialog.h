@@ -97,6 +97,9 @@ struct autonumber_slot_t {
 
 /* Construction, destruction */
 
+SchematicAutonumber*
+schematic_autonumber_new ();
+
 GtkWidget*
 schematic_autonumber_dialog_new (SchematicWindow *w_current);
 

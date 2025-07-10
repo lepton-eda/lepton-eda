@@ -1644,12 +1644,17 @@ GList *autonumber_history_add(GList *history, gchar *text)
   return history;
 }
 
-/** @brief Allocate and initialize the state structure
+/** @brief Create and initialize a new #SchematicAutonumber
+ *  instance.
  *
- * @return Pointer to the allocated structure or NULL on error.
+ *  @par Function Description
+ *  Creates a new #SchematicAutonumber instance and initializes it
+ *  with default values.
+ *
+ *  @return The new #SchematicAutonumber instance.
  */
 SchematicAutonumber*
-autonumber_init_state ()
+schematic_autonumber_new ()
 {
   SchematicAutonumber *autotext;
 
@@ -2200,7 +2205,7 @@ schematic_autonumber_dialog (SchematicWindow *w_current)
   if (schematic_autonumber_get_autotext () == NULL)
   {
     /* first call of this function, init dialog structure */
-    schematic_autonumber_set_autotext (autonumber_init_state ());
+    schematic_autonumber_set_autotext (schematic_autonumber_new ());
   }
 
   /* set the SchematicWindow always. Can it be changed between the calls??? */
