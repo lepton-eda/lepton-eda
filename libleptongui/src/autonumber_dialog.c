@@ -2192,7 +2192,7 @@ autonumber_create_dialog (SchematicWindow *w_current)
  *  @param w_current Pointer to the top level struct
  */
 void
-autonumber_text_dialog (SchematicWindow *w_current)
+schematic_autonumber_dialog (SchematicWindow *w_current)
 {
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;

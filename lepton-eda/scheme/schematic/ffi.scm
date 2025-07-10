@@ -178,7 +178,7 @@
 
             attrib_edit_dialog
 
-            autonumber_text_dialog
+            schematic_autonumber_dialog
 
             x_clipboard_finish
             x_clipboard_init
@@ -1076,7 +1076,7 @@
 (define-lff attrib_edit_dialog void (list '* '* int))
 
 ;;; autonumber_dialog.c
-(define-lff autonumber_text_dialog void '(*))
+(define-lff schematic_autonumber_dialog void '(*))
 
 ;;; x_clipboard.c
 (define-lff x_clipboard_finish void '(*))

@@ -1478,7 +1478,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
   (unless (in-action?)
-    (autonumber_text_dialog (*current-window))))
+    (schematic_autonumber_dialog (*current-window))))
 
 
 ;; -------------------------------------------------------------------
