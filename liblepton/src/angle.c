@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2021-2024 Lepton EDA Contributors
+ * Copyright (C) 2021-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,15 @@
 #include "liblepton_priv.h"
 
 
-/*! \brief Checks if an angle is [0,360)
+/*! \brief Check if an angle is normal.
  *
- *  \param [in] angle the angle in degrees
- *  \retval TRUE if the angle is [0,360)
+ *  \par Function Description
+ *  Checks if an angle is normal, that is, it is in the range
+ *  <tt>[0,360)</tt>.
+ *
+ *  \param [in] angle The angle in degrees.
+ *  \retval TRUE if the angle is normal,
+ *  \retval FALSE otherwise.
  */
 gboolean
 lepton_angle_is_normal (gint angle)
