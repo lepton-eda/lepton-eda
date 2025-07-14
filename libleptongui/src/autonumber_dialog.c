@@ -1307,7 +1307,7 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  */
 void
-autonumber_text_autonumber (SchematicAutonumber *autotext)
+schematic_autonumber_run (SchematicAutonumber *autotext)
 {
   GList *pages;
   GList *searchtext_list=NULL;
@@ -1417,7 +1417,7 @@ autonumber_text_autonumber (SchematicAutonumber *autotext)
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
     autotext->current_searchtext = (gchar*) text_item->data;
-    /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
+    /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
 
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
@@ -1830,12 +1830,12 @@ schematic_autonumber_start_autonumber (SchematicAutonumber *autotext)
   {
     /* Temporarily set the overwrite flag. */
     schematic_autonumber_set_autotext_scope_overwrite (autotext, TRUE);
-    autonumber_text_autonumber (autotext);
+    schematic_autonumber_run (autotext);
     schematic_autonumber_set_autotext_scope_overwrite (autotext, FALSE);
   }
   else
   {
-    autonumber_text_autonumber (autotext);
+    schematic_autonumber_run (autotext);
   }
 }
 

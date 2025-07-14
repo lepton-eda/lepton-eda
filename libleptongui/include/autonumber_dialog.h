@@ -238,6 +238,9 @@ void
 schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
 
 void
+schematic_autonumber_run (SchematicAutonumber *autotext);
+
+void
 schematic_autonumber_start_autonumber (SchematicAutonumber *autotext);
 
 G_END_DECLS
