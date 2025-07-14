@@ -1821,9 +1821,9 @@ autonumber_get_state (SchematicAutonumber *autotext)
  *  Triggering the apply button will call the autonumber action functions.
  */
 void
-autonumber_text_response (GtkWidget *widget,
-                          gint response,
-                          SchematicAutonumber *autotext)
+schematic_autonumber_dialog_response (GtkWidget *widget,
+                                      gint response,
+                                      SchematicAutonumber *autotext)
 {
   switch (response) {
   case GTK_RESPONSE_ACCEPT:
@@ -1844,7 +1844,8 @@ autonumber_text_response (GtkWidget *widget,
     autotext->dialog = NULL;
     break;
   default:
-    printf("ERROR: autonumber_text_response(): strange signal %d\n",response);
+    printf ("ERROR: schematic_autonumber_dialog_response(): strange signal %d\n",
+            response);
   }
 }
 
@@ -2221,7 +2222,7 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
 
   g_signal_connect (G_OBJECT (dialog),
                     "response",
-                    G_CALLBACK (autonumber_text_response),
+                    G_CALLBACK (schematic_autonumber_dialog_response),
                     autotext);
 
   g_signal_connect (G_OBJECT (opt_removenum),
