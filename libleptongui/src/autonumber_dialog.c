@@ -1305,6 +1305,8 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  elements for the searchtext.  Then it renumbers all text
  *  elements of all schematic pages. The renumbering follows the
  *  rules of the parameters given in the autonumber text dialog.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
  */
 void
 schematic_autonumber_run (SchematicAutonumber *autotext)
