@@ -1712,7 +1712,11 @@ schematic_autonumber_new ()
   return autotext;
 }
 
-/** @brief Restore the settings for the autonumber text dialog
+/** @brief Restore the Autonumber text dialog settings.
+ *
+ *  @par Function Description
+ *  Restores settings of the Autonumber text dialog saved
+ *  previously.
  *
  * @param autotext Pointer to the state struct.
  */
