@@ -241,8 +241,8 @@ void
 schematic_autonumber_run (SchematicAutonumber *autotext);
 
 void
-schematic_autonumber_sort_order_widget_init (SchematicWindow *w_current,
-                                             GtkWidget *sort_order);
+schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */

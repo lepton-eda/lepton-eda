@@ -1542,8 +1542,7 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
  *  in a GtkListStore.
  */
 void
-schematic_autonumber_sort_order_widget_init (SchematicWindow *w_current,
-                                             GtkWidget *sort_order)
+schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order)
 {
   GtkListStore *store;
   GtkTreeIter iter;
@@ -2229,7 +2228,7 @@ schematic_autonumber_dialog_init (SchematicAutonumber *autotext,
   sort_order =
     schematic_autonumber_dialog_lookup_widget (dialog, "sort_order");
 
-  schematic_autonumber_sort_order_widget_init (w_current, sort_order);
+  schematic_autonumber_sort_order_widget_init (sort_order);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                    GTK_RESPONSE_ACCEPT);
