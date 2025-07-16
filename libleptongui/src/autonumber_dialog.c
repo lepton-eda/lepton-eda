@@ -1536,10 +1536,14 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
   return found_widget;
 }
 
-/*! \brief Put the icons and the text into the sortorder combobox
+/*! \brief Put the icons and the text into the sort order
+ *  combobox.
+ *
  *  \par Function Description
- *  Load all bitmaps for the combobox and store them together with the label
- *  in a GtkListStore.
+ *  Load all bitmaps for the combobox and store them together with
+ *  the label in a GtkListStore.
+ *
+ *  \param [in,out] sort_order The sort order combobox widget.
  */
 void
 schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order)
