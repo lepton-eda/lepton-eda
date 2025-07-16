@@ -1718,6 +1718,8 @@ schematic_autonumber_new ()
  *  Restores settings of the Autonumber text dialog saved
  *  previously.
  *
+ * @sa schematic_autonumber_dialog_save_state()
+ *
  * @param autotext Pointer to the state struct.
  */
 void
@@ -1789,6 +1791,8 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
  *
  * Get the settings from the autonumber text dialog and store it
  * in the #SchematicAutonumber structure.
+ *
+ * @sa schematic_autonumber_dialog_restore_state()
  *
  * @param autotext Pointer to the state struct.
  */
