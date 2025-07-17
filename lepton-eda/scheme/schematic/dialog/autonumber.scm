@@ -144,4 +144,4 @@
     ;; autonumber widget, which is not yet implemented.
     (schematic_autonumber_set_autotext_window *autotext *window)
 
-    (schematic_autonumber_dialog_show *autotext)))
+    (gtk_window_present (gtk_widget_get_gtk_window *dialog))))

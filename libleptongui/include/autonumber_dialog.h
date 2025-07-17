@@ -232,9 +232,6 @@ void
 schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext);
 
 void
-schematic_autonumber_dialog_show (SchematicAutonumber *autotext);
-
-void
 schematic_autonumber_run (SchematicAutonumber *autotext);
 
 void

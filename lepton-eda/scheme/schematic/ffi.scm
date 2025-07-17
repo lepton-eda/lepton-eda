@@ -192,7 +192,6 @@
             schematic_autonumber_dialog_new
             schematic_autonumber_dialog_restore_state
             schematic_autonumber_dialog_save_state
-            schematic_autonumber_dialog_show
             schematic_autonumber_run
             schematic_autonumber_sort_order_widget_init
 
@@ -1106,7 +1105,6 @@
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
-(define-lff schematic_autonumber_dialog_show void '(*))
 (define-lff schematic_autonumber_run void '(*))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
 

@@ -2162,18 +2162,3 @@ schematic_autonumber_dialog_new (SchematicWindow *w_current)
 
   return autonumber_text;
 }
-
-
-/*! \brief Show the Autonumber dialog.
- *
- *  \par Function Description
- *  Shows the Autonumber dialog of a #SchematicAutonumber instance
- *  if it is in the background or minimized.
- *
- *  \param [in] autotext The #SchematicAutonumber instance.
- */
-void
-schematic_autonumber_dialog_show (SchematicAutonumber *autotext)
-{
-  gtk_window_present (GTK_WINDOW (schematic_autonumber_get_autotext_dialog (autotext)));
-}
