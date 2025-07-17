@@ -99,6 +99,8 @@
             (schematic_autonumber_set_autotext *new-autotext)
             *new-autotext)
           *current-autotext)))
+  (define *current-dialog
+    (schematic_autonumber_get_autotext_dialog *autotext))
 
   (define (make-autonumber-dialog)
     (let* ((*dialog (schematic_autonumber_dialog_new *window))
@@ -131,16 +133,15 @@
   ;; If the function is called the first time the dialog is
   ;; created.  If the dialog is only in background it is moved to
   ;; the foreground.
-  (let ((*dialog (schematic_autonumber_get_autotext_dialog *autotext)))
-    (if (null-pointer? *dialog)
-        ;; Create a new dialog.
-        (make-autonumber-dialog)
-        ;; Return existing dialog.
-        *dialog))
+  (let ((*dialog (if (null-pointer? *current-dialog)
+                     ;; Create a new dialog.
+                     (make-autonumber-dialog)
+                     ;; Return existing dialog.
+                     *current-dialog)))
 
-  ;; Remember the parent window in *autotext.  To make the
-  ;; widget dockable each window has to have an individual
-  ;; autonumber widget, which is not yet implemented.
-  (schematic_autonumber_set_autotext_window *autotext *window)
+    ;; Remember the parent window in *autotext.  To make the
+    ;; widget dockable each window has to have an individual
+    ;; autonumber widget, which is not yet implemented.
+    (schematic_autonumber_set_autotext_window *autotext *window)
 
-  (schematic_autonumber_dialog_show *autotext))
+    (schematic_autonumber_dialog_show *autotext)))
