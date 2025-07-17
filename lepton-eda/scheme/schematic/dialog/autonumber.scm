@@ -100,35 +100,41 @@
             *new-autotext)
           *current-autotext)))
 
+  (define (make-autonumber-dialog)
+    (let* ((*dialog (schematic_autonumber_dialog_new *window))
+           (*remove-number-widget
+            (schematic_autonumber_dialog_lookup_widget
+             *dialog
+             (string->pointer "opt_removenum")))
+           (*sort-order-widget
+            (schematic_autonumber_dialog_lookup_widget
+             *dialog
+             (string->pointer "sort_order"))))
+      (schematic_autonumber_sort_order_widget_init *sort-order-widget)
+
+      (gtk_dialog_set_default_response *dialog %gtk-response-accept)
+
+      (schematic_signal_connect *dialog
+                                (string->pointer "response")
+                                *autonumber-response-callback
+                                *autotext)
+      (schematic_signal_connect *remove-number-widget
+                                (string->pointer "clicked")
+                                *autonumber-remove-numbers-checkbox-clicked-callback
+                                *autotext)
+
+      (schematic_autonumber_set_autotext_dialog *autotext *dialog)
+      (schematic_autonumber_dialog_restore_state *autotext)
+      (gtk_widget_show_all *dialog)
+      *dialog))
+
   ;; If the function is called the first time the dialog is
   ;; created.  If the dialog is only in background it is moved to
   ;; the foreground.
   (let ((*dialog (schematic_autonumber_get_autotext_dialog *autotext)))
     (if (null-pointer? *dialog)
         ;; Create a new dialog.
-        (let* ((*new-dialog (schematic_autonumber_dialog_new *window))
-               (*remove-number-widget
-                (schematic_autonumber_dialog_lookup_widget *new-dialog
-                                                           (string->pointer "opt_removenum")))
-               (*sort-order-widget
-                (schematic_autonumber_dialog_lookup_widget *new-dialog
-                                                           (string->pointer "sort_order"))))
-          (schematic_autonumber_sort_order_widget_init *sort-order-widget)
-
-          (gtk_dialog_set_default_response *new-dialog %gtk-response-accept)
-          (schematic_signal_connect *new-dialog
-                                    (string->pointer "response")
-                                    *autonumber-response-callback
-                                    *autotext)
-          (schematic_signal_connect *remove-number-widget
-                                    (string->pointer "clicked")
-                                    *autonumber-remove-numbers-checkbox-clicked-callback
-                                    *autotext)
-
-          (schematic_autonumber_set_autotext_dialog *autotext *new-dialog)
-          (schematic_autonumber_dialog_restore_state *autotext)
-          (gtk_widget_show_all *new-dialog)
-          *new-dialog)
+        (make-autonumber-dialog)
         ;; Return existing dialog.
         *dialog))
 
