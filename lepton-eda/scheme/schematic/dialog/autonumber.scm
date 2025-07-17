@@ -75,10 +75,10 @@
 ;;; Activate or deactivate the "Overwrite existing numbers"
 ;;; checkbox depending on the state of the "Remove numbers"
 ;;; checkbox.
-(define (autonumber-remove-numbers-checkbox-clicked-callback *widget *autotext)
+(define (autonumber-remove-numbers-checkbox-clicked-callback *widget *dialog)
   (gtk_widget_set_sensitive
    (schematic_autonumber_dialog_lookup_widget
-    (schematic_autonumber_get_autotext_dialog *autotext)
+    *dialog
     (string->pointer "scope_overwrite"))
    (if (true? (gtk_toggle_button_get_active *widget)) 0 1)))
 
@@ -123,7 +123,7 @@
       (schematic_signal_connect *remove-number-widget
                                 (string->pointer "clicked")
                                 *autonumber-remove-numbers-checkbox-clicked-callback
-                                *autotext)
+                                *dialog)
 
       (schematic_autonumber_set_autotext_dialog *autotext *dialog)
       (schematic_autonumber_dialog_restore_state *autotext)
