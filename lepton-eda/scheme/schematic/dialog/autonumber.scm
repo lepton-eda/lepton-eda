@@ -88,6 +88,12 @@
 
 (define %gtk-response-accept (symbol->gtk-response 'accept))
 
+
+;;; Create a structure for storing autonumber dialog state.
+(define (make-autonumber-dialog-state)
+  (schematic_autonumber_new))
+
+
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
@@ -95,7 +101,7 @@
     (let ((*current-autotext (schematic_autonumber_get_autotext)))
       (if (null-pointer? *current-autotext)
           ;; If 'autotext' structure is NULL, let's init it.
-          (let ((*new-autotext (schematic_autonumber_new)))
+          (let ((*new-autotext (make-autonumber-dialog-state)))
             (schematic_autonumber_set_autotext *new-autotext)
             *new-autotext)
           *current-autotext)))
