@@ -371,6 +371,15 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - Gdk canvas scroll events are now handled in Scheme.
 
+- A new module, `(schematic action-mode)`, has been added.  It
+  exports the following new functions:
+  - `action-mode()` returns a Scheme symbol corresponding to the
+    current editing mode of a program window.
+  - `set-action-mode!()` sets a new editing mode for a window.
+  - `in-action()` returns a boolean value corresponding to the
+    current editing state: it returns `#t` if editing an object is
+    in action and `#f` otherwise.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
