@@ -186,8 +186,11 @@
             schematic_autonumber_set_autotext_dialog
             schematic_autonumber_get_autotext_removenum
             schematic_autonumber_set_autotext_removenum
+            schematic_autonumber_set_autotext_scope_number
             schematic_autonumber_get_autotext_scope_overwrite
             schematic_autonumber_set_autotext_scope_overwrite
+            schematic_autonumber_set_autotext_scope_skip
+            schematic_autonumber_set_autotext_scope_text
             schematic_autonumber_set_autotext_slotting
             schematic_autonumber_set_autotext_sort_order
             schematic_autonumber_set_autotext_startnum
@@ -197,6 +200,7 @@
             schematic_autonumber_dialog_restore_state
             schematic_autonumber_dialog_save_state
             schematic_autonumber_run
+            schematic_autonumber_scope_from_string
             schematic_autonumber_sort_order_from_string
             schematic_autonumber_sort_order_widget_init
 
@@ -1104,8 +1108,11 @@
 (define-lff schematic_autonumber_set_autotext_dialog void '(* *))
 (define-lff schematic_autonumber_get_autotext_removenum int '(*))
 (define-lff schematic_autonumber_set_autotext_removenum void (list '* int))
+(define-lff schematic_autonumber_set_autotext_scope_number void (list '* int))
 (define-lff schematic_autonumber_get_autotext_scope_overwrite int '(*))
 (define-lff schematic_autonumber_set_autotext_scope_overwrite void (list '* int))
+(define-lff schematic_autonumber_set_autotext_scope_skip void (list '* int))
+(define-lff schematic_autonumber_set_autotext_scope_text void '(* *))
 (define-lff schematic_autonumber_set_autotext_slotting void (list '* int))
 (define-lff schematic_autonumber_set_autotext_sort_order void (list '* int))
 (define-lff schematic_autonumber_set_autotext_startnum void (list '* int))
@@ -1115,6 +1122,7 @@
 (define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
 (define-lff schematic_autonumber_run void '(*))
+(define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
 

@@ -1802,12 +1802,6 @@ schematic_autonumber_new ()
                                                   g_list_append (scope_text, g_strdup (*t++)));
   }
 
-  schematic_autonumber_set_autotext_scope_skip (autotext,
-                                                SCOPE_PAGE);
-  schematic_autonumber_set_autotext_scope_number (autotext,
-                                                  SCOPE_SELECTED);
-  schematic_autonumber_set_autotext_scope_overwrite (autotext,
-                                                     FALSE);
   return autotext;
 }
 

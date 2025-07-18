@@ -97,6 +97,14 @@
    *autotext
    (schematic_autonumber_sort_order_from_string (string->pointer "sort-diagonal")))
 
+  (schematic_autonumber_set_autotext_scope_skip
+   *autotext
+   (schematic_autonumber_scope_from_string (string->pointer "scope-page")))
+  (schematic_autonumber_set_autotext_scope_number
+   *autotext
+   (schematic_autonumber_scope_from_string (string->pointer "scope-selected")))
+  (schematic_autonumber_set_autotext_scope_overwrite *autotext
+                                                     FALSE)
   (schematic_autonumber_set_autotext_startnum *autotext 1)
   (schematic_autonumber_set_autotext_removenum *autotext FALSE)
   (schematic_autonumber_set_autotext_slotting *autotext FALSE)
