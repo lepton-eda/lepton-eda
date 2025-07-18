@@ -1774,23 +1774,17 @@ schematic_autonumber_append_scope_text_element (GList *scope_text,
 }
 
 
-/** @brief Create and initialize a new #SchematicAutonumber
- *  instance.
+/** @brief Create a new #SchematicAutonumber instance.
  *
  *  @par Function Description
- *  Creates a new #SchematicAutonumber instance and initializes it
- *  with default values.
+ *  Allocates and returns a new #SchematicAutonumber instance.
  *
  *  @return The new #SchematicAutonumber instance.
  */
 SchematicAutonumber*
 schematic_autonumber_new ()
 {
-  SchematicAutonumber *autotext;
-
-  autotext = g_new (SchematicAutonumber, 1);
-
-  return autotext;
+  return g_new (SchematicAutonumber, 1);
 }
 
 /** @brief Restore the Autonumber text dialog settings.
