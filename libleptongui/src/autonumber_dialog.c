@@ -1305,9 +1305,11 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  elements for the searchtext.  Then it renumbers all text
  *  elements of all schematic pages. The renumbering follows the
  *  rules of the parameters given in the autonumber text dialog.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
  */
 void
-autonumber_text_autonumber (SchematicAutonumber *autotext)
+schematic_autonumber_run (SchematicAutonumber *autotext)
 {
   GList *pages;
   GList *searchtext_list=NULL;
@@ -1417,7 +1419,7 @@ autonumber_text_autonumber (SchematicAutonumber *autotext)
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
     autotext->current_searchtext = (gchar*) text_item->data;
-    /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
+    /* printf("schematic_autonumber_run: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
 
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
@@ -1522,7 +1524,9 @@ autonumber_text_autonumber (SchematicAutonumber *autotext)
  * @param widget Pointer to the parent widget.
  * @param widget_name Name of the widget.
  * @return Pointer to the widget or NULL if not found. */
-GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
+GtkWidget*
+schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
+                                           const gchar *widget_name)
 {
   GtkWidget *found_widget;
 
@@ -1532,14 +1536,17 @@ GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
   return found_widget;
 }
 
-/*! \brief Put the icons and the text into the sortorder combobox
+/*! \brief Put the icons and the text into the sort order
+ *  combobox.
+ *
  *  \par Function Description
- *  Load all bitmaps for the combobox and store them together with the label
- *  in a GtkListStore.
+ *  Load all bitmaps for the combobox and store them together with
+ *  the label in a GtkListStore.
+ *
+ *  \param [in,out] sort_order The sort order combobox widget.
  */
 void
-autonumber_sortorder_create (SchematicWindow *w_current,
-                             GtkWidget *sort_order)
+schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order)
 {
   GtkListStore *store;
   GtkTreeIter iter;
@@ -1644,12 +1651,17 @@ GList *autonumber_history_add(GList *history, gchar *text)
   return history;
 }
 
-/** @brief Allocate and initialize the state structure
+/** @brief Create and initialize a new #SchematicAutonumber
+ *  instance.
  *
- * @return Pointer to the allocated structure or NULL on error.
+ *  @par Function Description
+ *  Creates a new #SchematicAutonumber instance and initializes it
+ *  with default values.
+ *
+ *  @return The new #SchematicAutonumber instance.
  */
 SchematicAutonumber*
-autonumber_init_state ()
+schematic_autonumber_new ()
 {
   SchematicAutonumber *autotext;
 
@@ -1700,12 +1712,18 @@ autonumber_init_state ()
   return autotext;
 }
 
-/** @brief Restore the settings for the autonumber text dialog
+/** @brief Restore the Autonumber text dialog settings.
+ *
+ *  @par Function Description
+ *  Restores settings of the Autonumber text dialog saved
+ *  previously.
+ *
+ * @sa schematic_autonumber_dialog_save_state()
  *
  * @param autotext Pointer to the state struct.
  */
 void
-autonumber_set_state (SchematicAutonumber *autotext)
+schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   GtkTreeModel *model;
@@ -1713,7 +1731,8 @@ autonumber_set_state (SchematicAutonumber *autotext)
   /* Scope */
 
   /* Search text history */
-  widget = lookup_widget(autotext->dialog, "scope_text");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_text");
 
   /* Simple way to clear the ComboBox. Owen from #gtk+ says:
    *
@@ -1732,31 +1751,38 @@ autonumber_set_state (SchematicAutonumber *autotext)
   widget = gtk_bin_get_child(GTK_BIN(widget));
   gtk_entry_set_text(GTK_ENTRY(widget), (const gchar*) g_list_first(autotext->scope_text)->data);
 
-  widget = lookup_widget(autotext->dialog, "scope_skip");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_skip");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
                            autotext->scope_skip);
 
-  widget = lookup_widget(autotext->dialog, "scope_number");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_number");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
                            autotext->scope_number);
 
-  widget = lookup_widget(autotext->dialog, "scope_overwrite");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_overwrite");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->scope_overwrite);
 
   /* Options */
-  widget = lookup_widget(autotext->dialog, "opt_startnum");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_startnum");
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget),
                             autotext->startnum);
 
-  widget = lookup_widget(autotext->dialog, "sort_order");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "sort_order");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget), autotext->order);
 
-  widget = lookup_widget(autotext->dialog, "opt_removenum");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_removenum");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->removenum);
 
-  widget = lookup_widget(autotext->dialog, "opt_slotting");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_slotting");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->slotting);
 }
@@ -1766,10 +1792,12 @@ autonumber_set_state (SchematicAutonumber *autotext)
  * Get the settings from the autonumber text dialog and store it
  * in the #SchematicAutonumber structure.
  *
+ * @sa schematic_autonumber_dialog_restore_state()
+ *
  * @param autotext Pointer to the state struct.
  */
 void
-autonumber_get_state (SchematicAutonumber *autotext)
+schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   gchar *text;
@@ -1777,92 +1805,42 @@ autonumber_get_state (SchematicAutonumber *autotext)
   /* Scope */
 
   /* Search text history */
-  widget = lookup_widget(autotext->dialog, "scope_text");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_text");
   widget = gtk_bin_get_child(GTK_BIN(widget));
   text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
 
   autotext->scope_text=autonumber_history_add(autotext->scope_text, text);
 
-  widget = lookup_widget(autotext->dialog, "scope_skip");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_skip");
   autotext->scope_skip = gtk_combo_box_get_active( GTK_COMBO_BOX(widget) );
 
-  widget = lookup_widget(autotext->dialog, "scope_number");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_number");
   autotext->scope_number = gtk_combo_box_get_active(GTK_COMBO_BOX(widget) );
 
-  widget = lookup_widget(autotext->dialog, "scope_overwrite");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "scope_overwrite");
   autotext->scope_overwrite = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
   /* Sort order */
-  widget = lookup_widget(autotext->dialog, "sort_order");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "sort_order");
   autotext->order= gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
 
   /* Options */
-  widget = lookup_widget(autotext->dialog, "opt_startnum");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_startnum");
   autotext->startnum=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
 
-  widget = lookup_widget(autotext->dialog, "opt_removenum");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_removenum");
   autotext->removenum = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
-  widget = lookup_widget(autotext->dialog, "opt_slotting");
+  widget = schematic_autonumber_dialog_lookup_widget (autotext->dialog,
+                                                      "opt_slotting");
   autotext->slotting = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-}
-
-/* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
-
-/*! \brief response  callback for the autonumber text dialog
- *  \par Function Description
- *  The function just closes the dialog if the close button is pressed or the
- *  user closes the dialog window.
- *  Triggering the apply button will call the autonumber action functions.
- */
-void
-autonumber_text_response (GtkWidget *widget,
-                          gint response,
-                          SchematicAutonumber *autotext)
-{
-  switch (response) {
-  case GTK_RESPONSE_ACCEPT:
-    autonumber_get_state(autotext);
-    if (autotext->removenum == TRUE && autotext->scope_overwrite == FALSE) {
-      /* temporarly set the overwrite flag */
-      autotext->scope_overwrite = TRUE;
-      autonumber_text_autonumber(autotext);
-      autotext->scope_overwrite = FALSE;
-    }
-    else {
-      autonumber_text_autonumber(autotext);
-    }
-    break;
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    gtk_widget_destroy(autotext->dialog);
-    autotext->dialog = NULL;
-    break;
-  default:
-    printf("ERROR: autonumber_text_response(): strange signal %d\n",response);
-  }
-}
-
-
-/** @brief Callback that activates or deactivates "overwrite existing numbers"
- * check box.
- *
- * This gets called each time "remove numbers" check box gets clicked.
- */
-void
-autonumber_removenum_toggled (GtkWidget *opt_removenum,
-                              SchematicAutonumber *autotext)
-{
-  GtkWidget *scope_overwrite;
-
-  scope_overwrite=lookup_widget(autotext->dialog, "scope_overwrite");
-
-  /* toggle activity of scope overwrite with respect to removenum */
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(opt_removenum))) {
-    gtk_widget_set_sensitive(scope_overwrite, 0);
-  } else {
-    gtk_widget_set_sensitive(scope_overwrite, 1);
-  }
 }
 
 
@@ -1883,7 +1861,7 @@ autonumber_removenum_toggled (GtkWidget *opt_removenum,
  * @return Pointer to the dialog window.
  */
 GtkWidget*
-autonumber_create_dialog (SchematicWindow *w_current)
+schematic_autonumber_dialog_new (SchematicWindow *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
@@ -2171,7 +2149,8 @@ autonumber_create_dialog (SchematicWindow *w_current)
   gtk_widget_show (opt_slotting);
   gtk_box_pack_start (GTK_BOX (vbox4), opt_slotting, FALSE, FALSE, 0);
 
-  /* Store pointers to all widgets, for use by lookup_widget(). */
+  /* Store pointers to all widgets, for use by
+     schematic_autonumber_dialog_lookup_widget (). */
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_text, "scope_text");
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_number, "scope_number");
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_skip, "scope_skip");
@@ -2182,56 +2161,4 @@ autonumber_create_dialog (SchematicWindow *w_current)
   GLADE_HOOKUP_OBJECT (autonumber_text, opt_slotting, "opt_slotting");
 
   return autonumber_text;
-}
-
-/*! \brief Create or restore the autonumber text dialog
- *
- *  If the function is called the first time the dialog is created.
- *  If the dialog is only in background it is moved to the foreground.
- *
- *  @param w_current Pointer to the top level struct
- */
-void
-autonumber_text_dialog (SchematicWindow *w_current)
-{
-  GtkWidget *opt_removenum = NULL;
-  GtkWidget *sort_order = NULL;
-
-  if (schematic_autonumber_get_autotext () == NULL)
-  {
-    /* first call of this function, init dialog structure */
-    schematic_autonumber_set_autotext (autonumber_init_state ());
-  }
-
-  /* set the SchematicWindow always. Can it be changed between the calls??? */
-  autotext->w_current = w_current;
-
-  if(autotext->dialog == NULL) {
-    /* Dialog is not currently displayed - create it */
-
-    autotext->dialog = autonumber_create_dialog(w_current);
-
-    opt_removenum = lookup_widget(autotext->dialog, "opt_removenum");
-    sort_order = lookup_widget(autotext->dialog, "sort_order");
-
-    autonumber_sortorder_create(w_current, sort_order);
-
-    gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog),
-                                     GTK_RESPONSE_ACCEPT);
-
-    g_signal_connect (G_OBJECT (autotext->dialog), "response",
-                      G_CALLBACK (autonumber_text_response),
-                      autotext);
-
-    g_signal_connect (G_OBJECT (opt_removenum), "clicked",
-                      G_CALLBACK (autonumber_removenum_toggled),
-                      autotext);
-
-    autonumber_set_state(autotext);
-
-    gtk_widget_show_all(autotext->dialog);
-  }
-
-  /* if the dialog is in the background or minimized: show it */
-  gtk_window_present(GTK_WINDOW(autotext->dialog));
 }

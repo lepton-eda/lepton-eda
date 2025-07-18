@@ -78,15 +78,46 @@ gtk_widget_get_gtk_window (GtkWidget *widget)
 }
 
 
-/*! \brief Return an event scroll direction enum value from
- *         string.
- *  \par Function Description
- *  Returns the \c GdkScrollDirection enum value corresponding to
- *  the string \p s.  This is mainly intended to be used for value
- *  conversion in Scheme FFI functions.
+/*! \brief Transform a string into GTK response id value.
+ * \par Function Description
+
+ * Given a string naming a GTK response type id, return the enum
+ * value corresponding to it.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
  *
  * \param [in] s The string.
- * \return The scroll direction enum value.
+ * \return The GTK response id value.
+ */
+int
+gtk_string_to_response (char *s)
+{
+  int result = GTK_RESPONSE_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_RESPONSE_NONE; }
+  else if (strcmp (s, "reject") == 0) {result = GTK_RESPONSE_REJECT; }
+  else if (strcmp (s, "accept") == 0) {result = GTK_RESPONSE_ACCEPT; }
+  else if (strcmp (s, "delete-event") == 0) {result = GTK_RESPONSE_DELETE_EVENT; }
+  else if (strcmp (s, "ok") == 0) {result = GTK_RESPONSE_OK; }
+  else if (strcmp (s, "cancel") == 0) {result = GTK_RESPONSE_CANCEL; }
+  else if (strcmp (s, "close") == 0) {result = GTK_RESPONSE_CLOSE; }
+  else if (strcmp (s, "yes") == 0) {result = GTK_RESPONSE_YES; }
+  else if (strcmp (s, "no") == 0) {result = GTK_RESPONSE_NO; }
+  else if (strcmp (s, "apply") == 0) {result = GTK_RESPONSE_APPLY; }
+  else if (strcmp (s, "help") == 0) {result = GTK_RESPONSE_HELP; }
+
+  return result;
+}
+
+
+/*! \brief Return an event scroll direction enum value from string.
+ * \par Function Description
+ * Given a string \a s, returns the \c GdkScrollDirection enum
+ * value corresponding to it.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GdkScrollDirection value corresponding to the
+ *         string.
  */
 GdkScrollDirection
 gdk_event_scroll_direction_from_string (char *s)
@@ -105,15 +136,15 @@ gdk_event_scroll_direction_from_string (char *s)
 }
 
 
-/*! \brief Get a string holding the representation of \c
- *         GdkScrollDirection value.
- *  \par Function Description
- *  Returns the representation of a \c GdkScrollDirection value as
- *  a string.  This is mainly intended to be used for value
- *  conversion in Scheme FFI functions.
+/*! \brief Return a string holding the representation of \c GdkScrollDirection value.
+ * \par Function Description
+ * Given a \c GdkScrollDirection value, returns its external
+ * representation as a string.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
  *
- *  \param [in] mode The \c GdkScrollDirection value.
- *  \return The string representation of the value.
+ * \param [in] mode The \c GdkScrollDirection value.
+ * \return The string representing the \c GdkScrollDirection
+ *         value.
  */
 const char*
 gdk_event_scroll_direction_to_string (GdkScrollDirection mode)

@@ -95,8 +95,15 @@ struct autonumber_slot_t {
   gint slotnr;      /* just the number of the free slot */
 };
 
-void
-autonumber_text_dialog (SchematicWindow *w_current);
+/* Construction, destruction */
+
+SchematicAutonumber*
+schematic_autonumber_new ();
+
+GtkWidget*
+schematic_autonumber_dialog_new (SchematicWindow *w_current);
+
+/* Accessors */
 
 SchematicAutonumber*
 schematic_autonumber_get_autotext ();
@@ -213,6 +220,23 @@ schematic_autonumber_slot_get_symbol_name (SchematicAutonumberSlot *slot);
 void
 schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
                                            char *name);
+/* Methods */
+
+GtkWidget*
+schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
+                                           const gchar *widget_name);
+void
+schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_run (SchematicAutonumber *autotext);
+
+void
+schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
+
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */

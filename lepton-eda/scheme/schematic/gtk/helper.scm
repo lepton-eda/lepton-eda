@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023 Lepton EDA Contributors
+;;; Copyright (C) 2023-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,8 +21,13 @@
 
   #:use-module (schematic ffi)
 
-  #:export (gtk-response->symbol))
+  #:export (gtk-response->symbol
+            symbol->gtk-response))
 
 (define (gtk-response->symbol response)
   "Transforms GtkResponse integer RESPONSE to Scheme symbol."
   (string->symbol (pointer->string (gtk_response_to_string response))))
+
+(define (symbol->gtk-response sym)
+  "Transforms symbol SYM to corresponding GtkResponse integer value."
+  (gtk_string_to_response (string->pointer (symbol->string sym))))

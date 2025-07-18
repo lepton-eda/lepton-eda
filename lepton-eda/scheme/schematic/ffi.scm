@@ -39,6 +39,7 @@
             g_read_file
 
             gtk_response_to_string
+            gtk_string_to_response
             gtk_widget_get_gtk_window
 
             generic_confirm_dialog
@@ -178,7 +179,21 @@
 
             attrib_edit_dialog
 
-            autonumber_text_dialog
+            schematic_autonumber_new
+            schematic_autonumber_get_autotext
+            schematic_autonumber_set_autotext
+            schematic_autonumber_get_autotext_dialog
+            schematic_autonumber_set_autotext_dialog
+            schematic_autonumber_get_autotext_removenum
+            schematic_autonumber_get_autotext_scope_overwrite
+            schematic_autonumber_set_autotext_scope_overwrite
+            schematic_autonumber_set_autotext_window
+            schematic_autonumber_dialog_lookup_widget
+            schematic_autonumber_dialog_new
+            schematic_autonumber_dialog_restore_state
+            schematic_autonumber_dialog_save_state
+            schematic_autonumber_run
+            schematic_autonumber_sort_order_widget_init
 
             x_clipboard_finish
             x_clipboard_init
@@ -593,6 +608,7 @@
 
 ;;; gtk_helper.c
 (define-lff gtk_response_to_string '* (list int))
+(define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
 
 ;;; o_attrib.c
@@ -1076,7 +1092,21 @@
 (define-lff attrib_edit_dialog void (list '* '* int))
 
 ;;; autonumber_dialog.c
-(define-lff autonumber_text_dialog void '(*))
+(define-lff schematic_autonumber_new '* '())
+(define-lff schematic_autonumber_get_autotext '* '())
+(define-lff schematic_autonumber_set_autotext void '(*))
+(define-lff schematic_autonumber_get_autotext_dialog '* '(*))
+(define-lff schematic_autonumber_set_autotext_dialog void '(* *))
+(define-lff schematic_autonumber_get_autotext_removenum int '(*))
+(define-lff schematic_autonumber_get_autotext_scope_overwrite int '(*))
+(define-lff schematic_autonumber_set_autotext_scope_overwrite void (list '* int))
+(define-lff schematic_autonumber_set_autotext_window void '(* *))
+(define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
+(define-lff schematic_autonumber_dialog_new '* '(*))
+(define-lff schematic_autonumber_dialog_restore_state void '(*))
+(define-lff schematic_autonumber_dialog_save_state void '(*))
+(define-lff schematic_autonumber_run void '(*))
+(define-lff schematic_autonumber_sort_order_widget_init void '(*))
 
 ;;; x_clipboard.c
 (define-lff x_clipboard_finish void '(*))

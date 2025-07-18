@@ -34,6 +34,7 @@
             gtk_adjustment_get_upper
             gtk_adjustment_get_value
             gtk_adjustment_set_value
+            gtk_dialog_set_default_response
             gtk_events_pending
             gtk_rc_parse
             gtk_icon_theme_get_default
@@ -54,6 +55,9 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+            gtk_toggle_button_get_active
+            gtk_widget_set_sensitive
+            gtk_widget_show_all
 
             gtk_window_set_transient_for
             gtk_window_present
@@ -83,6 +87,8 @@
 (define-lff gtk_adjustment_get_value double '(*))
 (define-lff gtk_adjustment_set_value void (list '* double))
 
+(define-lff gtk_dialog_set_default_response void (list '* int))
+
 (define-lff gtk_events_pending int '())
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
@@ -111,10 +117,14 @@
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
+(define-lff gtk_toggle_button_get_active int '(*))
+
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
+(define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_show void '(*))
+(define-lff gtk_widget_show_all void '(*))
 
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))

@@ -202,6 +202,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   all fields of the structs `SchematicAutonumber` and
   `SchematicAutonumberSlot` have been added.
 
+- A new Scheme module for the Autonumber dialog, `(schematic
+  dialog autonumber)`, has been added.  It exports the function
+  `autonumber-dialog()` which opens the dialog.
+
 - The following structures have been made opaque and their data
   are now available only via accessors:
   - the structure of the type `SchematicNewText`,
