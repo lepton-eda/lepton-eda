@@ -112,18 +112,16 @@
 
   (schematic_autonumber_set_autotext_scope_text *autotext %null-pointer)
 
-  (let loop ((ls default-text-ls))
-    (let ((*scope-text-ls
-           (schematic_autonumber_get_autotext_scope_text *autotext)))
-      (unless (null? ls)
-        (schematic_autonumber_set_autotext_scope_text
-         *autotext
-         (g_list_append *scope-text-ls
-                        ;; Call for g_strdup() is necessary as
-                        ;; after a while, the pointer created in
-                        ;; Scheme will be garbage-collected.
-                        (g_strdup (string->pointer (car ls)))))
-        (loop (cdr ls)))))
+  (let loop ((ls default-text-ls)
+             (*gls %null-pointer))
+    (if (null? ls)
+        (schematic_autonumber_set_autotext_scope_text *autotext *gls)
+        (loop (cdr ls)
+              (g_list_append *gls
+                             ;; Call for g_strdup() is necessary as
+                             ;; after a while, the pointer created in
+                             ;; Scheme will be garbage-collected.
+                             (g_strdup (string->pointer (car ls)))))))
 
   (schematic_autonumber_set_autotext_sort_order
    *autotext
