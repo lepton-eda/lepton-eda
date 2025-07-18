@@ -1707,13 +1707,6 @@ schematic_autonumber_new ()
                                                      FALSE);
   schematic_autonumber_set_autotext_sort_order (autotext,
                                                 AUTONUMBER_SORT_DIAGONAL);
-  schematic_autonumber_set_autotext_startnum (autotext, 1);
-
-  schematic_autonumber_set_autotext_removenum (autotext, FALSE);
-  schematic_autonumber_set_autotext_slotting (autotext, FALSE);
-
-  schematic_autonumber_set_autotext_dialog (autotext, NULL);
-
   return autotext;
 }
 

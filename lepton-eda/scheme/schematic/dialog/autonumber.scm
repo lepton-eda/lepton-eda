@@ -91,8 +91,14 @@
 
 ;;; Create a structure for storing autonumber dialog state.
 (define (make-autonumber-dialog-state)
-  (schematic_autonumber_new))
+  (define *autotext (schematic_autonumber_new))
 
+  (schematic_autonumber_set_autotext_startnum *autotext 1)
+  (schematic_autonumber_set_autotext_removenum *autotext FALSE)
+  (schematic_autonumber_set_autotext_slotting *autotext FALSE)
+  (schematic_autonumber_set_autotext_dialog *autotext %null-pointer)
+
+  *autotext)
 
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
