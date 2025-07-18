@@ -93,6 +93,10 @@
 (define (make-autonumber-dialog-state)
   (define *autotext (schematic_autonumber_new))
 
+  (schematic_autonumber_set_autotext_sort_order
+   *autotext
+   (schematic_autonumber_sort_order_from_string (string->pointer "sort-diagonal")))
+
   (schematic_autonumber_set_autotext_startnum *autotext 1)
   (schematic_autonumber_set_autotext_removenum *autotext FALSE)
   (schematic_autonumber_set_autotext_slotting *autotext FALSE)

@@ -189,6 +189,7 @@
             schematic_autonumber_get_autotext_scope_overwrite
             schematic_autonumber_set_autotext_scope_overwrite
             schematic_autonumber_set_autotext_slotting
+            schematic_autonumber_set_autotext_sort_order
             schematic_autonumber_set_autotext_startnum
             schematic_autonumber_set_autotext_window
             schematic_autonumber_dialog_lookup_widget
@@ -196,6 +197,7 @@
             schematic_autonumber_dialog_restore_state
             schematic_autonumber_dialog_save_state
             schematic_autonumber_run
+            schematic_autonumber_sort_order_from_string
             schematic_autonumber_sort_order_widget_init
 
             x_clipboard_finish
@@ -1105,6 +1107,7 @@
 (define-lff schematic_autonumber_get_autotext_scope_overwrite int '(*))
 (define-lff schematic_autonumber_set_autotext_scope_overwrite void (list '* int))
 (define-lff schematic_autonumber_set_autotext_slotting void (list '* int))
+(define-lff schematic_autonumber_set_autotext_sort_order void (list '* int))
 (define-lff schematic_autonumber_set_autotext_startnum void (list '* int))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
@@ -1112,6 +1115,7 @@
 (define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_dialog_save_state void '(*))
 (define-lff schematic_autonumber_run void '(*))
+(define-lff schematic_autonumber_sort_order_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
 
 ;;; x_clipboard.c
