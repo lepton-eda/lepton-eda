@@ -649,6 +649,26 @@ schematic_autonumber_set_autotext_window (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Convert a string into an autonumbering scope enum value.
+ *
+ *  \par Function Description
+ *  Returns an integer autonumbering scope enum value
+ *  corresponding to the given string \p s.
+ *
+ *  \param [in] s The string.
+ */
+int
+schematic_autonumber_scope_from_string (char *s)
+{
+  int result = SCOPE_SELECTED;
+
+  if      (strcmp (s, "scope-selected") == 0) { result = SCOPE_SELECTED; }
+  else if (strcmp (s, "scope-page") == 0) { result = SCOPE_PAGE; }
+  else if (strcmp (s, "scope-hierarchy") == 0) { result = SCOPE_HIERARCHY; }
+
+  return result;
+}
+
 
 /*! \brief Convert an autonumbering scope enum value into a
  *  string.

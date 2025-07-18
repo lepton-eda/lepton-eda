@@ -234,6 +234,9 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext);
 void
 schematic_autonumber_run (SchematicAutonumber *autotext);
 
+int
+schematic_autonumber_scope_from_string (char *s);
+
 const char*
 schematic_autonumber_scope_to_string (int scope);
 
