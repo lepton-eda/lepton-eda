@@ -697,6 +697,31 @@ schematic_autonumber_scope_to_string (int scope)
 }
 
 
+/*! \brief Convert a string into an autonumbering sort order enum
+ *  value.
+ *
+ *  \par Function Description
+ *  Returns an integer autonumbering sort order enum value
+ *  corresponding to the given string \p s.
+ *
+ *  \param [in] s The string.
+ */
+int
+schematic_autonumber_sort_order_from_string (char *s)
+{
+  int result = AUTONUMBER_SORT_DIAGONAL;
+
+  if      (strcmp (s, "sort-diagonal") == 0) { result = AUTONUMBER_SORT_DIAGONAL; }
+  else if (strcmp (s, "sort-yx") == 0) { result = AUTONUMBER_SORT_YX; }
+  else if (strcmp (s, "sort-yx-rev") == 0) { result = AUTONUMBER_SORT_YX_REV; }
+  else if (strcmp (s, "sort-xy") == 0) { result = AUTONUMBER_SORT_XY; }
+  else if (strcmp (s, "sort-xy-rev") == 0) { result = AUTONUMBER_SORT_XY_REV; }
+  else if (strcmp (s, "sort-file") == 0) { result = AUTONUMBER_SORT_FILE; }
+
+  return result;
+}
+
+
 /*! \brief Convert an autonumbering sort order enum value into a
  *  string.
  *
