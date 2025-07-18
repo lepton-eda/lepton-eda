@@ -1687,8 +1687,6 @@ schematic_autonumber_new ()
 
   autotext = g_new (SchematicAutonumber, 1);
 
-  if(autotext==NULL) return NULL;
-
   schematic_autonumber_set_autotext_scope_text (autotext, NULL);
 
   t = default_text;
