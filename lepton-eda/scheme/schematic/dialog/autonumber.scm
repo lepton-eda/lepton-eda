@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -91,7 +92,36 @@
 
 ;;; Create a structure for storing autonumber dialog state.
 (define (make-autonumber-dialog-state)
+  ;; Default contents of the combo box history.
+  (define default-text-ls
+    '("refdes=*"
+      "refdes=C?"
+      "refdes=D?"
+      "refdes=I?"
+      "refdes=L?"
+      "refdes=Q?"
+      "refdes=R?"
+      "refdes=T?"
+      "refdes=U?"
+      "refdes=X?"
+      "netname=*"
+      "netname=A?"
+      "netname=D?"))
+
   (define *autotext (schematic_autonumber_new))
+
+  (schematic_autonumber_set_autotext_scope_text *autotext %null-pointer)
+
+  (let loop ((ls default-text-ls))
+    (let ((*scope-text-ls
+           (schematic_autonumber_get_autotext_scope_text *autotext)))
+      (unless (null? ls)
+        (schematic_autonumber_set_autotext_scope_text
+         *autotext
+         (schematic_autonumber_append_scope_text_element
+          *scope-text-ls
+          (string->pointer (car ls))))
+        (loop (cdr ls)))))
 
   (schematic_autonumber_set_autotext_sort_order
    *autotext

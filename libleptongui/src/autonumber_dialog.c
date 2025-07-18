@@ -1787,40 +1787,8 @@ SchematicAutonumber*
 schematic_autonumber_new ()
 {
   SchematicAutonumber *autotext;
-  GList *scope_text;
-
-  /* Default contents of the combo box history */
-  const gchar *default_text[] = {
-    "refdes=*",
-    "refdes=C?",
-    "refdes=D?",
-    "refdes=I?",
-    "refdes=L?",
-    "refdes=Q?",
-    "refdes=R?",
-    "refdes=T?",
-    "refdes=U?",
-    "refdes=X?",
-    "netname=*",
-    "netname=A?",
-    "netname=D?",
-    NULL
-  };
-  const gchar **t;
 
   autotext = g_new (SchematicAutonumber, 1);
-
-  schematic_autonumber_set_autotext_scope_text (autotext, NULL);
-
-  t = default_text;
-  while (*t != NULL) {
-    /* t is both an array address and the address of its first
-       element, it post-increments after we get its value. */
-    scope_text =
-      schematic_autonumber_get_autotext_scope_text (autotext);
-    schematic_autonumber_set_autotext_scope_text (autotext,
-                                                  schematic_autonumber_append_scope_text_element (scope_text, *t++));
-  }
 
   return autotext;
 }
