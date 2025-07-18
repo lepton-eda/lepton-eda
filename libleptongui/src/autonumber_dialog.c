@@ -1714,7 +1714,7 @@ schematic_autonumber_new ()
   schematic_autonumber_set_autotext_removenum (autotext, FALSE);
   schematic_autonumber_set_autotext_slotting (autotext, FALSE);
 
-  autotext->dialog = NULL;
+  schematic_autonumber_set_autotext_dialog (autotext, NULL);
 
   return autotext;
 }
