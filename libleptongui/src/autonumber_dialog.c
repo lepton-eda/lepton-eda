@@ -1869,7 +1869,10 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
   widget = gtk_bin_get_child(GTK_BIN(widget));
   text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
 
-  autotext->scope_text=autonumber_history_add(autotext->scope_text, text);
+  GList *scope_text =
+    schematic_autonumber_get_autotext_scope_text (autotext);
+
+  autotext->scope_text = autonumber_history_add (scope_text, text);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_skip");
