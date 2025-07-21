@@ -1883,7 +1883,8 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
-  autotext->scope_number = gtk_combo_box_get_active(GTK_COMBO_BOX(widget) );
+  combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+  schematic_autonumber_set_autotext_scope_number (autotext, combo_value);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
