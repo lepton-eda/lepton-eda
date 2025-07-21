@@ -1857,6 +1857,7 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   gchar *text;
+  int combo_value;
 
   GtkWidget *dialog =
     schematic_autonumber_get_autotext_dialog (autotext);
@@ -1877,7 +1878,8 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_skip");
-  autotext->scope_skip = gtk_combo_box_get_active( GTK_COMBO_BOX(widget) );
+  combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+  schematic_autonumber_set_autotext_scope_skip (autotext, combo_value);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
