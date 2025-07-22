@@ -1858,6 +1858,7 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
   GtkWidget *widget;
   gchar *text;
   int combo_value;
+  gboolean toggle_button_value;
 
   GtkWidget *dialog =
     schematic_autonumber_get_autotext_dialog (autotext);
@@ -1888,7 +1889,8 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
-  autotext->scope_overwrite = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+  toggle_button_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  schematic_autonumber_set_autotext_scope_overwrite (autotext, toggle_button_value);
 
   /* Sort order */
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
