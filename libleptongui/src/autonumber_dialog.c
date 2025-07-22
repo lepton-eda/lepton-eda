@@ -1820,8 +1820,9 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_skip");
-  gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
-                           autotext->scope_skip);
+  int scope_skip =
+    schematic_autonumber_get_autotext_scope_skip (autotext);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), scope_skip);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
