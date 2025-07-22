@@ -1839,8 +1839,8 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
   /* Options */
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_startnum");
-  gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget),
-                            autotext->startnum);
+  int startnum = schematic_autonumber_get_autotext_startnum (autotext);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), startnum);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "sort_order");
