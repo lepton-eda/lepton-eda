@@ -1849,8 +1849,9 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_removenum");
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
-                               autotext->removenum);
+  gboolean removenum =
+    schematic_autonumber_get_autotext_removenum (autotext);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), removenum);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_slotting");
