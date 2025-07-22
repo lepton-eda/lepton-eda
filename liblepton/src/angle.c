@@ -45,10 +45,14 @@ lepton_angle_is_normal (gint angle)
   return ((0 <= angle) && (angle < 360));
 }
 
-/*! \brief Checks if an angle is orthogonal
+/*! \brief Check if an angle is orthogonal.
  *
- *  \param [in] angle the angle in degrees
- *  \retval TRUE if the angle is a multiple of 90 degrees
+ *  \par Function Description
+ *  Checks if an angle is orthogonal.
+ *
+ *  \param [in] angle The angle in degrees.
+ *  \retval TRUE if the angle is a multiple of 90 degrees,
+ *  \retval FALSE otherwise.
  */
 gboolean
 lepton_angle_is_ortho (gint angle)
