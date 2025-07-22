@@ -1846,18 +1846,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
                                                       "sort_order");
   int order = schematic_autonumber_get_autotext_sort_order (autotext);
   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), order);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_removenum");
-  gboolean removenum =
-    schematic_autonumber_get_autotext_removenum (autotext);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), removenum);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_slotting");
-  gboolean slotting =
-    schematic_autonumber_get_autotext_slotting (autotext);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), slotting);
 }
 
 
