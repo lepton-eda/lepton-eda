@@ -1855,8 +1855,9 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_slotting");
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
-                               autotext->slotting);
+  gboolean slotting =
+    schematic_autonumber_get_autotext_slotting (autotext);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), slotting);
 }
 
 
