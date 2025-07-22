@@ -240,7 +240,27 @@
 ;;; Restore the Autonumber text dialog settings from the *AUTOTEXT
 ;;; variable.
 (define (restore-autonumber-dialog-state *autotext)
-  (schematic_autonumber_dialog_restore_state *autotext))
+  (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
+  (define remove-numbers?
+    (schematic_autonumber_get_autotext_removenum *autotext))
+  (define *remove-numbers-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_removenum")))
+  (define use-slotting?
+    (schematic_autonumber_get_autotext_slotting *autotext))
+  (define *slotting-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_slotting")))
+
+  (schematic_autonumber_dialog_restore_state *autotext)
+
+  (gtk_toggle_button_set_active *remove-numbers-widget
+                                remove-numbers?)
+
+  (gtk_toggle_button_set_active *slotting-widget
+                                use-slotting?))
 
 
 (define (autonumber-dialog window)

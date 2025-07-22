@@ -67,6 +67,8 @@
             gtk_spin_button_get_value_as_int
 
             gtk_toggle_button_get_active
+            gtk_toggle_button_set_active
+
             gtk_widget_set_sensitive
             gtk_widget_show_all
 
@@ -137,6 +139,7 @@
 (define-lff gtk_tearoff_menu_item_new '* '())
 
 (define-lff gtk_toggle_button_get_active int '(*))
+(define-lff gtk_toggle_button_set_active void (list '* int))
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
