@@ -1914,7 +1914,8 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_slotting");
-  autotext->slotting = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+  toggle_button_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  schematic_autonumber_set_autotext_slotting (autotext, toggle_button_value);
 }
 
 
