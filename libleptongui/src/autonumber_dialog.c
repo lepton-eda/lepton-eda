@@ -1832,9 +1832,10 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
-                               autotext->scope_overwrite);
-
+  gboolean scope_overwrite =
+    schematic_autonumber_get_autotext_scope_overwrite (autotext);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+                                scope_overwrite);
   /* Options */
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "opt_startnum");
