@@ -236,6 +236,13 @@
 
   *autotext)
 
+
+;;; Restore the Autonumber text dialog settings from the *AUTOTEXT
+;;; variable.
+(define (restore-autonumber-dialog-state *autotext)
+  (schematic_autonumber_dialog_restore_state *autotext))
+
+
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
@@ -274,7 +281,7 @@
                                 *dialog)
 
       (schematic_autonumber_set_autotext_dialog *autotext *dialog)
-      (schematic_autonumber_dialog_restore_state *autotext)
+      (restore-autonumber-dialog-state *autotext)
       (gtk_widget_show_all *dialog)
       *dialog))
 
