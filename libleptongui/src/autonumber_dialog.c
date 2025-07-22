@@ -1826,8 +1826,9 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_number");
-  gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
-                           autotext->scope_number);
+  int scope_number =
+    schematic_autonumber_get_autotext_scope_number (autotext);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), scope_number);
 
   widget = schematic_autonumber_dialog_lookup_widget (dialog,
                                                       "scope_overwrite");
