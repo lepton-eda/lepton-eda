@@ -61,15 +61,16 @@ gtk_response_to_string (int response)
 }
 
 
-/*! \brief Cast a GtkWidget to GtkWindow
+/*! \brief Cast \c GtkWidget to \c GtkWindow.
+ *
  *  \par Function Description
- *  The helper function casts a \a GtkWidget instance to \a
+ *  The helper function casts a \c GtkWidget instance to \c
  *  GtkWindow and returns the result.  Its only purpose is to be
  *  used in Scheme FFI which doesn't support C macros.  While not
  *  strongly necessary, it is an additional check, just in case.
  *
- *  \param [in] widget The GtkWidget object.
- *  \return The resulting GtkWindow object.
+ *  \param [in] widget The \c GtkWidget object.
+ *  \return The resulting \c GtkWindow object.
  */
 GtkWindow*
 gtk_widget_get_gtk_window (GtkWidget *widget)
