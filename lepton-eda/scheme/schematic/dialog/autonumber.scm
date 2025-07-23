@@ -253,8 +253,16 @@
     (schematic_autonumber_dialog_lookup_widget
      *dialog
      (string->pointer "opt_slotting")))
+  (define sort-order
+    (schematic_autonumber_get_autotext_sort_order *autotext))
+  (define *sort-order-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "sort_order")))
 
   (schematic_autonumber_dialog_restore_state *autotext)
+
+  (gtk_combo_box_set_active *sort-order-widget sort-order)
 
   (gtk_toggle_button_set_active *remove-numbers-widget
                                 remove-numbers?)
