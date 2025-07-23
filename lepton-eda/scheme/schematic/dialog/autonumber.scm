@@ -252,6 +252,8 @@
   (define *scope-text
     (schematic_autonumber_get_autotext_scope_text *autotext))
 
+  (define *model (gtk_combo_box_get_model *scope-text-widget))
+
   (define scope-to-skip
     (schematic_autonumber_get_autotext_scope_skip *autotext))
   (define *skip-scope-widget
@@ -296,7 +298,13 @@
      *dialog
      (string->pointer "sort_order")))
 
-  (schematic_autonumber_dialog_restore_state *autotext)
+
+  ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
+  ;;
+  ;; Yeah, it's just slightly "shady" ... if you want to stick to
+  ;; fully advertised API, you need to remember how many rows you
+  ;; added and use gtk_combo_box_remove_text().
+  (gtk_list_store_clear *model)
 
   (for-each
    (lambda (*element)
@@ -304,7 +312,7 @@
                                      *element))
    (glist->list (schematic_autonumber_get_autotext_scope_text
                  *autotext)
-                string->pointer))
+                identity))
 
   (gtk_entry_set_text *text-entry-widget
                       (glist-data (g_list_first *scope-text)))

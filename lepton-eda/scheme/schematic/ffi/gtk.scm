@@ -39,6 +39,7 @@
 
             gtk_combo_box_get_active
             gtk_combo_box_set_active
+            gtk_combo_box_get_model
 
             gtk_combo_box_text_append_text
 
@@ -48,6 +49,9 @@
             gtk_entry_set_text
 
             gtk_events_pending
+
+            gtk_list_store_clear
+
             gtk_rc_parse
             gtk_icon_theme_get_default
             gtk_icon_theme_append_search_path
@@ -109,6 +113,7 @@
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
+(define-lff gtk_combo_box_get_model '* '(*))
 
 (define-lff gtk_combo_box_text_append_text void '(* *))
 
@@ -118,6 +123,8 @@
 (define-lff gtk_entry_set_text void '(* *))
 
 (define-lff gtk_events_pending int '())
+
+(define-lff gtk_list_store_clear void '(*))
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())

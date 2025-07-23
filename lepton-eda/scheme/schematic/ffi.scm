@@ -203,7 +203,6 @@
             schematic_autonumber_set_autotext_window
             schematic_autonumber_dialog_lookup_widget
             schematic_autonumber_dialog_new
-            schematic_autonumber_dialog_restore_state
             schematic_autonumber_history_add
             schematic_autonumber_run
             schematic_autonumber_scope_from_string
@@ -1131,7 +1130,6 @@
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
-(define-lff schematic_autonumber_dialog_restore_state void '(*))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_run void '(*))
 (define-lff schematic_autonumber_scope_from_string int '(*))
