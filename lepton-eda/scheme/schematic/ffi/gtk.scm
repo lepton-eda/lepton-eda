@@ -43,6 +43,7 @@
             gtk_dialog_set_default_response
 
             gtk_entry_get_text
+            gtk_entry_set_text
 
             gtk_events_pending
             gtk_rc_parse
@@ -110,6 +111,7 @@
 (define-lff gtk_dialog_set_default_response void (list '* int))
 
 (define-lff gtk_entry_get_text '* '(*))
+(define-lff gtk_entry_set_text void '(* *))
 
 (define-lff gtk_events_pending int '())
 

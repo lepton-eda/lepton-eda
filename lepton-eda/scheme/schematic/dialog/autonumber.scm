@@ -242,6 +242,16 @@
 (define (restore-autonumber-dialog-state *autotext)
   (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
 
+  (define *scope-text-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "scope_text")))
+
+  (define *text-entry-widget
+    (gtk_bin_get_child *scope-text-widget))
+  (define *scope-text
+    (schematic_autonumber_get_autotext_scope_text *autotext))
+
   (define scope-to-skip
     (schematic_autonumber_get_autotext_scope_skip *autotext))
   (define *skip-scope-widget
@@ -287,6 +297,9 @@
      (string->pointer "sort_order")))
 
   (schematic_autonumber_dialog_restore_state *autotext)
+
+  (gtk_entry_set_text *text-entry-widget
+                      (glist-data (g_list_first *scope-text)))
 
   (gtk_combo_box_set_active *skip-scope-widget
                             scope-to-skip)
