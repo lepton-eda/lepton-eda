@@ -1782,6 +1782,7 @@ void
 schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
+  GtkWidget *entry_widget;
   GtkTreeModel *model;
   GList *el;
   GList *scope_text;
@@ -1811,11 +1812,11 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
                                     (const gchar*) el->data);
   }
 
-  widget = gtk_bin_get_child(GTK_BIN(widget));
+  entry_widget = gtk_bin_get_child (GTK_BIN (widget));
 
   scope_text =
     schematic_autonumber_get_autotext_scope_text (autotext);
-  gtk_entry_set_text (GTK_ENTRY (widget),
+  gtk_entry_set_text (GTK_ENTRY (entry_widget),
                       (const gchar*) g_list_first (scope_text)->data);
 }
 
