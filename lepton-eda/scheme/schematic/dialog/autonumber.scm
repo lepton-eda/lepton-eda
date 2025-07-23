@@ -35,10 +35,16 @@
   (schematic_autonumber_run *autotext))
 
 
+;;; Save the settings of the Autonumber text dialog in the
+;;; *AUTOTEXT variable.
+(define (save-autonumber-dialog-state *autotext)
+  (schematic_autonumber_dialog_save_state *autotext))
+
+
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
 ;;; object.
 (define (start-autonumbering *autotext)
-  (schematic_autonumber_dialog_save_state *autotext)
+  (save-autonumber-dialog-state *autotext)
   (if (and (true? (schematic_autonumber_get_autotext_removenum *autotext))
            (false? (schematic_autonumber_get_autotext_scope_overwrite *autotext)))
       (begin
