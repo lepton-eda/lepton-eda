@@ -1908,17 +1908,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
   spin_button_value =
     gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
   schematic_autonumber_set_autotext_startnum (autotext, spin_button_value);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_removenum");
-  toggle_button_value =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-  schematic_autonumber_set_autotext_removenum (autotext, toggle_button_value);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_slotting");
-  toggle_button_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-  schematic_autonumber_set_autotext_slotting (autotext, toggle_button_value);
 }
 
 

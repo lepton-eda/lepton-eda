@@ -38,7 +38,29 @@
 ;;; Save the settings of the Autonumber text dialog in the
 ;;; *AUTOTEXT variable.
 (define (save-autonumber-dialog-state *autotext)
-  (schematic_autonumber_dialog_save_state *autotext))
+  (define *dialog
+    (schematic_autonumber_get_autotext_dialog *autotext))
+
+  (define *remove-numbers-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_removenum")))
+  (define remove-numbers?
+    (gtk_toggle_button_get_active *remove-numbers-widget))
+
+  (define *slotting-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_slotting")))
+  (define use-slotting?
+    (gtk_toggle_button_get_active *slotting-widget))
+
+  (schematic_autonumber_dialog_save_state *autotext)
+
+  (schematic_autonumber_set_autotext_removenum *autotext
+                                               remove-numbers?)
+  (schematic_autonumber_set_autotext_slotting *autotext
+                                              use-slotting?))
 
 
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
