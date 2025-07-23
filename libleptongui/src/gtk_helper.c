@@ -80,8 +80,8 @@ gtk_widget_get_gtk_window (GtkWidget *widget)
 
 
 /*! \brief Transform a string into GTK response id value.
+ *
  * \par Function Description
-
  * Given a string naming a GTK response type id, return the enum
  * value corresponding to it.  This is mainly intended to be used
  * for value conversion in Scheme FFI functions.
