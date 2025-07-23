@@ -241,6 +241,13 @@
 ;;; variable.
 (define (restore-autonumber-dialog-state *autotext)
   (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
+  ;; Options.
+  (define start-number
+    (schematic_autonumber_get_autotext_startnum *autotext))
+  (define *start-number-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_startnum")))
   (define remove-numbers?
     (schematic_autonumber_get_autotext_removenum *autotext))
   (define *remove-numbers-widget
@@ -261,6 +268,9 @@
      (string->pointer "sort_order")))
 
   (schematic_autonumber_dialog_restore_state *autotext)
+
+  (gtk_spin_button_set_value *start-number-widget
+                             start-number)
 
   (gtk_combo_box_set_active *sort-order-widget sort-order)
 

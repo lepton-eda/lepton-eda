@@ -1836,11 +1836,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
     schematic_autonumber_get_autotext_scope_overwrite (autotext);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
                                 scope_overwrite);
-  /* Options */
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_startnum");
-  int startnum = schematic_autonumber_get_autotext_startnum (autotext);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), startnum);
 }
 
 
