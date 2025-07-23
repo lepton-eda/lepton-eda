@@ -28,8 +28,9 @@
 #include "schematic.h"
 
 /*! \brief Transform a GTK response id value to string.
+ *
  * \par Function Description
- * Given a GTK response type id \a response, returns the string
+ * Given a GTK response type id \p response, returns the string
  * corresponding to it.  This is mainly intended to be used for
  * value conversion in Scheme FFI functions.
  *
