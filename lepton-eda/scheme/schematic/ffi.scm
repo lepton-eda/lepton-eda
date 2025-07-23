@@ -194,6 +194,7 @@
             schematic_autonumber_set_autotext_scope_text
             schematic_autonumber_get_autotext_slotting
             schematic_autonumber_set_autotext_slotting
+            schematic_autonumber_get_autotext_sort_order
             schematic_autonumber_set_autotext_sort_order
             schematic_autonumber_set_autotext_startnum
             schematic_autonumber_set_autotext_window
@@ -1118,6 +1119,7 @@
 (define-lff schematic_autonumber_set_autotext_scope_text void '(* *))
 (define-lff schematic_autonumber_get_autotext_slotting int '(*))
 (define-lff schematic_autonumber_set_autotext_slotting void (list '* int))
+(define-lff schematic_autonumber_get_autotext_sort_order int '(*))
 (define-lff schematic_autonumber_set_autotext_sort_order void (list '* int))
 (define-lff schematic_autonumber_set_autotext_startnum void (list '* int))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))

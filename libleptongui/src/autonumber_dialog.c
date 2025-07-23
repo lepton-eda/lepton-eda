@@ -1841,11 +1841,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
                                                       "opt_startnum");
   int startnum = schematic_autonumber_get_autotext_startnum (autotext);
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget), startnum);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "sort_order");
-  int order = schematic_autonumber_get_autotext_sort_order (autotext);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), order);
 }
 
 

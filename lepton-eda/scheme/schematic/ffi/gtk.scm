@@ -38,6 +38,7 @@
             gtk_bin_get_child
 
             gtk_combo_box_get_active
+            gtk_combo_box_set_active
 
             gtk_dialog_set_default_response
 
@@ -103,6 +104,7 @@
 (define-lff gtk_bin_get_child '* '(*))
 
 (define-lff gtk_combo_box_get_active int '(*))
+(define-lff gtk_combo_box_set_active void (list '* int))
 
 (define-lff gtk_dialog_set_default_response void (list '* int))
 
