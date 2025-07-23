@@ -40,6 +40,8 @@
             gtk_combo_box_get_active
             gtk_combo_box_set_active
 
+            gtk_combo_box_text_append_text
+
             gtk_dialog_set_default_response
 
             gtk_entry_get_text
@@ -107,6 +109,8 @@
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
+
+(define-lff gtk_combo_box_text_append_text void '(* *))
 
 (define-lff gtk_dialog_set_default_response void (list '* int))
 

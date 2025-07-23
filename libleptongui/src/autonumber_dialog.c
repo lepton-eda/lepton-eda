@@ -1783,7 +1783,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   GtkTreeModel *model;
-  GList *el;
 
   GtkWidget *dialog = schematic_autonumber_get_autotext_dialog (autotext);
 
@@ -1801,14 +1800,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
   model = gtk_combo_box_get_model(GTK_COMBO_BOX(widget));
   gtk_list_store_clear(GTK_LIST_STORE(model));
-
-  for (el = schematic_autonumber_get_autotext_scope_text (autotext);
-       el != NULL;
-       el = g_list_next (el))
-  {
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (widget),
-                                    (const gchar*) el->data);
-  }
 }
 
 
