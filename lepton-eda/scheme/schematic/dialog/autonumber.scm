@@ -298,6 +298,14 @@
 
   (schematic_autonumber_dialog_restore_state *autotext)
 
+  (for-each
+   (lambda (*element)
+     (gtk_combo_box_text_append_text *scope-text-widget
+                                     *element))
+   (glist->list (schematic_autonumber_get_autotext_scope_text
+                 *autotext)
+                string->pointer))
+
   (gtk_entry_set_text *text-entry-widget
                       (glist-data (g_list_first *scope-text)))
 
