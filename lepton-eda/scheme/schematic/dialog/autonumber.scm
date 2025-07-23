@@ -241,6 +241,25 @@
 ;;; variable.
 (define (restore-autonumber-dialog-state *autotext)
   (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
+
+  (define scope-to-skip
+    (schematic_autonumber_get_autotext_scope_skip *autotext))
+  (define *skip-scope-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "scope_skip")))
+  (define scope-to-number
+    (schematic_autonumber_get_autotext_scope_number *autotext))
+  (define *number-scope-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "scope_number")))
+  (define overwrite-existing-numbers?
+    (schematic_autonumber_get_autotext_scope_overwrite *autotext))
+  (define *overwrite-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "scope_overwrite")))
   ;; Options.
   (define start-number
     (schematic_autonumber_get_autotext_startnum *autotext))
@@ -268,6 +287,15 @@
      (string->pointer "sort_order")))
 
   (schematic_autonumber_dialog_restore_state *autotext)
+
+  (gtk_combo_box_set_active *skip-scope-widget
+                            scope-to-skip)
+
+  (gtk_combo_box_set_active *number-scope-widget
+                            scope-to-number)
+
+  (gtk_toggle_button_set_active *overwrite-widget
+                                overwrite-existing-numbers?)
 
   (gtk_spin_button_set_value *start-number-widget
                              start-number)

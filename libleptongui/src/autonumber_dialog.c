@@ -1817,25 +1817,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
     schematic_autonumber_get_autotext_scope_text (autotext);
   gtk_entry_set_text (GTK_ENTRY (widget),
                       (const gchar*) g_list_first (scope_text)->data);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_skip");
-  int scope_skip =
-    schematic_autonumber_get_autotext_scope_skip (autotext);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), scope_skip);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_number");
-  int scope_number =
-    schematic_autonumber_get_autotext_scope_number (autotext);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), scope_number);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_overwrite");
-  gboolean scope_overwrite =
-    schematic_autonumber_get_autotext_scope_overwrite (autotext);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                scope_overwrite);
 }
 
 
