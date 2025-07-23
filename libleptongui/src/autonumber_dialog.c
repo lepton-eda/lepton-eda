@@ -1770,38 +1770,6 @@ schematic_autonumber_new ()
   return g_new (SchematicAutonumber, 1);
 }
 
-/** @brief Restore the Autonumber text dialog settings.
- *
- *  @par Function Description
- *  Restores settings of the Autonumber text dialog saved
- *  previously.
- *
- * @param autotext Pointer to the state struct.
- */
-void
-schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
-{
-  GtkWidget *widget;
-  GtkTreeModel *model;
-
-  GtkWidget *dialog = schematic_autonumber_get_autotext_dialog (autotext);
-
-  /* Scope */
-
-  /* Search text history */
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_text");
-
-  /* Simple way to clear the ComboBox. Owen from #gtk+ says:
-   *
-   * Yeah, it's just slightly "shady" ... if you want to stick to fully
-   * advertised API, you need to remember how many rows you added and
-   * use gtk_combo_box_remove_text() */
-
-  model = gtk_combo_box_get_model(GTK_COMBO_BOX(widget));
-  gtk_list_store_clear(GTK_LIST_STORE(model));
-}
-
 
 /* ***** DIALOG SET-UP ***************************************************** */
 
