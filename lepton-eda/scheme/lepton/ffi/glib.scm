@@ -26,6 +26,7 @@
             g_free
             g_list_append
             g_list_copy
+            g_list_first
             g_list_free
             g_list_remove
             g_list_remove_all
@@ -56,6 +57,7 @@
 (define-lff g_list_append '* '(* *))
 (define-lff g_list_copy '* '(*))
 (define-lff g_list_free void '(*))
+(define-lff g_list_first '* '(*))
 (define-lff g_list_free_full void '(*))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))
