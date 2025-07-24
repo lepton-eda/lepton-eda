@@ -41,6 +41,13 @@
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
+  (define *overwrite-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "scope_overwrite")))
+  (define overwrite-existing-numbers?
+    (gtk_toggle_button_get_active *overwrite-widget))
+
   ;; Sort order.
   (define *sort-order-widget
     (schematic_autonumber_dialog_lookup_widget
@@ -72,6 +79,10 @@
     (gtk_toggle_button_get_active *slotting-widget))
 
   (schematic_autonumber_dialog_save_state *autotext)
+
+  (schematic_autonumber_set_autotext_scope_overwrite
+   *autotext
+   overwrite-existing-numbers?)
 
   (schematic_autonumber_set_autotext_sort_order *autotext
                                                 sort-order)
