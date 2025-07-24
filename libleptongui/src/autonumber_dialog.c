@@ -1860,7 +1860,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 {
   GtkWidget *widget;
   gchar *text;
-  int combo_value;
 
   GtkWidget *dialog =
     schematic_autonumber_get_autotext_dialog (autotext);
@@ -1878,16 +1877,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
 
   schematic_autonumber_set_autotext_scope_text (autotext,
                                                 autonumber_history_add (scope_text, text));
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_skip");
-  combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
-  schematic_autonumber_set_autotext_scope_skip (autotext, combo_value);
-
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_number");
-  combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
-  schematic_autonumber_set_autotext_scope_number (autotext, combo_value);
 }
 
 
