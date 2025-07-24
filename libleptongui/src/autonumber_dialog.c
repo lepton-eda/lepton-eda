@@ -1894,12 +1894,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
                                                       "scope_overwrite");
   toggle_button_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
   schematic_autonumber_set_autotext_scope_overwrite (autotext, toggle_button_value);
-
-  /* Sort order */
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "sort_order");
-  combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
-  schematic_autonumber_set_autotext_sort_order (autotext, combo_value);
 }
 
 
