@@ -60,12 +60,13 @@ lepton_angle_is_ortho (gint angle)
   return ((angle % 90) == 0);
 }
 
-/*! \brief Make an angle orthogonal
+/*! \brief Make an angle orthogonal.
  *
- *  Snaps the angle to the nearest 90 degrees
+ *  \par Function Description
+ *  Snaps the angle to the nearest 90 degrees.
  *
- *  \param [in] angle the angle in degrees
- *  \return the orthogonal angle
+ *  \param [in] angle The angle in degrees.
+ *  \return The orthogonal angle.
  */
 gint
 lepton_angle_make_ortho (gint angle)
