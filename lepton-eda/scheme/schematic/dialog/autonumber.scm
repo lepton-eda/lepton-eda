@@ -41,6 +41,14 @@
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
+  ;; Sort order.
+  (define *sort-order-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "sort_order")))
+  (define sort-order
+    (gtk_combo_box_get_active *sort-order-widget))
+
   ;; Options.
   (define *start-number-widget
     (schematic_autonumber_dialog_lookup_widget
@@ -65,6 +73,8 @@
 
   (schematic_autonumber_dialog_save_state *autotext)
 
+  (schematic_autonumber_set_autotext_sort_order *autotext
+                                                sort-order)
   (schematic_autonumber_set_autotext_startnum *autotext
                                               spin-button-value)
 
