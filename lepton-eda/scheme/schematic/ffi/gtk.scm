@@ -55,6 +55,9 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+
+            gtk_spin_button_get_value_as_int
+
             gtk_toggle_button_get_active
             gtk_widget_set_sensitive
             gtk_widget_show_all
@@ -114,6 +117,8 @@
 (define-lff gtk_rc_parse void '(*))
 
 (define-lff gtk_scrolled_window_new '* '(* *))
+
+(define-lff gtk_spin_button_get_value_as_int int '(*))
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
