@@ -41,6 +41,14 @@
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
+  ;; Options.
+  (define *start-number-widget
+    (schematic_autonumber_dialog_lookup_widget
+     *dialog
+     (string->pointer "opt_startnum")))
+  (define spin-button-value
+    (gtk_spin_button_get_value_as_int *start-number-widget))
+
   (define *remove-numbers-widget
     (schematic_autonumber_dialog_lookup_widget
      *dialog
@@ -56,6 +64,9 @@
     (gtk_toggle_button_get_active *slotting-widget))
 
   (schematic_autonumber_dialog_save_state *autotext)
+
+  (schematic_autonumber_set_autotext_startnum *autotext
+                                              spin-button-value)
 
   (schematic_autonumber_set_autotext_removenum *autotext
                                                remove-numbers?)

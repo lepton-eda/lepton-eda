@@ -1861,7 +1861,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
   GtkWidget *widget;
   gchar *text;
   int combo_value;
-  int spin_button_value;
   gboolean toggle_button_value;
 
   GtkWidget *dialog =
@@ -1901,13 +1900,6 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
                                                       "sort_order");
   combo_value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
   schematic_autonumber_set_autotext_sort_order (autotext, combo_value);
-
-  /* Options */
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "opt_startnum");
-  spin_button_value =
-    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-  schematic_autonumber_set_autotext_startnum (autotext, spin_button_value);
 }
 
 
