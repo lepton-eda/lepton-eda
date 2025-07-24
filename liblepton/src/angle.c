@@ -74,10 +74,13 @@ lepton_angle_make_ortho (gint angle)
   return round (angle / 90.0) * 90;
 }
 
-/*! \brief Normalize an angle to [0,360)
+/*! \brief Normalize an angle.
  *
- *  \param [in] angle the angle in degrees
- *  \return the normalized angle inside [0,360)
+ *  \par Function Description
+ *  Normalize an angle to <tt>[0,360)</tt>.
+ *
+ *  \param [in] angle The angle in degrees.
+ *  \return The normalized angle inside <tt>[0,360)</tt>.
  */
 gint
 lepton_angle_normalize (gint angle)
