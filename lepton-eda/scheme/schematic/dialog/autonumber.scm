@@ -67,9 +67,6 @@
       (gtk_bin_get_child
        (lookup-dialog-widget *dialog 'scope_text)))))
 
-  (define *scope-text
-    (schematic_autonumber_get_autotext_scope_text *autotext))
-
   (define (set-data! element)
     (let ((name (first element))
           (getter (second element))
@@ -96,7 +93,9 @@
 
   (schematic_autonumber_set_autotext_scope_text
    *autotext
-   (schematic_autonumber_history_add *scope-text *text)))
+   (schematic_autonumber_history_add
+    (schematic_autonumber_get_autotext_scope_text *autotext)
+    *text)))
 
 
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
