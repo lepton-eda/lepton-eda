@@ -1718,7 +1718,9 @@ schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order)
  * Function makes sure that: 1) There are no duplicates in the list and 2) the
  * last search text is always at the top of the list.
  */
-GList *autonumber_history_add(GList *history, gchar *text)
+GList*
+schematic_autonumber_history_add (GList *history,
+                                  gchar *text)
 {
   /* Search for this text in history and delete it (so we don't have
    * duplicate entries) */
@@ -1876,7 +1878,7 @@ schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
     schematic_autonumber_get_autotext_scope_text (autotext);
 
   schematic_autonumber_set_autotext_scope_text (autotext,
-                                                autonumber_history_add (scope_text, text));
+                                                schematic_autonumber_history_add (scope_text, text));
 }
 
 
