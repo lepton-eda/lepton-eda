@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,14 @@
 
 #include "liblepton_priv.h"
 
-/*! \brief Allocate an arc
+/*! \brief Allocate an arc.
  *
- *  \return a pointer to an arc, which must be freed with lepton_arc_free.
+ *  \par Function Description
+ *  Allocates a new #LeptonArc instance.
+ *
+ *  The data must be freed with lepton_arc_free() after use.
+ *
+ *  \return The new arc instance.
  */
 LeptonArc*
 lepton_arc_new ()
