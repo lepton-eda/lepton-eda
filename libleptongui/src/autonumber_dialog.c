@@ -1776,8 +1776,6 @@ schematic_autonumber_new ()
  *  Restores settings of the Autonumber text dialog saved
  *  previously.
  *
- * @sa schematic_autonumber_dialog_save_state()
- *
  * @param autotext Pointer to the state struct.
  */
 void
@@ -1846,31 +1844,6 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
                                                       "opt_slotting");
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
                                autotext->slotting);
-}
-
-/** @brief Get the settings from the autonumber text dialog
- *
- * Get the settings from the "scope_text" widget of the autonumber
- * text dialog and store it in the #SchematicAutonumber structure.
- *
- * @sa schematic_autonumber_dialog_restore_state()
- *
- * @param autotext Pointer to the state struct.
- * @param entry_widget The "scope_text" entry widget.
- */
-void
-schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext,
-                                        GtkWidget *entry_widget)
-{
-  gchar *text;
-
-  text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry_widget)));
-
-  GList *scope_text =
-    schematic_autonumber_get_autotext_scope_text (autotext);
-
-  schematic_autonumber_set_autotext_scope_text (autotext,
-                                                schematic_autonumber_history_add (scope_text, text));
 }
 
 

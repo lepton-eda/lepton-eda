@@ -228,9 +228,6 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
 void
 schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext);
 
-void
-schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext,
-                                        GtkWidget *entry_widget);
 GList*
 schematic_autonumber_history_add (GList *history,
                                   gchar *text);
