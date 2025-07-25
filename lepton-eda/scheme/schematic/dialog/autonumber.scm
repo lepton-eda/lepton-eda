@@ -77,10 +77,9 @@
   (define sort-order (combo-box-value 'sort_order))
 
   ;; Options.
-  (define *start-number-widget
-    (lookup-dialog-widget *dialog 'opt_startnum))
   (define spin-button-value
-    (gtk_spin_button_get_value_as_int *start-number-widget))
+    (gtk_spin_button_get_value_as_int
+     (lookup-dialog-widget *dialog 'opt_startnum)))
 
   (define remove-numbers? (toggle-button-active? 'opt_removenum))
   (define use-slotting? (toggle-button-active? 'opt_slotting))
