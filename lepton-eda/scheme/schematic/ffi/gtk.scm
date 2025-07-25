@@ -40,6 +40,9 @@
             gtk_combo_box_get_active
 
             gtk_dialog_set_default_response
+
+            gtk_entry_get_text
+
             gtk_events_pending
             gtk_rc_parse
             gtk_icon_theme_get_default
@@ -100,6 +103,8 @@
 (define-lff gtk_combo_box_get_active int '(*))
 
 (define-lff gtk_dialog_set_default_response void (list '* int))
+
+(define-lff gtk_entry_get_text '* '(*))
 
 (define-lff gtk_events_pending int '())
 
