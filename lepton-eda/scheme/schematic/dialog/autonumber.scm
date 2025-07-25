@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog autonumber)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -65,46 +66,39 @@
   (define *scope-text
     (schematic_autonumber_get_autotext_scope_text *autotext))
 
-  (define scope-to-skip (combo-box-value 'scope_skip))
-  (define scope-to-number (combo-box-value 'scope_number))
-
-  (define overwrite-existing-numbers?
-    (toggle-button-active? 'scope_overwrite))
-
-  ;; Sort order.
-  (define sort-order (combo-box-value 'sort_order))
-
   ;; Options.
   (define spin-button-value
     (gtk_spin_button_get_value_as_int
      (lookup-dialog-widget *dialog 'opt_startnum)))
 
-  (define remove-numbers? (toggle-button-active? 'opt_removenum))
-  (define use-slotting? (toggle-button-active? 'opt_slotting))
+  (define (set-data! element)
+    (let ((name (first element))
+          (getter (second element))
+          (setter (third element)))
+      (setter *autotext (getter name))))
+
+  (define %funcs
+    `((scope_skip ,combo-box-value
+                  ,schematic_autonumber_set_autotext_scope_skip)
+      (scope_number ,combo-box-value
+                    ,schematic_autonumber_set_autotext_scope_number)
+      (scope_overwrite ,toggle-button-active?
+                       ,schematic_autonumber_set_autotext_scope_overwrite)
+      (sort_order ,combo-box-value
+                  ,schematic_autonumber_set_autotext_sort_order)
+      (opt_removenum ,toggle-button-active?
+                     ,schematic_autonumber_set_autotext_removenum)
+      (opt_slotting ,toggle-button-active?
+                    ,schematic_autonumber_set_autotext_slotting)))
+
+  (for-each set-data! %funcs)
 
   (schematic_autonumber_set_autotext_scope_text
    *autotext
    (schematic_autonumber_history_add *scope-text *text))
 
-  (schematic_autonumber_set_autotext_scope_skip *autotext
-                                                scope-to-skip)
-
-  (schematic_autonumber_set_autotext_scope_number *autotext
-                                                  scope-to-number)
-
-  (schematic_autonumber_set_autotext_scope_overwrite
-   *autotext
-   overwrite-existing-numbers?)
-
-  (schematic_autonumber_set_autotext_sort_order *autotext
-                                                sort-order)
   (schematic_autonumber_set_autotext_startnum *autotext
-                                              spin-button-value)
-
-  (schematic_autonumber_set_autotext_removenum *autotext
-                                               remove-numbers?)
-  (schematic_autonumber_set_autotext_slotting *autotext
-                                              use-slotting?))
+                                              spin-button-value))
 
 
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
