@@ -56,13 +56,11 @@
     (gtk_toggle_button_get_active
      (lookup-dialog-widget *dialog name)))
 
-  (define *scope-text-widget
-    (lookup-dialog-widget *dialog 'scope_text))
-  (define *text-entry-widget
-    (gtk_bin_get_child *scope-text-widget))
-
   (define *text
-    (g_strdup (gtk_entry_get_text *text-entry-widget)))
+    (g_strdup
+     (gtk_entry_get_text
+      (gtk_bin_get_child
+       (lookup-dialog-widget *dialog 'scope_text)))))
 
   (define *scope-text
     (schematic_autonumber_get_autotext_scope_text *autotext))
