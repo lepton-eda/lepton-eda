@@ -234,10 +234,11 @@
   (define *overwrite-widget
     (lookup-dialog-widget *dialog 'scope_overwrite))
   ;; Options.
-  (define start-number
-    (schematic_autonumber_get_autotext_startnum *autotext))
-  (define *start-number-widget
-    (lookup-dialog-widget *dialog 'opt_startnum))
+
+  (define (set-spin-button-value! name val)
+    (gtk_spin_button_set_value
+     (lookup-dialog-widget *dialog name)
+     val))
 
   (define (set-combo-box-value! name val)
     (gtk_combo_box_set_active
@@ -256,7 +257,9 @@
       (setter name (getter *autotext))))
 
   (define %funcs
-    `((sort_order ,set-combo-box-value!
+    `((opt_startnum ,set-spin-button-value!
+                    ,schematic_autonumber_get_autotext_startnum)
+      (sort_order ,set-combo-box-value!
                   ,schematic_autonumber_get_autotext_sort_order)
       (opt_removenum ,set-toggle-button-state!
                      ,schematic_autonumber_get_autotext_removenum)
@@ -289,9 +292,6 @@
 
   (gtk_toggle_button_set_active *overwrite-widget
                                 overwrite-existing-numbers?)
-
-  (gtk_spin_button_set_value *start-number-widget
-                             start-number)
 
   (for-each set-widget-state! %funcs))
 
