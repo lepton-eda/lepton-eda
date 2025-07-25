@@ -61,11 +61,17 @@
     (gtk_spin_button_get_value_as_int
      (lookup-dialog-widget *dialog name)))
 
-  (define *text
+  ;; Obtain text from the widget NAME.
+  (define (search-entry-text name)
     (g_strdup
      (gtk_entry_get_text
       (gtk_bin_get_child
-       (lookup-dialog-widget *dialog 'scope_text)))))
+       (lookup-dialog-widget *dialog name)))))
+
+  (define (new-text-ls name)
+    (schematic_autonumber_history_add
+     (schematic_autonumber_get_autotext_scope_text *autotext)
+     (search-entry-text name)))
 
   (define (set-data! element)
     (let ((name (first element))
@@ -74,7 +80,9 @@
       (setter *autotext (getter name))))
 
   (define %funcs
-    `((opt_startnum ,spin-button-value
+    `((scope_text ,new-text-ls
+                  ,schematic_autonumber_set_autotext_scope_text)
+      (opt_startnum ,spin-button-value
                     ,schematic_autonumber_set_autotext_startnum)
       (scope_skip ,combo-box-value
                   ,schematic_autonumber_set_autotext_scope_skip)
@@ -89,13 +97,7 @@
       (opt_slotting ,toggle-button-active?
                     ,schematic_autonumber_set_autotext_slotting)))
 
-  (for-each set-data! %funcs)
-
-  (schematic_autonumber_set_autotext_scope_text
-   *autotext
-   (schematic_autonumber_history_add
-    (schematic_autonumber_get_autotext_scope_text *autotext)
-    *text)))
+  (for-each set-data! %funcs))
 
 
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
