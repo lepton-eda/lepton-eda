@@ -238,19 +238,28 @@
     (schematic_autonumber_get_autotext_startnum *autotext))
   (define *start-number-widget
     (lookup-dialog-widget *dialog 'opt_startnum))
-  (define remove-numbers?
-    (schematic_autonumber_get_autotext_removenum *autotext))
-  (define *remove-numbers-widget
-    (lookup-dialog-widget *dialog 'opt_removenum))
-  (define use-slotting?
-    (schematic_autonumber_get_autotext_slotting *autotext))
-  (define *slotting-widget
-    (lookup-dialog-widget *dialog 'opt_slotting))
+
   (define sort-order
     (schematic_autonumber_get_autotext_sort_order *autotext))
   (define *sort-order-widget
     (lookup-dialog-widget *dialog 'sort_order))
 
+  (define (set-toggle-button-state! name val)
+    (gtk_toggle_button_set_active
+     (lookup-dialog-widget *dialog name)
+     val))
+
+  (define (set-widget-state! element)
+    (let ((name (first element))
+          (setter (second element))
+          (getter (third element)))
+      (setter name (getter *autotext))))
+
+  (define %funcs
+    `((opt_removenum ,set-toggle-button-state!
+                     ,schematic_autonumber_get_autotext_removenum)
+      (opt_slotting ,set-toggle-button-state!
+                    ,schematic_autonumber_get_autotext_slotting)))
 
   ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
   ;;
@@ -284,11 +293,7 @@
 
   (gtk_combo_box_set_active *sort-order-widget sort-order)
 
-  (gtk_toggle_button_set_active *remove-numbers-widget
-                                remove-numbers?)
-
-  (gtk_toggle_button_set_active *slotting-widget
-                                use-slotting?))
+  (for-each set-widget-state! %funcs))
 
 
 (define (autonumber-dialog window)
