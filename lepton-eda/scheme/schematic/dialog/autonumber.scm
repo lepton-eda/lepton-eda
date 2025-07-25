@@ -239,10 +239,10 @@
   (define *start-number-widget
     (lookup-dialog-widget *dialog 'opt_startnum))
 
-  (define sort-order
-    (schematic_autonumber_get_autotext_sort_order *autotext))
-  (define *sort-order-widget
-    (lookup-dialog-widget *dialog 'sort_order))
+  (define (set-combo-box-value! name val)
+    (gtk_combo_box_set_active
+     (lookup-dialog-widget *dialog name)
+     val))
 
   (define (set-toggle-button-state! name val)
     (gtk_toggle_button_set_active
@@ -256,7 +256,9 @@
       (setter name (getter *autotext))))
 
   (define %funcs
-    `((opt_removenum ,set-toggle-button-state!
+    `((sort_order ,set-combo-box-value!
+                  ,schematic_autonumber_get_autotext_sort_order)
+      (opt_removenum ,set-toggle-button-state!
                      ,schematic_autonumber_get_autotext_removenum)
       (opt_slotting ,set-toggle-button-state!
                     ,schematic_autonumber_get_autotext_slotting)))
@@ -290,8 +292,6 @@
 
   (gtk_spin_button_set_value *start-number-widget
                              start-number)
-
-  (gtk_combo_box_set_active *sort-order-widget sort-order)
 
   (for-each set-widget-state! %funcs))
 
