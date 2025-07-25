@@ -48,6 +48,10 @@
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
+  (define (combo-box-value name)
+    (gtk_combo_box_get_active
+     (lookup-dialog-widget *dialog name)))
+
   (define *scope-text-widget
     (lookup-dialog-widget *dialog 'scope_text))
   (define *text-entry-widget
@@ -59,15 +63,8 @@
   (define *scope-text
     (schematic_autonumber_get_autotext_scope_text *autotext))
 
-  (define *skip-scope-widget
-    (lookup-dialog-widget *dialog 'scope_skip))
-  (define scope-to-skip
-    (gtk_combo_box_get_active *skip-scope-widget))
-
-  (define *number-scope-widget
-    (lookup-dialog-widget *dialog 'scope_number))
-  (define scope-to-number
-    (gtk_combo_box_get_active *number-scope-widget))
+  (define scope-to-skip (combo-box-value 'scope_skip))
+  (define scope-to-number (combo-box-value 'scope_number))
 
   (define *overwrite-widget
     (lookup-dialog-widget *dialog 'scope_overwrite))
@@ -75,10 +72,7 @@
     (gtk_toggle_button_get_active *overwrite-widget))
 
   ;; Sort order.
-  (define *sort-order-widget
-    (lookup-dialog-widget *dialog 'sort_order))
-  (define sort-order
-    (gtk_combo_box_get_active *sort-order-widget))
+  (define sort-order (combo-box-value 'sort_order))
 
   ;; Options.
   (define *start-number-widget
