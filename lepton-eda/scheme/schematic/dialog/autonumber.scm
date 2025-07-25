@@ -229,11 +229,6 @@
     (schematic_autonumber_get_autotext_scope_number *autotext))
   (define *number-scope-widget
     (lookup-dialog-widget *dialog 'scope_number))
-  (define overwrite-existing-numbers?
-    (schematic_autonumber_get_autotext_scope_overwrite *autotext))
-  (define *overwrite-widget
-    (lookup-dialog-widget *dialog 'scope_overwrite))
-  ;; Options.
 
   (define (set-spin-button-value! name val)
     (gtk_spin_button_set_value
@@ -257,7 +252,9 @@
       (setter name (getter *autotext))))
 
   (define %funcs
-    `((opt_startnum ,set-spin-button-value!
+    `((scope_overwrite ,set-toggle-button-state!
+                       ,schematic_autonumber_get_autotext_scope_overwrite)
+      (opt_startnum ,set-spin-button-value!
                     ,schematic_autonumber_get_autotext_startnum)
       (sort_order ,set-combo-box-value!
                   ,schematic_autonumber_get_autotext_sort_order)
@@ -289,9 +286,6 @@
 
   (gtk_combo_box_set_active *number-scope-widget
                             scope-to-number)
-
-  (gtk_toggle_button_set_active *overwrite-widget
-                                overwrite-existing-numbers?)
 
   (for-each set-widget-state! %funcs))
 
