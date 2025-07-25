@@ -221,15 +221,6 @@
 
   (define *model (gtk_combo_box_get_model *scope-text-widget))
 
-  (define scope-to-skip
-    (schematic_autonumber_get_autotext_scope_skip *autotext))
-  (define *skip-scope-widget
-    (lookup-dialog-widget *dialog 'scope_skip))
-  (define scope-to-number
-    (schematic_autonumber_get_autotext_scope_number *autotext))
-  (define *number-scope-widget
-    (lookup-dialog-widget *dialog 'scope_number))
-
   (define (set-spin-button-value! name val)
     (gtk_spin_button_set_value
      (lookup-dialog-widget *dialog name)
@@ -252,7 +243,11 @@
       (setter name (getter *autotext))))
 
   (define %funcs
-    `((scope_overwrite ,set-toggle-button-state!
+    `((scope_skip ,set-combo-box-value!
+                  ,schematic_autonumber_get_autotext_scope_skip)
+      (scope_number ,set-combo-box-value!
+                    ,schematic_autonumber_get_autotext_scope_number)
+      (scope_overwrite ,set-toggle-button-state!
                        ,schematic_autonumber_get_autotext_scope_overwrite)
       (opt_startnum ,set-spin-button-value!
                     ,schematic_autonumber_get_autotext_startnum)
@@ -280,12 +275,6 @@
 
   (gtk_entry_set_text *text-entry-widget
                       (glist-data (g_list_first *scope-text)))
-
-  (gtk_combo_box_set_active *skip-scope-widget
-                            scope-to-skip)
-
-  (gtk_combo_box_set_active *number-scope-widget
-                            scope-to-number)
 
   (for-each set-widget-state! %funcs))
 
