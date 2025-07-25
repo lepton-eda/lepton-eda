@@ -52,6 +52,10 @@
     (gtk_combo_box_get_active
      (lookup-dialog-widget *dialog name)))
 
+  (define (toggle-button-active? name)
+    (gtk_toggle_button_get_active
+     (lookup-dialog-widget *dialog name)))
+
   (define *scope-text-widget
     (lookup-dialog-widget *dialog 'scope_text))
   (define *text-entry-widget
@@ -66,10 +70,8 @@
   (define scope-to-skip (combo-box-value 'scope_skip))
   (define scope-to-number (combo-box-value 'scope_number))
 
-  (define *overwrite-widget
-    (lookup-dialog-widget *dialog 'scope_overwrite))
   (define overwrite-existing-numbers?
-    (gtk_toggle_button_get_active *overwrite-widget))
+    (toggle-button-active? 'scope_overwrite))
 
   ;; Sort order.
   (define sort-order (combo-box-value 'sort_order))
@@ -80,15 +82,8 @@
   (define spin-button-value
     (gtk_spin_button_get_value_as_int *start-number-widget))
 
-  (define *remove-numbers-widget
-    (lookup-dialog-widget *dialog 'opt_removenum))
-  (define remove-numbers?
-    (gtk_toggle_button_get_active *remove-numbers-widget))
-
-  (define *slotting-widget
-    (lookup-dialog-widget *dialog 'opt_slotting))
-  (define use-slotting?
-    (gtk_toggle_button_get_active *slotting-widget))
+  (define remove-numbers? (toggle-button-active? 'opt_removenum))
+  (define use-slotting? (toggle-button-active? 'opt_slotting))
 
   (schematic_autonumber_set_autotext_scope_text
    *autotext
