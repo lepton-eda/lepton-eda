@@ -35,17 +35,23 @@
   (schematic_autonumber_run *autotext))
 
 
+;;; Return the widget of *DIALOG by its name which should be a
+;;; symbol.
+(define (lookup-dialog-widget *dialog name)
+  (define *name (string->pointer (symbol->string name)))
+  (schematic_autonumber_dialog_lookup_widget *dialog *name))
+
+
 ;;; Save the settings of the Autonumber text dialog in the
 ;;; *AUTOTEXT variable.
 (define (save-autonumber-dialog-state *autotext)
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
+  (define *scope-text-widget
+    (lookup-dialog-widget *dialog 'scope_text))
   (define *text-entry-widget
-    (gtk_bin_get_child
-     (schematic_autonumber_dialog_lookup_widget
-      *dialog
-      (string->pointer "scope_text"))))
+    (gtk_bin_get_child *scope-text-widget))
 
   (define *text
     (g_strdup (gtk_entry_get_text *text-entry-widget)))
@@ -54,53 +60,39 @@
     (schematic_autonumber_get_autotext_scope_text *autotext))
 
   (define *skip-scope-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_skip")))
+    (lookup-dialog-widget *dialog 'scope_skip))
   (define scope-to-skip
     (gtk_combo_box_get_active *skip-scope-widget))
 
   (define *number-scope-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_number")))
+    (lookup-dialog-widget *dialog 'scope_number))
   (define scope-to-number
     (gtk_combo_box_get_active *number-scope-widget))
 
   (define *overwrite-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_overwrite")))
+    (lookup-dialog-widget *dialog 'scope_overwrite))
   (define overwrite-existing-numbers?
     (gtk_toggle_button_get_active *overwrite-widget))
 
   ;; Sort order.
   (define *sort-order-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "sort_order")))
+    (lookup-dialog-widget *dialog 'sort_order))
   (define sort-order
     (gtk_combo_box_get_active *sort-order-widget))
 
   ;; Options.
   (define *start-number-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_startnum")))
+    (lookup-dialog-widget *dialog 'opt_startnum))
   (define spin-button-value
     (gtk_spin_button_get_value_as_int *start-number-widget))
 
   (define *remove-numbers-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_removenum")))
+    (lookup-dialog-widget *dialog 'opt_removenum))
   (define remove-numbers?
     (gtk_toggle_button_get_active *remove-numbers-widget))
 
   (define *slotting-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_slotting")))
+    (lookup-dialog-widget *dialog 'opt_slotting))
   (define use-slotting?
     (gtk_toggle_button_get_active *slotting-widget))
 
@@ -172,9 +164,7 @@
 ;;; checkbox.
 (define (autonumber-remove-numbers-checkbox-clicked-callback *widget *dialog)
   (gtk_widget_set_sensitive
-   (schematic_autonumber_dialog_lookup_widget
-    *dialog
-    (string->pointer "scope_overwrite"))
+   (lookup-dialog-widget *dialog 'scope_overwrite)
    (if (true? (gtk_toggle_button_get_active *widget)) 0 1)))
 
 (define *autonumber-remove-numbers-checkbox-clicked-callback
@@ -243,9 +233,7 @@
   (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
 
   (define *scope-text-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_text")))
+    (lookup-dialog-widget *dialog 'scope_text))
 
   (define *text-entry-widget
     (gtk_bin_get_child *scope-text-widget))
@@ -257,46 +245,32 @@
   (define scope-to-skip
     (schematic_autonumber_get_autotext_scope_skip *autotext))
   (define *skip-scope-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_skip")))
+    (lookup-dialog-widget *dialog 'scope_skip))
   (define scope-to-number
     (schematic_autonumber_get_autotext_scope_number *autotext))
   (define *number-scope-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_number")))
+    (lookup-dialog-widget *dialog 'scope_number))
   (define overwrite-existing-numbers?
     (schematic_autonumber_get_autotext_scope_overwrite *autotext))
   (define *overwrite-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_overwrite")))
+    (lookup-dialog-widget *dialog 'scope_overwrite))
   ;; Options.
   (define start-number
     (schematic_autonumber_get_autotext_startnum *autotext))
   (define *start-number-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_startnum")))
+    (lookup-dialog-widget *dialog 'opt_startnum))
   (define remove-numbers?
     (schematic_autonumber_get_autotext_removenum *autotext))
   (define *remove-numbers-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_removenum")))
+    (lookup-dialog-widget *dialog 'opt_removenum))
   (define use-slotting?
     (schematic_autonumber_get_autotext_slotting *autotext))
   (define *slotting-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "opt_slotting")))
+    (lookup-dialog-widget *dialog 'opt_slotting))
   (define sort-order
     (schematic_autonumber_get_autotext_sort_order *autotext))
   (define *sort-order-widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "sort_order")))
+    (lookup-dialog-widget *dialog 'sort_order))
 
 
   ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
@@ -355,13 +329,9 @@
   (define (make-autonumber-dialog)
     (let* ((*dialog (schematic_autonumber_dialog_new *window))
            (*remove-number-widget
-            (schematic_autonumber_dialog_lookup_widget
-             *dialog
-             (string->pointer "opt_removenum")))
+            (lookup-dialog-widget *dialog 'opt_removenum))
            (*sort-order-widget
-            (schematic_autonumber_dialog_lookup_widget
-             *dialog
-             (string->pointer "sort_order"))))
+            (lookup-dialog-widget *dialog 'sort_order)))
       (schematic_autonumber_sort_order_widget_init *sort-order-widget)
 
       (gtk_dialog_set_default_response *dialog %gtk-response-accept)
