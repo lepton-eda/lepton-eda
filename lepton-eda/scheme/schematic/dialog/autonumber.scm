@@ -211,15 +211,27 @@
 (define (restore-autonumber-dialog-state *autotext)
   (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
 
-  (define *scope-text-widget
-    (lookup-dialog-widget *dialog 'scope_text))
+  (define (update-text! name val)
+    (let* ((*scope-text-widget (lookup-dialog-widget *dialog name))
+           (*text-entry-widget
+            (gtk_bin_get_child *scope-text-widget))
+           (*model (gtk_combo_box_get_model *scope-text-widget)))
 
-  (define *text-entry-widget
-    (gtk_bin_get_child *scope-text-widget))
-  (define *scope-text
-    (schematic_autonumber_get_autotext_scope_text *autotext))
+      ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
+      ;;
+      ;; Yeah, it's just slightly "shady" ... if you want to stick
+      ;; to fully advertised API, you need to remember how many
+      ;; rows you added and use gtk_combo_box_remove_text().
+      (gtk_list_store_clear *model)
 
-  (define *model (gtk_combo_box_get_model *scope-text-widget))
+      (for-each
+       (lambda (*element)
+         (gtk_combo_box_text_append_text *scope-text-widget
+                                         *element))
+       (glist->list val identity))
+
+      (gtk_entry_set_text *text-entry-widget
+                          (glist-data (g_list_first val)))))
 
   (define (set-spin-button-value! name val)
     (gtk_spin_button_set_value
@@ -243,7 +255,9 @@
       (setter name (getter *autotext))))
 
   (define %funcs
-    `((scope_skip ,set-combo-box-value!
+    `((scope_text ,update-text!
+                  ,schematic_autonumber_get_autotext_scope_text)
+      (scope_skip ,set-combo-box-value!
                   ,schematic_autonumber_get_autotext_scope_skip)
       (scope_number ,set-combo-box-value!
                     ,schematic_autonumber_get_autotext_scope_number)
@@ -257,24 +271,6 @@
                      ,schematic_autonumber_get_autotext_removenum)
       (opt_slotting ,set-toggle-button-state!
                     ,schematic_autonumber_get_autotext_slotting)))
-
-  ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
-  ;;
-  ;; Yeah, it's just slightly "shady" ... if you want to stick to
-  ;; fully advertised API, you need to remember how many rows you
-  ;; added and use gtk_combo_box_remove_text().
-  (gtk_list_store_clear *model)
-
-  (for-each
-   (lambda (*element)
-     (gtk_combo_box_text_append_text *scope-text-widget
-                                     *element))
-   (glist->list (schematic_autonumber_get_autotext_scope_text
-                 *autotext)
-                identity))
-
-  (gtk_entry_set_text *text-entry-widget
-                      (glist-data (g_list_first *scope-text)))
 
   (for-each set-widget-state! %funcs))
 
