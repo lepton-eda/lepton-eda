@@ -1850,27 +1850,20 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
 
 /** @brief Get the settings from the autonumber text dialog
  *
- * Get the settings from the autonumber text dialog and store it
- * in the #SchematicAutonumber structure.
+ * Get the settings from the "scope_text" widget of the autonumber
+ * text dialog and store it in the #SchematicAutonumber structure.
  *
  * @sa schematic_autonumber_dialog_restore_state()
  *
  * @param autotext Pointer to the state struct.
+ * @param widget The "scope_text" widget.
  */
 void
-schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext)
+schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext,
+                                        GtkWidget *widget)
 {
-  GtkWidget *widget;
   gchar *text;
 
-  GtkWidget *dialog =
-    schematic_autonumber_get_autotext_dialog (autotext);
-
-  /* Scope */
-
-  /* Search text history */
-  widget = schematic_autonumber_dialog_lookup_widget (dialog,
-                                                      "scope_text");
   widget = gtk_bin_get_child(GTK_BIN(widget));
   text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
 
