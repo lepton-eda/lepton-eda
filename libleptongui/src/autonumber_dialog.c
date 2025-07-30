@@ -1862,10 +1862,11 @@ void
 schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext,
                                         GtkWidget *widget)
 {
+  GtkWidget *entry_widget;
   gchar *text;
 
-  widget = gtk_bin_get_child(GTK_BIN(widget));
-  text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
+  entry_widget = gtk_bin_get_child (GTK_BIN (widget));
+  text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry_widget)));
 
   GList *scope_text =
     schematic_autonumber_get_autotext_scope_text (autotext);
