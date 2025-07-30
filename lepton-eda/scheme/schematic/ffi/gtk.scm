@@ -35,6 +35,8 @@
             gtk_adjustment_get_value
             gtk_adjustment_set_value
 
+            gtk_bin_get_child
+
             gtk_combo_box_get_active
 
             gtk_dialog_set_default_response
@@ -92,6 +94,8 @@
 (define-lff gtk_adjustment_get_upper double '(*))
 (define-lff gtk_adjustment_get_value double '(*))
 (define-lff gtk_adjustment_set_value void (list '* double))
+
+(define-lff gtk_bin_get_child '* '(*))
 
 (define-lff gtk_combo_box_get_active int '(*))
 

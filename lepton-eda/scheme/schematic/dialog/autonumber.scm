@@ -41,10 +41,11 @@
   (define *dialog
     (schematic_autonumber_get_autotext_dialog *autotext))
 
-  (define *scope_text_widget
-    (schematic_autonumber_dialog_lookup_widget
-     *dialog
-     (string->pointer "scope_text")))
+  (define *text-entry-widget
+    (gtk_bin_get_child
+     (schematic_autonumber_dialog_lookup_widget
+      *dialog
+      (string->pointer "scope_text"))))
 
   (define *skip-scope-widget
     (schematic_autonumber_dialog_lookup_widget
@@ -98,7 +99,7 @@
     (gtk_toggle_button_get_active *slotting-widget))
 
   (schematic_autonumber_dialog_save_state *autotext
-                                          *scope_text_widget)
+                                          *text-entry-widget)
 
   (schematic_autonumber_set_autotext_scope_skip *autotext
                                                 scope-to-skip)
