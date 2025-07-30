@@ -1856,16 +1856,14 @@ schematic_autonumber_dialog_restore_state (SchematicAutonumber *autotext)
  * @sa schematic_autonumber_dialog_restore_state()
  *
  * @param autotext Pointer to the state struct.
- * @param widget The "scope_text" widget.
+ * @param entry_widget The "scope_text" entry widget.
  */
 void
 schematic_autonumber_dialog_save_state (SchematicAutonumber *autotext,
-                                        GtkWidget *widget)
+                                        GtkWidget *entry_widget)
 {
-  GtkWidget *entry_widget;
   gchar *text;
 
-  entry_widget = gtk_bin_get_child (GTK_BIN (widget));
   text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry_widget)));
 
   GList *scope_text =
