@@ -923,6 +923,12 @@ x_image_get_pixbuf (SchematicWindow *w_current,
       eda_renderer_draw (renderer, o_current);
     }
   }
+  for (iter = obj_list;
+       iter != NULL;
+       iter = g_list_next (iter))
+  {
+    eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
+  }
 
   g_list_free (obj_list);
   g_object_unref (G_OBJECT (renderer));
