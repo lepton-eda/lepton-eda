@@ -118,9 +118,11 @@
       (unless (null? ls)
         (schematic_autonumber_set_autotext_scope_text
          *autotext
-         (schematic_autonumber_append_scope_text_element
-          *scope-text-ls
-          (string->pointer (car ls))))
+         (g_list_append *scope-text-ls
+                        ;; Call for g_strdup() is necessary as
+                        ;; after a while, the pointer created in
+                        ;; Scheme will be garbage-collected.
+                        (g_strdup (string->pointer (car ls)))))
         (loop (cdr ls)))))
 
   (schematic_autonumber_set_autotext_sort_order

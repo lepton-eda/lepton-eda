@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
             g_list_remove
             g_list_remove_all
             g_log
+            g_strdup
 
             ;; Mock glib functions.
 
@@ -60,6 +61,8 @@
 (define-lff g_list_remove_all '* '(* *))
 
 (define-lff g_log void (list '* int '* '*))
+
+(define-lff g_strdup '* '(*))
 
 (define-lff g_slist_free_full void '(*))
 

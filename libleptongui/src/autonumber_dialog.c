@@ -1755,25 +1755,6 @@ GList *autonumber_history_add(GList *history, gchar *text)
 }
 
 
-/*! \brief Append a text element to a list.
- *
- *  \par Function Description
- *  Appends a new text element to the list of text elements
- *  displaying in the Autonumber dialog and returns the resulting
- *  list.
- *
- *  \param [in] scope_text The current list of text elements.
- *  \param [in] text The new text element to append.
- *  \return The resulting text element list.
- */
-GList*
-schematic_autonumber_append_scope_text_element (GList *scope_text,
-                                                const gchar *text)
-{
-  return g_list_append (scope_text, g_strdup (text));
-}
-
-
 /** @brief Create a new #SchematicAutonumber instance.
  *
  *  @par Function Description
