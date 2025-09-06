@@ -222,6 +222,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
                                            char *name);
 /* Methods */
 
+GList*
+schematic_autonumber_append_scope_text_element (GList *scope_text,
+                                                const gchar *text);
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
