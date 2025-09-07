@@ -30,7 +30,7 @@ See the <a href="geda-pcb_footprints.html" class="wikilink1" title="geda-pcb_foo
 <ul>
 <li class="level1"><div class="li"> This page contains <em>gEDA/PCB Specific</em> information about laying out circuit boards.</div>
 </li>
-<li class="level1"><div class="li"> Also see the gEDA/PCB <strong><a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html"> Glossary of Terms. </a></strong></div>
+<li class="level1"><div class="li"> Also see the gEDA/PCB <strong> Glossary of Terms. [FIXME: Add a link to glossary.]</strong></div>
 </li>
 </ul>
 
@@ -362,7 +362,7 @@ While using the line tool, use the number keys on top of the keyboard to switch 
 <div class="level2">
 
 <p>
-There is a set of predefined sizes for routing. The sets bear suggestive names (Signal, Power, Fat and Skinny). Hit the button “Route Style” to configure the sizes of the current set to your needs. You can set the names and the default values of these parameter sets in a config file ( ~/.pcb/settings for the <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">GTK-HID</a>, or ~/.Xdefaults for the <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">Lesstif-HID</a>). Example for such a setting:
+There is a set of predefined sizes for routing. The sets bear suggestive names (Signal, Power, Fat and Skinny). Hit the button “Route Style” to configure the sizes of the current set to your needs. You can set the names and the default values of these parameter sets in a config file ( ~/.pcb/settings for the <b>GTK-HID</b> [FIXME: Add a link to glossary], or ~/.Xdefaults for the <b>Lesstif-HID</b> [FIXME: Add a link to glossary]). Example for such a setting:
 </p>
 <pre class="code">route-styles = Signal,1000,3600,2000,1000:Power,2500,6000,3500,1000:Fat,4000,6000,3500,1000:Skinny,600,2402,1181,600</pre>
 
@@ -757,7 +757,7 @@ Put the polygons (and rectangles) on a separate layer. Use the <strong>Preferenc
 <div class="level2">
 
 <p>
-Parts of the polygon that are not connected to some net are automatically eliminated. This effectively removes <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">dead copper</a>. While this is desirable for the actual board, it requires calculation of quite extensive algorithms. So it is not necessarily a bug, but a price to be paid for a powerful feature. Still, there is a couple of things you can do to improve the situation:
+Parts of the polygon that are not connected to some net are automatically eliminated. This effectively removes <b>dead copper</b> [FIXME: Add a link to glossary]. While this is desirable for the actual board, it requires calculation of quite extensive algorithms. So it is not necessarily a bug, but a price to be paid for a powerful feature. Still, there is a couple of things you can do to improve the situation:
 </p>
 <ul>
 <li class="level1"><div class="li"> Temporarily hide the polygons. (see above)</div>
@@ -1384,8 +1384,8 @@ It limits the size of the image to NxN pixels, but maintains the aspect ratio.  
 <div class="level2">
 
 <p>
-In <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">GTK-HID</a> there is a <strong>Preferences…</strong> dialog in the <strong><em>File</em></strong> menu. The <strong>Colors</strong> tab presents a convenient way to set all the colors pcb uses via the standard GTK color chooser. The colors are saved to $HOME/.pcb/preferences on shut down of the application.
-With <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">Lesstif-HID</a> there is no preference dialog. Colors can be set in <code>$HOME/.pcb/settings</code>
+In <b>GTK-HID</b> [FIXME: Add a link to glossary] there is a <strong>Preferences…</strong> dialog in the <strong><em>File</em></strong> menu. The <strong>Colors</strong> tab presents a convenient way to set all the colors pcb uses via the standard GTK color chooser. The colors are saved to $HOME/.pcb/preferences on shut down of the application.
+With <b>Lesstif-HID</b> [FIXME: Add a link to glossary] there is no preference dialog. Colors can be set in <code>$HOME/.pcb/settings</code>
 </p>
 
 </div>

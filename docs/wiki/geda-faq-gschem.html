@@ -397,7 +397,7 @@ To paraphrase Nancy Reagan: Just say “no” to hidden power pins.
 </p>
 
 <p>
-That said, it may still be useful to detach the power pins from the functional part of the symbol. To do so, define a separate power symbol and give it the same <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">refdes</a> as the functional part. A run of gsch2pcb will treat the siblings properly as one single component. As neither gschem nor gsch2pcb explicitly know that the component is only complete with both symbols defined, you have to check yourself. With this workaround, you can draw all power related circuitry in one corner of the schematic where it does not interfere with the signal nets. In many cases this is advantageous with analog circuits.
+That said, it may still be useful to detach the power pins from the functional part of the symbol. To do so, define a separate power symbol and give it the same <b>refdes</b> [FIXME: Add a link to glossary] as the functional part. A run of gsch2pcb will treat the siblings properly as one single component. As neither gschem nor gsch2pcb explicitly know that the component is only complete with both symbols defined, you have to check yourself. With this workaround, you can draw all power related circuitry in one corner of the schematic where it does not interfere with the signal nets. In many cases this is advantageous with analog circuits.
 </p>
 
 </div>
@@ -454,7 +454,7 @@ Most people prefer to use title-A2.sym or title-A3.sym when printing to A4 sized
 That said, there may be circumstances where you actually want scaled symbols. There is a number of options to achieve this:
 </p>
 <ul>
-<li class="level1"><div class="li"> DJ Delorie contributed a <acronym title="Practical Extraction and Report Language">Perl</acronym> script called <a href="http://www.gedasymbols.org/user/dj_delorie/tools/scale-schematic" class="urlextern" title="http://www.gedasymbols.org/user/dj_delorie/tools/scale-schematic"  rel="nofollow">scale-schematic</a> on his pages in <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">gedasymbols.org</a>.</div>
+<li class="level1"><div class="li"> DJ Delorie contributed a <acronym title="Practical Extraction and Report Language">Perl</acronym> script called <a href="http://www.gedasymbols.org/user/dj_delorie/tools/scale-schematic" class="urlextern" title="http://www.gedasymbols.org/user/dj_delorie/tools/scale-schematic"  rel="nofollow">scale-schematic</a> on his pages in gedasymbols.org [FIXME: Add a proper link].</div>
 </li>
 <li class="level1"><div class="li"> Build your own library of symbols. This is not that far off, since many people end-up using exclusively their own symbols anyway.</div>
 </li>
