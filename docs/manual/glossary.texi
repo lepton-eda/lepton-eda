@@ -170,7 +170,7 @@ this usage may be dying out.
 @samp{pcb}: A powerful, open-source tool used to design the layout of
 a printed circuit board.  The output of the Lepton EDA tools can be
 used as an input to @pcb{}. See the @url{http://pcb.geda-project.org/,
-home page of pcb}.
+home page} of @pcb{}.
 @c TODO: Add actual link to the current @pcb{} project page.
 @item
 @samp{rats nest}: The lines drawn on the @pcb{} working area that hint
