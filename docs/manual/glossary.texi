@@ -180,10 +180,10 @@ are involved in a net, @command{pcb} tries to draw rats nests with the
 shortest possible length.
 @item
 @samp{silkscreen}: This is the layer that defines the text and
-graphics printed on the PCB board.  It usually contains the name of
-the board, outlines of the components and possibly their values or
-refdeses.  The origin of the name is the silk traditionally used
-during the print process.
+graphics printed on the printed circuit board.  It usually contains
+the name of the board, outlines of the components and possibly their
+values or refdeses.  The origin of the name is the silk traditionally
+used during the print process.
 @item
 @samp{solder layer}: This is the side of the board where traditional,
 thru hole components are soldered.  (Protel: @emph{Bottom Layer}.)
