@@ -44,14 +44,14 @@ whole site can be downloaded via concurrent versions system,
 This also the way users maintain their pages on the site.  See
 @url{http://gedasymbols.org/}.
 @item
-@samp{refdes}: Short for @url{http://en.wikipedia.org/wiki/reference
-designator, reference designator}.  The unique designator (or name) of
-a component.  The Lepton EDA and related tools rely on the refdeses to
-organize the components internally.  Therefore, for successful
-creation of a printed circuit board every component has to be linked
-with a refdes.  Usually, the refdes consists of a few upper case
-letters and a digit.  Examples: R1, R2, U115, CONN3.  (Protel:
-@emph{Designator}.)
+@samp{refdes}: Short for
+@url{https://en.wikipedia.org/wiki/Reference_designator, reference
+designator}.  The unique designator (or name) of a component.  The
+Lepton EDA and related tools rely on the refdeses to organize the
+components internally.  Therefore, for successful creation of a
+printed circuit board every component has to be linked with a refdes.
+Usually, the refdes consists of a few upper case letters and a digit.
+Examples: R1, R2, U115, CONN3.  (Protel: @emph{Designator}.)
 @item
 @samp{symbol}: A symbol is the representation of a particular
 component in your schematic diagram.  The classic examples are
