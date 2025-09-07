@@ -416,6 +416,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   it has been fixed by disabling smooth events if the mouse cursor
   warping is enabled in configuration.
 
+- In the GTK3 port code, net and bus cues were not rendered at
+  connection points when exporting to PNG, JPEG and other images
+  from GUI.  The rendering code has been fixed.
+
 - A regression introduced in 1.9.18, consisting in missing icons
   in the tab menu in the GTK2 port, has been fixed.
 
