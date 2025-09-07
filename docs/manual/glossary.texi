@@ -188,14 +188,14 @@ during the print process.
 @samp{solder layer}: This is the side of the board where traditional,
 thru hole components are soldered.  (Protel: @emph{Bottom Layer}.)
 @item
-@samp{thermal}, short for @url{http://en.wikipedia.org/wiki/thermal
-relief pad, thermal relief pad}: A thermal is a way to connect a via
-with a copper plane through narrow bridges.  The aim is to connect
-electrically, but provide enough thermal resistance to allow for
-convenient soldering.  There is a special mode in @command{pcb} to
-convert the annular ring of vias into thermals.  (However, vias never
-need thermals, since they are never soldered – only thru-holes need
-vias).
+@samp{thermal}, short for
+@url{https://en.wikipedia.org/wiki/Thermal_relief, thermal relief
+pad}: A thermal is a way to connect a via with a copper plane through
+narrow bridges.  The aim is to connect electrically, but provide
+enough thermal resistance to allow for convenient soldering.  There is
+a special mode in @command{pcb} to convert the annular ring of vias
+into thermals.  (However, vias never need thermals, since they are
+never soldered – only thru-holes need vias).
 @item
 @samp{via}: A via is a metalized hole that is meant to electrically
 connect different layers of the PCB.  Usually, vias are as small as
