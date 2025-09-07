@@ -414,7 +414,7 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   release 1.9.17.  Since it seems to be an GTK3 issue (see [this
   bug description](https://gitlab.gnome.org/GNOME/gtk/-/issues/2048)),
   it has been fixed by disabling smooth events if the mouse cursor
-  warping is enabled in configuration
+  warping is enabled in configuration.
 
 - A regression introduced in 1.9.18, consisting in missing icons
   in the tab menu in the GTK2 port, has been fixed.
