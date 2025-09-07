@@ -7,6 +7,7 @@ lepton_manual_TEXINFOS = \
 	configuration.texi \
 	development.texi \
 	geda-file-format-spec.texi \
+	glossary.texi \
 	installation.texi \
 	lepton-attrib.texi \
 	lepton-cli-config.texi \

@@ -1,5 +1,5 @@
-@node Glossary of EDA terms
-@chapter Glossary of EDA terms
+@node Glossary of EDA terms, Topic Index, Lepton EDA fonts, Top
+@appendix Glossary of EDA terms
 @cindex glossary
 
 The design of electronics involves a host of specific terms.  Some
@@ -10,7 +10,13 @@ of CAD for electronics.  Unfortunately, there is no universal naming
 scheme for concepts in the area of electronic design.  The glossary
 will give hints on how things are called in other design suites.
 
-@node Glossary of general terms
+@menu
+* Glossary of general terms::
+* Glossary of schematic capture and netlisting related terms::
+* Glossary of PCB related terms::
+@end menu
+
+@node Glossary of general terms, Glossary of schematic capture and netlisting related terms, Glossary of EDA terms, Glossary of EDA terms
 @section Glossary of general terms
 @cindex glossary of general terms
 
@@ -55,7 +61,7 @@ for an op-amp.  Using a schematic capture program (e.g.
 wire them up to create a representation of your circuit.
 @end itemize
 
-@node Glossary of schematic capture and netlisting related terms
+@node Glossary of schematic capture and netlisting related terms, Glossary of PCB related terms, Glossary of general terms, Glossary of EDA terms
 @section Glossary of schematic capture and netlisting related terms
 @cindex schematic capture and netlisting glossary
 
@@ -88,7 +94,7 @@ capture programs like Orcad require you to attach common nets – like
 power nets – on each instantiation of the slotted symbol.)
 @end itemize
 
-@node Glossary of PCB related terms
+@node Glossary of PCB related terms,  , Glossary of schematic capture and netlisting related terms, Glossary of EDA terms
 @section Glossary of PCB related terms
 @cindex pcb glossary
 
