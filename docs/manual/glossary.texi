@@ -135,10 +135,10 @@ of tracks, silk, solder mask and the outline of the board.  Because
 each layer is represented by a separate file, it is customary to
 bundle them in a ZIP file.  The offical name of the file format is
 @emph{Gerber RS274X}.  See
-@url{http://www.artwork.com/gerber/appl2.htm, this web page} for a
+@url{https://en.wikipedia.org/wiki/Gerber_format, this web page} for a
 cursory description of the format and
-@url{http://www.artwork.com/gerber/appl2.htm, this PDF} for a
-comprehensive specification.
+@url{https://www.ucamco.com/en/gerber, the official site} for a more
+detailed information.
 @item
 @samp{GTK-HID}: The GTK version of the @pcb{} user interface.
 @emph{HID} is an acronym for @emph{human interface device}.  As the
