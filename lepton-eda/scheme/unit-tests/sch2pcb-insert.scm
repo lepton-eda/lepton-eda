@@ -1,6 +1,7 @@
 ;;; Test Scheme procedures related to pcb elements.
 
-(use-modules (system foreign)
+(use-modules (ice-9 textual-ports)
+             (system foreign)
              (lepton ffi sch2pcb)
              (sch2pcb element)
              (sch2pcb insert))
@@ -187,6 +188,51 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
                                     (format #f "ERROR: ~A is not readable. Skipping.\n"
                                             element-filename))))
     (sch2pcb_close_file *output-file))
+  ;; Clean up.
+  (config-test-teardown))
+(test-end)
+
+
+(test-begin "insert-file-element")
+(test-group-with-cleanup "insert-file-element-grp"
+  (config-test-setup)
+  ;; Test an exit status and side effects of the function when
+  ;; called with a file element that is really a PCB file.
+  (let* ((*output-file
+          (sch2pcb_open_file_to_write
+           (string->pointer (string-append *testdir*
+                                           file-name-separator-string
+                                           "output.pcb"))))
+         (element-filename (string-join (list *testdir* "file.fp")
+                                        file-name-separator-string
+                                        'infix))
+         (element-file-contents
+          " # comment
+Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
+(
+        Pin(50 50 60 28 \"1\" 0x101)
+        Mark(50 50)
+)
+"))
+    ;; Create the element.
+    (with-output-to-file element-filename
+      (lambda () (display element-file-contents)))
+
+    (let* ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)"))
+           (<result>
+            (insert-file-element *output-file element-filename *element)))
+      (test-assert <result>))
+    (sch2pcb_close_file *output-file)
+    (test-equal "Element(0x00 \"DIP14\" \"U100\" \"unknown\" 0 0 3 100 0x00)
+(
+        Pin(50 50 60 28 \"1\" 0x101)
+        Mark(50 50)
+)
+"
+      (with-input-from-file (string-append *testdir*
+                                           file-name-separator-string
+                                           "output.pcb")
+        (lambda () (get-string-all (current-input-port))))))
   ;; Clean up.
   (config-test-teardown))
 (test-end)
