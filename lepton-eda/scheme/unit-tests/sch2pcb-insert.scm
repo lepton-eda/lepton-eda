@@ -105,3 +105,42 @@
   ;; Clean up.
   (config-test-teardown))
 (test-end)
+
+
+(test-begin "insert-file-element-really-dir")
+(test-group-with-cleanup "insert-file-element-really-dir-grp"
+  (config-test-setup)
+  ;; Test an exit status and side effects of the function when
+  ;; called with a file element that is really a PCB file.
+  (let* ((*output-file
+          (sch2pcb_open_file_to_write
+           (string->pointer (string-append *testdir*
+                                           file-name-separator-string
+                                           "output.pcb"))))
+         (element-filename (string-join (list *testdir* "file.pcb")
+                                        file-name-separator-string
+                                        'infix))
+         (element-file-contents
+          "  #some comment
+
+          \t   PCB"))
+    ;; Create the element, it's really a directory.
+    (mkdir element-filename)
+
+    (let* ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)"))
+           (<stderr>
+            (with-error-to-string
+              (lambda ()
+                (let ((<result>
+                       (insert-file-element *output-file element-filename *element)))
+                  (test-assert (not <result>)))))))
+      ;; Skip the test until Scheme code will check whether the
+      ;; path is a directory.
+      (test-skip 1)
+      (test-assert (string-contains <stderr>
+                                    (format #f "ERROR: ~A is a directory. Skipping.\n"
+                                            element-filename))))
+    (sch2pcb_close_file *output-file))
+  ;; Clean up.
+  (config-test-teardown))
+(test-end)
