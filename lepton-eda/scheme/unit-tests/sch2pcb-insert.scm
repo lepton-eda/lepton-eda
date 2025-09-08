@@ -25,9 +25,6 @@
 (let* ((*output-file %null-pointer)
        (element-filename "element.fp")
        (*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)")))
-  ;; Skip the next test until the *OUTPUT-FILE argument will be
-  ;; checked in the function.
-  (test-skip 1)
   (test-assert-thrown 'misc-error
                       (insert-file-element *output-file element-filename *element)))
 (test-end)
