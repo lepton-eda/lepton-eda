@@ -28,6 +28,10 @@
   "Insert the contents of the file ELEMENT-FILENAME into *OUTPUT-FILE
 replacing its fields 'footprint', 'refdes', and 'value' with the
 corresponding fields of *ELEMENT."
+  ;; Check that *OUTPUT-FILE is not NULL.  Otherwise the next call
+  ;; will crash.
+  (when (null-pointer? *output-file)
+    (error "insert-file-element(): NULL output file"))
   (true? (sch2pcb_insert_element *output-file
                                  (string->pointer element-filename)
                                  (pcb_element_get_description *element)
