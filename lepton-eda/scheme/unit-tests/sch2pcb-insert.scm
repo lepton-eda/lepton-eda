@@ -49,13 +49,12 @@
               (let ((<result>
                      (insert-file-element *output-file element-filename *element)))
                 (test-assert (not <result>)))))))
-    ;; Skip the next tests.  Currently, the C code deals with error
-    ;; output.  It seems, it outputs errors directly to stderr file
-    ;; using its file description info, so I cannot catch it.
-    (test-skip 2)
     (test-assert (string-contains <stderr>
                                   (string-append "insert_element() can't open "
                                                  element-filename)))
+    ;; Skip the test as the real error is not catched yet on
+    ;; reading the file.
+    (test-skip 1)
     (test-assert (string-contains <stderr> "No such file or directory"))
     (sch2pcb_close_file *output-file))
   ;; Clean up.
