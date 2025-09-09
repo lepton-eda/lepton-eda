@@ -291,6 +291,7 @@ TEST_EXTENSIONS = .scm
 # AM_SCM_LOG_FLAGS below because guile must know where to find
 # netlist modules before it runs tests
 SCM_LOG_DRIVER = \
+	LANG=C \
 	abs_top_builddir=$(abs_top_builddir) \
 	abs_top_srcdir=$(abs_top_srcdir) \
 	$(GUILE) \
