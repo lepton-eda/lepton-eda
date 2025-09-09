@@ -34,15 +34,15 @@ corresponding fields of *ELEMENT."
   (when (null-pointer? *output-file)
     (error "insert-file-element(): NULL output file"))
   (let ((*element-filename (string->pointer element-filename)))
-    (if (not (file-readable? element-filename))
-        (begin
-          (format (current-error-port)
-                  "insert-file-element(): can't open ~A\n"
-                  element-filename)
-          #f)
+    (if (file-readable? element-filename)
         (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
                                        *output-file
                                        *element-filename
                                        (pcb_element_get_description *element)
                                        (pcb_element_get_refdes *element)
-                                       (pcb_element_get_value *element))))))
+                                       (pcb_element_get_value *element)))
+        (begin
+          (format (current-error-port)
+                  "insert-file-element(): can't open ~A\n"
+                  element-filename)
+          #f))))
