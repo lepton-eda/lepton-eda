@@ -34,7 +34,8 @@ corresponding fields of *ELEMENT."
   (when (null-pointer? *output-file)
     (error "insert-file-element(): NULL output file"))
   (let ((*element-filename (string->pointer element-filename)))
-    (if (file-readable? element-filename)
+    (if (and (regular-file? element-filename)
+             (file-readable? element-filename))
         (true? (sch2pcb_insert_element (sch2pcb_open_file_to_read *element-filename)
                                        *output-file
                                        *element-filename
