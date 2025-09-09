@@ -131,12 +131,9 @@
                 (let ((<result>
                        (insert-file-element *output-file element-filename *element)))
                   (test-assert (not <result>)))))))
-      ;; Skip the test until Scheme code will check whether the
-      ;; path is a directory.
-      (test-skip 1)
       (test-assert (string-contains <stderr>
-                                    (format #f "ERROR: ~A is a directory. Skipping.\n"
-                                            element-filename))))
+                                    (string-append "insert-file-element(): can't open "
+                                                   element-filename))))
     (sch2pcb_close_file *output-file))
   ;; Clean up.
   (config-test-teardown))
