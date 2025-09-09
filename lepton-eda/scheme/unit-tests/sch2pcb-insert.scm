@@ -125,7 +125,8 @@
                   (test-assert (not <result>)))))))
       (test-assert (string-contains <stderr>
                                     (string-append "insert-file-element(): can't open "
-                                                   element-filename))))
+                                                   element-filename)))
+      (test-assert (string-contains <stderr> "Is a directory")))
     (sch2pcb_close_file *output-file))
   ;; Clean up.
   (config-test-teardown))
