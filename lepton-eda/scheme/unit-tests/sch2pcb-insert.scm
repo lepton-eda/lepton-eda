@@ -168,7 +168,8 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
                   (test-assert (not <result>)))))))
       (test-assert (string-contains <stderr>
                                     (string-append "insert-file-element(): can't open "
-                                                   element-filename))))
+                                                   element-filename)))
+      (test-assert (string-contains <stderr> "Permission denied")))
     (sch2pcb_close_file *output-file))
   ;; Clean up.
   (config-test-teardown))
