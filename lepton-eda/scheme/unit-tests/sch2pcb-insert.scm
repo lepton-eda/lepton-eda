@@ -90,11 +90,6 @@
                 (let ((<result>
                        (insert-file-element *output-file element-filename *element)))
                   (test-assert (not <result>)))))))
-      ;; Skip the test until the C functions producing this text
-      ;; will be replaced with Scheme ones.  The main issue with
-      ;; foreign C functions is that they do not use Scheme ports
-      ;; and output errors directly to stderr.
-      (test-skip 1)
       (test-assert (string-contains <stderr>
                                     (format #f "Warning: ~A appears to be a PCB layout file. Skipping.\n"
                                             element-filename))))
