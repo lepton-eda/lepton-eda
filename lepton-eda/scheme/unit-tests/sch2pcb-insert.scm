@@ -52,9 +52,6 @@
     (test-assert (string-contains <stderr>
                                   (string-append "insert-file-element(): can't open "
                                                  element-filename)))
-    ;; Skip the test as the real error is not catched yet on
-    ;; reading the file.
-    (test-skip 1)
     (test-assert (string-contains <stderr> "No such file or directory"))
     (sch2pcb_close_file *output-file))
   ;; Clean up.
