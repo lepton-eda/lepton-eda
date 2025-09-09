@@ -207,8 +207,9 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
                                         file-name-separator-string
                                         'infix))
          (element-file-contents
-          " # comment
-Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
+          " # Test that comment lines are omitted
+  # and leading whitespaces are trimmed.
+ \t Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
 (
         Pin(50 50 60 28 \"1\" 0x101)
         Mark(50 50)
