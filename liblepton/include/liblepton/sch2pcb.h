@@ -189,13 +189,6 @@ sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element);
-gboolean
-sch2pcb_insert_element (FILE *f_out,
-                        gchar *element_file,
-                        gchar *footprint,
-                        gchar *refdes,
-                        gchar *value);
-
 void
 sch2pcb_increment_verbose_mode ();
 
@@ -210,9 +203,6 @@ sch2pcb_get_pcb_element_list ();
 
 GList*
 sch2pcb_get_schematics ();
-
-FILE*
-sch2pcb_open_file_to_read (char *filename);
 
 FILE*
 sch2pcb_open_file_to_write (char *filename);

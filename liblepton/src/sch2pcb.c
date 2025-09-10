@@ -1,6 +1,6 @@
 /* gsch2pcb
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  *  Bill Wilson    billw@wt.net
  *
@@ -457,85 +457,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-/* A problem is that new PCB 1.7 file elements have the
- * (mark_x,mark_y) value set to wherever the element was created and
- * no equivalent of a gschem translate symbol was done.
- *
- * So, file elements inserted can be scattered over a big area and
- * this is bad when loading a file.new.pcb into an existing PC
- * board.  So, do a simple translate if (mark_x,mark_y) is
- * (arbitrarily) over 1000.  I'll assume that for values < 1000 the
- * element creator was concerned with a sane initial element
- * placement.  Unless someone has a better idea?  Don't bother with
- * pre PCB 1.7 formats as that would require parsing the mark().
- * Current m4 elements use the old format but they seem to have a
- * reasonable initial mark().
- */
-static void
-simple_translate (PcbElement * el)
-{
-
-  pcb_element_set_x (el, strdup ("0"));
-  pcb_element_set_y (el, strdup ("0"));
-}
-
-
-gboolean
-sch2pcb_insert_element (FILE *f_out,
-                        gchar *element_file,
-                        gchar *footprint,
-                        gchar *refdes,
-                        gchar *value)
-{
-  FILE *f_in;
-  PcbElement *el;
-  gchar *fmt, *s, buf[1024];
-  gboolean retval = FALSE;
-
-  if ((f_in = fopen (element_file, "r")) == NULL) {
-    s = g_strdup_printf ("insert_element() can't open %s", element_file);
-    perror (s);
-    g_free (s);
-    return FALSE;
-  }
-  /* Scan the file to detect whether it's actually a PCB
-   * layout. Assumes that a PCB layout will have a "PCB" line. */
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    s[3] = 0;                   /* Truncate line */
-    if (strncmp ("PCB", s, sizeof (buf)) == 0) {
-      printf ("Warning: %s appears to be a PCB layout file. Skipping.\n",
-              element_file);
-      fclose (f_in);
-      return FALSE;
-    }
-  }
-  rewind (f_in);
-
-  /* Copy the file element lines.  Substitute new parameters into the
-   * Element() or Element[] line and strip comments.
-   */
-  while ((fgets (buf, sizeof (buf), f_in)) != NULL) {
-    for (s = buf; *s == ' ' || *s == '\t'; ++s);
-    if ((el = pcb_element_line_parse (s)) != NULL) {
-      simple_translate (el);
-      fmt = (gchar*) (pcb_element_get_quoted_flags (el) ?
-                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
-
-      fprintf (f_out, fmt,
-               pcb_element_get_res_char (el), pcb_element_get_flags (el), footprint, refdes, value,
-               pcb_element_get_x (el), pcb_element_get_y (el), pcb_element_get_tail (el));
-      retval = TRUE;
-    } else if (*s != '#')
-      fputs (buf, f_out);
-    pcb_element_free (el);
-  }
-  fclose (f_in);
-  return retval;
-}
-
-
 gchar*
 sch2pcb_find_element (gchar *dir_path,
                       gchar *element)
@@ -581,22 +502,6 @@ sch2pcb_find_element (gchar *dir_path,
   }
   g_dir_close (dir);
   return found;
-}
-
-
-FILE*
-sch2pcb_open_file_to_read (char *filename)
-{
-  FILE *f_in;
-
-  if ((f_in = fopen (filename, "r")) == NULL)
-  {
-    return NULL;
-  }
-  else
-  {
-    return f_in;
-  }
 }
 
 

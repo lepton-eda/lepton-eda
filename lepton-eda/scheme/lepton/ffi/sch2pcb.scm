@@ -62,12 +62,10 @@
             sch2pcb_buffer_to_file
             sch2pcb_find_element
             sch2pcb_increment_verbose_mode
-            sch2pcb_insert_element
             sch2pcb_parse_schematics
             sch2pcb_get_pcb_element_list
             sch2pcb_pcb_element_list_append
             sch2pcb_get_verbose_mode
-            sch2pcb_open_file_to_read
             sch2pcb_open_file_to_write
             sch2pcb_close_file))
 
@@ -116,11 +114,9 @@
 (define-lff sch2pcb_buffer_to_file void '(* *))
 (define-lff sch2pcb_find_element '* '(* *))
 (define-lff sch2pcb_increment_verbose_mode void '())
-(define-lff sch2pcb_insert_element int '(* * * * *))
 (define-lff sch2pcb_parse_schematics '* '(*))
 (define-lff sch2pcb_get_pcb_element_list '* '())
 (define-lff sch2pcb_pcb_element_list_append void '(*))
 (define-lff sch2pcb_get_verbose_mode int '())
-(define-lff sch2pcb_open_file_to_read '* '(*))
 (define-lff sch2pcb_open_file_to_write '* '(*))
 (define-lff sch2pcb_close_file void '(*))
