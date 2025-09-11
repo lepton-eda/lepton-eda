@@ -500,48 +500,48 @@ sch2pcb_find_element_impl (gchar *dir_path,
 {
   gchar *path, *found = NULL;
 
-    path = g_strconcat (dir_path, "/", name, NULL);
-    found = NULL;
+  path = g_strconcat (dir_path, "/", name, NULL);
+  found = NULL;
 
-    /* if we got a directory name, then recurse down into it */
-    if (g_file_test (path, G_FILE_TEST_IS_DIR))
+  /* if we got a directory name, then recurse down into it */
+  if (g_file_test (path, G_FILE_TEST_IS_DIR))
+  {
+    GDir *next_dir = sch2pcb_find_element_open_dir (path);
+    if (next_dir == NULL)
     {
-      GDir *next_dir = sch2pcb_find_element_open_dir (path);
-      if (next_dir == NULL)
-      {
-        found = NULL;
-      }
-      else
-      {
-        if (sch2pcb_get_verbose_mode () > 1)
-        {
-          printf ("\t  Searching: \"%s\" for \"%s\"\n", path, element);
-        }
-        found = sch2pcb_find_element (path,
-                                      element,
-                                      next_dir);
-        sch2pcb_find_element_close_dir (next_dir);
-      }
+      found = NULL;
     }
+    else
+    {
+      if (sch2pcb_get_verbose_mode () > 1)
+      {
+        printf ("\t  Searching: \"%s\" for \"%s\"\n", path, element);
+      }
+      found = sch2pcb_find_element (path,
+                                    element,
+                                    next_dir);
+      sch2pcb_find_element_close_dir (next_dir);
+    }
+  }
 
-    /* otherwise assume it is a file and see if it is the one we want */
+  /* otherwise assume it is a file and see if it is the one we want */
+  else {
+    if (sch2pcb_get_verbose_mode () > 1)
+      printf ("\t           : %s\t", name);
+    if (!strcmp (name, element))
+      found = g_strdup (path);
     else {
-      if (sch2pcb_get_verbose_mode () > 1)
-        printf ("\t           : %s\t", name);
-      if (!strcmp (name, element))
+      gchar *tmps;
+      tmps = g_strconcat (element, ".fp", NULL);
+      if (!strcmp (name, tmps))
         found = g_strdup (path);
-      else {
-        gchar *tmps;
-        tmps = g_strconcat (element, ".fp", NULL);
-        if (!strcmp (name, tmps))
-          found = g_strdup (path);
-        g_free (tmps);
-      }
-      if (sch2pcb_get_verbose_mode () > 1)
-        printf ("%s\n", found ? "Yes" : "No");
+      g_free (tmps);
     }
-    g_free (path);
-    return found;
+    if (sch2pcb_get_verbose_mode () > 1)
+      printf ("%s\n", found ? "Yes" : "No");
+  }
+  g_free (path);
+  return found;
 }
 
 
