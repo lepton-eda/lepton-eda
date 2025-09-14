@@ -1143,8 +1143,8 @@ autonumber_match (SchematicAutonumber *autotext,
  *  entries.
  */
 void
-autonumber_get_used (SchematicWindow *w_current,
-                     SchematicAutonumber *autotext)
+schematic_autonumber_get_used (SchematicWindow *w_current,
+                               SchematicAutonumber *autotext)
 {
   gint number, numslots, slotnr, i;
   LeptonObject *o_current, *o_parent;
@@ -1447,7 +1447,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
         lepton_toplevel_goto_page (toplevel,
                                    (LeptonPage*) page_item->data);
         schematic_window_page_changed (w_current);
-        autonumber_get_used(w_current, autotext);
+        schematic_autonumber_get_used (w_current, autotext);
       }
     }
   }
@@ -1463,7 +1463,7 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
     if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
         || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
     {
-      autonumber_get_used(w_current, autotext);
+      schematic_autonumber_get_used (w_current, autotext);
     }
 
     /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
