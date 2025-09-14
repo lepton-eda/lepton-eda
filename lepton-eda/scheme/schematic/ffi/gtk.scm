@@ -34,8 +34,24 @@
             gtk_adjustment_get_upper
             gtk_adjustment_get_value
             gtk_adjustment_set_value
+
+            gtk_bin_get_child
+
+            gtk_combo_box_get_active
+            gtk_combo_box_set_active
+            gtk_combo_box_get_model
+
+            gtk_combo_box_text_append_text
+
             gtk_dialog_set_default_response
+
+            gtk_entry_get_text
+            gtk_entry_set_text
+
             gtk_events_pending
+
+            gtk_list_store_clear
+
             gtk_rc_parse
             gtk_icon_theme_get_default
             gtk_icon_theme_append_search_path
@@ -55,7 +71,13 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
+
+            gtk_spin_button_get_value_as_int
+            gtk_spin_button_set_value
+
             gtk_toggle_button_get_active
+            gtk_toggle_button_set_active
+
             gtk_widget_set_sensitive
             gtk_widget_show_all
 
@@ -87,9 +109,22 @@
 (define-lff gtk_adjustment_get_value double '(*))
 (define-lff gtk_adjustment_set_value void (list '* double))
 
+(define-lff gtk_bin_get_child '* '(*))
+
+(define-lff gtk_combo_box_get_active int '(*))
+(define-lff gtk_combo_box_set_active void (list '* int))
+(define-lff gtk_combo_box_get_model '* '(*))
+
+(define-lff gtk_combo_box_text_append_text void '(* *))
+
 (define-lff gtk_dialog_set_default_response void (list '* int))
 
+(define-lff gtk_entry_get_text '* '(*))
+(define-lff gtk_entry_set_text void '(* *))
+
 (define-lff gtk_events_pending int '())
+
+(define-lff gtk_list_store_clear void '(*))
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())
@@ -115,9 +150,13 @@
 
 (define-lff gtk_scrolled_window_new '* '(* *))
 
+(define-lff gtk_spin_button_get_value_as_int int '(*))
+(define-lff gtk_spin_button_set_value void (list '* double))
+
 (define-lff gtk_tearoff_menu_item_new '* '())
 
 (define-lff gtk_toggle_button_get_active int '(*))
+(define-lff gtk_toggle_button_set_active void (list '* int))
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))

@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog autonumber)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -35,10 +36,74 @@
   (schematic_autonumber_run *autotext))
 
 
+;;; Return the widget of *DIALOG by its name which should be a
+;;; symbol.
+(define (lookup-dialog-widget *dialog name)
+  (define *name (string->pointer (symbol->string name)))
+  (schematic_autonumber_dialog_lookup_widget *dialog *name))
+
+
+;;; Save the settings of the Autonumber text dialog in the
+;;; *AUTOTEXT variable.
+(define (save-autonumber-dialog-state *autotext)
+  (define *dialog
+    (schematic_autonumber_get_autotext_dialog *autotext))
+
+  (define (combo-box-value name)
+    (gtk_combo_box_get_active
+     (lookup-dialog-widget *dialog name)))
+
+  (define (toggle-button-active? name)
+    (gtk_toggle_button_get_active
+     (lookup-dialog-widget *dialog name)))
+
+  (define (spin-button-value name)
+    (gtk_spin_button_get_value_as_int
+     (lookup-dialog-widget *dialog name)))
+
+  ;; Obtain text from the widget NAME.
+  (define (search-entry-text name)
+    (g_strdup
+     (gtk_entry_get_text
+      (gtk_bin_get_child
+       (lookup-dialog-widget *dialog name)))))
+
+  (define (new-text-ls name)
+    (schematic_autonumber_history_add
+     (schematic_autonumber_get_autotext_scope_text *autotext)
+     (search-entry-text name)))
+
+  (define (set-data! element)
+    (let ((name (first element))
+          (getter (second element))
+          (setter (third element)))
+      (setter *autotext (getter name))))
+
+  (define %funcs
+    `((scope_text ,new-text-ls
+                  ,schematic_autonumber_set_autotext_scope_text)
+      (opt_startnum ,spin-button-value
+                    ,schematic_autonumber_set_autotext_startnum)
+      (scope_skip ,combo-box-value
+                  ,schematic_autonumber_set_autotext_scope_skip)
+      (scope_number ,combo-box-value
+                    ,schematic_autonumber_set_autotext_scope_number)
+      (scope_overwrite ,toggle-button-active?
+                       ,schematic_autonumber_set_autotext_scope_overwrite)
+      (sort_order ,combo-box-value
+                  ,schematic_autonumber_set_autotext_sort_order)
+      (opt_removenum ,toggle-button-active?
+                     ,schematic_autonumber_set_autotext_removenum)
+      (opt_slotting ,toggle-button-active?
+                    ,schematic_autonumber_set_autotext_slotting)))
+
+  (for-each set-data! %funcs))
+
+
 ;;; Start autonumbering based on settings stored in the *AUTOTEXT
 ;;; object.
 (define (start-autonumbering *autotext)
-  (schematic_autonumber_dialog_save_state *autotext)
+  (save-autonumber-dialog-state *autotext)
   (if (and (true? (schematic_autonumber_get_autotext_removenum *autotext))
            (false? (schematic_autonumber_get_autotext_scope_overwrite *autotext)))
       (begin
@@ -78,9 +143,7 @@
 ;;; checkbox.
 (define (autonumber-remove-numbers-checkbox-clicked-callback *widget *dialog)
   (gtk_widget_set_sensitive
-   (schematic_autonumber_dialog_lookup_widget
-    *dialog
-    (string->pointer "scope_overwrite"))
+   (lookup-dialog-widget *dialog 'scope_overwrite)
    (if (true? (gtk_toggle_button_get_active *widget)) 0 1)))
 
 (define *autonumber-remove-numbers-checkbox-clicked-callback
@@ -142,6 +205,76 @@
 
   *autotext)
 
+
+;;; Restore the Autonumber text dialog settings from the *AUTOTEXT
+;;; variable.
+(define (restore-autonumber-dialog-state *autotext)
+  (define *dialog (schematic_autonumber_get_autotext_dialog *autotext))
+
+  (define (update-text! name val)
+    (let* ((*scope-text-widget (lookup-dialog-widget *dialog name))
+           (*text-entry-widget
+            (gtk_bin_get_child *scope-text-widget))
+           (*model (gtk_combo_box_get_model *scope-text-widget)))
+
+      ;; Simple way to clear the ComboBox. Owen from #gtk+ says:
+      ;;
+      ;; Yeah, it's just slightly "shady" ... if you want to stick
+      ;; to fully advertised API, you need to remember how many
+      ;; rows you added and use gtk_combo_box_remove_text().
+      (gtk_list_store_clear *model)
+
+      (for-each
+       (lambda (*element)
+         (gtk_combo_box_text_append_text *scope-text-widget
+                                         *element))
+       (glist->list val identity))
+
+      (gtk_entry_set_text *text-entry-widget
+                          (glist-data (g_list_first val)))))
+
+  (define (set-spin-button-value! name val)
+    (gtk_spin_button_set_value
+     (lookup-dialog-widget *dialog name)
+     val))
+
+  (define (set-combo-box-value! name val)
+    (gtk_combo_box_set_active
+     (lookup-dialog-widget *dialog name)
+     val))
+
+  (define (set-toggle-button-state! name val)
+    (gtk_toggle_button_set_active
+     (lookup-dialog-widget *dialog name)
+     val))
+
+  (define (set-widget-state! element)
+    (let ((name (first element))
+          (setter (second element))
+          (getter (third element)))
+      (setter name (getter *autotext))))
+
+  (define %funcs
+    `((scope_text ,update-text!
+                  ,schematic_autonumber_get_autotext_scope_text)
+      (scope_skip ,set-combo-box-value!
+                  ,schematic_autonumber_get_autotext_scope_skip)
+      (scope_number ,set-combo-box-value!
+                    ,schematic_autonumber_get_autotext_scope_number)
+      (scope_overwrite ,set-toggle-button-state!
+                       ,schematic_autonumber_get_autotext_scope_overwrite)
+      (opt_startnum ,set-spin-button-value!
+                    ,schematic_autonumber_get_autotext_startnum)
+      (sort_order ,set-combo-box-value!
+                  ,schematic_autonumber_get_autotext_sort_order)
+      (opt_removenum ,set-toggle-button-state!
+                     ,schematic_autonumber_get_autotext_removenum)
+      (opt_slotting ,set-toggle-button-state!
+                    ,schematic_autonumber_get_autotext_slotting)))
+
+  (for-each set-widget-state! %funcs))
+
+
 (define (autonumber-dialog window)
   "Opens autonumber dialog in WINDOW."
   (define *window (check-window window 1))
@@ -159,13 +292,9 @@
   (define (make-autonumber-dialog)
     (let* ((*dialog (schematic_autonumber_dialog_new *window))
            (*remove-number-widget
-            (schematic_autonumber_dialog_lookup_widget
-             *dialog
-             (string->pointer "opt_removenum")))
+            (lookup-dialog-widget *dialog 'opt_removenum))
            (*sort-order-widget
-            (schematic_autonumber_dialog_lookup_widget
-             *dialog
-             (string->pointer "sort_order"))))
+            (lookup-dialog-widget *dialog 'sort_order)))
       (schematic_autonumber_sort_order_widget_init *sort-order-widget)
 
       (gtk_dialog_set_default_response *dialog %gtk-response-accept)
@@ -180,7 +309,7 @@
                                 *dialog)
 
       (schematic_autonumber_set_autotext_dialog *autotext *dialog)
-      (schematic_autonumber_dialog_restore_state *autotext)
+      (restore-autonumber-dialog-state *autotext)
       (gtk_widget_show_all *dialog)
       *dialog))
 
