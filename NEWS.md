@@ -159,6 +159,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Several functions have been renamed so their names are now
   prefixed with `lepton_`.
 
+- Previously, the function `process-gafrc()` did not check if the
+  directory to search for `gafrc` file is present and output
+  backtrace if it was missing.  This has been fixed, and now the
+  function outputs a message about the issue to the log.
+
 ### Changes in `libleptongui`:
 - The prefix `Gschem` in the names of the library object types has
   been replaced with `Schematic`.  Some other types have been
