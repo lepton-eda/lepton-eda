@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,14 +32,6 @@ const gchar * const *eda_get_system_config_dirs(void);
 const gchar *eda_get_user_data_dir(void);
 const gchar *eda_get_user_config_dir(void);
 const gchar *eda_get_user_cache_dir(void);
-
-/* ----------------------------------------------------------------
- * Initialisation
- * ---------------------------------------------------------------- */
-
-#ifdef __LIBLEPTON_INTERNAL_API__
-G_GNUC_INTERNAL void eda_paths_init(void);
-#endif /* __LIBLEPTON_PRIV_H_INSIDE__ */
 
 G_END_DECLS
 

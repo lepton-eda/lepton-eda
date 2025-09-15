@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,13 +17,12 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (use-modules (lepton ffi)
+             (lepton init)
              (lepton toplevel)
              (symcheck check))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ;;; Localization.

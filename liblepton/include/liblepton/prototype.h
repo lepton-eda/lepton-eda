@@ -77,9 +77,6 @@ g_rc_parse_handler (LeptonToplevel *toplevel,
                     ConfigParseErrorFunc handler,
                     void *user_data);
 
-/* liblepton.c */
-void liblepton_init(void);
-
 /* m_hatch.c */
 void
 m_hatch_box (LeptonBox *box,

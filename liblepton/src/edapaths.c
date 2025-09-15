@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -191,24 +191,4 @@ eda_get_user_cache_dir()
   }
 
   return user_cache_dir;
-}
-
-
-
-/*! \brief Initialise Lepton EDA data and configuration search paths.
- *
- * \par Function Description
- * Should only be called (once) by liblepton_init().
- */
-void
-eda_paths_init()
-{
-  /* These functions store their data in static local variables.
-   * Calling them here forces data initialization:
-  */
-  eda_get_system_data_dirs();
-  eda_get_system_config_dirs();
-  eda_get_user_data_dir();
-  eda_get_user_config_dir();
-  eda_get_user_cache_dir();
 }

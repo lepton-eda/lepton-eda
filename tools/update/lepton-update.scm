@@ -1,7 +1,7 @@
 ;;; lepton-update - Update schematics and symbols in the gEDA/gaf
 ;;; file format.
 ;;;
-;;; Copyright (C) 2021-2022 Lepton EDA Contributors.
+;;; Copyright (C) 2021-2025 Lepton EDA Contributors.
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
              (lepton ffi)
              (lepton file-system)
              (lepton gettext)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton srfi-37)
@@ -33,9 +34,7 @@
              (symbol check obsolete))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 (define (usage)

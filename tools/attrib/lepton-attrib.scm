@@ -1,7 +1,7 @@
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 2003-2010 Stuart D. Brorson.
 ;;; Copyright (C) 2005-2016 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
              (lepton ffi lib)
              (lepton ffi)
              (lepton file-system)
+             (lepton init)
              (lepton log)
              (lepton page)
              (lepton rc)
@@ -35,9 +36,7 @@
              (lepton version))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ;;; Simplify definition of functions by omitting the library

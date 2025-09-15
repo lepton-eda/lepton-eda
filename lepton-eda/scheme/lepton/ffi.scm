@@ -25,8 +25,7 @@
   #:re-export (libgtk
                liblepton)
 
-  #:export (liblepton_init
-            reference-pointer
+  #:export (reference-pointer
             c-string-array->list
             register-data-dirs
 
@@ -311,8 +310,12 @@
             lepton_colormap_set_color
             lepton_object_page_set_changed
             print_colors_array
+            lepton_color_init
+
+            s_attrib_init
             s_attrib_uniq
             s_attrib_add_entry
+
             s_clib_add_command
             s_clib_add_directory
             s_clib_add_scm
@@ -386,9 +389,6 @@
   (define-lff-lib arg ... liblepton))
 
 
-;;; Basic lepton initialisation function.
-(define-lff liblepton_init void '())
-
 (define-lff set_render_placeholders void '())
 (define-lff lepton_color_get_color_count size_t '())
 (define-lff lepton_color_default_id size_t '())
@@ -396,6 +396,9 @@
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
 (define-lff print_colors_array '* '())
+
+;;; color.c
+(define-lff lepton_color_init void '())
 
 ;;; s_clib.c
 (define-lff s_clib_add_command '* '(* * *))
@@ -422,7 +425,9 @@
 
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * * *))
+
 ;;; s_attrib.c
+(define-lff s_attrib_init void '())
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
 

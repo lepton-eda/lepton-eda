@@ -1,4 +1,4 @@
-;;; Copyright (C) 2019-2022 Lepton EDA Contributors
+;;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Werner Hoch
 ;;; Copyright (C) 2001,2002,2003,2004,2006,2007,2008 Werner Hoch <werner.ho@gmx.de>
@@ -41,6 +41,7 @@
              (sxml match)
              (lepton attrib)
              (lepton ffi)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton toplevel)
@@ -48,9 +49,7 @@
              (netlist attrib compare))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 (define %option-spec

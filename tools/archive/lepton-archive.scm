@@ -1,4 +1,4 @@
-;;; Copyright (C) 2019-2023 Lepton EDA Contributors
+;;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Stuart Brorson:
 ;;; Copyright (C) 2003 Stuart Brorson <sdb@cloud9.net>
@@ -68,6 +68,7 @@
              (srfi srfi-26)
              (lepton ffi)
              (lepton file-system)
+             (lepton init)
              (lepton library component)
              (lepton library)
              (lepton log)
@@ -83,9 +84,7 @@
              (lepton color-map))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ;;; Helper functions and data structures.

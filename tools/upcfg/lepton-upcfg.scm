@@ -2,7 +2,7 @@
 ;; Lepton EDA
 ;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2022 Lepton EDA Contributors
+;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -10,14 +10,13 @@
              (ice-9 rdelim) ; read-line()
              (ice-9 getopt-long)
              (lepton ffi)
+             (lepton init)
              (lepton legacy-config)
              (lepton log)
              (lepton version))
 
 ;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ; command line options:

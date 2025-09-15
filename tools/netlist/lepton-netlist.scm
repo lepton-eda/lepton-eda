@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Scheme API
-;;; Copyright (C) 2017-2023 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
              (geda deprecated)
              (lepton color-map)
              (lepton ffi)
+             (lepton init)
              (lepton library)
              (lepton log)
              (lepton toplevel)
@@ -29,9 +30,7 @@
              (netlist))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ;;; Localization.

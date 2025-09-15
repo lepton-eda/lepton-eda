@@ -2,13 +2,14 @@
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2023 Lepton EDA Contributors
+;; Copyright (C) 2019-2025 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
 (use-modules (ice-9 format)
              (ice-9 getopt-long)
              (lepton ffi)
+             (lepton init)
              (lepton object)
              (lepton page)
              (lepton rc)
@@ -18,9 +19,7 @@
              (lepton color-map))
 
 ;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 ; command line options:

@@ -64,7 +64,7 @@
              (srfi srfi-26)
              (ice-9 getopt-long)
              (ice-9 pretty-print)
-             (lepton ffi)
+             (lepton init)
              (lepton toplevel))
 
 ;;; In order to facilitate debugging, you can increase the pile of
@@ -72,6 +72,8 @@
 ;;; variable to a bigger value. Example:
 ;; (setenv "COLUMNS" "1000")
 
+;;; Skip initialisation of RC paths here.  It's what the
+;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
 (setenv "LEPTON_INHIBIT_RC_FILES" "yes")
 ;;; The load path should not be changed after loading the
 ;;; liblepton library.  This is tested in the unit test
@@ -80,11 +82,7 @@
         (with-output-to-string (lambda () (write %load-path))))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-;;; Skip initialisation of RC paths here.  It's what the
-;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
-;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
-;;;     (register-data-dirs))
+(init-liblepton)
 
 ;;; Syntax and procedure that check exception type and probably
 ;;; have no analogs in SRFI-64.

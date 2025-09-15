@@ -22,6 +22,7 @@
              (ice-9 readline)
              (lepton ffi)
              (lepton gettext)
+             (lepton init)
              (lepton library)
              (lepton rc)
              (lepton repl)
@@ -32,9 +33,7 @@
              (lepton color-map))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 (define cmd (basename (car (program-arguments))))

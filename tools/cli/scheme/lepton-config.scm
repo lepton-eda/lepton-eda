@@ -1,7 +1,7 @@
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2015 gEDA Contributors
-;;; Copyright (C) 2017-2024 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,13 +24,12 @@
              (lepton ffi)
              (lepton file-system)
              (lepton gettext)
+             (lepton init)
              (lepton srfi-37)
              (lepton version))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 (define cmd (basename (car (program-arguments))))

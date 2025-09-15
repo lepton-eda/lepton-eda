@@ -19,13 +19,12 @@
 
 (use-modules (lepton ffi)
              (lepton gettext)
+             (lepton init)
              (lepton srfi-37)
              (lepton version))
 
 ;;; Initialize liblepton library.
-(liblepton_init)
-(unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (register-data-dirs))
+(init-liblepton)
 
 
 (define %cli (basename (car (program-arguments))))
