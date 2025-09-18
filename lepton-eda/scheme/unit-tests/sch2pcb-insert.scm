@@ -21,39 +21,23 @@
 
 (test-begin "insert-file-element-null-output-file")
 
-;;; Test the function with NULL output file.
-(let* ((*output-file %null-pointer)
-       (element-filename "element.fp")
-       (*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)")))
-  (test-assert-thrown 'misc-error
-                      (insert-file-element *output-file element-filename *element)))
-(test-end)
-
-
 (test-begin "insert-file-element-missing-file")
 (test-group-with-cleanup "insert-file-element-missing-file-grp"
   (config-test-setup)
   ;; Test an exit status and side effects of the function when
   ;; called with some non-existing element file.
-  (let* ((*output-file
-          (sch2pcb_open_file_to_write
-           (string->pointer
-            (string-append *testdir*
-                           file-name-separator-string
-                           "output.pcb"))))
-         (element-filename "some-non-existing-element.fp")
+  (let* ((element-filename "some-non-existing-element.fp")
          (*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)"))
          (<stderr>
           (with-error-to-string
             (lambda ()
               (let ((<result>
-                     (insert-file-element *output-file element-filename *element)))
+                     (insert-file-element element-filename *element)))
                 (test-assert (not <result>)))))))
     (test-assert (string-contains <stderr>
                                   (string-append "insert-file-element(): can't open "
                                                  element-filename)))
-    (test-assert (string-contains <stderr> "No such file or directory"))
-    (sch2pcb_close_file *output-file))
+    (test-assert (string-contains <stderr> "No such file or directory")))
   ;; Clean up.
   (config-test-teardown))
 (test-end)
@@ -64,16 +48,11 @@
   (config-test-setup)
   ;; Test an exit status and side effects of the function when
   ;; called with a file element that is really a PCB file.
-  (let* ((*output-file
-          (sch2pcb_open_file_to_write
-           (string->pointer (string-append *testdir*
-                                           file-name-separator-string
-                                           "output.pcb"))))
-         (element-filename (string-join (list *testdir* "file.pcb")
-                                        file-name-separator-string
-                                        'infix))
-         (element-file-contents
-          "  #some comment
+  (let ((element-filename (string-join (list *testdir* "file.pcb")
+                                       file-name-separator-string
+                                       'infix))
+        (element-file-contents
+         "  #some comment
 
           \t   PCB"))
     ;; Create the element file.
@@ -85,12 +64,11 @@
             (with-error-to-string
               (lambda ()
                 (let ((<result>
-                       (insert-file-element *output-file element-filename *element)))
+                       (insert-file-element element-filename *element)))
                   (test-assert (not <result>)))))))
       (test-assert (string-contains <stderr>
                                     (format #f "Warning: ~A appears to be a PCB layout file. Skipping.\n"
-                                            element-filename))))
-    (sch2pcb_close_file *output-file))
+                                            element-filename)))))
   ;; Clean up.
   (config-test-teardown))
 (test-end)
@@ -101,16 +79,11 @@
   (config-test-setup)
   ;; Test an exit status and side effects of the function when
   ;; called with a file element that is really a PCB file.
-  (let* ((*output-file
-          (sch2pcb_open_file_to_write
-           (string->pointer (string-append *testdir*
-                                           file-name-separator-string
-                                           "output.pcb"))))
-         (element-filename (string-join (list *testdir* "file.pcb")
-                                        file-name-separator-string
-                                        'infix))
-         (element-file-contents
-          "  #some comment
+  (let ((element-filename (string-join (list *testdir* "file.pcb")
+                                       file-name-separator-string
+                                       'infix))
+        (element-file-contents
+         "  #some comment
 
           \t   PCB"))
     ;; Create the element, it's really a directory.
@@ -121,13 +94,12 @@
             (with-error-to-string
               (lambda ()
                 (let ((<result>
-                       (insert-file-element *output-file element-filename *element)))
+                       (insert-file-element element-filename *element)))
                   (test-assert (not <result>)))))))
       (test-assert (string-contains <stderr>
                                     (string-append "insert-file-element(): can't open "
                                                    element-filename)))
-      (test-assert (string-contains <stderr> "Is a directory")))
-    (sch2pcb_close_file *output-file))
+      (test-assert (string-contains <stderr> "Is a directory"))))
   ;; Clean up.
   (config-test-teardown))
 (test-end)
@@ -138,16 +110,11 @@
   (config-test-setup)
   ;; Test an exit status and side effects of the function when
   ;; called with a file element that is really a PCB file.
-  (let* ((*output-file
-          (sch2pcb_open_file_to_write
-           (string->pointer (string-append *testdir*
-                                           file-name-separator-string
-                                           "output.pcb"))))
-         (element-filename (string-join (list *testdir* "file.fp")
-                                        file-name-separator-string
-                                        'infix))
-         (element-file-contents
-          " # comment
+  (let ((element-filename (string-join (list *testdir* "file.fp")
+                                       file-name-separator-string
+                                       'infix))
+        (element-file-contents
+         " # comment
 Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
 (
         Pin(50 50 60 28 \"1\" 0x101)
@@ -165,13 +132,12 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
             (with-error-to-string
               (lambda ()
                 (let ((<result>
-                       (insert-file-element *output-file element-filename *element)))
+                       (insert-file-element element-filename *element)))
                   (test-assert (not <result>)))))))
       (test-assert (string-contains <stderr>
                                     (string-append "insert-file-element(): can't open "
                                                    element-filename)))
-      (test-assert (string-contains <stderr> "Permission denied")))
-    (sch2pcb_close_file *output-file))
+      (test-assert (string-contains <stderr> "Permission denied"))))
   ;; Clean up.
   (config-test-teardown))
 (test-end)
@@ -182,16 +148,11 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
   (config-test-setup)
   ;; Test an exit status and side effects of the function when
   ;; called with a file element that is really a PCB file.
-  (let* ((*output-file
-          (sch2pcb_open_file_to_write
-           (string->pointer (string-append *testdir*
-                                           file-name-separator-string
-                                           "output.pcb"))))
-         (element-filename (string-join (list *testdir* "file.fp")
-                                        file-name-separator-string
-                                        'infix))
-         (element-file-contents
-          " # Test that comment lines are omitted
+  (let ((element-filename (string-join (list *testdir* "file.fp")
+                                       file-name-separator-string
+                                       'infix))
+        (element-file-contents
+         " # Test that comment lines are omitted
   # and leading whitespaces are trimmed.
  \t Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
 (
@@ -204,20 +165,19 @@ Element(0x00 \"DIP8 package\" \"\" \"DIP8\" 220 100 3 100 0x00)
       (lambda () (display element-file-contents)))
 
     (let* ((*element (pkg-line->element "PKG_DIP14(DIP14,U100,unknown)"))
-           (<result>
-            (insert-file-element *output-file element-filename *element)))
-      (test-assert <result>))
-    (sch2pcb_close_file *output-file)
-    (test-equal "Element(0x00 \"DIP14\" \"U100\" \"unknown\" 0 0 3 100 0x00)
+           (<stdout>
+            (with-output-to-string
+              (lambda ()
+                (let ((<result>
+                       (insert-file-element element-filename *element)))
+                  (test-assert <result>))))))
+      (test-equal "Element(0x00 \"DIP14\" \"U100\" \"unknown\" 0 0 3 100 0x00)
 (
         Pin(50 50 60 28 \"1\" 0x101)
         Mark(50 50)
 )
 "
-      (with-input-from-file (string-append *testdir*
-                                           file-name-separator-string
-                                           "output.pcb")
-        (lambda () (get-string-all (current-input-port))))))
+        <stdout>)))
   ;; Clean up.
   (config-test-teardown))
 (test-end)

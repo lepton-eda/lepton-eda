@@ -505,37 +505,6 @@ sch2pcb_find_element (gchar *dir_path,
 }
 
 
-FILE*
-sch2pcb_open_file_to_write (char *filename)
-{
-  FILE *f_out;
-
-  if ((f_out = fopen (filename, "wb")) == NULL)
-  {
-    return NULL;
-  }
-  else
-  {
-    return f_out;
-  }
-}
-
-
-void
-sch2pcb_close_file (FILE *file)
-{
-  fclose (file);
-}
-
-
-void
-sch2pcb_buffer_to_file (char *buffer,
-                        FILE *file)
-{
-  fputs (buffer, file);
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {
