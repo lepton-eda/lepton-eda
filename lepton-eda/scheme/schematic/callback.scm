@@ -23,6 +23,7 @@
 
   #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -142,10 +143,10 @@
   (set-action-mode! 'component-mode #:window window)
   (when (null-pointer? (schematic_window_get_compselect_widget *window))
     (let ((*compselect-widget (schematic_compselect_new *window)))
-      (schematic_signal_connect *compselect-widget
-                                (string->pointer "response")
-                                *x_compselect_callback_response
-                                *window)
+      (g_signal_connect *compselect-widget
+                        (string->pointer "response")
+                        *x_compselect_callback_response
+                        *window)
       (init-preview-widget-signals
        (schematic_compselect_get_preview *compselect-widget))
       (schematic_window_set_compselect_widget *window *compselect-widget)))

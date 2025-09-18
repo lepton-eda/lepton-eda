@@ -28,6 +28,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -781,10 +782,10 @@ zooming."
      `("notify::page" . ,*schematic_window_notify_page_callback)))
 
   (define (connect-signal element)
-    (schematic_signal_connect *canvas
-                              (string->pointer (car element))
-                              (cdr element)
-                              *window))
+    (g_signal_connect *canvas
+                      (string->pointer (car element))
+                      (cdr element)
+                      *window))
 
   (x_window_setup_draw_events_drawing_area *window *canvas)
 
@@ -1083,10 +1084,10 @@ GtkApplication structure of the program (when compiled with
     (setup-window (x_window_new (parse-gschemrc *toplevel))))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
-    (schematic_signal_connect *main-window
-                              (string->pointer "delete-event")
-                              *callback-close-schematic-window
-                              *window)
+    (g_signal_connect *main-window
+                      (string->pointer "delete-event")
+                      *callback-close-schematic-window
+                      *window)
 
     (let ((*main-box (schematic_window_create_main_box *main-window))
           (*menubar (make-main-menu *window *callback-recent-chooser-item-activated))
@@ -1112,14 +1113,14 @@ GtkApplication structure of the program (when compiled with
                                          *callback-tab-button-save)
             (schematic_tabs_set_callback (string->pointer "hierarchy-up")
                                          *callback-tab-button-up)
-            (schematic_signal_connect *notebook
-                                      (string->pointer "switch-page")
-                                      *x_tabs_page_on_sel
-                                      *window)
-            (schematic_signal_connect *notebook
-                                      (string->pointer "page-reordered")
-                                      *callback-page-reordered
-                                      *window)
+            (g_signal_connect *notebook
+                              (string->pointer "switch-page")
+                              *x_tabs_page_on_sel
+                              *window)
+            (g_signal_connect *notebook
+                              (string->pointer "page-reordered")
+                              *callback-page-reordered
+                              *window)
             (tab-add-page! *window %null-pointer))
 
           (let ((*canvas (schematic_window_create_canvas *window *work-box)))
@@ -1148,10 +1149,10 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_set_log_widget *window
                                        (schematic_log_widget_new))
       (schematic_window_set_find_text_state_widget *window (schematic_find_text_state_new))
-      (schematic_signal_connect (schematic_window_get_find_text_state_widget *window)
-                                (string->pointer "select-object")
-                                *x_window_select_object
-                                *window)
+      (g_signal_connect (schematic_window_get_find_text_state_widget *window)
+                        (string->pointer "select-object")
+                        *x_window_select_object
+                        *window)
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window
