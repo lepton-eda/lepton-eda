@@ -111,8 +111,8 @@
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
-  ;; Step2: if searchtext has an asterisk at the end we have to
-  ;; find all matching searchtextes.
+  ;; Step2: If the text to search has an asterisk at the end we
+  ;; have to find all matching text templates.
   ;;
   ;; Example: "refdes=*" will match each text that starts with
   ;; "refdes=" and has a trailing "?" or a trailing number if the
@@ -120,7 +120,10 @@
   ;; refdes=R, refdes=C.
   ;;
   ;; If there is only one search pattern, it becomes a single item
-  ;; in the searchtext list.
+  ;; in the template list.
+  ;;
+  ;; For example: "refdes=C?" will be transformed into a list
+  ;; with only one template: refdes=C.
   (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
       (if search-text
