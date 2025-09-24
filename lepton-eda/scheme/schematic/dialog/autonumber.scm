@@ -78,11 +78,14 @@
   (define (create-search-text-list *window *page *search-text *search-text-ls)
     (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
     (schematic_window_page_changed *window)
+    ;; Guard to check if the page has already got active.
+    (unless (equal? *page (schematic_window_get_active_page *window))
+      (error "Processing non-active page."))
     ;; Iterate over all objects and look for matching
     ;; search patterns.
     (let loop ((*objects
                 (glist->list
-                 (lepton_page_objects (schematic_window_get_active_page *window))
+                 (lepton_page_objects *page)
                  identity))
                (*ls *search-text-ls))
       (if (null? *objects)
