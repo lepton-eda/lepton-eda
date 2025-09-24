@@ -1457,36 +1457,37 @@ schematic_autonumber_create_search_text_list (SchematicWindow *w_current,
      in the searchtext list */
 
   /* collect all the possible searchtexts in all pages of the hierarchy */
-    lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
-    schematic_window_page_changed (w_current);
-    /* iterate over all objects an look for matching searchtext's */
-    for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
-         iter != NULL;
-         iter = g_list_next (iter)) {
-      o_current = (LeptonObject*) iter->data;
-      if (lepton_object_is_text (o_current))
+  lepton_toplevel_goto_page (schematic_window_get_toplevel (w_current), page);
+  schematic_window_page_changed (w_current);
+  /* iterate over all objects an look for matching searchtext's */
+  for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
+       iter != NULL;
+       iter = g_list_next (iter))
+  {
+    o_current = (LeptonObject*) iter->data;
+    if (lepton_object_is_text (o_current))
+    {
+      if ((scope_number == SCOPE_HIERARCHY)
+          || (scope_number == SCOPE_PAGE)
+          || ((scope_number == SCOPE_SELECTED)
+              && (lepton_object_get_selected (o_current))))
+      {
+        const gchar *str = lepton_text_object_get_string (o_current);
+        /* the beginnig of the current text matches with the searchtext now */
+        /* strip of the trailing [0-9?] chars and add it too the searchtext */
+        new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
+        if ((new_searchtext != NULL)
+            && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
         {
-          if ((scope_number == SCOPE_HIERARCHY)
-              || (scope_number == SCOPE_PAGE)
-              || ((scope_number == SCOPE_SELECTED)
-                  && (lepton_object_get_selected (o_current))))
-            {
-              const gchar *str = lepton_text_object_get_string (o_current);
-              /* the beginnig of the current text matches with the searchtext now */
-              /* strip of the trailing [0-9?] chars and add it too the searchtext */
-              new_searchtext = schematic_autonumber_drop_string_suffix (str, searchtext);
-              if ((new_searchtext != NULL)
-                  && (g_list_find_custom (searchtext_list, new_searchtext, (GCompareFunc) strcmp) == NULL))
-                {
-                  searchtext_list = g_list_append (searchtext_list, new_searchtext);
-                }
-              else
-                {
-                  g_free(new_searchtext);
-                }
-            }
+          searchtext_list = g_list_append (searchtext_list, new_searchtext);
         }
+        else
+        {
+          g_free(new_searchtext);
+        }
+      }
     }
+  }
   return searchtext_list;
 }
 
