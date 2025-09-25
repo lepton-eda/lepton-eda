@@ -182,10 +182,13 @@
             schematic_autonumber_new
             schematic_autonumber_get_autotext
             schematic_autonumber_set_autotext
+            schematic_autonumber_set_autotext_current_searchtext
             schematic_autonumber_get_autotext_dialog
             schematic_autonumber_set_autotext_dialog
+            schematic_autonumber_set_autotext_free_slots
             schematic_autonumber_get_autotext_removenum
             schematic_autonumber_set_autotext_removenum
+            schematic_autonumber_set_autotext_root_page
             schematic_autonumber_get_autotext_scope_number
             schematic_autonumber_set_autotext_scope_number
             schematic_autonumber_get_autotext_scope_overwrite
@@ -200,6 +203,9 @@
             schematic_autonumber_set_autotext_sort_order
             schematic_autonumber_get_autotext_startnum
             schematic_autonumber_set_autotext_startnum
+            schematic_autonumber_set_autotext_used_numbers
+            schematic_autonumber_set_autotext_used_slots
+            schematic_autonumber_get_autotext_window
             schematic_autonumber_set_autotext_window
             schematic_autonumber_dialog_lookup_widget
             schematic_autonumber_dialog_new
@@ -231,6 +237,7 @@
             schematic_hierarchy_increment_page_control_counter
             s_hierarchy_find_up_page
             s_hierarchy_down_schematic_single
+            s_hierarchy_traversepages
 
             schematic_page_revert_dialog
 
@@ -739,6 +746,7 @@
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff s_hierarchy_find_up_page '* '(*))
 (define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
+(define-lff s_hierarchy_traversepages '* (list '* '* int))
 
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))
@@ -1107,10 +1115,13 @@
 (define-lff schematic_autonumber_new '* '())
 (define-lff schematic_autonumber_get_autotext '* '())
 (define-lff schematic_autonumber_set_autotext void '(*))
+(define-lff schematic_autonumber_set_autotext_current_searchtext void '(* *))
 (define-lff schematic_autonumber_get_autotext_dialog '* '(*))
 (define-lff schematic_autonumber_set_autotext_dialog void '(* *))
+(define-lff schematic_autonumber_set_autotext_free_slots void '(* *))
 (define-lff schematic_autonumber_get_autotext_removenum int '(*))
 (define-lff schematic_autonumber_set_autotext_removenum void (list '* int))
+(define-lff schematic_autonumber_set_autotext_root_page void (list '* int))
 (define-lff schematic_autonumber_get_autotext_scope_number int '(*))
 (define-lff schematic_autonumber_set_autotext_scope_number void (list '* int))
 (define-lff schematic_autonumber_get_autotext_scope_overwrite int '(*))
@@ -1125,11 +1136,14 @@
 (define-lff schematic_autonumber_set_autotext_sort_order void (list '* int))
 (define-lff schematic_autonumber_get_autotext_startnum int '(*))
 (define-lff schematic_autonumber_set_autotext_startnum void (list '* int))
+(define-lff schematic_autonumber_set_autotext_used_numbers void '(* *))
+(define-lff schematic_autonumber_set_autotext_used_slots void '(* *))
+(define-lff schematic_autonumber_get_autotext_window '* '(*))
 (define-lff schematic_autonumber_set_autotext_window void '(* *))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_history_add '* '(* *))
-(define-lff schematic_autonumber_run void '(*))
+(define-lff schematic_autonumber_run void '(* * * *))
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))

@@ -229,8 +229,10 @@ GList*
 schematic_autonumber_history_add (GList *history,
                                   gchar *text);
 void
-schematic_autonumber_run (SchematicAutonumber *autotext);
-
+schematic_autonumber_run (SchematicAutonumber *autotext,
+                          SchematicWindow *w_current,
+                          LeptonPage *active_page,
+                          GList *pages);
 int
 schematic_autonumber_scope_from_string (char *s);
 

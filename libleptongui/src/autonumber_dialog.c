@@ -1410,15 +1410,19 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
  *  rules of the parameters given in the autonumber text dialog.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] active_page The current page of the window.
+ *  \param [in] pages The whole list of pages of the window.
  */
 void
-schematic_autonumber_run (SchematicAutonumber *autotext)
+schematic_autonumber_run (SchematicAutonumber *autotext,
+                          SchematicWindow *w_current,
+                          LeptonPage *active_page,
+                          GList *pages)
 {
-  GList *pages;
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   LeptonObject *o_current;
-  SchematicWindow *w_current;
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
@@ -1426,26 +1430,11 @@ schematic_autonumber_run (SchematicAutonumber *autotext)
   size_t i;
   GList *o_list = NULL;
   const GList *iter;
-  LeptonPage *active_page = NULL;
   LeptonToplevel *toplevel = NULL;
 
-  w_current = autotext->w_current;
   toplevel = schematic_window_get_toplevel (w_current);
-  active_page = schematic_window_get_active_page (w_current);
-  autotext->current_searchtext = NULL;
-  autotext->root_page = 1;
-  autotext->used_numbers = NULL;
-  autotext->free_slots = NULL;
-  autotext->used_slots = NULL;
 
   scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
-
-  /* Step1: get all pages of the hierarchy */
-  pages = s_hierarchy_traversepages (w_current,
-                                     active_page,
-                                     HIERARCHY_NODUPS);
-
-  /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes.

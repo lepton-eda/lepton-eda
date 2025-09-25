@@ -34,7 +34,18 @@
 
 
 (define (run-autonumbering *autotext)
-  (schematic_autonumber_run *autotext))
+  (define *window (schematic_autonumber_get_autotext_window *autotext))
+  (define *active-page (schematic_window_get_active_page *window))
+  ;; Get all pages of the hierarchy.
+  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
+
+  (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
+  (schematic_autonumber_set_autotext_root_page *autotext 1)
+  (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
+  (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
+  (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
+
+  (schematic_autonumber_run *autotext *window *active-page *pages))
 
 
 ;;; Return the widget of *DIALOG by its name which should be a
