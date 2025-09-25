@@ -18,6 +18,7 @@
 
 (define-module (sch2pcb lookup)
   #:use-module (ice-9 ftw)
+  #:use-module (ice-9 i18n)
 
   #:use-module (lepton file-system)
   #:use-module (sch2pcb format)
@@ -28,7 +29,10 @@
 (define (lookup-footprint dir-path element-name)
   "Searches for a Pcb element (footprint) file by ELEMENT-NAME in
 DIR-PATH recursively.  If an element is found, returns the path to
-it as a string, otherwise returns #f."
+it as a string, otherwise returns #f.  If there are several files
+with the given basename in different directories, the paths are
+sorted using the function string-locale<?() and the first path is
+returned."
   (define (fold-files filename path)
     (define (id name stat result) result)
     (define (enter? name stat result) result)
@@ -54,7 +58,7 @@ it as a string, otherwise returns #f."
                       '()
                       path))
 
-  (let ((files (fold-files element-name dir-path)))
+  (let ((files (sort (fold-files element-name dir-path) string-locale<?)))
     ;; Return #f if no files found.
     (and (not (null? files))
          ;; Otherwise return the first file found.
