@@ -650,6 +650,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new module, `(lepton ffi sch2pcb)`, has been created.  It is
   going to contain foreign function definitions for the program.
 
+- A new module, `(sch2pcb lookup)`, has been introduced.  It
+  exports the function `lookup-footprint()` which recursively
+  searches a directory for *pcb file elements* by name.
+
 - Processing of long program options has been amended so they now
   conform to POSIX and GNU guidelines.  Basically, that means that
   the arguments of long options have now to be separated from
