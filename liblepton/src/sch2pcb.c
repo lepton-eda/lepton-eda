@@ -457,54 +457,6 @@ sch2pcb_pcb_element_list_append (PcbElement *element)
 }
 
 
-gchar*
-sch2pcb_find_element (gchar *dir_path,
-                      gchar *element)
-{
-  GDir *dir;
-  gchar *path, *name, *s, *found = NULL;
-
-  if ((dir = g_dir_open (dir_path, 0, NULL)) == NULL) {
-    s = g_strdup_printf ("sch2pcb_find_element can't open dir \"%s\"", dir_path);
-    perror (s);
-    g_free (s);
-    return NULL;
-  }
-  if (sch2pcb_get_verbose_mode () > 1)
-    printf ("\t  Searching: \"%s\" for \"%s\"\n", dir_path, element);
-  while ((name = (gchar *) g_dir_read_name (dir)) != NULL) {
-    path = g_strconcat (dir_path, "/", name, NULL);
-    found = NULL;
-
-    /* if we got a directory name, then recurse down into it */
-    if (g_file_test (path, G_FILE_TEST_IS_DIR))
-      found = sch2pcb_find_element (path, element);
-
-    /* otherwise assume it is a file and see if it is the one we want */
-    else {
-      if (sch2pcb_get_verbose_mode () > 1)
-        printf ("\t           : %s\t", name);
-      if (!strcmp (name, element))
-        found = g_strdup (path);
-      else {
-        gchar *tmps;
-        tmps = g_strconcat (element, ".fp", NULL);
-        if (!strcmp (name, tmps))
-          found = g_strdup (path);
-        g_free (tmps);
-      }
-      if (sch2pcb_get_verbose_mode () > 1)
-        printf ("%s\n", found ? "Yes" : "No");
-    }
-    g_free (path);
-    if (found)
-      break;
-  }
-  g_dir_close (dir);
-  return found;
-}
-
-
 GList*
 sch2pcb_parse_schematics (char *str)
 {

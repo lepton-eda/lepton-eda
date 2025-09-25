@@ -133,6 +133,7 @@ nobase_dist_scmdata_DATA = \
 	sch2pcb/element.scm \
 	sch2pcb/format.scm \
 	sch2pcb/insert.scm \
+	sch2pcb/lookup.scm \
 	schematic/action.scm \
 	schematic/action-mode.scm \
 	schematic/action/copy.scm \
@@ -285,7 +286,8 @@ TESTS = \
 	unit-tests/netlist-load-path.scm \
 	unit-tests/netlist-partlist.scm \
 	unit-tests/sch2pcb-element.scm \
-	unit-tests/sch2pcb-insert.scm
+	unit-tests/sch2pcb-insert.scm \
+	unit-tests/sch2pcb-lookup.scm
 
 TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
