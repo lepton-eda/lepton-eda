@@ -1446,75 +1446,75 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 
   toplevel = schematic_window_get_toplevel (w_current);
 
-    lepton_toplevel_goto_page (toplevel, page);
-    schematic_window_page_changed (w_current);
-    schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
-    /* build a page database if we're numbering pagebypage or selection only*/
-    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-        || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-    {
-      schematic_autonumber_get_used (w_current, autotext);
-    }
+  lepton_toplevel_goto_page (toplevel, page);
+  schematic_window_page_changed (w_current);
+  schematic_autonumber_set_autotext_root_page (autotext, (root_page == page));
+  /* build a page database if we're numbering pagebypage or selection only*/
+  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+      || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+  {
+    schematic_autonumber_get_used (w_current, autotext);
+  }
 
-    /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
-    /* 1. get objects to renumber */
-    for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
-         iter != NULL;
-         iter = g_list_next (iter))
+  /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
+  /* 1. get objects to renumber */
+  for (iter = lepton_page_objects (schematic_window_get_active_page (w_current));
+       iter != NULL;
+       iter = g_list_next (iter))
+  {
+    o_current = (LeptonObject*) iter->data;
+    if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RENUMBER)
     {
-      o_current = (LeptonObject*) iter->data;
-      if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RENUMBER)
-      {
-        /* put number into the used list */
-        o_list = g_list_append(o_list, o_current);
-      }
+      /* put number into the used list */
+      o_list = g_list_append(o_list, o_current);
     }
+  }
 
-    /* 2. sort object list */
-    switch (schematic_autonumber_get_autotext_sort_order (autotext))
+  /* 2. sort object list */
+  switch (schematic_autonumber_get_autotext_sort_order (autotext))
+  {
+  case AUTONUMBER_SORT_YX:
+    o_list=g_list_sort(o_list, schematic_autonumber_sort_yx);
+    break;
+  case AUTONUMBER_SORT_YX_REV:
+    o_list=g_list_sort(o_list, schematic_autonumber_sort_yx_rev);
+    break;
+  case AUTONUMBER_SORT_XY:
+    o_list=g_list_sort(o_list, schematic_autonumber_sort_xy);
+    break;
+  case AUTONUMBER_SORT_XY_REV:
+    o_list=g_list_sort(o_list, schematic_autonumber_sort_xy_rev);
+    break;
+  case AUTONUMBER_SORT_DIAGONAL:
+    o_list=g_list_sort(o_list, schematic_autonumber_sort_diagonal);
+    break;
+  default:
+    ; /* unsorted file order */
+  }
+
+  /* 3. renumber/reslot the objects */
+  for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
+  {
+    o_current = (LeptonObject*) obj_item->data;
+    if (schematic_autonumber_get_autotext_removenum (autotext))
     {
-    case AUTONUMBER_SORT_YX:
-      o_list=g_list_sort(o_list, schematic_autonumber_sort_yx);
-      break;
-    case AUTONUMBER_SORT_YX_REV:
-      o_list=g_list_sort(o_list, schematic_autonumber_sort_yx_rev);
-      break;
-    case AUTONUMBER_SORT_XY:
-      o_list=g_list_sort(o_list, schematic_autonumber_sort_xy);
-      break;
-    case AUTONUMBER_SORT_XY_REV:
-      o_list=g_list_sort(o_list, schematic_autonumber_sort_xy_rev);
-      break;
-    case AUTONUMBER_SORT_DIAGONAL:
-      o_list=g_list_sort(o_list, schematic_autonumber_sort_diagonal);
-      break;
-    default:
-      ; /* unsorted file order */
+      schematic_autonumber_remove_number (autotext, o_current);
     }
-
-    /* 3. renumber/reslot the objects */
-    for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item))
+    else
     {
-      o_current = (LeptonObject*) obj_item->data;
-      if (schematic_autonumber_get_autotext_removenum (autotext))
-      {
-        schematic_autonumber_remove_number (autotext, o_current);
-      }
-      else
-      {
-        /* get valid numbers from the database */
-        schematic_autonumber_get_new_numbers (autotext, o_current, &number, &slot);
-        /* and apply it. TODO: join these two functions */
-        schematic_autonumber_apply_new_text (autotext, o_current, number, slot);
-      }
+      /* get valid numbers from the database */
+      schematic_autonumber_get_new_numbers (autotext, o_current, &number, &slot);
+      /* and apply it. TODO: join these two functions */
+      schematic_autonumber_apply_new_text (autotext, o_current, number, slot);
     }
-    g_list_free(o_list);
-    o_list = NULL;
+  }
+  g_list_free(o_list);
+  o_list = NULL;
 
-    /* destroy the page database */
-    if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
-        || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
-      schematic_autonumber_clear_database (autotext);
+  /* destroy the page database */
+  if ((schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_PAGE)
+      || (schematic_autonumber_get_autotext_scope_skip (autotext) == SCOPE_SELECTED))
+    schematic_autonumber_clear_database (autotext);
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */
