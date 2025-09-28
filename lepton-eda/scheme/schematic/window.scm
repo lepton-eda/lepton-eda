@@ -693,8 +693,9 @@ zooming."
       (window-save-modifiers *window *event)
 
       (if (true? (schematic_event_get_doing_stroke))
-          (begin
-            (x_stroke_record *window window-x window-y)
+          (let ((int-x (inexact->exact (round window-x)))
+                (int-y (inexact->exact (round window-y))))
+            (x_stroke_record *window int-x int-y)
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))
               FALSE
