@@ -344,6 +344,17 @@ zooming."
   (set-action-mode! 'select-mode #:window window))
 
 
+(define-syntax-rule (process-canvas-event *canvas *event *window process-func)
+  (if (or (null-pointer? *window)
+          (null-pointer? *canvas))
+      (error "NULL page view or window.")
+      (let ((*page (schematic_canvas_get_page *canvas)))
+        (if (null-pointer? *page)
+            ;; If there is no page, terminate event.
+            TRUE
+            (process-func *canvas *event *window)))))
+
+
 (define (callback-button-released *canvas *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
@@ -451,14 +462,7 @@ zooming."
 
         FALSE)))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-button-released
   (procedure->pointer int callback-button-released '(* * *)))
@@ -666,14 +670,7 @@ zooming."
 
                 (_ FALSE)))))))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))
@@ -754,14 +751,7 @@ zooming."
 
                     FALSE)))))))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-motion
   (procedure->pointer int callback-motion '(* * *)))
