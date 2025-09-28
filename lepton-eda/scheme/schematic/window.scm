@@ -352,7 +352,11 @@ zooming."
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
-            (process-func *canvas *event *window)))))
+            ;; Some underlying functions have to know what window
+            ;; they operate on.  Set the current window explicitly
+            ;; as it is not defined for C GLib callbacks.
+            (with-window *window
+              (process-func *canvas *event *window))))))
 
 
 (define (callback-button-released *canvas *event *window)
