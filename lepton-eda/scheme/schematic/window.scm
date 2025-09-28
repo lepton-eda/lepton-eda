@@ -392,21 +392,21 @@ zooming."
                        (eq? current-action-mode 'copy-mode)
                        (eq? current-action-mode 'multiple-copy-mode)
                        (eq? current-action-mode 'paste-mode))
-                 (if (eq? current-action-mode 'move-mode)
-                     (o_move_invalidate_rubber *window FALSE)
-                     (o_place_invalidate_rubber *window FALSE))
-                 (schematic_window_set_rubber_visible *window 0)
+               (if (eq? current-action-mode 'move-mode)
+                   (o_move_invalidate_rubber *window FALSE)
+                   (o_place_invalidate_rubber *window FALSE))
+               (schematic_window_set_rubber_visible *window 0)
 
-                 (o_place_rotate *window)
+               (o_place_rotate *window)
 
-                 (when (eq? current-action-mode 'component-mode)
-                   (o_component_place_changed_run_hook *window))
+               (when (eq? current-action-mode 'component-mode)
+                 (o_component_place_changed_run_hook *window))
 
-                 (if (eq? current-action-mode 'move-mode)
-                     (o_move_invalidate_rubber *window TRUE)
-                     (o_place_invalidate_rubber *window TRUE))
+               (if (eq? current-action-mode 'move-mode)
+                   (o_move_invalidate_rubber *window TRUE)
+                   (o_place_invalidate_rubber *window TRUE))
 
-                 (schematic_window_set_rubber_visible *window 1)))
+               (schematic_window_set_rubber_visible *window 1)))
            (unless (and (in-action? window)
                         (or (eq? current-action-mode 'component-mode)
                             (eq? current-action-mode 'text-mode)
@@ -434,7 +434,7 @@ zooming."
                      (let ((str (pointer->string *str)))
                        (g_free *str)
                        (with-window *window
-                                    (eval-stroke str)))))
+                         (eval-stroke str)))))
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
