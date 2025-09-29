@@ -344,6 +344,21 @@ zooming."
   (set-action-mode! 'select-mode #:window window))
 
 
+(define-syntax-rule (process-canvas-event *canvas *event *window process-func)
+  (if (or (null-pointer? *window)
+          (null-pointer? *canvas))
+      (error "NULL page view or window.")
+      (let ((*page (schematic_canvas_get_page *canvas)))
+        (if (null-pointer? *page)
+            ;; If there is no page, terminate event.
+            TRUE
+            ;; Some underlying functions have to know what window
+            ;; they operate on.  Set the current window explicitly
+            ;; as it is not defined for C GLib callbacks.
+            (with-window *window
+              (process-func *canvas *event *window))))))
+
+
 (define (callback-button-released *canvas *event *window)
   (define window (pointer->window *window))
   (define current-action-mode (action-mode window))
@@ -392,21 +407,21 @@ zooming."
                        (eq? current-action-mode 'copy-mode)
                        (eq? current-action-mode 'multiple-copy-mode)
                        (eq? current-action-mode 'paste-mode))
-                 (if (eq? current-action-mode 'move-mode)
-                     (o_move_invalidate_rubber *window FALSE)
-                     (o_place_invalidate_rubber *window FALSE))
-                 (schematic_window_set_rubber_visible *window 0)
+               (if (eq? current-action-mode 'move-mode)
+                   (o_move_invalidate_rubber *window FALSE)
+                   (o_place_invalidate_rubber *window FALSE))
+               (schematic_window_set_rubber_visible *window 0)
 
-                 (o_place_rotate *window)
+               (o_place_rotate *window)
 
-                 (when (eq? current-action-mode 'component-mode)
-                   (o_component_place_changed_run_hook *window))
+               (when (eq? current-action-mode 'component-mode)
+                 (o_component_place_changed_run_hook *window))
 
-                 (if (eq? current-action-mode 'move-mode)
-                     (o_move_invalidate_rubber *window TRUE)
-                     (o_place_invalidate_rubber *window TRUE))
+               (if (eq? current-action-mode 'move-mode)
+                   (o_move_invalidate_rubber *window TRUE)
+                   (o_place_invalidate_rubber *window TRUE))
 
-                 (schematic_window_set_rubber_visible *window 1)))
+               (schematic_window_set_rubber_visible *window 1)))
            (unless (and (in-action? window)
                         (or (eq? current-action-mode 'component-mode)
                             (eq? current-action-mode 'text-mode)
@@ -434,7 +449,7 @@ zooming."
                      (let ((str (pointer->string *str)))
                        (g_free *str)
                        (with-window *window
-                                    (eval-stroke str)))))
+                         (eval-stroke str)))))
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
@@ -451,14 +466,7 @@ zooming."
 
         FALSE)))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-button-released
   (procedure->pointer int callback-button-released '(* * *)))
@@ -666,14 +674,7 @@ zooming."
 
                 (_ FALSE)))))))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))
@@ -692,8 +693,9 @@ zooming."
       (window-save-modifiers *window *event)
 
       (if (true? (schematic_event_get_doing_stroke))
-          (begin
-            (x_stroke_record *window window-x window-y)
+          (let ((int-x (inexact->exact (round window-x)))
+                (int-y (inexact->exact (round window-y))))
+            (x_stroke_record *window int-x int-y)
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))
               FALSE
@@ -754,14 +756,7 @@ zooming."
 
                     FALSE)))))))
 
-  (if (or (null-pointer? *window)
-          (null-pointer? *canvas))
-      (error "NULL page view or window.")
-      (let ((*page (schematic_canvas_get_page *canvas)))
-        (if (null-pointer? *page)
-            ;; If there is no page, terminate event.
-            TRUE
-            (process-event *canvas *event *window)))))
+  (process-canvas-event *canvas *event *window process-event))
 
 (define *callback-motion
   (procedure->pointer int callback-motion '(* * *)))
