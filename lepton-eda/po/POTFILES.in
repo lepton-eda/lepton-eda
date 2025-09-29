@@ -1,6 +1,7 @@
 lepton-eda/scheme/lepton/attrib.scm
 lepton-eda/scheme/lepton/library.scm
 lepton-eda/scheme/lepton/library/component.scm
+lepton-eda/scheme/lepton/os.scm
 lepton-eda/scheme/lepton/repl.scm
 lepton-eda/scheme/netlist.scm
 lepton-eda/scheme/netlist/attrib/refdes.scm
