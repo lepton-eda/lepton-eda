@@ -4,28 +4,29 @@
              (lepton config)
              (lepton legacy-config)
              (lepton object)
+             (lepton os)
              (lepton page)
              (lepton rc)
              (gschem deprecated)
              (schematic hook)
              (schematic window))
 
-;
-; Start of color section
-;
 
-; Load up a color scheme which has a dark (black) background.
-; Comment out the first line and comment in the second line for a
-; light (almost white) background.  The dark background is the
-; original look.
-;
-(primitive-load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
-;(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
-;(load (build-path geda-rc-path "gschem-colormap-bw")) ; light background, bw
+;;; Colors
+;;;
+;;; Load up a color scheme which has a dark (black) background.
+;;; Comment out the uncommented 'define' and comment in another
+;;; one to change the default color scheme.
+;;;
+;;; Dark background (original look)
+(define lepton-schematic-colormap "gschem-colormap-darkbg")
+;;; Light background
+; (define lepton-schematic-colormap "gschem-colormap-lightbg")
+;;; Light background, black-&-white scheme
+; (define lepton-schematic-colormap "gschem-colormap-darkbg")
 
-;
-; End of color section
-;
+;;; Load the selected color scheme.
+(primitive-load (lookup-sys-config-path lepton-schematic-colormap))
 
 
 
