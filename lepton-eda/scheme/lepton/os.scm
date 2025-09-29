@@ -34,6 +34,7 @@
             user-data-dir
             user-home-dir
             lookup-sys-config-path
+            lookup-sys-data-path
             ;; Deprecated functions.
             path-separator
             path-separator-char
@@ -81,6 +82,30 @@ The symbols may include:
 (define (sys-data-dirs)
   "Returns a list of search directories for system data."
   (c-string-array->list (eda_get_system_data_dirs)))
+
+
+(define (lookup-sys-data-path path)
+  "Searches for PATH in the directories returned by the function
+sys-data-dirs() according to the order of preference, from first
+to last.  Returns the first found path.  If the path has not been
+found, returns #f and reports a message about it to the log."
+  (let loop ((ls (filter-map
+                  (lambda (dir)
+                    (false-if-exception (canonicalize-path dir)))
+                  (sys-data-dirs))))
+    (if (null? ls)
+        (begin
+          (log! 'message
+                (G_ "Could not find the file ~S in system data dirs.")
+                path)
+          #f)
+        (let ((full-path (string-append (car ls)
+                                        file-name-separator-string
+                                        path)))
+          (if (file-exists? full-path)
+              full-path
+              (loop (cdr ls)))))))
+
 
 (define (sys-config-dirs)
   "Returns a list of search directories for system configuration."
