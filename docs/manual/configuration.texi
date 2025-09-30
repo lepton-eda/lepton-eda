@@ -256,7 +256,8 @@ There are five configuration contexts:
 
 @itemize
 @item
-contains default values for configuration settings (read-only)
+contains default values for configuration settings (read-only) defined
+in the program code of the Lepton tools
 
 @item
 configuration file: none
