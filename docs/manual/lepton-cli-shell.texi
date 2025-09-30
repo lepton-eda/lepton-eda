@@ -1,6 +1,7 @@
 @node lepton-cli shell
 @section lepton-cli shell
 @cindex lepton-cli shell
+@cindex lepton-shell
 
 @code{lepton-cli shell} provides an interactive Scheme Read-Eval-Print
 Loop (REPL) for automating processing of schematic and symbol
@@ -13,6 +14,10 @@ files. It is designed to be used with the Lepton EDA Scheme API.
 @end ifnothtml
 for more information on which Lepton EDA Scheme procedures you can
 use.
+
+To do the real job, the command launches the standalone utility
+@command{lepton-shell} which can be used instead in any example
+below.
 
 Usage:
 

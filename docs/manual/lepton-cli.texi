@@ -33,7 +33,10 @@ Print @cli{} version information.
 
 @end table
 
-
+When @var{COMMAND} is specified, the tool launches specific utilities
+really doing the job: @command{lepton-export},
+@command{lepton-config}, or @command{lepton-shell}.  Any of them can
+be used as standalone tools.
 
 @menu
 * lepton-cli export:: Export images from schematic and symbol files.

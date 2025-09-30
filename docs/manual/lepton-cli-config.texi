@@ -1,12 +1,17 @@
 @node lepton-cli config
 @section lepton-cli config
 @cindex lepton-cli config
+@cindex lepton-config
 
 This section describes how to set up Lepton tools with the
 @code{lepton-cli config} command.
 
 @code{lepton-cli config} is a basic utility for inspecting and
 modifying Lepton EDA configuration stores.
+
+To do the real job, the command launches the standalone utility
+@command{lepton-config} which can be used instead in any example
+below.
 
 The usage of the command:
 

@@ -1,6 +1,7 @@
 @node lepton-cli export
 @section lepton-cli export
 @cindex lepton-cli export
+@cindex lepton-export
 
 The command @code{lepton-cli export} is used to export schematic and
 symbol files in a variety of image formats.  The resulting images can
@@ -14,6 +15,9 @@ how the output is formatted.
 in one go.
 @end quotation
 
+To do the real job, the command launches the standalone utility
+@command{lepton-export} which can be used instead in any example
+below.
 
 Usage:
 
