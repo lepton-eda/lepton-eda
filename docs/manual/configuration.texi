@@ -1431,9 +1431,10 @@ and a serially increasing number.  Buses are still not used in
 @tab
 @anchor{net-naming-priority}
 Possible values: @cfgval{net-attribute}, @cfgval{netname-attribute}.
-Specify which attribute, @attr{net} or @attr{netname}, has
-priority if a net is found with two names. Any netname conflict will
-be resolved using the chosen attribute.
+Specify which attribute, @attr{net} or @attr{netname}, has priority if
+a net is found with two names.  Any netname conflict will be resolved
+using the chosen attribute.  @xref{net= attribute mini-HOWTO} for more
+information.
 
 @end multitable
 
