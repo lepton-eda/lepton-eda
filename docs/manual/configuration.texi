@@ -416,6 +416,10 @@ current directory, type:
 lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
 @end example
 
+@quotation Note
+You can edit any of the configuration files manually using your
+favorite text editor.
+@end quotation
 
 
 @node Configuration of Lepton tools, Deprecated settings, New configuration system, Configuration
