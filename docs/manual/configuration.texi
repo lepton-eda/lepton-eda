@@ -484,7 +484,8 @@ within GtkNotebook widget.
 @tab @cfgval{""} (empty string)
 @tab
 The name of the font to be used to draw text in schematics.  For
-example: @samp{font=OpenGost Type B TT Regular}
+example: @samp{font=OpenGost Type B TT Regular}.  @xref{Lepton EDA
+fonts} on fonts selection.
 
 @item @cfgkey{text-sizes}
 @tab @cfgtype{list of @code{string}s}
@@ -1559,7 +1560,8 @@ output.
 @tab @cfgtype{string}
 @tab @cfgval{"Sans"}
 @tab
-Set the font to be used for drawing text.
+Set the font to be used for drawing text.  @xref{Lepton EDA fonts} on
+fonts selection.
 
 @item @cfgkey{layout}
 @tab @cfgtype{string}
