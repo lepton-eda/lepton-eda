@@ -2007,9 +2007,6 @@ configuration functions}
 @url{https://github.com/lepton-eda/lepton-eda, Lepton EDA home page}
 
 @item
-@url{http://wiki.geda-project.org, gEDA wiki}
-
-@item
 @url{https://graahnul-grom.github.io/, dmn's documentation page},
 links and resources for Lepton EDA users and developers
 
