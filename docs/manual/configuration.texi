@@ -1578,7 +1578,9 @@ drawing will be used.
 @tab
 Set the widths of the margins to be used (the minimal distances from
 the sheet edges; actual margins may be larger if the sizes of the
-chosen paper do not meet the sizes of the printed schematic).
+chosen paper do not meet the sizes of the printed schematic).  The
+values are in Adobe points.  Exactly four numbers @strong{must} be
+given.  Using of any unit size suffixes is not allowed.
 
 @item @cfgtype{monochrome}
 @tab @cfgtype{boolean}
