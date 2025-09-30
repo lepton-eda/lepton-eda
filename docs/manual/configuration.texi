@@ -278,8 +278,10 @@ configuration file:
 @url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/lib/geda-system.conf,
 @file{geda-system.conf}}.)
 @item
-configuration file location: @file{$PREFIX/share/lepton-eda/}
-(@env{$PREFIX} is the installation prefix, e.g. @file{/usr} or @file{/usr/local})
+configuration file location: @file{$XDG_CONFIG_DIRS/lepton-eda/} (it
+may be @file{/etc/xdg/lepton-eda} or $@file{$PREFIX/share/lepton-eda}
+where @env{$PREFIX} is the installation prefix, e.g. @file{/usr} or
+@file{/usr/local})
 @item
  parent context: @samp{DEFAULT}
 @item
