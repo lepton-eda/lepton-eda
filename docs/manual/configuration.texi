@@ -1410,16 +1410,20 @@ Before 1.9.10 it was @code{gnetlist} group.
 @tab @cfgval{"unnamed_net"}
 @tab
 @anchor{default-net-name}
-Default name used for nets for which the user has set no explicit name
-via the @attr{netname=} or @attr{net=} attributes.
+Default net name prefix used for nets for which the user has set no
+explicit name via the @attr{netname=} or @attr{net=} attributes.  New
+net names are formed by concatenating this prefix and a serially
+increasing number.
 
 @item @cfgkey{default-bus-name}
 @tab @cfgtype{string}
 @tab @cfgval{"unnamed_bus"}
 @tab
 @anchor{default-bus-name}
-Default name used for buses for which the user has set no explicit
-name.  Buses are still not used in @netlist.
+Default bus name prefix used for buses for which the user has set no
+explicit name.  New bus names are formed by concatenating this prefix
+and a serially increasing number.  Buses are still not used in
+@netlist.
 
 @item @cfgkey{net-naming-priority}
 @tab @cfgtype{string}
