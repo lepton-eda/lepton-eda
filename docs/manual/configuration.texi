@@ -2025,13 +2025,7 @@ which could be helpful in settings upgrade process.
 
 @node Other resources,  , Utilities, Resources
 @subsection Other resources (outdated, but may be useful)
-@itemize
-@item
-@url{http://wiki.geda-project.org/geda:gaf_utility, gaf wiki page}
-(@command{gaf} is @command{lepton-cli}'s old name)
-@item
-@url{http://wiki.geda-project.org/geda:gschem_ug, gschem user guide},
-and in particular
-@url{http://wiki.geda-project.org/geda:gschem_ug:config, configuring
-gschem}
-@end itemize
+Some probably useful info on configuration may be found in the local
+snapshot of no longer available gEDA project wiki.  Hit @kbd{H W} in
+@schematic{} to open its start page, and search for ``Gschem User
+Guide'', and in particular its page ``Configuring gschem''.
