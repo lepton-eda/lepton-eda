@@ -281,7 +281,11 @@ configuration file:
 configuration file location: @file{$XDG_CONFIG_DIRS/lepton-eda/} (it
 may be @file{/etc/xdg/lepton-eda} or $@file{$PREFIX/share/lepton-eda}
 where @env{$PREFIX} is the installation prefix, e.g. @file{/usr} or
-@file{/usr/local})
+@file{/usr/local}); the environment variable @env{XDG_CONFIG_DIRS}
+defines a preference ordered list of directories to search for
+configuration files, the files have to reside in the package
+subdirectories (here, @file{lepton-eda})
+
 @item
  parent context: @samp{DEFAULT}
 @item
