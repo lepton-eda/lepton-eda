@@ -1606,8 +1606,9 @@ list of two doubles in the form @samp{WIDTH;HEIGHT} or string
 @tab
 Size the output with specific dimensions.  If the size is
 @cfgval{auto}, select the size that best fits the drawing.  This
-overrides the @code{paper} key (see the previous entry).
-
+overrides the @code{paper} key (see the previous entry).  Exactly two
+numbers @strong{must} be given.  Using of any unit size suffixes is
+not allowed.
 @end multitable
 
 
