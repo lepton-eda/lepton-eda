@@ -148,3 +148,15 @@ When using the @option{--size}, @option{--margins}, or
 or @samp{ } (space) as a separator between them instead of
 @samp{:}. In such a case, remember to properly quote your arguments to
 avoid them to be interpreted by your shell.
+
+Unlike with other @cli{} commands, you can use your locale's decimal
+point separator with the @samp{export} command in the command line if
+you enter numbers without quotes.  In such a case your shell will
+interpret the numbers for you.  It is not recommended, though, if you
+use the @code{lepton-cli export} command in scripts or Makefiles for
+portability reasons.
+
+@quotation Note
+It is recommended to always use @emph{dot} (@samp{.}) as decimal point
+separator with @cli.
+@end quotation
