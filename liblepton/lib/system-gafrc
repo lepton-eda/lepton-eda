@@ -23,9 +23,13 @@
 (debug-enable 'backtrace)
 (read-enable 'positions)
 
-; Clean up logfiles:
-;
-(cleanup-old-logs!)
+;;; Clean up logfiles unless the environment variable
+;;; LEPTON_INHIBIT_RC_FILES is set.  This protects the test suites
+;;; from sporadical errors when concurrently running processes try
+;;; to delete the same file.  Besides, the logs are preserved in
+;;; case any other errors emerge that have to be fixed.
+(unless (getenv "LEPTON_INHIBIT_RC_FILES")
+  (cleanup-old-logs!))
 
 
 ; Function: scheme-directory( dir )
