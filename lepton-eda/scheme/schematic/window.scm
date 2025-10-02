@@ -53,6 +53,7 @@
   #:use-module (schematic gui stroke)
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
+  #:use-module (schematic rc)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)

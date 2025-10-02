@@ -576,7 +576,7 @@
 
             g_action_eval_by_name
 
-            parse-gschemrc
+            x_rc_parse_gschem_error
             ))
 
 (define libleptongui
@@ -896,7 +896,7 @@
 (define-lff schematic_window_create_main_popup_menu '* '(*))
 
 ;;; x_rc.c
-(define-lff x_rc_parse_gschem void '(*))
+(define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
@@ -1272,12 +1272,3 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) (list '* int int)))))
            ((force proc) *window x y)))))
-
-
-(define (parse-gschemrc toplevel)
-  "Loads old (system, user, etc.) \"gschemrc\" files and new
-configuration \".conf\" files in a newly created toplevel
-environment.  Saves the values in the foreign LeptonToplevel
-structure TOPLEVEL and returns it."
-  (x_rc_parse_gschem toplevel)
-  toplevel)

@@ -50,9 +50,10 @@ g_read_file (LeptonToplevel *toplevel,
 
 /* g_rc.c */
 gboolean
-g_rc_parse_system (LeptonToplevel *toplevel,
-                   const gchar *rcname,
-                   GError **err);
+g_rc_parse_file (LeptonToplevel *toplevel,
+                 const gchar *rcfile,
+                 gpointer conf,
+                 GError **err);
 gboolean
 g_rc_parse_user (LeptonToplevel *toplevel,
                  const gchar *rcname,
@@ -66,16 +67,8 @@ gboolean
 g_rc_load_cache_config (LeptonToplevel* toplevel,
                         GError** err);
 void
-g_rc_parse (LeptonToplevel *toplevel,
-            const gchar* pname,
-            const gchar* rcname,
-            const gchar* rcfile);
-void
-g_rc_parse_handler (LeptonToplevel *toplevel,
-                    const gchar *rcname,
-                    const gchar *rcfile,
-                    ConfigParseErrorFunc handler,
-                    void *user_data);
+g_rc_parse__process_error (GError **err,
+                           const gchar *pname);
 
 /* m_hatch.c */
 void

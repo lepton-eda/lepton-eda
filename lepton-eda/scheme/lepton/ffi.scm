@@ -304,7 +304,11 @@
             set_render_placeholders
             lepton_color_get_color_count
             lepton_color_default_id
-            g_rc_parse
+            g_rc_load_cache_config
+            g_rc_parse__process_error
+            g_rc_parse_file
+            g_rc_parse_local
+            g_rc_parse_user
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
             lepton_colormap_set_color
@@ -424,7 +428,11 @@
 (define-lff lepton_toplevel_search_page '* '(* *))
 
 ;;; g_rc.c
-(define-lff g_rc_parse void '(* * * *))
+(define-lff g_rc_parse__process_error void '(* *))
+(define-lff g_rc_load_cache_config int '(* *))
+(define-lff g_rc_parse_user int '(* * *))
+(define-lff g_rc_parse_file int '(* * * *))
+(define-lff g_rc_parse_local int '(* * * *))
 
 ;;; s_attrib.c
 (define-lff s_attrib_init void '())

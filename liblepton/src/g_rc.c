@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,14 +88,14 @@ g_rc_try_mark_read (LeptonToplevel *toplevel,
  *
  * \param toplevel  The current #LeptonToplevel structure.
  * \param rcfile    The filename of the RC file to load.
- * \param cfg       The configuration context to use while loading.
+ * \param conf      The configuration context to use while loading.
  * \param err       Return location for errors, or NULL;
  * \return TRUE on success, FALSE on failure.
  */
-static gboolean
+gboolean
 g_rc_parse_file (LeptonToplevel *toplevel,
                  const gchar *rcfile,
-                 EdaConfig *cfg,
+                 gpointer conf,
                  GError **err)
 {
   gchar *name_norm = NULL;
@@ -103,6 +103,8 @@ g_rc_parse_file (LeptonToplevel *toplevel,
   gboolean status = FALSE;
   g_return_val_if_fail ((toplevel != NULL), FALSE);
   g_return_val_if_fail ((rcfile != NULL), FALSE);
+
+  EdaConfig *cfg = (EdaConfig *) conf;
 
   /* If no configuration file was specified, get the default
    * configuration file for the rc file. */
@@ -143,52 +145,6 @@ g_rc_parse_file (LeptonToplevel *toplevel,
   return status;
 }
 
-/*! \brief Load a system RC file.
- * \par Function Description
- * Attempts to load and run the system Scheme initialisation file with
- * basename \a rcname.  The string "system-" is prefixed to \a rcname.
- * If \a rcname is NULL, the default value of "gafrc" is used.
- *
- * \param toplevel  The current #LeptonToplevel structure.
- * \param rcname    The basename of the RC file to load, or NULL.
- * \param err       Return location for errors, or NULL.
- * \return TRUE on success, FALSE on failure.
- */
-gboolean
-g_rc_parse_system (LeptonToplevel *toplevel,
-                   const gchar *rcname,
-                   GError **err)
-{
-  gchar *sysname = NULL;
-  gchar *rcfile = NULL;
-  gboolean status = TRUE;
-  const gchar * const * sys_dirs = eda_get_system_config_dirs();
-  EdaConfig *cfg = eda_config_get_system_context();
-
-  /* Default to gafrc */
-  rcname = (rcname != NULL) ? rcname : "gafrc";
-
-  sysname = g_strdup_printf ("system-%s", rcname);
-  for (gint i = 0; sys_dirs[i]; ++i)
-  {
-    rcfile = g_build_filename (sys_dirs[i], sysname, NULL);
-    if (g_file_test(rcfile, G_FILE_TEST_IS_REGULAR))
-    {
-      break;
-    }
-    g_free(rcfile);
-    rcfile = NULL;
-  }
-
-  if (rcfile)
-  {
-    status = g_rc_parse_file (toplevel, rcfile, cfg, err);
-  }
-
-  g_free (rcfile);
-  g_free (sysname);
-  return status;
-}
 
 /*! \brief Load a user RC file.
  * \par Function Description
@@ -266,8 +222,10 @@ g_rc_parse_local (LeptonToplevel *toplevel,
   return status;
 }
 
-static void
-g_rc_parse__process_error (GError **err, const gchar *pname)
+
+void
+g_rc_parse__process_error (GError **err,
+                           const gchar *pname)
 {
   char *pbase;
 
@@ -296,99 +254,6 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
   fprintf (stderr, _("ERROR: The %1$s log may contain more information.\n"),
            pbase);
   exit (1);
-}
-
-/*! \brief General RC file parsing function.
- * \par Function Description
- * Calls g_rc_parse_handler() with the default error handler. If any
- * error other than ENOENT occurs while loading or running a Scheme
- * initialisation file, prints an informative message and calls
- * exit(1).
- *
- * \bug liblepton shouldn't call exit() - this function calls
- *      g_rc_parse__process_error(), which does.
- *
- * \warning Since this function may not return, it should only be used
- * on application startup or when there is no chance of data loss from
- * an unexpected exit().
- *
- * \param [in] toplevel  The #LeptonToplevel structure.
- * \param [in] pname     The name of the application (usually argv[0]).
- * \param [in] rcname    RC file basename, or NULL.
- * \param [in] rcfile    Specific RC file path, or NULL.
- */
-void
-g_rc_parse (LeptonToplevel *toplevel,
-            const gchar *pname,
-            const gchar *rcname,
-            const gchar *rcfile)
-{
-  g_rc_parse_handler (toplevel,
-                      rcname,
-                      rcfile,
-                      (ConfigParseErrorFunc) g_rc_parse__process_error,
-                      (void *) pname);
-}
-
-
-/*! \brief General RC file parsing function.
- * \par Function Description
- * Attempt to load and run system, user and local (current working directory)
- * Scheme initialisation files, first with the default "gafrc"
- * basename and then with the basename \a rcname, if \a rcname is not
- * NULL.  Additionally, attempt to load and run \a rcfile
- * if \a rcfile is not NULL.
- *
- * If an error occurs, calls \a handler with the provided \a user_data
- * and a GError.
- *
- * \see g_rc_parse().
- *
- * \param toplevel  The current #LeptonToplevel structure.
- * \param rcname    RC file basename, or NULL.
- * \param rcfile    Specific RC file path, or NULL.
- * \param handler   Handler function for RC errors.
- * \param user_data Data to be passed to \a handler.
- */
-void
-g_rc_parse_handler (LeptonToplevel *toplevel,
-                    const gchar *rcname,
-                    const gchar *rcfile,
-                    ConfigParseErrorFunc handler,
-                    void *user_data)
-{
-  GError *err = NULL;
-
-#ifdef HANDLER_DISPATCH
-#  error HANDLER_DISPATCH already defined
-#endif
-#define HANDLER_DISPATCH \
-  do { if (err == NULL) break;  handler (&err, user_data);        \
-       g_clear_error (&err); } while (0)
-
-  /* Load cache configuration: */
-  g_rc_load_cache_config (toplevel, &err); HANDLER_DISPATCH;
-
-  /* Load RC files in order. */
-  /* First gafrc files. */
-  g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
-  g_rc_parse_user (toplevel, NULL, &err); HANDLER_DISPATCH;
-  g_rc_parse_local (toplevel, NULL, NULL, &err); HANDLER_DISPATCH;
-  /* Next application-specific rcname. */
-  if (rcname != NULL) {
-    g_rc_parse_system (toplevel, rcname, &err); HANDLER_DISPATCH;
-    g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
-    g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
-  }
-  /* Finally, optional additional RC file.  Specifically use the
-   * current working directory's configuration context here, no matter
-   * where the rc file is located on disk. */
-  if (rcfile != NULL) {
-    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".");
-    g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err); HANDLER_DISPATCH;
-  }
-
-#undef HANDLER_DISPATCH
 }
 
 

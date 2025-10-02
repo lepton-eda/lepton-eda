@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,9 +20,12 @@
 
 (define-module (lepton rc)
   #:use-module (srfi srfi-1)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton eval)
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton gettext)
@@ -68,6 +71,35 @@ system file name separator string."
         (closedir dir))
       #f))
 
+
+(define (build-filename dir name)
+  (string-append dir file-name-separator-string name))
+
+
+;;; Attempts to load and run the system Scheme initialisation file
+;;; with basename *RCNAME in *TOPLEVEL, reporting errors via
+;;; **ERR.  The string "system-" is prefixed to *RCNAME.  If
+;;; *RCNAME is NULL, the default value of "gafrc" is used.
+;;; Returns TRUE on success, FALSE on failure.
+(define (parse-system-rc *toplevel *rcname **err)
+  (define sysname (string-append "system-"
+                                 (if (null-pointer? *rcname)
+                                     "gafrc"
+                                     (pointer->string *rcname))))
+
+  (let loop ((dirs (sys-config-dirs)))
+    (if (null? dirs)
+        TRUE
+        (let ((rcfile (build-filename (car dirs) sysname)))
+          (if (and (file-exists? rcfile)
+                   (regular-file? rcfile))
+              (g_rc_parse_file *toplevel
+                               (string->pointer rcfile)
+                               (eda_config_get_system_context)
+                               **err)
+              (loop (cdr dirs)))))))
+
+
 (define (load-rc-from-sys-config-dirs basename)
   "Load rc file BASENAME from the system configuration
 path (rather than the regular Scheme load path)."
@@ -76,14 +108,65 @@ path (rather than the regular Scheme load path)."
     (if rc-file (primitive-load rc-file))))
 
 
-(define (parse-rc program-name rc-name)
+;;; General RC file parsing function.
+;;;
+;;; Attempt to load and run system, user and local (current
+;;; working directory) Scheme initialisation files in *TOPLEVEL,
+;;; first with the default "gafrc" basename and then with the
+;;; basename RCNAME.
+;;;
+;;; If an error occurs, the function calls HANDLER with the
+;;; provided PROGRAM-NAME and a GError.
+;;;
+;;; The default error handler is currently the function
+;;; g_rc_parse__process_error().  If any error other than ENOENT
+;;; occurs while loading or running a Scheme initialisation file,
+;;; it prints an informative message and calls exit(1).
+;;;
+;;; Bug: liblepton shouldn't call exit() - the function
+;;;      g_rc_parse__process_error() does.
+;;;
+;;; Warning: Since this function may not return, it should only be
+;;; used on application startup or when there is no chance of data
+;;; loss from an unexpected exit().
+(define* (parse-rc program-name
+                   rc-name
+                   #:key
+                   (handler g_rc_parse__process_error)
+                   (*toplevel (toplevel->pointer (current-toplevel))))
   "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
-  (g_rc_parse (toplevel->pointer (current-toplevel))
-              (string->pointer program-name)
-              (string->pointer rc-name)
-              %null-pointer))
+  (define *rcname (string->pointer rc-name))
+  (define *user-data (string->pointer program-name))
+  (define (handler-dispatch *error)
+    (unless (or (null-pointer? *error)
+                (null-pointer? (dereference-pointer *error)))
+      (handler *error *user-data)
+      (g_clear_error *error)))
+
+  (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+
+    ;; Load cache configuration:
+    (g_rc_load_cache_config *toplevel *error)
+    (handler-dispatch *error)
+
+    ;; Load RC files in order.
+    ;; First gafrc files.
+    (parse-system-rc *toplevel %null-pointer *error)
+    (handler-dispatch *error)
+    (g_rc_parse_user *toplevel %null-pointer *error)
+    (handler-dispatch *error)
+    (g_rc_parse_local *toplevel %null-pointer %null-pointer *error)
+    (handler-dispatch *error)
+    ;; Next application-specific rcname.
+    (unless (null-pointer? *rcname)
+      (parse-system-rc *toplevel *rcname *error)
+      (handler-dispatch *error)
+      (g_rc_parse_user *toplevel *rcname *error)
+      (handler-dispatch *error)
+      (g_rc_parse_local *toplevel *rcname %null-pointer *error)
+      (handler-dispatch *error))))
 
 
 ;;; List of processed rc directories.
