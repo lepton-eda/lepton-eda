@@ -2,8 +2,9 @@
 ;;;
 ;;; Add the default component libraries
 ;;;
+(use-modules (lepton os))
 
-(define geda-sym-path (build-path geda-data-path "sym"))
+(define geda-sym-path (lookup-sys-data-path "sym"))
 
 (for-each
  (lambda (dir)
