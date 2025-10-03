@@ -2,9 +2,145 @@
 exec @GUILE@ -s "$0" "$@"
 !#
 
+;;; The eval-when() macro allows to suppress compilation warnings
+;;; on not defined variables because it evaluates the code on the
+;;; expand stage before compilation.  This allows us to get Scheme
+;;; module load paths we need before compilation, thus eliminating
+;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path))))
+  (define %m4-package-name "@PACKAGE_TARNAME@")
+  (define %m4-bindir "@leptonbindir@")
+  (define %m4-abs-top-srcdir "@abs_top_srcdir@")
+  (define %m4-abs-top-builddir "@abs_top_builddir@")
+  (define %m4-lepton-data-dir "@leptondatadir@")
+
+  (define %program-name (car (program-arguments)))
+  (define %running-program-absolute-file-name
+    ;; If the program name is specified using its absolute or
+    ;; relative path, canonicalize it.
+    (or (false-if-exception
+         (canonicalize-path %program-name))
+        ;; When the program name is just a basename, we have to
+        ;; use special means to obtain the real program path.
+
+        ;; Try to implement a portable way of getting the path the
+        ;; executable started from.
+
+        ;; Linux
+        (and (string-contains %host-type "linux")
+             (readlink "/proc/self/exe"))
+        ;; Other OSes can be added here, see the definition of the
+        ;; variable %platform in the module (lepton-os) for
+        ;; reference.
+
+        ;; FreeBSD: sysctl CTL_KERN KERN_PROC KERN_PROC_PATHNAME -1
+        ;; *BSD: (readlink "/proc/curproc/file")
+        ;; Mac OS X: _NSGetExecutablePath()
+        ;; Solaris: getexecname()
+        ;; Windows: GetModuleFileName() with Module = NULL
+        ))
+  (define %installed-program-absolute-file-name
+    (false-if-exception
+     (canonicalize-path
+      (string-append %m4-bindir
+                     file-name-separator-string
+                     (basename %program-name)))))
+  ;; Check if the current process has been started from the
+  ;; installation directory defined by autoconf, not from the
+  ;; build directory.
+  (define run-installed-program?
+    ;; First check that the executable exists in the installation
+    ;; directory.
+    (and %installed-program-absolute-file-name
+         ;; The second check is to verify that the running
+         ;; executable file is the same as one in the installation
+         ;; directory.  Currently, we can obtain the executable
+         ;; file name of the running process only on Linux, so if
+         ;; the real program binary path cannot be determined,
+         ;; assume the program is installed, anyways.
+         (or (not %running-program-absolute-file-name)
+             (string= %installed-program-absolute-file-name
+                      %running-program-absolute-file-name))))
+
+  (define %bitmap-directory
+    (if run-installed-program?
+        (string-append %m4-lepton-data-dir
+                       file-name-separator-string
+                       "bitmap")
+        (string-join (list %m4-abs-top-srcdir
+                           "libleptongui"
+                           "bitmap")
+                     file-name-separator-string)))
+
+  (if (and (not %installed-program-absolute-file-name)
+           (not %running-program-absolute-file-name))
+      (format (current-error-port)
+              "Running the program without installation
+is not supported for your OS, sorry.\n")
+      (if (and run-installed-program?
+               (not (getenv "LIBLEPTON")))
+          (let ((%lepton-scheme-dir
+                 (string-append %m4-lepton-data-dir
+                                file-name-separator-string
+                                "scheme"))
+                (%lepton-ccache-dir
+                 (string-append %m4-lepton-data-dir
+                                file-name-separator-string
+                                "ccache")))
+            ;; Add directory with Scheme modules to %load-path.
+            (add-to-load-path %lepton-scheme-dir)
+            ;; Load compiled code only when the program is
+            ;; installed.
+            (set! %load-compiled-path (cons %lepton-ccache-dir
+                                            %load-compiled-path)))
+          (let ((%lepton-scheme-dir
+                 (string-join (list %m4-abs-top-srcdir
+                                    %m4-package-name
+                                    "scheme")
+                              file-name-separator-string))
+                (%liblepton
+                 (string-join (list %m4-abs-top-builddir
+                                    "liblepton"
+                                    "src"
+                                    "liblepton")
+                              file-name-separator-string))
+                (%libleptongui
+                 (string-join (list %m4-abs-top-builddir
+                                    "libleptongui"
+                                    "src"
+                                    "libleptongui")
+                              file-name-separator-string))
+                (%libleptonattrib
+                 (string-join (list %m4-abs-top-builddir
+                                    "libleptonattrib"
+                                    "src"
+                                    "libleptonattrib")
+                              file-name-separator-string)))
+            ;; Add directory with Scheme modules to %load-path.
+            (add-to-load-path %lepton-scheme-dir)
+            ;; Set paths to the libs in the build directory.
+            (putenv "LIBLEPTON")
+            (setenv "LIBLEPTON" %liblepton)
+            (putenv "LIBLEPTONGUI")
+            (setenv "LIBLEPTONGUI" %libleptongui)
+            (putenv "LIBLEPTONATTRIB")
+            (setenv "LIBLEPTONATTRIB" %libleptonattrib)
+            ;; Define directories for configuration and data files.
+            (let ((current-xdg-data-dirs (getenv "XDG_DATA_DIRS")))
+              (putenv "XDG_DATA_DIRS")
+              (setenv "XDG_DATA_DIRS"
+                      (if current-xdg-data-dirs
+                          (string-append %m4-abs-top-srcdir
+                                         ":"
+                                         current-xdg-data-dirs)
+                          %m4-abs-top-srcdir)))
+            (let ((current-xdg-config-dirs (getenv "XDG_CONFIG_DIRS")))
+              (putenv "XDG_CONFIG_DIRS")
+              (setenv "XDG_CONFIG_DIRS"
+                      (if current-xdg-config-dirs
+                          (string-append %m4-abs-top-srcdir
+                                         ":"
+                                         current-xdg-config-dirs)
+                          %m4-abs-top-srcdir)))))))
 
 (use-modules (lepton m4))

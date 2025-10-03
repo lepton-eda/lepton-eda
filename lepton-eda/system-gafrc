@@ -1,0 +1,58 @@
+;                                                         -*-Scheme-*-
+;;;
+;;; Common init file for gaf
+;;;
+
+(use-modules (lepton library)
+             (lepton log-rotate)
+             (lepton os)
+             ;; Import deprecated Scheme functions.
+             (geda deprecated-config)
+             (geda deprecated)
+             (lepton color-map))
+
+;; Set some flags to aid in debugging rc files
+(cond-expand (guile-2 #t)
+             (guile (debug-enable 'debug)))
+(debug-enable 'backtrace)
+(read-enable 'positions)
+
+;;; Clean up logfiles unless the environment variable
+;;; LEPTON_INHIBIT_RC_FILES is set.  This protects the test suites
+;;; from sporadical errors when concurrently running processes try
+;;; to delete the same file.  Besides, the logs are preserved in
+;;; case any other errors emerge that have to be fixed.
+(unless (getenv "LEPTON_INHIBIT_RC_FILES")
+  (cleanup-old-logs!))
+
+
+; Function: scheme-directory( dir )
+;
+; Allows additional directories to be added to the list
+; of directories which are used by Lepton EDA to load Scheme code.
+; Environment variables in 'dir' are expanded.
+
+
+;;; Color maps for printing
+;;;
+;;; Load up a color scheme for printing optimised for a white or
+;;; dark background.  Comment out an unused definition and comment
+;;; in the one to use to change the print colormap.
+
+;;; Dark background
+; (define print-colormap "print-colormap-darkbg")
+;;; Light background
+(define print-colormap "print-colormap-lightbg")
+;;; Load the colormap
+(primitive-load (lookup-sys-config-path print-colormap))
+
+
+;;;; Process configuration script directory
+
+;; Look up for the directory containing any extra scheme files to
+;; load.
+(define autoload-path
+  (lookup-sys-data-path (build-path "scheme" "autoload")))
+
+;; Execute any scheme files found in the autoload-path directory.
+(and=> autoload-path load-scheme-dir)

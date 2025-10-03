@@ -21,6 +21,28 @@ GUILE_WARNINGS = \
 	-Wunbound-variable \
 	-Wunsupported-warning
 
+lepton-cli: lepton-cli.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
+
+lepton-config: lepton-config.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
+
+lepton-export: lepton-export.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
+
+lepton-shell: lepton-shell.in
+	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
+	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	&& chmod +x $@
+
+CLEANFILES = lepton-cli lepton-config lepton-export lepton-shell
+
 GOBJECTS = $(bin_SCRIPTS:%=%.go)
 
 # This part depends on the configure switch --enable-guild.
@@ -72,6 +94,6 @@ nobase_go_DATA = $(GOBJECTS)
 guile_install_go_files = install-nobase_goDATA
 $(guile_install_go_files): install-binSCRIPTS
 
-CLEANFILES = $(GOBJECTS)
+CLEANFILES += $(GOBJECTS)
 
 endif

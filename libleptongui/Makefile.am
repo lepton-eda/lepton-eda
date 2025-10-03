@@ -8,7 +8,6 @@ SUBDIRS = \
 	${DOC_DIR} \
 	examples \
 	include \
-	lib \
 	po \
 	src \
 	tests

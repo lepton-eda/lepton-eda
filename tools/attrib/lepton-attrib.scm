@@ -45,7 +45,8 @@
   (define-lff-lib arg ... libleptonattrib))
 
 
-(define libleptonattrib (dynamic-link %libleptonattrib))
+(define libleptonattrib
+  (dynamic-link (or (getenv "LIBLEPTONATTRIB") %libleptonattrib)))
 
 (define-lff-lib gtk_init void '(* *) libgtk)
 

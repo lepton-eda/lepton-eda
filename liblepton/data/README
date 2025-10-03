@@ -9,7 +9,7 @@ README for icon data
 This file describes where the various icons came from and their license.
 
 The schematic and symbol mimetype icons and registration data were
-contrinuted by Tomaz Solc, and subsequently modified by Peter Clifton,
+contributed by Tomaz Solc, and subsequently modified by Peter Clifton,
 including creation of a sch2pcb icon in a simlar style. The page outline
 is from the GNOME icon theme's text-x-generic icon by Jakub Steiner.
 
@@ -22,7 +22,7 @@ application-x-lepton-sch2pcb-project.svg
 application-x-lepton-schematic.svg
 application-x-lepton-symbol.svg
 
-Pixel targeted varients:
+Pixel targeted variants:
 
 application-x-lepton-sch2pcb-project-{16,22,32,48}.svg
 application-x-lepton-schematic-{16,22,32,48}.svg
