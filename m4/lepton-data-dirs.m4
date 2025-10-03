@@ -1,5 +1,5 @@
 # lepton-data-dirs.m4                                   -*-Autoconf-*-
-# serial 1.1
+# serial 1.2
 
 dnl Lepton EDA data and configuration directories
 dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
