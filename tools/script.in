@@ -93,8 +93,13 @@ is not supported for your OS, sorry.\n")
             ;; installed.
             (set! %load-compiled-path (cons %lepton-ccache-dir
                                             %load-compiled-path)))
-          (let ((%lepton-scheme-dir
+          (let ((%lepton-scheme-srcdir
                  (string-join (list %m4-abs-top-srcdir
+                                    %m4-package-name
+                                    "scheme")
+                              file-name-separator-string))
+                (%lepton-scheme-builddir
+                 (string-join (list %m4-abs-top-builddir
                                     %m4-package-name
                                     "scheme")
                               file-name-separator-string))
@@ -116,8 +121,12 @@ is not supported for your OS, sorry.\n")
                                     "src"
                                     "libleptonattrib")
                               file-name-separator-string)))
-            ;; Add directory with Scheme modules to %load-path.
-            (add-to-load-path %lepton-scheme-dir)
+            ;; Add directories with Scheme modules to %load-path.
+            ;; Load all modules but (lepton m4) from their source
+            ;; directory.
+            (add-to-load-path %lepton-scheme-srcdir)
+            ;; Load an only built module (lepton m4).
+            (add-to-load-path %lepton-scheme-builddir)
             ;; Set paths to the libs in the build directory.
             (putenv "LIBLEPTON")
             (setenv "LIBLEPTON" %liblepton)
