@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,8 @@ o_rotate_world_update (SchematicWindow *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = (LeptonObject*) o_iter->data;
 
-    s_conn_update_object (o_current->page, o_current);
+    s_conn_update_object (lepton_object_get_page (o_current),
+                          o_current);
   }
 
   o_invalidate_glist (w_current, list);
