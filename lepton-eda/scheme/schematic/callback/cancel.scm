@@ -34,11 +34,10 @@
   "Cancel all actions that may be in progress (e.g. move, component
 placement, etc.) and return to default \"select\" mode."
   (define window (pointer->window *window))
-  (define action-mode
-    (action-mode->symbol (schematic_window_get_action_mode *window)))
+  (define current-action-mode (action-mode window))
   (define *compselect (schematic_window_get_compselect_widget *window))
 
-  (when (and (eq? action-mode 'component-mode)
+  (when (and (eq? current-action-mode 'component-mode)
              (not (null-pointer? *compselect)))
     ;; User hit escape key when placing components.
 
@@ -60,7 +59,7 @@ placement, etc.) and return to default \"select\" mode."
   ;; If we're cancelling from a grip action, call the specific
   ;; cancel routine to reset the visibility of the object being
   ;; modified.
-  (when (eq? action-mode 'grips-mode)
+  (when (eq? current-action-mode 'grips-mode)
     (o_grips_cancel *window))
 
   ;; Free the place list and its contents. If we were in a move
