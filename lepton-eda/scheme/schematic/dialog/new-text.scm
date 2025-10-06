@@ -28,6 +28,7 @@
   #:use-module (lepton object text)
 
   #:use-module (schematic action-mode)
+  #:use-module (schematic callback cancel)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
@@ -46,7 +47,7 @@
     #f)
 
   (define (close-dialog!)
-    (i_callback_cancel %null-pointer *window)
+    (callback-cancel *window)
     (gtk_widget_destroy *dialog)
     (schematic_window_set_newtext_dialog *window %null-pointer))
 
