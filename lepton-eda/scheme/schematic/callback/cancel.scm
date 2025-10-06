@@ -68,7 +68,7 @@ placement, etc.) and return to default \"select\" mode."
   (schematic_window_delete_place_list *window)
 
   ;; Set the 'select' mode.
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode #:window window)
 
   ;; Clear the key command-sequence.
   (schematic_keys_reset *window)
