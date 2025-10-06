@@ -393,6 +393,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   exports the function `rotate-objects()` implementing rotation of
   objects in various interactive modes.
 
+- A new module, `(schematic callback cancel)`, has been
+  introduced.  It exports a new callback function,
+  `callback-cancel()`, used to cancel various GUI actions.
+
 - A new module, `(schematic rc)`, has been added for dealing with
   `lepton-schematic` specific RC files.
 
