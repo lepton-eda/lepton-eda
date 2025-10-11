@@ -526,6 +526,13 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   one.  Now it is skipped, like in panning mode, to calculate
   correct zooming direction on the next event.
 
+- A bug in the Autonumber dialog code appeared first in the
+  version 1.9.17 has been fixed.  The active page switching code
+  incorrectly handled the case when all hierarchy of schematics
+  had to be processed.  It always processed one page and that has
+  been fixed by getting the active page instance using its getter
+  instead of supplying it via a function argument.
+
 ### Changes in `lepton-archive`:
 
 - The program now outputs its basename instead of the full path
