@@ -24,8 +24,10 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -38,11 +40,22 @@
 (define (run-autonumbering *autotext)
   (define *window (schematic_autonumber_get_autotext_window *autotext))
   (define *active-page (schematic_window_get_active_page *window))
-  ;; Get all pages of the hierarchy.
-  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
 
   (define scope-number
     (schematic_autonumber_get_autotext_scope_number *autotext))
+
+  (define scope
+    (string->symbol
+     (pointer->string
+      (schematic_autonumber_scope_to_string scope-number))))
+
+  ;; Get all pages of the hierarchy.
+  (define *pages (s_hierarchy_traversepages *window *active-page FALSE))
+  (define *page-ls
+    (if (eq? scope 'scope-hierarchy)
+        (glist->list *pages identity)
+        ;; The text will be searched for only in the current page.
+        (list *active-page)))
 
   (define *scope-text
     (glist-data
@@ -62,12 +75,66 @@
   (define *search-text
     (and search-text (string->pointer search-text)))
 
+  (define (create-search-text-list *window *page *search-text *search-text-ls)
+    (lepton_toplevel_goto_page (schematic_window_get_toplevel *window) *page)
+    (schematic_window_page_changed *window)
+    ;; Guard to check if the page has already got active.
+    (unless (equal? *page (schematic_window_get_active_page *window))
+      (error "Processing non-active page."))
+    ;; Iterate over all objects and look for matching
+    ;; search patterns.
+    (let loop ((*objects
+                (glist->list
+                 (lepton_page_objects *page)
+                 identity))
+               (*ls *search-text-ls))
+      (if (null? *objects)
+          *ls
+          (loop (cdr *objects)
+                (let ((*object (car *objects)))
+                  (if (and (true? (lepton_object_is_text *object))
+                           (or (eq? scope 'scope-hierarchy)
+                               (eq? scope 'scope-page)
+                               (and (eq? scope 'scope-selected)
+                                    (true? (lepton_object_get_selected *object)))))
+                      ;; If the object is text then process it.
+                      (let* ((*str (lepton_text_object_get_string *object))
+                             ;; The beginning of the current text
+                             ;; matches with the searchtext now.
+                             ;; Strip of the trailing [0-9?] chars
+                             ;; and add it to the searchtext.
+                             (*new-search-text (schematic_autonumber_drop_string_suffix *str *search-text)))
+
+                        (if (null-pointer? *new-search-text)
+                            *ls
+                            (let ((search-text-ls (glist->list *ls pointer->string)))
+                              (if (member (pointer->string *new-search-text) search-text-ls)
+                                  (begin
+                                    (g_free *new-search-text)
+                                    *ls)
+                                  (g_list_append *ls *new-search-text)))))
+                      ;; Otherwise return the list as is.
+                      *ls))))))
+
   (schematic_autonumber_set_autotext_current_searchtext *autotext %null-pointer)
   (schematic_autonumber_set_autotext_root_page *autotext 1)
   (schematic_autonumber_set_autotext_used_numbers *autotext %null-pointer)
   (schematic_autonumber_set_autotext_free_slots *autotext %null-pointer)
   (schematic_autonumber_set_autotext_used_slots *autotext %null-pointer)
 
+  ;; Step2: If the text to search has an asterisk at the end we
+  ;; have to find all matching text templates.
+  ;;
+  ;; Example: "refdes=*" will match each text that starts with
+  ;; "refdes=" and has a trailing "?" or a trailing number if the
+  ;; "all"-option is set.  We get a list of possible prefixes:
+  ;; refdes=R, refdes=C.
+  ;;
+  ;; If there is only one search pattern, it becomes a single item
+  ;; in the template list.
+  ;;
+  ;; For example: "refdes=C?" will be transformed into a list
+  ;; with only one template: refdes=C.
   (if (string-null? scope-text)
       (log! 'message (G_ "No search string given in autonumber text."))
       (if search-text
@@ -75,11 +142,17 @@
                  (if single-search?
                      (g_list_append %null-pointer *search-text)
                      (if multi-search?
-                         (schematic_autonumber_create_search_text_list
-                          *window
-                          *pages
-                          *search-text
-                          scope-number)
+                         ;; Collect all the possible searchtexts
+                         ;; in all pages of the hierarchy.
+                         (let loop ((ls *page-ls)
+                                    (*search-text-ls %null-pointer))
+                           (if (null? ls)
+                               *search-text-ls
+                               (loop (cdr ls)
+                                     (create-search-text-list *window
+                                                              (car ls)
+                                                              *search-text
+                                                              *search-text-ls))))
                          %null-pointer))))
             (schematic_autonumber_run *autotext
                                       *window
