@@ -223,20 +223,6 @@ x_event_configure (SchematicCanvas   *page_view,
   return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint
-x_event_enter (GtkWidget *widget,
-               GdkEventCrossing *event,
-               SchematicWindow *w_current)
-{
-  g_return_val_if_fail ((w_current != NULL), 0);
-  /* do nothing or now */
-  return(0);
-}
 
 /*! \brief Callback to handle key events in the drawing area.
  *  \par Function Description

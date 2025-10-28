@@ -766,6 +766,28 @@ zooming."
   (procedure->pointer int callback-motion '(* * *)))
 
 
+(define (callback-enter *widget *event *window)
+  ;; This will most likely optimized out by the compiler.
+  ;; However the syntax check might be useful if we add anything
+  ;; useful here.
+  (define window (pointer->window *window))
+  ;; Do nothing for now.
+  FALSE)
+
+
+(define *callback-enter
+  (procedure->pointer int callback-enter '(* * *)))
+
+
+;;; Set up GTK+ callback handlers for the *MAIN-WINDOW widget of
+;;; *WINDOW.
+(define (setup-main-window-draw-events *window *main-window)
+  (g_signal_connect *main-window
+                    (string->pointer "enter-notify-event")
+                    *callback-enter
+                    *window))
+
+
 (define (setup-canvas-draw-events *window *canvas)
   (define signal-callback-list
     (list
@@ -1166,7 +1188,7 @@ GtkApplication structure of the program (when compiled with
 
 
       ;; Setup callbacks for main window draw events.
-      (x_window_setup_draw_events_main_wnd *window *main-window)
+      (setup-main-window-draw-events *window *main-window)
 
       ;; Setup hidden infowidgets.
       (schematic_window_create_find_text_widget *window *work-box)

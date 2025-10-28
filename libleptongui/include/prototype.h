@@ -909,10 +909,6 @@ gboolean
 x_event_configure (SchematicCanvas *page_view,
                    GdkEventConfigure *event,
                    gpointer user_data);
-gint
-x_event_enter(GtkWidget *widget,
-              GdkEventCrossing *event,
-              SchematicWindow *w_current);
 GdkEventKey*
 x_event_key (SchematicCanvas *page_view,
              GdkEventKey *event,
@@ -1117,9 +1113,6 @@ x_stroke_translate_and_execute (SchematicWindow *w_current);
 void
 x_window_create_drawing (GtkWidget *drawbox,
                          SchematicWindow *w_current);
-void
-x_window_setup_draw_events_main_wnd (SchematicWindow* w_current,
-                                     GtkWidget*      main_window);
 void
 x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
                                          SchematicCanvas* drawing_area);
