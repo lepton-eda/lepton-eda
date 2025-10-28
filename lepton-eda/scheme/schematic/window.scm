@@ -946,13 +946,60 @@ for *PAGE page will be created and set active."
                                            %null-pointer))))))
 
 
+;;; Closes *PAGE in *WINDOW.  The current page in *WINDOW is
+;;; changed to the next valid page.  If necessary, a new untitled
+;;; page is created (unless tabbed GUI is enabled: return NULL in
+;;; that case).
 (define (close-window-page! *window *page)
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (define tabs-enabled? (true? (x_tabs_enabled)))
+
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+
   ;; If we're closing whilst inside an action, re-wind the page
   ;; contents back to their state before we started.
   (when (in-action? (pointer->window *window))
     (callback-cancel *window))
 
-  (x_window_close_page *window *page))
+  ;; *new-current-page will be the new current page at the end of
+  ;; the function.
+  (let ((*new-current-page
+         (if (equal? *page (lepton_toplevel_get_page_current *toplevel))
+             (schematic_window_find_new_current_page *toplevel *page)
+             %null-pointer)))
+
+    (log! 'message
+          (if (true? (lepton_page_get_changed *page))
+              (G_ "Discarding page ~S")
+              (G_ "Closing ~S"))
+          (pointer->string (lepton_page_get_filename *page)))
+
+    ;; Remove the page from toplevel list of pages.
+    (lepton_page_delete *toplevel *page)
+    (schematic_window_page_changed *window)
+
+    ;; Switch to a different page if we just removed the current.
+    (if (null-pointer? (lepton_toplevel_get_page_current *toplevel))
+        (if tabs-enabled?
+            ;; If tabs are enabled, return the page as is, even if
+            ;; it is NULL.
+            *new-current-page
+            ;; Tabs are disabled.
+            (let ((*really-new-current-page
+                   (if (null-pointer? *new-current-page)
+                       ;; Page wasn't found, create a new page.
+                       (x_window_open_page *window %null-pointer)
+                       ;; Use found page.
+                       *new-current-page)))
+              ;; Change to the new current page and update display.
+              (x_window_set_current_page *window *really-new-current-page)
+              ;; Return the page.
+              *really-new-current-page))
+        ;; Return the page if it is not NULL.
+        *new-current-page)))
 
 
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last

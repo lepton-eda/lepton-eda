@@ -1184,8 +1184,8 @@ x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename);
 LeptonPage*
-x_window_close_page (SchematicWindow *w_current,
-                     LeptonPage *page);
+schematic_window_find_new_current_page (LeptonToplevel *toplevel,
+                                        LeptonPage *page);
 SchematicWindow*
 x_window_new (LeptonToplevel *toplevel);
 

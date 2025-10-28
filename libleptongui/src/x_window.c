@@ -701,86 +701,34 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-
-/*! \brief Closes a page.
- *  \private
- *  \par Function Description
- *  This function closes the page <B>page</B> of toplevel
- *  <B>toplevel</B>.
- *
- *  The current page of <B>toplevel</B> is changed to
- *  the next valid page.
- *  If necessary, a new untitled page is created
- *  (unless tabbed GUI is enabled: return NULL in that case).
- *
- *  \param [in] w_current The toplevel environment.
- *  \param [in] page      The page to close.
- *  \return               Pointer to a new current LeptonPage object.
- */
 LeptonPage*
-x_window_close_page (SchematicWindow *w_current,
-                     LeptonPage *page)
+schematic_window_find_new_current_page (LeptonToplevel *toplevel,
+                                        LeptonPage *page)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  LeptonPage *new_current = NULL;
   GList *iter;
+  LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
 
-  g_return_val_if_fail (toplevel != NULL, NULL);
-  g_return_val_if_fail (page     != NULL, NULL);
+  /* as it will delete current page, select new current page */
+  /* first look up in page hierarchy */
+  int id = lepton_page_get_up (page);
+  LeptonPage *new_current = lepton_toplevel_search_page_by_id (pages, id);
 
-  if (page == lepton_toplevel_get_page_current (toplevel))
-  {
-    LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
+  if (new_current == NULL) {
+    /* no up in hierarchy, choice is prev, next, new page */
+    iter = g_list_find (lepton_list_get_glist (pages), page);
 
-    /* as it will delete current page, select new current page */
-    /* first look up in page hierarchy */
-    int id = lepton_page_get_up (page);
-    new_current = lepton_toplevel_search_page_by_id (pages, id);
-
-    if (new_current == NULL) {
-      /* no up in hierarchy, choice is prev, next, new page */
-      iter = g_list_find (lepton_list_get_glist (pages), page);
-
-      if ( g_list_previous( iter ) ) {
-        new_current = (LeptonPage *)g_list_previous( iter )->data;
-      } else if ( g_list_next( iter ) ) {
-        new_current = (LeptonPage *)g_list_next( iter )->data;
-      } else {
-        /* need to add a new untitled page */
-        new_current = NULL;
-      }
+    if ( g_list_previous( iter ) ) {
+      new_current = (LeptonPage *)g_list_previous( iter )->data;
+    } else if ( g_list_next( iter ) ) {
+      new_current = (LeptonPage *)g_list_next( iter )->data;
+    } else {
+      /* need to add a new untitled page */
+      new_current = NULL;
     }
-    /* new_current will be the new current page at the end of the function */
-  }
-
-  g_message (lepton_page_get_changed (page) ?
-             _("Discarding page [%1$s]") : _("Closing [%1$s]"),
-             lepton_page_get_filename (page));
-  /* remove page from toplevel list of page and free */
-  lepton_page_delete (toplevel, page);
-  schematic_window_page_changed (w_current);
-
-  /* Switch to a different page if we just removed the current */
-  if (lepton_toplevel_get_page_current (toplevel) == NULL)
-  {
-
-    /* Create a new page if there wasn't another to switch to */
-    if (new_current == NULL && !x_tabs_enabled())
-    {
-      new_current = x_window_open_page (w_current, NULL);
-    }
-
-    /* change to new_current and update display */
-    if (!x_tabs_enabled())
-    {
-      x_window_set_current_page (w_current, new_current);
-    }
-
   }
 
   return new_current;
-
-} /* x_window_close_page() */
+}
 
 
 /*! \brief Creates and initializes a new lepton-schematic window.
