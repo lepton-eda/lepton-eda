@@ -341,8 +341,7 @@ zooming."
   (zoom-box-invalidate window)
   (schematic_window_set_rubber_visible *window 0)
   (zoom-box window)
-  (when (schematic_window_get_undo_panzoom *window)
-    (o_undo_savestate_viewport *window))
+  (undo-save-viewport window)
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window window))
 

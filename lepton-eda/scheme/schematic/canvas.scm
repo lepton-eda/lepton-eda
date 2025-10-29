@@ -27,7 +27,9 @@
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic event)
+  #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
+  #:use-module (schematic window foreign)
 
   #:export (canvas-viewport
             invalidate-canvas
@@ -81,6 +83,8 @@
 (define (scroll-canvas *widget *event *window)
   "Process scroll *EVENT passed to the canvas *WIDGET from its
 parent *WINDOW."
+  (define window (pointer->window *window))
+
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
 
@@ -243,9 +247,8 @@ parent *WINDOW."
                             (when pan-y-axis
                               (update-adjustment *vert-adjustment pan-direction))
 
-                            (when (and (true? (schematic_window_get_undo_panzoom *window))
-                                       (or zoom pan-x-axis pan-y-axis))
-                              (o_undo_savestate_viewport *window))
+                            (when (or zoom pan-x-axis pan-y-axis)
+                              (undo-save-viewport window))
 
                             (x_event_faked_motion *widget %null-pointer)
                             ;; Stop further processing of this signal.

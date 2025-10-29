@@ -97,12 +97,13 @@ success, #f on failure."
                 #t)))))
 
 
-(define (undo-save-viewport)
-  "Saves current viewport data onto the undo stack."
-  (define *window (*current-window))
+(define* (undo-save-viewport #:optional (window (current-window)))
+  "Saves current viewport data for WINDOW onto the undo stack."
+  (define *window (check-window window 1))
 
   (when (undo-panzoom?)
-    (o_undo_savestate_viewport *window)))
+    (let ((*page (schematic_window_get_active_page *window)))
+      (o_undo_savestate *window *page TRUE))))
 
 
 ;;; Recursively search in the undo list *UNDO for an undo item
