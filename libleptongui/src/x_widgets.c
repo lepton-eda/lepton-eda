@@ -56,10 +56,10 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget);
 
 
 static GtkWidget*
-x_widgets_show_in_dialog (SchematicWindow* w_current,
-                          GtkWidget*      widget,
-                          const gchar*    title,
-                          const gchar*    ini_group);
+x_widgets_dialog_new (SchematicWindow* w_current,
+                      GtkWidget*      widget,
+                      const gchar*    title,
+                      const gchar*    ini_group);
 
 
 
@@ -145,10 +145,10 @@ void x_widgets_show_options (SchematicWindow* w_current)
     else
     {
       GtkWidget *dialog =
-        x_widgets_show_in_dialog (w_current,
-                                  options_widget,
-                                  _("Options"),
-                                  "options");
+        x_widgets_dialog_new (w_current,
+                              options_widget,
+                              _("Options"),
+                              "options");
       schematic_window_set_options_widget_dialog (w_current, dialog);
     }
   }
@@ -182,10 +182,10 @@ void x_widgets_show_text_properties (SchematicWindow* w_current)
     else
     {
       GtkWidget *dialog =
-        x_widgets_show_in_dialog (w_current,
-                                  text_properties,
-                                  _("Edit Text"),
-                                  "txtprops");
+        x_widgets_dialog_new (w_current,
+                              text_properties,
+                              _("Edit Text"),
+                              "txtprops");
       schematic_window_set_text_properties_dialog (w_current, dialog);
     }
   }
@@ -220,10 +220,10 @@ void x_widgets_show_object_properties (SchematicWindow* w_current)
     else
     {
       GtkWidget *dialog =
-        x_widgets_show_in_dialog (w_current,
-                                  object_properties,
-                                  _("Object Properties"),
-                                  "objprops");
+        x_widgets_dialog_new (w_current,
+                              object_properties,
+                              _("Object Properties"),
+                              "objprops");
 
       schematic_window_set_object_properties_dialog (w_current, dialog);
     }
@@ -255,10 +255,10 @@ void x_widgets_show_log (SchematicWindow* w_current)
     else
     {
       GtkWidget *dialog =
-        x_widgets_show_in_dialog (w_current,
-                                  log_widget,
-                                  _("Log"),
-                                  "log");
+        x_widgets_dialog_new (w_current,
+                              log_widget,
+                              _("Log"),
+                              "log");
       schematic_window_set_log_widget_dialog (w_current, dialog);
     }
   }
@@ -291,10 +291,10 @@ void x_widgets_show_find_text_state (SchematicWindow* w_current)
     else
     {
       GtkWidget *dialog =
-        x_widgets_show_in_dialog (w_current,
-                                  find_text_state,
-                                  _("Find Text"),
-                                  "findtext");
+        x_widgets_dialog_new (w_current,
+                              find_text_state,
+                              _("Find Text"),
+                              "findtext");
       schematic_window_set_find_text_state_dialog (w_current, dialog);
     }
   }
@@ -319,10 +319,10 @@ void x_widgets_show_color_edit (SchematicWindow* w_current)
   else
   {
     GtkWidget *dialog =
-      x_widgets_show_in_dialog (w_current,
-                                GTK_WIDGET (color_edit_widget),
-                                _("Color Scheme Editor"),
-                                "colored");
+      x_widgets_dialog_new (w_current,
+                            GTK_WIDGET (color_edit_widget),
+                            _("Color Scheme Editor"),
+                            "colored");
     schematic_window_set_color_edit_dialog (w_current, dialog);
   }
 }
@@ -346,10 +346,10 @@ void x_widgets_show_font_select (SchematicWindow* w_current)
   else
   {
     GtkWidget *dialog =
-      x_widgets_show_in_dialog (w_current,
-                                font_select_widget,
-                                _("Select Schematic Font"),
-                                "fontsel");
+      x_widgets_dialog_new (w_current,
+                            font_select_widget,
+                            _("Select Schematic Font"),
+                            "fontsel");
     schematic_window_set_font_select_dialog (w_current, dialog);
   }
 }
@@ -373,10 +373,10 @@ void x_widgets_show_page_select (SchematicWindow* w_current)
   else
   {
     GtkWidget *dialog =
-      x_widgets_show_in_dialog (w_current,
-                                page_select_widget,
-                                _("Page Manager"),
-                                "pagesel");
+      x_widgets_dialog_new (w_current,
+                            page_select_widget,
+                            _("Page Manager"),
+                            "pagesel");
     schematic_window_set_page_select_dialog (w_current, dialog);
   }
 }
@@ -417,10 +417,10 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
  *  \return The new dialog.
  */
 static GtkWidget*
-x_widgets_show_in_dialog (SchematicWindow* w_current,
-                          GtkWidget*      widget,
-                          const gchar*    title,
-                          const gchar*    ini_group)
+x_widgets_dialog_new (SchematicWindow* w_current,
+                      GtkWidget*      widget,
+                      const gchar*    title,
+                      const gchar*    ini_group)
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
@@ -460,7 +460,7 @@ x_widgets_show_in_dialog (SchematicWindow* w_current,
 
   return dlg;
 
-} /* x_widgets_show_in_dialog() */
+} /* x_widgets_dialog_new() */
 
 
 
