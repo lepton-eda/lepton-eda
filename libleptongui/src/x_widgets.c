@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -549,11 +549,3 @@ x_widgets_destroy_dialogs (SchematicWindow* w_current)
   }
 
 } /* x_widgets_destroy_dialogs() */
-
-
-void
-x_widgets_toggle_widget_visibility (GtkWidget *widget)
-{
-  gboolean visible = gtk_widget_get_visible (widget);
-  gtk_widget_set_visible (widget, !visible);
-}

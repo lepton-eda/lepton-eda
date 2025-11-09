@@ -701,7 +701,8 @@ the snap grid size should be set to 100")))
 ;;;; View control actions
 
 (define (toggle-widget-visibility *widget)
-  (x_widgets_toggle_widget_visibility *widget))
+  (define visible? (true? (gtk_widget_get_visible *widget)))
+  (gtk_widget_set_visible *widget (if visible? FALSE TRUE)))
 
 ;;; Toggle the visibility of the sidebar.
 (define-action-public (&view-sidebar #:label (G_ "Sidebar"))

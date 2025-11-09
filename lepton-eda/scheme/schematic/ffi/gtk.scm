@@ -106,6 +106,7 @@
             gtk_widget_set_can_focus
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
+            gtk_widget_get_visible
             gtk_widget_set_visible
             gtk_widget_show
             gtk_widget_show_all
@@ -220,6 +221,7 @@
 (define-lff gtk_widget_set_can_focus void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
+(define-lff gtk_widget_get_visible int '(*))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))

@@ -1167,9 +1167,6 @@ x_widgets_show_page_select (SchematicWindow* w_current);
 void
 x_widgets_destroy_dialogs (SchematicWindow* w_current);
 
-void
-x_widgets_toggle_widget_visibility (GtkWidget *widget);
-
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 
