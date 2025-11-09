@@ -249,6 +249,7 @@ TESTS = \
 	unit-tests/geda-page-string.scm \
 	unit-tests/geda-promotable-attribs.scm \
 	unit-tests/lepton-attrib-basic.scm \
+	unit-tests/lepton-autonumber.scm \
 	unit-tests/lepton-config.scm \
 	unit-tests/lepton-file-system.scm \
 	unit-tests/lepton-library-component.scm \
