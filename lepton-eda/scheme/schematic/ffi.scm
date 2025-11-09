@@ -298,7 +298,6 @@
             schematic_compselect_new
             schematic_compselect_get_preview
 
-            x_widgets_destroy_dialogs
             x_widgets_init
             x_widgets_show_color_edit
             x_widgets_show_find_text_state
@@ -308,6 +307,7 @@
             x_widgets_show_options
             x_widgets_show_page_select
             x_widgets_use_docks
+            x_widgets_use_toplevel_windows
 
             recent_manager_add
             x_window_save_page
@@ -543,6 +543,22 @@
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
             schematic_window_get_warp_cursor
+            schematic_window_get_color_edit_dialog
+            schematic_window_set_color_edit_dialog
+            schematic_window_get_find_text_state_dialog
+            schematic_window_set_find_text_state_dialog
+            schematic_window_get_font_select_dialog
+            schematic_window_set_font_select_dialog
+            schematic_window_get_log_widget_dialog
+            schematic_window_set_log_widget_dialog
+            schematic_window_get_object_properties_dialog
+            schematic_window_set_object_properties_dialog
+            schematic_window_get_options_widget_dialog
+            schematic_window_set_options_widget_dialog
+            schematic_window_get_page_select_dialog
+            schematic_window_set_page_select_dialog
+            schematic_window_get_text_properties_dialog
+            schematic_window_set_text_properties_dialog
 
             font_select_widget_new
 
@@ -752,7 +768,6 @@
 (define-lff schematic_compselect_get_preview '* '(*))
 
 ;;; x_widgets.c
-(define-lff x_widgets_destroy_dialogs void '(*))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_show_color_edit void '(*))
 (define-lff x_widgets_show_find_text_state void '(*))
@@ -762,6 +777,7 @@
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
 (define-lff x_widgets_use_docks int '())
+(define-lff x_widgets_use_toplevel_windows int '())
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
@@ -978,6 +994,22 @@
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
 (define-lff schematic_window_get_warp_cursor int '(*))
+(define-lff schematic_window_get_color_edit_dialog '* '(*))
+(define-lff schematic_window_set_color_edit_dialog void '(* *))
+(define-lff schematic_window_get_find_text_state_dialog '* '(*))
+(define-lff schematic_window_set_find_text_state_dialog void '(* *))
+(define-lff schematic_window_get_font_select_dialog '* '(*))
+(define-lff schematic_window_set_font_select_dialog void '(* *))
+(define-lff schematic_window_get_log_widget_dialog '* '(*))
+(define-lff schematic_window_set_log_widget_dialog void '(* *))
+(define-lff schematic_window_get_object_properties_dialog '* '(*))
+(define-lff schematic_window_set_object_properties_dialog void '(* *))
+(define-lff schematic_window_get_options_widget_dialog '* '(*))
+(define-lff schematic_window_set_options_widget_dialog void '(* *))
+(define-lff schematic_window_get_page_select_dialog '* '(*))
+(define-lff schematic_window_set_page_select_dialog void '(* *))
+(define-lff schematic_window_get_text_properties_dialog '* '(*))
+(define-lff schematic_window_set_text_properties_dialog void '(* *))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))

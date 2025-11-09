@@ -70,7 +70,7 @@ gboolean x_widgets_use_docks()
 
 
 
-static gboolean
+gboolean
 x_widgets_use_toplevel_windows()
 {
   return !x_widgets_use_docks() && g_x_widgets_use_toplevel_windows;
@@ -461,91 +461,3 @@ x_widgets_dialog_new (SchematicWindow* w_current,
   return dlg;
 
 } /* x_widgets_dialog_new() */
-
-
-
-/*! \brief Destroy dialogs created in "toplevel" mode
- *
- *  \param [in] w_current  The toplevel environment.
- */
-void
-x_widgets_destroy_dialogs (SchematicWindow* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_widgets_use_toplevel_windows())
-    return;
-
-  GtkWidget *options_widget_dialog =
-    schematic_window_get_options_widget_dialog (w_current);
-
-  if (options_widget_dialog != NULL)
-  {
-    gtk_widget_destroy (options_widget_dialog);
-    schematic_window_set_options_widget_dialog (w_current, NULL);
-  }
-
-  GtkWidget *text_properties_dialog =
-    schematic_window_get_text_properties_dialog (w_current);
-
-  if (text_properties_dialog != NULL)
-  {
-    gtk_widget_destroy (text_properties_dialog);
-    schematic_window_set_text_properties_dialog (w_current, NULL);
-  }
-
-  GtkWidget *object_properties_dialog =
-    schematic_window_get_object_properties_dialog (w_current);
-
-  if (object_properties_dialog != NULL)
-  {
-    gtk_widget_destroy (object_properties_dialog);
-    schematic_window_set_object_properties_dialog (w_current, NULL);
-  }
-
-  GtkWidget *log_widget_dialog =
-    schematic_window_get_log_widget_dialog (w_current);
-
-  if (log_widget_dialog != NULL)
-  {
-    gtk_widget_destroy (log_widget_dialog);
-    schematic_window_set_log_widget_dialog (w_current, NULL);
-  }
-
-  GtkWidget *find_text_state_dialog =
-    schematic_window_get_find_text_state_dialog (w_current);
-
-  if (find_text_state_dialog != NULL)
-  {
-    gtk_widget_destroy (find_text_state_dialog);
-    schematic_window_set_find_text_state_dialog (w_current, NULL);
-  }
-
-  GtkWidget *color_edit_dialog =
-    schematic_window_get_color_edit_dialog (w_current);
-
-  if (color_edit_dialog != NULL)
-  {
-    gtk_widget_destroy (color_edit_dialog);
-    schematic_window_set_color_edit_dialog (w_current, NULL);
-  }
-
-  GtkWidget *font_select_dialog =
-    schematic_window_get_font_select_dialog (w_current);
-
-  if (font_select_dialog != NULL)
-  {
-    gtk_widget_destroy (font_select_dialog);
-    schematic_window_set_font_select_dialog (w_current, NULL);
-  }
-
-  GtkWidget *page_select_dialog =
-    schematic_window_get_page_select_dialog (w_current);
-
-  if (page_select_dialog != NULL)
-  {
-    gtk_widget_destroy (page_select_dialog);
-    schematic_window_set_page_select_dialog (w_current, NULL);
-  }
-
-} /* x_widgets_destroy_dialogs() */

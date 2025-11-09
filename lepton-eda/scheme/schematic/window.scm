@@ -113,7 +113,58 @@
 ;;; Destroy dialogs of *WINDOW which were created in "toplevel"
 ;;; mode.
 (define (destroy-widget-dialogs *window)
-  (x_widgets_destroy_dialogs *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (unless (false? (x_widgets_use_toplevel_windows))
+
+    (let ((*options_widget_dialog
+           (schematic_window_get_options_widget_dialog *window)))
+      (unless (null-pointer? *options_widget_dialog)
+        (gtk_widget_destroy *options_widget_dialog)
+        (schematic_window_set_options_widget_dialog *window %null-pointer)))
+
+    (let ((*text_properties_dialog
+           (schematic_window_get_text_properties_dialog *window)))
+      (unless (null-pointer? *text_properties_dialog)
+        (gtk_widget_destroy *text_properties_dialog)
+        (schematic_window_set_text_properties_dialog *window %null-pointer)))
+
+    (let ((*object_properties_dialog
+           (schematic_window_get_object_properties_dialog *window)))
+      (unless (null-pointer? *object_properties_dialog)
+        (gtk_widget_destroy *object_properties_dialog)
+        (schematic_window_set_object_properties_dialog *window %null-pointer)))
+
+    (let ((*log_widget_dialog
+           (schematic_window_get_log_widget_dialog *window)))
+      (unless (null-pointer? *log_widget_dialog)
+        (gtk_widget_destroy *log_widget_dialog)
+        (schematic_window_set_log_widget_dialog *window %null-pointer)))
+
+    (let ((*find_text_state_dialog
+           (schematic_window_get_find_text_state_dialog *window)))
+      (unless (null-pointer? *find_text_state_dialog)
+        (gtk_widget_destroy *find_text_state_dialog)
+        (schematic_window_set_find_text_state_dialog *window %null-pointer)))
+
+    (let ((*color_edit_dialog
+           (schematic_window_get_color_edit_dialog *window)))
+      (unless (null-pointer? *color_edit_dialog)
+        (gtk_widget_destroy *color_edit_dialog)
+        (schematic_window_set_color_edit_dialog *window %null-pointer)))
+
+    (let ((*font_select_dialog
+           (schematic_window_get_font_select_dialog *window)))
+      (unless (null-pointer? *font_select_dialog)
+        (gtk_widget_destroy *font_select_dialog)
+        (schematic_window_set_font_select_dialog *window %null-pointer)))
+
+    (let ((*page_select_dialog
+           (schematic_window_get_page_select_dialog *window)))
+      (unless (null-pointer? *page_select_dialog)
+        (gtk_widget_destroy *page_select_dialog)
+        (schematic_window_set_page_select_dialog *window %null-pointer)))))
 
 
 (define (destroy-window-widgets! *window)

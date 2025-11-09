@@ -1168,8 +1168,8 @@ x_widgets_show_font_select (SchematicWindow* w_current);
 void
 x_widgets_show_page_select (SchematicWindow* w_current);
 
-void
-x_widgets_destroy_dialogs (SchematicWindow* w_current);
+gboolean
+x_widgets_use_toplevel_windows ();
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();
