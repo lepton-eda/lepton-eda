@@ -110,11 +110,17 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
+;;; Destroy dialogs of *WINDOW which were created in "toplevel"
+;;; mode.
+(define (destroy-widget-dialogs *window)
+  (x_widgets_destroy_dialogs *window))
+
+
 (define (destroy-window-widgets! *window)
   (define (destroy-widget! *widget)
     (unless (null-pointer? *widget) (gtk_widget_destroy *widget)))
 
-  (x_widgets_destroy_dialogs *window)
+  (destroy-widget-dialogs *window)
 
   (for-each destroy-widget!
             (list (schematic_window_get_compselect_widget *window)
