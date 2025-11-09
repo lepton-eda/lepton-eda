@@ -700,15 +700,18 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 
+(define (toggle-widget-visibility *widget)
+  (x_widgets_toggle_widget_visibility *widget))
+
 ;;; Toggle the visibility of the sidebar.
 (define-action-public (&view-sidebar #:label (G_ "Sidebar"))
-  (x_widgets_toggle_widget_visibility
+  (toggle-widget-visibility
    (schematic_window_get_right_notebook (*current-window))))
 
 
 ;;; Toggle the visibility of the status window.
 (define-action-public (&view-status #:label (G_ "Status"))
-  (x_widgets_toggle_widget_visibility
+  (toggle-widget-visibility
    (schematic_window_get_bottom_notebook (*current-window))))
 
 
