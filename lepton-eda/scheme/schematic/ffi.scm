@@ -307,7 +307,6 @@
             x_widgets_show_object_properties
             x_widgets_show_options
             x_widgets_show_page_select
-            x_widgets_toggle_widget_visibility
             x_widgets_use_docks
 
             recent_manager_add
@@ -762,7 +761,6 @@
 (define-lff x_widgets_show_object_properties void '(*))
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
-(define-lff x_widgets_toggle_widget_visibility void '(*))
 (define-lff x_widgets_use_docks int '())
 
 ;;; action_mode.c
