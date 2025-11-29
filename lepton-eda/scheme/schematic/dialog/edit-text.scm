@@ -24,6 +24,6 @@
 
 
 (define (text-edit-dialog *window)
-  "Run the Edit text dialog in *WINDOW."
+  "Create and/or show the Edit text properties widget in *WINDOW."
 
-  (text_edit_dialog *window))
+  (x_widgets_show_text_properties *window))

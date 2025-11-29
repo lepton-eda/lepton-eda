@@ -307,6 +307,7 @@
             x_widgets_show_log
             x_widgets_show_object_properties
             x_widgets_show_page_select
+            x_widgets_show_text_properties
             x_widgets_use_docks
             x_widgets_use_toplevel_windows
 
@@ -593,7 +594,6 @@
 
             schematic_text_properties_widget_adjust_focus
             schematic_text_properties_widget_new
-            text_edit_dialog
 
             schematic_newtext_dialog_get_aligncb
             schematic_newtext_dialog_get_colorcb
@@ -779,6 +779,7 @@
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
 (define-lff x_widgets_show_page_select void '(*))
+(define-lff x_widgets_show_text_properties void '(*))
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
 
@@ -1053,7 +1054,6 @@
 ;;; text_properties_widget.c
 (define-lff schematic_text_properties_widget_adjust_focus void '(*))
 (define-lff schematic_text_properties_widget_new '* '(*))
-(define-lff text_edit_dialog void '(*))
 
 ;;; x_menus.c
 (define-lff do_popup int '(* *))
