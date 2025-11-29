@@ -299,6 +299,7 @@
             schematic_compselect_get_preview
 
             x_widgets_init
+            x_widgets_show_in_dock
             x_widgets_show_color_edit
             x_widgets_show_find_text_state
             x_widgets_show_font_select
@@ -767,6 +768,7 @@
 
 ;;; x_widgets.c
 (define-lff x_widgets_init void '())
+(define-lff x_widgets_show_in_dock void '(* *))
 (define-lff x_widgets_show_color_edit void '(*))
 (define-lff x_widgets_show_find_text_state void '(*))
 (define-lff x_widgets_show_font_select void '(*))

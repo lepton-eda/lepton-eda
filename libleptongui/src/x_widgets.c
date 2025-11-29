@@ -51,10 +51,6 @@ g_x_widgets_use_toplevel_windows = FALSE;
 
 
 
-static void
-x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget);
-
-
 static GtkWidget*
 x_widgets_dialog_new (SchematicWindow* w_current,
                       GtkWidget*      widget,
@@ -384,8 +380,9 @@ void x_widgets_show_page_select (SchematicWindow* w_current)
 
 
 
-static void
-x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
+void
+x_widgets_show_in_dock (GtkWidget* wbook,
+                        GtkWidget* widget)
 {
   g_return_if_fail (wbook != NULL);
   g_return_if_fail (widget != NULL);
