@@ -18,6 +18,12 @@
 
 
 (define-module (schematic dialog log)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton gettext)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (log-dialog))
@@ -25,4 +31,22 @@
 
 (define (log-dialog *window)
   "Create and/or show the Log dialog in *WINDOW."
-  (x_widgets_show_log *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*log-widget (schematic_window_get_log_widget *window)))
+
+    (if (true? (x_widgets_use_docks))
+        (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
+          (x_widgets_show_in_dock *bottom-notebook *log-widget))
+
+        (let ((*dialog (schematic_window_get_log_widget_dialog *window)))
+
+          (if (not (null-pointer? *dialog))
+              (gtk_window_present *dialog)
+
+              (let ((*new-dialog (x_widgets_dialog_new *window
+                                                       *log-widget
+                                                       (string->pointer (G_ "Log"))
+                                                       (string->pointer "log"))))
+                (schematic_window_set_log_widget_dialog *window *new-dialog)))))))
