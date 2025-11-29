@@ -1562,7 +1562,7 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 
 ;;; Shows the options widget.
-(define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
+(define-action-public (&options-options #:label (G_ "Show Options Widget"))
   (options-dialog (*current-window)))
 
 

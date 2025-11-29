@@ -106,7 +106,7 @@
                &help-hotkeys
                &options-grid
                &options-snap
-               &options-snap-size
+               &options-options
                &options-scale-up-snap-size
                &options-scale-down-snap-size
                &options-action-feedback
