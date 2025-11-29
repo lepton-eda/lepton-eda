@@ -270,7 +270,7 @@
 
 ( define options-menu-items
 ( list
-  ( list (G_ "_Options...")  '&options-snap-size #f )
+  ( list (G_ "_Options...")  '&options-options #f )
   ( list (G_ "_Font...")     '&options-select-font #f )
   ( list "SEPARATOR" #f #f )
   ( list (G_ "Grid +")       '&options-scale-up-snap-size #f )

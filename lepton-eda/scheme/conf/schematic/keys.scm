@@ -20,7 +20,7 @@
 ;;    The "Deselect All" command will be run when the <Ctrl> and
 ;;    <Shift> keys are held down, and the <A> key is pressed.
 ;;
-;;  * (global-set-key "O <Shift>S" '&options-snap-size)
+;;  * (global-set-key "O <Shift>S" '&options-options)
 ;;
 ;;    The "Snap Size" dialog box will be shown when an <O> is typed,
 ;;    followed by an <S> typed with the <Shift> key held down.
@@ -147,7 +147,7 @@
 (global-set-key "O S" '&options-snap)
 (global-set-key "O R" '&options-rubberband)
 (global-set-key "O M" '&options-magneticnet)
-(global-set-key "O O" '&options-snap-size)
+(global-set-key "O O" '&options-options)
 (global-set-key "O L" '&options-show-log-window)
 (global-set-key "O C" '&options-show-coord-window)
 (global-set-key "O F" '&options-select-font)
