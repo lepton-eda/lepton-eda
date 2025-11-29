@@ -591,6 +591,7 @@
             schematic_viewport_set_world_right
             schematic_viewport_set_world_top
 
+            schematic_text_properties_widget_adjust_focus
             schematic_text_properties_widget_new
             text_edit_dialog
 
@@ -1050,6 +1051,7 @@
 (define-lff schematic_viewport_set_world_top void (list '* int))
 
 ;;; text_properties_widget.c
+(define-lff schematic_text_properties_widget_adjust_focus void '(*))
 (define-lff schematic_text_properties_widget_new '* '(*))
 (define-lff text_edit_dialog void '(*))
 
