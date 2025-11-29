@@ -55,6 +55,7 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
+  #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
   #:use-module (schematic dialog slot-edit)
@@ -388,7 +389,7 @@
 
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
-  (text_edit_dialog (*current-window)))
+  (text-edit-dialog (*current-window)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (match (filter component? (page-selection (active-page)))
