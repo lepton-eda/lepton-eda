@@ -58,6 +58,7 @@
   #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
+  #:use-module (schematic dialog log)
   #:use-module (schematic dialog object-properties)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
@@ -1635,7 +1636,7 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
-  (x_widgets_show_log (*current-window)))
+  (log-dialog (*current-window)))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
   (coord_dialog (*current-window) 0 0))

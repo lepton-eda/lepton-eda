@@ -33,6 +33,8 @@
              (lepton page foreign)
              (lepton srfi-37)
              (lepton version)
+
+             (schematic dialog log)
              (schematic event handler)
              (schematic ffi)
              (schematic ffi gtk)
@@ -224,7 +226,7 @@ Run `~A --help' for more information.\n")
   (let ((cfg (path-config-context (getcwd))))
     (when (string= (config-string cfg "schematic" "log-window")
                    "startup")
-      (x_widgets_show_log window))))
+      (log-dialog window))))
 
 
 (define (get-absolute-filenames filename-list cwd)
