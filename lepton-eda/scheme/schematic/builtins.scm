@@ -59,6 +59,7 @@
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
   #:use-module (schematic dialog log)
+  #:use-module (schematic dialog options)
   #:use-module (schematic dialog object-properties)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
@@ -1562,28 +1563,7 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 ;;; Shows the options widget.
 (define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
-  (define *window (*current-window))
-  (define *options-widget
-    (schematic_window_get_options_widget *window))
-
-  (if (true? (x_widgets_use_docks))
-      ;; Show in the right dock.
-      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-        (x_widgets_show_in_dock *right-notebook
-                                *options-widget))
-
-      ;; Show in the dialog.
-      (let ((*dialog (schematic_window_get_options_widget_dialog *window)))
-
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-            (let ((*new-dialog
-                   (x_widgets_dialog_new *window
-                                         *options-widget
-                                         (string->pointer (G_ "Options"))
-                                         (string->pointer "options"))))
-              (schematic_window_set_options_widget_dialog *window
-                                                          *new-dialog))))))
+  (options-dialog (*current-window)))
 
 
 ;;; Multiplies by two the snap grid size.
