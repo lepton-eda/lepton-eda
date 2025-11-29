@@ -307,7 +307,6 @@
             x_widgets_show_log
             x_widgets_show_object_properties
             x_widgets_show_page_select
-            x_widgets_show_text_properties
             x_widgets_use_docks
             x_widgets_use_toplevel_windows
 
@@ -779,7 +778,6 @@
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
 (define-lff x_widgets_show_page_select void '(*))
-(define-lff x_widgets_show_text_properties void '(*))
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
 
