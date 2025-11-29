@@ -58,6 +58,7 @@
   #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
+  #:use-module (schematic dialog object-properties)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
@@ -399,7 +400,7 @@
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
-  (x_widgets_show_object_properties (*current-window)))
+  (object-properties-dialog (*current-window)))
 
 
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
