@@ -141,21 +141,6 @@ schematic_text_properties_widget_new (SchematicWindow *w_current)
 
 
 
-/*! \brief Open the widget box to edit text
- *
- *  \par Function Description
- *  This function creates or raises the modal text properties widget
- *
- *  \param [in] w_current The gschem toplevel
- */
-void
-text_edit_dialog (SchematicWindow *w_current)
-{
-  x_widgets_show_text_properties (w_current);
-}
-
-
-
 /*! \private
  *  \brief Initialize the text properties widget class structure
  *

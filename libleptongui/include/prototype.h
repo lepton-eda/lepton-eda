@@ -829,9 +829,6 @@ int
 x_dialog_validate_attribute (GtkWindow *parent,
                              char *attribute);
 void
-text_edit_dialog (SchematicWindow *w_current);
-
-void
 arc_angle_dialog (SchematicWindow *w_current,
                   LeptonObject *arc_object);
 void
