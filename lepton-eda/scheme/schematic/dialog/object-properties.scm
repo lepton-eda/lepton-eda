@@ -18,6 +18,12 @@
 
 
 (define-module (schematic dialog object-properties)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton gettext)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (object-properties-dialog))
@@ -25,4 +31,22 @@
 
 (define (object-properties-dialog *window)
   "Create and/or show the Object properties widget in *WINDOW."
-  (x_widgets_show_object_properties *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*object-properties-widget
+         (schematic_window_get_object_properties_widget *window)))
+
+    (if (true? (x_widgets_use_docks))
+        (let ((*right-notebook (schematic_window_get_right_notebook *window)))
+          (x_widgets_show_in_dock *right-notebook *object-properties-widget))
+
+        (let ((*dialog (schematic_window_get_object_properties_dialog *window)))
+          (if (not (null-pointer? *dialog))
+              (gtk_window_present *dialog)
+
+              (let ((*new-dialog (x_widgets_dialog_new *window
+                                                       *object-properties-widget
+                                                       (string->pointer (G_ "Object Properties"))
+                                                       (string->pointer "objprops"))))
+                (schematic_window_set_object_properties_dialog *window *new-dialog)))))))
