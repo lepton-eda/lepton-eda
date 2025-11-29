@@ -51,14 +51,6 @@ g_x_widgets_use_toplevel_windows = FALSE;
 
 
 
-static GtkWidget*
-x_widgets_dialog_new (SchematicWindow* w_current,
-                      GtkWidget*      widget,
-                      const gchar*    title,
-                      const gchar*    ini_group);
-
-
-
 gboolean x_widgets_use_docks()
 {
   return g_x_widgets_use_docks;
@@ -413,7 +405,7 @@ x_widgets_show_in_dock (GtkWidget* wbook,
  *
  *  \return The new dialog.
  */
-static GtkWidget*
+GtkWidget*
 x_widgets_dialog_new (SchematicWindow* w_current,
                       GtkWidget*      widget,
                       const gchar*    title,
