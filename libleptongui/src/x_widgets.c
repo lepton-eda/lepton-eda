@@ -107,45 +107,6 @@ void x_widgets_init()
 
 
 
-void x_widgets_show_text_properties (SchematicWindow* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *text_properties =
-    schematic_window_get_text_properties_widget (w_current);
-
-  if (x_widgets_use_docks())
-  {
-    GtkWidget *right_notebook =
-      schematic_window_get_right_notebook (w_current);
-    x_widgets_show_in_dock (right_notebook,
-                            text_properties);
-  }
-  else
-  {
-    GtkWidget *dialog =
-      schematic_window_get_text_properties_dialog (w_current);
-
-    if (dialog != NULL)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-    else
-    {
-      GtkWidget *dialog =
-        x_widgets_dialog_new (w_current,
-                              text_properties,
-                              _("Edit Text"),
-                              "txtprops");
-      schematic_window_set_text_properties_dialog (w_current, dialog);
-    }
-  }
-
-  schematic_text_properties_widget_adjust_focus (SCHEMATIC_TEXT_PROPERTIES_WIDGET (text_properties));
-}
-
-
-
 void x_widgets_show_object_properties (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
