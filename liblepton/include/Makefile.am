@@ -3,6 +3,7 @@ libleptoninclude_HEADERS = \
 	liblepton/angle.h \
 	liblepton/arc.h \
 	liblepton/arc_object.h \
+	liblepton/autonumber.h \
 	liblepton/bounds.h \
 	liblepton/box_object.h \
 	liblepton/bus_object.h \

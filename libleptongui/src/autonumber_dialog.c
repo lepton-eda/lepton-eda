@@ -1399,42 +1399,6 @@ autonumber_apply_new_text (SchematicAutonumber *autotext,
 }
 
 
-/*! \brief Drop wildcard string suffix
- *  \par Function Description
- *  Given that \a searchtext is a prefix for \a str, the function
- *  drops all the suffix characters of \a str consisting of only
- *  digits and question marks until its length is not less than
- *  the length of \a searchtext.
- *
- *  \param [in] str The string to drop suffix of.
- *  \param [in] searchtext The prefix string.
- *  \return The copy of the resulting string without suffix.
- *
- *  \note Caller must g_free returned character string.
- */
-gchar*
-schematic_autonumber_drop_string_suffix (const gchar *str,
-                                         gchar *searchtext)
-{
-  size_t i;
-  if (g_str_has_prefix (str, searchtext))
-  {
-    for (i = strlen (str) - 1;
-         (i >= strlen (searchtext))
-           && (str[i] == '?'
-               || isdigit ((int) (str[i])));
-         i--)
-      ; /* void */
-
-    return g_strndup (str, i + 1);
-  }
-  else
-  {
-    return NULL;
-  }
-}
-
-
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It

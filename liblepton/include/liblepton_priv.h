@@ -19,6 +19,7 @@
 
 #include "angle.h"
 #include "arc.h"
+#include "autonumber.h"
 #include "bezier.h"
 #include "bounds.h"
 #include "box.h"

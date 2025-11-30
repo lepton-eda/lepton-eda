@@ -103,7 +103,7 @@
                              ;; matches with the searchtext now.
                              ;; Strip of the trailing [0-9?] chars
                              ;; and add it to the searchtext.
-                             (*new-search-text (schematic_autonumber_drop_string_suffix *str *search-text)))
+                             (*new-search-text (lepton_autonumber_drop_string_suffix *str *search-text)))
 
                         (if (null-pointer? *new-search-text)
                             ls

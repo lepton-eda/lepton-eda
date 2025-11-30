@@ -386,7 +386,9 @@
 
             f_open
 
-            lepton_coord_snap))
+            lepton_coord_snap
+
+            lepton_autonumber_drop_string_suffix))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -775,6 +777,7 @@
 
 (define-lff lepton_coord_snap int (list int int))
 
+(define-lff lepton_autonumber_drop_string_suffix '* '(* *))
 
 (define (reference-pointer pointer)
   "Returns a newly created pointer to POINTER.  Thus, the action is

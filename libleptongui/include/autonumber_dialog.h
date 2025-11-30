@@ -225,9 +225,6 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
-gchar*
-schematic_autonumber_drop_string_suffix (const gchar *str,
-                                         gchar *searchtext);
 GList*
 schematic_autonumber_history_add (GList *history,
                                   gchar *text);
