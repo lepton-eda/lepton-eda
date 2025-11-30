@@ -106,6 +106,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new module, `(lepton ffi check-args)`, now contains functions
   for checking arguments of foreign functions.
 
+- A new module, `(lepton autonumber)`, has been added.  It exports
+  a function transforming attribute strings into autonumbering
+  templates for using in the Autonumber dialog in
+  `lepton-schematic`.
+
 - Scheme accessors for `GSList` lists and foreign functions for
   freeing all memory of `GSList`s and `GList`s have been
   introduced in the module `(lepton ffi glib)`.  Along with a new
