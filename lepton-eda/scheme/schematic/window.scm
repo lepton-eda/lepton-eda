@@ -30,6 +30,7 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton m4)
@@ -854,6 +855,11 @@ tab notebook.  Returns a C TabInfo structure."
             (G_ "Loading schematic ~S")
             (pointer->string *filename))))
 
+  (define (get-gerror-message *error)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (gerror-message *err))))
+
   (define (*make-new-page)
     (let ((*new-page (lepton_page_new *toplevel *filename)))
       ;; Switch to the new page.  NOTE: the call sets
@@ -865,10 +871,12 @@ tab notebook.  Returns a C TabInfo structure."
       (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
         ;; Try to load *FILENAME.
         (if (false? (schematic_file_open *window *new-page *filename *error))
-            (begin
+            (let ((error-message (get-gerror-message *error)))
+              (log! 'warning "~A" error-message)
               (open_page_error_dialog *window
                                       *filename
                                       (dereference-pointer *error))
+              (g_clear_error *error)
               ;; Loading failed.  Delete the page and open a new
               ;; blank one.
               (lepton_page_delete *toplevel *new-page)

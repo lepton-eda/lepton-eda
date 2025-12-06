@@ -1010,8 +1010,6 @@ open_page_error_dialog (SchematicWindow* w_current,
 {
   g_return_if_fail (w_current != NULL);
 
-  g_warning ("%s\n", err->message);
-
   const gchar* msg =
     _("<b>An error occurred while loading the requested file.</b>"
       "\n\n"
@@ -1039,8 +1037,6 @@ open_page_error_dialog (SchematicWindow* w_current,
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
-
-  g_clear_error (&err);
 
 } /* open_page_error_dialog() */
 
