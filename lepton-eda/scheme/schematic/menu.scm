@@ -115,7 +115,7 @@
     (and menu-item
          (gtk_menu_shell_append menu menu-item)
          (gtk_widget_show menu-item))
-    (when (string= raw-name RECENT_MENU_ITEM_NAME)
+    (when (string= raw-name (G_ RECENT_MENU_ITEM_NAME))
       (x_menu_attach_recent_files_submenu
        window
        menu-item
