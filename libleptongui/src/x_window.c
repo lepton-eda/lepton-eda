@@ -491,29 +491,16 @@ x_window_open_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename)
 {
-  /* Try to load [filename]: */
-  GError* err = NULL;
-  if (!schematic_file_open (w_current, page, filename, &err))
-  {
-    open_page_error_dialog (w_current, filename, err);
+  /* Run hook: */
+  g_run_hook_page (w_current, "open-page-hook", page);
 
-    /* Loading failed: delete page and open a blank one: */
-    lepton_page_delete (toplevel, page);
-    return x_window_new_page (w_current);
-  }
-  else
-  {
-    /* Run hook: */
-    g_run_hook_page (w_current, "open-page-hook", page);
+  /* Add page file name to the recent file list: */
+  recent_manager_add (w_current, filename);
 
-    /* Add page file name to the recent file list: */
-    recent_manager_add (w_current, filename);
+  /* Save current state of the page: */
+  o_undo_savestate (w_current, page, FALSE);
 
-    /* Save current state of the page: */
-    o_undo_savestate (w_current, page, FALSE);
-
-    return page;
-  }
+  return page;
 
 } /* x_window_open_page() */
 

@@ -853,7 +853,19 @@ tab notebook.  Returns a C TabInfo structure."
       (schematic_window_page_changed *window)
 
       (load-schematic-message)
-      (x_window_open_page *window *toplevel *new-page *filename)))
+      (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+        ;; Try to load *FILENAME.
+        (if (false? (schematic_file_open *window *new-page *filename *error))
+            (begin
+              (open_page_error_dialog *window
+                                      *filename
+                                      (dereference-pointer *error))
+              ;; Loading failed.  Delete the page and open a new
+              ;; blank one.
+              (lepton_page_delete *toplevel *new-page)
+              (x_window_new_page *window))
+
+            (x_window_open_page *window *toplevel *new-page *filename)))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
