@@ -503,18 +503,19 @@ x_window_open_page (SchematicWindow *w_current,
     lepton_page_delete (toplevel, page);
     return x_window_new_page (w_current);
   }
+  else
+  {
+    /* Run hook: */
+    g_run_hook_page (w_current, "open-page-hook", page);
 
+    /* Add page file name to the recent file list: */
+    recent_manager_add (w_current, filename);
 
-  /* Run hook: */
-  g_run_hook_page (w_current, "open-page-hook", page);
+    /* Save current state of the page: */
+    o_undo_savestate (w_current, page, FALSE);
 
-  /* Add page file name to the recent file list: */
-  recent_manager_add (w_current, filename);
-
-  /* Save current state of the page: */
-  o_undo_savestate (w_current, page, FALSE);
-
-  return page;
+    return page;
+  }
 
 } /* x_window_open_page() */
 
