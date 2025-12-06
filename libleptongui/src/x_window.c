@@ -495,9 +495,7 @@ x_window_open_page (SchematicWindow *w_current,
   GError* err = NULL;
   if (!schematic_file_open (w_current, page, filename, &err))
   {
-    g_warning ("%s\n", err->message);
     open_page_error_dialog (w_current, filename, err);
-    g_clear_error (&err);
 
     /* Loading failed: delete page and open a blank one: */
     lepton_page_delete (toplevel, page);
@@ -1079,6 +1077,8 @@ open_page_error_dialog (SchematicWindow* w_current,
 {
   g_return_if_fail (w_current != NULL);
 
+  g_warning ("%s\n", err->message);
+
   const gchar* msg =
     _("<b>An error occurred while loading the requested file.</b>"
       "\n\n"
@@ -1106,6 +1106,8 @@ open_page_error_dialog (SchematicWindow* w_current,
 
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
+
+  g_clear_error (&err);
 
 } /* open_page_error_dialog() */
 
