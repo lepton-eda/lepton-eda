@@ -237,6 +237,9 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 GList*
 schematic_autonumber_history_add (GList *history,
                                   gchar *text);
+GList*
+schematic_autonumber_make_renumber_list (SchematicAutonumber *autotext,
+                                         const GList *objects);
 int
 schematic_autonumber_match (SchematicAutonumber *autotext,
                             LeptonObject *o_current,

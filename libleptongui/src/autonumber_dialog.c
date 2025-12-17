@@ -1403,6 +1403,41 @@ schematic_autonumber_remove_number (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Form the list of objects to renumber.
+ *  \par Function Description
+ *  Filters the list of given objects and returns a new list of
+ *  those of them that have to be renumbered.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] objects The list of objects to process.
+ */
+GList*
+schematic_autonumber_make_renumber_list (SchematicAutonumber *autotext,
+                                         const GList *objects)
+{
+  LeptonObject *o_current;
+  const GList *iter;
+  GList *o_list = NULL;
+  int number;
+
+  /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
+  /* 1. get objects to renumber */
+  for (iter = objects;
+       iter != NULL;
+       iter = g_list_next (iter))
+  {
+    o_current = (LeptonObject*) iter->data;
+    if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RENUMBER)
+    {
+      /* put number into the used list */
+      o_list = g_list_append (o_list, o_current);
+    }
+  }
+
+  return o_list;
+}
+
+
 /*! \brief Handles all the options of the autonumber text dialog
  *  \par Function Description
  *  This function is the master of all autonumber code. It
@@ -1422,23 +1457,11 @@ schematic_autonumber_run (SchematicAutonumber *autotext,
 {
   GList *obj_item;
   LeptonObject *o_current;
-  gint number;
-  GList *o_list = NULL;
-  const GList *iter;
 
   /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
   /* 1. get objects to renumber */
-  for (iter = objects;
-       iter != NULL;
-       iter = g_list_next (iter))
-  {
-    o_current = (LeptonObject*) iter->data;
-    if (schematic_autonumber_match (autotext, o_current, &number) == AUTONUMBER_RENUMBER)
-    {
-      /* put number into the used list */
-      o_list = g_list_append(o_list, o_current);
-    }
-  }
+  GList *o_list =
+    schematic_autonumber_make_renumber_list (autotext, objects);
 
   /* 2. sort object list */
   switch (schematic_autonumber_get_autotext_sort_order (autotext))
