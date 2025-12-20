@@ -323,7 +323,14 @@ schematic_find_text_widget_activate_entry (GtkWidget *entry,
 
 
 
-/* Callback for when the user clicks the cancel button
+/*! \brief Emit the \a GTK_RESPONSE_CANCEL signal.
+ *
+ *  \par Function Description
+ *  The callback emits the \a GTK_RESPONSE_CANCEL signal when the
+ *  user clicks the Cancel button of the Find text widget.
+ *
+ *  \param [in] button The Cancel button widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
 void
 schematic_find_text_widget_click_cancel (GtkWidget *button,
