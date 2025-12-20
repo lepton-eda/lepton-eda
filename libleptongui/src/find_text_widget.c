@@ -375,7 +375,18 @@ schematic_find_text_widget_changed_type (GtkWidget *combo,
   }
 }
 
-/* Callback for when the user clicks the find button
+
+/*! \brief Run the Find text widget's Find button callback.
+ *
+ *  \par Function Description
+ *  The callback runs when the Find button of the Find text widget
+ *  is clicked.  It checks the state of the Find text widget and
+ *  emits the \a GTK_RESPONSE_OK signal, if appropriate, to start
+ *  the work on finding text or checking the contents of the
+ *  symbol being edited on the canvas.
+ *
+ *  \param [in] find_button The Find button widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
 void
 schematic_find_text_widget_click_find (GtkWidget *find_button,
