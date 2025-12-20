@@ -341,7 +341,16 @@ schematic_find_text_widget_click_cancel (GtkWidget *button,
 
 
 
-/* Callback for when the user changes combo box active item
+/*! \brief Run the Find text widget's combo box activation
+ *  callback.
+ *
+ *  \par Function Description
+ *  The callback changes sensitivity and visibility of the child
+ *  widgets of the Find text widget when the active item of the
+ *  combo box widget is changed.
+ *
+ *  \param [in] combo The combo box widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
 void
 schematic_find_text_widget_changed_type (GtkWidget *combo,
