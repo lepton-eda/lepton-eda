@@ -304,10 +304,13 @@ schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 
 
 
-/*! \brief Get the entry
+/*! \brief Get the entry widget of the Find text widget.
  *
- *  \param [in] widget This SchematicFindTextWidget
- *  \return The entry
+ *  \par Function Description
+ *  Returns the entry widget of the Find text widget.
+ *
+ *  \param [in] widget This #SchematicFindTextWidget.
+ *  \return The entry widget.
  */
 GtkWidget*
 schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
