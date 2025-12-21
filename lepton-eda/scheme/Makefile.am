@@ -165,6 +165,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/new-text.scm \
 	schematic/dialog/object-properties.scm \
 	schematic/dialog/options.scm \
+	schematic/dialog/page-select.scm \
 	schematic/dialog/slot-edit.scm \
 	schematic/doc.scm \
 	schematic/event.scm \
