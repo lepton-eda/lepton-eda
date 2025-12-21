@@ -18,6 +18,12 @@
 
 
 (define-module (schematic dialog font-select)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton gettext)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (font-select-dialog))
@@ -25,4 +31,18 @@
 
 (define (font-select-dialog *window)
   "Create and/or show the Font chooser dialog in *WINDOW."
-  (x_widgets_show_font_select *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*font-select-widget
+         (schematic_window_get_font_select_widget *window))
+        (*dialog (schematic_window_get_font_select_dialog *window)))
+    (if (not (null-pointer? *dialog))
+        (gtk_window_present *dialog)
+
+        (let ((*new-dialog
+               (x_widgets_dialog_new *window
+                                     *font-select-widget
+                                     (string->pointer (G_ "Select Schematic Font"))
+                                     (string->pointer "fontsel"))))
+          (schematic_window_set_font_select_dialog *window *new-dialog)))))
