@@ -107,42 +107,6 @@ void x_widgets_init()
 
 
 
-void x_widgets_show_find_text_state (SchematicWindow* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *find_text_state =
-    schematic_window_get_find_text_state_widget (w_current);
-
-  if (x_widgets_use_docks())
-  {
-    GtkWidget *bottom_notebook =
-      schematic_window_get_bottom_notebook (w_current);
-    x_widgets_show_in_dock (bottom_notebook, find_text_state);
-  }
-  else
-  {
-    GtkWidget *dialog =
-      schematic_window_get_find_text_state_dialog (w_current);
-
-    if (dialog != NULL)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-    else
-    {
-      GtkWidget *dialog =
-        x_widgets_dialog_new (w_current,
-                              find_text_state,
-                              _("Find Text"),
-                              "findtext");
-      schematic_window_set_find_text_state_dialog (w_current, dialog);
-    }
-  }
-}
-
-
-
 void x_widgets_show_color_edit (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);

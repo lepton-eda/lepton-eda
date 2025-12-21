@@ -18,6 +18,12 @@
 
 
 (define-module (schematic dialog find-text-state)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton gettext)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (find-text-state-dialog))
@@ -25,4 +31,24 @@
 
 (define (find-text-state-dialog *window)
   "Create and/or show the Find text state dialog in *WINDOW."
-  (x_widgets_show_find_text_state *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*find-text-state
+         (schematic_window_get_find_text_state_widget *window)))
+
+    (if (true? (x_widgets_use_docks))
+        (let ((*bottom-notebook
+               (schematic_window_get_bottom_notebook *window)))
+          (x_widgets_show_in_dock *bottom-notebook *find-text-state))
+
+        (let ((*dialog (schematic_window_get_find_text_state_dialog *window)))
+
+          (if (not (null-pointer? *dialog))
+              (gtk_window_present *dialog)
+
+              (let ((*new-dialog (x_widgets_dialog_new *window
+                                                       *find-text-state
+                                                       (string->pointer (G_ "Find Text"))
+                                                       (string->pointer "findtext"))))
+                (schematic_window_set_find_text_state_dialog *window *new-dialog)))))))

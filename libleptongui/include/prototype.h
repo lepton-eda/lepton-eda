@@ -1146,9 +1146,6 @@ void
 x_widgets_show_in_dock (GtkWidget* wbook,
                         GtkWidget* widget);
 void
-x_widgets_show_find_text_state (SchematicWindow* w_current);
-
-void
 x_widgets_show_color_edit (SchematicWindow* w_current);
 
 void
