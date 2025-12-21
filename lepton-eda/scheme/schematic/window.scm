@@ -56,6 +56,7 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog close-window)
+  #:use-module (schematic dialog find-text-state)
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
@@ -1654,7 +1655,7 @@ for *PAGE page will be created and set active."
 
   (if (> count 0)
       (begin
-        (x_widgets_show_find_text_state *window)
+        (find-text-state-dialog *window)
         TRUE)
       FALSE))
 
