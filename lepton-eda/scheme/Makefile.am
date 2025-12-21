@@ -159,6 +159,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/find-text.scm \
 	schematic/dialog/find-text-state.scm \
+	schematic/dialog/font-select.scm \
 	schematic/dialog/log.scm \
 	schematic/dialog/multiattrib.scm \
 	schematic/dialog/new-text.scm \
