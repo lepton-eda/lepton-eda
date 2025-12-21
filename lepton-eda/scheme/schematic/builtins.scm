@@ -64,6 +64,7 @@
   #:use-module (schematic dialog log)
   #:use-module (schematic dialog options)
   #:use-module (schematic dialog object-properties)
+  #:use-module (schematic dialog page-select)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
@@ -929,7 +930,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))
   (define *window (*current-window))
-  (x_widgets_show_page_select *window)
+  (page-select-dialog *window)
   (page_select_widget_update *window))
 
 
