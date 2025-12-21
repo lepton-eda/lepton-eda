@@ -1145,9 +1145,6 @@ x_widgets_init();
 void
 x_widgets_show_in_dock (GtkWidget* wbook,
                         GtkWidget* widget);
-void
-x_widgets_show_page_select (SchematicWindow* w_current);
-
 gboolean
 x_widgets_use_toplevel_windows ();
 

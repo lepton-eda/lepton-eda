@@ -107,34 +107,6 @@ void x_widgets_init()
 
 
 
-void x_widgets_show_page_select (SchematicWindow* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *page_select_widget =
-    schematic_window_get_page_select_widget (w_current);
-
-  GtkWidget *dialog =
-    schematic_window_get_page_select_dialog (w_current);
-
-  if (dialog != NULL)
-  {
-    gtk_window_present (GTK_WINDOW (dialog));
-  }
-  else
-  {
-    GtkWidget *dialog =
-      x_widgets_dialog_new (w_current,
-                            page_select_widget,
-                            _("Page Manager"),
-                            "pagesel");
-    schematic_window_set_page_select_dialog (w_current, dialog);
-  }
-}
-
-
-
-
 void
 x_widgets_show_in_dock (GtkWidget* wbook,
                         GtkWidget* widget)
