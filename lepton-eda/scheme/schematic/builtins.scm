@@ -60,6 +60,7 @@
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
   #:use-module (schematic dialog find-text-state)
+  #:use-module (schematic dialog font-select)
   #:use-module (schematic dialog log)
   #:use-module (schematic dialog options)
   #:use-module (schematic dialog object-properties)
@@ -1624,7 +1625,7 @@ that backs the list of key bindings.  Return the modified *STORE."
   (coord_dialog (*current-window) 0 0))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
-  (x_widgets_show_font_select (*current-window)))
+  (font-select-dialog (*current-window)))
 
 
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
