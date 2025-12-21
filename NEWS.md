@@ -297,6 +297,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   new-text)`, has been created.  It exports a new function,
   `new-text-dialog()`, that invokes the dialog.
 
+- A new module, `(schematic dialog find-text)`, has been
+  introduced.  It exports functions for dealing with the **Find
+  text** widget.
+
 - Several actions in the module `(schematic builtins)` have been
   simplified so that a few intermediate `i_callback_*()` functions
   are no longer used.
@@ -545,6 +549,16 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   had to be processed.  It always processed one page and that has
   been fixed by getting the active page instance using its getter
   instead of supplying it via a function argument.
+
+- A button sensitivity bug in the **Find text** widget code has
+  been fixed.  Previously, if the widget entry contained any text,
+  it was restored along with the entry widget itself if the user
+  first switched, for example, to "Check symbol" and then to "Find
+  text".  However, the sensitivity of the "Find" button was
+  switched off anyway independent of the text presence and until
+  some other text was entered.  Now the sensitivity of the button
+  is restored.
+
 
 ### Changes in `lepton-archive`:
 
