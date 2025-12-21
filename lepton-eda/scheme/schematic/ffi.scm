@@ -301,7 +301,6 @@
             x_widgets_dialog_new
             x_widgets_init
             x_widgets_show_in_dock
-            x_widgets_show_page_select
             x_widgets_use_docks
             x_widgets_use_toplevel_windows
 
@@ -553,6 +552,7 @@
             schematic_window_set_object_properties_dialog
             schematic_window_get_options_widget_dialog
             schematic_window_set_options_widget_dialog
+            schematic_window_get_page_select_widget
             schematic_window_get_page_select_dialog
             schematic_window_set_page_select_dialog
             schematic_window_get_text_properties_dialog
@@ -769,7 +769,6 @@
 (define-lff x_widgets_dialog_new '* '(* * * *))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_show_in_dock void '(* *))
-(define-lff x_widgets_show_page_select void '(*))
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
 
@@ -1002,6 +1001,7 @@
 (define-lff schematic_window_set_object_properties_dialog void '(* *))
 (define-lff schematic_window_get_options_widget_dialog '* '(*))
 (define-lff schematic_window_set_options_widget_dialog void '(* *))
+(define-lff schematic_window_get_page_select_widget '* '(*))
 (define-lff schematic_window_get_page_select_dialog '* '(*))
 (define-lff schematic_window_set_page_select_dialog void '(* *))
 (define-lff schematic_window_get_text_properties_dialog '* '(*))
