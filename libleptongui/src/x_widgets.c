@@ -107,33 +107,6 @@ void x_widgets_init()
 
 
 
-void x_widgets_show_font_select (SchematicWindow* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  GtkWidget *font_select_widget =
-    schematic_window_get_font_select_widget (w_current);
-
-  GtkWidget *dialog =
-    schematic_window_get_font_select_dialog (w_current);
-
-  if (dialog != NULL)
-  {
-    gtk_window_present (GTK_WINDOW (dialog));
-  }
-  else
-  {
-    GtkWidget *dialog =
-      x_widgets_dialog_new (w_current,
-                            font_select_widget,
-                            _("Select Schematic Font"),
-                            "fontsel");
-    schematic_window_set_font_select_dialog (w_current, dialog);
-  }
-}
-
-
-
 void x_widgets_show_page_select (SchematicWindow* w_current)
 {
   g_return_if_fail (w_current != NULL);
