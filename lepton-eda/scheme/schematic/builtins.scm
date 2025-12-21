@@ -55,6 +55,7 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
+  #:use-module (schematic dialog color-edit)
   #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
@@ -861,7 +862,7 @@ the snap grid size should be set to 100")))
 
 ;;; Show color scheme editor widget.
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
-  (x_widgets_show_color_edit (*current-window)))
+  (color-edit-dialog (*current-window)))
 
 
 ;; -------------------------------------------------------------------
