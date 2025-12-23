@@ -25,6 +25,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton config)
+  #:use-module (lepton eval)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
@@ -74,6 +75,7 @@
             make-schematic-window
             active-page
             set-active-page!
+            show-macro-widget
             snap-point
             window-canvas
             window-close-page!
@@ -1276,6 +1278,146 @@ for *PAGE page will be created and set active."
   (procedure->pointer void callback-page-manager-selection-changed '(* *)))
 
 
+;;; Evaluate macro defined in the C string *MACRO-TEXT.  Output
+;;; the macro and the result of its evaluation to log.
+(define (eval-macro-string! *window *macro-text)
+  (with-window
+   *window
+   (let ((result
+          (eval-string-protected (pointer->string *macro-text))))
+     (unless (eq? result 'error)
+       (log! 'message (format #f "~A" result))))))
+
+
+;;; Hide the Macro widget.
+(define (hide-macro-widget *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*window (schematic_macro_widget_get_window *widget)))
+    (when (null-pointer? *window)
+      (error "NULL window."))
+    (let ((*drawing_area (schematic_window_get_drawing_area *window)))
+      (gtk_widget_hide *widget)
+      (gtk_widget_grab_focus *drawing_area))))
+
+
+;;; Show the Macro widget.
+(define (show-macro-widget *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*entry (schematic_macro_widget_get_entry *widget)))
+    (when (null-pointer? *entry)
+      (error "NULL entry widget."))
+    (gtk_widget_show *widget)
+    (gtk_widget_grab_focus *entry)))
+
+
+;;; Eval the Guile code passed to *MACRO-WIDGET in the *TEXT
+;;; argument.
+(define (exec-macro! *macro-widget *text)
+  (when (null-pointer? *macro-widget)
+    (error "NULL widget."))
+  (let ((*store (schematic_macro_widget_get_store *macro-widget))
+        (*window (schematic_macro_widget_get_window *macro-widget)))
+    (when (null-pointer? *store)
+      (error "NULL list store."))
+    (when (null-pointer? *window)
+      (error "NULL window."))
+
+    (unless (or (null-pointer? *text)
+                (zero? (string-length (pointer->string *text))))
+      ;; Save the history and hide the Macro widget BEFORE
+      ;; evaluating the macro code provided by the user, since
+      ;; that code may terminate the program.
+      (schematic_macro_widget_add_history *store *text)
+      (schematic_macro_widget_truncate_history *store)
+      (schematic_macro_widget_save_history *store)
+      ;; Hide the widget and go to the canvas.
+      (hide-macro-widget *macro-widget)
+      ;; Evaluate the provided macro string.
+      (eval-macro-string! *window *text))))
+
+
+;;; Callback for when the user presses Enter in the entry widget.
+(define (activate-macro-widget-entry *entry *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  ;; gtk_entry_get_text_length() returns guint16.
+  (if (zero? (gtk_entry_get_text_length *entry))
+      (hide-macro-widget *widget)
+      (let ((*text (gtk_entry_get_text *entry)))
+        (exec-macro! *widget *text))))
+
+(define *callback-activate-macro-widget-entry
+  (procedure->pointer void activate-macro-widget-entry '(* *)))
+
+
+;;; Callback for when the user clicks the Cancel button.
+(define (click-macro-widget-cancel-button *button *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (hide-macro-widget *widget))
+
+(define *callback-click-macro-widget-cancel-button
+  (procedure->pointer void click-macro-widget-cancel-button '(* *)))
+
+
+;;; Callback for when the user clicks the Evaluate button.
+(define (click-macro-widget-evaluate-button *button *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let* ((*entry (schematic_macro_widget_get_entry *widget))
+         (*text (gtk_entry_get_text *entry)))
+    (exec-macro! *widget *text)))
+
+(define *callback-click-macro-widget-evaluate-button
+  (procedure->pointer void click-macro-widget-evaluate-button '(* *)))
+
+
+;;; GtkEntry's "text" property change notification signal handler.
+(define (notify-macro-widget-entry-text *entry *param-spec *widget)
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+  (let ((*evaluate-button
+         (schematic_macro_widget_get_evaluate_button *widget))
+        ;; gtk_entry_get_text_length() returns guint16.
+        (len (gtk_entry_get_text_length *entry)))
+    ;; Update the sensitivity of the evaluate button.
+    (gtk_widget_set_sensitive *evaluate-button
+                              (if (zero? len) FALSE TRUE))))
+
+(define *callback-notify-macro-widget-entry-text
+  (procedure->pointer void notify-macro-widget-entry-text '(* * *)))
+
+
+(define (make-macro-widget *window *work-box)
+  "Create the Macro widget for *WINDOW and pack it in *WORK-BOX."
+  (define *widget (schematic_macro_widget_new *window))
+
+  (schematic_window_set_macro_widget *window *widget)
+  (gtk_box_pack_start *work-box *widget FALSE FALSE 0)
+
+  (let ((*entry (schematic_macro_widget_get_entry *widget))
+        (*cancel-button (schematic_macro_widget_get_cancel_button *widget))
+        (*evaluate-button (schematic_macro_widget_get_evaluate_button *widget)))
+    (g_signal_connect *entry
+                      (string->pointer "activate")
+                      *callback-activate-macro-widget-entry
+                      *widget)
+    (g_signal_connect *cancel-button
+                      (string->pointer "clicked")
+                      *callback-click-macro-widget-cancel-button
+                      *widget)
+    (g_signal_connect *evaluate-button
+                      (string->pointer "clicked")
+                      *callback-click-macro-widget-evaluate-button
+                      *widget)
+    (g_signal_connect *entry
+                      (string->pointer "notify::text")
+                      *callback-notify-macro-widget-entry-text
+                      *widget)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1352,7 +1494,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_find_text_widget *window *work-box)
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
-      (schematic_window_create_macro_widget *window *work-box)
+      (make-macro-widget *window *work-box)
       (schematic_window_create_translate_widget *window *work-box)
 
       ;; Setup various widgets.

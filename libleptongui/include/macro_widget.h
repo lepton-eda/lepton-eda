@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,17 +59,69 @@ struct _SchematicMacroWidget
   GtkWidget *combo;
   GtkWidget *entry;
   GtkWidget *evaluate_button;
+  GtkWidget *cancel_button;
 };
 
 
-
-GtkWidget*
-macro_widget_new (SchematicWindow* toplevel);
-
 G_BEGIN_DECLS
 
+GtkWidget*
+schematic_macro_widget_new (SchematicWindow* toplevel);
+
+GtkListStore*
+schematic_macro_widget_get_store (SchematicMacroWidget *widget);
+
 void
-macro_widget_show (GtkWidget* widget);
+schematic_macro_widget_set_store (SchematicMacroWidget *widget,
+                                  GtkListStore *store);
+
+SchematicWindow*
+schematic_macro_widget_get_window (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_window (SchematicMacroWidget *widget,
+                                   SchematicWindow *window);
+
+GtkWidget*
+schematic_macro_widget_get_combo (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_combo (SchematicMacroWidget *widget,
+                                  GtkWidget *combo);
+
+GtkWidget*
+schematic_macro_widget_get_entry (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_entry (SchematicMacroWidget *widget,
+                                  GtkWidget *entry);
+
+GtkWidget*
+schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *widget);
+
+void
+schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *widget,
+                                            GtkWidget *evaluate_button);
+GtkWidget*
+schematic_macro_widget_get_cancel_button (SchematicMacroWidget *macro_widget);
+
+void
+schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
+                                          GtkWidget *cancel_button);
+void
+schematic_macro_widget_add_history (GtkListStore* store,
+                                    const gchar* line);
+void
+schematic_macro_widget_load_history (GtkListStore* store);
+
+void
+schematic_macro_widget_save_history (GtkListStore* store);
+
+void
+schematic_macro_widget_truncate_history (GtkListStore* store);
+
+void
+schematic_macro_widget_set_command_entry_font (GtkWidget* entry);
 
 G_END_DECLS
 

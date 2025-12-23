@@ -288,7 +288,6 @@
             schematic_window_create_find_text_widget
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
-            schematic_window_create_macro_widget
             schematic_window_create_translate_widget
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
@@ -363,7 +362,15 @@
 
             x_dialog_hotkeys
 
-            macro_widget_show
+            schematic_macro_widget_get_cancel_button
+            schematic_macro_widget_get_entry
+            schematic_macro_widget_get_evaluate_button
+            schematic_macro_widget_get_store
+            schematic_macro_widget_get_window
+            schematic_macro_widget_add_history
+            schematic_macro_widget_truncate_history
+            schematic_macro_widget_save_history
+            schematic_macro_widget_new
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
@@ -417,6 +424,7 @@
             schematic_window_set_color_edit_widget
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
+            schematic_window_get_drawing_area
             schematic_window_get_enforce_hierarchy
             schematic_window_get_file_preview
             schematic_window_set_file_preview
@@ -434,6 +442,7 @@
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
+            schematic_window_set_macro_widget
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
             schematic_window_set_multiattrib_widget
@@ -725,7 +734,15 @@
 (define-lff x_dialog_hotkeys void '(*))
 
 ;;; macro_widget.c
-(define-lff macro_widget_show void '(*))
+(define-lff schematic_macro_widget_get_cancel_button '* '(*))
+(define-lff schematic_macro_widget_get_entry '* '(*))
+(define-lff schematic_macro_widget_get_evaluate_button '* '(*))
+(define-lff schematic_macro_widget_get_store '* '(*))
+(define-lff schematic_macro_widget_get_window '* '(*))
+(define-lff schematic_macro_widget_add_history void '(* *))
+(define-lff schematic_macro_widget_truncate_history void '(*))
+(define-lff schematic_macro_widget_save_history '* '(*))
+(define-lff schematic_macro_widget_new '* '(*))
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
@@ -795,6 +812,7 @@
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
+(define-lff schematic_window_get_drawing_area '* '(*))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_file_preview int '(*))
 (define-lff schematic_window_set_file_preview void (list int '*))
@@ -812,6 +830,7 @@
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
+(define-lff schematic_window_set_macro_widget void '(* *))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_set_multiattrib_widget void '(* *))
@@ -935,7 +954,6 @@
 (define-lff schematic_window_create_find_text_widget void '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
-(define-lff schematic_window_create_macro_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))

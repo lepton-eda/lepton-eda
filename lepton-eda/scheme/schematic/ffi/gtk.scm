@@ -34,6 +34,8 @@
 
             gtk_bin_get_child
 
+            gtk_box_pack_start
+
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
@@ -42,6 +44,7 @@
             gtk_dialog_set_default_response
 
             gtk_entry_get_text
+            gtk_entry_get_text_length
             gtk_entry_set_text
 
             gtk_events_pending
@@ -120,6 +123,8 @@
 
 (define-lff gtk_bin_get_child '* '(*))
 
+(define-lff gtk_box_pack_start void (list '* '* int int int))
+
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
 (define-lff gtk_combo_box_get_model '* '(*))
@@ -129,6 +134,7 @@
 (define-lff gtk_dialog_set_default_response void (list '* int))
 
 (define-lff gtk_entry_get_text '* '(*))
+(define-lff gtk_entry_get_text_length uint16 '(*))
 (define-lff gtk_entry_set_text void '(* *))
 
 (define-lff gtk_events_pending int '())

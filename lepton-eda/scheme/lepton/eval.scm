@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2025 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 
 (define (process-error-stack stack key args)
+  (define unknown-error (G_ "ERROR: Unknown error"))
   (match args
     ((subr message message-args rest)
      ;; Capture long error message (including possible backtrace).
@@ -42,10 +43,12 @@
                     (display-error #f port subr message message-args rest)))))))
 
        ;; Send long message to log.
-       (log! 'message "~A\n" long-message)
+       (log! 'warning "~A" long-message)
        (format #t (G_ "ERROR: ~A\nPlease see log file for more information.\n")
                (apply format #f message message-args))))
-    (_ #f)))
+    (_ (log! 'warning "~A" unknown-error)
+       (format #t "~A" unknown-error)))
+  'error)
 
 
 (define* (eval-protected exp #:optional env)

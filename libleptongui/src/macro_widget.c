@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,47 +40,8 @@ get_property (GObject* object, guint param_id, GValue* value, GParamSpec* pspec)
 static void
 set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* pspec);
 
-
-static void
-on_entry_activate (GtkEntry* entry, gpointer data);
-
-static void
-on_evaluate_clicked (GtkButton* button, gpointer data);
-
-static void
-on_cancel_clicked (GtkButton* button, gpointer data);
-
-static void
-on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
-
-
-static void
-exec_macro (SchematicWindow* toplevel,
-            const gchar* macro_text);
-
-static void
-macro_widget_exec_macro (SchematicMacroWidget* widget,
-                         const gchar* macro_text);
-static void
-macro_widget_hide (SchematicMacroWidget* widget);
-
 static void
 macro_widget_create (SchematicMacroWidget* widget);
-
-static void
-history_add (GtkListStore* store, const gchar* line);
-
-static void
-history_save (GtkListStore* store);
-
-static void
-history_load (GtkListStore* store);
-
-static void
-history_truncate (GtkListStore* store);
-
-static void
-command_entry_set_font (GtkWidget* entry);
 
 
 
@@ -102,6 +63,183 @@ enum
 G_DEFINE_TYPE (SchematicMacroWidget,
                schematic_macro_widget,
                GTK_TYPE_INFO_BAR);
+
+
+/*! \brief Get the \c store field of the Macro widget instance.
+ *
+ *  \par Function Description
+ *  Returns the \c store field of the Macro widget instance.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \return The \c store field value.
+ */
+GtkListStore*
+schematic_macro_widget_get_store (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->store;
+}
+
+
+/*! \brief Set the \c store field of the Macro widget instance.
+ *
+ *  \par Function Description
+ *  Sets the \c store field of the Macro widget instance to the
+ *  given value.
+ *
+ *  \param [in] macro_widget The Macro widget.
+ *  \param [in] store The new store widget value.
+ */
+void
+schematic_macro_widget_set_store (SchematicMacroWidget *macro_widget,
+                                  GtkListStore *store)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->store = store;
+}
+
+
+/*! \brief Get the schematic window of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The schematic window.
+ */
+SchematicWindow*
+schematic_macro_widget_get_window (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->toplevel;
+}
+
+
+/*! \brief Set the schematic window for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] window The schematic window.
+ */
+void
+schematic_macro_widget_set_window (SchematicMacroWidget *macro_widget,
+                                   SchematicWindow *window)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->toplevel = window;
+}
+
+
+/*! \brief Get the combo widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The combo widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_combo (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->combo;
+}
+
+
+/*! \brief Set the combo widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] combo The combo widget.
+ */
+void
+schematic_macro_widget_set_combo (SchematicMacroWidget *macro_widget,
+                                  GtkWidget *combo)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->combo = combo;
+}
+
+
+/*! \brief Get the entry widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The entry widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_entry (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->entry;
+}
+
+
+/*! \brief Set the entry widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] entry The entry widget.
+ */
+void
+schematic_macro_widget_set_entry (SchematicMacroWidget *macro_widget,
+                                  GtkWidget *entry)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->entry = entry;
+}
+
+
+/*! \brief Get the evaluate button widget of this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \return The evaluate button widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_evaluate_button (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->evaluate_button;
+}
+
+
+/*! \brief Set the evaluate button widget for this macro widget
+ *
+ *  \param [in] macro_widget The macro widget.
+ *  \param [in] evaluate_button The evaluate button widget.
+ */
+void
+schematic_macro_widget_set_evaluate_button (SchematicMacroWidget *macro_widget,
+                                            GtkWidget *evaluate_button)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->evaluate_button = evaluate_button;
+}
+
+
+/*! \brief Get the Cancel button widget of the Macro widget.
+ *
+ *  \par Function Description
+ *  Returns the Cancel button widget of the Macro widget.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \return The Cancel button widget.
+ */
+GtkWidget*
+schematic_macro_widget_get_cancel_button (SchematicMacroWidget *macro_widget)
+{
+  g_return_val_if_fail (macro_widget != NULL, NULL);
+  return macro_widget->cancel_button;
+}
+
+
+/*! \brief Set the Cancel button widget for the Macro widget.
+ *
+ *  \par Function Description
+ *  Sets the \c cancel_button field of the Macro widget instance
+ *  to the given value.
+ *
+ *  \param [in] macro_widget The Macro widget instance.
+ *  \param [in] cancel_button The new Cancel button widget value.
+ */
+void
+schematic_macro_widget_set_cancel_button (SchematicMacroWidget *macro_widget,
+                                          GtkWidget *cancel_button)
+{
+  g_return_if_fail (macro_widget != NULL);
+  macro_widget->cancel_button = cancel_button;
+}
+
 
 /*! \brief Initialize gobject class
  */
@@ -137,11 +275,13 @@ get_property (GObject* object,
               GParamSpec* pspec)
 {
   SchematicMacroWidget* widget = SCHEMATIC_MACRO_WIDGET (object);
+  SchematicWindow *window;
 
   switch (param_id)
   {
     case PROP_TOPLEVEL:
-      g_value_set_pointer (value, widget->toplevel);
+      window = schematic_macro_widget_get_window (widget);
+      g_value_set_pointer (value, window);
       break;
 
     default:
@@ -160,11 +300,13 @@ set_property (GObject* object,
               GParamSpec* pspec)
 {
   SchematicMacroWidget* widget = SCHEMATIC_MACRO_WIDGET (object);
+  SchematicWindow *window;
 
   switch (param_id)
   {
     case PROP_TOPLEVEL:
-      widget->toplevel = SCHEMATIC_WINDOW (g_value_get_pointer (value));
+      window = SCHEMATIC_WINDOW (g_value_get_pointer (value));
+      schematic_macro_widget_set_window (widget, window);
       break;
 
     default:
@@ -174,83 +316,13 @@ set_property (GObject* object,
 
 
 
-
-/*
- * signal handlers:
- *
- */
-
-/*! \brief Callback for when the user presses enter in the entry widget
- */
-static void
-on_entry_activate (GtkEntry* entry, gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  if (gtk_entry_get_text_length (entry) <= 0)
-  {
-    macro_widget_hide (widget);
-    return;
-  }
-
-  const gchar* text = gtk_entry_get_text (entry);
-  macro_widget_exec_macro (widget, text);
-}
-
-
-
-/*! \brief Callback for when the user clicks the evaluate button
- */
-static void
-on_evaluate_clicked (GtkButton* button, gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
-  macro_widget_exec_macro (widget, text);
-}
-
-
-
-/*! \brief Callback for when the user clicks the cancel button
- */
-static void
-on_cancel_clicked (GtkButton* button, gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  macro_widget_hide (widget);
-}
-
-
-
-/*! \brief GtkEntry's "text" property change notification signal handler
- */
-static void
-on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
-{
-  SchematicMacroWidget* widget = (SchematicMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  /* Update the sensitivity of the evaluate button:
-  */
-  guint16 len = gtk_entry_get_text_length (GTK_ENTRY (widget->entry));
-  gtk_widget_set_sensitive (widget->evaluate_button, len > 0);
-}
-
-
-
-
 /*
  * implementation:
  *
  */
 
 GtkWidget*
-macro_widget_new (SchematicWindow* toplevel)
+schematic_macro_widget_new (SchematicWindow* toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
 
@@ -263,81 +335,6 @@ macro_widget_new (SchematicWindow* toplevel)
 
 
 
-void
-macro_widget_show (GtkWidget* widget)
-{
-  g_return_if_fail (widget != NULL);
-
-  SchematicMacroWidget* macro_widget = SCHEMATIC_MACRO_WIDGET (widget);
-
-  g_return_if_fail (macro_widget->entry != NULL);
-
-  gtk_widget_show (widget);
-  gtk_widget_grab_focus (macro_widget->entry);
-}
-
-
-
-static void
-macro_widget_hide (SchematicMacroWidget* widget)
-{
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (widget->toplevel);
-
-  gtk_widget_hide (GTK_WIDGET (widget));
-  gtk_widget_grab_focus (drawing_area);
-}
-
-
-
-/*! \brief Invoke liblepton code to execute macro [macro_text]
- * Execution output and result will be logged.
-*/
-static void
-exec_macro (SchematicWindow* toplevel,
-            const gchar* macro_text)
-{
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (toplevel);
-
-  gchar* cmd = g_strdup_printf(
-    "(use-modules (lepton log)) (log! 'message (format #f \"~A\" %s))",
-    macro_text);
-
-  g_scm_c_eval_string_protected (cmd);
-
-  g_free (cmd);
-
-  scm_dynwind_end();
-}
-
-
-
-/*! \brief Execute Guile code passed in [macro_text]
-*/
-static void
-macro_widget_exec_macro (SchematicMacroWidget* widget,
-                         const gchar* macro_text)
-{
-  if (macro_text == NULL || strlen(macro_text) <= 0)
-  {
-    return;
-  }
-
-  /* save history and hide widget BEFORE executing macro code,
-   * since that code may terminate the program:
-  */
-  history_add (widget->store, macro_text);
-  history_truncate (widget->store);
-  history_save (widget->store);
-
-  macro_widget_hide (widget);
-
-  exec_macro (widget->toplevel, macro_text);
-}
-
-
-
 /*! \brief Create the macro widget
 */
 static void
@@ -345,7 +342,6 @@ macro_widget_create (SchematicMacroWidget* widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
-  GtkWidget *cancel_button;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
 
   g_return_if_fail (widget != NULL);
@@ -359,41 +355,43 @@ macro_widget_create (SchematicMacroWidget* widget)
 
   /* command history list store:
   */
-  widget->store = gtk_list_store_new (1, G_TYPE_STRING);
-  GtkTreeModel* model = GTK_TREE_MODEL (widget->store);
+  GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+  schematic_macro_widget_set_store (widget, store);
+  GtkTreeModel* model = GTK_TREE_MODEL (store);
 
 
   /* command entry combo box:
   */
-  widget->combo = gtk_combo_box_new_with_model_and_entry (model);
+  GtkWidget *combo = gtk_combo_box_new_with_model_and_entry (model);
+  schematic_macro_widget_set_combo (widget, combo);
 
-  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget->combo), 0);
-  gtk_box_pack_start (GTK_BOX (content), widget->combo, TRUE, TRUE, 0);
-  gtk_widget_set_visible (widget->combo, TRUE);
+  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (combo), 0);
+  gtk_box_pack_start (GTK_BOX (content), combo, TRUE, TRUE, 0);
+  gtk_widget_set_visible (combo, TRUE);
 
 
   /* GtkEntry inside the combo box:
   */
-  widget->entry = gtk_bin_get_child (GTK_BIN (widget->combo));
-
+  GtkWidget *entry = gtk_bin_get_child (GTK_BIN (combo));
+  schematic_macro_widget_set_entry (widget, entry);
 
   /* set font for the command entry:
   */
-  command_entry_set_font (widget->entry);
+  schematic_macro_widget_set_command_entry_font (entry);
 
 
   /* load command history:
   */
-  history_load (widget->store);
-  history_truncate (widget->store);
+  schematic_macro_widget_load_history (store);
+  schematic_macro_widget_truncate_history (store);
 
 
   /* enable text completion in the command entry:
   */
   GtkEntryCompletion* comp = gtk_entry_completion_new();
-  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (widget->store));
+  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (store));
   gtk_entry_completion_set_text_column (comp, 0);
-  gtk_entry_set_completion (GTK_ENTRY (widget->entry), comp);
+  gtk_entry_set_completion (GTK_ENTRY (entry), comp);
 
 
 #ifdef ENABLE_GTK3
@@ -404,38 +402,21 @@ macro_widget_create (SchematicMacroWidget* widget)
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
 
-  widget->evaluate_button = gtk_button_new_with_label (_("Evaluate"));
-  gtk_widget_set_sensitive (widget->evaluate_button, FALSE);
-  gtk_widget_set_visible (widget->evaluate_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (button_box), widget->evaluate_button, FALSE, FALSE, 0);
+  GtkWidget *evaluate_button = gtk_button_new_with_label (_("Evaluate"));
+  schematic_macro_widget_set_evaluate_button (widget, evaluate_button);
 
-  cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
+  gtk_widget_set_sensitive (evaluate_button, FALSE);
+  gtk_widget_set_visible (evaluate_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (button_box), evaluate_button, FALSE, FALSE, 0);
+
+  GtkWidget *cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
+  schematic_macro_widget_set_cancel_button (widget, cancel_button);
+
   gtk_widget_set_visible (cancel_button, TRUE);
   gtk_box_pack_start (GTK_BOX (button_box), cancel_button, FALSE, FALSE, 0);
 
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
-
-  g_signal_connect (G_OBJECT (widget->entry),
-                    "activate",
-                    G_CALLBACK (&on_entry_activate),
-                    widget);
-
-  g_signal_connect (G_OBJECT (cancel_button),
-                    "clicked",
-                    G_CALLBACK (&on_cancel_clicked),
-                    widget);
-
-  g_signal_connect (G_OBJECT (widget->evaluate_button),
-                    "clicked",
-                    G_CALLBACK (&on_evaluate_clicked),
-                    widget);
-
-  g_signal_connect (G_OBJECT (widget->entry),
-                    "notify::text",
-                    G_CALLBACK (&on_entry_notify_text),
-                    widget);
-
 } /* macro_widget_create() */
 
 
@@ -445,8 +426,9 @@ macro_widget_create (SchematicMacroWidget* widget)
  *  \param store GtkListStore history container
  *  \param line  string to be added to history
  */
-static void
-history_add (GtkListStore* store, const gchar* line)
+void
+schematic_macro_widget_add_history (GtkListStore* store,
+                                    const gchar* line)
 {
   g_return_if_fail (store != NULL);
   g_return_if_fail (line != NULL);
@@ -477,7 +459,7 @@ history_add (GtkListStore* store, const gchar* line)
 
   g_free (last);
 
-} /* history_add() */
+} /* schematic_macro_widget_add_history() */
 
 
 
@@ -492,8 +474,8 @@ history_add (GtkListStore* store, const gchar* line)
  *
  *  \param store GtkListStore history container
  */
-static void
-history_truncate (GtkListStore* store)
+void
+schematic_macro_widget_truncate_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -542,7 +524,7 @@ history_truncate (GtkListStore* store)
     }
   }
 
-} /* history_truncate() */
+} /* schematic_macro_widget_truncate_history() */
 
 
 
@@ -550,8 +532,8 @@ history_truncate (GtkListStore* store)
  *
  *  \param store GtkListStore history container
  */
-static void
-history_save (GtkListStore* store)
+void
+schematic_macro_widget_save_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -601,7 +583,7 @@ history_save (GtkListStore* store)
   */
   g_strfreev (lines);
 
-} /* history_save() */
+} /* schematic_macro_widget_save_history() */
 
 
 
@@ -609,8 +591,8 @@ history_save (GtkListStore* store)
  *
  *  \param store GtkListStore history container
  */
-static void
-history_load (GtkListStore* store)
+void
+schematic_macro_widget_load_history (GtkListStore* store)
 {
   g_return_if_fail (store != NULL);
 
@@ -644,7 +626,7 @@ history_load (GtkListStore* store)
     g_strfreev (lines);
   }
 
-} /* history_load() */
+} /* schematic_macro_widget_load_history() */
 
 
 
@@ -659,8 +641,8 @@ history_load (GtkListStore* store)
  *
  *  \param entry  GtkEntry widget inside macro command combo box
  */
-static void
-command_entry_set_font (GtkWidget* entry)
+void
+schematic_macro_widget_set_command_entry_font (GtkWidget* entry)
 {
   g_return_if_fail (entry != NULL);
 
@@ -729,4 +711,4 @@ command_entry_set_font (GtkWidget* entry)
 
   g_clear_error (&err);
 
-} /* command_entry_set_font() */
+} /* schematic_macro_widget_set_command_entry_font() */
