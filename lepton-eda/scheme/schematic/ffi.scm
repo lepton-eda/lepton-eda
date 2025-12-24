@@ -363,6 +363,10 @@
 
             x_dialog_hotkeys
 
+            schematic_hotkey_store_new
+            schematic_hotkey_store_clear
+            schematic_hotkey_store_append_row
+
             macro_widget_show
 
             schematic_keys_get_event_keyval
@@ -722,7 +726,12 @@
 (define-lff coord_display_update void (list '* int int))
 
 ;;; hotkey_dialog.c
-(define-lff x_dialog_hotkeys void '(*))
+(define-lff x_dialog_hotkeys void '(* *))
+
+;;; hotkey_store.c
+(define-lff schematic_hotkey_store_new '* '())
+(define-lff schematic_hotkey_store_clear void '(*))
+(define-lff schematic_hotkey_store_append_row void '(* * * *))
 
 ;;; macro_widget.c
 (define-lff macro_widget_show void '(*))

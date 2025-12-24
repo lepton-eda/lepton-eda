@@ -854,7 +854,8 @@ coord_dialog (SchematicWindow *w_current,
               int x,
               int y);
 void
-x_dialog_hotkeys (SchematicWindow *w_current);
+x_dialog_hotkeys (SchematicWindow *w_current,
+                  SchematicHotkeyStore* store);
 
 void
 find_text_dialog (SchematicWindow *w_current);
