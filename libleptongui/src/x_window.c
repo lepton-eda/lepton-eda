@@ -109,64 +109,6 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 } /* x_window_setup_draw_events_drawing_area() */
 
 
-
-static void
-x_window_find_text (GtkWidget *widget,
-                    gint response,
-                    SchematicWindow *w_current)
-{
-  gint close = FALSE;
-  int count;
-  GtkWidget *find_text_widget;
-  GtkWidget *find_text_state;
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
-
-  gboolean show_hidden_text =
-    schematic_window_get_show_hidden_text (w_current);
-
-  switch (response) {
-  case GTK_RESPONSE_OK:
-    find_text_widget = schematic_window_get_find_text_widget (w_current);
-    find_text_state = schematic_window_get_find_text_state_widget (w_current);
-    count =
-      schematic_find_text_state_find (w_current,
-                                      SCHEMATIC_FIND_TEXT_STATE (find_text_state),
-                                      lepton_list_get_glist (toplevel->pages),
-                                      schematic_find_text_widget_get_find_type (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                      schematic_find_text_widget_get_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                      schematic_find_text_widget_get_descend (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)),
-                                      show_hidden_text);
-
-    if (count > 0)
-    {
-      x_widgets_show_find_text_state (w_current);
-      close = TRUE;
-    }
-
-    break;
-
-  case GTK_RESPONSE_CANCEL:
-  case GTK_RESPONSE_DELETE_EVENT:
-    close = TRUE;
-    break;
-
-  default:
-    printf("x_window_find_text(): strange signal %d\n", response);
-  }
-
-  if (close) {
-    GtkWidget *drawing_area =
-      schematic_window_get_drawing_area (w_current);
-    gtk_widget_grab_focus (drawing_area);
-    gtk_widget_hide (GTK_WIDGET (widget));
-  }
-}
-
-
 static void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
@@ -653,21 +595,11 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 }
 
 
-
 void
-schematic_window_create_find_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
+schematic_window_pack_widget (GtkWidget *parent_widget,
+                              GtkWidget *child_widget)
 {
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
-
-  GtkWidget *find_text_widget = GTK_WIDGET (obj);
-
-  schematic_window_set_find_text_widget (w_current, find_text_widget);
-
-  gtk_box_pack_start (GTK_BOX (work_box), find_text_widget, FALSE, FALSE, 0);
-
-  g_signal_connect (find_text_widget, "response",
-                    G_CALLBACK (&x_window_find_text), w_current);
+  gtk_box_pack_start (GTK_BOX (parent_widget), child_widget, FALSE, FALSE, 0);
 }
 
 

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,19 +48,6 @@ enum
 
 
 
-
-static void
-activate_entry (GtkWidget *entry,
-                SchematicFindTextWidget *widget);
-static void
-click_cancel (GtkWidget *button,
-              SchematicFindTextWidget *widget);
-static void
-changed_type (GtkWidget *entry,
-              SchematicFindTextWidget *widget);
-static void
-click_find (GtkWidget *entry,
-            SchematicFindTextWidget *widget);
 static GtkListStore*
 create_find_type_store ();
 
@@ -82,27 +69,251 @@ schematic_find_text_widget_init (SchematicFindTextWidget *view);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
-static void
-notify_entry_text (GtkWidget *entry,
-                   GParamSpec *pspec,
-                   SchematicFindTextWidget *widget);
-
 
 G_DEFINE_TYPE (SchematicFindTextWidget,
                schematic_find_text_widget,
                GTK_TYPE_INFO_BAR);
 
 
-
-/* Callback for when the user presses enter in the entry widget
+/*! \brief Get the Cancel button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the Cancel button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The Cancel button widget.
  */
-static void
-activate_entry (GtkWidget *entry,
-                SchematicFindTextWidget *widget)
+GtkWidget*
+schematic_find_text_widget_get_cancel_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->cancel_button;
+}
+
+
+/*! \brief Set the Cancel button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the Cancel button widget of the Find text widget to \p
+ *   cancel_button.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] cancel_button The Cancel button widget.
+ */
+void
+schematic_find_text_widget_set_cancel_button (SchematicFindTextWidget *widget,
+                                              GtkWidget *cancel_button)
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0) {
+  widget->cancel_button = cancel_button;
+}
+
+
+/*! \brief Get the combo widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the combo widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The combo widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->combo;
+}
+
+
+/*! \brief Set the combo widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the combo widget of the Find text widget to \p combo.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] combo The combo widget.
+ */
+void
+schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
+                                      GtkWidget *combo)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->combo = combo;
+}
+
+
+/*! \brief Get the \c descend_button widget of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *  Returns the \c descend_button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The \c descend_button widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_descend_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->descend_button;
+}
+
+
+/*! \brief Set the \c descend_button widget of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *  Sets the \c descend_button widget of the Find text widget to
+ *  the given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] descend_button The new \c descend_button value.
+ */
+void
+schematic_find_text_widget_set_descend_button (SchematicFindTextWidget *widget,
+                                               GtkWidget *descend_button)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->descend_button = descend_button;
+}
+
+
+/*! \brief Get the entry widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the entry widget of the Find text widget.
+ *
+ *  \param [in] widget This #SchematicFindTextWidget.
+ *  \return The entry widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->entry;
+}
+
+
+/*! \brief Set the entry widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the entry widget of the Find text widget to \p entry.
+ *
+ *  \param [in] widget This SchematicFindTextWidget.
+ *  \param [in] entry The entry widget.
+ */
+void
+schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
+                                      GtkWidget *entry)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->entry = entry;
+}
+
+
+/*! \brief Get the Find button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *  Returns the Find button widget of the Find text widget.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The Find button widget.
+ */
+GtkWidget*
+schematic_find_text_widget_get_find_button (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->find_button;
+}
+
+
+/*! \brief Set the Find button widget of the Find text widget.
+ *
+ *  \par Function Description
+ *   Sets the Find button widget of the Find text widget to the
+ *   given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] find_button The new Find button widget value.
+ */
+void
+schematic_find_text_widget_set_find_button (SchematicFindTextWidget *widget,
+                                            GtkWidget *find_button)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->find_button = find_button;
+}
+
+
+/*! \brief Get the field \c find_type_model of the Find text
+ *   widget.
+ *
+ *  \par Function Description
+ *  Returns the value of the \c find_type_model field the Find
+ *  text widget instance.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \return The \c find_type_model field value.
+ */
+GtkTreeModel*
+schematic_find_text_widget_get_find_type_model (SchematicFindTextWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, NULL);
+
+  return widget->find_type_model;
+}
+
+
+/*! \brief Set the field \c find_type_model of the Find text
+ *  widget.
+ *
+ *  \par Function Description
+ *   Sets the field \c find_type_model of the Find text widget
+ *   instance to the given value.
+ *
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ *  \param [in] find_type_model The new value of the \c
+ *                              find_type_model field.
+ */
+void
+schematic_find_text_widget_set_find_type_model (SchematicFindTextWidget *widget,
+                                                GtkTreeModel *find_type_model)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->find_type_model = find_type_model;
+}
+
+
+
+/*! \brief Callback called on Enter press in the entry widget.
+ *  \par Function Description
+ *  This function emits an appropriate response ID depending on
+ *  the contents of the entry widget.  It emits \a GTK_RESPONSE_OK
+ *  if any text is present in the entry, otherwise it emits \a
+ *  GTK_RESPONSE_CANCEL.
+ *
+ *  \param [in] entry The entry widget pointer.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
+ */
+void
+schematic_find_text_widget_activate_entry (GtkWidget *entry,
+                                           SchematicFindTextWidget *widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  if (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0)
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
   }
   else {
@@ -112,52 +323,105 @@ activate_entry (GtkWidget *entry,
 
 
 
-/* Callback for when the user clicks the cancel button
+/*! \brief Emit the \a GTK_RESPONSE_CANCEL signal.
+ *
+ *  \par Function Description
+ *  The callback emits the \a GTK_RESPONSE_CANCEL signal when the
+ *  user clicks the Cancel button of the Find text widget.
+ *
+ *  \param [in] button The Cancel button widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-click_cancel (GtkWidget *button,
-              SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_click_cancel (GtkWidget *button,
+                                         SchematicFindTextWidget *widget)
 {
   gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
 }
 
 
 
-/* Callback for when the user changes combo box active item
+/*! \brief Run the Find text widget's combo box activation
+ *  callback.
+ *
+ *  \par Function Description
+ *  The callback changes sensitivity and visibility of the child
+ *  widgets of the Find text widget when the active item of the
+ *  combo box widget is changed.
+ *
+ *  \param [in] combo The combo box widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-changed_type (GtkWidget *combo,
-              SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_changed_type (GtkWidget *combo,
+                                         SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
+
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+  GtkWidget *find_button = schematic_find_text_widget_get_find_button (widget);
+  GtkWidget *descend_button = schematic_find_text_widget_get_descend_button (widget);
 
   if (schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
   {
-    gtk_widget_set_sensitive (widget->find_button, TRUE);
-    gtk_widget_set_visible (widget->entry, FALSE);
-    gtk_widget_set_visible (widget->descend_button, FALSE);
+    gtk_widget_set_sensitive (find_button, TRUE);
+    gtk_widget_set_visible (entry, FALSE);
+    gtk_widget_set_visible (descend_button, FALSE);
   } else {
-    gtk_widget_set_sensitive (widget->find_button, FALSE);
-    gtk_widget_set_visible (widget->entry, TRUE);
-    gtk_widget_set_visible (widget->descend_button, TRUE);
+    gtk_widget_set_sensitive (find_button,
+                              (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0));
+    gtk_widget_set_visible (entry, TRUE);
+    gtk_widget_set_visible (descend_button, TRUE);
   }
 }
 
-/* Callback for when the user clicks the find button
+
+/*! \brief Run the Find text widget's Find button callback.
+ *
+ *  \par Function Description
+ *  The callback runs when the Find button of the Find text widget
+ *  is clicked.  It checks the state of the Find text widget and
+ *  emits the \a GTK_RESPONSE_OK signal, if appropriate, to start
+ *  the work on finding text or checking the contents of the
+ *  symbol being edited on the canvas.
+ *
+ *  \param [in] find_button The Find button widget.
+ *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-click_find (GtkWidget *entry,
-            SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_click_find (GtkWidget *find_button,
+                                       SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0 ||
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  if (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0 ||
       schematic_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK)
   {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
   }
 }
 
+
+/*! \brief Create a new Find text widget instance.
+ *
+ *  \par Function Description
+ *  This function creates a new #SchematicFindTextWidget instance,
+ *  casts it to \c GtkWidget, and returns the pointer to the
+ *  widget.
+ *
+ *  \return The new Find text widget.
+ */
+GtkWidget*
+schematic_find_text_widget_new ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_FIND_TEXT_WIDGET, NULL);
+
+  GtkWidget *find_text_widget = GTK_WIDGET (obj);
+
+  return find_text_widget;
+}
 
 
 /*! \brief Dispose of the object
@@ -187,30 +451,31 @@ finalize (GObject *object)
 }
 
 
-/*! \brief Create the text find dialog
+/*! \brief Show the Find text widget.
+ *
  *  \par Function Description
- *  This function creates the text find dialog.
+ *  This function shows the Find text widget and adds \p str as an
+ *  initial string to search for if the string is not NULL.
+ *
+ *  \param [in] find_text_widget The Find text dialog widget.
+ *  \param [in] str The string to search for.
  */
 void
-find_text_dialog (SchematicWindow *w_current)
+schematic_find_text_widget_show (GtkWidget *find_text_widget,
+                                 const gchar *str)
 {
-  LeptonObject *object;
-  GtkWidget *find_text_widget;
-
-  g_return_if_fail (w_current != NULL);
-
-  object = o_select_return_first_object(w_current);
-  find_text_widget = schematic_window_get_find_text_widget (w_current);
-
-  if (lepton_object_is_text (object))
+  if (str != NULL)
   {
     schematic_find_text_widget_set_find_text_string (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget),
-                                                     lepton_text_object_get_string (object));
+                                                     str);
   }
 
+  GtkWidget *entry =
+    schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget));
+
   gtk_widget_show (GTK_WIDGET (find_text_widget));
-  gtk_widget_grab_focus (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget)));
-  gtk_editable_select_region (GTK_EDITABLE (schematic_find_text_widget_get_entry (SCHEMATIC_FIND_TEXT_WIDGET (find_text_widget))), 0, -1);
+  gtk_widget_grab_focus (entry);
+  gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);
 }
 
 
@@ -301,24 +566,11 @@ schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget)
 {
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->descend_button));
+  GtkWidget *descend_button =
+    schematic_find_text_widget_get_descend_button (widget);
+
+  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (descend_button));
 }
-
-
-
-/*! \brief Get the entry
- *
- *  \param [in] widget This SchematicFindTextWidget
- *  \return The entry
- */
-GtkWidget*
-schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget)
-{
-  g_return_val_if_fail (widget != NULL, NULL);
-
-  return widget->entry;
-}
-
 
 
 /*! \brief Get the type of find to perform
@@ -332,11 +584,17 @@ schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget)
   int index = -1;
   GtkTreeIter iter;
   GValue value = {0};
+  GtkWidget *combo = NULL;
+  GtkTreeModel *find_type_model = NULL;
 
   g_return_val_if_fail (widget != NULL, 0);
 
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget->combo), &iter)) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
+  combo = schematic_find_text_widget_get_combo (widget);
+
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
+  {
+    find_type_model = schematic_find_text_widget_get_find_type_model (widget);
+    gtk_tree_model_get_value (GTK_TREE_MODEL (find_type_model), &iter, COLUMN_INDEX, &value);
     index = g_value_get_int (&value);
     g_value_unset (&value);
   }
@@ -356,7 +614,9 @@ schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget
 {
   g_return_val_if_fail (widget != NULL, NULL);
 
-  return gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  return gtk_entry_get_text (GTK_ENTRY (entry));
 }
 
 
@@ -371,30 +631,34 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
   GtkWidget *cancel_button;
+  GtkWidget *combo = NULL;
+  GtkWidget *descend_button = NULL;
+  GtkWidget *find_button = NULL;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
+  GtkWidget *entry = gtk_entry_new ();
   GtkCellRenderer *text_cell;
+  GtkTreeModel *find_type_model = NULL;
 
   g_return_if_fail (widget != NULL);
 
   gtk_widget_set_no_show_all (GTK_WIDGET (widget), TRUE);
 
-  widget->find_type_model = GTK_TREE_MODEL (create_find_type_store ());
-  widget->combo = gtk_combo_box_new_with_model (widget->find_type_model);
-  gtk_widget_set_visible (widget->combo, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->combo, FALSE, FALSE, 0);
+  find_type_model = GTK_TREE_MODEL (create_find_type_store ());
+  combo = gtk_combo_box_new_with_model (find_type_model);
+  gtk_widget_set_visible (combo, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), combo, FALSE, FALSE, 0);
 
   text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
   g_object_set (text_cell, "xpad", 5, NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->combo), text_cell, TRUE);
-  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (widget->combo), text_cell, "text", COLUMN_NAME);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), text_cell, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), text_cell, "text", COLUMN_NAME);
 
-  widget->entry = gtk_entry_new ();
-  gtk_widget_set_visible (widget->entry, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->entry, TRUE, TRUE, 0);
+  gtk_widget_set_visible (entry, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), entry, TRUE, TRUE, 0);
 
-  widget->descend_button = gtk_check_button_new_with_label(_("descend into hierarchy"));
-  gtk_widget_set_visible (widget->descend_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->descend_button, FALSE, FALSE, 0);
+  descend_button = gtk_check_button_new_with_label(_("descend into hierarchy"));
+  gtk_widget_set_visible (descend_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), descend_button, FALSE, FALSE, 0);
 
 #ifdef ENABLE_GTK3
   button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -404,10 +668,10 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
 
-  widget->find_button = gtk_button_new_with_label (_("Find"));
-  gtk_widget_set_sensitive (widget->find_button, FALSE);
-  gtk_widget_set_visible (widget->find_button, TRUE);
-  gtk_box_pack_start (GTK_BOX (button_box), widget->find_button, FALSE, FALSE, 0);
+  find_button = gtk_button_new_with_label (_("Find"));
+  gtk_widget_set_sensitive (find_button, FALSE);
+  gtk_widget_set_visible (find_button, TRUE);
+  gtk_box_pack_start (GTK_BOX (button_box), find_button, FALSE, FALSE, 0);
 
   cancel_button = gtk_button_new_with_mnemonic (_("_Cancel"));
   gtk_widget_set_visible (cancel_button, TRUE);
@@ -416,30 +680,12 @@ schematic_find_text_widget_init (SchematicFindTextWidget *widget)
   gtk_widget_set_no_show_all (action, TRUE);
   gtk_widget_set_visible (action, FALSE);
 
-  g_signal_connect (G_OBJECT (widget->entry),
-                    "activate",
-                    G_CALLBACK (activate_entry),
-                    widget);
-
-  g_signal_connect (G_OBJECT (widget->combo),
-                    "changed",
-                    G_CALLBACK (changed_type),
-                    widget);
-
-  g_signal_connect (G_OBJECT (cancel_button),
-                    "clicked",
-                    G_CALLBACK (click_cancel),
-                    widget);
-
-  g_signal_connect (G_OBJECT (widget->find_button),
-                    "clicked",
-                    G_CALLBACK (click_find),
-                    widget);
-
-  g_signal_connect (G_OBJECT (widget->entry),
-                    "notify::text",
-                    G_CALLBACK (notify_entry_text),
-                    widget);
+  schematic_find_text_widget_set_entry (widget, entry);
+  schematic_find_text_widget_set_find_type_model (widget, find_type_model);
+  schematic_find_text_widget_set_combo (widget, combo);
+  schematic_find_text_widget_set_cancel_button (widget, cancel_button);
+  schematic_find_text_widget_set_descend_button (widget, descend_button);
+  schematic_find_text_widget_set_find_button (widget, find_button);
 }
 
 
@@ -455,7 +701,10 @@ schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget->descend_button), descend);
+  GtkWidget *descend_button =
+    schematic_find_text_widget_get_descend_button (widget);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (descend_button), descend);
 
   g_object_notify (G_OBJECT (widget), "descend");
 }
@@ -476,24 +725,28 @@ schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
 
   g_return_if_fail (widget != NULL);
 
+  GtkTreeModel *find_type_model =
+    schematic_find_text_widget_get_find_type_model (widget);
+  GtkWidget *combo = schematic_find_text_widget_get_combo (widget);
+
   if (type >= 0) {
     gboolean success;
     GValue value = {0};
 
-    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (widget->find_type_model), &iter);
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (find_type_model), &iter);
     while (success) {
-      gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
+      gtk_tree_model_get_value (GTK_TREE_MODEL (find_type_model), &iter, COLUMN_INDEX, &value);
       if (g_value_get_int (&value) == type) {
         g_value_unset (&value);
         active = &iter;
         break;
       }
       g_value_unset (&value);
-      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(widget->find_type_model), &iter);
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(find_type_model), &iter);
     }
   }
 
-  gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget->combo), active);
+  gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), active);
 
   g_object_notify (G_OBJECT (widget), "find-type");
 }
@@ -511,7 +764,9 @@ schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_entry_set_text (GTK_ENTRY (widget->entry), str);
+  GtkWidget *entry = schematic_find_text_widget_get_entry (widget);
+
+  gtk_entry_set_text (GTK_ENTRY (entry), str);
 
   g_object_notify (G_OBJECT (widget), "find-text-string");
 }
@@ -568,15 +823,18 @@ create_find_type_store ()
  *  \param [in] pspec The parameter spec (unused).
  *  \param [in] widget The #SchematicFindTextWidget instance.
  */
-static void
-notify_entry_text (GtkWidget *entry,
-                   GParamSpec *pspec,
-                   SchematicFindTextWidget *widget)
+void
+schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
+                                              GParamSpec *pspec,
+                                              SchematicFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_widget_set_sensitive (widget->find_button,
-                            (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0));
+  GtkWidget *find_button =
+    schematic_find_text_widget_get_find_button (widget);
+
+  gtk_widget_set_sensitive (find_button,
+                            (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0));
 }
 
 

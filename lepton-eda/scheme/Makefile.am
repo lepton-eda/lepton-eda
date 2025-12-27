@@ -153,6 +153,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog.scm \
 	schematic/dialog/autonumber.scm \
 	schematic/dialog/file-select.scm \
+	schematic/dialog/find-text.scm \
 	schematic/dialog/multiattrib.scm \
 	schematic/dialog/new-text.scm \
 	schematic/dialog/slot-edit.scm \

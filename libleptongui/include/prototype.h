@@ -857,8 +857,8 @@ void
 x_dialog_hotkeys (SchematicWindow *w_current);
 
 void
-find_text_dialog (SchematicWindow *w_current);
-
+schematic_find_text_widget_show (GtkWidget *find_text_widget,
+                                 const gchar *str);
 void
 hide_text_dialog (SchematicWindow *w_current);
 
@@ -1126,8 +1126,8 @@ schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
 void
-schematic_window_create_find_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box);
+schematic_window_pack_widget (GtkWidget *parent_widget,
+                              GtkWidget *child_widget);
 void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ struct _SchematicFindTextWidget
 
   GtkTreeModel *find_type_model;
 
+  GtkWidget *cancel_button;
   GtkWidget *combo;
   GtkWidget *descend_button;
   GtkWidget *entry;
@@ -50,28 +51,85 @@ struct _SchematicFindTextWidget
 };
 
 
-
-int
-schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget);
-
-GtkWidget*
-schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
-
-const char*
-schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
-
-int
-schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
-
+/* Helpers */
 GType
 schematic_find_text_widget_get_type ();
+
+G_BEGIN_DECLS
+
+GtkWidget*
+schematic_find_text_widget_new ();
+
+/* Accessors */
+GtkWidget*
+schematic_find_text_widget_get_cancel_button (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_cancel_button (SchematicFindTextWidget *widget,
+                                              GtkWidget *cancel_button);
+GtkWidget*
+schematic_find_text_widget_get_combo (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_combo (SchematicFindTextWidget *widget,
+                                      GtkWidget *combo);
+int
+schematic_find_text_widget_get_descend (SchematicFindTextWidget *widget);
 
 void
 schematic_find_text_widget_set_descend (SchematicFindTextWidget *widget,
                                         int descend);
+GtkWidget*
+schematic_find_text_widget_get_descend_button (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_descend_button (SchematicFindTextWidget *widget,
+                                               GtkWidget *descend_button);
+GtkWidget*
+schematic_find_text_widget_get_entry (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_entry (SchematicFindTextWidget *widget,
+                                      GtkWidget *entry);
+GtkWidget*
+schematic_find_text_widget_get_find_button (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_find_button (SchematicFindTextWidget *widget,
+                                            GtkWidget *find_button);
+const char*
+schematic_find_text_widget_get_find_text_string (SchematicFindTextWidget *widget);
+
 void
 schematic_find_text_widget_set_find_text_string (SchematicFindTextWidget *widget,
                                                  const char *str);
+int
+schematic_find_text_widget_get_find_type (SchematicFindTextWidget *widget);
+
 void
 schematic_find_text_widget_set_find_type (SchematicFindTextWidget *widget,
                                           int type);
+GtkTreeModel*
+schematic_find_text_widget_get_find_type_model (SchematicFindTextWidget *widget);
+
+void
+schematic_find_text_widget_set_find_type_model (SchematicFindTextWidget *widget,
+                                                GtkTreeModel *find_type_model);
+/* Callbacks */
+void
+schematic_find_text_widget_activate_entry (GtkWidget *entry,
+                                           SchematicFindTextWidget *widget);
+void
+schematic_find_text_widget_changed_type (GtkWidget *combo,
+                                         SchematicFindTextWidget *widget);
+void
+schematic_find_text_widget_click_cancel (GtkWidget *button,
+                                         SchematicFindTextWidget *widget);
+void
+schematic_find_text_widget_click_find (GtkWidget *find_button,
+                                       SchematicFindTextWidget *widget);
+void
+schematic_find_text_widget_notify_entry_text (GtkWidget *entry,
+                                              GParamSpec *pspec,
+                                              SchematicFindTextWidget *widget);
+G_END_DECLS

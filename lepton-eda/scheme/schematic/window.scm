@@ -52,6 +52,7 @@
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic gui keymap)
   #:use-module (schematic gui stroke)
   #:use-module (schematic hook)
@@ -1264,6 +1265,60 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+(define (search-text *window *toplevel)
+  (define show-hidden-text?
+    (schematic_window_get_show_hidden_text *window))
+  (define *find-text-widget
+    (schematic_window_get_find_text_widget *window))
+  (define *find-text-state-widget
+    (schematic_window_get_find_text_state_widget *window))
+  (define *pages
+    (lepton_list_get_glist
+     (lepton_toplevel_get_pages *toplevel)))
+  (define find-type
+    (schematic_find_text_widget_get_find_type *find-text-widget))
+  (define *text-string
+    (schematic_find_text_widget_get_find_text_string *find-text-widget))
+  (define descend?
+    (schematic_find_text_widget_get_descend *find-text-widget))
+  (define count
+    (schematic_find_text_state_find *window
+                                    *find-text-state-widget
+                                    *pages
+                                    find-type
+                                    *text-string
+                                    descend?
+                                    show-hidden-text?))
+  (if (> count 0)
+      (begin
+        (x_widgets_show_find_text_state *window)
+        TRUE)
+      FALSE))
+
+
+(define (find-text *widget response *window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (let ((*toplevel (schematic_window_get_toplevel *window)))
+    (when (null-pointer? *toplevel)
+      (error "NULL toplevel."))
+
+    (let ((close?
+           (case (gtk-response->symbol response)
+             ((ok) (true? (search-text *window *toplevel)))
+             ((cancel delete-event) #t)
+             (else (log! 'warning "find-text(): strange-signal ~A" response)
+                   #f))))
+      (when close?
+        (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+          (gtk_widget_grab_focus *drawing-area)
+          (gtk_widget_hide *widget))))))
+
+(define *callback-find-text
+  (procedure->pointer void find-text (list '* int '*)))
+
+
 (define (callback-page-manager-selection-changed *selection *widget)
   (define *page
     (pagesel_callback_selection_changed *selection *widget))
@@ -1349,7 +1404,37 @@ GtkApplication structure of the program (when compiled with
       (setup-main-window-draw-events *window *main-window)
 
       ;; Setup hidden infowidgets.
-      (schematic_window_create_find_text_widget *window *work-box)
+      (let ((*find-text-widget (schematic_find_text_widget_new)))
+        (schematic_window_set_find_text_widget *window *find-text-widget)
+        (schematic_window_pack_widget *work-box *find-text-widget)
+        (g_signal_connect *find-text-widget
+                          (string->pointer "response")
+                          *callback-find-text
+                          *window)
+        (let ((*entry (schematic_find_text_widget_get_entry *find-text-widget))
+              (*combo (schematic_find_text_widget_get_combo *find-text-widget))
+              (*cancel-button (schematic_find_text_widget_get_cancel_button *find-text-widget))
+              (*find-button (schematic_find_text_widget_get_find_button *find-text-widget)))
+          (g_signal_connect *entry
+                            (string->pointer "activate")
+                            *schematic_find_text_widget_activate_entry
+                            *find-text-widget)
+          (g_signal_connect *entry
+                            (string->pointer "notify::text")
+                            *schematic_find_text_widget_notify_entry_text
+                            *find-text-widget)
+          (g_signal_connect *combo
+                            (string->pointer "changed")
+                            *schematic_find_text_widget_changed_type
+                            *find-text-widget)
+          (g_signal_connect *cancel-button
+                            (string->pointer "clicked")
+                            *schematic_find_text_widget_click_cancel
+                            *find-text-widget)
+          (g_signal_connect *find-button
+                            (string->pointer "clicked")
+                            *schematic_find_text_widget_click_find
+                            *find-text-widget)))
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
       (schematic_window_create_macro_widget *window *work-box)

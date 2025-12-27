@@ -240,9 +240,28 @@
             x_stroke_record
             x_stroke_translate_and_execute
 
+            schematic_find_text_state_find
             schematic_find_text_state_new
 
-            find_text_dialog
+            schematic_find_text_widget_new
+            schematic_find_text_widget_get_cancel_button
+            schematic_find_text_widget_set_cancel_button
+            schematic_find_text_widget_get_combo
+            schematic_find_text_widget_set_combo
+            schematic_find_text_widget_get_descend
+            schematic_find_text_widget_get_entry
+            schematic_find_text_widget_set_entry
+            schematic_find_text_widget_get_find_button
+            schematic_find_text_widget_set_find_button
+            schematic_find_text_widget_get_find_text_string
+            schematic_find_text_widget_get_find_type
+            *schematic_find_text_widget_activate_entry
+            *schematic_find_text_widget_changed_type
+            *schematic_find_text_widget_click_cancel
+            *schematic_find_text_widget_click_find
+            *schematic_find_text_widget_notify_entry_text
+            schematic_find_text_widget_show
+
             hide_text_dialog
             show_text_dialog
 
@@ -295,7 +314,6 @@
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
             schematic_window_create_canvas
-            schematic_window_create_find_text_widget
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
             schematic_window_create_macro_widget
@@ -303,6 +321,7 @@
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
+            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_show_all
@@ -427,6 +446,7 @@
             schematic_window_set_color_edit_widget
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
+            schematic_window_get_drawing_area
             schematic_window_get_enforce_hierarchy
             schematic_window_get_file_preview
             schematic_window_set_file_preview
@@ -440,6 +460,8 @@
             schematic_window_set_second_wy
             schematic_window_get_find_text_state_widget
             schematic_window_set_find_text_state_widget
+            schematic_window_get_find_text_widget
+            schematic_window_set_find_text_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
@@ -539,6 +561,7 @@
             o_select_box_motion
             o_select_end
             o_select_motion
+            o_select_return_first_object
             o_select_selected
             o_select_start
             o_select_unselect_all
@@ -805,6 +828,7 @@
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
+(define-lff schematic_window_get_drawing_area '* '(*))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_file_preview int '(*))
 (define-lff schematic_window_set_file_preview void (list int '*))
@@ -818,6 +842,8 @@
 (define-lff schematic_window_set_second_wy void (list '* int))
 (define-lff schematic_window_get_find_text_state_widget '* '(*))
 (define-lff schematic_window_set_find_text_state_widget void '(* *))
+(define-lff schematic_window_get_find_text_widget '* '(*))
+(define-lff schematic_window_set_find_text_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
@@ -942,7 +968,6 @@
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_canvas '* '(* *))
-(define-lff schematic_window_create_find_text_widget void '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_macro_widget void '(* *))
@@ -950,6 +975,7 @@
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
+(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_show_all void '(* *))
@@ -999,10 +1025,28 @@
 (define-lff schematic_tabs_set_callback void '(* *))
 
 ;;; find_text_state.c
+(define-lff schematic_find_text_state_find int (list '* '* '* int '* int int))
 (define-lff schematic_find_text_state_new '* '())
 
 ;;; find_text_widget.c
-(define-lff find_text_dialog void '(*))
+(define-lff schematic_find_text_widget_new '* '())
+(define-lff schematic_find_text_widget_get_cancel_button '* '(*))
+(define-lff schematic_find_text_widget_set_cancel_button void '(* *))
+(define-lff schematic_find_text_widget_get_combo '* '(*))
+(define-lff schematic_find_text_widget_set_combo void '(* *))
+(define-lff schematic_find_text_widget_get_descend int '(*))
+(define-lff schematic_find_text_widget_get_entry '* '(*))
+(define-lff schematic_find_text_widget_set_entry void '(* *))
+(define-lff schematic_find_text_widget_get_find_button '* '(*))
+(define-lff schematic_find_text_widget_set_find_button void '(* *))
+(define-lff schematic_find_text_widget_get_find_text_string '* '(*))
+(define-lff schematic_find_text_widget_get_find_type int '(*))
+(define-lfc *schematic_find_text_widget_activate_entry)
+(define-lfc *schematic_find_text_widget_changed_type)
+(define-lfc *schematic_find_text_widget_click_cancel)
+(define-lfc *schematic_find_text_widget_click_find)
+(define-lfc *schematic_find_text_widget_notify_entry_text)
+(define-lff schematic_find_text_widget_show void '(* *))
 
 ;;; show_hide_text_widget.c
 (define-lff hide_text_dialog void '(*))
@@ -1246,6 +1290,7 @@
 (define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_end void (list '* int int))
 (define-lff o_select_motion void (list '* int int))
+(define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
