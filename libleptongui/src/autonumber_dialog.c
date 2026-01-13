@@ -1306,8 +1306,9 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *              function.
  *  \param [in] renumber_slots Whether slots have to be renumbered
  *              as well.
+ *  \return The number for renumbering.
  */
-void
+int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_current,
@@ -1410,6 +1411,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   str = g_strdup_printf ("%s%d", search_template, number);
   lepton_text_object_set_string (o_current, str);
   g_free (str);
+
+  return number;
 }
 
 
