@@ -1410,8 +1410,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   str = g_strdup_printf ("%s%d", search_template, number);
   lepton_text_object_set_string (o_current, str);
   g_free (str);
-
-  schematic_window_active_page_changed (w_current);
 }
 
 

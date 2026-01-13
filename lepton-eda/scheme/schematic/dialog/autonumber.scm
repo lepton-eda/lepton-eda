@@ -194,7 +194,8 @@
                                         *object
                                         *parent
                                         *template
-                                        renumber_slots))
+                                        renumber_slots)
+  (schematic_window_active_page_changed *window))
 
 
 (define (autonumber-by-template! *autotext *window page-list *template scope-number)
