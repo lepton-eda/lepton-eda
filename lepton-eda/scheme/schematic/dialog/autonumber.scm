@@ -189,12 +189,17 @@
          (not (null-pointer? *parent))))
   (define renumber_slots (if renumber-slots? TRUE FALSE))
 
-  (schematic_autonumber_get_new_numbers *autotext
-                                        *window
-                                        *object
-                                        *parent
-                                        *template
-                                        renumber_slots)
+  (define number
+    (schematic_autonumber_get_new_numbers *autotext
+                                          *window
+                                          *parent
+                                          renumber_slots))
+  ;; Replace old text.
+  (lepton_text_object_set_string
+   *object
+   (string->pointer
+    (format #f "~A~A" (pointer->string *template) number)))
+
   (schematic_window_active_page_changed *window))
 
 

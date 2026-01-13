@@ -1298,12 +1298,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  \param [in,out] autotext The #SchematicAutonumber instance.
  *  \param [in] w_current The #SchematicWindow instance the
  *              Autonumber dialog belongs to.
- *  \param [in] o_current The \c LeptonObject instance to process.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
- *  \param [in] search_template The current search template which
- *              is used to generate the new value of the attribute
- *              object along with the new number found in the
- *              function.
  *  \param [in] renumber_slots Whether slots have to be renumbered
  *              as well.
  *  \return The number for renumbering.
@@ -1311,9 +1306,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
-                                      LeptonObject *o_current,
                                       LeptonObject *o_parent,
-                                      char *search_template,
                                       gboolean renumber_slots)
 {
   GList *item;
@@ -1406,11 +1399,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     o_slot_end (w_current, o_parent, str);
     g_free (str);
   }
-
-  /* Replace old text. */
-  str = g_strdup_printf ("%s%d", search_template, number);
-  lepton_text_object_set_string (o_current, str);
-  g_free (str);
 
   return number;
 }

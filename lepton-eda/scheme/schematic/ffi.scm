@@ -1312,7 +1312,7 @@
 (define-lff schematic_autonumber_clear_database void '(*))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
-(define-lff schematic_autonumber_get_new_numbers int (list '* '* '* '* '* int))
+(define-lff schematic_autonumber_get_new_numbers int (list '* '* '* int))
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_make_renumber_list '* '(* *))
