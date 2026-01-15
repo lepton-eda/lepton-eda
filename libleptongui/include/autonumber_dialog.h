@@ -237,6 +237,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       LeptonObject *o_parent,
                                       char *parent_name,
                                       gboolean renumber_slots);
+int
+schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext,
+                                             int start_number);
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);

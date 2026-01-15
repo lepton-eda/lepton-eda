@@ -1301,6 +1301,42 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get the next unused number for autonumbering.
+ *
+ *  \par Function Description
+ *  Gets the list of already occupied numbers of an
+ *  #SchematicAutonumber instance and a starting number to
+ *  continue numbering from, and calculates the next number for
+ *  autonumbering.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] start_number The number to continue numbering from.
+ *  \return The next unused number.
+ */
+int
+schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext,
+                                             int start_number)
+{
+  GList *item;
+  int next_number;
+
+  next_number = start_number;
+
+  item = schematic_autonumber_get_autotext_used_numbers (autotext);
+  while (1) {
+    while (item != NULL && GPOINTER_TO_INT (item->data) < next_number)
+      item = g_list_next(item);
+
+    if (item == NULL || GPOINTER_TO_INT (item->data) > next_number)
+      break;
+    else  /* next_number == item->data */
+      next_number++;
+  }
+
+  return next_number;
+}
+
+
 /*! \brief Handle all the options of the Autonumber text dialog.
  *  \par Function Description
  *  This function receives the options of the the autonumber text
@@ -1333,7 +1369,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       char *parent_name,
                                       gboolean renumber_slots)
 {
-  GList *item;
   gint new_number, numslots, i;
   SchematicAutonumberSlot *freeslot;
   GList *freeslot_item;
@@ -1370,16 +1405,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     /* get a new number */
     new_number = schematic_autonumber_get_autotext_startnum (autotext);
 
-    item = schematic_autonumber_get_autotext_used_numbers (autotext);
-    while (1) {
-      while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
-        item = g_list_next(item);
+    new_number = schematic_autonumber_get_next_unused_number (autotext, new_number);
 
-      if (item == NULL || GPOINTER_TO_INT(item->data) > new_number)
-        break;
-      else  /* new_number == item->data */
-        new_number++;
-    }
     number = new_number;
     slot = 0;
 
