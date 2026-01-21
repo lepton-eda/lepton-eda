@@ -409,6 +409,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new module, `(schematic rc)`, has been added for dealing with
   `lepton-schematic` specific RC files.
 
+- A new module, `(schematic dialog close-window)`, has been
+  introduced.  It contains functions for creating and running the
+  Close window confirmation dialog.
+
+- A new module, `(schematic dialog close-page)`.  It contains a
+  function yielding the Close page dialog.
+
+- A new module, `(schematic window page)`, has been introduced.
+  It contains procedures for setting and saving the active page of
+  the current window.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
