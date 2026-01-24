@@ -284,24 +284,25 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
           lepton_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
       }
 
-      if (filename == NULL) continue;
+      if (filename != NULL)
+      {
+        /* we got a schematic source attribute
+           lets load the page and dive into it */
+        GError *err = NULL;
+        child_page =
+          s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
+        if (child_page != NULL) {
+          /* call the recursive function */
+          s_hierarchy_traversepages (w_current, child_page, pages);
+        } else {
+          g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
+                     filename, err->message);
+          g_error_free (err);
+        }
 
-      /* we got a schematic source attribute
-         lets load the page and dive into it */
-      GError *err = NULL;
-      child_page =
-        s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
-      if (child_page != NULL) {
-        /* call the recursive function */
-        s_hierarchy_traversepages (w_current, child_page, pages);
-      } else {
-        g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
-                   filename, err->message);
-        g_error_free (err);
+        g_free (filename);
+        filename = NULL;
       }
-
-      g_free (filename);
-      filename = NULL;
     }
 
     return pages;
