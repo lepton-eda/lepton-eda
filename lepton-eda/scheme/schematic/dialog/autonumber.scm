@@ -62,7 +62,8 @@
     (if (not (null-pointer? (g_list_find *pages *page)))
         ;; Drop the page subtree.
         *pages
-
+        ;; Otherwise add the page to the list of visited pages and
+        ;; process its contents.
         (let ((*pages (g_list_append *pages *page)))
           ;; Walk through the page objects and search for
           ;; underlaying schematics.
