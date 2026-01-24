@@ -267,7 +267,6 @@
             schematic_hierarchy_increment_page_control_counter
             s_hierarchy_find_up_page
             s_hierarchy_down_schematic_single
-            s_hierarchy_traversepages
 
             schematic_page_revert_dialog
 
@@ -820,7 +819,6 @@
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff s_hierarchy_find_up_page '* '(*))
 (define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
-(define-lff s_hierarchy_traversepages '* '(* * *))
 
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))

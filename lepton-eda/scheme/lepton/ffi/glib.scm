@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2025 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
             g_free
             g_list_append
             g_list_copy
+            g_list_find
             g_list_first
             g_list_free
             g_list_remove
@@ -58,8 +59,9 @@
 
 (define-lff g_list_append '* '(* *))
 (define-lff g_list_copy '* '(*))
-(define-lff g_list_free void '(*))
+(define-lff g_list_find '* '(* *))
 (define-lff g_list_first '* '(*))
+(define-lff g_list_free void '(*))
 (define-lff g_list_free_full void '(*))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))

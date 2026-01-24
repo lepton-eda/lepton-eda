@@ -1343,10 +1343,6 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
                           LeptonPage *page,
                           const char *filename,
                           GError **error);
-GList*
-s_hierarchy_traversepages (SchematicWindow *w_current,
-                           LeptonPage *p_current,
-                           GList *pages);
 G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */

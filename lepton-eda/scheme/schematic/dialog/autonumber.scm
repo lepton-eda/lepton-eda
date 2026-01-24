@@ -27,6 +27,7 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object)
@@ -43,12 +44,70 @@
   #:export (autonumber-dialog))
 
 
+;;; This function traverses the hierarchy tree of pages in WINDOW and returns a
+;;; flat list of pages that are below PAGE.
+;;;
+;;; Warning: Currently, the function returns a GList of LeptonPage
+;;; pointers.  Caller must destroy returned GList with
+;;; g_list_free().
 (define (hierarchy-traverse-pages window page)
   (define *window (check-window window 1))
   (define *page (check-page page 2))
 
   (define (traverse-pages *window *page *pages)
-    (s_hierarchy_traversepages *window *page *pages))
+    ;; Preorder traversing.
+    ;; Check whether we already visited this page.
+    (if (not (null-pointer? (g_list_find *pages *page)))
+        ;; Drop the page subtree.
+        *pages
+
+        (let ((*pages (g_list_append *pages *page)))
+          ;; Walk through the page objects and search for
+          ;; underlaying schematics.
+          (let loop ((*objects (glist->list (lepton_page_objects *page)
+                                            identity)))
+            (if (null? *objects)
+                *pages
+                (let ((*object (car *objects)))
+                  ;; Only complex things like symbols can contain
+                  ;; attributes.
+                  (when (true? (lepton_object_is_component *object))
+                    (let* ((*attached-source-filename
+                            (lepton_attrib_search_attached_attribs_by_name *object
+                                                                           (string->pointer "source")
+                                                                           0))
+                           (*filename
+                            (if (null-pointer? *attached-source-filename)
+                                ;; If above is NULL then look
+                                ;; inside symbol.
+                                (lepton_attrib_search_inherited_attribs_by_name *object
+                                                                                (string->pointer "source")
+                                                                                0)
+                                *attached-source-filename)))
+
+                      (unless (null-pointer? *filename)
+                        ;; We got a schematic source attribute.
+                        ;; Let's load the page and dive into it.
+                        (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+                               (*child-page
+                                (s_hierarchy_down_schematic_single *window *filename *page 0 *error)))
+                          (if (not (null-pointer? *child-page))
+                              ;; Call the recursive function.
+                              (traverse-pages *window *child-page *pages)
+
+                              (let ((error-message
+                                     (if (or (null-pointer? *error)
+                                             (null-pointer? (dereference-pointer *error)))
+                                         (G_ "Unknown error.")
+                                         (gerror-message (dereference-pointer *error)))))
+                                (log! 'message
+                                      (G_ "Failed to descend hierarchy into ~S: ~A")
+                                      (pointer->string *filename)
+                                      error-message)
+                                (g_clear_error *error))))
+
+                        (g_free *filename))))
+                  (loop (cdr *objects))))))))
 
   (traverse-pages *window *page %null-pointer))
 
