@@ -104,13 +104,13 @@
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
         (let ((*pages (g_list_append *pages *page)))
-          ;; Walk through the page objects and search for
-          ;; underlaying schematics.
-          (let loop ((objects (filter component?
-                                      (page-contents (pointer->page *page)))))
-            (if (null? objects)
+          ;; Search for the list of underlaying schematic names.
+          (let loop ((*filenames (map source-filename
+                                      (filter component?
+                                              (page-contents (pointer->page *page))))))
+            (if (null? *filenames)
                 *pages
-                (let ((*filename (source-filename (car objects))))
+                (let ((*filename (car *filenames)))
                   (unless (null-pointer? *filename)
                     ;; We got a schematic source attribute.
                     ;; Let's load the page and dive into it.
@@ -129,7 +129,7 @@
                                (gerror-handler (pointer->string *filename)))))
 
                     (g_free *filename))
-                  (loop (cdr objects))))))))
+                  (loop (cdr *filenames))))))))
 
   (traverse-pages *window *page %null-pointer))
 
