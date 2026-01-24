@@ -80,6 +80,20 @@
             (format #f "~?" message args))
       #f))
 
+  (define (source-filename *object)
+    (let ((*attached-source-filename
+           (lepton_attrib_search_attached_attribs_by_name
+            *object
+            (string->pointer "source")
+            0)))
+      (if (null-pointer? *attached-source-filename)
+          ;; If above is NULL then look inside symbol.
+          (lepton_attrib_search_inherited_attribs_by_name
+           *object
+           (string->pointer "source")
+           0)
+          *attached-source-filename)))
+
   (define (traverse-pages *window *page *pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
@@ -96,19 +110,7 @@
             (if (null? objects)
                 *pages
                 (let ((*object (object->pointer (car objects))))
-                  (let* ((*attached-source-filename
-                          (lepton_attrib_search_attached_attribs_by_name *object
-                                                                         (string->pointer "source")
-                                                                         0))
-                         (*filename
-                          (if (null-pointer? *attached-source-filename)
-                              ;; If above is NULL then look
-                              ;; inside symbol.
-                              (lepton_attrib_search_inherited_attribs_by_name *object
-                                                                              (string->pointer "source")
-                                                                              0)
-                              *attached-source-filename)))
-
+                  (let ((*filename (source-filename *object)))
                     (unless (null-pointer? *filename)
                       ;; We got a schematic source attribute.
                       ;; Let's load the page and dive into it.
