@@ -91,44 +91,42 @@
         (let ((*pages (g_list_append *pages *page)))
           ;; Walk through the page objects and search for
           ;; underlaying schematics.
-          (let loop ((objects (page-contents (pointer->page *page))))
+          (let loop ((objects (filter component?
+                                      (page-contents (pointer->page *page)))))
             (if (null? objects)
                 *pages
                 (let ((*object (object->pointer (car objects))))
-                  ;; Only complex things like symbols can contain
-                  ;; attributes.
-                  (when (true? (lepton_object_is_component *object))
-                    (let* ((*attached-source-filename
-                            (lepton_attrib_search_attached_attribs_by_name *object
-                                                                           (string->pointer "source")
-                                                                           0))
-                           (*filename
-                            (if (null-pointer? *attached-source-filename)
-                                ;; If above is NULL then look
-                                ;; inside symbol.
-                                (lepton_attrib_search_inherited_attribs_by_name *object
-                                                                                (string->pointer "source")
-                                                                                0)
-                                *attached-source-filename)))
+                  (let* ((*attached-source-filename
+                          (lepton_attrib_search_attached_attribs_by_name *object
+                                                                         (string->pointer "source")
+                                                                         0))
+                         (*filename
+                          (if (null-pointer? *attached-source-filename)
+                              ;; If above is NULL then look
+                              ;; inside symbol.
+                              (lepton_attrib_search_inherited_attribs_by_name *object
+                                                                              (string->pointer "source")
+                                                                              0)
+                              *attached-source-filename)))
 
-                      (unless (null-pointer? *filename)
-                        ;; We got a schematic source attribute.
-                        ;; Let's load the page and dive into it.
-                        (let ((*child-page
-                               (hierarchy-down-schematic window
-                                                         (pointer->string *filename)
-                                                         page
-                                                         0
-                                                         *error
-                                                         (make-scheme-error-handler
-                                                          (pointer->string *filename)))))
-                          (and *child-page
-                               (if (not (null-pointer? *child-page))
-                                   ;; Call the recursive function.
-                                   (traverse-pages *window *child-page *pages)
-                                   (gerror-handler (pointer->string *filename)))))
+                    (unless (null-pointer? *filename)
+                      ;; We got a schematic source attribute.
+                      ;; Let's load the page and dive into it.
+                      (let ((*child-page
+                             (hierarchy-down-schematic window
+                                                       (pointer->string *filename)
+                                                       page
+                                                       0
+                                                       *error
+                                                       (make-scheme-error-handler
+                                                        (pointer->string *filename)))))
+                        (and *child-page
+                             (if (not (null-pointer? *child-page))
+                                 ;; Call the recursive function.
+                                 (traverse-pages *window *child-page *pages)
+                                 (gerror-handler (pointer->string *filename)))))
 
-                        (g_free *filename))))
+                      (g_free *filename)))
                   (loop (cdr objects))))))))
 
   (traverse-pages *window *page %null-pointer))
