@@ -80,7 +80,8 @@
             (format #f "~?" message args))
       #f))
 
-  (define (source-filename *object)
+  (define (source-filename object)
+    (define *object (object->pointer object))
     (let ((*attached-source-filename
            (lepton_attrib_search_attached_attribs_by_name
             *object
@@ -109,7 +110,7 @@
                                       (page-contents (pointer->page *page)))))
             (if (null? objects)
                 *pages
-                (let ((*filename (source-filename (object->pointer (car objects)))))
+                (let ((*filename (source-filename (car objects))))
                   (unless (null-pointer? *filename)
                     ;; We got a schematic source attribute.
                     ;; Let's load the page and dive into it.
