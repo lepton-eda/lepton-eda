@@ -273,35 +273,36 @@ s_hierarchy_traversepages (SchematicWindow *w_current,
       o_current = (LeptonObject *)iter->data;
 
       /* only complex things like symbols can contain attributes */
-      if (!lepton_object_is_component (o_current)) continue;
-
-      filename =
-        lepton_attrib_search_attached_attribs_by_name (o_current, "source", 0);
-
-      /* if above is NULL, then look inside symbol */
-      if (filename == NULL) {
-        filename =
-          lepton_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
-      }
-
-      if (filename != NULL)
+      if (lepton_object_is_component (o_current))
       {
-        /* we got a schematic source attribute
-           lets load the page and dive into it */
-        GError *err = NULL;
-        child_page =
-          s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
-        if (child_page != NULL) {
-          /* call the recursive function */
-          s_hierarchy_traversepages (w_current, child_page, pages);
-        } else {
-          g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
-                     filename, err->message);
-          g_error_free (err);
+        filename =
+          lepton_attrib_search_attached_attribs_by_name (o_current, "source", 0);
+
+        /* if above is NULL, then look inside symbol */
+        if (filename == NULL) {
+          filename =
+            lepton_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
         }
 
-        g_free (filename);
-        filename = NULL;
+        if (filename != NULL)
+        {
+          /* we got a schematic source attribute
+             lets load the page and dive into it */
+          GError *err = NULL;
+          child_page =
+            s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
+          if (child_page != NULL) {
+            /* call the recursive function */
+            s_hierarchy_traversepages (w_current, child_page, pages);
+          } else {
+            g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
+                       filename, err->message);
+            g_error_free (err);
+          }
+
+          g_free (filename);
+          filename = NULL;
+        }
       }
     }
 
