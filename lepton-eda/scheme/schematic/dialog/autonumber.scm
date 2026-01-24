@@ -109,26 +109,25 @@
                                       (page-contents (pointer->page *page)))))
             (if (null? objects)
                 *pages
-                (let ((*object (object->pointer (car objects))))
-                  (let ((*filename (source-filename *object)))
-                    (unless (null-pointer? *filename)
-                      ;; We got a schematic source attribute.
-                      ;; Let's load the page and dive into it.
-                      (let ((*child-page
-                             (hierarchy-down-schematic window
-                                                       (pointer->string *filename)
-                                                       page
-                                                       0
-                                                       *error
-                                                       (make-scheme-error-handler
-                                                        (pointer->string *filename)))))
-                        (and *child-page
-                             (if (not (null-pointer? *child-page))
-                                 ;; Call the recursive function.
-                                 (traverse-pages *window *child-page *pages)
-                                 (gerror-handler (pointer->string *filename)))))
+                (let ((*filename (source-filename (object->pointer (car objects)))))
+                  (unless (null-pointer? *filename)
+                    ;; We got a schematic source attribute.
+                    ;; Let's load the page and dive into it.
+                    (let ((*child-page
+                           (hierarchy-down-schematic window
+                                                     (pointer->string *filename)
+                                                     page
+                                                     0
+                                                     *error
+                                                     (make-scheme-error-handler
+                                                      (pointer->string *filename)))))
+                      (and *child-page
+                           (if (not (null-pointer? *child-page))
+                               ;; Call the recursive function.
+                               (traverse-pages *window *child-page *pages)
+                               (gerror-handler (pointer->string *filename)))))
 
-                      (g_free *filename)))
+                    (g_free *filename))
                   (loop (cdr objects))))))))
 
   (traverse-pages *window *page %null-pointer))
