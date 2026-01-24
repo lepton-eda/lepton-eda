@@ -31,6 +31,7 @@
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -90,11 +91,10 @@
         (let ((*pages (g_list_append *pages *page)))
           ;; Walk through the page objects and search for
           ;; underlaying schematics.
-          (let loop ((*objects (glist->list (lepton_page_objects *page)
-                                            identity)))
-            (if (null? *objects)
+          (let loop ((objects (page-contents (pointer->page *page))))
+            (if (null? objects)
                 *pages
-                (let ((*object (car *objects)))
+                (let ((*object (object->pointer (car objects))))
                   ;; Only complex things like symbols can contain
                   ;; attributes.
                   (when (true? (lepton_object_is_component *object))
@@ -129,7 +129,7 @@
                                    (gerror-handler (pointer->string *filename)))))
 
                         (g_free *filename))))
-                  (loop (cdr *objects))))))))
+                  (loop (cdr objects))))))))
 
   (traverse-pages *window *page %null-pointer))
 
