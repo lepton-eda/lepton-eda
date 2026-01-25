@@ -173,7 +173,7 @@
    (schematic_autonumber_get_autotext_window *autotext)))
 
 
-(define (autonumber-by-template! *autotext *window *pages page-list *template scope-number)
+(define (autonumber-by-template! *autotext *window page-list *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
   ;; Decide whether to renumber page by page or get a global
@@ -382,7 +382,6 @@
              (lambda (template)
                (autonumber-by-template! *autotext
                                         *window
-                                        *pages
                                         page-list
                                         (string->pointer template)
                                         scope-number))
