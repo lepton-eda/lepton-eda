@@ -23,6 +23,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton autonumber)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
@@ -31,7 +32,6 @@
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
-  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -80,20 +80,18 @@
             (format #f "~?" message args))
       #f))
 
+  (define (source-attrib? attrib)
+    (string= (attrib-name attrib) "source"))
+
   (define (source-filename object)
-    (define *object (object->pointer object))
-    (let ((*attached-source-filename
-           (lepton_attrib_search_attached_attribs_by_name
-            *object
-            (string->pointer "source")
-            0)))
-      (if (null-pointer? *attached-source-filename)
-          ;; If above is NULL then look inside symbol.
-          (lepton_attrib_search_inherited_attribs_by_name
-           *object
-           (string->pointer "source")
-           0)
-          *attached-source-filename)))
+    (let ((attached-attribs (filter source-attrib?
+                                    (object-attribs object))))
+      (if (null? attached-attribs)
+          (let ((inherited-source-attribs
+                 (filter source-attrib? (inherited-attribs object))))
+            (and (not (null? inherited-source-attribs))
+                 (attrib-value (car inherited-source-attribs))))
+          (attrib-value (car attached-attribs)))))
 
   (define (traverse-pages *window *page *pages)
     ;; Preorder traversing.
@@ -105,31 +103,27 @@
         ;; process its contents.
         (let ((*pages (g_list_append *pages *page)))
           ;; Search for the list of underlaying schematic names.
-          (let loop ((*filenames (map source-filename
-                                      (filter component?
-                                              (page-contents (pointer->page *page))))))
-            (if (null? *filenames)
+          (let loop ((filenames (filter-map source-filename
+                                            (filter component?
+                                                    (page-contents (pointer->page *page))))))
+            (if (null? filenames)
                 *pages
-                (let ((*filename (car *filenames)))
-                  (unless (null-pointer? *filename)
-                    ;; We got a schematic source attribute.
-                    ;; Let's load the page and dive into it.
-                    (let ((*child-page
-                           (hierarchy-down-schematic window
-                                                     (pointer->string *filename)
-                                                     page
-                                                     0
-                                                     *error
-                                                     (make-scheme-error-handler
-                                                      (pointer->string *filename)))))
-                      (and *child-page
-                           (if (not (null-pointer? *child-page))
-                               ;; Call the recursive function.
-                               (traverse-pages *window *child-page *pages)
-                               (gerror-handler (pointer->string *filename)))))
-
-                    (g_free *filename))
-                  (loop (cdr *filenames))))))))
+                ;; We got a schematic source attribute.
+                ;; Let's load the page and dive into it.
+                (let* ((filename (car filenames))
+                       (*child-page
+                        (hierarchy-down-schematic window
+                                                  filename
+                                                  page
+                                                  0
+                                                  *error
+                                                  (make-scheme-error-handler filename))))
+                  (and *child-page
+                       (if (not (null-pointer? *child-page))
+                           ;; Call the recursive function.
+                           (traverse-pages *window *child-page *pages)
+                           (gerror-handler filename)))
+                  (loop (cdr filenames))))))))
 
   (traverse-pages *window *page %null-pointer))
 
