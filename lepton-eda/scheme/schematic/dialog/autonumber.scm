@@ -292,7 +292,7 @@
     (if (eq? scope 'scope-hierarchy)
         (glist->list *pages pointer->page)
         ;; The text will be searched for only in the current page.
-        (list (pointer->page *active-page))))
+        (list active-page)))
 
   (define scope-text
     (pointer->string
