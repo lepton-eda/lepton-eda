@@ -89,6 +89,12 @@
           (filter source-attrib? (inherited-attribs component))
           attached-attribs)))
 
+  (define (page-source-filenames page)
+    (append-map split-attrib-value
+                (append-map source-attribs
+                            (filter component?
+                                    (page-contents page)))))
+
   (define (traverse-pages page pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
@@ -100,11 +106,7 @@
         (let ((pages (cons page pages))
               ;; Search for the list of underlaying schematic
               ;; names.
-              (filenames
-               (append-map split-attrib-value
-                           (append-map source-attribs
-                                       (filter component?
-                                               (page-contents page))))))
+              (filenames (page-source-filenames page)))
           (if (null? filenames)
               pages
               (let loop ((pages pages)
