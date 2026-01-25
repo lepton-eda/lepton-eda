@@ -83,7 +83,7 @@
   (define (source-attrib? attrib)
     (string= (attrib-name attrib) "source"))
 
-  (define (source-filename component)
+  (define (source-attribs component)
     (let ((attached-attribs (filter source-attrib?
                                     (object-attribs component))))
       (if (null? attached-attribs)
@@ -102,7 +102,7 @@
           ;; Search for the list of underlaying schematic names.
           (let loop ((filenames
                       (map attrib-value
-                           (append-map source-filename
+                           (append-map source-attribs
                                        (filter component?
                                                (page-contents (pointer->page *page)))))))
             (if (null? filenames)
