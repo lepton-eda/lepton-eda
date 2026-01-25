@@ -98,7 +98,7 @@
         *pages
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
-        (let ((*pages (append *pages (list *page)))
+        (let ((*pages (cons *page *pages))
               ;; Search for the list of underlaying schematic
               ;; names.
               (filenames
@@ -295,7 +295,8 @@
   ;; Get all pages of the hierarchy.
   (define page-list
     (if (eq? scope 'scope-hierarchy)
-        (map pointer->page (hierarchy-traverse-pages window active-page))
+        (map pointer->page
+             (reverse (hierarchy-traverse-pages window active-page)))
         ;; The text will be searched for only in the current page.
         (list active-page)))
 
