@@ -109,7 +109,8 @@
   (define (traverse-pages page pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
-    (if (memq page pages)
+    (if (or (not page)
+            (memq page pages))
         ;; Drop the page subtree.
         pages
         ;; Otherwise add the page to the list of visited pages and
@@ -124,11 +125,8 @@
               (loop
                ;; We got a schematic source attribute.
                ;; Let's load the page and dive into it.
-               (let ((child-page (filename-page (car filenames) page)))
-                 (if child-page
-                     ;; Call the recursive function.
-                     (traverse-pages child-page pages)
-                     pages))
+               (traverse-pages (filename-page (car filenames) page)
+                               pages)
                (cdr filenames))))))
 
 
