@@ -52,7 +52,6 @@
 ;;; PAGE.
 (define (hierarchy-traverse-pages window page)
   (define *window (check-window window 1))
-  (define *page (check-page page 2))
 
   (define *error
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
@@ -90,28 +89,28 @@
           (filter source-attrib? (inherited-attribs component))
           attached-attribs)))
 
-  (define (traverse-pages *page *pages)
+  (define (traverse-pages page pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
-    (if (member *page *pages)
+    (if (memq page pages)
         ;; Drop the page subtree.
-        *pages
+        pages
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
-        (let ((*pages (cons *page *pages))
+        (let ((pages (cons page pages))
               ;; Search for the list of underlaying schematic
               ;; names.
               (filenames
                (append-map split-attrib-value
                            (append-map source-attribs
                                        (filter component?
-                                               (page-contents (pointer->page *page)))))))
+                                               (page-contents page))))))
           (if (null? filenames)
-              *pages
-              (let loop ((*pages *pages)
+              pages
+              (let loop ((pages pages)
                          (filenames filenames))
                 (if (null? filenames)
-                    *pages
+                    pages
 
                     ;; We got a schematic source attribute.
                     ;; Let's load the page and dive into it.
@@ -126,14 +125,15 @@
                       (if *child-page
                           (if (not (null-pointer? *child-page))
                               ;; Call the recursive function.
-                              (loop (traverse-pages *child-page *pages)
+                              (loop (traverse-pages (pointer->page *child-page) pages)
                                     (cdr filenames))
+
                               (begin
                                 (gerror-handler filename)
-                                (loop *pages (cdr filenames))))
-                          (loop *pages (cdr filenames))))))))))
-
-  (traverse-pages *page '()))
+                                (loop pages (cdr filenames))))
+                          (loop pages (cdr filenames))))))))))
+  (check-page page 2)
+  (traverse-pages page '()))
 
 
 (define (scope-number->symbol scope-number)
@@ -295,8 +295,7 @@
   ;; Get all pages of the hierarchy.
   (define page-list
     (if (eq? scope 'scope-hierarchy)
-        (map pointer->page
-             (reverse (hierarchy-traverse-pages window active-page)))
+        (reverse (hierarchy-traverse-pages window active-page))
         ;; The text will be searched for only in the current page.
         (list active-page)))
 
