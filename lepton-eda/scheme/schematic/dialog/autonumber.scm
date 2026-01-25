@@ -121,14 +121,16 @@
           (if (null? filenames)
               pages
 
-              ;; We got a schematic source attribute.
-              ;; Let's load the page and dive into it.
-              (let ((child-page (filename-page (car filenames) page)))
-                (if child-page
-                    ;; Call the recursive function.
-                    (loop (traverse-pages child-page pages)
-                          (cdr filenames))
-                    (loop pages (cdr filenames))))))))
+              (loop
+               ;; We got a schematic source attribute.
+               ;; Let's load the page and dive into it.
+               (let ((child-page (filename-page (car filenames) page)))
+                 (if child-page
+                     ;; Call the recursive function.
+                     (traverse-pages child-page pages)
+                     pages))
+               (cdr filenames))))))
+
 
   (check-window window 1)
   (check-page page 2)
