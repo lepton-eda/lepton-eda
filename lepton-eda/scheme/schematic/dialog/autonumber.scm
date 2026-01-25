@@ -87,10 +87,8 @@
     (let ((attached-attribs (filter source-attrib?
                                     (object-attribs component))))
       (if (null? attached-attribs)
-          (let ((inherited-source-attribs
-                 (filter source-attrib? (inherited-attribs component))))
-            (map attrib-value inherited-source-attribs))
-          (map attrib-value attached-attribs))))
+          (filter source-attrib? (inherited-attribs component))
+          attached-attribs)))
 
   (define (traverse-pages *window *page *pages)
     ;; Preorder traversing.
@@ -103,9 +101,10 @@
         (let ((*pages (g_list_append *pages *page)))
           ;; Search for the list of underlaying schematic names.
           (let loop ((filenames
-                      (append-map source-filename
-                                  (filter component?
-                                          (page-contents (pointer->page *page))))))
+                      (map attrib-value
+                           (append-map source-filename
+                                       (filter component?
+                                               (page-contents (pointer->page *page)))))))
             (if (null? filenames)
                 *pages
                 ;; We got a schematic source attribute.
