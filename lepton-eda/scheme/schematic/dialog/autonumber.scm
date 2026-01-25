@@ -101,31 +101,40 @@
         *pages
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
-        (let ((*pages (g_list_append *pages *page)))
-          ;; Search for the list of underlaying schematic names.
-          (let loop ((filenames
-                      (append-map split-attrib-value
-                                  (append-map source-attribs
-                                              (filter component?
-                                                      (page-contents (pointer->page *page)))))))
-            (if (null? filenames)
-                *pages
-                ;; We got a schematic source attribute.
-                ;; Let's load the page and dive into it.
-                (let* ((filename (car filenames))
-                       (*child-page
-                        (hierarchy-down-schematic window
-                                                  filename
-                                                  page
-                                                  0
-                                                  *error
-                                                  (make-scheme-error-handler filename))))
-                  (and *child-page
-                       (if (not (null-pointer? *child-page))
-                           ;; Call the recursive function.
-                           (traverse-pages *child-page *pages)
-                           (gerror-handler filename)))
-                  (loop (cdr filenames))))))))
+        (let ((*pages (g_list_append *pages *page))
+              ;; Search for the list of underlaying schematic
+              ;; names.
+              (filenames
+               (append-map split-attrib-value
+                           (append-map source-attribs
+                                       (filter component?
+                                               (page-contents (pointer->page *page)))))))
+          (if (null? filenames)
+              *pages
+              (let loop ((*pages *pages)
+                         (filenames filenames))
+                (if (null? filenames)
+                    *pages
+
+                    ;; We got a schematic source attribute.
+                    ;; Let's load the page and dive into it.
+                    (let* ((filename (car filenames))
+                           (*child-page
+                            (hierarchy-down-schematic window
+                                                      filename
+                                                      page
+                                                      0
+                                                      *error
+                                                      (make-scheme-error-handler filename))))
+                      (if *child-page
+                          (if (not (null-pointer? *child-page))
+                              ;; Call the recursive function.
+                              (loop (traverse-pages *child-page *pages)
+                                    (cdr filenames))
+                              (begin
+                                (gerror-handler filename)
+                                (loop *pages (cdr filenames))))
+                          (loop *pages (cdr filenames))))))))))
 
   (traverse-pages *page %null-pointer))
 
