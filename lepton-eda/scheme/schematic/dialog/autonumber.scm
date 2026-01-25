@@ -56,6 +56,21 @@
   (define *window (check-window window 1))
   (define *page (check-page page 2))
 
+  (define *error
+    (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+
+  (define (gerror-handler filename)
+    (let ((error-message
+           (if (or (null-pointer? *error)
+                   (null-pointer? (dereference-pointer *error)))
+               (G_ "Unknown error.")
+               (gerror-message (dereference-pointer *error)))))
+      (log! 'message
+            (G_ "Failed to descend hierarchy into ~S: ~A")
+            filename
+            error-message)
+      (g_clear_error *error)))
+
   (define (make-scheme-error-handler filename)
     (lambda (key subr message args rest)
       (log! 'message
@@ -99,30 +114,19 @@
                       (unless (null-pointer? *filename)
                         ;; We got a schematic source attribute.
                         ;; Let's load the page and dive into it.
-                        (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-                               (*child-page
-                                (hierarchy-down-schematic window
-                                                          (pointer->string *filename)
-                                                          page
-                                                          0
-                                                          *error
-                                                          (make-scheme-error-handler
-                                                           (pointer->string *filename)))))
+                        (let ((*child-page
+                               (hierarchy-down-schematic window
+                                                         (pointer->string *filename)
+                                                         page
+                                                         0
+                                                         *error
+                                                         (make-scheme-error-handler
+                                                          (pointer->string *filename)))))
                           (and *child-page
                                (if (not (null-pointer? *child-page))
                                    ;; Call the recursive function.
                                    (traverse-pages *window *child-page *pages)
-
-                                   (let ((error-message
-                                          (if (or (null-pointer? *error)
-                                                  (null-pointer? (dereference-pointer *error)))
-                                              (G_ "Unknown error.")
-                                              (gerror-message (dereference-pointer *error)))))
-                                     (log! 'message
-                                           (G_ "Failed to descend hierarchy into ~S: ~A")
-                                           (pointer->string *filename)
-                                           error-message)
-                                     (g_clear_error *error)))))
+                                   (gerror-handler (pointer->string *filename)))))
 
                         (g_free *filename))))
                   (loop (cdr *objects))))))))
