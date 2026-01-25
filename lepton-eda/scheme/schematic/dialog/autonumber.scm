@@ -80,6 +80,9 @@
             (format #f "~?" message args))
       #f))
 
+  (define (split-attrib-value object)
+    (string-split (attrib-value object) #\,))
+
   (define (source-attrib? attrib)
     (string= (attrib-name attrib) "source"))
 
@@ -101,10 +104,10 @@
         (let ((*pages (g_list_append *pages *page)))
           ;; Search for the list of underlaying schematic names.
           (let loop ((filenames
-                      (map attrib-value
-                           (append-map source-attribs
-                                       (filter component?
-                                               (page-contents (pointer->page *page)))))))
+                      (append-map split-attrib-value
+                                  (append-map source-attribs
+                                              (filter component?
+                                                      (page-contents (pointer->page *page)))))))
             (if (null? filenames)
                 *pages
                 ;; We got a schematic source attribute.
