@@ -93,7 +93,7 @@
           (filter source-attrib? (inherited-attribs component))
           attached-attribs)))
 
-  (define (traverse-pages *window *page *pages)
+  (define (traverse-pages *page *pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
     (if (not (null-pointer? (g_list_find *pages *page)))
@@ -123,11 +123,11 @@
                   (and *child-page
                        (if (not (null-pointer? *child-page))
                            ;; Call the recursive function.
-                           (traverse-pages *window *child-page *pages)
+                           (traverse-pages *child-page *pages)
                            (gerror-handler filename)))
                   (loop (cdr filenames))))))))
 
-  (traverse-pages *window *page %null-pointer))
+  (traverse-pages *page %null-pointer))
 
 
 (define (scope-number->symbol scope-number)
