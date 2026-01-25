@@ -83,12 +83,12 @@
   (define (source-attrib? attrib)
     (string= (attrib-name attrib) "source"))
 
-  (define (source-filename object)
+  (define (source-filename component)
     (let ((attached-attribs (filter source-attrib?
-                                    (object-attribs object))))
+                                    (object-attribs component))))
       (if (null? attached-attribs)
           (let ((inherited-source-attribs
-                 (filter source-attrib? (inherited-attribs object))))
+                 (filter source-attrib? (inherited-attribs component))))
             (map attrib-value inherited-source-attribs))
           (map attrib-value attached-attribs))))
 
