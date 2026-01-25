@@ -93,6 +93,19 @@
                             (filter component?
                                     (page-contents page)))))
 
+  (define (filename-page filename parent-page)
+    (let ((*child-page
+           (hierarchy-down-schematic window
+                                     filename
+                                     parent-page
+                                     0
+                                     *error
+                                     (make-scheme-error-handler filename))))
+      (and *child-page
+           (if (null-pointer? *child-page)
+               (begin (gerror-handler filename) #f)
+               (pointer->page *child-page)))))
+
   (define (traverse-pages page pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
@@ -110,23 +123,11 @@
 
               ;; We got a schematic source attribute.
               ;; Let's load the page and dive into it.
-              (let* ((filename (car filenames))
-                     (*child-page
-                      (hierarchy-down-schematic window
-                                                filename
-                                                page
-                                                0
-                                                *error
-                                                (make-scheme-error-handler filename))))
-                (if *child-page
-                    (if (not (null-pointer? *child-page))
-                        ;; Call the recursive function.
-                        (loop (traverse-pages (pointer->page *child-page) pages)
-                              (cdr filenames))
-
-                        (begin
-                          (gerror-handler filename)
-                          (loop pages (cdr filenames))))
+              (let ((child-page (filename-page (car filenames) page)))
+                (if child-page
+                    ;; Call the recursive function.
+                    (loop (traverse-pages child-page pages)
+                          (cdr filenames))
                     (loop pages (cdr filenames))))))))
 
   (check-window window 1)
