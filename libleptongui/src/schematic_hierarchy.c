@@ -36,6 +36,24 @@ schematic_hierarchy_increment_page_control_counter ()
   page_control_counter++;
 }
 
+
+/*! \brief Set the error \a EDA_ERROR_NOLIB.
+ *
+ *  \par Function Description
+ *  Sets the \c GError argument \p err to \a EDA_ERROR_NOLIB.
+ *  This function is intended to be called from Scheme until a
+ *  Scheme replacement function is introduced.
+ *
+ *  \param [in,out] err The \c GError pointer.
+ */
+void
+schematic_hierarchy_set_error_nolib (GError **err)
+{
+  g_set_error (err, EDA_ERROR, EDA_ERROR_NOLIB,
+               _("Schematic not found in source library."));
+}
+
+
 /*!
  *  \brief Search for schematic associated source files and load them.
  *  \par Function Description
@@ -73,9 +91,9 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                                                "get-source-library-file"),
                              scm_from_utf8_string (filename));
 
-  if (scm_is_false (string_s)) {
-    g_set_error (err, EDA_ERROR, EDA_ERROR_NOLIB,
-                 _("Schematic not found in source library."));
+  if (scm_is_false (string_s))
+  {
+    schematic_hierarchy_set_error_nolib (err);
     return NULL;
   }
 

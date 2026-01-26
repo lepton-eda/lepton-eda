@@ -1329,6 +1329,9 @@ schematic_hierarchy_get_page_control_counter ();
 void
 schematic_hierarchy_increment_page_control_counter ();
 
+void
+schematic_hierarchy_set_error_nolib (GError **err);
+
 LeptonPage*
 s_hierarchy_down_schematic_single (SchematicWindow *w_current,
                                    const gchar *filename,
