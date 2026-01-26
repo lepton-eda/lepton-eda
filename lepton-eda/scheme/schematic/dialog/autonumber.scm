@@ -95,7 +95,13 @@
                                                           (pointer->string *filename)
                                                           page
                                                           0
-                                                          *error)))
+                                                          *error
+                                                          (lambda (key subr message args rest)
+                                                            (log! 'message
+                                                                  (G_ "Failed to descend hierarchy into ~S: ~A")
+                                                                  (pointer->string *filename)
+                                                                  message)
+                                                            %null-pointer))))
                           (if (not (null-pointer? *child-page))
                               ;; Call the recursive function.
                               (traverse-pages *window *child-page *pages)

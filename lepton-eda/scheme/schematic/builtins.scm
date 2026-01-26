@@ -19,6 +19,7 @@
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic builtins)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 match)
   #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
@@ -1124,6 +1125,15 @@ the snap grid size should be set to 100")))
     (g_clear_error *error)))
 
 (define (hierarchy-down-filename filename *window *parent page-control)
+  (define (scheme-error-handler key subr message args rest)
+    (let ((secondary-message
+           (failed-to-descend-error filename (format #f "~?" message args))))
+
+      (schematic-error-dialog (G_ "Failed to descend hierarchy.")
+                              #:secondary-text secondary-message))
+    ;; hierarchy-down-schematic() has to return a pointer, anyway.
+    %null-pointer)
+
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
@@ -1132,7 +1142,8 @@ the snap grid size should be set to 100")))
                                            filename
                                            (pointer->page *parent)
                                            page-control
-                                           *error)))
+                                           *error
+                                           scheme-error-handler)))
     (if (null-pointer? *child)
         ;; Launch the error dialog.
         (begin

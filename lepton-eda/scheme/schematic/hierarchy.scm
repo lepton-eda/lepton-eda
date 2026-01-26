@@ -30,11 +30,11 @@
   #:export (hierarchy-down-schematic))
 
 
-(define (hierarchy-down-schematic window
-                                  filename
-                                  parent-page
-                                  page-control
-                                  *error)
+(define (*hierarchy-down-schematic window
+                                   filename
+                                   parent-page
+                                   page-control
+                                   *error)
   (define *window (check-window window 1))
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
@@ -53,3 +53,20 @@
           (schematic_hierarchy_set_error_nolib *error)
 
           %null-pointer))))
+
+
+(define (hierarchy-down-schematic window
+                                  filename
+                                  parent-page
+                                  page-control
+                                  *error
+                                  scheme-error-handler)
+  (catch #t
+    (lambda ()
+      (*hierarchy-down-schematic window
+                                 filename
+                                 parent-page
+                                 page-control
+                                 *error))
+    ;; (lambda (key subr message args rest) ...)
+    scheme-error-handler))
