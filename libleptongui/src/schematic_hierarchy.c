@@ -54,6 +54,23 @@ schematic_hierarchy_set_error_nolib (GError **err)
 }
 
 
+/*! \brief Set the error \a EDA_ERROR_LOOP.
+ *
+ *  \par Function Description
+ *  Sets the \c GError argument \p err to \a EDA_ERROR_LOOP.
+ *  This function is intended to be called from Scheme until a
+ *  Scheme replacement function is introduced.
+ *
+ *  \param [in,out] err The \c GError pointer.
+ */
+void
+schematic_hierarchy_set_error_loop (GError **err)
+{
+  g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
+               _("Hierarchy contains a circular dependency."));
+}
+
+
 /*!
  *  \brief Search for schematic associated source files and load them.
  *  \par Function Description
@@ -93,8 +110,7 @@ s_hierarchy_down_schematic_single (SchematicWindow *w_current,
   if (forbear != NULL
       && lepton_page_get_pid (found) == lepton_page_get_pid (forbear))
   {
-    g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
-                 _("Hierarchy contains a circular dependency."));
+    schematic_hierarchy_set_error_loop (err);
     return NULL;  /* error signal */
   }
   else
