@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog autonumber)
+  #:use-module (ice-9 format)
   #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
@@ -100,7 +101,7 @@
                                                             (log! 'message
                                                                   (G_ "Failed to descend hierarchy into ~S: ~A")
                                                                   (pointer->string *filename)
-                                                                  message)
+                                                                  (format #f "~?" message args))
                                                             %null-pointer))))
                           (if (not (null-pointer? *child-page))
                               ;; Call the recursive function.
