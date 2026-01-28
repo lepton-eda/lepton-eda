@@ -102,21 +102,22 @@
                                                                   (G_ "Failed to descend hierarchy into ~S: ~A")
                                                                   (pointer->string *filename)
                                                                   (format #f "~?" message args))
-                                                            %null-pointer))))
-                          (if (not (null-pointer? *child-page))
-                              ;; Call the recursive function.
-                              (traverse-pages *window *child-page *pages)
+                                                            #f))))
+                          (and *child-page
+                               (if (not (null-pointer? *child-page))
+                                   ;; Call the recursive function.
+                                   (traverse-pages *window *child-page *pages)
 
-                              (let ((error-message
-                                     (if (or (null-pointer? *error)
-                                             (null-pointer? (dereference-pointer *error)))
-                                         (G_ "Unknown error.")
-                                         (gerror-message (dereference-pointer *error)))))
-                                (log! 'message
-                                      (G_ "Failed to descend hierarchy into ~S: ~A")
-                                      (pointer->string *filename)
-                                      error-message)
-                                (g_clear_error *error))))
+                                   (let ((error-message
+                                          (if (or (null-pointer? *error)
+                                                  (null-pointer? (dereference-pointer *error)))
+                                              (G_ "Unknown error.")
+                                              (gerror-message (dereference-pointer *error)))))
+                                     (log! 'message
+                                           (G_ "Failed to descend hierarchy into ~S: ~A")
+                                           (pointer->string *filename)
+                                           error-message)
+                                     (g_clear_error *error)))))
 
                         (g_free *filename))))
                   (loop (cdr *objects))))))))

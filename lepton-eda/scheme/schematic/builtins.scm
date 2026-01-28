@@ -1131,8 +1131,7 @@ the snap grid size should be set to 100")))
 
       (schematic-error-dialog (G_ "Failed to descend hierarchy.")
                               #:secondary-text secondary-message))
-    ;; hierarchy-down-schematic() has to return a pointer, anyway.
-    %null-pointer)
+    #f)
 
   (define use-tabs? (true? (x_tabs_enabled)))
 
@@ -1144,24 +1143,25 @@ the snap grid size should be set to 100")))
                                            page-control
                                            *error
                                            scheme-error-handler)))
-    (if (null-pointer? *child)
-        ;; Launch the error dialog.
-        (begin
-          (hierarchy-down-error-dialog filename *error)
-          #f)
-        ;; Open the child page.
-        (begin
-          ;; Notify window that another page became active.
-          (schematic_window_page_changed *window)
-          (if use-tabs?
-              ;; Tabbed GUI is used.  Create a tab for every
-              ;; subpage loaded.  Zoom will be set in
-              ;; set-tab-page!().
-              (*window-set-current-page! *window *child)
-              ;; hierarchy-down-schematic() does not zoom
-              ;; the loaded page, so zoom it here.
-              (zoom-child-page *window *parent *child))
-          *child))))
+    (and *child
+         (if (null-pointer? *child)
+             ;; Launch the error dialog.
+             (begin
+               (hierarchy-down-error-dialog filename *error)
+               #f)
+             ;; Open the child page.
+             (begin
+               ;; Notify window that another page became active.
+               (schematic_window_page_changed *window)
+               (if use-tabs?
+                   ;; Tabbed GUI is used.  Create a tab for every
+                   ;; subpage loaded.  Zoom will be set in
+                   ;; set-tab-page!().
+                   (*window-set-current-page! *window *child)
+                   ;; hierarchy-down-schematic() does not zoom
+                   ;; the loaded page, so zoom it here.
+                   (zoom-child-page *window *parent *child))
+               *child)))))
 
 (define (hierarchy-filenames->pages filenames *window *parent)
   (let loop ((page-control 0)
