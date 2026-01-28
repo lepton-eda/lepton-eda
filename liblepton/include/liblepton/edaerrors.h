@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2012 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ typedef enum {
   EDA_ERROR_RC_TWICE, /* Attempted to read a configuration file twice */
   EDA_ERROR_PARSE,    /* Schematic data could not be parsed. */
   EDA_ERROR_NOLIB,    /* A requested library resource was missing. */
-  EDA_ERROR_LOOP,     /* The data model contains a circular dependency. */
   EDA_ERROR_UNKNOWN_ENCODING, /* Schematic data was not UTF-8-encoded. */
   EDA_ERROR_NUM_ERRORS
 } EdaError;
