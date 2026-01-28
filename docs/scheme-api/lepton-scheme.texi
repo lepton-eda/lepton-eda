@@ -2969,6 +2969,21 @@ a local file.  Convenience function which calls
 @code{(show-uri "file://@var{filename}")}
 @end defun
 
+@subsection lepton-schematic hierarchy processing errors
+During traversing a hierarchical schematic, lepton-schematic may raise
+errors with the following keys:
+
+@deffn Key hierarchy-loop
+Raised when a circular dependency is found when traversing
+subschematics of a hierarchical schematic.
+@end deffn
+
+@deffn Key missing-resource
+Raised when a named resource, typically a schematic file, is not found
+in the source library.
+@end deffn
+
+
 @node lepton-netlist API Reference
 @chapter lepton-netlist API Reference
 
