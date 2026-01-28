@@ -56,6 +56,14 @@
   (define *window (check-window window 1))
   (define *page (check-page page 2))
 
+  (define (make-scheme-error-handler filename)
+    (lambda (key subr message args rest)
+      (log! 'message
+            (G_ "Failed to descend hierarchy into ~S: ~A")
+            filename
+            (format #f "~?" message args))
+      #f))
+
   (define (traverse-pages *window *page *pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
@@ -98,12 +106,8 @@
                                                           page
                                                           0
                                                           *error
-                                                          (lambda (key subr message args rest)
-                                                            (log! 'message
-                                                                  (G_ "Failed to descend hierarchy into ~S: ~A")
-                                                                  (pointer->string *filename)
-                                                                  (format #f "~?" message args))
-                                                            #f))))
+                                                          (make-scheme-error-handler
+                                                           (pointer->string *filename)))))
                           (and *child-page
                                (if (not (null-pointer? *child-page))
                                    ;; Call the recursive function.
