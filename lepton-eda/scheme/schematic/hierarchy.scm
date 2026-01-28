@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
   #:use-module (lepton library)
   #:use-module (lepton page foreign)
 
@@ -88,11 +89,11 @@
                 (if (and (not (null-pointer? *forebear-page))
                          (= (lepton_page_get_pid *found-page)
                             (lepton_page_get_pid *forebear-page)))
-                    (begin
-                      (schematic_hierarchy_set_error_loop *error)
-                      ;; Error signal.
-                      %null-pointer)
-
+                    (scm-error 'hierarchy-loop
+                               #f
+                               (G_ "Hierarchy contains a circular dependency.")
+                               '()
+                               #f)
                     (begin
                       (lepton_toplevel_goto_page *toplevel *found-page)
                       (unless (zero? page-control)

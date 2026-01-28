@@ -54,23 +54,6 @@ schematic_hierarchy_set_error_nolib (GError **err)
 }
 
 
-/*! \brief Set the error \a EDA_ERROR_LOOP.
- *
- *  \par Function Description
- *  Sets the \c GError argument \p err to \a EDA_ERROR_LOOP.
- *  This function is intended to be called from Scheme until a
- *  Scheme replacement function is introduced.
- *
- *  \param [in,out] err The \c GError pointer.
- */
-void
-schematic_hierarchy_set_error_loop (GError **err)
-{
-  g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
-               _("Hierarchy contains a circular dependency."));
-}
-
-
 /*! \brief Search for the parent page of a page in hierarchy.
  *  \par Function Description
  *  This function searches the parent page of page \a page in the

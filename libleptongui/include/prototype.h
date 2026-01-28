@@ -1330,9 +1330,6 @@ void
 schematic_hierarchy_increment_page_control_counter ();
 
 void
-schematic_hierarchy_set_error_loop (GError **err);
-
-void
 schematic_hierarchy_set_error_nolib (GError **err);
 
 LeptonPage*

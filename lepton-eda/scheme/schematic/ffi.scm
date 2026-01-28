@@ -265,7 +265,6 @@
 
             schematic_hierarchy_get_page_control_counter
             schematic_hierarchy_increment_page_control_counter
-            schematic_hierarchy_set_error_loop
             schematic_hierarchy_set_error_nolib
             s_hierarchy_find_up_page
 
@@ -818,7 +817,6 @@
 ;;; schematic_hierarchy.c
 (define-lff schematic_hierarchy_get_page_control_counter int '())
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
-(define-lff schematic_hierarchy_set_error_loop void '(*))
 (define-lff schematic_hierarchy_set_error_nolib void '(*))
 (define-lff s_hierarchy_find_up_page '* '(*))
 
