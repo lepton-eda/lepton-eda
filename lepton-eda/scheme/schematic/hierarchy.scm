@@ -101,10 +101,11 @@
                       (lepton_page_set_up *found-page (lepton_page_get_pid *parent-page))
                       ;; return
                       *found-page)))))
-        (begin
-          (schematic_hierarchy_set_error_nolib *error)
-
-          %null-pointer))))
+        (scm-error 'missing-resource
+                   #f
+                   (G_ "Schematic ~S not found in source library.")
+                   (list filename)
+                   #f))))
 
 
 (define (hierarchy-down-schematic window
