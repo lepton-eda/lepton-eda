@@ -117,16 +117,14 @@
               ;; Drop the page subtree.
               (traverse-pages (cdr new-pages) visited-pages)
               ;; Otherwise add the page to the list of visited
-              ;; pages and process its contents.
-              (let ((new-visited-pages (cons page visited-pages))
-                    ;; Search for the list of underlaying
-                    ;; schematic names.
-                    (filename-pages
-                      (map (lambda (filename)
-                             (filename-page filename page))
-                           (page-source-filenames page))))
+              ;; pages and process its contents searching for the
+              ;; list of underlaying schematic names.
+              (let ((filename-pages
+                     (map (lambda (filename)
+                            (filename-page filename page))
+                          (page-source-filenames page))))
                 (traverse-pages (append filename-pages (cdr new-pages))
-                                new-visited-pages))))))
+                                (cons page visited-pages)))))))
 
 
   (check-window window 1)
