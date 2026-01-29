@@ -106,33 +106,32 @@
                (begin (gerror-handler filename) #f)
                (pointer->page *child-page)))))
 
-  (define (traverse-pages page visited-pages)
+  (define (traverse-pages new-pages visited-pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
-    (if (or (not page)
-            (memq page visited-pages))
-        ;; Drop the page subtree.
+    (if (null? new-pages)
         visited-pages
-        ;; Otherwise add the page to the list of visited pages and
-        ;; process its contents.
-        (let loop ((visited-pages (cons page visited-pages))
-                   ;; Search for the list of underlaying
-                   ;; schematic names.
-                   (filenames (page-source-filenames page)))
-          (if (null? filenames)
-              visited-pages
-
-              (loop
-               ;; We got a schematic source attribute.
-               ;; Let's load the page and dive into it.
-               (traverse-pages (filename-page (car filenames) page)
-                               visited-pages)
-               (cdr filenames))))))
+        (let ((page (car new-pages)))
+          (if (or (not page)
+                  (memq page visited-pages))
+              ;; Drop the page subtree.
+              (traverse-pages (cdr new-pages) visited-pages)
+              ;; Otherwise add the page to the list of visited
+              ;; pages and process its contents.
+              (let ((new-visited-pages (cons page visited-pages))
+                    ;; Search for the list of underlaying
+                    ;; schematic names.
+                    (filename-pages
+                      (map (lambda (filename)
+                             (filename-page filename page))
+                           (page-source-filenames page))))
+                (traverse-pages (append filename-pages (cdr new-pages))
+                                new-visited-pages))))))
 
 
   (check-window window 1)
   (check-page page 2)
-  (traverse-pages page '()))
+  (traverse-pages (list page) '()))
 
 
 (define (scope-number->symbol scope-number)
