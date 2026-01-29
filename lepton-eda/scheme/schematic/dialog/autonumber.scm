@@ -106,27 +106,27 @@
                (begin (gerror-handler filename) #f)
                (pointer->page *child-page)))))
 
-  (define (traverse-pages page pages)
+  (define (traverse-pages page visited-pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
     (if (or (not page)
-            (memq page pages))
+            (memq page visited-pages))
         ;; Drop the page subtree.
-        pages
+        visited-pages
         ;; Otherwise add the page to the list of visited pages and
         ;; process its contents.
-        (let loop ((pages (cons page pages))
+        (let loop ((visited-pages (cons page visited-pages))
                    ;; Search for the list of underlaying
                    ;; schematic names.
                    (filenames (page-source-filenames page)))
           (if (null? filenames)
-              pages
+              visited-pages
 
               (loop
                ;; We got a schematic source attribute.
                ;; Let's load the page and dive into it.
                (traverse-pages (filename-page (car filenames) page)
-                               pages)
+                               visited-pages)
                (cdr filenames))))))
 
 
