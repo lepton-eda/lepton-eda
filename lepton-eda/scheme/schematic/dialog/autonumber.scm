@@ -106,6 +106,11 @@
                (begin (gerror-handler filename) #f)
                (pointer->page *child-page)))))
 
+  (define (child-pages page)
+    (map
+     (lambda (filename) (filename-page filename page))
+     (page-source-filenames page)))
+
   (define (traverse-pages new-pages visited-pages)
     ;; Preorder traversing.
     ;; Check whether we already visited this page.
@@ -119,13 +124,9 @@
               ;; Otherwise add the page to the list of visited
               ;; pages and process its contents searching for the
               ;; list of underlaying schematic names.
-              (let ((filename-pages
-                     (map (lambda (filename)
-                            (filename-page filename page))
-                          (page-source-filenames page))))
-                (traverse-pages (append filename-pages (cdr new-pages))
-                                (cons page visited-pages)))))))
-
+              (traverse-pages (append (child-pages page)
+                                      (cdr new-pages))
+                              (cons page visited-pages))))))
 
   (check-window window 1)
   (check-page page 2)
