@@ -570,6 +570,22 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   some other text was entered.  Now the sensitivity of the button
   is restored.
 
+- A new module, `(schematic hierarchy)`, has been added.
+  Currently, the module exports the function
+  `hierarchy-down-schematic()` which implements opening
+  subschematics of a component.
+
+- Components with multiple *source* attributes or with a *source*
+  attribute having several comma delimited source filenames as a
+  value, are now processed correctly.  Before, the hierarchy
+  traversing autonumbering code processed only the first *source*
+  attribute of a component, doing even that wrong as a single
+  comma separated value of the attribute was interpreted as a
+  schematic name.  The code has been changed to take into account
+  several *source* attributes and to split *source* attribute
+  values with comma separated filenames beforehand, and thus
+  obtain correct filenames.
+
 
 ### Changes in `lepton-archive`:
 
