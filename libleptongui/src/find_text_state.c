@@ -617,15 +617,15 @@ schematic_find_text_state_get_pages (SchematicWindow *w_current,
     /** \todo the following function becomes available in glib 2.32 */
     /* if (g_hash_table_contains (visit_list, page)) { */
 
-    if (g_hash_table_lookup_extended (visit_list, page, NULL, NULL)) {
-      continue;
-    }
+    if (!g_hash_table_lookup_extended (visit_list, page, NULL, NULL))
+    {
 
-    output_list = g_slist_prepend (output_list, page);
-    g_hash_table_insert (visit_list, page, NULL);
+      output_list = g_slist_prepend (output_list, page);
+      g_hash_table_insert (visit_list, page, NULL);
 
-    if (descend) {
-      input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
+      if (descend) {
+        input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
+      }
     }
   }
 
