@@ -614,12 +614,8 @@ schematic_find_text_state_get_pages (SchematicWindow *w_current,
     }
     else
     {
-      /** \todo the following function becomes available in glib 2.32 */
-      /* if (g_hash_table_contains (visit_list, page)) { */
-
-      if (!g_hash_table_lookup_extended (visit_list, page, NULL, NULL))
+      if (!g_hash_table_contains (visit_list, page))
       {
-
         output_list = g_slist_prepend (output_list, page);
         g_hash_table_insert (visit_list, page, NULL);
 
