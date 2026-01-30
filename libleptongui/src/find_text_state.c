@@ -611,20 +611,21 @@ schematic_find_text_state_get_pages (SchematicWindow *w_current,
 
     if (page == NULL) {
       g_warning ("NULL page encountered");
-      continue;
     }
-
-    /** \todo the following function becomes available in glib 2.32 */
-    /* if (g_hash_table_contains (visit_list, page)) { */
-
-    if (!g_hash_table_lookup_extended (visit_list, page, NULL, NULL))
+    else
     {
+      /** \todo the following function becomes available in glib 2.32 */
+      /* if (g_hash_table_contains (visit_list, page)) { */
 
-      output_list = g_slist_prepend (output_list, page);
-      g_hash_table_insert (visit_list, page, NULL);
+      if (!g_hash_table_lookup_extended (visit_list, page, NULL, NULL))
+      {
 
-      if (descend) {
-        input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
+        output_list = g_slist_prepend (output_list, page);
+        g_hash_table_insert (visit_list, page, NULL);
+
+        if (descend) {
+          input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
+        }
       }
     }
   }
