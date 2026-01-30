@@ -586,52 +586,6 @@ find_objects_using_check (GSList *pages)
 }
 
 
-/*! \brief obtain a list of pages for an operation
- *
- *  Descends the hierarchy of pages, if selected, and removes duplicate pages.
- *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] pages the list of pages to begin search
- *  \param [in] descend alose locates subpages
- *  \return a list of all the pages
- */
-GSList*
-schematic_find_text_state_get_pages (SchematicWindow *w_current,
-                                     GList *pages,
-                                     gboolean descend)
-{
-  GList *input_list = g_list_copy (pages);
-  GSList *output_list = NULL;
-  GHashTable *visit_list = g_hash_table_new (NULL, NULL);
-
-  while (input_list != NULL) {
-    LeptonPage *page = (LeptonPage*) input_list->data;
-
-    input_list = g_list_delete_link (input_list, input_list);
-
-    if (page == NULL) {
-      g_warning ("NULL page encountered");
-    }
-    else
-    {
-      if (!g_hash_table_contains (visit_list, page))
-      {
-        output_list = g_slist_prepend (output_list, page);
-        g_hash_table_insert (visit_list, page, NULL);
-
-        if (descend) {
-          input_list = g_list_concat (input_list, schematic_find_text_state_get_subpages (w_current, page));
-        }
-      }
-    }
-  }
-
-  g_hash_table_destroy (visit_list);
-
-  return g_slist_reverse (output_list);
-}
-
-
 /*! \brief Get a property
  *
  *  \param [in]     object

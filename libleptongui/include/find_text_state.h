@@ -76,10 +76,6 @@ schematic_find_text_state_find (SchematicWindow *w_current,
 GtkWidget*
 schematic_find_text_state_new ();
 
-GSList*
-schematic_find_text_state_get_pages (SchematicWindow *w_current,
-                                     GList *pages,
-                                     gboolean descend);
 GtkTreeSelection*
 schematic_find_text_state_get_selection (SchematicFindTextState *state);
 
