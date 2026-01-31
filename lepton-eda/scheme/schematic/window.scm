@@ -1300,18 +1300,18 @@ for *PAGE page will be created and set active."
         (g_slist_reverse *output-list)
 
         (let* ((*page (car input-ls))
-               (input-ls (cdr input-ls))
+               (new-input-ls (cdr input-ls))
                (page-visited? (member *page visit-ls)))
           (loop (if page-visited?
-                    input-ls
+                    new-input-ls
                     (if (true? descend?)
-                        (append input-ls
+                        (append new-input-ls
                                 (glist->list
                                  (schematic_find_text_state_get_subpages
                                   *window
                                   *page)
                                  identity))
-                        input-ls))
+                        new-input-ls))
                 (if page-visited?
                     *output-list
                     (g_slist_prepend *output-list *page))
