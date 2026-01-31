@@ -1297,19 +1297,22 @@ for *PAGE page will be created and set active."
         (let ((*page (glist-data (g_list_first *input-list)))
               (*input-list (g_list_delete_link *input-list *input-list)))
           (if (null-pointer? *page)
-              (log! 'warning "NULL page encountered")
+              (begin
+                (log! 'warning "NULL page encountered")
+                (loop *input-list *output-list visit-ls))
 
-              (unless (member *page visit-ls)
-                (set! *output-list (g_slist_prepend *output-list *page))
-                (set! visit-ls (cons *page visit-ls))
+              (begin
+                (unless (member *page visit-ls)
+                  (set! *output-list (g_slist_prepend *output-list *page))
+                  (set! visit-ls (cons *page visit-ls))
 
-                (when (true? descend?)
-                  (set! *input-list
-                        (g_list_concat *input-list
-                                       (schematic_find_text_state_get_subpages
-                                        *window
-                                        *page))))))
-          (loop *input-list *output-list visit-ls)))))
+                  (when (true? descend?)
+                    (set! *input-list
+                          (g_list_concat *input-list
+                                         (schematic_find_text_state_get_subpages
+                                          *window
+                                          *page)))))
+                (loop *input-list *output-list visit-ls)))))))
 
 
 (define (search-text *window *toplevel)
