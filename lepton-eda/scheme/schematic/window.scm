@@ -1290,34 +1290,31 @@ for *PAGE page will be created and set active."
   (let loop ((input-ls (glist->list *pages identity))
              (*output-list %null-pointer)
              (visit-ls '()))
+    (when (any null-pointer? input-ls)
+      (error "NULL page."))
     (if (null? input-ls)
         ;; Return the output list.
         (g_slist_reverse *output-list)
 
-        (let ((*page (car input-ls))
-              (input-ls (cdr input-ls)))
-          (if (null-pointer? *page)
-              (begin
-                (log! 'warning "NULL page encountered")
-                (loop input-ls *output-list visit-ls))
-
-              (let ((page-visited? (member *page visit-ls)))
-                (loop (if page-visited?
-                          input-ls
-                          (if (true? descend?)
-                              (append input-ls
-                                      (glist->list
-                                       (schematic_find_text_state_get_subpages
-                                        *window
-                                        *page)
-                                       identity))
-                              input-ls))
-                      (if page-visited?
-                          *output-list
-                          (g_slist_prepend *output-list *page))
-                      (if page-visited?
-                          visit-ls
-                          (cons *page visit-ls)))))))))
+        (let* ((*page (car input-ls))
+               (input-ls (cdr input-ls))
+               (page-visited? (member *page visit-ls)))
+          (loop (if page-visited?
+                    input-ls
+                    (if (true? descend?)
+                        (append input-ls
+                                (glist->list
+                                 (schematic_find_text_state_get_subpages
+                                  *window
+                                  *page)
+                                 identity))
+                        input-ls))
+                (if page-visited?
+                    *output-list
+                    (g_slist_prepend *output-list *page))
+                (if page-visited?
+                    visit-ls
+                    (cons *page visit-ls)))))))
 
 
 (define (search-text *window *toplevel)
