@@ -1283,9 +1283,11 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
-
-;;; Descends the hierarchy of *PAGES in *WINDOW forming a flat
-;;; list if DESCEND? is not #f, and removes duplicate pages.
+;;; The function obtains a list of pages for an operation.  It
+;;; processes the list of *PAGES in *WINDOW, descending the
+;;; hierarchy of pages if DESCEND? is not #f, adding all subpages,
+;;; and removing duplicate pages.  The function returns a new list
+;;; of all found pages.
 (define (find-text-get-all-pages *window *pages descend?)
   (define page-ls (glist->list *pages pointer->page))
 
