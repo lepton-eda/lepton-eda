@@ -1289,17 +1289,20 @@ for *PAGE page will be created and set active."
   (define *page (page->pointer page))
   (define objects (page-contents page))
 
+  (define (source-attrib? attrib)
+    (string= "source" (attrib-name attrib)))
+
   (define (first-attached-source-attrib object)
     (let loop ((attribs (object-attribs object)))
       (and (not (null? attribs))
-           (if (string= (attrib-name (car attribs)) "source")
+           (if (source-attrib? (car attribs))
                (attrib-value (car attribs))
                (loop (cdr attribs))))))
 
   (define (first-inherited-source-attrib object)
     (let loop ((attribs (inherited-attribs object)))
       (and (not (null? attribs))
-           (if (string= (attrib-name (car attribs)) "source")
+           (if (source-attrib? (car attribs))
                (attrib-value (car attribs))
                (loop (cdr attribs))))))
 
