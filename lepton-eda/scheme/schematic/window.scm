@@ -1290,8 +1290,10 @@ for *PAGE page will be created and set active."
   (let loop ((*input-list (g_list_copy *pages))
              (*output-list %null-pointer)
              (visit-ls '()))
+    (if (null-pointer? *input-list)
+        ;; Return the output list.
+        (g_slist_reverse *output-list)
 
-    (if (not (null-pointer? *input-list))
         (let ((*page (glist-data (g_list_first *input-list)))
               (*input-list (g_list_delete_link *input-list *input-list)))
           (if (null-pointer? *page)
@@ -1307,10 +1309,7 @@ for *PAGE page will be created and set active."
                                        (schematic_find_text_state_get_subpages
                                         *window
                                         *page))))))
-          (loop *input-list *output-list visit-ls))
-
-        ;; Return the output list.
-        (g_slist_reverse *output-list))))
+          (loop *input-list *output-list visit-ls)))))
 
 
 (define (search-text *window *toplevel)
