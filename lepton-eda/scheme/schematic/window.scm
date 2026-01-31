@@ -1292,15 +1292,14 @@ for *PAGE page will be created and set active."
   (define page-ls (glist->list *pages pointer->page))
 
   (let loop ((input-ls page-ls)
-             (output-ls '())
-             (visit-ls '()))
+             (output-ls '()))
     (if (null? input-ls)
         ;; Return the output list.
         (reverse output-ls)
 
         (let* ((page (car input-ls))
                (new-input-ls (cdr input-ls))
-               (page-visited? (memq page visit-ls)))
+               (page-visited? (memq page output-ls)))
           (loop (if page-visited?
                     new-input-ls
                     (if (true? descend?)
@@ -1313,10 +1312,7 @@ for *PAGE page will be created and set active."
                         new-input-ls))
                 (if page-visited?
                     output-ls
-                    (cons page output-ls))
-                (if page-visited?
-                    visit-ls
-                    (cons page visit-ls)))))))
+                    (cons page output-ls)))))))
 
 
 (define (search-text *window *toplevel)
