@@ -1304,13 +1304,15 @@ for *PAGE page will be created and set active."
               (if (member *page visit-ls)
                   (loop *input-list *output-list visit-ls)
                   (let ((*output-list (g_slist_prepend *output-list *page))
-                        (visit-ls (cons *page visit-ls)))
-                    (when (true? descend?)
-                      (set! *input-list
-                            (g_list_concat *input-list
-                                           (schematic_find_text_state_get_subpages
-                                            *window
-                                            *page))))
+                        (visit-ls (cons *page visit-ls))
+                        (*input-list
+                         (if (true? descend?)
+                             (g_list_concat *input-list
+                                            (schematic_find_text_state_get_subpages
+                                             *window
+                                             *page))
+                             *input-list)))
+
                     (loop *input-list *output-list visit-ls))))))))
 
 
