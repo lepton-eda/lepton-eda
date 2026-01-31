@@ -1301,18 +1301,17 @@ for *PAGE page will be created and set active."
                 (log! 'warning "NULL page encountered")
                 (loop *input-list *output-list visit-ls))
 
-              (begin
-                (unless (member *page visit-ls)
-                  (set! *output-list (g_slist_prepend *output-list *page))
-                  (set! visit-ls (cons *page visit-ls))
-
-                  (when (true? descend?)
-                    (set! *input-list
-                          (g_list_concat *input-list
-                                         (schematic_find_text_state_get_subpages
-                                          *window
-                                          *page)))))
-                (loop *input-list *output-list visit-ls)))))))
+              (if (member *page visit-ls)
+                  (loop *input-list *output-list visit-ls)
+                  (let ((*output-list (g_slist_prepend *output-list *page))
+                        (visit-ls (cons *page visit-ls)))
+                    (when (true? descend?)
+                      (set! *input-list
+                            (g_list_concat *input-list
+                                           (schematic_find_text_state_get_subpages
+                                            *window
+                                            *page))))
+                    (loop *input-list *output-list visit-ls))))))))
 
 
 (define (search-text *window *toplevel)
