@@ -1289,10 +1289,25 @@ for *PAGE page will be created and set active."
   (define objects (page-contents page))
 
   (define (get-subpages *page *page-ls *object)
-    (schematic_find_text_state_get_subpages *window
-                                            *page
-                                            *page-ls
-                                            *object))
+    (let* ((*attached-attrib
+            (lepton_attrib_search_attached_attribs_by_name
+             *object
+             (string->pointer "source")
+             0))
+           (*source-attrib
+            (if (null-pointer? *attached-attrib)
+                (lepton_attrib_search_inherited_attribs_by_name
+                 *object
+                 (string->pointer "source")
+                 0)
+                *attached-attrib)))
+
+      (if (null-pointer? *source-attrib)
+          *page-ls
+          (schematic_find_text_state_get_subpages *window
+                                                  *page
+                                                  *page-ls
+                                                  *source-attrib))))
 
   (reverse
    (glist->list

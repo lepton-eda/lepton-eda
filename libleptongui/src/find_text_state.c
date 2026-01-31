@@ -612,30 +612,18 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page the parent page
  *  \param [in] page_list The initial page list.
- *  \param [in] object The object to find pages for.
+ *  \param [in] attrib The first attached or inherited source= attribute.
  *  \return a list of all the subpages
  */
 GList*
 schematic_find_text_state_get_subpages (SchematicWindow *w_current,
                                         LeptonPage *page,
                                         GList *page_list,
-                                        LeptonObject *object)
+                                        char *attrib)
 {
-    char *attrib;
     char **filenames;
     char **iter;
 
-        attrib = lepton_attrib_search_attached_attribs_by_name (object,
-                                                                "source",
-                                                                0);
-        if (attrib == NULL) {
-          attrib = lepton_attrib_search_inherited_attribs_by_name (object,
-                                                                   "source",
-                                                                   0);
-        }
-
-        if (attrib != NULL)
-        {
           filenames = g_strsplit (attrib, ",", 0);
 
           if (filenames != NULL)
@@ -651,7 +639,6 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
 
             g_strfreev (filenames);
           }
-        }
 
   return page_list;
 }
