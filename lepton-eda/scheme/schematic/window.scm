@@ -25,6 +25,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton config)
   #:use-module (lepton eval)
   #:use-module (lepton ffi boolean)
@@ -1288,26 +1289,33 @@ for *PAGE page will be created and set active."
   (define *page (page->pointer page))
   (define objects (page-contents page))
 
-  (define (get-subpages *page *page-ls *object)
-    (let* ((*attached-attrib
-            (lepton_attrib_search_attached_attribs_by_name
-             *object
-             (string->pointer "source")
-             0))
-           (*source-attrib
-            (if (null-pointer? *attached-attrib)
-                (lepton_attrib_search_inherited_attribs_by_name
-                 *object
-                 (string->pointer "source")
-                 0)
-                *attached-attrib)))
+  (define (first-attached-source-attrib object)
+    (let loop ((attribs (object-attribs object)))
+      (and (not (null? attribs))
+           (if (string= (attrib-name (car attribs)) "source")
+               (attrib-value (car attribs))
+               (loop (cdr attribs))))))
 
-      (if (null-pointer? *source-attrib)
+  (define (first-inherited-source-attrib object)
+    (let loop ((attribs (inherited-attribs object)))
+      (and (not (null? attribs))
+           (if (string= (attrib-name (car attribs)) "source")
+               (attrib-value (car attribs))
+               (loop (cdr attribs))))))
+
+  (define (get-subpages *page *page-ls object)
+    (let* ((attached-attrib (first-attached-source-attrib object))
+           (source-attrib
+            (if (not attached-attrib)
+                (first-inherited-source-attrib object)
+                attached-attrib)))
+
+      (if (not source-attrib)
           *page-ls
           (schematic_find_text_state_get_subpages *window
                                                   *page
                                                   *page-ls
-                                                  *source-attrib))))
+                                                  (string->pointer source-attrib)))))
 
   (reverse
    (glist->list
@@ -1318,7 +1326,7 @@ for *PAGE page will be created and set active."
           (let ((*new-page-ls
                  (get-subpages *page
                                *page-ls
-                               (object->pointer (car objects)))))
+                               (car objects))))
             (loop (cdr objects) *new-page-ls))))
     pointer->page)))
 
