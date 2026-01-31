@@ -636,37 +636,34 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
       continue;
     }
 
-    if (!lepton_object_is_component (object))
+    if (lepton_object_is_component (object))
     {
-      continue;
-    }
+      attrib = lepton_attrib_search_attached_attribs_by_name (object,
+                                                              "source",
+                                                              0);
+      if (attrib == NULL) {
+        attrib = lepton_attrib_search_inherited_attribs_by_name (object,
+                                                                 "source",
+                                                                 0);
+      }
 
-    attrib = lepton_attrib_search_attached_attribs_by_name (object,
-                                                            "source",
-                                                            0);
-    if (attrib == NULL) {
-      attrib = lepton_attrib_search_inherited_attribs_by_name (object,
-                                                               "source",
-                                                               0);
-    }
-
-    if (attrib != NULL)
-    {
-      filenames = g_strsplit (attrib, ",", 0);
-
-      if (filenames != NULL)
+      if (attrib != NULL)
       {
+        filenames = g_strsplit (attrib, ",", 0);
 
-        for (iter = filenames; *iter != NULL; iter++) {
-          LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
+        if (filenames != NULL)
+        {
 
-          if (subpage != NULL) {
-            page_list = g_list_prepend (page_list, subpage);
+          for (iter = filenames; *iter != NULL; iter++) {
+            LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
+
+            if (subpage != NULL) {
+              page_list = g_list_prepend (page_list, subpage);
+            }
           }
+
+          g_strfreev (filenames);
         }
-
-        g_strfreev (filenames);
-
       }
     }
   }
