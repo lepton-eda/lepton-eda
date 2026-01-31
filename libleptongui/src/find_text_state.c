@@ -656,19 +656,21 @@ schematic_find_text_state_get_subpages (SchematicWindow *w_current,
 
     filenames = g_strsplit (attrib, ",", 0);
 
-    if (filenames == NULL) {
-      continue;
-    }
+    if (filenames != NULL)
+    {
 
-    for (iter = filenames; *iter != NULL; iter++) {
-      LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
+      for (iter = filenames; *iter != NULL; iter++) {
+        LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
 
-      if (subpage != NULL) {
-        page_list = g_list_prepend (page_list, subpage);
+        if (subpage != NULL) {
+          page_list = g_list_prepend (page_list, subpage);
+        }
       }
+
+      g_strfreev (filenames);
+
     }
 
-    g_strfreev (filenames);
   }
 
   return page_list;
