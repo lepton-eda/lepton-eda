@@ -1287,11 +1287,14 @@ for *PAGE page will be created and set active."
 ;;; Descends the hierarchy of *PAGES in *WINDOW forming a flat
 ;;; list if DESCEND? is not #f, and removes duplicate pages.
 (define (find-text-get-all-pages *window *pages descend?)
-  (let loop ((input-ls (glist->list *pages identity))
+  (define page-ls (glist->list *pages identity))
+
+  (when (any null-pointer? page-ls)
+    (error "NULL page."))
+
+  (let loop ((input-ls page-ls)
              (*output-list %null-pointer)
              (visit-ls '()))
-    (when (any null-pointer? input-ls)
-      (error "NULL page."))
     (if (null? input-ls)
         ;; Return the output list.
         (g_slist_reverse *output-list)
