@@ -1291,6 +1291,9 @@ for *PAGE page will be created and set active."
   (define *page (page->pointer page))
   (define objects (page-contents page))
 
+  (define (split-attrib-value object)
+    (string-split (attrib-value object) #\,))
+
   (define (source-attrib? attrib)
     (string= "source" (attrib-name attrib)))
 
@@ -1317,7 +1320,7 @@ for *PAGE page will be created and set active."
 
       (if (not source-attrib)
           *page-ls
-          (let loop ((filenames (string-split (attrib-value source-attrib) #\,))
+          (let loop ((filenames (split-attrib-value source-attrib))
                      (*page-ls *page-ls))
             (if (null? filenames)
                 *page-ls
