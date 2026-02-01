@@ -1310,20 +1310,18 @@ for *PAGE page will be created and set active."
                 (inherited-source-attribs object)
                 attached-attribs)))
 
-      (if (null? source-attribs)
-          *page-ls
-          (let loop ((filenames (append-map split-attrib-value source-attribs))
-                     (*page-ls *page-ls))
-            (if (null? filenames)
-                *page-ls
-                (let ((*subpage (s_hierarchy_load_subpage *window
-                                                          *page
-                                                          (string->pointer (car filenames))
-                                                          %null-pointer)))
-                  (loop (cdr filenames)
-                        (if (null-pointer? *subpage)
-                            *page-ls
-                            (g_list_prepend *page-ls *subpage)))))))))
+      (let loop ((filenames (append-map split-attrib-value source-attribs))
+                 (*page-ls *page-ls))
+        (if (null? filenames)
+            *page-ls
+            (let ((*subpage (s_hierarchy_load_subpage *window
+                                                      *page
+                                                      (string->pointer (car filenames))
+                                                      %null-pointer)))
+              (loop (cdr filenames)
+                    (if (null-pointer? *subpage)
+                        *page-ls
+                        (g_list_prepend *page-ls *subpage))))))))
 
   (reverse
    (glist->list
