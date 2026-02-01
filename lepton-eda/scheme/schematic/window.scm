@@ -1303,25 +1303,26 @@ for *PAGE page will be created and set active."
   (define (inherited-source-attribs object)
     (filter source-attrib? (inherited-attribs object)))
 
-  (define (get-subpages *page *page-ls object)
-    (let* ((attached-attribs (attached-source-attribs object))
-           (source-attribs
-            (if (null? attached-attribs)
-                (inherited-source-attribs object)
-                attached-attribs)))
+  (define (source-attribs object)
+    (let ((attached-attribs (attached-source-attribs object)))
+      (if (null? attached-attribs)
+          (inherited-source-attribs object)
+          attached-attribs)))
 
-      (let loop ((filenames (append-map split-attrib-value source-attribs))
-                 (*page-ls *page-ls))
-        (if (null? filenames)
-            *page-ls
-            (let ((*subpage (s_hierarchy_load_subpage *window
-                                                      *page
-                                                      (string->pointer (car filenames))
-                                                      %null-pointer)))
-              (loop (cdr filenames)
-                    (if (null-pointer? *subpage)
-                        *page-ls
-                        (g_list_prepend *page-ls *subpage))))))))
+  (define (get-subpages *page *page-ls object)
+    (let loop ((filenames (append-map split-attrib-value
+                                      (source-attribs object)))
+               (*page-ls *page-ls))
+      (if (null? filenames)
+          *page-ls
+          (let ((*subpage (s_hierarchy_load_subpage *window
+                                                    *page
+                                                    (string->pointer (car filenames))
+                                                    %null-pointer)))
+            (loop (cdr filenames)
+                  (if (null-pointer? *subpage)
+                      *page-ls
+                      (g_list_prepend *page-ls *subpage)))))))
 
   (reverse
    (glist->list
