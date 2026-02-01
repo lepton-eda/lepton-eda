@@ -1298,14 +1298,14 @@ for *PAGE page will be created and set active."
     (let loop ((attribs (object-attribs object)))
       (and (not (null? attribs))
            (if (source-attrib? (car attribs))
-               (attrib-value (car attribs))
+               (car attribs)
                (loop (cdr attribs))))))
 
   (define (first-inherited-source-attrib object)
     (let loop ((attribs (inherited-attribs object)))
       (and (not (null? attribs))
            (if (source-attrib? (car attribs))
-               (attrib-value (car attribs))
+               (car attribs)
                (loop (cdr attribs))))))
 
   (define (get-subpages *page *page-ls object)
@@ -1317,7 +1317,7 @@ for *PAGE page will be created and set active."
 
       (if (not source-attrib)
           *page-ls
-          (let loop ((filenames (string-split source-attrib #\,))
+          (let loop ((filenames (string-split (attrib-value source-attrib) #\,))
                      (*page-ls *page-ls))
             (if (null? filenames)
                 *page-ls
