@@ -605,45 +605,6 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 }
 
 
-/*! \brief get the subpages of a schematic page
- *
- *  if any subpages are not loaded, this function will load them.
- *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] page the parent page
- *  \param [in] page_list The initial page list.
- *  \param [in] attrib The first attached or inherited source= attribute.
- *  \return a list of all the subpages
- */
-GList*
-schematic_find_text_state_get_subpages (SchematicWindow *w_current,
-                                        LeptonPage *page,
-                                        GList *page_list,
-                                        char *attrib)
-{
-    char **filenames;
-    char **iter;
-
-          filenames = g_strsplit (attrib, ",", 0);
-
-          if (filenames != NULL)
-          {
-
-            for (iter = filenames; *iter != NULL; iter++) {
-              LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
-
-              if (subpage != NULL) {
-                page_list = g_list_prepend (page_list, subpage);
-              }
-            }
-
-            g_strfreev (filenames);
-          }
-
-  return page_list;
-}
-
-
 /*! \brief Return the selection of the Find text state widget.
  *
  *  \par Function Description

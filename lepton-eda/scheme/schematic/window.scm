@@ -1285,6 +1285,8 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+;;; Return the subpages of PAGE in *WINDOW.  If any subpages are
+;;; not loaded, this function will load them.
 (define (page-subpages *window page)
   (define *page (page->pointer page))
   (define objects (page-contents page))
@@ -1315,10 +1317,18 @@ for *PAGE page will be created and set active."
 
       (if (not source-attrib)
           *page-ls
-          (schematic_find_text_state_get_subpages *window
-                                                  *page
-                                                  *page-ls
-                                                  (string->pointer source-attrib)))))
+          (let loop ((filenames (string-split source-attrib #\,))
+                     (*page-ls *page-ls))
+            (if (null? filenames)
+                *page-ls
+                (let ((*subpage (s_hierarchy_load_subpage *window
+                                                          *page
+                                                          (string->pointer (car filenames))
+                                                          %null-pointer)))
+                  (loop (cdr filenames)
+                        (if (null-pointer? *subpage)
+                            *page-ls
+                            (g_list_prepend *page-ls *subpage)))))))))
 
   (reverse
    (glist->list

@@ -31,6 +31,7 @@
             g_list_find
             g_list_first
             g_list_free
+            g_list_prepend
             g_list_remove
             g_list_remove_all
             g_list_sort
@@ -71,6 +72,7 @@
 (define-lff g_list_first '* '(*))
 (define-lff g_list_free void '(*))
 (define-lff g_list_free_full void '(*))
+(define-lff g_list_prepend '* '(* *))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))
 (define-lff g_list_sort '* '(* *))
