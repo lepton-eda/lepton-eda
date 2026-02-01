@@ -1309,33 +1309,30 @@ for *PAGE page will be created and set active."
           (inherited-source-attribs object)
           attached-attribs)))
 
-  (define (get-subpages *page *page-ls object)
+  (define (get-subpages *page page-ls object)
     (let loop ((filenames (append-map split-attrib-value
                                       (source-attribs object)))
-               (*page-ls *page-ls))
+               (page-ls page-ls))
       (if (null? filenames)
-          *page-ls
+          page-ls
           (let ((*subpage (s_hierarchy_load_subpage *window
                                                     *page
                                                     (string->pointer (car filenames))
                                                     %null-pointer)))
             (loop (cdr filenames)
                   (if (null-pointer? *subpage)
-                      *page-ls
-                      (g_list_prepend *page-ls *subpage)))))))
+                      page-ls
+                      (cons (pointer->page *subpage) page-ls)))))))
 
   (reverse
-   (glist->list
-    (let loop ((objects (filter component? objects))
-               (*page-ls %null-pointer))
-      (if (null? objects)
-          *page-ls
-          (let ((*new-page-ls
-                 (get-subpages *page
-                               *page-ls
-                               (car objects))))
-            (loop (cdr objects) *new-page-ls))))
-    pointer->page)))
+   (let loop ((objects (filter component? objects))
+              (page-ls '()))
+     (if (null? objects)
+         page-ls
+         (let ((new-page-ls (get-subpages *page
+                                          page-ls
+                                          (car objects))))
+           (loop (cdr objects) new-page-ls))))))
 
 
 ;;; The function obtains a list of pages for an operation.  It
