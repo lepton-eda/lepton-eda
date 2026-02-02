@@ -20,6 +20,8 @@
 (define-module (schematic tabs)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi glib)
+
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
@@ -41,7 +43,13 @@
   "Searches for a TabInfo instance for the widget *TAB in the list
 *INFO-LS.  If found, returns the instance pointer, otherwise returns
 %NULL-POINTER."
-  (x_tabs_info_find_by_wtab *info-ls *tab))
+  (let loop ((info-ls (glist->list *info-ls identity)))
+    (if (null? info-ls)
+        %null-pointer
+        (let ((*info (car info-ls)))
+          (if (equal? (schematic_tab_info_get_tab_widget *info) *tab)
+              *info
+              (loop (cdr info-ls)))))))
 
 
 (define (add-tab-canvas! *tab *canvas)

@@ -159,9 +159,6 @@ x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data);
 static gint
 x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data);
 
-static gint
-x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
-
 static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
@@ -310,20 +307,6 @@ x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data)
 
 
 
-static gint
-x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data)
-{
-  TabInfo*   nfo  = (TabInfo*)   elem;
-  GtkWidget* wtab = (GtkWidget*) data;
-
-  if (schematic_tab_info_get_tab_widget (nfo) == wtab)
-    return 0;
-
-  return 1;
-}
-
-
-
 TabInfo*
 x_tabs_info_find_by_page (GList* nfos,
                           LeptonPage* page)
@@ -343,17 +326,6 @@ x_tabs_info_find_by_pview (GList* nfos,
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) pview,
                                    &x_tabs_info_cmp_pview);
-  return ptr ? (TabInfo*) ptr->data : NULL;
-}
-
-
-
-TabInfo*
-x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
-{
-  GList* ptr = g_list_find_custom (nfos,
-                                   (gconstpointer) wtab,
-                                   &x_tabs_info_cmp_wtab);
   return ptr ? (TabInfo*) ptr->data : NULL;
 }
 

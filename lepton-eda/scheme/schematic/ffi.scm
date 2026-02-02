@@ -349,7 +349,6 @@
             x_tabs_info_add
             x_tabs_info_cur
             x_tabs_info_find_by_page
-            x_tabs_info_find_by_wtab
             x_tabs_info_rm
             x_tabs_nbook_create
             schematic_window_set_current_canvas
@@ -1026,7 +1025,6 @@
 (define-lff x_tabs_info_add '* (list '* int '* '* '*))
 (define-lff x_tabs_info_cur '* '(*))
 (define-lff x_tabs_info_find_by_page '* '(* *))
-(define-lff x_tabs_info_find_by_wtab '* '(* *))
 (define-lff x_tabs_info_rm void '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff schematic_tabs_add_canvas void '(* *))
