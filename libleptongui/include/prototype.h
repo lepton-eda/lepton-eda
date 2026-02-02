@@ -1264,11 +1264,6 @@ void x_tabs_init();
 GtkWidget*
 x_tabs_nbook_create (SchematicWindow* w_current,
                      GtkWidget* work_box);
-gint
-x_tabs_nbook_page_add (SchematicWindow* w_current,
-                       LeptonPage*     page,
-                       SchematicCanvas* pview,
-                       GtkWidget*      wtab);
 void
 schematic_tabs_add_canvas (SchematicCanvas *pview,
                            GtkWidget *wtab);

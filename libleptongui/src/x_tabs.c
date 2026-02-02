@@ -466,27 +466,6 @@ x_tabs_nbook_create (SchematicWindow* w_current,
 
 
 
-gint
-x_tabs_nbook_page_add (SchematicWindow* w_current,
-                       LeptonPage*     page,
-                       SchematicCanvas* pview,
-                       GtkWidget*      wtab)
-{
-#ifdef DEBUG
-  printf( "x_tabs_nbook_page_add()\n" );
-#endif
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gint ndx = gtk_notebook_append_page (notebook, wtab, NULL);
-
-  return ndx;
-
-} /* x_tabs_nbook_page_add() */
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: page view:

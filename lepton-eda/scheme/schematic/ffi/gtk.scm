@@ -66,6 +66,7 @@
             gtk_menu_new
             gtk_menu_shell_append
 
+            gtk_notebook_append_page
             gtk_notebook_get_n_pages
             gtk_notebook_next_page
             gtk_notebook_page_num
@@ -159,6 +160,7 @@
 (define-lff gtk_menu_item_set_submenu void '(* *))
 (define-lff gtk_menu_shell_append void '(* *))
 
+(define-lff gtk_notebook_append_page int '(* * *))
 (define-lff gtk_notebook_get_n_pages int '(*))
 (define-lff gtk_notebook_next_page void '(*))
 (define-lff gtk_notebook_page_num int '(* *))
