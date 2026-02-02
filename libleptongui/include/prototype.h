@@ -1252,9 +1252,6 @@ x_tabs_info_cur (SchematicWindow* w_current);
 TabInfo*
 x_tabs_info_find_by_page (GList* nfos,
                           LeptonPage* page);
-TabInfo*
-x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
-
 void
 x_tabs_info_rm (SchematicWindow* w_current,
                 TabInfo* nfo);
