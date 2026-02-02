@@ -1084,15 +1084,12 @@ for *PAGE page will be created and set active."
   ;; Find a page in the list of loaded pages.
   (define (find-page *page)
     (define *toplevel (schematic_window_get_toplevel *window))
+    (define page-ls
+      (glist->list (lepton_list_get_glist
+                    (lepton_toplevel_get_pages *toplevel))
+                   pointer->page))
 
-    (let loop ((*page-ls (glist->list (lepton_list_get_glist
-                                       (lepton_toplevel_get_pages *toplevel))
-                                      pointer->page)))
-      (if (null? *page-ls)
-          FALSE
-          (if (eq? (pointer->page *page) (car *page-ls))
-              TRUE
-              (loop (cdr *page-ls))))))
+    (any (lambda (p) (eq? (pointer->page *page) p)) page-ls))
 
   (when (null-pointer? *window)
     (error "NULL window pointer in set-tab-page!()"))
@@ -1115,7 +1112,7 @@ for *PAGE page will be created and set active."
 
         ;; There is no page view for *PAGE, create a new one.
         (when (and (null-pointer? *tab-info)
-                   (true? (find-page *page)))
+                   (find-page *page))
           (let ((*tab-info (tab-add-page! *window *page)))
 
             (set-tab-header! (schematic_window_get_tab_notebook *window) *tab-info)
