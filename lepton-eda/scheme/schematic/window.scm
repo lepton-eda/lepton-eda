@@ -1081,6 +1081,9 @@ the new or found page."
   "Sets page of the current tab in *WINDOW to *PAGE.  If there's a
 tab that contains *PAGE, it will be activated, otherwise a new tab
 for *PAGE page will be created and set active."
+  (define (find-page *window *page)
+    (x_tabs_tl_page_find *window *page))
+
   (when (null-pointer? *window)
     (error "NULL window pointer in set-tab-page!()"))
 
@@ -1102,7 +1105,7 @@ for *PAGE page will be created and set active."
 
         ;; There is no page view for *PAGE, create a new one.
         (when (and (null-pointer? *tab-info)
-                   (true? (x_tabs_tl_page_find *window *page)))
+                   (true? (find-page *window *page)))
           (let ((*tab-info (tab-add-page! *window *page)))
 
             (set-tab-header! (schematic_window_get_tab_notebook *window) *tab-info)
