@@ -934,7 +934,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 
   lepton_list_move_item (pages, schematic_tab_info_get_page (nfo), newindex);
 
-  gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
+  gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_canvas (nfo)));
 
 } /* x_tabs_page_on_reordered() */
 
