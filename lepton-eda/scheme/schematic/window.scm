@@ -231,9 +231,26 @@
                       '(* *)))
 
 
+;;; GtkNotebook "page-reordered" signal handler.
 (define (callback-page-reordered *notebook *widget-tab new-index *window)
-  (x_tabs_page_on_reordered *notebook *widget-tab new-index *window)
-  (page_select_widget_update *window))
+
+ (when (null-pointer? *window)
+   (error "NULL window."))
+
+ (let ((*pages (schematic_window_get_pages *window)))
+   (when (null-pointer? *pages)
+     (error "NULL pages."))
+
+   (let* ((*info-list (schematic_window_get_tab_info_list *window))
+          (*tab-info (x_tabs_info_find_by_wtab *info-list *widget-tab)))
+     (when (null-pointer? *tab-info)
+       (error "NULL tabinfo."))
+
+     (lepton_list_move_item *pages (schematic_tab_info_get_page *tab-info) new-index)
+
+     (gtk_widget_grab_focus (schematic_tab_info_get_canvas *tab-info))))
+
+ (page_select_widget_update *window))
 
 (define *callback-page-reordered
   (procedure->pointer void
