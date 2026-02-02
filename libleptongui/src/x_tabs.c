@@ -923,11 +923,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   SchematicWindow* w_current = (SchematicWindow*) data;
   g_return_if_fail (w_current != NULL);
 
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
-
-  LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
+  LeptonPageList* pages = schematic_window_get_pages (w_current);
   g_return_if_fail (pages != NULL);
 
   GList *info_list =
