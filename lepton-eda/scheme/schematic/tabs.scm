@@ -21,12 +21,18 @@
   #:use-module (schematic ffi)
 
   #:export (add-tab-canvas!
+            close-page-tab!
             set-tab-header!))
 
 
 (define (add-tab-canvas! *tab *canvas)
   "Add *CANVAS to the *TAB widget container and focus it."
   (schematic_tabs_add_canvas *canvas *tab))
+
+
+(define (close-page-tab! *window *page)
+  "Closes a tab associated with *PAGE in *WINDOW."
+  (x_tabs_nbook_page_close *window *page))
 
 
 (define (set-tab-header! *notebook *tab-info)

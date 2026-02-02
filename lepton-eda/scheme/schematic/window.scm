@@ -1196,7 +1196,7 @@ for *PAGE page will be created and set active."
              ;; Page to be set as current after the current page is closed.
              (*new-current-page (close-window-page! *window *current-page)))
 
-        (x_tabs_nbook_page_close *window *current-page)
+        (close-page-tab! *window *current-page)
 
         (x_tabs_info_rm *window *current-tab-info)
 
