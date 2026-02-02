@@ -24,7 +24,7 @@
   #:use-module (schematic ffi)
 
   #:export (add-tab-canvas!
-            append-page-tab!
+            append-tab!
             close-page-tab!
             set-tab-header!))
 
@@ -34,10 +34,12 @@
   (schematic_tabs_add_canvas *canvas *tab))
 
 
-(define (append-page-tab! *window *tab *page)
-  "Appends new *TAB associated with *PAGE to the tabs notebook in
-*WINDOW.  Returns the index of the new tab."
-  (x_tabs_nbook_page_add *window *page %null-pointer *tab))
+(define (append-tab! *window *tab)
+  "Appends new *TAB to the tabs notebook in *WINDOW.  Returns the index
+of the new tab."
+  (gtk_notebook_append_page (schematic_window_get_tab_notebook *window)
+                            *tab
+                            %null-pointer))
 
 
 (define (close-page-tab! *window *page)
