@@ -26,6 +26,7 @@
   #:use-module (schematic ffi)
 
   #:export (add-tab-canvas!
+            add-tab-info!
             append-tab!
             close-page-tab!
             delete-tab-info!
@@ -38,6 +39,10 @@
   "Creates a new tabs notebook in *WINDOW and adds it to the container
 *WORK-BOX.  Returns the new notebook widget."
   (x_tabs_nbook_create *window *work-box))
+
+
+(define (add-tab-info! *window *tab *canvas *page index)
+  (x_tabs_info_add *window index *page *canvas *tab))
 
 
 (define (delete-tab-info! *window *info)

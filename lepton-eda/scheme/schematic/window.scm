@@ -875,7 +875,7 @@ tab notebook.  Returns a C TabInfo structure."
                                         *wtab
                                         TRUE)
       ;; Return TabInfo.
-      (x_tabs_info_add *window page-index *page *canvas *wtab))))
+      (add-tab-info! *window *wtab *canvas *page page-index))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
