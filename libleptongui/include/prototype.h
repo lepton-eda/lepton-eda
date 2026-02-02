@@ -1275,9 +1275,6 @@ void
 x_tabs_next (SchematicWindow* w_current);
 
 void
-x_tabs_prev (SchematicWindow* w_current);
-
-void
 x_tabs_hdr_set (GtkNotebook* nbook,
                 TabInfo* nfo);
 void

@@ -39,7 +39,6 @@
  * - x_tabs_enabled()      // whether tabbed GUI is currently enabled
  * - x_tabs_init()         // initialize tabbed GUI, read config
  * - x_tabs_next()         // go to next tab
- * - x_tabs_prev()         // go to prev tab
  * - x_tabs_hdr_update()   // update tab's header widget
  *
  * The behaviour is controlled by the following
@@ -885,29 +884,6 @@ x_tabs_next (SchematicWindow* w_current)
     schematic_window_get_tab_notebook (w_current);
 
   gtk_notebook_next_page (notebook);
-}
-
-
-
-/*! \brief Switch to the previous tab.
- *  \public
- *
- *  \todo: [ask folks]: (configurable?) cyclic tab change:
- *
- *  \param [in] w_current  The toplevel environment.
- */
-void
-x_tabs_prev (SchematicWindow* w_current)
-{
-  if (!x_tabs_enabled())
-      return;
-
-  g_return_if_fail (w_current != NULL);
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gtk_notebook_prev_page (notebook);
 }
 
 

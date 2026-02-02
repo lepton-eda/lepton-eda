@@ -50,6 +50,7 @@
   #:use-module (schematic callback cancel)
   #:use-module (schematic callback)
   #:use-module (schematic canvas)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
@@ -951,8 +952,12 @@ the snap grid size should be set to 100")))
 (define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
   (x_tabs_next (*current-window)))
 
+;;; Switch to the previous tab.
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
-  (x_tabs_prev (*current-window)))
+ (unless (true? (x_tabs_enabled))
+   (gtk_notebook_prev_page
+    (schematic_window_get_tab_notebook (*current-window)))))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Actions related to adding things
