@@ -68,6 +68,7 @@
 
             gtk_notebook_get_n_pages
             gtk_notebook_page_num
+            gtk_notebook_prev_page
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
 
@@ -158,6 +159,7 @@
 
 (define-lff gtk_notebook_get_n_pages int '(*))
 (define-lff gtk_notebook_page_num int '(* *))
+(define-lff gtk_notebook_prev_page void '(*))
 (define-lff gtk_notebook_set_current_page void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
 

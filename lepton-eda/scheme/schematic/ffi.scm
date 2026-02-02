@@ -622,7 +622,6 @@
             x_print
 
             x_tabs_next
-            x_tabs_prev
 
             a_zoom
 
@@ -1325,7 +1324,6 @@
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
-(define-lff x_tabs_prev void '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_savestate void (list '* '* int))
