@@ -925,9 +925,10 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 
   LeptonToplevel *toplevel =
     schematic_window_get_toplevel (w_current);
-
   g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->pages != NULL);
+
+  LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
+  g_return_if_fail (pages != NULL);
 
   GList *info_list =
     schematic_window_get_tab_info_list (w_current);
@@ -935,7 +936,6 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
   g_return_if_fail (nfo != NULL);
 
-  LeptonPageList* pages = toplevel->pages;
   lepton_list_move_item (pages, nfo->page_, newindex);
 
   gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
