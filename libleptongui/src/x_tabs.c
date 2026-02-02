@@ -359,41 +359,6 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
 
 
 
-
-/* --------------------------------------------------------
- *
- * implementation: SchematicWindow accessors:
- *
- */
-
-
-/*! \brief Find a \a page in the list of loaded pages.
- *
- *  \return TRUE if found.
- *
- */
-gboolean
-x_tabs_tl_page_find (SchematicWindow* w_current,
-                     LeptonPage* page)
-{
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-  GList* ptr = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-
-  for ( ; ptr != NULL; ptr = g_list_next (ptr) )
-  {
-    LeptonPage* pg = (LeptonPage*) ptr->data;
-    if (pg == page)
-      return TRUE;
-  }
-
-  return FALSE;
-
-} /* x_tabs_tl_page_find() */
-
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: notebook:
