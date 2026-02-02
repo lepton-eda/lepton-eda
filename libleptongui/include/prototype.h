@@ -1267,9 +1267,6 @@ x_tabs_nbook_create (SchematicWindow* w_current,
 void
 schematic_tabs_add_canvas (SchematicCanvas *pview,
                            GtkWidget *wtab);
-gboolean
-x_tabs_tl_page_find (SchematicWindow* w_current,
-                     LeptonPage* page);
 void
 x_tabs_hdr_set (GtkNotebook* nbook,
                 TabInfo* nfo);

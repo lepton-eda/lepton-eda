@@ -1081,8 +1081,18 @@ the new or found page."
   "Sets page of the current tab in *WINDOW to *PAGE.  If there's a
 tab that contains *PAGE, it will be activated, otherwise a new tab
 for *PAGE page will be created and set active."
+  ;; Find a page in the list of loaded pages.
   (define (find-page *window *page)
-    (x_tabs_tl_page_find *window *page))
+    (define *toplevel (schematic_window_get_toplevel *window))
+
+    (let loop ((*page-ls (glist->list (lepton_list_get_glist
+                                       (lepton_toplevel_get_pages *toplevel))
+                                      pointer->page)))
+      (if (null? *page-ls)
+          FALSE
+          (if (eq? (pointer->page *page) (car *page-ls))
+              TRUE
+              (loop (cdr *page-ls))))))
 
   (when (null-pointer? *window)
     (error "NULL window pointer in set-tab-page!()"))
