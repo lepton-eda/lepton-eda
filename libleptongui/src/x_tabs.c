@@ -378,7 +378,7 @@ x_tabs_tl_page_find (SchematicWindow* w_current,
 {
   LeptonToplevel *toplevel =
     schematic_window_get_toplevel (w_current);
-  GList* ptr = lepton_list_get_glist (toplevel->pages);
+  GList* ptr = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
 
   for ( ; ptr != NULL; ptr = g_list_next (ptr) )
   {
