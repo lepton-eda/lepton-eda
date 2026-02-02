@@ -24,13 +24,20 @@
   #:use-module (schematic ffi)
 
   #:export (add-tab-canvas!
+            append-page-tab!
             close-page-tab!
             set-tab-header!))
 
 
 (define (add-tab-canvas! *tab *canvas)
-  "Add *CANVAS to the *TAB widget container and focus it."
+  "Adds *CANVAS to the *TAB widget container and focuses it."
   (schematic_tabs_add_canvas *canvas *tab))
+
+
+(define (append-page-tab! *window *tab *page)
+  "Appends new *TAB associated with *PAGE to the tabs notebook in
+*WINDOW.  Returns the index of the new tab."
+  (x_tabs_nbook_page_add *window *page %null-pointer *tab))
 
 
 (define (close-page-tab! *window *page)

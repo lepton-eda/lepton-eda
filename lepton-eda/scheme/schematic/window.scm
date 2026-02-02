@@ -869,7 +869,7 @@ tab notebook.  Returns a C TabInfo structure."
     (add-tab-canvas! *wtab *canvas)
     (setup-canvas-draw-events *window *canvas)
     (schematic_window_set_current_canvas *window *canvas)
-    (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))
+    (let ((page-index (append-page-tab! *window *wtab *page)))
 
       (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
                                         *wtab
