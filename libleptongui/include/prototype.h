@@ -1272,6 +1272,9 @@ schematic_tabs_set_callback (char *name,
 SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_window (TabInfo *tab_info,
+                               SchematicWindow* window);
 LeptonPage*
 schematic_tab_info_get_page (TabInfo *tab_info);
 
