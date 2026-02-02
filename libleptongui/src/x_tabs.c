@@ -487,31 +487,6 @@ x_tabs_nbook_page_add (SchematicWindow* w_current,
 
 
 
-void
-x_tabs_nbook_page_close (SchematicWindow* w_current,
-                         LeptonPage* page)
-{
-  GList *info_list =
-    schematic_window_get_tab_info_list (w_current);
-  TabInfo* nfo = x_tabs_info_find_by_page (info_list, page);
-  if (!nfo)
-  {
-    return;
-  }
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gint ndx = gtk_notebook_page_num (notebook,
-                                    schematic_tab_info_get_tab_widget (nfo));
-
-  gtk_notebook_remove_page (notebook, ndx);
-
-} /* x_tabs_nbook_page_close() */
-
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: page view:

@@ -1270,9 +1270,6 @@ x_tabs_nbook_page_add (SchematicWindow* w_current,
                        SchematicCanvas* pview,
                        GtkWidget*      wtab);
 void
-x_tabs_nbook_page_close (SchematicWindow* w_current,
-                         LeptonPage* page);
-void
 schematic_tabs_add_canvas (SchematicCanvas *pview,
                            GtkWidget *wtab);
 gboolean
