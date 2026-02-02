@@ -866,7 +866,7 @@ tab notebook.  Returns a C TabInfo structure."
   (x_window_setup_scrolling *window *wtab)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
-    (schematic_tabs_add_canvas *canvas *wtab)
+    (add-tab-canvas! *wtab *canvas)
     (setup-canvas-draw-events *window *canvas)
     (schematic_window_set_current_canvas *window *canvas)
     (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))

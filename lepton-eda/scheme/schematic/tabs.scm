@@ -20,7 +20,13 @@
 (define-module (schematic tabs)
   #:use-module (schematic ffi)
 
-  #:export (set-tab-header!))
+  #:export (add-tab-canvas!
+            set-tab-header!))
+
+
+(define (add-tab-canvas! *tab *canvas)
+  "Add *CANVAS to the *TAB widget container and focus it."
+  (schematic_tabs_add_canvas *canvas *tab))
 
 
 (define (set-tab-header! *notebook *tab-info)
