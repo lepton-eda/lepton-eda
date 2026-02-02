@@ -230,6 +230,19 @@ x_tabs_info_cur (SchematicWindow* w_current)
 }
 
 
+/*! \brief Create a new #TabInfo instance.
+ *
+ *  \par Function Description
+ *  Returns a newly created #TabInfo instance.
+ *
+ *  \return The new #TabInfo instance.
+ */
+TabInfo*
+schematic_tab_info_new ()
+{
+  return (TabInfo*) g_malloc (sizeof (TabInfo));
+}
+
 
 TabInfo*
 x_tabs_info_add (SchematicWindow* w_current,
@@ -238,7 +251,7 @@ x_tabs_info_add (SchematicWindow* w_current,
                  SchematicCanvas* pview,
                  GtkWidget*      wtab)
 {
-  TabInfo* nfo = (TabInfo*) g_malloc (sizeof (TabInfo));
+  TabInfo* nfo = schematic_tab_info_new ();
 
   schematic_tab_info_set_index (nfo, ndx);
 
