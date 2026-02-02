@@ -243,7 +243,7 @@
      (error "NULL pages."))
 
    (let* ((*info-list (schematic_window_get_tab_info_list *window))
-          (*tab-info (x_tabs_info_find_by_wtab *info-list *widget-tab)))
+          (*tab-info (get-tab-info *widget-tab *info-list)))
      (when (null-pointer? *tab-info)
        (error "NULL tabinfo."))
 
@@ -1286,7 +1286,7 @@ for *PAGE page will be created and set active."
                (null-pointer? *current-canvas))
 
     (let* ((*info-list (schematic_window_get_tab_info_list *window))
-           (*tab-info (x_tabs_info_find_by_wtab *info-list *wtab)))
+           (*tab-info (get-tab-info *wtab *info-list)))
 
       (unless (null-pointer? *tab-info)
 

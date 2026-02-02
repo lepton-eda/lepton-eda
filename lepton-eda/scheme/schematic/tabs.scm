@@ -26,6 +26,7 @@
   #:export (add-tab-canvas!
             append-tab!
             close-page-tab!
+            get-tab-info
             make-tabs-notebook
             set-tab-header!))
 
@@ -34,6 +35,13 @@
   "Creates a new tabs notebook in *WINDOW and adds it to the container
 *WORK-BOX.  Returns the new notebook widget."
   (x_tabs_nbook_create *window *work-box))
+
+
+(define (get-tab-info *tab *info-ls)
+  "Searches for a TabInfo instance for the widget *TAB in the list
+*INFO-LS.  If found, returns the instance pointer, otherwise returns
+%NULL-POINTER."
+  (x_tabs_info_find_by_wtab *info-ls *tab))
 
 
 (define (add-tab-canvas! *tab *canvas)
