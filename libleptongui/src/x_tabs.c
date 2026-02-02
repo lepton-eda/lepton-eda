@@ -197,12 +197,6 @@ x_tabs_menu_action_on_activate (GtkAction* action,
 #endif
 
 
-/* tab header widget: */
-
-static GtkWidget*
-x_tabs_hdr_create (TabInfo* nfo);
-
-
 
 /* Callbacks */
 
@@ -553,7 +547,7 @@ schematic_tabs_add_canvas (SchematicCanvas *pview,
  *
  */
 
-static GtkWidget*
+GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo)
 {
   g_return_val_if_fail (nfo != NULL, NULL);
