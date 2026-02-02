@@ -1241,12 +1241,6 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr,
                            GdkEvent* e,
                            gpointer data);
 TabInfo*
-x_tabs_info_add (SchematicWindow* w_current,
-                 gint            ndx,
-                 LeptonPage*     page,
-                 SchematicCanvas* pview,
-                 GtkWidget*      wtab);
-TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current);
 
 TabInfo*
