@@ -709,6 +709,16 @@ schematic_tab_info_get_canvas (TabInfo *tab_info)
 }
 
 
+void
+schematic_tab_info_set_canvas (TabInfo *tab_info,
+                               SchematicCanvas *canvas)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->pview_ = canvas;
+}
+
+
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 {

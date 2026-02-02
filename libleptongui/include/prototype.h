@@ -1281,6 +1281,9 @@ schematic_tab_info_set_page (TabInfo *tab_info,
 SchematicCanvas*
 schematic_tab_info_get_canvas (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_canvas (TabInfo *tab_info,
+                               SchematicCanvas *canvas);
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info);
 
