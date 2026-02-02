@@ -420,6 +420,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   It contains procedures for setting and saving the active page of
   the current window.
 
+- A new module, `(schematic tabs)`, has been added.  It contains
+  functions dealing with tabs in **lepton-schematic** GUI.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
