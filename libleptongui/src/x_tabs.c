@@ -502,7 +502,8 @@ x_tabs_nbook_page_close (SchematicWindow* w_current,
   GtkNotebook *notebook =
     schematic_window_get_tab_notebook (w_current);
 
-  gint ndx = gtk_notebook_page_num (notebook, nfo->wtab_);
+  gint ndx = gtk_notebook_page_num (notebook,
+                                    schematic_tab_info_get_tab_widget (nfo));
 
   gtk_notebook_remove_page (notebook, ndx);
 
