@@ -1082,7 +1082,7 @@ the new or found page."
 tab that contains *PAGE, it will be activated, otherwise a new tab
 for *PAGE page will be created and set active."
   ;; Find a page in the list of loaded pages.
-  (define (find-page *window *page)
+  (define (find-page *page)
     (define *toplevel (schematic_window_get_toplevel *window))
 
     (let loop ((*page-ls (glist->list (lepton_list_get_glist
@@ -1115,7 +1115,7 @@ for *PAGE page will be created and set active."
 
         ;; There is no page view for *PAGE, create a new one.
         (when (and (null-pointer? *tab-info)
-                   (true? (find-page *window *page)))
+                   (true? (find-page *page)))
           (let ((*tab-info (tab-add-page! *window *page)))
 
             (set-tab-header! (schematic_window_get_tab_notebook *window) *tab-info)
