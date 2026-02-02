@@ -1233,6 +1233,9 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 
+GtkWidget*
+x_tabs_hdr_create (TabInfo* nfo);
+
 TabInfo*
 x_tabs_info_add (SchematicWindow* w_current,
                  gint            ndx,
