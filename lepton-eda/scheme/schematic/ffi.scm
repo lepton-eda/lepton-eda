@@ -621,8 +621,6 @@
 
             x_print
 
-            x_tabs_next
-
             a_zoom
 
             g_action_eval_by_name
@@ -1323,7 +1321,6 @@
 (define-lff lepton_slot_update_object void '(*))
 
 ;;; x_tabs.c
-(define-lff x_tabs_next void '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_savestate void (list '* '* int))

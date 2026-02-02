@@ -950,7 +950,9 @@ the snap grid size should be set to 100")))
   (callback-page-close %null-pointer (*current-window)))
 
 (define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
-  (x_tabs_next (*current-window)))
+ (unless (true? (x_tabs_enabled))
+   (gtk_notebook_next_page
+    (schematic_window_get_tab_notebook (*current-window)))))
 
 ;;; Switch to the previous tab.
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")

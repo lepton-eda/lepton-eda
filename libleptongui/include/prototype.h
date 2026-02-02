@@ -1272,9 +1272,6 @@ gboolean
 x_tabs_tl_page_find (SchematicWindow* w_current,
                      LeptonPage* page);
 void
-x_tabs_next (SchematicWindow* w_current);
-
-void
 x_tabs_hdr_set (GtkNotebook* nbook,
                 TabInfo* nfo);
 void
