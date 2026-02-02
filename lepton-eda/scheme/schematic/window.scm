@@ -65,6 +65,7 @@
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic rc)
+  #:use-module (schematic tabs)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
@@ -991,8 +992,8 @@ If *FILENAME is %null-pointer, the page will be blank.  If there
 is a page with the given *FILENAME, switches to its tab.  Returns
 the new or found page."
   (define (setup-tab-header *tab-info)
-    (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
-                    *tab-info))
+    (set-tab-header! (schematic_window_get_tab_notebook *window)
+                     *tab-info))
 
   (define (open-new-page *tab-info)
     (let ((*page (window-open-file! *window *filename)))
@@ -1104,7 +1105,7 @@ for *PAGE page will be created and set active."
                    (true? (x_tabs_tl_page_find *window *page)))
           (let ((*tab-info (tab-add-page! *window *page)))
 
-            (x_tabs_hdr_set (schematic_window_get_tab_notebook *window) *tab-info)
+            (set-tab-header! (schematic_window_get_tab_notebook *window) *tab-info)
             (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
                                            page-index)
             (grab-focus *tab-info)
