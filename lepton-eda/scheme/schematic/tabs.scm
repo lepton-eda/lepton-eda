@@ -42,7 +42,19 @@
 
 (define (delete-tab-info! *window *info)
   "Removes the tab *INFO instance from the TabInfo list of *WINDOW."
-  (x_tabs_info_rm *window *info))
+  (define *current-info-list
+    (schematic_window_get_tab_info_list *window))
+  (define *node (g_list_find *current-info-list *info))
+
+  (when (null-pointer? *node)
+    (error "*TabInfo not found."))
+
+  (let ((*new-info-list
+         (g_list_delete_link *current-info-list *node)))
+
+    (schematic_window_set_tab_info_list *window *new-info-list)
+
+    (g_free *info)))
 
 
 (define (get-tab-info *tab *info-ls)

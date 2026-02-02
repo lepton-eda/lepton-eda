@@ -26,6 +26,7 @@
             g_free
             g_list_append
             g_list_copy
+            g_list_delete_link
             g_list_find
             g_list_first
             g_list_free
@@ -59,6 +60,7 @@
 
 (define-lff g_list_append '* '(* *))
 (define-lff g_list_copy '* '(*))
+(define-lff g_list_delete_link '* '(* *))
 (define-lff g_list_find '* '(* *))
 (define-lff g_list_first '* '(*))
 (define-lff g_list_free void '(*))
