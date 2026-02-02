@@ -316,7 +316,7 @@ x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data)
   TabInfo*   nfo  = (TabInfo*)   elem;
   GtkWidget* wtab = (GtkWidget*) data;
 
-  if (nfo->wtab_ == wtab)
+  if (schematic_tab_info_get_tab_widget (nfo) == wtab)
     return 0;
 
   return 1;
