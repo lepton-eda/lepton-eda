@@ -28,6 +28,7 @@
   #:export (add-tab-canvas!
             append-tab!
             close-page-tab!
+            delete-tab-info!
             get-tab-info
             make-tabs-notebook
             set-tab-header!))
@@ -37,6 +38,11 @@
   "Creates a new tabs notebook in *WINDOW and adds it to the container
 *WORK-BOX.  Returns the new notebook widget."
   (x_tabs_nbook_create *window *work-box))
+
+
+(define (delete-tab-info! *window *info)
+  "Removes the tab *INFO instance from the TabInfo list of *WINDOW."
+  (x_tabs_info_rm *window *info))
 
 
 (define (get-tab-info *tab *info-ls)

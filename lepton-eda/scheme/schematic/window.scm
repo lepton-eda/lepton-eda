@@ -1208,7 +1208,7 @@ for *PAGE page will be created and set active."
 
         (close-page-tab! *window *current-page)
 
-        (x_tabs_info_rm *window *current-tab-info)
+        (delete-tab-info! *window *current-tab-info)
 
         (if (null-pointer? *new-current-page)
             (begin
