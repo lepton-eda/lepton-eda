@@ -347,16 +347,21 @@
             x_tabs_enabled
             x_tabs_hdr_set
             x_tabs_hdr_update
-            x_tabs_info_add
             x_tabs_info_cur
             x_tabs_info_find_by_page
             x_tabs_nbook_create
             schematic_window_set_current_canvas
+            schematic_tab_info_new
+            schematic_tab_info_get_canvas
+            schematic_tab_info_set_canvas
+            schematic_tab_info_get_index
+            schematic_tab_info_set_index
             schematic_tab_info_get_page
             schematic_tab_info_set_page
-            schematic_tab_info_get_canvas
             schematic_tab_info_get_tab_widget
+            schematic_tab_info_set_tab_widget
             schematic_tab_info_get_window
+            schematic_tab_info_set_window
             schematic_tabs_add_canvas
             schematic_tabs_set_callback
 
@@ -1023,17 +1028,22 @@
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_set void '(* *))
 (define-lff x_tabs_hdr_update void '(* *))
-(define-lff x_tabs_info_add '* (list '* int '* '* '*))
 (define-lff x_tabs_info_cur '* '(*))
 (define-lff x_tabs_info_find_by_page '* '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff schematic_tabs_add_canvas void '(* *))
 (define-lff schematic_window_set_current_canvas void '(* *))
+(define-lff schematic_tab_info_new '* '())
+(define-lff schematic_tab_info_get_canvas '* '(*))
+(define-lff schematic_tab_info_set_canvas void '(* *))
+(define-lff schematic_tab_info_get_index int '(*))
+(define-lff schematic_tab_info_set_index void (list '* int))
 (define-lff schematic_tab_info_get_page '* '(*))
 (define-lff schematic_tab_info_set_page void '(* *))
-(define-lff schematic_tab_info_get_canvas '* '(*))
 (define-lff schematic_tab_info_get_tab_widget '* '(*))
+(define-lff schematic_tab_info_set_tab_widget void '(* *))
 (define-lff schematic_tab_info_get_window '* '(*))
+(define-lff schematic_tab_info_set_window void '(* *))
 (define-lff schematic_tabs_set_callback void '(* *))
 
 ;;; find_text_state.c

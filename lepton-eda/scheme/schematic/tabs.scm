@@ -42,7 +42,22 @@
 
 
 (define (add-tab-info! *window *tab *canvas *page index)
-  (x_tabs_info_add *window index *page *canvas *tab))
+  "Creates a new TabInfo instance using the fields *WINDOW, *TAB,
+*CANVAS, *PAGE, and INDEX.  Returns the new TabInfo instance."
+  (define *info (schematic_tab_info_new))
+
+  (schematic_tab_info_set_index *info index)
+  (schematic_tab_info_set_page *info *page)
+  (schematic_tab_info_set_canvas *info *canvas)
+  (schematic_tab_info_set_tab_widget *info *tab)
+  (schematic_tab_info_set_window *info *window)
+
+  (let* ((*current-info-list
+          (schematic_window_get_tab_info_list *window))
+         (*new-info-list
+          (g_list_append *current-info-list *info)))
+    (schematic_window_set_tab_info_list *window *new-info-list)
+    *info))
 
 
 (define (delete-tab-info! *window *info)

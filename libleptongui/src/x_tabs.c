@@ -244,32 +244,6 @@ schematic_tab_info_new ()
 }
 
 
-TabInfo*
-x_tabs_info_add (SchematicWindow* w_current,
-                 gint            ndx,
-                 LeptonPage*     page,
-                 SchematicCanvas* pview,
-                 GtkWidget*      wtab)
-{
-  TabInfo* nfo = schematic_tab_info_new ();
-
-  schematic_tab_info_set_index (nfo, ndx);
-
-  schematic_tab_info_set_page (nfo, page);
-  schematic_tab_info_set_canvas (nfo, pview);
-  schematic_tab_info_set_tab_widget (nfo, wtab);
-  schematic_tab_info_set_window (nfo, w_current);
-
-  GList *current_info_list =
-    schematic_window_get_tab_info_list (w_current);
-  GList *new_info_list = g_list_append (current_info_list, nfo);
-  schematic_window_set_tab_info_list (w_current, new_info_list);
-
-  return nfo;
-}
-
-
-
 static gint
 x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data)
 {
