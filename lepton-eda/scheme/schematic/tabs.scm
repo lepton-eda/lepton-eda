@@ -18,6 +18,9 @@
 
 
 (define-module (schematic tabs)
+  #:use-module (system foreign)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (add-tab-canvas!
@@ -32,7 +35,17 @@
 
 (define (close-page-tab! *window *page)
   "Closes a tab associated with *PAGE in *WINDOW."
-  (x_tabs_nbook_page_close *window *page))
+
+  (define *info-list (schematic_window_get_tab_info_list *window))
+  (define *tab-info (x_tabs_info_find_by_page *info-list *page))
+
+  (unless (null-pointer? *tab-info)
+    (let* ((*notebook (schematic_window_get_tab_notebook *window))
+           (index (gtk_notebook_page_num
+                   *notebook
+                   (schematic_tab_info_get_tab_widget *tab-info))))
+
+      (gtk_notebook_remove_page *notebook index))))
 
 
 (define (set-tab-header! *notebook *tab-info)
