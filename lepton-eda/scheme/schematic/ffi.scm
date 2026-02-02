@@ -328,6 +328,7 @@
             schematic_window_set_main_window
             schematic_window_get_pages
             schematic_window_get_tab_info_list
+            schematic_window_set_tab_info_list
             schematic_window_get_tab_notebook
             schematic_window_set_toolbar
 
@@ -349,7 +350,6 @@
             x_tabs_info_add
             x_tabs_info_cur
             x_tabs_info_find_by_page
-            x_tabs_info_rm
             x_tabs_nbook_create
             schematic_window_set_current_canvas
             schematic_tab_info_get_page
@@ -1002,6 +1002,7 @@
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))
 (define-lff schematic_window_get_tab_info_list '* '(*))
+(define-lff schematic_window_set_tab_info_list void '(* *))
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
 
@@ -1025,7 +1026,6 @@
 (define-lff x_tabs_info_add '* (list '* int '* '* '*))
 (define-lff x_tabs_info_cur '* '(*))
 (define-lff x_tabs_info_find_by_page '* '(* *))
-(define-lff x_tabs_info_rm void '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff schematic_tabs_add_canvas void '(* *))
 (define-lff schematic_window_set_current_canvas void '(* *))
