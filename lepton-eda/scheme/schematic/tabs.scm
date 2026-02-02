@@ -26,7 +26,14 @@
   #:export (add-tab-canvas!
             append-tab!
             close-page-tab!
+            make-tabs-notebook
             set-tab-header!))
+
+
+(define (make-tabs-notebook *window *work-box)
+  "Creates a new tabs notebook in *WINDOW and adds it to the container
+*WORK-BOX.  Returns the new notebook widget."
+  (x_tabs_nbook_create *window *work-box))
 
 
 (define (add-tab-canvas! *tab *canvas)
