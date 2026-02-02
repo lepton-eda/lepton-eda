@@ -240,12 +240,12 @@ x_tabs_info_add (SchematicWindow* w_current,
 {
   TabInfo* nfo = (TabInfo*) g_malloc (sizeof (TabInfo));
 
-  nfo->ndx_   = ndx;
+  schematic_tab_info_set_index (nfo, ndx);
 
-  nfo->page_  = page;
-  nfo->pview_ = pview;
-  nfo->wtab_  = wtab;
-  nfo->tl_    = w_current;
+  schematic_tab_info_set_page (nfo, page);
+  schematic_tab_info_set_canvas (nfo, pview);
+  schematic_tab_info_set_tab_widget (nfo, wtab);
+  schematic_tab_info_set_window (nfo, w_current);
 
   GList *current_info_list =
     schematic_window_get_tab_info_list (w_current);
