@@ -912,34 +912,6 @@ x_tabs_prev (SchematicWindow* w_current)
 
 
 
-/*! \brief GtkNotebook "page-reordered" signal handler.
- */
-void
-x_tabs_page_on_reordered (GtkNotebook* nbook,
-                          GtkWidget*   wtab,
-                          guint        newindex,
-                          gpointer     data)
-{
-  SchematicWindow* w_current = (SchematicWindow*) data;
-  g_return_if_fail (w_current != NULL);
-
-  LeptonPageList* pages = schematic_window_get_pages (w_current);
-  g_return_if_fail (pages != NULL);
-
-  GList *info_list =
-    schematic_window_get_tab_info_list (w_current);
-
-  TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
-  g_return_if_fail (nfo != NULL);
-
-  lepton_list_move_item (pages, schematic_tab_info_get_page (nfo), newindex);
-
-  gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_canvas (nfo)));
-
-} /* x_tabs_page_on_reordered() */
-
-
-
 /*! \brief Create popup menu for tab's header.
  */
 static GtkMenu*

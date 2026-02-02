@@ -1266,11 +1266,6 @@ void
 x_tabs_nbook_page_close (SchematicWindow* w_current,
                          LeptonPage* page);
 void
-x_tabs_page_on_reordered (GtkNotebook* nbook,
-                          GtkWidget*   wtab,
-                          guint        newindex,
-                          gpointer     data);
-void
 schematic_tabs_add_canvas (SchematicCanvas *pview,
                            GtkWidget *wtab);
 gboolean

@@ -108,6 +108,7 @@
             lepton_export_settings_set_outfile
 
             lepton_list_get_glist
+            lepton_list_move_item
 
             lepton_object_get_attached_to
             lepton_object_set_attached_to
@@ -512,6 +513,7 @@
 
 ;;; list.c
 (define-lff lepton_list_get_glist '* '(*))
+(define-lff lepton_list_move_item void (list '* '* int))
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))
