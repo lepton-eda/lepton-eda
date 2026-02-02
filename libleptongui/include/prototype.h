@@ -1287,6 +1287,9 @@ schematic_tab_info_set_canvas (TabInfo *tab_info,
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_tab_widget (TabInfo *tab_info,
+                                   GtkWidget *tab_widget);
 /* color_edit_widget.c */
 void
 color_edit_widget_update (SchematicWindow* w_current);
