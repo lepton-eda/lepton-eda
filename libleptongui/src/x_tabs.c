@@ -682,6 +682,16 @@ schematic_tab_info_get_window (TabInfo *tab_info)
 }
 
 
+void
+schematic_tab_info_set_window (TabInfo *tab_info,
+                               SchematicWindow* window)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->tl_ = window;
+}
+
+
 LeptonPage*
 schematic_tab_info_get_page (TabInfo *tab_info)
 {
