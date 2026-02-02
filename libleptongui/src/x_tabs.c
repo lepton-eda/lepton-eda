@@ -169,8 +169,6 @@ x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
 /* notebook: */
 
-static gboolean
-x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
 static GtkMenu*
 x_tabs_menu_create (TabInfo* nfo);
 static void
@@ -889,7 +887,7 @@ x_tabs_menu_create (TabInfo* nfo)
 /*! \brief Tab's header widget "button-press-event" signal handler.
  *  \todo  Consider switching to clicked tab
  */
-static gboolean
+gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 {
   g_return_val_if_fail (data != NULL, FALSE);

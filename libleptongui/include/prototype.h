@@ -1236,6 +1236,10 @@ gboolean x_tabs_enabled();
 GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo);
 
+gboolean
+x_tabs_hdr_on_mouse_click (GtkWidget* hdr,
+                           GdkEvent* e,
+                           gpointer data);
 TabInfo*
 x_tabs_info_add (SchematicWindow* w_current,
                  gint            ndx,
