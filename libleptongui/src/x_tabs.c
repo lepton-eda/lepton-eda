@@ -728,6 +728,15 @@ schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 }
 
 
+void
+schematic_tab_info_set_tab_widget (TabInfo *tab_info,
+                                   GtkWidget *tab_widget)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->wtab_ = tab_widget;
+}
+
 
 /* --------------------------------------------------------
  *
