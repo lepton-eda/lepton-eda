@@ -673,6 +673,25 @@ x_tabs_hdr_update (SchematicWindow* w_current,
 }
 
 
+int
+schematic_tab_info_get_index (TabInfo *tab_info)
+{
+  g_return_val_if_fail (tab_info != NULL, 0);
+
+  return tab_info->ndx_;
+}
+
+
+void
+schematic_tab_info_set_index (TabInfo *tab_info,
+                              int index)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->ndx_ = index;
+}
+
+
 SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info)
 {

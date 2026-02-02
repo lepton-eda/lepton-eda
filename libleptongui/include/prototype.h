@@ -1269,6 +1269,12 @@ x_tabs_hdr_update (SchematicWindow* w_current,
 void
 schematic_tabs_set_callback (char *name,
                              GCallback callback);
+int
+schematic_tab_info_get_index (TabInfo *tab_info);
+
+void
+schematic_tab_info_set_index (TabInfo *tab_info,
+                              int index);
 SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info);
 
