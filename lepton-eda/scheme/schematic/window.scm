@@ -1647,7 +1647,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_main_popup_menu *window)
 
       (if (true? (x_tabs_enabled))
-          (let ((*notebook (x_tabs_nbook_create *window *work-box)))
+          (let ((*notebook (make-tabs-notebook *window *work-box)))
             (schematic_tabs_set_callback (string->pointer "page-close")
                                          *callback-tab-button-close)
             (schematic_tabs_set_callback (string->pointer "file-save")
