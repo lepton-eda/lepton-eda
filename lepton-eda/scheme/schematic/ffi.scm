@@ -71,6 +71,7 @@
             o_attrib_add_attrib
 
             o_redraw_cleanstates
+            o_invalidate_glist
             o_invalidate_rubber
 
             o_arc_end1
@@ -105,8 +106,6 @@
             o_grips_cancel
             o_grips_end
             o_grips_motion
-
-            o_invalidate_glist
 
             o_line_end
             o_line_invalidate_rubber
@@ -1102,6 +1101,7 @@
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
+(define-lff o_invalidate_glist void '(* *))
 (define-lff o_invalidate_rubber int '(*))
 
 ;;; o_arc.c
@@ -1151,7 +1151,6 @@
 
 ;;; o_misc.c
 (define-lff o_edit_show_hidden void '(* *))
-(define-lff o_invalidate_glist void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 
 ;;; o_move.c
