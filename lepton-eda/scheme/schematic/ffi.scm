@@ -292,6 +292,7 @@
             x_widgets_show_page_select
             x_widgets_toggle_widget_visibility
 
+            x_window_create_drawing
             x_window_new
             open_page_error_dialog
             untitled_filename
@@ -307,7 +308,6 @@
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
-            schematic_window_create_canvas
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
             schematic_window_create_translate_widget
@@ -976,6 +976,7 @@
 (define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
+(define-lff x_window_create_drawing void '(* *))
 (define-lff x_window_new '* '(*))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
@@ -991,7 +992,6 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_canvas '* '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
