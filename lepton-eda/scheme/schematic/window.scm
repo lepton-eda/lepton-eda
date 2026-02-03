@@ -1620,6 +1620,11 @@ for *PAGE page will be created and set active."
     (gtk_widget_grab_focus *drawing-area)))
 
 
+;;; Creates and initializes a new lepton-schematic window based on
+;;; data stored in the context *TOPLEVEL.
+(define (make-window *toplevel)
+  (x_window_new *toplevel))
+
 
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
@@ -1643,7 +1648,7 @@ GtkApplication structure of the program (when compiled with
       *window))
 
   (define *window
-    (setup-window (x_window_new (parse-gschemrc *toplevel))))
+    (setup-window (make-window (parse-gschemrc *toplevel))))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
     (g_signal_connect *main-window
