@@ -1744,7 +1744,18 @@ for *PAGE page will be created and set active."
 ;;; Creates and initializes a new lepton-schematic window based on
 ;;; data stored in the context *TOPLEVEL.
 (define (make-window *toplevel)
-  (x_window_new *toplevel))
+  (define *window (schematic_window_new))
+
+  (schematic_window_set_toplevel *window *toplevel)
+
+  (lepton_object_add_change_notify *toplevel
+                                   *o_invalidate
+                                   *o_invalidate
+                                   *window)
+  ;; Initialize tabbed GUI.
+  (x_tabs_init)
+
+  *window)
 
 
 (define (make-schematic-window *app *toplevel)

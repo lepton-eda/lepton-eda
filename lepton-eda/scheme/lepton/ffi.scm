@@ -156,6 +156,7 @@
             lepton_object_is_pin
             lepton_object_is_text
 
+            lepton_object_add_change_notify
             lepton_object_calculate_visible_bounds
             lepton_object_copy
             lepton_object_delete
@@ -562,6 +563,7 @@
 (define-lff lepton_object_is_pin int '(*))
 (define-lff lepton_object_is_text int '(*))
 
+(define-lff lepton_object_add_change_notify void '(* * * *))
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
 (define-lff lepton_object_delete void '(*))
