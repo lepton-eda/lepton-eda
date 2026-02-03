@@ -1717,6 +1717,31 @@ for *PAGE page will be created and set active."
     (schematic_window_get_current_canvas *window)))
 
 
+;;; Shows widgets in *MAIN-WINDOW of *WINDOW, sets visibility of
+;;; right and bottom notebooks, and focuses to the drawing area.
+(define (show-main-window *window *main-window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *main-window)
+    (error "NULL main window."))
+
+  ;; Show all widgets.
+  (gtk_widget_show_all *main-window)
+
+  (unless (true? (x_widgets_use_docks))
+    (let ((*bottom-notebook
+           (schematic_window_get_bottom_notebook *window))
+          (*right-notebook
+           (schematic_window_get_right_notebook *window)))
+      (gtk_widget_set_visible *right-notebook FALSE)
+      (gtk_widget_set_visible *bottom-notebook FALSE)))
+
+  (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+    ;; Focus canvas.
+    (gtk_widget_grab_focus *drawing-area)))
+
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1874,7 +1899,7 @@ GtkApplication structure of the program (when compiled with
 
       (schematic_window_restore_geometry *window *main-window)
 
-      (schematic_window_show_all *window *main-window)
+      (show-main-window *window *main-window)
       ;; Returns *window.
       (schematic_window_set_main_window *window *main-window)))
 

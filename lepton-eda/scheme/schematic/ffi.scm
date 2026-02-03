@@ -294,6 +294,7 @@
             x_widgets_show_options
             x_widgets_show_page_select
             x_widgets_toggle_widget_visibility
+            x_widgets_use_docks
 
             x_window_create_drawing
             x_window_new
@@ -320,7 +321,6 @@
             schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
-            schematic_window_show_all
             schematic_window_get_main_window
             schematic_window_set_main_window
             schematic_window_get_pages
@@ -730,6 +730,7 @@
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
 (define-lff x_widgets_toggle_widget_visibility void '(*))
+(define-lff x_widgets_use_docks int '())
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
@@ -1000,7 +1001,6 @@
 (define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
-(define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))

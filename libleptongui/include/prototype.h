@@ -1155,9 +1155,6 @@ void
 schematic_window_save_geometry (SchematicWindow* w_current);
 
 void
-schematic_window_show_all (SchematicWindow *w_current,
-                           GtkWidget *main_window);
-void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
 void

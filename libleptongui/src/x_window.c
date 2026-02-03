@@ -298,43 +298,6 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
 }
 
 
-/*! \brief Show widgets of schematic window
- *  \par Function Description
- *  Shows widgets of schematic window, sets visibility of right
- *  and bottom notebooks, and sets focus to the drawing area.
- *
- * \param [in] w_current The #SchematicWindow object.
- * \param [in] main_window The main window widget.
- */
-void
-schematic_window_show_all (SchematicWindow *w_current,
-                           GtkWidget *main_window)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (main_window != NULL);
-
-  /* show all widgets: */
-  gtk_widget_show_all (main_window);
-
-
-  if ( !x_widgets_use_docks() )
-  {
-    GtkWidget *bottom_notebook =
-      schematic_window_get_bottom_notebook (w_current);
-    GtkWidget *right_notebook =
-      schematic_window_get_right_notebook (w_current);
-    gtk_widget_set_visible (right_notebook, FALSE);
-    gtk_widget_set_visible (bottom_notebook, FALSE);
-  }
-
-
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  /* focus page view: */
-  gtk_widget_grab_focus (drawing_area);
-}
-
-
 /*! \brief Saves a page to a file.
  *  \par Function Description
  *  This function saves the page <B>page</B> to a file named
