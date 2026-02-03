@@ -71,6 +71,7 @@
             o_attrib_add_attrib
 
             o_redraw_cleanstates
+            *o_invalidate
             o_invalidate_glist
             o_invalidate_rubber
 
@@ -293,7 +294,6 @@
             x_widgets_use_docks
 
             x_window_create_drawing
-            x_window_new
             open_page_error_dialog
             untitled_filename
             recent_manager_add
@@ -343,6 +343,7 @@
             x_tabs_info_find_by_page
             x_tabs_info_find_by_wtab
             x_tabs_info_rm
+            x_tabs_init
             x_tabs_nbook_create
             x_tabs_nbook_page_add
             x_tabs_nbook_page_close
@@ -439,9 +440,11 @@
             schematic_window_add_timer
             schematic_window_destroy_timer
             schematic_window_free
+            schematic_window_new
             schematic_window_get_current_canvas
             schematic_window_get_show_hidden_text
             schematic_window_get_toplevel
+            schematic_window_set_toplevel
             *schematic_window_notify_page_callback
             schematic_window_page_changed
             schematic_window_page_content_changed
@@ -839,9 +842,11 @@
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
 (define-lff schematic_window_free void '(*))
+(define-lff schematic_window_new '* '())
 (define-lff schematic_window_get_current_canvas '* '(*))
 (define-lff schematic_window_get_show_hidden_text int '(*))
 (define-lff schematic_window_get_toplevel '* '(*))
+(define-lff schematic_window_set_toplevel void '(* *))
 (define-lfc *schematic_window_notify_page_callback)
 (define-lff schematic_window_page_changed void '(*))
 (define-lff schematic_window_page_content_changed void '(* *))
@@ -977,7 +982,6 @@
 
 ;;; x_window.c
 (define-lff x_window_create_drawing void '(* *))
-(define-lff x_window_new '* '(*))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
@@ -1029,6 +1033,7 @@
 (define-lff x_tabs_info_find_by_page '* '(* *))
 (define-lff x_tabs_info_find_by_wtab '* '(* *))
 (define-lff x_tabs_info_rm void '(* *))
+(define-lff x_tabs_init void '())
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_nbook_page_add int '(* * * *))
 (define-lff x_tabs_nbook_page_close void '(* *))
@@ -1102,6 +1107,7 @@
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
+(define-lfc *o_invalidate)
 (define-lff o_invalidate_glist void '(* *))
 (define-lff o_invalidate_rubber int '(*))
 

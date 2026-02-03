@@ -377,29 +377,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-/*! \brief Creates and initializes a new lepton-schematic window.
- *
- * \return Pointer to the new SchematicWindow object.
- */
-SchematicWindow* x_window_new (LeptonToplevel *toplevel)
-{
-  SchematicWindow *w_current = schematic_window_new ();
-  schematic_window_set_toplevel (w_current, toplevel);
-
-  /* Damage notifications should invalidate the object on screen */
-  lepton_object_add_change_notify (toplevel,
-                                   (ChangeNotifyFunc) o_invalidate,
-                                   (ChangeNotifyFunc) o_invalidate,
-                                   w_current);
-
-  /* Initialize tabbed GUI: */
-  x_tabs_init();
-
-  return w_current;
-}
-
-
-
 /*! \brief Add a menubar widget to the main container of a window.
  *  \par Function Description
  *  Adds a menubar at the top of the program window.  GTK2 version
