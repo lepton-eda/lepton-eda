@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2025 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@
             gtk_combo_box_set_active
             gtk_combo_box_get_model
             gtk_combo_box_text_append_text
+
+            gtk_container_add
 
             gtk_dialog_set_default_response
 
@@ -134,6 +136,8 @@
 (define-lff gtk_combo_box_get_model '* '(*))
 
 (define-lff gtk_combo_box_text_append_text void '(* *))
+
+(define-lff gtk_container_add void '(* *))
 
 (define-lff gtk_dialog_set_default_response void (list '* int))
 

@@ -249,36 +249,6 @@ schematic_window_create_work_box ()
 }
 
 
-/*! \brief Create a page view
- *  \par Function Description
- *  Creates a scrolled #SchematicCanvas widget in the working area
- *  \a work_box.  This function is used when tabs are disabled.
- *
- * \param w_current The #SchematicWindow object.
- * \param work_box The working area widget.
- * \return Pointer to the new GtkWidget object.
- */
-SchematicCanvas*
-schematic_window_create_canvas (SchematicWindow *w_current,
-                                GtkWidget *work_box)
-{
-  GtkWidget *scrolled = NULL;
-
-  g_return_val_if_fail (w_current != NULL, NULL);
-  g_return_val_if_fail (work_box != NULL, NULL);
-
-  /* scrolled window (parent of page view): */
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (work_box), scrolled);
-
-  /* create page view: */
-  x_window_create_drawing (scrolled, w_current);
-  x_window_setup_scrolling (w_current, scrolled);
-
-  return schematic_window_get_current_canvas (w_current);
-}
-
-
 /*! \brief Create paned widgets with notebooks
  *  \par Function Description
  *  Creates bottom and right notebooks and two paned widgets for

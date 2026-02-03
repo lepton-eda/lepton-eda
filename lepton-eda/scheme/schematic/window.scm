@@ -1697,6 +1697,26 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+;;; Creates and returns a scrolled canvas widget in the working area
+;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
+(define (make-canvas *window *work-box)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *work-box)
+    (error "NULL work box."))
+
+  ;; scrolled window (parent of page view):
+  (let ((*scrolled
+         (gtk_scrolled_window_new %null-pointer %null-pointer)))
+    (gtk_container_add *work-box *scrolled)
+
+    ;; Create page view.
+    (x_window_create_drawing *scrolled *window)
+    (x_window_setup_scrolling *window *scrolled)
+
+    (schematic_window_get_current_canvas *window)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1761,7 +1781,7 @@ GtkApplication structure of the program (when compiled with
                               *window)
             (tab-add-page! *window %null-pointer))
 
-          (let ((*canvas (schematic_window_create_canvas *window *work-box)))
+          (let ((*canvas (make-canvas *window *work-box)))
             ;; Setup callbacks for page view draw events.
             (setup-canvas-draw-events *window *canvas)))
 
