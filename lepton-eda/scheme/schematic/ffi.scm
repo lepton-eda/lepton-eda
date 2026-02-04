@@ -1002,7 +1002,7 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_hide_text_widget '* '(* *))
+(define-lff schematic_window_create_hide_text_widget '* '(*))
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))

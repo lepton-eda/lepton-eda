@@ -422,8 +422,7 @@ schematic_window_pack_widget (GtkWidget *parent_widget,
 
 
 GtkWidget*
-schematic_window_create_hide_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
+schematic_window_create_hide_text_widget (GtkWidget *work_box)
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Hide"),
