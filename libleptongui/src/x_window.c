@@ -24,9 +24,6 @@
 
 
 static GtkWidget*
-create_notebook_right (SchematicWindow *w_current);
-
-static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
 
@@ -133,7 +130,8 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
   hpaned = gtk_hpaned_new ();
 #endif
 
-  GtkWidget *right_notebook = create_notebook_right (w_current);
+  GtkWidget *right_notebook =
+    schematic_window_side_notebook_new (w_current);
   schematic_window_set_right_notebook (w_current, right_notebook);
 
   GtkWidget *bottom_notebook = create_notebook_bottom (w_current);
@@ -236,8 +234,8 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-static GtkWidget*
-create_notebook_right (SchematicWindow* w_current)
+GtkWidget*
+schematic_window_side_notebook_new (SchematicWindow* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
