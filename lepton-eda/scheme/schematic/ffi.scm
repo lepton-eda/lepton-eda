@@ -327,6 +327,8 @@
             schematic_window_set_tab_info_list
             schematic_window_get_tab_notebook
             schematic_window_set_toolbar
+            schematic_window_bottom_notebook_new
+            schematic_window_side_notebook_new
 
             schematic_toolbar_new
             schematic_toolbar_activate_button
@@ -1037,7 +1039,7 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_notebooks void '(* * *))
+(define-lff schematic_window_create_notebooks void '(* * * *))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))
@@ -1045,6 +1047,8 @@
 (define-lff schematic_window_set_tab_info_list void '(* *))
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
+(define-lff schematic_window_bottom_notebook_new '* '(*))
+(define-lff schematic_window_side_notebook_new '* '(*))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))

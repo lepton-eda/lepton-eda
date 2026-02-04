@@ -1114,9 +1114,10 @@ GtkWidget*
 schematic_window_create_work_box ();
 
 void
-schematic_window_create_notebooks (SchematicWindow *w_current,
-                                   GtkWidget *main_box,
-                                   GtkWidget *work_box);
+schematic_window_create_notebooks (GtkWidget *main_box,
+                                   GtkWidget *work_box,
+                                   GtkWidget *right_notebook,
+                                   GtkWidget *bottom_notebook);
 GtkWidget*
 schematic_window_bottom_notebook_new (SchematicWindow *w_current);
 

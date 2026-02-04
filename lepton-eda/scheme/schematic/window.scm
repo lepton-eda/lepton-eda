@@ -2161,8 +2161,15 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
-      (schematic_window_create_notebooks *window *main-box *work-box)
+      (let ((*right-notebook (schematic_window_side_notebook_new *window))
+            (*bottom-notebook (schematic_window_bottom_notebook_new *window)))
+        (schematic_window_set_right_notebook *window *right-notebook)
+        (schematic_window_set_bottom_notebook *window *bottom-notebook)
 
+        (schematic_window_create_notebooks *main-box
+                                           *work-box
+                                           *right-notebook
+                                           *bottom-notebook))
       ;; Setup statusbar.
       (let* ((*options (schematic_window_get_options *window))
              (middle-button (schematic_window_get_middle_button *window))

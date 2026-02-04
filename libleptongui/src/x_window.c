@@ -101,19 +101,21 @@ schematic_window_create_work_box ()
 }
 
 
-/*! \brief Create paned widgets with notebooks
+/*! \brief Create paned widgets with notebooks.
  *  \par Function Description
  *  Creates bottom and right notebooks and two paned widgets for
  *  them.
  *
- * \param [in] w_current The #SchematicWindow object.
  * \param [in] main_box The top level box container widget.
  * \param [in] work_box The working area widget.
+ * \param [in] right_notebook The right notebook.
+ * \param [in] bottom_notebook The bottom notebook.
  */
 void
-schematic_window_create_notebooks (SchematicWindow *w_current,
-                                   GtkWidget *main_box,
-                                   GtkWidget *work_box)
+schematic_window_create_notebooks (GtkWidget *main_box,
+                                   GtkWidget *work_box,
+                                   GtkWidget *right_notebook,
+                                   GtkWidget *bottom_notebook)
 {
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
@@ -125,13 +127,6 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
   vpaned = gtk_vpaned_new ();
   hpaned = gtk_hpaned_new ();
 #endif
-
-  GtkWidget *right_notebook =
-    schematic_window_side_notebook_new (w_current);
-  schematic_window_set_right_notebook (w_current, right_notebook);
-
-  GtkWidget *bottom_notebook = schematic_window_bottom_notebook_new (w_current);
-  schematic_window_set_bottom_notebook (w_current, bottom_notebook);
 
   gtk_container_add (GTK_CONTAINER (main_box), vpaned);
 
