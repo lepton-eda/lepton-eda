@@ -34,22 +34,19 @@ untitled_next_index (SchematicWindow* w_current);
 
 
 /*! \brief Create a schematic drawing canvas.
- *  \par Function Description
- *  Creates and initializes a schematic drawing canvas widget and
- *  adds it to the scrolled container of the parent
- *  #SchematicWindow instance The page of the canvas is set to the
- *  active page of the window.
  *
+ *  \par Function Description
+ *  Creates a schematic drawing canvas widget and adds it to the
+ *  scrolled container.
+ *
+ *  \param [in] view The #SchematicCanvas instance.
  *  \param [in] scrolled The scrolled container.
- *  \param [in] w_current The parent window.
+ *  \return [in] The drawing area widget of the canvas.
  */
 GtkWidget*
-x_window_create_drawing (GtkWidget *scrolled,
-                         SchematicWindow *w_current)
+x_window_create_drawing (SchematicCanvas *view,
+                         GtkWidget *scrolled)
 {
-  LeptonPage* page = schematic_window_get_active_page (w_current);
-  SchematicCanvas* view = schematic_canvas_new_with_page (page);
-
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (view), TRUE);

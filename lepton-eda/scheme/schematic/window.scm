@@ -1708,7 +1708,9 @@ for *PAGE page will be created and set active."
   (when (null-pointer? *scrolled)
     (error "NULL scrolled widget."))
 
-  (let ((*drawing-area (x_window_create_drawing *scrolled *window)))
+  (let* ((*page (schematic_window_get_active_page *window))
+         (*canvas (schematic_canvas_new_with_page *page))
+         (*drawing-area (x_window_create_drawing *canvas *scrolled)))
 
     (schematic_window_set_drawing_area *window *drawing-area)
 
