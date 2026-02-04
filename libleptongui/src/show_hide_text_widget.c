@@ -74,6 +74,13 @@ notify_entry_text (GtkWidget *entry,
                    SchematicShowHideTextWidget *widget);
 
 
+/*! \brief Create a new Hide text widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created Hide text widget.
+ *
+ *  \return The new Hide text widget.
+ */
 GtkWidget*
 schematic_show_hide_text_widget_new_hide ()
 {
