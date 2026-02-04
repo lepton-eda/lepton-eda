@@ -1116,7 +1116,8 @@ schematic_window_create_work_box ();
 void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
-                                 GtkWidget *menubar);
+                                 GtkWidget *menubar,
+                                 int add_handlebox);
 void
 schematic_window_create_translate_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
