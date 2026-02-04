@@ -23,10 +23,6 @@
 #include "schematic.h"
 
 
-static GtkWidget*
-create_notebook_bottom (SchematicWindow *w_current);
-
-
 /*! \brief Creates a new main window widget.
  *  \par Function Description
  * Creates a new lepton-schematic window and initializes some of
@@ -134,7 +130,7 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
     schematic_window_side_notebook_new (w_current);
   schematic_window_set_right_notebook (w_current, right_notebook);
 
-  GtkWidget *bottom_notebook = create_notebook_bottom (w_current);
+  GtkWidget *bottom_notebook = schematic_window_bottom_notebook_new (w_current);
   schematic_window_set_bottom_notebook (w_current, bottom_notebook);
 
   gtk_container_add (GTK_CONTAINER (main_box), vpaned);
@@ -270,8 +266,8 @@ schematic_window_side_notebook_new (SchematicWindow* w_current)
 
 
 
-static GtkWidget*
-create_notebook_bottom (SchematicWindow* w_current)
+GtkWidget*
+schematic_window_bottom_notebook_new (SchematicWindow* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
