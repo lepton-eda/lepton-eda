@@ -429,13 +429,7 @@ schematic_window_create_hide_text_widget (GtkWidget *work_box)
                                "label-text", _("Hide text starting with:"),
                                NULL);
 
-  GtkWidget *hide_text_widget = GTK_WIDGET (obj);
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      hide_text_widget,
-                      FALSE, FALSE, 0);
-
-  return hide_text_widget;
+  return GTK_WIDGET (obj);
 }
 
 
