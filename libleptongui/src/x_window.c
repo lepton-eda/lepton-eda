@@ -61,7 +61,7 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 #ifdef ENABLE_GTK3
   gint events;
 
-  if (w_current->warp_cursor)
+  if (schematic_window_get_warp_cursor (w_current))
   {
     events = GDK_SCROLL_MASK;
   }
