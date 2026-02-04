@@ -497,6 +497,7 @@
             schematic_window_get_rubber_visible
             schematic_window_set_rubber_visible
             schematic_window_get_selection_list
+            schematic_window_set_show_text_widget
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
             schematic_window_get_undo_panzoom
@@ -903,6 +904,7 @@
 (define-lff schematic_window_get_rubber_visible int '(*))
 (define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
+(define-lff schematic_window_set_show_text_widget void '(* *))
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
@@ -1009,7 +1011,7 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_show_text_widget '* '(* *))
+(define-lff schematic_window_create_show_text_widget '* '(*))
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))

@@ -413,8 +413,7 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 
 
 GtkWidget*
-schematic_window_create_show_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
+schematic_window_create_show_text_widget (GtkWidget *work_box)
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Show"),
@@ -422,7 +421,6 @@ schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                NULL);
 
   GtkWidget *show_text_widget = GTK_WIDGET (obj);
-  schematic_window_set_show_text_widget (w_current, show_text_widget);
 
   gtk_box_pack_start (GTK_BOX (work_box),
                       show_text_widget,

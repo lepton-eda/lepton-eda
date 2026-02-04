@@ -1873,7 +1873,8 @@ GtkApplication structure of the program (when compiled with
                           *x_window_hide_text
                           *window))
       (let ((*show-text-widget
-             (schematic_window_create_show_text_widget *window *work-box)))
+             (schematic_window_create_show_text_widget *work-box)))
+        (schematic_window_set_show_text_widget *window *show-text-widget)
         (g_signal_connect *show-text-widget
                           (string->pointer "response")
                           *x_window_show_text
