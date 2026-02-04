@@ -276,6 +276,7 @@
             schematic_page_revert_dialog
 
             schematic_show_hide_text_widget_new_hide
+            schematic_show_hide_text_widget_new_show
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -317,7 +318,6 @@
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
-            schematic_window_create_show_text_widget
             schematic_window_create_translate_widget
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
@@ -836,6 +836,7 @@
 
 ;;; show_hide_text_widget.c
 (define-lff schematic_show_hide_text_widget_new_hide '* '())
+(define-lff schematic_show_hide_text_widget_new_show '* '())
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
@@ -1011,7 +1012,6 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_show_text_widget '* '())
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))

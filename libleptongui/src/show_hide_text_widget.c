@@ -93,6 +93,25 @@ schematic_show_hide_text_widget_new_hide ()
 }
 
 
+/*! \brief Create a new Show text widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created Show text widget.
+ *
+ *  \return The new Show text widget.
+ */
+GtkWidget*
+schematic_show_hide_text_widget_new_show ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                               "button-text", _("Show"),
+                               "label-text", _("Show text starting with:"),
+                               NULL);
+
+  return GTK_WIDGET (obj);
+}
+
+
 
 /*! \brief Show the hide text widget
  */

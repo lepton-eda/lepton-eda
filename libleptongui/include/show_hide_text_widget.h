@@ -53,6 +53,9 @@ G_BEGIN_DECLS
 GtkWidget*
 schematic_show_hide_text_widget_new_hide ();
 
+GtkWidget*
+schematic_show_hide_text_widget_new_show ();
+
 G_END_DECLS
 
 
