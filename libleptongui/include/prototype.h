@@ -1127,7 +1127,7 @@ void
 schematic_window_pack_widget (GtkWidget *parent_widget,
                               GtkWidget *child_widget);
 GtkWidget*
-schematic_window_create_hide_text_widget (GtkWidget *work_box);
+schematic_window_create_hide_text_widget ();
 void
 schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
