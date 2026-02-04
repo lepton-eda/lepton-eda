@@ -396,7 +396,7 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 #ifdef ENABLE_GTK3
   gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
 #else
-  if (w_current->handleboxes)
+  if (schematic_window_get_handleboxes (w_current))
   {
     GtkWidget *handlebox = gtk_handle_box_new ();
     gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
