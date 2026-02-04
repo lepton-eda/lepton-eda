@@ -407,8 +407,6 @@ schematic_window_create_menubar (SchematicWindow *w_current,
     gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
   }
 #endif
-
-  schematic_window_set_menubar (w_current, menubar);
 }
 
 

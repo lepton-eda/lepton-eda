@@ -1795,6 +1795,7 @@ GtkApplication structure of the program (when compiled with
           (*menubar (make-main-menu *window *callback-recent-chooser-item-activated))
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
+      (schematic_window_set_menubar *window *menubar)
 
       ;; Make toolbar.
       (let ((create-toolbar?
