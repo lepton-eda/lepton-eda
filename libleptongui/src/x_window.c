@@ -413,15 +413,6 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 
 
 void
-schematic_window_pack_widget (GtkWidget *parent_widget,
-                              GtkWidget *child_widget)
-{
-  gtk_box_pack_start (GTK_BOX (parent_widget), child_widget, FALSE, FALSE, 0);
-}
-
-
-
-void
 schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {

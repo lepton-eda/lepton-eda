@@ -1836,7 +1836,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup hidden infowidgets.
       (let ((*find-text-widget (schematic_find_text_widget_new)))
         (schematic_window_set_find_text_widget *window *find-text-widget)
-        (schematic_window_pack_widget *work-box *find-text-widget)
+        (gtk_widget_pack_child *work-box *find-text-widget)
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
                           *callback-find-text
@@ -1866,7 +1866,7 @@ GtkApplication structure of the program (when compiled with
                             *schematic_find_text_widget_click_find
                             *find-text-widget)))
       (let ((*hide-text-widget (schematic_show_hide_text_widget_new_hide)))
-        (schematic_window_pack_widget *work-box *hide-text-widget)
+        (gtk_widget_pack_child *work-box *hide-text-widget)
         (schematic_window_set_hide_text_widget *window *hide-text-widget)
         (g_signal_connect *hide-text-widget
                           (string->pointer "response")

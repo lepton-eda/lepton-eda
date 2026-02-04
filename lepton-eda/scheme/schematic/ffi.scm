@@ -41,6 +41,7 @@
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
+            gtk_widget_pack_child
 
             generic_confirm_dialog
             generic_error_dialog
@@ -320,7 +321,6 @@
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
-            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_get_main_window
@@ -685,6 +685,7 @@
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
+(define-lff gtk_widget_pack_child void '(* *))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -1011,7 +1012,6 @@
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
-(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_get_main_window '* '(*))
