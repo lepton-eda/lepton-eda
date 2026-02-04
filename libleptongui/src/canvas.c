@@ -1766,3 +1766,45 @@ schematic_canvas_setup_drawing_area (SchematicCanvas *view)
 
   return GTK_WIDGET (view);
 }
+
+
+/*! \brief Set up events for the drawing area.
+ *
+ *  \par Function Description
+ *  Sets up events for the drawing area widget of the canvas.
+ *
+ * \param [in] drawing_area The #SchematicCanvas instance.
+ * \param [in] warp_cursor  Whether the mouse cursor can be warped.
+ */
+void
+schematic_canvas_setup_drawing_area_events (SchematicCanvas* drawing_area,
+                                            int warp_cursor)
+{
+  /* gtk_widget_set_events() can be called on unrealized widgets only.
+  *  Since with tabbed GUI (see x_tabs.c) we need to setup events
+  *  for already created page view widgets, use
+  *  gtk_widget_add_events() instead.
+  */
+  gtk_widget_add_events (GTK_WIDGET (drawing_area),
+                         GDK_EXPOSURE_MASK |
+                         GDK_POINTER_MOTION_MASK |
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_ENTER_NOTIFY_MASK |
+                         GDK_KEY_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK);
+
+#ifdef ENABLE_GTK3
+  gint events;
+
+  if (warp_cursor)
+  {
+    events = GDK_SCROLL_MASK;
+  }
+  else
+  {
+    events = GDK_SMOOTH_SCROLL_MASK | GDK_SCROLL_MASK;
+  }
+
+  gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
+#endif
+}

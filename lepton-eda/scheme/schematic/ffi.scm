@@ -301,7 +301,6 @@
             untitled_filename
             recent_manager_add
             x_window_save_page
-            x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
             x_window_untitled_page
             schematic_window_create_app_window
@@ -426,6 +425,7 @@
             schematic_canvas_redraw
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_setup_drawing_area
+            schematic_canvas_setup_drawing_area_events
             schematic_canvas_zoom_extents
             schematic_canvas_zoom_object
 
@@ -806,6 +806,7 @@
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_setup_drawing_area void '(*))
+(define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
@@ -988,7 +989,6 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_setup_draw_events_drawing_area void (list '* int))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))

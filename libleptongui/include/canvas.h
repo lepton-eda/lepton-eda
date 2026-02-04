@@ -182,6 +182,9 @@ schematic_canvas_zoom_object (SchematicCanvas *view,
 GtkWidget*
 schematic_canvas_setup_drawing_area (SchematicCanvas *view);
 
+void
+schematic_canvas_setup_drawing_area_events (SchematicCanvas* drawing_area,
+                                            int warp_cursor);
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy
 schematic_canvas_get_hscroll_policy (SchematicCanvas *view);

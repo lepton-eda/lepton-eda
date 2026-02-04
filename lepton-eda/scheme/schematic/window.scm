@@ -853,7 +853,7 @@ zooming."
                       (cdr element)
                       *window))
 
-  (x_window_setup_draw_events_drawing_area
+  (schematic_canvas_setup_drawing_area_events
    *canvas
    (schematic_window_get_warp_cursor *window))
 

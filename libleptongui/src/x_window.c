@@ -33,49 +33,6 @@ static int
 untitled_next_index (SchematicWindow* w_current);
 
 
-/*! \brief Set up callbacks for the drawing area.
- *  \par Function Description
- *
- * Installs GTK+ callback handlers for signals that are emitted by
- * the drawing area
- *
- * \param [in] drawing_area The drawing area (page view).
- * \param [in] warp_cursor  Whether the mouse cursor can be warped.
- */
-void x_window_setup_draw_events_drawing_area (SchematicCanvas* drawing_area,
-                                              int warp_cursor)
-{
-  /* gtk_widget_set_events() can be called on unrealized widgets only.
-  *  Since with tabbed GUI (see x_tabs.c) we need to setup events
-  *  for already created page view widgets, use
-  *  gtk_widget_add_events() instead.
-  */
-  gtk_widget_add_events (GTK_WIDGET (drawing_area),
-                         GDK_EXPOSURE_MASK |
-                         GDK_POINTER_MOTION_MASK |
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_ENTER_NOTIFY_MASK |
-                         GDK_KEY_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK);
-
-#ifdef ENABLE_GTK3
-  gint events;
-
-  if (warp_cursor)
-  {
-    events = GDK_SCROLL_MASK;
-  }
-  else
-  {
-    events = GDK_SMOOTH_SCROLL_MASK | GDK_SCROLL_MASK;
-  }
-
-  gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
-#endif
-
-} /* x_window_setup_draw_events_drawing_area() */
-
-
 static void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
 {
