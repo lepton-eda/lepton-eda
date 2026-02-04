@@ -1782,12 +1782,8 @@ for *PAGE page will be created and set active."
     (error "NULL scrolled widget."))
 
   (let* ((*page (schematic_window_get_active_page *window))
-         (*canvas (schematic_canvas_new_with_page *page))
-         (*drawing-area (x_window_create_drawing *canvas *scrolled)))
-
-    (schematic_window_set_drawing_area *window *drawing-area)
-
-    *drawing-area))
+         (*canvas (schematic_canvas_new_with_page *page)))
+    (x_window_create_drawing *canvas *scrolled)))
 
 
 ;;; Creates and returns a scrolled canvas widget in the working area
@@ -1805,7 +1801,9 @@ for *PAGE page will be created and set active."
     (gtk_container_add *work-box *scrolled)
 
     ;; Create page view.
-    (make-drawing-area *scrolled *window)
+    (schematic_window_set_drawing_area
+     *window
+     (make-drawing-area *scrolled *window))
     (x_window_setup_scrolling *window *scrolled)
 
     (schematic_window_get_current_canvas *window)))
