@@ -254,7 +254,7 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-void
+GtkWidget*
 schematic_window_create_translate_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
@@ -267,6 +267,7 @@ schematic_window_create_translate_widget (SchematicWindow *w_current,
 
   g_signal_connect (widget, "response",
                     G_CALLBACK (&x_window_translate_response), w_current);
+  return widget;
 }
 
 
