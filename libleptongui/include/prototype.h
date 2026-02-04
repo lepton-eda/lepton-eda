@@ -1122,7 +1122,8 @@ schematic_window_create_work_box ();
 void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
-                                 GtkWidget *menubar);
+                                 GtkWidget *menubar,
+                                 int add_handlebox);
 void
 schematic_window_pack_widget (GtkWidget *parent_widget,
                               GtkWidget *child_widget);

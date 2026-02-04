@@ -477,6 +477,7 @@
             schematic_window_set_find_text_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
+            schematic_window_get_handleboxes
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
             schematic_window_set_macro_widget
@@ -878,6 +879,7 @@
 (define-lff schematic_window_set_find_text_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
+(define-lff schematic_window_get_handleboxes int '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_set_macro_widget void '(* *))
@@ -994,7 +996,7 @@
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
-(define-lff schematic_window_create_menubar void '(* * *))
+(define-lff schematic_window_create_menubar void (list '* '* '* int))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
