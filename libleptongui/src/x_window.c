@@ -47,9 +47,6 @@ GtkWidget*
 x_window_create_drawing (GtkWidget *scrolled,
                          SchematicWindow *w_current)
 {
-  g_return_val_if_fail (w_current != NULL, NULL);
-  g_return_val_if_fail (scrolled != NULL, NULL);
-
   LeptonPage* page = schematic_window_get_active_page (w_current);
   SchematicCanvas* view = schematic_canvas_new_with_page (page);
 
