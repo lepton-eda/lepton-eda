@@ -734,5 +734,10 @@ schematic_window_get_page_select_dialog (SchematicWindow *w_current);
 void
 schematic_window_set_page_select_dialog (SchematicWindow *w_current,
                                          GtkWidget *widget);
+int
+schematic_window_get_warp_cursor (SchematicWindow *w_current);
 
+void
+schematic_window_set_warp_cursor (SchematicWindow *w_current,
+                                  int val);
 G_END_DECLS

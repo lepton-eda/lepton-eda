@@ -3044,3 +3044,40 @@ schematic_window_set_page_select_dialog (SchematicWindow *w_current,
 
   w_current->page_select_dialog = widget;
 }
+
+
+/*! \brief Get schematic window's field \a warp_cursor.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a warp_cursor field of the schematic
+ *  window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field \a warp_cursor.
+ */
+int
+schematic_window_get_warp_cursor (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->warp_cursor;
+}
+
+
+/*! \brief Set schematic window's field \a warp_cursor.
+ *
+ *  \par Function Description
+ *  Sets the \a warp_cursor field of the schematic window to the given
+ *  value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field \a warp_cursor.
+ */
+void
+schematic_window_set_warp_cursor (SchematicWindow *w_current,
+                                  int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->warp_cursor = val;
+}
