@@ -39,11 +39,11 @@ untitled_next_index (SchematicWindow* w_current);
  * Installs GTK+ callback handlers for signals that are emitted by
  * the drawing area
  *
- * \param [in] w_current    The toplevel environment.
  * \param [in] drawing_area The drawing area (page view).
+ * \param [in] warp_cursor  Whether the mouse cursor can be warped.
  */
-void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
-                                              SchematicCanvas* drawing_area)
+void x_window_setup_draw_events_drawing_area (SchematicCanvas* drawing_area,
+                                              int warp_cursor)
 {
   /* gtk_widget_set_events() can be called on unrealized widgets only.
   *  Since with tabbed GUI (see x_tabs.c) we need to setup events
@@ -61,7 +61,7 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 #ifdef ENABLE_GTK3
   gint events;
 
-  if (schematic_window_get_warp_cursor (w_current))
+  if (warp_cursor)
   {
     events = GDK_SCROLL_MASK;
   }
