@@ -382,20 +382,16 @@ x_window_save_page (SchematicWindow *w_current,
  *  Adds a menubar at the top of the program window.  GTK2 version
  *  of the widget may have 'handle boxes' depending on configuration.
  *
- *  \param [in] w_current The toplevel GUI window structure.
  *  \param [in] main_box The main container of the app window.
  *  \param [in] menubar The menubar widget created elsewhere.
  *  \param [in] add_handlebox Whether the menubar handlebox has to be
  *                            added.
  */
 void
-schematic_window_create_menubar (SchematicWindow *w_current,
-                                 GtkWidget *main_box,
+schematic_window_create_menubar (GtkWidget *main_box,
                                  GtkWidget *menubar,
                                  int add_handlebox)
 {
-  g_return_if_fail (w_current != NULL);
-
 #ifdef ENABLE_GTK3
   gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
 #else
