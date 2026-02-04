@@ -420,13 +420,7 @@ schematic_window_create_show_text_widget (GtkWidget *work_box)
                                "label-text", _("Show text starting with:"),
                                NULL);
 
-  GtkWidget *show_text_widget = GTK_WIDGET (obj);
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      show_text_widget,
-                      FALSE, FALSE, 0);
-
-  return show_text_widget;
+  return GTK_WIDGET (obj);
 }
 
 

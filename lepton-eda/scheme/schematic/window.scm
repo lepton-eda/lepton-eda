@@ -1874,6 +1874,7 @@ GtkApplication structure of the program (when compiled with
                           *window))
       (let ((*show-text-widget
              (schematic_window_create_show_text_widget *work-box)))
+        (gtk_widget_pack_child *work-box *show-text-widget)
         (schematic_window_set_show_text_widget *window *show-text-widget)
         (g_signal_connect *show-text-widget
                           (string->pointer "response")
