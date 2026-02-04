@@ -1104,7 +1104,7 @@ char*
 x_stroke_translate_and_execute (SchematicWindow *w_current);
 
 /* x_window.c */
-void
+GtkWidget*
 x_window_create_drawing (GtkWidget *drawbox,
                          SchematicWindow *w_current);
 void
