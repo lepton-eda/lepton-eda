@@ -1169,6 +1169,10 @@ void
 x_window_hide_text (GtkWidget *widget,
                     gint response,
                     SchematicWindow *w_current);
+void
+x_window_show_text (GtkWidget *widget,
+                    gint response,
+                    SchematicWindow *w_current);
 
 /* x_widgets.c */
 gboolean
