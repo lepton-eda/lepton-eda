@@ -1703,7 +1703,11 @@ for *PAGE page will be created and set active."
 ;;; Creates and returns a schematic drawing area widget as known as
 ;;; canvas.  Adds it to the scrolled container *SCROLLED of *WINDOW.
 (define (make-drawing-area *scrolled *window)
-  (x_window_create_drawing *scrolled *window))
+  (let ((*drawing-area (x_window_create_drawing *scrolled *window)))
+
+    (schematic_window_set_drawing_area *window *drawing-area)
+
+    *drawing-area))
 
 
 ;;; Creates and returns a scrolled canvas widget in the working area

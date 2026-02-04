@@ -61,7 +61,6 @@ x_window_create_drawing (GtkWidget *scrolled,
 #endif
 
   GtkWidget *drawing_area = GTK_WIDGET (view);
-  schematic_window_set_drawing_area (w_current, drawing_area);
 
   gtk_container_add (GTK_CONTAINER(scrolled), drawing_area);
 
