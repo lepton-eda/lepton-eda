@@ -1701,16 +1701,14 @@ for *PAGE page will be created and set active."
 
 
 ;;; Creates and returns a schematic drawing area widget as known as
-;;; canvas.  Adds it to the scrolled container *SCROLLED of *WINDOW.
-(define (make-drawing-area *scrolled *window)
-  (when (null-pointer? *window)
-    (error "NULL window."))
+;;; canvas.  Adds it to the scrolled container *SCROLLED and
+;;; associates it with *PAGE.
+(define (make-drawing-area *scrolled *page)
   (when (null-pointer? *scrolled)
     (error "NULL scrolled widget."))
 
-  (let* ((*page (schematic_window_get_active_page *window))
-         (*canvas (schematic_canvas_new_with_page *page)))
-    (x_window_create_drawing *canvas *scrolled)))
+  (schematic_canvas_setup_drawing_area (schematic_canvas_new_with_page *page)
+                                       *scrolled))
 
 
 ;;; Creates and returns a scrolled canvas widget in the working area
@@ -1730,7 +1728,8 @@ for *PAGE page will be created and set active."
     ;; Create page view.
     (schematic_window_set_drawing_area
      *window
-     (make-drawing-area *scrolled *window))
+     (make-drawing-area *scrolled
+                        (schematic_window_get_active_page *window)))
     (x_window_setup_scrolling *window *scrolled)
 
     (schematic_window_get_current_canvas *window)))

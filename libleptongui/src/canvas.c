@@ -1744,3 +1744,36 @@ geometry_cache_finalize (SchematicCanvas *view)
   g_hash_table_destroy (view->_geometry_cache);
   view->_geometry_cache = NULL;
 }
+
+
+/*! \brief Set up the drawing area of a schematic canvas.
+ *
+ *  \par Function Description
+ *  Sets expanding and filling of the canvas' drawing area, adds it to
+ *  a scrolled container, focuses, and shows.
+ *
+ *  \param [in] view The #SchematicCanvas instance.
+ *  \param [in] scrolled The scrolled container.
+ *  \return [in] The drawing area widget of the canvas.
+ */
+GtkWidget*
+schematic_canvas_setup_drawing_area (SchematicCanvas *view,
+                                     GtkWidget *scrolled)
+{
+#ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_halign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+  gtk_widget_set_valign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+#endif
+
+  GtkWidget *drawing_area = GTK_WIDGET (view);
+
+  gtk_container_add (GTK_CONTAINER(scrolled), drawing_area);
+
+  gtk_widget_set_can_focus (drawing_area, TRUE);
+  gtk_widget_grab_focus (drawing_area);
+  gtk_widget_show (drawing_area);
+
+  return drawing_area;
+}

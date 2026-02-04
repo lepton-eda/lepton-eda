@@ -33,39 +33,6 @@ static int
 untitled_next_index (SchematicWindow* w_current);
 
 
-/*! \brief Create a schematic drawing canvas.
- *
- *  \par Function Description
- *  Creates a schematic drawing canvas widget and adds it to the
- *  scrolled container.
- *
- *  \param [in] view The #SchematicCanvas instance.
- *  \param [in] scrolled The scrolled container.
- *  \return [in] The drawing area widget of the canvas.
- */
-GtkWidget*
-x_window_create_drawing (SchematicCanvas *view,
-                         GtkWidget *scrolled)
-{
-#ifdef ENABLE_GTK3
-  gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
-  gtk_widget_set_vexpand (GTK_WIDGET (view), TRUE);
-  gtk_widget_set_halign (GTK_WIDGET (view), GTK_ALIGN_FILL);
-  gtk_widget_set_valign (GTK_WIDGET (view), GTK_ALIGN_FILL);
-#endif
-
-  GtkWidget *drawing_area = GTK_WIDGET (view);
-
-  gtk_container_add (GTK_CONTAINER(scrolled), drawing_area);
-
-  gtk_widget_set_can_focus (drawing_area, TRUE);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_show (drawing_area);
-
-  return drawing_area;
-}
-
-
 /*! \brief Set up callbacks for the drawing area.
  *  \par Function Description
  *

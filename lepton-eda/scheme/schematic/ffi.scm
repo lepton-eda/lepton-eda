@@ -297,7 +297,6 @@
             x_widgets_toggle_widget_visibility
             x_widgets_use_docks
 
-            x_window_create_drawing
             open_page_error_dialog
             untitled_filename
             recent_manager_add
@@ -426,6 +425,7 @@
             schematic_canvas_pan_start
             schematic_canvas_redraw
             schematic_canvas_SCREENtoWORLD
+            schematic_canvas_setup_drawing_area
             schematic_canvas_zoom_extents
             schematic_canvas_zoom_object
 
@@ -804,6 +804,7 @@
 (define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
+(define-lff schematic_canvas_setup_drawing_area void '(* *))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
@@ -981,7 +982,6 @@
 (define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
-(define-lff x_window_create_drawing void '(* *))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
