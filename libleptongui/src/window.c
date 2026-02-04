@@ -3044,3 +3044,40 @@ schematic_window_set_page_select_dialog (SchematicWindow *w_current,
 
   w_current->page_select_dialog = widget;
 }
+
+
+/*! \brief Get schematic window's field \a handleboxes.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a handleboxes field of the schematic
+ *  window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field \a handleboxes.
+ */
+int
+schematic_window_get_handleboxes (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->handleboxes;
+}
+
+
+/*! \brief Set schematic window's field \a handleboxes.
+ *
+ *  \par Function Description
+ *  Sets the \a handleboxes field of the schematic window to the given
+ *  value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field \a handleboxes.
+ */
+void
+schematic_window_set_handleboxes (SchematicWindow *w_current,
+                                  int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->handleboxes = val;
+}
