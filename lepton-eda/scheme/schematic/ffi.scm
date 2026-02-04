@@ -483,6 +483,7 @@
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
             schematic_window_set_macro_widget
+            schematic_window_set_menubar
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
             schematic_window_set_multiattrib_widget
@@ -897,6 +898,7 @@
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_set_macro_widget void '(* *))
+(define-lff schematic_window_set_menubar void '(* *))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_set_multiattrib_widget void '(* *))
