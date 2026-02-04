@@ -528,6 +528,7 @@
             schematic_window_get_text_caps
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
+            schematic_window_get_warp_cursor
 
             font_select_widget_new
 
@@ -929,6 +930,7 @@
 (define-lff schematic_window_get_text_caps int '(*))
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
+(define-lff schematic_window_get_warp_cursor int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -986,7 +988,7 @@
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_setup_draw_events_drawing_area void '(* *))
+(define-lff x_window_setup_draw_events_drawing_area void (list '* int))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))

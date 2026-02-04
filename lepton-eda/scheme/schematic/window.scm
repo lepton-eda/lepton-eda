@@ -853,7 +853,9 @@ zooming."
                       (cdr element)
                       *window))
 
-  (x_window_setup_draw_events_drawing_area *window *canvas)
+  (x_window_setup_draw_events_drawing_area
+   *canvas
+   (schematic_window_get_warp_cursor *window))
 
   (for-each connect-signal signal-callback-list))
 

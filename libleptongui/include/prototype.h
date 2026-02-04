@@ -1105,8 +1105,8 @@ x_stroke_translate_and_execute (SchematicWindow *w_current);
 
 /* x_window.c */
 void
-x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
-                                         SchematicCanvas* drawing_area);
+x_window_setup_draw_events_drawing_area (SchematicCanvas* drawing_area,
+                                         int warp_cursor);
 GtkWidget*
 schematic_window_create_app_window (gpointer app);
 
