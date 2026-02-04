@@ -43,7 +43,9 @@ untitled_next_index (SchematicWindow* w_current);
  *  \param [in] scrolled The scrolled container.
  *  \param [in] w_current The parent window.
  */
-void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
+GtkWidget*
+x_window_create_drawing (GtkWidget *scrolled,
+                         SchematicWindow *w_current)
 {
   LeptonPage* page = schematic_window_get_active_page (w_current);
   SchematicCanvas* view = schematic_canvas_new_with_page (page);
@@ -63,6 +65,8 @@ void x_window_create_drawing(GtkWidget *scrolled, SchematicWindow *w_current)
   gtk_widget_set_can_focus (drawing_area, TRUE);
   gtk_widget_grab_focus (drawing_area);
   gtk_widget_show (drawing_area);
+
+  return drawing_area;
 }
 
 
