@@ -1700,6 +1700,12 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+;;; Creates and returns a schematic drawing area widget as known as
+;;; canvas.  Adds it to the scrolled container *SCROLLED of *WINDOW.
+(define (make-drawing-area *scrolled *window)
+  (x_window_create_drawing *scrolled *window))
+
+
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
 (define (make-canvas *window *work-box)
@@ -1714,7 +1720,7 @@ for *PAGE page will be created and set active."
     (gtk_container_add *work-box *scrolled)
 
     ;; Create page view.
-    (x_window_create_drawing *scrolled *window)
+    (make-drawing-area *scrolled *window)
     (x_window_setup_scrolling *window *scrolled)
 
     (schematic_window_get_current_canvas *window)))
