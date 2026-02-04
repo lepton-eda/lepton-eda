@@ -746,4 +746,10 @@ schematic_window_get_warp_cursor (SchematicWindow *w_current);
 void
 schematic_window_set_warp_cursor (SchematicWindow *w_current,
                                   int val);
+int
+schematic_window_get_handleboxes (SchematicWindow *w_current);
+
+void
+schematic_window_set_handleboxes (SchematicWindow *w_current,
+                                  int val);
 G_END_DECLS
