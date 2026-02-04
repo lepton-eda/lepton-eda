@@ -1123,7 +1123,7 @@ void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
-void
+GtkWidget*
 schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
 void
