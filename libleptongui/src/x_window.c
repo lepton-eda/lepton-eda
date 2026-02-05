@@ -242,19 +242,10 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                    SchematicOptions *options,
                                    const char *text_mid_button,
                                    const char* text_right_button_action,
-                                   int third_button_cancel)
+                                   const char* text_right_button_cancel)
 {
-  const char* text_right_button_cancel = NULL;
-  char*       text_right_button        = NULL;
 
-  if (third_button_cancel)
-  {
-    text_right_button_cancel = _("/Cancel");
-  }
-  else
-  {
-    text_right_button_cancel = "";
-  }
+  char*       text_right_button        = NULL;
 
   text_right_button = g_strdup_printf ("%s%s",
                                        text_right_button_action,
