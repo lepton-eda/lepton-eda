@@ -241,16 +241,8 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
                                    const char *text_mid_button,
-                                   const char* text_right_button_action,
-                                   const char* text_right_button_cancel)
+                                   char *text_right_button)
 {
-
-  char*       text_right_button        = NULL;
-
-  text_right_button = g_strdup_printf ("%s%s",
-                                       text_right_button_action,
-                                       text_right_button_cancel);
-
   gpointer obj = g_object_new (SCHEMATIC_TYPE_BOTTOM_WIDGET,
                                "toplevel",
                                w_current,
@@ -276,8 +268,6 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "magnetic-net-mode",
                                schematic_options_get_magnetic_net_mode (options),
                                NULL);
-
-  g_free (text_right_button);
 
   GtkWidget *bottom_widget = GTK_WIDGET (obj);
   schematic_window_set_bottom_widget (w_current, bottom_widget);
