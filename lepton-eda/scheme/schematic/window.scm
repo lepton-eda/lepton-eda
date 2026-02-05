@@ -1762,12 +1762,14 @@ for *PAGE page will be created and set active."
 
 
 (define (translate-response *widget response-id *window)
+  (define window (pointer->window *window))
+
   (when (eq? (gtk-response->symbol response-id) 'ok)
     (o_component_translate_all
      *window
      (schematic_translate_widget_get_value *widget)))
 
-  (i_set_state *window (symbol->action-mode 'select-mode))
+  (set-action-mode! 'select-mode #:window window)
 
   (gtk_widget_grab_focus
    (schematic_window_get_drawing_area *window))
