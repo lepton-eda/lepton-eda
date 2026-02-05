@@ -47,6 +47,10 @@ struct _SchematicShowHideTextWidget
 };
 
 
+GType
+schematic_show_hide_text_widget_get_type ();
+
+
 G_BEGIN_DECLS
 
 /* Constructors, destructors */
@@ -55,9 +59,6 @@ schematic_show_hide_text_widget_new_hide ();
 
 GtkWidget*
 schematic_show_hide_text_widget_new_show ();
-
-G_END_DECLS
-
 
 /* Accessors */
 const char*
@@ -72,9 +73,6 @@ schematic_show_hide_text_widget_get_label_text (SchematicShowHideTextWidget *wid
 const char*
 schematic_show_hide_text_widget_get_text_string (SchematicShowHideTextWidget *widget);
 
-GType
-schematic_show_hide_text_widget_get_type ();
-
 void
 schematic_show_hide_text_widget_set_button_text (SchematicShowHideTextWidget *widget,
                                                  const char *text);
@@ -84,3 +82,4 @@ schematic_show_hide_text_widget_set_label_text (SchematicShowHideTextWidget *wid
 void
 schematic_show_hide_text_widget_set_text_string (SchematicShowHideTextWidget *widget,
                                                  const char *str);
+G_END_DECLS
