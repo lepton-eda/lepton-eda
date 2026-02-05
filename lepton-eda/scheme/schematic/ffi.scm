@@ -103,6 +103,7 @@
 
             o_edit_hide_specific_text
             o_edit_show_hidden
+            o_edit_show_specific_text
 
             o_find_object
 
@@ -310,7 +311,6 @@
             x_window_save_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
-            x_window_show_text
             x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
@@ -1004,7 +1004,6 @@
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
-(define-lff x_window_show_text void (list '* int '*))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
@@ -1173,6 +1172,7 @@
 ;;; o_misc.c
 (define-lff o_edit_hide_specific_text void '(* * *))
 (define-lff o_edit_show_hidden void '(* *))
+(define-lff o_edit_show_specific_text void '(* * *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 
 ;;; o_move.c

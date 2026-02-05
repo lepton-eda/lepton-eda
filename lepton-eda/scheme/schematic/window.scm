@@ -1781,7 +1781,19 @@ for *PAGE page will be created and set active."
 
 
 (define (show-text-response *widget response-id *window)
-  (x_window_show_text *widget response-id *window))
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (when (eq? (gtk-response->symbol response-id) 'ok)
+    (let ((*page (schematic_window_get_active_page *window)))
+      (o_edit_show_specific_text
+       *window
+       (lepton_page_objects *page)
+       (schematic_show_hide_text_widget_get_text_string *widget))))
+
+  (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+    (gtk_widget_grab_focus *drawing-area)
+    (gtk_widget_hide *widget)))
 
 (define *callback-show-text-response
   (procedure->pointer void show-text-response (list '* int '*)))
