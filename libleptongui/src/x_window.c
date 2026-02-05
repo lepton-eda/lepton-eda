@@ -236,15 +236,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-GtkWidget*
-schematic_window_create_translate_widget ()
-{
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
-
-  return GTK_WIDGET (obj);
-}
-
-
 void
 schematic_window_show_translate_widget (SchematicWindow *w_current)
 {

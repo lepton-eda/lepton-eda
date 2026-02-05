@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,15 @@ static void
 notify_entry_text (GtkWidget *entry,
                    GParamSpec *pspec,
                    SchematicTranslateWidget *widget);
+
+
+GtkWidget*
+schematic_translate_widget_new ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
+
+  return GTK_WIDGET (obj);
+}
 
 
 /*! \brief Get the entry

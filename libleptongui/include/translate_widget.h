@@ -48,6 +48,18 @@ struct _SchematicTranslateWidget
 
 
 
+G_BEGIN_DECLS
+
+/* Constructors, destructors */
+GtkWidget*
+schematic_translate_widget_new ();
+
+/* Accessors */
+int
+schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
+
+G_END_DECLS
+
 GtkWidget*
 schematic_translate_widget_get_entry (SchematicTranslateWidget *widget);
 
@@ -56,13 +68,6 @@ schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget);
 
 GType
 schematic_translate_widget_get_type ();
-
-G_BEGIN_DECLS
-
-int
-schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
-
-G_END_DECLS
 
 void
 schematic_translate_widget_set_label_text (SchematicTranslateWidget *widget,

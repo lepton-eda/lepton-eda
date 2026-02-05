@@ -1113,9 +1113,6 @@ schematic_window_create_main_box (GtkWidget *main_window);
 GtkWidget*
 schematic_window_create_work_box ();
 
-GtkWidget*
-schematic_window_create_translate_widget ();
-
 void
 schematic_window_show_translate_widget (SchematicWindow *w_current);
 

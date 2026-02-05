@@ -316,7 +316,6 @@
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
-            schematic_window_create_translate_widget
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
@@ -634,6 +633,7 @@
 
             x_print
 
+            schematic_translate_widget_new
             schematic_translate_widget_get_value
 
             a_zoom
@@ -1021,7 +1021,6 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_translate_widget '* '())
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
@@ -1353,6 +1352,7 @@
 ;;; x_tabs.c
 
 ;;; translate_widget.c
+(define-lff schematic_translate_widget_new '* '())
 (define-lff schematic_translate_widget_get_value int '(*))
 
 ;;; o_undo.c
