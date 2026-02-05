@@ -454,6 +454,7 @@
             schematic_window_get_active_page
             schematic_window_get_bottom_notebook
             schematic_window_set_bottom_notebook
+            schematic_window_set_bottom_widget
             schematic_window_set_color_edit_widget
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
@@ -878,6 +879,7 @@
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_bottom_notebook '* '(*))
 (define-lff schematic_window_set_bottom_notebook void '(* *))
+(define-lff schematic_window_set_bottom_widget void '(* *))
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))

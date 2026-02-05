@@ -263,12 +263,7 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "magnetic-net-mode", magnetic_net_mode,
                                NULL);
 
-  GtkWidget *bottom_widget = GTK_WIDGET (obj);
-  schematic_window_set_bottom_widget (w_current, bottom_widget);
-
-  gtk_box_pack_start (GTK_BOX (main_box), bottom_widget, FALSE, FALSE, 0);
-
-  return bottom_widget;
+  return GTK_WIDGET (obj);
 
 } /* schematic_window_create_statusbar */
 
