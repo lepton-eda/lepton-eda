@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2024-2025 Lepton EDA Contributors
+;;; Copyright (C) 2024-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -62,6 +62,11 @@ placement, etc.) and return to default \"select\" mode."
   ;; modified.
   (when (eq? current-action-mode 'grips-mode)
     (o_grips_cancel *window))
+
+  ;; If we're cancelling from a net action, reset the visibility of
+  ;; the net and all the variables used for net drawing.
+  (when (eq? current-action-mode 'net-mode)
+    (o_net_reset *window))
 
   ;; Free the place list and its contents. If we were in a move
   ;; action, the list (refering to objects on the page) would

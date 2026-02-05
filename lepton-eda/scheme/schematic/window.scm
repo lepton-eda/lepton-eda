@@ -711,7 +711,7 @@ zooming."
                              ('bus-mode (o_bus_invalidate_rubber *window))
                              ('circle-mode (o_circle_invalidate_rubber *window))
                              ('line-mode (o_line_invalidate_rubber *window))
-                             ('net-mode (o_net_reset *window))
+                             ('net-mode (o_net_invalidate_rubber *window))
                              ('path-mode (o_path_invalidate_rubber *window))
                              ('picture-mode (o_picture_invalidate_rubber *window))
                              ('pin-mode (o_pin_invalidate_rubber *window))
