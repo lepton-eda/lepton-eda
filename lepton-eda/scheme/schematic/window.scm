@@ -708,7 +708,7 @@ zooming."
                            (match current-action-mode
                              ('arc-mode (o_arc_invalidate_rubber *window))
                              ('box-mode (o_box_invalidate_rubber *window))
-                             ('bus-mode (o_bus_reset *window))
+                             ('bus-mode (o_bus_invalidate_rubber *window))
                              ('circle-mode (o_circle_invalidate_rubber *window))
                              ('line-mode (o_line_invalidate_rubber *window))
                              ('net-mode (o_net_reset *window))

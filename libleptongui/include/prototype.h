@@ -265,9 +265,6 @@ o_bus_end (SchematicWindow *w_current,
            int x,
            int y);
 void
-o_bus_reset (SchematicWindow *w_current);
-
-void
 o_bus_motion (SchematicWindow *w_current,
               int x,
               int y);
