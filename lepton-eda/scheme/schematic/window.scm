@@ -1761,6 +1761,13 @@ for *PAGE page will be created and set active."
   *window)
 
 
+(define (hide-text-response *widget response-id *window)
+  (x_window_hide_text *widget response-id *window))
+
+(define *callback-hide-text-response
+  (procedure->pointer void hide-text-response (list '* int '*)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1870,7 +1877,7 @@ GtkApplication structure of the program (when compiled with
         (schematic_window_set_hide_text_widget *window *hide-text-widget)
         (g_signal_connect *hide-text-widget
                           (string->pointer "response")
-                          *x_window_hide_text
+                          *callback-hide-text-response
                           *window))
       (let ((*show-text-widget (schematic_show_hide_text_widget_new_show)))
         (gtk_widget_pack_child *work-box *show-text-widget)

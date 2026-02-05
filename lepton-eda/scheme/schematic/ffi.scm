@@ -305,7 +305,7 @@
             open_page_error_dialog
             untitled_filename
             recent_manager_add
-            *x_window_hide_text
+            x_window_hide_text
             x_window_save_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
@@ -999,7 +999,7 @@
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
-(define-lfc *x_window_hide_text)
+(define-lff x_window_hide_text void (list '* int '*))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
