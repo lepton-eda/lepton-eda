@@ -443,11 +443,7 @@ schematic_window_create_translate_widget (SchematicWindow *w_current,
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
 
-  GtkWidget *widget = GTK_WIDGET (obj);
-
-  gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
-
-  return widget;
+  return GTK_WIDGET (obj);
 }
 
 
