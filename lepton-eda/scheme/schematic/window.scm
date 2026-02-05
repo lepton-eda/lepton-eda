@@ -2181,8 +2181,6 @@ GtkApplication structure of the program (when compiled with
                                                third-button-cancel-action-text))
              (*bottom-widget
               (schematic_window_create_statusbar *window
-                                                 *main-box
-                                                 *options
                                                  (string->pointer middle-button-action-text)
                                                  (string->pointer third-button-text)
                                                  (schematic_options_get_grid_mode *options)
