@@ -101,6 +101,7 @@
             schematic_delete
             schematic_delete_dialog
 
+            o_edit_hide_specific_text
             o_edit_show_hidden
 
             o_find_object
@@ -277,6 +278,7 @@
 
             schematic_show_hide_text_widget_new_hide
             schematic_show_hide_text_widget_new_show
+            schematic_show_hide_text_widget_get_text_string
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -305,7 +307,6 @@
             open_page_error_dialog
             untitled_filename
             recent_manager_add
-            x_window_hide_text
             x_window_save_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
@@ -837,6 +838,7 @@
 ;;; show_hide_text_widget.c
 (define-lff schematic_show_hide_text_widget_new_hide '* '())
 (define-lff schematic_show_hide_text_widget_new_show '* '())
+(define-lff schematic_show_hide_text_widget_get_text_string '* '(*))
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
@@ -999,7 +1001,6 @@
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
-(define-lff x_window_hide_text void (list '* int '*))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
@@ -1170,6 +1171,7 @@
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
+(define-lff o_edit_hide_specific_text void '(* * *))
 (define-lff o_edit_show_hidden void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 

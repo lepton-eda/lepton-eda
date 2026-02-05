@@ -1163,10 +1163,6 @@ gboolean
 x_window_untitled_page (LeptonPage* page);
 
 void
-x_window_hide_text (GtkWidget *widget,
-                    gint response,
-                    SchematicWindow *w_current);
-void
 x_window_show_text (GtkWidget *widget,
                     gint response,
                     SchematicWindow *w_current);

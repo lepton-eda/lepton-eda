@@ -110,27 +110,6 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 
 
 void
-x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
-{
-  LeptonPage *page = NULL;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (response == GTK_RESPONSE_OK) {
-    page = schematic_window_get_active_page (w_current);
-    o_edit_hide_specific_text (w_current,
-                               lepton_page_objects (page),
-                               schematic_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
-  }
-
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
-
-void
 x_window_show_text (GtkWidget *widget,
                     gint response,
                     SchematicWindow *w_current)
