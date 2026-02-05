@@ -240,28 +240,10 @@ void
 schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
-                                   int middle_button,
+                                   const char *text_mid_button,
                                    int third_button,
                                    int third_button_cancel)
 {
-  const char* text_mid_button = _("none");
-
-  if (middle_button == MOUSEBTN_DO_STROKE)
-    text_mid_button = _("Stroke");
-  else
-  if (middle_button == MOUSEBTN_DO_ACTION)
-    text_mid_button = _("Action");
-  else
-  if (middle_button == MOUSEBTN_DO_REPEAT)
-      text_mid_button = _("Repeat");
-  else
-  if (middle_button == MOUSEBTN_DO_PAN)
-      text_mid_button = _("Pan");
-  else
-  if (middle_button == MOUSEBTN_DO_POPUP)
-      text_mid_button = _("Menu");
-
-
   const char* text_right_button_action = NULL;
   const char* text_right_button_cancel = NULL;
   char*       text_right_button        = NULL;

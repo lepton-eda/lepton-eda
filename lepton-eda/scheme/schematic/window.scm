@@ -2155,15 +2155,23 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_notebooks *window *main-box *work-box)
 
       ;; Setup statusbar.
-      (let ((*options (schematic_window_get_options *window))
-            (middle-button (schematic_window_get_middle_button *window))
-            (third-button (schematic_window_get_third_button *window))
-            (third-button-cancel
-             (schematic_window_get_third_button_cancel *window)))
+      (let* ((*options (schematic_window_get_options *window))
+             (middle-button (schematic_window_get_middle_button *window))
+             (middle-button-text
+              (cond
+               ((= middle-button MOUSEBTN_DO_STROKE) (G_ "Stroke"))
+               ((= middle-button MOUSEBTN_DO_ACTION) (G_ "Action"))
+               ((= middle-button MOUSEBTN_DO_REPEAT) (G_ "Repeat"))
+               ((= middle-button MOUSEBTN_DO_PAN) (G_ "Pan"))
+               ((= middle-button MOUSEBTN_DO_POPUP) (G_ "Menu"))
+               (else (G_ "none"))))
+             (third-button (schematic_window_get_third_button *window))
+             (third-button-cancel
+              (schematic_window_get_third_button_cancel *window)))
         (schematic_window_create_statusbar *window
                                            *main-box
                                            *options
-                                           middle-button
+                                           (string->pointer middle-button-text)
                                            third-button
                                            third-button-cancel))
 

@@ -1024,7 +1024,7 @@
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_notebooks void '(* * *))
-(define-lff schematic_window_create_statusbar void (list '* '* '* int int int))
+(define-lff schematic_window_create_statusbar void (list '* '* '* '* int int))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))

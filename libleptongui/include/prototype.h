@@ -1121,7 +1121,7 @@ void
 schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
-                                   int middle_button,
+                                   const char *text_mid_button,
                                    int third_button,
                                    int third_button_cancel);
 void
