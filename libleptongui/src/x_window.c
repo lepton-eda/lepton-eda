@@ -236,7 +236,7 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-void
+GtkWidget*
 schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
@@ -267,6 +267,8 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
   schematic_window_set_bottom_widget (w_current, bottom_widget);
 
   gtk_box_pack_start (GTK_BOX (main_box), bottom_widget, FALSE, FALSE, 0);
+
+  return bottom_widget;
 
 } /* schematic_window_create_statusbar */
 

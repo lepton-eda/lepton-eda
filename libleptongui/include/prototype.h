@@ -1117,7 +1117,7 @@ void
 schematic_window_create_notebooks (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    GtkWidget *work_box);
-void
+GtkWidget*
 schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
