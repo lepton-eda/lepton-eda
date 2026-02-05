@@ -547,7 +547,9 @@
             schematic_options_cycle_grid_mode
             schematic_options_get_grid_mode
             schematic_options_cycle_magnetic_net_mode
+            schematic_options_get_magnetic_net_mode
             schematic_options_cycle_net_rubber_band_mode
+            schematic_options_get_net_rubber_band_mode
             schematic_options_cycle_snap_mode
             schematic_options_get_snap_mode
             schematic_options_set_snap_mode
@@ -973,7 +975,9 @@
 (define-lff schematic_options_cycle_grid_mode void '(*))
 (define-lff schematic_options_get_grid_mode int '(*))
 (define-lff schematic_options_cycle_magnetic_net_mode void '(*))
+(define-lff schematic_options_get_magnetic_net_mode int '(*))
 (define-lff schematic_options_cycle_net_rubber_band_mode void '(*))
+(define-lff schematic_options_get_net_rubber_band_mode int '(*))
 (define-lff schematic_options_cycle_snap_mode void '(*))
 (define-lff schematic_options_get_snap_mode int '(*))
 (define-lff schematic_options_set_snap_mode void (list '* int))
@@ -1024,7 +1028,7 @@
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_notebooks void '(* * *))
-(define-lff schematic_window_create_statusbar void '(* * * * *))
+(define-lff schematic_window_create_statusbar void (list '* '* '* '* '* int int int int int))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))
