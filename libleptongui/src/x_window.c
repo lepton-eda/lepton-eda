@@ -246,11 +246,9 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
 {
   const char* text_mid_button = _("none");
 
-#ifdef HAVE_LIBSTROKE
   if (middle_button == MOUSEBTN_DO_STROKE)
     text_mid_button = _("Stroke");
-#endif
-
+  else
   if (middle_button == MOUSEBTN_DO_ACTION)
     text_mid_button = _("Action");
   else
