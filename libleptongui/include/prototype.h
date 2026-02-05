@@ -1130,8 +1130,8 @@ void
 schematic_window_create_show_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
 GtkWidget*
-schematic_window_create_translate_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box);
+schematic_window_create_translate_widget ();
+
 void
 schematic_window_show_translate_widget (SchematicWindow *w_current);
 

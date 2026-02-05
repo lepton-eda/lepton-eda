@@ -438,8 +438,7 @@ schematic_window_create_show_text_widget (SchematicWindow *w_current,
 
 
 GtkWidget*
-schematic_window_create_translate_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
+schematic_window_create_translate_widget ()
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
 
