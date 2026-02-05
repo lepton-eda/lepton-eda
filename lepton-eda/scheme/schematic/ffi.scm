@@ -122,6 +122,7 @@
             o_move_start
 
             o_net_end
+            o_net_invalidate_rubber
             o_net_motion
             o_net_reset
             o_net_start
@@ -1166,6 +1167,7 @@
 
 ;;; o_net.c
 (define-lff o_net_end void (list '* int int))
+(define-lff o_net_invalidate_rubber void '(*))
 (define-lff o_net_motion void (list '* int int))
 (define-lff o_net_reset void '(*))
 (define-lff o_net_start void (list '* int int))
