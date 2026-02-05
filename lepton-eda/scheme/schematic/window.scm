@@ -2104,8 +2104,7 @@ GtkApplication structure of the program (when compiled with
                           *window))
 
       (make-macro-widget *window *work-box)
-      (let ((*translate-widget
-             (schematic_window_create_translate_widget *window *work-box)))
+      (let ((*translate-widget (schematic_window_create_translate_widget)))
         (gtk_widget_pack_child *work-box *translate-widget)
         (schematic_window_set_translate_widget *window *translate-widget)
         (g_signal_connect *translate-widget
