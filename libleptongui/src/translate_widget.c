@@ -84,6 +84,13 @@ notify_entry_text (GtkWidget *entry,
                    SchematicTranslateWidget *widget);
 
 
+/*! \brief Create a new Translate widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created Translate widget.
+ *
+ *  \return The new Translate widget.
+ */
 GtkWidget*
 schematic_translate_widget_new ()
 {
