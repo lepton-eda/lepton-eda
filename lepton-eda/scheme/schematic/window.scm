@@ -2166,13 +2166,18 @@ GtkApplication structure of the program (when compiled with
                ((= middle-button MOUSEBTN_DO_POPUP) (G_ "Menu"))
                (else (G_ "none"))))
              (third-button (schematic_window_get_third_button *window))
+             (third-button-action-text
+              (cond
+               ((= third-button MOUSEBTN_DO_POPUP) (G_ "Menu"))
+               ((= third-button MOUSEBTN_DO_PAN) (G_ "Pan"))
+               (else (G_ "none"))))
              (third-button-cancel
               (schematic_window_get_third_button_cancel *window)))
         (schematic_window_create_statusbar *window
                                            *main-box
                                            *options
                                            (string->pointer middle-button-action-text)
-                                           third-button
+                                           (string->pointer third-button-action-text)
                                            third-button-cancel))
 
       (restore-geometry *window *main-window)
