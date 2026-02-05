@@ -423,7 +423,8 @@
     (log! 'message (G_ "WARNING: If you are translating a symbol to the origin,
 the snap grid size should be set to 100")))
 
-  (schematic_window_show_translate_widget *window))
+  (schematic_window_show_translate_widget
+   (schematic_window_get_translate_widget *window)))
 
 
 ;;; Lock all objects in selection list.
