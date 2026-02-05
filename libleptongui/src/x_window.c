@@ -241,22 +241,29 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box)
 {
   const char* text_mid_button = _("none");
+  int middle_button =
+    schematic_window_get_middle_button (w_current);
+  int third_button =
+    schematic_window_get_third_button (w_current);
+  int third_button_cancel =
+    schematic_window_get_third_button_cancel (w_current);
+  SchematicOptions *options = schematic_window_get_options (w_current);
 
 #ifdef HAVE_LIBSTROKE
-  if (w_current->middle_button == MOUSEBTN_DO_STROKE)
+  if (middle_button == MOUSEBTN_DO_STROKE)
     text_mid_button = _("Stroke");
 #endif
 
-  if (w_current->middle_button == MOUSEBTN_DO_ACTION)
+  if (middle_button == MOUSEBTN_DO_ACTION)
     text_mid_button = _("Action");
   else
-  if (w_current->middle_button == MOUSEBTN_DO_REPEAT)
+  if (middle_button == MOUSEBTN_DO_REPEAT)
       text_mid_button = _("Repeat");
   else
-  if (w_current->middle_button == MOUSEBTN_DO_PAN)
+  if (middle_button == MOUSEBTN_DO_PAN)
       text_mid_button = _("Pan");
   else
-  if (w_current->middle_button == MOUSEBTN_DO_POPUP)
+  if (middle_button == MOUSEBTN_DO_POPUP)
       text_mid_button = _("Menu");
 
 
@@ -264,12 +271,12 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
   const char* text_right_button_cancel = NULL;
   char*       text_right_button        = NULL;
 
-  if (w_current->third_button == MOUSEBTN_DO_POPUP)
+  if (third_button == MOUSEBTN_DO_POPUP)
   {
     text_right_button_action = _("Menu");
   }
   else
-  if (w_current->third_button == MOUSEBTN_DO_PAN)
+  if (third_button == MOUSEBTN_DO_PAN)
   {
     text_right_button_action = _("Pan");
   }
@@ -278,7 +285,7 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
     text_right_button_action = _("none");
   }
 
-  if (w_current->third_button_cancel)
+  if (third_button_cancel)
   {
     text_right_button_cancel = _("/Cancel");
   }
@@ -295,9 +302,9 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "toplevel",
                                w_current,
                                "grid-mode",
-                               schematic_options_get_grid_mode (w_current->options),
+                               schematic_options_get_grid_mode (options),
                                "grid-size",
-                               schematic_options_get_snap_size (w_current->options),
+                               schematic_options_get_snap_size (options),
                                /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
                                "left-button-text",
                                _("Pick"),
@@ -306,15 +313,15 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                "right-button-text",
                                text_right_button,
                                "snap-mode",
-                               schematic_options_get_snap_mode (w_current->options),
+                               schematic_options_get_snap_mode (options),
                                "snap-size",
-                               schematic_options_get_snap_size (w_current->options),
+                               schematic_options_get_snap_size (options),
                                "status-text",
                                _("Select Mode"),
                                "net-rubber-band-mode",
-                               schematic_options_get_net_rubber_band_mode (w_current->options),
+                               schematic_options_get_net_rubber_band_mode (options),
                                "magnetic-net-mode",
-                               schematic_options_get_magnetic_net_mode (w_current->options),
+                               schematic_options_get_magnetic_net_mode (options),
                                NULL);
 
   g_free (text_right_button);
