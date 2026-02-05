@@ -240,7 +240,7 @@ void
 schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    SchematicOptions *options,
-                                   const char *text_mid_button,
+                                   char *text_mid_button,
                                    char *text_right_button)
 {
   gpointer obj = g_object_new (SCHEMATIC_TYPE_BOTTOM_WIDGET,
