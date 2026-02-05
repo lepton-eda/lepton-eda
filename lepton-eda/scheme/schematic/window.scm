@@ -702,19 +702,22 @@ zooming."
                          (schematic_canvas_pan_start *canvas
                                                      (inexact->exact (round window-x))
                                                      (inexact->exact (round window-y)))
-                         ;; This is the default cancel.
-                         ;; Reset all draw and place actions.
-                         (match current-action-mode
-                           ('arc-mode (o_arc_invalidate_rubber *window))
-                           ('box-mode (o_box_invalidate_rubber *window))
-                           ('bus-mode (o_bus_reset *window))
-                           ('circle-mode (o_circle_invalidate_rubber *window))
-                           ('line-mode (o_line_invalidate_rubber *window))
-                           ('net-mode (o_net_reset *window))
-                           ('path-mode (o_path_invalidate_rubber *window))
-                           ('picture-mode (o_picture_invalidate_rubber *window))
-                           ('pin-mode (o_pin_invalidate_rubber *window))
-                           (_ (callback-cancel *window)))))
+                         (begin
+                           ;; This is the default cancel.
+                           ;; Reset all draw and place actions.
+                           (match current-action-mode
+                             ('arc-mode (o_arc_invalidate_rubber *window))
+                             ('box-mode (o_box_invalidate_rubber *window))
+                             ('bus-mode (o_bus_reset *window))
+                             ('circle-mode (o_circle_invalidate_rubber *window))
+                             ('line-mode (o_line_invalidate_rubber *window))
+                             ('net-mode (o_net_reset *window))
+                             ('path-mode (o_path_invalidate_rubber *window))
+                             ('picture-mode (o_picture_invalidate_rubber *window))
+                             ('pin-mode (o_pin_invalidate_rubber *window))
+                             (_ 'do-nothing))
+                           (when (true? (schematic_window_get_third_button_cancel *window))
+                             (callback-cancel *window)))))
                  ;; Finish event processing.
                  FALSE)
 
