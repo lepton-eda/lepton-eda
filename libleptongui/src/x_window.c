@@ -453,7 +453,6 @@ schematic_window_create_translate_widget (SchematicWindow *w_current,
   gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
 
   GtkWidget *widget = GTK_WIDGET (obj);
-  schematic_window_set_translate_widget (w_current, widget);
 
   gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
 

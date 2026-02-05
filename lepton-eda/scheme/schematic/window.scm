@@ -1889,6 +1889,7 @@ GtkApplication structure of the program (when compiled with
       (make-macro-widget *window *work-box)
       (let ((*translate-widget
              (schematic_window_create_translate_widget *window *work-box)))
+        (schematic_window_set_translate_widget *window *translate-widget)
         (g_signal_connect *translate-widget
                           (string->pointer "response")
                           *callback-translate-response

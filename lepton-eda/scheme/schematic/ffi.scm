@@ -495,6 +495,7 @@
             schematic_window_get_selection_list
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
+            schematic_window_set_translate_widget
             schematic_window_get_undo_panzoom
             schematic_window_get_keyaccel_string
             schematic_window_set_keyaccel_string
@@ -897,6 +898,7 @@
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
+(define-lff schematic_window_set_translate_widget void '(* *))
 (define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
 (define-lff schematic_window_set_keyaccel_string void '(* *))
