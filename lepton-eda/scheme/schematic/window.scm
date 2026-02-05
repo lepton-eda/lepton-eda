@@ -2155,7 +2155,17 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_notebooks *window *main-box *work-box)
 
       ;; Setup statusbar.
-      (schematic_window_create_statusbar *window *main-box)
+      (let ((*options (schematic_window_get_options *window))
+            (middle-button (schematic_window_get_middle_button *window))
+            (third-button (schematic_window_get_third_button *window))
+            (third-button-cancel
+             (schematic_window_get_third_button_cancel *window)))
+        (schematic_window_create_statusbar *window
+                                           *main-box
+                                           *options
+                                           middle-button
+                                           third-button
+                                           third-button-cancel))
 
       (restore-geometry *window *main-window)
 

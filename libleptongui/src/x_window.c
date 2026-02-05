@@ -238,16 +238,13 @@ x_window_save_page (SchematicWindow *w_current,
 
 void
 schematic_window_create_statusbar (SchematicWindow *w_current,
-                                   GtkWidget *main_box)
+                                   GtkWidget *main_box,
+                                   SchematicOptions *options,
+                                   int middle_button,
+                                   int third_button,
+                                   int third_button_cancel)
 {
   const char* text_mid_button = _("none");
-  int middle_button =
-    schematic_window_get_middle_button (w_current);
-  int third_button =
-    schematic_window_get_third_button (w_current);
-  int third_button_cancel =
-    schematic_window_get_third_button_cancel (w_current);
-  SchematicOptions *options = schematic_window_get_options (w_current);
 
 #ifdef HAVE_LIBSTROKE
   if (middle_button == MOUSEBTN_DO_STROKE)

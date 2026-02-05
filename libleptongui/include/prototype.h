@@ -1119,7 +1119,11 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
                                    GtkWidget *work_box);
 void
 schematic_window_create_statusbar (SchematicWindow *w_current,
-                                   GtkWidget *main_box);
+                                   GtkWidget *main_box,
+                                   SchematicOptions *options,
+                                   int middle_button,
+                                   int third_button,
+                                   int third_button_cancel);
 void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
