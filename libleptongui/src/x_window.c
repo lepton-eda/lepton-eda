@@ -226,11 +226,12 @@ x_window_save_page (SchematicWindow *w_current,
 
 
 GtkWidget*
-schematic_window_side_notebook_new (SchematicWindow* w_current)
+schematic_window_side_notebook_new (SchematicWindow* w_current,
+                                    gboolean use_docks)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
-  if ( x_widgets_use_docks() )
+  if (use_docks)
   {
     GtkWidget *object_properties =
       schematic_window_get_object_properties_widget (w_current);

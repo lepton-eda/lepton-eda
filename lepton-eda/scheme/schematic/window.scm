@@ -2161,8 +2161,9 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
-      (let ((*right-notebook (schematic_window_side_notebook_new *window))
-            (*bottom-notebook (schematic_window_bottom_notebook_new *window)))
+      (let* ((use_docks (x_widgets_use_docks))
+             (*right-notebook (schematic_window_side_notebook_new *window use_docks))
+             (*bottom-notebook (schematic_window_bottom_notebook_new *window)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
 
