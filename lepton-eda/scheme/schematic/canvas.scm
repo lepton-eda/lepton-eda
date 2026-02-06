@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2024-2025 Lepton EDA Contributors
+;;; Copyright (C) 2024-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -169,28 +169,20 @@ parent *WINDOW."
                       (and (not control-pressed?) shift-pressed?)
                       ;; GTK style behaviour.
                       (and (not control-pressed?) (not shift-pressed?))))
-                 ;; You must have scrollbars enabled if you
-                 ;; want to use the scroll wheel to pan.
-                 (pan-y-axis (and (true? (schematic_window_get_scrollbars_flag *window))
-                                  ;; If the user has a left/right
-                                  ;; scroll wheel, never scroll
-                                  ;; the Y axis.
-                                  (and (not left-or-right-direction?)
-                                       pan-y-by-mods)))
+                 ;; If the user has a left/right scroll wheel, never
+                 ;; scroll the Y axis.
+                 (pan-y-axis (and (not left-or-right-direction?)
+                                  pan-y-by-mods))
                  (pan-x-by-mods
                   (if classic-scrolling?
                       ;; Classic gschem behaviour.
                       (and control-pressed? (not shift-pressed?))
                       ;; GTK style behaviour.
                       (and (not control-pressed?) shift-pressed?)))
-                 ;; You must have scrollbars enabled if you
-                 ;; want to use the scroll wheel to pan.
-                 (pan-x-axis (and (true? (schematic_window_get_scrollbars_flag *window))
-                                  ;; If the user has a left/right
-                                  ;; scroll wheel, always scroll
-                                  ;; the X axis.
-                                  (or left-or-right-direction?
-                                      pan-x-by-mods))))
+                 ;; If the user has a left/right scroll wheel, always
+                 ;; scroll the X axis.
+                 (pan-x-axis (or left-or-right-direction?
+                                 pan-x-by-mods)))
 
             ;; Check for duplicate legacy scroll event, see
             ;; GNOME bug 726878.
