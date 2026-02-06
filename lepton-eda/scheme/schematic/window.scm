@@ -939,21 +939,23 @@ zooming."
 (define (tab-add-page! *window *page)
   "Creates a new page view for *PAGE in *WINDOW and adds it to the
 tab notebook.  Returns a C TabInfo structure."
-  (define *wtab (gtk_scrolled_window_new %null-pointer %null-pointer))
+  (define *scrolled-widget
+    (gtk_scrolled_window_new %null-pointer %null-pointer))
 
-  (x_window_setup_scrolling *window *wtab)
+  (x_window_setup_scrolling *window *scrolled-widget)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
-    (add-tab-canvas! *wtab *canvas)
+    (add-tab-canvas! *scrolled-widget *canvas)
     (setup-canvas-draw-events *window *canvas)
     (schematic_window_set_current_canvas *window *canvas)
-    (let ((page-index (append-tab! *window *wtab)))
-
-      (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
-                                        *wtab
-                                        TRUE)
+    (let ((page-index (append-tab! *window
+                                   *scrolled-widget)))
+      (gtk_notebook_set_tab_reorderable
+       (schematic_window_get_tab_notebook *window)
+       *scrolled-widget
+       TRUE)
       ;; Return TabInfo.
-      (add-tab-info! *window *wtab *canvas *page page-index))))
+      (add-tab-info! *window *scrolled-widget *canvas *page page-index))))
 
 
 ;;; Determine a new "untitled" schematic file name (used for new
