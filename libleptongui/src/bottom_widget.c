@@ -111,6 +111,22 @@ G_DEFINE_TYPE (SchematicBottomWidget,
 #endif
 
 
+/*! \brief Create a new bottom widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created bottom widget (status bar) setting its \c
+ *  GObject properties to the given values.
+ *
+ *  \param [in] w_current The #SchematicWindow instance of the widget.
+ *  \param [in] text_mid_button Text for the middle mouse button.
+ *  \param [in] text_right_button Text for the right mouse button.
+ *  \param [in] grid_mode The current grid mode.
+ *  \param [in] snap_size The active snap size.
+ *  \param [in] snap_mode The current snap mode.
+ *  \param [in] net_rubber_band_mode The current net rubberband mode.
+ *  \param [in] magnetic_net_mode The current net magnetic mode.
+ *  \return The new bottom widget.
+ */
 GtkWidget*
 schematic_bottom_widget_new (SchematicWindow *w_current,
                              char *text_mid_button,
