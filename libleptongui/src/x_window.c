@@ -236,14 +236,20 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-/*! \brief Setup scrolling parameters
+/*! \brief Setup scrolling parameters for a scrolled widget.
  *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] scrolled  Scrolled widget - a parent of page view widget
+ *  \par Function Description
+ *  Adjusts the viewport and scrollbars of the widget \p scrolled and
+ *  enables or disables the visibility of the scrollbars depending on
+ *  the value of the argument \p show_scrollbars.
+ *
+ *  \param [in] scrolled Scrolled widget - a parent of page view
+ *                       widget.
+ *  \param [in] show_scrollbars Whether scrollbars have to be visible.
  */
 void
-x_window_setup_scrolling (SchematicWindow *w_current,
-                          GtkWidget *scrolled)
+x_window_setup_scrolling (GtkWidget *scrolled,
+                          gboolean show_scrollbars)
 {
   GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
     gtk_adjustment_new (0.0,
@@ -264,7 +270,7 @@ x_window_setup_scrolling (SchematicWindow *w_current,
   gtk_scrolled_window_set_hadjustment (GTK_SCROLLED_WINDOW (scrolled), hadjustment);
   gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scrolled), vadjustment);
 
-  GtkPolicyType policy = schematic_window_get_scrollbars_flag (w_current) ?
+  GtkPolicyType policy = show_scrollbars ?
                          GTK_POLICY_ALWAYS :
                          GTK_POLICY_NEVER;
 

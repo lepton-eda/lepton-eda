@@ -941,8 +941,11 @@ zooming."
 tab notebook.  Returns a C TabInfo structure."
   (define *scrolled-widget
     (gtk_scrolled_window_new %null-pointer %null-pointer))
+  ;; C gboolean.
+  (define show_scrollbars
+    (schematic_window_get_scrollbars_flag *window))
 
-  (x_window_setup_scrolling *window *scrolled-widget)
+  (x_window_setup_scrolling *scrolled-widget show_scrollbars)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
     (add-tab-canvas! *scrolled-widget *canvas)
@@ -1872,7 +1875,11 @@ for *PAGE page will be created and set active."
 
   ;; scrolled window (parent of page view):
   (let ((*scrolled
-         (gtk_scrolled_window_new %null-pointer %null-pointer)))
+         (gtk_scrolled_window_new %null-pointer %null-pointer))
+        ;; C gboolean.
+        (show_scrollbars
+         (schematic_window_get_scrollbars_flag *window)))
+
     (gtk_container_add *work-box *scrolled)
 
     ;; Create page view.
@@ -1880,7 +1887,7 @@ for *PAGE page will be created and set active."
      *window
      (make-drawing-area *scrolled
                         (schematic_window_get_active_page *window)))
-    (x_window_setup_scrolling *window *scrolled)
+    (x_window_setup_scrolling *scrolled show_scrollbars)
 
     (schematic_window_get_current_canvas *window)))
 
