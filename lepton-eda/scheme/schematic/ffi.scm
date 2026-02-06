@@ -71,6 +71,8 @@
             o_attrib_add_attrib
 
             o_redraw_cleanstates
+            *o_invalidate
+            o_invalidate_glist
             o_invalidate_rubber
 
             o_arc_end1
@@ -105,8 +107,6 @@
             o_grips_cancel
             o_grips_end
             o_grips_motion
-
-            o_invalidate_glist
 
             o_line_end
             o_line_invalidate_rubber
@@ -291,14 +291,13 @@
             x_widgets_show_options
             x_widgets_show_page_select
             x_widgets_toggle_widget_visibility
+            x_widgets_use_docks
 
-            x_window_new
+            x_window_create_drawing
             open_page_error_dialog
             untitled_filename
             recent_manager_add
             x_window_save_page
-            *x_window_select_object
-            x_window_set_current_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
             x_window_untitled_page
@@ -306,11 +305,9 @@
             schematic_window_create_main_box
             schematic_window_create_work_box
             schematic_window_create_menubar
-            schematic_window_find_new_current_page
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
-            schematic_window_create_canvas
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
             schematic_window_create_translate_widget
@@ -320,7 +317,6 @@
             schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
-            schematic_window_show_all
             schematic_window_get_main_window
             schematic_window_set_main_window
             schematic_window_get_tab_info_list
@@ -347,6 +343,7 @@
             x_tabs_info_find_by_page
             x_tabs_info_find_by_wtab
             x_tabs_info_rm
+            x_tabs_init
             x_tabs_nbook_create
             x_tabs_nbook_page_add
             x_tabs_nbook_page_close
@@ -412,6 +409,7 @@
             lepton_menu_set_action_data
 
             schematic_canvas_get_page
+            schematic_canvas_set_page
             schematic_canvas_get_viewport
             schematic_canvas_get_hadjustment
             schematic_canvas_get_vadjustment
@@ -428,6 +426,7 @@
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_zoom_extents
             schematic_canvas_grab_focus
+            schematic_canvas_zoom_object
 
             schematic_preview_new
             *schematic_preview_callback_realize
@@ -441,9 +440,11 @@
             schematic_window_add_timer
             schematic_window_destroy_timer
             schematic_window_free
+            schematic_window_new
             schematic_window_get_current_canvas
             schematic_window_get_show_hidden_text
             schematic_window_get_toplevel
+            schematic_window_set_toplevel
             *schematic_window_notify_page_callback
             schematic_window_page_changed
             schematic_window_page_content_changed
@@ -733,6 +734,7 @@
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
 (define-lff x_widgets_toggle_widget_visibility void '(*))
+(define-lff x_widgets_use_docks int '())
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
@@ -788,6 +790,7 @@
 
 ;;; canvas.c
 (define-lff schematic_canvas_get_page '* '(*))
+(define-lff schematic_canvas_set_page void '(* *))
 (define-lff schematic_canvas_get_viewport '* '(*))
 (define-lff schematic_canvas_get_hadjustment '* '(*))
 (define-lff schematic_canvas_get_vadjustment '* '(*))
@@ -804,6 +807,7 @@
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_grab_focus void '(*))
+(define-lff schematic_canvas_zoom_object void '(* *))
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
@@ -838,9 +842,11 @@
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
 (define-lff schematic_window_free void '(*))
+(define-lff schematic_window_new '* '())
 (define-lff schematic_window_get_current_canvas '* '(*))
 (define-lff schematic_window_get_show_hidden_text int '(*))
 (define-lff schematic_window_get_toplevel '* '(*))
+(define-lff schematic_window_set_toplevel void '(* *))
 (define-lfc *schematic_window_notify_page_callback)
 (define-lff schematic_window_page_changed void '(*))
 (define-lff schematic_window_page_content_changed void '(* *))
@@ -975,13 +981,11 @@
 (define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
-(define-lff x_window_new '* '(*))
+(define-lff x_window_create_drawing void '(* *))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lfc *x_window_select_object)
-(define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
@@ -990,10 +994,8 @@
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
-(define-lff schematic_window_find_new_current_page '* '(* *))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_canvas '* '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
@@ -1003,7 +1005,6 @@
 (define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
-(define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_tab_info_list '* '(*))
@@ -1032,6 +1033,7 @@
 (define-lff x_tabs_info_find_by_page '* '(* *))
 (define-lff x_tabs_info_find_by_wtab '* '(* *))
 (define-lff x_tabs_info_rm void '(* *))
+(define-lff x_tabs_init void '())
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_nbook_page_add int '(* * * *))
 (define-lff x_tabs_nbook_page_close void '(* *))
@@ -1105,6 +1107,8 @@
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
+(define-lfc *o_invalidate)
+(define-lff o_invalidate_glist void '(* *))
 (define-lff o_invalidate_rubber int '(*))
 
 ;;; o_arc.c
@@ -1154,7 +1158,6 @@
 
 ;;; o_misc.c
 (define-lff o_edit_show_hidden void '(* *))
-(define-lff o_invalidate_glist void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 
 ;;; o_move.c

@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,32 +153,6 @@ x_window_show_text (GtkWidget *widget,
 }
 
 
-void
-x_window_select_object (SchematicFindTextState *state,
-                        LeptonObject *object,
-                        SchematicWindow *w_current)
-{
-  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (view != NULL);
-
-  LeptonPage *page = schematic_canvas_get_page (view);
-  g_return_if_fail (page != NULL);
-
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->page != NULL);
-
-  if (page != object->page)
-  {
-    /* open object's page: */
-    x_window_set_current_page (w_current, object->page);
-
-    /* tabbed GUI: current page view may be different here: */
-    view = schematic_window_get_current_canvas (w_current);
-  }
-
-  schematic_canvas_zoom_object (view, object);
-}
-
 static void
 x_window_translate_response (SchematicTranslateWidget *widget,
                              gint response,
@@ -275,36 +249,6 @@ schematic_window_create_work_box ()
 }
 
 
-/*! \brief Create a page view
- *  \par Function Description
- *  Creates a scrolled #SchematicCanvas widget in the working area
- *  \a work_box.  This function is used when tabs are disabled.
- *
- * \param w_current The #SchematicWindow object.
- * \param work_box The working area widget.
- * \return Pointer to the new GtkWidget object.
- */
-SchematicCanvas*
-schematic_window_create_canvas (SchematicWindow *w_current,
-                                GtkWidget *work_box)
-{
-  GtkWidget *scrolled = NULL;
-
-  g_return_val_if_fail (w_current != NULL, NULL);
-  g_return_val_if_fail (work_box != NULL, NULL);
-
-  /* scrolled window (parent of page view): */
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (work_box), scrolled);
-
-  /* create page view: */
-  x_window_create_drawing (scrolled, w_current);
-  x_window_setup_scrolling (w_current, scrolled);
-
-  return schematic_window_get_current_canvas (w_current);
-}
-
-
 /*! \brief Create paned widgets with notebooks
  *  \par Function Description
  *  Creates bottom and right notebooks and two paned widgets for
@@ -352,80 +296,6 @@ schematic_window_create_notebooks (SchematicWindow *w_current,
   gtk_paned_pack2 (GTK_PANED (hpaned), right_notebook,
                    FALSE, TRUE);
 }
-
-
-/*! \brief Show widgets of schematic window
- *  \par Function Description
- *  Shows widgets of schematic window, sets visibility of right
- *  and bottom notebooks, and sets focus to the drawing area.
- *
- * \param [in] w_current The #SchematicWindow object.
- * \param [in] main_window The main window widget.
- */
-void
-schematic_window_show_all (SchematicWindow *w_current,
-                           GtkWidget *main_window)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (main_window != NULL);
-
-  /* show all widgets: */
-  gtk_widget_show_all (main_window);
-
-
-  if ( !x_widgets_use_docks() )
-  {
-    GtkWidget *bottom_notebook =
-      schematic_window_get_bottom_notebook (w_current);
-    GtkWidget *right_notebook =
-      schematic_window_get_right_notebook (w_current);
-    gtk_widget_set_visible (right_notebook, FALSE);
-    gtk_widget_set_visible (bottom_notebook, FALSE);
-  }
-
-
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  /* focus page view: */
-  gtk_widget_grab_focus (drawing_area);
-}
-
-
-/*! \brief Changes the current page.
- *  \private
- *  \par Function Description
- *  This function displays the specified page <B>page</B> in the
- *  window attached to <B>toplevel</B>.
- *
- *  It changes the <B>toplevel</B>'s current page to <B>page</B>,
- *  draws it and updates the user interface.
- *
- *  <B>page</B> has to be in the list of PAGEs attached to <B>toplevel</B>.
- *
- *  \param [in] w_current The toplevel environment.
- *  \param [in] page      The page to become current page.
- */
-void
-x_window_set_current_page (SchematicWindow *w_current,
-                           LeptonPage *page)
-{
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  g_return_if_fail (page != NULL);
-
-  o_redraw_cleanstates (w_current);
-
-  schematic_canvas_set_page (page_view, page);
-
-  i_update_menus (w_current);
-  /* i_set_filename (w_current, page->page_filename); */
-
-  page_select_widget_update (w_current);
-  schematic_multiattrib_widget_update (w_current);
-
-} /* x_window_set_current_page() */
-
 
 
 /*! \brief Saves a page to a file.
@@ -505,59 +375,6 @@ x_window_save_page (SchematicWindow *w_current,
   return ret;
 
 } /* x_window_save_page() */
-
-
-LeptonPage*
-schematic_window_find_new_current_page (LeptonToplevel *toplevel,
-                                        LeptonPage *page)
-{
-  GList *iter;
-  LeptonPageList* pages = lepton_toplevel_get_pages (toplevel);
-
-  /* as it will delete current page, select new current page */
-  /* first look up in page hierarchy */
-  int id = lepton_page_get_up (page);
-  LeptonPage *new_current = lepton_toplevel_search_page_by_id (pages, id);
-
-  if (new_current == NULL) {
-    /* no up in hierarchy, choice is prev, next, new page */
-    iter = g_list_find (lepton_list_get_glist (pages), page);
-
-    if ( g_list_previous( iter ) ) {
-      new_current = (LeptonPage *)g_list_previous( iter )->data;
-    } else if ( g_list_next( iter ) ) {
-      new_current = (LeptonPage *)g_list_next( iter )->data;
-    } else {
-      /* need to add a new untitled page */
-      new_current = NULL;
-    }
-  }
-
-  return new_current;
-}
-
-
-/*! \brief Creates and initializes a new lepton-schematic window.
- *
- * \return Pointer to the new SchematicWindow object.
- */
-SchematicWindow* x_window_new (LeptonToplevel *toplevel)
-{
-  SchematicWindow *w_current = schematic_window_new ();
-  schematic_window_set_toplevel (w_current, toplevel);
-
-  /* Damage notifications should invalidate the object on screen */
-  lepton_object_add_change_notify (toplevel,
-                                   (ChangeNotifyFunc) o_invalidate,
-                                   (ChangeNotifyFunc) o_invalidate,
-                                   w_current);
-
-  /* Initialize tabbed GUI: */
-  x_tabs_init();
-
-  return w_current;
-}
-
 
 
 /*! \brief Add a menubar widget to the main container of a window.

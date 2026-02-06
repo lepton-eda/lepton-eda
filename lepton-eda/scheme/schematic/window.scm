@@ -966,6 +966,26 @@ tab notebook.  Returns a C TabInfo structure."
             *page))))
 
 
+(define (set-window-current-page! *window *page)
+  "Change the current page in *WINDOW to *PAGE, draw it, and update
+the user interface.  *PAGE has to be in the list of pages of the
+window."
+  (define *canvas (schematic_window_get_current_canvas *window))
+
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (o_redraw_cleanstates *window)
+  (schematic_canvas_set_page *canvas *page)
+  (i_update_menus *window)
+  (page_select_widget_update *window)
+  (schematic_multiattrib_widget_update *window))
+
+
 (define (open-tab! *window *filename)
   "Creates a new page, page view and tab for *FILENAME in *WINDOW.
 If *FILENAME is %null-pointer, the page will be blank.  If there
@@ -978,7 +998,7 @@ the new or found page."
   (define (open-new-page *tab-info)
     (let ((*page (window-open-file! *window *filename)))
       (schematic_tab_info_set_page *tab-info *page)
-      (x_window_set_current_page *window *page)
+      (set-window-current-page! *window *page)
 
       (setup-tab-header *tab-info)
       (grab-focus *tab-info)
@@ -1098,6 +1118,37 @@ for *PAGE page will be created and set active."
                                            %null-pointer))))))
 
 
+(define (new-active-page *toplevel *page)
+  (define *pages (lepton_toplevel_get_pages *toplevel))
+  ;; As it will delete current page select new current page first
+  ;; look up in page hierarchy.
+  (define id (lepton_page_get_up *page))
+  (define *new-active-page
+    (lepton_toplevel_search_page_by_id *pages id))
+
+  (define (prev-or-next all-items item)
+    (let ((rev-ls (cdr (memq item (reverse all-items)))))
+      (if (null? rev-ls)
+          (let ((ls (cdr (memq item all-items))))
+            (and (not (null? ls))
+                 (car ls)))
+          (car rev-ls))))
+
+  (if (null-pointer? *new-active-page)
+      ;; When no upper page in hierarchy found, find its previous
+      ;; or next page.
+      (let* ((page-ls (glist->list (lepton_list_get_glist *pages)
+                                   pointer->page))
+             (page (pointer->page *page))
+             (new-active-page (prev-or-next page-ls page)))
+        (if new-active-page
+            (page->pointer new-active-page)
+            ;; Need to add a new untitled page.
+            %null-pointer))
+      ;; Found a page upper in hierarchy.
+      *new-active-page))
+
+
 ;;; Closes *PAGE in *WINDOW.  The current page in *WINDOW is
 ;;; changed to the next valid page.  If necessary, a new untitled
 ;;; page is created (unless tabbed GUI is enabled: return NULL in
@@ -1120,7 +1171,7 @@ for *PAGE page will be created and set active."
   ;; the function.
   (let ((*new-current-page
          (if (equal? *page (lepton_toplevel_get_page_current *toplevel))
-             (schematic_window_find_new_current_page *toplevel *page)
+             (new-active-page *toplevel *page)
              %null-pointer)))
 
     (log! 'message
@@ -1147,7 +1198,7 @@ for *PAGE page will be created and set active."
                        ;; Use found page.
                        *new-current-page)))
               ;; Change to the new current page and update display.
-              (x_window_set_current_page *window *really-new-current-page)
+              (set-window-current-page! *window *really-new-current-page)
               ;; Return the page.
               *really-new-current-page))
         ;; Return the page if it is not NULL.
@@ -1270,7 +1321,7 @@ for *PAGE page will be created and set active."
         (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
         (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))
 
-        (x_window_set_current_page *window (schematic_tab_info_get_page *tab-info))))))
+        (set-window-current-page! *window (schematic_tab_info_get_page *tab-info))))))
 
 (define *callback-tabs-switch-page
   (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))
@@ -1280,7 +1331,7 @@ for *PAGE page will be created and set active."
   "Sets current page of *WINDOW to *PAGE."
   (if (true? (x_tabs_enabled))
       (set-tab-page! *window *page)
-      (x_window_set_current_page *window *page)))
+      (set-window-current-page! *window *page)))
 
 
 (define (search-text *window *toplevel)
@@ -1335,6 +1386,42 @@ for *PAGE page will be created and set active."
 
 (define *callback-find-text
   (procedure->pointer void find-text (list '* int '*)))
+
+
+(define (select-object *state *object *window)
+  (define *canvas (schematic_window_get_current_canvas *window))
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
+  (when (null-pointer? *object)
+    (error "NULL object."))
+
+  (let* ((*page (schematic_canvas_get_page *canvas))
+         (*object-page (lepton_object_get_page *object))
+         (same-page? (equal? *page *object-page)))
+    (when (null-pointer? *page)
+      (error "NULL page."))
+
+    (when (null-pointer? *object-page)
+      (error "NULL object page."))
+
+    (begin
+      (unless same-page?
+        ;; Open object's page.
+        (set-window-current-page! *window *object-page))
+      (begin
+        (unless same-page?
+          ;; Open object's page.
+          (set-window-current-page! *window *object-page))
+        ;; In tabbed GUI the current canvas may be
+        ;; different.
+        (let ((*current-canvas (if same-page?
+                                   *canvas
+                                   (schematic_window_get_current_canvas *window))))
+          (schematic_canvas_zoom_object *current-canvas *object))))))
+
+(define *callback-select-object
+  (procedure->pointer void select-object '(* * *)))
 
 
 (define (callback-page-manager-selection-changed *selection *widget)
@@ -1489,6 +1576,67 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+;;; Creates and returns a scrolled canvas widget in the working area
+;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
+(define (make-canvas *window *work-box)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *work-box)
+    (error "NULL work box."))
+
+  ;; scrolled window (parent of page view):
+  (let ((*scrolled
+         (gtk_scrolled_window_new %null-pointer %null-pointer)))
+    (gtk_container_add *work-box *scrolled)
+
+    ;; Create page view.
+    (x_window_create_drawing *scrolled *window)
+    (x_window_setup_scrolling *window *scrolled)
+
+    (schematic_window_get_current_canvas *window)))
+
+
+;;; Shows widgets in *MAIN-WINDOW of *WINDOW, sets visibility of
+;;; right and bottom notebooks, and focuses to the drawing area.
+(define (show-main-window *window *main-window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *main-window)
+    (error "NULL main window."))
+
+  ;; Show all widgets.
+  (gtk_widget_show_all *main-window)
+
+  (unless (true? (x_widgets_use_docks))
+    (let ((*bottom-notebook
+           (schematic_window_get_bottom_notebook *window))
+          (*right-notebook
+           (schematic_window_get_right_notebook *window)))
+      (gtk_widget_set_visible *right-notebook FALSE)
+      (gtk_widget_set_visible *bottom-notebook FALSE)))
+
+  (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+    ;; Focus canvas.
+    (gtk_widget_grab_focus *drawing-area)))
+
+
+;;; Creates and initializes a new lepton-schematic window based on
+;;; data stored in the context *TOPLEVEL.
+(define (make-window *toplevel)
+  (define *window (schematic_window_new))
+
+  (schematic_window_set_toplevel *window *toplevel)
+
+  (lepton_object_add_change_notify *toplevel
+                                   *o_invalidate
+                                   *o_invalidate
+                                   *window)
+  ;; Initialize tabbed GUI.
+  (x_tabs_init)
+
+  *window)
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1511,7 +1659,7 @@ GtkApplication structure of the program (when compiled with
       *window))
 
   (define *window
-    (setup-window (x_window_new (parse-gschemrc *toplevel))))
+    (setup-window (make-window (parse-gschemrc *toplevel))))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
     (g_signal_connect *main-window
@@ -1553,7 +1701,7 @@ GtkApplication structure of the program (when compiled with
                               *window)
             (tab-add-page! *window %null-pointer))
 
-          (let ((*canvas (schematic_window_create_canvas *window *work-box)))
+          (let ((*canvas (make-canvas *window *work-box)))
             ;; Setup callbacks for page view draw events.
             (setup-canvas-draw-events *window *canvas)))
 
@@ -1611,7 +1759,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_set_find_text_state_widget *window (schematic_find_text_state_new))
       (g_signal_connect (schematic_window_get_find_text_state_widget *window)
                         (string->pointer "select-object")
-                        *x_window_select_object
+                        *callback-select-object
                         *window)
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
@@ -1638,7 +1786,7 @@ GtkApplication structure of the program (when compiled with
 
       (schematic_window_restore_geometry *window *main-window)
 
-      (schematic_window_show_all *window *main-window)
+      (show-main-window *window *main-window)
       ;; Returns *window.
       (schematic_window_set_main_window *window *main-window)))
 

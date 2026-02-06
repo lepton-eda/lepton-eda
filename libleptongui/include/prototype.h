@@ -1122,9 +1122,6 @@ schematic_window_create_main_box (GtkWidget *main_window);
 GtkWidget*
 schematic_window_create_work_box ();
 
-SchematicCanvas*
-schematic_window_create_canvas (SchematicWindow *w_current,
-                                GtkWidget *work_box);
 void
 schematic_window_create_menubar (SchematicWindow *w_current,
                                  GtkWidget *main_box,
@@ -1158,9 +1155,6 @@ void
 schematic_window_save_geometry (SchematicWindow* w_current);
 
 void
-schematic_window_show_all (SchematicWindow *w_current,
-                           GtkWidget *main_window);
-void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
 void
@@ -1170,23 +1164,10 @@ open_page_error_dialog (SchematicWindow *w_current,
 gchar*
 untitled_filename (SchematicWindow *w_current);
 
-void
-x_window_set_current_page (SchematicWindow *w_current,
-                           LeptonPage *page);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename);
-LeptonPage*
-schematic_window_find_new_current_page (LeptonToplevel *toplevel,
-                                        LeptonPage *page);
-SchematicWindow*
-x_window_new (LeptonToplevel *toplevel);
-
-void
-x_window_select_object (SchematicFindTextState *state,
-                        LeptonObject *object,
-                        SchematicWindow *w_current);
 void
 x_window_setup_scrolling (SchematicWindow *w_current,
                           GtkWidget *scrolled);
