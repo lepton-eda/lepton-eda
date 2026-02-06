@@ -84,8 +84,8 @@
             o_box_start
 
             o_bus_end
+            o_bus_invalidate_rubber
             o_bus_motion
-            o_bus_reset
             o_bus_start
 
             o_circle_end
@@ -122,6 +122,7 @@
             o_move_start
 
             o_net_end
+            o_net_invalidate_rubber
             o_net_motion
             o_net_reset
             o_net_start
@@ -1121,8 +1122,8 @@
 
 ;;; o_bus.c
 (define-lff o_bus_end void (list '* int int))
+(define-lff o_bus_invalidate_rubber void '(*))
 (define-lff o_bus_motion void (list '* int int))
-(define-lff o_bus_reset void '(*))
 (define-lff o_bus_start void (list '* int int))
 
 ;;; o_circle.c
@@ -1166,6 +1167,7 @@
 
 ;;; o_net.c
 (define-lff o_net_end void (list '* int int))
+(define-lff o_net_invalidate_rubber void '(*))
 (define-lff o_net_motion void (list '* int int))
 (define-lff o_net_reset void '(*))
 (define-lff o_net_start void (list '* int int))

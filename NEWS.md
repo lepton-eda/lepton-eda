@@ -586,6 +586,24 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   values with comma separated filenames beforehand, and thus
   obtain correct filenames.
 
+- A regression emerged in the version 1.9.10 has been fixed.  The
+  function processing the value of the `third-button-cancel`
+  config key returned the value of another key, which led to wrong
+  reaction on the third mouse button events. The issue has been
+  solved by fixing the config key name.
+
+- Previously, the behaviour of the program on the third mouse
+  button click when the `third-button-cancel` config key was set
+  to `false` was action dependent.  Drawing nets or buses, adding,
+  moving, and placement of components were cancelled on the third
+  button press the same way as it was when the value was `true`.
+  Drawing of other primitives was not affected, however.  The code
+  of processing the third button events has been changed as
+  follows:
+  - Nothing changes in the *in-action* state when the setting is
+    `true`, no drawing action is cancelled.
+  - Any carried out action is cancelled when the setting is
+    `false`.
 
 ### Changes in `lepton-archive`:
 
