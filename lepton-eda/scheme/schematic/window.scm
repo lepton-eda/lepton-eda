@@ -2180,14 +2180,14 @@ GtkApplication structure of the program (when compiled with
              (third-button-text (string-append third-button-action-text
                                                third-button-cancel-action-text))
              (*bottom-widget
-              (schematic_window_create_statusbar *window
-                                                 (string->pointer middle-button-action-text)
-                                                 (string->pointer third-button-text)
-                                                 (schematic_options_get_grid_mode *options)
-                                                 (schematic_options_get_snap_size *options)
-                                                 (schematic_options_get_snap_mode *options)
-                                                 (schematic_options_get_net_rubber_band_mode *options)
-                                                 (schematic_options_get_magnetic_net_mode *options))))
+              (schematic_bottom_widget_new *window
+                                           (string->pointer middle-button-action-text)
+                                           (string->pointer third-button-text)
+                                           (schematic_options_get_grid_mode *options)
+                                           (schematic_options_get_snap_size *options)
+                                           (schematic_options_get_snap_mode *options)
+                                           (schematic_options_get_net_rubber_band_mode *options)
+                                           (schematic_options_get_magnetic_net_mode *options))))
         (schematic_window_set_bottom_widget *window *bottom-widget)
         (gtk_widget_pack_child *main-box *bottom-widget))
 

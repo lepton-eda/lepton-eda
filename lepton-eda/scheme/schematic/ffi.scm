@@ -231,6 +231,8 @@
             *schematic_autonumber_sort_xy_rev
             *schematic_autonumber_sort_diagonal
 
+            schematic_bottom_widget_new
+
             x_clipboard_finish
             x_clipboard_init
             x_clipboard_get
@@ -317,7 +319,6 @@
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
             schematic_window_create_notebooks
-            schematic_window_create_statusbar
             schematic_window_get_main_window
             schematic_window_set_main_window
             schematic_window_get_pages
@@ -1030,7 +1031,6 @@
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_notebooks void '(* * *))
-(define-lff schematic_window_create_statusbar '* (list '* '* '* int int int int int))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))
@@ -1283,6 +1283,9 @@
 (define-lfc *schematic_autonumber_sort_xy)
 (define-lfc *schematic_autonumber_sort_xy_rev)
 (define-lfc *schematic_autonumber_sort_diagonal)
+
+;;; bottom_widget.c
+(define-lff schematic_bottom_widget_new '* (list '* '* '* int int int int int))
 
 ;;; x_clipboard.c
 (define-lff x_clipboard_finish void '(*))

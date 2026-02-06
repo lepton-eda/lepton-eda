@@ -68,8 +68,20 @@ struct _SchematicBottomWidget
   SchematicWindow* toplevel;
 };
 
+GType
+schematic_bottom_widget_get_type ();
 
+G_BEGIN_DECLS
 
+GtkWidget*
+schematic_bottom_widget_new (SchematicWindow *w_current,
+                             char *text_mid_button,
+                             char *text_right_button,
+                             SchematicGridMode grid_mode,
+                             int snap_size,
+                             SchematicSnapMode snap_mode,
+                             gboolean net_rubber_band_mode,
+                             gboolean magnetic_net_mode);
 int
 schematic_bottom_widget_get_grid_mode (SchematicBottomWidget *widget);
 
@@ -99,9 +111,6 @@ schematic_bottom_widget_get_rubber_band_mode (SchematicBottomWidget *widget);
 
 gboolean
 schematic_bottom_widget_get_magnetic_net_mode (SchematicBottomWidget *widget);
-
-GType
-schematic_bottom_widget_get_type ();
 
 void
 schematic_bottom_widget_set_grid_mode (SchematicBottomWidget *widget,
@@ -136,3 +145,4 @@ schematic_bottom_widget_set_rubber_band_mode (SchematicBottomWidget *widget,
 void
 schematic_bottom_widget_set_magnetic_net_mode (SchematicBottomWidget *widget,
                                                gboolean mode);
+G_END_DECLS

@@ -1117,15 +1117,6 @@ void
 schematic_window_create_notebooks (SchematicWindow *w_current,
                                    GtkWidget *main_box,
                                    GtkWidget *work_box);
-GtkWidget*
-schematic_window_create_statusbar (SchematicWindow *w_current,
-                                   char *text_mid_button,
-                                   char *text_right_button,
-                                   SchematicGridMode grid_mode,
-                                   int snap_size,
-                                   SchematicSnapMode snap_mode,
-                                   gboolean net_rubber_band_mode,
-                                   gboolean magnetic_net_mode);
 void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);

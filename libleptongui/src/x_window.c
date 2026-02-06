@@ -236,37 +236,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-GtkWidget*
-schematic_window_create_statusbar (SchematicWindow *w_current,
-                                   char *text_mid_button,
-                                   char *text_right_button,
-                                   SchematicGridMode grid_mode,
-                                   int snap_size,
-                                   SchematicSnapMode snap_mode,
-                                   gboolean net_rubber_band_mode,
-                                   gboolean magnetic_net_mode)
-{
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_BOTTOM_WIDGET,
-                               "toplevel", w_current,
-                               "grid-mode", grid_mode,
-                               "grid-size", snap_size,
-                               /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
-                               "left-button-text", _("Pick"),
-                               "middle-button-text", text_mid_button,
-                               "right-button-text", text_right_button,
-                               "snap-mode", snap_mode,
-                               "snap-size", snap_size,
-                               "status-text", _("Select Mode"),
-                               "net-rubber-band-mode", net_rubber_band_mode,
-                               "magnetic-net-mode", magnetic_net_mode,
-                               NULL);
-
-  return GTK_WIDGET (obj);
-
-} /* schematic_window_create_statusbar */
-
-
-
 /*! \brief Setup scrolling parameters
  *
  *  \param [in] w_current The current #SchematicWindow environment.
