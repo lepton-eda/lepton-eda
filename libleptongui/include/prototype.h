@@ -1233,67 +1233,27 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 
-TabInfo*
-x_tabs_info_add (SchematicWindow* w_current,
-                 gint            ndx,
-                 LeptonPage*     page,
-                 SchematicCanvas* pview,
-                 GtkWidget*      wtab);
+GtkWidget*
+x_tabs_hdr_create (TabInfo* nfo);
+
+gboolean
+x_tabs_hdr_on_mouse_click (GtkWidget* hdr,
+                           GdkEvent* e,
+                           gpointer data);
 TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current);
 
 TabInfo*
 x_tabs_info_find_by_page (GList* nfos,
                           LeptonPage* page);
-TabInfo*
-x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
-
-void
-x_tabs_info_rm (SchematicWindow* w_current,
-                TabInfo* nfo);
-
 void x_tabs_init();
 
 GtkWidget*
 x_tabs_nbook_create (SchematicWindow* w_current,
                      GtkWidget* work_box);
-gint
-x_tabs_nbook_page_add (SchematicWindow* w_current,
-                       LeptonPage*     page,
-                       SchematicCanvas* pview,
-                       GtkWidget*      wtab);
-void
-x_tabs_nbook_page_close (SchematicWindow* w_current,
-                         LeptonPage* page);
-void
-x_tabs_page_on_reordered (GtkNotebook* nbook,
-                          GtkWidget*   wtab,
-                          guint        newindex,
-                          gpointer     data);
 void
 schematic_tabs_add_canvas (SchematicCanvas *pview,
                            GtkWidget *wtab);
-gboolean
-x_tabs_tl_page_find (SchematicWindow* w_current,
-                     LeptonPage* page);
-LeptonPage*
-x_tabs_tl_page_cur (SchematicWindow *w_current);
-
-void
-x_tabs_tl_page_cur_set (SchematicWindow *w_current,
-                        LeptonPage *page);
-SchematicCanvas*
-x_tabs_tl_pview_cur (SchematicWindow* w_current);
-
-void
-x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
-                         SchematicCanvas* pview);
-void
-x_tabs_next (SchematicWindow* w_current);
-
-void
-x_tabs_prev (SchematicWindow* w_current);
-
 void
 x_tabs_hdr_set (GtkNotebook* nbook,
                 TabInfo* nfo);
@@ -1303,9 +1263,21 @@ x_tabs_hdr_update (SchematicWindow* w_current,
 void
 schematic_tabs_set_callback (char *name,
                              GCallback callback);
+TabInfo*
+schematic_tab_info_new ();
+
+int
+schematic_tab_info_get_index (TabInfo *tab_info);
+
+void
+schematic_tab_info_set_index (TabInfo *tab_info,
+                              int index);
 SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_window (TabInfo *tab_info,
+                               SchematicWindow* window);
 LeptonPage*
 schematic_tab_info_get_page (TabInfo *tab_info);
 
@@ -1315,9 +1287,15 @@ schematic_tab_info_set_page (TabInfo *tab_info,
 SchematicCanvas*
 schematic_tab_info_get_canvas (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_canvas (TabInfo *tab_info,
+                               SchematicCanvas *canvas);
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_tab_widget (TabInfo *tab_info,
+                                   GtkWidget *tab_widget);
 /* color_edit_widget.c */
 void
 color_edit_widget_update (SchematicWindow* w_current);

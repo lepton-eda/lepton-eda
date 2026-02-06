@@ -413,12 +413,15 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   introduced.  It contains functions for creating and running the
   Close window confirmation dialog.
 
-- A new module, `(schematic dialog close-page)`.  It contains a
-  function yielding the Close page dialog.
+- A new module, `(schematic dialog close-page)`, has been added.
+  It contains a function yielding the Close page dialog.
 
 - A new module, `(schematic window page)`, has been introduced.
   It contains procedures for setting and saving the active page of
   the current window.
+
+- A new module, `(schematic tabs)`, has been added.  It contains
+  functions dealing with tabs in **lepton-schematic** GUI.
 
 ### Changes in `lepton-schematic`:
 

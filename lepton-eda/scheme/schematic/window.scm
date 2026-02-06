@@ -63,6 +63,7 @@
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic rc)
+  #:use-module (schematic tabs)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
@@ -229,9 +230,26 @@
                       '(* *)))
 
 
+;;; GtkNotebook "page-reordered" signal handler.
 (define (callback-page-reordered *notebook *widget-tab new-index *window)
-  (x_tabs_page_on_reordered *notebook *widget-tab new-index *window)
-  (page_select_widget_update *window))
+
+ (when (null-pointer? *window)
+   (error "NULL window."))
+
+ (let ((*pages (schematic_window_get_pages *window)))
+   (when (null-pointer? *pages)
+     (error "NULL pages."))
+
+   (let* ((*info-list (schematic_window_get_tab_info_list *window))
+          (*tab-info (get-tab-info *widget-tab *info-list)))
+     (when (null-pointer? *tab-info)
+       (error "NULL tabinfo."))
+
+     (lepton_list_move_item *pages (schematic_tab_info_get_page *tab-info) new-index)
+
+     (gtk_widget_grab_focus (schematic_tab_info_get_canvas *tab-info))))
+
+ (page_select_widget_update *window))
 
 (define *callback-page-reordered
   (procedure->pointer void
@@ -846,16 +864,16 @@ tab notebook.  Returns a C TabInfo structure."
   (x_window_setup_scrolling *window *wtab)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
-    (schematic_tabs_add_canvas *canvas *wtab)
+    (add-tab-canvas! *wtab *canvas)
     (setup-canvas-draw-events *window *canvas)
-    (x_tabs_tl_pview_cur_set *window *canvas)
-    (let ((page-index (x_tabs_nbook_page_add *window *page *canvas *wtab)))
+    (schematic_window_set_current_canvas *window *canvas)
+    (let ((page-index (append-tab! *window *wtab)))
 
       (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
                                         *wtab
                                         TRUE)
       ;; Return TabInfo.
-      (x_tabs_info_add *window page-index *page *canvas *wtab))))
+      (add-tab-info! *window *wtab *canvas *page page-index))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
@@ -972,8 +990,8 @@ If *FILENAME is %null-pointer, the page will be blank.  If there
 is a page with the given *FILENAME, switches to its tab.  Returns
 the new or found page."
   (define (setup-tab-header *tab-info)
-    (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
-                    *tab-info))
+    (set-tab-header! (schematic_window_get_tab_notebook *window)
+                     *tab-info))
 
   (define (open-new-page *tab-info)
     (let ((*page (window-open-file! *window *filename)))
@@ -1061,6 +1079,16 @@ the new or found page."
   "Sets page of the current tab in *WINDOW to *PAGE.  If there's a
 tab that contains *PAGE, it will be activated, otherwise a new tab
 for *PAGE page will be created and set active."
+  ;; Find a page in the list of loaded pages.
+  (define (find-page *page)
+    (define *toplevel (schematic_window_get_toplevel *window))
+    (define page-ls
+      (glist->list (lepton_list_get_glist
+                    (lepton_toplevel_get_pages *toplevel))
+                   pointer->page))
+
+    (any (lambda (p) (eq? (pointer->page *page) p)) page-ls))
+
   (when (null-pointer? *window)
     (error "NULL window pointer in set-tab-page!()"))
 
@@ -1082,10 +1110,10 @@ for *PAGE page will be created and set active."
 
         ;; There is no page view for *PAGE, create a new one.
         (when (and (null-pointer? *tab-info)
-                   (true? (x_tabs_tl_page_find *window *page)))
+                   (find-page *page))
           (let ((*tab-info (tab-add-page! *window *page)))
 
-            (x_tabs_hdr_set (schematic_window_get_tab_notebook *window) *tab-info)
+            (set-tab-header! (schematic_window_get_tab_notebook *window) *tab-info)
             (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
                                            page-index)
             (grab-focus *tab-info)
@@ -1094,7 +1122,7 @@ for *PAGE page will be created and set active."
             (process-pending-events)
 
             ;; Zoom new page view created for existing page.
-            (schematic_canvas_zoom_extents (x_tabs_tl_pview_cur *window)
+            (schematic_canvas_zoom_extents (schematic_window_get_current_canvas *window)
                                            %null-pointer))))))
 
 
@@ -1176,9 +1204,9 @@ for *PAGE page will be created and set active."
              ;; Page to be set as current after the current page is closed.
              (*new-current-page (close-window-page! *window *current-page)))
 
-        (x_tabs_nbook_page_close *window *current-page)
+        (close-page-tab! *window *current-page)
 
-        (x_tabs_info_rm *window *current-tab-info)
+        (delete-tab-info! *window *current-tab-info)
 
         (if (null-pointer? *new-current-page)
             (begin
@@ -1249,14 +1277,14 @@ for *PAGE page will be created and set active."
 
 ;;; GtkNotebook "switch-page" signal handler.
 (define (callback-tabs-switch-page *notebook *wtab id *window)
-  (define *current-page (x_tabs_tl_page_cur *window))
-  (define *current-canvas (x_tabs_tl_pview_cur *window) )
+  (define *current-page (schematic_window_get_active_page *window))
+  (define *current-canvas (schematic_window_get_current_canvas *window) )
 
   (unless (and (null-pointer? *current-page)
                (null-pointer? *current-canvas))
 
     (let* ((*info-list (schematic_window_get_tab_info_list *window))
-           (*tab-info (x_tabs_info_find_by_wtab *info-list *wtab)))
+           (*tab-info (get-tab-info *wtab *info-list)))
 
       (unless (null-pointer? *tab-info)
 
@@ -1267,10 +1295,12 @@ for *PAGE page will be created and set active."
         ;; page.
         (callback-cancel *window)
 
-        (x_tabs_tl_pview_cur_set *window (schematic_tab_info_get_canvas *tab-info))
-        (x_tabs_tl_page_cur_set *window (schematic_tab_info_get_page *tab-info))
+        (schematic_window_set_current_canvas *window (schematic_tab_info_get_canvas *tab-info))
+        (let ((*page (schematic_tab_info_get_page *tab-info)))
+          (window-set-toplevel-page! (pointer->window *window)
+                                     (pointer->page *page))
 
-        (x_window_set_current_page *window (schematic_tab_info_get_page *tab-info))))))
+          (x_window_set_current_page *window *page))))))
 
 (define *callback-tabs-switch-page
   (procedure->pointer void callback-tabs-switch-page (list '* '* int '*)))
@@ -1536,7 +1566,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_main_popup_menu *window)
 
       (if (true? (x_tabs_enabled))
-          (let ((*notebook (x_tabs_nbook_create *window *work-box)))
+          (let ((*notebook (make-tabs-notebook *window *work-box)))
             (schematic_tabs_set_callback (string->pointer "page-close")
                                          *callback-tab-button-close)
             (schematic_tabs_set_callback (string->pointer "file-save")

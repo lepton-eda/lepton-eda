@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2025 Lepton EDA Contributors
+ * Copyright (C) 2018-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,8 +38,6 @@
  *
  * - x_tabs_enabled()      // whether tabbed GUI is currently enabled
  * - x_tabs_init()         // initialize tabbed GUI, read config
- * - x_tabs_next()         // go to next tab
- * - x_tabs_prev()         // go to prev tab
  * - x_tabs_hdr_update()   // update tab's header widget
  *
  * The behaviour is controlled by the following
@@ -161,9 +159,6 @@ x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data);
 static gint
 x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data);
 
-static gint
-x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
-
 static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
@@ -171,8 +166,6 @@ x_tabs_info_find_by_pview (GList* nfos, SchematicCanvas* pview);
 
 /* notebook: */
 
-static gboolean
-x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
 static GtkMenu*
 x_tabs_menu_create (TabInfo* nfo);
 static void
@@ -197,12 +190,6 @@ static void
 x_tabs_menu_action_on_activate (GtkAction* action,
                                 gpointer data);
 #endif
-
-
-/* tab header widget: */
-
-static GtkWidget*
-x_tabs_hdr_create (TabInfo* nfo);
 
 
 
@@ -236,60 +223,25 @@ schematic_tabs_set_callback (char *name,
 TabInfo*
 x_tabs_info_cur (SchematicWindow* w_current)
 {
-  SchematicCanvas* pview = x_tabs_tl_pview_cur (w_current);
+  SchematicCanvas* pview = schematic_window_get_current_canvas (w_current);
   GList *info_list = schematic_window_get_tab_info_list (w_current);
   TabInfo* nfo = x_tabs_info_find_by_pview (info_list, pview);
   return nfo;
 }
 
 
-
+/*! \brief Create a new #TabInfo instance.
+ *
+ *  \par Function Description
+ *  Returns a newly created #TabInfo instance.
+ *
+ *  \return The new #TabInfo instance.
+ */
 TabInfo*
-x_tabs_info_add (SchematicWindow* w_current,
-                 gint            ndx,
-                 LeptonPage*     page,
-                 SchematicCanvas* pview,
-                 GtkWidget*      wtab)
+schematic_tab_info_new ()
 {
-  TabInfo* nfo = (TabInfo*) g_malloc (sizeof (TabInfo));
-
-  nfo->ndx_   = ndx;
-
-  nfo->page_  = page;
-  nfo->pview_ = pview;
-  nfo->wtab_  = wtab;
-  nfo->tl_    = w_current;
-
-  GList *current_info_list =
-    schematic_window_get_tab_info_list (w_current);
-  GList *new_info_list = g_list_append (current_info_list, nfo);
-  schematic_window_set_tab_info_list (w_current, new_info_list);
-
-  return nfo;
+  return (TabInfo*) g_malloc (sizeof (TabInfo));
 }
-
-
-
-void
-x_tabs_info_rm (SchematicWindow* w_current,
-                TabInfo* nfo)
-{
-  GList *current_info_list =
-    schematic_window_get_tab_info_list (w_current);
-  GList* node = g_list_find (current_info_list, nfo);
-
-  g_return_if_fail (node != NULL);
-
-  if (node != NULL)
-  {
-    GList *new_info_list =
-      g_list_delete_link (current_info_list, node);
-    schematic_window_set_tab_info_list (w_current, new_info_list);
-
-    g_free (nfo);
-  }
-}
-
 
 
 static gint
@@ -320,20 +272,6 @@ x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data)
 
 
 
-static gint
-x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data)
-{
-  TabInfo*   nfo  = (TabInfo*)   elem;
-  GtkWidget* wtab = (GtkWidget*) data;
-
-  if (nfo->wtab_ == wtab)
-    return 0;
-
-  return 1;
-}
-
-
-
 TabInfo*
 x_tabs_info_find_by_page (GList* nfos,
                           LeptonPage* page)
@@ -355,95 +293,6 @@ x_tabs_info_find_by_pview (GList* nfos,
                                    &x_tabs_info_cmp_pview);
   return ptr ? (TabInfo*) ptr->data : NULL;
 }
-
-
-
-TabInfo*
-x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
-{
-  GList* ptr = g_list_find_custom (nfos,
-                                   (gconstpointer) wtab,
-                                   &x_tabs_info_cmp_wtab);
-  return ptr ? (TabInfo*) ptr->data : NULL;
-}
-
-
-
-
-/* --------------------------------------------------------
- *
- * implementation: SchematicWindow accessors:
- *
- */
-
-LeptonPage*
-x_tabs_tl_page_cur (SchematicWindow* w_current)
-{
-  return schematic_window_get_active_page (w_current);
-}
-
-
-
-void
-x_tabs_tl_page_cur_set (SchematicWindow* w_current,
-                        LeptonPage* page)
-{
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-  lepton_toplevel_goto_page (toplevel, page);
-
-  /* NOTE: schematic_window_page_changed() after
-   * lepton_toplevel_goto_page():
-  */
-  schematic_window_page_changed (w_current);
-}
-
-
-
-SchematicCanvas*
-x_tabs_tl_pview_cur (SchematicWindow* w_current)
-{
-  GtkWidget *wview = schematic_window_get_drawing_area (w_current);
-  SchematicCanvas* view  = SCHEMATIC_CANVAS (wview);
-
-  return view;
-}
-
-
-
-void
-x_tabs_tl_pview_cur_set (SchematicWindow* w_current,
-                         SchematicCanvas* pview)
-{
-  schematic_window_set_drawing_area (w_current, GTK_WIDGET (pview));
-}
-
-
-
-/*! \brief Find a \a page in the list of loaded pages.
- *
- *  \return TRUE if found.
- *
- */
-gboolean
-x_tabs_tl_page_find (SchematicWindow* w_current,
-                     LeptonPage* page)
-{
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-  GList* ptr = lepton_list_get_glist (toplevel->pages);
-
-  for ( ; ptr != NULL; ptr = g_list_next (ptr) )
-  {
-    LeptonPage* pg = (LeptonPage*) ptr->data;
-    if (pg == page)
-      return TRUE;
-  }
-
-  return FALSE;
-
-} /* x_tabs_tl_page_find() */
-
 
 
 
@@ -519,51 +368,6 @@ x_tabs_nbook_create (SchematicWindow* w_current,
 
 
 
-gint
-x_tabs_nbook_page_add (SchematicWindow* w_current,
-                       LeptonPage*     page,
-                       SchematicCanvas* pview,
-                       GtkWidget*      wtab)
-{
-#ifdef DEBUG
-  printf( "x_tabs_nbook_page_add()\n" );
-#endif
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gint ndx = gtk_notebook_append_page (notebook, wtab, NULL);
-
-  return ndx;
-
-} /* x_tabs_nbook_page_add() */
-
-
-
-void
-x_tabs_nbook_page_close (SchematicWindow* w_current,
-                         LeptonPage* page)
-{
-  GList *info_list =
-    schematic_window_get_tab_info_list (w_current);
-  TabInfo* nfo = x_tabs_info_find_by_page (info_list, page);
-  if (!nfo)
-  {
-    return;
-  }
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gint ndx = gtk_notebook_page_num (notebook, nfo->wtab_);
-
-  gtk_notebook_remove_page (notebook, ndx);
-
-} /* x_tabs_nbook_page_close() */
-
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: page view:
@@ -598,7 +402,7 @@ schematic_tabs_add_canvas (SchematicCanvas *pview,
  *
  */
 
-static GtkWidget*
+GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo)
 {
   g_return_val_if_fail (nfo != NULL, NULL);
@@ -856,12 +660,41 @@ x_tabs_hdr_update (SchematicWindow* w_current,
 }
 
 
+int
+schematic_tab_info_get_index (TabInfo *tab_info)
+{
+  g_return_val_if_fail (tab_info != NULL, 0);
+
+  return tab_info->ndx_;
+}
+
+
+void
+schematic_tab_info_set_index (TabInfo *tab_info,
+                              int index)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->ndx_ = index;
+}
+
+
 SchematicWindow*
 schematic_tab_info_get_window (TabInfo *tab_info)
 {
   g_return_val_if_fail (tab_info != NULL, NULL);
 
   return tab_info->tl_;
+}
+
+
+void
+schematic_tab_info_set_window (TabInfo *tab_info,
+                               SchematicWindow* window)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->tl_ = window;
 }
 
 
@@ -892,6 +725,16 @@ schematic_tab_info_get_canvas (TabInfo *tab_info)
 }
 
 
+void
+schematic_tab_info_set_canvas (TabInfo *tab_info,
+                               SchematicCanvas *canvas)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->pview_ = canvas;
+}
+
+
 GtkWidget*
 schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 {
@@ -901,90 +744,21 @@ schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 }
 
 
+void
+schematic_tab_info_set_tab_widget (TabInfo *tab_info,
+                                   GtkWidget *tab_widget)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->wtab_ = tab_widget;
+}
+
 
 /* --------------------------------------------------------
  *
  * implementation: core and public functions:
  *
  */
-
-
-/*! \brief Switch to the next tab.
- *  \public
- *
- *  \todo: [ask folks]: (configurable?) cyclic tab change:
- *
- *  \param [in] w_current  The toplevel environment.
- */
-void
-x_tabs_next (SchematicWindow* w_current)
-{
-  if (!x_tabs_enabled())
-    return;
-
-  g_return_if_fail (w_current != NULL);
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gtk_notebook_next_page (notebook);
-}
-
-
-
-/*! \brief Switch to the previous tab.
- *  \public
- *
- *  \todo: [ask folks]: (configurable?) cyclic tab change:
- *
- *  \param [in] w_current  The toplevel environment.
- */
-void
-x_tabs_prev (SchematicWindow* w_current)
-{
-  if (!x_tabs_enabled())
-      return;
-
-  g_return_if_fail (w_current != NULL);
-
-  GtkNotebook *notebook =
-    schematic_window_get_tab_notebook (w_current);
-
-  gtk_notebook_prev_page (notebook);
-}
-
-
-
-/*! \brief GtkNotebook "page-reordered" signal handler.
- */
-void
-x_tabs_page_on_reordered (GtkNotebook* nbook,
-                          GtkWidget*   wtab,
-                          guint        newindex,
-                          gpointer     data)
-{
-  SchematicWindow* w_current = (SchematicWindow*) data;
-  g_return_if_fail (w_current != NULL);
-
-  LeptonToplevel *toplevel =
-    schematic_window_get_toplevel (w_current);
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->pages != NULL);
-
-  GList *info_list =
-    schematic_window_get_tab_info_list (w_current);
-
-  TabInfo* nfo = x_tabs_info_find_by_wtab (info_list, wtab);
-  g_return_if_fail (nfo != NULL);
-
-  LeptonPageList* pages = toplevel->pages;
-  lepton_list_move_item (pages, nfo->page_, newindex);
-
-  gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
-
-} /* x_tabs_page_on_reordered() */
-
 
 
 /*! \brief Create popup menu for tab's header.
@@ -1018,7 +792,7 @@ x_tabs_menu_create (TabInfo* nfo)
 /*! \brief Tab's header widget "button-press-event" signal handler.
  *  \todo  Consider switching to clicked tab
  */
-static gboolean
+gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 {
   g_return_val_if_fail (data != NULL, FALSE);
