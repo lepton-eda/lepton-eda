@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,17 +70,8 @@ find_objects_using_substring (GSList *pages,
 static GSList*
 find_objects_using_check (GSList *pages);
 
-static GSList*
-get_pages (SchematicWindow *w_current,
-           GList *pages,
-           gboolean descend);
-
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
-
-static GList*
-get_subpages (SchematicWindow *w_current,
-              LeptonPage *page);
 
 static void
 object_weakref_cb (LeptonObject *object,
@@ -88,9 +79,6 @@ object_weakref_cb (LeptonObject *object,
 static void
 remove_object (SchematicFindTextState *state,
                LeptonObject *object);
-static void
-select_cb (GtkTreeSelection *selection,
-           SchematicFindTextState *state);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
@@ -102,7 +90,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *
  *  \param [in] w_current The SchematicWindow structure.
  *  \param [in] state The SchematicFindTextState structure.
- *  \param [in] pages a list of pages to search
+ *  \param [in] all_pages The list of all pages in the hierarchy.
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
  *  \param [in] descend Descend the page hierarchy
@@ -112,7 +100,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 int
 schematic_find_text_state_find (SchematicWindow *w_current,
                                 SchematicFindTextState *state,
-                                GList *pages,
+                                GSList *all_pages,
                                 int type,
                                 const char *text,
                                 gboolean descend,
@@ -120,10 +108,7 @@ schematic_find_text_state_find (SchematicWindow *w_current,
 {
   int count;
   GSList *objects = NULL;
-  GSList *all_pages;
   gboolean filter_text = TRUE;
-
-  all_pages = get_pages (w_current, pages, descend);
 
   switch (type) {
     case FIND_TYPE_SUBSTRING:
@@ -146,8 +131,6 @@ schematic_find_text_state_find (SchematicWindow *w_current,
     default:
       break;
   }
-
-  g_slist_free (all_pages);
 
   assign_store (state, objects, filter_text);
   count = g_slist_length (objects);
@@ -603,55 +586,6 @@ find_objects_using_check (GSList *pages)
 }
 
 
-/*! \brief obtain a list of pages for an operation
- *
- *  Descends the hierarchy of pages, if selected, and removes duplicate pages.
- *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] pages the list of pages to begin search
- *  \param [in] descend alose locates subpages
- *  \return a list of all the pages
- */
-static GSList*
-get_pages (SchematicWindow *w_current,
-           GList *pages,
-           gboolean descend)
-{
-  GList *input_list = g_list_copy (pages);
-  GSList *output_list = NULL;
-  GHashTable *visit_list = g_hash_table_new (NULL, NULL);
-
-  while (input_list != NULL) {
-    LeptonPage *page = (LeptonPage*) input_list->data;
-
-    input_list = g_list_delete_link (input_list, input_list);
-
-    if (page == NULL) {
-      g_warning ("NULL page encountered");
-      continue;
-    }
-
-    /** \todo the following function becomes available in glib 2.32 */
-    /* if (g_hash_table_contains (visit_list, page)) { */
-
-    if (g_hash_table_lookup_extended (visit_list, page, NULL, NULL)) {
-      continue;
-    }
-
-    output_list = g_slist_prepend (output_list, page);
-    g_hash_table_insert (visit_list, page, NULL);
-
-    if (descend) {
-      input_list = g_list_concat (input_list, get_subpages (w_current, page));
-    }
-  }
-
-  g_hash_table_destroy (visit_list);
-
-  return g_slist_reverse (output_list);
-}
-
-
 /*! \brief Get a property
  *
  *  \param [in]     object
@@ -671,74 +605,24 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 }
 
 
-/*! \brief get the subpages of a schematic page
+/*! \brief Return the selection of the Find text state widget.
  *
- *  if any subpages are not loaded, this function will load them.
+ *  \par Function Description
+ *  Returns the current selection of the Find text state widget.
  *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] page the parent page
- *  \return a list of all the subpages
+ *  \param [in] state The Find text state widget.
+ *  \return The \c GtkTreeSelection instance.
  */
-static GList*
-get_subpages (SchematicWindow *w_current,
-              LeptonPage *page)
+GtkTreeSelection*
+schematic_find_text_state_get_selection (SchematicFindTextState *state)
 {
-  const GList *object_iter;
-  GList *page_list = NULL;
+  g_return_val_if_fail (state != NULL, NULL);
 
-  g_return_val_if_fail (page != NULL, NULL);
+  GtkWidget *tree_widget = state->tree_widget;
 
-  object_iter = lepton_page_objects (page);
+  g_return_val_if_fail (tree_widget != NULL, NULL);
 
-  while (object_iter != NULL) {
-    char *attrib;
-    char **filenames;
-    char **iter;
-    LeptonObject *object = (LeptonObject*) object_iter->data;
-
-    object_iter = g_list_next (object_iter);
-
-    if (object == NULL) {
-      g_warning ("NULL object encountered");
-      continue;
-    }
-
-    if (!lepton_object_is_component (object))
-    {
-      continue;
-    }
-
-    attrib = lepton_attrib_search_attached_attribs_by_name (object,
-                                                            "source",
-                                                            0);
-    if (attrib == NULL) {
-      attrib = lepton_attrib_search_inherited_attribs_by_name (object,
-                                                               "source",
-                                                               0);
-    }
-
-    if (attrib == NULL) {
-      continue;
-    }
-
-    filenames = g_strsplit (attrib, ",", 0);
-
-    if (filenames == NULL) {
-      continue;
-    }
-
-    for (iter = filenames; *iter != NULL; iter++) {
-      LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
-
-      if (subpage != NULL) {
-        page_list = g_list_prepend (page_list, subpage);
-      }
-    }
-
-    g_strfreev (filenames);
-  }
-
-  return g_list_reverse (page_list);
+  return gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
 }
 
 
@@ -752,7 +636,6 @@ schematic_find_text_state_init (SchematicFindTextState *state)
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkWidget *scrolled;
-  GtkTreeSelection *selection;
   GtkWidget *tree_widget;
 
   g_return_if_fail (state != NULL);
@@ -771,6 +654,7 @@ schematic_find_text_state_init (SchematicFindTextState *state)
                                   GTK_POLICY_AUTOMATIC);
 
   tree_widget = gtk_tree_view_new_with_model (GTK_TREE_MODEL (state->store));
+  state->tree_widget = tree_widget;
   gtk_container_add (GTK_CONTAINER (scrolled), tree_widget);
 
   /* filename column */
@@ -796,11 +680,6 @@ schematic_find_text_state_init (SchematicFindTextState *state)
   renderer = gtk_cell_renderer_text_new();
   gtk_tree_view_column_pack_start(column, renderer, TRUE);
   gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
-
-  /* attach signal to detect user selection */
-
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
-  g_signal_connect (selection, "changed", G_CALLBACK (select_cb), state);
 }
 
 
@@ -872,9 +751,9 @@ remove_object (SchematicFindTextState *state,
  *  \param [in] selection
  *  \param [in] state
  */
-static void
-select_cb (GtkTreeSelection *selection,
-           SchematicFindTextState *state)
+void
+schematic_find_text_state_select (GtkTreeSelection *selection,
+                                  SchematicFindTextState *state)
 {
   GtkTreeIter iter;
   gboolean success;

@@ -25,16 +25,23 @@
   #:export (g_clear_error
             g_free
             g_list_append
+            g_list_concat
             g_list_copy
+            g_list_delete_link
             g_list_find
             g_list_first
             g_list_free
+            g_list_prepend
             g_list_remove
             g_list_remove_all
             g_list_sort
 
             g_log
             g_strdup
+
+            g_slist_free
+            g_slist_prepend
+            g_slist_reverse
 
             ;; Mock glib functions.
 
@@ -58,11 +65,14 @@
 (define-lff g_free void '(*))
 
 (define-lff g_list_append '* '(* *))
+(define-lff g_list_concat '* '(* *))
 (define-lff g_list_copy '* '(*))
+(define-lff g_list_delete_link '* '(* *))
 (define-lff g_list_find '* '(* *))
 (define-lff g_list_first '* '(*))
 (define-lff g_list_free void '(*))
 (define-lff g_list_free_full void '(*))
+(define-lff g_list_prepend '* '(* *))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))
 (define-lff g_list_sort '* '(* *))
@@ -71,7 +81,10 @@
 
 (define-lff g_strdup '* '(*))
 
+(define-lff g_slist_free void '(*))
 (define-lff g_slist_free_full void '(*))
+(define-lff g_slist_prepend '* '(* *))
+(define-lff g_slist_reverse '* '(*))
 
 
 ;;; GSList: singly-linked list.

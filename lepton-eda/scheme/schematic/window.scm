@@ -25,6 +25,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton config)
   #:use-module (lepton eval)
   #:use-module (lepton ffi boolean)
@@ -37,6 +38,7 @@
   #:use-module (lepton log)
   #:use-module (lepton m4)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
   #:use-module (lepton toplevel foreign)
@@ -1283,6 +1285,84 @@ for *PAGE page will be created and set active."
       (x_window_set_current_page *window *page)))
 
 
+;;; Return the subpages of PAGE in *WINDOW.  If any subpages are
+;;; not loaded, this function will load them.
+(define (page-subpages *window page)
+  (define *page (page->pointer page))
+  (define objects (page-contents page))
+
+  (define (split-attrib-value object)
+    (string-split (attrib-value object) #\,))
+
+  (define (source-attrib? attrib)
+    (string= "source" (attrib-name attrib)))
+
+  (define (attached-source-attribs object)
+    (filter source-attrib? (object-attribs object)))
+
+  (define (inherited-source-attribs object)
+    (filter source-attrib? (inherited-attribs object)))
+
+  (define (source-attribs object)
+    (let ((attached-attribs (attached-source-attribs object)))
+      (if (null? attached-attribs)
+          (inherited-source-attribs object)
+          attached-attribs)))
+
+  (define (get-subpages *page page-ls object)
+    (let loop ((filenames (append-map split-attrib-value
+                                      (source-attribs object)))
+               (page-ls page-ls))
+      (if (null? filenames)
+          page-ls
+          (let ((*subpage (s_hierarchy_load_subpage *window
+                                                    *page
+                                                    (string->pointer (car filenames))
+                                                    %null-pointer)))
+            (loop (cdr filenames)
+                  (if (null-pointer? *subpage)
+                      page-ls
+                      (cons (pointer->page *subpage) page-ls)))))))
+
+  (reverse
+   (let loop ((objects (filter component? objects))
+              (page-ls '()))
+     (if (null? objects)
+         page-ls
+         (let ((new-page-ls (get-subpages *page
+                                          page-ls
+                                          (car objects))))
+           (loop (cdr objects) new-page-ls))))))
+
+
+;;; The function obtains a list of pages for an operation.  It
+;;; processes the list of *PAGES in *WINDOW, descending the
+;;; hierarchy of pages if DESCEND? is not #f, adding all subpages,
+;;; and removing duplicate pages.  The function returns a new list
+;;; of all found pages.
+(define (find-text-get-all-pages *window *pages descend?)
+  (define page-ls (glist->list *pages pointer->page))
+
+  (let loop ((input-ls page-ls)
+             (output-ls '()))
+    (if (null? input-ls)
+        ;; Return the output list.
+        (reverse output-ls)
+
+        (let* ((page (car input-ls))
+               (new-input-ls (cdr input-ls))
+               (page-visited? (memq page output-ls)))
+          (loop (if page-visited?
+                    new-input-ls
+                    (if (true? descend?)
+                        (append new-input-ls
+                                (page-subpages *window page))
+                        new-input-ls))
+                (if page-visited?
+                    output-ls
+                    (cons page output-ls)))))))
+
+
 (define (search-text *window *toplevel)
   (define show-hidden-text?
     (schematic_window_get_show_hidden_text *window))
@@ -1299,14 +1379,25 @@ for *PAGE page will be created and set active."
     (schematic_find_text_widget_get_find_text_string *find-text-widget))
   (define descend?
     (schematic_find_text_widget_get_descend *find-text-widget))
+  (define all-pages
+    (find-text-get-all-pages *window *pages descend?))
+  (define *all-pages
+    (let loop ((pages all-pages)
+               (*pages-gslist %null-pointer))
+      (if (null? pages)
+          *pages-gslist
+          (loop (cdr pages)
+                (g_slist_prepend *pages-gslist (page->pointer (car pages)))))))
   (define count
     (schematic_find_text_state_find *window
                                     *find-text-state-widget
-                                    *pages
+                                    *all-pages
                                     find-type
                                     *text-string
                                     descend?
                                     show-hidden-text?))
+  (g_slist_free *all-pages)
+
   (if (> count 0)
       (begin
         (x_widgets_show_find_text_state *window)
@@ -1608,11 +1699,19 @@ GtkApplication structure of the program (when compiled with
                                            (schematic_options_widget_new *window))
       (schematic_window_set_log_widget *window
                                        (schematic_log_widget_new))
-      (schematic_window_set_find_text_state_widget *window (schematic_find_text_state_new))
-      (g_signal_connect (schematic_window_get_find_text_state_widget *window)
-                        (string->pointer "select-object")
-                        *x_window_select_object
-                        *window)
+      (let ((*find-text-state-widget (schematic_find_text_state_new)))
+        (schematic_window_set_find_text_state_widget *window *find-text-state-widget)
+        (g_signal_connect *find-text-state-widget
+                          (string->pointer "select-object")
+                          *x_window_select_object
+                          *window)
+        ;; Attach signal to detect user selection.
+        (let ((*selection
+               (schematic_find_text_state_get_selection *find-text-state-widget)))
+          (g_signal_connect *selection
+                            (string->pointer "changed")
+                            *schematic_find_text_state_select
+                            *find-text-state-widget)))
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window

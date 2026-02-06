@@ -240,6 +240,8 @@
 
             schematic_find_text_state_find
             schematic_find_text_state_new
+            schematic_find_text_state_get_selection
+            *schematic_find_text_state_select
 
             schematic_find_text_widget_new
             schematic_find_text_widget_get_cancel_button
@@ -267,6 +269,7 @@
             schematic_hierarchy_increment_page_control_counter
             schematic_hierarchy_set_error_nolib
             s_hierarchy_find_up_page
+            s_hierarchy_load_subpage
 
             schematic_page_revert_dialog
 
@@ -819,6 +822,7 @@
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff schematic_hierarchy_set_error_nolib void '(*))
 (define-lff s_hierarchy_find_up_page '* '(*))
+(define-lff s_hierarchy_load_subpage '* '(* * * *))
 
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))
@@ -1052,6 +1056,8 @@
 ;;; find_text_state.c
 (define-lff schematic_find_text_state_find int (list '* '* '* int '* int int))
 (define-lff schematic_find_text_state_new '* '())
+(define-lff schematic_find_text_state_get_selection '* '(*))
+(define-lfc *schematic_find_text_state_select)
 
 ;;; find_text_widget.c
 (define-lff schematic_find_text_widget_new '* '())

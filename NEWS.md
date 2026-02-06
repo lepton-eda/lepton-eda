@@ -586,6 +586,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   values with comma separated filenames beforehand, and thus
   obtain correct filenames.
 
+- Components with multiple *source* attributes are now processed
+  in the **Find text state** widget code.  Before, the hierarchy
+  traversing code processed only the first *source* attribute of a
+  component when looking up for subpages.
+
 
 ### Changes in `lepton-archive`:
 
