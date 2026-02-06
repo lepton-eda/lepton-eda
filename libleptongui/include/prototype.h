@@ -1128,9 +1128,6 @@ gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename);
-void
-x_window_setup_scrolling (GtkWidget *scrolled,
-                          gboolean show_scrollbars);
 gboolean
 x_window_untitled_page (LeptonPage* page);
 

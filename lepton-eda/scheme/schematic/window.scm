@@ -945,7 +945,7 @@ tab notebook.  Returns a C TabInfo structure."
   (define show_scrollbars
     (schematic_window_get_scrollbars_flag *window))
 
-  (x_window_setup_scrolling *scrolled-widget show_scrollbars)
+  (schematic_canvas_setup_scrolling *scrolled-widget show_scrollbars)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
     (add-tab-canvas! *scrolled-widget *canvas)
@@ -1887,7 +1887,7 @@ for *PAGE page will be created and set active."
      *window
      (make-drawing-area *scrolled
                         (schematic_window_get_active_page *window)))
-    (x_window_setup_scrolling *scrolled show_scrollbars)
+    (schematic_canvas_setup_scrolling *scrolled show_scrollbars)
 
     (schematic_window_get_current_canvas *window)))
 
