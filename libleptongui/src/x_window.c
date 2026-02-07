@@ -784,8 +784,6 @@ untitled_next_index (SchematicWindow* w_current)
 gchar*
 untitled_filename (SchematicWindow* w_current)
 {
-  g_return_val_if_fail (w_current != NULL, NULL);
-
   /* Determine default file name (without a number appended)
   *  for a new page:
   */
