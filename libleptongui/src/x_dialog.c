@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -400,3 +400,46 @@ x_dialog_validate_attribute (GtkWindow* parent, char *attribute)
   }
   return TRUE;
 }
+
+
+
+/*! \brief Show "Failed to load file" dialog.
+ *
+ *  \par Function Description
+ *  Opens the "Failed to load file" dialog reporting the file name.
+ *
+ *  \param main_window The transient parent window.
+ *  \param filename  File path that failed to load.
+ *  \param error_message Associated error message.
+ */
+void
+schematic_dialog_load_file_error (GtkWidget *main_window,
+                                  const gchar *filename,
+                                  char *error_message)
+{
+  const gchar* msg =
+    _("<b>An error occurred while loading the requested file.</b>"
+      "\n\n"
+      "Loading from '%1$s' failed. Error message:"
+      "\n\n"
+      "%2$s."
+      "\n\n"
+      "The lepton-schematic log may contain more information.\n"
+      "You may also launch lepton-schematic with --verbose command"
+      " line switch and monitor program's output in terminal window.");
+
+  GtkWidget* dialog = gtk_message_dialog_new_with_markup
+    (GTK_WINDOW (main_window),
+    GTK_DIALOG_DESTROY_WITH_PARENT,
+    GTK_MESSAGE_ERROR,
+    GTK_BUTTONS_CLOSE,
+    msg,
+    filename,
+    error_message);
+
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
+
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+} /* schematic_dialog_load_file_error() */

@@ -50,6 +50,7 @@
             generic_filesel_dialog
             generic_msg_dialog
             major_changed_dialog
+            schematic_dialog_load_file_error
 
             schematic_execute_script
 
@@ -309,7 +310,6 @@
             x_widgets_toggle_widget_visibility
             x_widgets_use_docks
 
-            open_page_error_dialog
             recent_manager_add
             x_window_save_page
             x_window_untitled_page
@@ -1035,7 +1035,6 @@
 (define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
-(define-lff open_page_error_dialog void '(* * *))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_untitled_page int '(*))
@@ -1126,6 +1125,7 @@
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 (define-lff major_changed_dialog void '(*))
+(define-lff schematic_dialog_load_file_error void '(* * *))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))

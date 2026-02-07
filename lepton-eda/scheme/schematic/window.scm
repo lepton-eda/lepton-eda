@@ -1087,9 +1087,9 @@ tab notebook.  Returns a C TabInfo structure."
         (if (false? (schematic_file_open *window *new-page *filename *error))
             (let ((error-message (gerror-error-message *error)))
               (log! 'warning "~A" error-message)
-              (open_page_error_dialog *main-window
-                                      *filename
-                                      (string->pointer error-message))
+              (schematic_dialog_load_file_error *main-window
+                                                *filename
+                                                (string->pointer error-message))
               ;; Loading failed.  Delete the page and open a new
               ;; blank one.
               (lepton_page_delete *toplevel *new-page)

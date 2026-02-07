@@ -871,6 +871,10 @@ GtkWidget*
 schematic_close_confirmation_dialog_new (SchematicWindow *w_current,
                                          GList *unsaved_pages);
 
+void
+schematic_dialog_load_file_error (GtkWidget *main_window,
+                                  const gchar *filename,
+                                  char *error_message);
 /* x_event.c */
 gboolean
 schematic_event_get_doing_stroke ();
@@ -1121,10 +1125,6 @@ schematic_window_create_notebooks (GtkWidget *main_box,
 void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
-void
-open_page_error_dialog (GtkWidget *main_window,
-                        const gchar *filename,
-                        char *error_message);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
