@@ -779,15 +779,16 @@ untitled_next_index (SchematicWindow* w_current)
  * Such (avoided) names are reported to the log.
  *
  *  \param  w_current   The toplevel environment.
+ *  \param  cwd The current working directory.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
-untitled_filename (SchematicWindow* w_current)
+untitled_filename (SchematicWindow* w_current,
+                   char *cwd)
 {
   /* Determine default file name (without a number appended)
   *  for a new page:
   */
-  gchar*     cwd = g_get_current_dir ();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
 
   gchar* name = eda_config_get_string (cfg,
@@ -829,7 +830,6 @@ untitled_filename (SchematicWindow* w_current)
     }
   }
 
-  g_free (cwd);
   g_free (name);
   g_free (fname);
 

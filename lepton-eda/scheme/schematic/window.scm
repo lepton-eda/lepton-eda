@@ -885,7 +885,8 @@ tab notebook.  Returns a C TabInfo structure."
   (when (null-pointer? *window)
     (error "NULL window."))
 
-  (untitled_filename *window))
+  (let ((cwd (getcwd)))
+    (untitled_filename *window (string->pointer cwd))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
