@@ -779,19 +779,19 @@ untitled_next_index (SchematicWindow* w_current)
  * Such (avoided) names are reported to the log.
  *
  *  \param  w_current   The toplevel environment.
+ *  \param  toplevel The \c LeptonToplevel instance of the window.
  *  \param  cwd The current working directory.
  *  \param  name The default file name prefix for new pages.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
 untitled_filename (SchematicWindow* w_current,
+                   LeptonToplevel *toplevel,
                    char *cwd,
                    char *name)
 {
   gchar* fname = NULL;
   gchar* fpath = NULL;
-
-  LeptonToplevel* toplevel = schematic_window_get_toplevel (w_current);
 
   for (;;)
   {

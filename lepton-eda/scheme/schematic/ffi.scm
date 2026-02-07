@@ -983,7 +983,7 @@
 ;;; x_window.c
 (define-lff x_window_create_drawing void '(* *))
 (define-lff open_page_error_dialog void '(* * *))
-(define-lff untitled_filename '* '(* * *))
+(define-lff untitled_filename '* '(* * * *))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))

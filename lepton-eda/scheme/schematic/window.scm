@@ -889,10 +889,12 @@ tab notebook.  Returns a C TabInfo structure."
          (default-filename
            (config-string (path-config-context cwd)
                           "schematic"
-                          "default-filename")))
+                          "default-filename"))
+         (*toplevel (schematic_window_get_toplevel *window)))
     ;; Determine default file name (without a number appended) for a
     ;; new page.
     (untitled_filename *window
+                       *toplevel
                        (string->pointer cwd)
                        (string->pointer default-filename))))
 
