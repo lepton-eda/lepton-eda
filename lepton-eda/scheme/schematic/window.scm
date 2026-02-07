@@ -957,6 +957,9 @@ tab notebook.  Returns a C TabInfo structure."
 
 
 (define (untitled-filename *window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
   (untitled_filename *window))
 
 
