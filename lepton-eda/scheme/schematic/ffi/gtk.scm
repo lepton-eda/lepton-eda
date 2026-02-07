@@ -73,6 +73,7 @@
 
             gtk_notebook_append_page
             gtk_notebook_get_n_pages
+            gtk_notebook_new
             gtk_notebook_next_page
             gtk_notebook_page_num
             gtk_notebook_prev_page
@@ -181,6 +182,7 @@
 
 (define-lff gtk_notebook_append_page int '(* * *))
 (define-lff gtk_notebook_get_n_pages int '(*))
+(define-lff gtk_notebook_new '* '())
 (define-lff gtk_notebook_next_page void '(*))
 (define-lff gtk_notebook_page_num int '(* *))
 (define-lff gtk_notebook_prev_page void '(*))

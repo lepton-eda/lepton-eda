@@ -1991,7 +1991,11 @@ for *PAGE page will be created and set active."
 
 
 (define (make-side-notebook *window use_docks)
-  (schematic_window_side_notebook_new *window use_docks))
+  (define *notebook (gtk_notebook_new))
+
+  (schematic_window_side_notebook_new *window *notebook use_docks)
+
+  *notebook)
 
 
 (define (make-schematic-window *app *toplevel)

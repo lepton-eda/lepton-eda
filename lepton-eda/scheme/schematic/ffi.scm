@@ -1048,7 +1048,7 @@
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
 (define-lff schematic_window_bottom_notebook_new '* '(*))
-(define-lff schematic_window_side_notebook_new '* (list '* int))
+(define-lff schematic_window_side_notebook_new void (list '* '* int))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))
