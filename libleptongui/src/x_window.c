@@ -233,20 +233,6 @@ schematic_window_side_notebook_new (SchematicWindow* w_current,
                                     GtkWidget *options_widget,
                                     gboolean use_docks)
 {
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              object_properties_widget,
-                              gtk_label_new(_("Object")));
-
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              text_properties_widget,
-                              gtk_label_new(_("Text")));
-
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              options_widget,
-                              gtk_label_new(_("Options")));
-
-
-
     gtk_container_set_border_width (GTK_CONTAINER (notebook),
                                     DIALOG_BORDER_SPACING);
 }

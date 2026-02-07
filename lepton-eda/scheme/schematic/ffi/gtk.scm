@@ -59,6 +59,8 @@
 
             gtk_init
 
+            gtk_label_new
+
             gtk_list_store_clear
 
             gtk_main_iteration
@@ -167,6 +169,8 @@
 (define-lff gtk_icon_theme_get_default '* '())
 
 (define-lff gtk_init void '(* *))
+
+(define-lff gtk_label_new '* '(*))
 
 (define-lff gtk_list_store_clear void '(*))
 

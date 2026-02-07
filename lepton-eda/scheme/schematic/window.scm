@@ -2000,6 +2000,17 @@ for *PAGE page will be created and set active."
            (schematic_window_get_text_properties_widget *window))
           (*options-widget
            (schematic_window_get_options_widget *window)))
+
+      (gtk_notebook_append_page *notebook
+                                *object-properties-widget
+                                (gtk_label_new (string->pointer (G_ "Object"))))
+      (gtk_notebook_append_page *notebook
+                                *text-properties-widget
+                                (gtk_label_new (string->pointer (G_ "Text"))))
+      (gtk_notebook_append_page *notebook
+                                *options-widget
+                                (gtk_label_new (string->pointer (G_ "Options"))))
+
       (schematic_window_side_notebook_new *window
                                           *notebook
                                           *object-properties-widget
