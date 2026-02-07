@@ -1990,6 +1990,10 @@ for *PAGE page will be created and set active."
   (procedure->pointer void translate-response (list '* int '*)))
 
 
+(define (make-side-notebook *window use_docks)
+  (schematic_window_side_notebook_new *window use_docks))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -2162,7 +2166,7 @@ GtkApplication structure of the program (when compiled with
 
       ;; Setup layout of notebooks.
       (let* ((use_docks (x_widgets_use_docks))
-             (*right-notebook (schematic_window_side_notebook_new *window use_docks))
+             (*right-notebook (make-side-notebook *window use_docks))
              (*bottom-notebook (schematic_window_bottom_notebook_new *window)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
