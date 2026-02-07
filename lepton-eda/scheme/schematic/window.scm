@@ -882,6 +882,12 @@ tab notebook.  Returns a C TabInfo structure."
 
 
 (define (untitled-filename *window)
+  (define (next-filename *toplevel cwd default-filename)
+    (untitled_filename *window
+                       *toplevel
+                       (string->pointer cwd)
+                       (string->pointer default-filename)))
+
   (when (null-pointer? *window)
     (error "NULL window."))
 
@@ -894,15 +900,9 @@ tab notebook.  Returns a C TabInfo structure."
     ;; Determine default file name (without a number appended) for a
     ;; new page.
     (let loop ((*filename
-                (untitled_filename *window
-                                   *toplevel
-                                   (string->pointer cwd)
-                                   (string->pointer default-filename))))
+                (next-filename *toplevel cwd default-filename)))
       (if (null-pointer? *filename)
-          (loop (untitled_filename *window
-                                   *toplevel
-                                   (string->pointer cwd)
-                                   (string->pointer default-filename)))
+          (loop (next-filename *toplevel cwd default-filename))
           *filename))))
 
 
