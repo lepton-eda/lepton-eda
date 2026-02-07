@@ -1148,6 +1148,7 @@ open_page_error_dialog (SchematicWindow *w_current,
                         char *error_message);
 gchar*
 untitled_filename (SchematicWindow *w_current,
+                   LeptonToplevel *toplevel,
                    char *cwd,
                    char *name);
 gint
