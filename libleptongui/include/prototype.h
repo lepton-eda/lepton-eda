@@ -1162,7 +1162,7 @@ gchar*
 untitled_filename (SchematicWindow *w_current,
                    LeptonToplevel *toplevel,
                    char *cwd,
-                   char *name);
+                   char *fname);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
@@ -1172,6 +1172,9 @@ x_window_setup_scrolling (SchematicWindow *w_current,
                           GtkWidget *scrolled);
 gboolean
 x_window_untitled_page (LeptonPage* page);
+
+int
+untitled_next_index (SchematicWindow* w_current);
 
 /* x_widgets.c */
 gboolean

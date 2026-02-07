@@ -883,10 +883,17 @@ tab notebook.  Returns a C TabInfo structure."
 
 (define (untitled-filename *window)
   (define (next-filename *toplevel cwd default-filename)
-    (untitled_filename *window
-                       *toplevel
-                       (string->pointer cwd)
-                       (string->pointer default-filename)))
+    ;; Build file name (default name + number appended).
+    (let ((filename
+           (string-append default-filename
+                          "_"
+                          (number->string (untitled_next_index *window))
+                          ".sch")))
+
+      (untitled_filename *window
+                         *toplevel
+                         (string->pointer cwd)
+                         (string->pointer filename))))
 
   (when (null-pointer? *window)
     (error "NULL window."))

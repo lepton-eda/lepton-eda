@@ -300,6 +300,7 @@
             x_window_create_drawing
             open_page_error_dialog
             untitled_filename
+            untitled_next_index
             recent_manager_add
             x_window_save_page
             x_window_setup_draw_events_drawing_area
@@ -984,6 +985,7 @@
 (define-lff x_window_create_drawing void '(* *))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(* * * *))
+(define-lff untitled_next_index int '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
