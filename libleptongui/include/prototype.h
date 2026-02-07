@@ -1119,9 +1119,6 @@ schematic_window_create_notebooks (GtkWidget *main_box,
                                    GtkWidget *right_notebook,
                                    GtkWidget *bottom_notebook);
 void
-schematic_window_bottom_notebook_new (SchematicWindow *w_current,
-                                      GtkWidget *notebook);
-void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
 void

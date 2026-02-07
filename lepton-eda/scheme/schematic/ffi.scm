@@ -327,7 +327,6 @@
             schematic_window_set_tab_info_list
             schematic_window_get_tab_notebook
             schematic_window_set_toolbar
-            schematic_window_bottom_notebook_new
 
             schematic_toolbar_new
             schematic_toolbar_activate_button
@@ -524,6 +523,7 @@
             schematic_window_get_newtext_dialog
             schematic_window_set_newtext_dialog
             schematic_window_set_dont_invalidate
+            schematic_window_get_log_widget
             schematic_window_set_log_widget
             schematic_window_get_multiattrib_widget
             schematic_window_set_object_properties_widget
@@ -959,6 +959,7 @@
 (define-lff schematic_window_get_newtext_dialog '* '(*))
 (define-lff schematic_window_set_newtext_dialog void '(* *))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
+(define-lff schematic_window_get_log_widget '* '(*))
 (define-lff schematic_window_set_log_widget void '(* *))
 (define-lff schematic_window_get_multiattrib_widget '* '(*))
 (define-lff schematic_window_set_object_properties_widget void '(* *))
@@ -1052,7 +1053,6 @@
 (define-lff schematic_window_set_tab_info_list void '(* *))
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
-(define-lff schematic_window_bottom_notebook_new void '(* *))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))

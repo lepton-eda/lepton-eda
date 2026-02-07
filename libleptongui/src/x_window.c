@@ -225,29 +225,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-void
-schematic_window_bottom_notebook_new (SchematicWindow* w_current,
-                                      GtkWidget *notebook)
-{
-    GtkWidget *find_text_state =
-      schematic_window_get_find_text_state_widget (w_current);
-    GtkWidget *log_widget =
-      schematic_window_get_log_widget (w_current);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              find_text_state,
-                              gtk_label_new(_("Find Text")));
-
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              log_widget,
-                              gtk_label_new(_("Log")));
-
-
-    gtk_container_set_border_width (GTK_CONTAINER (notebook),
-                                    DIALOG_BORDER_SPACING);
-}
-
-
-
 /*! \brief Show "Failed to load file" dialog.
  *
  *  \param w_current The toplevel environment.

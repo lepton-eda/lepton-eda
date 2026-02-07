@@ -2021,8 +2021,19 @@ for *PAGE page will be created and set active."
   (define *notebook (gtk_notebook_new))
 
   (when (true? use_docks)
-    (schematic_window_bottom_notebook_new *window *notebook))
+    (let ((*find-text-state
+           (schematic_window_get_find_text_state_widget *window))
+          (*log-widget
+           (schematic_window_get_log_widget *window)))
+      (gtk_notebook_append_page *notebook
+                                *find-text-state
+                                (gtk_label_new (string->pointer (G_ "Find Text"))))
+      (gtk_notebook_append_page *notebook
+                                *log-widget
+                                (gtk_label_new (string->pointer (G_ "Log"))))
 
+      (gtk_container_set_border_width *notebook
+                                      %default-dialog-border-spacing)))
   *notebook)
 
 
