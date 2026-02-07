@@ -2018,7 +2018,11 @@ for *PAGE page will be created and set active."
 
 
 (define (make-bottom-notebook *window)
-  (schematic_window_bottom_notebook_new *window))
+  (define *notebook (gtk_notebook_new))
+
+  (schematic_window_bottom_notebook_new *window *notebook)
+
+  *notebook)
 
 
 (define (make-schematic-window *app *toplevel)

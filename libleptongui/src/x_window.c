@@ -225,11 +225,10 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-GtkWidget*
-schematic_window_bottom_notebook_new (SchematicWindow* w_current)
+void
+schematic_window_bottom_notebook_new (SchematicWindow* w_current,
+                                      GtkWidget *notebook)
 {
-  GtkWidget *notebook = gtk_notebook_new ();
-
   if ( x_widgets_use_docks() )
   {
     GtkWidget *find_text_state =
@@ -248,8 +247,6 @@ schematic_window_bottom_notebook_new (SchematicWindow* w_current)
     gtk_container_set_border_width (GTK_CONTAINER (notebook),
                                     DIALOG_BORDER_SPACING);
   }
-
-  return notebook;
 }
 
 
