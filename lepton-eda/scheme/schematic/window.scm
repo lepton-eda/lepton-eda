@@ -1073,6 +1073,8 @@ tab notebook.  Returns a C TabInfo structure."
       (g_clear_error *error)
       msg))
 
+  (define *main-window (schematic_window_get_main_window *window))
+
   (define (*make-new-page)
     (let ((*new-page (lepton_page_new *toplevel *filename)))
       ;; Switch to the new page.  NOTE: the call sets
@@ -1085,7 +1087,7 @@ tab notebook.  Returns a C TabInfo structure."
         (if (false? (schematic_file_open *window *new-page *filename *error))
             (let ((error-message (gerror-error-message *error)))
               (log! 'warning "~A" error-message)
-              (open_page_error_dialog *window
+              (open_page_error_dialog *main-window
                                       *filename
                                       (string->pointer error-message))
               ;; Loading failed.  Delete the page and open a new

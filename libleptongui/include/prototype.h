@@ -1122,7 +1122,7 @@ void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
 void
-open_page_error_dialog (SchematicWindow *w_current,
+open_page_error_dialog (GtkWidget *main_window,
                         const gchar *filename,
                         char *error_message);
 gint

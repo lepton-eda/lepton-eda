@@ -227,17 +227,18 @@ x_window_save_page (SchematicWindow *w_current,
 
 /*! \brief Show "Failed to load file" dialog.
  *
- *  \param w_current The toplevel environment.
+ *  \par Function Description
+ *  Opens the "Failed to load file" dialog reporting the file name.
+ *
+ *  \param main_window The transient parent window.
  *  \param filename  File path that failed to load.
  *  \param error_message Associated error message.
  */
 void
-open_page_error_dialog (SchematicWindow* w_current,
+open_page_error_dialog (GtkWidget *main_window,
                         const gchar *filename,
                         char *error_message)
 {
-  g_return_if_fail (w_current != NULL);
-
   const gchar* msg =
     _("<b>An error occurred while loading the requested file.</b>"
       "\n\n"
@@ -248,9 +249,6 @@ open_page_error_dialog (SchematicWindow* w_current,
       "The lepton-schematic log may contain more information.\n"
       "You may also launch lepton-schematic with --verbose command"
       " line switch and monitor program's output in terminal window.");
-
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
 
   GtkWidget* dialog = gtk_message_dialog_new_with_markup
     (GTK_WINDOW (main_window),
