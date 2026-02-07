@@ -2017,6 +2017,10 @@ for *PAGE page will be created and set active."
   *notebook)
 
 
+(define (make-bottom-notebook *window)
+  (schematic_window_bottom_notebook_new *window))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -2190,7 +2194,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup layout of notebooks.
       (let* ((use_docks (x_widgets_use_docks))
              (*right-notebook (make-side-notebook *window use_docks))
-             (*bottom-notebook (schematic_window_bottom_notebook_new *window)))
+             (*bottom-notebook (make-bottom-notebook *window)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
 
