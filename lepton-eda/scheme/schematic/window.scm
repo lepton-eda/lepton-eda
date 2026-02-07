@@ -881,6 +881,10 @@ tab notebook.  Returns a C TabInfo structure."
       (add-tab-info! *window *wtab *canvas *page page-index))))
 
 
+(define (untitled-filename *window)
+  (untitled_filename *window))
+
+
 ;;; Creates and returns a new untitled page in *WINDOW.
 (define (window-make-untitled-page *window)
   (define quiet-mode? (true? (get_quiet_mode)))
@@ -893,7 +897,7 @@ tab notebook.  Returns a C TabInfo structure."
       (error "NULL toplevel."))
 
     ;; New page file name.
-    (let* ((*filename (untitled_filename *window))
+    (let* ((*filename (untitled-filename *window))
            ;; Create a new page.
            (*page (lepton_page_new *toplevel *filename)))
 
