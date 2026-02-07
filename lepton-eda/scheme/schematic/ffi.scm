@@ -493,7 +493,9 @@
             schematic_window_set_multiattrib_widget
             schematic_window_get_num_untitled
             schematic_window_set_num_untitled
+            schematic_window_get_object_properties_widget
             schematic_window_get_options
+            schematic_window_get_options_widget
             schematic_window_delete_place_list
             schematic_window_get_place_list
             schematic_window_set_place_list
@@ -503,6 +505,7 @@
             schematic_window_set_rubber_visible
             schematic_window_get_selection_list
             schematic_window_set_show_text_widget
+            schematic_window_get_text_properties_widget
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
             schematic_window_get_translate_widget
@@ -925,7 +928,9 @@
 (define-lff schematic_window_set_multiattrib_widget void '(* *))
 (define-lff schematic_window_get_num_untitled int '(*))
 (define-lff schematic_window_set_num_untitled void (list '* int))
+(define-lff schematic_window_get_object_properties_widget '* '(*))
 (define-lff schematic_window_get_options '* '(*))
+(define-lff schematic_window_get_options_widget '* '(*))
 (define-lff schematic_window_delete_place_list void '(*))
 (define-lff schematic_window_get_place_list '* '(*))
 (define-lff schematic_window_set_place_list void '(* *))
@@ -935,6 +940,7 @@
 (define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_set_show_text_widget void '(* *))
+(define-lff schematic_window_get_text_properties_widget '* '(*))
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_translate_widget '* '(*))
@@ -1048,7 +1054,7 @@
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
 (define-lff schematic_window_bottom_notebook_new '* '(*))
-(define-lff schematic_window_side_notebook_new void (list '* '* int))
+(define-lff schematic_window_side_notebook_new void (list '* '* '* '* '* int))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))

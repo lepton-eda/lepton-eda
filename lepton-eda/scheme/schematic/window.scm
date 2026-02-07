@@ -1994,8 +1994,18 @@ for *PAGE page will be created and set active."
   (define *notebook (gtk_notebook_new))
 
   (when (true? use_docks)
-    (schematic_window_side_notebook_new *window *notebook use_docks))
-
+    (let ((*object-properties-widget
+           (schematic_window_get_object_properties_widget *window))
+          (*text-properties-widget
+           (schematic_window_get_text_properties_widget *window))
+          (*options-widget
+           (schematic_window_get_options_widget *window)))
+      (schematic_window_side_notebook_new *window
+                                          *notebook
+                                          *object-properties-widget
+                                          *text-properties-widget
+                                          *options-widget
+                                          use_docks)))
   *notebook)
 
 

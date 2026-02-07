@@ -228,14 +228,11 @@ x_window_save_page (SchematicWindow *w_current,
 void
 schematic_window_side_notebook_new (SchematicWindow* w_current,
                                     GtkWidget *notebook,
+                                    GtkWidget *object_properties_widget,
+                                    GtkWidget *text_properties_widget,
+                                    GtkWidget *options_widget,
                                     gboolean use_docks)
 {
-    GtkWidget *object_properties_widget =
-      schematic_window_get_object_properties_widget (w_current);
-    GtkWidget *text_properties_widget =
-      schematic_window_get_text_properties_widget (w_current);
-    GtkWidget *options_widget =
-      schematic_window_get_options_widget (w_current);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                               object_properties_widget,
                               gtk_label_new(_("Object")));
