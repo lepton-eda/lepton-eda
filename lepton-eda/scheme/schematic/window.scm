@@ -893,10 +893,17 @@ tab notebook.  Returns a C TabInfo structure."
          (*toplevel (schematic_window_get_toplevel *window)))
     ;; Determine default file name (without a number appended) for a
     ;; new page.
-    (untitled_filename *window
-                       *toplevel
-                       (string->pointer cwd)
-                       (string->pointer default-filename))))
+    (let loop ((*filename
+                (untitled_filename *window
+                                   *toplevel
+                                   (string->pointer cwd)
+                                   (string->pointer default-filename))))
+      (if (null-pointer? *filename)
+          (loop (untitled_filename *window
+                                   *toplevel
+                                   (string->pointer cwd)
+                                   (string->pointer default-filename)))
+          *filename))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.

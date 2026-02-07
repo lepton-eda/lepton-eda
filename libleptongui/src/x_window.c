@@ -793,8 +793,6 @@ untitled_filename (SchematicWindow* w_current,
   gchar* fname = NULL;
   gchar* fpath = NULL;
 
-  for (;;)
-  {
     /* Build file name (default name + number appended):
     */
     fname = g_strdup_printf ("%s_%d.sch",
@@ -815,16 +813,15 @@ untitled_filename (SchematicWindow* w_current,
 
       g_free (fname);
       g_free (fpath);
+
+      return NULL;
     }
     else
     {
-      break;
+      g_free (fname);
+
+      return fpath;
     }
-  }
-
-  g_free (fname);
-
-  return fpath;
 
 } /* untitled_filename() */
 
