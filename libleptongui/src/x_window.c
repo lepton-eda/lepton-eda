@@ -780,22 +780,14 @@ untitled_next_index (SchematicWindow* w_current)
  *
  *  \param  w_current   The toplevel environment.
  *  \param  cwd The current working directory.
+ *  \param  name The default file name prefix for new pages.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
 untitled_filename (SchematicWindow* w_current,
-                   char *cwd)
+                   char *cwd,
+                   char *name)
 {
-  /* Determine default file name (without a number appended)
-  *  for a new page:
-  */
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-
-  gchar* name = eda_config_get_string (cfg,
-                                       "schematic",
-                                       "default-filename",
-                                       NULL);
-
   gchar* fname = NULL;
   gchar* fpath = NULL;
 
@@ -830,7 +822,6 @@ untitled_filename (SchematicWindow* w_current,
     }
   }
 
-  g_free (name);
   g_free (fname);
 
   return fpath;
