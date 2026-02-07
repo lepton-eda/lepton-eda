@@ -2017,10 +2017,11 @@ for *PAGE page will be created and set active."
   *notebook)
 
 
-(define (make-bottom-notebook *window)
+(define (make-bottom-notebook *window use_docks)
   (define *notebook (gtk_notebook_new))
 
-  (schematic_window_bottom_notebook_new *window *notebook)
+  (when (true? use_docks)
+    (schematic_window_bottom_notebook_new *window *notebook))
 
   *notebook)
 
@@ -2198,7 +2199,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup layout of notebooks.
       (let* ((use_docks (x_widgets_use_docks))
              (*right-notebook (make-side-notebook *window use_docks))
-             (*bottom-notebook (make-bottom-notebook *window)))
+             (*bottom-notebook (make-bottom-notebook *window use_docks)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
 

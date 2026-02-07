@@ -229,8 +229,6 @@ void
 schematic_window_bottom_notebook_new (SchematicWindow* w_current,
                                       GtkWidget *notebook)
 {
-  if ( x_widgets_use_docks() )
-  {
     GtkWidget *find_text_state =
       schematic_window_get_find_text_state_widget (w_current);
     GtkWidget *log_widget =
@@ -246,7 +244,6 @@ schematic_window_bottom_notebook_new (SchematicWindow* w_current,
 
     gtk_container_set_border_width (GTK_CONTAINER (notebook),
                                     DIALOG_BORDER_SPACING);
-  }
 }
 
 
