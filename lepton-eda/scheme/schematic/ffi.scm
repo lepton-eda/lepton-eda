@@ -299,6 +299,7 @@
 
             open_page_error_dialog
             untitled_filename
+            untitled_next_index
             recent_manager_add
             x_window_save_page
             x_window_setup_scrolling
@@ -985,6 +986,7 @@
 ;;; x_window.c
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(* * * *))
+(define-lff untitled_next_index int '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_setup_scrolling void '(* *))

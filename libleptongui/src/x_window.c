@@ -29,9 +29,6 @@ create_notebook_right (SchematicWindow *w_current);
 static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
-static int
-untitled_next_index (SchematicWindow* w_current);
-
 
 static void
 x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
@@ -685,7 +682,7 @@ recent_manager_add (SchematicWindow* w_current,
 
 /*! \brief Get next number to be part of the untitled file name.
  */
-static int
+int
 untitled_next_index (SchematicWindow* w_current)
 {
   return ++w_current->num_untitled;
@@ -705,23 +702,16 @@ untitled_next_index (SchematicWindow* w_current)
  *  \param  w_current   The toplevel environment.
  *  \param  toplevel The \c LeptonToplevel instance of the window.
  *  \param  cwd The current working directory.
- *  \param  name The default file name prefix for new pages.
+ *  \param  fname The basename of a new page.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
 untitled_filename (SchematicWindow* w_current,
                    LeptonToplevel *toplevel,
                    char *cwd,
-                   char *name)
+                   char *fname)
 {
-  gchar* fname = NULL;
   gchar* fpath = NULL;
-
-    /* Build file name (default name + number appended):
-    */
-    fname = g_strdup_printf ("%s_%d.sch",
-                             name ? name : UNTITLED_FILENAME_PREFIX,
-                             untitled_next_index (w_current));
 
     /* Build full path for file name:
     */
@@ -735,15 +725,12 @@ untitled_filename (SchematicWindow* w_current,
     {
       g_message (_("Skipping existing file [%s]"), fname);
 
-      g_free (fname);
       g_free (fpath);
 
       return NULL;
     }
     else
     {
-      g_free (fname);
-
       return fpath;
     }
 
