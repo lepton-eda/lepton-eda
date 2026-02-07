@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -26,10 +26,14 @@
   #:use-module (lepton log)
   #:use-module (schematic ffi)
 
-  #:export (schematic-message-dialog
+  #:export (%default-dialog-border-spacing
+            schematic-message-dialog
             schematic-confirm-dialog
             schematic-error-dialog
             schematic-fileselect-dialog))
+
+;;; The same as definition of DIALOG_BORDER_SPACING in x_dialog.h.
+(define %default-dialog-border-spacing 5)
 
 (define (schematic-message-dialog message)
   "Opens GTK message dialog with MESSAGE and one OK button."

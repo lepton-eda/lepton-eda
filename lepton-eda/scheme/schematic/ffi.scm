@@ -328,7 +328,6 @@
             schematic_window_get_tab_notebook
             schematic_window_set_toolbar
             schematic_window_bottom_notebook_new
-            schematic_window_side_notebook_new
 
             schematic_toolbar_new
             schematic_toolbar_activate_button
@@ -1054,7 +1053,6 @@
 (define-lff schematic_window_get_tab_notebook '* '(*))
 (define-lff schematic_window_set_toolbar void '(* *))
 (define-lff schematic_window_bottom_notebook_new '* '(*))
-(define-lff schematic_window_side_notebook_new void (list '* '* '* '* '* int))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))

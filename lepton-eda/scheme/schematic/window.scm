@@ -53,6 +53,7 @@
   #:use-module (schematic callback)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
+  #:use-module (schematic dialog)
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog close-window)
   #:use-module (schematic event)
@@ -2011,12 +2012,8 @@ for *PAGE page will be created and set active."
                                 *options-widget
                                 (gtk_label_new (string->pointer (G_ "Options"))))
 
-      (schematic_window_side_notebook_new *window
-                                          *notebook
-                                          *object-properties-widget
-                                          *text-properties-widget
-                                          *options-widget
-                                          use_docks)))
+      (gtk_container_set_border_width *notebook
+                                      %default-dialog-border-spacing)))
   *notebook)
 
 

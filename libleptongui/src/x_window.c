@@ -225,20 +225,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-void
-schematic_window_side_notebook_new (SchematicWindow* w_current,
-                                    GtkWidget *notebook,
-                                    GtkWidget *object_properties_widget,
-                                    GtkWidget *text_properties_widget,
-                                    GtkWidget *options_widget,
-                                    gboolean use_docks)
-{
-    gtk_container_set_border_width (GTK_CONTAINER (notebook),
-                                    DIALOG_BORDER_SPACING);
-}
-
-
-
 GtkWidget*
 schematic_window_bottom_notebook_new (SchematicWindow* w_current)
 {

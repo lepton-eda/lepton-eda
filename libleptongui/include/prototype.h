@@ -1122,13 +1122,6 @@ GtkWidget*
 schematic_window_bottom_notebook_new (SchematicWindow *w_current);
 
 void
-schematic_window_side_notebook_new (SchematicWindow *w_current,
-                                    GtkWidget *notebook,
-                                    GtkWidget *object_properties_widget,
-                                    GtkWidget *text_properties_widget,
-                                    GtkWidget *options_widget,
-                                    gboolean use_docks);
-void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);
 void
