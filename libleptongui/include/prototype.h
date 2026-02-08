@@ -1162,7 +1162,8 @@ gchar*
 untitled_filename (SchematicWindow *w_current,
                    LeptonToplevel *toplevel,
                    char *cwd,
-                   char *fname);
+                   char *fname,
+                   char *fpath);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,

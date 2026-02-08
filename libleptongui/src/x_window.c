@@ -779,20 +779,16 @@ untitled_next_index (SchematicWindow* w_current)
  *  \param  toplevel The \c LeptonToplevel instance of the window.
  *  \param  cwd The current working directory.
  *  \param  fname The basename of a new page.
+ *  \param  fpath The absolute filename for \p fname.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
 untitled_filename (SchematicWindow* w_current,
                    LeptonToplevel *toplevel,
                    char *cwd,
-                   char *fname)
+                   char *fname,
+                   char *fpath)
 {
-  gchar* fpath = NULL;
-
-    /* Build full path for file name:
-    */
-    fpath = g_build_filename (cwd, fname, NULL);
-
     /* Avoid reusing names of already opened files:
     *  Avoid reusing names of existing files in current directory:
     */
@@ -800,8 +796,6 @@ untitled_filename (SchematicWindow* w_current,
          g_file_test (fpath, G_FILE_TEST_EXISTS) )
     {
       g_message (_("Skipping existing file [%s]"), fname);
-
-      g_free (fpath);
 
       return NULL;
     }

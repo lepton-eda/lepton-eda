@@ -884,16 +884,19 @@ tab notebook.  Returns a C TabInfo structure."
 (define (untitled-filename *window)
   (define (next-filename *toplevel cwd default-filename)
     ;; Build file name (default name + number appended).
-    (let ((filename
-           (string-append default-filename
-                          "_"
-                          (number->string (untitled_next_index *window))
-                          ".sch")))
+    (let* ((filename
+            (string-append default-filename
+                           "_"
+                           (number->string (untitled_next_index *window))
+                           ".sch"))
+           ;; Build full path for file name.
+           (path (string-append cwd file-name-separator-string filename)))
 
       (untitled_filename *window
                          *toplevel
                          (string->pointer cwd)
-                         (string->pointer filename))))
+                         (string->pointer filename)
+                         (string->pointer path))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -934,8 +937,6 @@ tab notebook.  Returns a C TabInfo structure."
                                  (pointer->page *page))
       (unless quiet-mode?
         (log! 'message (G_ "New file ~S") (pointer->string *filename)))
-
-      (g_free *filename)
 
       ;; Run new page hook.
       (with-window *window
