@@ -766,50 +766,6 @@ untitled_next_index (SchematicWindow* w_current)
 
 
 
-/*! \brief Get untitled file name.
- *  \par Function Description
- *
- * Determine "untitled" schematic file name (used for new pages)
- * and build full path from this name and current working
- * directory.  When constructing this name, avoid reusing names of
- * already opened files and existing files in current directory.
- * Such (avoided) names are reported to the log.
- *
- *  \param  w_current   The toplevel environment.
- *  \param  toplevel The \c LeptonToplevel instance of the window.
- *  \param  cwd The current working directory.
- *  \param  fname The basename of a new page.
- *  \param  fpath The absolute filename for \p fname.
- *  \param  exists Whether the page or file with the filename
-                   \p fname exists.
- *  \return             Newly-allocated untitled file path.
- */
-gchar*
-untitled_filename (SchematicWindow* w_current,
-                   LeptonToplevel *toplevel,
-                   char *cwd,
-                   char *fname,
-                   char *fpath,
-                   gboolean exists)
-{
-    /* Avoid reusing names of already opened files:
-    *  Avoid reusing names of existing files in current directory:
-    */
-    if (exists)
-    {
-      g_message (_("Skipping existing file [%s]"), fname);
-
-      return NULL;
-    }
-    else
-    {
-      return fpath;
-    }
-
-} /* untitled_filename() */
-
-
-
 /*! \brief Determine if a given \a page is "untitled" one.
  *  \par Function Description
  *

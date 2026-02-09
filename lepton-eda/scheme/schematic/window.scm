@@ -881,6 +881,11 @@ tab notebook.  Returns a C TabInfo structure."
       (add-tab-info! *window *wtab *canvas *page page-index))))
 
 
+;;; Determine a new "untitled" schematic file name (used for new
+;;; pages) and build a full path from this name and the current
+;;; working directory.  When constructing this name, avoid reusing the
+;;; names of already opened files and files existing in the current
+;;; directory.  Such avoided names are reported to the log.
 (define (untitled-filename *window)
   (define (next-filename *toplevel cwd default-filename)
     ;; Build file name (default name + number appended).
@@ -891,17 +896,18 @@ tab notebook.  Returns a C TabInfo structure."
                            ".sch"))
            ;; Build full path for file name.
            (path (string-append cwd file-name-separator-string filename))
-           (exists? (or (true? (lepton_toplevel_search_page_by_basename
-                                *toplevel
-                                (string->pointer filename)))
+           (exists? (or (not (null-pointer? (lepton_toplevel_search_page_by_basename
+                                             *toplevel
+                                             (string->pointer filename))))
                         (file-exists? path))))
+      ;; Avoid reusing names of already opened files and the files
+      ;; existing in the current directory.
+      (if exists?
+          (begin
+            (log! 'message (G_ "Skipping existing file ~S") filename)
+            %null-pointer)
 
-      (untitled_filename *window
-                         *toplevel
-                         (string->pointer cwd)
-                         (string->pointer filename)
-                         (string->pointer path)
-                         (if exists? TRUE FALSE))))
+          (string->pointer path))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
