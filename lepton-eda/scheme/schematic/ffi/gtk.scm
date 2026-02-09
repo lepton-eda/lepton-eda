@@ -103,6 +103,7 @@
             gtk_window_set_transient_for
             gtk_window_move
             gtk_window_present
+            gtk_window_resize
 
             ;; GDK
             GdkModifierType
@@ -198,6 +199,7 @@
 
 (define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
+(define-lff gtk_window_resize void (list '* int int))
 (define-lff gtk_window_set_default_icon_name void '(*))
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_get_size void '(* * *))

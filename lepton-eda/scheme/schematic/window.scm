@@ -97,6 +97,10 @@
   #:replace (close-page!))
 
 
+(define %default-window-width 800)
+(define %default-window-height 600)
+
+
 (define (process-key-event *page_view *event *window)
   (with-window *window
     (eval-press-key-event *event *page_view *window)))
@@ -165,9 +169,20 @@
       (when (and (> x 0) (> y 0))
         (gtk_window_move *main-window x y))))
 
-  (schematic_window_restore_geometry *window
-                                     *main-window
-                                     (if restore? TRUE FALSE)))
+  (let* ((stored-width
+          (if restore?
+              (config-int cache-config "schematic.window-geometry" "width")
+              -1))
+         (stored-height
+          (if restore?
+              (config-int cache-config "schematic.window-geometry" "height")
+              -1))
+         (positive-sizes? (and (> stored-width 0) (> stored-height 0)))
+         (width (if positive-sizes? stored-width %default-window-width))
+         (height (if positive-sizes? stored-height %default-window-height)))
+    (gtk_window_resize *main-window width height)
+
+    (schematic_window_restore_geometry *window *main-window height)))
 
 
 (define (close-window! window)

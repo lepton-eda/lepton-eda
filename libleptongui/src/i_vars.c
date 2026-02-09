@@ -66,9 +66,6 @@ gboolean default_draw_grips = TRUE;
 
 int   default_auto_save_interval = 120;
 
-int   default_width = 800;  /* these variables are used in x_window.c */
-int   default_height = 600;
-
 int default_mousepan_gain = 1;
 int default_keyboardpan_gain = 20;
 int default_select_slack_pixels = 10;

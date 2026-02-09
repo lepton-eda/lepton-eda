@@ -899,34 +899,13 @@ x_window_untitled_page (LeptonPage* page)
  *
  *  \param [in] w_current   The #SchematicWindow object.
  *  \param [in] main_window The main window widget of lepton-schematic.
- *  \param [in] restore Whether to restore the window geometry.
+ *  \param [in] height The height of the main window.
  */
 void
 schematic_window_restore_geometry (SchematicWindow *w_current,
                                    GtkWidget* main_window,
-                                   gboolean restore)
+                                   int height)
 {
-  gint width  = -1;
-  gint height = -1;
-
-  if (restore)
-  {
-    EdaConfig* ccfg = eda_config_get_cache_context();
-
-    width  = eda_config_get_int (ccfg, "schematic.window-geometry", "width",  NULL);
-    height = eda_config_get_int (ccfg, "schematic.window-geometry", "height", NULL);
-  }
-
-
-  if (width <= 0 || height <= 0)
-  {
-    width  = default_width;
-    height = default_height;
-  }
-
-  gtk_window_resize (GTK_WINDOW (main_window), width, height);
-
-
   if (x_widgets_use_docks())
   {
     GtkWidget *find_text_state =
