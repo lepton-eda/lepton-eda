@@ -907,9 +907,8 @@ tab notebook.  Returns a C TabInfo structure."
       (if exists?
           (begin
             (log! 'message (G_ "Skipping existing file ~S") filename)
-            %null-pointer)
-
-          (string->pointer path))))
+            #f)
+          path)))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -922,11 +921,9 @@ tab notebook.  Returns a C TabInfo structure."
          (*toplevel (schematic_window_get_toplevel *window)))
     ;; Determine default file name (without a number appended) for a
     ;; new page.
-    (let loop ((*filename
-                (next-filename *toplevel cwd default-filename)))
-      (if (null-pointer? *filename)
-          (loop (next-filename *toplevel cwd default-filename))
-          *filename))))
+    (let loop ((filename (next-filename *toplevel cwd default-filename)))
+      (or filename
+          (loop (next-filename *toplevel cwd default-filename))))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
@@ -941,15 +938,15 @@ tab notebook.  Returns a C TabInfo structure."
       (error "NULL toplevel."))
 
     ;; New page file name.
-    (let* ((*filename (untitled-filename *window))
+    (let* ((filename (untitled-filename *window))
            ;; Create a new page.
-           (*page (lepton_page_new *toplevel *filename)))
+           (*page (lepton_page_new *toplevel (string->pointer filename))))
 
       ;; Switch to the new page.
       (window-set-toplevel-page! (pointer->window *window)
                                  (pointer->page *page))
       (unless quiet-mode?
-        (log! 'message (G_ "New file ~S") (pointer->string *filename)))
+        (log! 'message (G_ "New file ~S") filename))
 
       ;; Run new page hook.
       (with-window *window
