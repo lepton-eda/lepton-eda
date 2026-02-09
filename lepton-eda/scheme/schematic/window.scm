@@ -887,6 +887,10 @@ tab notebook.  Returns a C TabInfo structure."
 ;;; names of already opened files and files existing in the current
 ;;; directory.  Such avoided names are reported to the log.
 (define (untitled-filename *window)
+  (define (filename-page-exists? *toplevel filename)
+    (not (null-pointer? (lepton_toplevel_search_page_by_basename
+                         *toplevel
+                         (string->pointer filename)))))
   (define (next-filename *toplevel cwd default-filename)
     ;; Build file name (default name + number appended).
     (let* ((filename
@@ -896,9 +900,7 @@ tab notebook.  Returns a C TabInfo structure."
                            ".sch"))
            ;; Build full path for file name.
            (path (string-append cwd file-name-separator-string filename))
-           (exists? (or (not (null-pointer? (lepton_toplevel_search_page_by_basename
-                                             *toplevel
-                                             (string->pointer filename))))
+           (exists? (or (filename-page-exists? *toplevel filename)
                         (file-exists? path))))
       ;; Avoid reusing names of already opened files and the files
       ;; existing in the current directory.
