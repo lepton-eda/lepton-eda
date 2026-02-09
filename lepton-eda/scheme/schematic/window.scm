@@ -886,12 +886,12 @@ tab notebook.  Returns a C TabInfo structure."
 ;;; working directory.  When constructing this name, avoid reusing the
 ;;; names of already opened files and files existing in the current
 ;;; directory.  Such avoided names are reported to the log.
-(define (untitled-filename *window)
-  (define (filename-page-exists? *toplevel filename)
+(define (untitled-filename *window *toplevel)
+  (define (filename-page-exists? filename)
     (not (null-pointer? (lepton_toplevel_search_page_by_basename
                          *toplevel
                          (string->pointer filename)))))
-  (define (next-filename *toplevel cwd default-filename)
+  (define (next-filename cwd default-filename)
     ;; Build file name (default name + number appended).
     (let* ((filename
             (string-append default-filename
@@ -900,7 +900,7 @@ tab notebook.  Returns a C TabInfo structure."
                            ".sch"))
            ;; Build full path for file name.
            (path (string-append cwd file-name-separator-string filename))
-           (exists? (or (filename-page-exists? *toplevel filename)
+           (exists? (or (filename-page-exists? filename)
                         (file-exists? path))))
       ;; Avoid reusing names of already opened files and the files
       ;; existing in the current directory.
@@ -917,13 +917,12 @@ tab notebook.  Returns a C TabInfo structure."
          (default-filename
            (config-string (path-config-context cwd)
                           "schematic"
-                          "default-filename"))
-         (*toplevel (schematic_window_get_toplevel *window)))
+                          "default-filename")))
     ;; Determine default file name (without a number appended) for a
     ;; new page.
-    (let loop ((filename (next-filename *toplevel cwd default-filename)))
+    (let loop ((filename (next-filename cwd default-filename)))
       (or filename
-          (loop (next-filename *toplevel cwd default-filename))))))
+          (loop (next-filename cwd default-filename))))))
 
 
 ;;; Creates and returns a new untitled page in *WINDOW.
@@ -938,7 +937,7 @@ tab notebook.  Returns a C TabInfo structure."
       (error "NULL toplevel."))
 
     ;; New page file name.
-    (let* ((filename (untitled-filename *window))
+    (let* ((filename (untitled-filename *window *toplevel))
            ;; Create a new page.
            (*page (lepton_page_new *toplevel (string->pointer filename))))
 
