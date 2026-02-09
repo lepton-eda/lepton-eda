@@ -890,13 +890,18 @@ tab notebook.  Returns a C TabInfo structure."
                            (number->string (untitled_next_index *window))
                            ".sch"))
            ;; Build full path for file name.
-           (path (string-append cwd file-name-separator-string filename)))
+           (path (string-append cwd file-name-separator-string filename))
+           (exists? (or (true? (lepton_toplevel_search_page_by_basename
+                                *toplevel
+                                (string->pointer filename)))
+                        (file-exists? path))))
 
       (untitled_filename *window
                          *toplevel
                          (string->pointer cwd)
                          (string->pointer filename)
-                         (string->pointer path))))
+                         (string->pointer path)
+                         (if exists? TRUE FALSE))))
 
   (when (null-pointer? *window)
     (error "NULL window."))

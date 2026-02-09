@@ -780,6 +780,8 @@ untitled_next_index (SchematicWindow* w_current)
  *  \param  cwd The current working directory.
  *  \param  fname The basename of a new page.
  *  \param  fpath The absolute filename for \p fname.
+ *  \param  exists Whether the page or file with the filename
+                   \p fname exists.
  *  \return             Newly-allocated untitled file path.
  */
 gchar*
@@ -787,13 +789,13 @@ untitled_filename (SchematicWindow* w_current,
                    LeptonToplevel *toplevel,
                    char *cwd,
                    char *fname,
-                   char *fpath)
+                   char *fpath,
+                   gboolean exists)
 {
     /* Avoid reusing names of already opened files:
     *  Avoid reusing names of existing files in current directory:
     */
-    if ( lepton_toplevel_search_page_by_basename (toplevel, fname) ||
-         g_file_test (fpath, G_FILE_TEST_EXISTS) )
+    if (exists)
     {
       g_message (_("Skipping existing file [%s]"), fname);
 
