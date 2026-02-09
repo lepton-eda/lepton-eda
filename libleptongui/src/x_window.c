@@ -888,36 +888,6 @@ x_window_untitled_page (LeptonPage* page)
 
 
 
-/*! \brief Save main window's geometry to the CACHE config context.
- *
- *  \param w_current The toplevel environment.
- */
-void
-schematic_window_save_geometry (SchematicWindow* w_current)
-{
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
-
-  gint x = 0;
-  gint y = 0;
-  gtk_window_get_position (GTK_WINDOW (main_window), &x, &y);
-
-  gint width = 0;
-  gint height = 0;
-  gtk_window_get_size (GTK_WINDOW (main_window), &width, &height);
-
-  EdaConfig* cfg = eda_config_get_cache_context();
-
-  eda_config_set_int (cfg, "schematic.window-geometry", "x", x);
-  eda_config_set_int (cfg, "schematic.window-geometry", "y", y);
-  eda_config_set_int (cfg, "schematic.window-geometry", "width", width);
-  eda_config_set_int (cfg, "schematic.window-geometry", "height", height);
-
-  eda_config_save (cfg, NULL);
-}
-
-
-
 /*! \brief Restore main window's geometry.
  *
  *  \par Function Description

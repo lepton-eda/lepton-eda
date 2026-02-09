@@ -124,7 +124,33 @@
 
 ;;; Save main window's geometry to the cache config context.
 (define (save-geometry *window)
-  (schematic_window_save_geometry *window))
+  (define *main-window (schematic_window_get_main_window *window))
+  (define (get-int bv)
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
+  (define x-bv (make-bytevector (sizeof int) 0))
+  (define y-bv (make-bytevector (sizeof int) 0))
+  (define width-bv (make-bytevector (sizeof int) 0))
+  (define height-bv (make-bytevector (sizeof int) 0))
+
+  (gtk_window_get_position *main-window
+                           (bytevector->pointer x-bv)
+                           (bytevector->pointer y-bv))
+
+  (gtk_window_get_size *main-window
+                       (bytevector->pointer width-bv)
+                       (bytevector->pointer height-bv))
+
+  (let ((config (cache-config-context))
+        (x (get-int x-bv))
+        (y (get-int y-bv))
+        (width (get-int width-bv))
+        (height (get-int height-bv)))
+    (set-config! config "schematic.window-geometry" "x" x)
+    (set-config! config "schematic.window-geometry" "y" y)
+    (set-config! config "schematic.window-geometry" "width" width)
+    (set-config! config "schematic.window-geometry" "height" height)
+
+    (config-save! config)))
 
 
 (define (close-window! window)

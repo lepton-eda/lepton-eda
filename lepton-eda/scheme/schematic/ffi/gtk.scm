@@ -98,6 +98,8 @@
             gtk_widget_show_all
 
             gtk_window_set_default_icon_name
+            gtk_window_get_position
+            gtk_window_get_size
             gtk_window_set_transient_for
             gtk_window_present
 
@@ -195,6 +197,8 @@
 
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))
+(define-lff gtk_window_get_position void '(* * *))
+(define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_set_transient_for void '(* *))
 
 ;;; gdk_event_get_button() can only be used for GTK3.
