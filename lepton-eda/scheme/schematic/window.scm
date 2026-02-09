@@ -122,6 +122,11 @@
                   (schematic_window_get_slot_edit_widget *window))))
 
 
+;;; Save main window's geometry to the cache config context.
+(define (save-geometry *window)
+  (schematic_window_save_geometry *window))
+
+
 (define (close-window! window)
   "Closes WINDOW."
   (define *window (window->pointer window))
@@ -148,7 +153,7 @@
     ;; to be done before freeing its memory.
     (when last-window?
       ;; Save window geometry.
-      (schematic_window_save_geometry *window)
+      (save-geometry *window)
       ;; Close the log file.
       (s_log_close)
       ;; Free the buffers.
