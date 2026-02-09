@@ -913,14 +913,6 @@ schematic_window_restore_geometry (SchematicWindow *w_current,
   {
     EdaConfig* ccfg = eda_config_get_cache_context();
 
-    gint x = eda_config_get_int (ccfg, "schematic.window-geometry", "x", NULL);
-    gint y = eda_config_get_int (ccfg, "schematic.window-geometry", "y", NULL);
-
-    if (x > 0 && y > 0)
-    {
-      gtk_window_move (GTK_WINDOW (main_window), x, y);
-    }
-
     width  = eda_config_get_int (ccfg, "schematic.window-geometry", "width",  NULL);
     height = eda_config_get_int (ccfg, "schematic.window-geometry", "height", NULL);
   }

@@ -101,6 +101,7 @@
             gtk_window_get_position
             gtk_window_get_size
             gtk_window_set_transient_for
+            gtk_window_move
             gtk_window_present
 
             ;; GDK
@@ -195,6 +196,7 @@
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))
 
+(define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_set_default_icon_name void '(*))
 (define-lff gtk_window_get_position void '(* * *))

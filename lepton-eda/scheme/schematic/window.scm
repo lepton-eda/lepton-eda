@@ -157,6 +157,13 @@
   (define restore? (config-boolean (path-config-context (getcwd))
                                    "schematic.gui"
                                    "restore-window-geometry"))
+  (define cache-config (cache-config-context))
+
+  (when restore?
+    (let ((x (config-int cache-config "schematic.window-geometry" "x"))
+          (y (config-int cache-config "schematic.window-geometry" "y")))
+      (when (and (> x 0) (> y 0))
+        (gtk_window_move *main-window x y))))
 
   (schematic_window_restore_geometry *window
                                      *main-window
