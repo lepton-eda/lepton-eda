@@ -1147,7 +1147,8 @@ schematic_window_create_statusbar (SchematicWindow *w_current,
                                    GtkWidget *main_box);
 void
 schematic_window_restore_geometry (SchematicWindow* w_current,
-                                   GtkWidget* main_window);
+                                   GtkWidget* main_window,
+                                   gboolean restore);
 void
 recent_manager_add (SchematicWindow *w_current,
                     const gchar *filename);

@@ -154,7 +154,13 @@
 
 
 (define (restore-geometry *window *main-window)
-  (schematic_window_restore_geometry *window *main-window))
+  (define restore? (config-boolean (path-config-context (getcwd))
+                                   "schematic.gui"
+                                   "restore-window-geometry"))
+
+  (schematic_window_restore_geometry *window
+                                     *main-window
+                                     (if restore? TRUE FALSE)))
 
 
 (define (close-window! window)

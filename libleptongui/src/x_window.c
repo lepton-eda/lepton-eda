@@ -899,29 +899,13 @@ x_window_untitled_page (LeptonPage* page)
  *
  *  \param [in] w_current   The #SchematicWindow object.
  *  \param [in] main_window The main window widget of lepton-schematic.
+ *  \param [in] restore Whether to restore the window geometry.
  */
 void
 schematic_window_restore_geometry (SchematicWindow *w_current,
-                                   GtkWidget* main_window)
+                                   GtkWidget* main_window,
+                                   gboolean restore)
 {
-  gchar* cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  gboolean restore = TRUE; /* by default, restore geometry */
-  GError*  err = NULL;
-  gboolean val = eda_config_get_boolean (cfg,
-                                         "schematic.gui",
-                                         "restore-window-geometry",
-                                         &err);
-  if (err == NULL)
-  {
-    restore = val;
-  }
-
-  g_clear_error (&err);
-
-
   gint width  = -1;
   gint height = -1;
 
