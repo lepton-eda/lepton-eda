@@ -1168,8 +1168,6 @@ x_window_setup_scrolling (SchematicWindow *w_current,
 gboolean
 x_window_untitled_page (LeptonPage* page);
 
-int
-untitled_next_index (SchematicWindow* w_current);
 
 /* x_widgets.c */
 gboolean

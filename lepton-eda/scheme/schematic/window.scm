@@ -896,12 +896,19 @@ tab notebook.  Returns a C TabInfo structure."
     (not (null-pointer? (lepton_toplevel_search_page_by_basename
                          *toplevel
                          (string->pointer filename)))))
+
+  ;; Get the next number for an untitled file name.
+  (define (next-untitled-id)
+    (let ((next-id (1+ (schematic_window_get_num_untitled *window))))
+      (schematic_window_set_num_untitled *window next-id)
+      next-id))
+
   (define (next-filename)
     ;; Build file name (default name + number appended).
     (let* ((filename
             (string-append default-filename
                            "_"
-                           (number->string (untitled_next_index *window))
+                           (number->string (next-untitled-id))
                            ".sch"))
            ;; Build full path for file name.
            (path (string-append cwd file-name-separator-string filename))

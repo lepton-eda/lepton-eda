@@ -756,18 +756,6 @@ recent_manager_add (SchematicWindow* w_current,
 
 
 
-/*! \brief Get next number to be part of the untitled file name.
- */
-int
-untitled_next_index (SchematicWindow* w_current)
-{
-  int num = schematic_window_get_num_untitled (w_current);
-  schematic_window_set_num_untitled (w_current, ++num);
-  return num;
-}
-
-
-
 /*! \brief Determine if a given \a page is "untitled" one.
  *  \par Function Description
  *
