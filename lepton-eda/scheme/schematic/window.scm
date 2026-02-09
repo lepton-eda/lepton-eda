@@ -157,6 +157,11 @@
     (config-save! config)))
 
 
+;;; Restore the previous geometry of the main window if the value of
+;;; the key 'restore-window-geometry' in the 'schematic.gui'
+;;; configuration group is set to 'true'.  The geometry to restore is
+;;; read from the cache config context.  Unless valid configuration
+;;; values are read, the default width and height are used.
 (define (restore-geometry *window *main-window)
   (define restore? (config-boolean (path-config-context (getcwd))
                                    "schematic.gui"
@@ -182,7 +187,12 @@
          (height (if positive-sizes? stored-height %default-window-height)))
     (gtk_window_resize *main-window width height)
 
-    (schematic_window_restore_geometry *window *main-window height)))
+    (when (true? (x_widgets_use_docks))
+      (let ((*find_text_state
+             (schematic_window_get_find_text_state_widget *window)))
+        (gtk_widget_set_size_request *find_text_state
+                                     -1
+                                     (centered-quotient height 4))))))
 
 
 (define (close-window! window)

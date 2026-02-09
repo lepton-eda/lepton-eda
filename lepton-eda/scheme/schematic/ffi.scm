@@ -319,7 +319,6 @@
             schematic_window_create_notebooks
             schematic_window_create_statusbar
             schematic_window_pack_widget
-            schematic_window_restore_geometry
             schematic_window_get_main_window
             schematic_window_set_main_window
             schematic_window_get_pages
@@ -1002,7 +1001,6 @@
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
 (define-lff schematic_window_pack_widget void '(* *))
-(define-lff schematic_window_restore_geometry void (list '* '* int))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_get_pages '* '(*))

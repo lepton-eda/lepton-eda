@@ -885,31 +885,3 @@ x_window_untitled_page (LeptonPage* page)
   return named_like_untitled && !file_exists;
 
 } /* untitled_page() */
-
-
-
-/*! \brief Restore main window's geometry.
- *
- *  \par Function Description
- *  If [schematic.gui]\::restore-window-geometry configuration key is
- *  set to true, read main window's geometry from the CACHE config
- *  context and restore it.
- *  Unless valid configuration values are read, use default width
- *  and height.
- *
- *  \param [in] w_current   The #SchematicWindow object.
- *  \param [in] main_window The main window widget of lepton-schematic.
- *  \param [in] height The height of the main window.
- */
-void
-schematic_window_restore_geometry (SchematicWindow *w_current,
-                                   GtkWidget* main_window,
-                                   int height)
-{
-  if (x_widgets_use_docks())
-  {
-    GtkWidget *find_text_state =
-      schematic_window_get_find_text_state_widget (w_current);
-    gtk_widget_set_size_request (find_text_state, -1, height / 4);
-  }
-}
