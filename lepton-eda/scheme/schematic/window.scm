@@ -153,6 +153,10 @@
     (config-save! config)))
 
 
+(define (restore-geometry *window *main-window)
+  (schematic_window_restore_geometry *window *main-window))
+
+
 (define (close-window! window)
   "Closes WINDOW."
   (define *window (window->pointer window))
@@ -1947,7 +1951,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup statusbar.
       (schematic_window_create_statusbar *window *main-box)
 
-      (schematic_window_restore_geometry *window *main-window)
+      (restore-geometry *window *main-window)
 
       (show-main-window *window *main-window)
       ;; Returns *window.
