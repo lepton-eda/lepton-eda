@@ -1146,13 +1146,6 @@ void
 open_page_error_dialog (SchematicWindow *w_current,
                         const gchar *filename,
                         char *error_message);
-gchar*
-untitled_filename (SchematicWindow *w_current,
-                   LeptonToplevel *toplevel,
-                   char *cwd,
-                   char *fname,
-                   char *fpath,
-                   gboolean exists);
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
