@@ -647,6 +647,7 @@
             x_fileselect_save
             *x_fileselect_callback_update_preview
             schematic_file_open
+            schematic_file_select_dialog_save_as
 
             x_image_setup
 
@@ -1336,9 +1337,10 @@
 (define-lff schematic_file_select_dialog_new '* '(*))
 (define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
-(define-lff x_fileselect_save int '(* * * *))
+(define-lff x_fileselect_save int '(* * * * *))
 (define-lfc *x_fileselect_callback_update_preview)
 (define-lff schematic_file_open int '(* * * *))
+(define-lff schematic_file_select_dialog_save_as '* '(*))
 
 ;;; x_image.c
 (define-lff x_image_setup void '(*))

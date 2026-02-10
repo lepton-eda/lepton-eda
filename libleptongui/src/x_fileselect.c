@@ -440,22 +440,21 @@ schematic_file_select_dialog_save_as (GtkWindow *parent)
  *  \param  [in,out] result    If not NULL, will be filled with save operation result.
  *  \param [in] main_window The main_window widget of the
  *                          schematic window.
+ *  \param  [in] dialog The 'Save as' dialog widget to set up.
  *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
 gboolean
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
-                   GtkWidget *main_window)
+                   GtkWidget *main_window,
+                   GtkWidget *dialog)
 {
   gboolean ret = FALSE;
   if (result != NULL)
   {
     *result = FALSE;
   }
-
-  GtkWidget *dialog =
-    schematic_file_select_dialog_save_as (GTK_WINDOW (main_window));
 
   /* add file filters to dialog:
   */

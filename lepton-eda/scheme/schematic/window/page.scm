@@ -45,8 +45,10 @@
   (when (null-pointer? *page)
     (error "NULL page."))
 
-  (let ((*main-window (schematic_window_get_main_window *window)))
-    (x_fileselect_save *window *page *result *main-window)))
+  (let* ((*main-window (schematic_window_get_main_window *window))
+         (*dialog
+          (schematic_file_select_dialog_save_as *main-window)))
+    (x_fileselect_save *window *page *result *main-window *dialog)))
 
 
 (define (window-save-active-page! window)
