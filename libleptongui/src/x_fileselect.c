@@ -45,6 +45,33 @@ add_filter (GtkFileChooser* filechooser,
             GtkFileFilterFunc pfn);
 
 
+GtkFileFilter*
+schematic_file_select_dialog_get_filter_sch ()
+{
+  return filter_sch;
+}
+
+
+GtkFileFilter*
+schematic_file_select_dialog_get_filter_sym ()
+{
+  return filter_sym;
+}
+
+
+GtkFileFilter*
+schematic_file_select_dialog_get_filter_sch_sym ()
+{
+  return filter_sch_sym;
+}
+
+
+GtkFileFilter*
+schematic_file_select_dialog_get_filter_all ()
+{
+  return filter_all;
+}
+
 
 gboolean
 schematic_file_select_dialog_filename_sym (const gchar* fname)
