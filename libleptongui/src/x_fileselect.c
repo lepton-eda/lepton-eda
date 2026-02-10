@@ -104,8 +104,8 @@ filter_func_all(const GtkFileFilterInfo* info, gpointer data)
  *
  *  \param [in] filechooser The file chooser to add filter to.
  */
-static void
-setup_filters (GtkFileChooser *filechooser)
+void
+schematic_file_select_dialog_setup_filters (GtkFileChooser *filechooser)
 {
   add_filter (filechooser, &filter_sch,
               _("Schematics (*.sch)"), &filter_func_sch);
@@ -369,7 +369,7 @@ x_fileselect_open (SchematicWindow *w_current,
                 NULL);
 
   /* add file filters to dialog */
-  setup_filters (GTK_FILE_CHOOSER (dialog));
+  schematic_file_select_dialog_setup_filters (GTK_FILE_CHOOSER (dialog));
   /* restore last filter: */
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_last_opendlg);
 
@@ -458,7 +458,7 @@ x_fileselect_save (SchematicWindow *w_current,
 
   /* add file filters to dialog:
   */
-  setup_filters (GTK_FILE_CHOOSER (dialog));
+  schematic_file_select_dialog_setup_filters (GTK_FILE_CHOOSER (dialog));
   const gchar* fname = lepton_page_get_filename (page);
 
   if (filename_sch (fname))
