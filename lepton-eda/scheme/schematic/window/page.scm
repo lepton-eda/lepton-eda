@@ -20,6 +20,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
@@ -78,6 +79,12 @@
            *dialog
            (string->pointer
             (basename (pointer->string *page-filename))))))
+
+    ;; Add handler for dialog's "filter" property change notification.
+    (g_signal_connect *dialog
+                      (string->pointer "notify::filter")
+                      *schematic_file_select_dialog_filter_changed
+                      %null-pointer)
 
     (x_fileselect_save *window
                        *page

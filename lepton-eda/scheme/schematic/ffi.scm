@@ -645,6 +645,7 @@
             schematic_file_select_dialog_setup_filters
             schematic_file_select_dialog_filename_sch
             schematic_file_select_dialog_filename_sym
+            *schematic_file_select_dialog_filter_changed
             schematic_file_select_dialog_get_filter_sch
             schematic_file_select_dialog_get_filter_sch_sym
             schematic_file_select_dialog_get_filter_sym
@@ -1345,6 +1346,7 @@
 (define-lff schematic_file_select_dialog_setup_filters void '(*))
 (define-lff schematic_file_select_dialog_filename_sch int '(*))
 (define-lff schematic_file_select_dialog_filename_sym int '(*))
+(define-lfc *schematic_file_select_dialog_filter_changed)
 (define-lff schematic_file_select_dialog_get_filter_sch '* '())
 (define-lff schematic_file_select_dialog_get_filter_sch_sym '* '())
 (define-lff schematic_file_select_dialog_get_filter_sym '* '())

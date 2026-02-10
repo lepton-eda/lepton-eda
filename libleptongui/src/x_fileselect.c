@@ -490,14 +490,6 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  /* add handler for dialog's "filter" property change notification:
-  */
-  g_signal_connect (dialog,
-                    "notify::filter",
-                    G_CALLBACK (&schematic_file_select_dialog_filter_changed),
-                    NULL);
-
-
   /*
    * Open "Save As.." dialog:
   */
