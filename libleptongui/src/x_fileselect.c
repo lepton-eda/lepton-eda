@@ -456,9 +456,6 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  /* add file filters to dialog:
-  */
-  schematic_file_select_dialog_setup_filters (GTK_FILE_CHOOSER (dialog));
   const gchar* fname = lepton_page_get_filename (page);
 
   if (filename_sch (fname))

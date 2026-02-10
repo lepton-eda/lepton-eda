@@ -48,6 +48,9 @@
   (let* ((*main-window (schematic_window_get_main_window *window))
          (*dialog
           (schematic_file_select_dialog_save_as *main-window)))
+    ;; Add file filters to the dialog.
+    (schematic_file_select_dialog_setup_filters *dialog)
+
     (x_fileselect_save *window *page *result *main-window *dialog)))
 
 
