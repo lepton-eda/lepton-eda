@@ -950,6 +950,9 @@ schematic_file_select_dialog_filename_sym (const gchar* fname);
 gboolean
 schematic_file_select_dialog_filename_sch (const gchar* fname);
 
+void
+schematic_file_select_dialog_filter_changed (GtkFileChooserDialog* dialog,
+                                             gpointer data);
 GtkFileFilter*
 schematic_file_select_dialog_get_filter_sch ();
 

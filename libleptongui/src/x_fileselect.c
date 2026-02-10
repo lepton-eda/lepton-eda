@@ -210,8 +210,9 @@ basename_switch_suffix (const gchar* path, const gchar* suffix)
  *  Change filename's extension (.sch or .sym) in the "Save As"
  *  dialog according to the currently selected filter.
  */
-static void
-on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
+void
+schematic_file_select_dialog_filter_changed (GtkFileChooserDialog* dialog,
+                                             gpointer data)
 {
   GtkFileChooser* chooser = GTK_FILE_CHOOSER (dialog);
   GtkFileFilter*  filter  = gtk_file_chooser_get_filter (chooser);
@@ -245,7 +246,7 @@ on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
     g_free (bname);
   }
 
-} /* on_filter_changed() */
+} /* schematic_file_select_dialog_filter_changed() */
 
 
 
@@ -493,7 +494,7 @@ x_fileselect_save (SchematicWindow *w_current,
   */
   g_signal_connect (dialog,
                     "notify::filter",
-                    G_CALLBACK (&on_filter_changed),
+                    G_CALLBACK (&schematic_file_select_dialog_filter_changed),
                     NULL);
 
 
