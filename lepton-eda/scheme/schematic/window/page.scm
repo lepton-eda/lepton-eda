@@ -23,6 +23,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -51,6 +52,16 @@
          (*page-filename (lepton_page_get_filename *page)))
     ;; Add file filters to the dialog.
     (schematic_file_select_dialog_setup_filters *dialog)
+
+    (if (true? (schematic_file_select_dialog_filename_sch *page-filename))
+        (gtk_file_chooser_set_filter *dialog
+                                     (schematic_file_select_dialog_get_filter_sch))
+
+        (if (true? (schematic_file_select_dialog_filename_sym *page-filename))
+            (gtk_file_chooser_set_filter *dialog
+                                         (schematic_file_select_dialog_get_filter_sym))
+            (gtk_file_chooser_set_filter *dialog
+                                         (schematic_file_select_dialog_get_filter_all))))
 
     (x_fileselect_save *window
                        *page

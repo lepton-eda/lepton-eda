@@ -645,6 +645,10 @@
             schematic_file_select_dialog_setup_filters
             schematic_file_select_dialog_filename_sch
             schematic_file_select_dialog_filename_sym
+            schematic_file_select_dialog_get_filter_sch
+            schematic_file_select_dialog_get_filter_sch_sym
+            schematic_file_select_dialog_get_filter_sym
+            schematic_file_select_dialog_get_filter_all
             x_fileselect_add_preview
             x_fileselect_open
             x_fileselect_save
@@ -1341,6 +1345,10 @@
 (define-lff schematic_file_select_dialog_setup_filters void '(*))
 (define-lff schematic_file_select_dialog_filename_sch int '(*))
 (define-lff schematic_file_select_dialog_filename_sym int '(*))
+(define-lff schematic_file_select_dialog_get_filter_sch '* '())
+(define-lff schematic_file_select_dialog_get_filter_sch_sym '* '())
+(define-lff schematic_file_select_dialog_get_filter_sym '* '())
+(define-lff schematic_file_select_dialog_get_filter_all '* '())
 (define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
 (define-lff x_fileselect_save int '(* * * * * *))

@@ -489,23 +489,6 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  if (schematic_file_select_dialog_filename_sch (fname))
-  {
-    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog),
-                                 schematic_file_select_dialog_get_filter_sch ());
-  }
-  else
-  if (schematic_file_select_dialog_filename_sym (fname))
-  {
-    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog),
-                                 schematic_file_select_dialog_get_filter_sym ());
-  }
-  else
-  {
-    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog),
-                                 schematic_file_select_dialog_get_filter_all ());
-  }
-
   /* set the current filename or directory name if new document:
   */
   if (g_file_test (fname, G_FILE_TEST_EXISTS))
