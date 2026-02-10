@@ -63,6 +63,22 @@
             (gtk_file_chooser_set_filter *dialog
                                          (schematic_file_select_dialog_get_filter_all))))
 
+    ;; Set the current filename or directory name for new documents.
+    (if (file-exists? (pointer->string *page-filename))
+        (gtk_file_chooser_set_filename *dialog *page-filename)
+
+        (begin
+          ;; Force save in the current working directory.
+          (gtk_file_chooser_set_current_folder
+           *dialog
+           (string->pointer (getcwd)))
+
+          ;; Set page file's basename as the current filename.
+          (gtk_file_chooser_set_current_name
+           *dialog
+           (string->pointer
+            (basename (pointer->string *page-filename))))))
+
     (x_fileselect_save *window
                        *page
                        *result

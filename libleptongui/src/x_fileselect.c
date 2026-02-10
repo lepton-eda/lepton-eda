@@ -489,29 +489,6 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  /* set the current filename or directory name if new document:
-  */
-  if (g_file_test (fname, G_FILE_TEST_EXISTS))
-  {
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), fname);
-  }
-  else
-  {
-    gchar *cwd = g_get_current_dir ();
-
-    /* force save in current working dir:
-    */
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
-    g_free (cwd);
-
-    /* set page file's basename as the current filename:
-    */
-    gchar* bname = g_path_get_basename (fname);
-    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
-    g_free (bname);
-  }
-
-
   /* add handler for dialog's "filter" property change notification:
   */
   g_signal_connect (dialog,
