@@ -58,8 +58,8 @@ filename_sym (const gchar* fname)
 
 
 
-static gboolean
-filename_sch (const gchar* fname)
+gboolean
+schematic_file_select_dialog_filename_sch (const gchar* fname)
 {
   gchar* str = g_utf8_strdown (fname, -1);
   gboolean res = g_str_has_suffix (str, ".sch");
@@ -73,7 +73,7 @@ filename_sch (const gchar* fname)
 static gboolean
 filter_func_sch(const GtkFileFilterInfo* info, gpointer data)
 {
-  return filename_sch (info->filename);
+  return schematic_file_select_dialog_filename_sch (info->filename);
 }
 
 static gboolean
@@ -85,7 +85,9 @@ filter_func_sym(const GtkFileFilterInfo* info, gpointer data)
 static gboolean
 filter_func_sch_sym(const GtkFileFilterInfo* info, gpointer data)
 {
-  return filename_sch (info->filename) || filename_sym (info->filename);
+  return
+    schematic_file_select_dialog_filename_sch (info->filename)
+    || filename_sym (info->filename);
 }
 
 static gboolean
@@ -201,7 +203,8 @@ on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
     bname = basename_switch_suffix (fname, "sch");
   }
   else
-  if (filter == filter_sym && filename_sch (fname))
+  if (filter == filter_sym &&
+      schematic_file_select_dialog_filename_sch (fname))
   {
     bname = basename_switch_suffix (fname, "sym");
   }
@@ -458,7 +461,7 @@ x_fileselect_save (SchematicWindow *w_current,
     *result = FALSE;
   }
 
-  if (filename_sch (fname))
+  if (schematic_file_select_dialog_filename_sch (fname))
   {
     gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_sch);
   }
