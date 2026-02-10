@@ -47,11 +47,17 @@
 
   (let* ((*main-window (schematic_window_get_main_window *window))
          (*dialog
-          (schematic_file_select_dialog_save_as *main-window)))
+          (schematic_file_select_dialog_save_as *main-window))
+         (*page-filename (lepton_page_get_filename *page)))
     ;; Add file filters to the dialog.
     (schematic_file_select_dialog_setup_filters *dialog)
 
-    (x_fileselect_save *window *page *result *main-window *dialog)))
+    (x_fileselect_save *window
+                       *page
+                       *result
+                       *main-window
+                       *dialog
+                       *page-filename)))
 
 
 (define (window-save-active-page! window)

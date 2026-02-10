@@ -441,6 +441,7 @@ schematic_file_select_dialog_save_as (GtkWindow *parent)
  *  \param [in] main_window The main_window widget of the
  *                          schematic window.
  *  \param  [in] dialog The 'Save as' dialog widget to set up.
+ *  \param [in] fname The page filename.
  *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
 gboolean
@@ -448,15 +449,14 @@ x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
                    GtkWidget *main_window,
-                   GtkWidget *dialog)
+                   GtkWidget *dialog,
+                   gchar *fname)
 {
   gboolean ret = FALSE;
   if (result != NULL)
   {
     *result = FALSE;
   }
-
-  const gchar* fname = lepton_page_get_filename (page);
 
   if (filename_sch (fname))
   {

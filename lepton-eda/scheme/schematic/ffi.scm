@@ -1339,7 +1339,7 @@
 (define-lff schematic_file_select_dialog_setup_filters void '(*))
 (define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
-(define-lff x_fileselect_save int '(* * * * *))
+(define-lff x_fileselect_save int '(* * * * * *))
 (define-lfc *x_fileselect_callback_update_preview)
 (define-lff schematic_file_open int '(* * * *))
 (define-lff schematic_file_select_dialog_save_as '* '(*))
