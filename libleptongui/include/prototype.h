@@ -945,6 +945,9 @@ void
 schematic_file_select_dialog_setup_filters (GtkFileChooser *filechooser);
 
 gboolean
+schematic_file_select_dialog_filename_sym (const gchar* fname);
+
+gboolean
 schematic_file_select_dialog_filename_sch (const gchar* fname);
 
 GtkWidget*
