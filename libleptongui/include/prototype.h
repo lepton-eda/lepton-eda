@@ -966,6 +966,9 @@ GtkFileFilter*
 schematic_file_select_dialog_get_filter_all ();
 
 GtkWidget*
+schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
+                                             char *filename);
+GtkWidget*
 schematic_file_select_dialog_save_as (GtkWindow *parent);
 
 void

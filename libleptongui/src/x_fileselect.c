@@ -455,6 +455,27 @@ schematic_file_select_dialog_save_as (GtkWindow *parent)
 }
 
 
+GtkWidget*
+schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
+                                             char *filename)
+{
+  GtkWidget *dialog =
+    gtk_message_dialog_new (GTK_WINDOW (parent),
+                            (GtkDialogFlags) (GTK_DIALOG_MODAL |
+                                              GTK_DIALOG_DESTROY_WITH_PARENT),
+                            GTK_MESSAGE_QUESTION,
+                            GTK_BUTTONS_YES_NO,
+                            _("The selected file `%1$s' already exists.\n\n"
+                              "Would you like to overwrite it?"),
+                            filename);
+
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Overwrite file?"));
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
+
+  return dialog;
+}
+
+
 /*! \brief Opens a file chooser for saving the current page.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
@@ -505,17 +526,7 @@ x_fileselect_save (SchematicWindow *w_current,
     if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS))
     {
       GtkWidget *checkdialog =
-        gtk_message_dialog_new (GTK_WINDOW(dialog),
-                                (GtkDialogFlags) (GTK_DIALOG_MODAL |
-                                                  GTK_DIALOG_DESTROY_WITH_PARENT),
-                                GTK_MESSAGE_QUESTION,
-                                GTK_BUTTONS_YES_NO,
-                                _("The selected file `%1$s' already exists.\n\n"
-                                  "Would you like to overwrite it?"),
-                                filename);
-
-      gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));
-      gtk_dialog_set_default_response (GTK_DIALOG (checkdialog), GTK_RESPONSE_NO);
+        schematic_file_select_dialog_overwrite_file (dialog, filename);
 
       if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES)
       {
