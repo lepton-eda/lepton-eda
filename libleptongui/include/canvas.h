@@ -178,8 +178,6 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
 void
 schematic_canvas_zoom_object (SchematicCanvas *view,
                               LeptonObject *object);
-void
-schematic_canvas_grab_focus (SchematicCanvas *page_view);
 
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy

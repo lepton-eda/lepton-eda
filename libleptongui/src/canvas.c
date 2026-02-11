@@ -1744,16 +1744,3 @@ geometry_cache_finalize (SchematicCanvas *view)
   g_hash_table_destroy (view->_geometry_cache);
   view->_geometry_cache = NULL;
 }
-
-
-/*! \brief Focuses page view.
- *
- *  \param  [in] page_view The page view.
- */
-void
-schematic_canvas_grab_focus (SchematicCanvas *page_view)
-{
-  g_return_if_fail (page_view != NULL);
-
-  gtk_widget_grab_focus (GTK_WIDGET (page_view));
-}
