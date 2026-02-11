@@ -180,8 +180,8 @@ schematic_canvas_zoom_object (SchematicCanvas *view,
                               LeptonObject *object);
 
 GtkWidget*
-schematic_canvas_setup_drawing_area (SchematicCanvas *view,
-                                     GtkWidget *scrolled);
+schematic_canvas_setup_drawing_area (SchematicCanvas *view);
+
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy
 schematic_canvas_get_hscroll_policy (SchematicCanvas *view);
