@@ -1708,6 +1708,7 @@ for *PAGE page will be created and set active."
 
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
+;;; The page of the canvas is set to the active page of the window.
 (define (make-canvas *window *work-box)
   (when (null-pointer? *window)
     (error "NULL window."))
