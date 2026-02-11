@@ -427,7 +427,6 @@
             schematic_canvas_redraw
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_zoom_extents
-            schematic_canvas_grab_focus
             schematic_canvas_zoom_object
 
             schematic_preview_new
@@ -805,7 +804,6 @@
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_zoom_extents void '(* *))
-(define-lff schematic_canvas_grab_focus void '(*))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
 ;;; preview_widget.c

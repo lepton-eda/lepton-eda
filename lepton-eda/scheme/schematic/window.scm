@@ -267,7 +267,7 @@
 
 
 (define (grab-focus *tab-info)
-  (schematic_canvas_grab_focus
+  (gtk_widget_grab_focus
    (schematic_tab_info_get_canvas *tab-info)))
 
 
@@ -532,7 +532,7 @@ zooming."
         FALSE))
 
   (define (process-event *canvas *event *window)
-    (schematic_canvas_grab_focus *canvas)
+    (gtk_widget_grab_focus *canvas)
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
