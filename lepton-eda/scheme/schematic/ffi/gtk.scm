@@ -92,6 +92,7 @@
             gtk_widget_destroy
             gtk_widget_grab_focus
             gtk_widget_hide
+            gtk_widget_set_can_focus
             gtk_widget_set_sensitive
             gtk_widget_set_visible
             gtk_widget_show
@@ -188,6 +189,7 @@
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
+(define-lff gtk_widget_set_can_focus void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))

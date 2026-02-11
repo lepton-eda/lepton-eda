@@ -1701,14 +1701,22 @@ for *PAGE page will be created and set active."
 
 
 ;;; Creates and returns a schematic drawing area widget as known as
-;;; canvas.  Adds it to the scrolled container *SCROLLED and
-;;; associates it with *PAGE.
+;;; canvas.  Associates it with *PAGE, adds it to the scrolled
+;;; container *SCROLLED, focuses, and shows.
 (define (make-drawing-area *scrolled *page)
   (when (null-pointer? *scrolled)
     (error "NULL scrolled widget."))
 
-  (schematic_canvas_setup_drawing_area (schematic_canvas_new_with_page *page)
-                                       *scrolled))
+  (let ((*drawing-area
+         (schematic_canvas_setup_drawing_area
+          (schematic_canvas_new_with_page *page))))
+    (gtk_container_add *scrolled *drawing-area)
+
+    (gtk_widget_set_can_focus *drawing-area TRUE)
+    (gtk_widget_grab_focus *drawing-area)
+    (gtk_widget_show *drawing-area)
+
+    *drawing-area))
 
 
 ;;; Creates and returns a scrolled canvas widget in the working area

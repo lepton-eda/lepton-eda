@@ -804,7 +804,7 @@
 (define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
-(define-lff schematic_canvas_setup_drawing_area void '(* *))
+(define-lff schematic_canvas_setup_drawing_area void '(*))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
