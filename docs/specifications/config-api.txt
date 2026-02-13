@@ -240,7 +240,7 @@ C function::
 
 Scheme function::
 
-  None yet
+  cache-config-context
 
 The cache context is used for program-specific configuration, and is
 loaded from ``${XDG_CACHE_HOME}/lepton-eda/gui.conf`` [XDGDIRS]_.

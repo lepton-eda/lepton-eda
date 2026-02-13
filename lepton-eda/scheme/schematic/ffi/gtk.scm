@@ -93,13 +93,18 @@
             gtk_widget_grab_focus
             gtk_widget_hide
             gtk_widget_set_sensitive
+            gtk_widget_set_size_request
             gtk_widget_set_visible
             gtk_widget_show
             gtk_widget_show_all
 
             gtk_window_set_default_icon_name
+            gtk_window_get_position
+            gtk_window_get_size
             gtk_window_set_transient_for
+            gtk_window_move
             gtk_window_present
+            gtk_window_resize
 
             ;; GDK
             GdkModifierType
@@ -189,12 +194,17 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_set_sensitive void (list '* int))
+(define-lff gtk_widget_set_size_request void (list '* int int))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))
 
+(define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
+(define-lff gtk_window_resize void (list '* int int))
 (define-lff gtk_window_set_default_icon_name void '(*))
+(define-lff gtk_window_get_position void '(* * *))
+(define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_set_transient_for void '(* *))
 
 ;;; gdk_event_get_button() can only be used for GTK3.

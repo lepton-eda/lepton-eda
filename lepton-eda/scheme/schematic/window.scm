@@ -97,6 +97,10 @@
   #:replace (close-page!))
 
 
+(define %default-window-width 800)
+(define %default-window-height 600)
+
+
 (define (process-key-event *page_view *event *window)
   (with-window *window
     (eval-press-key-event *event *page_view *window)))
@@ -120,6 +124,75 @@
                   (schematic_window_get_hotkey_widget *window)
                   (schematic_window_get_coord_widget *window)
                   (schematic_window_get_slot_edit_widget *window))))
+
+
+;;; Save main window's geometry to the cache config context.
+(define (save-geometry *window)
+  (define *main-window (schematic_window_get_main_window *window))
+  (define (get-int bv)
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
+  (define x-bv (make-bytevector (sizeof int) 0))
+  (define y-bv (make-bytevector (sizeof int) 0))
+  (define width-bv (make-bytevector (sizeof int) 0))
+  (define height-bv (make-bytevector (sizeof int) 0))
+
+  (gtk_window_get_position *main-window
+                           (bytevector->pointer x-bv)
+                           (bytevector->pointer y-bv))
+
+  (gtk_window_get_size *main-window
+                       (bytevector->pointer width-bv)
+                       (bytevector->pointer height-bv))
+
+  (let ((config (cache-config-context))
+        (x (get-int x-bv))
+        (y (get-int y-bv))
+        (width (get-int width-bv))
+        (height (get-int height-bv)))
+    (set-config! config "schematic.window-geometry" "x" x)
+    (set-config! config "schematic.window-geometry" "y" y)
+    (set-config! config "schematic.window-geometry" "width" width)
+    (set-config! config "schematic.window-geometry" "height" height)
+
+    (config-save! config)))
+
+
+;;; Restore the previous geometry of the main window if the value of
+;;; the key 'restore-window-geometry' in the 'schematic.gui'
+;;; configuration group is set to 'true'.  The geometry to restore is
+;;; read from the cache config context.  Unless valid configuration
+;;; values are read, the default width and height are used.
+(define (restore-geometry *window *main-window)
+  (define restore? (config-boolean (path-config-context (getcwd))
+                                   "schematic.gui"
+                                   "restore-window-geometry"))
+  (define cache-config (cache-config-context))
+
+  (when restore?
+    (let ((x (config-int cache-config "schematic.window-geometry" "x"))
+          (y (config-int cache-config "schematic.window-geometry" "y")))
+      (when (and (> x 0) (> y 0))
+        (gtk_window_move *main-window x y))))
+
+  (let* ((stored-width
+          (if restore?
+              (config-int cache-config "schematic.window-geometry" "width")
+              -1))
+         (stored-height
+          (if restore?
+              (config-int cache-config "schematic.window-geometry" "height")
+              -1))
+         (positive-sizes? (and (> stored-width 0) (> stored-height 0)))
+         (width (if positive-sizes? stored-width %default-window-width))
+         (height (if positive-sizes? stored-height %default-window-height)))
+    (gtk_window_resize *main-window width height)
+
+    (when (true? (x_widgets_use_docks))
+      (let ((*find_text_state
+             (schematic_window_get_find_text_state_widget *window)))
+        (gtk_widget_set_size_request *find_text_state
+                                     -1
+                                     (centered-quotient height 4))))))
 
 
 (define (close-window! window)
@@ -148,7 +221,7 @@
     ;; to be done before freeing its memory.
     (when last-window?
       ;; Save window geometry.
-      (schematic_window_save_geometry *window)
+      (save-geometry *window)
       ;; Close the log file.
       (s_log_close)
       ;; Free the buffers.
@@ -1916,7 +1989,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup statusbar.
       (schematic_window_create_statusbar *window *main-box)
 
-      (schematic_window_restore_geometry *window *main-window)
+      (restore-geometry *window *main-window)
 
       (show-main-window *window *main-window)
       ;; Returns *window.
