@@ -1158,9 +1158,6 @@ void
 open_page_error_dialog (SchematicWindow *w_current,
                         const gchar *filename,
                         char *error_message);
-gchar*
-untitled_filename (SchematicWindow *w_current);
-
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
@@ -1170,6 +1167,7 @@ x_window_setup_scrolling (SchematicWindow *w_current,
                           GtkWidget *scrolled);
 gboolean
 x_window_untitled_page (LeptonPage* page);
+
 
 /* x_widgets.c */
 gboolean

@@ -3044,3 +3044,42 @@ schematic_window_set_page_select_dialog (SchematicWindow *w_current,
 
   w_current->page_select_dialog = widget;
 }
+
+
+/*! \brief Get the value of the untitled page counter.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a num_untitled field of the schematic
+ *  window.  The value corresponds to the last number used to form the
+ *  name of an untitled page.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'num_untitled'.
+ */
+int
+schematic_window_get_num_untitled (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->num_untitled;
+}
+
+
+/*! \brief Set the value of the untitled page counter.
+ *
+ *  \par Function Description
+ *  Sets the value of the \a num_untitled field of the schematic
+ *  window to the given value.  The value is used to form the name of
+ *  the next untitled page.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] num The new value of the field.
+ */
+void
+schematic_window_set_num_untitled (SchematicWindow *w_current,
+                                   int num)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->num_untitled = num;
+}

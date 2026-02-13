@@ -29,9 +29,6 @@ create_notebook_right (SchematicWindow *w_current);
 static GtkWidget*
 create_notebook_bottom (SchematicWindow *w_current);
 
-static int
-untitled_next_index (SchematicWindow* w_current);
-
 
 /*! \brief Create a schematic drawing canvas.
  *  \par Function Description
@@ -756,88 +753,6 @@ recent_manager_add (SchematicWindow* w_current,
   }
 
 } /* recent_manager_add() */
-
-
-
-/*! \brief Get next number to be part of the untitled file name.
- */
-static int
-untitled_next_index (SchematicWindow* w_current)
-{
-  return ++w_current->num_untitled;
-}
-
-
-
-/*! \brief Get untitled file name.
- *  \par Function Description
- *
- * Determine "untitled" schematic file name (used for new pages)
- * and build full path from this name and current working
- * directory.  When constructing this name, avoid reusing names of
- * already opened files and existing files in current directory.
- * Such (avoided) names are reported to the log.
- *
- *  \param  w_current   The toplevel environment.
- *  \return             Newly-allocated untitled file path.
- */
-gchar*
-untitled_filename (SchematicWindow* w_current)
-{
-  g_return_val_if_fail (w_current != NULL, NULL);
-
-  /* Determine default file name (without a number appended)
-  *  for a new page:
-  */
-  gchar*     cwd = g_get_current_dir ();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-
-  gchar* name = eda_config_get_string (cfg,
-                                       "schematic",
-                                       "default-filename",
-                                       NULL);
-
-  gchar* fname = NULL;
-  gchar* fpath = NULL;
-
-  LeptonToplevel* toplevel = schematic_window_get_toplevel (w_current);
-
-  for (;;)
-  {
-    /* Build file name (default name + number appended):
-    */
-    fname = g_strdup_printf ("%s_%d.sch",
-                             name ? name : UNTITLED_FILENAME_PREFIX,
-                             untitled_next_index (w_current));
-
-    /* Build full path for file name:
-    */
-    fpath = g_build_filename (cwd, fname, NULL);
-
-    /* Avoid reusing names of already opened files:
-    *  Avoid reusing names of existing files in current directory:
-    */
-    if ( lepton_toplevel_search_page_by_basename (toplevel, fname) ||
-         g_file_test (fpath, G_FILE_TEST_EXISTS) )
-    {
-      g_message (_("Skipping existing file [%s]"), fname);
-
-      g_free (fname);
-      g_free (fpath);
-    }
-    else
-    {
-      break;
-    }
-  }
-
-  g_free (cwd);
-  g_free (name);
-  g_free (fname);
-
-  return fpath;
-
-} /* untitled_filename() */
 
 
 

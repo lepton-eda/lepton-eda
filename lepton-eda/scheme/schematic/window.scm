@@ -881,6 +881,57 @@ tab notebook.  Returns a C TabInfo structure."
       (add-tab-info! *window *wtab *canvas *page page-index))))
 
 
+;;; Determine a new "untitled" schematic file name (used for new
+;;; pages) and build a full path from this name and the current
+;;; working directory.  When constructing this name, avoid reusing the
+;;; names of already opened files and files existing in the current
+;;; directory.  Such avoided names are reported to the log.
+(define (untitled-filename *window *toplevel)
+  (define cwd (getcwd))
+  (define default-filename
+    (config-string (path-config-context cwd)
+                   "schematic"
+                   "default-filename"))
+  (define (filename-page-exists? filename)
+    (not (null-pointer? (lepton_toplevel_search_page_by_basename
+                         *toplevel
+                         (string->pointer filename)))))
+
+  ;; Get the next number for an untitled file name.
+  (define (next-untitled-id)
+    (let ((next-id (1+ (schematic_window_get_num_untitled *window))))
+      (schematic_window_set_num_untitled *window next-id)
+      next-id))
+
+  (define (next-filename)
+    ;; Build file name (default name + number appended).
+    (let* ((filename
+            (string-append default-filename
+                           "_"
+                           (number->string (next-untitled-id))
+                           ".sch"))
+           ;; Build full path for file name.
+           (path (string-append cwd file-name-separator-string filename))
+           (exists? (or (filename-page-exists? filename)
+                        (file-exists? path))))
+      ;; Avoid reusing names of already opened files and the files
+      ;; existing in the current directory.
+      (if exists?
+          (begin
+            (log! 'message (G_ "Skipping existing file ~S") filename)
+            #f)
+          path)))
+
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  ;; Determine default file name (without a number appended) for a
+  ;; new page.
+  (let loop ((filename (next-filename)))
+    (or filename
+        (loop (next-filename)))))
+
+
 ;;; Creates and returns a new untitled page in *WINDOW.
 (define (window-make-untitled-page *window)
   (define quiet-mode? (true? (get_quiet_mode)))
@@ -893,17 +944,15 @@ tab notebook.  Returns a C TabInfo structure."
       (error "NULL toplevel."))
 
     ;; New page file name.
-    (let* ((*filename (untitled_filename *window))
+    (let* ((filename (untitled-filename *window *toplevel))
            ;; Create a new page.
-           (*page (lepton_page_new *toplevel *filename)))
+           (*page (lepton_page_new *toplevel (string->pointer filename))))
 
       ;; Switch to the new page.
       (window-set-toplevel-page! (pointer->window *window)
                                  (pointer->page *page))
       (unless quiet-mode?
-        (log! 'message (G_ "New file ~S") (pointer->string *filename)))
-
-      (g_free *filename)
+        (log! 'message (G_ "New file ~S") filename))
 
       ;; Run new page hook.
       (with-window *window
