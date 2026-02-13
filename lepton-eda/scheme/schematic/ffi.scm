@@ -297,12 +297,10 @@
             x_widgets_toggle_widget_visibility
             x_widgets_use_docks
 
-            x_window_create_drawing
             open_page_error_dialog
             untitled_filename
             recent_manager_add
             x_window_save_page
-            x_window_setup_draw_events_drawing_area
             x_window_setup_scrolling
             x_window_untitled_page
             schematic_window_create_app_window
@@ -426,8 +424,9 @@
             schematic_canvas_pan_start
             schematic_canvas_redraw
             schematic_canvas_SCREENtoWORLD
+            schematic_canvas_setup_drawing_area
+            schematic_canvas_setup_drawing_area_events
             schematic_canvas_zoom_extents
-            schematic_canvas_grab_focus
             schematic_canvas_zoom_object
 
             schematic_preview_new
@@ -460,6 +459,7 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_drawing_area
+            schematic_window_set_drawing_area
             schematic_window_get_enforce_hierarchy
             schematic_window_get_file_preview
             schematic_window_set_file_preview
@@ -528,6 +528,7 @@
             schematic_window_get_text_caps
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
+            schematic_window_get_warp_cursor
 
             font_select_widget_new
 
@@ -804,8 +805,9 @@
 (define-lff schematic_canvas_pan_start void (list '* int int))
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
+(define-lff schematic_canvas_setup_drawing_area void '(*))
+(define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
 (define-lff schematic_canvas_zoom_extents void '(* *))
-(define-lff schematic_canvas_grab_focus void '(*))
 (define-lff schematic_canvas_zoom_object void '(* *))
 
 ;;; preview_widget.c
@@ -860,6 +862,7 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_drawing_area '* '(*))
+(define-lff schematic_window_set_drawing_area void '(* *))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_file_preview int '(*))
 (define-lff schematic_window_set_file_preview void (list int '*))
@@ -928,6 +931,7 @@
 (define-lff schematic_window_get_text_caps int '(*))
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
+(define-lff schematic_window_get_warp_cursor int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -981,12 +985,10 @@
 (define-lff x_rc_parse_gschem_error void '(* *))
 
 ;;; x_window.c
-(define-lff x_window_create_drawing void '(* *))
 (define-lff open_page_error_dialog void '(* * *))
 (define-lff untitled_filename '* '(*))
 (define-lff recent_manager_add void '(* *))
 (define-lff x_window_save_page int '(* * *))
-(define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))

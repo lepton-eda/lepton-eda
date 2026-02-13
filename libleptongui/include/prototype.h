@@ -1104,12 +1104,6 @@ char*
 x_stroke_translate_and_execute (SchematicWindow *w_current);
 
 /* x_window.c */
-void
-x_window_create_drawing (GtkWidget *drawbox,
-                         SchematicWindow *w_current);
-void
-x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
-                                         SchematicCanvas* drawing_area);
 GtkWidget*
 schematic_window_create_app_window (gpointer app);
 

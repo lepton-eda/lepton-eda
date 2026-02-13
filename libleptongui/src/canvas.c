@@ -1746,14 +1746,65 @@ geometry_cache_finalize (SchematicCanvas *view)
 }
 
 
-/*! \brief Focuses page view.
+/*! \brief Set up the drawing area of a schematic canvas.
  *
- *  \param  [in] page_view The page view.
+ *  \par Function Description
+ *  Sets expanding and filling of the canvas' drawing area.
+ *
+ *  \param [in] view The #SchematicCanvas instance.
+ *  \return [in] The drawing area widget of the canvas.
+ */
+GtkWidget*
+schematic_canvas_setup_drawing_area (SchematicCanvas *view)
+{
+#ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_halign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+  gtk_widget_set_valign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+#endif
+
+  return GTK_WIDGET (view);
+}
+
+
+/*! \brief Set up events for the drawing area.
+ *
+ *  \par Function Description
+ *  Sets up events for the drawing area widget of the canvas.
+ *
+ * \param [in] drawing_area The #SchematicCanvas instance.
+ * \param [in] warp_cursor  Whether the mouse cursor can be warped.
  */
 void
-schematic_canvas_grab_focus (SchematicCanvas *page_view)
+schematic_canvas_setup_drawing_area_events (SchematicCanvas* drawing_area,
+                                            int warp_cursor)
 {
-  g_return_if_fail (page_view != NULL);
+  /* gtk_widget_set_events() can be called on unrealized widgets only.
+  *  Since with tabbed GUI (see x_tabs.c) we need to setup events
+  *  for already created page view widgets, use
+  *  gtk_widget_add_events() instead.
+  */
+  gtk_widget_add_events (GTK_WIDGET (drawing_area),
+                         GDK_EXPOSURE_MASK |
+                         GDK_POINTER_MOTION_MASK |
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_ENTER_NOTIFY_MASK |
+                         GDK_KEY_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK);
 
-  gtk_widget_grab_focus (GTK_WIDGET (page_view));
+#ifdef ENABLE_GTK3
+  gint events;
+
+  if (warp_cursor)
+  {
+    events = GDK_SCROLL_MASK;
+  }
+  else
+  {
+    events = GDK_SMOOTH_SCROLL_MASK | GDK_SCROLL_MASK;
+  }
+
+  gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
+#endif
 }

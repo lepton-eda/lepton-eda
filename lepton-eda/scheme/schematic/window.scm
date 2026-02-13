@@ -267,7 +267,7 @@
 
 
 (define (grab-focus *tab-info)
-  (schematic_canvas_grab_focus
+  (gtk_widget_grab_focus
    (schematic_tab_info_get_canvas *tab-info)))
 
 
@@ -532,7 +532,7 @@ zooming."
         FALSE))
 
   (define (process-event *canvas *event *window)
-    (schematic_canvas_grab_focus *canvas)
+    (gtk_widget_grab_focus *canvas)
     (let ((button-number (schematic_event_get_button *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
@@ -853,7 +853,9 @@ zooming."
                       (cdr element)
                       *window))
 
-  (x_window_setup_draw_events_drawing_area *window *canvas)
+  (schematic_canvas_setup_drawing_area_events
+   *canvas
+   (schematic_window_get_warp_cursor *window))
 
   (for-each connect-signal signal-callback-list))
 
@@ -1700,8 +1702,28 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+;;; Creates and returns a schematic drawing area widget as known as
+;;; canvas.  Associates it with *PAGE, adds it to the scrolled
+;;; container *SCROLLED, focuses, and shows.
+(define (make-drawing-area *scrolled *page)
+  (when (null-pointer? *scrolled)
+    (error "NULL scrolled widget."))
+
+  (let ((*drawing-area
+         (schematic_canvas_setup_drawing_area
+          (schematic_canvas_new_with_page *page))))
+    (gtk_container_add *scrolled *drawing-area)
+
+    (gtk_widget_set_can_focus *drawing-area TRUE)
+    (gtk_widget_grab_focus *drawing-area)
+    (gtk_widget_show *drawing-area)
+
+    *drawing-area))
+
+
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
+;;; The page of the canvas is set to the active page of the window.
 (define (make-canvas *window *work-box)
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -1714,7 +1736,10 @@ for *PAGE page will be created and set active."
     (gtk_container_add *work-box *scrolled)
 
     ;; Create page view.
-    (x_window_create_drawing *scrolled *window)
+    (schematic_window_set_drawing_area
+     *window
+     (make-drawing-area *scrolled
+                        (schematic_window_get_active_page *window)))
     (x_window_setup_scrolling *window *scrolled)
 
     (schematic_window_get_current_canvas *window)))

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -178,6 +178,13 @@ schematic_canvas_zoom_extents (SchematicCanvas *view,
 void
 schematic_canvas_zoom_object (SchematicCanvas *view,
                               LeptonObject *object);
+
+GtkWidget*
+schematic_canvas_setup_drawing_area (SchematicCanvas *view);
+
+void
+schematic_canvas_setup_drawing_area_events (SchematicCanvas* drawing_area,
+                                            int warp_cursor);
 #ifdef ENABLE_GTK3
 GtkScrollablePolicy
 schematic_canvas_get_hscroll_policy (SchematicCanvas *view);
@@ -191,9 +198,6 @@ schematic_canvas_set_hscroll_policy (SchematicCanvas *view,
 void
 schematic_canvas_set_vscroll_policy (SchematicCanvas *view,
                                      GtkScrollablePolicy scroll);
-void
-schematic_canvas_grab_focus (SchematicCanvas *page_view);
-
 #endif
 
 G_END_DECLS
