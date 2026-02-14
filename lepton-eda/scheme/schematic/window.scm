@@ -1700,6 +1700,12 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+(define (add-menubar *main-box *menubar add_handleboxes)
+  (schematic_window_create_menubar *main-box
+                                   *menubar
+                                   add_handleboxes))
+
+
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
 (define (make-canvas *window *work-box)
@@ -1794,9 +1800,9 @@ GtkApplication structure of the program (when compiled with
     (let ((*main-box (schematic_window_create_main_box *main-window))
           (*menubar (make-main-menu *window *callback-recent-chooser-item-activated))
           (*work-box (schematic_window_create_work_box)))
-      (schematic_window_create_menubar *main-box
-                                       *menubar
-                                       (schematic_window_get_handleboxes *window))
+      (add-menubar *main-box
+                   *menubar
+                   (schematic_window_get_handleboxes *window))
       (schematic_window_set_menubar *window *menubar)
 
       ;; Make toolbar.
