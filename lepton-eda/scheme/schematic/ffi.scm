@@ -41,6 +41,7 @@
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
+            gtk_widget_pack_child
 
             generic_confirm_dialog
             generic_error_dialog
@@ -100,7 +101,9 @@
             schematic_delete
             schematic_delete_dialog
 
+            o_edit_hide_specific_text
             o_edit_show_hidden
+            o_edit_show_specific_text
 
             o_find_object
 
@@ -274,6 +277,10 @@
 
             schematic_page_revert_dialog
 
+            schematic_show_hide_text_widget_new_hide
+            schematic_show_hide_text_widget_new_show
+            schematic_show_hide_text_widget_get_text_string
+
             slot_edit_dialog
             slot_edit_dialog_response
             slot_edit_dialog_get_text
@@ -312,13 +319,10 @@
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
-            schematic_window_create_hide_text_widget
-            schematic_window_create_show_text_widget
             schematic_window_create_translate_widget
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
-            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_get_main_window
@@ -475,6 +479,8 @@
             schematic_window_set_find_text_state_widget
             schematic_window_get_find_text_widget
             schematic_window_set_find_text_widget
+            schematic_window_get_hide_text_widget
+            schematic_window_set_hide_text_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
@@ -492,6 +498,7 @@
             schematic_window_get_rubber_visible
             schematic_window_set_rubber_visible
             schematic_window_get_selection_list
+            schematic_window_set_show_text_widget
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
             schematic_window_get_undo_panzoom
@@ -681,6 +688,7 @@
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
+(define-lff gtk_widget_pack_child void '(* *))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -827,6 +835,11 @@
 ;;; page_revert_dialog.c
 (define-lff schematic_page_revert_dialog int '(* *))
 
+;;; show_hide_text_widget.c
+(define-lff schematic_show_hide_text_widget_new_hide '* '())
+(define-lff schematic_show_hide_text_widget_new_show '* '())
+(define-lff schematic_show_hide_text_widget_get_text_string '* '(*))
+
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
 (define-lff slot_edit_dialog_response int (list int))
@@ -875,6 +888,8 @@
 (define-lff schematic_window_set_find_text_state_widget void '(* *))
 (define-lff schematic_window_get_find_text_widget '* '(*))
 (define-lff schematic_window_set_find_text_widget void '(* *))
+(define-lff schematic_window_get_hide_text_widget '* '(*))
+(define-lff schematic_window_set_hide_text_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
@@ -892,6 +907,7 @@
 (define-lff schematic_window_get_rubber_visible int '(*))
 (define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
+(define-lff schematic_window_set_show_text_widget void '(* *))
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
@@ -996,13 +1012,10 @@
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
-(define-lff schematic_window_create_hide_text_widget void '(* *))
-(define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
-(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_get_main_window '* '(*))
@@ -1157,7 +1170,9 @@
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
+(define-lff o_edit_hide_specific_text void '(* * *))
 (define-lff o_edit_show_hidden void '(* *))
+(define-lff o_edit_show_specific_text void '(* * *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 
 ;;; o_move.c

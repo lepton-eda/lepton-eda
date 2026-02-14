@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,45 @@ static void
 notify_entry_text (GtkWidget *entry,
                    GParamSpec *pspec,
                    SchematicShowHideTextWidget *widget);
+
+
+/*! \brief Create a new Hide text widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created Hide text widget.
+ *
+ *  \return The new Hide text widget.
+ */
+GtkWidget*
+schematic_show_hide_text_widget_new_hide ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                               "button-text", _("Hide"),
+                               "label-text", _("Hide text starting with:"),
+                               NULL);
+
+  return GTK_WIDGET (obj);
+}
+
+
+/*! \brief Create a new Show text widget.
+ *
+ *  \par Function Description
+ *  Returns a newly created Show text widget.
+ *
+ *  \return The new Show text widget.
+ */
+GtkWidget*
+schematic_show_hide_text_widget_new_show ()
+{
+  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                               "button-text", _("Show"),
+                               "label-text", _("Show text starting with:"),
+                               NULL);
+
+  return GTK_WIDGET (obj);
+}
+
 
 
 /*! \brief Show the hide text widget

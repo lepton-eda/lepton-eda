@@ -1761,6 +1761,44 @@ for *PAGE page will be created and set active."
   *window)
 
 
+(define (hide-text-response *widget response-id *window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (when (eq? (gtk-response->symbol response-id) 'ok)
+    (let ((*page (schematic_window_get_active_page *window)))
+      (o_edit_hide_specific_text
+       *window
+       (lepton_page_objects *page)
+       (schematic_show_hide_text_widget_get_text_string *widget))))
+
+  (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+    (gtk_widget_grab_focus *drawing-area)
+    (gtk_widget_hide *widget)))
+
+(define *callback-hide-text-response
+  (procedure->pointer void hide-text-response (list '* int '*)))
+
+
+(define (show-text-response *widget response-id *window)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (when (eq? (gtk-response->symbol response-id) 'ok)
+    (let ((*page (schematic_window_get_active_page *window)))
+      (o_edit_show_specific_text
+       *window
+       (lepton_page_objects *page)
+       (schematic_show_hide_text_widget_get_text_string *widget))))
+
+  (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+    (gtk_widget_grab_focus *drawing-area)
+    (gtk_widget_hide *widget)))
+
+(define *callback-show-text-response
+  (procedure->pointer void show-text-response (list '* int '*)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1836,7 +1874,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup hidden infowidgets.
       (let ((*find-text-widget (schematic_find_text_widget_new)))
         (schematic_window_set_find_text_widget *window *find-text-widget)
-        (schematic_window_pack_widget *work-box *find-text-widget)
+        (gtk_widget_pack_child *work-box *find-text-widget)
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
                           *callback-find-text
@@ -1865,8 +1903,21 @@ GtkApplication structure of the program (when compiled with
                             (string->pointer "clicked")
                             *schematic_find_text_widget_click_find
                             *find-text-widget)))
-      (schematic_window_create_hide_text_widget *window *work-box)
-      (schematic_window_create_show_text_widget *window *work-box)
+      (let ((*hide-text-widget (schematic_show_hide_text_widget_new_hide)))
+        (gtk_widget_pack_child *work-box *hide-text-widget)
+        (schematic_window_set_hide_text_widget *window *hide-text-widget)
+        (g_signal_connect *hide-text-widget
+                          (string->pointer "response")
+                          *callback-hide-text-response
+                          *window))
+      (let ((*show-text-widget (schematic_show_hide_text_widget_new_show)))
+        (gtk_widget_pack_child *work-box *show-text-widget)
+        (schematic_window_set_show_text_widget *window *show-text-widget)
+        (g_signal_connect *show-text-widget
+                          (string->pointer "response")
+                          *callback-show-text-response
+                          *window))
+
       (make-macro-widget *window *work-box)
       (schematic_window_create_translate_widget *window *work-box)
 

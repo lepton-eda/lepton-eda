@@ -110,50 +110,6 @@ void x_window_setup_draw_events_drawing_area (SchematicWindow* w_current,
 
 
 static void
-x_window_hide_text (GtkWidget *widget, gint response, SchematicWindow *w_current)
-{
-  LeptonPage *page = NULL;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (response == GTK_RESPONSE_OK) {
-    page = schematic_window_get_active_page (w_current);
-    o_edit_hide_specific_text (w_current,
-                               lepton_page_objects (page),
-                               schematic_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
-  }
-
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
-
-static void
-x_window_show_text (GtkWidget *widget,
-                    gint response,
-                    SchematicWindow *w_current)
-{
-  LeptonPage *page = NULL;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (response == GTK_RESPONSE_OK) {
-    page = schematic_window_get_active_page (w_current);
-    o_edit_show_specific_text (w_current,
-                               lepton_page_objects (page),
-                               schematic_show_hide_text_widget_get_text_string (SCHEMATIC_SHOW_HIDE_TEXT_WIDGET (widget)));
-  }
-
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
-
-static void
 x_window_translate_response (SchematicTranslateWidget *widget,
                              gint response,
                              SchematicWindow *w_current)
@@ -409,58 +365,6 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 #endif
 
   schematic_window_set_menubar (w_current, menubar);
-}
-
-
-void
-schematic_window_pack_widget (GtkWidget *parent_widget,
-                              GtkWidget *child_widget)
-{
-  gtk_box_pack_start (GTK_BOX (parent_widget), child_widget, FALSE, FALSE, 0);
-}
-
-
-
-void
-schematic_window_create_hide_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
-{
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
-                               "button-text", _("Hide"),
-                               "label-text", _("Hide text starting with:"),
-                               NULL);
-
-  GtkWidget *hide_text_widget = GTK_WIDGET (obj);
-  schematic_window_set_hide_text_widget (w_current, hide_text_widget);
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      hide_text_widget,
-                      FALSE, FALSE, 0);
-
-  g_signal_connect (hide_text_widget, "response",
-                    G_CALLBACK (&x_window_hide_text), w_current);
-}
-
-
-
-void
-schematic_window_create_show_text_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
-{
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_SHOW_HIDE_TEXT_WIDGET,
-                               "button-text", _("Show"),
-                               "label-text", _("Show text starting with:"),
-                               NULL);
-
-  GtkWidget *show_text_widget = GTK_WIDGET (obj);
-  schematic_window_set_show_text_widget (w_current, show_text_widget);
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      show_text_widget,
-                      FALSE, FALSE, 0);
-
-  g_signal_connect (show_text_widget, "response",
-                    G_CALLBACK (&x_window_show_text), w_current);
 }
 
 
