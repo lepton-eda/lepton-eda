@@ -1700,10 +1700,21 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+
+;;;  Adds the menu widget *MENUBAR to the main window widget
+;;;  *MAIN-WINDOW.  The GTK2 version of the widget may have handle
+;;;  boxes depending on configuration.  The handle boxes are added
+;;;  if ADD_HANDLEBOXES is TRUE (C boolean).
 (define (add-menubar *main-box *menubar add_handleboxes)
-  (schematic_window_create_menubar *main-box
-                                   *menubar
-                                   add_handleboxes))
+  (if %m4-use-gtk3
+      (gtk_widget_pack_child *main-box *menubar)
+
+      (if (true? add_handleboxes)
+          (let ((*handlebox (gtk_handle_box_new)))
+            (gtk_widget_pack_child *main-box *handlebox)
+            (gtk_container_add *handlebox *menubar))
+
+          (gtk_widget_pack_child *main-box *menubar))))
 
 
 ;;; Creates and returns a scrolled canvas widget in the working area

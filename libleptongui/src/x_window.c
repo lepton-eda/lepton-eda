@@ -377,38 +377,6 @@ x_window_save_page (SchematicWindow *w_current,
 } /* x_window_save_page() */
 
 
-/*! \brief Add a menubar widget to the main container of a window.
- *  \par Function Description
- *  Adds a menubar at the top of the program window.  GTK2 version
- *  of the widget may have 'handle boxes' depending on configuration.
- *
- *  \param [in] main_box The main container of the app window.
- *  \param [in] menubar The menubar widget created elsewhere.
- *  \param [in] add_handlebox Whether the menubar handlebox has to be
- *                            added.
- */
-void
-schematic_window_create_menubar (GtkWidget *main_box,
-                                 GtkWidget *menubar,
-                                 int add_handlebox)
-{
-#ifdef ENABLE_GTK3
-  gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
-#else
-  if (add_handlebox)
-  {
-    GtkWidget *handlebox = gtk_handle_box_new ();
-    gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (handlebox), menubar);
-  }
-  else
-  {
-    gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
-  }
-#endif
-}
-
-
 void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)

@@ -309,7 +309,6 @@
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_work_box
-            schematic_window_create_menubar
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
@@ -997,7 +996,6 @@
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
-(define-lff schematic_window_create_menubar void (list '* '* int))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
