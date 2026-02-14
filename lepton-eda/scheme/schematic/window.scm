@@ -1700,6 +1700,23 @@ for *PAGE page will be created and set active."
                       *widget)))
 
 
+
+;;;  Adds the menu widget *MENUBAR to the main window widget
+;;;  *MAIN-WINDOW.  The GTK2 version of the widget may have handle
+;;;  boxes depending on configuration.  The handle boxes are added
+;;;  if ADD_HANDLEBOXES is TRUE (C boolean).
+(define (add-menubar *main-box *menubar add_handleboxes)
+  (if %m4-use-gtk3
+      (gtk_widget_pack_child *main-box *menubar)
+
+      (if (true? add_handleboxes)
+          (let ((*handlebox (gtk_handle_box_new)))
+            (gtk_widget_pack_child *main-box *handlebox)
+            (gtk_container_add *handlebox *menubar))
+
+          (gtk_widget_pack_child *main-box *menubar))))
+
+
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
 (define (make-canvas *window *work-box)
@@ -1794,7 +1811,10 @@ GtkApplication structure of the program (when compiled with
     (let ((*main-box (schematic_window_create_main_box *main-window))
           (*menubar (make-main-menu *window *callback-recent-chooser-item-activated))
           (*work-box (schematic_window_create_work_box)))
-      (schematic_window_create_menubar *window *main-box *menubar)
+      (add-menubar *main-box
+                   *menubar
+                   (schematic_window_get_handleboxes *window))
+      (schematic_window_set_menubar *window *menubar)
 
       ;; Make toolbar.
       (let ((create-toolbar?
@@ -1836,7 +1856,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup hidden infowidgets.
       (let ((*find-text-widget (schematic_find_text_widget_new)))
         (schematic_window_set_find_text_widget *window *find-text-widget)
-        (schematic_window_pack_widget *work-box *find-text-widget)
+        (gtk_widget_pack_child *work-box *find-text-widget)
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
                           *callback-find-text

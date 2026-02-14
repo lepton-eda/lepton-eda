@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2023-2025 Lepton EDA Contributors
+ * Copyright (C) 2023-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,15 @@ gtk_widget_get_gtk_window (GtkWidget *widget)
 {
   return GTK_WINDOW (widget);
 }
+
+
+void
+gtk_widget_pack_child (GtkWidget *parent_widget,
+                       GtkWidget *child_widget)
+{
+  gtk_box_pack_start (GTK_BOX (parent_widget), child_widget, FALSE, FALSE, 0);
+}
+
 
 
 /*! \brief Transform a string into GTK response id value.

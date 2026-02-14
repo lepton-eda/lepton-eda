@@ -1120,13 +1120,6 @@ GtkWidget*
 schematic_window_create_work_box ();
 
 void
-schematic_window_create_menubar (SchematicWindow *w_current,
-                                 GtkWidget *main_box,
-                                 GtkWidget *menubar);
-void
-schematic_window_pack_widget (GtkWidget *parent_widget,
-                              GtkWidget *child_widget);
-void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box);
 void

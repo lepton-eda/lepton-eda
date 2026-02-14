@@ -41,6 +41,7 @@
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
+            gtk_widget_pack_child
 
             generic_confirm_dialog
             generic_error_dialog
@@ -308,7 +309,6 @@
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_work_box
-            schematic_window_create_menubar
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
@@ -318,7 +318,6 @@
             schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
-            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_get_main_window
@@ -477,9 +476,11 @@
             schematic_window_set_find_text_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
+            schematic_window_get_handleboxes
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
             schematic_window_set_macro_widget
+            schematic_window_set_menubar
             schematic_window_get_middle_button
             schematic_window_get_mousepan_gain
             schematic_window_set_multiattrib_widget
@@ -681,6 +682,7 @@
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
+(define-lff gtk_widget_pack_child void '(* *))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -877,9 +879,11 @@
 (define-lff schematic_window_set_find_text_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
+(define-lff schematic_window_get_handleboxes int '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_set_macro_widget void '(* *))
+(define-lff schematic_window_set_menubar void '(* *))
 (define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_set_multiattrib_widget void '(* *))
@@ -992,7 +996,6 @@
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
-(define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
@@ -1002,7 +1005,6 @@
 (define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
-(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_get_main_window '* '(*))

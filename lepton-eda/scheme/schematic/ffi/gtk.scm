@@ -51,6 +51,8 @@
 
             gtk_events_pending
 
+            gtk_handle_box_new
+
             gtk_icon_theme_append_search_path
             gtk_icon_theme_get_default
 
@@ -146,6 +148,8 @@
 (define-lff gtk_entry_set_text void '(* *))
 
 (define-lff gtk_events_pending int '())
+
+(define-lff gtk_handle_box_new '* '())
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())
