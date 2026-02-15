@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,17 +48,26 @@ struct _SchematicTranslateWidget
 
 
 
+G_BEGIN_DECLS
+
+/* Constructors, destructors */
+GtkWidget*
+schematic_translate_widget_new ();
+
+/* Accessors */
+int
+schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
+
 GtkWidget*
 schematic_translate_widget_get_entry (SchematicTranslateWidget *widget);
+
+G_END_DECLS
 
 const char*
 schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget);
 
 GType
 schematic_translate_widget_get_type ();
-
-int
-schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
 
 void
 schematic_translate_widget_set_label_text (SchematicTranslateWidget *widget,

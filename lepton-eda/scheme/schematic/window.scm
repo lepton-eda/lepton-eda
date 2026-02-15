@@ -1761,6 +1761,25 @@ for *PAGE page will be created and set active."
   *window)
 
 
+(define (translate-response *widget response-id *window)
+  (define window (pointer->window *window))
+
+  (when (eq? (gtk-response->symbol response-id) 'ok)
+    (o_component_translate_all
+     *window
+     (schematic_translate_widget_get_value *widget)))
+
+  (set-action-mode! 'select-mode #:window window)
+
+  (gtk_widget_grab_focus
+   (schematic_window_get_drawing_area *window))
+  (gtk_widget_hide *widget))
+
+
+(define *callback-translate-response
+  (procedure->pointer void translate-response (list '* int '*)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -1836,7 +1855,7 @@ GtkApplication structure of the program (when compiled with
       ;; Setup hidden infowidgets.
       (let ((*find-text-widget (schematic_find_text_widget_new)))
         (schematic_window_set_find_text_widget *window *find-text-widget)
-        (schematic_window_pack_widget *work-box *find-text-widget)
+        (gtk_widget_pack_child *work-box *find-text-widget)
         (g_signal_connect *find-text-widget
                           (string->pointer "response")
                           *callback-find-text
@@ -1868,8 +1887,13 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_hide_text_widget *window *work-box)
       (schematic_window_create_show_text_widget *window *work-box)
       (make-macro-widget *window *work-box)
-      (schematic_window_create_translate_widget *window *work-box)
-
+      (let ((*translate-widget (schematic_translate_widget_new)))
+        (gtk_widget_pack_child *work-box *translate-widget)
+        (schematic_window_set_translate_widget *window *translate-widget)
+        (g_signal_connect *translate-widget
+                          (string->pointer "response")
+                          *callback-translate-response
+                          *window))
       ;; Setup various widgets.
       (x_widgets_init)
       (schematic_window_set_object_properties_widget *window

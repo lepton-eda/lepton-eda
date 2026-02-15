@@ -41,6 +41,7 @@
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
+            gtk_widget_pack_child
 
             generic_confirm_dialog
             generic_error_dialog
@@ -96,6 +97,7 @@
             o_circle_start
 
             o_component_place_changed_run_hook
+            o_component_translate_all
 
             schematic_delete
             schematic_delete_dialog
@@ -314,11 +316,8 @@
             schematic_window_set_page_select_widget
             schematic_window_create_hide_text_widget
             schematic_window_create_show_text_widget
-            schematic_window_create_translate_widget
-            schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
-            schematic_window_pack_widget
             schematic_window_restore_geometry
             schematic_window_save_geometry
             schematic_window_get_main_window
@@ -494,6 +493,8 @@
             schematic_window_get_selection_list
             schematic_window_get_third_button
             schematic_window_get_third_button_cancel
+            schematic_window_get_translate_widget
+            schematic_window_set_translate_widget
             schematic_window_get_undo_panzoom
             schematic_window_get_keyaccel_string
             schematic_window_set_keyaccel_string
@@ -624,6 +625,10 @@
 
             x_print
 
+            schematic_translate_widget_new
+            schematic_translate_widget_get_entry
+            schematic_translate_widget_get_value
+
             a_zoom
 
             g_action_eval_by_name
@@ -681,6 +686,7 @@
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
+(define-lff gtk_widget_pack_child void '(* *))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -894,6 +900,8 @@
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_third_button int '(*))
 (define-lff schematic_window_get_third_button_cancel int '(*))
+(define-lff schematic_window_get_translate_widget '* '(*))
+(define-lff schematic_window_set_translate_widget void '(* *))
 (define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
 (define-lff schematic_window_set_keyaccel_string void '(* *))
@@ -998,11 +1006,8 @@
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
 (define-lff schematic_window_create_show_text_widget void '(* *))
-(define-lff schematic_window_create_translate_widget void '(* *))
-(define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
-(define-lff schematic_window_pack_widget void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_get_main_window '* '(*))
@@ -1137,6 +1142,7 @@
 
 ;;; o_component.c
 (define-lff o_component_place_changed_run_hook void '(*))
+(define-lff o_component_translate_all void (list '* int))
 
 ;;; delete_dialog.c
 (define-lff schematic_delete void '(* *))
@@ -1328,6 +1334,11 @@
 (define-lff lepton_slot_update_object void '(*))
 
 ;;; x_tabs.c
+
+;;; translate_widget.c
+(define-lff schematic_translate_widget_new '* '())
+(define-lff schematic_translate_widget_get_entry '* '(*))
+(define-lff schematic_translate_widget_get_value int '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_savestate void (list '* '* int))

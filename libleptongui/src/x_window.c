@@ -153,24 +153,6 @@ x_window_show_text (GtkWidget *widget,
 }
 
 
-static void
-x_window_translate_response (SchematicTranslateWidget *widget,
-                             gint response,
-                             SchematicWindow *w_current)
-{
-  if (response == GTK_RESPONSE_OK) {
-    o_component_translate_all (w_current,
-                               schematic_translate_widget_get_value (widget));
-  }
-
-  i_set_state (w_current, SELECT);
-  GtkWidget *drawing_area =
-    schematic_window_get_drawing_area (w_current);
-  gtk_widget_grab_focus (drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
-
 /*! \brief Creates a new main window widget.
  *  \par Function Description
  * Creates a new lepton-schematic window and initializes some of
@@ -413,15 +395,6 @@ schematic_window_create_menubar (SchematicWindow *w_current,
 
 
 void
-schematic_window_pack_widget (GtkWidget *parent_widget,
-                              GtkWidget *child_widget)
-{
-  gtk_box_pack_start (GTK_BOX (parent_widget), child_widget, FALSE, FALSE, 0);
-}
-
-
-
-void
 schematic_window_create_hide_text_widget (SchematicWindow *w_current,
                                           GtkWidget *work_box)
 {
@@ -462,34 +435,6 @@ schematic_window_create_show_text_widget (SchematicWindow *w_current,
   g_signal_connect (show_text_widget, "response",
                     G_CALLBACK (&x_window_show_text), w_current);
 }
-
-
-void
-schematic_window_create_translate_widget (SchematicWindow *w_current,
-                                          GtkWidget *work_box)
-{
-  gpointer obj = g_object_new (SCHEMATIC_TYPE_TRANSLATE_WIDGET, NULL);
-
-  GtkWidget *widget = GTK_WIDGET (obj);
-  schematic_window_set_translate_widget (w_current, widget);
-
-  gtk_box_pack_start (GTK_BOX (work_box), widget, FALSE, FALSE, 0);
-
-  g_signal_connect (widget, "response",
-                    G_CALLBACK (&x_window_translate_response), w_current);
-}
-
-
-void
-schematic_window_show_translate_widget (SchematicWindow *w_current)
-{
-  GtkWidget *widget =
-    schematic_window_get_translate_widget (w_current);
-
-  gtk_widget_show (widget);
-  gtk_widget_grab_focus (schematic_translate_widget_get_entry (SCHEMATIC_TRANSLATE_WIDGET (widget)));
-}
-
 
 
 void
