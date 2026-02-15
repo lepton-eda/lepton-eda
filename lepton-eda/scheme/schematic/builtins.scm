@@ -410,6 +410,9 @@
       (schematic_snap_mode_to_string
        (schematic_options_get_snap_mode *options)))))
 
+  (define (show-translate-widget *widget)
+    (schematic_window_show_translate_widget *widget))
+
   (when (eq? snap-mode 'off)
     (log! 'message (G_ "WARNING: Do not translate with snap off!"))
     (log! 'message (G_ "WARNING: Turning snap on and continuing with translate."))
@@ -423,7 +426,7 @@
     (log! 'message (G_ "WARNING: If you are translating a symbol to the origin,
 the snap grid size should be set to 100")))
 
-  (schematic_window_show_translate_widget
+  (show-translate-widget
    (schematic_window_get_translate_widget *window)))
 
 
