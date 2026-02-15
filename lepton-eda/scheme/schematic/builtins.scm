@@ -411,7 +411,9 @@
        (schematic_options_get_snap_mode *options)))))
 
   (define (show-translate-widget *widget)
-    (schematic_window_show_translate_widget *widget))
+    (gtk_widget_show *widget)
+    (gtk_widget_grab_focus
+     (schematic_translate_widget_get_entry *widget)))
 
   (when (eq? snap-mode 'off)
     (log! 'message (G_ "WARNING: Do not translate with snap off!"))

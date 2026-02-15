@@ -58,10 +58,10 @@ schematic_translate_widget_new ();
 int
 schematic_translate_widget_get_value (SchematicTranslateWidget *widget);
 
-G_END_DECLS
-
 GtkWidget*
 schematic_translate_widget_get_entry (SchematicTranslateWidget *widget);
+
+G_END_DECLS
 
 const char*
 schematic_translate_widget_get_label_text (SchematicTranslateWidget *widget);
