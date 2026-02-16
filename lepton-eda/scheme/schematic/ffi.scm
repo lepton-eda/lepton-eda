@@ -38,6 +38,8 @@
 
             g_read_file
 
+            gtk_policy_to_string
+            gtk_string_to_policy
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
@@ -425,7 +427,6 @@
             schematic_canvas_SCREENtoWORLD
             schematic_canvas_setup_drawing_area
             schematic_canvas_setup_drawing_area_events
-            schematic_canvas_setup_scrolling
             schematic_canvas_zoom_extents
             schematic_canvas_zoom_object
 
@@ -700,6 +701,8 @@
 (define-lff g_init_window void '(*))
 
 ;;; gtk_helper.c
+(define-lff gtk_policy_to_string '* (list int))
+(define-lff gtk_string_to_policy int '(*))
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
@@ -829,7 +832,6 @@
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff schematic_canvas_setup_drawing_area void '(*))
 (define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
-(define-lff schematic_canvas_setup_scrolling void (list '* int))
 (define-lff schematic_canvas_zoom_extents void '(* *))
 (define-lff schematic_canvas_zoom_object void '(* *))
 

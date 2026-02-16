@@ -84,6 +84,7 @@
 
             gtk_scrolled_window_new
             gtk_scrolled_window_set_hadjustment
+            gtk_scrolled_window_set_policy
             gtk_scrolled_window_set_vadjustment
 
             gtk_spin_button_get_value_as_int
@@ -191,6 +192,7 @@
 
 (define-lff gtk_scrolled_window_new '* '(* *))
 (define-lff gtk_scrolled_window_set_hadjustment void '(* *))
+(define-lff gtk_scrolled_window_set_policy void (list '* int int))
 (define-lff gtk_scrolled_window_set_vadjustment void '(* *))
 
 (define-lff gtk_spin_button_get_value_as_int int '(*))

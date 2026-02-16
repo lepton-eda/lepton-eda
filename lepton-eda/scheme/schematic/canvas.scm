@@ -67,7 +67,16 @@
   (procedure->pointer int redraw-canvas '(* * *)))
 
 
+(define GTK_POLICY_ALWAYS
+  (gtk_string_to_policy (string->pointer "always")))
+
+(define GTK_POLICY_NEVER
+  (gtk_string_to_policy (string->pointer "never")))
+
 (define (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+  "Adjusts the viewport and scrollbars of *SCROLLED-WIDGET and enables or
+disables the visibility of the scrollbars depending on the value of
+SHOW_SCROLLBARS which is a C boolean."
   (define world-left (schematic_world_size_get_default_left))
   (define world-right (schematic_world_size_get_default_right))
   (define world-bottom (schematic_world_size_get_default_bottom))
@@ -89,10 +98,14 @@
                         100.0
                         10.0))
 
+  (define policy (if (true? show_scrollbars)
+                     GTK_POLICY_ALWAYS
+                     GTK_POLICY_NEVER))
+
   (gtk_scrolled_window_set_hadjustment *scrolled-widget *hadjustment)
   (gtk_scrolled_window_set_vadjustment *scrolled-widget *vadjustment)
 
-  (schematic_canvas_setup_scrolling *scrolled-widget show_scrollbars))
+  (gtk_scrolled_window_set_policy *scrolled-widget policy policy))
 
 
 ;;; Temporary definitions from "gschem_defines.h".

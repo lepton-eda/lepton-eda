@@ -1808,28 +1808,3 @@ schematic_canvas_setup_drawing_area_events (SchematicCanvas* drawing_area,
   gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
 #endif
 }
-
-
-/*! \brief Setup scrolling parameters for a scrolled widget.
- *
- *  \par Function Description
- *  Adjusts the viewport and scrollbars of the widget \p scrolled and
- *  enables or disables the visibility of the scrollbars depending on
- *  the value of the argument \p show_scrollbars.
- *
- *  \param [in] scrolled Scrolled widget - a parent of page view
- *                       widget.
- *  \param [in] show_scrollbars Whether scrollbars have to be visible.
- */
-void
-schematic_canvas_setup_scrolling (GtkWidget *scrolled,
-                                  gboolean show_scrollbars)
-{
-  GtkPolicyType policy = show_scrollbars ?
-                         GTK_POLICY_ALWAYS :
-                         GTK_POLICY_NEVER;
-
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  policy, policy);
-
-}
