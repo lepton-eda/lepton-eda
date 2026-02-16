@@ -89,12 +89,17 @@
     ;; Open "Save As.." dialog.
     (gtk_widget_show *dialog)
 
-    (x_fileselect_save *window
-                       *page
-                       *result
-                       *main-window
-                       *dialog
-                       *page-filename)))
+    (let ((accepted-filename?
+           (x_fileselect_save *window
+                              *page
+                              *result
+                              *main-window
+                              *dialog
+                              *page-filename)))
+
+      (gtk_widget_destroy *dialog)
+      ;; Whether the filename to save was accepted by the user.
+      accepted-filename?)))
 
 
 (define (window-save-active-page! window)

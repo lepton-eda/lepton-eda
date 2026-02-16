@@ -554,8 +554,6 @@ x_fileselect_save (SchematicWindow *w_current,
 
   } /* if: accept response */
 
-  gtk_widget_destroy (dialog);
-
   return ret;
 
 } /* x_fileselect_save() */
