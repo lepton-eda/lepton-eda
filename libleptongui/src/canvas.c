@@ -1827,16 +1827,17 @@ schematic_canvas_setup_scrolling (GtkWidget *scrolled,
 {
   GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
     gtk_adjustment_new (0.0,
-                        WORLD_DEFAULT_LEFT,
-                        WORLD_DEFAULT_RIGHT,
+                        schematic_world_size_get_default_left (),
+                        schematic_world_size_get_default_right (),
                         100.0,
                         100.0,
                         10.0));
 
   GtkAdjustment *vadjustment = GTK_ADJUSTMENT(
-    gtk_adjustment_new (WORLD_DEFAULT_BOTTOM,
+    gtk_adjustment_new (schematic_world_size_get_default_bottom (),
                         0.0,
-                        WORLD_DEFAULT_BOTTOM - WORLD_DEFAULT_TOP,
+                        schematic_world_size_get_default_bottom () -
+                        schematic_world_size_get_default_top (),
                         100.0,
                         100.0,
                         10.0));
