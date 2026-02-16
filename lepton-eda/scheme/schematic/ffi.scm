@@ -646,6 +646,11 @@
             g_action_eval_by_name
 
             x_rc_parse_gschem_error
+
+            schematic_world_size_get_default_left
+            schematic_world_size_get_default_right
+            schematic_world_size_get_default_bottom
+            schematic_world_size_get_default_top
             ))
 
 (define libleptongui
@@ -1383,6 +1388,13 @@
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))
+
+;;; world_size.c
+(define-lff schematic_world_size_get_default_left int '())
+(define-lff schematic_world_size_get_default_right int '())
+(define-lff schematic_world_size_get_default_bottom int '())
+(define-lff schematic_world_size_get_default_top int '())
+
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

@@ -31,6 +31,7 @@
             gtk_adjustment_get_upper
             gtk_adjustment_get_value
             gtk_adjustment_set_value
+            gtk_adjustment_new
 
             gtk_bin_get_child
 
@@ -82,6 +83,8 @@
             gtk_rc_parse
 
             gtk_scrolled_window_new
+            gtk_scrolled_window_set_hadjustment
+            gtk_scrolled_window_set_vadjustment
 
             gtk_spin_button_get_value_as_int
             gtk_spin_button_set_value
@@ -134,6 +137,7 @@
 (define-lff gtk_adjustment_get_upper double '(*))
 (define-lff gtk_adjustment_get_value double '(*))
 (define-lff gtk_adjustment_set_value void (list '* double))
+(define-lff gtk_adjustment_new '* (list double double double double double double))
 
 (define-lff gtk_bin_get_child '* '(*))
 
@@ -186,6 +190,8 @@
 (define-lff gtk_rc_parse void '(*))
 
 (define-lff gtk_scrolled_window_new '* '(* *))
+(define-lff gtk_scrolled_window_set_hadjustment void '(* *))
+(define-lff gtk_scrolled_window_set_vadjustment void '(* *))
 
 (define-lff gtk_spin_button_get_value_as_int int '(*))
 (define-lff gtk_spin_button_set_value void (list '* double))

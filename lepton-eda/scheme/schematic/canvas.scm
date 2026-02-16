@@ -68,6 +68,26 @@
 
 
 (define (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+  (define *hadjustment
+    (gtk_adjustment_new 0.0
+                        (schematic_world_size_get_default_left)
+                        (schematic_world_size_get_default_right)
+                        100.0
+                        100.0
+                        10.0))
+
+  (define *vadjustment
+    (gtk_adjustment_new (schematic_world_size_get_default_bottom)
+                        0.0
+                        (- (schematic_world_size_get_default_bottom)
+                           (schematic_world_size_get_default_top))
+                        100.0
+                        100.0
+                        10.0))
+
+  (gtk_scrolled_window_set_hadjustment *scrolled-widget *hadjustment)
+  (gtk_scrolled_window_set_vadjustment *scrolled-widget *vadjustment)
+
   (schematic_canvas_setup_scrolling *scrolled-widget show_scrollbars))
 
 

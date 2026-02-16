@@ -1825,26 +1825,6 @@ void
 schematic_canvas_setup_scrolling (GtkWidget *scrolled,
                                   gboolean show_scrollbars)
 {
-  GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
-    gtk_adjustment_new (0.0,
-                        schematic_world_size_get_default_left (),
-                        schematic_world_size_get_default_right (),
-                        100.0,
-                        100.0,
-                        10.0));
-
-  GtkAdjustment *vadjustment = GTK_ADJUSTMENT(
-    gtk_adjustment_new (schematic_world_size_get_default_bottom (),
-                        0.0,
-                        schematic_world_size_get_default_bottom () -
-                        schematic_world_size_get_default_top (),
-                        100.0,
-                        100.0,
-                        10.0));
-
-  gtk_scrolled_window_set_hadjustment (GTK_SCROLLED_WINDOW (scrolled), hadjustment);
-  gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scrolled), vadjustment);
-
   GtkPolicyType policy = show_scrollbars ?
                          GTK_POLICY_ALWAYS :
                          GTK_POLICY_NEVER;
