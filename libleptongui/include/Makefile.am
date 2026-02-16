@@ -49,4 +49,5 @@ noinst_HEADERS = \
 	preview_widget.h \
 	snap_mode.h \
 	toolbar.h \
+	world_size.h \
 	window.h

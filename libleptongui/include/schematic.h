@@ -66,6 +66,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "new_text_dialog.h"
 #include "page_select_widget.h"
 #include "toolbar.h"
+#include "world_size.h"
 
 /* Gettext translation */
 #include "gettext.h"

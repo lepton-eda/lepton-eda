@@ -101,6 +101,7 @@ libleptongui_la_SOURCES = \
 	new_text_dialog.c \
 	page_select_widget.c \
 	toolbar.c \
+	world_size.c \
 	x_print.c \
 	x_rc.c \
 	x_stroke.c \
