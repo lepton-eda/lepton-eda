@@ -495,7 +495,9 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  *                          schematic window.
  *  \param  [in] dialog The 'Save as' dialog widget to set up.
  *  \param [in] fname The page filename.
- *  \return                    TRUE if dialog was closed with ACCEPT response.
+ *  \return TRUE if the dialog was closed with ACCEPT response and
+ *          the user selected a name of a non-existing file or
+ *          allowed (didn't cancel) overwriting an existing one.
  */
 gboolean
 x_fileselect_save (SchematicWindow *w_current,
