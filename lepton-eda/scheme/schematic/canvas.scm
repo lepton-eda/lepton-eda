@@ -73,10 +73,10 @@
 (define GTK_POLICY_NEVER
   (gtk_string_to_policy (string->pointer "never")))
 
-(define (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+(define (setup-canvas-scrolling *scrolled-widget show-scrollbars?)
   "Adjusts the viewport and scrollbars of *SCROLLED-WIDGET and enables or
 disables the visibility of the scrollbars depending on the value of
-SHOW_SCROLLBARS which is a C boolean."
+SHOW-SCROLLBARS?."
   (define world-left (schematic_world_size_get_default_left))
   (define world-right (schematic_world_size_get_default_right))
   (define world-bottom (schematic_world_size_get_default_bottom))
@@ -98,7 +98,7 @@ SHOW_SCROLLBARS which is a C boolean."
                         100.0
                         10.0))
 
-  (define policy (if (true? show_scrollbars)
+  (define policy (if show-scrollbars?
                      GTK_POLICY_ALWAYS
                      GTK_POLICY_NEVER))
 

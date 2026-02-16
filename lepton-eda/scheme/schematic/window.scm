@@ -942,10 +942,10 @@ tab notebook.  Returns a C TabInfo structure."
   (define *scrolled-widget
     (gtk_scrolled_window_new %null-pointer %null-pointer))
   ;; C gboolean.
-  (define show_scrollbars
-    (schematic_window_get_scrollbars_flag *window))
+  (define show-scrollbars?
+    (true? (schematic_window_get_scrollbars_flag *window)))
 
-  (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+  (setup-canvas-scrolling *scrolled-widget show-scrollbars?)
 
   (let ((*canvas (schematic_canvas_new_with_page *page)))
     (add-tab-canvas! *scrolled-widget *canvas)
@@ -1877,8 +1877,8 @@ for *PAGE page will be created and set active."
   (let ((*scrolled
          (gtk_scrolled_window_new %null-pointer %null-pointer))
         ;; C gboolean.
-        (show_scrollbars
-         (schematic_window_get_scrollbars_flag *window)))
+        (show-scrollbars?
+         (true? (schematic_window_get_scrollbars_flag *window))))
 
     (gtk_container_add *work-box *scrolled)
 
@@ -1887,7 +1887,7 @@ for *PAGE page will be created and set active."
      *window
      (make-drawing-area *scrolled
                         (schematic_window_get_active_page *window)))
-    (setup-canvas-scrolling *scrolled show_scrollbars)
+    (setup-canvas-scrolling *scrolled show-scrollbars?)
 
     (schematic_window_get_current_canvas *window)))
 
