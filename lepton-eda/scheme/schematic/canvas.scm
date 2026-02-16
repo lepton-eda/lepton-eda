@@ -68,19 +68,23 @@
 
 
 (define (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+  (define world-left (schematic_world_size_get_default_left))
+  (define world-right (schematic_world_size_get_default_right))
+  (define world-bottom (schematic_world_size_get_default_bottom))
+  (define world-top (schematic_world_size_get_default_top))
+
   (define *hadjustment
     (gtk_adjustment_new 0.0
-                        (schematic_world_size_get_default_left)
-                        (schematic_world_size_get_default_right)
+                        world-left
+                        world-right
                         100.0
                         100.0
                         10.0))
 
   (define *vadjustment
-    (gtk_adjustment_new (schematic_world_size_get_default_bottom)
+    (gtk_adjustment_new world-bottom
                         0.0
-                        (- (schematic_world_size_get_default_bottom)
-                           (schematic_world_size_get_default_top))
+                        (- world-bottom world-top)
                         100.0
                         100.0
                         10.0))
