@@ -86,6 +86,9 @@
                       *schematic_file_select_dialog_filter_changed
                       %null-pointer)
 
+    ;; Open "Save As.." dialog.
+    (gtk_widget_show *dialog)
+
     (x_fileselect_save *window
                        *page
                        *result
