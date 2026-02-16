@@ -35,7 +35,8 @@
             invalidate-canvas
             *redraw-canvas
             scroll-canvas
-            *scroll-canvas))
+            *scroll-canvas
+            setup-canvas-scrolling))
 
 
 (define (canvas-viewport canvas)
@@ -64,6 +65,10 @@
 
 (define *redraw-canvas
   (procedure->pointer int redraw-canvas '(* * *)))
+
+
+(define (setup-canvas-scrolling *scrolled-widget show_scrollbars)
+  (schematic_canvas_setup_scrolling *scrolled-widget show_scrollbars))
 
 
 ;;; Temporary definitions from "gschem_defines.h".
