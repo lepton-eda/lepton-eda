@@ -39,6 +39,12 @@ gtk_widget_get_gtk_window (GtkWidget *widget);
 void
 gtk_widget_pack_child (GtkWidget *parent_widget,
                        GtkWidget *child_widget);
+const char*
+gtk_policy_to_string (int policy);
+
+int
+gtk_string_to_policy (char *s);
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */

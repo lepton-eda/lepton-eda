@@ -179,3 +179,59 @@ gdk_event_scroll_direction_to_string (GdkScrollDirection mode)
 
   return result;
 }
+
+
+/*! \brief Transform a GTK policy id value to string.
+ *
+ * \par Function Description
+ * Given a \c GtkPolicyType id \p policy, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] policy The policy id.
+ * \return The string corresponding to the id.
+ */
+const char*
+gtk_policy_to_string (int policy)
+{
+  const char *result = "unknown";
+
+  switch (policy)
+  {
+  case GTK_POLICY_ALWAYS: result = "always"; break;
+  case GTK_POLICY_AUTOMATIC: result = "automatic"; break;
+  case GTK_POLICY_NEVER: result = "never"; break;
+#ifdef ENABLE_GTK3
+  case GTK_POLICY_EXTERNAL: result = "external"; break;
+#endif
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into GTK policy id value.
+ *
+ * \par Function Description
+ * Given a string naming a \c GtkPolicyType id, return the enum
+ * value corresponding to it.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The GTK policy id value.
+ */
+int
+gtk_string_to_policy (char *s)
+{
+  int result = GTK_POLICY_ALWAYS;
+
+  if (strcmp (s, "always") == 0) {result = GTK_POLICY_ALWAYS; }
+  else if (strcmp (s, "automatic") == 0) {result = GTK_POLICY_AUTOMATIC; }
+  else if (strcmp (s, "never") == 0) {result = GTK_POLICY_NEVER; }
+#ifdef ENABLE_GTK3
+  else if (strcmp (s, "external") == 0) {result = GTK_POLICY_EXTERNAL; }
+#endif
+
+  return result;
+}
