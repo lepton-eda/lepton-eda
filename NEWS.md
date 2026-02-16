@@ -367,9 +367,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   The module contains helpers for working with the foreign C type
   `SchematicViewport`.
 
-- A new module, `(schematic canvas)`, has been added.  Currently,
-  the module exports an only function, `canvas-viewport()`, that
-  obtains the `<viewport>` object of a `<canvas>` instance.
+- A new module, `(schematic canvas)`, has been added.  The module
+  exports functions for setting up the widget of a `<canvas>` instance
+  and its child widgets, obtaining the `<viewport>` of the canvas,
+  redrawing, and scrolling.
 
 - Most of the functions related to the *zoom box* feature have
   been rewritten in Scheme.
@@ -388,6 +389,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   for users for backwards compatibility.
 
 - Gdk canvas scroll events are now handled in Scheme.
+
+- An arbitrary limitation for canvas scrolling has been eliminated.
+  Previously, if scrollbars were disabled in configuration, the user
+  could not pan over canvas in the X or Y direction using the mouse
+  scroll wheel.  Since presence or absence of scrollbars should not
+  affect canvas scrolling, this limitation has been thrown out.
 
 - A new module, `(schematic action-mode)`, has been added.  It
   exports the following new functions:
