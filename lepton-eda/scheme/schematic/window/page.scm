@@ -27,6 +27,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
 
   #:export (file-select-save-page!
@@ -44,12 +45,14 @@
 
 (define (file-select-save-page! *window *page *result)
   (define (run-save-as-dialog *main-window *dialog *page-filename)
-    (x_fileselect_save *window
-                       *page
-                       *result
-                       *main-window
-                       *dialog
-                       *page-filename))
+    (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
+        (x_fileselect_save *window
+                           *page
+                           *result
+                           *main-window
+                           *dialog
+                           *page-filename)
+        FALSE))
 
   (when (null-pointer? *window)
     (error "NULL window."))

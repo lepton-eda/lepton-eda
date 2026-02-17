@@ -48,6 +48,7 @@
             gtk_dialog_add_button
             gtk_dialog_get_content_area
             gtk_dialog_set_default_response
+            gtk_dialog_run
 
             gtk_entry_get_text
             gtk_entry_get_text_length
@@ -185,6 +186,7 @@
 (define-lff gtk_dialog_add_button '* (list '* '* int))
 (define-lff gtk_dialog_get_content_area '* '(*))
 (define-lff gtk_dialog_set_default_response void (list '* int))
+(define-lff gtk_dialog_run int '(*))
 
 (define-lff gtk_entry_get_text '* '(*))
 (define-lff gtk_entry_get_text_length uint16 '(*))

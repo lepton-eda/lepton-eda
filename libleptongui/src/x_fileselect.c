@@ -507,8 +507,6 @@ x_fileselect_save (SchematicWindow *w_current,
                    GtkWidget *dialog,
                    gchar *fname)
 {
-  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
-  {
     gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     /* If the file already exists, display a dialog box to check if
@@ -549,12 +547,6 @@ x_fileselect_save (SchematicWindow *w_current,
     {
       return FALSE;
     }
-
-  } /* if: accept response */
-  else
-  {
-    return FALSE;
-  }
 
 } /* x_fileselect_save() */
 
