@@ -491,8 +491,6 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  *  \param  [in]     w_current The SchematicWindow environment.
  *  \param  [in]     page      The page to be saved.
  *  \param  [in,out] result    If not NULL, will be filled with save operation result.
- *  \param [in] main_window The main_window widget of the
- *                          schematic window.
  *  \param  [in] dialog The 'Save as' dialog widget to set up.
  *  \param [in] fname The page filename.
  *  \return TRUE if the dialog was closed with ACCEPT response and
@@ -503,7 +501,6 @@ gboolean
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
-                   GtkWidget *main_window,
                    GtkWidget *dialog,
                    gchar *fname)
 {

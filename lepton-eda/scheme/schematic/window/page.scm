@@ -44,12 +44,11 @@
 
 
 (define (file-select-save-page! *window *page *result)
-  (define (run-save-as-dialog *main-window *dialog *page-filename)
+  (define (run-save-as-dialog *dialog *page-filename)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
         (x_fileselect_save *window
                            *page
                            *result
-                           *main-window
                            *dialog
                            *page-filename)
         FALSE))
@@ -109,8 +108,7 @@
                             (sizeof int)))
 
     (let ((accepted-filename?
-           (run-save-as-dialog *main-window
-                               *dialog
+           (run-save-as-dialog *dialog
                                *page-filename)))
 
       (gtk_widget_destroy *dialog)

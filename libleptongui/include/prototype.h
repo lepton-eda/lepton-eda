@@ -982,7 +982,6 @@ gboolean
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
-                   GtkWidget *main_window,
                    GtkWidget *dialog,
                    gchar *fname);
 gboolean
