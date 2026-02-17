@@ -507,8 +507,6 @@ x_fileselect_save (SchematicWindow *w_current,
                    GtkWidget *dialog,
                    gchar *fname)
 {
-  gboolean ret = FALSE;
-
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
   {
     gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
@@ -536,21 +534,27 @@ x_fileselect_save (SchematicWindow *w_current,
     */
     if (filename != NULL)
     {
-      ret = TRUE;
-
       gboolean res = x_window_save_page (w_current, page, filename);
+
+      g_free (filename);
 
       if (result != NULL)
       {
         *result = res;
       }
+
+      return TRUE;
+    }
+    else
+    {
+      return FALSE;
     }
 
-    g_free (filename);
-
   } /* if: accept response */
-
-  return ret;
+  else
+  {
+    return FALSE;
+  }
 
 } /* x_fileselect_save() */
 
