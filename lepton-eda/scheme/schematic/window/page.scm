@@ -17,6 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic window page)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -88,6 +89,13 @@
 
     ;; Open "Save As.." dialog.
     (gtk_widget_show *dialog)
+
+    (unless (null-pointer? *result)
+      (bytevector-sint-set! (pointer->bytevector *result (sizeof int))
+                            0
+                            FALSE
+                            (native-endianness)
+                            (sizeof int)))
 
     (let ((accepted-filename?
            (x_fileselect_save *window

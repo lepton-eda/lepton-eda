@@ -508,10 +508,6 @@ x_fileselect_save (SchematicWindow *w_current,
                    gchar *fname)
 {
   gboolean ret = FALSE;
-  if (result != NULL)
-  {
-    *result = FALSE;
-  }
 
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
   {
