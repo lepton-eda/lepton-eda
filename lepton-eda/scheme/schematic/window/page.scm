@@ -43,6 +43,14 @@
 
 
 (define (file-select-save-page! *window *page *result)
+  (define (run-save-as-dialog *main-window *dialog *page-filename)
+    (x_fileselect_save *window
+                       *page
+                       *result
+                       *main-window
+                       *dialog
+                       *page-filename))
+
   (when (null-pointer? *window)
     (error "NULL window."))
   (when (null-pointer? *page)
@@ -98,12 +106,9 @@
                             (sizeof int)))
 
     (let ((accepted-filename?
-           (x_fileselect_save *window
-                              *page
-                              *result
-                              *main-window
-                              *dialog
-                              *page-filename)))
+           (run-save-as-dialog *main-window
+                               *dialog
+                               *page-filename)))
 
       (gtk_widget_destroy *dialog)
       ;; Whether the filename to save was accepted by the user.
