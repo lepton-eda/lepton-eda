@@ -46,10 +46,12 @@
 (define (file-select-save-page! *window *page *result)
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
-        (x_fileselect_save *window
-                           *page
-                           *result
-                           *dialog)
+        (let ((*filename (gtk_file_chooser_get_filename *dialog)))
+          (x_fileselect_save *window
+                             *page
+                             *result
+                             *dialog
+                             *filename))
         FALSE))
 
   (when (null-pointer? *window)

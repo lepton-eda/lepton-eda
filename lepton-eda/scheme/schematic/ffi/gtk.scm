@@ -58,6 +58,7 @@
 
             gtk_file_chooser_set_current_folder
             gtk_file_chooser_set_current_name
+            gtk_file_chooser_get_filename
             gtk_file_chooser_set_filename
             gtk_file_chooser_set_filter
 
@@ -196,6 +197,7 @@
 
 (define-lff gtk_file_chooser_set_current_folder void '(* *))
 (define-lff gtk_file_chooser_set_current_name void '(* *))
+(define-lff gtk_file_chooser_get_filename '* '(*))
 (define-lff gtk_file_chooser_set_filename void '(* *))
 (define-lff gtk_file_chooser_set_filter void '(* *))
 
