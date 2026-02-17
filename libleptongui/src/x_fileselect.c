@@ -515,7 +515,6 @@ x_fileselect_save (SchematicWindow *w_current,
       if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES)
       {
         g_message (_("Save cancelled on user request"));
-        g_free (filename);
         filename = NULL;
       }
 
@@ -528,8 +527,6 @@ x_fileselect_save (SchematicWindow *w_current,
     if (filename != NULL)
     {
       gboolean res = x_window_save_page (w_current, page, filename);
-
-      g_free (filename);
 
       if (result != NULL)
       {

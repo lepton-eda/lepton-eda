@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
@@ -44,14 +45,27 @@
 
 
 (define (file-select-save-page! *window *page *result)
+  ;; Get filename from the GtkFileChooser dialog.  As the value
+  ;; must be freed anyway, the filename is transformed into a
+  ;; Scheme string, and the original pointer is freed.  If the
+  ;; original pointer is NULL, the function returns #f.
+  (define (file-chooser-filename *dialog)
+    (let* ((*filename (gtk_file_chooser_get_filename *dialog))
+           (filename (and (not (null-pointer? *filename))
+                          (pointer->string *filename))))
+      (g_free *filename)
+      filename))
+
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
-        (let ((*filename (gtk_file_chooser_get_filename *dialog)))
+        (let ((filename (file-chooser-filename *dialog)))
           (x_fileselect_save *window
                              *page
                              *result
                              *dialog
-                             *filename))
+                             (if filename
+                                 (string->pointer filename)
+                                 %null-pointer)))
         FALSE))
 
   (when (null-pointer? *window)
