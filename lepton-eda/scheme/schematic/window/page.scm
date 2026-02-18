@@ -69,6 +69,9 @@
       (g_free *filename)
       filename))
 
+  (define (overwrite-dialog-response *overwrite-dialog)
+    (gtk-response->symbol (gtk_dialog_run *overwrite-dialog)))
+
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
         (let* ((filename (file-chooser-filename *dialog))
@@ -82,8 +85,7 @@
                       (string->pointer filename))))
                (overwrite-cancelled?
                 (and *overwrite-dialog
-                     (not (eq? (gtk-response->symbol
-                                (gtk_dialog_run *overwrite-dialog))
+                     (not (eq? (overwrite-dialog-response *overwrite-dialog)
                                'yes)))))
           (when *overwrite-dialog
             (gtk_widget_destroy *overwrite-dialog))
