@@ -508,9 +508,6 @@ x_fileselect_save (SchematicWindow *w_current,
                    gboolean file_exists,
                    gboolean overwrite_cancelled)
 {
-    /* If the file already exists, display a dialog box to check if
-       the user really wants to overwrite it:
-    */
     if (file_exists)
     {
       if (overwrite_cancelled)

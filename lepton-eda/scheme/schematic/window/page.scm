@@ -62,6 +62,8 @@
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
         (let* ((filename (file-chooser-filename *dialog))
                (existing-file? (and filename (file-exists? filename)))
+               ;; If the file already exists, display a dialog box to
+               ;; check if the user really wants to overwrite it.
                (*overwrite-dialog
                 (if existing-file?
                     (schematic_file_select_dialog_overwrite_file
