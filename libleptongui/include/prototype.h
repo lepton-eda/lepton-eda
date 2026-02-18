@@ -978,14 +978,11 @@ GSList*
 x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog);
 
-gboolean
+void
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
-                   GtkWidget *dialog,
-                   char *filename,
-                   gboolean file_exists,
-                   gboolean overwrite_cancelled);
+                   char *filename);
 gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,

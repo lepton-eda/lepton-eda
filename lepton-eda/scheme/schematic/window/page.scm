@@ -81,15 +81,17 @@
           (when overwrite-cancelled?
             (log! 'message (G_ "Save cancelled on user request")))
 
-          (x_fileselect_save *window
-                             *page
-                             *result
-                             *dialog
-                             (if filename
-                                 (string->pointer filename)
-                                 %null-pointer)
-                             (if existing-file? TRUE FALSE)
-                             (if overwrite-cancelled? TRUE FALSE)))
+          (if (and filename (not overwrite-cancelled?))
+              ;; Try saving the page to filename.
+              (begin
+                (x_fileselect_save *window
+                                   *page
+                                   *result
+                                   (if filename
+                                       (string->pointer filename)
+                                       %null-pointer))
+                TRUE)
+              FALSE))
         FALSE))
 
   (when (null-pointer? *window)

@@ -491,41 +491,20 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  *  \param  [in]     w_current The SchematicWindow environment.
  *  \param  [in]     page      The page to be saved.
  *  \param  [in,out] result    If not NULL, will be filled with save operation result.
- *  \param  [in] dialog The 'Save as' dialog widget to set up.
  *  \param  [in] filename The filename chosen in the 'Save as' dialog.
- *  \param  [in] file_exists TRUE if a file with the chosen filename already exists.
- *  \param  [in] overwrite_cancelled TRUE if the user cancelled an overwrite.
- *  \return TRUE if the dialog was closed with ACCEPT response and
- *          the user selected a name of a non-existing file or
- *          allowed (didn't cancel) overwriting an existing one.
  */
-gboolean
+void
 x_fileselect_save (SchematicWindow *w_current,
                    LeptonPage* page,
                    gboolean* result,
-                   GtkWidget *dialog,
-                   char *filename,
-                   gboolean file_exists,
-                   gboolean overwrite_cancelled)
+                   char *filename)
 {
-    /* try saving the page to file filename:
-    */
-    if (filename != NULL && !overwrite_cancelled)
-    {
       gboolean res = x_window_save_page (w_current, page, filename);
 
       if (result != NULL)
       {
         *result = res;
       }
-
-      return TRUE;
-    }
-    else
-    {
-      return FALSE;
-    }
-
 } /* x_fileselect_save() */
 
 
