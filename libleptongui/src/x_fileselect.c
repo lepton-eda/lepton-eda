@@ -515,7 +515,6 @@ x_fileselect_save (SchematicWindow *w_current,
     {
       if (overwrite_cancelled)
       {
-        g_message (_("Save cancelled on user request"));
         filename = NULL;
       }
     }

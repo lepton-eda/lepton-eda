@@ -24,6 +24,8 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi gtk)
@@ -73,6 +75,9 @@
                                'yes)))))
           (when (not (null-pointer? *overwrite-dialog))
             (gtk_widget_destroy *overwrite-dialog))
+
+          (when overwrite-cancelled?
+            (log! 'message (G_ "Save cancelled on user request")))
 
           (x_fileselect_save *window
                              *page
