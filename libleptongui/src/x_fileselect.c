@@ -508,18 +508,9 @@ x_fileselect_save (SchematicWindow *w_current,
                    gboolean file_exists,
                    gboolean overwrite_cancelled)
 {
-    if (file_exists)
-    {
-      if (overwrite_cancelled)
-      {
-        filename = NULL;
-      }
-    }
-
-
     /* try saving the page to file filename:
     */
-    if (filename != NULL)
+    if (filename != NULL && !overwrite_cancelled)
     {
       gboolean res = x_window_save_page (w_current, page, filename);
 
