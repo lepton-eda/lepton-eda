@@ -71,6 +71,9 @@
                      (not (eq? (gtk-response->symbol
                                 (gtk_dialog_run *overwrite-dialog))
                                'yes)))))
+          (when (not (null-pointer? *overwrite-dialog))
+            (gtk_widget_destroy *overwrite-dialog))
+
           (x_fileselect_save *window
                              *page
                              *result
@@ -79,7 +82,6 @@
                                  (string->pointer filename)
                                  %null-pointer)
                              (if existing-file? TRUE FALSE)
-                             *overwrite-dialog
                              (if overwrite-cancelled? TRUE FALSE)))
         FALSE))
 
