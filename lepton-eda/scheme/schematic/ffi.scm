@@ -641,6 +641,7 @@
             schematic_event_control_mask
             schematic_event_shift_mask
 
+            schematic_file_select_dialog_overwrite_file
             schematic_file_select_dialog_new
             schematic_file_select_dialog_setup_filters
             schematic_file_select_dialog_filename_sch
@@ -1342,6 +1343,7 @@
 (define-lff schematic_event_shift_mask int '())
 
 ;;; x_fileselect.c
+(define-lff schematic_file_select_dialog_overwrite_file '* '(* *))
 (define-lff schematic_file_select_dialog_new '* '(*))
 (define-lff schematic_file_select_dialog_setup_filters void '(*))
 (define-lff schematic_file_select_dialog_filename_sch int '(*))
@@ -1353,7 +1355,7 @@
 (define-lff schematic_file_select_dialog_get_filter_all '* '())
 (define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
-(define-lff x_fileselect_save int (list '* '* '* '* '* int))
+(define-lff x_fileselect_save int (list '* '* '* '* '* int '*))
 (define-lfc *x_fileselect_callback_update_preview)
 (define-lff schematic_file_open int '(* * * *))
 (define-lff schematic_file_select_dialog_save_as '* '(*))

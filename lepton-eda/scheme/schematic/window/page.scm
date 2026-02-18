@@ -59,7 +59,13 @@
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
         (let* ((filename (file-chooser-filename *dialog))
-               (existing-file? (and filename (file-exists? filename))))
+               (existing-file? (and filename (file-exists? filename)))
+               (*overwrite-dialog
+                (if existing-file?
+                    (schematic_file_select_dialog_overwrite_file
+                     *dialog
+                     (string->pointer filename))
+                    %null-pointer)))
           (x_fileselect_save *window
                              *page
                              *result
@@ -67,7 +73,8 @@
                              (if filename
                                  (string->pointer filename)
                                  %null-pointer)
-                             (if existing-file? TRUE FALSE)))
+                             (if existing-file? TRUE FALSE)
+                             *overwrite-dialog))
         FALSE))
 
   (when (null-pointer? *window)

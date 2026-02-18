@@ -984,7 +984,8 @@ x_fileselect_save (SchematicWindow *w_current,
                    gboolean* result,
                    GtkWidget *dialog,
                    char *filename,
-                   gboolean file_exists);
+                   gboolean file_exists,
+                   GtkWidget *checkdialog);
 gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,
