@@ -58,14 +58,16 @@
 
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
-        (let ((filename (file-chooser-filename *dialog)))
+        (let* ((filename (file-chooser-filename *dialog))
+               (existing-file? (and filename (file-exists? filename))))
           (x_fileselect_save *window
                              *page
                              *result
                              *dialog
                              (if filename
                                  (string->pointer filename)
-                                 %null-pointer)))
+                                 %null-pointer)
+                             (if existing-file? TRUE FALSE)))
         FALSE))
 
   (when (null-pointer? *window)
