@@ -977,12 +977,6 @@ x_fileselect_add_preview (GtkWidget *dialog,
 GSList*
 x_fileselect_open (SchematicWindow *w_current,
                    GtkWidget *dialog);
-
-void
-x_fileselect_save (SchematicWindow *w_current,
-                   LeptonPage* page,
-                   gboolean* result,
-                   char *filename);
 gboolean
 schematic_file_open (SchematicWindow *w_current,
                      LeptonPage *page,

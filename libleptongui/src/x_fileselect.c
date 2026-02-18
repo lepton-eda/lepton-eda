@@ -476,39 +476,6 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
 }
 
 
-/*! \brief Opens a file chooser for saving the current page.
- *  \par Function Description
- *  This function opens a file chooser dialog and wait for the user to
- *  select a file where the \a page will be saved.
- *
- *  If the user cancels the operation (with the cancel button), the
- *  page is not saved and FALSE is returned.
- *
- *  The function updates the user interface. (Actual UI update
- *  is performed in x_window_save_page(), which is called by this
- *  function).
- *
- *  \param  [in]     w_current The SchematicWindow environment.
- *  \param  [in]     page      The page to be saved.
- *  \param  [in,out] result    If not NULL, will be filled with save operation result.
- *  \param  [in] filename The filename chosen in the 'Save as' dialog.
- */
-void
-x_fileselect_save (SchematicWindow *w_current,
-                   LeptonPage* page,
-                   gboolean* result,
-                   char *filename)
-{
-      gboolean res = x_window_save_page (w_current, page, filename);
-
-      if (result != NULL)
-      {
-        *result = res;
-      }
-} /* x_fileselect_save() */
-
-
-
 /*! \brief Load/Backup selection dialog.
  *  \par Function Description
  *  This function opens a message dialog and wait for the user to choose

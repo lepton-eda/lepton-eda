@@ -46,6 +46,17 @@
   (schematic_window_page_changed *window))
 
 
+;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for the
+;;; user to select a file where the page will be saved.  If the
+;;; argument *RESULT is not NULL, the pointer references the C boolean
+;;; result of the save operation.
+;;;
+;;; If the user cancels the operation (with the Cancel button), the
+;;; page is not saved and FALSE is returned.
+;;;
+;;; The function updates the user interface. (Actual UI update is
+;;; performed in x_window_save_page(), which is called by this
+;;; function).
 (define (file-select-save-page! *window *page *result)
   ;; Get filename from the GtkFileChooser dialog.  As the value
   ;; must be freed anyway, the filename is transformed into a
@@ -83,13 +94,16 @@
 
           (if (and filename (not overwrite-cancelled?))
               ;; Try saving the page to filename.
-              (begin
-                (x_fileselect_save *window
-                                   *page
-                                   *result
-                                   (if filename
-                                       (string->pointer filename)
-                                       %null-pointer))
+              (let ((save_result
+                     (x_window_save_page *window
+                                         *page
+                                         (string->pointer filename))))
+                (unless (null-pointer? *result)
+                  (bytevector-sint-set! (pointer->bytevector *result (sizeof int))
+                                        0
+                                        save_result
+                                        (native-endianness)
+                                        (sizeof int)))
                 TRUE)
               FALSE))
         FALSE))

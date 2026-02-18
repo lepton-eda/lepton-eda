@@ -653,7 +653,6 @@
             schematic_file_select_dialog_get_filter_all
             x_fileselect_add_preview
             x_fileselect_open
-            x_fileselect_save
             *x_fileselect_callback_update_preview
             schematic_file_open
             schematic_file_select_dialog_save_as
@@ -1355,7 +1354,6 @@
 (define-lff schematic_file_select_dialog_get_filter_all '* '())
 (define-lff x_fileselect_add_preview void '(* *))
 (define-lff x_fileselect_open '* '(* *))
-(define-lff x_fileselect_save void '(* * * *))
 (define-lfc *x_fileselect_callback_update_preview)
 (define-lff schematic_file_open int '(* * * *))
 (define-lff schematic_file_select_dialog_save_as '* '(*))
