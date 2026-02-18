@@ -65,7 +65,12 @@
                     (schematic_file_select_dialog_overwrite_file
                      *dialog
                      (string->pointer filename))
-                    %null-pointer)))
+                    %null-pointer))
+               (overwrite-cancelled?
+                (and (not (null-pointer? *overwrite-dialog))
+                     (not (eq? (gtk-response->symbol
+                                (gtk_dialog_run *overwrite-dialog))
+                               'yes)))))
           (x_fileselect_save *window
                              *page
                              *result
@@ -74,7 +79,8 @@
                                  (string->pointer filename)
                                  %null-pointer)
                              (if existing-file? TRUE FALSE)
-                             *overwrite-dialog))
+                             *overwrite-dialog
+                             (if overwrite-cancelled? TRUE FALSE)))
         FALSE))
 
   (when (null-pointer? *window)
