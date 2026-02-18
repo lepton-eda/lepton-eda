@@ -70,7 +70,11 @@
       filename))
 
   (define (overwrite-dialog-response *overwrite-dialog)
-    (gtk-response->symbol (gtk_dialog_run *overwrite-dialog)))
+    (let ((result (gtk-response->symbol
+                   (gtk_dialog_run *overwrite-dialog))))
+      (gtk_widget_destroy *overwrite-dialog)
+
+      result))
 
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
@@ -87,8 +91,6 @@
                 (and *overwrite-dialog
                      (not (eq? (overwrite-dialog-response *overwrite-dialog)
                                'yes)))))
-          (when *overwrite-dialog
-            (gtk_widget_destroy *overwrite-dialog))
 
           (when overwrite-cancelled?
             (log! 'message (G_ "Save cancelled on user request")))
