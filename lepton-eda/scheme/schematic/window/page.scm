@@ -69,9 +69,13 @@
       (g_free *filename)
       filename))
 
-  (define (overwrite-dialog-response *overwrite-dialog)
-    (let ((result (gtk-response->symbol
-                   (gtk_dialog_run *overwrite-dialog))))
+  (define (overwrite-dialog-response *parent-dialog filename)
+    (let* ((*overwrite-dialog
+            (schematic_file_select_dialog_overwrite_file
+             *parent-dialog
+             (string->pointer filename)))
+           (result (gtk-response->symbol
+                    (gtk_dialog_run *overwrite-dialog))))
       (gtk_widget_destroy *overwrite-dialog)
 
       result))
@@ -82,14 +86,9 @@
                (existing-file? (and filename (file-exists? filename)))
                ;; If the file already exists, display a dialog box to
                ;; check if the user really wants to overwrite it.
-               (*overwrite-dialog
-                (and existing-file?
-                     (schematic_file_select_dialog_overwrite_file
-                      *dialog
-                      (string->pointer filename))))
                (overwrite-cancelled?
-                (and *overwrite-dialog
-                     (not (eq? (overwrite-dialog-response *overwrite-dialog)
+                (and existing-file?
+                     (not (eq? (overwrite-dialog-response *dialog filename)
                                'yes)))))
 
           (when overwrite-cancelled?
