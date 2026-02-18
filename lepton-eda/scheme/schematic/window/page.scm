@@ -76,17 +76,16 @@
                ;; If the file already exists, display a dialog box to
                ;; check if the user really wants to overwrite it.
                (*overwrite-dialog
-                (if existing-file?
-                    (schematic_file_select_dialog_overwrite_file
-                     *dialog
-                     (string->pointer filename))
-                    %null-pointer))
+                (and existing-file?
+                     (schematic_file_select_dialog_overwrite_file
+                      *dialog
+                      (string->pointer filename))))
                (overwrite-cancelled?
-                (and (not (null-pointer? *overwrite-dialog))
+                (and *overwrite-dialog
                      (not (eq? (gtk-response->symbol
                                 (gtk_dialog_run *overwrite-dialog))
                                'yes)))))
-          (when (not (null-pointer? *overwrite-dialog))
+          (when *overwrite-dialog
             (gtk_widget_destroy *overwrite-dialog))
 
           (when overwrite-cancelled?
