@@ -134,7 +134,7 @@
     ;; For untitled pages, open "Save as..." dialog.
     (let ((bv (make-bytevector (sizeof int) 0)))
       ;; Skip the result if the File save dialog has been cancelled.
-      (or (not (true? (file-select-save-page! *window *page (bytevector->pointer bv))))
+      (or (not (file-select-save-page! *window *page (bytevector->pointer bv)))
           ;; Otherwise, get the result of the save operation.
           (true? (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))))
 

@@ -52,7 +52,7 @@
 ;;; result of the save operation.
 ;;;
 ;;; If the user cancels the operation (with the Cancel button), the
-;;; page is not saved and FALSE is returned.
+;;; page is not saved and #f is returned.
 ;;;
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in x_window_save_page(), which is called by this
@@ -104,9 +104,9 @@
                                         save_result
                                         (native-endianness)
                                         (sizeof int)))
-                TRUE)
-              FALSE))
-        FALSE))
+                #t)
+              #f))
+        #f))
 
   (when (null-pointer? *window)
     (error "NULL window."))
