@@ -83,15 +83,12 @@
   (define (run-save-as-dialog *dialog)
     (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
         (let* ((filename (file-chooser-filename *dialog))
-               (existing-file? (and filename (file-exists? filename)))
-               ;; If the file already exists, display a dialog box to
-               ;; check if the user really wants to overwrite it.
-               (overwrite-cancelled?
-                (and existing-file?
-                     (not (eq? (overwrite-dialog-response *dialog filename)
-                               'yes)))))
-
-          (if overwrite-cancelled?
+               (existing-file? (and filename (file-exists? filename))))
+          ;; If the file already exists, display a dialog box to check
+          ;; if the user really wants to overwrite it.
+          (if (and existing-file?
+                   (not (eq? (overwrite-dialog-response *dialog filename)
+                             'yes)))
               (begin
                 (log! 'message (G_ "Save cancelled on user request"))
                 #f)
