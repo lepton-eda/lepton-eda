@@ -91,23 +91,25 @@
                      (not (eq? (overwrite-dialog-response *dialog filename)
                                'yes)))))
 
-          (when overwrite-cancelled?
-            (log! 'message (G_ "Save cancelled on user request")))
+          (if overwrite-cancelled?
+              (begin
+                (log! 'message (G_ "Save cancelled on user request"))
+                #f)
 
-          (if (and filename (not overwrite-cancelled?))
-              ;; Try saving the page to filename.
-              (let ((save_result
-                     (x_window_save_page *window
-                                         *page
-                                         (string->pointer filename))))
-                (unless (null-pointer? *result)
-                  (bytevector-sint-set! (pointer->bytevector *result (sizeof int))
-                                        0
-                                        save_result
-                                        (native-endianness)
-                                        (sizeof int)))
-                #t)
-              #f))
+              (if filename
+                  ;; Try saving the page to filename.
+                  (let ((save_result
+                         (x_window_save_page *window
+                                             *page
+                                             (string->pointer filename))))
+                    (unless (null-pointer? *result)
+                      (bytevector-sint-set! (pointer->bytevector *result (sizeof int))
+                                            0
+                                            save_result
+                                            (native-endianness)
+                                            (sizeof int)))
+                    #t)
+                  #f)))
         #f))
 
   (when (null-pointer? *window)
