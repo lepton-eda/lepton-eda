@@ -128,6 +128,8 @@
 
             ;; GDK
             GdkModifierType
+
+            gdk_event_free
             gdk_event_get
             gdk_event_get_coords
             gdk_event_get_scroll_deltas
@@ -254,6 +256,7 @@
 (define-lff gtk_window_set_transient_for void '(* *))
 (define-lff gtk_window_set_type_hint void (list '* int))
 
+(define-lff gdk_event_free void '(*))
 (define-lff gdk_event_get '* '())
 ;;; gdk_event_get_button() can only be used for GTK3.
 ;; (define-lff gdk_event_get_button int '(* *))
