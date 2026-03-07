@@ -257,6 +257,7 @@ Component library setup
 Interactive work with Scheme code
 
 * Geiser REPL::
+* GDK events::
 
 Netlister
 
