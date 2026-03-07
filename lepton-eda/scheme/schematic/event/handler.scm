@@ -22,9 +22,20 @@
   #:use-module (system foreign)
 
   #:use-module (schematic ffi gtk)
+  #:use-module (schematic hook)
 
-  #:export (set-gdk-event-handler))
+  #:export (set-default-gdk-event-handler))
 
+
+;;; The default event handler.  It does nothing more than running
+;;; the user customizable hook gdk-event-hook() and return the
+;;; event to GTK for further processing.
+(define (default-event-handler *event *data)
+  (run-hook gdk-event-hook *event *data)
+  (gtk_main_do_event *event))
+
+(define *default-event-handler
+  (procedure->pointer void default-event-handler '(* *)))
 
 
 ;;; Function definitions:
@@ -59,3 +70,9 @@
                                 (*data %null-pointer)
                                 (*destroy-notify-func %null-pointer))
   (gdk_event_handler_set *handler *data *destroy-notify-func))
+
+
+(define (set-default-gdk-event-handler)
+  "Set the default handler for GDK events that can be customized
+using the hook GDK-EVENT-HOOK."
+  (set-gdk-event-handler *default-event-handler))
