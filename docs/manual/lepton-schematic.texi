@@ -1842,9 +1842,10 @@ out.
 
 @menu
 * Geiser REPL::
+* GDK events::
 @end menu
 
-@node Geiser REPL,  , Interactive work with Scheme code, Interactive work with Scheme code
+@node Geiser REPL, GDK events, Interactive work with Scheme code, Interactive work with Scheme code
 @subsection Investigate the code using the Geiser REPL
 @cindex geiser
 
@@ -1878,3 +1879,30 @@ scheme@@(guile-user)> (add-to-load-path "/usr/share/lepton-eda/scheme")
 
 Then you'll be able to investigate the contents of a module under the
 path as described above.
+
+
+@node GDK events,  , Geiser REPL, Interactive work with Scheme code
+@subsection GDK event processing
+@cindex gdk event
+
+A custom function for processing GDK events can be added using the
+@code{gdk-event-hook} Scheme hook.  It may be useful for development,
+hunting bugs, or interactive testing.  A simple example Scheme script
+could look like this:
+
+@example
+(use-modules (schematic hook))
+
+(define (event-handler *event *data)
+  ;; Add your event processing function here.
+  (format (current-error-port) "Event: ~A\n" *event))
+
+(add-hook! gdk-event-hook event-handler)
+@end example
+
+Run the script using @code{lepton-schematic -s myscript.scm} and
+you'll see the output in your terminal.
+
+On its own, GDK event processing is out of the scope of this manual,
+so please reference the GTK+ documentation for more information on
+this.
