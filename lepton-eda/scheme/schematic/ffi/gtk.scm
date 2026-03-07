@@ -134,7 +134,8 @@
             gdk_event_get_scroll_direction
             gdk_event_get_state
             gdk_event_get_time
-            gdk_event_handler_set))
+            gdk_event_handler_set
+            gdk_event_put))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -260,6 +261,7 @@
 (define-lff gdk_event_get_state int '(* *))
 (define-lff gdk_event_get_time uint32 '(*))
 (define-lff gdk_event_handler_set void '(* * *))
+(define-lff gdk_event_put void '(*))
 
 (define gdk_event_get_scroll_deltas
   (if %m4-use-gtk3
