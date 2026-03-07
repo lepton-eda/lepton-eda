@@ -64,6 +64,7 @@
 
             gtk_list_store_clear
 
+            gtk_main_do_event
             gtk_main_iteration
             gtk_main_level
             gtk_main_quit
@@ -123,7 +124,8 @@
             gdk_event_get_scroll_deltas
             gdk_event_get_scroll_direction
             gdk_event_get_state
-            gdk_event_get_time))
+            gdk_event_get_time
+            gdk_event_handler_set))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -176,6 +178,7 @@
 
 (define-lff gtk_list_store_clear void '(*))
 
+(define-lff gtk_main_do_event void '(*))
 (define-lff gtk_main_iteration int '())
 (define-lff gtk_main_level int '())
 (define-lff gtk_main_quit void '())
@@ -234,6 +237,7 @@
 (define-lff gdk_event_get_coords int '(* * *))
 (define-lff gdk_event_get_state int '(* *))
 (define-lff gdk_event_get_time uint32 '(*))
+(define-lff gdk_event_handler_set void '(* * *))
 
 (define gdk_event_get_scroll_deltas
   (if %m4-use-gtk3
