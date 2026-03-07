@@ -1,6 +1,6 @@
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
              (lepton page foreign)
              (lepton srfi-37)
              (lepton version)
+             (schematic event handler)
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
@@ -317,6 +318,17 @@ Run `~A --help' for more information.\n")
     ;; Evaluate post load expression in the dynamic context of the
     ;; new window.
     (with-window window (eval-post-load-expr!))))
+
+
+(define (event-handler *event *data)
+  ;; Do nothing for now.
+  (gtk_main_do_event *event))
+
+(define *event-handler
+  (procedure->pointer void event-handler '(* *)))
+
+;;; Setup custom GDK event handler.
+(set-gdk-event-handler *event-handler)
 
 ;;; Run main GTK loop.
 (if %m4-use-gtk3
