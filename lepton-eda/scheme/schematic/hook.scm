@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
 ;; Copyright (C) 2010-2016 gEDA Contributors
-;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -36,7 +36,8 @@
             action-property-hook
             switch-action-mode-hook
             bind-keys-hook
-            complex-place-list-changed-hook))
+            complex-place-list-changed-hook
+            gdk-event-hook))
 
 (define add-objects-hook (make-hook 1))
 
@@ -71,3 +72,5 @@
 (define switch-action-mode-hook (make-hook 1))
 
 (define complex-place-list-changed-hook (make-hook 1))
+
+(define gdk-event-hook (make-hook 2))

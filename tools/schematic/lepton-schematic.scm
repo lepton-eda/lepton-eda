@@ -319,16 +319,8 @@ Run `~A --help' for more information.\n")
     ;; new window.
     (with-window window (eval-post-load-expr!))))
 
-
-(define (event-handler *event *data)
-  ;; Do nothing for now.
-  (gtk_main_do_event *event))
-
-(define *event-handler
-  (procedure->pointer void event-handler '(* *)))
-
 ;;; Setup custom GDK event handler.
-(set-gdk-event-handler *event-handler)
+(set-default-gdk-event-handler)
 
 ;;; Run main GTK loop.
 (if %m4-use-gtk3
