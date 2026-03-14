@@ -44,6 +44,7 @@ lepton-eda/scheme/schematic/builtins.scm
 lepton-eda/scheme/schematic/dialog/autonumber.scm
 lepton-eda/scheme/schematic/doc.scm
 lepton-eda/scheme/schematic/keymap.scm
+lepton-eda/scheme/schematic/rc.scm
 lepton-eda/scheme/gschem/deprecated.scm
 
 tools/schematic/lepton-schematic.scm
