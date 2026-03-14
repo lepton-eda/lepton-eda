@@ -2172,10 +2172,16 @@ config_error_message (GError **error)
   return err->message;
 }
 
-/*! \brief Test if GError error is about missing file.
+
+/*! \brief Test if \c GError code matches \c G_IO_ERROR_NOT_FOUND.
  *
- * \param error The GError value.
- * \return TRUE if GError matches G_IO_ERROR_NOT_FOUND, otherwise FALSE.
+ * \par Function Description
+ * Tests if the error code of \p error matches \c
+ * G_IO_ERROR_NOT_FOUND.
+ *
+ * \param error The \c GError value.
+ * \return TRUE if \c GError matches \c G_IO_ERROR_NOT_FOUND,
+ * \return FALSE otherwise.
  */
 gboolean
 config_error_file_not_found (GError *error)
