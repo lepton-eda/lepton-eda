@@ -40,8 +40,8 @@
     (if (null-pointer? *err)
         ;; Take no chances; if err was not set for some reason,
         ;; it's a problem.
-        (G_ "ERROR: An unknown error occurred while parsing configuration files.")
-        (format #f (G_ "ERROR: ~A") (gerror-message *err))))
+        (G_ "An unknown error occurred while parsing configuration files.")
+        (gerror-message *err)))
 
   ;; Secondary dialog text.
   (define dialog-message
@@ -61,7 +61,7 @@ The lepton-schematic log may contain more information.")
   ;; this.
   (unless (or (true? (config_error_file_noent *err))
               (true? (config_error_rc_twice *err)))
-    (log! 'message log-message)
+    (log! 'message (G_ "ERROR: ~A") log-message)
 
     (x_rc_parse_gschem_error *program-name
                              (string->pointer dialog-message))))
