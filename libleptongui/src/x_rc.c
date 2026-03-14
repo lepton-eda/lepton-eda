@@ -25,25 +25,10 @@
 
 /* RC parse error handler function for lepton-schematic. */
 void
-x_rc_parse_gschem_error (GError *err,
-                         const gchar *pname)
+x_rc_parse_gschem_error (const gchar *pname,
+                         char *msg2)
 {
-  char *msg2; /* Secondary text */
   GtkWidget *dialog;
-
-  /* Take no chances; if err was not set for some reason, it's a
-   * problem. */
-  if (err == NULL) {
-    /* Dialog message */
-    msg2 =
-      g_strdup (_("An unknown error occurred while parsing configuration files."
-                  "\n\nThe lepton-schematic log may contain more information."));
-  } else {
-    /* Dialog message */
-    msg2 = g_strdup_printf (_("%1$s\n\n"
-                              "The lepton-schematic log may contain more information."),
-                            err->message);
-  }
 
   dialog = gtk_message_dialog_new (NULL,
                                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
@@ -53,5 +38,4 @@ x_rc_parse_gschem_error (GError *err,
   g_object_set (G_OBJECT (dialog), "secondary-text", msg2, NULL);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
-  g_free (msg2);
 }
