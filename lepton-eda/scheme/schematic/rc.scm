@@ -59,9 +59,8 @@ The lepton-schematic log may contain more information.")
 
   ;; Config files are allowed to be missing or skipped; check for
   ;; this.
-  (unless (and (not (null-pointer? *err))
-               (or (true? (config_error_file_noent *err))
-                   (true? (config_error_rc_twice *err))))
+  (unless (or (true? (config_error_file_noent *err))
+              (true? (config_error_rc_twice *err)))
     (log! 'message log-message)
 
     (x_rc_parse_gschem_error *program-name
