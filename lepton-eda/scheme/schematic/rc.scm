@@ -21,6 +21,9 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
   #:use-module (lepton rc)
 
   #:use-module (schematic ffi)
@@ -33,11 +36,19 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
+  (define log-message
+    (if (null-pointer? *err)
+        ;; Take no chances; if err was not set for some reason,
+        ;; it's a problem.
+        (G_ "ERROR: An unknown error occurred while parsing configuration files.")
+        (format #f (G_ "ERROR: ~A") (gerror-message *err))))
+
   ;; Config files are allowed to be missing or skipped; check for
   ;; this.
   (unless (and (not (null-pointer? *err))
                (or (true? (config_error_file_noent *err))
                    (true? (config_error_rc_twice *err))))
+    (log! 'message log-message)
 
     (x_rc_parse_gschem_error *err *program-name)))
 
