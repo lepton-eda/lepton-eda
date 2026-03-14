@@ -36,11 +36,14 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
+  (define unknown-error-message
+    (G_ "An unknown error occurred while parsing configuration files."))
+
   (define log-message
     (if (null-pointer? *err)
         ;; Take no chances; if err was not set for some reason,
         ;; it's a problem.
-        (G_ "An unknown error occurred while parsing configuration files.")
+        unknown-error-message
         (gerror-message *err)))
 
   ;; Secondary dialog text.
@@ -48,9 +51,11 @@
     (if (null-pointer? *err)
         ;; Take no chances; if err was not set for some reason,
         ;; it's a problem.
-        (G_ "An unknown error occurred while parsing configuration files.
+        (format #f
+                (G_ "~A
 
 The lepton-schematic log may contain more information.")
+                unknown-error-message)
         (format #f
                 (G_ "~A
 
