@@ -36,6 +36,9 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
+  (define more-info-message
+    (G_ "The lepton-schematic log may contain more information."))
+
   (define unknown-error-message
     (G_ "An unknown error occurred while parsing configuration files."))
 
@@ -51,16 +54,8 @@
     (if (null-pointer? *err)
         ;; Take no chances; if err was not set for some reason,
         ;; it's a problem.
-        (format #f
-                (G_ "~A
-
-The lepton-schematic log may contain more information.")
-                unknown-error-message)
-        (format #f
-                (G_ "~A
-
-The lepton-schematic log may contain more information.")
-                (gerror-message *err))))
+        (string-append unknown-error-message "\n\n" more-info-message)
+        (string-append (gerror-message *err) "\n\n" more-info-message)))
 
   ;; Config files are allowed to be missing or skipped; check for
   ;; this.
