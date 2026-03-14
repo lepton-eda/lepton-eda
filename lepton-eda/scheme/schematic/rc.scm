@@ -51,11 +51,14 @@
 
   ;; Secondary dialog text.
   (define dialog-message
-    (if (null-pointer? *err)
-        ;; Take no chances; if err was not set for some reason,
-        ;; it's a problem.
-        (string-append unknown-error-message "\n\n" more-info-message)
-        (string-append (gerror-message *err) "\n\n" more-info-message)))
+    (string-append
+     (if (null-pointer? *err)
+         ;; Take no chances; if err was not set for some reason,
+         ;; it's a problem.
+         unknown-error-message
+         (gerror-message *err))
+     "\n\n"
+     more-info-message))
 
   ;; Config files are allowed to be missing or skipped; check for
   ;; this.
