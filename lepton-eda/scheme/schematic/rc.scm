@@ -27,9 +27,11 @@
 
 
 (define (parse-error **err *program-name)
-  (if (null-pointer? **err)
-      (error "NULL GError.")
-      (x_rc_parse_gschem_error **err *program-name)))
+  (define *err (if (null-pointer? **err)
+                   (error "NULL GError.")
+                   (dereference-pointer **err)))
+
+  (x_rc_parse_gschem_error *err *program-name))
 
 
 (define toplevel-initialized? #f)

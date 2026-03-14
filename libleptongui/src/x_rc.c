@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 /* RC parse error handler function for lepton-schematic. */
 void
-x_rc_parse_gschem_error (GError **err,
+x_rc_parse_gschem_error (GError *err,
                          const gchar *pname)
 {
   char *msg2; /* Secondary text */
@@ -33,7 +33,7 @@ x_rc_parse_gschem_error (GError **err,
 
   /* Take no chances; if err was not set for some reason, it's a
    * problem. */
-  if (*err == NULL) {
+  if (err == NULL) {
     /* Log message */
     g_message (_("ERROR: An unknown error occurred while parsing "
                  "configuration files."));
@@ -46,18 +46,18 @@ x_rc_parse_gschem_error (GError **err,
 
     /* Config files are allowed to be missing or skipped; check for
      * this. */
-    if (config_error_file_noent (*err) || config_error_rc_twice (*err))
+    if (config_error_file_noent (err) || config_error_rc_twice (err))
     {
       return;
     }
 
     /* Log message */
-    g_message (_("ERROR: %1$s"), (*err)->message);
+    g_message (_("ERROR: %1$s"), err->message);
 
     /* Dialog message */
     msg2 = g_strdup_printf (_("%1$s\n\n"
                               "The lepton-schematic log may contain more information."),
-                            (*err)->message);
+                            err->message);
   }
 
   dialog = gtk_message_dialog_new (NULL,

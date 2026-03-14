@@ -1079,7 +1079,7 @@ void
 x_print (SchematicWindow *w_current);
 /* x_rc.c */
 void
-x_rc_parse_gschem_error (GError **err,
+x_rc_parse_gschem_error (GError *err,
                          const gchar *pname);
 
 /* x_rotatecb.c */
