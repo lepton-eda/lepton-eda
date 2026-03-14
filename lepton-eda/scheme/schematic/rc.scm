@@ -19,6 +19,8 @@
 (define-module (schematic rc)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi)
   #:use-module (lepton rc)
 
   #:use-module (schematic ffi)
@@ -31,7 +33,13 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
-  (x_rc_parse_gschem_error *err *program-name))
+  ;; Config files are allowed to be missing or skipped; check for
+  ;; this.
+  (unless (and (not (null-pointer? *err))
+               (or (true? (config_error_file_noent *err))
+                   (true? (config_error_rc_twice *err))))
+
+    (x_rc_parse_gschem_error *err *program-name)))
 
 
 (define toplevel-initialized? #f)

@@ -43,14 +43,6 @@ x_rc_parse_gschem_error (GError *err,
       g_strdup (_("An unknown error occurred while parsing configuration files."
                   "\n\nThe lepton-schematic log may contain more information."));
   } else {
-
-    /* Config files are allowed to be missing or skipped; check for
-     * this. */
-    if (config_error_file_noent (err) || config_error_rc_twice (err))
-    {
-      return;
-    }
-
     /* Log message */
     g_message (_("ERROR: %1$s"), err->message);
 
