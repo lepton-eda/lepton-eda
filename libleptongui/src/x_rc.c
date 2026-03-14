@@ -31,8 +31,6 @@ x_rc_parse_gschem_error (GError **err,
   char *msg2; /* Secondary text */
   GtkWidget *dialog;
 
-  g_assert (err != NULL);
-
   /* Take no chances; if err was not set for some reason, it's a
    * problem. */
   if (*err == NULL) {
