@@ -37,10 +37,7 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
-  (define program-name
-    (if (null-pointer? *program-name)
-        "lepton-schematic"
-        (pointer->string *program-name)))
+  (define program-name (basename (car (program-arguments))))
 
   (define more-info-message
     (format #f
