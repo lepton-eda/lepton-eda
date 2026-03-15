@@ -56,7 +56,7 @@
         (gerror-message *err)))
 
   ;; Secondary dialog text.
-  (define dialog-message
+  (define secondary-dialog-message
     (string-append error-message "\n\n" more-info-message))
 
   ;; Config files are allowed to be missing or skipped; check for
@@ -66,7 +66,7 @@
     (log! 'message (G_ "ERROR: ~A") error-message)
 
     (schematic-error-dialog (G_ "Cannot load lepton-schematic configuration.")
-                            #:secondary-text dialog-message
+                            #:secondary-text secondary-dialog-message
                             #:title program-name)))
 
 
