@@ -32,6 +32,7 @@
   #:export (parse-gschemrc))
 
 
+;;; Parse error handler for "gschemrc" files.
 (define (parse-error **err *program-name)
   (define *err (if (null-pointer? **err)
                    (error "NULL GError.")
