@@ -36,6 +36,11 @@
                    (error "NULL GError.")
                    (dereference-pointer **err)))
 
+  (define program-name
+    (if (null-pointer? *program-name)
+        "lepton-schematic"
+        (pointer->string *program-name)))
+
   (define more-info-message
     (G_ "The lepton-schematic log may contain more information."))
 
@@ -59,7 +64,7 @@
               (true? (config_error_rc_twice *err)))
     (log! 'message (G_ "ERROR: ~A") error-message)
 
-    (x_rc_parse_gschem_error *program-name
+    (x_rc_parse_gschem_error (string->pointer program-name)
                              (string->pointer dialog-message))))
 
 
