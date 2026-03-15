@@ -430,6 +430,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new module, `(schematic tabs)`, has been added.  It contains
   functions dealing with tabs in **lepton-schematic** GUI.
 
+- A new module, `(schematic event handler)`, has been added.
+  Along with a new hook, `gdk-event-hook`, exported in the module
+  `(schematic hook)`, it allows to customize processing GDK events
+  in `lepton-schematic` by adding user defined event handlers.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
