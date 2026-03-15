@@ -43,7 +43,9 @@
         (pointer->string *program-name)))
 
   (define more-info-message
-    (G_ "The lepton-schematic log may contain more information."))
+    (format #f
+            (G_ "The ~A log may contain more information.")
+            program-name))
 
   (define unknown-error-message
     (G_ "An unknown error occurred while parsing configuration files."))
@@ -56,7 +58,7 @@
         (gerror-message *err)))
 
   (define primary-dialog-message
-    (G_ "Cannot load lepton-schematic configuration."))
+    (format #f (G_ "Cannot load ~A configuration.") program-name))
 
   ;; Secondary dialog text.
   (define secondary-dialog-message
