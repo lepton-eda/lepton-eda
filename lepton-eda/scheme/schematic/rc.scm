@@ -55,6 +55,9 @@
         unknown-error-message
         (gerror-message *err)))
 
+  (define primary-dialog-message
+    (G_ "Cannot load lepton-schematic configuration."))
+
   ;; Secondary dialog text.
   (define secondary-dialog-message
     (string-append error-message "\n\n" more-info-message))
@@ -65,7 +68,7 @@
               (true? (config_error_rc_twice *err)))
     (log! 'message (G_ "ERROR: ~A") error-message)
 
-    (schematic-error-dialog (G_ "Cannot load lepton-schematic configuration.")
+    (schematic-error-dialog primary-dialog-message
                             #:secondary-text secondary-dialog-message
                             #:title program-name)))
 
