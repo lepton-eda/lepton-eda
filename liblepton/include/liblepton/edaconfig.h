@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -165,6 +165,12 @@ config_error_message (GError **error);
 
 gboolean
 config_error_file_not_found (GError *error);
+
+gboolean
+config_error_file_noent (GError *error);
+
+gboolean
+config_error_rc_twice (GError *error);
 
 gboolean
 config_add_event (EdaConfig *cfg,

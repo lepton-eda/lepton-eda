@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2021-2025 Lepton EDA Contributors
+;;; Copyright (C) 2021-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,11 +19,58 @@
 (define-module (schematic rc)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
   #:use-module (lepton rc)
 
+  #:use-module (schematic dialog)
   #:use-module (schematic ffi)
 
   #:export (parse-gschemrc))
+
+
+;;; Parse error handler for "gschemrc" files.
+(define (parse-error **err *program-name)
+  (define *err (if (null-pointer? **err)
+                   (error "NULL GError.")
+                   (dereference-pointer **err)))
+
+  (define program-name (basename (car (program-arguments))))
+
+  (define more-info-message
+    (format #f
+            (G_ "The ~A log may contain more information.")
+            program-name))
+
+  (define unknown-error-message
+    (G_ "An unknown error occurred while parsing configuration files."))
+
+  (define error-message
+    (if (null-pointer? *err)
+        ;; Take no chances; if err was not set for some reason,
+        ;; it's a problem.
+        unknown-error-message
+        (gerror-message *err)))
+
+  (define primary-dialog-message
+    (format #f (G_ "Cannot load ~A configuration.") program-name))
+
+  ;; Secondary dialog text.
+  (define secondary-dialog-message
+    (string-append error-message "\n\n" more-info-message))
+
+  ;; Config files are allowed to be missing or skipped; check for
+  ;; this.
+  (unless (or (true? (config_error_file_noent *err))
+              (true? (config_error_rc_twice *err)))
+    (log! 'message (G_ "ERROR: ~A") error-message)
+
+    (schematic-error-dialog primary-dialog-message
+                            #:secondary-text secondary-dialog-message
+                            #:title program-name)))
 
 
 (define toplevel-initialized? #f)
@@ -37,7 +84,7 @@ explanatory messages."
   (unless toplevel-initialized?
     (parse-rc "lepton-schematic"
               "gschemrc"
-              #:handler x_rc_parse_gschem_error
+              #:handler parse-error
               #:*toplevel *toplevel)
     (set! toplevel-initialized? #t))
   *toplevel)

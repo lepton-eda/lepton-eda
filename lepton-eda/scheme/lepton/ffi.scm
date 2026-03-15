@@ -35,7 +35,9 @@
             config_error_type
             config_error_code
             config_error_message
+            config_error_file_noent
             config_error_file_not_found
+            config_error_rc_twice
             config_add_event
             config_remove_event
             config_get_legacy_mode
@@ -457,7 +459,9 @@
 (define-lff config_error_type '* '(*))
 (define-lff config_error_code '* '(*))
 (define-lff config_error_message '* '(*))
+(define-lff config_error_file_noent int '(*))
 (define-lff config_error_file_not_found int '(*))
+(define-lff config_error_rc_twice int '(*))
 (define-lff config_add_event int '(* * *))
 (define-lff config_remove_event int '(* * *))
 (define-lff config_get_legacy_mode int '())
