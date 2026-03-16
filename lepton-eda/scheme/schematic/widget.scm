@@ -18,6 +18,11 @@
 
 
 (define-module (schematic widget)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi boolean)
+
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (show-notebook-widget))
@@ -25,4 +30,14 @@
 
 (define (show-notebook-widget *notebook *widget)
   "Shows *WIDGET in *NOTEBOOK."
-  (x_widgets_show_in_dock *notebook *widget))
+  (when (null-pointer? *notebook)
+    (error "NULL notebook."))
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+
+  (let ((page-number (gtk_notebook_page_num *notebook *widget)))
+    (when (>= page-number 0)
+      (gtk_notebook_set_current_page *notebook page-number)
+      (gtk_widget_set_visible *notebook TRUE)))
+
+  (gtk_widget_show_all *widget))
