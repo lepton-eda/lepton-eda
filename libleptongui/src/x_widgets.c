@@ -107,26 +107,6 @@ void x_widgets_init()
 
 
 
-void
-x_widgets_show_in_dock (GtkWidget* wbook,
-                        GtkWidget* widget)
-{
-  g_return_if_fail (wbook != NULL);
-  g_return_if_fail (widget != NULL);
-
-  GtkNotebook* nbook = GTK_NOTEBOOK (wbook);
-
-  int page = gtk_notebook_page_num (nbook, widget);
-  if (page >= 0)
-  {
-    gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (wbook, TRUE);
-  }
-  gtk_widget_show_all (widget);
-}
-
-
-
 /*! \brief Create a new dialog for a widget.
  *
  * \par Function Description

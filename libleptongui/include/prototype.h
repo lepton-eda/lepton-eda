@@ -1146,9 +1146,6 @@ x_widgets_use_docks();
 void
 x_widgets_init();
 
-void
-x_widgets_show_in_dock (GtkWidget* wbook,
-                        GtkWidget* widget);
 gboolean
 x_widgets_use_toplevel_windows ();
 

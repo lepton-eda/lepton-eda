@@ -300,7 +300,6 @@
 
             x_widgets_dialog_new
             x_widgets_init
-            x_widgets_show_in_dock
             x_widgets_use_docks
             x_widgets_use_toplevel_windows
 
@@ -768,7 +767,6 @@
 ;;; x_widgets.c
 (define-lff x_widgets_dialog_new '* '(* * * *))
 (define-lff x_widgets_init void '())
-(define-lff x_widgets_show_in_dock void '(* *))
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
 
