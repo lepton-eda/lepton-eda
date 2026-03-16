@@ -25,6 +25,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic widget)
 
   #:export (find-text-state-dialog))
 
@@ -40,7 +41,7 @@
     (if (true? (x_widgets_use_docks))
         (let ((*bottom-notebook
                (schematic_window_get_bottom_notebook *window)))
-          (x_widgets_show_in_dock *bottom-notebook *find-text-state))
+          (show-notebook-widget *bottom-notebook *find-text-state))
 
         (let ((*dialog (schematic_window_get_find_text_state_dialog *window)))
 

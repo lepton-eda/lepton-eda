@@ -25,6 +25,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic widget)
 
   #:export (options-dialog))
 
@@ -37,7 +38,7 @@
   (let ((*options-widget (schematic_window_get_options_widget *window)))
     (if (true? (x_widgets_use_docks))
         (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (x_widgets_show_in_dock *right-notebook *options-widget))
+          (show-notebook-widget *right-notebook *options-widget))
 
         (let ((*dialog (schematic_window_get_options_widget_dialog *window)))
 

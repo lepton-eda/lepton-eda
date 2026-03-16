@@ -25,6 +25,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic widget)
 
   #:export (object-properties-dialog))
 
@@ -39,7 +40,7 @@
 
     (if (true? (x_widgets_use_docks))
         (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (x_widgets_show_in_dock *right-notebook *object-properties-widget))
+          (show-notebook-widget *right-notebook *object-properties-widget))
 
         (let ((*dialog (schematic_window_get_object_properties_dialog *window)))
           (if (not (null-pointer? *dialog))
