@@ -25,6 +25,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic widget)
 
   #:export (text-edit-dialog))
 
@@ -39,7 +40,7 @@
 
     (if (true? (x_widgets_use_docks))
         (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (x_widgets_show_in_dock *right-notebook *text-properties-widget))
+          (show-notebook-widget *right-notebook *text-properties-widget))
 
         (let ((*dialog (schematic_window_get_text_properties_dialog *window)))
           (if (not (null-pointer? *dialog))

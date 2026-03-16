@@ -25,6 +25,7 @@
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic widget)
 
   #:export (log-dialog))
 
@@ -38,7 +39,7 @@
 
     (if (true? (x_widgets_use_docks))
         (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
-          (x_widgets_show_in_dock *bottom-notebook *log-widget))
+          (show-notebook-widget *bottom-notebook *log-widget))
 
         (let ((*dialog (schematic_window_get_log_widget_dialog *window)))
 
