@@ -111,6 +111,8 @@
             gtk_widget_set_visible
             gtk_widget_show
             gtk_widget_show_all
+            *gtk_widget_hide
+            *gtk_widget_hide_on_delete
 
             gtk_window_set_default_icon_name
             gtk_window_get_position
@@ -230,6 +232,8 @@
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))
+(define-lfc *gtk_widget_hide)
+(define-lfc *gtk_widget_hide_on_delete)
 
 (define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
