@@ -235,3 +235,84 @@ gtk_string_to_policy (char *s)
 
   return result;
 }
+
+
+/* GdkWindowTypeHint enum helpers.
+ *
+ * GTK2 source:
+ * - /usr/include/gtk-2.0/gdk/gdkwindow.h
+ * GTK3 source:
+ * - /usr/include/gtk-3.0/gdk/gdktypes.h
+ */
+
+/*! \brief Transform a \c GdkWindowTypeHint value to string.
+ *
+ * \par Function Description
+
+ * Returns a string corresponding to the given \c
+ * GdkWindowTypeHint value.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
+ *
+ * \param [in] hint The \c GdkWindowTypeHint value.
+ * \return The string corresponding to the value.
+ */
+const char*
+gdk_window_type_hint_to_string (int hint)
+{
+  const char *result = "normal";
+
+  switch (hint)
+  {
+  case GDK_WINDOW_TYPE_HINT_NORMAL: result = "normal"; break;
+  case GDK_WINDOW_TYPE_HINT_DIALOG: result = "dialog"; break;
+  case GDK_WINDOW_TYPE_HINT_MENU: result = "menu"; break;
+  case GDK_WINDOW_TYPE_HINT_TOOLBAR: result = "toolbar"; break;
+  case GDK_WINDOW_TYPE_HINT_SPLASHSCREEN: result = "splashscreen"; break;
+  case GDK_WINDOW_TYPE_HINT_UTILITY: result = "utility"; break;
+  case GDK_WINDOW_TYPE_HINT_DOCK: result = "dock"; break;
+  case GDK_WINDOW_TYPE_HINT_DESKTOP: result = "desktop"; break;
+  case GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU: result = "dropdown-menu"; break;
+  case GDK_WINDOW_TYPE_HINT_POPUP_MENU: result = "popup-menu"; break;
+  case GDK_WINDOW_TYPE_HINT_TOOLTIP: result = "tooltip"; break;
+  case GDK_WINDOW_TYPE_HINT_NOTIFICATION: result = "notification"; break;
+  case GDK_WINDOW_TYPE_HINT_COMBO: result = "combo"; break;
+  case GDK_WINDOW_TYPE_HINT_DND: result = "dnd"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into a \c GdkWindowTypeHint value.
+ *
+ * \par Function Description
+ * Returns a \c GdkWindowTypeHint enum value corresponding to the
+ * given string.  This is mainly intended to be used for value
+ * conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GdkWindowTypeHint value.
+ */
+int
+gdk_string_to_window_type_hint (char *s)
+{
+  int result = GDK_WINDOW_TYPE_HINT_NORMAL;
+
+  if (strcmp (s, "normal") == 0) {result = GDK_WINDOW_TYPE_HINT_NORMAL; }
+  else if (strcmp (s, "dialog") == 0) {result = GDK_WINDOW_TYPE_HINT_DIALOG; }
+  else if (strcmp (s, "menu") == 0) {result = GDK_WINDOW_TYPE_HINT_MENU; }
+  else if (strcmp (s, "toolbar") == 0) {result = GDK_WINDOW_TYPE_HINT_TOOLBAR; }
+  else if (strcmp (s, "splashscreen") == 0) {result = GDK_WINDOW_TYPE_HINT_SPLASHSCREEN; }
+  else if (strcmp (s, "utility") == 0) {result = GDK_WINDOW_TYPE_HINT_UTILITY; }
+  else if (strcmp (s, "dock") == 0) {result = GDK_WINDOW_TYPE_HINT_DOCK; }
+  else if (strcmp (s, "desktop") == 0) {result = GDK_WINDOW_TYPE_HINT_DESKTOP; }
+  else if (strcmp (s, "dropdown-menu") == 0) {result = GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU; }
+  else if (strcmp (s, "popup-menu") == 0) {result = GDK_WINDOW_TYPE_HINT_POPUP_MENU; }
+  else if (strcmp (s, "tooltip") == 0) {result = GDK_WINDOW_TYPE_HINT_TOOLTIP; }
+  else if (strcmp (s, "notification") == 0) {result = GDK_WINDOW_TYPE_HINT_NOTIFICATION; }
+  else if (strcmp (s, "combo") == 0) {result = GDK_WINDOW_TYPE_HINT_COMBO; }
+  else if (strcmp (s, "dnd") == 0) {result = GDK_WINDOW_TYPE_HINT_DND; }
+
+  return result;
+}
