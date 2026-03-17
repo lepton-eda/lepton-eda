@@ -134,6 +134,9 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libgtk))
 
+(define-syntax-rule (define-lfc arg ...)
+  (define-lfc-lib arg ... libgtk))
+
 (define GdkModifierType uint32)
 
 

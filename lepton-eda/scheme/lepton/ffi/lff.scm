@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2022 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@
 
   #:use-module (lepton ffi lib)
 
-  #:export (define-lff-lib))
+  #:export (define-lff-lib
+            define-lfc-lib))
 
 
 ;;; Syntax to define a lazy foreign function from given library.
@@ -36,3 +37,21 @@
                            (dynamic-func (symbol->string (quote name)) lib)
                            args))))
          (force proc))))))
+
+
+;;; Brief syntax macro for defining lazy foreign callbacks.
+;;; Unlike 'define-lff-lib' above, it returns a pointer to a C
+;;; function by name, not a Scheme procedure wrapping it.
+;;;
+;;; By convention, the first character of a callback function name
+;;; should be '*'.  The first character is dropped here before
+;;; dlopening the function in any case, so be careful when
+;;; composing callback names.
+(define-syntax define-lfc-lib
+  (syntax-rules ()
+    ((_ name lib)
+     (define name
+       (let ((*callback
+              (delay (dynamic-func (string-drop (symbol->string (quote name)) 1)
+                                   lib))))
+         (force *callback))))))
