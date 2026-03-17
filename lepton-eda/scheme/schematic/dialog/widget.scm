@@ -27,4 +27,10 @@
   "Creates a new dialog box for *WIDGET in *WINDOW setting its title to
 *TITLE and its group of settings to *SETTINGS-GROUP.  The dialog will
 be a parent for the *WIDGET."
-  (x_widgets_dialog_new *window *widget *title *settings-group))
+  (define *main-window (schematic_window_get_main_window *window))
+
+  (x_widgets_dialog_new *window
+                        *main-window
+                        *widget
+                        *title
+                        *settings-group))

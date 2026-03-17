@@ -1133,6 +1133,7 @@ x_window_translate_response (GtkWidget *widget,
 /* x_widgets.c */
 GtkWidget*
 x_widgets_dialog_new (SchematicWindow* w_current,
+                      GtkWidget *main_window,
                       GtkWidget*      widget,
                       const gchar*    title,
                       const gchar*    ini_group);

@@ -763,7 +763,7 @@
 (define-lff schematic_compselect_get_preview '* '(*))
 
 ;;; x_widgets.c
-(define-lff x_widgets_dialog_new '* '(* * * *))
+(define-lff x_widgets_dialog_new '* '(* * * * *))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
