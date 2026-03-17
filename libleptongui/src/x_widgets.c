@@ -131,13 +131,13 @@ x_widgets_dialog_new (SchematicWindow* w_current,
   g_return_val_if_fail (widget != NULL, NULL);
 
   GtkWidget* dlg =
-    schematic_dialog_new_with_buttons (title,
-                                       GTK_WINDOW (main_window),
-                                       (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
-                                       ini_group,
-                                       w_current,
-                                       _("_Close"), GTK_RESPONSE_NONE,
-                                       NULL);
+    GTK_WIDGET (schematic_dialog_new_empty (title,
+                                            GTK_WINDOW (main_window),
+                                            (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
+                                            ini_group,
+                                            w_current));
+
+  gtk_dialog_add_button (GTK_DIALOG (dlg), _("_Close"), GTK_RESPONSE_NONE);
 
   return dlg;
 
