@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
@@ -46,8 +47,8 @@
           (if (not (null-pointer? *dialog))
               (gtk_window_present *dialog)
 
-              (let ((*new-dialog (x_widgets_dialog_new *window
-                                                       *log-widget
-                                                       (string->pointer (G_ "Log"))
-                                                       (string->pointer "log"))))
+              (let ((*new-dialog (make-widget-dialog *window
+                                                     *log-widget
+                                                     (string->pointer (G_ "Log"))
+                                                     (string->pointer "log"))))
                 (schematic_window_set_log_widget_dialog *window *new-dialog)))))))

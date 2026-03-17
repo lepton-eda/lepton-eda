@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
@@ -46,9 +47,9 @@
               (gtk_window_present *dialog)
 
               (let ((*new-dialog
-                     (x_widgets_dialog_new *window
-                                           *options-widget
-                                           (string->pointer (G_ "Options"))
-                                           (string->pointer "options"))))
+                     (make-widget-dialog *window
+                                         *options-widget
+                                         (string->pointer (G_ "Options"))
+                                         (string->pointer "options"))))
                 (schematic_window_set_options_widget_dialog *window
                                                             *new-dialog)))))))
