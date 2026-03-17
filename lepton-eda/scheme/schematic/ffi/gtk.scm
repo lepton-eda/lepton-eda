@@ -118,6 +118,7 @@
             gtk_window_get_position
             gtk_window_get_size
             gtk_window_set_transient_for
+            gtk_window_set_type_hint
             gtk_window_move
             gtk_window_present
             gtk_window_resize
@@ -242,6 +243,7 @@
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_set_transient_for void '(* *))
+(define-lff gtk_window_set_type_hint void (list '* int))
 
 ;;; gdk_event_get_button() can only be used for GTK3.
 ;; (define-lff gdk_event_get_button int '(* *))

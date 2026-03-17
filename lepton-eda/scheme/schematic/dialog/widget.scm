@@ -20,6 +20,7 @@
 (define-module (schematic dialog widget)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi gobject)
 
   #:use-module (schematic ffi gtk)
@@ -41,6 +42,12 @@ be a parent for the *WIDGET."
                                         *settings-group))
 
   (define *content-area (gtk_dialog_get_content_area *dialog))
+
+  (when (true? (x_widgets_use_toplevel_windows))
+    (gtk_window_set_transient_for *dialog %null-pointer)
+    (gtk_window_set_type_hint *dialog
+                              (gdk_string_to_window_type_hint
+                               (string->pointer "normal"))))
 
   (g_signal_connect *dialog
                     (string->pointer "response")
