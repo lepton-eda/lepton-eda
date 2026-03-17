@@ -114,6 +114,7 @@ void x_widgets_init()
  *  Returns a new parent dialog box for \p widget.
  *
  *  \param [in]     w_current The toplevel environment.
+ *  \param [in]     main_window The main window widget.
  *  \param [in]     widget Widget to show
  *  \param [in]     title  Dialog's title
  *  \param [in]     ini_group Config file section for dialog geometry
@@ -122,14 +123,12 @@ void x_widgets_init()
  */
 GtkWidget*
 x_widgets_dialog_new (SchematicWindow* w_current,
+                      GtkWidget *main_window,
                       GtkWidget*      widget,
                       const gchar*    title,
                       const gchar*    ini_group)
 {
   g_return_val_if_fail (widget != NULL, NULL);
-
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
 
   GtkWidget* dlg =
     schematic_dialog_new_with_buttons (title,
