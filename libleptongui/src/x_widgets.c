@@ -145,16 +145,6 @@ x_widgets_dialog_new (SchematicWindow* w_current,
     gtk_window_set_type_hint (GTK_WINDOW (dlg), GDK_WINDOW_TYPE_HINT_NORMAL);
   }
 
-  g_signal_connect (G_OBJECT (dlg),
-                    "response",
-                    G_CALLBACK (&gtk_widget_hide),
-                    NULL);
-
-  g_signal_connect (G_OBJECT (dlg),
-                    "delete-event",
-                    G_CALLBACK (&gtk_widget_hide_on_delete),
-                    NULL);
-
   return dlg;
 
 } /* x_widgets_dialog_new() */

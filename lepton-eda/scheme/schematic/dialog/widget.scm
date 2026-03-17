@@ -18,6 +18,10 @@
 
 
 (define-module (schematic dialog widget)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi gobject)
+
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
@@ -37,6 +41,16 @@ be a parent for the *WIDGET."
                                         *settings-group))
 
   (define *content-area (gtk_dialog_get_content_area *dialog))
+
+  (g_signal_connect *dialog
+                    (string->pointer "response")
+                    *gtk_widget_hide
+                    %null-pointer)
+
+  (g_signal_connect *dialog
+                    (string->pointer "delete-event")
+                    *gtk_widget_hide_on_delete
+                    %null-pointer)
 
   (gtk_container_add *content-area *widget)
 
