@@ -678,24 +678,8 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libleptongui))
 
-
-;;; Brief syntax macro for defining lazy foreign callbacks.
-;;; Unlike 'define-lff' above, it returns a pointer to a C
-;;; function by name, not a Scheme procedure wrapping it.
-;;;
-;;; By convention, the first character of a callback function name
-;;; should be '*'.  The first character is dropped here before
-;;; dlopening the function in any case, so be careful when
-;;; composing callback names.
-(define-syntax define-lfc
-  (syntax-rules ()
-    ((_ name)
-     (define name
-       (let ((*callback
-              (delay (dynamic-func (string-drop (symbol->string (quote name)) 1)
-                                   libleptongui))))
-         (force *callback))))))
-
+(define-syntax-rule (define-lfc arg ...)
+  (define-lfc-lib arg ... libleptongui))
 
 ;;; lepton_schematic.c
 (define-lff lepton_schematic_run int '(*))
