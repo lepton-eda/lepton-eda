@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
@@ -41,8 +42,8 @@
         (gtk_window_present *dialog)
 
         (let ((*new-dialog
-               (x_widgets_dialog_new *window
-                                     *color-edit-widget
-                                     (string->pointer (G_ "Color Scheme Editor"))
-                                     (string->pointer "colored"))))
+               (make-widget-dialog *window
+                                   *color-edit-widget
+                                   (string->pointer (G_ "Color Scheme Editor"))
+                                   (string->pointer "colored"))))
           (schematic_window_set_color_edit_dialog *window *new-dialog)))))

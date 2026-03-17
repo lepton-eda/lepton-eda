@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
@@ -46,10 +47,10 @@
           (if (not (null-pointer? *dialog))
               (gtk_window_present *dialog)
 
-              (let ((*new-dialog (x_widgets_dialog_new *window
-                                                       *text-properties-widget
-                                                       (string->pointer (G_ "Edit Text"))
-                                                       (string->pointer "txtprops"))))
+              (let ((*new-dialog (make-widget-dialog *window
+                                                     *text-properties-widget
+                                                     (string->pointer (G_ "Edit Text"))
+                                                     (string->pointer "txtprops"))))
                 (schematic_window_set_text_properties_dialog *window *new-dialog)))))
 
     (schematic_text_properties_widget_adjust_focus *text-properties-widget)))

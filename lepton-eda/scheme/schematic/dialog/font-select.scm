@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
@@ -41,8 +42,8 @@
         (gtk_window_present *dialog)
 
         (let ((*new-dialog
-               (x_widgets_dialog_new *window
-                                     *font-select-widget
-                                     (string->pointer (G_ "Select Schematic Font"))
-                                     (string->pointer "fontsel"))))
+               (make-widget-dialog *window
+                                   *font-select-widget
+                                   (string->pointer (G_ "Select Schematic Font"))
+                                   (string->pointer "fontsel"))))
           (schematic_window_set_font_select_dialog *window *new-dialog)))))
