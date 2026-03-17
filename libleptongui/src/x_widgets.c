@@ -155,12 +155,6 @@ x_widgets_dialog_new (SchematicWindow* w_current,
                     G_CALLBACK (&gtk_widget_hide_on_delete),
                     NULL);
 
-  GtkWidget* content_area = gtk_dialog_get_content_area (GTK_DIALOG (dlg));
-  gtk_container_add (GTK_CONTAINER (content_area), widget);
-
-  gtk_widget_show_all (dlg);
-  gtk_window_present (GTK_WINDOW (dlg));
-
   return dlg;
 
 } /* x_widgets_dialog_new() */

@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog widget)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (make-widget-dialog))
@@ -29,8 +30,17 @@
 be a parent for the *WIDGET."
   (define *main-window (schematic_window_get_main_window *window))
 
-  (x_widgets_dialog_new *window
-                        *main-window
-                        *widget
-                        *title
-                        *settings-group))
+  (define *dialog (x_widgets_dialog_new *window
+                                        *main-window
+                                        *widget
+                                        *title
+                                        *settings-group))
+
+  (define *content-area (gtk_dialog_get_content_area *dialog))
+
+  (gtk_container_add *content-area *widget)
+
+  (gtk_widget_show_all *dialog)
+  (gtk_window_present *dialog)
+
+  *dialog)
