@@ -45,6 +45,12 @@ gtk_policy_to_string (int policy);
 int
 gtk_string_to_policy (char *s);
 
+const char*
+gdk_window_type_hint_to_string (int hint);
+
+int
+gdk_string_to_window_type_hint (char *s);
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */

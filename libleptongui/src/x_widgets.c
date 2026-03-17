@@ -139,12 +139,6 @@ x_widgets_dialog_new (SchematicWindow* w_current,
                                        _("_Close"), GTK_RESPONSE_NONE,
                                        NULL);
 
-  if (x_widgets_use_toplevel_windows())
-  {
-    gtk_window_set_transient_for (GTK_WINDOW (dlg), NULL);
-    gtk_window_set_type_hint (GTK_WINDOW (dlg), GDK_WINDOW_TYPE_HINT_NORMAL);
-  }
-
   return dlg;
 
 } /* x_widgets_dialog_new() */
