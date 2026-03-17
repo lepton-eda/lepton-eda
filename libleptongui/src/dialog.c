@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -422,7 +422,7 @@ schematic_dialog_add_buttons_valist (GtkDialog *dialog,
  *
  *  \return  The SchematicDialog created.
  */
-static GtkWidget*
+GtkWidget*
 schematic_dialog_new_empty (const gchar *title,
                             GtkWindow *parent,
                             GtkDialogFlags flags,
