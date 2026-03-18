@@ -2033,10 +2033,10 @@ for *PAGE page will be created and set active."
   (procedure->pointer void translate-response (list '* int '*)))
 
 
-(define (make-side-notebook *window use_docks)
+(define (make-side-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when (true? use_docks)
+  (when %use-dock-widgets
     (let ((*object-properties-widget
            (schematic_window_get_object_properties_widget *window))
           (*text-properties-widget
@@ -2059,10 +2059,10 @@ for *PAGE page will be created and set active."
   *notebook)
 
 
-(define (make-bottom-notebook *window use_docks)
+(define (make-bottom-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when (true? use_docks)
+  (when %use-dock-widgets
     (let ((*find-text-state
            (schematic_window_get_find_text_state_widget *window))
           (*log-widget
@@ -2250,9 +2250,8 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
-      (let* ((use_docks (if %use-dock-widgets TRUE FALSE))
-             (*right-notebook (make-side-notebook *window use_docks))
-             (*bottom-notebook (make-bottom-notebook *window use_docks)))
+      (let ((*right-notebook (make-side-notebook *window))
+            (*bottom-notebook (make-bottom-notebook *window)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
 
