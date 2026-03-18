@@ -38,7 +38,7 @@
 
   (let ((*log-widget (schematic_window_get_log_widget *window)))
 
-    (if %use-dock-widgets
+    (if (eq? (widget-style) 'dock)
         (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
           (show-notebook-widget *bottom-notebook *log-widget))
 

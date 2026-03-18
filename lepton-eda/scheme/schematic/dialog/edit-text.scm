@@ -39,7 +39,7 @@
   (let ((*text-properties-widget
          (schematic_window_get_text_properties_widget *window)))
 
-    (if %use-dock-widgets
+    (if (eq? (widget-style) 'dock)
         (let ((*right-notebook (schematic_window_get_right_notebook *window)))
           (show-notebook-widget *right-notebook *text-properties-widget))
 

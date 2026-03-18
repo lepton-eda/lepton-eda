@@ -124,7 +124,7 @@
   (when (null-pointer? *window)
     (error "NULL window."))
 
-  (when %use-toplevel-windows
+  (when (eq? (widget-style) 'normal)
 
     (destroy-widget-dialog schematic_window_get_options_widget_dialog
                            schematic_window_set_options_widget_dialog)
@@ -222,7 +222,7 @@
          (height (if positive-sizes? stored-height %default-window-height)))
     (gtk_window_resize *main-window width height)
 
-    (when %use-dock-widgets
+    (when (eq? (widget-style) 'dock)
       (let ((*find_text_state
              (schematic_window_get_find_text_state_widget *window)))
         (gtk_widget_set_size_request *find_text_state
@@ -1946,7 +1946,7 @@ for *PAGE page will be created and set active."
   ;; Show all widgets.
   (gtk_widget_show_all *main-window)
 
-  (unless %use-dock-widgets
+  (unless (eq? (widget-style) 'dock)
     (let ((*bottom-notebook
            (schematic_window_get_bottom_notebook *window))
           (*right-notebook
@@ -2036,7 +2036,7 @@ for *PAGE page will be created and set active."
 (define (make-side-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when %use-dock-widgets
+  (when (eq? (widget-style) 'dock)
     (let ((*object-properties-widget
            (schematic_window_get_object_properties_widget *window))
           (*text-properties-widget
@@ -2062,7 +2062,7 @@ for *PAGE page will be created and set active."
 (define (make-bottom-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when %use-dock-widgets
+  (when (eq? (widget-style) 'dock)
     (let ((*find-text-state
            (schematic_window_get_find_text_state_widget *window))
           (*log-widget
@@ -2210,7 +2210,6 @@ GtkApplication structure of the program (when compiled with
                           *callback-translate-response
                           *window))
       ;; Setup various widgets.
-      (init-window-widgets-config)
       (schematic_window_set_object_properties_widget *window
                                                      (schematic_object_properties_widget_new *window))
       (schematic_window_set_text_properties_widget *window
