@@ -128,8 +128,6 @@ x_widgets_dialog_new (SchematicWindow* w_current,
                       const gchar*    title,
                       const gchar*    ini_group)
 {
-  g_return_val_if_fail (widget != NULL, NULL);
-
   GtkWidget* dlg =
     GTK_WIDGET (schematic_dialog_new_empty (title,
                                             GTK_WINDOW (main_window),

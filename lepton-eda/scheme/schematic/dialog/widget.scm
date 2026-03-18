@@ -33,35 +33,36 @@
   "Creates a new dialog box for *WIDGET in *WINDOW setting its title to
 *TITLE and its group of settings to *SETTINGS-GROUP.  The dialog will
 be a parent for the *WIDGET."
-  (define *main-window (schematic_window_get_main_window *window))
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
 
-  (define *dialog (x_widgets_dialog_new *window
+  (let* ((*main-window (schematic_window_get_main_window *window))
+         (*dialog (x_widgets_dialog_new *window
                                         *main-window
                                         *widget
                                         *title
                                         *settings-group))
+         (*content-area (gtk_dialog_get_content_area *dialog)))
 
-  (define *content-area (gtk_dialog_get_content_area *dialog))
+    (when (true? (x_widgets_use_toplevel_windows))
+      (gtk_window_set_transient_for *dialog %null-pointer)
+      (gtk_window_set_type_hint *dialog
+                                (gdk_string_to_window_type_hint
+                                 (string->pointer "normal"))))
 
-  (when (true? (x_widgets_use_toplevel_windows))
-    (gtk_window_set_transient_for *dialog %null-pointer)
-    (gtk_window_set_type_hint *dialog
-                              (gdk_string_to_window_type_hint
-                               (string->pointer "normal"))))
+    (g_signal_connect *dialog
+                      (string->pointer "response")
+                      *gtk_widget_hide
+                      %null-pointer)
 
-  (g_signal_connect *dialog
-                    (string->pointer "response")
-                    *gtk_widget_hide
-                    %null-pointer)
+    (g_signal_connect *dialog
+                      (string->pointer "delete-event")
+                      *gtk_widget_hide_on_delete
+                      %null-pointer)
 
-  (g_signal_connect *dialog
-                    (string->pointer "delete-event")
-                    *gtk_widget_hide_on_delete
-                    %null-pointer)
+    (gtk_container_add *content-area *widget)
 
-  (gtk_container_add *content-area *widget)
+    (gtk_widget_show_all *dialog)
+    (gtk_window_present *dialog)
 
-  (gtk_widget_show_all *dialog)
-  (gtk_window_present *dialog)
-
-  *dialog)
+    *dialog))
