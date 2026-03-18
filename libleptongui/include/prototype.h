@@ -1134,16 +1134,6 @@ x_window_translate_response (GtkWidget *widget,
                              gint response,
                              SchematicWindow *w_current);
 
-/* x_widgets.c */
-gboolean
-x_widgets_use_docks();
-
-void
-x_widgets_init();
-
-gboolean
-x_widgets_use_toplevel_windows ();
-
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 

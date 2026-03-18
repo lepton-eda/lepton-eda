@@ -301,10 +301,6 @@
             schematic_compselect_new
             schematic_compselect_get_preview
 
-            x_widgets_init
-            x_widgets_use_docks
-            x_widgets_use_toplevel_windows
-
             recent_manager_add
             x_window_save_page
             x_window_untitled_page
@@ -751,11 +747,6 @@
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
 (define-lff schematic_compselect_get_preview '* '(*))
-
-;;; x_widgets.c
-(define-lff x_widgets_init void '())
-(define-lff x_widgets_use_docks int '())
-(define-lff x_widgets_use_toplevel_windows int '())
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))

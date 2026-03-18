@@ -39,7 +39,7 @@
   (let ((*find-text-state
          (schematic_window_get_find_text_state_widget *window)))
 
-    (if (true? (x_widgets_use_docks))
+    (if %use-dock-widgets
         (let ((*bottom-notebook
                (schematic_window_get_bottom_notebook *window)))
           (show-notebook-widget *bottom-notebook *find-text-state))

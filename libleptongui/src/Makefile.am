@@ -106,7 +106,6 @@ libleptongui_la_SOURCES = \
 	x_rc.c \
 	x_stroke.c \
 	x_window.c \
-	x_widgets.c \
 	x_tabs.c \
 	color_edit_widget.c \
 	font_select_widget.c
