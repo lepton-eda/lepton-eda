@@ -45,6 +45,7 @@
             gtk_container_add
             gtk_container_set_border_width
 
+            gtk_dialog_add_button
             gtk_dialog_get_content_area
             gtk_dialog_set_default_response
 
@@ -167,6 +168,7 @@
 (define-lff gtk_container_add void '(* *))
 (define-lff gtk_container_set_border_width void (list '* unsigned-int))
 
+(define-lff gtk_dialog_add_button '* (list '* '* int))
 (define-lff gtk_dialog_get_content_area '* '(*))
 (define-lff gtk_dialog_set_default_response void (list '* int))
 

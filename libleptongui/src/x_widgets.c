@@ -135,8 +135,6 @@ x_widgets_dialog_new (SchematicWindow* w_current,
                                             ini_group,
                                             w_current));
 
-  gtk_dialog_add_button (GTK_DIALOG (dlg), _("_Close"), GTK_RESPONSE_NONE);
-
   return dlg;
 
 } /* x_widgets_dialog_new() */
