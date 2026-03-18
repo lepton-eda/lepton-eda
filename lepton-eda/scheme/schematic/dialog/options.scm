@@ -37,7 +37,7 @@
     (error "NULL window."))
 
   (let ((*options-widget (schematic_window_get_options_widget *window)))
-    (if (true? (x_widgets_use_docks))
+    (if %use-dock-widgets
         (let ((*right-notebook (schematic_window_get_right_notebook *window)))
           (show-notebook-widget *right-notebook *options-widget))
 

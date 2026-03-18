@@ -20,6 +20,7 @@
 (define-module (schematic dialog widget)
   #:use-module (system foreign)
 
+  #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton gettext)
@@ -28,7 +29,32 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
 
-  #:export (make-widget-dialog))
+  #:export (make-widget-dialog
+            init-window-widgets-config
+            %use-toplevel-windows
+            %use-dock-widgets))
+
+
+;;; Whether widgets configuration was initialized.
+(define %initialized #f)
+;;; Whether to use docking GUI.
+(define %use-dock-widgets #f)
+;;; When docking GUI is off, whether to display widgets as toplevel
+;;; windows (#t) or dialogs (#f).
+(define %use-toplevel-windows #f)
+
+
+(define (init-window-widgets-config)
+  "Reads widgets configuration.  The function must be called before
+adding any settings widgets."
+  (unless %initialized
+    (let ((cfg (path-config-context (getcwd))))
+      (set! %use-dock-widgets
+            (config-boolean cfg "schematic.gui" "use-docks"))
+      (set! %use-toplevel-windows
+            (config-boolean cfg "schematic.gui" "use-toplevel-windows"))
+      (set! %initialized #t))))
+
 
 ;;; Defined in gtkdialog.h.
 (define GTK_DIALOG_DESTROY_WITH_PARENT 2)
@@ -52,7 +78,7 @@ be a parent for the *WIDGET."
                            (string->pointer (G_ "_Close"))
                            (symbol->gtk-response 'none))
 
-    (when (true? (x_widgets_use_toplevel_windows))
+    (when %use-toplevel-windows
       (gtk_window_set_transient_for *dialog %null-pointer)
       (gtk_window_set_type_hint *dialog
                                 (gdk_string_to_window_type_hint

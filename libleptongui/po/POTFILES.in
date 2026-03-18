@@ -89,7 +89,6 @@ libleptongui/src/page_select_widget.c
 libleptongui/src/x_print.c
 libleptongui/src/x_stroke.c
 libleptongui/src/x_tabs.c
-libleptongui/src/x_widgets.c
 libleptongui/src/x_window.c
 
 libleptongui/data/lepton-schematic.desktop.in

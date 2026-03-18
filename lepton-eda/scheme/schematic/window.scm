@@ -57,6 +57,7 @@
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog close-window)
   #:use-module (schematic dialog find-text-state)
+  #:use-module (schematic dialog widget)
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
@@ -123,7 +124,7 @@
   (when (null-pointer? *window)
     (error "NULL window."))
 
-  (unless (false? (x_widgets_use_toplevel_windows))
+  (when %use-toplevel-windows
 
     (destroy-widget-dialog schematic_window_get_options_widget_dialog
                            schematic_window_set_options_widget_dialog)
@@ -221,7 +222,7 @@
          (height (if positive-sizes? stored-height %default-window-height)))
     (gtk_window_resize *main-window width height)
 
-    (when (true? (x_widgets_use_docks))
+    (when %use-dock-widgets
       (let ((*find_text_state
              (schematic_window_get_find_text_state_widget *window)))
         (gtk_widget_set_size_request *find_text_state
@@ -1945,7 +1946,7 @@ for *PAGE page will be created and set active."
   ;; Show all widgets.
   (gtk_widget_show_all *main-window)
 
-  (unless (true? (x_widgets_use_docks))
+  (unless %use-dock-widgets
     (let ((*bottom-notebook
            (schematic_window_get_bottom_notebook *window))
           (*right-notebook
@@ -2209,7 +2210,7 @@ GtkApplication structure of the program (when compiled with
                           *callback-translate-response
                           *window))
       ;; Setup various widgets.
-      (x_widgets_init)
+      (init-window-widgets-config)
       (schematic_window_set_object_properties_widget *window
                                                      (schematic_object_properties_widget_new *window))
       (schematic_window_set_text_properties_widget *window
@@ -2249,7 +2250,7 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
-      (let* ((use_docks (x_widgets_use_docks))
+      (let* ((use_docks (if %use-dock-widgets TRUE FALSE))
              (*right-notebook (make-side-notebook *window use_docks))
              (*bottom-notebook (make-bottom-notebook *window use_docks)))
         (schematic_window_set_right_notebook *window *right-notebook)
