@@ -30,6 +30,8 @@
 
   #:export (make-widget-dialog))
 
+;;; Defined in gtkdialog.h.
+(define GTK_DIALOG_DESTROY_WITH_PARENT 2)
 
 (define (make-widget-dialog *window *widget *title *settings-group)
   "Creates a new dialog box for *WIDGET in *WINDOW setting its title to
@@ -39,11 +41,11 @@ be a parent for the *WIDGET."
     (error "NULL widget."))
 
   (let* ((*main-window (schematic_window_get_main_window *window))
-         (*dialog (x_widgets_dialog_new *window
-                                        *main-window
-                                        *widget
-                                        *title
-                                        *settings-group))
+         (*dialog (schematic_dialog_new_empty *title
+                                              *main-window
+                                              GTK_DIALOG_DESTROY_WITH_PARENT
+                                              *settings-group
+                                              *window))
          (*content-area (gtk_dialog_get_content_area *dialog)))
 
     (gtk_dialog_add_button *dialog

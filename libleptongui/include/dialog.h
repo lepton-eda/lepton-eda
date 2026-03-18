@@ -64,11 +64,15 @@ schematic_dialog_new_with_buttons (const gchar *title,
                                    const gchar *first_button_text,
                                    ...);
 
+G_BEGIN_DECLS
+
 GtkWidget*
 schematic_dialog_new_empty (const gchar *title,
                             GtkWindow *parent,
                             GtkDialogFlags flags,
                             const gchar *settings_name,
                             SchematicWindow *w_current);
+
+G_END_DECLS
 
 #endif /* __DIALOG_H__ */

@@ -53,6 +53,7 @@
             generic_msg_dialog
             major_changed_dialog
             schematic_dialog_load_file_error
+            schematic_dialog_new_empty
 
             schematic_execute_script
 
@@ -300,7 +301,6 @@
             schematic_compselect_new
             schematic_compselect_get_preview
 
-            x_widgets_dialog_new
             x_widgets_init
             x_widgets_use_docks
             x_widgets_use_toplevel_windows
@@ -751,7 +751,6 @@
 (define-lff schematic_compselect_get_preview '* '(*))
 
 ;;; x_widgets.c
-(define-lff x_widgets_dialog_new '* '(* * * * *))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_use_docks int '())
 (define-lff x_widgets_use_toplevel_windows int '())
@@ -1133,6 +1132,7 @@
 (define-lff generic_msg_dialog void '(*))
 (define-lff major_changed_dialog void '(*))
 (define-lff schematic_dialog_load_file_error void '(* * *))
+(define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))
