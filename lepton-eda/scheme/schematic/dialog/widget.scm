@@ -56,9 +56,6 @@ widgets), 'normal (toplevel windows), or 'dialog (dialog windows)."
   (force configured-widget-style))
 
 
-;;; Defined in gtkdialog.h.
-(define GTK_DIALOG_DESTROY_WITH_PARENT 2)
-
 (define (make-widget-dialog *window *widget *title *settings-group)
   "Creates a new dialog box for *WIDGET in *WINDOW setting its title to
 *TITLE and its group of settings to *SETTINGS-GROUP.  The dialog will

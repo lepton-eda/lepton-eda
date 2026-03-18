@@ -124,6 +124,8 @@
             gtk_window_present
             gtk_window_resize
 
+            GTK_DIALOG_DESTROY_WITH_PARENT
+
             ;; GDK
             GdkModifierType
             gdk_event_get_coords
@@ -140,6 +142,9 @@
 
 (define-syntax-rule (define-lfc arg ...)
   (define-lfc-lib arg ... libgtk))
+
+;;; Defined in gtkdialog.h.
+(define GTK_DIALOG_DESTROY_WITH_PARENT 2)
 
 (define GdkModifierType uint32)
 
