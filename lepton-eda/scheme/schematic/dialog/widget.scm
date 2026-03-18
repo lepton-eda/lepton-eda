@@ -22,9 +22,11 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton gettext)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
 
   #:export (make-widget-dialog))
 
@@ -43,6 +45,10 @@ be a parent for the *WIDGET."
                                         *title
                                         *settings-group))
          (*content-area (gtk_dialog_get_content_area *dialog)))
+
+    (gtk_dialog_add_button *dialog
+                           (string->pointer (G_ "_Close"))
+                           (symbol->gtk-response 'none))
 
     (when (true? (x_widgets_use_toplevel_windows))
       (gtk_window_set_transient_for *dialog %null-pointer)
