@@ -104,37 +104,3 @@ void x_widgets_init()
     g_once_init_leave (&initialized, 1);
   }
 }
-
-
-
-/*! \brief Create a new dialog for a widget.
- *
- * \par Function Description
- *
- *  Returns a new parent dialog box for \p widget.
- *
- *  \param [in]     w_current The toplevel environment.
- *  \param [in]     main_window The main window widget.
- *  \param [in]     widget Widget to show
- *  \param [in]     title  Dialog's title
- *  \param [in]     ini_group Config file section for dialog geometry
- *
- *  \return The new dialog.
- */
-GtkWidget*
-x_widgets_dialog_new (SchematicWindow* w_current,
-                      GtkWidget *main_window,
-                      GtkWidget*      widget,
-                      const gchar*    title,
-                      const gchar*    ini_group)
-{
-  GtkWidget* dlg =
-    GTK_WIDGET (schematic_dialog_new_empty (title,
-                                            GTK_WINDOW (main_window),
-                                            (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            ini_group,
-                                            w_current));
-
-  return dlg;
-
-} /* x_widgets_dialog_new() */
