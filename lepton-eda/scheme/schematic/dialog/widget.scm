@@ -30,30 +30,30 @@
   #:use-module (schematic gtk helper)
 
   #:export (make-widget-dialog
-            init-window-widgets-config
-            %use-toplevel-windows
-            %use-dock-widgets))
+            widget-style))
 
 
-;;; Whether widgets configuration was initialized.
-(define %initialized #f)
-;;; Whether to use docking GUI.
-(define %use-dock-widgets #f)
-;;; When docking GUI is off, whether to display widgets as toplevel
-;;; windows (#t) or dialogs (#f).
-(define %use-toplevel-windows #f)
-
-
-(define (init-window-widgets-config)
-  "Reads widgets configuration.  The function must be called before
-adding any settings widgets."
-  (unless %initialized
+(define configured-widget-style
+  (delay
     (let ((cfg (path-config-context (getcwd))))
-      (set! %use-dock-widgets
-            (config-boolean cfg "schematic.gui" "use-docks"))
-      (set! %use-toplevel-windows
-            (config-boolean cfg "schematic.gui" "use-toplevel-windows"))
-      (set! %initialized #t))))
+      ;; Check whether to use docking GUI.
+      (if (config-boolean cfg "schematic.gui" "use-docks")
+          ;; Display widgets in docks.
+          'dock
+          ;; Display widgets in separate windows.
+          (if (config-boolean cfg
+                              "schematic.gui"
+                              "use-toplevel-windows")
+              ;; Display widget as toplevel windows.
+              'normal
+              ;; Display widgets as dialogs.
+              'dialog)))))
+
+
+(define (widget-style)
+  "Returns the configured widget style, which is one of 'dock (docked
+widgets), 'normal (toplevel windows), or 'dialog (dialog windows)."
+  (force configured-widget-style))
 
 
 ;;; Defined in gtkdialog.h.
@@ -78,7 +78,7 @@ be a parent for the *WIDGET."
                            (string->pointer (G_ "_Close"))
                            (symbol->gtk-response 'none))
 
-    (when %use-toplevel-windows
+    (when (eq? (widget-style) 'normal)
       (gtk_window_set_transient_for *dialog %null-pointer)
       (gtk_window_set_type_hint *dialog
                                 (gdk_string_to_window_type_hint
