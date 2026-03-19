@@ -406,7 +406,7 @@
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
-  (object-properties-dialog (*current-window)))
+  (object-properties-dialog (current-window)))
 
 
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))

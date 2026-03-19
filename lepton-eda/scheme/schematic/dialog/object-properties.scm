@@ -27,28 +27,28 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (object-properties-dialog))
 
 
-(define (object-properties-dialog *window)
+(define (object-properties-dialog window)
   "Create and/or show the Object properties widget in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define *window (check-window window 1))
 
-  (let ((*object-properties-widget
-         (schematic_window_get_object_properties_widget *window)))
+  (define *object-properties-widget
+    (schematic_window_get_object_properties_widget *window))
 
-    (if (eq? (widget-style) 'dock)
-        (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (show-notebook-widget *right-notebook *object-properties-widget))
+  (if (eq? (widget-style) 'dock)
+      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
+        (show-notebook-widget *right-notebook *object-properties-widget))
 
-        (let ((*dialog (schematic_window_get_object_properties_dialog *window)))
-          (if (not (null-pointer? *dialog))
-              (gtk_window_present *dialog)
+      (let ((*dialog (schematic_window_get_object_properties_dialog *window)))
+        (if (not (null-pointer? *dialog))
+            (gtk_window_present *dialog)
 
-              (let ((*new-dialog (make-widget-dialog *window
-                                                     *object-properties-widget
-                                                     (string->pointer (G_ "Object Properties"))
-                                                     (string->pointer "objprops"))))
-                (schematic_window_set_object_properties_dialog *window *new-dialog)))))))
+            (let ((*new-dialog (make-widget-dialog *window
+                                                   *object-properties-widget
+                                                   (string->pointer (G_ "Object Properties"))
+                                                   (string->pointer "objprops"))))
+              (schematic_window_set_object_properties_dialog *window *new-dialog))))))
