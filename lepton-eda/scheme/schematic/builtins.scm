@@ -929,8 +929,9 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))
+  (define window (current-window))
   (define *window (*current-window))
-  (page-select-dialog *window)
+  (page-select-dialog window)
   (page_select_widget_update *window))
 
 
