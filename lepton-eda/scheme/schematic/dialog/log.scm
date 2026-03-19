@@ -27,28 +27,28 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (log-dialog))
 
 
-(define (log-dialog *window)
+(define (log-dialog window)
   "Create and/or show the Log dialog in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define *window (check-window window 1))
 
-  (let ((*log-widget (schematic_window_get_log_widget *window)))
+  (define *log-widget (schematic_window_get_log_widget *window))
 
-    (if (eq? (widget-style) 'dock)
-        (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
-          (show-notebook-widget *bottom-notebook *log-widget))
+  (if (eq? (widget-style) 'dock)
+      (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
+        (show-notebook-widget *bottom-notebook *log-widget))
 
-        (let ((*dialog (schematic_window_get_log_widget_dialog *window)))
+      (let ((*dialog (schematic_window_get_log_widget_dialog *window)))
 
-          (if (not (null-pointer? *dialog))
-              (gtk_window_present *dialog)
+        (if (not (null-pointer? *dialog))
+            (gtk_window_present *dialog)
 
-              (let ((*new-dialog (make-widget-dialog *window
-                                                     *log-widget
-                                                     (string->pointer (G_ "Log"))
-                                                     (string->pointer "log"))))
-                (schematic_window_set_log_widget_dialog *window *new-dialog)))))))
+            (let ((*new-dialog (make-widget-dialog *window
+                                                   *log-widget
+                                                   (string->pointer (G_ "Log"))
+                                                   (string->pointer "log"))))
+              (schematic_window_set_log_widget_dialog *window *new-dialog))))))
