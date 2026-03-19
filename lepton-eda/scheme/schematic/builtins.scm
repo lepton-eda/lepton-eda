@@ -1620,7 +1620,7 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
-  (log-dialog (*current-window)))
+  (log-dialog (current-window)))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
   (coord_dialog (*current-window) 0 0))
