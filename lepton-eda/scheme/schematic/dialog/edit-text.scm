@@ -27,30 +27,30 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (text-edit-dialog))
 
 
-(define (text-edit-dialog *window)
+(define (text-edit-dialog window)
   "Create and/or show the Edit text properties widget in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define *window (check-window window 1))
 
-  (let ((*text-properties-widget
-         (schematic_window_get_text_properties_widget *window)))
+  (define *text-properties-widget
+    (schematic_window_get_text_properties_widget *window))
 
-    (if (eq? (widget-style) 'dock)
-        (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (show-notebook-widget *right-notebook *text-properties-widget))
+  (if (eq? (widget-style) 'dock)
+      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
+        (show-notebook-widget *right-notebook *text-properties-widget))
 
-        (let ((*dialog (schematic_window_get_text_properties_dialog *window)))
-          (if (not (null-pointer? *dialog))
-              (gtk_window_present *dialog)
+      (let ((*dialog (schematic_window_get_text_properties_dialog *window)))
+        (if (not (null-pointer? *dialog))
+            (gtk_window_present *dialog)
 
-              (let ((*new-dialog (make-widget-dialog *window
-                                                     *text-properties-widget
-                                                     (string->pointer (G_ "Edit Text"))
-                                                     (string->pointer "txtprops"))))
-                (schematic_window_set_text_properties_dialog *window *new-dialog)))))
+            (let ((*new-dialog (make-widget-dialog *window
+                                                   *text-properties-widget
+                                                   (string->pointer (G_ "Edit Text"))
+                                                   (string->pointer "txtprops"))))
+              (schematic_window_set_text_properties_dialog *window *new-dialog)))))
 
-    (schematic_text_properties_widget_adjust_focus *text-properties-widget)))
+  (schematic_text_properties_widget_adjust_focus *text-properties-widget))

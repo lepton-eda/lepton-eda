@@ -396,7 +396,7 @@
 
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
-  (text-edit-dialog (*current-window)))
+  (text-edit-dialog (current-window)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (match (filter component? (page-selection (active-page)))
