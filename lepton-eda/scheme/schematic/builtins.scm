@@ -864,7 +864,7 @@ the snap grid size should be set to 100")))
 
 ;;; Show color scheme editor widget.
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
-  (color-edit-dialog (*current-window)))
+  (color-edit-dialog (current-window)))
 
 
 ;; -------------------------------------------------------------------

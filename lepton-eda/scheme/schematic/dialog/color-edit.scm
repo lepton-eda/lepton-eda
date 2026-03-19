@@ -26,24 +26,23 @@
   #:use-module (schematic dialog widget)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (color-edit-dialog))
 
 
-(define (color-edit-dialog *window)
-  "Create and/or show the Color edit dialog in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+(define (color-edit-dialog window)
+  "Create and/or show the Color edit dialog in WINDOW."
+  (define *window (check-window window 1))
+  (define *color-edit-widget (schematic_window_get_color_edit_widget *window))
+  (define *dialog (schematic_window_get_color_edit_dialog *window))
 
-  (let ((*color-edit-widget (schematic_window_get_color_edit_widget *window))
-        (*dialog (schematic_window_get_color_edit_dialog *window)))
+  (if (not (null-pointer? *dialog))
+      (gtk_window_present *dialog)
 
-    (if (not (null-pointer? *dialog))
-        (gtk_window_present *dialog)
-
-        (let ((*new-dialog
-               (make-widget-dialog *window
-                                   *color-edit-widget
-                                   (string->pointer (G_ "Color Scheme Editor"))
-                                   (string->pointer "colored"))))
-          (schematic_window_set_color_edit_dialog *window *new-dialog)))))
+      (let ((*new-dialog
+             (make-widget-dialog *window
+                                 *color-edit-widget
+                                 (string->pointer (G_ "Color Scheme Editor"))
+                                 (string->pointer "colored"))))
+        (schematic_window_set_color_edit_dialog *window *new-dialog))))
