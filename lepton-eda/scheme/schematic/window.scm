@@ -1656,7 +1656,7 @@ for *PAGE page will be created and set active."
 
   (if (> count 0)
       (begin
-        (find-text-state-dialog *window)
+        (find-text-state-dialog (pointer->window *window))
         TRUE)
       FALSE))
 

@@ -726,7 +726,7 @@ the snap grid size should be set to 100")))
 
 ;;; Show the find text state window.
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
-  (find-text-state-dialog (*current-window)))
+  (find-text-state-dialog (current-window)))
 
 ;;; Redraw canvas.
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
