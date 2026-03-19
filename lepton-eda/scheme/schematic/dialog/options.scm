@@ -27,29 +27,30 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (options-dialog))
 
 
-(define (options-dialog *window)
+(define (options-dialog window)
   "Create and/or show the Options dialog in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define *window (check-window window 1))
 
-  (let ((*options-widget (schematic_window_get_options_widget *window)))
-    (if (eq? (widget-style) 'dock)
-        (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-          (show-notebook-widget *right-notebook *options-widget))
+  (define *options-widget (schematic_window_get_options_widget *window))
 
-        (let ((*dialog (schematic_window_get_options_widget_dialog *window)))
+  (if (eq? (widget-style) 'dock)
+      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
+        (show-notebook-widget *right-notebook *options-widget))
 
-          (if (not (null-pointer? *dialog))
-              (gtk_window_present *dialog)
+      (let ((*dialog (schematic_window_get_options_widget_dialog *window)))
 
-              (let ((*new-dialog
-                     (make-widget-dialog *window
-                                         *options-widget
-                                         (string->pointer (G_ "Options"))
-                                         (string->pointer "options"))))
-                (schematic_window_set_options_widget_dialog *window
-                                                            *new-dialog)))))))
+        (if (not (null-pointer? *dialog))
+            (gtk_window_present *dialog)
+
+            (let ((*new-dialog
+                   (make-widget-dialog *window
+                                       *options-widget
+                                       (string->pointer (G_ "Options"))
+                                       (string->pointer "options"))))
+              (schematic_window_set_options_widget_dialog *window
+                                                          *new-dialog))))))
