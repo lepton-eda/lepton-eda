@@ -27,30 +27,30 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (find-text-state-dialog))
 
 
-(define (find-text-state-dialog *window)
+(define (find-text-state-dialog window)
   "Create and/or show the Find text state dialog in *WINDOW."
-  (when (null-pointer? *window)
-    (error "NULL window."))
+  (define *window (check-window window 1))
 
-  (let ((*find-text-state
-         (schematic_window_get_find_text_state_widget *window)))
+  (define *find-text-state
+    (schematic_window_get_find_text_state_widget *window))
 
-    (if (eq? (widget-style) 'dock)
-        (let ((*bottom-notebook
-               (schematic_window_get_bottom_notebook *window)))
-          (show-notebook-widget *bottom-notebook *find-text-state))
+  (if (eq? (widget-style) 'dock)
+      (let ((*bottom-notebook
+             (schematic_window_get_bottom_notebook *window)))
+        (show-notebook-widget *bottom-notebook *find-text-state))
 
-        (let ((*dialog (schematic_window_get_find_text_state_dialog *window)))
+      (let ((*dialog (schematic_window_get_find_text_state_dialog *window)))
 
-          (if (not (null-pointer? *dialog))
-              (gtk_window_present *dialog)
+        (if (not (null-pointer? *dialog))
+            (gtk_window_present *dialog)
 
-              (let ((*new-dialog (make-widget-dialog *window
-                                                     *find-text-state
-                                                     (string->pointer (G_ "Find Text"))
-                                                     (string->pointer "findtext"))))
-                (schematic_window_set_find_text_state_dialog *window *new-dialog)))))))
+            (let ((*new-dialog (make-widget-dialog *window
+                                                   *find-text-state
+                                                   (string->pointer (G_ "Find Text"))
+                                                   (string->pointer "findtext"))))
+              (schematic_window_set_find_text_state_dialog *window *new-dialog))))))
