@@ -1626,7 +1626,7 @@ that backs the list of key bindings.  Return the modified *STORE."
   (coord_dialog (*current-window) 0 0))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
-  (font-select-dialog (*current-window)))
+  (font-select-dialog (current-window)))
 
 
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
