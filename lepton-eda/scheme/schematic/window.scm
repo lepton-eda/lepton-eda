@@ -1496,9 +1496,13 @@ for *PAGE page will be created and set active."
 
 (define (*window-set-current-page! *window *page)
   "Sets current page of *WINDOW to *PAGE."
-  (if (true? (x_tabs_enabled))
-      (set-tab-page! *window *page)
-      (set-window-current-page! *window *page)))
+  ;; NULL is a valid value for *page.  Some lower level functions
+  ;; return NULL to indicate that the current page should not be
+  ;; changed to another.
+  (unless (null-pointer? *page)
+    (if (true? (x_tabs_enabled))
+        (set-tab-page! *window *page)
+        (set-window-current-page! *window *page))))
 
 
 ;;; Return the subpages of PAGE in *WINDOW.  If any subpages are
