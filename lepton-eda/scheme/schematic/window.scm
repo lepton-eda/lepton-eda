@@ -1247,7 +1247,7 @@ for *PAGE page will be created and set active."
     (any (lambda (p) (eq? (pointer->page *page) p)) page-ls))
 
   (when (null-pointer? *window)
-    (error "NULL window pointer in set-tab-page!()"))
+    (error "NULL window."))
 
   (let ((*tab-info (x_tabs_info_find_by_page (schematic_window_get_tab_info_list *window)
                                              *page))
