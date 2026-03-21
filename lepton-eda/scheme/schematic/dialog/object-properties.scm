@@ -43,12 +43,9 @@
       (let ((*right-notebook (schematic_window_get_right_notebook *window)))
         (show-notebook-widget *right-notebook *object-properties-widget))
 
-      (let ((*dialog (schematic_window_get_object_properties_dialog *window)))
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-
-            (let ((*new-dialog (make-widget-dialog *window
-                                                   *object-properties-widget
-                                                   (string->pointer (G_ "Object Properties"))
-                                                   (string->pointer "objprops"))))
-              (schematic_window_set_object_properties_dialog *window *new-dialog))))))
+      (show-widget-dialog *window
+                          *object-properties-widget
+                          schematic_window_get_object_properties_dialog
+                          schematic_window_set_object_properties_dialog
+                          "Object Properties"
+                          "objprops")))
