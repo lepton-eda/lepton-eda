@@ -34,17 +34,10 @@
 
 (define (log-dialog window)
   "Create and/or show the Log dialog in *WINDOW."
-  (define *window (check-window window 1))
-
-  (define *log-widget (schematic_window_get_log_widget *window))
-
-  (if (eq? (widget-style) 'dock)
-      (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
-        (show-notebook-widget *bottom-notebook *log-widget))
-
-      (show-widget-dialog *window
-                          *log-widget
-                          schematic_window_get_log_widget_dialog
-                          schematic_window_set_log_widget_dialog
-                          "Log"
-                          "log")))
+  (show-widget window
+               schematic_window_get_log_widget
+               schematic_window_get_bottom_notebook
+               schematic_window_get_log_widget_dialog
+               schematic_window_set_log_widget_dialog
+               "Log"
+               "log"))
