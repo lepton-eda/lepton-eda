@@ -34,18 +34,10 @@
 
 (define (object-properties-dialog window)
   "Create and/or show the Object properties widget in *WINDOW."
-  (define *window (check-window window 1))
-
-  (define *object-properties-widget
-    (schematic_window_get_object_properties_widget *window))
-
-  (if (eq? (widget-style) 'dock)
-      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-        (show-notebook-widget *right-notebook *object-properties-widget))
-
-      (show-widget-dialog *window
-                          *object-properties-widget
-                          schematic_window_get_object_properties_dialog
-                          schematic_window_set_object_properties_dialog
-                          "Object Properties"
-                          "objprops")))
+  (show-widget window
+               schematic_window_get_object_properties_widget
+               schematic_window_get_right_notebook
+               schematic_window_get_object_properties_dialog
+               schematic_window_set_object_properties_dialog
+               "Object Properties"
+               "objprops"))
