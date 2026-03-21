@@ -28,8 +28,11 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
+  #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
 
   #:export (make-widget-dialog
+            show-widget
             show-widget-dialog
             widget-style))
 
@@ -122,3 +125,33 @@ code."
                                    (string->pointer (G_ title))
                                    (string->pointer name))))
           (dialog-setter *window *new-dialog)))))
+
+
+(define (show-widget window
+                     *widget-getter
+                     *notebook-getter
+                     *dialog-getter
+                     *dialog-setter
+                     dialog-title
+                     widget-name)
+  "Show widget in WINDOW.  The window's widget is obtained using
+*WIDGET-GETTER.  If the widget has to be shown in one of the
+window's docks, the dock's notebook is obtained using
+*NOTEBOOK-GETTER.  Otherwise, a dialog is used to show it.  If the
+dialog exists, it is obtained using *DIALOG-GETTER.  Otherwise, a
+new dialog is created and set for the window using *DIALOG-SETTER.
+The title of the dialog is set to DIALOG-TITLE.  WIDGET-NAME is an
+internal name of the widget for using in lower level C code.
+Returns the widget."
+  (define *window (check-window window 1))
+  (define *widget (*widget-getter *window))
+
+  (if (eq? (widget-style) 'dock)
+      (show-notebook-widget (*notebook-getter *window) *widget)
+      (show-widget-dialog *window
+                          *widget
+                          *dialog-getter
+                          *dialog-setter
+                          dialog-title
+                          "findtext"))
+  *widget)
