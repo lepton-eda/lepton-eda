@@ -42,15 +42,9 @@
       (let ((*right-notebook (schematic_window_get_right_notebook *window)))
         (show-notebook-widget *right-notebook *options-widget))
 
-      (let ((*dialog (schematic_window_get_options_widget_dialog *window)))
-
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-
-            (let ((*new-dialog
-                   (make-widget-dialog *window
-                                       *options-widget
-                                       (string->pointer (G_ "Options"))
-                                       (string->pointer "options"))))
-              (schematic_window_set_options_widget_dialog *window
-                                                          *new-dialog))))))
+      (show-widget-dialog *window
+                          *options-widget
+                          schematic_window_get_options_widget_dialog
+                          schematic_window_set_options_widget_dialog
+                          "Options"
+                          "options")))
