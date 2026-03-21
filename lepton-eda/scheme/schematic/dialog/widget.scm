@@ -30,6 +30,7 @@
   #:use-module (schematic gtk helper)
 
   #:export (make-widget-dialog
+            show-widget-dialog
             widget-style))
 
 
@@ -97,3 +98,27 @@ be a parent for the *WIDGET."
     (gtk_window_present *dialog)
 
     *dialog))
+
+
+(define (show-widget-dialog *window
+                            *widget
+                            dialog-getter
+                            dialog-setter
+                            title
+                            name)
+  "Show *WIDGET in a dialog.  If the dialog exists, it is obtained
+using DIALOG-GETTER.  Otherwise it is created and assigned for the
+widget in *WINDOW using DIALOG-SETTER.  The dialog title is set to
+TITLE.  NAME is used to designate the dialog in lower level C
+code."
+  (let ((*dialog (dialog-getter *window)))
+
+    (if (not (null-pointer? *dialog))
+        (gtk_window_present *dialog)
+
+        (let ((*new-dialog
+               (make-widget-dialog *window
+                                   *widget
+                                   (string->pointer (G_ title))
+                                   (string->pointer name))))
+          (dialog-setter *window *new-dialog)))))
