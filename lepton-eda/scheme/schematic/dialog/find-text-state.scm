@@ -34,19 +34,10 @@
 
 (define (find-text-state-dialog window)
   "Create and/or show the Find text state dialog in *WINDOW."
-  (define *window (check-window window 1))
-
-  (define *find-text-state
-    (schematic_window_get_find_text_state_widget *window))
-
-  (if (eq? (widget-style) 'dock)
-      (let ((*bottom-notebook
-             (schematic_window_get_bottom_notebook *window)))
-        (show-notebook-widget *bottom-notebook *find-text-state))
-
-      (show-widget-dialog *window
-                          *find-text-state
-                          schematic_window_get_find_text_state_dialog
-                          schematic_window_set_find_text_state_dialog
-                          "Find Text"
-                          "findtext")))
+  (show-widget window
+               schematic_window_get_find_text_state_widget
+               schematic_window_get_bottom_notebook
+               schematic_window_get_find_text_state_dialog
+               schematic_window_set_find_text_state_dialog
+               "Find Text"
+               "findtext"))
