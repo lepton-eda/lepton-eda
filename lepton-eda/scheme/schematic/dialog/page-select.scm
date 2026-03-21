@@ -38,14 +38,9 @@
   (define *page-select-widget
     (schematic_window_get_page_select_widget *window))
 
-  (define *dialog (schematic_window_get_page_select_dialog *window))
-
-  (if (not (null-pointer? *dialog))
-      (gtk_window_present *dialog)
-
-      (let ((*new-dialog
-             (make-widget-dialog *window
-                                 *page-select-widget
-                                 (string->pointer (G_ "Page Manager"))
-                                 (string->pointer "pagesel"))))
-        (schematic_window_set_page_select_dialog *window *new-dialog))))
+  (show-widget-dialog *window
+                      *page-select-widget
+                      schematic_window_get_page_select_dialog
+                      schematic_window_set_page_select_dialog
+                      "Page Manager"
+                      "pagesel"))
