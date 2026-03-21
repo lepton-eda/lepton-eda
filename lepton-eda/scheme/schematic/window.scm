@@ -1248,6 +1248,8 @@ for *PAGE page will be created and set active."
 
   (when (null-pointer? *window)
     (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
 
   (let ((*tab-info (x_tabs_info_find_by_page (schematic_window_get_tab_info_list *window)
                                              *page))
