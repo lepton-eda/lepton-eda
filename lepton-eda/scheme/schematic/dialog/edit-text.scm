@@ -43,14 +43,11 @@
       (let ((*right-notebook (schematic_window_get_right_notebook *window)))
         (show-notebook-widget *right-notebook *text-properties-widget))
 
-      (let ((*dialog (schematic_window_get_text_properties_dialog *window)))
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-
-            (let ((*new-dialog (make-widget-dialog *window
-                                                   *text-properties-widget
-                                                   (string->pointer (G_ "Edit Text"))
-                                                   (string->pointer "txtprops"))))
-              (schematic_window_set_text_properties_dialog *window *new-dialog)))))
+      (show-widget-dialog *window
+                          *text-properties-widget
+                          schematic_window_get_text_properties_dialog
+                          schematic_window_set_text_properties_dialog
+                          "Edit Text"
+                          "txtprops"))
 
   (schematic_text_properties_widget_adjust_focus *text-properties-widget))
