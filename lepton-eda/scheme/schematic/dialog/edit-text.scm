@@ -34,20 +34,11 @@
 
 (define (text-edit-dialog window)
   "Create and/or show the Edit text properties widget in *WINDOW."
-  (define *window (check-window window 1))
-
-  (define *text-properties-widget
-    (schematic_window_get_text_properties_widget *window))
-
-  (if (eq? (widget-style) 'dock)
-      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-        (show-notebook-widget *right-notebook *text-properties-widget))
-
-      (show-widget-dialog *window
-                          *text-properties-widget
-                          schematic_window_get_text_properties_dialog
-                          schematic_window_set_text_properties_dialog
-                          "Edit Text"
-                          "txtprops"))
-
-  (schematic_text_properties_widget_adjust_focus *text-properties-widget))
+  (schematic_text_properties_widget_adjust_focus
+   (show-widget window
+                schematic_window_get_text_properties_widget
+                schematic_window_get_right_notebook
+                schematic_window_get_text_properties_dialog
+                schematic_window_set_text_properties_dialog
+                "Edit Text"
+                "txtprops")))
