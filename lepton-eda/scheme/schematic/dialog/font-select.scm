@@ -37,14 +37,10 @@
 
   (define *font-select-widget
     (schematic_window_get_font_select_widget *window))
-  (define *dialog (schematic_window_get_font_select_dialog *window))
 
-  (if (not (null-pointer? *dialog))
-      (gtk_window_present *dialog)
-
-      (let ((*new-dialog
-             (make-widget-dialog *window
-                                 *font-select-widget
-                                 (string->pointer (G_ "Select Schematic Font"))
-                                 (string->pointer "fontsel"))))
-        (schematic_window_set_font_select_dialog *window *new-dialog))))
+  (show-widget-dialog *window
+                      *font-select-widget
+                      schematic_window_get_font_select_dialog
+                      schematic_window_set_font_select_dialog
+                      "Select Schematic Font"
+                      "fontsel"))
