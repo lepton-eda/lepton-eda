@@ -42,13 +42,9 @@
       (let ((*bottom-notebook (schematic_window_get_bottom_notebook *window)))
         (show-notebook-widget *bottom-notebook *log-widget))
 
-      (let ((*dialog (schematic_window_get_log_widget_dialog *window)))
-
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-
-            (let ((*new-dialog (make-widget-dialog *window
-                                                   *log-widget
-                                                   (string->pointer (G_ "Log"))
-                                                   (string->pointer "log"))))
-              (schematic_window_set_log_widget_dialog *window *new-dialog))))))
+      (show-widget-dialog *window
+                          *log-widget
+                          schematic_window_get_log_widget_dialog
+                          schematic_window_set_log_widget_dialog
+                          "Log"
+                          "log")))
