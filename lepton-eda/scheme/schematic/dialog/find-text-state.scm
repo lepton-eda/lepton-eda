@@ -44,13 +44,9 @@
              (schematic_window_get_bottom_notebook *window)))
         (show-notebook-widget *bottom-notebook *find-text-state))
 
-      (let ((*dialog (schematic_window_get_find_text_state_dialog *window)))
-
-        (if (not (null-pointer? *dialog))
-            (gtk_window_present *dialog)
-
-            (let ((*new-dialog (make-widget-dialog *window
-                                                   *find-text-state
-                                                   (string->pointer (G_ "Find Text"))
-                                                   (string->pointer "findtext"))))
-              (schematic_window_set_find_text_state_dialog *window *new-dialog))))))
+      (show-widget-dialog *window
+                          *find-text-state
+                          schematic_window_get_find_text_state_dialog
+                          schematic_window_set_find_text_state_dialog
+                          "Find Text"
+                          "findtext")))
