@@ -34,17 +34,10 @@
 
 (define (options-dialog window)
   "Create and/or show the Options dialog in *WINDOW."
-  (define *window (check-window window 1))
-
-  (define *options-widget (schematic_window_get_options_widget *window))
-
-  (if (eq? (widget-style) 'dock)
-      (let ((*right-notebook (schematic_window_get_right_notebook *window)))
-        (show-notebook-widget *right-notebook *options-widget))
-
-      (show-widget-dialog *window
-                          *options-widget
-                          schematic_window_get_options_widget_dialog
-                          schematic_window_set_options_widget_dialog
-                          "Options"
-                          "options")))
+  (show-widget window
+               schematic_window_get_options_widget
+               schematic_window_get_right_notebook
+               schematic_window_get_options_widget_dialog
+               schematic_window_set_options_widget_dialog
+               "Options"
+               "options"))
