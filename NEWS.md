@@ -99,6 +99,13 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   definitions in the module `(schematic ffi gtk)`, and in the
   tools `lepton-schematic` and `lepton-attrib`.
 
+- A new syntax to define lazy foreign callbacks for C libraries
+  has been introduced.  Previously, the like syntax was only
+  defined for Lepton's libraries.  Now its generalization,
+  `define-lfc-lib()`, is exported in the module `(lepton ffi lff)`
+  and can be used for other libraries, for example, for **GTK+**
+  ones.
+
 - Two new modules, `(lepton ffi gobject)` and `(lepton ffi glib)`,
   have been introduced to localize `libgobject` and `libglib`
   functions and separate their definitions from Lepton functions.
@@ -434,6 +441,42 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   Along with a new hook, `gdk-event-hook`, exported in the module
   `(schematic hook)`, it allows to customize processing GDK events
   in `lepton-schematic` by adding user defined event handlers.
+
+- The following new modules dealing with settings widget dialogs
+  have been added:
+  - `(schematic dialog edit-text)` exports the function
+    `text-edit-dialog()` showing the *Text Edit* widget.
+  - `(schematic dialog object-properties)` exports the function
+    `object-properties-dialog()` showing the *Object Properties*
+    widget.
+  - `(schematic dialog log)` exports the function `log-dialog()`
+    showing the *Log* widget.
+  - `(schematic dialog options)` exports the function
+    `options-dialog()` showing the *Options* widget.
+  - `(schematic dialog find-text-state)` exports the function
+    `find-text-state-dialog()` showing the *Find Text State*
+    widget.
+  - `(schematic dialog color-edit)` exports the function
+    `color-edit-dialog()` showing the *Color Chooser* widget.
+  - `(schematic dialog font-select)` exports the function
+    `font-select-dialog()` showing the *Font Chooser* widget.
+  - `(schematic dialog page-select)` exports the function
+    `page-select-dialog()` showing the *Page Manager* widget.
+
+- A new module, `(schematic widget)`, has been introduced.  It
+  exports the function `show-notebook-widget()` which opens
+  settings widgets in docks.
+
+- A new module, `(schematic dialog widget)`, has been created.  It
+  exports the following new functions:
+  - `widget-style()`, that checks what widget style is set in the
+    configuration,
+  - `make-widget-dialog()`, which creates parent dialog boxes for
+    settings widgets,
+  - `show-widget-dialog()`, showing widgets as dialogs,
+  - `show-widget()`, a generic function that opens widgets in
+    docks, as toplevel windows or dialogs depending on the
+    configuration settings.
 
 ### Changes in `lepton-schematic`:
 
