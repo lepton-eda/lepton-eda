@@ -99,16 +99,16 @@ schematic_preview_get_page_filename (SchematicPreview *preview)
  *  \param [in] widget    The preview widget.
  *  \param [in] event     The event structure.
  *  \param [in] user_data Unused user data.
+ *  \param [in] preview_w_current The #SchematicWindow toplevel environment.
  *  \returns FALSE to propagate the event further.
  */
 gboolean
 schematic_preview_callback_button_press (GtkWidget *widget,
                                          GdkEventButton *event,
-                                         gpointer user_data)
+                                         gpointer user_data,
+                                         SchematicWindow *preview_w_current)
 {
   SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
-  SchematicWindow *preview_w_current =
-    schematic_preview_get_window (preview);
   gint wx, wy;
 
   if (!schematic_preview_get_active (preview))

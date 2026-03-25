@@ -165,9 +165,12 @@ buffer should be displayed, the widget displays the error message."
 
 ;;; Handles mouse button press events.
 (define (button-press-callback *widget *event *user-data)
+  (define *window (schematic_preview_get_window *widget))
+
   (schematic_preview_callback_button_press *widget
                                            *event
-                                           *user-data))
+                                           *user-data
+                                           *window))
 
 (define *button-press-callback
   (procedure->pointer int button-press-callback '(* * *)))
