@@ -163,13 +163,23 @@ buffer should be displayed, the widget displays the error message."
   (procedure->pointer void realize-preview '(* *)))
 
 
+;;; Handles mouse button press events.
+(define (button-press-callback *widget *event *user-data)
+  (schematic_preview_callback_button_press *widget
+                                           *event
+                                           *user-data))
+
+(define *button-press-callback
+  (procedure->pointer int button-press-callback '(* * *)))
+
+
 ;;; The list of pairs (NAME . CALLBACK) for initialization of
 ;;; preview widgets.
 (define %signal-callback-list
   (list
    `(,(if %m4-use-gtk3 "draw" "expose-event") . ,*redraw-canvas)
    `("realize" . ,*realize-preview)
-   `("button-press-event" . ,*schematic_preview_callback_button_press)
+   `("button-press-event" . ,*button-press-callback)
    `("configure-event" . ,*x_event_configure)
    `("scroll-event" . ,*scroll-preview)
    `("update-preview" . ,*update-preview)))
