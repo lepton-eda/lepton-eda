@@ -116,7 +116,8 @@ schematic_preview_callback_button_press (GtkWidget *widget,
     return TRUE;
   }
 
-  switch (event->button) {
+  switch (schematic_event_get_button ((GdkEvent*) event))
+  {
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_w_current,
                 SCHEMATIC_CANVAS (preview),
