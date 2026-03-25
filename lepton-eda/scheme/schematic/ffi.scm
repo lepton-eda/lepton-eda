@@ -422,7 +422,6 @@
             schematic_canvas_zoom_object
 
             schematic_preview_new
-            schematic_preview_callback_button_press
             schematic_preview_get_active
             schematic_preview_get_buffer
             schematic_preview_get_filename
@@ -821,7 +820,6 @@
 
 ;;; preview_widget.c
 (define-lff schematic_preview_new '* '())
-(define-lff schematic_preview_callback_button_press int '(* * * *))
 (define-lff schematic_preview_get_active int '(*))
 (define-lff schematic_preview_get_buffer '* '(*))
 (define-lff schematic_preview_get_filename '* '(*))

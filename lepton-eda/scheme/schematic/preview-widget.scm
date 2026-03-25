@@ -163,14 +163,65 @@ buffer should be displayed, the widget displays the error message."
   (procedure->pointer void realize-preview '(* *)))
 
 
-;;; Handles mouse button press events.
-(define (button-press-callback *widget *event *user-data)
-  (define *window (schematic_preview_get_window *widget))
+;;; Temporary definitions from "gschem_defines.h".
+(define ZOOM_OUT 0)
+(define ZOOM_IN 1)
+(define ZOOM_FULL 2)
+(define ZOOM_SAME 3)
 
-  (schematic_preview_callback_button_press *widget
-                                           *event
-                                           *user-data
-                                           *window))
+(define DONTCARE 0)
+(define MENU 1)
+(define HOTKEY 2)
+
+
+;;; Handles mouse button press events.
+(define (button-press-callback *preview-widget *event *user-data)
+  (define *window (schematic_preview_get_window *preview-widget))
+  (define wx-bv (make-bytevector (sizeof int) 0))
+  (define wy-bv (make-bytevector (sizeof int) 0))
+
+
+  (if (false? (schematic_preview_get_active *preview-widget))
+      TRUE
+
+      (case (schematic_event_get_button *event)
+        ;; Left mouse button: zoom in.
+        ((1)
+         (a_zoom *window
+                 *preview-widget
+                 ZOOM_IN
+                 HOTKEY)
+         (schematic_canvas_invalidate_all *preview-widget)
+         FALSE)
+        ;; Middle mouse button: pan.
+        ((2)
+         (if (false? (x_event_get_pointer_position
+                      *window
+                      FALSE
+                      (bytevector->pointer wx-bv)
+                      (bytevector->pointer wy-bv)))
+             FALSE
+             (begin
+               (schematic_canvas_pan
+                *preview-widget
+                (bytevector-sint-ref wx-bv
+                                     0
+                                     (native-endianness)
+                                     (sizeof int))
+                (bytevector-sint-ref wy-bv
+                                     0
+                                     (native-endianness)
+                                     (sizeof int)))
+               FALSE)))
+
+        ;; Right mouse button: zoom out.
+        ((3)
+         (a_zoom *window
+                 *preview-widget
+                 ZOOM_OUT
+                 HOTKEY)
+         (schematic_canvas_invalidate_all *preview-widget)
+         FALSE))))
 
 (define *button-press-callback
   (procedure->pointer int button-press-callback '(* * *)))

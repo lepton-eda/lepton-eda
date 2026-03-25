@@ -90,59 +90,6 @@ schematic_preview_get_page_filename (SchematicPreview *preview)
 }
 
 
-/*! \brief Handles the press on a mouse button.
- *  \par Function Description
- *  It handles the user inputs.
- *
- *  Three action are available: zoom in, pan and zoom out on preview display.
- *
- *  \param [in] widget    The preview widget.
- *  \param [in] event     The event structure.
- *  \param [in] user_data Unused user data.
- *  \param [in] preview_w_current The #SchematicWindow toplevel environment.
- *  \returns FALSE to propagate the event further.
- */
-gboolean
-schematic_preview_callback_button_press (GtkWidget *widget,
-                                         GdkEventButton *event,
-                                         gpointer user_data,
-                                         SchematicWindow *preview_w_current)
-{
-  SchematicPreview *preview = SCHEMATIC_PREVIEW (widget);
-  gint wx, wy;
-
-  if (!schematic_preview_get_active (preview))
-  {
-    return TRUE;
-  }
-
-  switch (schematic_event_get_button ((GdkEvent*) event))
-  {
-      case 1: /* left mouse button: zoom in */
-        a_zoom (preview_w_current,
-                SCHEMATIC_CANVAS (preview),
-                ZOOM_IN,
-                HOTKEY);
-        schematic_canvas_invalidate_all (SCHEMATIC_CANVAS (widget));
-        break;
-      case 2: /* middle mouse button: pan */
-        if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
-          return FALSE;
-        schematic_canvas_pan (SCHEMATIC_CANVAS (preview), wx, wy);
-        break;
-      case 3: /* right mouse button: zoom out */
-        a_zoom (preview_w_current,
-                SCHEMATIC_CANVAS (preview),
-                ZOOM_OUT,
-                HOTKEY);
-        schematic_canvas_invalidate_all (SCHEMATIC_CANVAS (widget));
-        break;
-  }
-
-  return FALSE;
-}
-
-
 static void
 schematic_preview_class_init (SchematicPreviewClass *klass)
 {
