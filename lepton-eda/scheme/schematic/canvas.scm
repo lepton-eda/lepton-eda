@@ -31,6 +31,7 @@
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
+  #:use-module (schematic zoom)
 
   #:export (canvas-viewport
             invalidate-canvas
@@ -201,7 +202,7 @@ parent *WINDOW."
                       (and (not control-pressed?) (not shift-pressed?))
                       ;; GTK style behaviour.
                       (and control-pressed? (not shift-pressed?))))
-                 (zoom
+                 (zoom?
                   ;; If the user has a left/right scroll
                   ;; wheel, always scroll the y-axis.
                   (and (not left-or-right-direction?)
@@ -266,8 +267,8 @@ parent *WINDOW."
                                     ((zero? direction) ZOOM_SAME)))
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
-                    (when zoom
-                      (a_zoom *window *widget zoom-direction HOTKEY))
+                    (when zoom?
+                      (zoom *window *widget zoom-direction HOTKEY))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))
@@ -282,7 +283,7 @@ parent *WINDOW."
                             (when pan-y-axis
                               (update-adjustment *vert-adjustment pan-direction))
 
-                            (when (or zoom pan-x-axis pan-y-axis)
+                            (when (or zoom? pan-x-axis pan-y-axis)
                               (undo-save-viewport window))
 
                             (x_event_faked_motion *widget %null-pointer)

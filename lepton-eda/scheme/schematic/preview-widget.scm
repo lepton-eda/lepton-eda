@@ -37,6 +37,7 @@
   #:use-module (schematic canvas)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic zoom)
 
   #:export (init-preview-widget-signals))
 
@@ -187,10 +188,7 @@ buffer should be displayed, the widget displays the error message."
       (case (schematic_event_get_button *event)
         ;; Left mouse button: zoom in.
         ((1)
-         (a_zoom *window
-                 *preview-widget
-                 ZOOM_IN
-                 HOTKEY)
+         (zoom *window *preview-widget ZOOM_IN HOTKEY)
          (schematic_canvas_invalidate_all *preview-widget)
          FALSE)
         ;; Middle mouse button: pan.
@@ -216,10 +214,7 @@ buffer should be displayed, the widget displays the error message."
 
         ;; Right mouse button: zoom out.
         ((3)
-         (a_zoom *window
-                 *preview-widget
-                 ZOOM_OUT
-                 HOTKEY)
+         (zoom *window *preview-widget ZOOM_OUT HOTKEY)
          (schematic_canvas_invalidate_all *preview-widget)
          FALSE))))
 
