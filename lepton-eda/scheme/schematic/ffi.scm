@@ -1388,7 +1388,7 @@
 (define-lff s_log_close void '())
 
 ;;; a_zoom.c
-(define-lff a_zoom void (list '* '* int int))
+(define-lff a_zoom void (list '* '* '* int int))
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))

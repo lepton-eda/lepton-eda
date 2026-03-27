@@ -28,4 +28,8 @@
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (a_zoom *window *canvas direction selected-from))
+  (let ((*viewport (schematic_canvas_get_viewport *canvas)))
+    (when (null-pointer? *viewport)
+      (error "NULL viewport"))
+
+    (a_zoom *window *canvas *viewport direction selected-from)))

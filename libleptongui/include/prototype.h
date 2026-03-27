@@ -7,6 +7,7 @@ G_BEGIN_DECLS
 void
 a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
+        SchematicViewport *geometry,
         int dir,
         int selected_from);
 void

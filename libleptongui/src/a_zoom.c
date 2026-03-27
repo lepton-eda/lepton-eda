@@ -40,12 +40,10 @@
 void
 a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
+        SchematicViewport *geometry,
         int dir,
         int selected_from)
 {
-  SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
-  g_return_if_fail (geometry != NULL);
-
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
   double top, bottom, right, left;
