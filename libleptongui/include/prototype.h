@@ -891,6 +891,9 @@ schematic_event_alt_mask ();
 guint
 schematic_event_get_button (GdkEvent *event);
 
+GdkEventType
+schematic_event_get_type (GdkEvent* event);
+
 gboolean
 schematic_event_is_double_button_press (GdkEvent *event);
 

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,18 @@ schematic_event_alt_mask ()
 {
   return GDK_MOD1_MASK;
 }
+
+
+GdkEventType
+schematic_event_get_type (GdkEvent* event)
+{
+#ifdef ENABLE_GTK3
+  return gdk_event_get_event_type (event);
+#else
+  return event->type;
+#endif
+}
+
 
 gboolean
 schematic_event_is_double_button_press (GdkEvent *event)
