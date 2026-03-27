@@ -130,7 +130,8 @@ a_zoom (SchematicWindow *w_current,
    */
   GdkEvent *topEvent = gdk_event_get();
   while( topEvent != NULL ) {
-    if( topEvent->type != GDK_SCROLL ) {
+    if (schematic_event_get_type (topEvent) != GDK_SCROLL)
+    {
       gdk_event_put( topEvent );
       gdk_event_free( topEvent );
       break;
