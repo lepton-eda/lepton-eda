@@ -43,8 +43,6 @@ a_zoom (SchematicWindow *w_current,
         int dir,
         int selected_from)
 {
-  g_return_if_fail (page_view != NULL);
-
   SchematicViewport *geometry = schematic_canvas_get_viewport (page_view);
   g_return_if_fail (geometry != NULL);
 

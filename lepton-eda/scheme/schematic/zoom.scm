@@ -18,9 +18,14 @@
 
 
 (define-module (schematic zoom)
+  #:use-module (system foreign)
+
   #:use-module (schematic ffi)
 
   #:export (zoom))
 
 (define (zoom *window *canvas direction selected-from)
+  (when (null-pointer? *canvas)
+    (error "NULL canvas."))
+
   (a_zoom *window *canvas direction selected-from))
