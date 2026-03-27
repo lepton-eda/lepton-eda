@@ -83,7 +83,8 @@ a_zoom (SchematicWindow *w_current,
     if (!x_event_get_pointer_position(w_current, FALSE,
                                       &start_x, &start_y))
       return;
-    if ( w_current->warp_cursor ) {
+    if (schematic_window_get_warp_cursor (w_current))
+    {
       world_pan_center_x = start_x;
       world_pan_center_y = start_y;
     } else {
@@ -131,7 +132,8 @@ a_zoom (SchematicWindow *w_current,
   }
 
   /* warp the cursor to the right position */
-  if (w_current->warp_cursor) {
+  if (schematic_window_get_warp_cursor (w_current))
+  {
      schematic_canvas_WORLDtoSCREEN (page_view,
                                      world_pan_center_x, world_pan_center_y,
                                      &start_x, &start_y);
