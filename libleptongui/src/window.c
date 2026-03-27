@@ -3194,3 +3194,40 @@ schematic_window_set_zoom_gain (SchematicWindow *w_current,
 
   w_current->zoom_gain = val;
 }
+
+
+/*! \brief Get schematic window's field \a zoom_with_pan.
+ *
+ *  \par Function Description
+ *  Returns the value of the \a zoom_with_pan field of the schematic
+ *  window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field \a zoom_with_pan.
+ */
+int
+schematic_window_get_zoom_with_pan (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->zoom_with_pan;
+}
+
+
+/*! \brief Set schematic window's field \a zoom_with_pan.
+ *
+ *  \par Function Description
+ *  Sets the \a zoom_with_pan field of the schematic window to the
+ *  given value.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field \a zoom_with_pan.
+ */
+void
+schematic_window_set_zoom_with_pan (SchematicWindow *w_current,
+                                    int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->zoom_with_pan = val;
+}
