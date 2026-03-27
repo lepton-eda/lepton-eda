@@ -88,16 +88,24 @@ a_zoom (SchematicWindow *w_current,
       world_pan_center_x = start_x;
       world_pan_center_y = start_y;
     } else {
-      left = ((geometry->viewport_left - start_x) * (1/relativ_zoom_factor) + start_x);
-      right = ((geometry->viewport_right - start_x) * (1/relativ_zoom_factor) + start_x);
-      top = ((geometry->viewport_top - start_y) * (1/relativ_zoom_factor) + start_y);
-      bottom = ((geometry->viewport_bottom - start_y) * (1/relativ_zoom_factor) + start_y);
+      left = ((schematic_viewport_get_left (geometry) - start_x) *
+              (1/relativ_zoom_factor) + start_x);
+      right = ((schematic_viewport_get_right (geometry) - start_x) *
+               (1/relativ_zoom_factor) + start_x);
+      top = ((schematic_viewport_get_top (geometry) - start_y) *
+             (1/relativ_zoom_factor) + start_y);
+      bottom = ((schematic_viewport_get_bottom (geometry) - start_y) *
+                (1/relativ_zoom_factor) + start_y);
       world_pan_center_x = (right + left) / 2;
       world_pan_center_y = (top + bottom) / 2;
     }
   } else {
-    world_pan_center_x = (double) (geometry->viewport_left + geometry->viewport_right) / 2;
-    world_pan_center_y = (double) (geometry->viewport_top + geometry->viewport_bottom) / 2;
+    world_pan_center_x =
+      (double) (schematic_viewport_get_left (geometry) +
+                schematic_viewport_get_right (geometry)) / 2;
+    world_pan_center_y =
+      (double) (schematic_viewport_get_top (geometry) +
+                schematic_viewport_get_bottom (geometry)) / 2;
   }
 
 #if DEBUG
