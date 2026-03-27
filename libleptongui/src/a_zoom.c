@@ -77,7 +77,9 @@ a_zoom (SchematicWindow *w_current,
 
   /* calc center: either "mouse_to_world" or center=center or a
      virtual center if warp_cursor is disabled */
-  if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
+  if (schematic_window_get_zoom_with_pan (w_current) == TRUE
+      && selected_from == HOTKEY)
+  {
     if (!x_event_get_pointer_position(w_current, FALSE,
                                       &start_x, &start_y))
       return;
