@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 2007-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -63,5 +63,16 @@ schematic_dialog_new_with_buttons (const gchar *title,
                                    SchematicWindow *w_current,
                                    const gchar *first_button_text,
                                    ...);
+
+G_BEGIN_DECLS
+
+GtkWidget*
+schematic_dialog_new_empty (const gchar *title,
+                            GtkWindow *parent,
+                            GtkDialogFlags flags,
+                            const gchar *settings_name,
+                            SchematicWindow *w_current);
+
+G_END_DECLS
 
 #endif /* __DIALOG_H__ */

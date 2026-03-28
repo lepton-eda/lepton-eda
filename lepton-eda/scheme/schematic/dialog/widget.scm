@@ -1,0 +1,157 @@
+;;; Lepton EDA Schematic Capture
+;;; Scheme API
+;;; Copyright (C) 2026 Lepton EDA Contributors
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2 of the License, or
+;;; (at your option) any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program; if not, write to the Free Software
+;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+
+(define-module (schematic dialog widget)
+  #:use-module (system foreign)
+
+  #:use-module (lepton config)
+  #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi gobject)
+  #:use-module (lepton gettext)
+
+  #:use-module (schematic ffi gtk)
+  #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
+  #:use-module (schematic widget)
+  #:use-module (schematic window foreign)
+
+  #:export (make-widget-dialog
+            show-widget
+            show-widget-dialog
+            widget-style))
+
+
+(define configured-widget-style
+  (delay
+    (let ((cfg (path-config-context (getcwd))))
+      ;; Check whether to use docking GUI.
+      (if (config-boolean cfg "schematic.gui" "use-docks")
+          ;; Display widgets in docks.
+          'dock
+          ;; Display widgets in separate windows.
+          (if (config-boolean cfg
+                              "schematic.gui"
+                              "use-toplevel-windows")
+              ;; Display widget as toplevel windows.
+              'normal
+              ;; Display widgets as dialogs.
+              'dialog)))))
+
+
+(define (widget-style)
+  "Returns the configured widget style, which is one of 'dock (docked
+widgets), 'normal (toplevel windows), or 'dialog (dialog windows)."
+  (force configured-widget-style))
+
+
+(define (make-widget-dialog *window *widget *title *settings-group)
+  "Creates a new dialog box for *WIDGET in *WINDOW setting its title to
+*TITLE and its group of settings to *SETTINGS-GROUP.  The dialog will
+be a parent for the *WIDGET."
+  (when (null-pointer? *widget)
+    (error "NULL widget."))
+
+  (let* ((*main-window (schematic_window_get_main_window *window))
+         (*dialog (schematic_dialog_new_empty *title
+                                              *main-window
+                                              GTK_DIALOG_DESTROY_WITH_PARENT
+                                              *settings-group
+                                              *window))
+         (*content-area (gtk_dialog_get_content_area *dialog)))
+
+    (gtk_dialog_add_button *dialog
+                           (string->pointer (G_ "_Close"))
+                           (symbol->gtk-response 'none))
+
+    (when (eq? (widget-style) 'normal)
+      (gtk_window_set_transient_for *dialog %null-pointer)
+      (gtk_window_set_type_hint *dialog
+                                (gdk_string_to_window_type_hint
+                                 (string->pointer "normal"))))
+
+    (g_signal_connect *dialog
+                      (string->pointer "response")
+                      *gtk_widget_hide
+                      %null-pointer)
+
+    (g_signal_connect *dialog
+                      (string->pointer "delete-event")
+                      *gtk_widget_hide_on_delete
+                      %null-pointer)
+
+    (gtk_container_add *content-area *widget)
+
+    (gtk_widget_show_all *dialog)
+    (gtk_window_present *dialog)
+
+    *dialog))
+
+
+(define (show-widget-dialog *window
+                            *widget
+                            dialog-getter
+                            dialog-setter
+                            title
+                            name)
+  "Show *WIDGET in a dialog.  If the dialog exists, it is obtained
+using DIALOG-GETTER.  Otherwise it is created and assigned for the
+widget in *WINDOW using DIALOG-SETTER.  The dialog title is set to
+TITLE.  NAME is used to designate the dialog in lower level C
+code."
+  (let ((*dialog (dialog-getter *window)))
+
+    (if (not (null-pointer? *dialog))
+        (gtk_window_present *dialog)
+
+        (let ((*new-dialog
+               (make-widget-dialog *window
+                                   *widget
+                                   (string->pointer (G_ title))
+                                   (string->pointer name))))
+          (dialog-setter *window *new-dialog)))))
+
+
+(define (show-widget window
+                     *widget-getter
+                     *notebook-getter
+                     *dialog-getter
+                     *dialog-setter
+                     dialog-title
+                     widget-name)
+  "Show widget in WINDOW.  The window's widget is obtained using
+*WIDGET-GETTER.  If the widget has to be shown in one of the
+window's docks, the dock's notebook is obtained using
+*NOTEBOOK-GETTER.  Otherwise, a dialog is used to show it.  If the
+dialog exists, it is obtained using *DIALOG-GETTER.  Otherwise, a
+new dialog is created and set for the window using *DIALOG-SETTER.
+The title of the dialog is set to DIALOG-TITLE.  WIDGET-NAME is an
+internal name of the widget for using in lower level C code.
+Returns the widget."
+  (define *window (check-window window 1))
+  (define *widget (*widget-getter *window))
+
+  (if (eq? (widget-style) 'dock)
+      (show-notebook-widget (*notebook-getter *window) *widget)
+      (show-widget-dialog *window
+                          *widget
+                          *dialog-getter
+                          *dialog-setter
+                          dialog-title
+                          "findtext"))
+  *widget)

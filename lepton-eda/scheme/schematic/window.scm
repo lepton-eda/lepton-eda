@@ -56,6 +56,8 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog close-window)
+  #:use-module (schematic dialog find-text-state)
+  #:use-module (schematic dialog widget)
   #:use-module (schematic event)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
@@ -110,11 +112,43 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
+;;; Destroy dialogs of *WINDOW which were created in "toplevel"
+;;; mode.
+(define (destroy-widget-dialogs *window)
+  (define (destroy-widget-dialog *getter *setter)
+    (let ((*dialog (*getter *window)))
+      (unless (null-pointer? *dialog)
+        (gtk_widget_destroy *dialog)
+        (*setter *window %null-pointer))))
+
+  (when (null-pointer? *window)
+    (error "NULL window."))
+
+  (when (eq? (widget-style) 'normal)
+
+    (destroy-widget-dialog schematic_window_get_options_widget_dialog
+                           schematic_window_set_options_widget_dialog)
+    (destroy-widget-dialog schematic_window_get_text_properties_dialog
+                           schematic_window_set_text_properties_dialog)
+    (destroy-widget-dialog schematic_window_get_object_properties_dialog
+                           schematic_window_set_object_properties_dialog)
+    (destroy-widget-dialog schematic_window_get_log_widget_dialog
+                           schematic_window_set_log_widget_dialog)
+    (destroy-widget-dialog schematic_window_get_find_text_state_dialog
+                           schematic_window_set_find_text_state_dialog)
+    (destroy-widget-dialog schematic_window_get_color_edit_dialog
+                           schematic_window_set_color_edit_dialog)
+    (destroy-widget-dialog schematic_window_get_font_select_dialog
+                           schematic_window_set_font_select_dialog)
+    (destroy-widget-dialog schematic_window_get_page_select_dialog
+                           schematic_window_set_page_select_dialog)))
+
+
 (define (destroy-window-widgets! *window)
   (define (destroy-widget! *widget)
     (unless (null-pointer? *widget) (gtk_widget_destroy *widget)))
 
-  (x_widgets_destroy_dialogs *window)
+  (destroy-widget-dialogs *window)
 
   (for-each destroy-widget!
             (list (schematic_window_get_compselect_widget *window)
@@ -188,7 +222,7 @@
          (height (if positive-sizes? stored-height %default-window-height)))
     (gtk_window_resize *main-window width height)
 
-    (when (true? (x_widgets_use_docks))
+    (when (eq? (widget-style) 'dock)
       (let ((*find_text_state
              (schematic_window_get_find_text_state_widget *window)))
         (gtk_widget_set_size_request *find_text_state
@@ -1622,7 +1656,7 @@ for *PAGE page will be created and set active."
 
   (if (> count 0)
       (begin
-        (x_widgets_show_find_text_state *window)
+        (find-text-state-dialog (pointer->window *window))
         TRUE)
       FALSE))
 
@@ -1912,7 +1946,7 @@ for *PAGE page will be created and set active."
   ;; Show all widgets.
   (gtk_widget_show_all *main-window)
 
-  (unless (true? (x_widgets_use_docks))
+  (unless (eq? (widget-style) 'dock)
     (let ((*bottom-notebook
            (schematic_window_get_bottom_notebook *window))
           (*right-notebook
@@ -1999,10 +2033,10 @@ for *PAGE page will be created and set active."
   (procedure->pointer void translate-response (list '* int '*)))
 
 
-(define (make-side-notebook *window use_docks)
+(define (make-side-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when (true? use_docks)
+  (when (eq? (widget-style) 'dock)
     (let ((*object-properties-widget
            (schematic_window_get_object_properties_widget *window))
           (*text-properties-widget
@@ -2025,10 +2059,10 @@ for *PAGE page will be created and set active."
   *notebook)
 
 
-(define (make-bottom-notebook *window use_docks)
+(define (make-bottom-notebook *window)
   (define *notebook (gtk_notebook_new))
 
-  (when (true? use_docks)
+  (when (eq? (widget-style) 'dock)
     (let ((*find-text-state
            (schematic_window_get_find_text_state_widget *window))
           (*log-widget
@@ -2176,7 +2210,6 @@ GtkApplication structure of the program (when compiled with
                           *callback-translate-response
                           *window))
       ;; Setup various widgets.
-      (x_widgets_init)
       (schematic_window_set_object_properties_widget *window
                                                      (schematic_object_properties_widget_new *window))
       (schematic_window_set_text_properties_widget *window
@@ -2216,9 +2249,8 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
-      (let* ((use_docks (x_widgets_use_docks))
-             (*right-notebook (make-side-notebook *window use_docks))
-             (*bottom-notebook (make-bottom-notebook *window use_docks)))
+      (let ((*right-notebook (make-side-notebook *window))
+            (*bottom-notebook (make-bottom-notebook *window)))
         (schematic_window_set_right_notebook *window *right-notebook)
         (schematic_window_set_bottom_notebook *window *bottom-notebook)
 

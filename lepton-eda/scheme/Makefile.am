@@ -154,11 +154,20 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/autonumber.scm \
 	schematic/dialog/close-page.scm \
 	schematic/dialog/close-window.scm \
+	schematic/dialog/color-edit.scm \
+	schematic/dialog/edit-text.scm \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/find-text.scm \
+	schematic/dialog/find-text-state.scm \
+	schematic/dialog/font-select.scm \
+	schematic/dialog/log.scm \
 	schematic/dialog/multiattrib.scm \
 	schematic/dialog/new-text.scm \
+	schematic/dialog/object-properties.scm \
+	schematic/dialog/options.scm \
+	schematic/dialog/page-select.scm \
 	schematic/dialog/slot-edit.scm \
+	schematic/dialog/widget.scm \
 	schematic/doc.scm \
 	schematic/event.scm \
 	schematic/event/handler.scm \
@@ -187,6 +196,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/util.scm \
 	schematic/undo.scm \
 	schematic/viewport/foreign.scm \
+	schematic/widget.scm \
 	schematic/window.scm \
 	schematic/window/foreign.scm \
 	schematic/window/global.scm \

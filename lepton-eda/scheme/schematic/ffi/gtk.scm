@@ -45,6 +45,8 @@
             gtk_container_add
             gtk_container_set_border_width
 
+            gtk_dialog_add_button
+            gtk_dialog_get_content_area
             gtk_dialog_set_default_response
 
             gtk_entry_get_text
@@ -106,17 +108,23 @@
             gtk_widget_set_can_focus
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
+            gtk_widget_get_visible
             gtk_widget_set_visible
             gtk_widget_show
             gtk_widget_show_all
+            *gtk_widget_hide
+            *gtk_widget_hide_on_delete
 
             gtk_window_set_default_icon_name
             gtk_window_get_position
             gtk_window_get_size
             gtk_window_set_transient_for
+            gtk_window_set_type_hint
             gtk_window_move
             gtk_window_present
             gtk_window_resize
+
+            GTK_DIALOG_DESTROY_WITH_PARENT
 
             ;; GDK
             GdkModifierType
@@ -131,6 +139,12 @@
 ;;; argument.
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libgtk))
+
+(define-syntax-rule (define-lfc arg ...)
+  (define-lfc-lib arg ... libgtk))
+
+;;; Defined in gtkdialog.h.
+(define GTK_DIALOG_DESTROY_WITH_PARENT 2)
 
 (define GdkModifierType uint32)
 
@@ -159,6 +173,8 @@
 (define-lff gtk_container_add void '(* *))
 (define-lff gtk_container_set_border_width void (list '* unsigned-int))
 
+(define-lff gtk_dialog_add_button '* (list '* '* int))
+(define-lff gtk_dialog_get_content_area '* '(*))
 (define-lff gtk_dialog_set_default_response void (list '* int))
 
 (define-lff gtk_entry_get_text '* '(*))
@@ -220,9 +236,12 @@
 (define-lff gtk_widget_set_can_focus void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
+(define-lff gtk_widget_get_visible int '(*))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_widget_show_all void '(*))
+(define-lfc *gtk_widget_hide)
+(define-lfc *gtk_widget_hide_on_delete)
 
 (define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
@@ -231,6 +250,7 @@
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_set_transient_for void '(* *))
+(define-lff gtk_window_set_type_hint void (list '* int))
 
 ;;; gdk_event_get_button() can only be used for GTK3.
 ;; (define-lff gdk_event_get_button int '(* *))

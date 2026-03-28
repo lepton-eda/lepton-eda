@@ -829,9 +829,6 @@ int
 x_dialog_validate_attribute (GtkWindow *parent,
                              char *attribute);
 void
-text_edit_dialog (SchematicWindow *w_current);
-
-void
 arc_angle_dialog (SchematicWindow *w_current,
                   LeptonObject *arc_object);
 void
@@ -1132,43 +1129,6 @@ void
 x_window_translate_response (GtkWidget *widget,
                              gint response,
                              SchematicWindow *w_current);
-
-/* x_widgets.c */
-gboolean
-x_widgets_use_docks();
-
-void
-x_widgets_init();
-
-void
-x_widgets_show_options (SchematicWindow* w_current);
-
-void
-x_widgets_show_text_properties (SchematicWindow* w_current);
-
-void
-x_widgets_show_object_properties (SchematicWindow* w_current);
-
-void
-x_widgets_show_log (SchematicWindow* w_current);
-
-void
-x_widgets_show_find_text_state (SchematicWindow* w_current);
-
-void
-x_widgets_show_color_edit (SchematicWindow* w_current);
-
-void
-x_widgets_show_font_select (SchematicWindow* w_current);
-
-void
-x_widgets_show_page_select (SchematicWindow* w_current);
-
-void
-x_widgets_destroy_dialogs (SchematicWindow* w_current);
-
-void
-x_widgets_toggle_widget_visibility (GtkWidget *widget);
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();

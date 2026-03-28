@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2025 Lepton EDA Contributors
+;;; Copyright (C) 2023-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
@@ -58,7 +59,7 @@ depends of the type of the first object in the object list."
                        ;; attributes.
                        (= (line-number str) 1))
                   (attrib_edit_dialog *window *object FROM_MENU)
-                  (text_edit_dialog *window))))
+                  (text-edit-dialog window))))
            ;; All other primitives may have attributes attached to
            ;; them.  Show the Multiattrib dialog instead of simply
            ;; ignoring such primitives.

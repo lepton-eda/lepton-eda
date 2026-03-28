@@ -38,6 +38,8 @@
 
             g_read_file
 
+            gdk_window_type_hint_to_string
+            gdk_string_to_window_type_hint
             gtk_policy_to_string
             gtk_string_to_policy
             gtk_response_to_string
@@ -51,6 +53,7 @@
             generic_msg_dialog
             major_changed_dialog
             schematic_dialog_load_file_error
+            schematic_dialog_new_empty
 
             schematic_execute_script
 
@@ -298,18 +301,6 @@
             schematic_compselect_new
             schematic_compselect_get_preview
 
-            x_widgets_destroy_dialogs
-            x_widgets_init
-            x_widgets_show_color_edit
-            x_widgets_show_find_text_state
-            x_widgets_show_font_select
-            x_widgets_show_log
-            x_widgets_show_object_properties
-            x_widgets_show_options
-            x_widgets_show_page_select
-            x_widgets_toggle_widget_visibility
-            x_widgets_use_docks
-
             recent_manager_add
             x_window_save_page
             x_window_untitled_page
@@ -544,6 +535,25 @@
             schematic_window_text_caps_to_string
             schematic_window_get_text_size
             schematic_window_get_warp_cursor
+            schematic_window_get_color_edit_widget
+            schematic_window_get_color_edit_dialog
+            schematic_window_set_color_edit_dialog
+            schematic_window_get_find_text_state_dialog
+            schematic_window_set_find_text_state_dialog
+            schematic_window_get_font_select_widget
+            schematic_window_get_font_select_dialog
+            schematic_window_set_font_select_dialog
+            schematic_window_get_log_widget_dialog
+            schematic_window_set_log_widget_dialog
+            schematic_window_get_object_properties_dialog
+            schematic_window_set_object_properties_dialog
+            schematic_window_get_options_widget_dialog
+            schematic_window_set_options_widget_dialog
+            schematic_window_get_page_select_widget
+            schematic_window_get_page_select_dialog
+            schematic_window_set_page_select_dialog
+            schematic_window_get_text_properties_dialog
+            schematic_window_set_text_properties_dialog
 
             font_select_widget_new
 
@@ -575,8 +585,8 @@
             schematic_viewport_set_world_right
             schematic_viewport_set_world_top
 
+            schematic_text_properties_widget_adjust_focus
             schematic_text_properties_widget_new
-            text_edit_dialog
 
             schematic_newtext_dialog_get_aligncb
             schematic_newtext_dialog_get_colorcb
@@ -664,24 +674,8 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libleptongui))
 
-
-;;; Brief syntax macro for defining lazy foreign callbacks.
-;;; Unlike 'define-lff' above, it returns a pointer to a C
-;;; function by name, not a Scheme procedure wrapping it.
-;;;
-;;; By convention, the first character of a callback function name
-;;; should be '*'.  The first character is dropped here before
-;;; dlopening the function in any case, so be careful when
-;;; composing callback names.
-(define-syntax define-lfc
-  (syntax-rules ()
-    ((_ name)
-     (define name
-       (let ((*callback
-              (delay (dynamic-func (string-drop (symbol->string (quote name)) 1)
-                                   libleptongui))))
-         (force *callback))))))
-
+(define-syntax-rule (define-lfc arg ...)
+  (define-lfc-lib arg ... libleptongui))
 
 ;;; lepton_schematic.c
 (define-lff lepton_schematic_run int '(*))
@@ -703,6 +697,8 @@
 (define-lff g_init_window void '(*))
 
 ;;; gtk_helper.c
+(define-lff gdk_window_type_hint_to_string '* (list int))
+(define-lff gdk_string_to_window_type_hint int '(*))
 (define-lff gtk_policy_to_string '* (list int))
 (define-lff gtk_string_to_policy int '(*))
 (define-lff gtk_response_to_string '* (list int))
@@ -749,19 +745,6 @@
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
 (define-lff schematic_compselect_get_preview '* '(*))
-
-;;; x_widgets.c
-(define-lff x_widgets_destroy_dialogs void '(*))
-(define-lff x_widgets_init void '())
-(define-lff x_widgets_show_color_edit void '(*))
-(define-lff x_widgets_show_find_text_state void '(*))
-(define-lff x_widgets_show_font_select void '(*))
-(define-lff x_widgets_show_log void '(*))
-(define-lff x_widgets_show_object_properties void '(*))
-(define-lff x_widgets_show_options void '(*))
-(define-lff x_widgets_show_page_select void '(*))
-(define-lff x_widgets_toggle_widget_visibility void '(*))
-(define-lff x_widgets_use_docks int '())
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
@@ -978,6 +961,25 @@
 (define-lff schematic_window_text_caps_to_string '* (list int))
 (define-lff schematic_window_get_text_size int '(*))
 (define-lff schematic_window_get_warp_cursor int '(*))
+(define-lff schematic_window_get_color_edit_widget '* '(*))
+(define-lff schematic_window_get_color_edit_dialog '* '(*))
+(define-lff schematic_window_set_color_edit_dialog void '(* *))
+(define-lff schematic_window_get_find_text_state_dialog '* '(*))
+(define-lff schematic_window_set_find_text_state_dialog void '(* *))
+(define-lff schematic_window_get_font_select_widget '* '(*))
+(define-lff schematic_window_get_font_select_dialog '* '(*))
+(define-lff schematic_window_set_font_select_dialog void '(* *))
+(define-lff schematic_window_get_log_widget_dialog '* '(*))
+(define-lff schematic_window_set_log_widget_dialog void '(* *))
+(define-lff schematic_window_get_object_properties_dialog '* '(*))
+(define-lff schematic_window_set_object_properties_dialog void '(* *))
+(define-lff schematic_window_get_options_widget_dialog '* '(*))
+(define-lff schematic_window_set_options_widget_dialog void '(* *))
+(define-lff schematic_window_get_page_select_widget '* '(*))
+(define-lff schematic_window_get_page_select_dialog '* '(*))
+(define-lff schematic_window_set_page_select_dialog void '(* *))
+(define-lff schematic_window_get_text_properties_dialog '* '(*))
+(define-lff schematic_window_set_text_properties_dialog void '(* *))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1016,8 +1018,8 @@
 (define-lff schematic_viewport_set_world_top void (list '* int))
 
 ;;; text_properties_widget.c
+(define-lff schematic_text_properties_widget_adjust_focus void '(*))
 (define-lff schematic_text_properties_widget_new '* '(*))
-(define-lff text_edit_dialog void '(*))
 
 ;;; x_menus.c
 (define-lff do_popup int '(* *))
@@ -1121,6 +1123,7 @@
 (define-lff generic_msg_dialog void '(*))
 (define-lff major_changed_dialog void '(*))
 (define-lff schematic_dialog_load_file_error void '(* * *))
+(define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))

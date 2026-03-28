@@ -55,8 +55,16 @@
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
+  #:use-module (schematic dialog color-edit)
+  #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog find-text)
+  #:use-module (schematic dialog find-text-state)
+  #:use-module (schematic dialog font-select)
+  #:use-module (schematic dialog log)
+  #:use-module (schematic dialog options)
+  #:use-module (schematic dialog object-properties)
+  #:use-module (schematic dialog page-select)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
@@ -388,7 +396,7 @@
 
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
-  (text_edit_dialog (*current-window)))
+  (text-edit-dialog (current-window)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (match (filter component? (page-selection (active-page)))
@@ -398,7 +406,7 @@
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
-  (x_widgets_show_object_properties (*current-window)))
+  (object-properties-dialog (current-window)))
 
 
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
@@ -700,21 +708,25 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 
+(define (toggle-widget-visibility *widget)
+  (define visible? (true? (gtk_widget_get_visible *widget)))
+  (gtk_widget_set_visible *widget (if visible? FALSE TRUE)))
+
 ;;; Toggle the visibility of the sidebar.
 (define-action-public (&view-sidebar #:label (G_ "Sidebar"))
-  (x_widgets_toggle_widget_visibility
+  (toggle-widget-visibility
    (schematic_window_get_right_notebook (*current-window))))
 
 
 ;;; Toggle the visibility of the status window.
 (define-action-public (&view-status #:label (G_ "Status"))
-  (x_widgets_toggle_widget_visibility
+  (toggle-widget-visibility
    (schematic_window_get_bottom_notebook (*current-window))))
 
 
 ;;; Show the find text state window.
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
-  (x_widgets_show_find_text_state (*current-window)))
+  (find-text-state-dialog (current-window)))
 
 ;;; Redraw canvas.
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
@@ -852,7 +864,7 @@ the snap grid size should be set to 100")))
 
 ;;; Show color scheme editor widget.
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
-  (x_widgets_show_color_edit (*current-window)))
+  (color-edit-dialog (current-window)))
 
 
 ;; -------------------------------------------------------------------
@@ -917,8 +929,9 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))
+  (define window (current-window))
   (define *window (*current-window))
-  (x_widgets_show_page_select *window)
+  (page-select-dialog window)
   (page_select_widget_update *window))
 
 
@@ -1554,8 +1567,8 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 
 ;;; Shows the options widget.
-(define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
-  (x_widgets_show_options (*current-window)))
+(define-action-public (&options-options #:label (G_ "Show Options Widget"))
+  (options-dialog (current-window)))
 
 
 ;;; Multiplies by two the snap grid size.
@@ -1608,13 +1621,13 @@ that backs the list of key bindings.  Return the modified *STORE."
 
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
-  (x_widgets_show_log (*current-window)))
+  (log-dialog (current-window)))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
   (coord_dialog (*current-window) 0 0))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
-  (x_widgets_show_font_select (*current-window)))
+  (font-select-dialog (current-window)))
 
 
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
