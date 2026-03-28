@@ -8,7 +8,7 @@ void
 a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
         SchematicViewport *geometry,
-        int dir,
+        double relativ_zoom_factor,
         int selected_from);
 void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,

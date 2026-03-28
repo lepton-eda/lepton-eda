@@ -24,12 +24,35 @@
 
   #:export (zoom))
 
+;;; Definitions from "schematic_defines.h".
+(define DONTCARE 0)
+(define MENU 1)
+(define HOTKEY 2)
+(define ZOOM_OUT 0)
+(define ZOOM_IN 1)
+(define ZOOM_FULL 2)
+(define ZOOM_SAME 3)
+
+;;; DIRECTION is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are
+;;; defined in globals.h.
 (define (zoom *window *canvas direction selected-from)
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (let ((*viewport (schematic_canvas_get_viewport *canvas)))
+  (let ((*viewport (schematic_canvas_get_viewport *canvas))
+        (zoom-gain (schematic_window_get_zoom_gain *window)))
     (when (null-pointer? *viewport)
       (error "NULL viewport"))
 
-    (a_zoom *window *canvas *viewport direction selected-from)))
+    ;; NB: zoom-gain is a percentage increase.
+    (let ((relative-zoom-factor
+           (cond
+            ((= direction ZOOM_IN) (/ (+ 100.0 zoom-gain) 100.0))
+            ((= direction ZOOM_OUT) (/ 100.0 (+ 100.0 zoom-gain)))
+            ;; Indicate the zoom full with a negative zoomfactor.
+            ((= direction ZOOM_FULL) -1)
+            ;; Don't zoom.
+            ((= direction ZOOM_SAME) 1)
+            (else -1))))
+
+      (a_zoom *window *canvas *viewport relative-zoom-factor selected-from))))

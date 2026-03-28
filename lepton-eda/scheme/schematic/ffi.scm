@@ -552,6 +552,7 @@
             schematic_window_set_page_select_dialog
             schematic_window_get_text_properties_dialog
             schematic_window_set_text_properties_dialog
+            schematic_window_get_zoom_gain
 
             font_select_widget_new
 
@@ -976,6 +977,7 @@
 (define-lff schematic_window_set_page_select_dialog void '(* *))
 (define-lff schematic_window_get_text_properties_dialog '* '(*))
 (define-lff schematic_window_set_text_properties_dialog void '(* *))
+(define-lff schematic_window_get_zoom_gain int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1388,7 +1390,7 @@
 (define-lff s_log_close void '())
 
 ;;; a_zoom.c
-(define-lff a_zoom void (list '* '* '* int int))
+(define-lff a_zoom void (list '* '* '* double int))
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))

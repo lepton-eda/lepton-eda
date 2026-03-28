@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,40 +36,17 @@
  *  \par Function Description
  *
  */
-/* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void
 a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
         SchematicViewport *geometry,
-        int dir,
+        double relativ_zoom_factor,
         int selected_from)
 {
-  double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
+  double world_pan_center_x,world_pan_center_y;
   int start_x, start_y;
   double top, bottom, right, left;
 
-
-  /* NB: zoom_gain is a percentage increase */
-  int zoom_gain = schematic_window_get_zoom_gain (w_current);
-  switch(dir) {
-  case(ZOOM_IN):
-    relativ_zoom_factor = (100.0 + zoom_gain) / 100.0;
-    break;
-
-  case(ZOOM_OUT):
-    relativ_zoom_factor = 100.0 / (100.0 + zoom_gain);
-    break;
-
-  case(ZOOM_FULL):
-    /* indicate the zoom full with a negative zoomfactor */
-    relativ_zoom_factor = -1;
-    break;
-
-    /* Don't zoom. */
-  case(ZOOM_SAME):
-    relativ_zoom_factor = 1;
-    break;
-  }
 
   /* calc center: either "mouse_to_world" or center=center or a
      virtual center if warp_cursor is disabled */
