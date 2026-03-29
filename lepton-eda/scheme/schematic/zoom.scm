@@ -61,7 +61,8 @@
            (and (true? (schematic_window_get_zoom_with_pan *window))
                 (= selected-from HOTKEY)))
           (start-x-bv (make-bytevector (sizeof int) 0))
-          (start-y-bv (make-bytevector (sizeof int) 0)))
+          (start-y-bv (make-bytevector (sizeof int) 0))
+          (warp-cursor (schematic_window_get_warp_cursor *window)))
 
       (unless (and hotkey-zoom-with-pan?
                    (false? (x_event_get_pointer_position
@@ -69,10 +70,10 @@
                             FALSE
                             (bytevector->pointer start-x-bv)
                             (bytevector->pointer start-y-bv))))
-        (a_zoom *window
-                *canvas
+        (a_zoom *canvas
                 *viewport
                 relative-zoom-factor
                 (if hotkey-zoom-with-pan? TRUE FALSE)
                 (bytevector-sint-ref start-x-bv 0 (native-endianness) (sizeof int))
-                (bytevector-sint-ref start-y-bv 0 (native-endianness) (sizeof int)))))))
+                (bytevector-sint-ref start-y-bv 0 (native-endianness) (sizeof int))
+                warp-cursor)))))

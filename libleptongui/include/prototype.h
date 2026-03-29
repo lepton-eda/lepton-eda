@@ -5,13 +5,13 @@ G_BEGIN_DECLS
 
 /* a_zoom.c */
 void
-a_zoom (SchematicWindow *w_current,
-        SchematicCanvas *page_view,
+a_zoom (SchematicCanvas *page_view,
         SchematicViewport *geometry,
         double relativ_zoom_factor,
         gboolean hotkey_zoom_with_pan,
         int start_x,
-        int start_y);
+        int start_y,
+        int warp_cursor);
 void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer);
