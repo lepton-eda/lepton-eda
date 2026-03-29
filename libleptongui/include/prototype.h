@@ -9,7 +9,7 @@ a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
         SchematicViewport *geometry,
         double relativ_zoom_factor,
-        int selected_from);
+        gboolean hotkey_zoom_with_pan);
 void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer);

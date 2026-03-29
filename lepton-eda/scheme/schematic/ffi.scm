@@ -553,6 +553,7 @@
             schematic_window_get_text_properties_dialog
             schematic_window_set_text_properties_dialog
             schematic_window_get_zoom_gain
+            schematic_window_get_zoom_with_pan
 
             font_select_widget_new
 
@@ -978,6 +979,7 @@
 (define-lff schematic_window_get_text_properties_dialog '* '(*))
 (define-lff schematic_window_set_text_properties_dialog void '(* *))
 (define-lff schematic_window_get_zoom_gain int '(*))
+(define-lff schematic_window_get_zoom_with_pan int '(*))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))

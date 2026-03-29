@@ -41,7 +41,7 @@ a_zoom (SchematicWindow *w_current,
         SchematicCanvas *page_view,
         SchematicViewport *geometry,
         double relativ_zoom_factor,
-        int selected_from)
+        gboolean hotkey_zoom_with_pan)
 {
   double world_pan_center_x,world_pan_center_y;
   int start_x, start_y;
@@ -50,8 +50,7 @@ a_zoom (SchematicWindow *w_current,
 
   /* calc center: either "mouse_to_world" or center=center or a
      virtual center if warp_cursor is disabled */
-  if (schematic_window_get_zoom_with_pan (w_current) == TRUE
-      && selected_from == HOTKEY)
+  if (hotkey_zoom_with_pan)
   {
     if (!x_event_get_pointer_position(w_current, FALSE,
                                       &start_x, &start_y))

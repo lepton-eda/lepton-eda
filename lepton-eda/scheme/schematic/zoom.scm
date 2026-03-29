@@ -20,6 +20,8 @@
 (define-module (schematic zoom)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
+
   #:use-module (schematic ffi)
 
   #:export (zoom))
@@ -53,6 +55,13 @@
             ((= direction ZOOM_FULL) -1)
             ;; Don't zoom.
             ((= direction ZOOM_SAME) 1)
-            (else -1))))
+            (else -1)))
+          (hotkey-zoom-with-pan?
+           (and (true? (schematic_window_get_zoom_with_pan *window))
+                (= selected-from HOTKEY))))
 
-      (a_zoom *window *canvas *viewport relative-zoom-factor selected-from))))
+      (a_zoom *window
+              *canvas
+              *viewport
+              relative-zoom-factor
+              (if hotkey-zoom-with-pan? TRUE FALSE)))))
