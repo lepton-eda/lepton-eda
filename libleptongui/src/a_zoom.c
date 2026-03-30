@@ -66,9 +66,11 @@ a_zoom (SchematicCanvas *page_view,
   /* warp the cursor to the right position */
   if (warp_cursor)
   {
-     schematic_canvas_WORLDtoSCREEN (page_view,
-                                     world_pan_center_x, world_pan_center_y,
-                                     &start_x, &start_y);
+     SchematicViewport *viewport = schematic_canvas_get_viewport (page_view);
+
+     start_x = schematic_viewport_pix_x (viewport, world_pan_center_x);
+     start_y = schematic_viewport_pix_y (viewport, world_pan_center_y);
+
      x_basic_warp_cursor (GTK_WIDGET (page_view), start_x, start_y);
   }
 }
