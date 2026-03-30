@@ -895,6 +895,9 @@ gboolean
 schematic_event_is_double_button_press (GdkEvent *event);
 
 gboolean
+schematic_event_is_scroll (GdkEvent *event);
+
+gboolean
 schematic_event_skip_motion_event (GdkEvent *event);
 
 gboolean

@@ -96,6 +96,13 @@ schematic_event_is_double_button_press (GdkEvent *event)
 }
 
 
+gboolean
+schematic_event_is_scroll (GdkEvent *event)
+{
+  return (schematic_event_get_type (event) == GDK_SCROLL);
+}
+
+
 guint
 schematic_event_get_button (GdkEvent *event)
 {

@@ -632,6 +632,7 @@
             *x_event_configure
             schematic_event_get_button
             schematic_event_is_double_button_press
+            schematic_event_is_scroll
             schematic_event_get_doing_stroke
             schematic_event_set_doing_stroke
             schematic_event_get_scroll_direction
@@ -1324,6 +1325,7 @@
 (define-lfc *x_event_configure)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
+(define-lff schematic_event_is_scroll int '(*))
 (define-lff schematic_event_get_doing_stroke int '())
 (define-lff schematic_event_set_doing_stroke void (list int))
 (define-lff schematic_event_get_scroll_direction int '(*))

@@ -41,7 +41,7 @@ a_zoom ()
 {
   GdkEvent *topEvent = gdk_event_get();
   while( topEvent != NULL ) {
-    if (schematic_event_get_type (topEvent) != GDK_SCROLL)
+    if (!schematic_event_is_scroll (topEvent))
     {
       gdk_event_put( topEvent );
       gdk_event_free( topEvent );
