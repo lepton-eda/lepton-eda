@@ -50,7 +50,9 @@ is not #f, zooming with panning is enabled."
     (error "NULL canvas."))
 
   (let ((*viewport (schematic_canvas_get_viewport *canvas))
-        (zoom-gain (schematic_window_get_zoom_gain *window)))
+        (zoom-gain (schematic_window_get_zoom_gain *window))
+        (zoom-with-pan?
+         (true? (schematic_window_get_zoom_with_pan *window))))
     (when (null-pointer? *viewport)
       (error "NULL viewport"))
 
@@ -64,9 +66,7 @@ is not #f, zooming with panning is enabled."
             ;; Don't zoom.
             ((zoom-same) 1)
             (else -1)))
-          (hotkey-zoom-with-pan?
-           (and (true? (schematic_window_get_zoom_with_pan *window))
-                position))
+          (hotkey-zoom-with-pan? (and zoom-with-pan? position))
           (start-x-bv (make-bytevector (sizeof int) 0))
           (start-y-bv (make-bytevector (sizeof int) 0))
           (warp-cursor (schematic_window_get_warp_cursor *window)))
