@@ -38,36 +38,13 @@
  */
 void
 a_zoom (SchematicCanvas *page_view,
-        SchematicViewport *geometry,
         double relativ_zoom_factor,
-        gboolean hotkey_zoom_with_pan,
         int start_x,
         int start_y,
         int warp_cursor,
-        double viewport_center_x,
-        double viewport_center_y,
-        double new_pan_center_x,
-        double new_pan_center_y)
+        double world_pan_center_x,
+        double world_pan_center_y)
 {
-  double world_pan_center_x,world_pan_center_y;
-
-  /* calc center: either "mouse_to_world" or center=center or a
-     virtual center if warp_cursor is disabled */
-  if (hotkey_zoom_with_pan)
-  {
-    if (warp_cursor)
-    {
-      world_pan_center_x = start_x;
-      world_pan_center_y = start_y;
-    } else {
-      world_pan_center_x = new_pan_center_x;
-      world_pan_center_y = new_pan_center_y;
-    }
-  } else {
-    world_pan_center_x = viewport_center_x;
-    world_pan_center_y = viewport_center_y;
-  }
-
 #if DEBUG
   printf("relative zoomfactor: %E\n", relativ_zoom_factor);
   printf("new center: x: %E, y: %E \n",

@@ -89,15 +89,21 @@
                    start-x))
                (new-pan-center-y
                 (+ (/ (- viewport-center-y start-y) relative-zoom-factor)
-                   start-y)))
+                   start-y))
+               (warp-cursor? (true? warp-cursor))
+               ;; Depending on the configuration settings, the new
+               ;; viewport center is either the current mouse
+               ;; position if the cursor should be warped, the
+               ;; current center, or a new virtual center.
+               (pan-center (if hotkey-zoom-with-pan?
+                               (if warp-cursor?
+                                   (cons start-x start-y)
+                                   (cons new-pan-center-x new-pan-center-y))
+                               (cons viewport-center-x viewport-center-y))))
           (a_zoom *canvas
-                  *viewport
                   relative-zoom-factor
-                  (if hotkey-zoom-with-pan? TRUE FALSE)
                   start-x
                   start-y
                   warp-cursor
-                  viewport-center-x
-                  viewport-center-y
-                  new-pan-center-x
-                  new-pan-center-y))))))
+                  (car pan-center)
+                  (cdr pan-center)))))))
