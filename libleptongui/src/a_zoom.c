@@ -45,13 +45,6 @@ a_zoom (SchematicCanvas *page_view,
         double world_pan_center_x,
         double world_pan_center_y)
 {
-#if DEBUG
-  printf("relative zoomfactor: %E\n", relativ_zoom_factor);
-  printf("new center: x: %E, y: %E \n",
-         world_pan_center_x, world_pan_center_y);
-#endif
-
-
   /* calculate new window and draw it */
   schematic_canvas_pan_general (page_view,
                                 world_pan_center_x,
