@@ -13,7 +13,9 @@ a_zoom (SchematicCanvas *page_view,
         int start_y,
         int warp_cursor,
         double viewport_center_x,
-        double viewport_center_y);
+        double viewport_center_y,
+        double new_pan_center_x,
+        double new_pan_center_y);
 void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer);

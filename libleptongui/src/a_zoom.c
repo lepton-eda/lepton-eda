@@ -45,11 +45,11 @@ a_zoom (SchematicCanvas *page_view,
         int start_y,
         int warp_cursor,
         double viewport_center_x,
-        double viewport_center_y)
+        double viewport_center_y,
+        double new_pan_center_x,
+        double new_pan_center_y)
 {
   double world_pan_center_x,world_pan_center_y;
-  double top, bottom, right, left;
-
 
   /* calc center: either "mouse_to_world" or center=center or a
      virtual center if warp_cursor is disabled */
@@ -60,16 +60,8 @@ a_zoom (SchematicCanvas *page_view,
       world_pan_center_x = start_x;
       world_pan_center_y = start_y;
     } else {
-      left = ((schematic_viewport_get_left (geometry) - start_x) *
-              (1/relativ_zoom_factor) + start_x);
-      right = ((schematic_viewport_get_right (geometry) - start_x) *
-               (1/relativ_zoom_factor) + start_x);
-      top = ((schematic_viewport_get_top (geometry) - start_y) *
-             (1/relativ_zoom_factor) + start_y);
-      bottom = ((schematic_viewport_get_bottom (geometry) - start_y) *
-                (1/relativ_zoom_factor) + start_y);
-      world_pan_center_x = (right + left) / 2;
-      world_pan_center_y = (top + bottom) / 2;
+      world_pan_center_x = new_pan_center_x;
+      world_pan_center_y = new_pan_center_y;
     }
   } else {
     world_pan_center_x = viewport_center_x;

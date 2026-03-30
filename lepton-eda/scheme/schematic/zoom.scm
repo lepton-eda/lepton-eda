@@ -70,22 +70,44 @@
                             FALSE
                             (bytevector->pointer start-x-bv)
                             (bytevector->pointer start-y-bv))))
-        (let ((start-x (bytevector-sint-ref start-x-bv
-                                            0
-                                            (native-endianness)
-                                            (sizeof int)))
-              (start-y (bytevector-sint-ref start-y-bv
-                                            0
-                                            (native-endianness)
-                                            (sizeof int)))
-              (viewport-center-x
-               (/ (+ (schematic_viewport_get_left *viewport)
-                     (schematic_viewport_get_right *viewport))
-                  2))
-              (viewport-center-y
-               (/ (+ (schematic_viewport_get_top *viewport)
-                     (schematic_viewport_get_bottom *viewport))
-                  2)))
+        (let* ((start-x (bytevector-sint-ref start-x-bv
+                                             0
+                                             (native-endianness)
+                                             (sizeof int)))
+               (start-y (bytevector-sint-ref start-y-bv
+                                             0
+                                             (native-endianness)
+                                             (sizeof int)))
+               (viewport-center-x
+                (/ (+ (schematic_viewport_get_left *viewport)
+                      (schematic_viewport_get_right *viewport))
+                   2))
+               (viewport-center-y
+                (/ (+ (schematic_viewport_get_top *viewport)
+                      (schematic_viewport_get_bottom *viewport))
+                   2))
+               (left
+                (+ (* (- (schematic_viewport_get_left *viewport)
+                         start-x)
+                      (/ 1 relative-zoom-factor))
+                   start-x))
+               (right
+                (+ (* (- (schematic_viewport_get_right *viewport)
+                         start-x)
+                      (/ 1 relative-zoom-factor))
+                   start-x))
+               (top
+                (+ (* (- (schematic_viewport_get_top *viewport)
+                         start-y)
+                      (/ 1 relative-zoom-factor))
+                   start-y))
+               (bottom
+                (+ (* (- (schematic_viewport_get_bottom *viewport)
+                         start-y)
+                      (/ 1 relative-zoom-factor))
+                   start-y))
+               (new-pan-center-x (/ (+ right left) 2))
+               (new-pan-center-y (/ (+ top bottom) 2)))
           (a_zoom *canvas
                   *viewport
                   relative-zoom-factor
@@ -94,4 +116,6 @@
                   start-y
                   warp-cursor
                   viewport-center-x
-                  viewport-center-y))))))
+                  viewport-center-y
+                  new-pan-center-x
+                  new-pan-center-y))))))
