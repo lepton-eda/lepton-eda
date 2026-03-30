@@ -70,7 +70,15 @@
                             FALSE
                             (bytevector->pointer start-x-bv)
                             (bytevector->pointer start-y-bv))))
-        (let ((viewport-center-x
+        (let ((start-x (bytevector-sint-ref start-x-bv
+                                            0
+                                            (native-endianness)
+                                            (sizeof int)))
+              (start-y (bytevector-sint-ref start-y-bv
+                                            0
+                                            (native-endianness)
+                                            (sizeof int)))
+              (viewport-center-x
                (/ (+ (schematic_viewport_get_left *viewport)
                      (schematic_viewport_get_right *viewport))
                   2))
@@ -82,8 +90,8 @@
                   *viewport
                   relative-zoom-factor
                   (if hotkey-zoom-with-pan? TRUE FALSE)
-                  (bytevector-sint-ref start-x-bv 0 (native-endianness) (sizeof int))
-                  (bytevector-sint-ref start-y-bv 0 (native-endianness) (sizeof int))
+                  start-x
+                  start-y
                   warp-cursor
                   viewport-center-x
                   viewport-center-y))))))
