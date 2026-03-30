@@ -36,6 +36,11 @@
 (define ZOOM_FULL 2)
 (define ZOOM_SAME 3)
 
+
+(define (filter-out-scroll-events)
+  (a_zoom))
+
+
 ;;; DIRECTION is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are
 ;;; defined in globals.h.
 (define (zoom *window *canvas direction selected-from)
@@ -107,7 +112,7 @@
            (inexact->exact (round (cdr pan-center)))
            relative-zoom-factor)
 
-          (a_zoom)
+          (filter-out-scroll-events)
 
           ;; Warp the cursor to the right position.
           (when warp-cursor?
