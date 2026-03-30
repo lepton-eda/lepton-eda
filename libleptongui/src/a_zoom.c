@@ -43,7 +43,9 @@ a_zoom (SchematicCanvas *page_view,
         gboolean hotkey_zoom_with_pan,
         int start_x,
         int start_y,
-        int warp_cursor)
+        int warp_cursor,
+        double viewport_center_x,
+        double viewport_center_y)
 {
   double world_pan_center_x,world_pan_center_y;
   double top, bottom, right, left;
@@ -70,12 +72,8 @@ a_zoom (SchematicCanvas *page_view,
       world_pan_center_y = (top + bottom) / 2;
     }
   } else {
-    world_pan_center_x =
-      (double) (schematic_viewport_get_left (geometry) +
-                schematic_viewport_get_right (geometry)) / 2;
-    world_pan_center_y =
-      (double) (schematic_viewport_get_top (geometry) +
-                schematic_viewport_get_bottom (geometry)) / 2;
+    world_pan_center_x = viewport_center_x;
+    world_pan_center_y = viewport_center_y;
   }
 
 #if DEBUG
