@@ -580,6 +580,8 @@
             schematic_viewport_get_right
             schematic_viewport_get_top
             schematic_viewport_pan
+            schematic_viewport_pix_x
+            schematic_viewport_pix_y
             schematic_viewport_set_world_bottom
             schematic_viewport_set_world_left
             schematic_viewport_set_world_right
@@ -664,6 +666,8 @@
             schematic_world_size_get_default_right
             schematic_world_size_get_default_bottom
             schematic_world_size_get_default_top
+
+            x_basic_warp_cursor
             ))
 
 (define libleptongui
@@ -1012,6 +1016,8 @@
 (define-lff schematic_viewport_get_right int '(*))
 (define-lff schematic_viewport_get_top int '(*))
 (define-lff schematic_viewport_pan void (list '* int int double))
+(define-lff schematic_viewport_pix_x int (list '* int))
+(define-lff schematic_viewport_pix_y int (list '* int))
 (define-lff schematic_viewport_set_world_bottom void (list '* int))
 (define-lff schematic_viewport_set_world_left void (list '* int))
 (define-lff schematic_viewport_set_world_right void (list '* int))
@@ -1392,7 +1398,7 @@
 (define-lff s_log_close void '())
 
 ;;; a_zoom.c
-(define-lff a_zoom void (list '* int int int double double))
+(define-lff a_zoom void '())
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))
@@ -1402,6 +1408,9 @@
 (define-lff schematic_world_size_get_default_right int '())
 (define-lff schematic_world_size_get_default_bottom int '())
 (define-lff schematic_world_size_get_default_top int '())
+
+;;; x_basic.c
+(define-lff x_basic_warp_cursor void (list '* int int))
 
 
 ;;; This is a special case: the function may be not defined in C

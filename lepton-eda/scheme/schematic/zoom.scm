@@ -106,9 +106,15 @@
            (inexact->exact (round (car pan-center)))
            (inexact->exact (round (cdr pan-center)))
            relative-zoom-factor)
-          (a_zoom *canvas
-                  start-x
-                  start-y
-                  warp-cursor
-                  (car pan-center)
-                  (cdr pan-center)))))))
+
+          (a_zoom)
+
+          ;; Warp the cursor to the right position.
+          (when warp-cursor?
+            (let ((x (schematic_viewport_pix_x
+                      *viewport
+                      (inexact->exact (round (car pan-center)))))
+                  (y (schematic_viewport_pix_y
+                      *viewport
+                      (inexact->exact (round (cdr pan-center))))))
+              (x_basic_warp_cursor *canvas x y))))))))

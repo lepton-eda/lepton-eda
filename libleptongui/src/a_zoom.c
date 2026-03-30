@@ -37,12 +37,7 @@
  *
  */
 void
-a_zoom (SchematicCanvas *page_view,
-        int start_x,
-        int start_y,
-        int warp_cursor,
-        double world_pan_center_x,
-        double world_pan_center_y)
+a_zoom ()
 {
   /* Before warping the cursor, filter out any consecutive scroll events
    * from the event queue.  If the program receives more than one scroll
@@ -61,17 +56,6 @@ a_zoom (SchematicCanvas *page_view,
     }
     gdk_event_free( topEvent );
     topEvent = gdk_event_get();
-  }
-
-  /* warp the cursor to the right position */
-  if (warp_cursor)
-  {
-     SchematicViewport *viewport = schematic_canvas_get_viewport (page_view);
-
-     start_x = schematic_viewport_pix_x (viewport, world_pan_center_x);
-     start_y = schematic_viewport_pix_y (viewport, world_pan_center_y);
-
-     x_basic_warp_cursor (GTK_WIDGET (page_view), start_x, start_y);
   }
 }
 
