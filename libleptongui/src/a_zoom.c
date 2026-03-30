@@ -38,19 +38,12 @@
  */
 void
 a_zoom (SchematicCanvas *page_view,
-        double relativ_zoom_factor,
         int start_x,
         int start_y,
         int warp_cursor,
         double world_pan_center_x,
         double world_pan_center_y)
 {
-  /* calculate new window and draw it */
-  schematic_canvas_pan_general (page_view,
-                                world_pan_center_x,
-                                world_pan_center_y,
-                                relativ_zoom_factor);
-
   /* Before warping the cursor, filter out any consecutive scroll events
    * from the event queue.  If the program receives more than one scroll
    * event before it can process the first one, then the globals mouse_x

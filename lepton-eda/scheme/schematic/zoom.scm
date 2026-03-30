@@ -100,8 +100,13 @@
                                    (cons start-x start-y)
                                    (cons new-pan-center-x new-pan-center-y))
                                (cons viewport-center-x viewport-center-y))))
+          ;; Calculate new viewport and draw it.
+          (schematic_canvas_pan_general
+           *canvas
+           (inexact->exact (round (car pan-center)))
+           (inexact->exact (round (cdr pan-center)))
+           relative-zoom-factor)
           (a_zoom *canvas
-                  relative-zoom-factor
                   start-x
                   start-y
                   warp-cursor

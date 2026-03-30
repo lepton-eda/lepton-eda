@@ -6,7 +6,6 @@ G_BEGIN_DECLS
 /* a_zoom.c */
 void
 a_zoom (SchematicCanvas *page_view,
-        double relativ_zoom_factor,
         int start_x,
         int start_y,
         int warp_cursor,
