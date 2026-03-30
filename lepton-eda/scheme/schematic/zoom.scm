@@ -84,16 +84,12 @@
                (viewport-bottom (schematic_viewport_get_bottom *viewport))
                (viewport-center-x (/ (+ viewport-left viewport-right) 2))
                (viewport-center-y (/ (+ viewport-top viewport-bottom) 2))
-               (left (+ (/ (- viewport-left start-x) relative-zoom-factor)
-                        start-x))
-               (right (+ (/ (- viewport-right start-x) relative-zoom-factor)
-                         start-x))
-               (top (+ (/ (- viewport-top start-y) relative-zoom-factor)
-                       start-y))
-               (bottom (+ (/ (- viewport-bottom start-y) relative-zoom-factor)
-                          start-y))
-               (new-pan-center-x (/ (+ right left) 2))
-               (new-pan-center-y (/ (+ top bottom) 2)))
+               (new-pan-center-x
+                (+ (/ (- viewport-center-x start-x) relative-zoom-factor)
+                   start-x))
+               (new-pan-center-y
+                (+ (/ (- viewport-center-y start-y) relative-zoom-factor)
+                   start-y)))
           (a_zoom *canvas
                   *viewport
                   relative-zoom-factor
