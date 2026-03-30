@@ -110,11 +110,6 @@ SHOW-SCROLLBARS?."
   (gtk_scrolled_window_set_policy *scrolled-widget policy policy))
 
 
-;;; Temporary definitions from "gschem_defines.h".
-(define DONTCARE 0)
-(define MENU 1)
-(define HOTKEY 2)
-
 ;;; The time of the last scroll event to check for duplicate
 ;;; scroll events.
 (define %last-scroll-event-time 0)
@@ -263,7 +258,7 @@ parent *WINDOW."
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom?
-                      (zoom *window *widget #:direction zoom-direction #:selected-from HOTKEY))
+                      (zoom *window *widget #:direction zoom-direction))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))

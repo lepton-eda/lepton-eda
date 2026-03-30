@@ -164,12 +164,6 @@ buffer should be displayed, the widget displays the error message."
   (procedure->pointer void realize-preview '(* *)))
 
 
-;;; Temporary definitions from "gschem_defines.h".
-(define DONTCARE 0)
-(define MENU 1)
-(define HOTKEY 2)
-
-
 ;;; Handles mouse button press events.
 (define (button-press-callback *preview-widget *event *user-data)
   (define *window (schematic_preview_get_window *preview-widget))
@@ -183,7 +177,7 @@ buffer should be displayed, the widget displays the error message."
       (case (schematic_event_get_button *event)
         ;; Left mouse button: zoom in.
         ((1)
-         (zoom *window *preview-widget #:direction 'zoom-in #:selected-from HOTKEY)
+         (zoom *window *preview-widget #:direction 'zoom-in)
          (schematic_canvas_invalidate_all *preview-widget)
          FALSE)
         ;; Middle mouse button: pan.
@@ -209,7 +203,7 @@ buffer should be displayed, the widget displays the error message."
 
         ;; Right mouse button: zoom out.
         ((3)
-         (zoom *window *preview-widget #:direction 'zoom-out #:selected-from HOTKEY)
+         (zoom *window *preview-widget #:direction 'zoom-out)
          (schematic_canvas_invalidate_all *preview-widget)
          FALSE))))
 

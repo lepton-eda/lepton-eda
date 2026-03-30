@@ -28,11 +28,6 @@
 
   #:export (zoom))
 
-;;; Definitions from "schematic_defines.h".
-(define DONTCARE 0)
-(define MENU 1)
-(define HOTKEY 2)
-
 
 (define (filter-out-scroll-events)
   (let loop ((*event (gdk_event_get)))
@@ -46,10 +41,11 @@
             (loop (gdk_event_get)))))))
 
 
-(define* (zoom *window *canvas #:key (direction #f) (selected-from HOTKEY))
+(define* (zoom *window *canvas #:key (direction #f) (position #t))
   "Zoom *CANVAS of *WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
-'zoom-out, 'zoom-full, or 'zoom-same.  SELECTED-FROM is either MENU,
-HOTKEY, or DONTCARE."
+'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
+\"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
+is not #f, zooming with panning is enabled."
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
@@ -70,7 +66,7 @@ HOTKEY, or DONTCARE."
             (else -1)))
           (hotkey-zoom-with-pan?
            (and (true? (schematic_window_get_zoom_with_pan *window))
-                (= selected-from HOTKEY)))
+                position))
           (start-x-bv (make-bytevector (sizeof int) 0))
           (start-y-bv (make-bytevector (sizeof int) 0))
           (warp-cursor (schematic_window_get_warp_cursor *window)))

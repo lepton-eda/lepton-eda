@@ -782,12 +782,6 @@ the snap grid size should be set to 100")))
                               (- (schematic_window_get_keyboardpan_gain *window))))
 
 
-;;; Definitions from "schematic_defines.h".
-(define DONTCARE 0)
-(define MENU 1)
-(define HOTKEY 2)
-
-
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
   (define *window (*current-window))
 
@@ -814,10 +808,7 @@ the snap grid size should be set to 100")))
   (zoom *window
         (schematic_window_get_current_canvas *window)
         #:direction 'zoom-in
-        #:selected-from
-        (match (action-position)
-          ((x . y) HOTKEY)
-          (_ MENU)))
+        #:position (action-position))
   (undo-save-viewport))
 
 
@@ -827,10 +818,7 @@ the snap grid size should be set to 100")))
   (zoom *window
         (schematic_window_get_current_canvas *window)
         #:direction 'zoom-out
-        #:selected-from
-        (match (action-position)
-          ((x . y) HOTKEY)
-          (_ MENU)))
+        #:position (action-position))
   (undo-save-viewport))
 
 
@@ -838,7 +826,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
   (define *canvas (schematic_window_get_current_canvas *window))
 
-  (zoom *window *canvas #:direction 'zoom-full #:selected-from DONTCARE)
+  (zoom *window *canvas #:direction 'zoom-full #:position #f)
   (undo-save-viewport))
 
 

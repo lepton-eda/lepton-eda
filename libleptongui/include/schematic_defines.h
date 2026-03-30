@@ -76,11 +76,6 @@
 #define SCROLL_WHEEL_CLASSIC 0
 #define SCROLL_WHEEL_GTK     1
 
-/* for selected_from */
-#define DONTCARE                0
-#define MENU                    1
-#define HOTKEY                  2
-
 /* The prefix of the default filename used for newly created pages
  *
  * TRANSLATORS:
