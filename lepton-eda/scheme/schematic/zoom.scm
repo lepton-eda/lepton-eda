@@ -112,6 +112,13 @@
            (inexact->exact (round (cdr pan-center)))
            relative-zoom-factor)
 
+          ;; Before warping the cursor, filter out any consecutive
+          ;; scroll events from the event queue.  If the program
+          ;; receives more than one scroll event before it can process
+          ;; the first one, then the globals mouse_x and mouse_y won't
+          ;; contain the proper mouse position, because the handler
+          ;; for the mouse moved event needs to run first to set these
+          ;; values.
           (filter-out-scroll-events)
 
           ;; Warp the cursor to the right position.
