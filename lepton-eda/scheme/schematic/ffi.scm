@@ -659,8 +659,6 @@
             schematic_translate_widget_get_entry
             schematic_translate_widget_get_value
 
-            a_zoom
-
             g_action_eval_by_name
 
             schematic_world_size_get_default_left
@@ -1398,9 +1396,6 @@
 (define-lff lepton_log_get_logging_enabled int '())
 (define-lff lepton_log_set_logging_enabled void (list int))
 (define-lff s_log_close void '())
-
-;;; a_zoom.c
-(define-lff a_zoom void '())
 
 ;;; x_menus.c
 (define-lff g_action_eval_by_name int (list '* '*))

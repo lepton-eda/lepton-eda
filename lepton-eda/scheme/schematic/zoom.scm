@@ -23,6 +23,7 @@
 
   #:use-module (lepton ffi boolean)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
   #:export (zoom))
@@ -38,7 +39,15 @@
 
 
 (define (filter-out-scroll-events)
-  (a_zoom))
+  (let loop ((*event (gdk_event_get)))
+    (unless (null-pointer? *event)
+      (if (false? (schematic_event_is_scroll *event))
+          (begin
+            (gdk_event_put *event)
+            (gdk_event_free *event))
+          (begin
+            (gdk_event_free *event)
+            (loop (gdk_event_get)))))))
 
 
 ;;; DIRECTION is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are

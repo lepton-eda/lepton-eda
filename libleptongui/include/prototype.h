@@ -5,8 +5,6 @@ G_BEGIN_DECLS
 
 /* a_zoom.c */
 void
-a_zoom ();
-void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer);
 

@@ -37,28 +37,6 @@
  *
  */
 void
-a_zoom ()
-{
-  GdkEvent *topEvent = gdk_event_get();
-  while( topEvent != NULL ) {
-    if (!schematic_event_is_scroll (topEvent))
-    {
-      gdk_event_put( topEvent );
-      gdk_event_free( topEvent );
-      break;
-    }
-    gdk_event_free( topEvent );
-    topEvent = gdk_event_get();
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 a_zoom_box_draw_rubber (SchematicWindow *w_current,
                         EdaRenderer *renderer)
 {
