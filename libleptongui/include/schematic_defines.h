@@ -21,11 +21,6 @@
 #ifndef _SCHEMATIC_DEFINES_H_INCL
 #define _SCHEMATIC_DEFINES_H_INCL
 
-#define ZOOM_OUT 0
-#define ZOOM_IN 1
-#define ZOOM_FULL 2
-#define ZOOM_SAME 3
-
 #define ZOOM_EXTENTS_PADDING_PX 5
 
 /* For grip size in pixels (i.e. device units) */

@@ -786,9 +786,6 @@ the snap grid size should be set to 100")))
 (define DONTCARE 0)
 (define MENU 1)
 (define HOTKEY 2)
-(define ZOOM_OUT 0)
-(define ZOOM_IN 1)
-(define ZOOM_FULL 2)
 
 
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
@@ -816,7 +813,8 @@ the snap grid size should be set to 100")))
 
   (zoom *window
         (schematic_window_get_current_canvas *window)
-        ZOOM_IN
+        #:direction 'zoom-in
+        #:selected-from
         (match (action-position)
           ((x . y) HOTKEY)
           (_ MENU)))
@@ -828,7 +826,8 @@ the snap grid size should be set to 100")))
 
   (zoom *window
         (schematic_window_get_current_canvas *window)
-        ZOOM_OUT
+        #:direction 'zoom-out
+        #:selected-from
         (match (action-position)
           ((x . y) HOTKEY)
           (_ MENU)))
@@ -839,7 +838,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
   (define *canvas (schematic_window_get_current_canvas *window))
 
-  (zoom *window *canvas ZOOM_FULL DONTCARE)
+  (zoom *window *canvas #:direction 'zoom-full #:selected-from DONTCARE)
   (undo-save-viewport))
 
 

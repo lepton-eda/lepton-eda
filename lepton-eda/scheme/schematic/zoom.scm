@@ -32,10 +32,6 @@
 (define DONTCARE 0)
 (define MENU 1)
 (define HOTKEY 2)
-(define ZOOM_OUT 0)
-(define ZOOM_IN 1)
-(define ZOOM_FULL 2)
-(define ZOOM_SAME 3)
 
 
 (define (filter-out-scroll-events)
@@ -50,9 +46,10 @@
             (loop (gdk_event_get)))))))
 
 
-;;; DIRECTION is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are
-;;; defined in globals.h.
-(define (zoom *window *canvas direction selected-from)
+(define* (zoom *window *canvas #:key (direction #f) (selected-from HOTKEY))
+  "Zoom *CANVAS of *WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
+'zoom-out, 'zoom-full, or 'zoom-same.  SELECTED-FROM is either MENU,
+HOTKEY, or DONTCARE."
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
@@ -63,13 +60,13 @@
 
     ;; NB: zoom-gain is a percentage increase.
     (let ((relative-zoom-factor
-           (cond
-            ((= direction ZOOM_IN) (/ (+ 100.0 zoom-gain) 100.0))
-            ((= direction ZOOM_OUT) (/ 100.0 (+ 100.0 zoom-gain)))
+           (case direction
+            ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
+            ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
             ;; Indicate the zoom full with a negative zoomfactor.
-            ((= direction ZOOM_FULL) -1)
+            ((zoom-full) -1)
             ;; Don't zoom.
-            ((= direction ZOOM_SAME) 1)
+            ((zoom-same) 1)
             (else -1)))
           (hotkey-zoom-with-pan?
            (and (true? (schematic_window_get_zoom_with_pan *window))

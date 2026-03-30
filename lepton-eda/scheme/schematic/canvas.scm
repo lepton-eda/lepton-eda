@@ -111,11 +111,6 @@ SHOW-SCROLLBARS?."
 
 
 ;;; Temporary definitions from "gschem_defines.h".
-(define ZOOM_OUT 0)
-(define ZOOM_IN 1)
-(define ZOOM_FULL 2)
-(define ZOOM_SAME 3)
-
 (define DONTCARE 0)
 (define MENU 1)
 (define HOTKEY 2)
@@ -148,11 +143,11 @@ parent *WINDOW."
 
   (define (event-scroll-direction->zoom-direction scroll-direction)
     (case (event-scroll-direction->symbol scroll-direction)
-      ((gdk-scroll-up) ZOOM_IN)
-      ((gdk-scroll-left) ZOOM_IN)
-      ((gdk-scroll-down) ZOOM_OUT)
-      ((gdk-scroll-right) ZOOM_OUT)
-      (else ZOOM_SAME)))
+      ((gdk-scroll-up) 'zoom-in)
+      ((gdk-scroll-left) 'zoom-in)
+      ((gdk-scroll-down) 'zoom-out)
+      ((gdk-scroll-right) 'zoom-out)
+      (else 'zoom-same)))
 
   (define (update-adjustment *adjustment pan-direction)
     (gtk_adjustment_set_value
@@ -262,13 +257,13 @@ parent *WINDOW."
                                  ;; devices.
                                  (let ((direction (cdr scroll-direction)))
                                    (cond
-                                    ((negative? direction) ZOOM_IN)
-                                    ((positive? direction) ZOOM_OUT)
-                                    ((zero? direction) ZOOM_SAME)))
+                                    ((negative? direction) 'zoom-in)
+                                    ((positive? direction) 'zoom-out)
+                                    ((zero? direction) 'zoom-same)))
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom?
-                      (zoom *window *widget zoom-direction HOTKEY))
+                      (zoom *window *widget #:direction zoom-direction #:selected-from HOTKEY))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))
