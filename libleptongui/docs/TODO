@@ -41,10 +41,6 @@ Code cleanups (no particular order):
 	component to object_head or a complex which goes to object->complex.
 	It becomes an issue, that you have to search the list.
 
-	move a_zoom a_pan to i_* world
-
-	perhaps rename a_basic to something else
-
 	go through and fix left, top, right, bottom to be what they really
 	mean (0,0 is in the lower left)
 
