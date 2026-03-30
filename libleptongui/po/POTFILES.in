@@ -1,4 +1,3 @@
-libleptongui/src/a_zoom.c
 libleptongui/src/color_edit_widget.c
 libleptongui/src/execute_script.c
 libleptongui/src/font_select_widget.c
