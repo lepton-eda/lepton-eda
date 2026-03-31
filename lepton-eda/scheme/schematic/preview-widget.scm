@@ -177,7 +177,10 @@ buffer should be displayed, the widget displays the error message."
         (case (schematic_event_get_button *event)
           ;; Left mouse button: zoom in.
           ((1)
-           (zoom *window *preview-widget #:direction 'zoom-in)
+           (zoom *window
+                 *preview-widget
+                 #:direction 'zoom-in
+                 #:position position)
            (schematic_canvas_invalidate_all *preview-widget))
           ;; Middle mouse button: pan.
           ((2)
@@ -187,7 +190,10 @@ buffer should be displayed, the widget displays the error message."
                                    (cdr position))))
           ;; Right mouse button: zoom out.
           ((3)
-           (zoom *window *preview-widget #:direction 'zoom-out)
+           (zoom *window
+                 *preview-widget
+                 #:direction 'zoom-out
+                 #:position position)
            (schematic_canvas_invalidate_all *preview-widget)))
         FALSE)))
 
