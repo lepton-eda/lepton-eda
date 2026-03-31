@@ -18,13 +18,14 @@
 
 
 (define-module (schematic zoom)
-  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic mouse-pointer)
+  #:use-module (schematic window global)
 
   #:export (zoom))
 
@@ -63,9 +64,7 @@ is not #f, zooming with panning is enabled."
   (let ((*viewport (schematic_canvas_get_viewport *canvas))
         (zoom-gain (schematic_window_get_zoom_gain *window))
         (zoom-with-pan?
-         (true? (schematic_window_get_zoom_with_pan *window)))
-        (start-x-bv (make-bytevector (sizeof int) 0))
-        (start-y-bv (make-bytevector (sizeof int) 0)))
+         (true? (schematic_window_get_zoom_with_pan *window))))
     (when (null-pointer? *viewport)
       (error "NULL viewport"))
 
@@ -83,24 +82,12 @@ is not #f, zooming with panning is enabled."
             (warp-cursor?
              (true? (schematic_window_get_warp_cursor *window)))
             (zoom-position
-             (true? (x_event_get_pointer_position
-                     *window
-                     FALSE
-                     (bytevector->pointer start-x-bv)
-                     (bytevector->pointer start-y-bv)))))
+             (with-window *window (mouse-pointer-position))))
 
         (unless (and zoom-with-pan?
                      position
                      (not zoom-position))
-          (let* ((start-x (bytevector-sint-ref start-x-bv
-                                               0
-                                               (native-endianness)
-                                               (sizeof int)))
-                 (start-y (bytevector-sint-ref start-y-bv
-                                               0
-                                               (native-endianness)
-                                               (sizeof int)))
-                 (viewport-left (schematic_viewport_get_left *viewport))
+          (let* ((viewport-left (schematic_viewport_get_left *viewport))
                  (viewport-right (schematic_viewport_get_right *viewport))
                  (viewport-top (schematic_viewport_get_top *viewport))
                  (viewport-bottom (schematic_viewport_get_bottom *viewport))
@@ -110,14 +97,14 @@ is not #f, zooming with panning is enabled."
                  ;; current center, or a new virtual center.
                  (pan-center (if (and zoom-with-pan? position)
                                  (if warp-cursor?
-                                     (cons start-x start-y)
+                                     zoom-position
                                      (cons (pan-center-coord viewport-left
                                                              viewport-right
-                                                             start-x
+                                                             (car zoom-position)
                                                              relative-zoom-factor)
                                            (pan-center-coord viewport-bottom
                                                              viewport-top
-                                                             start-y
+                                                             (cdr zoom-position)
                                                              relative-zoom-factor)))
                                  (cons (center viewport-left viewport-right)
                                        (center viewport-top viewport-bottom)))))
