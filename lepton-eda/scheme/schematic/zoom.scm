@@ -81,15 +81,17 @@ is not #f, zooming with panning is enabled."
                ((zoom-full) -1)
                (else -1)))
             (warp-cursor?
-             (true? (schematic_window_get_warp_cursor *window))))
+             (true? (schematic_window_get_warp_cursor *window)))
+            (zoom-position
+             (true? (x_event_get_pointer_position
+                     *window
+                     FALSE
+                     (bytevector->pointer start-x-bv)
+                     (bytevector->pointer start-y-bv)))))
 
         (unless (and zoom-with-pan?
                      position
-                     (false? (x_event_get_pointer_position
-                              *window
-                              FALSE
-                              (bytevector->pointer start-x-bv)
-                              (bytevector->pointer start-y-bv))))
+                     (not zoom-position))
           (let* ((start-x (bytevector-sint-ref start-x-bv
                                                0
                                                (native-endianness)
