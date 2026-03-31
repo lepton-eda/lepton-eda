@@ -46,6 +46,14 @@
 'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
 \"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
 is not #f, zooming with panning is enabled."
+
+  (define (pan-center-coord viewport-center-coord
+                            start-coord
+                            relative-zoom-factor)
+    (+ (/ (- viewport-center-coord start-coord)
+          relative-zoom-factor)
+       start-coord))
+
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
@@ -92,12 +100,12 @@ is not #f, zooming with panning is enabled."
                  (viewport-bottom (schematic_viewport_get_bottom *viewport))
                  (viewport-center-x (/ (+ viewport-left viewport-right) 2))
                  (viewport-center-y (/ (+ viewport-top viewport-bottom) 2))
-                 (new-pan-center-x
-                  (+ (/ (- viewport-center-x start-x) relative-zoom-factor)
-                     start-x))
-                 (new-pan-center-y
-                  (+ (/ (- viewport-center-y start-y) relative-zoom-factor)
-                     start-y))
+                 (new-pan-center-x (pan-center-coord viewport-center-x
+                                                     start-x
+                                                     relative-zoom-factor))
+                 (new-pan-center-y (pan-center-coord viewport-center-y
+                                                     start-y
+                                                     relative-zoom-factor))
                  (warp-cursor? (true? warp-cursor))
                  ;; Depending on the configuration settings, the new
                  ;; viewport center is either the current mouse
