@@ -28,9 +28,11 @@
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic event)
+  #:use-module (schematic mouse-pointer)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
   #:use-module (schematic zoom)
 
   #:export (canvas-viewport
@@ -258,7 +260,10 @@ parent *WINDOW."
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom?
-                      (zoom *window *widget #:direction zoom-direction))
+                      (zoom *window
+                            *widget
+                            #:direction zoom-direction
+                            #:position (with-window *window (mouse-pointer-position))))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))
