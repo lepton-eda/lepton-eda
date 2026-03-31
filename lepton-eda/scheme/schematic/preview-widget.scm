@@ -37,6 +37,8 @@
   #:use-module (schematic canvas)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic mouse-pointer)
+  #:use-module (schematic window global)
   #:use-module (schematic zoom)
 
   #:export (init-preview-widget-signals))
@@ -167,45 +169,33 @@ buffer should be displayed, the widget displays the error message."
 ;;; Handles mouse button press events.
 (define (button-press-callback *preview-widget *event *user-data)
   (define *window (schematic_preview_get_window *preview-widget))
-  (define wx-bv (make-bytevector (sizeof int) 0))
-  (define wy-bv (make-bytevector (sizeof int) 0))
-
 
   (if (false? (schematic_preview_get_active *preview-widget))
       TRUE
 
-      (case (schematic_event_get_button *event)
-        ;; Left mouse button: zoom in.
-        ((1)
-         (zoom *window *preview-widget #:direction 'zoom-in)
-         (schematic_canvas_invalidate_all *preview-widget)
-         FALSE)
-        ;; Middle mouse button: pan.
-        ((2)
-         (if (false? (x_event_get_pointer_position
-                      *window
-                      FALSE
-                      (bytevector->pointer wx-bv)
-                      (bytevector->pointer wy-bv)))
-             FALSE
-             (begin
-               (schematic_canvas_pan
-                *preview-widget
-                (bytevector-sint-ref wx-bv
-                                     0
-                                     (native-endianness)
-                                     (sizeof int))
-                (bytevector-sint-ref wy-bv
-                                     0
-                                     (native-endianness)
-                                     (sizeof int)))
-               FALSE)))
+      (let ((position (with-window *window (mouse-pointer-position))))
+        (case (schematic_event_get_button *event)
+          ;; Left mouse button: zoom in.
+          ((1)
+           (zoom *window *preview-widget #:direction 'zoom-in)
+           (schematic_canvas_invalidate_all *preview-widget)
+           FALSE)
+          ;; Middle mouse button: pan.
+          ((2)
+           (if (not position)
+               FALSE
+               (begin
+                 (schematic_canvas_pan
+                  *preview-widget
+                  (car position)
+                  (cdr position))
+                 FALSE)))
 
-        ;; Right mouse button: zoom out.
-        ((3)
-         (zoom *window *preview-widget #:direction 'zoom-out)
-         (schematic_canvas_invalidate_all *preview-widget)
-         FALSE))))
+          ;; Right mouse button: zoom out.
+          ((3)
+           (zoom *window *preview-widget #:direction 'zoom-out)
+           (schematic_canvas_invalidate_all *preview-widget)
+           FALSE)))))
 
 (define *button-press-callback
   (procedure->pointer int button-press-callback '(* * *)))
