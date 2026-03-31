@@ -64,14 +64,14 @@ is not #f, zooming with panning is enabled."
           relative-zoom-factor)
        start-coord))
 
-  (define (pan-center *viewport zoom-position relative-zoom-factor)
+  (define (pan-center *viewport pan-position relative-zoom-factor)
     (cons (pan-center-coord (schematic_viewport_get_left *viewport)
                             (schematic_viewport_get_right *viewport)
-                            (car zoom-position)
+                            (car pan-position)
                             relative-zoom-factor)
           (pan-center-coord (schematic_viewport_get_bottom *viewport)
                             (schematic_viewport_get_top *viewport)
-                            (cdr zoom-position)
+                            (cdr pan-position)
                             relative-zoom-factor)))
 
   (when (null-pointer? *canvas)
