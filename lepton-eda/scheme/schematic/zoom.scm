@@ -79,6 +79,7 @@ is not #f, zooming with panning is enabled."
 
   (let ((*viewport (schematic_canvas_get_viewport *canvas))
         (zoom-gain (schematic_window_get_zoom_gain *window))
+        (show-all? (eq? direction 'zoom-full))
         (zoom-with-pan?
          (true? (schematic_window_get_zoom_with_pan *window))))
     (when (null-pointer? *viewport)
@@ -107,13 +108,22 @@ is not #f, zooming with panning is enabled."
           ;; center is either the current mouse position if the cursor
           ;; should be warped, the current center, or a new virtual
           ;; center.
-          (let* ((zoom-center (if (and zoom-with-pan? position)
-                                  (if warp-cursor?
+          (let* ((zoom-center
+                  (if (and zoom-with-pan?
+                           ;; Position is undefined when the
+                           ;; pointer is out of the canvas.  In
+                           ;; such a case panning cannot be done.
+                           position
+                           ;; Panning cannot be used when the
+                           ;; canvas should be displayed at its
+                           ;; full size.
+                           (not show-all?))
+                      (if warp-cursor?
+                          zoom-position
+                          (pan-center *viewport
                                       zoom-position
-                                      (pan-center *viewport
-                                                  zoom-position
-                                                  relative-zoom-factor))
-                                  (viewport-center *viewport))))
+                                      relative-zoom-factor))
+                      (viewport-center *viewport))))
             ;; Calculate new viewport and draw it.
             (schematic_canvas_pan_general
              *canvas
