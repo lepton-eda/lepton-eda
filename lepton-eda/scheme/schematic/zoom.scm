@@ -49,10 +49,11 @@ is not #f, zooming with panning is enabled."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
-  (define (pan-center-coord viewport-center-coord
+  (define (pan-center-coord viewport-min
+                            viewport-max
                             start-coord
                             relative-zoom-factor)
-    (+ (/ (- viewport-center-coord start-coord)
+    (+ (/ (- (center viewport-min viewport-max) start-coord)
           relative-zoom-factor)
        start-coord))
 
@@ -102,10 +103,12 @@ is not #f, zooming with panning is enabled."
                  (viewport-bottom (schematic_viewport_get_bottom *viewport))
                  (viewport-center-x (center viewport-left viewport-right))
                  (viewport-center-y (center viewport-top viewport-bottom))
-                 (new-pan-center-x (pan-center-coord viewport-center-x
+                 (new-pan-center-x (pan-center-coord viewport-left
+                                                     viewport-right
                                                      start-x
                                                      relative-zoom-factor))
-                 (new-pan-center-y (pan-center-coord viewport-center-y
+                 (new-pan-center-y (pan-center-coord viewport-bottom
+                                                     viewport-top
                                                      start-y
                                                      relative-zoom-factor))
                  (warp-cursor? (true? warp-cursor))
