@@ -66,12 +66,12 @@ is not #f, zooming with panning is enabled."
             ;; Don't zoom.
             ((zoom-same) 1)
             (else -1)))
-          (hotkey-zoom-with-pan? (and zoom-with-pan? position))
           (start-x-bv (make-bytevector (sizeof int) 0))
           (start-y-bv (make-bytevector (sizeof int) 0))
           (warp-cursor (schematic_window_get_warp_cursor *window)))
 
-      (unless (and hotkey-zoom-with-pan?
+      (unless (and zoom-with-pan?
+                   position
                    (false? (x_event_get_pointer_position
                             *window
                             FALSE
@@ -102,7 +102,7 @@ is not #f, zooming with panning is enabled."
                ;; viewport center is either the current mouse
                ;; position if the cursor should be warped, the
                ;; current center, or a new virtual center.
-               (pan-center (if hotkey-zoom-with-pan?
+               (pan-center (if (and zoom-with-pan? position)
                                (if warp-cursor?
                                    (cons start-x start-y)
                                    (cons new-pan-center-x new-pan-center-y))
