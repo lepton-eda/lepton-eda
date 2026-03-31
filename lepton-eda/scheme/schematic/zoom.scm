@@ -101,16 +101,6 @@ is not #f, zooming with panning is enabled."
                  (viewport-right (schematic_viewport_get_right *viewport))
                  (viewport-top (schematic_viewport_get_top *viewport))
                  (viewport-bottom (schematic_viewport_get_bottom *viewport))
-                 (viewport-center-x (center viewport-left viewport-right))
-                 (viewport-center-y (center viewport-top viewport-bottom))
-                 (new-pan-center-x (pan-center-coord viewport-left
-                                                     viewport-right
-                                                     start-x
-                                                     relative-zoom-factor))
-                 (new-pan-center-y (pan-center-coord viewport-bottom
-                                                     viewport-top
-                                                     start-y
-                                                     relative-zoom-factor))
                  (warp-cursor? (true? warp-cursor))
                  ;; Depending on the configuration settings, the new
                  ;; viewport center is either the current mouse
@@ -119,8 +109,16 @@ is not #f, zooming with panning is enabled."
                  (pan-center (if (and zoom-with-pan? position)
                                  (if warp-cursor?
                                      (cons start-x start-y)
-                                     (cons new-pan-center-x new-pan-center-y))
-                                 (cons viewport-center-x viewport-center-y))))
+                                     (cons (pan-center-coord viewport-left
+                                                             viewport-right
+                                                             start-x
+                                                             relative-zoom-factor)
+                                           (pan-center-coord viewport-bottom
+                                                             viewport-top
+                                                             start-y
+                                                             relative-zoom-factor)))
+                                 (cons (center viewport-left viewport-right)
+                                       (center viewport-top viewport-bottom)))))
             ;; Calculate new viewport and draw it.
             (schematic_canvas_pan_general
              *canvas
