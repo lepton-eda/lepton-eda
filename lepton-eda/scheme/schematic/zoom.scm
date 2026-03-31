@@ -50,6 +50,12 @@ is not #f, zooming with panning is enabled."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
+  (define (viewport-center *viewport)
+    (cons (center (schematic_viewport_get_left *viewport)
+                  (schematic_viewport_get_right *viewport))
+          (center (schematic_viewport_get_top *viewport)
+                  (schematic_viewport_get_bottom *viewport))))
+
   (define (pan-center-coord viewport-min
                             viewport-max
                             start-coord
@@ -97,22 +103,17 @@ is not #f, zooming with panning is enabled."
         (unless (and zoom-with-pan?
                      position
                      (not zoom-position))
-          (let* ((viewport-left (schematic_viewport_get_left *viewport))
-                 (viewport-right (schematic_viewport_get_right *viewport))
-                 (viewport-top (schematic_viewport_get_top *viewport))
-                 (viewport-bottom (schematic_viewport_get_bottom *viewport))
-                 ;; Depending on the configuration settings, the new
-                 ;; viewport center is either the current mouse
-                 ;; position if the cursor should be warped, the
-                 ;; current center, or a new virtual center.
-                 (zoom-center (if (and zoom-with-pan? position)
+          ;; Depending on the configuration settings, the new viewport
+          ;; center is either the current mouse position if the cursor
+          ;; should be warped, the current center, or a new virtual
+          ;; center.
+          (let* ((zoom-center (if (and zoom-with-pan? position)
                                   (if warp-cursor?
                                       zoom-position
                                       (pan-center *viewport
                                                   zoom-position
                                                   relative-zoom-factor))
-                                  (cons (center viewport-left viewport-right)
-                                        (center viewport-top viewport-bottom)))))
+                                  (viewport-center *viewport))))
             ;; Calculate new viewport and draw it.
             (schematic_canvas_pan_general
              *canvas
