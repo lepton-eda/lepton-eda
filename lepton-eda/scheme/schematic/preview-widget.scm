@@ -178,24 +178,18 @@ buffer should be displayed, the widget displays the error message."
           ;; Left mouse button: zoom in.
           ((1)
            (zoom *window *preview-widget #:direction 'zoom-in)
-           (schematic_canvas_invalidate_all *preview-widget)
-           FALSE)
+           (schematic_canvas_invalidate_all *preview-widget))
           ;; Middle mouse button: pan.
           ((2)
-           (if (not position)
-               FALSE
-               (begin
-                 (schematic_canvas_pan
-                  *preview-widget
-                  (car position)
-                  (cdr position))
-                 FALSE)))
-
+           (when position
+             (schematic_canvas_pan *preview-widget
+                                   (car position)
+                                   (cdr position))))
           ;; Right mouse button: zoom out.
           ((3)
            (zoom *window *preview-widget #:direction 'zoom-out)
-           (schematic_canvas_invalidate_all *preview-widget)
-           FALSE)))))
+           (schematic_canvas_invalidate_all *preview-widget)))
+        FALSE)))
 
 (define *button-press-callback
   (procedure->pointer int button-press-callback '(* * *)))
