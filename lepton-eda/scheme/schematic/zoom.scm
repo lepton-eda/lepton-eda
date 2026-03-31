@@ -95,24 +95,24 @@ is not #f, zooming with panning is enabled."
                  ;; viewport center is either the current mouse
                  ;; position if the cursor should be warped, the
                  ;; current center, or a new virtual center.
-                 (pan-center (if (and zoom-with-pan? position)
-                                 (if warp-cursor?
-                                     zoom-position
-                                     (cons (pan-center-coord viewport-left
-                                                             viewport-right
-                                                             (car zoom-position)
-                                                             relative-zoom-factor)
-                                           (pan-center-coord viewport-bottom
-                                                             viewport-top
-                                                             (cdr zoom-position)
-                                                             relative-zoom-factor)))
-                                 (cons (center viewport-left viewport-right)
-                                       (center viewport-top viewport-bottom)))))
+                 (zoom-center (if (and zoom-with-pan? position)
+                                  (if warp-cursor?
+                                      zoom-position
+                                      (cons (pan-center-coord viewport-left
+                                                              viewport-right
+                                                              (car zoom-position)
+                                                              relative-zoom-factor)
+                                            (pan-center-coord viewport-bottom
+                                                              viewport-top
+                                                              (cdr zoom-position)
+                                                              relative-zoom-factor)))
+                                  (cons (center viewport-left viewport-right)
+                                        (center viewport-top viewport-bottom)))))
             ;; Calculate new viewport and draw it.
             (schematic_canvas_pan_general
              *canvas
-             (inexact->exact (round (car pan-center)))
-             (inexact->exact (round (cdr pan-center)))
+             (inexact->exact (round (car zoom-center)))
+             (inexact->exact (round (cdr zoom-center)))
              relative-zoom-factor)
 
             ;; Before warping the cursor, filter out any consecutive
@@ -128,8 +128,8 @@ is not #f, zooming with panning is enabled."
             (when warp-cursor?
               (let ((x (schematic_viewport_pix_x
                         *viewport
-                        (inexact->exact (round (car pan-center)))))
+                        (inexact->exact (round (car zoom-center)))))
                     (y (schematic_viewport_pix_y
                         *viewport
-                        (inexact->exact (round (cdr pan-center))))))
+                        (inexact->exact (round (cdr zoom-center))))))
                 (x_basic_warp_cursor *canvas x y)))))))))
