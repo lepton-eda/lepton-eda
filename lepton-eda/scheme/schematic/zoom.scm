@@ -80,7 +80,8 @@ is not #f, zooming with panning is enabled."
                (else -1)))
             (start-x-bv (make-bytevector (sizeof int) 0))
             (start-y-bv (make-bytevector (sizeof int) 0))
-            (warp-cursor (schematic_window_get_warp_cursor *window)))
+            (warp-cursor?
+             (true? (schematic_window_get_warp_cursor *window))))
 
         (unless (and zoom-with-pan?
                      position
@@ -101,7 +102,6 @@ is not #f, zooming with panning is enabled."
                  (viewport-right (schematic_viewport_get_right *viewport))
                  (viewport-top (schematic_viewport_get_top *viewport))
                  (viewport-bottom (schematic_viewport_get_bottom *viewport))
-                 (warp-cursor? (true? warp-cursor))
                  ;; Depending on the configuration settings, the new
                  ;; viewport center is either the current mouse
                  ;; position if the cursor should be warped, the
