@@ -63,7 +63,9 @@ is not #f, zooming with panning is enabled."
   (let ((*viewport (schematic_canvas_get_viewport *canvas))
         (zoom-gain (schematic_window_get_zoom_gain *window))
         (zoom-with-pan?
-         (true? (schematic_window_get_zoom_with_pan *window))))
+         (true? (schematic_window_get_zoom_with_pan *window)))
+        (start-x-bv (make-bytevector (sizeof int) 0))
+        (start-y-bv (make-bytevector (sizeof int) 0)))
     (when (null-pointer? *viewport)
       (error "NULL viewport"))
 
@@ -78,8 +80,6 @@ is not #f, zooming with panning is enabled."
                ;; Indicate the zoom full with a negative zoomfactor.
                ((zoom-full) -1)
                (else -1)))
-            (start-x-bv (make-bytevector (sizeof int) 0))
-            (start-y-bv (make-bytevector (sizeof int) 0))
             (warp-cursor?
              (true? (schematic_window_get_warp_cursor *window))))
 
