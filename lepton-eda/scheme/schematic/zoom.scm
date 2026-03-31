@@ -58,6 +58,16 @@ is not #f, zooming with panning is enabled."
           relative-zoom-factor)
        start-coord))
 
+  (define (pan-center *viewport zoom-position relative-zoom-factor)
+    (cons (pan-center-coord (schematic_viewport_get_left *viewport)
+                            (schematic_viewport_get_right *viewport)
+                            (car zoom-position)
+                            relative-zoom-factor)
+          (pan-center-coord (schematic_viewport_get_bottom *viewport)
+                            (schematic_viewport_get_top *viewport)
+                            (cdr zoom-position)
+                            relative-zoom-factor)))
+
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
@@ -98,14 +108,9 @@ is not #f, zooming with panning is enabled."
                  (zoom-center (if (and zoom-with-pan? position)
                                   (if warp-cursor?
                                       zoom-position
-                                      (cons (pan-center-coord viewport-left
-                                                              viewport-right
-                                                              (car zoom-position)
-                                                              relative-zoom-factor)
-                                            (pan-center-coord viewport-bottom
-                                                              viewport-top
-                                                              (cdr zoom-position)
-                                                              relative-zoom-factor)))
+                                      (pan-center *viewport
+                                                  zoom-position
+                                                  relative-zoom-factor))
                                   (cons (center viewport-left viewport-right)
                                         (center viewport-top viewport-bottom)))))
             ;; Calculate new viewport and draw it.
