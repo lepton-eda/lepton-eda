@@ -81,68 +81,67 @@ is not #f, zooming with panning is enabled."
   (define *window (check-window window 1))
   (define *canvas (check-canvas canvas 2))
   (define *viewport (viewport->pointer (canvas-viewport canvas)))
+  (define zoom-gain (schematic_window_get_zoom_gain *window))
+  (define show-all? (eq? direction 'zoom-full))
+  (define zoom-with-pan?
+    (true? (schematic_window_get_zoom_with_pan *window)))
+  (define warp-cursor?
+    (true? (schematic_window_get_warp_cursor *window)))
 
-  (let ((zoom-gain (schematic_window_get_zoom_gain *window))
-        (show-all? (eq? direction 'zoom-full))
-        (zoom-with-pan?
-         (true? (schematic_window_get_zoom_with_pan *window))))
+  ;; Skip calculations when no zoom change is requested.
+  (unless (eq? direction 'zoom-same)
 
-    ;; Skip calculations when no zoom change is requested.
-    (unless (eq? direction 'zoom-same)
+    ;; NB: zoom-gain is a percentage increase.
+    (let ((relative-zoom-factor
+           (case direction
+             ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
+             ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
+             ;; Indicate the zoom full with a negative zoomfactor.
+             ((zoom-full) -1)
+             (else -1))))
 
-      ;; NB: zoom-gain is a percentage increase.
-      (let ((relative-zoom-factor
-             (case direction
-               ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
-               ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
-               ;; Indicate the zoom full with a negative zoomfactor.
-               ((zoom-full) -1)
-               (else -1)))
-            (warp-cursor?
-             (true? (schematic_window_get_warp_cursor *window))))
+      ;; Depending on the configuration settings, the new viewport
+      ;; center is either the current mouse position if the cursor
+      ;; should be warped, the current center, or a new virtual
+      ;; center.
+      (let* ((zoom-center
+              (if (and zoom-with-pan?
+                       ;; Position is undefined when the
+                       ;; pointer is out of the canvas.  In
+                       ;; such a case panning cannot be done.
+                       position
+                       ;; Panning cannot be used when the
+                       ;; canvas should be displayed at its
+                       ;; full size.
+                       (not show-all?))
+                  (if warp-cursor?
+                      position
+                      (pan-center *viewport
+                                  position
+                                  relative-zoom-factor))
+                  (viewport-center *viewport))))
+        ;; Calculate new viewport and draw it.
+        (schematic_canvas_pan_general
+         *canvas
+         (inexact->exact (round (car zoom-center)))
+         (inexact->exact (round (cdr zoom-center)))
+         relative-zoom-factor)
 
-        ;; Depending on the configuration settings, the new viewport
-        ;; center is either the current mouse position if the cursor
-        ;; should be warped, the current center, or a new virtual
-        ;; center.
-        (let* ((zoom-center
-                (if (and zoom-with-pan?
-                         ;; Position is undefined when the
-                         ;; pointer is out of the canvas.  In
-                         ;; such a case panning cannot be done.
-                         position
-                         ;; Panning cannot be used when the
-                         ;; canvas should be displayed at its
-                         ;; full size.
-                         (not show-all?))
-                    (if warp-cursor?
-                        position
-                        (pan-center *viewport
-                                    position
-                                    relative-zoom-factor))
-                    (viewport-center *viewport))))
-          ;; Calculate new viewport and draw it.
-          (schematic_canvas_pan_general
-           *canvas
-           (inexact->exact (round (car zoom-center)))
-           (inexact->exact (round (cdr zoom-center)))
-           relative-zoom-factor)
+        ;; Before warping the cursor, filter out any consecutive
+        ;; scroll events from the event queue.  If the program
+        ;; receives more than one scroll event before it can process
+        ;; the first one, then the globals mouse_x and mouse_y won't
+        ;; contain the proper mouse position, because the handler
+        ;; for the mouse moved event needs to run first to set these
+        ;; values.
+        (filter-out-scroll-events)
 
-          ;; Before warping the cursor, filter out any consecutive
-          ;; scroll events from the event queue.  If the program
-          ;; receives more than one scroll event before it can process
-          ;; the first one, then the globals mouse_x and mouse_y won't
-          ;; contain the proper mouse position, because the handler
-          ;; for the mouse moved event needs to run first to set these
-          ;; values.
-          (filter-out-scroll-events)
-
-          ;; Warp the cursor to the right position.
-          (when warp-cursor?
-            (let ((x (schematic_viewport_pix_x
-                      *viewport
-                      (inexact->exact (round (car zoom-center)))))
-                  (y (schematic_viewport_pix_y
-                      *viewport
-                      (inexact->exact (round (cdr zoom-center))))))
-              (x_basic_warp_cursor *canvas x y))))))))
+        ;; Warp the cursor to the right position.
+        (when warp-cursor?
+          (let ((x (schematic_viewport_pix_x
+                    *viewport
+                    (inexact->exact (round (car zoom-center)))))
+                (y (schematic_viewport_pix_y
+                    *viewport
+                    (inexact->exact (round (cdr zoom-center))))))
+            (x_basic_warp_cursor *canvas x y)))))))
