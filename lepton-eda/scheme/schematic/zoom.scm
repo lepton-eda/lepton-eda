@@ -25,6 +25,7 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic mouse-pointer)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
   #:export (zoom))
@@ -42,8 +43,8 @@
             (loop (gdk_event_get)))))))
 
 
-(define* (zoom *window *canvas #:key (direction #f) (position #f))
-  "Zoom *CANVAS of *WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
+(define* (zoom window *canvas #:key (direction #f) (position #f))
+  "Zoom *CANVAS of WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
 'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
 \"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
 is not #f, zooming with panning is enabled."
@@ -73,6 +74,8 @@ is not #f, zooming with panning is enabled."
                             (schematic_viewport_get_top *viewport)
                             (cdr pan-position)
                             relative-zoom-factor)))
+
+  (define *window (check-window window 1))
 
   (when (null-pointer? *canvas)
     (error "NULL canvas."))

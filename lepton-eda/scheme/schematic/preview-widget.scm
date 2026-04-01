@@ -38,6 +38,7 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic mouse-pointer)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window global)
   #:use-module (schematic zoom)
 
@@ -169,6 +170,7 @@ buffer should be displayed, the widget displays the error message."
 ;;; Handles mouse button press events.
 (define (button-press-callback *preview-widget *event *user-data)
   (define *window (schematic_preview_get_window *preview-widget))
+  (define window (pointer->window *window))
 
   (if (false? (schematic_preview_get_active *preview-widget))
       TRUE
@@ -177,7 +179,7 @@ buffer should be displayed, the widget displays the error message."
         (case (schematic_event_get_button *event)
           ;; Left mouse button: zoom in.
           ((1)
-           (zoom *window
+           (zoom window
                  *preview-widget
                  #:direction 'zoom-in
                  #:position position)
@@ -190,7 +192,7 @@ buffer should be displayed, the widget displays the error message."
                                    (cdr position))))
           ;; Right mouse button: zoom out.
           ((3)
-           (zoom *window
+           (zoom window
                  *preview-widget
                  #:direction 'zoom-out
                  #:position position)

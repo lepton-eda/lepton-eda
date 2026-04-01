@@ -260,7 +260,7 @@ parent *WINDOW."
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom?
-                      (zoom *window
+                      (zoom window
                             *widget
                             #:direction zoom-direction
                             #:position (with-window *window (mouse-pointer-position))))
