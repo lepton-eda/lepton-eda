@@ -157,11 +157,6 @@ parent *WINDOW."
           (- (gtk_adjustment_get_upper *adjustment)
              (gtk_adjustment_get_page_size *adjustment)))))
 
-  (when (null-pointer? *window)
-    (error "NULL window"))
-  (when (null-pointer? *widget)
-    (error "NULL canvas"))
-
   (let ((*page (schematic_canvas_get_page *widget)))
     (if (null-pointer? *page)
         ;; We cannot zoom or scroll a page if it doesn't exist :)
