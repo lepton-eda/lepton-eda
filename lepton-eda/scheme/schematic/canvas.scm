@@ -120,6 +120,7 @@ SHOW-SCROLLBARS?."
   "Process scroll *EVENT passed to the canvas *WIDGET from its
 parent *WINDOW."
   (define window (pointer->window *window))
+  (define canvas (pointer->canvas *widget))
 
   (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
@@ -261,7 +262,7 @@ parent *WINDOW."
                              (event-scroll-direction->zoom-direction scroll-direction))))
                     (when zoom?
                       (zoom window
-                            *widget
+                            canvas
                             #:direction zoom-direction
                             #:position (with-window *window (mouse-pointer-position))))
 

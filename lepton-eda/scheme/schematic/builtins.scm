@@ -804,34 +804,31 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
   (define window (current-window))
-  (define *window (*current-window))
-  (define *canvas (schematic_window_get_current_canvas *window))
+  (define canvas (window-canvas window))
 
   (zoom window
-        *canvas
+        canvas
         #:direction 'zoom-in
         #:position (action-position))
   (undo-save-viewport))
 
 
 (define-action-public (&view-zoom-out #:label (G_ "Zoom Out") #:icon "gtk-zoom-out")
-  (define *window (*current-window))
   (define window (current-window))
-  (define *canvas (schematic_window_get_current_canvas *window))
+  (define canvas (window-canvas window))
 
   (zoom window
-        *canvas
+        canvas
         #:direction 'zoom-out
         #:position (action-position))
   (undo-save-viewport))
 
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
-  (define *window (*current-window))
   (define window (current-window))
-  (define *canvas (schematic_window_get_current_canvas *window))
+  (define canvas (window-canvas window))
 
-  (zoom window *canvas #:direction 'zoom-full #:position #f)
+  (zoom window canvas #:direction 'zoom-full #:position #f)
   (undo-save-viewport))
 
 

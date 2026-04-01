@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
 
+  #:use-module (schematic canvas foreign)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic mouse-pointer)
@@ -43,8 +44,8 @@
             (loop (gdk_event_get)))))))
 
 
-(define* (zoom window *canvas #:key (direction #f) (position #f))
-  "Zoom *CANVAS of WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
+(define* (zoom window canvas #:key (direction #f) (position #f))
+  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
 'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
 \"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
 is not #f, zooming with panning is enabled."
@@ -76,9 +77,7 @@ is not #f, zooming with panning is enabled."
                             relative-zoom-factor)))
 
   (define *window (check-window window 1))
-
-  (when (null-pointer? *canvas)
-    (error "NULL canvas."))
+  (define *canvas (check-canvas canvas 2))
 
   (let ((*viewport (schematic_canvas_get_viewport *canvas))
         (zoom-gain (schematic_window_get_zoom_gain *window))

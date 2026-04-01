@@ -34,6 +34,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -171,6 +172,7 @@ buffer should be displayed, the widget displays the error message."
 (define (button-press-callback *preview-widget *event *user-data)
   (define *window (schematic_preview_get_window *preview-widget))
   (define window (pointer->window *window))
+  (define canvas (pointer->canvas *preview-widget))
 
   (if (false? (schematic_preview_get_active *preview-widget))
       TRUE
@@ -180,7 +182,7 @@ buffer should be displayed, the widget displays the error message."
           ;; Left mouse button: zoom in.
           ((1)
            (zoom window
-                 *preview-widget
+                 canvas
                  #:direction 'zoom-in
                  #:position position)
            (schematic_canvas_invalidate_all *preview-widget))
@@ -193,7 +195,7 @@ buffer should be displayed, the widget displays the error message."
           ;; Right mouse button: zoom out.
           ((3)
            (zoom window
-                 *preview-widget
+                 canvas
                  #:direction 'zoom-out
                  #:position position)
            (schematic_canvas_invalidate_all *preview-widget)))
