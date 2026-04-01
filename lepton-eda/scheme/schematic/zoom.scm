@@ -42,7 +42,7 @@
             (loop (gdk_event_get)))))))
 
 
-(define* (zoom *window *canvas #:key (direction #f) (position #t))
+(define* (zoom *window *canvas #:key (direction #f) (position #f))
   "Zoom *CANVAS of *WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
 'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
 \"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
