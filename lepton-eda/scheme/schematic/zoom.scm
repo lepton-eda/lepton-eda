@@ -23,9 +23,11 @@
   #:use-module (lepton ffi boolean)
 
   #:use-module (schematic canvas foreign)
+  #:use-module (schematic canvas)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic mouse-pointer)
+  #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
 
@@ -78,14 +80,12 @@ is not #f, zooming with panning is enabled."
 
   (define *window (check-window window 1))
   (define *canvas (check-canvas canvas 2))
+  (define *viewport (viewport->pointer (canvas-viewport canvas)))
 
-  (let ((*viewport (schematic_canvas_get_viewport *canvas))
-        (zoom-gain (schematic_window_get_zoom_gain *window))
+  (let ((zoom-gain (schematic_window_get_zoom_gain *window))
         (show-all? (eq? direction 'zoom-full))
         (zoom-with-pan?
          (true? (schematic_window_get_zoom_with_pan *window))))
-    (when (null-pointer? *viewport)
-      (error "NULL viewport"))
 
     ;; Skip calculations when no zoom change is requested.
     (unless (eq? direction 'zoom-same)
