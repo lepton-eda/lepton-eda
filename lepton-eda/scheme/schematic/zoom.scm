@@ -82,9 +82,14 @@ is not #f, zooming with panning is enabled."
   (define *canvas (check-canvas canvas 2))
   (define *viewport (viewport->pointer (canvas-viewport canvas)))
   (define zoom-gain (schematic_window_get_zoom_gain *window))
-  (define show-all? (eq? direction 'zoom-full))
   (define zoom-with-pan?
-    (true? (schematic_window_get_zoom_with_pan *window)))
+    (and (true? (schematic_window_get_zoom_with_pan *window))
+         ;; Position is undefined when the pointer is out of the
+         ;; canvas.  In such a case panning cannot be done.
+         position
+         ;; Panning cannot be used when the canvas should be
+         ;; displayed at its full size.
+         (not (eq? direction 'zoom-full))))
   (define warp-cursor?
     (true? (schematic_window_get_warp_cursor *window)))
 
@@ -105,15 +110,7 @@ is not #f, zooming with panning is enabled."
       ;; should be warped, the current center, or a new virtual
       ;; center.
       (let* ((zoom-center
-              (if (and zoom-with-pan?
-                       ;; Position is undefined when the
-                       ;; pointer is out of the canvas.  In
-                       ;; such a case panning cannot be done.
-                       position
-                       ;; Panning cannot be used when the
-                       ;; canvas should be displayed at its
-                       ;; full size.
-                       (not show-all?))
+              (if zoom-with-pan?
                   (if warp-cursor?
                       position
                       (pan-center *viewport
