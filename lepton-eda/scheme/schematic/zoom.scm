@@ -97,13 +97,11 @@ is not #f, zooming with panning is enabled."
                ((zoom-full) -1)
                (else -1)))
             (warp-cursor?
-             (true? (schematic_window_get_warp_cursor *window)))
-            (zoom-position
-             (with-window *window (mouse-pointer-position))))
+             (true? (schematic_window_get_warp_cursor *window))))
 
         (unless (and zoom-with-pan?
                      position
-                     (not zoom-position))
+                     (not position))
           ;; Depending on the configuration settings, the new viewport
           ;; center is either the current mouse position if the cursor
           ;; should be warped, the current center, or a new virtual
@@ -119,9 +117,9 @@ is not #f, zooming with panning is enabled."
                            ;; full size.
                            (not show-all?))
                       (if warp-cursor?
-                          zoom-position
+                          position
                           (pan-center *viewport
-                                      zoom-position
+                                      position
                                       relative-zoom-factor))
                       (viewport-center *viewport))))
             ;; Calculate new viewport and draw it.
