@@ -96,8 +96,8 @@ POSITION is not #f, zooming with panning is enabled."
   ;; NB: zoom-gain is a percentage increase.
   (let ((relative-zoom-factor
          (case direction
-           ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
-           ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
+           ((zoom-in) (/ (+ 100 zoom-gain) 100))
+           ((zoom-out) (/ 100 (+ 100 zoom-gain)))
            ;; Indicate the zoom full with a negative zoomfactor.
            ((zoom-full) -1)
            (else -1))))
@@ -117,9 +117,9 @@ POSITION is not #f, zooming with panning is enabled."
       ;; Calculate new viewport and draw it.
       (schematic_canvas_pan_general
        *canvas
-       (inexact->exact (round (car zoom-center)))
-       (inexact->exact (round (cdr zoom-center)))
-       relative-zoom-factor)
+       (round (car zoom-center))
+       (round (cdr zoom-center))
+       (exact->inexact relative-zoom-factor))
 
       ;; Before warping the cursor, filter out any consecutive
       ;; scroll events from the event queue.  If the program
@@ -134,8 +134,8 @@ POSITION is not #f, zooming with panning is enabled."
       (when warp-cursor?
         (let ((x (schematic_viewport_pix_x
                   *viewport
-                  (inexact->exact (round (car zoom-center)))))
+                  (round (car zoom-center))))
               (y (schematic_viewport_pix_y
                   *viewport
-                  (inexact->exact (round (cdr zoom-center))))))
+                  (round (cdr zoom-center)))))
           (x_basic_warp_cursor *canvas x y))))))
