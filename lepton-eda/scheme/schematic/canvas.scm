@@ -145,7 +145,7 @@ parent *WINDOW."
       ((gdk-scroll-left) 'zoom-in)
       ((gdk-scroll-down) 'zoom-out)
       ((gdk-scroll-right) 'zoom-out)
-      (else 'zoom-same)))
+      (else #f)))
 
   (define (update-adjustment *adjustment pan-direction)
     (gtk_adjustment_set_value
@@ -252,10 +252,10 @@ parent *WINDOW."
                                    (cond
                                     ((negative? direction) 'zoom-in)
                                     ((positive? direction) 'zoom-out)
-                                    ((zero? direction) 'zoom-same)))
+                                    ((zero? direction) #f)))
                                  (event-scroll-direction->zoom-direction scroll-direction))
                              (event-scroll-direction->zoom-direction scroll-direction))))
-                    (when zoom?
+                    (when (and zoom? zoom-direction)
                       (zoom window
                             canvas
                             #:direction zoom-direction

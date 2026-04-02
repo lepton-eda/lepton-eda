@@ -47,10 +47,10 @@
 
 
 (define* (zoom window canvas #:key (direction #f) (position #f))
-  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be 'zoom-in,
-'zoom-out, 'zoom-full, or 'zoom-same.  If the configuration key
-\"zoom-with-pan\" in the \"schematic.gui\" group is true, and POSITION
-is not #f, zooming with panning is enabled."
+  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
+'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
+\"zoom-with-pan\" in the \"schematic.gui\" group is true, and
+POSITION is not #f, zooming with panning is enabled."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
@@ -93,52 +93,49 @@ is not #f, zooming with panning is enabled."
   (define warp-cursor?
     (true? (schematic_window_get_warp_cursor *window)))
 
-  ;; Skip calculations when no zoom change is requested.
-  (unless (eq? direction 'zoom-same)
+  ;; NB: zoom-gain is a percentage increase.
+  (let ((relative-zoom-factor
+         (case direction
+           ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
+           ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
+           ;; Indicate the zoom full with a negative zoomfactor.
+           ((zoom-full) -1)
+           (else -1))))
 
-    ;; NB: zoom-gain is a percentage increase.
-    (let ((relative-zoom-factor
-           (case direction
-             ((zoom-in) (/ (+ 100.0 zoom-gain) 100.0))
-             ((zoom-out) (/ 100.0 (+ 100.0 zoom-gain)))
-             ;; Indicate the zoom full with a negative zoomfactor.
-             ((zoom-full) -1)
-             (else -1))))
+    ;; Depending on the configuration settings, the new viewport
+    ;; center is either the current mouse position if the cursor
+    ;; should be warped, the current center, or a new virtual
+    ;; center.
+    (let* ((zoom-center
+            (if zoom-with-pan?
+                (if warp-cursor?
+                    position
+                    (pan-center *viewport
+                                position
+                                relative-zoom-factor))
+                (viewport-center *viewport))))
+      ;; Calculate new viewport and draw it.
+      (schematic_canvas_pan_general
+       *canvas
+       (inexact->exact (round (car zoom-center)))
+       (inexact->exact (round (cdr zoom-center)))
+       relative-zoom-factor)
 
-      ;; Depending on the configuration settings, the new viewport
-      ;; center is either the current mouse position if the cursor
-      ;; should be warped, the current center, or a new virtual
-      ;; center.
-      (let* ((zoom-center
-              (if zoom-with-pan?
-                  (if warp-cursor?
-                      position
-                      (pan-center *viewport
-                                  position
-                                  relative-zoom-factor))
-                  (viewport-center *viewport))))
-        ;; Calculate new viewport and draw it.
-        (schematic_canvas_pan_general
-         *canvas
-         (inexact->exact (round (car zoom-center)))
-         (inexact->exact (round (cdr zoom-center)))
-         relative-zoom-factor)
+      ;; Before warping the cursor, filter out any consecutive
+      ;; scroll events from the event queue.  If the program
+      ;; receives more than one scroll event before it can process
+      ;; the first one, then the globals mouse_x and mouse_y won't
+      ;; contain the proper mouse position, because the handler
+      ;; for the mouse moved event needs to run first to set these
+      ;; values.
+      (filter-out-scroll-events)
 
-        ;; Before warping the cursor, filter out any consecutive
-        ;; scroll events from the event queue.  If the program
-        ;; receives more than one scroll event before it can process
-        ;; the first one, then the globals mouse_x and mouse_y won't
-        ;; contain the proper mouse position, because the handler
-        ;; for the mouse moved event needs to run first to set these
-        ;; values.
-        (filter-out-scroll-events)
-
-        ;; Warp the cursor to the right position.
-        (when warp-cursor?
-          (let ((x (schematic_viewport_pix_x
-                    *viewport
-                    (inexact->exact (round (car zoom-center)))))
-                (y (schematic_viewport_pix_y
-                    *viewport
-                    (inexact->exact (round (cdr zoom-center))))))
-            (x_basic_warp_cursor *canvas x y)))))))
+      ;; Warp the cursor to the right position.
+      (when warp-cursor?
+        (let ((x (schematic_viewport_pix_x
+                  *viewport
+                  (inexact->exact (round (car zoom-center)))))
+              (y (schematic_viewport_pix_y
+                  *viewport
+                  (inexact->exact (round (cdr zoom-center))))))
+          (x_basic_warp_cursor *canvas x y))))))
