@@ -1,5 +1,6 @@
 ;; -*- Scheme -*-
-;;
+;; Lepton EDA Schematic Capture
+;; Scheme API
 ;; Copyright (C) 2006-2010 Dan McMahill
 ;; Copyright (C) 2006-2011 gEDA Contributors
 ;; Copyright (C) 2019-2022 Lepton EDA Contributors

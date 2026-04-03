@@ -1,4 +1,5 @@
-;;; Lepton EDA library - Scheme API
+;;; Lepton EDA Schematic Capture
+;;; Scheme API
 ;;; Copyright (C) 2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify

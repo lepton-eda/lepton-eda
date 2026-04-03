@@ -1,4 +1,4 @@
-;; Lepton EDA
+;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; ( schematic sellock ) module: select locked components.
 ;; Copyright (C) 2020-2023 dmn <graahnul.grom@ya.ru>

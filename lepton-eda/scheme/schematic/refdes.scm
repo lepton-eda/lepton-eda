@@ -1,4 +1,5 @@
 ;;; Lepton EDA Schematic Capture
+;;; Scheme API
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2014 gEDA Contributors
 ;;; Copyright (C) 2017-2022 Lepton EDA Contributors
