@@ -105,34 +105,34 @@ POSITION is not #f, zooming with panning is enabled."
     (true? (schematic_window_get_warp_cursor *window)))
 
   ;; NB: zoom-gain is a percentage increase.
-  (let ((zoom-factor (relative-zoom-factor zoom-gain direction)))
+  (let* ((zoom-factor (relative-zoom-factor zoom-gain direction))
+         ;; Depending on the configuration settings, the new viewport
+         ;; center is either the current mouse position if the cursor
+         ;; should be warped, the current center, or a new virtual
+         ;; center.
+         (zoom-center
+          (cond
+           ;; Display the world at its full size.
+           ((eq? direction 'zoom-full)
+            (world-center))
+           ;; POSITION is undefined when the pointer is out of the
+           ;; canvas.  If POSITION is defined, make it the new
+           ;; viewport center and move the pointer there.  Otherwise
+           ;; use the current viewport center.
+           (warp-cursor?
+            (or position (viewport-center viewport)))
+           ;; If the mouse pointer is over the canvas and the
+           ;; "zoom-with-pan" configuration setting is set to "true",
+           ;; do zooming with panning.
+           ((and position zoom-with-pan?)
+            (zoom-pan-center viewport position zoom-factor))
+           ;; Zoom with no panning at the viewport center in all other
+           ;; cases.
+           (else (viewport-center viewport)))))
 
-    ;; Depending on the configuration settings, the new viewport
-    ;; center is either the current mouse position if the cursor
-    ;; should be warped, the current center, or a new virtual
-    ;; center.
-    (let* ((zoom-center
-            (cond
-             ;; Display the world at its full size.
-             ((eq? direction 'zoom-full)
-              (world-center))
-             ;; POSITION is undefined when the pointer is out of
-             ;; the canvas.  If POSITION is defined, make it the
-             ;; new viewport center and move the pointer there.
-             ;; Otherwise use the current viewport center.
-             (warp-cursor?
-              (or position (viewport-center viewport)))
-             ;; If the mouse pointer is over the canvas and the
-             ;; "zoom-with-pan" configuration setting is set to
-             ;; "true", do zooming with panning.
-             ((and position zoom-with-pan?)
-              (zoom-pan-center viewport position zoom-factor))
-             ;; Zoom with no panning at the viewport center in all
-             ;; other cases.
-             (else (viewport-center viewport)))))
-      ;; Calculate new viewport and draw it.
-      (pan *canvas zoom-center zoom-factor)
+    ;; Calculate new viewport and draw it.
+    (pan *canvas zoom-center zoom-factor)
 
-      ;; Warp the cursor to the right position.
-      (when warp-cursor?
-        (warp-pointer *canvas *viewport zoom-center)))))
+    ;; Warp the cursor to the right position.
+    (when warp-cursor?
+      (warp-pointer *canvas *viewport zoom-center))))
