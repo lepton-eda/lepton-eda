@@ -40,7 +40,7 @@
     ((zoom-out) (/ 100 (+ 100 zoom-gain)))
     ;; Indicate the zoom full with a negative zoomfactor.
     ((zoom-full) -1)
-    (else -1)))
+    (else #f)))
 
 
 (define (pan *canvas position zoom-factor)
