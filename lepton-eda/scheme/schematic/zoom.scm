@@ -114,10 +114,7 @@ POSITION is not #f, zooming with panning is enabled."
   (define *viewport (viewport->pointer (canvas-viewport canvas)))
   (define zoom-gain (schematic_window_get_zoom_gain *window))
   (define zoom-with-pan?
-    (and (true? (schematic_window_get_zoom_with_pan *window))
-         ;; Position is undefined when the pointer is out of the
-         ;; canvas.  In such a case panning cannot be done.
-         position))
+    (true? (schematic_window_get_zoom_with_pan *window)))
   (define warp-cursor?
     (true? (schematic_window_get_warp_cursor *window)))
 
@@ -129,16 +126,24 @@ POSITION is not #f, zooming with panning is enabled."
     ;; should be warped, the current center, or a new virtual
     ;; center.
     (let* ((zoom-center
-            (if (eq? direction 'zoom-full)
-                ;; Display the world at its full size.
-                (world-center)
-                (if zoom-with-pan?
-                    (if warp-cursor?
-                        position
-                        (pan-center *viewport
-                                    position
-                                    zoom-factor))
-                    (viewport-center *viewport)))))
+            (cond
+             ;; Display the world at its full size.
+             ((eq? direction 'zoom-full)
+              (world-center))
+             ;; POSITION is undefined when the pointer is out of
+             ;; the canvas.  If POSITION is defined, make it the
+             ;; new viewport center and move the pointer there.
+             ;; Otherwise use the current viewport center.
+             (warp-cursor?
+              (or position (viewport-center *viewport)))
+             ;; If the mouse pointer is over the canvas and the
+             ;; "zoom-with-pan" configuration setting is set to
+             ;; "true", do zooming with panning.
+             ((and position zoom-with-pan?)
+              (pan-center *viewport position zoom-factor))
+             ;; Zoom with no panning at the viewport center in all
+             ;; other cases.
+             (else (viewport-center *viewport)))))
       ;; Calculate new viewport and draw it.
       (pan *canvas zoom-center zoom-factor)
 
