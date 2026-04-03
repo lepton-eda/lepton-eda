@@ -45,9 +45,10 @@
     (else #f)))
 
 
-(define (pan *canvas position zoom-factor)
-  "Pan the viewport of *CANVAS at POSITION zooming it with
-ZOOM-FACTOR."
+(define (pan canvas position zoom-factor)
+  "Pan the viewport of CANVAS at POSITION zooming it with ZOOM-FACTOR."
+  (define *canvas (check-canvas canvas 1))
+
   (schematic_canvas_pan_general
    *canvas
    (round (car position))
@@ -108,7 +109,6 @@ form (X . Y)."
 the \"schematic.gui\" group is true, and POSITION is not #f, zooming
 with panning is enabled."
   (define *window (check-window window 1))
-  (define *canvas (check-canvas canvas 2))
   (define viewport (canvas-viewport canvas))
   (define zoom-gain (schematic_window_get_zoom_gain *window))
   (define zoom-with-pan?
@@ -127,7 +127,7 @@ with panning is enabled."
         ;; canvas.  If POSITION is defined, make it the new viewport
         ;; center.  Otherwise, zoom with no panning at the current
         ;; viewport center.
-        (pan *canvas
+        (pan canvas
              (or position (viewport-center viewport))
              zoom-factor)
 
@@ -138,7 +138,7 @@ with panning is enabled."
       ;; "zoom-with-pan" configuration setting is set to "true", do
       ;; zooming with panning.  Otherwise, zoom with no panning at the
       ;; current viewport center.
-      (pan *canvas
+      (pan canvas
            (if (and position zoom-with-pan?)
                (zoom-pan-center viewport position zoom-factor)
                (viewport-center viewport))
@@ -151,4 +151,4 @@ with panning is enabled."
 
   ;; The negative zoom factor indicates that the world coordinate
   ;; space has to be displayed at its full size.
-  (pan *canvas (world-center) -1))
+  (pan canvas (world-center) -1))
