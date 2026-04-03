@@ -33,15 +33,14 @@
   #:use-module (schematic window global)
   #:use-module (schematic world-size)
 
-  #:export (zoom))
+  #:export (zoom
+            zoom-world))
 
 
 (define (relative-zoom-factor zoom-gain direction)
   (case direction
     ((zoom-in) (/ (+ 100 zoom-gain) 100))
     ((zoom-out) (/ 100 (+ 100 zoom-gain)))
-    ;; Indicate the zoom full with a negative zoomfactor.
-    ((zoom-full) -1)
     (else #f)))
 
 
@@ -91,9 +90,9 @@ form (X . Y)."
 
 (define* (zoom window canvas direction #:key (position #f))
   "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
-'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
-\"zoom-with-pan\" in the \"schematic.gui\" group is true, and
-POSITION is not #f, zooming with panning is enabled."
+'zoom-in or 'zoom-out.  If the configuration key \"zoom-with-pan\" in
+the \"schematic.gui\" group is true, and POSITION is not #f, zooming
+with panning is enabled."
   (define *window (check-window window 1))
   (define *canvas (check-canvas canvas 2))
   (define viewport (canvas-viewport canvas))
@@ -112,9 +111,6 @@ POSITION is not #f, zooming with panning is enabled."
          ;; center.
          (zoom-center
           (cond
-           ;; Display the world at its full size.
-           ((eq? direction 'zoom-full)
-            (world-center))
            ;; POSITION is undefined when the pointer is out of the
            ;; canvas.  If POSITION is defined, make it the new
            ;; viewport center and move the pointer there.  Otherwise
@@ -136,3 +132,12 @@ POSITION is not #f, zooming with panning is enabled."
     ;; Warp the cursor to the right position.
     (when warp-cursor?
       (warp-pointer *canvas *viewport zoom-center))))
+
+
+(define (zoom-world canvas)
+  "Zoom CANVAS to display all world coordinate space."
+  (define *canvas (check-canvas canvas 1))
+
+  ;; The negative zoom factor indicates that the world coordinate
+  ;; space has to be displayed at its full size.
+  (pan *canvas (world-center) -1))
