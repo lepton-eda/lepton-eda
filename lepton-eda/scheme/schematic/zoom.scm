@@ -129,8 +129,10 @@ with panning is enabled."
     ;; Calculate new viewport and draw it.
     (pan *canvas zoom-center zoom-factor)
 
-    ;; Warp the cursor to the right position.
-    (when warp-cursor?
+    ;; Warp the cursor to the right position.  If the pointer is out
+    ;; of the canvas, don't warp it as moving it to an arbitrary
+    ;; position may be misleading.
+    (when (and warp-cursor? position)
       (warp-pointer *canvas *viewport zoom-center))))
 
 
