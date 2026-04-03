@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi check-args)
 
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
@@ -59,6 +60,8 @@ ZOOM-FACTOR."
   (define *canvas (check-canvas canvas 1))
   (define viewport (canvas-viewport canvas))
   (define *viewport (viewport->pointer viewport))
+
+  (check-coord position 2)
 
   (let ((x (schematic_viewport_pix_x
             *viewport
