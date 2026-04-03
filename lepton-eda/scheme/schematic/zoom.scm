@@ -54,6 +54,16 @@ ZOOM-FACTOR."
    (exact->inexact zoom-factor)))
 
 
+(define (warp-pointer *canvas *viewport position)
+  (let ((x (schematic_viewport_pix_x
+            *viewport
+            (round (car position))))
+        (y (schematic_viewport_pix_y
+            *viewport
+            (round (cdr position)))))
+    (x_basic_warp_cursor *canvas x y)))
+
+
 (define (filter-out-scroll-events)
   (let loop ((*event (gdk_event_get)))
     (unless (null-pointer? *event)
@@ -142,10 +152,4 @@ POSITION is not #f, zooming with panning is enabled."
 
       ;; Warp the cursor to the right position.
       (when warp-cursor?
-        (let ((x (schematic_viewport_pix_x
-                  *viewport
-                  (round (car zoom-center))))
-              (y (schematic_viewport_pix_y
-                  *viewport
-                  (round (cdr zoom-center)))))
-          (x_basic_warp_cursor *canvas x y))))))
+        (warp-pointer *canvas *viewport zoom-center)))))
