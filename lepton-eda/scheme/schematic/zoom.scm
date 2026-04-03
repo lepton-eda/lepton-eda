@@ -30,6 +30,7 @@
   #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
+  #:use-module (schematic world-size)
 
   #:export (zoom))
 
@@ -116,10 +117,7 @@ POSITION is not #f, zooming with panning is enabled."
     (and (true? (schematic_window_get_zoom_with_pan *window))
          ;; Position is undefined when the pointer is out of the
          ;; canvas.  In such a case panning cannot be done.
-         position
-         ;; Panning cannot be used when the canvas should be
-         ;; displayed at its full size.
-         (not (eq? direction 'zoom-full))))
+         position))
   (define warp-cursor?
     (true? (schematic_window_get_warp_cursor *window)))
 
@@ -131,13 +129,16 @@ POSITION is not #f, zooming with panning is enabled."
     ;; should be warped, the current center, or a new virtual
     ;; center.
     (let* ((zoom-center
-            (if zoom-with-pan?
-                (if warp-cursor?
-                    position
-                    (pan-center *viewport
-                                position
-                                zoom-factor))
-                (viewport-center *viewport))))
+            (if (eq? direction 'zoom-full)
+                ;; Display the world at its full size.
+                (world-center)
+                (if zoom-with-pan?
+                    (if warp-cursor?
+                        position
+                        (pan-center *viewport
+                                    position
+                                    zoom-factor))
+                    (viewport-center *viewport)))))
       ;; Calculate new viewport and draw it.
       (pan *canvas zoom-center zoom-factor)
 

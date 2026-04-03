@@ -24,7 +24,8 @@
   #:export (world-left
             world-right
             world-top
-            world-bottom))
+            world-bottom
+            world-center))
 
 (define %world-default-left (schematic_world_size_get_default_left))
 (define %world-default-right (schematic_world_size_get_default_right))
@@ -46,3 +47,12 @@
 (define (world-top)
   "Returns the maximum top world Y coordinate."
   %world-default-top)
+
+
+(define (center min-coord max-coord)
+  (round (/ (+ min-coord max-coord) 2)))
+
+(define (world-center)
+  "Return coordinates of the world center point."
+  (cons (center (world-left) (world-right))
+        (center (world-bottom) (world-top))))
