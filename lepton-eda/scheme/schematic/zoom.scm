@@ -34,6 +34,15 @@
   #:export (zoom))
 
 
+(define (relative-zoom-factor zoom-gain direction)
+  (case direction
+    ((zoom-in) (/ (+ 100 zoom-gain) 100))
+    ((zoom-out) (/ 100 (+ 100 zoom-gain)))
+    ;; Indicate the zoom full with a negative zoomfactor.
+    ((zoom-full) -1)
+    (else -1)))
+
+
 (define (pan *canvas position zoom-factor)
   "Pan the viewport of *CANVAS at POSITION zooming it with
 ZOOM-FACTOR."
@@ -105,13 +114,7 @@ POSITION is not #f, zooming with panning is enabled."
     (true? (schematic_window_get_warp_cursor *window)))
 
   ;; NB: zoom-gain is a percentage increase.
-  (let ((relative-zoom-factor
-         (case direction
-           ((zoom-in) (/ (+ 100 zoom-gain) 100))
-           ((zoom-out) (/ 100 (+ 100 zoom-gain)))
-           ;; Indicate the zoom full with a negative zoomfactor.
-           ((zoom-full) -1)
-           (else -1))))
+  (let ((zoom-factor (relative-zoom-factor zoom-gain direction)))
 
     ;; Depending on the configuration settings, the new viewport
     ;; center is either the current mouse position if the cursor
@@ -123,10 +126,10 @@ POSITION is not #f, zooming with panning is enabled."
                     position
                     (pan-center *viewport
                                 position
-                                relative-zoom-factor))
+                                zoom-factor))
                 (viewport-center *viewport))))
       ;; Calculate new viewport and draw it.
-      (pan *canvas zoom-center relative-zoom-factor)
+      (pan *canvas zoom-center zoom-factor)
 
       ;; Before warping the cursor, filter out any consecutive
       ;; scroll events from the event queue.  If the program
