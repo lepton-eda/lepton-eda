@@ -34,6 +34,17 @@
   #:export (zoom))
 
 
+(define (pan *canvas position zoom-factor)
+  "Pan the viewport of *CANVAS at POSITION zooming it with
+ZOOM-FACTOR."
+  (schematic_canvas_pan_general
+   *canvas
+   (round (car position))
+   (round (cdr position))
+   ;; The zoom factor is 'double' in C.
+   (exact->inexact zoom-factor)))
+
+
 (define (filter-out-scroll-events)
   (let loop ((*event (gdk_event_get)))
     (unless (null-pointer? *event)
@@ -115,11 +126,7 @@ POSITION is not #f, zooming with panning is enabled."
                                 relative-zoom-factor))
                 (viewport-center *viewport))))
       ;; Calculate new viewport and draw it.
-      (schematic_canvas_pan_general
-       *canvas
-       (round (car zoom-center))
-       (round (cdr zoom-center))
-       (exact->inexact relative-zoom-factor))
+      (pan *canvas zoom-center relative-zoom-factor)
 
       ;; Before warping the cursor, filter out any consecutive
       ;; scroll events from the event queue.  If the program
