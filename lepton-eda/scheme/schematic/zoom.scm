@@ -89,7 +89,7 @@ form (X . Y)."
                           (cdr position))))
 
 
-(define* (zoom window canvas #:key (direction #f) (position #f))
+(define* (zoom window canvas direction #:key (position #f))
   "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
 'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
 \"zoom-with-pan\" in the \"schematic.gui\" group is true, and

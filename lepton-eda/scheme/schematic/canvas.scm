@@ -254,7 +254,7 @@ parent *WINDOW."
                     (when (and zoom? zoom-direction)
                       (zoom window
                             canvas
-                            #:direction zoom-direction
+                            zoom-direction
                             #:position (with-window *window (mouse-pointer-position))))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
