@@ -65,18 +65,6 @@ ZOOM-FACTOR."
     (x_basic_warp_cursor *canvas x y)))
 
 
-(define (filter-out-scroll-events)
-  (let loop ((*event (gdk_event_get)))
-    (unless (null-pointer? *event)
-      (if (false? (schematic_event_is_scroll *event))
-          (begin
-            (gdk_event_put *event)
-            (gdk_event_free *event))
-          (begin
-            (gdk_event_free *event)
-            (loop (gdk_event_get)))))))
-
-
 (define* (zoom window canvas #:key (direction #f) (position #f))
   "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
 'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
@@ -146,15 +134,6 @@ POSITION is not #f, zooming with panning is enabled."
              (else (viewport-center *viewport)))))
       ;; Calculate new viewport and draw it.
       (pan *canvas zoom-center zoom-factor)
-
-      ;; Before warping the cursor, filter out any consecutive
-      ;; scroll events from the event queue.  If the program
-      ;; receives more than one scroll event before it can process
-      ;; the first one, then the globals mouse_x and mouse_y won't
-      ;; contain the proper mouse position, because the handler
-      ;; for the mouse moved event needs to run first to set these
-      ;; values.
-      (filter-out-scroll-events)
 
       ;; Warp the cursor to the right position.
       (when warp-cursor?
