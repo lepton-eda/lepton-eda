@@ -28,6 +28,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic viewport foreign)
+  #:use-module (schematic viewport)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
   #:use-module (schematic world-size)
@@ -73,11 +74,11 @@ POSITION is not #f, zooming with panning is enabled."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
-  (define (viewport-center *viewport)
-    (cons (center (schematic_viewport_get_left *viewport)
-                  (schematic_viewport_get_right *viewport))
-          (center (schematic_viewport_get_top *viewport)
-                  (schematic_viewport_get_bottom *viewport))))
+  (define (viewport-center viewport)
+    (cons (center (viewport-left viewport)
+                  (viewport-right viewport))
+          (center (viewport-top viewport)
+                  (viewport-bottom viewport))))
 
   (define (pan-center-coord viewport-min
                             viewport-max
@@ -87,19 +88,20 @@ POSITION is not #f, zooming with panning is enabled."
           relative-zoom-factor)
        start-coord))
 
-  (define (pan-center *viewport pan-position relative-zoom-factor)
-    (cons (pan-center-coord (schematic_viewport_get_left *viewport)
-                            (schematic_viewport_get_right *viewport)
+  (define (pan-center viewport pan-position relative-zoom-factor)
+    (cons (pan-center-coord (viewport-left viewport)
+                            (viewport-right viewport)
                             (car pan-position)
                             relative-zoom-factor)
-          (pan-center-coord (schematic_viewport_get_bottom *viewport)
-                            (schematic_viewport_get_top *viewport)
+          (pan-center-coord (viewport-bottom viewport)
+                            (viewport-top viewport)
                             (cdr pan-position)
                             relative-zoom-factor)))
 
   (define *window (check-window window 1))
   (define *canvas (check-canvas canvas 2))
-  (define *viewport (viewport->pointer (canvas-viewport canvas)))
+  (define viewport (canvas-viewport canvas))
+  (define *viewport (viewport->pointer viewport))
   (define zoom-gain (schematic_window_get_zoom_gain *window))
   (define zoom-with-pan?
     (true? (schematic_window_get_zoom_with_pan *window)))
@@ -123,15 +125,15 @@ POSITION is not #f, zooming with panning is enabled."
              ;; new viewport center and move the pointer there.
              ;; Otherwise use the current viewport center.
              (warp-cursor?
-              (or position (viewport-center *viewport)))
+              (or position (viewport-center viewport)))
              ;; If the mouse pointer is over the canvas and the
              ;; "zoom-with-pan" configuration setting is set to
              ;; "true", do zooming with panning.
              ((and position zoom-with-pan?)
-              (pan-center *viewport position zoom-factor))
+              (pan-center viewport position zoom-factor))
              ;; Zoom with no panning at the viewport center in all
              ;; other cases.
-             (else (viewport-center *viewport)))))
+             (else (viewport-center viewport)))))
       ;; Calculate new viewport and draw it.
       (pan *canvas zoom-center zoom-factor)
 
