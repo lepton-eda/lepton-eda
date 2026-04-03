@@ -74,12 +74,6 @@ POSITION is not #f, zooming with panning is enabled."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
-  (define (viewport-center viewport)
-    (cons (center (viewport-left viewport)
-                  (viewport-right viewport))
-          (center (viewport-top viewport)
-                  (viewport-bottom viewport))))
-
   (define (pan-center-coord viewport-min
                             viewport-max
                             start-coord

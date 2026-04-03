@@ -24,7 +24,8 @@
   #:export (viewport-left
             viewport-right
             viewport-top
-            viewport-bottom))
+            viewport-bottom
+            viewport-center))
 
 (define (viewport-left viewport)
   "Returns the minimum left world X coordinate of VIEWPORT."
@@ -48,3 +49,15 @@
   "Returns the maximum top world Y coordinate of VIEWPORT."
   (define *viewport (check-viewport viewport 1))
   (schematic_viewport_get_top *viewport))
+
+
+(define (center min-coord max-coord)
+  (round (/ (+ min-coord max-coord) 2)))
+
+
+(define (viewport-center viewport)
+  "Return coordinates of the VIEWPORT center point."
+  (cons (center (viewport-left viewport)
+                (viewport-right viewport))
+        (center (viewport-top viewport)
+                (viewport-bottom viewport))))
