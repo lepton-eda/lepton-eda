@@ -66,32 +66,34 @@ ZOOM-FACTOR."
     (x_basic_warp_cursor *canvas x y)))
 
 
-(define* (zoom window canvas #:key (direction #f) (position #f))
-  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
-'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
-\"zoom-with-pan\" in the \"schematic.gui\" group is true, and
-POSITION is not #f, zooming with panning is enabled."
+(define (zoom-pan-center viewport position zoom-factor)
+  "Calculate new center for VIEWPORT when zooming with panning is
+started at POSITION and the relative zoom factor is ZOOM-FACTOR.
+The new center and POSITION are in world coordinates in the
+form (X . Y)."
   (define (center min-coord max-coord)
     (/ (+ min-coord max-coord) 2))
 
   (define (pan-center-coord viewport-min
                             viewport-max
-                            start-coord
-                            relative-zoom-factor)
+                            start-coord)
     (+ (/ (- (center viewport-min viewport-max) start-coord)
-          relative-zoom-factor)
+          zoom-factor)
        start-coord))
 
-  (define (pan-center viewport pan-position relative-zoom-factor)
-    (cons (pan-center-coord (viewport-left viewport)
-                            (viewport-right viewport)
-                            (car pan-position)
-                            relative-zoom-factor)
-          (pan-center-coord (viewport-bottom viewport)
-                            (viewport-top viewport)
-                            (cdr pan-position)
-                            relative-zoom-factor)))
+  (cons (pan-center-coord (viewport-left viewport)
+                          (viewport-right viewport)
+                          (car position))
+        (pan-center-coord (viewport-bottom viewport)
+                          (viewport-top viewport)
+                          (cdr position))))
 
+
+(define* (zoom window canvas #:key (direction #f) (position #f))
+  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
+'zoom-in, 'zoom-out, or 'zoom-full.  If the configuration key
+\"zoom-with-pan\" in the \"schematic.gui\" group is true, and
+POSITION is not #f, zooming with panning is enabled."
   (define *window (check-window window 1))
   (define *canvas (check-canvas canvas 2))
   (define viewport (canvas-viewport canvas))
@@ -124,7 +126,7 @@ POSITION is not #f, zooming with panning is enabled."
              ;; "zoom-with-pan" configuration setting is set to
              ;; "true", do zooming with panning.
              ((and position zoom-with-pan?)
-              (pan-center viewport position zoom-factor))
+              (zoom-pan-center viewport position zoom-factor))
              ;; Zoom with no panning at the viewport center in all
              ;; other cases.
              (else (viewport-center viewport)))))
