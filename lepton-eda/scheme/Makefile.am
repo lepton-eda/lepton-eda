@@ -196,6 +196,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/util.scm \
 	schematic/undo.scm \
 	schematic/viewport/foreign.scm \
+	schematic/viewport.scm \
 	schematic/widget.scm \
 	schematic/window.scm \
 	schematic/window/foreign.scm \
