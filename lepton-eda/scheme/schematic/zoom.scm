@@ -55,7 +55,8 @@ ZOOM-FACTOR."
    (exact->inexact zoom-factor)))
 
 
-(define (warp-pointer *canvas *viewport position)
+(define (warp-pointer canvas *viewport position)
+  (define *canvas (check-canvas canvas 1))
   (let ((x (schematic_viewport_pix_x
             *viewport
             (round (car position))))
@@ -122,7 +123,7 @@ with panning is enabled."
         ;; is out of the canvas, don't warp it as moving it to an
         ;; arbitrary position may be misleading.
         (when position
-          (warp-pointer *canvas *viewport position)))
+          (warp-pointer canvas *viewport position)))
 
       ;; If the mouse pointer is over the canvas and the
       ;; "zoom-with-pan" configuration setting is set to "true", do
