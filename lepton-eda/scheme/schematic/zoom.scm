@@ -55,7 +55,7 @@ ZOOM-FACTOR."
    (exact->inexact zoom-factor)))
 
 
-(define (warp-pointer canvas position)
+(define (warp-pointer-at-canvas-position canvas position)
   (define *canvas (check-canvas canvas 1))
   (define viewport (canvas-viewport canvas))
   (define *viewport (viewport->pointer viewport))
@@ -67,6 +67,13 @@ ZOOM-FACTOR."
             *viewport
             (round (cdr position)))))
     (x_basic_warp_cursor *canvas x y)))
+
+
+;; Warp the mouse pointer.  If the pointer is out of the canvas, don't
+;; warp it as moving it to an arbitrary position may be misleading.
+(define (warp-pointer canvas position)
+  (when position
+    (warp-pointer-at-canvas-position canvas position)))
 
 
 (define (zoom-pan-center viewport position zoom-factor)
@@ -121,11 +128,8 @@ with panning is enabled."
              (or position (viewport-center viewport))
              zoom-factor)
 
-        ;; Warp the cursor to the new center position.  If the pointer
-        ;; is out of the canvas, don't warp it as moving it to an
-        ;; arbitrary position may be misleading.
-        (when position
-          (warp-pointer canvas position)))
+        ;; Warp the cursor to the new center position.
+        (warp-pointer canvas position))
 
       ;; If the mouse pointer is over the canvas and the
       ;; "zoom-with-pan" configuration setting is set to "true", do
