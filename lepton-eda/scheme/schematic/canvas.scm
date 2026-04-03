@@ -33,6 +33,7 @@
   #:use-module (schematic viewport foreign)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
+  #:use-module (schematic world-size)
   #:use-module (schematic zoom)
 
   #:export (canvas-viewport
@@ -81,23 +82,18 @@
   "Adjusts the viewport and scrollbars of *SCROLLED-WIDGET and enables or
 disables the visibility of the scrollbars depending on the value of
 SHOW-SCROLLBARS?."
-  (define world-left (schematic_world_size_get_default_left))
-  (define world-right (schematic_world_size_get_default_right))
-  (define world-bottom (schematic_world_size_get_default_bottom))
-  (define world-top (schematic_world_size_get_default_top))
-
   (define *hadjustment
     (gtk_adjustment_new 0.0
-                        world-left
-                        world-right
+                        (world-left)
+                        (world-right)
                         100.0
                         100.0
                         10.0))
 
   (define *vadjustment
-    (gtk_adjustment_new world-bottom
+    (gtk_adjustment_new (world-bottom)
                         0.0
-                        (- world-bottom world-top)
+                        (- (world-bottom) (world-top))
                         100.0
                         100.0
                         10.0))
