@@ -43,8 +43,8 @@ If POSITION is #f, use the viewport center instead."
 
   (schematic_canvas_pan_general
    *canvas
-   (round (car pan-position))
-   (round (cdr pan-position))
+   (car pan-position)
+   (cdr pan-position)
    ;; The zoom factor is 'double' in C.
    (exact->inexact zoom-factor)))
 
@@ -83,9 +83,9 @@ form (X . Y)."
   (define (pan-center-coord viewport-min
                             viewport-max
                             start-coord)
-    (+ (/ (- (center viewport-min viewport-max) start-coord)
-          zoom-factor)
-       start-coord))
+    (round (+ (/ (- (center viewport-min viewport-max) start-coord)
+                 zoom-factor)
+              start-coord)))
 
   (cons (pan-center-coord (viewport-left viewport)
                           (viewport-right viewport)
