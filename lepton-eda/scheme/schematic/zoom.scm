@@ -18,20 +18,15 @@
 
 
 (define-module (schematic zoom)
-  #:use-module (system foreign)
-
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
 
   #:use-module (schematic canvas foreign)
   #:use-module (schematic canvas)
-  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
-  #:use-module (schematic mouse-pointer)
   #:use-module (schematic viewport foreign)
   #:use-module (schematic viewport)
   #:use-module (schematic window foreign)
-  #:use-module (schematic window global)
   #:use-module (schematic world-size)
 
   #:export (zoom-in
