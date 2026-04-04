@@ -34,7 +34,8 @@
   #:use-module (schematic window global)
   #:use-module (schematic world-size)
 
-  #:export (zoom
+  #:export (zoom-in
+            zoom-out
             zoom-world))
 
 
@@ -144,6 +145,18 @@ with panning is enabled."
                 position
                 (zoom-pan-center viewport position zoom-factor))
            zoom-factor)))
+
+
+(define (zoom-in window canvas position)
+  "Zoom in CANVAS with settings from WINDOW at POSITION in world
+coordinates."
+  (zoom window canvas 'zoom-in #:position position))
+
+
+(define (zoom-out window canvas position)
+  "Zoom out CANVAS with settings from WINDOW at POSITION in world
+coordinates."
+  (zoom window canvas 'zoom-out #:position position))
 
 
 (define (zoom-world canvas)

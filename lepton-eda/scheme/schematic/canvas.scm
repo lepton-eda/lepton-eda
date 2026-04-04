@@ -135,12 +135,10 @@ parent *WINDOW."
       ((gdk-scroll-down gdk-scroll-right) 1)
       (else 0)))
 
-  (define (event-scroll-direction->zoom-direction scroll-direction)
+  (define (event-scroll-direction->zoom-function scroll-direction)
     (case (event-scroll-direction->symbol scroll-direction)
-      ((gdk-scroll-up) 'zoom-in)
-      ((gdk-scroll-left) 'zoom-in)
-      ((gdk-scroll-down) 'zoom-out)
-      ((gdk-scroll-right) 'zoom-out)
+      ((gdk-scroll-up gdk-scroll-left) zoom-in)
+      ((gdk-scroll-down gdk-scroll-right) zoom-out)
       (else #f)))
 
   (define (update-adjustment *adjustment pan-direction)
@@ -238,7 +236,7 @@ parent *WINDOW."
                                  (inexact->exact (round (cdr scroll-direction)))
                                  (event-scroll-direction->pan-direction scroll-direction))
                              (event-scroll-direction->pan-direction scroll-direction)))
-                        (zoom-direction
+                        (zoom-function
                          (if %m4-use-gtk3
                              (if smooth-scroll?
                                  ;; event->delta_x seems to be
@@ -246,16 +244,15 @@ parent *WINDOW."
                                  ;; devices.
                                  (let ((direction (cdr scroll-direction)))
                                    (cond
-                                    ((negative? direction) 'zoom-in)
-                                    ((positive? direction) 'zoom-out)
+                                    ((negative? direction) zoom-in)
+                                    ((positive? direction) zoom-out)
                                     ((zero? direction) #f)))
-                                 (event-scroll-direction->zoom-direction scroll-direction))
-                             (event-scroll-direction->zoom-direction scroll-direction))))
-                    (when (and zoom? zoom-direction)
-                      (zoom window
-                            canvas
-                            zoom-direction
-                            #:position (with-window *window (mouse-pointer-position))))
+                                 (event-scroll-direction->zoom-function scroll-direction))
+                             (event-scroll-direction->zoom-function scroll-direction))))
+                    (when (and zoom? zoom-function)
+                      (zoom-function window
+                                     canvas
+                                     (with-window *window (mouse-pointer-position))))
 
                     (let ((*horiz-adjustment (schematic_canvas_get_hadjustment *widget))
                           (*vert-adjustment (schematic_canvas_get_vadjustment *widget)))

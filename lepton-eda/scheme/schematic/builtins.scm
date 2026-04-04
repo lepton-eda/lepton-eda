@@ -806,7 +806,7 @@ the snap grid size should be set to 100")))
   (define window (current-window))
   (define canvas (window-canvas window))
 
-  (zoom window canvas 'zoom-in #:position (action-position))
+  (zoom-in window canvas (action-position))
   (undo-save-viewport))
 
 
@@ -814,7 +814,7 @@ the snap grid size should be set to 100")))
   (define window (current-window))
   (define canvas (window-canvas window))
 
-  (zoom window canvas 'zoom-out #:position (action-position))
+  (zoom-out window canvas (action-position))
   (undo-save-viewport))
 
 
