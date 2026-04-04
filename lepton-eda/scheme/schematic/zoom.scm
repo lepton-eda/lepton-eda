@@ -46,13 +46,16 @@
 
 
 (define (pan canvas position zoom-factor)
-  "Pan the viewport of CANVAS at POSITION zooming it with ZOOM-FACTOR."
+  "Pan the viewport of CANVAS at POSITION zooming it with ZOOM-FACTOR.
+If POSITION is #f, use the viewport center instead."
   (define *canvas (check-canvas canvas 1))
+  (define viewport (canvas-viewport canvas))
+  (define pan-position (or position (viewport-center viewport)))
 
   (schematic_canvas_pan_general
    *canvas
-   (round (car position))
-   (round (cdr position))
+   (round (car pan-position))
+   (round (cdr pan-position))
    ;; The zoom factor is 'double' in C.
    (exact->inexact zoom-factor)))
 
@@ -127,9 +130,7 @@ with panning is enabled."
         ;; canvas.  If POSITION is defined, make it the new viewport
         ;; center.  Otherwise, zoom with no panning at the current
         ;; viewport center.
-        (pan canvas
-             (or position (viewport-center viewport))
-             zoom-factor)
+        (pan canvas position zoom-factor)
 
         ;; Warp the cursor to the new center position.
         (warp-pointer canvas position))
@@ -139,9 +140,9 @@ with panning is enabled."
       ;; zooming with panning.  Otherwise, zoom with no panning at the
       ;; current viewport center.
       (pan canvas
-           (if (and position zoom-with-pan?)
-               (zoom-pan-center viewport position zoom-factor)
-               (viewport-center viewport))
+           (and zoom-with-pan?
+                position
+                (zoom-pan-center viewport position zoom-factor))
            zoom-factor)))
 
 
