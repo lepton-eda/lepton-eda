@@ -39,13 +39,6 @@
             zoom-world))
 
 
-(define (relative-zoom-factor zoom-gain direction)
-  (case direction
-    ((zoom-in) (/ (+ 100 zoom-gain) 100))
-    ((zoom-out) (/ 100 (+ 100 zoom-gain)))
-    (else #f)))
-
-
 (define (pan canvas position zoom-factor)
   "Pan the viewport of CANVAS at POSITION zooming it with ZOOM-FACTOR.
 If POSITION is #f, use the viewport center instead."
@@ -107,20 +100,17 @@ form (X . Y)."
                           (cdr position))))
 
 
-(define* (zoom window canvas direction #:key (position #f))
+(define* (zoom window canvas zoom-factor #:key (position #f))
   "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
 'zoom-in or 'zoom-out.  If the configuration key \"zoom-with-pan\" in
 the \"schematic.gui\" group is true, and POSITION is not #f, zooming
 with panning is enabled."
   (define *window (check-window window 1))
   (define viewport (canvas-viewport canvas))
-  (define zoom-gain (schematic_window_get_zoom_gain *window))
   (define zoom-with-pan?
     (true? (schematic_window_get_zoom_with_pan *window)))
   (define warp-cursor?
     (true? (schematic_window_get_warp_cursor *window)))
-  ;; NB: zoom-gain is a percentage increase.
-  (define zoom-factor (relative-zoom-factor zoom-gain direction))
 
   ;; Depending on the configuration settings, the new viewport center
   ;; is either the current mouse position if the cursor should be
@@ -146,17 +136,24 @@ with panning is enabled."
                 (zoom-pan-center viewport position zoom-factor))
            zoom-factor)))
 
+;;; NB: zoom-gain is a percentage increase.
+(define (zoom-gain window)
+  (define *window (check-window window 1))
+  (schematic_window_get_zoom_gain *window))
+
 
 (define (zoom-in window canvas position)
   "Zoom in CANVAS with settings from WINDOW at POSITION in world
 coordinates."
-  (zoom window canvas 'zoom-in #:position position))
+  (define zoom-factor (/ (+ 100 (zoom-gain window)) 100))
+  (zoom window canvas zoom-factor #:position position))
 
 
 (define (zoom-out window canvas position)
   "Zoom out CANVAS with settings from WINDOW at POSITION in world
 coordinates."
-  (zoom window canvas 'zoom-out #:position position))
+  (define zoom-factor (/ 100 (+ 100 (zoom-gain window))))
+  (zoom window canvas zoom-factor #:position position))
 
 
 (define (zoom-world canvas)
