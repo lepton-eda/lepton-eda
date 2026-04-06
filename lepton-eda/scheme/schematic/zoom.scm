@@ -96,10 +96,9 @@ form (X . Y)."
 
 
 (define* (zoom window canvas zoom-factor #:key (position #f))
-  "Zoom CANVAS of WINDOW.  DIRECTION is a symbol which can be
-'zoom-in or 'zoom-out.  If the configuration key \"zoom-with-pan\" in
-the \"schematic.gui\" group is true, and POSITION is not #f, zooming
-with panning is enabled."
+  "Zoom CANVAS of WINDOW with a zoom factor of ZOOM-FACTOR.  If the
+configuration key \"zoom-with-pan\" in the \"schematic.gui\" group
+is 'true', and POSITION is not #f, zooming with panning is enabled."
   (define *window (check-window window 1))
   (define viewport (canvas-viewport canvas))
   (define zoom-with-pan?
