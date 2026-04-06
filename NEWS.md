@@ -379,6 +379,18 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   and its child widgets, obtaining the `<viewport>` of the canvas,
   redrawing, and scrolling.
 
+- A new module, `(schematic viewport)`, has been added.  The
+  module exports functions returning the maximal and minimal
+  coordinates of a `<viewport>` instance, and the coordinates of
+  its center.
+
+- A new module, `(schematic world-size)`, has been introduced.  It
+  exports functions returning the default minimum and maximum
+  workspace coordinates, and the coordinates of its center.
+
+- A new module, `(schematic zoom)`, has been added.  It exports
+  functions for zooming the canvas.
+
 - Most of the functions related to the *zoom box* feature have
   been rewritten in Scheme.
 
@@ -509,6 +521,16 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   bug description](https://gitlab.gnome.org/GNOME/gtk/-/issues/2048)),
   it has been fixed by disabling smooth events if the mouse cursor
   warping is enabled in configuration.
+
+- Mouse pointer warping is no longer used along with the action
+  *View* → *Zoom Full*.  In other zoom modes, zooming in or out,
+  it is used only when the mouse pointer is over the canvas as
+  moving it to an arbitrary position on the canvas from some other
+  location in or out of the program window may be misleading for
+  the user.
+
+- The obsolete code for filtering out consecutive scroll events on
+  zooming with warping the mouse pointer has been removed.
 
 - In the GTK3 port code, net and bus cues were not rendered at
   connection points when exporting to PNG, JPEG and other images
