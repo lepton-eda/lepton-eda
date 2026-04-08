@@ -464,6 +464,17 @@ schematic_file_select_dialog_save_as (GtkWindow *parent)
 }
 
 
+/*! \brief Open an 'Overwrite file?' dialog.
+ *
+ *  \par Function Description
+ *
+ *  Opens an 'Overwrite file?' dialog with a question about
+ *  overwriting \p filename.
+ *
+ *  \param [in] parent The parent Gtk window of the dialog.
+ *  \param [in] filename The name of the file to overwrite.
+ *  \return The new dialog.
+ */
 GtkWidget*
 schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
                                              char *filename)
