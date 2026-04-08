@@ -51,8 +51,13 @@
 ;;; argument *RESULT is not NULL, the pointer references the C boolean
 ;;; result of the save operation.
 ;;;
-;;; If the user cancels the operation (with the Cancel button), the
-;;; page is not saved and #f is returned.
+;;; If the user cancels the operation (with the Cancel button),
+;;; the page is not saved and #f is returned.  If the user accepts
+;;; the filename chosen in the dialog, but the result of saving is
+;;; out of interest, that is, *RESULT is NULL, the function
+;;; returns #t.  When *RESULT is not NULL, the function returns
+;;; 'success or 'error depending on the result of the save
+;;; operation.
 ;;;
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in x_window_save_page(), which is called by this
@@ -103,15 +108,12 @@
                     (x_window_save_page *window
                                         *page
                                         (string->pointer filename))))
-               (unless (null-pointer? *result)
-                 (bytevector-sint-set! (pointer->bytevector
-                                        *result
-                                        (sizeof int))
-                                       0
-                                       save_result
-                                       (native-endianness)
-                                       (sizeof int)))
-               #t))))
+               (if (null-pointer? *result)
+                   ;; The result of saving is ignored.
+                   #t
+                   (if (true? save_result)
+                       'success
+                       'error))))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
