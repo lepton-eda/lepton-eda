@@ -214,14 +214,6 @@ x_window_save_page (SchematicWindow *w_current,
       log_msg = _("Saved [%1$s]");
     }
     state_msg = _("Saved");
-
-    /* reset page CHANGED flag */
-    lepton_page_set_changed (page, 0);
-
-    /* add to recent file list */
-    recent_manager_add (w_current, filename);
-
-    page_select_widget_update (w_current);
   }
 
   /* log status of operation */

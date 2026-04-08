@@ -81,6 +81,13 @@
                           *filename
                           result
                           (if different-names? TRUE FALSE))
+      (when (true? result)
+        ;; Reset page CHANGED flag.
+        (lepton_page_set_changed *page 0)
+        ;; Add to recent file list.
+        (recent_manager_add *window *filename)
+        ;; Update Page Manager.
+        (page_select_widget_update *window))
       result)))
 
 
