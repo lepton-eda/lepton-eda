@@ -424,6 +424,15 @@ x_fileselect_open (SchematicWindow *w_current,
 }
 
 
+/*! \brief Open a 'Save As' dialog.
+ *
+ *  \par Function Description
+ *
+ *  Opens a 'Save As' dialog.
+ *
+ *  \param [in] parent The parent Gtk window of the dialog.
+ *  \return The new dialog.
+ */
 GtkWidget*
 schematic_file_select_dialog_save_as (GtkWindow *parent)
 {
