@@ -209,8 +209,6 @@ x_window_save_page (SchematicWindow *w_current,
     /* change page name if necessary and prepare log message */
     if (different_names)
     {
-      lepton_page_set_filename (page, filename);
-
       log_msg = _("Saved as [%1$s]");
     } else {
       log_msg = _("Saved [%1$s]");

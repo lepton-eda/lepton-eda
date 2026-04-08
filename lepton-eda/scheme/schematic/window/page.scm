@@ -73,6 +73,9 @@
     (let ((different-names?
            (not (string-ci= (pointer->string (lepton_page_get_filename *page))
                             (pointer->string *filename)))))
+      (when (and (true? result)
+                 different-names?)
+        (lepton_page_set_filename *page *filename))
       (x_window_save_page *window
                           *page
                           *filename
