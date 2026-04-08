@@ -154,12 +154,14 @@
     ;; Open "Save As.." dialog.
     (gtk_widget_show *dialog)
 
-    (let ((accepted-filename?
-           (run-save-as-dialog *dialog)))
-
+    (let* ((save-result (run-save-as-dialog *dialog))
+           (saved-without-errors? (eq? save-result 'success)))
       (gtk_widget_destroy *dialog)
-      ;; Whether the filename to save was accepted by the user.
-      accepted-filename?)))
+
+      ;; Skip the result if the File save dialog has been cancelled.
+      (or (not save-result)
+          ;; Otherwise, get the result of the save operation.
+          saved-without-errors?))))
 
 
 (define (window-save-active-page! window)

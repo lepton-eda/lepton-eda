@@ -127,22 +127,13 @@
     (when tabs-enabled?
       (x_tabs_hdr_update *window (page->pointer page))))
 
-  ;; Returns #t if untitled page has been successfully saved or
-  ;; saving has been cancelled.
-  (define (save-untitled-page! *page)
-    ;; For untitled pages, open "Save as..." dialog.
-    (let* ((save-result (file-select-save-page! *window *page))
-           (filename-accepted? save-result)
-           (saved-without-errors? (eq? save-result 'success)))
-      ;; Skip the result if the File save dialog has been cancelled.
-      (or (not filename-accepted?)
-          ;; Otherwise, get the result of the save operation.
-          saved-without-errors?)))
-
+  ;; Returns #t if page has been successfully saved or saving has
+  ;; been cancelled.
   (define (save-page! page)
     (let ((*page (page->pointer page)))
       (if (untitled? *page)
-          (save-untitled-page! *page)
+          ;; For untitled pages, open "Save as..." dialog.
+          (file-select-save-page! *window *page)
           ;; Simply save any other page.
           (true? (x_window_save_page *window
                                      *page
