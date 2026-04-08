@@ -47,12 +47,9 @@
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
 ;;; the user to select a file where the page will be saved.
-;;;
-;;; If the user cancels the operation (with the Cancel button),
-;;; the page is not saved and #f is returned.  If the user accepts
-;;; the filename chosen in the dialog, the function returns
-;;; 'success or 'error depending on the result of the save
-;;; operation.
+;;; Returns #f on a save error, and #t in all other cases
+;;; including cancelling the Save dialog or its child overwrite
+;;; dialog.
 ;;;
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in x_window_save_page(), which is called by this
@@ -83,25 +80,22 @@
       (and filename-accepted?
            (file-chooser-filename *dialog)))
 
-    (and filename
-         ;; If the file already exists, display a dialog box to
-         ;; check if the user really wants to overwrite it.
-         (if (and (file-exists? filename)
-                  (not (eq? (overwrite-dialog-response *dialog
-                                                       filename)
-                            'yes)))
-             (begin
-               (log! 'message (G_ "Save cancelled on user request"))
-               #f)
+    ;; It is OK if the user cancels the File select dialog.
+    (or (not filename)
+        ;; If the file already exists, display a dialog box to
+        ;; check if the user really wants to overwrite it.
+        (if (and (file-exists? filename)
+                 (not (eq? (overwrite-dialog-response *dialog
+                                                      filename)
+                           'yes)))
+            (begin
+              (log! 'message (G_ "Save cancelled on user request"))
+              #t)
 
-             ;; Try saving the page to filename.
-             (let ((save_result
-                    (x_window_save_page *window
-                                        *page
-                                        (string->pointer filename))))
-               (if (true? save_result)
-                   'success
-                   'error)))))
+            ;; Try saving the page to filename.
+            (true? (x_window_save_page *window
+                                       *page
+                                       (string->pointer filename))))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -150,14 +144,11 @@
     ;; Open "Save As.." dialog.
     (gtk_widget_show *dialog)
 
-    (let* ((save-result (run-save-as-dialog *dialog))
-           (saved-without-errors? (eq? save-result 'success)))
+    (let ((save-result (run-save-as-dialog *dialog)))
       (gtk_widget_destroy *dialog)
 
-      ;; Skip the result if the File save dialog has been cancelled.
-      (or (not save-result)
-          ;; Otherwise, get the result of the save operation.
-          saved-without-errors?))))
+      ;; Return the result of the save operation.
+      save-result)))
 
 
 (define (window-save-active-page! window)
