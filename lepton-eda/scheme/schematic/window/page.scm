@@ -33,6 +33,7 @@
   #:use-module (schematic window foreign)
 
   #:export (file-select-save-page!
+            window-save-page!
             window-set-toplevel-page!
             window-save-active-page!))
 
@@ -45,6 +46,10 @@
   (schematic_window_page_changed *window))
 
 
+(define (window-save-page! *window *page *filename)
+  (x_window_save_page *window *page *filename))
+
+
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
 ;;; the user to select a file where the page will be saved.
 ;;; Returns #f on a save error, and #t in all other cases
@@ -52,7 +57,7 @@
 ;;; dialog.
 ;;;
 ;;; The function updates the user interface. (Actual UI update is
-;;; performed in x_window_save_page(), which is called by this
+;;; performed in window-save-page!(), which is called by this
 ;;; function).
 (define (file-select-save-page! *window *page)
   (define (file-chooser-filename *dialog)
@@ -93,9 +98,9 @@
               #t)
 
             ;; Try saving the page to filename.
-            (true? (x_window_save_page *window
-                                       *page
-                                       (string->pointer filename))))))
+            (true? (window-save-page! *window
+                                      *page
+                                      (string->pointer filename))))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -160,4 +165,6 @@
         ;; Open "Save as..." dialog.
         (file-select-save-page! *window *page)
         ;; Save page.
-        (x_window_save_page *window *page (lepton_page_get_filename *page)))))
+        (window-save-page! *window
+                           *page
+                           (lepton_page_get_filename *page)))))
