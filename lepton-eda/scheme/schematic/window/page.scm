@@ -58,10 +58,6 @@
 ;;; performed in x_window_save_page(), which is called by this
 ;;; function).
 (define (file-select-save-page! *window *page)
-  ;; Get filename from the GtkFileChooser dialog.  As the value
-  ;; must be freed anyway, the filename is transformed into a
-  ;; Scheme string, and the original pointer is freed.  If the
-  ;; original pointer is NULL, the function returns #f.
   (define (file-chooser-filename *dialog)
     (let* ((*filename (gtk_file_chooser_get_filename *dialog))
            (filename (and (not (null-pointer? *filename))
