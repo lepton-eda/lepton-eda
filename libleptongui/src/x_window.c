@@ -198,9 +198,6 @@ x_window_save_page (SchematicWindow *w_current,
   gint ret;
   GError *err = NULL;
 
-  g_return_val_if_fail (page     != NULL, 0);
-  g_return_val_if_fail (filename != NULL, 0);
-
   /* try saving page to filename */
   ret = (gint)f_save (page, filename, &err);
 

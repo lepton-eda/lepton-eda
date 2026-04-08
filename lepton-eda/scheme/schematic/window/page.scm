@@ -47,6 +47,13 @@
 
 
 (define (window-save-page! *window *page *filename)
+  (when (null-pointer? *window)
+    (error "NULL window."))
+  (when (null-pointer? *page)
+    (error "NULL page."))
+  (when (null-pointer? *filename)
+    (error "NULL filename."))
+
   (x_window_save_page *window *page *filename))
 
 
