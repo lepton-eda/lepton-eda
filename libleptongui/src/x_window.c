@@ -146,6 +146,35 @@ schematic_window_create_notebooks (GtkWidget *main_box,
 }
 
 
+/*! \brief Run the "Failed to save file" dialog.
+ *
+ *  \par Function Description
+ *
+ *  Runs the "Failed to save file" dialog reporting \p message.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] message The message to report.
+ */
+void
+schematic_window_dialog_save_error (SchematicWindow *w_current,
+                                    char *message)
+{
+  GtkWidget *main_window =
+    schematic_window_get_main_window (w_current);
+
+  GtkWidget *dialog;
+  dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
+                                   GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_ERROR,
+                                   GTK_BUTTONS_CLOSE,
+                                   "%s",
+                                   message);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to save file"));
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+}
+
+
 /*! \brief Saves a page to a file.
  *  \par Function Description
  *  This function saves the page <B>page</B> to a file named
@@ -179,19 +208,7 @@ x_window_save_page (SchematicWindow *w_current,
     log_msg   = _("Could NOT save page [%1$s]");
     state_msg = _("Error while trying to save");
 
-    GtkWidget *main_window =
-      schematic_window_get_main_window (w_current);
-
-    GtkWidget *dialog;
-    dialog = gtk_message_dialog_new (GTK_WINDOW (main_window),
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     GTK_MESSAGE_ERROR,
-                                     GTK_BUTTONS_CLOSE,
-                                     "%s",
-                                     err->message);
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to save file"));
-    gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (dialog);
+    schematic_window_dialog_save_error (w_current, err->message);
     g_clear_error (&err);
   } else {
     /* successful save of page to file, update page... */
