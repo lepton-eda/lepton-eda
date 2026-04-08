@@ -1051,7 +1051,7 @@
 
 ;;; x_window.c
 (define-lff recent_manager_add void '(* *))
-(define-lff x_window_save_page int (list '* '* '* int))
+(define-lff x_window_save_page int (list '* '* '* int int))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))

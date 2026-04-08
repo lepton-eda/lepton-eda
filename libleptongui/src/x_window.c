@@ -188,13 +188,15 @@ schematic_window_dialog_save_error (SchematicWindow *w_current,
  *  \param [in] page      The page to save.
  *  \param [in] filename  The name of the file in which to save page.
  *  \param [in] ret The result of saving.
+ *  \param [in] different_names Whether page and file names differ.
  *  \returns 1 on success, 0 otherwise.
  */
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename,
-                    int ret)
+                    int ret,
+                    gboolean different_names)
 {
   const gchar *log_msg, *state_msg;
 
@@ -205,7 +207,7 @@ x_window_save_page (SchematicWindow *w_current,
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
-    if (g_ascii_strcasecmp (lepton_page_get_filename (page), filename) != 0)
+    if (different_names)
     {
       lepton_page_set_filename (page, filename);
 

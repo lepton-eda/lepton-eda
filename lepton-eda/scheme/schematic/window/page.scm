@@ -70,8 +70,15 @@
          *window
          (string->pointer message))))
 
-    (x_window_save_page *window *page *filename result)
-    result))
+    (let ((different-names?
+           (not (string-ci= (pointer->string (lepton_page_get_filename *page))
+                            (pointer->string *filename)))))
+      (x_window_save_page *window
+                          *page
+                          *filename
+                          result
+                          (if different-names? TRUE FALSE))
+      result)))
 
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for

@@ -998,7 +998,8 @@ gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
                     const gchar *filename,
-                    int ret);
+                    int ret,
+                    gboolean different_names);
 gboolean
 x_window_untitled_page (LeptonPage* page);
 
