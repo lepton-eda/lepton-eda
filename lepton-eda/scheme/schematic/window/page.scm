@@ -17,7 +17,6 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic window page)
-  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -46,23 +45,19 @@
   (schematic_window_page_changed *window))
 
 
-;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for the
-;;; user to select a file where the page will be saved.  If the
-;;; argument *RESULT is not NULL, the pointer references the C boolean
-;;; result of the save operation.
+;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
+;;; the user to select a file where the page will be saved.
 ;;;
 ;;; If the user cancels the operation (with the Cancel button),
 ;;; the page is not saved and #f is returned.  If the user accepts
-;;; the filename chosen in the dialog, but the result of saving is
-;;; out of interest, that is, *RESULT is NULL, the function
-;;; returns #t.  When *RESULT is not NULL, the function returns
+;;; the filename chosen in the dialog, the function returns
 ;;; 'success or 'error depending on the result of the save
 ;;; operation.
 ;;;
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in x_window_save_page(), which is called by this
 ;;; function).
-(define (file-select-save-page! *window *page *result)
+(define (file-select-save-page! *window *page)
   ;; Get filename from the GtkFileChooser dialog.  As the value
   ;; must be freed anyway, the filename is transformed into a
   ;; Scheme string, and the original pointer is freed.  If the
@@ -108,12 +103,9 @@
                     (x_window_save_page *window
                                         *page
                                         (string->pointer filename))))
-               (if (null-pointer? *result)
-                   ;; The result of saving is ignored.
-                   #t
-                   (if (true? save_result)
-                       'success
-                       'error))))))
+               (if (true? save_result)
+                   'success
+                   'error)))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -162,13 +154,6 @@
     ;; Open "Save As.." dialog.
     (gtk_widget_show *dialog)
 
-    (unless (null-pointer? *result)
-      (bytevector-sint-set! (pointer->bytevector *result (sizeof int))
-                            0
-                            FALSE
-                            (native-endianness)
-                            (sizeof int)))
-
     (let ((accepted-filename?
            (run-save-as-dialog *dialog)))
 
@@ -184,6 +169,6 @@
   (unless (null-pointer? *page)
     (if (true? (x_window_untitled_page *page))
         ;; Open "Save as..." dialog.
-        (file-select-save-page! *window *page %null-pointer)
+        (file-select-save-page! *window *page)
         ;; Save page.
         (x_window_save_page *window *page (lepton_page_get_filename *page)))))

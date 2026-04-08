@@ -112,8 +112,7 @@
 (define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
   (define *window (*current-window))
   (file-select-save-page! *window
-                          (schematic_window_get_active_page *window)
-                          %null-pointer))
+                          (schematic_window_get_active_page *window)))
 
 ;;; Save all opened pages.
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
@@ -132,11 +131,7 @@
   ;; saving has been cancelled.
   (define (save-untitled-page! *page)
     ;; For untitled pages, open "Save as..." dialog.
-    (let* ((bv (make-bytevector (sizeof int) 0))
-           (save-result
-            (file-select-save-page! *window
-                                    *page
-                                    (bytevector->pointer bv)))
+    (let* ((save-result (file-select-save-page! *window *page))
            (filename-accepted? save-result)
            (saved-without-errors? (eq? save-result 'success)))
       ;; Skip the result if the File save dialog has been cancelled.
