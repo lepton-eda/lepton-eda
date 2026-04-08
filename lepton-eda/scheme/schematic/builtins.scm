@@ -132,11 +132,20 @@
   ;; saving has been cancelled.
   (define (save-untitled-page! *page)
     ;; For untitled pages, open "Save as..." dialog.
-    (let ((bv (make-bytevector (sizeof int) 0)))
+    (let* ((bv (make-bytevector (sizeof int) 0))
+           (filename-accepted?
+            (file-select-save-page! *window
+                                    *page
+                                    (bytevector->pointer bv)))
+           (saved-without-errors?
+            (true? (bytevector-sint-ref bv
+                                        0
+                                        (native-endianness)
+                                        (sizeof int)))))
       ;; Skip the result if the File save dialog has been cancelled.
-      (or (not (file-select-save-page! *window *page (bytevector->pointer bv)))
+      (or (not filename-accepted?)
           ;; Otherwise, get the result of the save operation.
-          (true? (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))))
+          saved-without-errors?)))
 
   (define (save-page! page)
     (let ((*page (page->pointer page)))
