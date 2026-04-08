@@ -198,12 +198,10 @@ x_window_save_page (SchematicWindow *w_current,
                     int ret,
                     gboolean different_names)
 {
-  const gchar *log_msg, *state_msg;
+  const gchar *log_msg;
 
   if (ret != 1) {
     log_msg   = _("Could NOT save page [%1$s]");
-    state_msg = _("Error while trying to save");
-
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
@@ -213,13 +211,10 @@ x_window_save_page (SchematicWindow *w_current,
     } else {
       log_msg = _("Saved [%1$s]");
     }
-    state_msg = _("Saved");
   }
 
   /* log status of operation */
   g_message (log_msg, filename);
-
-  i_set_state_msg  (w_current, SELECT, state_msg);
 
   return ret;
 

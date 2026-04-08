@@ -29,6 +29,7 @@
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
 
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
@@ -88,6 +89,13 @@
         (recent_manager_add *window *filename)
         ;; Update Page Manager.
         (page_select_widget_update *window))
+
+      (i_set_state_msg *window
+                       (symbol->action-mode 'select-mode)
+                       (string->pointer
+                        (if (false? result)
+                            (G_ "Error while trying to save")
+                            (G_ "Saved"))))
       result)))
 
 
