@@ -175,52 +175,6 @@ schematic_window_dialog_save_error (SchematicWindow *w_current,
 }
 
 
-/*! \brief Saves a page to a file.
- *  \par Function Description
- *  This function saves the page <B>page</B> to a file named
- *  <B>filename</B>.
- *
- *  It returns the value returned by function <B>f_save()</B> trying
- *  to save page <B>page</B> to file <B>filename</B> (1 on success, 0
- *  on failure).
- *
- *  \param [in] w_current The current #SchematicWindow environment.
- *  \param [in] page      The page to save.
- *  \param [in] filename  The name of the file in which to save page.
- *  \param [in] ret The result of saving.
- *  \param [in] different_names Whether page and file names differ.
- *  \returns 1 on success, 0 otherwise.
- */
-gint
-x_window_save_page (SchematicWindow *w_current,
-                    LeptonPage *page,
-                    const gchar *filename,
-                    int ret,
-                    gboolean different_names)
-{
-  const gchar *log_msg;
-
-  if (ret != 1) {
-    log_msg   = _("Could NOT save page [%1$s]");
-  } else {
-    /* successful save of page to file, update page... */
-    /* change page name if necessary and prepare log message */
-    if (different_names)
-    {
-      log_msg = _("Saved as [%1$s]");
-    } else {
-      log_msg = _("Saved [%1$s]");
-    }
-  }
-
-  /* log status of operation */
-  g_message (log_msg, filename);
-
-  return ret;
-
-} /* x_window_save_page() */
-
-
 /*! \brief Add \a filename to the recent files list.
  *
  * \todo gtk_recent_manager_add_item() also used in x_menus.c.

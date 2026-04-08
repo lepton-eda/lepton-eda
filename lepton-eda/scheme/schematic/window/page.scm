@@ -50,6 +50,8 @@
 
 
 (define (window-save-page! *window *page *filename)
+  "Saves *PAGE in *WINDOW to a file named *FILENAME.  Returns TRUE on
+success, FALSE otherwise (C booleans)."
   (define **err
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
   (when (null-pointer? *window)
@@ -77,11 +79,7 @@
       (when (and (true? result)
                  different-names?)
         (lepton_page_set_filename *page *filename))
-      (x_window_save_page *window
-                          *page
-                          *filename
-                          result
-                          (if different-names? TRUE FALSE))
+
       (when (true? result)
         ;; Reset page CHANGED flag.
         (lepton_page_set_changed *page 0)
@@ -89,6 +87,19 @@
         (recent_manager_add *window *filename)
         ;; Update Page Manager.
         (page_select_widget_update *window))
+
+      ;; Log status of operation.
+      (if (false? result)
+          (log! 'message
+                (G_ "Could NOT save page ~S")
+                (pointer->string *filename))
+          (if different-names?
+              (log! 'message
+                    (G_ "Saved as ~S")
+                    (pointer->string *filename))
+              (log! 'message
+                    (G_ "Saved ~S")
+                    (pointer->string *filename))))
 
       (i_set_state_msg *window
                        (symbol->action-mode 'select-mode)

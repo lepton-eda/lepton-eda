@@ -302,7 +302,6 @@
             schematic_compselect_get_preview
 
             recent_manager_add
-            x_window_save_page
             x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
@@ -1051,7 +1050,6 @@
 
 ;;; x_window.c
 (define-lff recent_manager_add void '(* *))
-(define-lff x_window_save_page int (list '* '* '* int int))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
