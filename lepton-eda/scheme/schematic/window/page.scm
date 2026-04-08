@@ -81,34 +81,33 @@
       result))
 
   (define (run-save-as-dialog *dialog)
-    (if (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
-        (let ((filename (file-chooser-filename *dialog)))
-          (and filename
-               ;; If the file already exists, display a dialog box to
-               ;; check if the user really wants to overwrite it.
-               (if (and (file-exists? filename)
-                        (not (eq? (overwrite-dialog-response *dialog
-                                                             filename)
-                                  'yes)))
-                   (begin
-                     (log! 'message (G_ "Save cancelled on user request"))
-                     #f)
+    (and (eq? (gtk-response->symbol (gtk_dialog_run *dialog)) 'accept)
+         (let ((filename (file-chooser-filename *dialog)))
+           (and filename
+                ;; If the file already exists, display a dialog box to
+                ;; check if the user really wants to overwrite it.
+                (if (and (file-exists? filename)
+                         (not (eq? (overwrite-dialog-response *dialog
+                                                              filename)
+                                   'yes)))
+                    (begin
+                      (log! 'message (G_ "Save cancelled on user request"))
+                      #f)
 
-                   ;; Try saving the page to filename.
-                   (let ((save_result
-                          (x_window_save_page *window
-                                              *page
-                                              (string->pointer filename))))
-                     (unless (null-pointer? *result)
-                       (bytevector-sint-set! (pointer->bytevector
-                                              *result
-                                              (sizeof int))
-                                             0
-                                             save_result
-                                             (native-endianness)
-                                             (sizeof int)))
-                     #t))))
-        #f))
+                    ;; Try saving the page to filename.
+                    (let ((save_result
+                           (x_window_save_page *window
+                                               *page
+                                               (string->pointer filename))))
+                      (unless (null-pointer? *result)
+                        (bytevector-sint-set! (pointer->bytevector
+                                               *result
+                                               (sizeof int))
+                                              0
+                                              save_result
+                                              (native-endianness)
+                                              (sizeof int)))
+                      #t))))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
