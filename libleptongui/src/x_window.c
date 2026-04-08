@@ -187,26 +187,21 @@ schematic_window_dialog_save_error (SchematicWindow *w_current,
  *  \param [in] w_current The current #SchematicWindow environment.
  *  \param [in] page      The page to save.
  *  \param [in] filename  The name of the file in which to save page.
+ *  \param [in] ret The result of saving.
  *  \returns 1 on success, 0 otherwise.
  */
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
-                    const gchar *filename)
+                    const gchar *filename,
+                    int ret)
 {
   const gchar *log_msg, *state_msg;
-  gint ret;
-  GError *err = NULL;
-
-  /* try saving page to filename */
-  ret = (gint)f_save (page, filename, &err);
 
   if (ret != 1) {
     log_msg   = _("Could NOT save page [%1$s]");
     state_msg = _("Error while trying to save");
 
-    schematic_window_dialog_save_error (w_current, err->message);
-    g_clear_error (&err);
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */

@@ -36,6 +36,8 @@
 
             g_init_window
 
+            f_save
+
             g_read_file
 
             gdk_window_type_hint_to_string
@@ -305,6 +307,7 @@
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_work_box
+            schematic_window_dialog_save_error
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_page_select_widget
@@ -700,6 +703,9 @@
 ;;; rotation_combo.c
 (define-lff schematic_rotation_combo_get_angle int '(*))
 
+;;; f_basic.c
+(define-lff f_save int '(* * *))
+
 ;;; g_basic.c
 (define-lff g_read_file int '(* * *))
 
@@ -1045,11 +1051,12 @@
 
 ;;; x_window.c
 (define-lff recent_manager_add void '(* *))
-(define-lff x_window_save_page int '(* * *))
+(define-lff x_window_save_page int (list '* '* '* int))
 (define-lff x_window_untitled_page int '(*))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
+(define-lff schematic_window_dialog_save_error void '(* *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))

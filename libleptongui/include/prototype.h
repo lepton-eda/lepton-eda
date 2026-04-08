@@ -997,7 +997,8 @@ recent_manager_add (SchematicWindow *w_current,
 gint
 x_window_save_page (SchematicWindow *w_current,
                     LeptonPage *page,
-                    const gchar *filename);
+                    const gchar *filename,
+                    int ret);
 gboolean
 x_window_untitled_page (LeptonPage* page);
 

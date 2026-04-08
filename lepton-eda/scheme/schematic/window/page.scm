@@ -17,12 +17,14 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic window page)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
@@ -47,6 +49,8 @@
 
 
 (define (window-save-page! *window *page *filename)
+  (define **err
+    (bytevector->pointer (make-bytevector (sizeof '*) 0)))
   (when (null-pointer? *window)
     (error "NULL window."))
   (when (null-pointer? *page)
@@ -54,7 +58,20 @@
   (when (null-pointer? *filename)
     (error "NULL filename."))
 
-  (x_window_save_page *window *page *filename))
+  ;; Try saving page to filename.
+  (let ((result (f_save *page *filename **err))
+        (*err (dereference-pointer **err)))
+    (when (and (false? result)
+               (not (null-pointer? *err)))
+      (let ((message (gerror-message *err)))
+        (g_clear_error **err)
+
+        (schematic_window_dialog_save_error
+         *window
+         (string->pointer message))))
+
+    (x_window_save_page *window *page *filename result)
+    result))
 
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
