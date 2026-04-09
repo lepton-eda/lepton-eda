@@ -107,7 +107,7 @@ success, otherwise #f."
     result))
 
 
-;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
+;;; Opens a file chooser dialog for *PAGE in WINDOW and waits for
 ;;; the user to select a file where the page will be saved.
 ;;; Returns #f on a save error, and #t in all other cases
 ;;; including cancelling the Save dialog or its child overwrite
@@ -116,7 +116,9 @@ success, otherwise #f."
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in window-save-page!(), which is called by this
 ;;; function).
-(define (file-select-save-page! *window *page)
+(define (file-select-save-page! window *page)
+  (define *window (check-window window 1))
+
   (define (file-chooser-filename *dialog)
     (let* ((*filename (gtk_file_chooser_get_filename *dialog))
            (filename (and (not (null-pointer? *filename))
@@ -155,12 +157,10 @@ success, otherwise #f."
               #t)
 
             ;; Try saving the page to filename.
-            (window-save-page! (pointer->window *window)
+            (window-save-page! window
                                (pointer->page *page)
                                filename))))
 
-  (when (null-pointer? *window)
-    (error "NULL window."))
   (when (null-pointer? *page)
     (error "NULL page."))
 
@@ -221,6 +221,6 @@ success, otherwise #f."
   (unless (null-pointer? *page)
     (if (true? (x_window_untitled_page *page))
         ;; Open "Save as..." dialog.
-        (file-select-save-page! *window *page)
+        (file-select-save-page! window *page)
         ;; Save page.
         (window-save-page! window page (page-filename page)))))

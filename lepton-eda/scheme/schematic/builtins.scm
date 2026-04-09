@@ -111,12 +111,14 @@
   (window-save-active-page! (current-window)))
 
 (define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
+  (define window (current-window))
   (define *window (*current-window))
-  (file-select-save-page! *window
+  (file-select-save-page! window
                           (schematic_window_get_active_page *window)))
 
 ;;; Save all opened pages.
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
+  (define window (current-window))
   (define *window (*current-window))
   (define tabs-enabled? (true? (x_tabs_enabled)))
 
@@ -134,7 +136,7 @@
     (let ((*page (page->pointer page)))
       (if (untitled? *page)
           ;; For untitled pages, open "Save as..." dialog.
-          (file-select-save-page! *window *page)
+          (file-select-save-page! window *page)
           ;; Simply save any other page.
           (window-save-page! (pointer->window *window)
                              page
