@@ -137,7 +137,7 @@
           (file-select-save-page! *window *page)
           ;; Simply save any other page.
           (window-save-page! (pointer->window *window)
-                             *page
+                             page
                              (string->pointer (page-filename page))))))
 
   (define (save-page-and-update-header! page)
