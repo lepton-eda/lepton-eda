@@ -107,16 +107,16 @@ success, otherwise #f."
     result))
 
 
-;;; Opens a file chooser dialog for PAGE in WINDOW and waits for
-;;; the user to select a file where the page will be saved.
-;;; Returns #f on a save error, and #t in all other cases
-;;; including cancelling the Save dialog or its child overwrite
-;;; dialog.
-;;;
 ;;; The function updates the user interface. (Actual UI update is
 ;;; performed in window-save-page!(), which is called by this
 ;;; function).
 (define (file-select-save-page! window page)
+  "Opens a file chooser dialog in WINDOW to select a file name in
+which to save PAGE.  If a file with the chosen name already
+exists, an overwrite confirmation dialog is opened.  If either of
+the dialogs is cancelled by the user, the function returns #t.
+Otherwise it tries to save the page and returns #t on success, or
+#f on any error."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
 
