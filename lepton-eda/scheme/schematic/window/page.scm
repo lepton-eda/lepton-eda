@@ -77,7 +77,7 @@ success, otherwise #f."
 
     (let ((different-names?
            (not (string-ci= (pointer->string (lepton_page_get_filename *page))
-                            (pointer->string *filename)))))
+                            filename))))
       (when (and result
                  different-names?)
         (lepton_page_set_filename *page *filename))
@@ -92,16 +92,10 @@ success, otherwise #f."
 
       ;; Log status of operation.
       (if (not result)
-          (log! 'message
-                (G_ "Could NOT save page ~S")
-                (pointer->string *filename))
+          (log! 'message (G_ "Could NOT save page ~S") filename)
           (if different-names?
-              (log! 'message
-                    (G_ "Saved as ~S")
-                    (pointer->string *filename))
-              (log! 'message
-                    (G_ "Saved ~S")
-                    (pointer->string *filename))))
+              (log! 'message (G_ "Saved as ~S") filename)
+              (log! 'message (G_ "Saved ~S") filename)))
 
       (i_set_state_msg *window
                        (symbol->action-mode 'select-mode)
