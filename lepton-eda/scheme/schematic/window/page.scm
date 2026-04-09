@@ -75,32 +75,31 @@ success, otherwise #f."
          (string->pointer message))))
 
     ;; Update widgets, log and display the status of operation.
-    (let ((different-names?
-           (not (string-ci= (page-filename page) filename))))
-      (if result
-          (begin
-            (if different-names?
-                (begin
-                  (set-page-filename! page filename)
-                  (log! 'message (G_ "Saved as ~S") filename))
-                (log! 'message (G_ "Saved ~S") filename))
-            ;; Reset page CHANGED flag.
-            (set-page-dirty! page #f)
-            ;; Add to recent file list.
-            (recent_manager_add *window (string->pointer filename))
-            ;; Update Page Manager.  It has to be updated after
-            ;; changing the name and dirty status of the page.
-            (page_select_widget_update *window))
+    (if result
+        (begin
+          (if (string-ci= (page-filename page) filename)
+              (log! 'message (G_ "Saved ~S") filename)
+              ;; The file names differ.
+              (begin
+                (set-page-filename! page filename)
+                (log! 'message (G_ "Saved as ~S") filename)))
+          ;; Reset page CHANGED flag.
+          (set-page-dirty! page #f)
+          ;; Add to recent file list.
+          (recent_manager_add *window (string->pointer filename))
+          ;; Update Page Manager.  It has to be updated after
+          ;; changing the name and dirty status of the page.
+          (page_select_widget_update *window))
 
-          (log! 'message (G_ "Could NOT save page ~S") filename))
+        (log! 'message (G_ "Could NOT save page ~S") filename))
 
-      (i_set_state_msg *window
-                       (symbol->action-mode 'select-mode)
-                       (string->pointer
-                        (if result
-                            (G_ "Saved")
-                            (G_ "Error while trying to save"))))
-      result)))
+    (i_set_state_msg *window
+                     (symbol->action-mode 'select-mode)
+                     (string->pointer
+                      (if result
+                          (G_ "Saved")
+                          (G_ "Error while trying to save"))))
+    result))
 
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
