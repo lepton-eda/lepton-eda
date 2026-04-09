@@ -138,7 +138,7 @@
           ;; Simply save any other page.
           (window-save-page! (pointer->window *window)
                              page
-                             (string->pointer (page-filename page))))))
+                             (page-filename page)))))
 
   (define (save-page-and-update-header! page)
     (let ((saved? (save-page! page)))

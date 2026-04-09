@@ -21,6 +21,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
@@ -28,6 +29,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi gtk)
@@ -49,15 +51,17 @@
   (schematic_window_page_changed *window))
 
 
-(define (window-save-page! window page *filename)
-  "Saves PAGE in WINDOW to a file named *FILENAME.  Returns #t on
+(define (window-save-page! window page filename)
+  "Saves PAGE in WINDOW to a file named FILENAME.  Returns #t on
 success, otherwise #f."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
+  ;; Temporarily define the pointer before checking the string.
+  (define *filename (string->pointer filename))
   (define **err
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-  (when (null-pointer? *filename)
-    (error "NULL filename."))
+
+  (check-string filename 3)
 
   ;; Try saving page to filename.
   (let ((result (true? (f_save *page *filename **err)))
@@ -158,7 +162,7 @@ success, otherwise #f."
             ;; Try saving the page to filename.
             (window-save-page! (pointer->window *window)
                                (pointer->page *page)
-                               (string->pointer filename)))))
+                               filename))))
 
   (when (null-pointer? *window)
     (error "NULL window."))
@@ -224,6 +228,4 @@ success, otherwise #f."
         ;; Open "Save as..." dialog.
         (file-select-save-page! *window *page)
         ;; Save page.
-        (window-save-page! window
-                           page
-                           (lepton_page_get_filename *page)))))
+        (window-save-page! window page (page-filename page)))))
