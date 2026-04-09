@@ -50,8 +50,8 @@
 
 
 (define (window-save-page! *window *page *filename)
-  "Saves *PAGE in *WINDOW to a file named *FILENAME.  Returns TRUE on
-success, FALSE otherwise (C booleans)."
+  "Saves *PAGE in *WINDOW to a file named *FILENAME.  Returns #t on
+success, otherwise #f."
   (define **err
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
   (when (null-pointer? *window)
@@ -107,7 +107,7 @@ success, FALSE otherwise (C booleans)."
                         (if (false? result)
                             (G_ "Error while trying to save")
                             (G_ "Saved"))))
-      result)))
+      (true? result))))
 
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
@@ -158,9 +158,9 @@ success, FALSE otherwise (C booleans)."
               #t)
 
             ;; Try saving the page to filename.
-            (true? (window-save-page! *window
-                                      *page
-                                      (string->pointer filename))))))
+            (window-save-page! *window
+                               *page
+                               (string->pointer filename)))))
 
   (when (null-pointer? *window)
     (error "NULL window."))

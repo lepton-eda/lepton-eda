@@ -136,10 +136,9 @@
           ;; For untitled pages, open "Save as..." dialog.
           (file-select-save-page! *window *page)
           ;; Simply save any other page.
-          (true? (window-save-page! *window
-                                    *page
-                                    (string->pointer
-                                     (page-filename page)))))))
+          (window-save-page! *window
+                             *page
+                             (string->pointer (page-filename page))))))
 
   (define (save-page-and-update-header! page)
     (let ((saved? (save-page! page)))
