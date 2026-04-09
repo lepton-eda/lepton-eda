@@ -59,6 +59,16 @@ success, otherwise #f."
                      (symbol->action-mode 'select-mode)
                      (string->pointer message)))
 
+  (define (process-error)
+    (let ((*err (dereference-pointer **err)))
+      (unless (null-pointer? *err)
+        (let ((message (gerror-message *err)))
+          (g_clear_error **err)
+
+          (schematic_window_dialog_save_error
+           *window
+           (string->pointer message))))))
+
   (define *window (check-window window 1))
   (define *page (check-page page 2))
   (define **err
@@ -68,16 +78,7 @@ success, otherwise #f."
 
   ;; Try saving page to filename.
   (let ((result
-         (true? (f_save *page (string->pointer filename) **err)))
-        (*err (dereference-pointer **err)))
-    (when (and (not result)
-               (not (null-pointer? *err)))
-      (let ((message (gerror-message *err)))
-        (g_clear_error **err)
-
-        (schematic_window_dialog_save_error
-         *window
-         (string->pointer message))))
+         (true? (f_save *page (string->pointer filename) **err))))
 
     ;; Update widgets, log and display the status of operation.
     (if result
@@ -99,6 +100,7 @@ success, otherwise #f."
           (set-statusbar-message! (G_ "Saved")))
 
         (begin
+          (process-error)
           (log! 'message (G_ "Could NOT save page ~S") filename)
           (set-statusbar-message! (G_ "Error while trying to save"))))
 
