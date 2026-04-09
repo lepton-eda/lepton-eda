@@ -62,9 +62,9 @@ success, otherwise #f."
     (error "NULL filename."))
 
   ;; Try saving page to filename.
-  (let ((result (f_save *page *filename **err))
+  (let ((result (true? (f_save *page *filename **err)))
         (*err (dereference-pointer **err)))
-    (when (and (false? result)
+    (when (and (not result)
                (not (null-pointer? *err)))
       (let ((message (gerror-message *err)))
         (g_clear_error **err)
@@ -76,11 +76,11 @@ success, otherwise #f."
     (let ((different-names?
            (not (string-ci= (pointer->string (lepton_page_get_filename *page))
                             (pointer->string *filename)))))
-      (when (and (true? result)
+      (when (and result
                  different-names?)
         (lepton_page_set_filename *page *filename))
 
-      (when (true? result)
+      (when result
         ;; Reset page CHANGED flag.
         (lepton_page_set_changed *page 0)
         ;; Add to recent file list.
@@ -89,7 +89,7 @@ success, otherwise #f."
         (page_select_widget_update *window))
 
       ;; Log status of operation.
-      (if (false? result)
+      (if (not result)
           (log! 'message
                 (G_ "Could NOT save page ~S")
                 (pointer->string *filename))
@@ -104,10 +104,10 @@ success, otherwise #f."
       (i_set_state_msg *window
                        (symbol->action-mode 'select-mode)
                        (string->pointer
-                        (if (false? result)
+                        (if (not result)
                             (G_ "Error while trying to save")
                             (G_ "Saved"))))
-      (true? result))))
+      result)))
 
 
 ;;; Opens a file chooser dialog in *WINDOW for *PAGE and waits for
