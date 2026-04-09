@@ -89,18 +89,18 @@ success, otherwise #f."
         (page_select_widget_update *window))
 
       ;; Log status of operation.
-      (if (not result)
-          (log! 'message (G_ "Could NOT save page ~S") filename)
+      (if result
           (if different-names?
               (log! 'message (G_ "Saved as ~S") filename)
-              (log! 'message (G_ "Saved ~S") filename)))
+              (log! 'message (G_ "Saved ~S") filename))
+          (log! 'message (G_ "Could NOT save page ~S") filename))
 
       (i_set_state_msg *window
                        (symbol->action-mode 'select-mode)
                        (string->pointer
-                        (if (not result)
-                            (G_ "Error while trying to save")
-                            (G_ "Saved"))))
+                        (if result
+                            (G_ "Saved")
+                            (G_ "Error while trying to save"))))
       result)))
 
 
