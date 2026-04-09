@@ -74,25 +74,24 @@ success, otherwise #f."
          *window
          (string->pointer message))))
 
+    ;; Update widgets, log and display the status of operation.
     (let ((different-names?
            (not (string-ci= (page-filename page) filename))))
-      (when (and result
-                 different-names?)
-        (set-page-filename! page filename))
-
-      (when result
-        ;; Reset page CHANGED flag.
-        (set-page-dirty! page #f)
-        ;; Add to recent file list.
-        (recent_manager_add *window (string->pointer filename))
-        ;; Update Page Manager.
-        (page_select_widget_update *window))
-
-      ;; Log status of operation.
       (if result
-          (if different-names?
-              (log! 'message (G_ "Saved as ~S") filename)
-              (log! 'message (G_ "Saved ~S") filename))
+          (begin
+            (if different-names?
+                (begin
+                  (set-page-filename! page filename)
+                  (log! 'message (G_ "Saved as ~S") filename))
+                (log! 'message (G_ "Saved ~S") filename))
+            ;; Reset page CHANGED flag.
+            (set-page-dirty! page #f)
+            ;; Add to recent file list.
+            (recent_manager_add *window (string->pointer filename))
+            ;; Update Page Manager.  It has to be updated after
+            ;; changing the name and dirty status of the page.
+            (page_select_widget_update *window))
+
           (log! 'message (G_ "Could NOT save page ~S") filename))
 
       (i_set_state_msg *window
