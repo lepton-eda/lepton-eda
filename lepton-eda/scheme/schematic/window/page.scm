@@ -82,7 +82,7 @@ success, otherwise #f."
 
       (when result
         ;; Reset page CHANGED flag.
-        (lepton_page_set_changed *page 0)
+        (set-page-dirty! page #f)
         ;; Add to recent file list.
         (recent_manager_add *window (string->pointer filename))
         ;; Update Page Manager.
