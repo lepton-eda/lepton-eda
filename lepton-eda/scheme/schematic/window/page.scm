@@ -94,13 +94,14 @@ success, otherwise #f."
           (recent_manager_add *window (string->pointer filename))
           ;; Update Page Manager.  It has to be updated after
           ;; changing the name and dirty status of the page.
-          (page_select_widget_update *window))
+          (page_select_widget_update *window)
 
-        (log! 'message (G_ "Could NOT save page ~S") filename))
+          (set-statusbar-message! (G_ "Saved")))
 
-    (set-statusbar-message! (if result
-                                (G_ "Saved")
-                                (G_ "Error while trying to save")))
+        (begin
+          (log! 'message (G_ "Could NOT save page ~S") filename)
+          (set-statusbar-message! (G_ "Error while trying to save"))))
+
     result))
 
 
