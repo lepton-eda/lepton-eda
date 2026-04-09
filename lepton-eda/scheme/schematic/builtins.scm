@@ -136,7 +136,7 @@
           ;; For untitled pages, open "Save as..." dialog.
           (file-select-save-page! *window *page)
           ;; Simply save any other page.
-          (window-save-page! *window
+          (window-save-page! (pointer->window *window)
                              *page
                              (string->pointer (page-filename page))))))
 

@@ -49,13 +49,12 @@
   (schematic_window_page_changed *window))
 
 
-(define (window-save-page! *window *page *filename)
-  "Saves *PAGE in *WINDOW to a file named *FILENAME.  Returns #t on
+(define (window-save-page! window *page *filename)
+  "Saves *PAGE in WINDOW to a file named *FILENAME.  Returns #t on
 success, otherwise #f."
+  (define *window (check-window window 1))
   (define **err
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-  (when (null-pointer? *window)
-    (error "NULL window."))
   (when (null-pointer? *page)
     (error "NULL page."))
   (when (null-pointer? *filename)
@@ -158,7 +157,7 @@ success, otherwise #f."
               #t)
 
             ;; Try saving the page to filename.
-            (window-save-page! *window
+            (window-save-page! (pointer->window *window)
                                *page
                                (string->pointer filename)))))
 
@@ -225,6 +224,6 @@ success, otherwise #f."
         ;; Open "Save as..." dialog.
         (file-select-save-page! *window *page)
         ;; Save page.
-        (window-save-page! *window
+        (window-save-page! window
                            *page
                            (lepton_page_get_filename *page)))))
