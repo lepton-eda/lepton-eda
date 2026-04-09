@@ -56,15 +56,14 @@
 success, otherwise #f."
   (define *window (check-window window 1))
   (define *page (check-page page 2))
-  ;; Temporarily define the pointer before checking the string.
-  (define *filename (string->pointer filename))
   (define **err
     (bytevector->pointer (make-bytevector (sizeof '*) 0)))
 
   (check-string filename 3)
 
   ;; Try saving page to filename.
-  (let ((result (true? (f_save *page *filename **err)))
+  (let ((result
+         (true? (f_save *page (string->pointer filename) **err)))
         (*err (dereference-pointer **err)))
     (when (and (not result)
                (not (null-pointer? *err)))
@@ -85,7 +84,7 @@ success, otherwise #f."
         ;; Reset page CHANGED flag.
         (lepton_page_set_changed *page 0)
         ;; Add to recent file list.
-        (recent_manager_add *window *filename)
+        (recent_manager_add *window (string->pointer filename))
         ;; Update Page Manager.
         (page_select_widget_update *window))
 
