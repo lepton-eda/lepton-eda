@@ -76,11 +76,10 @@ success, otherwise #f."
          (string->pointer message))))
 
     (let ((different-names?
-           (not (string-ci= (pointer->string (lepton_page_get_filename *page))
-                            filename))))
+           (not (string-ci= (page-filename page) filename))))
       (when (and result
                  different-names?)
-        (lepton_page_set_filename *page *filename))
+        (set-page-filename! page filename))
 
       (when result
         ;; Reset page CHANGED flag.
