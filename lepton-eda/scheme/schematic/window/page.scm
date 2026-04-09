@@ -54,6 +54,11 @@
 (define (window-save-page! window page filename)
   "Saves PAGE in WINDOW to a file named FILENAME.  Returns #t on
 success, otherwise #f."
+  (define (set-statusbar-message! message)
+    (i_set_state_msg *window
+                     (symbol->action-mode 'select-mode)
+                     (string->pointer message)))
+
   (define *window (check-window window 1))
   (define *page (check-page page 2))
   (define **err
@@ -93,12 +98,9 @@ success, otherwise #f."
 
         (log! 'message (G_ "Could NOT save page ~S") filename))
 
-    (i_set_state_msg *window
-                     (symbol->action-mode 'select-mode)
-                     (string->pointer
-                      (if result
-                          (G_ "Saved")
-                          (G_ "Error while trying to save"))))
+    (set-statusbar-message! (if result
+                                (G_ "Saved")
+                                (G_ "Error while trying to save")))
     result))
 
 
