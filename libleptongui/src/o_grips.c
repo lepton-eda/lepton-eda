@@ -1520,7 +1520,7 @@ o_grips_draw_rubber (SchematicWindow *w_current,
       break;
 
     case OBJ_BOX:
-      o_box_draw_rubber (w_current, renderer);
+      schematic_draw_box (w_current, renderer);
       break;
 
     case OBJ_PATH:

@@ -204,9 +204,6 @@ void
 o_box_motion (SchematicWindow *w_current,
               int x,
               int y);
-void
-o_box_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
 
 /* o_bus.c */
 void
