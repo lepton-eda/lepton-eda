@@ -31,6 +31,32 @@ extern LeptonColorMap display_outline_colors;
  * readability issues
  */
 
+/*! \brief Draw a zoom box.
+ *
+ *  \par Function Description
+ *
+ *  Draws a zoom box using coordinates defined in the current
+ *  #SchematicWindow instance and all other data set in \p renderer.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_zoom_box (SchematicWindow *w_current,
+                         EdaRenderer *renderer)
+{
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_box (cr, flags, wwidth, w_current->first_wx, w_current->first_wy,
+                 w_current->second_wx, w_current->second_wy);
+  eda_cairo_set_source_color (cr, ZOOM_BOX_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -321,7 +347,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           break;
         case GRIPS      : o_grips_draw_rubber (w_current, renderer); break;
         case SBOX       : o_select_box_draw_rubber (w_current, renderer); break;
-        case ZOOMBOX    : a_zoom_box_draw_rubber (w_current, renderer); break;
+        case ZOOMBOX    : schematic_draw_zoom_box (w_current, renderer); break;
         default: break;
       }
     }

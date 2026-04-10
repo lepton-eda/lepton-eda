@@ -27,6 +27,9 @@
 
 G_BEGIN_DECLS
 
+void
+schematic_draw_zoom_box (SchematicWindow *w_current,
+                         EdaRenderer *renderer);
 
 #ifdef ENABLE_GTK3
 void

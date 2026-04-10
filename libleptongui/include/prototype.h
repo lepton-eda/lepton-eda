@@ -3,11 +3,6 @@
 
 G_BEGIN_DECLS
 
-/* a_zoom.c */
-void
-a_zoom_box_draw_rubber (SchematicWindow *w_current,
-                        EdaRenderer *renderer);
-
 /* execute_script.c */
 char*
 schematic_execute_script (SchematicWindow *w_current);

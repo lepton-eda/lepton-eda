@@ -1,7 +1,6 @@
 lib_LTLIBRARIES = libleptongui.la
 
 libleptongui_la_SOURCES = \
-	a_zoom.c \
 	action.c \
 	action_mode.c \
 	autonumber_dialog.c \
