@@ -28,6 +28,9 @@
 G_BEGIN_DECLS
 
 void
+schematic_draw_arc (SchematicWindow *w_current,
+                    EdaRenderer *renderer);
+void
 schematic_draw_zoom_box (SchematicWindow *w_current,
                          EdaRenderer *renderer);
 

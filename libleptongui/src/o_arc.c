@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -264,46 +264,4 @@ o_arc_motion (SchematicWindow *w_current,
   /* draw the new temporary arc */
   o_arc_invalidate_rubber (w_current);
   schematic_window_set_rubber_visible (w_current, 1);
-}
-
-/*! \brief Draw arc from SchematicWindow object.
- *  \par Function Description
- *  This function draws the arc from the variables in the SchematicWindow
- *  structure <B>*w_current</B> using \a renderer.
- *  The center of the arc is at (<B>w_current->first_wx</B>,
- *  <B>w_current->first_wy</B>), its radius equal to <B>w_current->distance</B>,
- *  and the start and end angle are given by <B>w_current->second_wx</B> and
- *  <B>w_current->second_wy</B>.
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] renderer   The \c EdaRenderer object.
- */
-void
-o_arc_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer)
-{
-  double rad_angle;
-  int rdx, rdy;
-  double wwidth = 0;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  eda_cairo_arc (cr, flags, wwidth,
-                 w_current->first_wx, w_current->first_wy,
-                 w_current->distance,
-                 w_current->second_wx, w_current->second_wy);
-
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-
-  /* draw the radius line */
-  rad_angle = ((double) w_current->second_wx) * M_PI / 180;
-  rdx = (double) w_current->distance * cos (rad_angle);
-  rdy = (double) w_current->distance * sin (rad_angle);
-
-  eda_cairo_line (cr, flags, END_NONE, wwidth,
-                  w_current->first_wx, w_current->first_wy,
-                  w_current->first_wx + rdx, w_current->first_wy + rdy);
-
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }

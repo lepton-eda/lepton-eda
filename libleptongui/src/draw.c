@@ -31,6 +31,55 @@ extern LeptonColorMap display_outline_colors;
  * readability issues
  */
 
+
+/*! \brief Draw an arc.
+ *
+ *  \par Function Description
+ *
+ *  Draws an arc using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  The center of the arc is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>), its radius equal to
+ *  <B>w_current->distance</B>, and the start and end angles are
+ *  given by <B>w_current->second_wx</B> and
+ *  <B>w_current->second_wy</B>.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_arc (SchematicWindow *w_current,
+                    EdaRenderer *renderer)
+{
+  double rad_angle;
+  int rdx, rdy;
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_arc (cr, flags, wwidth,
+                 w_current->first_wx, w_current->first_wy,
+                 w_current->distance,
+                 w_current->second_wx, w_current->second_wy);
+
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+
+  /* draw the radius line */
+  rad_angle = ((double) w_current->second_wx) * M_PI / 180;
+  rdx = (double) w_current->distance * cos (rad_angle);
+  rdy = (double) w_current->distance * sin (rad_angle);
+
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx, w_current->first_wy,
+                  w_current->first_wx + rdx, w_current->first_wy + rdy);
+
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
+}
+
+
 /*! \brief Draw a zoom box.
  *
  *  \par Function Description
@@ -318,7 +367,7 @@ schematic_draw_rect (SchematicWindow *w_current,
     {
       switch (action_mode)
       {
-        case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
+        case ARCMODE    : schematic_draw_arc (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
         case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
         case LINEMODE   : o_line_draw_rubber (w_current, renderer); break;

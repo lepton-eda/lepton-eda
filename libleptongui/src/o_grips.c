@@ -1516,7 +1516,7 @@ o_grips_draw_rubber (SchematicWindow *w_current,
 
   switch (lepton_object_get_type (w_current->which_object)) {
     case OBJ_ARC:
-      o_arc_draw_rubber (w_current, renderer);
+      schematic_draw_arc (w_current, renderer);
       break;
 
     case OBJ_BOX:

@@ -161,9 +161,7 @@ o_arc_motion (SchematicWindow *w_current,
               int x,
               int y,
               int whichone);
-void
-o_arc_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
+
 /* o_attrib.c */
 void
 o_attrib_add_selected (SchematicWindow *w_current,
