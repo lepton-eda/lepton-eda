@@ -80,7 +80,7 @@
             o_redraw_cleanstates
             *o_invalidate
             o_invalidate_glist
-            o_invalidate_rubber
+            schematic_draw_invalidate_rubber
 
             o_arc_end1
             o_arc_invalidate_rubber
@@ -1162,7 +1162,7 @@
 (define-lff o_redraw_cleanstates int '(*))
 (define-lfc *o_invalidate)
 (define-lff o_invalidate_glist void '(* *))
-(define-lff o_invalidate_rubber int '(*))
+(define-lff schematic_draw_invalidate_rubber int '(*))
 
 ;;; o_arc.c
 (define-lff o_arc_end1 void (list '* int int))

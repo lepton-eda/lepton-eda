@@ -103,7 +103,7 @@
 
 (define (callback-add-bus *window)
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
   (set-action-mode! 'bus-mode #:window (pointer->window *window))
   (let ((position (action-position)))
     (and position
@@ -143,7 +143,7 @@
 
 (define (callback-toolbar-edit-select *widget *window)
   (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
-    (unless (true? (o_invalidate_rubber *window))
+    (unless (true? (schematic_draw_invalidate_rubber *window))
       (callback-cancel *window))
     (callback-edit-select *window)))
 

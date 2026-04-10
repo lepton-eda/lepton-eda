@@ -989,7 +989,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
   (define *window (*current-window))
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'line-mode)
 
@@ -1004,7 +1004,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'path-mode)
 
@@ -1017,7 +1017,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'box-mode)
 
@@ -1032,7 +1032,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'circle-mode)
 
@@ -1047,7 +1047,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'arc-mode)
 
@@ -1062,7 +1062,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'pin-mode)
 
@@ -1077,7 +1077,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'select-mode)
 

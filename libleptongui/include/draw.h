@@ -44,7 +44,7 @@ schematic_draw_rect (SchematicWindow *w_current,
                      GdkRectangle *rectangle);
 #endif
 int
-o_invalidate_rubber (SchematicWindow *w_current);
+schematic_draw_invalidate_rubber (SchematicWindow *w_current);
 
 int
 o_redraw_cleanstates (SchematicWindow *w_current);

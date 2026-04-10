@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2025 Lepton EDA Contributors
+;;; Copyright (C) 2025-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -180,7 +180,7 @@ window."
         *newtext-widget))
 
   (o_redraw_cleanstates *window)
-  (o_invalidate_rubber *window)
+  (schematic_draw_invalidate_rubber *window)
 
   (i_action_stop *window)
   (set-action-mode! 'select-mode #:window window)
