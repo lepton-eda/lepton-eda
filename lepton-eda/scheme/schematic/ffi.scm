@@ -1158,7 +1158,7 @@
 ;;; m_basic.c
 (define-lff snap_grid int (list '* int))
 
-;;; o_basic.c
+;;; draw.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lfc *o_invalidate)
 (define-lff o_invalidate_glist void '(* *))

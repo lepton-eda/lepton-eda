@@ -192,7 +192,7 @@ o_attrib_add_attrib (SchematicWindow *w_current,
                      int x,
                      int y);
 
-/* o_basic.c */
+/* draw.c */
 #ifdef ENABLE_GTK3
 void
 o_redraw_rect (SchematicWindow *w_current,

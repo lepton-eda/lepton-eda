@@ -28,6 +28,7 @@ libleptongui_la_SOURCES = \
 	coord_dialog.c \
 	dialog.c \
 	dialog_misc.c \
+	draw.c \
 	fill_swatch_cell_renderer.c \
 	find_text_state.c \
 	find_text_widget.c \
@@ -54,7 +55,6 @@ libleptongui_la_SOURCES = \
 	m_basic.c \
 	o_arc.c \
 	o_attrib.c \
-	o_basic.c \
 	o_box.c \
 	o_bus.c \
 	o_circle.c \
