@@ -192,41 +192,6 @@ o_attrib_add_attrib (SchematicWindow *w_current,
                      int x,
                      int y);
 
-/* draw.c */
-#ifdef ENABLE_GTK3
-void
-o_redraw_rect (SchematicWindow *w_current,
-               GtkWidget *widget,
-               LeptonPage *page,
-               SchematicViewport *geometry,
-               cairo_t *cr);
-#else
-void
-o_redraw_rect (SchematicWindow *w_current,
-               GdkDrawable *drawable,
-               LeptonPage *page,
-               SchematicViewport *geometry,
-               GdkRectangle *rectangle);
-#endif
-int
-o_invalidate_rubber (SchematicWindow *w_current);
-
-int
-o_redraw_cleanstates (SchematicWindow *w_current);
-
-void
-o_invalidate_rect (SchematicWindow *w_current,
-                   int x1,
-                   int y1,
-                   int x2,
-                   int y2);
-void
-o_invalidate (SchematicWindow *w_current,
-              LeptonObject *object);
-void
-o_invalidate_glist (SchematicWindow *w_current,
-                    GList *list);
-
 /* o_box.c */
 void
 o_box_draw (SchematicWindow *w_current,

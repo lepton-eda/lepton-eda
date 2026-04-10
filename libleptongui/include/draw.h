@@ -1,0 +1,66 @@
+/* Lepton EDA Schematic Capture
+ * Copyright (C) 2026 Lepton EDA Contributors
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
+/*!
+ * \file draw.h
+ *
+ * \brief Drawing functions
+ */
+
+#ifndef DRAW_H
+#define DRAW_H
+
+G_BEGIN_DECLS
+
+
+#ifdef ENABLE_GTK3
+void
+o_redraw_rect (SchematicWindow *w_current,
+               GtkWidget *widget,
+               LeptonPage *page,
+               SchematicViewport *geometry,
+               cairo_t *cr);
+#else
+void
+o_redraw_rect (SchematicWindow *w_current,
+               GdkDrawable *drawable,
+               LeptonPage *page,
+               SchematicViewport *geometry,
+               GdkRectangle *rectangle);
+#endif
+int
+o_invalidate_rubber (SchematicWindow *w_current);
+
+int
+o_redraw_cleanstates (SchematicWindow *w_current);
+
+void
+o_invalidate_rect (SchematicWindow *w_current,
+                   int x1,
+                   int y1,
+                   int x2,
+                   int y2);
+void
+o_invalidate (SchematicWindow *w_current,
+              LeptonObject *object);
+void
+o_invalidate_glist (SchematicWindow *w_current,
+                    GList *list);
+G_END_DECLS
+
+#endif /* DRAW_H */

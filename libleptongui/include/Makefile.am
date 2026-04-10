@@ -23,6 +23,7 @@ noinst_HEADERS = \
 	schematic_defines.h \
 	dialog.h \
 	dialog_misc.h \
+	draw.h \
 	fill_swatch_cell_renderer.h \
 	find_text_state.h \
 	find_text_widget.h \
