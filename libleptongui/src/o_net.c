@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -758,10 +758,11 @@ o_net_invalidate_rubber (SchematicWindow *w_current)
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
       magnetic_halfsize = MAX (4 * size, MAGNETIC_HALFSIZE);
 
-      o_invalidate_rect (w_current, magnetic_x - magnetic_halfsize,
-                                    magnetic_y - magnetic_halfsize,
-                                    magnetic_x + magnetic_halfsize,
-                                    magnetic_y + magnetic_halfsize);
+      schematic_draw_invalidate_rect (w_current,
+                                      magnetic_x - magnetic_halfsize,
+                                      magnetic_y - magnetic_halfsize,
+                                      magnetic_x + magnetic_halfsize,
+                                      magnetic_y + magnetic_halfsize);
     }
   }
 

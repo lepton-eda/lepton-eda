@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,7 +179,11 @@ x_stroke_translate_and_execute (SchematicWindow *w_current)
     max_y = MAX (max_y, point->y);
   }
 
-  o_invalidate_rect (w_current, min_x, min_y, max_x + 1, max_y + 1);
+  schematic_draw_invalidate_rect (w_current,
+                                  min_x,
+                                  min_y,
+                                  max_x + 1,
+                                  max_y + 1);
 
   /* resets length of array */
   stroke_points->len = 0;

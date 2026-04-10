@@ -50,11 +50,11 @@ int
 schematic_draw_clear (SchematicWindow *w_current);
 
 void
-o_invalidate_rect (SchematicWindow *w_current,
-                   int x1,
-                   int y1,
-                   int x2,
-                   int y2);
+schematic_draw_invalidate_rect (SchematicWindow *w_current,
+                                int x1,
+                                int y1,
+                                int x2,
+                                int y2);
 void
 o_invalidate (SchematicWindow *w_current,
               LeptonObject *object);

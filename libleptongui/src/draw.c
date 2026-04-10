@@ -493,11 +493,11 @@ schematic_draw_clear (SchematicWindow *w_current)
  *  \param [in] y2         Y coord for corner 2 (SCREEN units)
  */
 void
-o_invalidate_rect (SchematicWindow *w_current,
-                   int x1,
-                   int y1,
-                   int x2,
-                   int y2)
+schematic_draw_invalidate_rect (SchematicWindow *w_current,
+                                int x1,
+                                int y1,
+                                int x2,
+                                int y2)
 {
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
 
@@ -512,8 +512,9 @@ o_invalidate_rect (SchematicWindow *w_current,
 /*! \brief Invalidate on-screen area for an object
  *
  *  \par Function Description
- *  This function calls o_invalidate_rect() with the bounds of the
- *  passed LeptonObject, converted to screen coordinates.
+ *  This function calls schematic_draw_invalidate_rect() with the
+ *  bounds of the passed LeptonObject, converted to screen
+ *  coordinates.
  *
  *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] object     The LeptonObject invalidated on screen.
@@ -559,8 +560,8 @@ o_invalidate (SchematicWindow *w_current,
 /*! \brief Invalidate on-screen area for a GList of objects
  *
  *  \par Function Description
- *  This function calls o_invalidate_rect() with the bounds of the
- *  passed GList, converted to screen coordinates.
+ *  This function calls schematic_draw_invalidate_rect() with the
+ *  bounds of the passed GList, converted to screen coordinates.
  *
  *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] list       The glist objects invalidated on screen.
