@@ -56,8 +56,8 @@ schematic_draw_invalidate_rect (SchematicWindow *w_current,
                                 int x2,
                                 int y2);
 void
-o_invalidate (SchematicWindow *w_current,
-              LeptonObject *object);
+schematic_draw_invalidate_object (SchematicWindow *w_current,
+                                  LeptonObject *object);
 void
 o_invalidate_glist (SchematicWindow *w_current,
                     GList *list);

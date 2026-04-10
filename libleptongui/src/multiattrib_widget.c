@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1082,7 +1082,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
     o_attrib = (LeptonObject *)a_iter->data;
 
     /* actually modifies the attribute */
-    o_invalidate (w_current, o_attrib);
+    schematic_draw_invalidate_object (w_current, o_attrib);
     lepton_text_object_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
     lepton_text_object_recreate (o_attrib);
   }
@@ -1145,7 +1145,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
     else
       new_snv = SHOW_VALUE;
 
-    o_invalidate (w_current, o_attrib);
+    schematic_draw_invalidate_object (w_current, o_attrib);
 
     /* actually modifies the attribute */
     lepton_text_object_set_show (o_attrib, new_snv);
@@ -1210,7 +1210,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
     else
       new_snv = SHOW_NAME;
 
-    o_invalidate (w_current, o_attrib);
+    schematic_draw_invalidate_object (w_current, o_attrib);
 
     /* actually modifies the attribute */
     lepton_text_object_set_show (o_attrib, new_snv);

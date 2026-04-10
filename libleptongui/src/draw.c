@@ -520,8 +520,8 @@ schematic_draw_invalidate_rect (SchematicWindow *w_current,
  *  \param [in] object     The LeptonObject invalidated on screen.
  */
 void
-o_invalidate (SchematicWindow *w_current,
-              LeptonObject *object)
+schematic_draw_invalidate_object (SchematicWindow *w_current,
+                                  LeptonObject *object)
 {
   if (w_current == NULL
       || schematic_window_get_dont_invalidate (w_current))

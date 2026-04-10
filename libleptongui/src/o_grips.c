@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -950,7 +950,7 @@ o_grips_start (SchematicWindow *w_current,
 
     /* Switch off drawing for the object being modified */
     object->dont_redraw = TRUE;
-    o_invalidate (w_current, object);
+    schematic_draw_invalidate_object (w_current, object);
 
     /* there is one */
     /* depending on its type, start the modification process */
@@ -1148,7 +1148,7 @@ o_grips_end_box (SchematicWindow *w_current,
    * we want this? hack */
   if ((box_width == 0) || (box_height == 0)) {
     o_box_invalidate_rubber (w_current);
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1192,7 +1192,7 @@ o_grips_end_picture (SchematicWindow *w_current,
    * we want this? hack */
   if ((GET_PICTURE_WIDTH(w_current) == 0) || (GET_PICTURE_HEIGHT(w_current) == 0)) {
     o_picture_invalidate_rubber (w_current);
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1233,7 +1233,7 @@ o_grips_end_circle (SchematicWindow *w_current,
    * we want this? hack */
   if (w_current->distance == 0) {
     o_circle_invalidate_rubber (w_current);
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1268,7 +1268,7 @@ o_grips_end_line (SchematicWindow *w_current,
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
     o_box_invalidate_rubber (w_current);
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1306,7 +1306,7 @@ o_grips_end_net (SchematicWindow *w_current,
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1347,7 +1347,7 @@ o_grips_end_pin (SchematicWindow *w_current,
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1385,7 +1385,7 @@ o_grips_end_bus (SchematicWindow *w_current,
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_invalidate (w_current, o_current);
+    schematic_draw_invalidate_object (w_current, o_current);
     return;
   }
 
@@ -1483,7 +1483,7 @@ o_grips_end (SchematicWindow *w_current)
 
   /* Switch drawing of the object back on */
   object->dont_redraw = FALSE;
-  o_invalidate (w_current, object);
+  schematic_draw_invalidate_object (w_current, object);
 
   /* reset global variables */
   w_current->which_grip = -1;

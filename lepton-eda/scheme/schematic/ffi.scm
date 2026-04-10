@@ -78,7 +78,7 @@
             o_attrib_add_attrib
 
             schematic_draw_clear
-            *o_invalidate
+            *schematic_draw_invalidate_object
             o_invalidate_glist
             schematic_draw_invalidate_rubber
 
@@ -1160,7 +1160,7 @@
 
 ;;; draw.c
 (define-lff schematic_draw_clear int '(*))
-(define-lfc *o_invalidate)
+(define-lfc *schematic_draw_invalidate_object)
 (define-lff o_invalidate_glist void '(* *))
 (define-lff schematic_draw_invalidate_rubber int '(*))
 

@@ -380,13 +380,13 @@ o_picture_exchange (SchematicWindow *w_current,
       gboolean status;
 
       /* Erase previous picture */
-      o_invalidate (w_current, object);
+      schematic_draw_invalidate_object (w_current, object);
 
       status = lepton_picture_object_set_from_file (object, filename, error);
       if (!status) return FALSE;
 
       /* Draw new picture */
-      o_invalidate (w_current, object);
+      schematic_draw_invalidate_object (w_current, object);
     }
   }
   return TRUE;

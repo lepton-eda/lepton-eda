@@ -1967,8 +1967,8 @@ for *PAGE page will be created and set active."
   (schematic_window_set_toplevel *window *toplevel)
 
   (lepton_object_add_change_notify *toplevel
-                                   *o_invalidate
-                                   *o_invalidate
+                                   *schematic_draw_invalidate_object
+                                   *schematic_draw_invalidate_object
                                    *window)
   ;; Initialize tabbed GUI.
   (x_tabs_init)
