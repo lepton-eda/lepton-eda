@@ -567,8 +567,8 @@ schematic_draw_invalidate_object (SchematicWindow *w_current,
  *  \param [in] list       The glist objects invalidated on screen.
  */
 void
-o_invalidate_glist (SchematicWindow *w_current,
-                    GList *list)
+schematic_draw_invalidate_object_list (SchematicWindow *w_current,
+                                       GList *list)
 {
   int left, top, bottom, right;
 

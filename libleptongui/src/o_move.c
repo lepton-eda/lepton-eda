@@ -55,7 +55,8 @@ o_move_start (SchematicWindow *w_current,
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
 
-    o_invalidate_glist (w_current, lepton_list_get_glist (page->selection_list));
+    schematic_draw_invalidate_object_list (w_current,
+                                           lepton_list_get_glist (page->selection_list));
 
     if (net_rubber_band_mode) {
       o_move_prep_rubberband(w_current);
@@ -226,10 +227,11 @@ o_move_end (SchematicWindow *w_current)
   }
 
   /* Draw the objects that were moved */
-  o_invalidate_glist (w_current, lepton_list_get_glist (page->selection_list));
+  schematic_draw_invalidate_object_list (w_current,
+                                         lepton_list_get_glist (page->selection_list));
 
   /* Draw the connected nets/buses that were also changed */
-  o_invalidate_glist (w_current, rubbernet_objects);
+  schematic_draw_invalidate_object_list (w_current, rubbernet_objects);
 
   /* Call move-objects-hook for moved objects and changed connected
    * nets/buses */

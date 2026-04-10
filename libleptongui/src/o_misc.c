@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ o_mirror_world_update (SchematicWindow *w_current,
     return;
   }
 
-  o_invalidate_glist (w_current, list);
+  schematic_draw_invalidate_object_list (w_current, list);
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
@@ -74,7 +74,7 @@ o_mirror_world_update (SchematicWindow *w_current,
     s_conn_update_object (o_current->page, o_current);
   }
 
-  o_invalidate_glist (w_current, list);
+  schematic_draw_invalidate_object_list (w_current, list);
 
   /* Run mirror-objects-hook */
   g_run_hook_object_list (w_current, "mirror-objects-hook", list);

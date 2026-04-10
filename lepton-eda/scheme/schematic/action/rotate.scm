@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2025 Lepton EDA Contributors
+;;; Copyright (C) 2023-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ rotate-objects-hook() after rotation of the objects."
         (i_action_stop *window)
         (set-action-mode! 'select-mode #:window window))
       (begin
-        (o_invalidate_glist *window *objects)
+        (schematic_draw_invalidate_object_list *window *objects)
         ;; Find connected objects, removing each object in turn
         ;; from the connection list.  We only *really* want those
         ;; objects connected to the selection, not those within in
@@ -63,7 +63,7 @@ rotate-objects-hook() after rotation of the objects."
            (s_conn_update_object (lepton_object_get_page *object)
                                  *object))
          *object-ls)
-        (o_invalidate_glist *window *objects)
+        (schematic_draw_invalidate_object_list *window *objects)
         ;; Run hook.
         (with-window *window (run-hook rotate-objects-hook objects))
         (schematic_window_active_page_changed *window)

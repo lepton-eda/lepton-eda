@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,12 +128,13 @@ o_place_end (SchematicWindow *w_current,
     g_run_hook_object_list (w_current, hook_name, temp_dest_list);
   }
 
-  o_invalidate_glist (w_current, connected_objects);
+  schematic_draw_invalidate_object_list (w_current, connected_objects);
   g_list_free (connected_objects);
   connected_objects = NULL;
 
   schematic_window_page_content_changed (w_current, page);
-  o_invalidate_glist (w_current, temp_dest_list); /* only redraw new objects */
+  /* only redraw new objects */
+  schematic_draw_invalidate_object_list (w_current, temp_dest_list);
   g_list_free (temp_dest_list);
 
   o_undo_savestate_old (w_current);

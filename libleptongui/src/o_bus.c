@@ -96,7 +96,7 @@ o_bus_end (SchematicWindow *w_current,
 
     /* connect the new bus to the other busses */
     prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
-    o_invalidate_glist (w_current, prev_conn_objects);
+    schematic_draw_invalidate_object_list (w_current, prev_conn_objects);
     g_list_free (prev_conn_objects);
 
     /* Call add-objects-hook */
