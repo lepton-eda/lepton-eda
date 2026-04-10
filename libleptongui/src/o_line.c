@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,32 +177,4 @@ o_line_motion (SchematicWindow *w_current,
 
   o_line_invalidate_rubber (w_current);
   schematic_window_set_rubber_visible (w_current, 1);
-}
-
-/*! \brief Draw line from SchematicWindow object.
- *  \par Function Description
- *  This function draws a line with an exclusive or function over
- *  the sheet using \a renderer.
- *  The color of the box is <B>SELECT_COLOR</B>. The line is
- *  described by the two points (<B>w_current->first_wx</B>,
- *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] renderer   The \c EdaRenderer object.
- */
-void
-o_line_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer)
-{
-  double wwidth = 0;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  eda_cairo_line (cr, flags, END_NONE, wwidth,
-                  w_current->first_wx, w_current->first_wy,
-                  w_current->second_wx, w_current->second_wy);
-
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }

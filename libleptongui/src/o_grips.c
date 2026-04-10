@@ -1539,7 +1539,7 @@ o_grips_draw_rubber (SchematicWindow *w_current,
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:
-      o_line_draw_rubber (w_current, renderer);
+      schematic_draw_line (w_current, renderer);
     break;
 
     default:

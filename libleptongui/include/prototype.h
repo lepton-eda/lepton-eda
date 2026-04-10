@@ -349,9 +349,6 @@ void
 o_line_motion (SchematicWindow *w_current,
                int x,
                int y);
-void
-o_line_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer);
 int
 o_line_visible (SchematicWindow *w_current,
                 LeptonLine *line,

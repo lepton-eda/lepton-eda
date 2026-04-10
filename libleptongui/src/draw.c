@@ -188,6 +188,40 @@ schematic_draw_circle (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw a line.
+ *
+ *  \par Function Description
+ *
+ *  Draws a line using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  The color of the line is <B>SELECT_COLOR</B>. The line is
+ *  described by the two points (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_line (SchematicWindow *w_current,
+                     EdaRenderer *renderer)
+{
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx, w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
+
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
+}
+
+
 /*! \brief Draw a zoom box.
  *
  *  \par Function Description
@@ -478,7 +512,7 @@ schematic_draw_rect (SchematicWindow *w_current,
         case ARCMODE    : schematic_draw_arc (w_current, renderer); break;
         case BOXMODE    : schematic_draw_box (w_current, renderer); break;
         case CIRCLEMODE : schematic_draw_circle (w_current, renderer); break;
-        case LINEMODE   : o_line_draw_rubber (w_current, renderer); break;
+        case LINEMODE   : schematic_draw_line (w_current, renderer); break;
         case PATHMODE   : o_path_draw_rubber (w_current, renderer); break;
         case PICTUREMODE: o_picture_draw_rubber (w_current, renderer); break;
         case PINMODE    : o_pin_draw_rubber (w_current, renderer); break;

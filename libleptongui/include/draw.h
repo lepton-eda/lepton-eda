@@ -40,6 +40,9 @@ void
 schematic_draw_circle (SchematicWindow *w_current,
                        EdaRenderer *renderer);
 void
+schematic_draw_line (SchematicWindow *w_current,
+                     EdaRenderer *renderer);
+void
 schematic_draw_zoom_box (SchematicWindow *w_current,
                          EdaRenderer *renderer);
 
