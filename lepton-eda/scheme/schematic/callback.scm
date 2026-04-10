@@ -102,7 +102,7 @@
 
 
 (define (callback-add-bus *window)
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
   (set-action-mode! 'bus-mode #:window (pointer->window *window))
   (let ((position (action-position)))
@@ -114,7 +114,7 @@
 
 
 (define (callback-add-net *window)
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (set-action-mode! 'net-mode #:window (pointer->window *window))
   (let ((position (action-position)))
     (and position
@@ -126,7 +126,7 @@
 
 
 (define (callback-edit-select *window)
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (set-action-mode! 'select-mode #:window (pointer->window *window))
   (i_action_stop *window))
 
@@ -151,7 +151,7 @@
 (define (callback-add-component *widget *window)
   (define window (pointer->window *window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
 
   (set-action-mode! 'component-mode #:window window)
   (when (null-pointer? (schematic_window_get_compselect_widget *window))

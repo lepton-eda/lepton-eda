@@ -179,7 +179,7 @@ window."
         ;; Otherwise just return the widget.
         *newtext-widget))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (i_action_stop *window)

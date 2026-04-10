@@ -234,7 +234,7 @@
   (define show-hidden-text?
     (true? (schematic_window_get_show_hidden_text *window)))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
 
   (o_select_unselect_all *window)
 
@@ -255,7 +255,7 @@
 (define-action-public (&edit-deselect #:label (G_ "Deselect"))
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
 
   (o_select_unselect_all *window)
 
@@ -268,7 +268,7 @@
   (define *window (*current-window))
 
   (unless (null? (page-selection (active-page)))
-    (o_redraw_cleanstates *window)
+    (schematic_draw_clear *window)
     (delete-selection *window)
     ;; If you delete the objects you must go into select mode
     ;; after the delete.
@@ -285,7 +285,7 @@
                        (symbol->action-mode 'select-mode)
                        (string->pointer (G_ "Select objs first")))
       (let ((position (action-position)))
-        (o_redraw_cleanstates *window)
+        (schematic_draw_clear *window)
         (and position
              (match (snap-point position)
                ((x . y) (o_move_start *window x y))
@@ -301,7 +301,7 @@
                        (symbol->action-mode 'select-mode)
                        (string->pointer (G_ "Select objs first")))
       (let ((position (action-position)))
-        (o_redraw_cleanstates *window)
+        (schematic_draw_clear *window)
         (and position
              (match (snap-point position)
                ((x . y) (start-copy *window x y))
@@ -317,7 +317,7 @@
                        (symbol->action-mode 'select-mode)
                        (string->pointer (G_ "Select objs first")))
       (let ((position (action-position)))
-        (o_redraw_cleanstates *window)
+        (schematic_draw_clear *window)
         (and position
              (match (snap-point position)
                ((x . y) (start-copy *window x y))
@@ -342,7 +342,7 @@
               ;; Mouse pointer is over the canvas: rotate selection.
               (let ((*objects (lepton_list_get_glist
                                (schematic_window_get_selection_list *window))))
-                (o_redraw_cleanstates *window)
+                (schematic_draw_clear *window)
                 (unless (null-pointer? *objects)
                   (match (snap-point position)
                     ((x . y) (rotate-objects x y 90 *objects
@@ -370,7 +370,7 @@
               ;; Mouse pointer is over the canvas: mirror selection.
               (let ((*objects (lepton_list_get_glist
                                (schematic_window_get_selection_list *window))))
-                (o_redraw_cleanstates *window)
+                (schematic_draw_clear *window)
                 (unless (null-pointer? *objects)
                   (match (snap-point position)
                     ((x . y) (o_mirror_world_update *window x y *objects))
@@ -506,7 +506,7 @@ the snap grid size should be set to 100")))
     (if (null? selection)
         ;; Nothing selected, go back to select state.
         (begin
-          (o_redraw_cleanstates *window)
+          (schematic_draw_clear *window)
           (i_action_stop *window)
           (set-action-mode! 'select-mode))
 
@@ -529,7 +529,7 @@ the snap grid size should be set to 100")))
     (if (null? selection)
         ;; Nothing selected, go back to select state.
         (begin
-          (o_redraw_cleanstates *window)
+          (schematic_draw_clear *window)
           (i_action_stop *window)
           (set-action-mode! 'select-mode))
 
@@ -630,7 +630,7 @@ the snap grid size should be set to 100")))
   (if (null? selected-components)
       (begin
         ;; Nothing selected, go back to select state.
-        (o_redraw_cleanstates *window)
+        (schematic_draw_clear *window)
         (i_action_stop *window)
         (set-action-mode! 'select-mode))
       (for-each
@@ -734,7 +734,7 @@ the snap grid size should be set to 100")))
      (schematic_canvas_pan (schematic_window_get_current_canvas *window) x y)
      (undo-save-viewport))
     (_
-     (o_redraw_cleanstates *window)
+     (schematic_draw_clear *window)
      (i_action_stop *window)
      (set-action-mode! 'pan-mode))))
 
@@ -777,7 +777,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
 
   (set-action-mode! 'zoom-box-mode)
 
@@ -988,7 +988,7 @@ the snap grid size should be set to 100")))
 
 (define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
   (define *window (*current-window))
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'line-mode)
@@ -1003,7 +1003,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-path #:label (G_ "Add Path") #:icon "insert-path")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'path-mode)
@@ -1016,7 +1016,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-box #:label (G_ "Add Box") #:icon "insert-box")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'box-mode)
@@ -1031,7 +1031,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-circle #:label (G_ "Add Circle") #:icon "insert-circle")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'circle-mode)
@@ -1046,7 +1046,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-arc #:label (G_ "Add Arc") #:icon "insert-arc")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'arc-mode)
@@ -1061,7 +1061,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-pin #:label (G_ "Add Pin") #:icon "insert-pin")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'pin-mode)
@@ -1076,7 +1076,7 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-picture #:label (G_ "Add Picture") #:icon "insert-image")
   (define *window (*current-window))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_draw_invalidate_rubber *window)
 
   (set-action-mode! 'select-mode)

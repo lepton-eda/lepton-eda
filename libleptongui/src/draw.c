@@ -383,7 +383,7 @@ schematic_draw_invalidate_rubber (SchematicWindow *w_current)
  *  Usually a intermediate select state would clean (redraw) the screen.
  */
 int
-o_redraw_cleanstates (SchematicWindow *w_current)
+schematic_draw_clear (SchematicWindow *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
   /* returns FALSE if the function was'nt nessecary */

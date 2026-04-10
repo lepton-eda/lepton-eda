@@ -148,7 +148,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           toplevel->page_current->place_list = NULL;
         } else {
           /* Cancel whatever other action is currently in progress */
-          o_redraw_cleanstates (w_current);
+          schematic_draw_clear (w_current);
         }
 
         if (symbol == NULL) {
@@ -186,7 +186,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         if (action_mode == COMPMODE)
         {
           /* Cancel the place operation currently in progress */
-          o_redraw_cleanstates (w_current);
+          schematic_draw_clear (w_current);
 
           /* return to the default state */
           i_set_state (w_current, SELECT);

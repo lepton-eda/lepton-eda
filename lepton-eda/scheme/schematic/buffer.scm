@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2023-2025 Lepton EDA Contributors
+;;; Copyright (C) 2023-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ removed from the selection and the hook won't be run."
 
   (unless (null-pointer? *selection)
     ;; On cutting, delete place list and invalidate canvas.
-    (when cut? (o_redraw_cleanstates *window))
+    (when cut? (schematic_draw_clear *window))
 
     ;; Remove previous buffer contents.
     (lepton_object_list_delete (buffer-list-ref buffer-number))
@@ -154,7 +154,7 @@ place list at the point ANCHOR."
     ;; these objects.
     (run-copy-objects-hook *window (buffer-list-ref buffer-n)))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   ;; Cancel current place or draw action if it is being
   ;; done.
   (when (in-action? window)

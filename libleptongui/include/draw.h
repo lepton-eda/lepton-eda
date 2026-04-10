@@ -47,7 +47,7 @@ int
 schematic_draw_invalidate_rubber (SchematicWindow *w_current);
 
 int
-o_redraw_cleanstates (SchematicWindow *w_current);
+schematic_draw_clear (SchematicWindow *w_current);
 
 void
 o_invalidate_rect (SchematicWindow *w_current,

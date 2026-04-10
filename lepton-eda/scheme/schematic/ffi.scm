@@ -77,7 +77,7 @@
 
             o_attrib_add_attrib
 
-            o_redraw_cleanstates
+            schematic_draw_clear
             *o_invalidate
             o_invalidate_glist
             schematic_draw_invalidate_rubber
@@ -1159,7 +1159,7 @@
 (define-lff snap_grid int (list '* int))
 
 ;;; draw.c
-(define-lff o_redraw_cleanstates int '(*))
+(define-lff schematic_draw_clear int '(*))
 (define-lfc *o_invalidate)
 (define-lff o_invalidate_glist void '(* *))
 (define-lff schematic_draw_invalidate_rubber int '(*))

@@ -1168,7 +1168,7 @@ window."
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (o_redraw_cleanstates *window)
+  (schematic_draw_clear *window)
   (schematic_canvas_set_page *canvas *page)
   (i_update_menus *window)
   (page_select_widget_update *window)
