@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,17 +38,18 @@ extern LeptonColorMap display_outline_colors;
  */
 #ifdef ENABLE_GTK3
 void
-o_redraw_rect (SchematicWindow *w_current,
-               GtkWidget *widget,
-               LeptonPage *page,
-               SchematicViewport *geometry,
-               cairo_t *cr)
+schematic_draw_rect (SchematicWindow *w_current,
+                     GtkWidget *widget,
+                     LeptonPage *page,
+                     SchematicViewport *geometry,
+                     cairo_t *cr)
 #else
-void o_redraw_rect (SchematicWindow *w_current,
-                    GdkDrawable *drawable,
-                    LeptonPage *page,
-                    SchematicViewport *geometry,
-                    GdkRectangle *rectangle)
+void
+schematic_draw_rect (SchematicWindow *w_current,
+                     GdkDrawable *drawable,
+                     LeptonPage *page,
+                     SchematicViewport *geometry,
+                     GdkRectangle *rectangle)
 #endif
 {
   gboolean draw_selected;

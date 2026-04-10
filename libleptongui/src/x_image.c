@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1012,11 +1012,11 @@ x_image_get_pixbuf (SchematicWindow *w_current,
                                         WORLD_DEFAULT_RIGHT,
                                         WORLD_DEFAULT_BOTTOM);
 
-  o_redraw_rect (&new_w_current,
-                 window,
-                 page,
-                 new_geometry,
-                 &rect);
+  schematic_draw_rect (&new_w_current,
+                       window,
+                       page,
+                       new_geometry,
+                       &rect);
 
   schematic_viewport_free (new_geometry);
 

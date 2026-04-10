@@ -30,18 +30,18 @@ G_BEGIN_DECLS
 
 #ifdef ENABLE_GTK3
 void
-o_redraw_rect (SchematicWindow *w_current,
-               GtkWidget *widget,
-               LeptonPage *page,
-               SchematicViewport *geometry,
-               cairo_t *cr);
+schematic_draw_rect (SchematicWindow *w_current,
+                     GtkWidget *widget,
+                     LeptonPage *page,
+                     SchematicViewport *geometry,
+                     cairo_t *cr);
 #else
 void
-o_redraw_rect (SchematicWindow *w_current,
-               GdkDrawable *drawable,
-               LeptonPage *page,
-               SchematicViewport *geometry,
-               GdkRectangle *rectangle);
+schematic_draw_rect (SchematicWindow *w_current,
+                     GdkDrawable *drawable,
+                     LeptonPage *page,
+                     SchematicViewport *geometry,
+                     GdkRectangle *rectangle);
 #endif
 int
 o_invalidate_rubber (SchematicWindow *w_current);

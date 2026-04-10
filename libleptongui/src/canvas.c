@@ -1649,17 +1649,17 @@ schematic_canvas_redraw (SchematicCanvas *view,
     g_return_if_fail (view != NULL);
 
 #ifdef ENABLE_GTK3
-    o_redraw_rect (w_current,
-                   GTK_WIDGET(view),
-                   page,
-                   geometry,
-                   cr);
+    schematic_draw_rect (w_current,
+                         GTK_WIDGET(view),
+                         page,
+                         geometry,
+                         cr);
 #else
-    o_redraw_rect (w_current,
-                   gtk_widget_get_window (GTK_WIDGET(view)),
-                   page,
-                   geometry,
-                   &(event->area));
+    schematic_draw_rect (w_current,
+                         gtk_widget_get_window (GTK_WIDGET(view)),
+                         page,
+                         geometry,
+                         &(event->area));
 #endif
   }
 }
