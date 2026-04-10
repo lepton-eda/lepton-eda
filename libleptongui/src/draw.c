@@ -111,6 +111,40 @@ schematic_draw_box (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw a bus segment.
+ *
+ *  \par Function Description
+ *
+ *  Draws a bus segment using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  The bus segment is drawn from the point
+ *  (<B>first_wx</B>,<B>first_wy</B>) to the point
+ *  (<B>second_wx</B>,<B>second_wy</B>).
+ *
+ *  The function can be used to draw or erase bus segments screen.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_bus (SchematicWindow *w_current,
+                    EdaRenderer *renderer)
+{
+  int size = BUS_WIDTH;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_line (cr, flags, END_NONE, size,
+                  w_current->first_wx,  w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
+}
+
+
 /*! \brief Draw a zoom box.
  *
  *  \par Function Description
@@ -410,7 +444,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
-          o_bus_draw_rubber(w_current, renderer);
+          schematic_draw_bus (w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
           cairo_restore (cr);

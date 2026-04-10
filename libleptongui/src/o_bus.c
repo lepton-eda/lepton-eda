@@ -178,31 +178,3 @@ o_bus_invalidate_rubber (SchematicWindow *w_current)
                                           w_current->second_wx,
                                           w_current->second_wy);
 }
-
-/*! \brief draw a rubberbus segment
- *  \par Function Description
- *  This function draws a bus segment from the point
- *  (<B>first_wx</B>,<B>first_wy</B>) to the point
- *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>SchematicWindow</B>
- *   structure using \a renderer.
- *
- *  The function can be used to draw or erase the rubberbus on the screen.
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] renderer   The \c EdaRenderer object.
- */
-void
-o_bus_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer)
-{
-  int size = BUS_WIDTH;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  eda_cairo_line (cr, flags, END_NONE, size,
-                  w_current->first_wx,  w_current->first_wy,
-                  w_current->second_wx, w_current->second_wy);
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
-}

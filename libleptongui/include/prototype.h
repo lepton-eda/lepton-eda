@@ -219,9 +219,6 @@ o_bus_motion (SchematicWindow *w_current,
               int x,
               int y);
 void
-o_bus_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
-void
 o_bus_invalidate_rubber (SchematicWindow *w_current);
 
 /* o_circle.c */
