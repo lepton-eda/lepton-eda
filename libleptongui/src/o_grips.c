@@ -1532,7 +1532,7 @@ o_grips_draw_rubber (SchematicWindow *w_current,
       break;
 
     case OBJ_CIRCLE:
-      o_circle_draw_rubber (w_current, renderer);
+      schematic_draw_circle (w_current, renderer);
       break;
 
     case OBJ_LINE:

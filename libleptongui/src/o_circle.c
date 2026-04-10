@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -183,41 +183,4 @@ o_circle_motion (SchematicWindow *w_current,
   /* draw the new temporary circle */
   o_circle_invalidate_rubber (w_current);
   schematic_window_set_rubber_visible (w_current, 1);
-}
-
-/*! \brief Draw circle from SchematicWindow object.
- *  \par Function Description
- *  This function draws the circle from the variables in the SchematicWindow
- *  structure <B>*w_current</B> using \a renderer.
- *  The center of the circle is at (<B>w_current->first_wx</B>,
- *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
- *
- *  It draws a horizontal radius segment on the right half of the circle and
- *  the circle with the selection color.
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] renderer   The \c EdaRenderer object.
- */
-void
-o_circle_draw_rubber (SchematicWindow *w_current,
-                      EdaRenderer *renderer)
-{
-  double wwidth = 0;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  eda_cairo_center_arc (cr, flags, wwidth, wwidth,
-                        w_current->first_wx, w_current->first_wy,
-                        w_current->distance,
-                        0, 360);
-
-  eda_cairo_line (cr, flags, END_NONE, wwidth,
-                  w_current->first_wx,
-                  w_current->first_wy,
-                  w_current->first_wx + w_current->distance,
-                  w_current->first_wy);
-
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }

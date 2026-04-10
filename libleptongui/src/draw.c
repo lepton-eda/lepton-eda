@@ -145,6 +145,49 @@ schematic_draw_bus (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw a circle.
+ *
+ *  \par Function Description
+ *
+ *  Draws a circle using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  The center of the circle is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and its radius is in
+ *  <B>w_current->distance</B>.
+ *
+ *  It draws a horizontal radius segment on the right half of the
+ *  circle and the circle with the selection color.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_circle (SchematicWindow *w_current,
+                       EdaRenderer *renderer)
+{
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_center_arc (cr, flags, wwidth, wwidth,
+                        w_current->first_wx, w_current->first_wy,
+                        w_current->distance,
+                        0, 360);
+
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx,
+                  w_current->first_wy,
+                  w_current->first_wx + w_current->distance,
+                  w_current->first_wy);
+
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
+}
+
+
 /*! \brief Draw a zoom box.
  *
  *  \par Function Description
@@ -434,7 +477,7 @@ schematic_draw_rect (SchematicWindow *w_current,
       {
         case ARCMODE    : schematic_draw_arc (w_current, renderer); break;
         case BOXMODE    : schematic_draw_box (w_current, renderer); break;
-        case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
+        case CIRCLEMODE : schematic_draw_circle (w_current, renderer); break;
         case LINEMODE   : o_line_draw_rubber (w_current, renderer); break;
         case PATHMODE   : o_path_draw_rubber (w_current, renderer); break;
         case PICTUREMODE: o_picture_draw_rubber (w_current, renderer); break;

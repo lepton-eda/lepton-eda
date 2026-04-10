@@ -240,9 +240,6 @@ void
 o_circle_motion (SchematicWindow *w_current,
                  int x,
                  int y);
-void
-o_circle_draw_rubber (SchematicWindow *w_current,
-                      EdaRenderer *renderer);
 
 /* o_component.c */
 void
