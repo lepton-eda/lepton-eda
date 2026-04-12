@@ -37,6 +37,7 @@ libleptongui_la_SOURCES = \
 	macro_widget.c \
 	main_window.c \
 	multiattrib_widget.c \
+	net.c \
 	object_properties_widget.c \
 	options.c \
 	options_widget.c \
@@ -64,7 +65,6 @@ libleptongui_la_SOURCES = \
 	o_line.c \
 	o_misc.c \
 	o_move.c \
-	o_net.c \
 	o_path.c \
 	o_picture.c \
 	o_pin.c \

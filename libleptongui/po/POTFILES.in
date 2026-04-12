@@ -52,7 +52,7 @@ libleptongui/src/o_grips.c
 libleptongui/src/o_line.c
 libleptongui/src/o_misc.c
 libleptongui/src/o_move.c
-libleptongui/src/o_net.c
+libleptongui/src/net.c
 libleptongui/src/o_path.c
 libleptongui/src/o_picture.c
 libleptongui/src/o_pin.c

@@ -423,7 +423,7 @@ o_move_end_rubberband (SchematicWindow *w_current,
                        int world_diff_y,
                        GList **objects);
 
-/* o_net.c */
+/* net.c */
 void
 o_net_reset (SchematicWindow *w_current);
 

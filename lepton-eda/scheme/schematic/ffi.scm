@@ -1223,7 +1223,7 @@
 (define-lff o_move_motion void (list '* int int))
 (define-lff o_move_start void (list '* int int))
 
-;;; o_net.c
+;;; net.c
 (define-lff o_net_end void (list '* int int))
 (define-lff o_net_invalidate_rubber void '(*))
 (define-lff o_net_motion void (list '* int int))
