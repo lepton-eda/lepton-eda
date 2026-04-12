@@ -21,6 +21,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "bitmap.h"
 #include "grid_mode.h"
 #include "gtk_helper.h"
+#include "net.h"
 #include "snap_mode.h"
 #include "schematic_defines.h"
 #include "bin.h"

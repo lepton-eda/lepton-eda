@@ -423,48 +423,6 @@ o_move_end_rubberband (SchematicWindow *w_current,
                        int world_diff_y,
                        GList **objects);
 
-/* net.c */
-void
-o_net_reset (SchematicWindow *w_current);
-
-void
-o_net_guess_direction (SchematicWindow *w_current,
-                       int x,
-                       int y);
-void
-o_net_find_magnetic (SchematicWindow *w_current,
-                     int event_x,
-                     int event_y);
-void
-o_net_finishmagnetic (SchematicWindow *w_current);
-
-void
-o_net_start_magnetic (SchematicWindow *w_current,
-                      int x,
-                      int y);
-void
-o_net_start (SchematicWindow *w_current,
-             int x,
-             int y);
-void
-o_net_end (SchematicWindow *w_current,
-           int x,
-           int y);
-void
-o_net_motion (SchematicWindow *w_current,
-              int x,
-              int y);
-void
-o_net_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
-void
-o_net_invalidate_rubber (SchematicWindow *w_current);
-
-int
-o_net_add_busrippers (SchematicWindow *w_current,
-                      LeptonObject *net_obj,
-                      GList *other_objects);
-
 /* o_picture.c */
 void
 o_picture_start (SchematicWindow *w_current,

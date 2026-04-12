@@ -8,6 +8,7 @@ noinst_HEADERS = \
 	grid_mode.h \
 	gtk_helper.h \
 	i_vars.h \
+	net.h \
 	prototype.h \
 	x_dialog.h \
 	x_tabs.h \
