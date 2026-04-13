@@ -457,7 +457,7 @@ o_picture_set_pixbuf (SchematicWindow *w_current,
                       GdkPixbuf *pixbuf,
                       char *filename);
 
-/* o_path.c */
+/* path.c */
 void
 o_path_start (SchematicWindow *w_current,
               int x,

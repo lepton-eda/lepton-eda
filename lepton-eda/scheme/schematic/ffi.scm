@@ -1231,7 +1231,7 @@
 (define-lff o_net_start void (list '* int int))
 (define-lff o_net_start_magnetic void (list '* int int))
 
-;;; o_path.c
+;;; path.c
 (define-lff o_path_continue void (list '* int int))
 (define-lff o_path_end void (list '* int int))
 (define-lff o_path_invalidate_rubber void '(*))

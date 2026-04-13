@@ -41,6 +41,7 @@ libleptongui_la_SOURCES = \
 	object_properties_widget.c \
 	options.c \
 	options_widget.c \
+	path.c \
 	viewport.c \
 	pin_type_combo.c \
 	rotation_combo.c \
@@ -65,7 +66,6 @@ libleptongui_la_SOURCES = \
 	o_line.c \
 	o_misc.c \
 	o_move.c \
-	o_path.c \
 	o_picture.c \
 	o_pin.c \
 	o_place.c \
