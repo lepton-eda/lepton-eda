@@ -9,6 +9,7 @@ noinst_HEADERS = \
 	gtk_helper.h \
 	i_vars.h \
 	net.h \
+	path.h \
 	prototype.h \
 	x_dialog.h \
 	x_tabs.h \

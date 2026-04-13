@@ -457,40 +457,6 @@ o_picture_set_pixbuf (SchematicWindow *w_current,
                       GdkPixbuf *pixbuf,
                       char *filename);
 
-/* path.c */
-void
-o_path_start (SchematicWindow *w_current,
-              int x,
-              int y);
-void
-o_path_continue (SchematicWindow *w_current,
-                 int w_x,
-                 int w_y);
-void
-o_path_motion (SchematicWindow *w_current,
-               int w_x,
-               int w_y);
-void
-o_path_end (SchematicWindow *w_current,
-            int x,
-            int y);
-void
-o_path_invalidate_rubber (SchematicWindow *w_current);
-
-void
-o_path_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer);
-void
-o_path_invalidate_rubber_grips (SchematicWindow *w_current);
-
-void
-o_path_motion_grips (SchematicWindow *w_current,
-                     int x,
-                     int y);
-void
-o_path_draw_rubber_grips (SchematicWindow *w_current,
-                          EdaRenderer *renderer);
-
 /* o_pin.c */
 void
 o_pin_start (SchematicWindow *w_current,
