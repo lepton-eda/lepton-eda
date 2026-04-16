@@ -47,6 +47,7 @@ libleptongui_la_SOURCES = \
 	rotation_combo.c \
 	selection_adapter.c \
 	show_hide_text_widget.c \
+	stroke.c \
 	swatch_column_renderer.c \
 	text_properties_widget.c \
 	translate_widget.c \
@@ -101,7 +102,6 @@ libleptongui_la_SOURCES = \
 	toolbar.c \
 	world_size.c \
 	x_print.c \
-	x_stroke.c \
 	x_window.c \
 	x_tabs.c \
 	color_edit_widget.c \
