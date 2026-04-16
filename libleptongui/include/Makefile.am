@@ -11,6 +11,7 @@ noinst_HEADERS = \
 	net.h \
 	path.h \
 	prototype.h \
+	stroke.h \
 	x_dialog.h \
 	x_tabs.h \
 	gettext.h \
