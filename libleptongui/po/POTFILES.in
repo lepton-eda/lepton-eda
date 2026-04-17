@@ -63,7 +63,7 @@ libleptongui/src/preview_widget.c
 libleptongui/src/schematic_hierarchy.c
 libleptongui/src/slot_edit_dialog.c
 libleptongui/src/window.c
-libleptongui/src/x_attribedit.c
+libleptongui/src/attrib_edit_dialog.c
 libleptongui/src/autonumber_dialog.c
 libleptongui/src/x_basic.c
 libleptongui/src/x_clipboard.c
