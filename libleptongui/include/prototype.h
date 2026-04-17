@@ -536,7 +536,7 @@ void
 schematic_alignment_combo_set_align (GtkWidget *widget,
                                      int align);
 
-/* x_attribedit.c */
+/* attrib_edit_dialog.c */
 void
 attrib_edit_dialog_ok (GtkWidget *w,
                        SchematicWindow *w_current);

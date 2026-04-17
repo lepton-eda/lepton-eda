@@ -1274,7 +1274,7 @@
 (define-lff o_place_rotate void '(*))
 (define-lff o_place_start void (list '* int int))
 
-;;; x_attribedit.c
+;;; attrib_edit_dialog.c
 (define-lff attrib_edit_dialog void (list '* '* int))
 
 ;;; autonumber_dialog.c
