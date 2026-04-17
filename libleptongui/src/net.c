@@ -654,52 +654,6 @@ o_net_motion (SchematicWindow *w_current,
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief draw rubbernet lines to the gc
- *  \par Function Description
- *  This function draws the rubbernets to the graphic context
- */
-void
-o_net_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer)
-{
-  int size = NET_WIDTH, w_magnetic_halfsize;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-  gboolean magnetic_net_mode;
-
-  g_return_if_fail (w_current != NULL);
-
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-
-  magnetic_net_mode = schematic_options_get_magnetic_net_mode (w_current->options);
-
-  if (magnetic_net_mode) {
-    if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
-      w_magnetic_halfsize = MAX (4 * size,
-                                 schematic_canvas_WORLDabs (page_view, MAGNETIC_HALFSIZE));
-      eda_cairo_arc (cr, flags, size,
-                     w_current->magnetic_wx, w_current->magnetic_wy,
-                     w_magnetic_halfsize, 0, 360);
-    }
-  }
-
-  /* Primary line */
-  eda_cairo_line (cr, flags, END_NONE, size,
-                  w_current->first_wx,  w_current->first_wy,
-                  w_current->second_wx, w_current->second_wy);
-
-  /* Secondary line */
-  eda_cairo_line (cr, flags, END_NONE, size,
-                     w_current->second_wx, w_current->second_wy,
-                     w_current->third_wx,  w_current->third_wy);
-
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief

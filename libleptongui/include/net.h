@@ -89,9 +89,6 @@ o_net_motion (SchematicWindow *w_current,
               int x,
               int y);
 void
-o_net_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
-void
 o_net_invalidate_rubber (SchematicWindow *w_current);
 
 int
