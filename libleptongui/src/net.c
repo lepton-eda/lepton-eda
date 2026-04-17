@@ -25,34 +25,6 @@
 #include "schematic.h"
 
 
-/* magnetic options */
-/* half size of the magnetic marker on the screen. */
-#define MAGNETIC_HALFSIZE 6
-
-/* define how far the cursor could be to activate magnetic */
-#define MAGNETIC_PIN_REACH 50
-#define MAGNETIC_NET_REACH 20
-#define MAGNETIC_BUS_REACH 30
-
-/* weighting factors to tell that a pin is more important than a net */
-#define MAGNETIC_PIN_WEIGHT 5.0
-#define MAGNETIC_NET_WEIGHT 2.0
-#define MAGNETIC_BUS_WEIGHT 3.0
-
-/* Bit definitions for the four quardrants of the direction guessing */
-#define QUADRANT1  0x01
-#define QUADRANT2  0x02
-#define QUADRANT3  0x04
-#define QUADRANT4  0x08
-
-typedef struct st_bus_ripper BUS_RIPPER;
-
-struct st_bus_ripper
-{
-  int x[2];
-  int y[2];
-};
-
 /*! \brief Reset all variables used for net drawing
  *  \par Function Description
  *  This function resets all variables from SchematicWindow that are used
