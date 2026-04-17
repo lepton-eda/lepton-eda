@@ -536,55 +536,6 @@ o_path_end (SchematicWindow *w_current,
   }
 }
 
-/*! \brief Draw path creation preview.
- * \par Function Description
- * Draw a preview of the path currently being drawn, including a
- * helper line showing the control point of the node being drawn (if
- * applicable).
- */
-void
-o_path_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer)
-{
-  LeptonObject object;
-  int added_sections = 0;
-
-  /* Draw a helper for when we're dragging a control point */
-  if (w_current->first_wx != w_current->second_wx
-      || w_current->first_wy != w_current->second_wy) {
-    double wwidth = 0;
-    cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-    GArray *color_map = eda_renderer_get_color_map (renderer);
-    int flags = eda_renderer_get_cairo_flags (renderer);
-
-    eda_cairo_line (cr, flags, END_NONE, wwidth,
-                    w_current->first_wx, w_current->first_wy,
-                    w_current->second_wx, w_current->second_wy);
-
-    eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-    eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
-  }
-  /* Now draw the rest of the path */
-
-  /* Calculate any new sections */
-  added_sections = schematic_path_next_sections (w_current);
-
-  /* Setup a fake object to pass the drawing routine */
-  memset (&object, 0, sizeof (LeptonObject));
-  LeptonStroke *stroke = lepton_stroke_new ();
-  LeptonFill *fill = lepton_fill_new ();
-  lepton_object_set_type (&object, OBJ_PATH);
-  lepton_object_set_color (&object, SELECT_COLOR);
-  lepton_object_set_stroke (&object, stroke);
-  lepton_object_set_fill (&object, fill);
-  lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
-  object.path = w_current->temp_path;
-
-  eda_renderer_draw (renderer, &object);
-
-  /* Throw away the added sections again */
-  w_current->temp_path->num_sections -= added_sections;
-}
 
 void
 o_path_invalidate_rubber_grips (SchematicWindow *w_current)

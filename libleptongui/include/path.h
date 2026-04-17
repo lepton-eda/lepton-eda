@@ -50,9 +50,6 @@ void
 o_path_invalidate_rubber (SchematicWindow *w_current);
 
 void
-o_path_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer);
-void
 o_path_invalidate_rubber_grips (SchematicWindow *w_current);
 
 void
