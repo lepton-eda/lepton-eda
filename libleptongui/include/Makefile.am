@@ -1,6 +1,7 @@
 noinst_HEADERS = \
 	action.h \
 	action_mode.h \
+	attrib_edit_dialog.h \
 	autonumber_dialog.h \
 	bitmap.h \
 	canvas.h \
