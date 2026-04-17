@@ -68,7 +68,7 @@ libleptongui/src/x_basic.c
 libleptongui/src/x_clipboard.c
 libleptongui/src/x_color.c
 libleptongui/src/x_colorcb.c
-libleptongui/src/x_compselect.c
+libleptongui/src/component_chooser.c
 libleptongui/src/x_dialog.c
 libleptongui/src/x_event.c
 libleptongui/src/x_fileselect.c

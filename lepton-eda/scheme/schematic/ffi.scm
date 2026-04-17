@@ -776,7 +776,7 @@
 (define-lff x_colorcb_get_index int '(*))
 (define-lff x_colorcb_update_colors void '())
 
-;;; x_compselect.c
+;;; component_chooser.c
 (define-lfc *x_compselect_callback_response)
 (define-lff x_compselect_deselect void '(*))
 (define-lff x_compselect_open void '(*))

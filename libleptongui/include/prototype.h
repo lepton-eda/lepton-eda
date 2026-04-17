@@ -699,7 +699,7 @@ x_event_get_pointer_position (SchematicWindow *w_current,
                               gint *wx,
                               gint *wy);
 
-/* x_compselect.c */
+/* component_chooser.c */
 void
 x_compselect_open (GtkWidget *cswindow);
 
