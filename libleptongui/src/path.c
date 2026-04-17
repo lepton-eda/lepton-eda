@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -187,17 +187,18 @@ path_expand (SchematicWindow *w_current)
  *   - temp_path is the new \c LeptonPath object (i.e. sequence of
  *     path sections that comprise the path drawn so far).
  *
- * path_next_sections() adds up to two additional sections to the
- * temporary path, and returns the number of sections added, on the
- * basis that: a path starts with a MOVETO the first point; two cusp
- * nodes (control points coincident with the node position) generate a
- * LINETO section; and a path ends either whenever the user clicks on
- * either the first or the current node.
+ * schematic_path_next_sections() adds up to two additional
+ * sections to the temporary path, and returns the number of
+ * sections added, on the basis that: a path starts with a MOVETO
+ * the first point; two cusp nodes (control points coincident with
+ * the node position) generate a LINETO section; and a path ends
+ * either whenever the user clicks on either the first or the
+ * current node.
  *
  * \return the number of path sections added.
  */
-static int
-path_next_sections (SchematicWindow *w_current)
+int
+schematic_path_next_sections (SchematicWindow *w_current)
 {
   gboolean cusp_point, cusp_prev, close_path, end_path, start_path;
   LeptonPath *p;
@@ -316,7 +317,7 @@ o_path_invalidate_rubber (SchematicWindow *w_current)
   g_return_if_fail (page_view != NULL);
 
   /* Calculate any new sections */
-  added_sections = path_next_sections (w_current);
+  added_sections = schematic_path_next_sections (w_current);
 
   path_rubber_bbox (w_current, w_current->temp_path,
                     &min_x, &max_y, &max_x, &min_y);
@@ -344,7 +345,7 @@ o_path_invalidate_rubber (SchematicWindow *w_current)
  *  enabling preview ("rubber") drawing.
  *
  *  For details of how #SchematicWindow fields are used during the
- *  path creation process, see path_next_sections().
+ *  path creation process, see schematic_path_next_sections().
  *
  *  \param [in] w_current  The SchematicWindow object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
@@ -503,7 +504,7 @@ o_path_end (SchematicWindow *w_current,
               && y1 == prev_section->y3);
 
   /* Add predicted next sections */
-  path_next_sections (w_current);
+  schematic_path_next_sections (w_current);
 
   if (end_path || close_path) {
     /* Add object to page and clean up path drawing state */
@@ -566,7 +567,7 @@ o_path_draw_rubber (SchematicWindow *w_current,
   /* Now draw the rest of the path */
 
   /* Calculate any new sections */
-  added_sections = path_next_sections (w_current);
+  added_sections = schematic_path_next_sections (w_current);
 
   /* Setup a fake object to pass the drawing routine */
   memset (&object, 0, sizeof (LeptonObject));

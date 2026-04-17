@@ -27,6 +27,9 @@
 
 G_BEGIN_DECLS
 
+int
+schematic_path_next_sections (SchematicWindow *w_current);
+
 void
 o_path_start (SchematicWindow *w_current,
               int x,
