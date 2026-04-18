@@ -28,6 +28,18 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
+/*! \brief Make a modified copy of a path.
+ *
+ *  \par Function Description
+ *
+ *  Creates a copy of a path and modifies it using one of its
+ *  control points defined by the function arguments.
+ *
+ *  \param [in] path The original path.
+ *  \param [in] new_x New X coordinate of the control point.
+ *  \param [in] new_y New Y coordinate of the control point.
+ *  \param [in] whichone The control point identificator.
+ */
 LeptonPath*
 schematic_path_copy_modify (LeptonPath *path,
                             int new_x,
