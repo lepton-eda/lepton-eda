@@ -61,9 +61,6 @@ void
 o_path_motion_grips (SchematicWindow *w_current,
                      int x,
                      int y);
-void
-o_path_draw_rubber_grips (SchematicWindow *w_current,
-                          EdaRenderer *renderer);
 G_END_DECLS
 
 #endif /* PATH_H */

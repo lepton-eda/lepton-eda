@@ -1524,7 +1524,7 @@ o_grips_draw_rubber (SchematicWindow *w_current,
       break;
 
     case OBJ_PATH:
-      o_path_draw_rubber_grips (w_current, renderer);
+      schematic_draw_path_copy (w_current, renderer);
       break;
 
     case OBJ_PICTURE:
