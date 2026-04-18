@@ -30,8 +30,6 @@
 
 LeptonPath*
 schematic_path_copy_modify (LeptonPath *path,
-                            int dx,
-                            int dy,
                             int new_x,
                             int new_y,
                             int whichone)
@@ -51,9 +49,9 @@ schematic_path_copy_modify (LeptonPath *path,
     LeptonPathSection *section     = &path->sections[i];
     LeptonPathSection *new_section = &new_path->sections[i];
 
-    x1 = section->x1 + dx; y1 = section->y1 + dy;
-    x2 = section->x2 + dx; y2 = section->y2 + dy;
-    x3 = section->x3 + dx; y3 = section->y3 + dy;
+    x1 = section->x1; y1 = section->y1;
+    x2 = section->x2; y2 = section->y2;
+    x3 = section->x3; y3 = section->y3;
 
     switch (section->code) {
       case PATH_CURVETO:
@@ -615,8 +613,6 @@ o_path_draw_rubber_grips (SchematicWindow *w_current,
   lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
   object.path =
     schematic_path_copy_modify (w_current->which_object->path,
-                                0,
-                                0,
                                 w_current->second_wx,
                                 w_current->second_wy,
                                 w_current->which_grip);
