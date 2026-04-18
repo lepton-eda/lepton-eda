@@ -535,9 +535,6 @@ void
 o_select_box_invalidate_rubber (SchematicWindow *w_current);
 
 void
-o_select_box_draw_rubber (SchematicWindow *w_current,
-                          EdaRenderer *renderer);
-void
 o_select_box_search (SchematicWindow *w_current);
 
 void

@@ -726,7 +726,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           cairo_restore (cr);
           break;
         case GRIPS      : o_grips_draw_rubber (w_current, renderer); break;
-        case SBOX       : o_select_box_draw_rubber (w_current, renderer); break;
+        case SBOX       : schematic_draw_box (w_current, renderer);
         case ZOOMBOX    : schematic_draw_zoom_box (w_current, renderer); break;
         default: break;
       }

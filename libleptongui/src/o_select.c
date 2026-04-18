@@ -393,17 +393,6 @@ o_select_box_invalidate_rubber (SchematicWindow *w_current)
                                           w_current->second_wy);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_select_box_draw_rubber (SchematicWindow *w_current,
-                          EdaRenderer *renderer)
-{
-  schematic_draw_box (w_current, renderer);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
