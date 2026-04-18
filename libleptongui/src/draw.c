@@ -477,6 +477,57 @@ schematic_draw_zoom_box (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw objects being grip manipulated.
+ *
+ *  \par Function Description
+ *
+ *  Draws the objects being grip manipulated using the variables
+ *  defined in the current #SchematicWindow instance and all other
+ *  data set in \p renderer.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_object (SchematicWindow *w_current,
+                       EdaRenderer *renderer)
+{
+  g_return_if_fail (w_current->which_object != NULL);
+
+  switch (lepton_object_get_type (w_current->which_object)) {
+    case OBJ_ARC:
+      schematic_draw_arc (w_current, renderer);
+      break;
+
+    case OBJ_BOX:
+      schematic_draw_box (w_current, renderer);
+      break;
+
+    case OBJ_PATH:
+      schematic_draw_path_copy (w_current, renderer);
+      break;
+
+    case OBJ_PICTURE:
+      schematic_draw_picture (w_current, renderer);
+      break;
+
+    case OBJ_CIRCLE:
+      schematic_draw_circle (w_current, renderer);
+      break;
+
+    case OBJ_LINE:
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:
+      schematic_draw_line (w_current, renderer);
+    break;
+
+    default:
+      g_return_if_reached ();
+  }
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -765,7 +816,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           eda_renderer_set_color_map (renderer, render_color_map);
           cairo_restore (cr);
           break;
-        case GRIPS      : o_grips_draw_rubber (w_current, renderer); break;
+        case GRIPS      : schematic_draw_object (w_current, renderer); break;
         case SBOX       : schematic_draw_box (w_current, renderer);
         case ZOOMBOX    : schematic_draw_zoom_box (w_current, renderer); break;
         default: break;

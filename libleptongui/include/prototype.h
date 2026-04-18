@@ -332,9 +332,6 @@ void
 o_grips_cancel (SchematicWindow *w_current);
 
 void
-o_grips_draw_rubber (SchematicWindow *w_current,
-                     EdaRenderer *renderer);
-void
 o_line_invalidate_rubber (SchematicWindow *w_current);
 
 void

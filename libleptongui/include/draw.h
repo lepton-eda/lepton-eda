@@ -60,6 +60,9 @@ schematic_draw_pin (SchematicWindow *w_current,
 void
 schematic_draw_zoom_box (SchematicWindow *w_current,
                          EdaRenderer *renderer);
+void
+schematic_draw_object (SchematicWindow *w_current,
+                       EdaRenderer *renderer);
 
 #ifdef ENABLE_GTK3
 void
