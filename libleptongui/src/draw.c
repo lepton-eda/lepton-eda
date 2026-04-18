@@ -337,6 +337,35 @@ schematic_draw_path (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw a pin.
+ *
+ *  \par Function Description
+ *
+ *  Draws a pin using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_pin (SchematicWindow *w_current,
+                    EdaRenderer *renderer)
+{
+  double wwidth = PIN_WIDTH_NET;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx, w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
+
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
+}
+
+
 /*! \brief Draw a zoom box.
  *
  *  \par Function Description
@@ -630,7 +659,7 @@ schematic_draw_rect (SchematicWindow *w_current,
         case LINEMODE   : schematic_draw_line (w_current, renderer); break;
         case PATHMODE   : schematic_draw_path (w_current, renderer); break;
         case PICTUREMODE: o_picture_draw_rubber (w_current, renderer); break;
-        case PINMODE    : o_pin_draw_rubber (w_current, renderer); break;
+        case PINMODE    : schematic_draw_pin (w_current, renderer); break;
         case BUSMODE:
           /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (cr);

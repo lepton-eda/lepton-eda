@@ -471,9 +471,6 @@ o_pin_motion (SchematicWindow *w_current,
               int x,
               int y);
 void
-o_pin_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer);
-void
 o_pin_invalidate_rubber (SchematicWindow *w_current);
 
 /* o_place.c */

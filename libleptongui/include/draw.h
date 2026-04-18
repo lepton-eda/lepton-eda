@@ -49,6 +49,9 @@ void
 schematic_draw_path (SchematicWindow *w_current,
                      EdaRenderer *renderer);
 void
+schematic_draw_pin (SchematicWindow *w_current,
+                    EdaRenderer *renderer);
+void
 schematic_draw_zoom_box (SchematicWindow *w_current,
                          EdaRenderer *renderer);
 

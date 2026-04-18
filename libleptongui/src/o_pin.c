@@ -135,26 +135,3 @@ o_pin_invalidate_rubber (SchematicWindow *w_current)
                                           w_current->second_wx,
                                           w_current->second_wy);
 }
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_pin_draw_rubber (SchematicWindow *w_current,
-                   EdaRenderer *renderer)
-{
-  double wwidth = PIN_WIDTH_NET;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  eda_cairo_line (cr, flags, END_NONE, wwidth,
-                  w_current->first_wx, w_current->first_wy,
-                  w_current->second_wx, w_current->second_wy);
-
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
-}
