@@ -181,7 +181,7 @@ o_place_motion (SchematicWindow *w_current,
  *
  *  \par Function Description
  *  This function invalidates the bounding box where objects would be
- *  drawn by o_place_draw_rubber()
+ *  drawn by schematic_draw_place()
  *
  * The function applies manhatten mode constraints to the coordinates
  * before drawing if the CONTROL key is recording as being pressed in
@@ -276,98 +276,6 @@ o_place_invalidate_rubber (SchematicWindow *w_current,
                                           top + diff_y,
                                           right + diff_x,
                                           bottom + diff_y);
-}
-
-
-/*! \brief Draw a bounding box or outline for LeptonObject placement
- *  \par Function Description
- *  This function draws either the OBJECTS in the place list
- *  or a rectangle around their bounding box, depending upon the
- *  currently selected w_current->actionfeedback_mode. This takes the
- *  value BOUNDINGBOX or OUTLINE.
- *
- * The function applies manhatten mode constraints to the coordinates
- * before drawing if the CONTROL key is recording as being pressed in
- * the w_current structure.
- *
- *  \param w_current   SchematicWindow which we're drawing for.
- *  \param renderer    Renderer to use for drawing.
- */
-void
-o_place_draw_rubber (SchematicWindow *w_current,
-                     EdaRenderer *renderer)
-{
-  int diff_x, diff_y;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-
-  g_return_if_fail (w_current != NULL);
-
-  SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  LeptonPage *page = schematic_canvas_get_page (page_view);
-  g_return_if_fail (page != NULL);
-  g_return_if_fail (page->place_list != NULL);
-
-  gboolean show_hidden_text =
-    schematic_window_get_show_hidden_text (w_current);
-
-  SchematicActionMode action_mode =
-    schematic_window_get_action_mode (w_current);
-  /* Don't worry about the previous drawing method and movement
-   * constraints, use with the current settings */
-  w_current->drawbounding_action_mode = (schematic_window_get_control_key_pressed (w_current) &&
-                                         ! (   (action_mode == PASTEMODE)
-                                            || (action_mode == COMPMODE)
-                                            || (action_mode == TEXTMODE)))
-                                        ? CONSTRAINED : FREE;
-
-  /* Calculate delta of X-Y positions from buffer's origin */
-  diff_x = w_current->second_wx - w_current->first_wx;
-  diff_y = w_current->second_wy - w_current->first_wy;
-
-  /* Adjust the coordinates according to the movement constraints */
-  if (w_current->drawbounding_action_mode == CONSTRAINED ) {
-    if (abs(diff_x) >= abs(diff_y)) {
-      w_current->second_wy = w_current->first_wy;
-      diff_y = 0;
-    } else {
-      w_current->second_wx = w_current->first_wx;
-      diff_x = 0;
-    }
-  }
-
-  /* Translate the cairo context to the required offset before drawing. */
-  cairo_save (cr);
-  cairo_translate (cr, diff_x, diff_y);
-
-  /* Draw with the appropriate mode */
-  if (w_current->actionfeedback_mode == BOUNDINGBOX)
-  {
-    GArray *map = eda_renderer_get_color_map (renderer);
-    int flags = eda_renderer_get_cairo_flags (renderer);
-    int left, top, bottom, right;
-
-    /* Find the bounds of the drawing to be done */
-    lepton_object_list_bounds (page->place_list,
-                               show_hidden_text,
-                               &left,
-                               &top,
-                               &right,
-                               &bottom);
-
-    /* Draw box outline */
-    eda_cairo_box (cr, flags, 0, left, top, right, bottom);
-    eda_cairo_set_source_color (cr, BOUNDINGBOX_COLOR, map);
-    eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, 0, -1, -1);
-  } else {
-    GList *iter;
-    for (iter = page->place_list; iter != NULL;
-         iter = g_list_next (iter)) {
-      eda_renderer_draw (renderer, (LeptonObject *) iter->data);
-    }
-  }
-  cairo_restore (cr);
 }
 
 

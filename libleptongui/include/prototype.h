@@ -486,9 +486,6 @@ void
 o_place_invalidate_rubber (SchematicWindow *w_current,
                            int drawing);
 void
-o_place_draw_rubber (SchematicWindow *w_current,
-                     EdaRenderer *renderer);
-void
 o_place_rotate (SchematicWindow *w_current);
 
 void

@@ -477,7 +477,7 @@ o_move_draw_rubber (SchematicWindow *w_current,
 
   g_return_if_fail (w_current != NULL);
 
-  o_place_draw_rubber (w_current, renderer);
+  schematic_draw_place (w_current, renderer);
 
   net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
 
