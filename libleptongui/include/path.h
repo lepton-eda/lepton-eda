@@ -27,6 +27,13 @@
 
 G_BEGIN_DECLS
 
+LeptonPath*
+schematic_path_copy_modify (LeptonPath *path,
+                            int dx,
+                            int dy,
+                            int new_x,
+                            int new_y,
+                            int whichone);
 int
 schematic_path_next_sections (SchematicWindow *w_current);
 

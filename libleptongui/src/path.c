@@ -28,13 +28,13 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-static LeptonPath*
-path_copy_modify (LeptonPath *path,
-                  int dx,
-                  int dy,
-                  int new_x,
-                  int new_y,
-                  int whichone)
+LeptonPath*
+schematic_path_copy_modify (LeptonPath *path,
+                            int dx,
+                            int dy,
+                            int new_x,
+                            int new_y,
+                            int whichone)
 {
   LeptonPath *new_path;
   int x1, y1, x2, y2, x3, y3;
@@ -613,9 +613,13 @@ o_path_draw_rubber_grips (SchematicWindow *w_current,
   lepton_object_set_stroke (&object, stroke);
   lepton_object_set_fill (&object, fill);
   lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
-  object.path = path_copy_modify (w_current->which_object->path, 0, 0,
-                                  w_current->second_wx,
-                                  w_current->second_wy, w_current->which_grip);
+  object.path =
+    schematic_path_copy_modify (w_current->which_object->path,
+                                0,
+                                0,
+                                w_current->second_wx,
+                                w_current->second_wy,
+                                w_current->which_grip);
 
   eda_renderer_draw (renderer, &object);
   lepton_path_free (object.path);
