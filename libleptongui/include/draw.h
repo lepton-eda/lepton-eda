@@ -49,6 +49,9 @@ void
 schematic_draw_path (SchematicWindow *w_current,
                      EdaRenderer *renderer);
 void
+schematic_draw_picture (SchematicWindow *w_current,
+                        EdaRenderer *renderer);
+void
 schematic_draw_pin (SchematicWindow *w_current,
                     EdaRenderer *renderer);
 void

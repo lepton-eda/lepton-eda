@@ -97,7 +97,6 @@ o_picture_end (SchematicWindow *w_current,
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* erase the temporary picture */
-  /* o_picture_draw_rubber(w_current); */
   schematic_window_set_rubber_visible (w_current, 0);
 
   picture_width  = GET_PICTURE_WIDTH (w_current);
@@ -319,37 +318,6 @@ o_picture_motion (SchematicWindow *w_current,
   schematic_window_set_rubber_visible (w_current, 1);
 }
 
-/*! \brief Draw picture from SchematicWindow object.
- *  \par Function Description
- *  This function draws the box from the variables in the
- *  #SchematicWindow structure <B>*w_current</B> using \a renderer.
- *  One corner of the box is at (<B>w_current->first_wx</B>,
- *  <B>w_current->first_wy</B>) and the second corner is at
- *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
- *
- *  \param [in] w_current  The #SchematicWindow object.
- *  \param [in] renderer   The \c EdaRenderer object.
- */
-void
-o_picture_draw_rubber (SchematicWindow *w_current,
-                       EdaRenderer *renderer)
-{
-  int left, top, width, height;
-  double wwidth = 0;
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
-  GArray *color_map = eda_renderer_get_color_map (renderer);
-  int flags = eda_renderer_get_cairo_flags (renderer);
-
-  /* get the width/height and the upper left corner of the picture */
-  left =   GET_PICTURE_LEFT (w_current);
-  top =    GET_PICTURE_TOP (w_current);
-  width =  GET_PICTURE_WIDTH (w_current);
-  height = GET_PICTURE_HEIGHT (w_current);
-
-  eda_cairo_box (cr, flags, wwidth, left, top - height, left + width, top);
-  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
-  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
-}
 
 /*! \brief Replace all selected pictures with a new picture
  * \par Function Description

@@ -442,9 +442,6 @@ picture_selection_dialog (SchematicWindow *w_current);
 void
 o_picture_invalidate_rubber(SchematicWindow *w_current);
 
-void
-o_picture_draw_rubber (SchematicWindow *w_current,
-                       EdaRenderer *renderer);
 gboolean
 o_picture_exchange (SchematicWindow *w_current,
                     const gchar *filename,

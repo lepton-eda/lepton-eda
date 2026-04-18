@@ -32,6 +32,18 @@ extern LeptonColorMap display_outline_colors;
  */
 
 
+/* This works, but using one macro inside of other doesn't */
+#define GET_PICTURE_WIDTH(w) \
+  abs((w)->second_wx - (w)->first_wx)
+#define GET_PICTURE_HEIGHT(w) \
+  (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
+#define GET_PICTURE_LEFT(w) \
+  MIN((w)->first_wx, (w)->second_wx)
+#define GET_PICTURE_TOP(w) \
+  (w)->first_wy > (w)->second_wy ? (w)->first_wy  : \
+  (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
+
+
 /*! \brief Draw an arc.
  *
  *  \par Function Description
@@ -334,6 +346,39 @@ schematic_draw_path (SchematicWindow *w_current,
 
   /* Throw away the added sections again */
   w_current->temp_path->num_sections -= added_sections;
+}
+
+
+/*! \brief Draw a picture.
+ *
+ *  \par Function Description
+ *
+ *  Draws a picture using the variables defined in the current
+ *  #SchematicWindow instance and all other data set in \p
+ *  renderer.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_picture (SchematicWindow *w_current,
+                        EdaRenderer *renderer)
+{
+  int left, top, width, height;
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
+
+  /* get the width/height and the upper left corner of the picture */
+  left =   GET_PICTURE_LEFT (w_current);
+  top =    GET_PICTURE_TOP (w_current);
+  width =  GET_PICTURE_WIDTH (w_current);
+  height = GET_PICTURE_HEIGHT (w_current);
+
+  eda_cairo_box (cr, flags, wwidth, left, top - height, left + width, top);
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }
 
 
@@ -658,7 +703,7 @@ schematic_draw_rect (SchematicWindow *w_current,
         case CIRCLEMODE : schematic_draw_circle (w_current, renderer); break;
         case LINEMODE   : schematic_draw_line (w_current, renderer); break;
         case PATHMODE   : schematic_draw_path (w_current, renderer); break;
-        case PICTUREMODE: o_picture_draw_rubber (w_current, renderer); break;
+        case PICTUREMODE: schematic_draw_picture (w_current, renderer); break;
         case PINMODE    : schematic_draw_pin (w_current, renderer); break;
         case BUSMODE:
           /* FIXME shouldn't need to save/restore colormap here */
