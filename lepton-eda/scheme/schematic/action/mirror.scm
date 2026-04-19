@@ -18,7 +18,11 @@
 
 
 (define-module (schematic action mirror)
+  #:use-module (system foreign)
+
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (mirror-objects))
 
@@ -26,4 +30,8 @@
 (define (mirror-objects *window x y *objects)
   "Mirror *OBJECTS in *WINDOW around the center point (X . Y).  The
 coords are in the world units."
-  (o_mirror_world_update *window x y *objects))
+  (if (null-pointer? *objects)
+      (begin
+        (i_action_stop *window)
+        (set-action-mode! 'select-mode #:window (pointer->window *window)))
+      (o_mirror_world_update *window x y *objects)))

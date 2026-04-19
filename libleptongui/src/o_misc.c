@@ -44,12 +44,6 @@ o_mirror_world_update (SchematicWindow *w_current,
   LeptonObject *o_current;
   GList *o_iter;
 
-  if (list == NULL) {
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
-    return;
-  }
-
   schematic_draw_invalidate_object_list (w_current, list);
 
   /* Find connected objects, removing each object in turn from the
