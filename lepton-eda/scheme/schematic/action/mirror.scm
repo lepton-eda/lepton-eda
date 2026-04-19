@@ -20,6 +20,9 @@
 (define-module (schematic action mirror)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
+
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
@@ -34,6 +37,29 @@ coords are in the world units."
       (begin
         (i_action_stop *window)
         (set-action-mode! 'select-mode #:window (pointer->window *window)))
+
       (begin
         (schematic_draw_invalidate_object_list *window *objects)
+
+        ;; Find connected objects, removing each object in turn
+        ;; from the connection list. We only _really_ want those
+        ;; objects connected to the selection, not those within in
+        ;; it.
+        (for-each s_conn_remove_object_connections
+                  (glist->list *objects identity))
+
+        (lepton_object_list_mirror *objects x y)
+
+        ;; Find connected objects, adding each object in turn back
+        ;; to the connection list. We only _really_ want those
+        ;; objects connected to the selection, not those within in
+        ;; it.
+        (for-each
+         (lambda (*object)
+           (let ((*page (lepton_object_get_page *object)))
+             (s_conn_update_object *page *object)))
+         (glist->list *objects identity))
+
+        (schematic_draw_invalidate_object_list *window *objects)
+
         (o_mirror_world_update *window x y *objects))))
