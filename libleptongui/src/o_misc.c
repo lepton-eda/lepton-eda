@@ -63,7 +63,8 @@ o_mirror_world_update (SchematicWindow *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = (LeptonObject*) o_iter->data;
 
-    s_conn_update_object (o_current->page, o_current);
+    LeptonPage *page = lepton_object_get_page (o_current);
+    s_conn_update_object (page, o_current);
   }
 
   schematic_draw_invalidate_object_list (w_current, list);
