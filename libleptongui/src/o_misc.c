@@ -44,8 +44,6 @@ o_mirror_world_update (SchematicWindow *w_current,
   LeptonObject *o_current;
   GList *o_iter;
 
-  schematic_draw_invalidate_object_list (w_current, list);
-
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
    * to the selection, not those within in it.

@@ -34,4 +34,6 @@ coords are in the world units."
       (begin
         (i_action_stop *window)
         (set-action-mode! 'select-mode #:window (pointer->window *window)))
-      (o_mirror_world_update *window x y *objects)))
+      (begin
+        (schematic_draw_invalidate_object_list *window *objects)
+        (o_mirror_world_update *window x y *objects))))
