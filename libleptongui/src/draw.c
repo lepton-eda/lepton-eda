@@ -623,6 +623,71 @@ schematic_draw_place (SchematicWindow *w_current,
 }
 
 
+/*! \brief Draw objects being stretched during move.
+ *
+ *  \par Function Description
+ *
+ *  Draws the objects being stretched during move using the
+ *  variables defined in the current #SchematicWindow instance and
+ *  all other data set in \p renderer.
+ *
+ *  The buses and nets are stretched on move when the net
+ *  rubberband mode is switched on.
+ *
+ *  \param [in] w_current The #SchematicWindow instance.
+ *  \param [in] renderer The renderer.
+ */
+void
+schematic_draw_stretch_list (SchematicWindow *w_current,
+                             EdaRenderer *renderer)
+{
+  GList *s_iter;
+  int diff_x, diff_y;
+  gboolean net_rubber_band_mode;
+
+  g_return_if_fail (w_current != NULL);
+
+  schematic_draw_place (w_current, renderer);
+
+  net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
+
+  if (!net_rubber_band_mode)
+    return;
+
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
+
+  for (s_iter = w_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *s_current = (STRETCH*) s_iter->data;
+    LeptonObject *object = s_current->object;
+    int whichone = s_current->whichone;
+
+    /* We can only stretch nets and buses */
+    switch (lepton_object_get_type (object)) {
+      case OBJ_NET:
+      case OBJ_BUS:
+        break;
+    default:
+      continue;
+    }
+
+    g_return_if_fail ((whichone >= 0) && (whichone < 2));
+
+    /* Apply stretch */
+    object->line->x[whichone] += diff_x;
+    object->line->y[whichone] += diff_y;
+
+    /* Draw stretched object */
+    eda_renderer_draw (renderer, object);
+
+    /* Restore original geometry */
+    object->line->x[whichone] -= diff_x;
+    object->line->y[whichone] -= diff_y;
+  }
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -871,7 +936,7 @@ schematic_draw_rect (SchematicWindow *w_current,
           cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
-          o_move_draw_rubber (w_current, renderer);
+          schematic_draw_stretch_list (w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
           cairo_restore (cr);

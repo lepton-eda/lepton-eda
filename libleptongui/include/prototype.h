@@ -398,9 +398,6 @@ o_move_motion (SchematicWindow *w_current,
 void
 o_move_invalidate_rubber (SchematicWindow *w_current,
                           int drawing);
-void
-o_move_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer);
 int
 o_move_return_whichone (LeptonObject *object,
                         int x,

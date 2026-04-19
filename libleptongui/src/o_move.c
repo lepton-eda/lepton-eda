@@ -467,62 +467,6 @@ o_move_invalidate_rubber (SchematicWindow *w_current,
  *  \par Function Description
  *
  */
-void
-o_move_draw_rubber (SchematicWindow *w_current,
-                    EdaRenderer *renderer)
-{
-  GList *s_iter;
-  int diff_x, diff_y;
-  gboolean net_rubber_band_mode;
-
-  g_return_if_fail (w_current != NULL);
-
-  schematic_draw_place (w_current, renderer);
-
-  net_rubber_band_mode = schematic_options_get_net_rubber_band_mode (w_current->options);
-
-  if (!net_rubber_band_mode)
-    return;
-
-  diff_x = w_current->second_wx - w_current->first_wx;
-  diff_y = w_current->second_wy - w_current->first_wy;
-
-  for (s_iter = w_current->stretch_list;
-       s_iter != NULL; s_iter = g_list_next (s_iter)) {
-    STRETCH *s_current = (STRETCH*) s_iter->data;
-    LeptonObject *object = s_current->object;
-    int whichone = s_current->whichone;
-
-    /* We can only stretch nets and buses */
-    switch (lepton_object_get_type (object)) {
-      case OBJ_NET:
-      case OBJ_BUS:
-        break;
-    default:
-      continue;
-    }
-
-    g_return_if_fail ((whichone >= 0) && (whichone < 2));
-
-    /* Apply stretch */
-    object->line->x[whichone] += diff_x;
-    object->line->y[whichone] += diff_y;
-
-    /* Draw stretched object */
-    eda_renderer_draw (renderer, object);
-
-    /* Restore original geometry */
-    object->line->x[whichone] -= diff_x;
-    object->line->y[whichone] -= diff_y;
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 int o_move_return_whichone(LeptonObject * object, int x, int y)
 {
   if (object->line->x[0] == x && object->line->y[0] == y) {
