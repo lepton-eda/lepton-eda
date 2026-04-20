@@ -118,13 +118,16 @@ coordinate."
   (define *active-page (schematic_window_get_active_page *window))
   (define *objects (lepton_page_objects *active-page))
 
-  (let ((count (o_select_box_search *window
-                                    show_hidden_text
-                                    left
-                                    top
-                                    right
-                                    bottom
-                                    *objects)))
+  (define (select-objects)
+    (o_select_box_search *window
+                         show_hidden_text
+                         left
+                         top
+                         right
+                         bottom
+                         *objects))
+
+  (let ((count (select-objects)))
     ;; If there were no objects to be found in select box, count
     ;; will be zero, and you need to deselect anything remaining
     ;; (except when the Shift or Control keys are pressed).
