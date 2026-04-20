@@ -424,6 +424,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
     current editing state: it returns `#t` if editing an object is
     in action and `#f` otherwise.
 
+- A new module, `(schematic action mirror)`, has been added.  It
+  exports the function `mirror-objects()` implementing mirroring
+  of objects in various interactive modes.
+
 - A new module, `(schematic action rotate)`, has been added.  It
   exports the function `rotate-objects()` implementing rotation of
   objects in various interactive modes.
