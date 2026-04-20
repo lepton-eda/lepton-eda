@@ -1385,7 +1385,7 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
-(define-lff o_select_box_search void '(*))
+(define-lff o_select_box_search int '(*))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))

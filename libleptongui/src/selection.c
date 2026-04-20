@@ -207,7 +207,7 @@ o_select_object (SchematicWindow *w_current,
  *  \par Function Description
  *
  */
-void
+int
 o_select_box_search (SchematicWindow *w_current)
 {
   LeptonObject *o_current=NULL;
@@ -265,6 +265,8 @@ o_select_box_search (SchematicWindow *w_current)
   if (count == 0 && !SHIFTKEY && !CONTROLKEY) {
     o_select_unselect_all (w_current);
   }
+
+  return count;
 }
 
 

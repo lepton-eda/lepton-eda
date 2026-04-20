@@ -493,7 +493,7 @@ o_select_object (SchematicWindow *w_current,
                  LeptonObject *o_current,
                  int type,
                  int count);
-void
+int
 o_select_box_search (SchematicWindow *w_current);
 
 void
