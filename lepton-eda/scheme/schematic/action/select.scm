@@ -96,7 +96,20 @@ coordinate."
 (define (search-visible-objects window)
   (define *window (check-window window 1))
 
-  (o_select_box_search *window)
+  (define shift-key-pressed?
+    (true? (schematic_window_get_shift_key_pressed *window)))
+  (define control-key-pressed?
+    (true? (schematic_window_get_control_key_pressed *window)))
+
+  (let ((count (o_select_box_search *window)))
+    ;; If there were no objects to be found in select box, count
+    ;; will be zero, and you need to deselect anything remaining
+    ;; (except when the Shift or Control keys are pressed).
+    (when (and (zero? count)
+               (not shift-key-pressed?)
+               (not control-key-pressed?))
+      (o_select_unselect_all *window)))
+
   (i_update_menus *window))
 
 
