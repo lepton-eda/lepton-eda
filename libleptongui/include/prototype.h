@@ -494,8 +494,13 @@ o_select_object (SchematicWindow *w_current,
                  int type,
                  int count);
 int
-o_select_box_search (SchematicWindow *w_current);
-
+o_select_box_search (SchematicWindow *w_current,
+                     gboolean show_hidden_text,
+                     int first_wx,
+                     int first_wy,
+                     int second_wx,
+                     int second_wy,
+                     LeptonPage *active_page);
 void
 o_select_connected_nets (SchematicWindow *w_current,
                          LeptonObject* o_current);

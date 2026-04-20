@@ -101,7 +101,23 @@ coordinate."
   (define control-key-pressed?
     (true? (schematic_window_get_control_key_pressed *window)))
 
-  (let ((count (o_select_box_search *window)))
+  (define show_hidden_text
+    (schematic_window_get_show_hidden_text *window))
+
+  (define wx1 (schematic_window_get_first_wx *window))
+  (define wy1 (schematic_window_get_first_wy *window))
+  (define wx2 (schematic_window_get_second_wx *window))
+  (define wy2 (schematic_window_get_second_wy *window))
+
+  (define *active-page (schematic_window_get_active_page *window))
+
+  (let ((count (o_select_box_search *window
+                                    show_hidden_text
+                                    wx1
+                                    wy1
+                                    wx2
+                                    wy2
+                                    *active-page)))
     ;; If there were no objects to be found in select box, count
     ;; will be zero, and you need to deselect anything remaining
     ;; (except when the Shift or Control keys are pressed).
