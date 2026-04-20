@@ -96,7 +96,8 @@ coordinate."
 (define (search-visible-objects window)
   (define *window (check-window window 1))
 
-  (o_select_box_search *window))
+  (o_select_box_search *window)
+  (i_update_menus *window))
 
 
 (define (finish-box-selection window x y)

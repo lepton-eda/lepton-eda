@@ -265,7 +265,6 @@ o_select_box_search (SchematicWindow *w_current)
   if (count == 0 && !SHIFTKEY && !CONTROLKEY) {
     o_select_unselect_all (w_current);
   }
-  i_update_menus(w_current);
 }
 
 
