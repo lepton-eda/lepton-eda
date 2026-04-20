@@ -109,14 +109,19 @@ coordinate."
   (define wx2 (schematic_window_get_second_wx *window))
   (define wy2 (schematic_window_get_second_wy *window))
 
+  (define left (min wx1 wx2))
+  (define right (max wx1 wx2))
+  (define top (min wy1 wy2))
+  (define bottom (max wy1 wy2))
+
   (define *active-page (schematic_window_get_active_page *window))
 
   (let ((count (o_select_box_search *window
                                     show_hidden_text
-                                    wx1
-                                    wy1
-                                    wx2
-                                    wy2
+                                    left
+                                    top
+                                    right
+                                    bottom
                                     *active-page)))
     ;; If there were no objects to be found in select box, count
     ;; will be zero, and you need to deselect anything remaining

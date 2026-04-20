@@ -210,21 +210,15 @@ o_select_object (SchematicWindow *w_current,
 int
 o_select_box_search (SchematicWindow *w_current,
                      gboolean show_hidden_text,
-                     int first_wx,
-                     int first_wy,
-                     int second_wx,
-                     int second_wy,
+                     int left,
+                     int top,
+                     int right,
+                     int bottom,
                      LeptonPage *active_page)
 {
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
-  int left, right, top, bottom;
   const GList *iter;
-
-  left = MIN (first_wx, second_wx);
-  right = MAX (first_wx, second_wx);
-  top = MIN (first_wy, second_wy);
-  bottom = MAX (first_wy, second_wy);
 
   iter = lepton_page_objects (active_page);
   while (iter != NULL) {
