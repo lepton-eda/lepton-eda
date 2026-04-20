@@ -93,6 +93,12 @@ coordinate."
   (schematic_window_set_rubber_visible *window 1))
 
 
+(define (search-visible-objects window)
+  (define *window (check-window window 1))
+
+  (o_select_box_search *window))
+
+
 (define (finish-box-selection window x y)
   "Finish the process of box selection in WINDOW.  (X . Y) is the
 unused value of the current world coordinate."
@@ -103,7 +109,7 @@ unused value of the current world coordinate."
   (invalidate-selection-box window)
   (schematic_window_set_rubber_visible *window 0)
 
-  (o_select_box_search *window)
+  (search-visible-objects window)
 
   (set-action-mode! 'select-mode #:window window)
   (i_action_stop *window))
