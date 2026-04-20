@@ -500,7 +500,8 @@ o_select_box_search (SchematicWindow *w_current,
                      int top,
                      int right,
                      int bottom,
-                     const GList *iter);
+                     int count,
+                     LeptonObject *o_current);
 void
 o_select_connected_nets (SchematicWindow *w_current,
                          LeptonObject* o_current);

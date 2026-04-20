@@ -214,13 +214,9 @@ o_select_box_search (SchematicWindow *w_current,
                      int top,
                      int right,
                      int bottom,
-                     const GList *iter)
+                     int count,
+                     LeptonObject *o_current)
 {
-  LeptonObject *o_current=NULL;
-  int count = 0; /* object count */
-
-  while (iter != NULL) {
-    o_current = (LeptonObject*) iter->data;
     /* only select visible objects */
     if (!lepton_object_is_text (o_current) ||
         lepton_text_object_is_visible (o_current) ||
@@ -244,8 +240,6 @@ o_select_box_search (SchematicWindow *w_current,
         count++;
       }
     }
-    iter = g_list_next (iter);
-  }
 
   return count;
 }

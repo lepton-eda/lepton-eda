@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
 
   #:use-module (schematic action-mode)
@@ -119,13 +120,20 @@ coordinate."
   (define *objects (lepton_page_objects *active-page))
 
   (define (select-objects)
-    (o_select_box_search *window
-                         show_hidden_text
-                         left
-                         top
-                         right
-                         bottom
-                         *objects))
+    (let loop ((*object-ls (glist->list *objects identity))
+               ;; Object count.
+               (count 0))
+      (if (null? *object-ls)
+          count
+          (loop (cdr *object-ls)
+                (o_select_box_search *window
+                                     show_hidden_text
+                                     left
+                                     top
+                                     right
+                                     bottom
+                                     count
+                                     (car *object-ls))))))
 
   (let ((count (select-objects)))
     ;; If there were no objects to be found in select box, count
