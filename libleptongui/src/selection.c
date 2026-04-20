@@ -214,13 +214,11 @@ o_select_box_search (SchematicWindow *w_current,
                      int top,
                      int right,
                      int bottom,
-                     LeptonPage *active_page)
+                     const GList *iter)
 {
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
-  const GList *iter;
 
-  iter = lepton_page_objects (active_page);
   while (iter != NULL) {
     o_current = (LeptonObject*) iter->data;
     /* only select visible objects */

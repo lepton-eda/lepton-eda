@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi)
 
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
@@ -115,6 +116,7 @@ coordinate."
   (define bottom (max wy1 wy2))
 
   (define *active-page (schematic_window_get_active_page *window))
+  (define *objects (lepton_page_objects *active-page))
 
   (let ((count (o_select_box_search *window
                                     show_hidden_text
@@ -122,7 +124,7 @@ coordinate."
                                     top
                                     right
                                     bottom
-                                    *active-page)))
+                                    *objects)))
     ;; If there were no objects to be found in select box, count
     ;; will be zero, and you need to deselect anything remaining
     ;; (except when the Shift or Control keys are pressed).
