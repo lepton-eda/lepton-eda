@@ -217,11 +217,6 @@ o_select_box_search (SchematicWindow *w_current,
                      int count,
                      LeptonObject *o_current)
 {
-    /* only select visible objects */
-    if (!lepton_object_is_text (o_current) ||
-        lepton_text_object_is_visible (o_current) ||
-        show_hidden_text)
-    {
       int cleft, ctop, cright, cbottom;
 
       if (lepton_object_calculate_visible_bounds (o_current,
@@ -239,7 +234,6 @@ o_select_box_search (SchematicWindow *w_current,
         o_select_object(w_current, o_current, MULTIPLE, count);
         count++;
       }
-    }
 
   return count;
 }

@@ -120,14 +120,21 @@ coordinate."
   (define *objects (lepton_page_objects *active-page))
 
   (define (test-object-bounds *object count)
-    (o_select_box_search *window
-                         show_hidden_text
-                         left
-                         top
-                         right
-                         bottom
-                         count
-                         *object))
+    ;; Only select visible objects.
+    (let ((visible-object?
+           (or (false? (lepton_object_is_text *object))
+               (true? (lepton_text_object_is_visible *object))
+               (true? show_hidden_text))))
+      (if visible-object?
+          (o_select_box_search *window
+                               show_hidden_text
+                               left
+                               top
+                               right
+                               bottom
+                               count
+                               *object)
+          count)))
 
   (define (select-objects)
     (let loop ((*object-ls (glist->list *objects identity))
