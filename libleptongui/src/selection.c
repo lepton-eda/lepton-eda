@@ -202,43 +202,6 @@ o_select_object (SchematicWindow *w_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int
-o_select_box_search (SchematicWindow *w_current,
-                     gboolean show_hidden_text,
-                     int left,
-                     int top,
-                     int right,
-                     int bottom,
-                     int count,
-                     LeptonObject *o_current)
-{
-      int cleft, ctop, cright, cbottom;
-
-      if (lepton_object_calculate_visible_bounds (o_current,
-                                                  show_hidden_text,
-                                                  &cleft,
-                                                  &ctop,
-                                                  &cright,
-                                                  &cbottom) &&
-          cleft   >= left &&
-          cright  <= right  &&
-          ctop    >= top  &&
-          cbottom <= bottom)
-      {
-
-        o_select_object(w_current, o_current, MULTIPLE, count);
-        count++;
-      }
-
-  return count;
-}
-
-
 /*! \brief Select all nets connected to the current net
  *  \par Function Description
  *   Depending on the state of the \a net_selection_mode variable

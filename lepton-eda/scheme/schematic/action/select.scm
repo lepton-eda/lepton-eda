@@ -18,6 +18,7 @@
 
 
 (define-module (schematic action select)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -95,6 +96,10 @@ coordinate."
   (schematic_window_set_rubber_visible *window 1))
 
 
+;;; Definitions from schematic_defines.h.
+(define SINGLE 0)
+(define MULTIPLE 1)
+
 (define (search-visible-objects window)
   (define *window (check-window window 1))
 
@@ -119,21 +124,48 @@ coordinate."
   (define *active-page (schematic_window_get_active_page *window))
   (define *objects (lepton_page_objects *active-page))
 
+  (define object-bv-left (make-bytevector (sizeof int) 0))
+  (define object-bv-right (make-bytevector (sizeof int) 0))
+  (define object-bv-top (make-bytevector (sizeof int) 0))
+  (define object-bv-bottom (make-bytevector (sizeof int) 0))
+
   (define (test-object-bounds *object count)
     ;; Only select visible objects.
     (let ((visible-object?
            (or (false? (lepton_object_is_text *object))
                (true? (lepton_text_object_is_visible *object))
                (true? show_hidden_text))))
-      (if visible-object?
-          (o_select_box_search *window
-                               show_hidden_text
-                               left
-                               top
-                               right
-                               bottom
-                               count
-                               *object)
+      (if (and visible-object?
+               (true? (lepton_object_calculate_visible_bounds
+                       *object
+                       show_hidden_text
+                       (bytevector->pointer object-bv-left)
+                       (bytevector->pointer object-bv-top)
+                       (bytevector->pointer object-bv-right)
+                       (bytevector->pointer object-bv-bottom)))
+               (>= (bytevector-sint-ref object-bv-left
+                                        0
+                                        (native-endianness)
+                                        (sizeof int))
+                   left)
+               (<= (bytevector-sint-ref object-bv-right
+                                        0
+                                        (native-endianness)
+                                        (sizeof int))
+                   right)
+               (>= (bytevector-sint-ref object-bv-top
+                                        0
+                                        (native-endianness)
+                                        (sizeof int))
+                   top)
+               (<= (bytevector-sint-ref object-bv-bottom
+                                        0
+                                        (native-endianness)
+                                        (sizeof int))
+                   bottom))
+          (begin
+            (o_select_object *window *object MULTIPLE count)
+            (1+ count))
           count)))
 
   (define (select-objects)

@@ -604,7 +604,7 @@
             schematic_newtext_dialog_get_textsizecb
             schematic_newtext_dialog_textview_select_all
 
-            o_select_box_search
+            o_select_object
             o_select_return_first_object
             o_select_selected
             o_select_unselect_all
@@ -1385,7 +1385,7 @@
 (define-lff x_print void '(*))
 
 ;;; selection.c
-(define-lff o_select_box_search int (list '* int int int int int int '*))
+(define-lff o_select_object void (list '* '* int int))
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_unselect_all void '(*))

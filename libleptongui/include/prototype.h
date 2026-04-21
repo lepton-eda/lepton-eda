@@ -493,15 +493,6 @@ o_select_object (SchematicWindow *w_current,
                  LeptonObject *o_current,
                  int type,
                  int count);
-int
-o_select_box_search (SchematicWindow *w_current,
-                     gboolean show_hidden_text,
-                     int left,
-                     int top,
-                     int right,
-                     int bottom,
-                     int count,
-                     LeptonObject *o_current);
 void
 o_select_connected_nets (SchematicWindow *w_current,
                          LeptonObject* o_current);
