@@ -119,6 +119,16 @@ coordinate."
   (define *active-page (schematic_window_get_active_page *window))
   (define *objects (lepton_page_objects *active-page))
 
+  (define (test-object-bounds *object count)
+    (o_select_box_search *window
+                         show_hidden_text
+                         left
+                         top
+                         right
+                         bottom
+                         count
+                         *object))
+
   (define (select-objects)
     (let loop ((*object-ls (glist->list *objects identity))
                ;; Object count.
@@ -126,14 +136,7 @@ coordinate."
       (if (null? *object-ls)
           count
           (loop (cdr *object-ls)
-                (o_select_box_search *window
-                                     show_hidden_text
-                                     left
-                                     top
-                                     right
-                                     bottom
-                                     count
-                                     (car *object-ls))))))
+                (test-object-bounds (car *object-ls) count)))))
 
   (let ((count (select-objects)))
     ;; If there were no objects to be found in select box, count
