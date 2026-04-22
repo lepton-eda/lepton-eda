@@ -45,6 +45,11 @@
 (define SINGLE 0)
 (define MULTIPLE 1)
 
+
+(define (is-hit? *window *object x y slack)
+  (schematic_selection_is_object_hit *window *object x y slack))
+
+
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
 ;;; . Y) taken into account the permissible pixel slack SLACK.
 ;;; If so, the function changes selection as appropriate for the
@@ -52,7 +57,7 @@
 ;;; operations resume after this object.  Return TRUE if the
 ;;; LeptonObject was hit, otherwise FALSE.
 (define (find-single-object *window *object x y slack)
-  (if (false? (schematic_selection_is_object_hit *window *object x y slack))
+  (if (false? (is-hit? *window *object x y slack))
       FALSE
 
       (begin
@@ -333,11 +338,8 @@ pressing the left mouse button."
                                                identity)))
       (if (null? *selected-objects)
           FALSE
-          (if (true? (schematic_selection_is_object_hit *window
-                                                        (car *selected-objects)
-                                                        x
-                                                        y
-                                                        slack))
+          (if (true?
+               (is-hit? *window (car *selected-objects) x y slack))
               TRUE
               (loop (cdr *selected-objects)))))))
 
