@@ -59,27 +59,24 @@
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (let* ((slack (schematic_canvas_WORLDabs
-                 *canvas
-                 (schematic_window_get_select_slack_pixels *window)))
-         (*objects (lepton_page_objects
-                    (schematic_window_get_active_page *window)))
-         (*last-found-object
-          (schematic_window_get_object_lastplace *window))
-         ;; Decide whether to iterate over all objects or start at
-         ;; the last found object.  If there is more than one
-         ;; object below the (X . Y) position, this will select
-         ;; the next object below the position point.  You can
-         ;; change the selected object by clicking at the same
-         ;; place multiple times.
-         (*object-ls (glist->list *objects identity))
-         (*rest-objects
-          (remove-object/rotate-ls *last-found-object *object-ls)))
+  (let ((slack (schematic_canvas_WORLDabs
+                *canvas
+                (schematic_window_get_select_slack_pixels *window)))
+        (*objects (lepton_page_objects
+                   (schematic_window_get_active_page *window)))
+        (*last-found-object
+         (schematic_window_get_object_lastplace *window)))
 
-    ;; Iterate over all objects at once.
-    (let loop ((ls *rest-objects))
+    ;; Iterate over all objects starting at the last found object.
+    ;; If there is more than one object around the (X . Y)
+    ;; position, this will select the next object near the
+    ;; position point.  You can change the selected object by
+    ;; clicking at the same place multiple times.
+    (let loop ((ls (remove-object/rotate-ls
+                    *last-found-object
+                    (glist->list *objects identity))))
       (if (null? ls)
-          ;; Nothing found.
+          ;; Nothing more found.
           (o_find_object *window
                          *objects
                          *last-found-object
