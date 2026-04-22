@@ -60,12 +60,12 @@
          ;; place multiple times.
          (last-found-object-exists?
           (not (null-pointer? *last-found-object)))
+         (*object-ls (glist->list *objects identity))
+         (*object-ls-tail (and last-found-object-exists?
+                               (member *last-found-object *object-ls)))
          (*rest-objects
-          (if last-found-object-exists?
-              (glist->list
-               (glist-next
-                (g_list_find *objects *last-found-object))
-               identity)
+          (if *object-ls-tail
+              (cdr *object-ls-tail)
               '())))
 
     ;; Do first search (if we found any objects after the last
