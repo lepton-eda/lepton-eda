@@ -37,6 +37,7 @@
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack           The slack applied to the hit-test.
+ *  \param [in] show_hidden_text Whether the hidden text is visible.
  *
  *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
@@ -45,12 +46,10 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
                                    LeptonObject *object,
                                    int w_x,
                                    int w_y,
-                                   int w_slack)
+                                   int w_slack,
+                                   gboolean show_hidden_text)
 {
   int left, top, right, bottom;
-
-  gboolean show_hidden_text =
-    schematic_window_get_show_hidden_text (w_current);
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */

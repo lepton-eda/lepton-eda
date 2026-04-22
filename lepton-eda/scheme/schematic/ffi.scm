@@ -1210,7 +1210,7 @@
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
-(define-lff schematic_selection_is_object_hit int (list '* '* int int int))
+(define-lff schematic_selection_is_object_hit int (list '* '* int int int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))
