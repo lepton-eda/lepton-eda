@@ -45,15 +45,32 @@
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
-  (let ((slack (schematic_canvas_WORLDabs
-                *canvas
-                (schematic_window_get_select_slack_pixels *window)))
-        (*objects (lepton_page_objects
-                   (schematic_window_get_active_page *window)))
-        (*last-found-object
-         (schematic_window_get_object_lastplace *window)))
+  (let* ((slack (schematic_canvas_WORLDabs
+                 *canvas
+                 (schematic_window_get_select_slack_pixels *window)))
+         (*objects (lepton_page_objects
+                    (schematic_window_get_active_page *window)))
+         (*last-found-object
+          (schematic_window_get_object_lastplace *window))
+         ;; Decide whether to iterate over all objects or start at
+         ;; the last found object.  If there is more than one
+         ;; object below the (X . Y) position, this will select
+         ;; the next object below the position point.  You can
+         ;; change the selected object by clicking at the same
+         ;; place multiple times.
+         (*rest-objects
+          (if (null-pointer? *last-found-object)
+              %null-pointer
+              (glist-next
+               (g_list_find *objects *last-found-object)))))
 
-    (o_find_object *window *objects *last-found-object x y slack)))
+    (o_find_object *window
+                   *objects
+                   *last-found-object
+                   *rest-objects
+                   x
+                   y
+                   slack)))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

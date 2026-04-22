@@ -270,6 +270,7 @@ gboolean
 o_find_object (SchematicWindow *w_current,
                const GList *objects,
                LeptonObject *object_lastplace,
+               const GList *rest_objects,
                int x,
                int y,
                int w_slack);
