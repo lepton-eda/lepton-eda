@@ -58,13 +58,15 @@
          ;; the next object below the position point.  You can
          ;; change the selected object by clicking at the same
          ;; place multiple times.
+         (last-found-object-exists?
+          (not (null-pointer? *last-found-object)))
          (*rest-objects
-          (if (null-pointer? *last-found-object)
-              '()
+          (if last-found-object-exists?
               (glist->list
                (glist-next
                 (g_list_find *objects *last-found-object))
-               identity))))
+               identity)
+              '())))
 
     ;; Do first search (if we found any objects after the last
     ;; found object).
