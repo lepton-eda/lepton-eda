@@ -116,7 +116,6 @@
 
             schematic_selection_find_single_object
             schematic_selection_is_object_hit
-            o_find_object
 
             o_grips_cancel
             o_grips_end
@@ -561,6 +560,7 @@
             schematic_window_get_zoom_with_pan
             schematic_window_get_select_slack_pixels
             schematic_window_get_object_lastplace
+            schematic_window_set_object_lastplace
 
             font_select_widget_new
 
@@ -1002,6 +1002,7 @@
 (define-lff schematic_window_get_zoom_with_pan int '(*))
 (define-lff schematic_window_get_select_slack_pixels int '(*))
 (define-lff schematic_window_get_object_lastplace '* '(*))
+(define-lff schematic_window_set_object_lastplace void '(* *))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -1209,7 +1210,6 @@
 ;;; o_find.c
 (define-lff schematic_selection_find_single_object int (list '* '* int int int))
 (define-lff schematic_selection_is_object_hit int (list '* '* int int int))
-(define-lff o_find_object int (list '* '* '* int int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))

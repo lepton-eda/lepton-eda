@@ -272,13 +272,6 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
                                    int w_x,
                                    int w_y,
                                    int w_slack);
-gboolean
-o_find_object (SchematicWindow *w_current,
-               const GList *objects,
-               LeptonObject *object_lastplace,
-               int x,
-               int y,
-               int w_slack);
 
 /* o_grips.c */
 LeptonObject*

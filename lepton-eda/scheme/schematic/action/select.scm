@@ -42,6 +42,15 @@
 
 
 (define (find-object *window x y)
+  "Find and select an object in *WINDOW at the given world
+coordinates (X . Y) taking into account the number of slack pixels
+around the object defining the area in which it still can be
+selected,and update the page selection.  Find operations resume
+searching after the last object which was found before, so
+multiple find operations at the same point will cycle through any
+objects on top of each other at this location.  The function
+returns TRUE if the object was hit at the given coordinate,
+otherwise FALSE."
   (define *canvas (schematic_window_get_current_canvas *window))
 
   ;; Rotate the object list LS starting from *OBJECT so its head
@@ -76,13 +85,18 @@
                     *last-found-object
                     (glist->list *objects identity))))
       (if (null? ls)
-          ;; Nothing more found.
-          (o_find_object *window
-                         *objects
-                         *last-found-object
-                         x
-                         y
-                         slack)
+          (begin
+            ;; Didn't find anything.... reset lastplace.
+            (schematic_window_set_object_lastplace *window
+                                                   %null-pointer)
+            ;; Deselect everything only if Shift key isn't pressed.
+            (unless (true? (schematic_window_get_shift_key_pressed
+                            *window))
+              (o_select_unselect_all *window))
+
+            (i_update_menus *window)
+            FALSE)
+
           (if (true? (schematic_selection_find_single_object *window
                                                              (car ls)
                                                              x
