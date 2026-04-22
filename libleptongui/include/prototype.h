@@ -269,6 +269,7 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
 gboolean
 o_find_object (SchematicWindow *w_current,
                const GList *objects,
+               LeptonObject *object_lastplace,
                int x,
                int y,
                int w_slack);

@@ -49,9 +49,11 @@
                 *canvas
                 (schematic_window_get_select_slack_pixels *window)))
         (*objects (lepton_page_objects
-                   (schematic_window_get_active_page *window))))
+                   (schematic_window_get_active_page *window)))
+        (*last-found-object
+         (schematic_window_get_object_lastplace *window)))
 
-    (o_find_object *window *objects x y slack)))
+    (o_find_object *window *objects *last-found-object x y slack)))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

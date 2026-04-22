@@ -136,6 +136,7 @@ schematic_selection_find_single_object (SchematicWindow *w_current,
  *
  *  \param [in] w_current         The SchematicWindow object.
  *  \param [in] objects The list of objects of the active page.
+ *  \param [in] object_lastplace The last selected object.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack The number of slack pixels around the
@@ -147,6 +148,7 @@ schematic_selection_find_single_object (SchematicWindow *w_current,
 gboolean
 o_find_object (SchematicWindow *w_current,
                const GList *objects,
+               LeptonObject *object_lastplace,
                int w_x,
                int w_y,
                int w_slack)
@@ -158,9 +160,6 @@ o_find_object (SchematicWindow *w_current,
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  LeptonObject *object_lastplace =
-    schematic_window_get_object_lastplace (w_current);
-
   if (object_lastplace != NULL)
   {
     /* NB: g_list_find doesn't declare its input const, so we cast */
