@@ -153,21 +153,6 @@ o_find_object (SchematicWindow *w_current,
                int w_y,
                int w_slack)
 {
-  const GList *iter = NULL;
-
-  /* now search from the beginning up until the object_lastplace */
-  for (iter = objects;
-       iter != NULL; iter = g_list_next (iter)) {
-    LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (schematic_selection_find_single_object (w_current, o_current, w_x, w_y, w_slack))
-    {
-      return TRUE;
-    }
-    /* break once we've inspected up to where we started the first loop */
-    if (o_current == object_lastplace)
-      break;
-  }
-
   /* didn't find anything.... reset lastplace */
   schematic_window_set_object_lastplace (w_current, NULL);
 

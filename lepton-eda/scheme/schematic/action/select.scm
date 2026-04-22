@@ -19,6 +19,8 @@
 
 (define-module (schematic action select)
   #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi boolean)
@@ -42,6 +44,18 @@
 (define (find-object *window x y)
   (define *canvas (schematic_window_get_current_canvas *window))
 
+  ;; Rotate the object list LS starting from *OBJECT so its head
+  ;; before *OBJECT is appended to its tail after *OBJECT and the
+  ;; object is removed.  If *OBJECT is not in the list, return the
+  ;; list as is.
+  (define (remove-object/rotate-ls *object ls)
+    (let ((index
+           (list-index (lambda (x) (equal? x *object)) ls)))
+      (if index
+          (let-values (((head tail) (split-at ls index)))
+            (append (cdr tail) head))
+          ls)))
+
   (when (null-pointer? *canvas)
     (error "NULL canvas."))
 
@@ -58,18 +72,11 @@
          ;; the next object below the position point.  You can
          ;; change the selected object by clicking at the same
          ;; place multiple times.
-         (last-found-object-exists?
-          (not (null-pointer? *last-found-object)))
          (*object-ls (glist->list *objects identity))
-         (*object-ls-tail (and last-found-object-exists?
-                               (member *last-found-object *object-ls)))
          (*rest-objects
-          (if *object-ls-tail
-              (cdr *object-ls-tail)
-              '())))
+          (remove-object/rotate-ls *last-found-object *object-ls)))
 
-    ;; Do first search (if we found any objects after the last
-    ;; found object).
+    ;; Iterate over all objects at once.
     (let loop ((ls *rest-objects))
       (if (null? ls)
           ;; Nothing found.
