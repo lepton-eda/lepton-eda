@@ -49,11 +49,6 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
 {
   int left, top, right, bottom;
 
-  if (!lepton_object_get_selectable (object))
-  {
-    return FALSE;
-  }
-
   gboolean show_hidden_text =
     schematic_window_get_show_hidden_text (w_current);
 

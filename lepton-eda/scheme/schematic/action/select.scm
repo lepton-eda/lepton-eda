@@ -47,7 +47,10 @@
 
 
 (define (is-hit? *window *object x y slack)
-  (schematic_selection_is_object_hit *window *object x y slack))
+  (if (false? (lepton_object_get_selectable *object))
+      FALSE
+
+      (schematic_selection_is_object_hit *window *object x y slack)))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
