@@ -64,13 +64,24 @@
               (glist-next
                (g_list_find *objects *last-found-object)))))
 
-    (o_find_object *window
-                   *objects
-                   *last-found-object
-                   *rest-objects
-                   x
-                   y
-                   slack)))
+    ;; Do first search (if we found any objects after the last
+    ;; found object).
+    (let loop ((ls (glist->list *rest-objects identity)))
+      (if (null? ls)
+          ;; Nothing found.
+          (o_find_object *window
+                         *objects
+                         *last-found-object
+                         x
+                         y
+                         slack)
+          (if (true? (schematic_selection_find_single_object *window
+                                                             (car ls)
+                                                             x
+                                                             y
+                                                             slack))
+              TRUE
+              (loop (cdr ls)))))))
 
 
 ;;; Invalidate the area of the box selection in WINDOW.

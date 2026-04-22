@@ -114,6 +114,7 @@
             o_edit_show_hidden
             o_edit_show_specific_text
 
+            schematic_selection_find_single_object
             schematic_selection_is_object_hit
             o_find_object
 
@@ -1206,8 +1207,9 @@
 (define-lff schematic_delete_dialog int '())
 
 ;;; o_find.c
+(define-lff schematic_selection_find_single_object int (list '* '* int int int))
 (define-lff schematic_selection_is_object_hit int (list '* '* int int int))
-(define-lff o_find_object int (list '* '* '* '* int int int))
+(define-lff o_find_object int (list '* '* '* int int int))
 
 ;;; o_grips.c
 (define-lff o_grips_cancel void '(*))

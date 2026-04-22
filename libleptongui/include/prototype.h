@@ -261,6 +261,12 @@ schematic_delete_dialog ();
 
 /* o_find.c */
 gboolean
+schematic_selection_find_single_object (SchematicWindow *w_current,
+                                        LeptonObject *object,
+                                        int w_x,
+                                        int w_y,
+                                        int w_slack);
+gboolean
 schematic_selection_is_object_hit (SchematicWindow *w_current,
                                    LeptonObject *object,
                                    int w_x,
@@ -270,7 +276,6 @@ gboolean
 o_find_object (SchematicWindow *w_current,
                const GList *objects,
                LeptonObject *object_lastplace,
-               const GList *rest_objects,
                int x,
                int y,
                int w_slack);

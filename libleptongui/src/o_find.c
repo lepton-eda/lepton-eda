@@ -137,7 +137,6 @@ schematic_selection_find_single_object (SchematicWindow *w_current,
  *  \param [in] w_current         The SchematicWindow object.
  *  \param [in] objects The list of objects of the active page.
  *  \param [in] object_lastplace The last selected object.
- *  \param [in] rest_objects The sublist of objects to start with first.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack The number of slack pixels around the
@@ -150,22 +149,11 @@ gboolean
 o_find_object (SchematicWindow *w_current,
                const GList *objects,
                LeptonObject *object_lastplace,
-               const GList *rest_objects,
                int w_x,
                int w_y,
                int w_slack)
 {
-  const GList *iter = rest_objects;
-
-  /* do first search (if we found any objects after the last found object) */
-  while (iter != NULL) {
-    LeptonObject *o_current = (LeptonObject*) iter->data;
-    if (schematic_selection_find_single_object (w_current, o_current, w_x, w_y, w_slack))
-    {
-      return TRUE;
-    }
-    iter = g_list_next (iter);
-  }
+  const GList *iter = NULL;
 
   /* now search from the beginning up until the object_lastplace */
   for (iter = objects;
