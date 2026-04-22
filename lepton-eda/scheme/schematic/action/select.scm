@@ -60,13 +60,15 @@
          ;; place multiple times.
          (*rest-objects
           (if (null-pointer? *last-found-object)
-              %null-pointer
-              (glist-next
-               (g_list_find *objects *last-found-object)))))
+              '()
+              (glist->list
+               (glist-next
+                (g_list_find *objects *last-found-object))
+               identity))))
 
     ;; Do first search (if we found any objects after the last
     ;; found object).
-    (let loop ((ls (glist->list *rest-objects identity)))
+    (let loop ((ls *rest-objects))
       (if (null? ls)
           ;; Nothing found.
           (o_find_object *window
