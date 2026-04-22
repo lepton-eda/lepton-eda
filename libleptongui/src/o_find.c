@@ -165,11 +165,14 @@ o_find_object (SchematicWindow *w_current,
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  if (lepton_page_get_object_lastplace (active_page) != NULL)
+  LeptonObject *object_lastplace =
+    schematic_window_get_object_lastplace (w_current);
+
+  if (object_lastplace != NULL)
   {
     /* NB: g_list_find doesn't declare its input const, so we cast */
     iter = g_list_find ((GList *)lepton_page_objects (active_page),
-                        lepton_page_get_object_lastplace (active_page));
+                        object_lastplace);
     iter = g_list_next (iter);
   }
 
@@ -192,12 +195,12 @@ o_find_object (SchematicWindow *w_current,
       return TRUE;
     }
     /* break once we've inspected up to where we started the first loop */
-    if (o_current == lepton_page_get_object_lastplace (active_page))
+    if (o_current == object_lastplace)
       break;
   }
 
   /* didn't find anything.... reset lastplace */
-  lepton_page_set_object_lastplace (active_page, NULL);
+  schematic_window_set_object_lastplace (w_current, NULL);
 
   /* Deselect everything only if shift key isn't pressed. */
   if (!schematic_window_get_shift_key_pressed (w_current))
