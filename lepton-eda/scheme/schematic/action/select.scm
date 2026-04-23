@@ -47,6 +47,9 @@
 
 
 (define (is-hit? *window *object x y slack)
+  (define (bv->int bv)
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
+
   (define show_hidden_text
     (schematic_window_get_show_hidden_text *window))
 
@@ -73,22 +76,10 @@
                              (bytevector->pointer top-bv)
                              (bytevector->pointer right-bv)
                              (bytevector->pointer bottom-bv)))
-                    (let ((left (bytevector-sint-ref left-bv
-                                                     0
-                                                     (native-endianness)
-                                                     (sizeof int)))
-                          (top (bytevector-sint-ref top-bv
-                                                    0
-                                                    (native-endianness)
-                                                    (sizeof int)))
-                          (right (bytevector-sint-ref right-bv
-                                                      0
-                                                      (native-endianness)
-                                                      (sizeof int)))
-                          (bottom (bytevector-sint-ref bottom-bv
-                                                       0
-                                                       (native-endianness)
-                                                       (sizeof int))))
+                    (let ((left (bv->int left-bv))
+                          (top (bv->int top-bv))
+                          (right (bv->int right-bv))
+                          (bottom (bv->int bottom-bv)))
                       (false? (inside_region (- left slack)
                                              (- top slack)
                                              (+ right slack)
