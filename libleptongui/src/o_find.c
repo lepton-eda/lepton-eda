@@ -49,22 +49,6 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
                                    int w_slack,
                                    gboolean show_hidden_text)
 {
-  int left, top, right, bottom;
-
-  /* Do a coarse test first to avoid computing distances for objects ouside
-   * of the hit range.
-   */
-  if (!lepton_object_calculate_visible_bounds (object,
-                                               show_hidden_text,
-                                               &left,
-                                               &top,
-                                               &right,
-                                               &bottom) ||
-      !inside_region (left  - w_slack, top    - w_slack,
-                      right + w_slack, bottom + w_slack,
-                      w_x, w_y))
-    return FALSE;
-
   return (lepton_object_shortest_distance (object,
                                            w_x,
                                            w_y,

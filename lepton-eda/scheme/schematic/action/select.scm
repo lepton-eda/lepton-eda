@@ -60,12 +60,49 @@
                (false? show_hidden_text))
           FALSE
 
-          (schematic_selection_is_object_hit *window
-                                             *object
+          (let ((left-bv (make-bytevector (sizeof int) 0))
+                (top-bv (make-bytevector (sizeof int) 0))
+                (right-bv (make-bytevector (sizeof int) 0))
+                (bottom-bv (make-bytevector (sizeof int) 0)))
+            ;; Do a coarse test first to avoid computing distances
+            ;; for objects ouside of the hit range.
+            (if (or (false? (lepton_object_calculate_visible_bounds
+                             *object
+                             show_hidden_text
+                             (bytevector->pointer left-bv)
+                             (bytevector->pointer top-bv)
+                             (bytevector->pointer right-bv)
+                             (bytevector->pointer bottom-bv)))
+                    (let ((left (bytevector-sint-ref left-bv
+                                                     0
+                                                     (native-endianness)
+                                                     (sizeof int)))
+                          (top (bytevector-sint-ref top-bv
+                                                    0
+                                                    (native-endianness)
+                                                    (sizeof int)))
+                          (right (bytevector-sint-ref right-bv
+                                                      0
+                                                      (native-endianness)
+                                                      (sizeof int)))
+                          (bottom (bytevector-sint-ref bottom-bv
+                                                       0
+                                                       (native-endianness)
+                                                       (sizeof int))))
+                      (false? (inside_region (- left slack)
+                                             (- top slack)
+                                             (+ right slack)
+                                             (+ bottom slack)
                                              x
-                                             y
-                                             slack
-                                             show_hidden_text))))
+                                             y))))
+                FALSE
+
+                (schematic_selection_is_object_hit *window
+                                                   *object
+                                                   x
+                                                   y
+                                                   slack
+                                                   show_hidden_text))))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
