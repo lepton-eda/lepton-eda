@@ -51,13 +51,6 @@ schematic_selection_is_object_hit (SchematicWindow *w_current,
 {
   int left, top, right, bottom;
 
-  /* We can't hit invisible (text) objects unless show_hidden_text is active.
-   */
-  if (lepton_object_is_text (object) &&
-      !lepton_text_object_is_visible (object) &&
-      !show_hidden_text)
-    return FALSE;
-
   /* Do a coarse test first to avoid computing distances for objects ouside
    * of the hit range.
    */

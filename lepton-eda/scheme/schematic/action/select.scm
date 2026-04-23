@@ -53,12 +53,19 @@
   (if (false? (lepton_object_get_selectable *object))
       FALSE
 
-      (schematic_selection_is_object_hit *window
-                                         *object
-                                         x
-                                         y
-                                         slack
-                                         show_hidden_text)))
+      (if (and (true? (lepton_object_is_text *object))
+               (false? (lepton_text_object_is_visible *object))
+               ;; We can't hit invisible (text) objects unless
+               ;; show_hidden_text is active.
+               (false? show_hidden_text))
+          FALSE
+
+          (schematic_selection_is_object_hit *window
+                                             *object
+                                             x
+                                             y
+                                             slack
+                                             show_hidden_text))))
 
 
 ;;; Test if *OBJECT in *WINDOW was hit at the given coordinates (X
