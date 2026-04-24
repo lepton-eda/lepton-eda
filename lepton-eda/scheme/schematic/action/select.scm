@@ -69,32 +69,32 @@
 
        ;; Do a coarse test first to avoid computing distances for
        ;; objects ouside of the hit range.
-       (let ((left-bv (make-bytevector (sizeof int) 0))
-             (top-bv (make-bytevector (sizeof int) 0))
-             (right-bv (make-bytevector (sizeof int) 0))
-             (bottom-bv (make-bytevector (sizeof int) 0)))
+       (let ((xmin-bv (make-bytevector (sizeof int) 0))
+             (ymin-bv (make-bytevector (sizeof int) 0))
+             (xmax-bv (make-bytevector (sizeof int) 0))
+             (ymax-bv (make-bytevector (sizeof int) 0)))
 
          ;; First off, we have to be able to get bounds of the
          ;; object.
          (and (true? (lepton_object_calculate_visible_bounds
                       *object
                       show_hidden_text
-                      (bytevector->pointer left-bv)
-                      (bytevector->pointer top-bv)
-                      (bytevector->pointer right-bv)
-                      (bytevector->pointer bottom-bv)))
+                      (bytevector->pointer xmin-bv)
+                      (bytevector->pointer ymin-bv)
+                      (bytevector->pointer xmax-bv)
+                      (bytevector->pointer ymax-bv)))
 
-              (let ((left (bv->int left-bv))
-                    (top (bv->int top-bv))
-                    (right (bv->int right-bv))
-                    (bottom (bv->int bottom-bv)))
+              (let ((xmin (bv->int xmin-bv))
+                    (ymin (bv->int ymin-bv))
+                    (xmax (bv->int xmax-bv))
+                    (ymax (bv->int ymax-bv)))
                 ;; And the position has to be inside the object
                 ;; rectangle bounds or at least closer to it than
                 ;; the given slack.
-                (true? (inside_region (- left slack)
-                                      (- top slack)
-                                      (+ right slack)
-                                      (+ bottom slack)
+                (true? (inside_region (- xmin slack)
+                                      (- ymin slack)
+                                      (+ xmax slack)
+                                      (+ ymax slack)
                                       x
                                       y)))))
        ;; And eventually, an object may be a circle, and the
