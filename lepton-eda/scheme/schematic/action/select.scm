@@ -91,12 +91,8 @@
                 ;; And the position has to be inside the object
                 ;; rectangle bounds or at least closer to it than
                 ;; the given slack.
-                (true? (inside_region (- xmin slack)
-                                      (- ymin slack)
-                                      (+ xmax slack)
-                                      (+ ymax slack)
-                                      x
-                                      y)))))
+                (and (<= (- xmin slack) x (+ xmax slack))
+                     (<= (- ymin slack) y (+ ymax slack))))))
        ;; And eventually, an object may be a circle, and the
        ;; corners of its bounding box may be a bit far from its
        ;; circumference to be selected.  Let's check this.
