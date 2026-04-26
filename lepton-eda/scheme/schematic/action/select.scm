@@ -53,7 +53,7 @@
 (define SINGLE 0)
 (define MULTIPLE 1)
 
-(define (select! *window *object type count)
+(define (select! *window *object type first-object?)
   (define shift-pressed?
     (true? (schematic_window_get_shift_key_pressed *window)))
   (define control-pressed?
@@ -62,7 +62,6 @@
     (true? (lepton_object_get_selected *object)))
   (define *selection
     (schematic_window_get_selection_list *window))
-  (define first-object? (zero? count))
 
   (if (not object-selected?)
       ;; The object is not selected.
@@ -189,7 +188,7 @@
                (or (not (object-selected? object))
                    (zero? count)))
           (begin
-            (select! *window *object SINGLE count)
+            (select! *window *object SINGLE (zero? count))
             (if (> net-selection-state 1)
                 ;; Collect nets.
                 (append (object-connections object)
@@ -271,7 +270,7 @@
   ;; Shift+<mouse-1> on it to deselect it.
   (if (or (true? (schematic_window_get_shift_key_pressed *window))
           (true? (schematic_window_get_control_key_pressed *window)))
-      (select! *window *net SINGLE 0)
+      (select! *window *net SINGLE #t)
       (let ((net-selection-state
              (schematic_window_get_net_selection_state *window)))
         (unless (object-selected? (pointer->object *net))
@@ -359,7 +358,7 @@
                  (true? (schematic_window_get_net_selection_mode *window)))
             (select-connected-nets *window *object)
             ;; 0 is count.
-            (select! *window *object SINGLE 0))
+            (select! *window *object SINGLE #t))
 
         (schematic_window_set_object_lastplace *window *object)
         (i_update_menus *window)
@@ -549,7 +548,7 @@ coordinate."
                                         (sizeof int))
                    bottom))
           (begin
-            (select! *window *object MULTIPLE count)
+            (select! *window *object MULTIPLE (zero? count))
             (1+ count))
           count)))
 
