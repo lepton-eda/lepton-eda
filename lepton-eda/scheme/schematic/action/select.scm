@@ -62,6 +62,7 @@
     (true? (lepton_object_get_selected *object)))
   (define *selection
     (schematic_window_get_selection_list *window))
+  (define first-object? (zero? count))
 
   (if (not object-selected?)
       ;; The object is not selected.
@@ -71,8 +72,8 @@
         ;; condition: Control key is not pressed.
         ;; condition: For both multiple and single object addition.
         ;; result: Remove all objects from selection.
-        (when (and (not shift-pressed?)
-                   (zero? count)
+        (when (and first-object?
+                   (not shift-pressed?)
                    (not control-pressed?))
           (o_select_unselect_all *window))
 
@@ -96,7 +97,7 @@
             ;; 1st result: Remove all objects from selection.
             ;; 2nd result: Add object to selection.
             (when (and (= type MULTIPLE)
-                       (zero? count)
+                       first-object?
                        (not control-pressed?))
               (o_select_unselect_all *window)
 
