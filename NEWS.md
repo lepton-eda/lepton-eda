@@ -423,6 +423,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   - `in-action()` returns a boolean value corresponding to the
     current editing state: it returns `#t` if editing an object is
     in action and `#f` otherwise.
+  - `check-action-state()`, a syntax to check that the current
+    window is in action.
 
 - A new module, `(schematic action mirror)`, has been added.  It
   exports the function `mirror-objects()` implementing mirroring
