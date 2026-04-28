@@ -432,6 +432,16 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   exports the function `rotate-objects()` implementing rotation of
   objects in various interactive modes.
 
+- A new module, `(schematic action select)`, has been added.  The
+  module exports the following functions:
+  - `start-selection()`
+  - `finish-selection()`
+  - `continue-selection()`
+  - `start-box-selection()`
+  - `continue-box-selection()`
+  - `finish-box-selection()`
+  - `find-object()`
+
 - A new module, `(schematic callback cancel)`, has been
   introduced.  It exports a new callback function,
   `callback-cancel()`, used to cancel various GUI actions.
