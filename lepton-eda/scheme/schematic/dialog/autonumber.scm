@@ -180,11 +180,10 @@
   (define automatic_slotting
     (schematic_autonumber_get_autotext_slotting *autotext))
   (define *parent (lepton_object_get_attached_to *object))
-  (define renumber_slots
-    (if (and (true? automatic_slotting)
-             (not (null-pointer? *parent)))
-        TRUE
-        FALSE))
+  (define renumber-slots?
+    (and (true? automatic_slotting)
+         (not (null-pointer? *parent))))
+  (define renumber_slots (if renumber-slots? TRUE FALSE))
 
   (schematic_autonumber_get_new_numbers *autotext
                                         *object
