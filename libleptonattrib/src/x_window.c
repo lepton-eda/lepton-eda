@@ -2,7 +2,7 @@
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -850,10 +850,10 @@ activate (gpointer user_data)
  * The function populates the spreadsheet data structure and
  * updates GUI.
  */
+#ifdef ENABLE_GTK3
 int
 lepton_attrib_window (LeptonToplevel *toplevel)
 {
-#ifdef ENABLE_GTK3
   GtkApplication *app;
   int status;
 
@@ -875,10 +875,15 @@ lepton_attrib_window (LeptonToplevel *toplevel)
   status = g_application_run (G_APPLICATION (app), 0, NULL);
   g_object_unref (app);
   return status;
-#else
+}
+
+#else /* GTK2 */
+int
+lepton_attrib_window (LeptonToplevel *toplevel)
+{
   activate ((gpointer) toplevel);
   /* Run main GTK loop. */
   gtk_main ();
   return 0;
-#endif
 }
+#endif
