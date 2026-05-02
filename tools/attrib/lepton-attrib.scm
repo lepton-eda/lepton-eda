@@ -1,7 +1,7 @@
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 2003-2010 Stuart D. Brorson.
 ;;; Copyright (C) 2005-2016 gEDA Contributors
-;;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@
              (system foreign)
 
              (lepton ffi glib)
-             (lepton ffi lff)
-             (lepton ffi lib)
              (lepton ffi)
              (lepton file-system)
              (lepton init)
@@ -33,26 +31,12 @@
              (lepton rc)
              (lepton toplevel foreign)
              (lepton toplevel)
-             (lepton version))
+             (lepton version)
+
+             (attrib ffi))
 
 ;;; Initialize liblepton library.
 (init-liblepton)
-
-
-;;; Simplify definition of functions by omitting the library
-;;; argument.
-(define-syntax-rule (define-lff arg ...)
-  (define-lff-lib arg ... libleptonattrib))
-
-
-(define libleptonattrib
-  (dynamic-link (or (getenv "LIBLEPTONATTRIB") %libleptonattrib)))
-
-(define-lff-lib gtk_init void '(* *) libgtk)
-
-(define-lff set_verbose_mode void '())
-(define-lff x_fileselect_open '* '())
-(define-lff lepton_attrib_window int '(*))
 
 
 ;;; Localization.

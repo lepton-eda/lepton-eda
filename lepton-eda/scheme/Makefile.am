@@ -4,6 +4,7 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
+	attrib/ffi.scm \
 	backend/PCB.scm \
 	backend/allegro.scm \
 	backend/bae.scm \
