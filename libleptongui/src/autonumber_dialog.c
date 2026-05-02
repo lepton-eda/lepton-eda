@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1279,6 +1279,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   gchar *numslot_str;
   char *str;
   gint number, slot;
+  gboolean unused_slot_found = FALSE;
 
   new_number = autotext->startnum;
 
@@ -1302,47 +1303,50 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
       g_free(freeslot);
       autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
 
-      return;
+      unused_slot_found = TRUE;
     }
   }
 
-  /* get a new number */
-  item = autotext->used_numbers;
-  while (1) {
-    while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
-      item = g_list_next(item);
+  if (!unused_slot_found)
+  {
+    /* get a new number */
+    item = autotext->used_numbers;
+    while (1) {
+      while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
+        item = g_list_next(item);
 
-    if (item == NULL || GPOINTER_TO_INT(item->data) > new_number)
-      break;
-    else  /* new_number == item->data */
-      new_number++;
-  }
-  number = new_number;
-  slot = 0;
+      if (item == NULL || GPOINTER_TO_INT(item->data) > new_number)
+        break;
+      else  /* new_number == item->data */
+        new_number++;
+    }
+    number = new_number;
+    slot = 0;
 
-  /* insert the new number to the used list */
-  autotext->used_numbers = g_list_insert_sorted(autotext->used_numbers,
-                                                GINT_TO_POINTER(new_number),
-                                                (GCompareFunc) autonumber_sort_numbers);
+    /* insert the new number to the used list */
+    autotext->used_numbers = g_list_insert_sorted(autotext->used_numbers,
+                                                  GINT_TO_POINTER(new_number),
+                                                  (GCompareFunc) autonumber_sort_numbers);
 
-  /* 3. is o_current a slotted object ? */
-  if ((autotext->slotting) && o_parent != NULL) {
-    numslot_str =
-      lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
-    if (numslot_str != NULL) {
-      sscanf(numslot_str," %d",&numslots);
-      g_free(numslot_str);
-      if (numslots > 0) {
-        /* Yes! -> new number and slot=1; add the other slots to the database */
-        slot = 1;
-        for (i=2; i <=numslots; i++) {
-          freeslot = g_new (SchematicAutonumberSlot, 1);
-          freeslot->symbolname = lepton_component_object_get_basename (o_parent);
-          freeslot->number = new_number;
-          freeslot->slotnr = i;
-          autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
-                                                      freeslot,
-                                                      (GCompareFunc) freeslot_compare);
+    /* 3. is o_current a slotted object ? */
+    if ((autotext->slotting) && o_parent != NULL) {
+      numslot_str =
+        lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
+      if (numslot_str != NULL) {
+        sscanf(numslot_str," %d",&numslots);
+        g_free(numslot_str);
+        if (numslots > 0) {
+          /* Yes! -> new number and slot=1; add the other slots to the database */
+          slot = 1;
+          for (i=2; i <=numslots; i++) {
+            freeslot = g_new (SchematicAutonumberSlot, 1);
+            freeslot->symbolname = lepton_component_object_get_basename (o_parent);
+            freeslot->number = new_number;
+            freeslot->slotnr = i;
+            autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
+                                                        freeslot,
+                                                        (GCompareFunc) freeslot_compare);
+          }
         }
       }
     }
