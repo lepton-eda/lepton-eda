@@ -222,14 +222,14 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 GSList *x_fileselect_open (void);
 
 /* ------------- x_window.c ------------- */
+int
+attrib_run (LeptonToplevel *toplevel);
+
 void x_window_add_items();
 void
 x_window_set_toplevel (LeptonToplevel *toplevel);
 LeptonToplevel*
 x_window_get_toplevel ();
-
-int
-lepton_attrib_window (LeptonToplevel *toplevel);
 
 void
 x_window_set_title_changed (int changed);

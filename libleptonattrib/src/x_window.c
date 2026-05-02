@@ -852,7 +852,7 @@ activate (gpointer user_data)
  */
 #ifdef ENABLE_GTK3
 int
-lepton_attrib_window (LeptonToplevel *toplevel)
+attrib_run (LeptonToplevel *toplevel)
 {
   GtkApplication *app;
   int status;
@@ -879,7 +879,7 @@ lepton_attrib_window (LeptonToplevel *toplevel)
 
 #else /* GTK2 */
 int
-lepton_attrib_window (LeptonToplevel *toplevel)
+attrib_run (LeptonToplevel *toplevel)
 {
   activate ((gpointer) toplevel);
   /* Run main GTK loop. */

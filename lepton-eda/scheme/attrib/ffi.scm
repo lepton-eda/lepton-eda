@@ -28,7 +28,7 @@
 
             x_fileselect_open
 
-            lepton_attrib_window))
+            attrib_run))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -47,4 +47,4 @@
 (define-lff x_fileselect_open '* '())
 
 ;;; x_window.c
-(define-lff lepton_attrib_window int '(*))
+(define-lff attrib_run int '(*))
