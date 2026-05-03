@@ -223,7 +223,7 @@ GSList *x_fileselect_open (void);
 
 /* ------------- x_window.c ------------- */
 void
-attrib_activate (gpointer app,
+attrib_activate (gpointer window_widget,
                  gpointer user_data);
 
 int

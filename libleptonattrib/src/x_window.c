@@ -762,13 +762,13 @@ attrib_window_new (gpointer app)
 
 
 void
-attrib_activate (gpointer app,
+attrib_activate (gpointer window_widget,
                  gpointer user_data)
 {
   GList *iter;
   LeptonPage *p_local;
 
-  window = attrib_window_new (app);
+  window = (GtkWidget*) window_widget;
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   x_window_set_toplevel (toplevel);
@@ -898,7 +898,6 @@ int
 attrib_run (gpointer unused,
             LeptonToplevel *toplevel)
 {
-  attrib_activate (NULL, (gpointer) toplevel);
   /* Run main GTK loop. */
   gtk_main ();
   return 0;

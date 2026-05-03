@@ -82,7 +82,8 @@ Lepton EDA homepage: ~S
 
 
 (define (activate *app *toplevel)
-  (attrib_activate *app *toplevel))
+  (define *window-widget (attrib_window_new *app))
+  (attrib_activate *window-widget *toplevel))
 
 
 ;;; Init logging.
@@ -127,8 +128,12 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (exit (attrib_run (procedure->pointer void activate '(* *))
-                                     (toplevel->pointer (current-toplevel)))))))))
+                   (exit (if %m4-use-gtk3
+                             (attrib_run (procedure->pointer void activate '(* *))
+                                         (toplevel->pointer (current-toplevel)))
+                             (let ((*toplevel (toplevel->pointer (current-toplevel))))
+                               (activate %null-pointer *toplevel)
+                               (attrib_run %null-pointer *toplevel)))))))))
 
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
