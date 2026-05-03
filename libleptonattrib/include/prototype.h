@@ -229,7 +229,7 @@ attrib_activate (gpointer app,
 int
 attrib_run (gpointer activate_callback,
             LeptonToplevel *toplevel);
-void
+GtkWidget*
 attrib_window_new (gpointer app);
 
 void x_window_add_items();

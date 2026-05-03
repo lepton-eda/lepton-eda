@@ -746,15 +746,17 @@ startup (GApplication *app)
  *  port and is not used in GTK2 port.
  *
  *  \param [in] app The \c GtkApplication instance.
+ *
+ *  \return The created window widget.
  */
-void
+GtkWidget*
 attrib_window_new (gpointer app)
 {
   /* window is a global declared in globals.h. */
 #ifdef ENABLE_GTK3
-  window = gtk_application_window_new ((GtkApplication*) app);
+  return gtk_application_window_new ((GtkApplication*) app);
 #else
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  return gtk_window_new(GTK_WINDOW_TOPLEVEL);
 #endif
 }
 
@@ -766,7 +768,7 @@ attrib_activate (gpointer app,
   GList *iter;
   LeptonPage *p_local;
 
-  attrib_window_new (app);
+  window = attrib_window_new (app);
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   x_window_set_toplevel (toplevel);
