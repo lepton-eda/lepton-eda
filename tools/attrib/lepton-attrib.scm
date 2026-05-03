@@ -123,7 +123,7 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (exit (attrib_run (procedure->pointer void activate '(* *))
+                   (exit (attrib_run (procedure->pointer void attrib_activate '(* *))
                                      (toplevel->pointer (current-toplevel)))))))))
 
         ;; There are non-existing or unreadable files.  Report and

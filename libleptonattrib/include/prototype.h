@@ -224,12 +224,12 @@ GSList *x_fileselect_open (void);
 /* ------------- x_window.c ------------- */
 #ifdef ENABLE_GTK3
 void
-activate (GtkApplication* app,
-          gpointer user_data);
+attrib_activate (GtkApplication* app,
+                 gpointer user_data);
 #else
 void
-activate (gpointer unused,
-          gpointer user_data);
+attrib_activate (gpointer unused,
+                 gpointer user_data);
 #endif
 
 int

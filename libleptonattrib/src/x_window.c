@@ -738,11 +738,11 @@ startup (GApplication *app)
 
 void
 #ifdef ENABLE_GTK3
-activate (GtkApplication* app,
-          gpointer user_data)
+attrib_activate (GtkApplication* app,
+                 gpointer user_data)
 #else
-activate (gpointer unused,
-          gpointer user_data)
+attrib_activate (gpointer unused,
+                 gpointer user_data)
 #endif
 {
   GList *iter;
@@ -884,7 +884,7 @@ int
 attrib_run (gpointer unused,
             LeptonToplevel *toplevel)
 {
-  activate (NULL, (gpointer) toplevel);
+  attrib_activate (NULL, (gpointer) toplevel);
   /* Run main GTK loop. */
   gtk_main ();
   return 0;

@@ -28,7 +28,7 @@
 
             x_fileselect_open
 
-            activate
+            attrib_activate
             attrib_run))
 
 ;;; Simplify definition of functions by omitting the library
@@ -48,5 +48,5 @@
 (define-lff x_fileselect_open '* '())
 
 ;;; x_window.c
-(define-lff activate int '(* *))
+(define-lff attrib_activate int '(* *))
 (define-lff attrib_run int '(* *))
