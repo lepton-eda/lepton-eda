@@ -1374,10 +1374,10 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
           /* Yes! -> new number and slot=1; add the other slots to the database */
           slot = 1;
           for (i=2; i <=numslots; i++) {
-            freeslot = g_new (SchematicAutonumberSlot, 1);
-            freeslot->symbolname = lepton_component_object_get_basename (o_parent);
-            freeslot->number = new_number;
-            freeslot->slotnr = i;
+            freeslot =
+              schematic_autonumber_slot_new (new_number,
+                                             i,
+                                             lepton_component_object_get_basename (o_parent));
             autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
                                                         freeslot,
                                                         (GCompareFunc) freeslot_compare);
