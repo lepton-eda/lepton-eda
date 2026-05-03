@@ -736,12 +736,13 @@ startup (GApplication *app)
 #endif
 
 
-static void
+void
 #ifdef ENABLE_GTK3
 activate (GtkApplication* app,
           gpointer user_data)
 #else
-activate (gpointer user_data)
+activate (gpointer unused,
+          gpointer user_data)
 #endif
 {
   GList *iter;
@@ -852,7 +853,8 @@ activate (gpointer user_data)
  */
 #ifdef ENABLE_GTK3
 int
-attrib_run (LeptonToplevel *toplevel)
+attrib_run (gpointer activate_callback,
+            LeptonToplevel *toplevel)
 {
   GtkApplication *app;
   int status;
@@ -870,7 +872,7 @@ attrib_run (LeptonToplevel *toplevel)
                                    app);
 
   g_signal_connect (app, "startup", G_CALLBACK (startup), NULL);
-  g_signal_connect (app, "activate", G_CALLBACK (activate), (gpointer) toplevel);
+  g_signal_connect (app, "activate", G_CALLBACK (activate_callback), (gpointer) toplevel);
 
   status = g_application_run (G_APPLICATION (app), 0, NULL);
   g_object_unref (app);
@@ -879,9 +881,10 @@ attrib_run (LeptonToplevel *toplevel)
 
 #else /* GTK2 */
 int
-attrib_run (LeptonToplevel *toplevel)
+attrib_run (gpointer unused,
+            LeptonToplevel *toplevel)
 {
-  activate ((gpointer) toplevel);
+  activate (NULL, (gpointer) toplevel);
   /* Run main GTK loop. */
   gtk_main ();
   return 0;

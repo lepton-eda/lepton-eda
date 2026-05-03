@@ -222,8 +222,19 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 GSList *x_fileselect_open (void);
 
 /* ------------- x_window.c ------------- */
+#ifdef ENABLE_GTK3
+void
+activate (GtkApplication* app,
+          gpointer user_data);
+#else
+void
+activate (gpointer unused,
+          gpointer user_data);
+#endif
+
 int
-attrib_run (LeptonToplevel *toplevel);
+attrib_run (gpointer activate_callback,
+            LeptonToplevel *toplevel);
 
 void x_window_add_items();
 void
