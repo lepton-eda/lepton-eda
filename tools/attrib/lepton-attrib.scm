@@ -81,6 +81,10 @@ Lepton EDA homepage: ~S
   (process-gafrc "lepton-attrib" name))
 
 
+(define (activate *app *toplevel)
+  (attrib_activate *app *toplevel))
+
+
 ;;; Init logging.
 (init-log "attrib")
 (display-lepton-version #:print-name #t #:log #t)
@@ -123,7 +127,7 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (exit (attrib_run (procedure->pointer void attrib_activate '(* *))
+                   (exit (attrib_run (procedure->pointer void activate '(* *))
                                      (toplevel->pointer (current-toplevel)))))))))
 
         ;; There are non-existing or unreadable files.  Report and
