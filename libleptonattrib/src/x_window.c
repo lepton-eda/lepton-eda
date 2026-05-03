@@ -737,24 +737,25 @@ startup (GApplication *app)
 
 
 void
+attrib_window_new (gpointer app)
+{
+  /* window is a global declared in globals.h. */
 #ifdef ENABLE_GTK3
-attrib_activate (GtkApplication* app,
-                 gpointer user_data)
+  window = gtk_application_window_new ((GtkApplication*) app);
 #else
-attrib_activate (gpointer unused,
-                 gpointer user_data)
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 #endif
+}
+
+
+void
+attrib_activate (gpointer app,
+                 gpointer user_data)
 {
   GList *iter;
   LeptonPage *p_local;
 
-
-  /*  window is a global declared in globals.h.  */
-#ifdef ENABLE_GTK3
-  window = gtk_application_window_new (app);
-#else
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-#endif
+  attrib_window_new (app);
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   x_window_set_toplevel (toplevel);
