@@ -1403,10 +1403,12 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (!unused_slot_found)
   {
     /* get a new number */
+    /* Start with the start number set in the dialog. */
     new_number = schematic_autonumber_get_autotext_startnum (autotext);
-
+    /* Iterate over unused numbers to get the new value. */
     new_number = schematic_autonumber_get_next_unused_number (autotext, new_number);
-
+    /* Store the number for later using to actually update the
+       text object being processed. */
     number = new_number;
     slot = 0;
 
