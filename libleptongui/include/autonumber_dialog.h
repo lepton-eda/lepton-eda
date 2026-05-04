@@ -223,6 +223,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
+schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
+                                      int number);
+void
 schematic_autonumber_clear_database (SchematicAutonumber *autotext);
 
 GtkWidget*

@@ -1337,6 +1337,26 @@ schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Add a number to the list of used numbers.
+ *
+ *  \par Function Description
+ *  Adds \p number to the sorted list of already occupied numbers
+ *  of an #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] number The number to add.
+ */
+void
+schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
+                                      int number)
+{
+  schematic_autonumber_set_autotext_used_numbers (autotext,
+                                                  g_list_insert_sorted (schematic_autonumber_get_autotext_used_numbers (autotext),
+                                                                        GINT_TO_POINTER (number),
+                                                                        (GCompareFunc) autonumber_sort_numbers));
+}
+
+
 /*! \brief Handle all the options of the Autonumber text dialog.
  *  \par Function Description
  *  This function receives the options of the the autonumber text
@@ -1413,10 +1433,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     slot = 0;
 
     /* insert the new number to the used list */
-    schematic_autonumber_set_autotext_used_numbers (autotext,
-                                                    g_list_insert_sorted (schematic_autonumber_get_autotext_used_numbers (autotext),
-                                                                          GINT_TO_POINTER (new_number),
-                                                                          (GCompareFunc) autonumber_sort_numbers));
+    schematic_autonumber_add_used_number (autotext, new_number);
 
     /* 3. is o_current a slotted object ? */
     if (renumber_slots)
