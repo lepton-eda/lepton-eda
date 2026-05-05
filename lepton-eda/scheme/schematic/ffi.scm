@@ -244,7 +244,6 @@
             *schematic_autonumber_sort_xy
             *schematic_autonumber_sort_xy_rev
             *schematic_autonumber_sort_diagonal
-            schematic_autonumber_update_slot_number
 
             schematic_bottom_widget_new
 
@@ -1339,7 +1338,6 @@
 (define-lfc *schematic_autonumber_sort_xy)
 (define-lfc *schematic_autonumber_sort_xy_rev)
 (define-lfc *schematic_autonumber_sort_diagonal)
-(define-lff schematic_autonumber_update_slot_number void (list '* '* int))
 
 ;;; bottom_widget.c
 (define-lff schematic_bottom_widget_new '* (list '* '* '* int int int int int))

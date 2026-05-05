@@ -226,7 +226,13 @@
       numslots))
 
   (define (update-slot-number! slot)
-    (schematic_autonumber_update_slot_number *window *parent slot))
+    ;; Updates the text content of the "slot" attribute of the
+    ;; object if the slot value is not zero.
+    (unless (zero? slot)
+      ;; Update the slot on the owning object.
+      (o_slot_end *window
+                  *parent
+                  (string->pointer (format #f "slot=~A" slot)))))
 
   (define (set-slot-get-number!)
     (let ((*free-slot-item

@@ -1362,35 +1362,6 @@ schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
 }
 
 
-/*! \brief Update the 'slot' attribute of an object.
- *
- *  \par Function Description
- *  Updates the \a slot attribute attached to \p o_current setting
- *  its number to \p slot_number.
- *
- *  \param [in] w_current The parent #SchematicWindow instance.
- *  \param [in] o_current The object to modify the 'slot'
- *              attribute of.
- *  \param [in] slot_number New slot number.
- */
-void
-schematic_autonumber_update_slot_number (SchematicWindow *w_current,
-                                         LeptonObject *o_current,
-                                         int slot_number)
-{
-  char *str;
-
-  /* Updates the text content of the "slot" attribute of the
-   * object if the slot value is not zero. */
-  if (slot_number != 0) {
-    /* Update the slot on the owning object. */
-    str = g_strdup_printf ("slot=%d", slot_number);
-    o_slot_end (w_current, o_current, str);
-    g_free (str);
-  }
-}
-
-
 /*! \brief Get free slot item by name.
  *
  *  \par Function Description
