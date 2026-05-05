@@ -183,6 +183,7 @@
     (schematic_autonumber_get_autotext_window *autotext))
   (define *template
     (schematic_autonumber_get_autotext_current_searchtext *autotext))
+  (define template (pointer->string *template))
   (define *parent (lepton_object_get_attached_to *object))
   (define renumber-slots?
     (and (true? automatic_slotting)
@@ -197,8 +198,7 @@
   ;; Replace old text.
   (lepton_text_object_set_string
    *object
-   (string->pointer
-    (format #f "~A~A" (pointer->string *template) number)))
+   (string->pointer (format #f "~A~A" template number)))
 
   (schematic_window_active_page_changed *window))
 
