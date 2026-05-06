@@ -179,6 +179,8 @@
 (define (renumber! *autotext *object)
   (define automatic_slotting
     (schematic_autonumber_get_autotext_slotting *autotext))
+  (define *window
+    (schematic_autonumber_get_autotext_window *autotext))
   (define *parent (lepton_object_get_attached_to *object))
   (define renumber-slots?
     (and (true? automatic_slotting)
@@ -186,6 +188,7 @@
   (define renumber_slots (if renumber-slots? TRUE FALSE))
 
   (schematic_autonumber_get_new_numbers *autotext
+                                        *window
                                         *object
                                         *parent
                                         renumber_slots))

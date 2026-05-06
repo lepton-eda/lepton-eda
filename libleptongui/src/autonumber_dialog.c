@@ -1296,6 +1296,8 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  is set to zero.
  *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
+ *  \param [in] w_current The #SchematicWindow instance the
+ *              Autonumber dialog belongs to.
  *  \param [in] o_current The \c LeptonObject instance to process.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] renumber_slots Whether slots have to be renumbered
@@ -1303,6 +1305,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  */
 void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
+                                      SchematicWindow *w_current,
                                       LeptonObject *o_current,
                                       LeptonObject *o_parent,
                                       gboolean renumber_slots)
@@ -1394,7 +1397,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (slot != 0) {
     /* Update the slot on the owning object. */
     str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (schematic_autonumber_get_autotext_window (autotext),
+    o_slot_end (w_current,
                 lepton_object_get_attached_to (o_current),
                 str);
     g_free (str);
@@ -1407,7 +1410,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   lepton_text_object_set_string (o_current, str);
   g_free (str);
 
-  schematic_window_active_page_changed (schematic_autonumber_get_autotext_window (autotext));
+  schematic_window_active_page_changed (w_current);
 }
 
 
