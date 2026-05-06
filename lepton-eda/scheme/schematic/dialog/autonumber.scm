@@ -177,9 +177,14 @@
 
 
 (define (renumber! *autotext *object)
+  (define automatic_slotting
+    (schematic_autonumber_get_autotext_slotting *autotext))
   (define *parent (lepton_object_get_attached_to *object))
 
-  (schematic_autonumber_get_new_numbers *autotext *object *parent))
+  (schematic_autonumber_get_new_numbers *autotext
+                                        *object
+                                        *parent
+                                        automatic_slotting))
 
 
 (define (autonumber-by-template! *autotext *window page-list *template scope-number)
