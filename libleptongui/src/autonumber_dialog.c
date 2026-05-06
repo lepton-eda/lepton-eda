@@ -1397,9 +1397,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (slot != 0) {
     /* Update the slot on the owning object. */
     str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (w_current,
-                lepton_object_get_attached_to (o_current),
-                str);
+    o_slot_end (w_current, o_parent, str);
     g_free (str);
   }
 
