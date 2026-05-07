@@ -32,6 +32,7 @@
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -177,6 +178,7 @@
 
 
 (define (renumber! *autotext *object)
+  (define object (pointer->object *object))
   (define automatic_slotting
     (schematic_autonumber_get_autotext_slotting *autotext))
   (define *window
@@ -196,9 +198,7 @@
                                           *parent
                                           renumber_slots))
   ;; Replace old text.
-  (lepton_text_object_set_string
-   *object
-   (string->pointer (format #f "~A~A" template number)))
+  (set-text-string! object (format #f "~A~A" template number))
 
   (schematic_window_active_page_changed *window))
 
