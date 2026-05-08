@@ -285,6 +285,10 @@ schematic_autonumber_sort_yx_rev (gconstpointer a,
 void
 schematic_autonumber_sort_order_widget_init (GtkWidget *sort_order);
 
+void
+schematic_autonumber_update_slot_number (SchematicWindow *w_current,
+                                         LeptonObject *o_current,
+                                         int slot_number);
 G_END_DECLS
 
 #endif /* AUTONUMBER_DIALOG_H */
