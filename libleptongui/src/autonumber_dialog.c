@@ -1389,6 +1389,35 @@ schematic_autonumber_update_slot_number (SchematicWindow *w_current,
 }
 
 
+/*! \brief Get free slot item by name.
+ *
+ *  \par Function Description
+ *  Returns an item of free slot \c GList corresponding to given
+ *  \p name.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] name The component name to search for.
+ *
+ *  \return The found list item.
+ */
+GList*
+schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
+                                                 char *name)
+{
+  SchematicAutonumberSlot *freeslot;
+  GList *freeslot_item;
+
+  freeslot =
+    schematic_autonumber_slot_new (0, 0, name);
+  freeslot_item =
+    schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
+                                    freeslot);
+  g_free (freeslot);
+
+  return freeslot_item;
+}
+
+
 /*! \brief Handle all the options of the Autonumber text dialog.
  *  \par Function Description
  *  This function receives the options of the the autonumber text
@@ -1426,12 +1455,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  freeslot =
-    schematic_autonumber_slot_new (0, 0, parent_name);
   freeslot_item =
-    schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
-                                    freeslot);
-  g_free(freeslot);
+    schematic_autonumber_get_free_slot_item_by_name (autotext, parent_name);
+
   /* Yes! -> remove from database, apply it */
   if (freeslot_item != NULL) {
     freeslot = (SchematicAutonumberSlot*) freeslot_item->data;

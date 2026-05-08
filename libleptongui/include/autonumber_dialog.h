@@ -234,6 +234,9 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
 GList*
 schematic_autonumber_find_slot (GList *slots,
                                 SchematicAutonumberSlot *slot);
+GList*
+schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
+                                                 char *name);
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
