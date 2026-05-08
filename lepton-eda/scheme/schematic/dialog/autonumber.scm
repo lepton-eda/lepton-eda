@@ -204,7 +204,8 @@
                                                   *window
                                                   *parent
                                                   *parent-name
-                                                  number))
+                                                  number)
+            number)
           ;; If there is any suitable unused slot in the database,
           ;; remove it from database and apply the numbers.
           (let* ((*freeslot (glist-data *free-slot-item))

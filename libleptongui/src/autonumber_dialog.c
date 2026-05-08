@@ -1440,7 +1440,7 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
  *  \param [in] number The number for renumbering.
- *  \return The number for renumbering.
+ *  \return The slot number for renumbering.
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
@@ -1478,7 +1478,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
     schematic_autonumber_update_slot_number (w_current, o_parent, slot);
 
-  return number;
+  return slot;
 }
 
 
