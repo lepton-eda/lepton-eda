@@ -193,12 +193,14 @@
     (and (true? automatic_slotting)
          (not (null-pointer? *parent))))
 
+  (define (set-slot-get-number!)
+    (schematic_autonumber_get_new_numbers *autotext
+                                          *window
+                                          *parent
+                                          *parent-name))
   (define number
     (if renumber-slots?
-        (schematic_autonumber_get_new_numbers *autotext
-                                              *window
-                                              *parent
-                                              *parent-name)
+        (set-slot-get-number!)
         (schematic_autonumber_get_next_unused_number *autotext)))
 
   ;; Replace old text.
