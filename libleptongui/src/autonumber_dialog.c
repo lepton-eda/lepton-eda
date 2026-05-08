@@ -1465,6 +1465,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     schematic_autonumber_set_autotext_free_slots (autotext,
                                                   g_list_delete_link (schematic_autonumber_get_autotext_free_slots (autotext),
                                                                       freeslot_item));
+
+    schematic_autonumber_update_slot_number (w_current, o_parent, slot);
   }
   else
   {
@@ -1491,9 +1493,9 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
         }
       }
     }
-  }
 
-  schematic_autonumber_update_slot_number (w_current, o_parent, slot);
+    schematic_autonumber_update_slot_number (w_current, o_parent, slot);
+  }
 
   return number;
 }
