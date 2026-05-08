@@ -1381,16 +1381,13 @@ schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
  *              Autonumber dialog belongs to.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
- *  \param [in] renumber_slots Whether slots have to be renumbered
- *              as well.
  *  \return The number for renumbering.
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
-                                      char *parent_name,
-                                      gboolean renumber_slots)
+                                      char *parent_name)
 {
   gint numslots, i;
   SchematicAutonumberSlot *freeslot;
@@ -1402,8 +1399,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  if (renumber_slots)
-  {
     freeslot =
       schematic_autonumber_slot_new (0, 0, parent_name);
     freeslot_item =
@@ -1421,7 +1416,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                         freeslot_item));
       unused_slot_found = TRUE;
     }
-  }
 
   if (!unused_slot_found)
   {
@@ -1430,8 +1424,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     slot = 0;
 
     /* 3. is o_current a slotted object ? */
-    if (renumber_slots)
-    {
       numslot_str =
         lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
       if (numslot_str != NULL) {
@@ -1450,7 +1442,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
           }
         }
       }
-    }
   }
 
   /* Updates the text content of the "slot" attribute of the

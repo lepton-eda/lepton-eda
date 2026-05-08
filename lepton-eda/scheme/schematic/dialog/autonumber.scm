@@ -192,14 +192,15 @@
   (define renumber-slots?
     (and (true? automatic_slotting)
          (not (null-pointer? *parent))))
-  (define renumber_slots (if renumber-slots? TRUE FALSE))
 
   (define number
-    (schematic_autonumber_get_new_numbers *autotext
-                                          *window
-                                          *parent
-                                          *parent-name
-                                          renumber_slots))
+    (if renumber-slots?
+        (schematic_autonumber_get_new_numbers *autotext
+                                              *window
+                                              *parent
+                                              *parent-name)
+        (schematic_autonumber_get_next_unused_number *autotext)))
+
   ;; Replace old text.
   (set-text-string! object (format #f "~A~A" template number))
 
