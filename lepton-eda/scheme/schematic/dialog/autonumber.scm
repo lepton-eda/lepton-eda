@@ -194,10 +194,14 @@
          (not (null-pointer? *parent))))
 
   (define (set-slot-get-number!)
-    (schematic_autonumber_get_new_numbers *autotext
-                                          *window
-                                          *parent
-                                          *parent-name))
+    (let ((*free-slot-item
+           (schematic_autonumber_get_free_slot_item_by_name *autotext
+                                                            *parent-name)))
+      (schematic_autonumber_get_new_numbers *autotext
+                                            *window
+                                            *parent
+                                            *parent-name
+                                            *free-slot-item)))
   (define number
     (if renumber-slots?
         (set-slot-get-number!)

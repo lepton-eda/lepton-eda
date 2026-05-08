@@ -1439,25 +1439,23 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *              Autonumber dialog belongs to.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
+ *  \param [in] freeslot_item A free slot in the list of unused slots.
  *  \return The number for renumbering.
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
-                                      char *parent_name)
+                                      char *parent_name,
+                                      GList *freeslot_item)
 {
   gint numslots, i;
   SchematicAutonumberSlot *freeslot;
-  GList *freeslot_item;
   gchar *numslot_str;
   gint number, slot;
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  freeslot_item =
-    schematic_autonumber_get_free_slot_item_by_name (autotext, parent_name);
-
   /* Yes! -> remove from database, apply it */
   if (freeslot_item != NULL) {
     freeslot = (SchematicAutonumberSlot*) freeslot_item->data;

@@ -224,6 +224,7 @@
             schematic_autonumber_clear_database
             schematic_autonumber_dialog_lookup_widget
             schematic_autonumber_dialog_new
+            schematic_autonumber_get_free_slot_item_by_name
             schematic_autonumber_get_new_numbers
             schematic_autonumber_get_next_unused_number
             schematic_autonumber_get_used
@@ -1313,7 +1314,8 @@
 (define-lff schematic_autonumber_clear_database void '(*))
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
-(define-lff schematic_autonumber_get_new_numbers int '(* * * *))
+(define-lff schematic_autonumber_get_free_slot_item_by_name '* '(* *))
+(define-lff schematic_autonumber_get_new_numbers int '(* * * * *))
 (define-lff schematic_autonumber_get_next_unused_number int '(*))
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
