@@ -1450,8 +1450,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   SchematicAutonumberSlot *freeslot;
   gint slot;
 
-    slot = 0;
-
     /* 3. is o_current a slotted object ? */
       if (numslots > 0) {
         /* Yes! -> new number and slot=1; add the other slots to the database */
@@ -1464,6 +1462,10 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                               freeslot,
                                                                               (GCompareFunc) freeslot_compare));
         }
+      }
+      else
+      {
+        slot = 0;
       }
 
   return slot;
