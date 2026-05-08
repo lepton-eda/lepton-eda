@@ -199,6 +199,7 @@
             schematic_autonumber_set_autotext_current_searchtext
             schematic_autonumber_get_autotext_dialog
             schematic_autonumber_set_autotext_dialog
+            schematic_autonumber_get_autotext_free_slots
             schematic_autonumber_set_autotext_free_slots
             schematic_autonumber_get_autotext_removenum
             schematic_autonumber_set_autotext_removenum
@@ -232,6 +233,8 @@
             schematic_autonumber_make_renumber_list
             schematic_autonumber_scope_from_string
             schematic_autonumber_scope_to_string
+            schematic_autonumber_slot_get_number
+            schematic_autonumber_slot_get_slot_number
             schematic_autonumber_sort_order_from_string
             schematic_autonumber_sort_order_to_string
             schematic_autonumber_sort_order_widget_init
@@ -240,6 +243,7 @@
             *schematic_autonumber_sort_xy
             *schematic_autonumber_sort_xy_rev
             *schematic_autonumber_sort_diagonal
+            schematic_autonumber_update_slot_number
 
             schematic_bottom_widget_new
 
@@ -1289,6 +1293,7 @@
 (define-lff schematic_autonumber_set_autotext_current_searchtext void '(* *))
 (define-lff schematic_autonumber_get_autotext_dialog '* '(*))
 (define-lff schematic_autonumber_set_autotext_dialog void '(* *))
+(define-lff schematic_autonumber_get_autotext_free_slots '* '(*))
 (define-lff schematic_autonumber_set_autotext_free_slots void '(* *))
 (define-lff schematic_autonumber_get_autotext_removenum int '(*))
 (define-lff schematic_autonumber_set_autotext_removenum void (list '* int))
@@ -1315,13 +1320,15 @@
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_get_free_slot_item_by_name '* '(* *))
-(define-lff schematic_autonumber_get_new_numbers int '(* * * * *))
+(define-lff schematic_autonumber_get_new_numbers int '(* * * *))
 (define-lff schematic_autonumber_get_next_unused_number int '(*))
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))
 (define-lff schematic_autonumber_make_renumber_list '* '(* *))
 (define-lff schematic_autonumber_scope_from_string int '(*))
 (define-lff schematic_autonumber_scope_to_string '* (list int))
+(define-lff schematic_autonumber_slot_get_number int '(*))
+(define-lff schematic_autonumber_slot_get_slot_number int '(*))
 (define-lff schematic_autonumber_sort_order_from_string int '(*))
 (define-lff schematic_autonumber_sort_order_to_string '* (list int))
 (define-lff schematic_autonumber_sort_order_widget_init void '(*))
@@ -1330,6 +1337,7 @@
 (define-lfc *schematic_autonumber_sort_xy)
 (define-lfc *schematic_autonumber_sort_xy_rev)
 (define-lfc *schematic_autonumber_sort_diagonal)
+(define-lff schematic_autonumber_update_slot_number void (list '* '* int))
 
 ;;; bottom_widget.c
 (define-lff schematic_bottom_widget_new '* (list '* '* '* int int int int int))

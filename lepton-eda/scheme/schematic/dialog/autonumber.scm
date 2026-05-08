@@ -197,11 +197,27 @@
     (let ((*free-slot-item
            (schematic_autonumber_get_free_slot_item_by_name *autotext
                                                             *parent-name)))
-      (schematic_autonumber_get_new_numbers *autotext
-                                            *window
-                                            *parent
-                                            *parent-name
-                                            *free-slot-item)))
+      (if (null-pointer? *free-slot-item)
+          (schematic_autonumber_get_new_numbers *autotext
+                                                *window
+                                                *parent
+                                                *parent-name)
+          ;; If there is any suitable unused slot in the database,
+          ;; remove it from database and apply the numbers.
+          (let* ((*freeslot (glist-data *free-slot-item))
+                 (number (schematic_autonumber_slot_get_number *freeslot))
+                 (slot (schematic_autonumber_slot_get_slot_number *freeslot)))
+            (g_free *freeslot)
+            (schematic_autonumber_set_autotext_free_slots
+             *autotext
+             (g_list_delete_link
+              (schematic_autonumber_get_autotext_free_slots *autotext)
+              *free-slot-item))
+
+            (schematic_autonumber_update_slot_number *window *parent slot)
+            ;; Return the number to set it later.
+            number))))
+
   (define number
     (if renumber-slots?
         (set-slot-get-number!)
