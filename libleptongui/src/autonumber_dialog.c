@@ -1399,23 +1399,23 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-    freeslot =
-      schematic_autonumber_slot_new (0, 0, parent_name);
-    freeslot_item =
-      schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
-                                      freeslot);
+  freeslot =
+    schematic_autonumber_slot_new (0, 0, parent_name);
+  freeslot_item =
+    schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
+                                    freeslot);
+  g_free(freeslot);
+  /* Yes! -> remove from database, apply it */
+  if (freeslot_item != NULL) {
+    freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
+    number = schematic_autonumber_slot_get_number (freeslot);
+    slot = schematic_autonumber_slot_get_slot_number (freeslot);
     g_free(freeslot);
-    /* Yes! -> remove from database, apply it */
-    if (freeslot_item != NULL) {
-      freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
-      number = schematic_autonumber_slot_get_number (freeslot);
-      slot = schematic_autonumber_slot_get_slot_number (freeslot);
-      g_free(freeslot);
-      schematic_autonumber_set_autotext_free_slots (autotext,
-                                                    g_list_delete_link (schematic_autonumber_get_autotext_free_slots (autotext),
-                                                                        freeslot_item));
-      unused_slot_found = TRUE;
-    }
+    schematic_autonumber_set_autotext_free_slots (autotext,
+                                                  g_list_delete_link (schematic_autonumber_get_autotext_free_slots (autotext),
+                                                                      freeslot_item));
+    unused_slot_found = TRUE;
+  }
 
   if (!unused_slot_found)
   {
@@ -1424,24 +1424,24 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     slot = 0;
 
     /* 3. is o_current a slotted object ? */
-      numslot_str =
-        lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
-      if (numslot_str != NULL) {
-        sscanf(numslot_str," %d",&numslots);
-        g_free(numslot_str);
-        if (numslots > 0) {
-          /* Yes! -> new number and slot=1; add the other slots to the database */
-          slot = 1;
-          for (i=2; i <=numslots; i++) {
-            freeslot =
-              schematic_autonumber_slot_new (number, i, parent_name);
-            schematic_autonumber_set_autotext_free_slots (autotext,
-                                                          g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
-                                                                                freeslot,
-                                                                                (GCompareFunc) freeslot_compare));
-          }
+    numslot_str =
+      lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
+    if (numslot_str != NULL) {
+      sscanf(numslot_str," %d",&numslots);
+      g_free(numslot_str);
+      if (numslots > 0) {
+        /* Yes! -> new number and slot=1; add the other slots to the database */
+        slot = 1;
+        for (i=2; i <=numslots; i++) {
+          freeslot =
+            schematic_autonumber_slot_new (number, i, parent_name);
+          schematic_autonumber_set_autotext_free_slots (autotext,
+                                                        g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
+                                                                              freeslot,
+                                                                              (GCompareFunc) freeslot_compare));
         }
       }
+    }
   }
 
   /* Updates the text content of the "slot" attribute of the
