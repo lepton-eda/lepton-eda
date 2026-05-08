@@ -1306,22 +1306,22 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
  *  \par Function Description
  *  Gets the list of already occupied numbers of an
  *  #SchematicAutonumber instance and a starting number to
- *  continue numbering from, and calculates the next number for
+ *  start searching from, and calculates the next number for
  *  autonumbering.
  *
  *  \param [in] autotext The #SchematicAutonumber instance.
- *  \param [in] start_number The number to continue numbering from.
  *  \return The next unused number.
  */
 int
-schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext,
-                                             int start_number)
+schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext)
 {
   GList *item;
   int next_number;
 
-  next_number = start_number;
+  /* Start with the start number set in the dialog. */
+  next_number = schematic_autonumber_get_autotext_startnum (autotext);
 
+  /* Iterate over unused numbers to get the new value. */
   item = schematic_autonumber_get_autotext_used_numbers (autotext);
   while (1) {
     while (item != NULL && GPOINTER_TO_INT (item->data) < next_number)
@@ -1423,10 +1423,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (!unused_slot_found)
   {
     /* get a new number */
-    /* Start with the start number set in the dialog. */
-    new_number = schematic_autonumber_get_autotext_startnum (autotext);
-    /* Iterate over unused numbers to get the new value. */
-    new_number = schematic_autonumber_get_next_unused_number (autotext, new_number);
+    new_number = schematic_autonumber_get_next_unused_number (autotext);
     /* Store the number for later using to actually update the
        text object being processed. */
     number = new_number;
