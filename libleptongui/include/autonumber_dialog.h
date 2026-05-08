@@ -241,7 +241,8 @@ int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
-                                      char *parent_name);
+                                      char *parent_name,
+                                      int number);
 int
 schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext);
 

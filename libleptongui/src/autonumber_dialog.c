@@ -1439,21 +1439,21 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *              Autonumber dialog belongs to.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
+ *  \param [in] number The number for renumbering.
  *  \return The number for renumbering.
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       SchematicWindow *w_current,
                                       LeptonObject *o_parent,
-                                      char *parent_name)
+                                      char *parent_name,
+                                      int number)
 {
   gint numslots, i;
   SchematicAutonumberSlot *freeslot;
   gchar *numslot_str;
-  gint number, slot;
+  gint slot;
 
-    /* get a new number */
-    number = schematic_autonumber_get_next_unused_number (autotext);
     slot = 0;
 
     /* 3. is o_current a slotted object ? */

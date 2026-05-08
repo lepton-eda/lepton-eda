@@ -198,10 +198,13 @@
            (schematic_autonumber_get_free_slot_item_by_name *autotext
                                                             *parent-name)))
       (if (null-pointer? *free-slot-item)
-          (schematic_autonumber_get_new_numbers *autotext
-                                                *window
-                                                *parent
-                                                *parent-name)
+          (let ((number
+                 (schematic_autonumber_get_next_unused_number *autotext)))
+            (schematic_autonumber_get_new_numbers *autotext
+                                                  *window
+                                                  *parent
+                                                  *parent-name
+                                                  number))
           ;; If there is any suitable unused slot in the database,
           ;; remove it from database and apply the numbers.
           (let* ((*freeslot (glist-data *free-slot-item))
