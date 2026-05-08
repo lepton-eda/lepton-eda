@@ -1392,7 +1392,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       char *parent_name,
                                       gboolean renumber_slots)
 {
-  gint new_number, numslots, i;
+  gint numslots, i;
   SchematicAutonumberSlot *freeslot;
   GList *freeslot_item;
   gchar *numslot_str;
@@ -1426,10 +1426,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   if (!unused_slot_found)
   {
     /* get a new number */
-    new_number = schematic_autonumber_get_next_unused_number (autotext);
-    /* Store the number for later using to actually update the
-       text object being processed. */
-    number = new_number;
+    number = schematic_autonumber_get_next_unused_number (autotext);
     slot = 0;
 
     /* 3. is o_current a slotted object ? */
@@ -1445,7 +1442,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
           slot = 1;
           for (i=2; i <=numslots; i++) {
             freeslot =
-              schematic_autonumber_slot_new (new_number, i, parent_name);
+              schematic_autonumber_slot_new (number, i, parent_name);
             schematic_autonumber_set_autotext_free_slots (autotext,
                                                           g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
                                                                                 freeslot,
