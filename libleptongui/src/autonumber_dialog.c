@@ -1395,7 +1395,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
   gchar *numslot_str;
   char *str;
   gint number, slot;
-  gboolean unused_slot_found = FALSE;
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
@@ -1414,10 +1413,8 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
     schematic_autonumber_set_autotext_free_slots (autotext,
                                                   g_list_delete_link (schematic_autonumber_get_autotext_free_slots (autotext),
                                                                       freeslot_item));
-    unused_slot_found = TRUE;
   }
-
-  if (!unused_slot_found)
+  else
   {
     /* get a new number */
     number = schematic_autonumber_get_next_unused_number (autotext);
