@@ -1320,7 +1320,7 @@
 (define-lff schematic_autonumber_dialog_lookup_widget '* '(* *))
 (define-lff schematic_autonumber_dialog_new '* '(*))
 (define-lff schematic_autonumber_get_free_slot_item_by_name '* '(* *))
-(define-lff schematic_autonumber_get_new_numbers int (list '* '* '* '* int))
+(define-lff schematic_autonumber_get_new_numbers int (list '* '* '* int))
 (define-lff schematic_autonumber_get_next_unused_number int '(*))
 (define-lff schematic_autonumber_get_used void '(* *))
 (define-lff schematic_autonumber_history_add '* '(* *))

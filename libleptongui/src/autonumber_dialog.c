@@ -1435,8 +1435,6 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *  is set to zero.
  *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
- *  \param [in] w_current The #SchematicWindow instance the
- *              Autonumber dialog belongs to.
  *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
  *  \param [in] number The number for renumbering.
@@ -1444,7 +1442,6 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      SchematicWindow *w_current,
                                       LeptonObject *o_parent,
                                       char *parent_name,
                                       int number)
@@ -1475,8 +1472,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
         }
       }
     }
-
-    schematic_autonumber_update_slot_number (w_current, o_parent, slot);
 
   return slot;
 }

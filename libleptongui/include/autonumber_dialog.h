@@ -239,7 +239,6 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
                                                  char *name);
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      SchematicWindow *w_current,
                                       LeptonObject *o_parent,
                                       char *parent_name,
                                       int number);
