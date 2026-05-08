@@ -239,9 +239,9 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
                                                  char *name);
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_parent,
                                       char *parent_name,
-                                      int number);
+                                      int number,
+                                      int numslots);
 int
 schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext);
 

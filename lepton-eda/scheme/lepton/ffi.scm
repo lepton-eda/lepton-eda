@@ -337,6 +337,7 @@
             lepton_attrib_is_inherited
             lepton_attrib_search_attached_attribs_by_name
             lepton_attrib_search_inherited_attribs_by_name
+            lepton_attrib_search_object_attribs_by_name
 
             inside_region
 
@@ -727,6 +728,7 @@
 (define-lff lepton_attrib_is_inherited int '(*))
 (define-lff lepton_attrib_search_attached_attribs_by_name '* (list '* '* int))
 (define-lff lepton_attrib_search_inherited_attribs_by_name '* (list '* '* int))
+(define-lff lepton_attrib_search_object_attribs_by_name '* (list '* '* int))
 
 ;;; bounds.c
 (define-lff inside_region int (list int int int int int int))

@@ -177,6 +177,10 @@
    (schematic_autonumber_get_autotext_window *autotext)))
 
 
+(define (string->integer value)
+  (and (string-every char-set:digit value)
+       (string->number value)))
+
 (define (renumber! *autotext *object)
   (define object (pointer->object *object))
   (define automatic_slotting
@@ -193,6 +197,19 @@
     (and (true? automatic_slotting)
          (not (null-pointer? *parent))))
 
+  (define (numslots-value *object)
+    (let* ((*numslots
+            (lepton_attrib_search_object_attribs_by_name
+             *object
+             (string->pointer "numslots")
+             0))
+           (numslots (and (not (null-pointer? *numslots))
+                          (string->integer
+                           (string-trim
+                            (pointer->string *numslots))))))
+      (g_free *numslots)
+      numslots))
+
   (define (set-slot-get-number!)
     (let ((*free-slot-item
            (schematic_autonumber_get_free_slot_item_by_name *autotext
@@ -200,11 +217,12 @@
       (if (null-pointer? *free-slot-item)
           (let* ((number
                   (schematic_autonumber_get_next_unused_number *autotext))
+                 (numslots (or (numslots-value *parent) 0))
                  (slot
                   (schematic_autonumber_get_new_numbers *autotext
-                                                        *parent
                                                         *parent-name
-                                                        number)))
+                                                        number
+                                                        numslots)))
             (schematic_autonumber_update_slot_number *window *parent slot)
             number)
           ;; If there is any suitable unused slot in the database,

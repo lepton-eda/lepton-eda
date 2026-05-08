@@ -1435,30 +1435,24 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *  is set to zero.
  *
  *  \param [in,out] autotext The #SchematicAutonumber instance.
- *  \param [in] o_parent The parent object of \p o_current, or NULL.
  *  \param [in] parent_name The component name of the parent object.
  *  \param [in] number The number for renumbering.
+ *  \param [in] numslots The parent's 'numslot' attribute value.
  *  \return The slot number for renumbering.
  */
 int
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_parent,
                                       char *parent_name,
-                                      int number)
+                                      int number,
+                                      int numslots)
 {
-  gint numslots, i;
+  gint i;
   SchematicAutonumberSlot *freeslot;
-  gchar *numslot_str;
   gint slot;
 
     slot = 0;
 
     /* 3. is o_current a slotted object ? */
-    numslot_str =
-      lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
-    if (numslot_str != NULL) {
-      sscanf(numslot_str," %d",&numslots);
-      g_free(numslot_str);
       if (numslots > 0) {
         /* Yes! -> new number and slot=1; add the other slots to the database */
         slot = 1;
@@ -1471,7 +1465,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                               (GCompareFunc) freeslot_compare));
         }
       }
-    }
 
   return slot;
 }
