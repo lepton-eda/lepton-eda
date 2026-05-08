@@ -1333,6 +1333,9 @@ schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext)
       next_number++;
   }
 
+  /* Insert the new number to the list of used numbers. */
+  schematic_autonumber_add_used_number (autotext, next_number);
+
   return next_number;
 }
 
@@ -1428,9 +1431,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
        text object being processed. */
     number = new_number;
     slot = 0;
-
-    /* insert the new number to the used list */
-    schematic_autonumber_add_used_number (autotext, new_number);
 
     /* 3. is o_current a slotted object ? */
     if (renumber_slots)
