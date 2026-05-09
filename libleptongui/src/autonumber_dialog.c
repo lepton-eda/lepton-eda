@@ -1438,9 +1438,8 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
  *  \param [in] parent_name The component name of the parent object.
  *  \param [in] number The number for renumbering.
  *  \param [in] numslots The parent's 'numslot' attribute value.
- *  \return The slot number for renumbering.
  */
-int
+void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       char *parent_name,
                                       int number,
@@ -1448,12 +1447,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
 {
   gint i;
   SchematicAutonumberSlot *freeslot;
-  gint slot;
 
-    /* 3. is o_current a slotted object ? */
-      if (numslots > 0) {
-        /* Yes! -> new number and slot=1; add the other slots to the database */
-        slot = 1;
         for (i=2; i <=numslots; i++) {
           freeslot =
             schematic_autonumber_slot_new (number, i, parent_name);
@@ -1462,13 +1456,6 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                                                               freeslot,
                                                                               (GCompareFunc) freeslot_compare));
         }
-      }
-      else
-      {
-        slot = 0;
-      }
-
-  return slot;
 }
 
 

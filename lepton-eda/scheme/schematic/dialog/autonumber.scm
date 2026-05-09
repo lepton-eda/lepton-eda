@@ -215,14 +215,17 @@
            (schematic_autonumber_get_free_slot_item_by_name *autotext
                                                             *parent-name)))
       (if (null-pointer? *free-slot-item)
+          ;; Set new number and slot number.
           (let* ((number
                   (schematic_autonumber_get_next_unused_number *autotext))
                  (numslots (or (numslots-value *parent) 0))
-                 (slot
-                  (schematic_autonumber_get_new_numbers *autotext
-                                                        *parent-name
-                                                        number
-                                                        numslots)))
+                 (slot (if (> numslots 0) 1 0)))
+            ;; Add other slots (> 1, if any) to the database.
+            (when (> numslots 0)
+              (schematic_autonumber_get_new_numbers *autotext
+                                                    *parent-name
+                                                    number
+                                                    numslots))
             (schematic_autonumber_update_slot_number *window *parent slot)
             number)
           ;; If there is any suitable unused slot in the database,

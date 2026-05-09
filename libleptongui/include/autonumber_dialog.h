@@ -237,7 +237,7 @@ schematic_autonumber_find_slot (GList *slots,
 GList*
 schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
                                                  char *name);
-int
+void
 schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
                                       char *parent_name,
                                       int number,
