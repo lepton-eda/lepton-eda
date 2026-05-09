@@ -181,6 +181,21 @@
   (and (string-every char-set:digit value)
        (string->number value)))
 
+
+;;; Renumbers *OBJECT which should be an attribute object.  If it
+;;; is attached to another object, and the parent object is a
+;;; component, it generates both a new number and a new slot
+;;; number.
+;;;
+;;; The renumbering follows the rules of the parameters given in
+;;; the autonumber text dialog.  The options are received from the
+;;; dialog's structure *AUTOTEXT.
+;;;
+;;; The attribute "slot" is set if autoslotting is active, else it
+;;; is set to zero.
+;;;
+;;; To properly handle the attributes, the function uses the lists
+;;; of already used numbers and free slots defined in C.
 (define (renumber! *autotext *object)
   (define object (pointer->object *object))
   (define automatic_slotting
@@ -222,10 +237,18 @@
                  (slot (if (> numslots 0) 1 0)))
             ;; Add other slots (> 1, if any) to the database.
             (when (> numslots 0)
-              (schematic_autonumber_get_new_numbers *autotext
-                                                    *parent-name
-                                                    number
-                                                    numslots))
+              (for-each
+               (lambda (i)
+                 (let ((*freeslot
+                        (schematic_autonumber_slot_new number i *parent-name)))
+                   (schematic_autonumber_set_autotext_free_slots
+                    *autotext
+                    (g_list_insert_sorted
+                     (schematic_autonumber_get_autotext_free_slots *autotext)
+                     *freeslot
+                     *schematic_autonumber_freeslot_compare))))
+               (iota (1- numslots) 2)))
+
             (schematic_autonumber_update_slot_number *window *parent slot)
             number)
           ;; If there is any suitable unused slot in the database,

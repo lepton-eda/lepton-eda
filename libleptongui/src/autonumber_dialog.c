@@ -1420,47 +1420,6 @@ schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
 }
 
 
-/*! \brief Handle all the options of the Autonumber text dialog.
- *  \par Function Description
- *  This function receives the options of the the autonumber text
- *  dialog in an #SchematicAutonumber structure and then gets or
- *  generates new numbers for the object \p o_current.  It uses
- *  the element numbers \c used_numbers and the list of the free
- *  slots \c free_slots of the #SchematicAutonumber struct.  First
- *  it collects all pages of a hierarchical schematic.  Second it
- *  gets all matching text elements for the searchtext.  Then it
- *  renumbers all text elements of all schematic pages. The
- *  renumbering follows the rules of the parameters given in the
- *  autonumber text dialog.
- *
- *  The attribute "slot" is set if autoslotting is active, else it
- *  is set to zero.
- *
- *  \param [in,out] autotext The #SchematicAutonumber instance.
- *  \param [in] parent_name The component name of the parent object.
- *  \param [in] number The number for renumbering.
- *  \param [in] numslots The parent's 'numslot' attribute value.
- */
-void
-schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      char *parent_name,
-                                      int number,
-                                      int numslots)
-{
-  gint i;
-  SchematicAutonumberSlot *freeslot;
-
-        for (i=2; i <=numslots; i++) {
-          freeslot =
-            schematic_autonumber_slot_new (number, i, parent_name);
-          schematic_autonumber_set_autotext_free_slots (autotext,
-                                                        g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
-                                                                              freeslot,
-                                                                              (GCompareFunc) schematic_autonumber_freeslot_compare));
-        }
-}
-
-
 /*! \brief Form the list of objects to renumber.
  *  \par Function Description
  *  Filters the list of given objects and returns a new list of

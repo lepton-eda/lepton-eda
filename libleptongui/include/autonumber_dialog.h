@@ -240,11 +240,6 @@ schematic_autonumber_freeslot_compare (gconstpointer a,
 GList*
 schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
                                                  char *name);
-void
-schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      char *parent_name,
-                                      int number,
-                                      int numslots);
 int
 schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext);
 
