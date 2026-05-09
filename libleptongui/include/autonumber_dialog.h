@@ -267,6 +267,10 @@ schematic_autonumber_scope_from_string (char *s);
 const char*
 schematic_autonumber_scope_to_string (int scope);
 
+SchematicAutonumberSlot*
+schematic_autonumber_slot_new (int number,
+                               int slot_number,
+                               char *symbol_name);
 int
 schematic_autonumber_sort_order_from_string (char *s);
 
