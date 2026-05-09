@@ -1011,7 +1011,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
  *  is set to zero it acts as a wildcard.  The function is used as
  *  GCompareFunc by GList functions.
  */
-gint freeslot_compare(gconstpointer a, gconstpointer b)
+int
+schematic_autonumber_freeslot_compare (gconstpointer a,
+                                       gconstpointer b)
 {
   SchematicAutonumberSlot *aa, *bb;
   gint res;
@@ -1197,7 +1199,7 @@ schematic_autonumber_find_slot (GList *slots,
 {
   return g_list_find_custom (slots,
                              slot,
-                             (GCompareFunc) freeslot_compare);
+                             (GCompareFunc) schematic_autonumber_freeslot_compare);
 }
 
 
@@ -1256,7 +1258,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 
               slot_item = g_list_find_custom(autotext->used_slots,
                                              slot,
-                                             (GCompareFunc) freeslot_compare);
+                                             (GCompareFunc) schematic_autonumber_freeslot_compare);
               if (slot_item != NULL) { /* duplicate slot in used_slots */
                 g_message (_("duplicate slot may cause problems: "
                              "[symbolname=%1$s, number=%2$d, slot=%3$d]"),
@@ -1266,11 +1268,11 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
               else {
                 autotext->used_slots = g_list_insert_sorted(autotext->used_slots,
                                                             slot,
-                                                            (GCompareFunc) freeslot_compare);
+                                                            (GCompareFunc) schematic_autonumber_freeslot_compare);
 
                 slot_item = g_list_find_custom(autotext->free_slots,
                                                slot,
-                                               (GCompareFunc) freeslot_compare);
+                                               (GCompareFunc) schematic_autonumber_freeslot_compare);
                 if (slot_item == NULL) {
                   /* insert all slots to the list, except of the current one */
                   for (i=1; i <= numslots; i++) {
@@ -1279,7 +1281,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
                       slot->slotnr = i;
                       autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
                                                                   slot,
-                                                                  (GCompareFunc) freeslot_compare);
+                                                                  (GCompareFunc) schematic_autonumber_freeslot_compare);
                     }
                   }
                 }
@@ -1454,7 +1456,7 @@ schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
           schematic_autonumber_set_autotext_free_slots (autotext,
                                                         g_list_insert_sorted (schematic_autonumber_get_autotext_free_slots (autotext),
                                                                               freeslot,
-                                                                              (GCompareFunc) freeslot_compare));
+                                                                              (GCompareFunc) schematic_autonumber_freeslot_compare));
         }
 }
 

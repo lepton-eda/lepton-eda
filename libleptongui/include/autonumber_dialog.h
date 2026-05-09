@@ -234,6 +234,9 @@ schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
 GList*
 schematic_autonumber_find_slot (GList *slots,
                                 SchematicAutonumberSlot *slot);
+int
+schematic_autonumber_freeslot_compare (gconstpointer a,
+                                       gconstpointer b);
 GList*
 schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
                                                  char *name);
