@@ -225,6 +225,9 @@
       (g_free *numslots)
       numslots))
 
+  (define (update-slot-number! slot)
+    (schematic_autonumber_update_slot_number *window *parent slot))
+
   (define (set-slot-get-number!)
     (let ((*free-slot-item
            (schematic_autonumber_get_free_slot_item_by_name *autotext
@@ -249,7 +252,7 @@
                      *schematic_autonumber_freeslot_compare))))
                (iota (1- numslots) 2)))
 
-            (schematic_autonumber_update_slot_number *window *parent slot)
+            (update-slot-number! slot)
             number)
           ;; If there is any suitable unused slot in the database,
           ;; remove it from database and apply the numbers.
@@ -263,7 +266,7 @@
               (schematic_autonumber_get_autotext_free_slots *autotext)
               *free-slot-item))
 
-            (schematic_autonumber_update_slot_number *window *parent slot)
+            (update-slot-number! slot)
             ;; Return the number to set it later.
             number))))
 
