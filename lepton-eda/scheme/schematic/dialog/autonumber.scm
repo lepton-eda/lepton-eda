@@ -32,6 +32,7 @@
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -176,6 +177,116 @@
    (schematic_autonumber_get_autotext_window *autotext)))
 
 
+(define (string->integer value)
+  (and (string-every char-set:digit value)
+       (string->number value)))
+
+
+;;; Renumbers *OBJECT which should be an attribute object.  If it
+;;; is attached to another object, and the parent object is a
+;;; component, it generates both a new number and a new slot
+;;; number.
+;;;
+;;; The renumbering follows the rules of the parameters given in
+;;; the autonumber text dialog.  The options are received from the
+;;; dialog's structure *AUTOTEXT.
+;;;
+;;; The attribute "slot" is set if autoslotting is active, else it
+;;; is set to zero.
+;;;
+;;; To properly handle the attributes, the function uses the lists
+;;; of already used numbers and free slots defined in C.
+(define (renumber! *autotext *object)
+  (define object (pointer->object *object))
+  (define automatic_slotting
+    (schematic_autonumber_get_autotext_slotting *autotext))
+  (define *window
+    (schematic_autonumber_get_autotext_window *autotext))
+  (define *template
+    (schematic_autonumber_get_autotext_current_searchtext *autotext))
+  (define template (pointer->string *template))
+  (define *parent (lepton_object_get_attached_to *object))
+  (define *parent-name
+    (lepton_component_object_get_basename *parent))
+  (define renumber-slots?
+    (and (true? automatic_slotting)
+         (not (null-pointer? *parent))))
+
+  (define (numslots-value *object)
+    (let* ((*numslots
+            (lepton_attrib_search_object_attribs_by_name
+             *object
+             (string->pointer "numslots")
+             0))
+           (numslots (and (not (null-pointer? *numslots))
+                          (string->integer
+                           (string-trim
+                            (pointer->string *numslots))))))
+      (g_free *numslots)
+      numslots))
+
+  (define (update-slot-number! slot)
+    ;; Updates the text content of the "slot" attribute of the
+    ;; object if the slot value is not zero.
+    (unless (zero? slot)
+      ;; Update the slot on the owning object.
+      (o_slot_end *window
+                  *parent
+                  (string->pointer (format #f "slot=~A" slot)))))
+
+  (define (set-slot-get-number!)
+    (let ((*free-slot-item
+           (schematic_autonumber_get_free_slot_item_by_name *autotext
+                                                            *parent-name)))
+      (if (null-pointer? *free-slot-item)
+          ;; Set new number and slot number.
+          (let* ((number
+                  (schematic_autonumber_get_next_unused_number *autotext))
+                 (numslots (or (numslots-value *parent) 0))
+                 (slot (if (> numslots 0) 1 0)))
+            ;; Add other slots (> 1, if any) to the database.
+            (when (> numslots 0)
+              (for-each
+               (lambda (i)
+                 (let ((*freeslot
+                        (schematic_autonumber_slot_new number i *parent-name)))
+                   (schematic_autonumber_set_autotext_free_slots
+                    *autotext
+                    (g_list_insert_sorted
+                     (schematic_autonumber_get_autotext_free_slots *autotext)
+                     *freeslot
+                     *schematic_autonumber_freeslot_compare))))
+               (iota (1- numslots) 2)))
+
+            (update-slot-number! slot)
+            number)
+          ;; If there is any suitable unused slot in the database,
+          ;; remove it from database and apply the numbers.
+          (let* ((*freeslot (glist-data *free-slot-item))
+                 (number (schematic_autonumber_slot_get_number *freeslot))
+                 (slot (schematic_autonumber_slot_get_slot_number *freeslot)))
+            (g_free *freeslot)
+            (schematic_autonumber_set_autotext_free_slots
+             *autotext
+             (g_list_delete_link
+              (schematic_autonumber_get_autotext_free_slots *autotext)
+              *free-slot-item))
+
+            (update-slot-number! slot)
+            ;; Return the number to set it later.
+            number))))
+
+  (define number
+    (if renumber-slots?
+        (set-slot-get-number!)
+        (schematic_autonumber_get_next_unused_number *autotext)))
+
+  ;; Replace old text.
+  (set-text-string! object (format #f "~A~A" template number))
+
+  (schematic_window_active_page_changed *window))
+
+
 (define (autonumber-by-template! *autotext *window page-list *template scope-number)
   (schematic_autonumber_set_autotext_current_searchtext *autotext
                                                         *template)
@@ -256,7 +367,7 @@
         (lambda (*object)
           (if (true? (schematic_autonumber_get_autotext_removenum *autotext))
               (remove-number! *autotext *object)
-              (schematic_autonumber_get_new_numbers *autotext *object)))
+              (renumber! *autotext *object)))
         (glist->list *sorted-objects identity))
        (g_list_free *sorted-objects))
 

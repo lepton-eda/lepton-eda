@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1011,7 +1011,9 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
  *  is set to zero it acts as a wildcard.  The function is used as
  *  GCompareFunc by GList functions.
  */
-gint freeslot_compare(gconstpointer a, gconstpointer b)
+int
+schematic_autonumber_freeslot_compare (gconstpointer a,
+                                       gconstpointer b)
 {
   SchematicAutonumberSlot *aa, *bb;
   gint res;
@@ -1148,6 +1150,59 @@ schematic_autonumber_match (SchematicAutonumber *autotext,
 }
 
 
+/*! \brief Create and return a new #SchematicAutonumberSlot
+ *  instance.
+ *
+ *  \par Function Description
+ *  Creates and returns a new #SchematicAutonumberSlot instance
+ *  setting its fields to the given argument values.
+ *
+ *  \param [in] number The number being a suffix of the processed
+ *              object text string.
+ *  \param [in] slot_number The given slot number.
+ *  \param [in] symbol_name The name of the symbol the data
+ *              belongs to.
+ *  \return The new #SchematicAutonumberSlot instance.
+ */
+SchematicAutonumberSlot*
+schematic_autonumber_slot_new (int number,
+                               int slot_number,
+                               char *symbol_name)
+{
+  SchematicAutonumberSlot *slot;
+
+  slot = g_new (SchematicAutonumberSlot, 1);
+
+  slot->number = number;
+  slot->slotnr = slot_number;
+  slot->symbolname = symbol_name;
+
+  return slot;
+}
+
+
+/*! \brief Find a slot in a list of autonumber slots.
+ *  \par Function Description
+ *
+ *  Searches for \p slot in the \p slots \c GList and returns a
+ *  new \c GList starting with the item pointing to \p slot,
+ *  or NULL if there is no such item in the list.
+ *
+ *  \param [in] slots The list of slots.
+ *  \param [in] slot The slot to search for.
+ *
+ *  \return The \c GList starting with the given slot or NULL.
+ */
+GList*
+schematic_autonumber_find_slot (GList *slots,
+                                SchematicAutonumberSlot *slot)
+{
+  return g_list_find_custom (slots,
+                             slot,
+                             (GCompareFunc) schematic_autonumber_freeslot_compare);
+}
+
+
 /*! \brief Creates a list of already numbered objects and slots
  *  \par Function Description
  *  This function collects the used numbers of a single schematic
@@ -1203,7 +1258,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 
               slot_item = g_list_find_custom(autotext->used_slots,
                                              slot,
-                                             (GCompareFunc) freeslot_compare);
+                                             (GCompareFunc) schematic_autonumber_freeslot_compare);
               if (slot_item != NULL) { /* duplicate slot in used_slots */
                 g_message (_("duplicate slot may cause problems: "
                              "[symbolname=%1$s, number=%2$d, slot=%3$d]"),
@@ -1213,11 +1268,11 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
               else {
                 autotext->used_slots = g_list_insert_sorted(autotext->used_slots,
                                                             slot,
-                                                            (GCompareFunc) freeslot_compare);
+                                                            (GCompareFunc) schematic_autonumber_freeslot_compare);
 
                 slot_item = g_list_find_custom(autotext->free_slots,
                                                slot,
-                                               (GCompareFunc) freeslot_compare);
+                                               (GCompareFunc) schematic_autonumber_freeslot_compare);
                 if (slot_item == NULL) {
                   /* insert all slots to the list, except of the current one */
                   for (i=1; i <= numslots; i++) {
@@ -1226,7 +1281,7 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
                       slot->slotnr = i;
                       autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
                                                                   slot,
-                                                                  (GCompareFunc) freeslot_compare);
+                                                                  (GCompareFunc) schematic_autonumber_freeslot_compare);
                     }
                   }
                 }
@@ -1248,123 +1303,91 @@ schematic_autonumber_get_used (SchematicWindow *w_current,
 }
 
 
-/*! \brief Handle all the options of the Autonumber text dialog.
+/*! \brief Get the next unused number for autonumbering.
+ *
  *  \par Function Description
- *  This function receives the options of the the autonumber text
- *  dialog in an #SchematicAutonumber structure and then gets or
- *  generates new numbers for the object \p o_current.  It uses
- *  the element numbers \c used_numbers and the list of the free
- *  slots \c free_slots of the #SchematicAutonumber struct.  First
- *  it collects all pages of a hierarchical schematic.  Second it
- *  gets all matching text elements for the searchtext.  Then it
- *  renumbers all text elements of all schematic pages. The
- *  renumbering follows the rules of the parameters given in the
- *  autonumber text dialog.
+ *  Gets the list of already occupied numbers of an
+ *  #SchematicAutonumber instance and a starting number to
+ *  start searching from, and calculates the next number for
+ *  autonumbering.
  *
- *  The attribute "slot" is set if autoslotting is active, else it
- *  is set to zero.
- *
- *  \param [in,out] autotext The #SchematicAutonumber instance.
- *  \param [in] o_current The \c LeptonObject instance to process.
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \return The next unused number.
  */
-void
-schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current)
+int
+schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext)
 {
   GList *item;
-  gint new_number, numslots, i;
-  SchematicAutonumberSlot *freeslot;
-  LeptonObject *o_parent = NULL;
-  GList *freeslot_item;
-  gchar *numslot_str;
-  char *str;
-  gint number, slot;
+  int next_number;
 
-  new_number = autotext->startnum;
+  /* Start with the start number set in the dialog. */
+  next_number = schematic_autonumber_get_autotext_startnum (autotext);
 
-  /* Check for slots first */
-  /* 1. are there any unused slots in the database? */
-  o_parent = lepton_object_get_attached_to (o_current);
-  if (autotext->slotting && o_parent != NULL) {
-    freeslot = g_new (SchematicAutonumberSlot, 1);
-    freeslot->symbolname = lepton_component_object_get_basename (o_parent);
-    freeslot->number = 0;
-    freeslot->slotnr = 0;
-    freeslot_item = g_list_find_custom(autotext->free_slots,
-                                       freeslot,
-                                       (GCompareFunc) freeslot_compare);
-    g_free(freeslot);
-    /* Yes! -> remove from database, apply it */
-    if (freeslot_item != NULL) {
-      freeslot = (SchematicAutonumberSlot*) freeslot_item->data;
-      number = freeslot->number;
-      slot = freeslot->slotnr;
-      g_free(freeslot);
-      autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
-
-      return;
-    }
-  }
-
-  /* get a new number */
-  item = autotext->used_numbers;
+  /* Iterate over unused numbers to get the new value. */
+  item = schematic_autonumber_get_autotext_used_numbers (autotext);
   while (1) {
-    while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
+    while (item != NULL && GPOINTER_TO_INT (item->data) < next_number)
       item = g_list_next(item);
 
-    if (item == NULL || GPOINTER_TO_INT(item->data) > new_number)
+    if (item == NULL || GPOINTER_TO_INT (item->data) > next_number)
       break;
-    else  /* new_number == item->data */
-      new_number++;
-  }
-  number = new_number;
-  slot = 0;
-
-  /* insert the new number to the used list */
-  autotext->used_numbers = g_list_insert_sorted(autotext->used_numbers,
-                                                GINT_TO_POINTER(new_number),
-                                                (GCompareFunc) autonumber_sort_numbers);
-
-  /* 3. is o_current a slotted object ? */
-  if ((autotext->slotting) && o_parent != NULL) {
-    numslot_str =
-      lepton_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
-    if (numslot_str != NULL) {
-      sscanf(numslot_str," %d",&numslots);
-      g_free(numslot_str);
-      if (numslots > 0) {
-        /* Yes! -> new number and slot=1; add the other slots to the database */
-        slot = 1;
-        for (i=2; i <=numslots; i++) {
-          freeslot = g_new (SchematicAutonumberSlot, 1);
-          freeslot->symbolname = lepton_component_object_get_basename (o_parent);
-          freeslot->number = new_number;
-          freeslot->slotnr = i;
-          autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
-                                                      freeslot,
-                                                      (GCompareFunc) freeslot_compare);
-        }
-      }
-    }
+    else  /* next_number == item->data */
+      next_number++;
   }
 
-  /* Updates the text content of the "slot" attribute of the
-   * object if the slot value is not zero. */
-  if (slot != 0) {
-    /* Update the slot on the owning object. */
-    str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (autotext->w_current,
-                lepton_object_get_attached_to (o_current),
-                str);
-    g_free (str);
-  }
+  /* Insert the new number to the list of used numbers. */
+  schematic_autonumber_add_used_number (autotext, next_number);
 
-  /* Replace old text. */
-  str = g_strdup_printf ("%s%d", autotext->current_searchtext, number);
-  lepton_text_object_set_string (o_current, str);
-  g_free (str);
+  return next_number;
+}
 
-  schematic_window_active_page_changed (autotext->w_current);
+
+/*! \brief Add a number to the list of used numbers.
+ *
+ *  \par Function Description
+ *  Adds \p number to the sorted list of already occupied numbers
+ *  of an #SchematicAutonumber instance.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] number The number to add.
+ */
+void
+schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
+                                      int number)
+{
+  schematic_autonumber_set_autotext_used_numbers (autotext,
+                                                  g_list_insert_sorted (schematic_autonumber_get_autotext_used_numbers (autotext),
+                                                                        GINT_TO_POINTER (number),
+                                                                        (GCompareFunc) autonumber_sort_numbers));
+}
+
+
+/*! \brief Get free slot item by name.
+ *
+ *  \par Function Description
+ *  Returns an item of free slot \c GList corresponding to given
+ *  \p name.
+ *
+ *  \param [in] autotext The #SchematicAutonumber instance.
+ *  \param [in] name The component name to search for.
+ *
+ *  \return The found list item.
+ */
+GList*
+schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
+                                                 char *name)
+{
+  SchematicAutonumberSlot *freeslot;
+  GList *freeslot_item;
+
+  freeslot =
+    schematic_autonumber_slot_new (0, 0, name);
+  freeslot_item =
+    schematic_autonumber_find_slot (schematic_autonumber_get_autotext_free_slots (autotext),
+                                    freeslot);
+  g_free (freeslot);
+
+  return freeslot_item;
 }
 
 

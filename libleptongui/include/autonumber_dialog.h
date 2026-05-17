@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -223,14 +223,26 @@ schematic_autonumber_slot_set_symbol_name (SchematicAutonumberSlot *slot,
 /* Methods */
 
 void
+schematic_autonumber_add_used_number (SchematicAutonumber *autotext,
+                                      int number);
+void
 schematic_autonumber_clear_database (SchematicAutonumber *autotext);
 
 GtkWidget*
 schematic_autonumber_dialog_lookup_widget (GtkWidget *widget,
                                            const gchar *widget_name);
-void
-schematic_autonumber_get_new_numbers (SchematicAutonumber *autotext,
-                                      LeptonObject *o_current);
+GList*
+schematic_autonumber_find_slot (GList *slots,
+                                SchematicAutonumberSlot *slot);
+int
+schematic_autonumber_freeslot_compare (gconstpointer a,
+                                       gconstpointer b);
+GList*
+schematic_autonumber_get_free_slot_item_by_name (SchematicAutonumber *autotext,
+                                                 char *name);
+int
+schematic_autonumber_get_next_unused_number (SchematicAutonumber *autotext);
+
 void
 schematic_autonumber_get_used (SchematicWindow *w_current,
                                SchematicAutonumber *autotext);
@@ -250,6 +262,10 @@ schematic_autonumber_scope_from_string (char *s);
 const char*
 schematic_autonumber_scope_to_string (int scope);
 
+SchematicAutonumberSlot*
+schematic_autonumber_slot_new (int number,
+                               int slot_number,
+                               char *symbol_name);
 int
 schematic_autonumber_sort_order_from_string (char *s);
 
