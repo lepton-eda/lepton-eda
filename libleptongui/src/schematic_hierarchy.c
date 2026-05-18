@@ -116,10 +116,7 @@ s_hierarchy_load_subpage (SchematicWindow *w_current,
                              scm_from_utf8_string (filename));
 
   if (scm_is_false (string_s)) {
-    g_set_error (error,
-                 EDA_ERROR,
-                 EDA_ERROR_NOLIB,
-                 _("Schematic not found in source library."));
+    schematic_hierarchy_set_error_nolib (error);
   } else {
     string = scm_to_utf8_string (string_s);
     gchar *normalized = f_normalize_filename (string, error);
