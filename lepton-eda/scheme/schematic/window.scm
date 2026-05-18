@@ -1671,20 +1671,22 @@ for *PAGE page will be created and set active."
 (define (find-text *widget response *window)
   (define window (pointer->window *window))
 
-  (let ((*toplevel (schematic_window_get_toplevel *window)))
-    (when (null-pointer? *toplevel)
-      (error "NULL toplevel."))
+  (define *toplevel
+    (let ((*window-toplevel (schematic_window_get_toplevel *window)))
+      (if (null-pointer? *window-toplevel)
+          (error "NULL toplevel.")
+          *window-toplevel)))
 
-    (let ((close?
-           (case (gtk-response->symbol response)
-             ((ok) (true? (search-text window *toplevel)))
-             ((cancel delete-event) #t)
-             (else (log! 'warning "find-text(): strange-signal ~A" response)
-                   #f))))
-      (when close?
-        (let ((*drawing-area (schematic_window_get_drawing_area *window)))
-          (gtk_widget_grab_focus *drawing-area)
-          (gtk_widget_hide *widget))))))
+  (let ((close?
+         (case (gtk-response->symbol response)
+           ((ok) (true? (search-text window *toplevel)))
+           ((cancel delete-event) #t)
+           (else (log! 'warning "find-text(): strange-signal ~A" response)
+                 #f))))
+    (when close?
+      (let ((*drawing-area (schematic_window_get_drawing_area *window)))
+        (gtk_widget_grab_focus *drawing-area)
+        (gtk_widget_hide *widget)))))
 
 (define *callback-find-text
   (procedure->pointer void find-text (list '* int '*)))
