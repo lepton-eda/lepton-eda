@@ -1615,7 +1615,7 @@ for *PAGE page will be created and set active."
                (page-visited? (memq page output-ls)))
           (loop (if page-visited?
                     new-input-ls
-                    (if (true? descend?)
+                    (if descend?
                         (append new-input-ls
                                 (page-subpages window page))
                         new-input-ls))
@@ -1645,8 +1645,9 @@ for *PAGE page will be created and set active."
     (schematic_find_text_widget_get_find_type *find-text-widget))
   (define *text-string
     (schematic_find_text_widget_get_find_text_string *find-text-widget))
-  (define descend?
+  (define _descend
     (schematic_find_text_widget_get_descend *find-text-widget))
+  (define descend? (true? _descend))
   (define all-pages
     (find-text-get-all-pages window pages descend?))
   (define *all-pages
@@ -1662,7 +1663,7 @@ for *PAGE page will be created and set active."
                                     *all-pages
                                     find-type
                                     *text-string
-                                    descend?
+                                    _descend
                                     show-hidden-text?))
   (g_slist_free *all-pages)
 
