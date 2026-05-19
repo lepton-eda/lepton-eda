@@ -783,8 +783,9 @@ attrib_activate (gpointer window_widget,
   LeptonPage *p_local;
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
+  GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
 
-  for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
+  for (iter = pages;
        iter != NULL;
        iter = g_list_next (iter)) {
 
@@ -827,7 +828,7 @@ attrib_activate (gpointer window_widget,
   sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
 
   /* must iterate over all pages in design */
-  for (iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
+  for (iter = pages;
         iter != NULL;
         iter = g_list_next( iter ) ) {
     p_local = (LeptonPage *)iter->data;
@@ -858,7 +859,7 @@ attrib_activate (gpointer window_widget,
   /* ---------- Now verify correctness of entire design.  ---------- */
   s_toplevel_verify_design(toplevel);  /* toplevel is a global */
 
-  x_window_set_title (lepton_list_get_glist (lepton_toplevel_get_pages (toplevel)));
+  x_window_set_title (pages);
 
   gtk_widget_show_all (window);
 }
