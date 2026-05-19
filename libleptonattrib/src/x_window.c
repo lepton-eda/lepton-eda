@@ -823,7 +823,9 @@ attrib_activate (gpointer window_widget,
   s_string_list_sort_master_pin_attrib_list();
 
   /* ---------- Create and load the tables  ---------- */
-  sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
+  attrib_sheet_data_set_component_table (sheet_head,
+                                         s_table_new (sheet_head->comp_count,
+                                                      sheet_head->comp_attrib_count));
   sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
   sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
 
