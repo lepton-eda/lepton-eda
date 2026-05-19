@@ -84,6 +84,8 @@ Lepton EDA homepage: ~S
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
 
+  (attrib_window_set_window_widget *window-widget)
+
   (x_window_set_toplevel *toplevel)
 
   (attrib_activate *window-widget *toplevel))

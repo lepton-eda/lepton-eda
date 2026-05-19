@@ -796,8 +796,6 @@ attrib_activate (gpointer window_widget,
   GList *iter;
   LeptonPage *p_local;
 
-  attrib_window_set_window_widget ((GtkWidget*) window_widget);
-
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
 
   /* Initialize GTK window. */

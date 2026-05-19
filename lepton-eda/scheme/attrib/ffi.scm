@@ -31,6 +31,7 @@
             attrib_activate
             attrib_run
             attrib_window_new
+            attrib_window_set_window_widget
             x_window_set_toplevel
             ))
 
@@ -54,4 +55,5 @@
 (define-lff attrib_activate int '(* *))
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
+(define-lff attrib_window_set_window_widget void '(*))
 (define-lff x_window_set_toplevel void '(*))
