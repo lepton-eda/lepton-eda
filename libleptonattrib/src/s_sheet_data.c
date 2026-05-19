@@ -83,6 +83,21 @@ attrib_sheet_data_set_component_table (SHEET_DATA *data,
 }
 
 
+TABLE**
+attrib_sheet_data_get_net_table (SHEET_DATA *data)
+{
+  return data->net_table;
+}
+
+
+void
+attrib_sheet_data_set_net_table (SHEET_DATA *data,
+                                 TABLE** table)
+{
+  data->net_table = table;
+}
+
+
 int
 s_sheet_data_changed (const SHEET_DATA* data)
 {
