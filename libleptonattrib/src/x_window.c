@@ -786,7 +786,7 @@ attrib_activate (gpointer window_widget,
 
   /* Initialize SHEET_DATA data structure (sheet_head was declared
      in globals.h) */
-  sheet_head = s_sheet_data_new();
+  attrib_set_sheet_data (s_sheet_data_new());
 
   for (iter = lepton_list_get_glist (toplevel->pages);
        iter != NULL;
