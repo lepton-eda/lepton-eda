@@ -83,6 +83,7 @@ Lepton EDA homepage: ~S
 
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
+  (define *sheet-data (s_sheet_data_new))
 
   (attrib_window_set_window_widget *window-widget)
 
@@ -92,7 +93,7 @@ Lepton EDA homepage: ~S
   (x_window_init)
 
   ;; Initialize main sheet data structure.
-  (attrib_set_sheet_data (s_sheet_data_new))
+  (attrib_set_sheet_data *sheet-data)
 
   (attrib_activate *window-widget *toplevel))
 
