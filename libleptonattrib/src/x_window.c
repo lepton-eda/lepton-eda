@@ -796,7 +796,7 @@ attrib_activate (gpointer window_widget,
   GList *iter;
   LeptonPage *p_local;
 
-  window = (GtkWidget*) window_widget;
+  attrib_window_set_window_widget ((GtkWidget*) window_widget);
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
 
