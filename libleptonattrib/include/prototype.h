@@ -47,6 +47,18 @@ attrib_sheet_data_get_component_table (SHEET_DATA *data);
 void
 attrib_sheet_data_set_component_table (SHEET_DATA *data,
                                        TABLE** table);
+int
+attrib_sheet_data_get_component_count (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_component_count (SHEET_DATA *data,
+                                       int count);
+int
+attrib_sheet_data_get_component_attrib_count (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_component_attrib_count (SHEET_DATA *data,
+                                              int count);
 TABLE**
 attrib_sheet_data_get_net_table (SHEET_DATA *data);
 

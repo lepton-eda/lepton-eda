@@ -83,6 +83,36 @@ attrib_sheet_data_set_component_table (SHEET_DATA *data,
 }
 
 
+int
+attrib_sheet_data_get_component_count (SHEET_DATA *data)
+{
+  return data->comp_count;
+}
+
+
+void
+attrib_sheet_data_set_component_count (SHEET_DATA *data,
+                                       int count)
+{
+  data->comp_count = count;
+}
+
+
+int
+attrib_sheet_data_get_component_attrib_count (SHEET_DATA *data)
+{
+  return data->comp_attrib_count;
+}
+
+
+void
+attrib_sheet_data_set_component_attrib_count (SHEET_DATA *data,
+                                              int count)
+{
+  data->comp_attrib_count = count;
+}
+
+
 /*! \brief Get the net table of sheet data.
  *
  *  \par Function Description
