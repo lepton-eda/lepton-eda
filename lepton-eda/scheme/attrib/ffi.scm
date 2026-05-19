@@ -24,11 +24,14 @@
 
   #:export (gtk_init
 
+            attrib_set_sheet_data
             attrib_set_toplevel
 
             set_verbose_mode
 
             x_fileselect_open
+
+            s_sheet_data_new
 
             attrib_activate
             attrib_run
@@ -48,6 +51,7 @@
 (define-lff-lib gtk_init void '(* *) libgtk)
 
 ;;; attrib.c
+(define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_set_toplevel void '(*))
 
 ;;; s_misc.c
@@ -55,6 +59,9 @@
 
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '())
+
+;;; s_sheet_data.c
+(define-lff s_sheet_data_new '* '())
 
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))

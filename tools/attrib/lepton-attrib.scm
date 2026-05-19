@@ -91,6 +91,9 @@ Lepton EDA homepage: ~S
   ;; Initialize GTK window.
   (x_window_init)
 
+  ;; Initialize main sheet data structure.
+  (attrib_set_sheet_data (s_sheet_data_new))
+
   (attrib_activate *window-widget *toplevel))
 
 

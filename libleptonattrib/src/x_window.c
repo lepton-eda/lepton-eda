@@ -784,9 +784,6 @@ attrib_activate (gpointer window_widget,
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
 
-  /* Initialize SHEET_DATA data structure. */
-  attrib_set_sheet_data (s_sheet_data_new());
-
   for (iter = lepton_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
