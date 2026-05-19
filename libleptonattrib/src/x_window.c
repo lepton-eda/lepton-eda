@@ -799,8 +799,8 @@ attrib_activate (gpointer window_widget,
     /* Note that this must be changed.  We need to input the entire project
      * before doing anything with the nets because we need to first
      * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items (p_local->object_list);
-    s_sheet_data_add_master_net_attrib_list_items (p_local->object_list);
+    s_sheet_data_add_master_net_list_items (lepton_page_objects (p_local));
+    s_sheet_data_add_master_net_attrib_list_items (lepton_page_objects (p_local));
 #endif
 
     s_sheet_data_add_master_pin_list_items (lepton_page_objects (p_local));
