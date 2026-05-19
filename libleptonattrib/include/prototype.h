@@ -41,6 +41,13 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name);
 char *s_attrib_get_refdes(LeptonObject *object);
 
 /* ------------- s_sheet_data.c ------------- */
+TABLE**
+attrib_sheet_data_get_component_table (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_component_table (SHEET_DATA *data,
+                                       TABLE** table);
+
 int s_sheet_data_changed (const SHEET_DATA* data);
 void s_sheet_data_set_changed (SHEET_DATA* data, int changed);
 SHEET_DATA *s_sheet_data_new();

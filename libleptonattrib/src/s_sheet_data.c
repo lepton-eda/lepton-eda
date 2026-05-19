@@ -50,6 +50,21 @@
 #include "../include/gettext.h"
 
 
+TABLE**
+attrib_sheet_data_get_component_table (SHEET_DATA *data)
+{
+  return data->component_table;
+}
+
+
+void
+attrib_sheet_data_set_component_table (SHEET_DATA *data,
+                                       TABLE** table)
+{
+  data->component_table = table;
+}
+
+
 int
 s_sheet_data_changed (const SHEET_DATA* data)
 {
