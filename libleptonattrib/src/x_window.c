@@ -834,7 +834,8 @@ attrib_activate (gpointer window_widget,
     p_local = (LeptonPage *)iter->data;
 
     /* only traverse pages which are toplevel */
-    if (p_local->page_control == 0) {
+    if (lepton_page_get_page_control (p_local) == 0)
+    {
       /* adds all components from page to comp_table */
       s_table_add_toplevel_comp_items_to_comp_table (lepton_page_objects (p_local));
 #if 0
