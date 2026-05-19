@@ -30,7 +30,9 @@
 
             attrib_activate
             attrib_run
-            attrib_window_new))
+            attrib_window_new
+            x_window_set_toplevel
+            ))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -52,3 +54,4 @@
 (define-lff attrib_activate int '(* *))
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
+(define-lff x_window_set_toplevel void '(*))
