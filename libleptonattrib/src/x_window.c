@@ -824,14 +824,14 @@ attrib_activate (gpointer window_widget,
 
   /* ---------- Create and load the tables  ---------- */
   attrib_sheet_data_set_component_table (sheet_head,
-                                         s_table_new (sheet_head->comp_count,
-                                                      sheet_head->comp_attrib_count));
+                                         s_table_new (attrib_sheet_data_get_component_count (sheet_head),
+                                                      attrib_sheet_data_get_component_attrib_count (sheet_head)));
   attrib_sheet_data_set_net_table (sheet_head,
-                                   s_table_new (sheet_head->net_count,
-                                                sheet_head->net_attrib_count));
+                                   s_table_new (attrib_sheet_data_get_net_count (sheet_head),
+                                                attrib_sheet_data_get_net_attrib_count (sheet_head)));
   attrib_sheet_data_set_pin_table (sheet_head,
-                                   s_table_new (sheet_head->pin_count,
-                                                sheet_head->pin_attrib_count));
+                                   s_table_new (attrib_sheet_data_get_pin_count (sheet_head),
+                                                attrib_sheet_data_get_pin_attrib_count (sheet_head)));
 
   /* must iterate over all pages in design */
   for (iter = pages;
