@@ -779,36 +779,8 @@ void
 attrib_activate (gpointer window_widget,
                  gpointer user_data)
 {
-  GList *iter;
-  LeptonPage *p_local;
-
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-
-  /* must iterate over all pages in design */
-  for (iter = pages;
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-    p_local = (LeptonPage *)iter->data;
-
-    /* only traverse pages which are toplevel */
-    if (lepton_page_get_page_control (p_local) == 0)
-    {
-      /* adds all components from page to comp_table */
-      s_table_add_toplevel_comp_items_to_comp_table (lepton_page_objects (p_local));
-#if 0
-      /* Note that this must be changed.  We need to input the entire project
-       * before doing anything with the nets because we need to first
-       * determine where they are all connected!   */
-
-      /* adds all nets from page to net_table */
-      s_table_add_toplevel_net_items_to_net_table (lepton_page_objects (p_local));
-#endif
-
-      /* adds all pins from page to pin_table */
-      s_table_add_toplevel_pin_items_to_pin_table (lepton_page_objects (p_local));
-    }
-  } /* for loop over pages */
 
   /* -------------- update windows --------------- */
   x_window_add_items();    /* This updates the top level stuff,

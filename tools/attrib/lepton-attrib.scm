@@ -150,6 +150,27 @@ Lepton EDA homepage: ~S
    (s_table_new (attrib_sheet_data_get_pin_count *sheet-data)
                 (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
 
+  ;; Must iterate over all pages in design.
+  (for-each
+   (lambda (*page)
+     ;; Only traverse pages which are toplevel.
+     (when  (zero? (lepton_page_get_page_control *page))
+       ;; Adds all components from page to the component table.
+       (s_table_add_toplevel_comp_items_to_comp_table (lepton_page_objects *page))
+       (when #f
+         ;; Note that this must be changed.  We need to input the
+         ;; entire project before doing anything with the nets
+         ;; because we need to first determine where they are all
+         ;; connected!
+
+         ;; Adds all nets from page to the net table.
+         (s_table_add_toplevel_net_items_to_net_table (lepton_page_objects *page)))
+
+       ;; Adds all pins from page to the pin table.
+       (s_table_add_toplevel_pin_items_to_pin_table (lepton_page_objects *page))))
+
+   (glist->list *pages identity))
+
   (attrib_activate *window-widget *toplevel))
 
 

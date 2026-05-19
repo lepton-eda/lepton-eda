@@ -141,7 +141,9 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
                                         int num_attribs);
 
 void s_table_add_toplevel_comp_items_to_comp_table(const GList *obj_list);
+#if 0
 void s_table_add_toplevel_net_items_to_net_table(const GList *obj_list);
+#endif
 void s_table_add_toplevel_pin_items_to_pin_table(const GList *obj_list);
 
 void s_table_gtksheet_to_all_tables();

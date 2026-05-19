@@ -56,6 +56,9 @@
             s_string_list_sort_master_pin_attrib_list
 
             s_table_new
+            s_table_add_toplevel_comp_items_to_comp_table
+            s_table_add_toplevel_net_items_to_net_table
+            s_table_add_toplevel_pin_items_to_pin_table
 
             attrib_activate
             attrib_run
@@ -112,6 +115,11 @@
 
 ;;; s_table.c
 (define-lff s_table_new '* (list int int))
+(define-lff s_table_add_toplevel_comp_items_to_comp_table void '(*))
+;;; The following function is not really defined.
+;; (define-lff s_table_add_toplevel_net_items_to_net_table void '(*))
+(define s_table_add_toplevel_net_items_to_net_table #f)
+(define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
 
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))
