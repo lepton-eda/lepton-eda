@@ -798,9 +798,6 @@ attrib_activate (gpointer window_widget,
 
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
 
-  /* Initialize GTK window. */
-  x_window_init ();
-
   /* Initialize SHEET_DATA data structure (sheet_head was declared
      in globals.h) */
   sheet_head = s_sheet_data_new();

@@ -88,6 +88,9 @@ Lepton EDA homepage: ~S
 
   (x_window_set_toplevel *toplevel)
 
+  ;; Initialize GTK window.
+  (x_window_init)
+
   (attrib_activate *window-widget *toplevel))
 
 
