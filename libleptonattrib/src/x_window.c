@@ -84,6 +84,20 @@ x_window_get_toplevel ()
   return window_toplevel;
 }
 
+
+GtkWidget*
+attrib_window_get_window_widget ()
+{
+  return window;
+}
+
+void
+attrib_window_set_window_widget (GtkWidget *window_widget)
+{
+  window = window_widget;
+}
+
+
 static GtkWidget*
 separator_new ()
 {

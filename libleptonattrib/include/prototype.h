@@ -232,6 +232,12 @@ attrib_run (gpointer activate_callback,
 GtkWidget*
 attrib_window_new (gpointer app);
 
+GtkWidget*
+attrib_window_get_window_widget ();
+
+void
+attrib_window_set_window_widget (GtkWidget* window_widget);
+
 void x_window_add_items();
 
 void
