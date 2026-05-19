@@ -53,6 +53,12 @@ attrib_sheet_data_get_net_table (SHEET_DATA *data);
 void
 attrib_sheet_data_set_net_table (SHEET_DATA *data,
                                  TABLE** table);
+TABLE**
+attrib_sheet_data_get_pin_table (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_pin_table (SHEET_DATA *data,
+                                 TABLE** table);
 
 int s_sheet_data_changed (const SHEET_DATA* data);
 void s_sheet_data_set_changed (SHEET_DATA* data, int changed);

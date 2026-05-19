@@ -116,6 +116,21 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
+TABLE**
+attrib_sheet_data_get_pin_table (SHEET_DATA *data)
+{
+  return data->pin_table;
+}
+
+
+void
+attrib_sheet_data_set_pin_table (SHEET_DATA *data,
+                                 TABLE** table)
+{
+  data->pin_table = table;
+}
+
+
 int
 s_sheet_data_changed (const SHEET_DATA* data)
 {
