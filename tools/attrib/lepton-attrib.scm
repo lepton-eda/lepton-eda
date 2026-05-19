@@ -84,6 +84,8 @@ Lepton EDA homepage: ~S
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
   (define *sheet-data (s_sheet_data_new))
+  (define *pages
+    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
   (attrib_window_set_window_widget *window-widget)
 
@@ -94,6 +96,31 @@ Lepton EDA homepage: ~S
 
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
+
+  (for-each
+   (lambda (*page)
+     (lepton_toplevel_set_page_current *toplevel *page)
+
+     ;; Now add all items found to the master lists
+     (s_sheet_data_add_master_comp_list_items
+      (lepton_page_objects *page))
+     (s_sheet_data_add_master_comp_attrib_list_items
+      (lepton_page_objects *page))
+     ;; Note that this must be changed.  We need to input the
+     ;; entire project before doing anything with the nets because
+     ;; we need to first determine where they are all connected!
+     (when #f
+       (s_sheet_data_add_master_net_list_items
+        (lepton_page_objects *page))
+       (s_sheet_data_add_master_net_attrib_list_items
+        (lepton_page_objects *page)))
+
+     (s_sheet_data_add_master_pin_list_items
+      (lepton_page_objects *page))
+     (s_sheet_data_add_master_pin_attrib_list_items
+      (lepton_page_objects *page)))
+
+   (glist->list *pages identity))
 
   (attrib_activate *window-widget *toplevel))
 

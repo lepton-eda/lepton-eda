@@ -32,6 +32,12 @@
             x_fileselect_open
 
             s_sheet_data_new
+            s_sheet_data_add_master_comp_list_items
+            s_sheet_data_add_master_comp_attrib_list_items
+            s_sheet_data_add_master_net_list_items
+            s_sheet_data_add_master_net_attrib_list_items
+            s_sheet_data_add_master_pin_list_items
+            s_sheet_data_add_master_pin_attrib_list_items
 
             attrib_activate
             attrib_run
@@ -62,6 +68,12 @@
 
 ;;; s_sheet_data.c
 (define-lff s_sheet_data_new '* '())
+(define-lff s_sheet_data_add_master_comp_list_items void '(*))
+(define-lff s_sheet_data_add_master_comp_attrib_list_items void '(*))
+(define-lff s_sheet_data_add_master_net_list_items void '(*))
+(define-lff s_sheet_data_add_master_net_attrib_list_items void '(*))
+(define-lff s_sheet_data_add_master_pin_list_items void '(*))
+(define-lff s_sheet_data_add_master_pin_attrib_list_items void '(*))
 
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))

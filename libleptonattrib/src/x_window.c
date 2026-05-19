@@ -785,28 +785,6 @@ attrib_activate (gpointer window_widget,
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
 
-  for (iter = pages;
-       iter != NULL;
-       iter = g_list_next (iter)) {
-
-    p_local = (LeptonPage*) iter->data;
-    lepton_toplevel_set_page_current (toplevel, p_local);
-
-    /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items (lepton_page_objects (p_local));
-    s_sheet_data_add_master_comp_attrib_list_items (lepton_page_objects (p_local));
-#if 0
-    /* Note that this must be changed.  We need to input the entire project
-     * before doing anything with the nets because we need to first
-     * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items (lepton_page_objects (p_local));
-    s_sheet_data_add_master_net_attrib_list_items (lepton_page_objects (p_local));
-#endif
-
-    s_sheet_data_add_master_pin_list_items (lepton_page_objects (p_local));
-    s_sheet_data_add_master_pin_attrib_list_items (lepton_page_objects (p_local));
-  }     /* end of loop over files     */
-
   /* ---------- Sort the master lists  ---------- */
   s_string_list_sort_master_comp_list();
   s_string_list_sort_master_comp_attrib_list();

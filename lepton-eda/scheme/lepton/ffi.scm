@@ -353,6 +353,7 @@
 
             lepton_toplevel_new
             lepton_toplevel_get_page_current
+            lepton_toplevel_set_page_current
             lepton_toplevel_get_pages
             lepton_toplevel_get_changed_pages
             lepton_toplevel_goto_page
@@ -441,6 +442,7 @@
 ;;; toplevel.c
 (define-lff lepton_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
+(define-lff lepton_toplevel_set_page_current void '(* *))
 (define-lff lepton_toplevel_get_pages '* '(*))
 (define-lff lepton_toplevel_get_changed_pages '* '(*))
 (define-lff lepton_toplevel_goto_page void '(* *))
