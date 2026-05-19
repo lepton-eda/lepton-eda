@@ -5,6 +5,12 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
+SHEET_DATA*
+attrib_get_sheet_data ();
+
+void
+attrib_set_sheet_data (SHEET_DATA *sheet_data);
+
 LeptonToplevel*
 attrib_get_toplevel ();
 

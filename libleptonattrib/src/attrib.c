@@ -63,6 +63,19 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
+SHEET_DATA*
+attrib_get_sheet_data ()
+{
+  return sheet_head;
+}
+
+void
+attrib_set_sheet_data (SHEET_DATA *sheet_data)
+{
+  sheet_head = sheet_data;
+}
+
+
 /*! \var LeptonToplevel *toplevel
  *
  * The project and UI toplevel structure defining their data and
