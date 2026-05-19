@@ -31,6 +31,15 @@
 
             x_fileselect_open
 
+            attrib_sheet_data_get_component_attrib_count
+            attrib_sheet_data_get_component_count
+            attrib_sheet_data_set_component_table
+            attrib_sheet_data_get_net_attrib_count
+            attrib_sheet_data_get_net_count
+            attrib_sheet_data_set_net_table
+            attrib_sheet_data_get_pin_attrib_count
+            attrib_sheet_data_get_pin_count
+            attrib_sheet_data_set_pin_table
             s_sheet_data_new
             s_sheet_data_add_master_comp_list_items
             s_sheet_data_add_master_comp_attrib_list_items
@@ -45,6 +54,8 @@
             s_string_list_sort_master_net_attrib_list
             s_string_list_sort_master_pin_list
             s_string_list_sort_master_pin_attrib_list
+
+            s_table_new
 
             attrib_activate
             attrib_run
@@ -74,6 +85,15 @@
 (define-lff x_fileselect_open '* '())
 
 ;;; s_sheet_data.c
+(define-lff attrib_sheet_data_get_component_attrib_count int '(*))
+(define-lff attrib_sheet_data_get_component_count int '(*))
+(define-lff attrib_sheet_data_set_component_table void '(* *))
+(define-lff attrib_sheet_data_get_net_attrib_count int '(*))
+(define-lff attrib_sheet_data_get_net_count int '(*))
+(define-lff attrib_sheet_data_set_net_table void '(* *))
+(define-lff attrib_sheet_data_get_pin_attrib_count int '(*))
+(define-lff attrib_sheet_data_get_pin_count int '(*))
+(define-lff attrib_sheet_data_set_pin_table void '(* *))
 (define-lff s_sheet_data_new '* '())
 (define-lff s_sheet_data_add_master_comp_list_items void '(*))
 (define-lff s_sheet_data_add_master_comp_attrib_list_items void '(*))
@@ -89,6 +109,9 @@
 (define-lff s_string_list_sort_master_net_attrib_list void '())
 (define-lff s_string_list_sort_master_pin_list void '())
 (define-lff s_string_list_sort_master_pin_attrib_list void '())
+
+;;; s_table.c
+(define-lff s_table_new '* (list int int))
 
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))

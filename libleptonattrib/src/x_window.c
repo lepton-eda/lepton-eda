@@ -785,17 +785,6 @@ attrib_activate (gpointer window_widget,
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
 
-  /* ---------- Create and load the tables  ---------- */
-  attrib_sheet_data_set_component_table (sheet_head,
-                                         s_table_new (attrib_sheet_data_get_component_count (sheet_head),
-                                                      attrib_sheet_data_get_component_attrib_count (sheet_head)));
-  attrib_sheet_data_set_net_table (sheet_head,
-                                   s_table_new (attrib_sheet_data_get_net_count (sheet_head),
-                                                attrib_sheet_data_get_net_attrib_count (sheet_head)));
-  attrib_sheet_data_set_pin_table (sheet_head,
-                                   s_table_new (attrib_sheet_data_get_pin_count (sheet_head),
-                                                attrib_sheet_data_get_pin_attrib_count (sheet_head)));
-
   /* must iterate over all pages in design */
   for (iter = pages;
         iter != NULL;

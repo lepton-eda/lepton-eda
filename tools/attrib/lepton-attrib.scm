@@ -136,6 +136,20 @@ Lepton EDA homepage: ~S
   (s_string_list_sort_master_pin_list)
   (s_string_list_sort_master_pin_attrib_list)
 
+  ;; Create and load the tables.
+  (attrib_sheet_data_set_component_table
+   *sheet-data
+   (s_table_new (attrib_sheet_data_get_component_count *sheet-data)
+                (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+  (attrib_sheet_data_set_net_table
+   *sheet-data
+   (s_table_new (attrib_sheet_data_get_net_count *sheet-data)
+                (attrib_sheet_data_get_net_attrib_count *sheet-data)))
+  (attrib_sheet_data_set_pin_table
+   *sheet-data
+   (s_table_new (attrib_sheet_data_get_pin_count *sheet-data)
+                (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
+
   (attrib_activate *window-widget *toplevel))
 
 
