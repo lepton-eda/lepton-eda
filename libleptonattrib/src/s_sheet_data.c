@@ -146,6 +146,36 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
+int
+attrib_sheet_data_get_net_count (SHEET_DATA *data)
+{
+  return data->net_count;
+}
+
+
+void
+attrib_sheet_data_set_net_count (SHEET_DATA *data,
+                                 int count)
+{
+  data->net_count = count;
+}
+
+
+int
+attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data)
+{
+  return data->net_attrib_count;
+}
+
+
+void
+attrib_sheet_data_set_net_attrib_count (SHEET_DATA *data,
+                                        int count)
+{
+  data->net_attrib_count = count;
+}
+
+
 /*! \brief Get the pin table of sheet data.
  *
  *  \par Function Description

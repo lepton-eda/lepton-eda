@@ -65,6 +65,18 @@ attrib_sheet_data_get_net_table (SHEET_DATA *data);
 void
 attrib_sheet_data_set_net_table (SHEET_DATA *data,
                                  TABLE** table);
+int
+attrib_sheet_data_get_net_count (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_net_count (SHEET_DATA *data,
+                                 int count);
+int
+attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data);
+
+void
+attrib_sheet_data_set_net_attrib_count (SHEET_DATA *data,
+                                        int count);
 TABLE**
 attrib_sheet_data_get_pin_table (SHEET_DATA *data);
 
