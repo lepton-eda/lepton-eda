@@ -210,6 +210,36 @@ attrib_sheet_data_set_pin_table (SHEET_DATA *data,
 
 
 int
+attrib_sheet_data_get_pin_count (SHEET_DATA *data)
+{
+  return data->pin_count;
+}
+
+
+void
+attrib_sheet_data_set_pin_count (SHEET_DATA *data,
+                                 int count)
+{
+  data->pin_count = count;
+}
+
+
+int
+attrib_sheet_data_get_pin_attrib_count (SHEET_DATA *data)
+{
+  return data->pin_attrib_count;
+}
+
+
+void
+attrib_sheet_data_set_pin_attrib_count (SHEET_DATA *data,
+                                        int count)
+{
+  data->pin_attrib_count = count;
+}
+
+
+int
 s_sheet_data_changed (const SHEET_DATA* data)
 {
   return data->CHANGED;
