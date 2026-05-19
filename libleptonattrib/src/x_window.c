@@ -843,7 +843,7 @@ attrib_activate (gpointer window_widget,
        * determine where they are all connected!   */
 
       /* adds all nets from page to net_table */
-      s_table_add_toplevel_net_items_to_net_table(p_local->object_head);
+      s_table_add_toplevel_net_items_to_net_table (lepton_page_objects (p_local));
 #endif
 
       /* adds all pins from page to pin_table */
