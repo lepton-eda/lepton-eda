@@ -785,21 +785,6 @@ attrib_activate (gpointer window_widget,
   LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
   GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
 
-  /* ---------- Sort the master lists  ---------- */
-  s_string_list_sort_master_comp_list();
-  s_string_list_sort_master_comp_attrib_list();
-
-#if 0
-  /* Note that this must be changed.  We need to input the entire project
-   * before doing anything with the nets because we need to first
-   * determine where they are all connected!   */
-  s_string_list_sort_master_net_list();
-  s_string_list_sort_master_net_attrib_list();
-#endif
-
-  s_string_list_sort_master_pin_list();
-  s_string_list_sort_master_pin_attrib_list();
-
   /* ---------- Create and load the tables  ---------- */
   attrib_sheet_data_set_component_table (sheet_head,
                                          s_table_new (attrib_sheet_data_get_component_count (sheet_head),

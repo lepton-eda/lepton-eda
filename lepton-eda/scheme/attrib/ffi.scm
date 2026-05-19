@@ -39,6 +39,13 @@
             s_sheet_data_add_master_pin_list_items
             s_sheet_data_add_master_pin_attrib_list_items
 
+            s_string_list_sort_master_comp_list
+            s_string_list_sort_master_comp_attrib_list
+            s_string_list_sort_master_net_list
+            s_string_list_sort_master_net_attrib_list
+            s_string_list_sort_master_pin_list
+            s_string_list_sort_master_pin_attrib_list
+
             attrib_activate
             attrib_run
             attrib_window_new
@@ -74,6 +81,14 @@
 (define-lff s_sheet_data_add_master_net_attrib_list_items void '(*))
 (define-lff s_sheet_data_add_master_pin_list_items void '(*))
 (define-lff s_sheet_data_add_master_pin_attrib_list_items void '(*))
+
+;;; s_string_list.c
+(define-lff s_string_list_sort_master_comp_list void '())
+(define-lff s_string_list_sort_master_comp_attrib_list void '())
+(define-lff s_string_list_sort_master_net_list void '())
+(define-lff s_string_list_sort_master_net_attrib_list void '())
+(define-lff s_string_list_sort_master_pin_list void '())
+(define-lff s_string_list_sort_master_pin_attrib_list void '())
 
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))

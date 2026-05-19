@@ -122,6 +122,20 @@ Lepton EDA homepage: ~S
 
    (glist->list *pages identity))
 
+  ;; Sort the master lists.
+  (s_string_list_sort_master_comp_list)
+  (s_string_list_sort_master_comp_attrib_list)
+
+  (when #f
+    ;; Note that this must be changed.  We need to input the
+    ;; entire project before doing anything with the nets because
+    ;; we need to first determine where they are all connected!
+    (s_string_list_sort_master_net_list)
+    (s_string_list_sort_master_net_attrib_list))
+
+  (s_string_list_sort_master_pin_list)
+  (s_string_list_sort_master_pin_attrib_list)
+
   (attrib_activate *window-widget *toplevel))
 
 
