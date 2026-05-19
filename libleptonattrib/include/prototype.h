@@ -233,6 +233,10 @@ GtkWidget*
 attrib_window_new (gpointer app);
 
 void x_window_add_items();
+
+void
+x_window_init ();
+
 void
 x_window_set_toplevel (LeptonToplevel *toplevel);
 LeptonToplevel*

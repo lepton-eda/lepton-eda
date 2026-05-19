@@ -59,9 +59,6 @@
  *------------------------------------------------------------------*/
 #define GATTRIB_THEME_ICON_NAME "lepton-attrib"
 
-static void
-x_window_init ();
-
 #ifndef ENABLE_GTK3
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
@@ -106,7 +103,7 @@ separator_new ()
  *  GTK_CONTAINER *main_vbox
  *  GTK_MENU
  */
-static void
+void
 x_window_init ()
 {
   GtkWidget *menu_bar;
