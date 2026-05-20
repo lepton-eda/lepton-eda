@@ -30,6 +30,8 @@
 
             x_fileselect_open
 
+            x_dialog_missing_sym
+
             attrib_sheet_data_get_component_attrib_count
             attrib_sheet_data_get_component_count
             attrib_sheet_data_set_component_table
@@ -59,8 +61,6 @@
             s_table_add_toplevel_net_items_to_net_table
             s_table_add_toplevel_pin_items_to_pin_table
 
-            s_toplevel_verify_design
-
             attrib_run
             attrib_window_new
             x_window_add_items
@@ -86,6 +86,9 @@
 
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '())
+
+;;; x_dialog.c
+(define-lff x_dialog_missing_sym void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_get_component_attrib_count int '(*))
@@ -120,9 +123,6 @@
 ;; (define-lff s_table_add_toplevel_net_items_to_net_table void '(*))
 (define s_table_add_toplevel_net_items_to_net_table #f)
 (define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
-
-;;; s_toplevel.c
-(define-lff s_toplevel_verify_design void '(*))
 
 ;;; x_window.c
 (define-lff attrib_run int '(* *))

@@ -22,6 +22,7 @@
              (srfi srfi-1)
              (system foreign)
 
+             (lepton ffi boolean)
              (lepton ffi glib)
              (lepton ffi)
              (lepton file-system)
@@ -83,8 +84,24 @@ Lepton EDA homepage: ~S
   (process-gafrc "lepton-attrib" name))
 
 
+;;; Verifies the entire design by looping through all objects in
+;;; the design looking for missing components, that is, those
+;;; components for which no corresponding symbol files was found.
 (define (verify-design *toplevel)
-  (s_toplevel_verify_design *toplevel))
+  (when (any
+         (lambda (*page)
+           (any
+            (lambda (*object)
+              ;; Look for object, and verify that it has a symbol
+              ;; file attached and signal that problem exists.
+              (and (true? (lepton_object_is_component *object))
+                   (true? (lepton_component_object_get_missing *object))))
+            (glist->list (lepton_page_objects *page) identity)))
+         (glist->list (lepton_list_get_glist
+                       (lepton_toplevel_get_pages *toplevel))
+                      identity))
+    ;; Dialog gives user option to quit.
+    (x_dialog_missing_sym)))
 
 
 (define (activate *app *toplevel)

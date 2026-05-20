@@ -159,9 +159,6 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
 
 /* ------------- s_toplevel.c ------------- */
 void
-s_toplevel_verify_design (LeptonToplevel *toplevel);
-
-void
 #ifdef ENABLE_GTK3
 s_toplevel_save_sheet (GSimpleAction *action,
                        GVariant *parameter,

@@ -50,46 +50,6 @@
 
 /* ===================  Public Functions  ====================== */
 
-/*! \brief Verify the entire design
- *
- * This function loops through all objects in the design looking
- * for missing components, that is, those components for which no
- * corresponding symbol files was found.
- *
- * \param toplevel The LeptonToplevel object to be verified.
- */
-void s_toplevel_verify_design (LeptonToplevel *toplevel)
-{
-  GList *p_iter;
-  const GList *o_iter;
-
-  int missing_sym_flag = 0;
-
-  for (p_iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-       p_iter != NULL;
-       p_iter = g_list_next (p_iter)) {
-    LeptonPage *p_current = (LeptonPage*) p_iter->data;
-
-    for (o_iter = lepton_page_objects (p_current);
-         o_iter != NULL;
-         o_iter = g_list_next (o_iter)) {
-      LeptonObject *o_current = (LeptonObject*) o_iter->data;
-
-      /* --- look for object, and verify that it has a symbol file attached. ---- */
-      if (lepton_object_is_component (o_current) &&
-          lepton_component_object_get_missing (o_current))
-      {
-        missing_sym_flag = 1;  /* flag to signal that problem exists.  */
-      }
-    }
-  }
-
-  if (missing_sym_flag) {
-    x_dialog_missing_sym();  /* dialog gives user option to quit */
-  }
-}
-
-
 /*! \brief Saves all the pages of a LeptonToplevel object.
  *  \par Function Description
  *  Saves all the pages in the <B>toplevel</B> parameter.
