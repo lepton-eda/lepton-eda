@@ -83,6 +83,10 @@ Lepton EDA homepage: ~S
   (process-gafrc "lepton-attrib" name))
 
 
+(define (verify-design *toplevel)
+  (s_toplevel_verify_design *toplevel))
+
+
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
   (define *sheet-data (s_sheet_data_new))
@@ -178,7 +182,7 @@ Lepton EDA homepage: ~S
   ;; function to update the GtkSheet itself.
   (x_window_add_items)
   ;; Verify correctness of entire design.
-  (s_toplevel_verify_design *toplevel)
+  (verify-design *toplevel)
 
   (x_window_set_title *pages)
 
