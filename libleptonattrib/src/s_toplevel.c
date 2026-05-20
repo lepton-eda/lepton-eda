@@ -65,7 +65,7 @@ void s_toplevel_verify_design (LeptonToplevel *toplevel)
 
   int missing_sym_flag = 0;
 
-  for (p_iter = lepton_list_get_glist (toplevel->pages);
+  for (p_iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
     LeptonPage *p_current = (LeptonPage*) p_iter->data;
