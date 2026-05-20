@@ -29,6 +29,8 @@
              (lepton init)
              (lepton log)
              (lepton page)
+             (lepton object foreign)
+             (lepton object)
              (lepton rc)
              (lepton toplevel foreign)
              (lepton toplevel)
@@ -94,7 +96,7 @@ Lepton EDA homepage: ~S
             (lambda (*object)
               ;; Look for object, and verify that it has a symbol
               ;; file attached and signal that problem exists.
-              (and (true? (lepton_object_is_component *object))
+              (and (component? (pointer->object *object))
                    (true? (lepton_component_object_get_missing *object))))
             (glist->list (lepton_page_objects *page) identity)))
          (glist->list (lepton_list_get_glist
