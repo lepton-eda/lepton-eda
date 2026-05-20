@@ -23,6 +23,7 @@
   #:use-module (lepton ffi lib)
 
   #:export (gtk_init
+            gtk_widget_show_all
 
             attrib_set_sheet_data
             attrib_set_toplevel
@@ -62,7 +63,6 @@
 
             s_toplevel_verify_design
 
-            attrib_activate
             attrib_run
             attrib_window_new
             attrib_window_set_window_widget
@@ -80,6 +80,7 @@
   (define-lff-lib arg ... libleptonattrib))
 
 (define-lff-lib gtk_init void '(* *) libgtk)
+(define-lff-lib gtk_widget_show_all void '(*) libgtk)
 
 ;;; attrib.c
 (define-lff attrib_set_sheet_data void '(*))
@@ -129,7 +130,6 @@
 (define-lff s_toplevel_verify_design void '(*))
 
 ;;; x_window.c
-(define-lff attrib_activate int '(* *))
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_set_window_widget void '(*))

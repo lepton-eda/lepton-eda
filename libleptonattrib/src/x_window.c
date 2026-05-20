@@ -772,14 +772,6 @@ attrib_window_new (gpointer app)
 }
 
 
-void
-attrib_activate (gpointer window_widget,
-                 gpointer user_data)
-{
-  gtk_widget_show_all (window);
-}
-
-
 /*! \brief Open lepton-attrib window.
  *
  * The function populates the spreadsheet data structure and

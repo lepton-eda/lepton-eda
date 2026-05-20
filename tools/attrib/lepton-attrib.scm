@@ -180,7 +180,7 @@ Lepton EDA homepage: ~S
 
   (x_window_set_title *pages)
 
-  (attrib_activate *window-widget *toplevel))
+  (gtk_widget_show_all *window-widget))
 
 
 ;;; Init logging.
