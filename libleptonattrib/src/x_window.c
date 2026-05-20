@@ -67,9 +67,6 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 static void
 x_window_set_default_icon( void );
 
-static void
-x_window_set_title (GList* plist);
-
 
 /*! \brief Get the main window widget.
  *
@@ -666,7 +663,7 @@ x_window_set_default_icon( void )
  *
  *  \param plist  The list of LeptonPage objects (opened pages).
  */
-static void
+void
 x_window_set_title (GList* plist)
 {
   g_return_if_fail (plist != NULL);
@@ -779,19 +776,6 @@ void
 attrib_activate (gpointer window_widget,
                  gpointer user_data)
 {
-  LeptonToplevel *toplevel = (LeptonToplevel*) user_data;
-  GList *pages = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-
-  /* -------------- update windows --------------- */
-  x_window_add_items();    /* This updates the top level stuff,
-                            * and then calls another fcn to update
-                            * the GtkSheet itself.  */
-
-  /* ---------- Now verify correctness of entire design.  ---------- */
-  s_toplevel_verify_design(toplevel);  /* toplevel is a global */
-
-  x_window_set_title (pages);
-
   gtk_widget_show_all (window);
 }
 

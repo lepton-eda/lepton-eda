@@ -171,6 +171,15 @@ Lepton EDA homepage: ~S
 
    (glist->list *pages identity))
 
+  ;; Update windows.
+  ;; This updates the top level stuff, and then calls another
+  ;; function to update the GtkSheet itself.
+  (x_window_add_items)
+  ;; Verify correctness of entire design.
+  (s_toplevel_verify_design *toplevel)
+
+  (x_window_set_title *pages)
+
   (attrib_activate *window-widget *toplevel))
 
 

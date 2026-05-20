@@ -313,6 +313,9 @@ void
 x_window_init ();
 
 void
+x_window_set_title (GList* plist);
+
+void
 x_window_set_title_changed (int changed);
 
 G_END_DECLS

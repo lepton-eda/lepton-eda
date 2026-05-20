@@ -60,11 +60,15 @@
             s_table_add_toplevel_net_items_to_net_table
             s_table_add_toplevel_pin_items_to_pin_table
 
+            s_toplevel_verify_design
+
             attrib_activate
             attrib_run
             attrib_window_new
             attrib_window_set_window_widget
+            x_window_add_items
             x_window_init
+            x_window_set_title
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -121,9 +125,14 @@
 (define s_table_add_toplevel_net_items_to_net_table #f)
 (define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
 
+;;; s_toplevel.c
+(define-lff s_toplevel_verify_design void '(*))
+
 ;;; x_window.c
 (define-lff attrib_activate int '(* *))
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_set_window_widget void '(*))
+(define-lff x_window_add_items void '())
 (define-lff x_window_init void '())
+(define-lff x_window_set_title void '(*))
