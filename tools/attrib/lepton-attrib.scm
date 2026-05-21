@@ -93,12 +93,13 @@ Lepton EDA homepage: ~S
   (when (any
          (lambda (*page)
            (any
-            (lambda (*object)
+            (lambda (object)
               ;; Look for object, and verify that it has a symbol
               ;; file attached and signal that problem exists.
-              (and (component? (pointer->object *object))
-                   (true? (lepton_component_object_get_missing *object))))
-            (glist->list (lepton_page_objects *page) identity)))
+              (and (component? object)
+                   (true? (lepton_component_object_get_missing
+                           (object->pointer object)))))
+            (glist->list (lepton_page_objects *page) pointer->object)))
          (glist->list (lepton_list_get_glist
                        (lepton_toplevel_get_pages *toplevel))
                       identity))
