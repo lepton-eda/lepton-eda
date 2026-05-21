@@ -28,6 +28,7 @@
              (lepton file-system)
              (lepton init)
              (lepton log)
+             (lepton page foreign)
              (lepton page)
              (lepton object foreign)
              (lepton object)
@@ -97,12 +98,11 @@ Lepton EDA homepage: ~S
          (true? (lepton_component_object_get_missing
                  (object->pointer object)))))
   (when (any
-         (lambda (*page)
-           (any missing-symbol?
-                (glist->list (lepton_page_objects *page) pointer->object)))
+         (lambda (page)
+           (any missing-symbol? (page-contents page)))
          (glist->list (lepton_list_get_glist
                        (lepton_toplevel_get_pages *toplevel))
-                      identity))
+                      pointer->page))
     ;; Dialog gives user option to quit.
     (x_dialog_missing_sym)))
 
