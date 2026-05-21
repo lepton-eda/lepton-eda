@@ -41,6 +41,10 @@
 
              (attrib ffi))
 
+
+(define %theme-icon-name "lepton-attrib")
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -204,6 +208,8 @@ Lepton EDA homepage: ~S
     (x_dialog_missing_sym))
 
   (x_window_set_title *pages)
+  ;; Set default icon.
+  (gtk_window_set_default_icon_name (string->pointer %theme-icon-name))
 
   (gtk_widget_show_all *window-widget))
 

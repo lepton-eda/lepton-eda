@@ -54,18 +54,11 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-/*------------------------------------------------------------------
- * Gattrib specific defines
- *------------------------------------------------------------------*/
-#define GATTRIB_THEME_ICON_NAME "lepton-attrib"
 
 #ifndef ENABLE_GTK3
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 #endif
-
-static void
-x_window_set_default_icon( void );
 
 
 static GtkWidget*
@@ -92,9 +85,6 @@ x_window_init ()
 {
   GtkWidget *menu_bar;
   GtkWidget *main_vbox;
-
-  /* Set default icon */
-  x_window_set_default_icon();
 
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (attrib_really_quit), 0);
@@ -612,20 +602,6 @@ x_window_add_items()
 #endif
 
   gtk_widget_show_all( GTK_WIDGET(window) );
-}
-
-
-/*! \brief Set application icon
- *
- * Setup default icon for GTK windows
- *
- *  Sets the default window icon by name, to be found in the current icon
- *  theme. The name used is \#define'd above as GATTRIB_THEME_ICON_NAME.
- */
-static void
-x_window_set_default_icon( void )
-{
-  gtk_window_set_default_icon_name( GATTRIB_THEME_ICON_NAME );
 }
 
 
