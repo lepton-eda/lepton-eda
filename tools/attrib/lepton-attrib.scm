@@ -97,12 +97,14 @@ Lepton EDA homepage: ~S
     (and (component? object)
          (true? (lepton_component_object_get_missing
                  (object->pointer object)))))
-  (when (any
-         (lambda (page)
-           (any missing-symbol? (page-contents page)))
-         (glist->list (lepton_list_get_glist
-                       (lepton_toplevel_get_pages *toplevel))
-                      pointer->page))
+
+  (define (page-with-missing-symbol? page)
+    (any missing-symbol? (page-contents page)))
+
+  (when (any page-with-missing-symbol?
+             (glist->list (lepton_list_get_glist
+                           (lepton_toplevel_get_pages *toplevel))
+                          pointer->page))
     ;; Dialog gives user option to quit.
     (x_dialog_missing_sym)))
 
