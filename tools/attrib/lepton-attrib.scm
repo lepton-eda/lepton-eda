@@ -90,16 +90,16 @@ Lepton EDA homepage: ~S
 ;;; the design looking for missing components, that is, those
 ;;; components for which no corresponding symbol files was found.
 (define (verify-design *toplevel)
+  (define (missing-symbol? object)
+    ;; Look for object, and verify that it has a symbol file
+    ;; attached and signal that problem exists.
+    (and (component? object)
+         (true? (lepton_component_object_get_missing
+                 (object->pointer object)))))
   (when (any
          (lambda (*page)
-           (any
-            (lambda (object)
-              ;; Look for object, and verify that it has a symbol
-              ;; file attached and signal that problem exists.
-              (and (component? object)
-                   (true? (lepton_component_object_get_missing
-                           (object->pointer object)))))
-            (glist->list (lepton_page_objects *page) pointer->object)))
+           (any missing-symbol?
+                (glist->list (lepton_page_objects *page) pointer->object)))
          (glist->list (lepton_list_get_glist
                        (lepton_toplevel_get_pages *toplevel))
                       identity))
