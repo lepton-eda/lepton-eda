@@ -86,9 +86,6 @@ x_window_init ()
   GtkWidget *menu_bar;
   GtkWidget *main_vbox;
 
-  g_signal_connect(window, "delete_event",
-                   G_CALLBACK (attrib_really_quit), 0);
-
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */
   /* -----  widgets into a vertical column.  ----- */
   #ifdef ENABLE_GTK3

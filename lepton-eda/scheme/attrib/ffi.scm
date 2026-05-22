@@ -24,7 +24,9 @@
 
   #:export (attrib_set_sheet_data
             attrib_set_toplevel
+            attrib_get_window
             attrib_set_window
+            *attrib_really_quit
 
             set_verbose_mode
 
@@ -75,9 +77,13 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libleptonattrib))
 
+(define-syntax-rule (define-lfc arg ...)
+  (define-lfc-lib arg ... libleptonattrib))
+
 ;;; attrib.c
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_set_toplevel void '(*))
+(define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
 
 ;;; s_misc.c
@@ -85,6 +91,9 @@
 
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '())
+
+;;; attrib.c
+(define-lfc *attrib_really_quit)
 
 ;;; x_dialog.c
 (define-lff x_dialog_missing_sym void '())

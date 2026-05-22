@@ -24,6 +24,7 @@
 
              (lepton ffi boolean)
              (lepton ffi glib)
+             (lepton ffi gobject)
              (lepton ffi)
              (lepton file-system)
              (lepton init)
@@ -111,6 +112,13 @@ Lepton EDA homepage: ~S
 
 
 (define (init-window)
+  (define *window-widget (attrib_get_window))
+
+  (g_signal_connect *window-widget
+                    (string->pointer "delete_event")
+                    *attrib_really_quit
+                    %null-pointer)
+
   (x_window_init))
 
 
