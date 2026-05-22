@@ -110,6 +110,10 @@ Lepton EDA homepage: ~S
   (any page-with-missing-symbol? (active-pages)))
 
 
+(define (init-window)
+  (x_window_init))
+
+
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
   (define *sheet-data (s_sheet_data_new))
@@ -121,7 +125,7 @@ Lepton EDA homepage: ~S
   (attrib_set_toplevel *toplevel)
 
   ;; Initialize GTK window.
-  (x_window_init)
+  (init-window)
 
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
