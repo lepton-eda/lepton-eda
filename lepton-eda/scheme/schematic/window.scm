@@ -1544,7 +1544,7 @@ for *PAGE page will be created and set active."
         (set-window-current-page! *window *page))))
 
 
-;;; Load and return a subpage having FILENAME for *PAGE in *WINDOW
+;;; Load and return a subpage having FILENAME for *PAGE in WINDOW
 ;;; or NULL if an error occured.  Any errors are returned in
 ;;; GError **ERR.  It has to be NULL to disable error reporting.
 ;;;
@@ -1554,18 +1554,18 @@ for *PAGE page will be created and set active."
 ;;; - Ensures a duplicate page is not loaded
 ;;; - Does not change the current page
 ;;; - Does not modify the most recent "up" page
-(define (load-subpage *window *page filename **err)
+(define (load-subpage window *page filename **err)
   (define (canonicalize filename)
     (catch 'system-error
       (lambda () (canonicalize-path filename))
       (lambda (key subr message args rest)
         (log! 'message (apply format #f message args)))))
 
+  (define *window (check-window window 1))
+
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
 
-  (when (null-pointer? *window)
-    (error "NULL window."))
   (when (null-pointer? *page)
     (error "NULL page."))
 
@@ -1610,7 +1610,6 @@ for *PAGE page will be created and set active."
 ;;; Return the subpages of PAGE in WINDOW.  If any subpages are
 ;;; not loaded, this function will load them.
 (define (page-subpages window page)
-  (define *window (check-window window 1))
   (define *page (page->pointer page))
   (define objects (page-contents page))
 
@@ -1638,7 +1637,7 @@ for *PAGE page will be created and set active."
                (page-ls page-ls))
       (if (null? filenames)
           page-ls
-          (let ((*subpage (load-subpage *window
+          (let ((*subpage (load-subpage window
                                         *page
                                         (car filenames)
                                         %null-pointer)))
