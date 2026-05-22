@@ -1572,38 +1572,37 @@ for *PAGE page will be created and set active."
   (define *page (check-page page 2))
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
+  (define *toplevel (lepton_page_get_toplevel *page))
 
-  (let ((*toplevel (lepton_page_get_toplevel *page)))
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
 
-    (when (null-pointer? *toplevel)
-      (error "NULL toplevel."))
-
-    (let ((source-filename (get-source-library-file filename)))
-      (if source-filename
-          (let* ((normalized-name (canonicalize source-filename))
-                 (*subpage (lepton_toplevel_search_page
-                            *toplevel
-                            (string->pointer normalized-name))))
-            (if (null-pointer? *subpage)
-                (let* ((*subpage (lepton_page_new
-                                  *toplevel
-                                  (string->pointer source-filename)))
-                       (success? (true? (schematic_file_open
-                                         *window
-                                         *subpage
-                                         (lepton_page_get_filename *subpage)
-                                         **err))))
-                  (if success?
-                      (update-page-control-counter *subpage)
-                      (begin
-                        (lepton_page_delete *toplevel *subpage)
-                        %null-pointer)))
-                *subpage))
-          (begin
-            (log! 'warning
-                  (G_ "Schematic ~S has not been found in source library.")
-                  filename)
-            %null-pointer)))))
+  (let ((source-filename (get-source-library-file filename)))
+    (if source-filename
+        (let* ((normalized-name (canonicalize source-filename))
+               (*subpage (lepton_toplevel_search_page
+                          *toplevel
+                          (string->pointer normalized-name))))
+          (if (null-pointer? *subpage)
+              (let* ((*subpage (lepton_page_new
+                                *toplevel
+                                (string->pointer source-filename)))
+                     (success? (true? (schematic_file_open
+                                       *window
+                                       *subpage
+                                       (lepton_page_get_filename *subpage)
+                                       **err))))
+                (if success?
+                    (update-page-control-counter *subpage)
+                    (begin
+                      (lepton_page_delete *toplevel *subpage)
+                      %null-pointer)))
+              *subpage))
+        (begin
+          (log! 'warning
+                (G_ "Schematic ~S has not been found in source library.")
+                filename)
+          %null-pointer))))
 
 
 ;;; Return the subpages of PAGE in WINDOW.  If any subpages are
