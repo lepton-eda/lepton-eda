@@ -1561,6 +1561,13 @@ for *PAGE page will be created and set active."
       (lambda (key subr message args rest)
         (log! 'message (apply format #f message args)))))
 
+  (define (update-page-control-counter *page)
+    (schematic_hierarchy_increment_page_control_counter)
+    (lepton_page_set_page_control
+     *page
+     (schematic_hierarchy_get_page_control_counter))
+    *page)
+
   (define *window (check-window window 1))
   (define *page (check-page page 2))
   (define *filename (and (check-string filename 3)
@@ -1587,12 +1594,7 @@ for *PAGE page will be created and set active."
                                          (lepton_page_get_filename *subpage)
                                          **err))))
                   (if success?
-                      (begin
-                        (schematic_hierarchy_increment_page_control_counter)
-                        (lepton_page_set_page_control
-                         *subpage
-                         (schematic_hierarchy_get_page_control_counter))
-                        *subpage)
+                      (update-page-control-counter *subpage)
                       (begin
                         (lepton_page_delete *toplevel *subpage)
                         %null-pointer)))
