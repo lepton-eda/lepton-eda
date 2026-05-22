@@ -1574,6 +1574,10 @@ for *PAGE page will be created and set active."
                          (string->pointer filename)))
   (define *toplevel (lepton_page_get_toplevel *page))
 
+  (define (delete-page *page)
+    (lepton_page_delete *toplevel *page)
+    %null-pointer)
+
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
 
@@ -1594,9 +1598,7 @@ for *PAGE page will be created and set active."
                                        **err))))
                 (if success?
                     (update-page-control-counter *subpage)
-                    (begin
-                      (lepton_page_delete *toplevel *subpage)
-                      %null-pointer)))
+                    (delete-page *subpage)))
               *subpage))
         (begin
           (log! 'warning
