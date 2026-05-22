@@ -111,13 +111,26 @@ Lepton EDA homepage: ~S
   (any page-with-missing-symbol? (active-pages)))
 
 
+(define (callback-file-quit *action *parameter *data)
+  (attrib_really_quit *action *parameter *data))
+(define *callback-file-quit
+  (procedure->pointer void callback-file-quit '(* * *)))
+
+
+(define (init-callbacks)
+  (attrib_window_set_menu_callback (string->pointer "file-quit")
+                                   *callback-file-quit))
+
 (define (init-window)
   (define *window-widget (attrib_get_window))
 
   (g_signal_connect *window-widget
                     (string->pointer "delete_event")
-                    *attrib_really_quit
+                    *callback-file-quit
                     %null-pointer)
+
+  ;; Init menu functions.
+  (init-callbacks)
 
   (x_window_init))
 

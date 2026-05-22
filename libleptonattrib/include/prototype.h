@@ -303,6 +303,9 @@ attrib_run (gpointer activate_callback,
 GtkWidget*
 attrib_window_new (gpointer app);
 
+void
+attrib_window_set_menu_callback (char *name,
+                                 GCallback callback);
 void x_window_add_items();
 
 void

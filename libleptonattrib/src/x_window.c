@@ -261,6 +261,28 @@ menu_edit_delattrib()
   x_dialog_delattrib();
 }
 
+/* Menu callbacks */
+static GCallback callback_file_quit = NULL;
+
+static void
+callback_file_quit_wrapper (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_quit) (action, parameter, user_data);
+}
+
+
+void
+attrib_window_set_menu_callback (char *name,
+                                 GCallback callback)
+{
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (callback != NULL);
+
+  if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
+}
+
 
 /*!
  * GTK3 main menu structure.
@@ -382,7 +404,7 @@ static const gchar menu[] =
 static GActionEntry app_entries[] = {
   { "file-save", s_toplevel_save_sheet, NULL, NULL, NULL },
   { "file-export-csv", menu_file_export_csv, NULL, NULL, NULL },
-  { "file-quit", attrib_really_quit, NULL, NULL, NULL },
+  { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
   { "edit-add-attrib", menu_edit_newattrib, NULL, NULL, NULL },
   { "edit-delete-attrib", menu_edit_delattrib, NULL, NULL, NULL },
   { "visibility-invisible", s_visibility_set_invisible, NULL, NULL, NULL },
@@ -402,7 +424,7 @@ static const GtkActionEntry actions[] = {
   { "file-save", "document-save", "Save", "<Control>S", "", s_toplevel_save_sheet},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", "document-print", "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
-  { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK(attrib_really_quit)},
+  { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK (callback_file_quit_wrapper)},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},

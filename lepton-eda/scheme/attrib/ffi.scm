@@ -26,7 +26,7 @@
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
-            *attrib_really_quit
+            attrib_really_quit
 
             set_verbose_mode
 
@@ -65,6 +65,7 @@
 
             attrib_run
             attrib_window_new
+            attrib_window_set_menu_callback
             x_window_add_items
             x_window_init
             ))
@@ -93,7 +94,7 @@
 (define-lff x_fileselect_open '* '())
 
 ;;; attrib.c
-(define-lfc *attrib_really_quit)
+(define-lff attrib_really_quit void '(* * *))
 
 ;;; x_dialog.c
 (define-lff x_dialog_missing_sym void '())
@@ -135,5 +136,6 @@
 ;;; x_window.c
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
+(define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())
