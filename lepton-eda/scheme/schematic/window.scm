@@ -1578,6 +1578,18 @@ for *PAGE page will be created and set active."
     (lepton_page_delete *toplevel *page)
     %null-pointer)
 
+  (define (open-new-page filename)
+    (let* ((*new-page
+            (lepton_page_new *toplevel (string->pointer filename)))
+           (success? (true? (schematic_file_open
+                             *window
+                             *new-page
+                             (lepton_page_get_filename *new-page)
+                             **err))))
+      (if success?
+          (update-page-control-counter *new-page)
+          (delete-page *new-page))))
+
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
 
@@ -1588,17 +1600,7 @@ for *PAGE page will be created and set active."
                           *toplevel
                           (string->pointer normalized-name))))
           (if (null-pointer? *subpage)
-              (let* ((*subpage (lepton_page_new
-                                *toplevel
-                                (string->pointer source-filename)))
-                     (success? (true? (schematic_file_open
-                                       *window
-                                       *subpage
-                                       (lepton_page_get_filename *subpage)
-                                       **err))))
-                (if success?
-                    (update-page-control-counter *subpage)
-                    (delete-page *subpage)))
+              (open-new-page source-filename)
               *subpage))
         (begin
           (log! 'warning
