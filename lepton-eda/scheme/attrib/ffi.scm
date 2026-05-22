@@ -65,7 +65,6 @@
             attrib_window_new
             x_window_add_items
             x_window_init
-            x_window_set_title
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -129,4 +128,3 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())
-(define-lff x_window_set_title void '(*))

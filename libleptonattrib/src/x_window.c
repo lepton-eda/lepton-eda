@@ -605,43 +605,6 @@ x_window_add_items()
 }
 
 
-/*! \brief Set the main window's title.
- *
- *  \param plist  The list of LeptonPage objects (opened pages).
- */
-void
-x_window_set_title (GList* plist)
-{
-  g_return_if_fail (plist != NULL);
-  g_return_if_fail (window != NULL);
-
-  const gchar* prog_name = "lepton-attrib";
-  gchar* title = NULL;
-
-  if (g_list_length (plist) == 1)
-  {
-    const gchar* fpath = lepton_page_get_filename ((LeptonPage *) plist->data);
-    gchar* fname = g_path_get_basename (fpath);
-
-    title = g_strdup_printf ("%s - %s", fname, prog_name);
-
-    g_free (fname);
-  }
-  else
-  if (g_list_length (plist) > 1)
-  {
-    title = g_strdup_printf ("%s - %s", _("Multiple files"), prog_name);
-  }
-  else
-  {
-    title = g_strdup_printf ("%s", prog_name);
-  }
-
-  gtk_window_set_title (GTK_WINDOW (window), title);
-  g_free (title);
-}
-
-
 /*! \brief Indicate if document has \a changed in the title.
  */
 void

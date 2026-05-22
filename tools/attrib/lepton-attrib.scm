@@ -207,7 +207,21 @@ Lepton EDA homepage: ~S
     ;; Dialog gives user option to quit.
     (x_dialog_missing_sym))
 
-  (x_window_set_title *pages)
+  ;; Set the main window's title.
+  (let ((program-name (basename (car (program-arguments))))
+        (page-count (length (active-pages))))
+    (gtk_window_set_title
+     *window-widget
+     (string->pointer
+      (if (= page-count 1)
+          (string-append
+           (basename (page-filename (car (active-pages))))
+           " - "
+           program-name)
+          (if (> page-count 1)
+              (string-append (G_ "Multiple files") " - " program-name)
+              program-name)))))
+
   ;; Set default icon.
   (gtk_window_set_default_icon_name (string->pointer %theme-icon-name))
 
