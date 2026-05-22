@@ -29,7 +29,10 @@ attrib_really_quit (GSimpleAction *action,
                     GVariant *parameter,
                     gpointer user_data);
 #else
-gboolean attrib_really_quit(void);
+void
+attrib_really_quit (gpointer action,
+                    gpointer parameter,
+                    gpointer user_data);
 #endif
 
 gint attrib_quit(gint return_code);

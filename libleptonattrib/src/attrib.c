@@ -177,13 +177,16 @@ attrib_set_window (GtkWidget *window_widget)
 
 /*! \brief GTK callback to quit the program.
  *
+ *  \par Function Description
  * This is called when the user quits the program using the UI. The
  * callback is attached to the GTK window_delete event in
  * x_window_init() and attached to the File->Quit menu item in
  * x_window_create_menu().  On execution, the function checks for
  * unsaved changes before calling gattrib_quit() to quit the program.
  *
- *  \return value 0 to the shell to denote a successful quit.
+ * \param action [in] GSimpleAction (GTK3), unused.
+ * \param parameter [in] GVariant (GTK3), unused.
+ * \param user_data [in] User data, unused.
  */
 #ifdef ENABLE_GTK3
 void
@@ -191,7 +194,10 @@ attrib_really_quit (GSimpleAction *action,
                     GVariant *parameter,
                     gpointer user_data)
 #else
-gboolean attrib_really_quit(void)
+void
+attrib_really_quit (gpointer action,
+                    gpointer parameter,
+                    gpointer user_data)
 #endif
 {
   /* Save main window's geometry:
@@ -232,9 +238,6 @@ gboolean attrib_really_quit(void)
   } else {
     attrib_quit(0);
   }
-#ifndef ENABLE_GTK3
-  return TRUE;
-#endif
 }
 
 /*------------------------------------------------------------------*/
