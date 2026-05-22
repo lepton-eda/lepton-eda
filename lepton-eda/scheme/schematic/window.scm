@@ -1544,7 +1544,7 @@ for *PAGE page will be created and set active."
         (set-window-current-page! *window *page))))
 
 
-;;; Load and return a subpage having FILENAME for *PAGE in WINDOW
+;;; Load and return a subpage having FILENAME for PAGE in WINDOW
 ;;; or NULL if an error occured.  Any errors are returned in
 ;;; GError **ERR.  It has to be NULL to disable error reporting.
 ;;;
@@ -1554,7 +1554,7 @@ for *PAGE page will be created and set active."
 ;;; - Ensures a duplicate page is not loaded
 ;;; - Does not change the current page
 ;;; - Does not modify the most recent "up" page
-(define (load-subpage window *page filename **err)
+(define (load-subpage window page filename **err)
   (define (canonicalize filename)
     (catch 'system-error
       (lambda () (canonicalize-path filename))
@@ -1562,12 +1562,9 @@ for *PAGE page will be created and set active."
         (log! 'message (apply format #f message args)))))
 
   (define *window (check-window window 1))
-
+  (define *page (check-page page 2))
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
-
-  (when (null-pointer? *page)
-    (error "NULL page."))
 
   (let ((*toplevel (lepton_page_get_toplevel *page)))
 
@@ -1610,7 +1607,6 @@ for *PAGE page will be created and set active."
 ;;; Return the subpages of PAGE in WINDOW.  If any subpages are
 ;;; not loaded, this function will load them.
 (define (page-subpages window page)
-  (define *page (page->pointer page))
   (define objects (page-contents page))
 
   (define (split-attrib-value object)
@@ -1631,14 +1627,14 @@ for *PAGE page will be created and set active."
           (inherited-source-attribs object)
           attached-attribs)))
 
-  (define (get-subpages *page page-ls object)
+  (define (get-subpages page page-ls object)
     (let loop ((filenames (append-map split-attrib-value
                                       (source-attribs object)))
                (page-ls page-ls))
       (if (null? filenames)
           page-ls
           (let ((*subpage (load-subpage window
-                                        *page
+                                        page
                                         (car filenames)
                                         %null-pointer)))
             (loop (cdr filenames)
@@ -1651,7 +1647,7 @@ for *PAGE page will be created and set active."
               (page-ls '()))
      (if (null? objects)
          page-ls
-         (let ((new-page-ls (get-subpages *page
+         (let ((new-page-ls (get-subpages page
                                           page-ls
                                           (car objects))))
            (loop (cdr objects) new-page-ls))))))
