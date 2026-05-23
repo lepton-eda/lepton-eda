@@ -1574,6 +1574,9 @@ for *PAGE page will be created and set active."
                          (string->pointer filename)))
   (define *toplevel (lepton_page_get_toplevel *page))
 
+  (define (lookup-toplevel-page filename)
+    (lepton_toplevel_search_page *toplevel
+                                 (string->pointer filename)))
   (define (delete-page *page)
     (lepton_page_delete *toplevel *page)
     %null-pointer)
@@ -1595,10 +1598,8 @@ for *PAGE page will be created and set active."
 
   (let ((source-filename (get-source-library-file filename)))
     (if source-filename
-        (let* ((normalized-name (canonicalize source-filename))
-               (*subpage (lepton_toplevel_search_page
-                          *toplevel
-                          (string->pointer normalized-name))))
+        (let ((*subpage (lookup-toplevel-page
+                         (canonicalize source-filename))))
           (if (null-pointer? *subpage)
               (open-new-page source-filename)
               *subpage))
