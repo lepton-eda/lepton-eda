@@ -111,6 +111,11 @@ Lepton EDA homepage: ~S
   (any page-with-missing-symbol? (active-pages)))
 
 
+(define (callback-file-save *action *parameter *data)
+  (s_toplevel_save_sheet *action *parameter *data))
+(define *callback-file-save
+  (procedure->pointer void callback-file-save '(* * *)))
+
 (define (callback-file-quit *action *parameter *data)
   (attrib_really_quit *action *parameter *data))
 (define *callback-file-quit
@@ -118,6 +123,8 @@ Lepton EDA homepage: ~S
 
 
 (define (init-callbacks)
+  (attrib_window_set_menu_callback (string->pointer "file-save")
+                                   *callback-file-save)
   (attrib_window_set_menu_callback (string->pointer "file-quit")
                                    *callback-file-quit))
 

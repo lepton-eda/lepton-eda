@@ -263,6 +263,16 @@ menu_edit_delattrib()
 
 
 /* Menu callbacks */
+static GCallback callback_file_save = NULL;
+
+static void
+callback_file_save_wrapper (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_save) (action, parameter, user_data);
+}
+
 
 /*! \var static GCallback callback_file_quit
  *
@@ -309,7 +319,8 @@ attrib_window_set_menu_callback (char *name,
   g_return_if_fail (name != NULL);
   g_return_if_fail (callback != NULL);
 
-  if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
+  if (strcmp (name, "file-save") == 0) {callback_file_save = callback;}
+  else if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
 }
 
 
@@ -431,7 +442,7 @@ static const gchar menu[] =
 #ifdef ENABLE_GTK3
 
 static GActionEntry app_entries[] = {
-  { "file-save", s_toplevel_save_sheet, NULL, NULL, NULL },
+  { "file-save", callback_file_save_wrapper, NULL, NULL, NULL },
   { "file-export-csv", menu_file_export_csv, NULL, NULL, NULL },
   { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
   { "edit-add-attrib", menu_edit_newattrib, NULL, NULL, NULL },
@@ -450,7 +461,7 @@ static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
   { "file", NULL, "_File"},
-  { "file-save", "document-save", "Save", "<Control>S", "", s_toplevel_save_sheet},
+  { "file-save", "document-save", "Save", "<Control>S", "", G_CALLBACK (callback_file_save_wrapper)},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", "document-print", "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
   { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK (callback_file_quit_wrapper)},

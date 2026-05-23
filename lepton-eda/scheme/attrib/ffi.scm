@@ -63,6 +63,8 @@
             s_table_add_toplevel_net_items_to_net_table
             s_table_add_toplevel_pin_items_to_pin_table
 
+            s_toplevel_save_sheet
+
             attrib_run
             attrib_window_new
             attrib_window_set_menu_callback
@@ -132,6 +134,9 @@
 ;; (define-lff s_table_add_toplevel_net_items_to_net_table void '(*))
 (define s_table_add_toplevel_net_items_to_net_table #f)
 (define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
+
+;;; s_toplevel.c
+(define-lff s_toplevel_save_sheet void '(* * *))
 
 ;;; x_window.c
 (define-lff attrib_run int '(* *))

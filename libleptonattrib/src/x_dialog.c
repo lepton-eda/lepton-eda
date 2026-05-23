@@ -260,11 +260,7 @@ void x_dialog_unsaved_data()
         }
       case GTK_RESPONSE_YES:
         {
-#ifdef ENABLE_GTK3
           s_toplevel_save_sheet (NULL, NULL, NULL);
-#else
-          s_toplevel_save_sheet ();
-#endif
           attrib_quit(0);
           break;
         }

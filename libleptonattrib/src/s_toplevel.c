@@ -93,17 +93,25 @@ save_toplevel_pages (LeptonToplevel *toplevel)
 /*------------------------------------------------------------------*/
 /*! \brief Copy data from gtksheet into LeptonToplevel struct
  *
+ *  \par Function Description
  * Called when the user invokes "save".  It first
  * places all data from gtksheet into SHEET_DATA.  Then it
  * loops through all pages and saves them.
+ *
+ * \param action [in] GSimpleAction (GTK3), unused.
+ * \param parameter [in] GVariant (GTK3), unused.
+ * \param user_data [in] User data, unused.
  */
-void
 #ifdef ENABLE_GTK3
+void
 s_toplevel_save_sheet (GSimpleAction *action,
                        GVariant *parameter,
                        gpointer user_data)
 #else
-s_toplevel_save_sheet ()
+void
+s_toplevel_save_sheet (gpointer action,
+                       gpointer parameter,
+                       gpointer user_data)
 #endif
 {
   GList *iter;
