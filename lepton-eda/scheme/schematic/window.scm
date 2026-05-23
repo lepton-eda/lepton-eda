@@ -1572,7 +1572,11 @@ for *PAGE page will be created and set active."
   (define *page (check-page page 2))
   (define *filename (and (check-string filename 3)
                          (string->pointer filename)))
-  (define *toplevel (lepton_page_get_toplevel *page))
+  (define *toplevel
+    (let ((*page-toplevel (lepton_page_get_toplevel *page)))
+      (if (null-pointer? *page-toplevel)
+          (error "NULL toplevel.")
+          *page-toplevel)))
 
   (define (lookup-toplevel-page filename)
     (lepton_toplevel_search_page *toplevel
@@ -1592,9 +1596,6 @@ for *PAGE page will be created and set active."
       (if success?
           (update-page-control-counter *new-page)
           (delete-page *new-page))))
-
-  (when (null-pointer? *toplevel)
-    (error "NULL toplevel."))
 
   (let ((source-filename (get-source-library-file filename)))
     (if source-filename
