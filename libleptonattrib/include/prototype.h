@@ -271,7 +271,10 @@ void
 s_visibility_set_value_only (gpointer action,
                              gpointer parameter,
                              gpointer user_data);
-void s_visibility_set_name_and_value();
+void
+s_visibility_set_name_and_value (gpointer action,
+                                 gpointer parameter,
+                                 gpointer user_data);
 #endif
 
 void s_visibility_set_cell(gint cur_page, gint row, gint col,

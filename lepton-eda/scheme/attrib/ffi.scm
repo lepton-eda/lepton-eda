@@ -66,6 +66,7 @@
             s_toplevel_save_sheet
 
             s_visibility_set_invisible
+            s_visibility_set_name_and_value
             s_visibility_set_name_only
             s_visibility_set_value_only
 
@@ -147,6 +148,7 @@
 
 ;;; s_visibility.c
 (define-lff s_visibility_set_invisible void '(* * *))
+(define-lff s_visibility_set_name_and_value void '(* * *))
 (define-lff s_visibility_set_name_only void '(* * *))
 (define-lff s_visibility_set_value_only void '(* * *))
 
