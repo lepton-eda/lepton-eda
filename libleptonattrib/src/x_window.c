@@ -196,13 +196,16 @@ x_window_init ()
  *
  * Implement the File->Export CSV menu item
  */
-static void
 #ifdef ENABLE_GTK3
+void
 menu_file_export_csv (GSimpleAction *action,
                       GVariant *parameter,
                       gpointer user_data)
 #else
-menu_file_export_csv()
+void
+menu_file_export_csv (gpointer action,
+                      gpointer parameter,
+                      gpointer user_data)
 #endif
 {
   gint cur_page;
@@ -291,6 +294,17 @@ callback_file_save_wrapper (GSimpleAction *action,
 }
 
 
+static GCallback callback_file_export_csv = NULL;
+
+static void
+callback_file_export_csv_wrapper (GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_export_csv) (action, parameter, user_data);
+}
+
+
 /*! \var static GCallback callback_file_quit
  *
  * The callback set in Scheme to quit the program.
@@ -337,6 +351,7 @@ attrib_window_set_menu_callback (char *name,
   g_return_if_fail (callback != NULL);
 
   if (strcmp (name, "file-save") == 0) {callback_file_save = callback;}
+  else if (strcmp (name, "file-export-csv") == 0) {callback_file_export_csv = callback;}
   else if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
 }
 
@@ -460,7 +475,7 @@ static const gchar menu[] =
 
 static GActionEntry app_entries[] = {
   { "file-save", callback_file_save_wrapper, NULL, NULL, NULL },
-  { "file-export-csv", menu_file_export_csv, NULL, NULL, NULL },
+  { "file-export-csv", callback_file_export_csv_wrapper, NULL, NULL, NULL },
   { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
   { "edit-add-attrib", menu_edit_newattrib, NULL, NULL, NULL },
   { "edit-delete-attrib", menu_edit_delattrib, NULL, NULL, NULL },
@@ -479,7 +494,7 @@ static const GtkActionEntry actions[] = {
   /* File menu */
   { "file", NULL, "_File"},
   { "file-save", "document-save", "Save", "<Control>S", "", G_CALLBACK (callback_file_save_wrapper)},
-  { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
+  { "file-export-csv", NULL, "Export CSV", "", "", G_CALLBACK (callback_file_export_csv_wrapper)},
   /* { "file-print", "document-print", "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
   { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK (callback_file_quit_wrapper)},
 

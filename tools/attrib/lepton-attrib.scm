@@ -116,6 +116,11 @@ Lepton EDA homepage: ~S
 (define *callback-file-save
   (procedure->pointer void callback-file-save '(* * *)))
 
+(define (callback-file-export-csv *action *parameter *data)
+  (menu_file_export_csv *action *parameter *data))
+(define *callback-file-export-csv
+  (procedure->pointer void callback-file-export-csv '(* * *)))
+
 (define (callback-file-quit *action *parameter *data)
   (attrib_really_quit *action *parameter *data))
 (define *callback-file-quit
@@ -125,6 +130,8 @@ Lepton EDA homepage: ~S
 (define (init-callbacks)
   (attrib_window_set_menu_callback (string->pointer "file-save")
                                    *callback-file-save)
+  (attrib_window_set_menu_callback (string->pointer "file-export-csv")
+                                   *callback-file-export-csv)
   (attrib_window_set_menu_callback (string->pointer "file-quit")
                                    *callback-file-quit))
 
