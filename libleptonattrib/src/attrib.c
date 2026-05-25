@@ -206,52 +206,6 @@ attrib_set_window (GtkWidget *window_widget)
 }
 
 
-/*! \brief GTK callback to quit the program.
- *
- *  \par Function Description
- * This is called when the user quits the program using the UI. The
- * callback is attached to the GTK window_delete event in
- * x_window_init() and attached to the File->Quit menu item in
- * x_window_create_menu().  On execution, the function checks for
- * unsaved changes before calling gattrib_quit() to quit the program.
- *
- * \param action [in] GSimpleAction (GTK3), unused.
- * \param parameter [in] GVariant (GTK3), unused.
- * \param user_data [in] User data, unused.
- */
-#ifdef ENABLE_GTK3
-void
-attrib_really_quit (GSimpleAction *action,
-                    GVariant *parameter,
-                    gpointer user_data)
-#else
-void
-attrib_really_quit (gpointer action,
-                    gpointer parameter,
-                    gpointer user_data)
-#endif
-{
-  /* Deactivate the current cell to trigger "deactivate" signal.
-   * This allows changing of the sheet_head->CHANGED flag in the
-   * on_deactivate() handler function if needed.
-  */
-  for (int i = 0; i < attrib_get_sheets_number (); ++i)
-  {
-    GtkSheet *sheet = attrib_get_sheet (i);
-    if (sheet != NULL)
-    {
-       gtk_sheet_set_active_cell (sheet, -1, -1);
-    }
-  }
-
-
-  if (s_sheet_data_changed (sheet_head)) {
-    x_dialog_unsaved_data();
-  } else {
-    attrib_quit(0);
-  }
-}
-
 /*------------------------------------------------------------------*/
 /*! \brief Quit the program.
  *

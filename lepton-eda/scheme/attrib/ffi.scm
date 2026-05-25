@@ -21,12 +21,18 @@
 
   #:use-module (lepton ffi lff)
   #:use-module (lepton ffi lib)
+  #:use-module (lepton m4)
 
-  #:export (attrib_set_sheet_data
+  #:export (gtk_sheet_set_active_cell
+
+            attrib_get_sheet
+            attrib_set_sheet_data
+            attrib_get_sheet_data
+            attrib_get_sheets_number
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
-            attrib_really_quit
+            attrib_quit
 
             set_verbose_mode
 
@@ -34,6 +40,7 @@
 
             x_dialog_about_dialog
             x_dialog_missing_sym
+            x_dialog_unsaved_data
 
             attrib_sheet_data_get_component_attrib_count
             attrib_sheet_data_get_component_count
@@ -51,6 +58,7 @@
             s_sheet_data_add_master_net_attrib_list_items
             s_sheet_data_add_master_pin_list_items
             s_sheet_data_add_master_pin_attrib_list_items
+            s_sheet_data_changed
 
             s_string_list_sort_master_comp_list
             s_string_list_sort_master_comp_attrib_list
@@ -92,11 +100,24 @@
 (define-syntax-rule (define-lfc arg ...)
   (define-lfc-lib arg ... libleptonattrib))
 
+
+(define %libgtksheet
+  (if %m4-use-gtk3 "libgtksheet-4.0" "libgtkextra-x11-3.0"))
+
+(define libgtksheet (dynamic-link %libgtksheet))
+
+(define-lff-lib gtk_sheet_set_active_cell int (list '* int int) libgtksheet)
+
+
 ;;; attrib.c
+(define-lff attrib_get_sheet '* (list int))
 (define-lff attrib_set_sheet_data void '(*))
+(define-lff attrib_get_sheet_data '* '())
+(define-lff attrib_get_sheets_number int '())
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
+(define-lff attrib_quit int (list int))
 
 ;;; s_misc.c
 (define-lff set_verbose_mode void '())
@@ -104,12 +125,10 @@
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '())
 
-;;; attrib.c
-(define-lff attrib_really_quit void '(* * *))
-
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))
 (define-lff x_dialog_missing_sym void '())
+(define-lff x_dialog_unsaved_data void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_get_component_attrib_count int '(*))
@@ -128,6 +147,7 @@
 (define-lff s_sheet_data_add_master_net_attrib_list_items void '(*))
 (define-lff s_sheet_data_add_master_pin_list_items void '(*))
 (define-lff s_sheet_data_add_master_pin_attrib_list_items void '(*))
+(define-lff s_sheet_data_changed int '(*))
 
 ;;; s_string_list.c
 (define-lff s_string_list_sort_master_comp_list void '())

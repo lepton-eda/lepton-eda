@@ -155,11 +155,29 @@ Lepton EDA homepage: ~S
 (define *callback-file-export-csv
   (procedure->pointer void callback-file-export-csv '(* * *)))
 
+
+;;; Quit the program using the UI. On execution, the function
+;;; checks for unsaved changes before calling attrib_quit() to
+;;; quit the program.
 (define (callback-file-quit *action *parameter *data)
   (save-geometry)
-  (attrib_really_quit *action *parameter *data))
+  ;; Deactivate the current cell to trigger "deactivate" signal.
+  ;; This allows changing of the sheet_head->CHANGED flag in the
+  ;; on_deactivate() handler function if needed.
+  (for-each
+   (lambda (i)
+     (let ((*sheet (attrib_get_sheet i)))
+       (unless (null-pointer? *sheet)
+         (gtk_sheet_set_active_cell *sheet -1 -1))))
+   (iota (attrib_get_sheets_number)))
+
+  (if (true? (s_sheet_data_changed (attrib_get_sheet_data)))
+      (x_dialog_unsaved_data)
+      (attrib_quit 0)))
+
 (define *callback-file-quit
   (procedure->pointer void callback-file-quit '(* * *)))
+
 
 (define (callback-edit-add-attrib *action *parameter *data)
   (menu_edit_newattrib *action *parameter *data))

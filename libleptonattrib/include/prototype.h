@@ -29,18 +29,6 @@ attrib_get_window ();
 void
 attrib_set_window (GtkWidget* window_widget);
 
-#ifdef ENABLE_GTK3
-void
-attrib_really_quit (GSimpleAction *action,
-                    GVariant *parameter,
-                    gpointer user_data);
-#else
-void
-attrib_really_quit (gpointer action,
-                    gpointer parameter,
-                    gpointer user_data);
-#endif
-
 gint attrib_quit(gint return_code);
 
 /* -------------- listsort.c ----------------- */
