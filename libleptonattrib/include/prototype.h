@@ -11,6 +11,9 @@ attrib_get_sheet_data ();
 void
 attrib_set_sheet_data (SHEET_DATA *sheet_data);
 
+int
+attrib_get_sheets_number ();
+
 LeptonToplevel*
 attrib_get_toplevel ();
 

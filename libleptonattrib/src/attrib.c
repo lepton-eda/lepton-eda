@@ -98,6 +98,13 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data)
 }
 
 
+int
+attrib_get_sheets_number ()
+{
+  return NUM_SHEETS;
+}
+
+
 /*! \var LeptonToplevel *toplevel
  *
  * The project and UI toplevel structure defining their data and
@@ -204,7 +211,7 @@ attrib_really_quit (gpointer action,
    * This allows changing of the sheet_head->CHANGED flag in the
    * on_deactivate() handler function if needed.
   */
-  for (int i = 0; i < NUM_SHEETS; ++i)
+  for (int i = 0; i < attrib_get_sheets_number (); ++i)
   {
     if (sheets[i] != NULL)
     {
