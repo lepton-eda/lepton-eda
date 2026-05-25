@@ -67,6 +67,7 @@
 
             s_visibility_set_invisible
             s_visibility_set_name_only
+            s_visibility_set_value_only
 
             attrib_run
             attrib_window_new
@@ -147,6 +148,7 @@
 ;;; s_visibility.c
 (define-lff s_visibility_set_invisible void '(* * *))
 (define-lff s_visibility_set_name_only void '(* * *))
+(define-lff s_visibility_set_value_only void '(* * *))
 
 ;;; x_window.c
 (define-lff attrib_run int '(* *))

@@ -267,7 +267,10 @@ void
 s_visibility_set_name_only (gpointer action,
                             gpointer parameter,
                             gpointer user_data);
-void s_visibility_set_value_only();
+void
+s_visibility_set_value_only (gpointer action,
+                             gpointer parameter,
+                             gpointer user_data);
 void s_visibility_set_name_and_value();
 #endif
 
