@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -327,13 +327,16 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 
 
 /*! \brief The About dialog */
-void
 #ifdef ENABLE_GTK3
+void
 x_dialog_about_dialog (GSimpleAction *action,
                        GVariant *parameter,
                        gpointer user_data)
 #else
-x_dialog_about_dialog ()
+void
+x_dialog_about_dialog (gpointer action,
+                       gpointer parameter,
+                       gpointer user_data)
 #endif
 {
   GtkWidget* dlg = gtk_about_dialog_new();

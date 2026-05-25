@@ -156,6 +156,11 @@ Lepton EDA homepage: ~S
 (define *callback-visibility-name-value
   (procedure->pointer void callback-visibility-name-value '(* * *)))
 
+(define (callback-help-about *action *parameter *data)
+  (x_dialog_about_dialog *action *parameter *data))
+(define *callback-help-about
+  (procedure->pointer void callback-help-about '(* * *)))
+
 
 (define (init-callbacks)
   (attrib_window_set_menu_callback (string->pointer "file-save")
@@ -175,7 +180,9 @@ Lepton EDA homepage: ~S
   (attrib_window_set_menu_callback (string->pointer "visibility-value-only")
                                    *callback-visibility-value-only)
   (attrib_window_set_menu_callback (string->pointer "visibility-name-value")
-                                   *callback-visibility-name-value))
+                                   *callback-visibility-name-value)
+  (attrib_window_set_menu_callback (string->pointer "help-about")
+                                   *callback-help-about))
 
 (define (init-window)
   (define *window-widget (attrib_get_window))

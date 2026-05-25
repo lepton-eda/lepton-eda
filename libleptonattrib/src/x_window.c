@@ -532,6 +532,17 @@ callback_visibility_name_value_wrapper (GSimpleAction *action,
 }
 
 
+static GCallback callback_help_about = NULL;
+
+static void
+callback_help_about_wrapper (GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_help_about) (action, parameter, user_data);
+}
+
+
 /*! \brief Set menu item callback by name.
  *
  *  \par Function Description
@@ -558,6 +569,7 @@ attrib_window_set_menu_callback (char *name,
   else if (strcmp (name, "visibility-name-only") == 0) {callback_visibility_name_only = callback;}
   else if (strcmp (name, "visibility-value-only") == 0) {callback_visibility_value_only = callback;}
   else if (strcmp (name, "visibility-name-value") == 0) {callback_visibility_name_value = callback;}
+  else if (strcmp (name, "help-about") == 0) {callback_help_about = callback;}
 }
 
 
@@ -688,7 +700,7 @@ static GActionEntry app_entries[] = {
   { "visibility-name-only", callback_visibility_name_only_wrapper, NULL, NULL, NULL },
   { "visibility-value-only", callback_visibility_value_only_wrapper, NULL, NULL, NULL },
   { "visibility-name-value", callback_visibility_name_value_wrapper, NULL, NULL, NULL },
-  { "help-about", x_dialog_about_dialog, NULL, NULL, NULL },
+  { "help-about", callback_help_about_wrapper, NULL, NULL, NULL },
 };
 
 
@@ -720,7 +732,7 @@ static const GtkActionEntry actions[] = {
 
   /* Help menu */
   { "help", NULL, "_Help"},
-  { "help-about", "help-about", "About", "", "", x_dialog_about_dialog},
+  { "help-about", "help-about", "About", "", "", G_CALLBACK (callback_help_about_wrapper)},
 };
 #endif
 

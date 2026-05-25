@@ -32,6 +32,7 @@
 
             x_fileselect_open
 
+            x_dialog_about_dialog
             x_dialog_missing_sym
 
             attrib_sheet_data_get_component_attrib_count
@@ -107,6 +108,7 @@
 (define-lff attrib_really_quit void '(* * *))
 
 ;;; x_dialog.c
+(define-lff x_dialog_about_dialog void '(* * *))
 (define-lff x_dialog_missing_sym void '())
 
 ;;; s_sheet_data.c
