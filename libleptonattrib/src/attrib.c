@@ -200,26 +200,6 @@ attrib_really_quit (gpointer action,
                     gpointer user_data)
 #endif
 {
-  /* Save main window's geometry:
-  */
-  gint x = 0;
-  gint y = 0;
-  gtk_window_get_position (GTK_WINDOW (window), &x, &y);
-
-  gint width  = 0;
-  gint height = 0;
-  gtk_window_get_size (GTK_WINDOW (window), &width, &height);
-
-  EdaConfig* cfg = eda_config_get_cache_context();
-
-  eda_config_set_int (cfg, "attrib.window-geometry", "x", x);
-  eda_config_set_int (cfg, "attrib.window-geometry", "y", y);
-  eda_config_set_int (cfg, "attrib.window-geometry", "width", width);
-  eda_config_set_int (cfg, "attrib.window-geometry", "height", height);
-
-  eda_config_save (cfg, NULL);
-
-
   /* Deactivate the current cell to trigger "deactivate" signal.
    * This allows changing of the sheet_head->CHANGED flag in the
    * on_deactivate() handler function if needed.
