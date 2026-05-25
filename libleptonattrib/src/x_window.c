@@ -412,6 +412,16 @@ callback_edit_delete_attrib_wrapper (GSimpleAction *action,
 }
 
 
+static GCallback callback_visibility_invisible = NULL;
+
+static void
+callback_visibility_invisible_wrapper (GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_invisible) (action, parameter, user_data);
+}
+
 
 /*! \brief Set menu item callback by name.
  *
@@ -435,6 +445,7 @@ attrib_window_set_menu_callback (char *name,
   else if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
   else if (strcmp (name, "edit-add-attrib") == 0) {callback_edit_add_attrib = callback;}
   else if (strcmp (name, "edit-delete-attrib") == 0) {callback_edit_delete_attrib = callback;}
+  else if (strcmp (name, "visibility-invisible") == 0) {callback_visibility_invisible = callback;}
 }
 
 
@@ -561,7 +572,7 @@ static GActionEntry app_entries[] = {
   { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
   { "edit-add-attrib", callback_edit_add_attrib_wrapper, NULL, NULL, NULL },
   { "edit-delete-attrib", callback_edit_delete_attrib_wrapper, NULL, NULL, NULL },
-  { "visibility-invisible", s_visibility_set_invisible, NULL, NULL, NULL },
+  { "visibility-invisible", callback_visibility_invisible_wrapper, NULL, NULL, NULL },
   { "visibility-name-only", s_visibility_set_name_only, NULL, NULL, NULL },
   { "visibility-value-only", s_visibility_set_value_only, NULL, NULL, NULL },
   { "visibility-name-value", s_visibility_set_name_and_value, NULL, NULL, NULL },
@@ -590,7 +601,7 @@ static const GtkActionEntry actions[] = {
 
   /* Visibility menu */
   { "visibility", NULL, "_Visibility"},
-  { "visibility-invisible", NULL, "Set selected invisible", "", "", s_visibility_set_invisible},
+  { "visibility-invisible", NULL, "Set selected invisible", "", "", G_CALLBACK (callback_visibility_invisible_wrapper)},
   { "visibility-name-only", NULL, "Set selected name visible only", "", "", s_visibility_set_name_only},
   { "visibility-value-only", NULL, "Set selected value visible only", "", "", s_visibility_set_value_only},
   { "visibility-name-value", NULL, "Set selected name and value visible", "", "", s_visibility_set_name_and_value},

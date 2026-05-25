@@ -65,6 +65,8 @@
 
             s_toplevel_save_sheet
 
+            s_visibility_set_invisible
+
             attrib_run
             attrib_window_new
             attrib_window_set_menu_callback
@@ -140,6 +142,9 @@
 
 ;;; s_toplevel.c
 (define-lff s_toplevel_save_sheet void '(* * *))
+
+;;; s_visibility.c
+(define-lff s_visibility_set_invisible void '(* * *))
 
 ;;; x_window.c
 (define-lff attrib_run int '(* *))
