@@ -311,6 +311,18 @@ attrib_window_set_menu_callback (char *name,
                                  GCallback callback);
 #ifdef ENABLE_GTK3
 void
+menu_edit_newattrib (GSimpleAction *action,
+                     GVariant *parameter,
+                     gpointer user_data);
+#else
+void
+menu_edit_newattrib (gpointer action,
+                     gpointer parameter,
+                     gpointer user_data);
+#endif
+
+#ifdef ENABLE_GTK3
+void
 menu_file_export_csv (GSimpleAction *action,
                       GVariant *parameter,
                       gpointer user_data);
@@ -320,6 +332,7 @@ menu_file_export_csv (gpointer action,
                       gpointer parameter,
                       gpointer user_data);
 #endif
+
 void x_window_add_items();
 
 void

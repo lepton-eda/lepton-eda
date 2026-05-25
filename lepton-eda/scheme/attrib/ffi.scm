@@ -68,6 +68,7 @@
             attrib_run
             attrib_window_new
             attrib_window_set_menu_callback
+            menu_edit_newattrib
             menu_file_export_csv
             x_window_add_items
             x_window_init
@@ -143,6 +144,7 @@
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_set_menu_callback void '(* *))
+(define-lff menu_edit_newattrib void '(* * *))
 (define-lff menu_file_export_csv void '(* * *))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())
