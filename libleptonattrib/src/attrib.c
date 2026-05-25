@@ -98,6 +98,13 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data)
 }
 
 
+GtkSheet*
+attrib_get_sheet (int i)
+{
+  return sheets[i];
+}
+
+
 /*! \brief Get the number of sheets.
  *
  *  \par Function Description
@@ -220,7 +227,7 @@ attrib_really_quit (gpointer action,
   */
   for (int i = 0; i < attrib_get_sheets_number (); ++i)
   {
-    GtkSheet *sheet = sheets[i];
+    GtkSheet *sheet = attrib_get_sheet (i);
     if (sheet != NULL)
     {
        gtk_sheet_set_active_cell (sheet, -1, -1);
