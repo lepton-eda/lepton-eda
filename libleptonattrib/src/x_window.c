@@ -442,6 +442,17 @@ callback_visibility_invisible_wrapper (GSimpleAction *action,
 }
 
 
+static GCallback callback_visibility_name_only = NULL;
+
+static void
+callback_visibility_name_only_wrapper (GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_name_only) (action, parameter, user_data);
+}
+
+
 /*! \brief Set menu item callback by name.
  *
  *  \par Function Description
@@ -465,6 +476,7 @@ attrib_window_set_menu_callback (char *name,
   else if (strcmp (name, "edit-add-attrib") == 0) {callback_edit_add_attrib = callback;}
   else if (strcmp (name, "edit-delete-attrib") == 0) {callback_edit_delete_attrib = callback;}
   else if (strcmp (name, "visibility-invisible") == 0) {callback_visibility_invisible = callback;}
+  else if (strcmp (name, "visibility-name-only") == 0) {callback_visibility_name_only = callback;}
 }
 
 
@@ -592,7 +604,7 @@ static GActionEntry app_entries[] = {
   { "edit-add-attrib", callback_edit_add_attrib_wrapper, NULL, NULL, NULL },
   { "edit-delete-attrib", callback_edit_delete_attrib_wrapper, NULL, NULL, NULL },
   { "visibility-invisible", callback_visibility_invisible_wrapper, NULL, NULL, NULL },
-  { "visibility-name-only", s_visibility_set_name_only, NULL, NULL, NULL },
+  { "visibility-name-only", callback_visibility_name_only_wrapper, NULL, NULL, NULL },
   { "visibility-value-only", s_visibility_set_value_only, NULL, NULL, NULL },
   { "visibility-name-value", s_visibility_set_name_and_value, NULL, NULL, NULL },
   { "help-about", x_dialog_about_dialog, NULL, NULL, NULL },
@@ -621,7 +633,7 @@ static const GtkActionEntry actions[] = {
   /* Visibility menu */
   { "visibility", NULL, "_Visibility"},
   { "visibility-invisible", NULL, "Set selected invisible", "", "", G_CALLBACK (callback_visibility_invisible_wrapper)},
-  { "visibility-name-only", NULL, "Set selected name visible only", "", "", s_visibility_set_name_only},
+  { "visibility-name-only", NULL, "Set selected name visible only", "", "", G_CALLBACK (callback_visibility_name_only_wrapper)},
   { "visibility-value-only", NULL, "Set selected value visible only", "", "", s_visibility_set_value_only},
   { "visibility-name-value", NULL, "Set selected name and value visible", "", "", s_visibility_set_name_and_value},
 
