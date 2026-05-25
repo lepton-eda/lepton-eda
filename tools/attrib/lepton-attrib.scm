@@ -157,7 +157,8 @@ Lepton EDA homepage: ~S
 
 
 (define (unsaved-data-dialog)
-  (x_dialog_unsaved_data))
+  (define *dialog (x_dialog_unsaved_data))
+  (gtk_widget_destroy *dialog))
 
 
 ;;; Quit the program using the UI. On execution, the function

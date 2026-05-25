@@ -216,7 +216,8 @@ void x_dialog_missing_sym()
  * This is the "Unsaved data -- are you sure you want to quit?" dialog
  *         box which is thrown up before the user quits.
  */
-void x_dialog_unsaved_data()
+GtkWidget*
+x_dialog_unsaved_data ()
 {
   GtkWidget *dialog;
   gchar *str;
@@ -270,8 +271,7 @@ void x_dialog_unsaved_data()
           break;
         }
       }
-  gtk_widget_destroy (dialog);
-  return;
+  return dialog;
 }
 
 /*! \brief Unimplemented feature dialog

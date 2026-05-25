@@ -278,7 +278,10 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
 void x_dialog_newattrib();
 void x_dialog_delattrib();
 void x_dialog_missing_sym();
-void x_dialog_unsaved_data();
+
+GtkWidget*
+x_dialog_unsaved_data ();
+
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 

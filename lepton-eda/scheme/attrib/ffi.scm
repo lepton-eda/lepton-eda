@@ -128,7 +128,7 @@
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))
 (define-lff x_dialog_missing_sym void '())
-(define-lff x_dialog_unsaved_data void '())
+(define-lff x_dialog_unsaved_data '* '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_get_component_attrib_count int '(*))
