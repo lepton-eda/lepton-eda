@@ -220,9 +220,10 @@ attrib_really_quit (gpointer action,
   */
   for (int i = 0; i < attrib_get_sheets_number (); ++i)
   {
-    if (sheets[i] != NULL)
+    GtkSheet *sheet = sheets[i];
+    if (sheet != NULL)
     {
-       gtk_sheet_set_active_cell (sheets[i], -1, -1);
+       gtk_sheet_set_active_cell (sheet, -1, -1);
     }
   }
 
