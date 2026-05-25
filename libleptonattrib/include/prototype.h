@@ -311,6 +311,18 @@ attrib_window_set_menu_callback (char *name,
                                  GCallback callback);
 #ifdef ENABLE_GTK3
 void
+menu_edit_delattrib (GSimpleAction *action,
+                     GVariant *parameter,
+                     gpointer user_data);
+#else
+void
+menu_edit_delattrib (gpointer action,
+                     gpointer parameter,
+                     gpointer user_data);
+#endif
+
+#ifdef ENABLE_GTK3
+void
 menu_edit_newattrib (GSimpleAction *action,
                      GVariant *parameter,
                      gpointer user_data);

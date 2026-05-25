@@ -255,13 +255,16 @@ menu_edit_newattrib (gpointer action,
  *
  * Implements the Delete Attribute menu item
  */
-static void
 #ifdef ENABLE_GTK3
+void
 menu_edit_delattrib (GSimpleAction *action,
                      GVariant *parameter,
                      gpointer user_data)
 #else
-menu_edit_delattrib()
+void
+menu_edit_delattrib (gpointer action,
+                     gpointer parameter,
+                     gpointer user_data)
 #endif
 {
   x_dialog_delattrib();
@@ -380,6 +383,17 @@ callback_edit_add_attrib_wrapper (GSimpleAction *action,
   ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_edit_add_attrib) (action, parameter, user_data);
 }
 
+static GCallback callback_edit_delete_attrib = NULL;
+
+static void
+callback_edit_delete_attrib_wrapper (GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_edit_delete_attrib) (action, parameter, user_data);
+}
+
+
 
 /*! \brief Set menu item callback by name.
  *
@@ -402,6 +416,7 @@ attrib_window_set_menu_callback (char *name,
   else if (strcmp (name, "file-export-csv") == 0) {callback_file_export_csv = callback;}
   else if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
   else if (strcmp (name, "edit-add-attrib") == 0) {callback_edit_add_attrib = callback;}
+  else if (strcmp (name, "edit-delete-attrib") == 0) {callback_edit_delete_attrib = callback;}
 }
 
 
@@ -527,7 +542,7 @@ static GActionEntry app_entries[] = {
   { "file-export-csv", callback_file_export_csv_wrapper, NULL, NULL, NULL },
   { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
   { "edit-add-attrib", callback_edit_add_attrib_wrapper, NULL, NULL, NULL },
-  { "edit-delete-attrib", menu_edit_delattrib, NULL, NULL, NULL },
+  { "edit-delete-attrib", callback_edit_delete_attrib_wrapper, NULL, NULL, NULL },
   { "visibility-invisible", s_visibility_set_invisible, NULL, NULL, NULL },
   { "visibility-name-only", s_visibility_set_name_only, NULL, NULL, NULL },
   { "visibility-value-only", s_visibility_set_value_only, NULL, NULL, NULL },
@@ -550,7 +565,7 @@ static const GtkActionEntry actions[] = {
   /* Edit menu */
   { "edit", NULL, "_Edit"},
   { "edit-add-attrib", NULL, "Add new attrib column", "", "", G_CALLBACK (callback_edit_add_attrib_wrapper)},
-  { "edit-delete-attrib", NULL, "Delete attrib column", "", "", menu_edit_delattrib},
+  { "edit-delete-attrib", NULL, "Delete attrib column", "", "", G_CALLBACK (callback_edit_delete_attrib_wrapper)},
   /* { "edit-find-attrib", "edit-find", "Find attrib value", "<Control>F", "", x_dialog_unimplemented_feature}, */
   /* { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "", x_dialog_unimplemented_feature}, */
   /* { "edit-search-for-refdes", NULL, "Search for refdes", "", "", x_dialog_unimplemented_feature}, */

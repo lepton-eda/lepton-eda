@@ -131,6 +131,11 @@ Lepton EDA homepage: ~S
 (define *callback-edit-add-attrib
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
+(define (callback-edit-delete-attrib *action *parameter *data)
+  (menu_edit_delattrib *action *parameter *data))
+(define *callback-edit-delete-attrib
+  (procedure->pointer void callback-edit-delete-attrib '(* * *)))
+
 
 (define (init-callbacks)
   (attrib_window_set_menu_callback (string->pointer "file-save")
@@ -140,7 +145,9 @@ Lepton EDA homepage: ~S
   (attrib_window_set_menu_callback (string->pointer "file-quit")
                                    *callback-file-quit)
   (attrib_window_set_menu_callback (string->pointer "edit-add-attrib")
-                                   *callback-edit-add-attrib))
+                                   *callback-edit-add-attrib)
+  (attrib_window_set_menu_callback (string->pointer "edit-delete-attrib")
+                                   *callback-edit-delete-attrib))
 
 (define (init-window)
   (define *window-widget (attrib_get_window))
