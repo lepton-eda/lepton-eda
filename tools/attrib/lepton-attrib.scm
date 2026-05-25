@@ -156,6 +156,10 @@ Lepton EDA homepage: ~S
   (procedure->pointer void callback-file-export-csv '(* * *)))
 
 
+(define (unsaved-data-dialog)
+  (x_dialog_unsaved_data))
+
+
 ;;; Quit the program using the UI. On execution, the function
 ;;; checks for unsaved changes before calling attrib_quit() to
 ;;; quit the program.
@@ -172,7 +176,7 @@ Lepton EDA homepage: ~S
    (iota (attrib_get_sheets_number)))
 
   (if (true? (s_sheet_data_changed (attrib_get_sheet_data)))
-      (x_dialog_unsaved_data)
+      (unsaved-data-dialog)
       (attrib_quit 0)))
 
 (define *callback-file-quit
