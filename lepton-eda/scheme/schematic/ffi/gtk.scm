@@ -94,6 +94,18 @@
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
 
+            GTK_RESPONSE_NONE
+            GTK_RESPONSE_REJECT
+            GTK_RESPONSE_ACCEPT
+            GTK_RESPONSE_DELETE_EVENT
+            GTK_RESPONSE_OK
+            GTK_RESPONSE_CANCEL
+            GTK_RESPONSE_CLOSE
+            GTK_RESPONSE_YES
+            GTK_RESPONSE_NO
+            GTK_RESPONSE_APPLY
+            GTK_RESPONSE_HELP
+
             gtk_rc_parse
 
             gtk_scrolled_window_new
@@ -233,6 +245,19 @@
 (define-lff gtk_notebook_remove_page void (list '* int))
 (define-lff gtk_notebook_set_current_page void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
+
+;;; Definitions from gtkdialog.h.
+(define GTK_RESPONSE_NONE -1)
+(define GTK_RESPONSE_REJECT -2)
+(define GTK_RESPONSE_ACCEPT -3)
+(define GTK_RESPONSE_DELETE_EVENT -4)
+(define GTK_RESPONSE_OK -5)
+(define GTK_RESPONSE_CANCEL -6)
+(define GTK_RESPONSE_CLOSE -7)
+(define GTK_RESPONSE_YES -8)
+(define GTK_RESPONSE_NO -9)
+(define GTK_RESPONSE_APPLY -10)
+(define GTK_RESPONSE_HELP -11)
 
 (define-lff gtk_rc_parse void '(*))
 
