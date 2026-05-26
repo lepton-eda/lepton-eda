@@ -71,6 +71,23 @@ separator_new ()
 #endif
 }
 
+
+/*! \brief Create the array of sheets.
+ *
+ *  \par Function Description
+ *
+ *  Malloc -- but don't fill out -- space for sheets.  This
+ *  basically sets up the overhead for the sheets.  The memory for
+ *  the actual sheet cells is allocated later, when
+ *  gtk_sheet_new() is invoked.
+ */
+void
+attrib_window_sheets_new ()
+{
+  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
+}
+
+
 /*! \brief Initialises the toplevel gtksheet
  *
  * This function initializes the toplevel gtksheet stuff.
@@ -164,11 +181,7 @@ x_window_init ()
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
 
-  /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
-  /* This basically sets up the overhead for the sheets, as I understand
-   * it.  The memory for the actual sheet cells is allocated later,
-   * when gtk_sheet_new is invoked, I think.  */
-  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
+  attrib_window_sheets_new ();
 
 } /* x_window_init() */
 

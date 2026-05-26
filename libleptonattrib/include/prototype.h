@@ -308,6 +308,9 @@ GtkWidget*
 attrib_window_new (gpointer app);
 
 void
+attrib_window_sheets_new ();
+
+void
 attrib_window_set_menu_callback (char *name,
                                  GCallback callback);
 #ifdef ENABLE_GTK3
