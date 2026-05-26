@@ -250,27 +250,6 @@ x_dialog_unsaved_data ()
                                           -1);
 #endif
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
-
-  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
-    {
-      case GTK_RESPONSE_NO:
-        {
-          attrib_quit(0);
-          break;
-        }
-      case GTK_RESPONSE_YES:
-        {
-          s_toplevel_save_sheet (NULL, NULL, NULL);
-          attrib_quit(0);
-          break;
-        }
-      case GTK_RESPONSE_CANCEL:
-      default:
-        {
-          break;
-        }
-      }
   return dialog;
 }
 

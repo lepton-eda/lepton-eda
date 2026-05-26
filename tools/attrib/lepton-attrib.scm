@@ -158,6 +158,20 @@ Lepton EDA homepage: ~S
 
 (define (unsaved-data-dialog)
   (define *dialog (x_dialog_unsaved_data))
+
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
+
+  (let ((response (gtk_dialog_run *dialog)))
+    (cond
+      ((= response GTK_RESPONSE_NO)
+       (attrib_quit 0))
+      ((= response GTK_RESPONSE_YES)
+       (s_toplevel_save_sheet %null-pointer
+                              %null-pointer
+                              %null-pointer)
+       (attrib_quit 0))
+      (else #f)))
+
   (gtk_widget_destroy *dialog))
 
 
