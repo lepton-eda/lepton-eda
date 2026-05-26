@@ -134,7 +134,8 @@ s_toplevel_save_sheet (gpointer action,
 
     p_current = (LeptonPage *)iter->data;
     /* only traverse pages which are toplevel */
-    if (p_current->page_control == 0) {
+    if (lepton_page_get_page_control (p_current) == 0)
+    {
       s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
     }
   }
