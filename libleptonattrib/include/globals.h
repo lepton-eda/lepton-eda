@@ -93,8 +93,6 @@ extern SHEET_DATA *sheet_head;
 /*------------------------------------------------------------------
  * GTKsheet includes: stuff for dealing with windows.
  *------------------------------------------------------------------*/
-#define DEFAULT_PRECISION 2
-#define DEFAULT_SPACE 8
 #define NUM_SHEETS 3            /* Components, Nets, and Pins */
 
 extern GtkWidget *window;              /* Main window */
