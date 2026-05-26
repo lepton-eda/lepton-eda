@@ -74,7 +74,6 @@
             s_table_add_toplevel_net_items_to_net_table
             s_table_add_toplevel_pin_items_to_pin_table
 
-            save_toplevel_pages
             s_toplevel_sheetdata_to_toplevel
 
             s_visibility_set_invisible
@@ -171,7 +170,6 @@
 (define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
 
 ;;; s_toplevel.c
-(define-lff save_toplevel_pages int '(*))
 (define-lff s_toplevel_sheetdata_to_toplevel void '(* *))
 
 ;;; s_visibility.c

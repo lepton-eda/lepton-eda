@@ -406,6 +406,7 @@
             o_read_buffer
 
             f_open
+            f_save
 
             lepton_coord_snap))
 
@@ -794,6 +795,7 @@
 
 ;;; f_basic.c
 (define-lff f_open int (list '* '* '* int '*))
+(define-lff f_save int '(* * *))
 
 ;;; export.c
 (define-lff export_config void '())

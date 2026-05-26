@@ -50,43 +50,6 @@
 
 /* ===================  Public Functions  ====================== */
 
-/*! \brief Saves all the pages of a LeptonToplevel object.
- *  \par Function Description
- *  Saves all the pages in the <B>toplevel</B> parameter.
- *
- *  \param [in] toplevel  The LeptonToplevel to save pages from.
- *  \return The number of failed tries to save a page.
- */
-int
-save_toplevel_pages (LeptonToplevel *toplevel)
-{
-  const GList *iter;
-  LeptonPage *p_current;
-
-  for ( iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *)iter->data;
-
-    if (f_save (p_current, lepton_page_get_filename (p_current), NULL))
-    {
-      g_message (_("Saved [%1$s]"),
-                 lepton_page_get_filename (p_current));
-      /* reset the CHANGED flag of p_current */
-      lepton_page_set_changed (p_current, 0);
-
-    } else {
-      g_message (_("Could NOT save [%1$s]"),
-                 lepton_page_get_filename (p_current));
-    }
-
-  }
-
-  return 0;
-}
-
-
 /*------------------------------------------------------------------*/
 /*! \brief Add a new attribute to the top level
  *
