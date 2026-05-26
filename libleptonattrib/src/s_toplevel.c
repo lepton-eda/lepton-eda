@@ -62,7 +62,6 @@ save_toplevel_pages (LeptonToplevel *toplevel)
 {
   const GList *iter;
   LeptonPage *p_current;
-  gint status = 0;
 
   for ( iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
         iter != NULL;
@@ -80,13 +79,11 @@ save_toplevel_pages (LeptonToplevel *toplevel)
     } else {
       g_message (_("Could NOT save [%1$s]"),
                  lepton_page_get_filename (p_current));
-      /* increase the error counter */
-      status++;
     }
 
   }
 
-  return status;
+  return 0;
 }
 
 
