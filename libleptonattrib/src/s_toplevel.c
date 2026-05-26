@@ -64,7 +64,7 @@ save_toplevel_pages (LeptonToplevel *toplevel)
   LeptonPage *p_current;
   gint status = 0;
 
-  for ( iter = lepton_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
