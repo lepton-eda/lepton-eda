@@ -318,6 +318,13 @@ failure."
 
 (define (init-window)
   (define *window-widget (attrib_get_window))
+  (define cache-config (cache-config-context))
+  (define x (config-int cache-config "attrib.window-geometry" "x"))
+  (define y (config-int cache-config "attrib.window-geometry" "y"))
+  (define width
+    (config-int cache-config "attrib.window-geometry" "width" ))
+  (define height
+    (config-int cache-config "attrib.window-geometry" "height"))
 
   (g_signal_connect *window-widget
                     (string->pointer "delete_event")
@@ -327,7 +334,13 @@ failure."
   ;; Init menu functions.
   (init-callbacks)
 
-  (x_window_init))
+  (x_window_init)
+
+  ;; Restore main window's geometry.
+  (gtk_window_move *window-widget x y)
+
+  (when (and (> width 0) (> height 0))
+    (gtk_window_resize *window-widget width height)))
 
 
 (define (activate *app *toplevel)
