@@ -145,15 +145,19 @@ Lepton EDA homepage: ~S
     (config-save! config)))
 
 
+(define (save-page page filename)
+  "Saves PAGE under FILENAME returning #t on success, or #f on
+failure."
+  (define *page (check-page page 1))
+  (true? (f_save *page (string->pointer filename) %null-pointer)))
+
+
 ;;; Saves all toplevel pages.
 (define (save-pages)
   (for-each
    (lambda (page)
-     (let ((*page (page->pointer page))
-           (filename (page-filename page)))
-       (if (true? (f_save *page
-                          (string->pointer filename)
-                          %null-pointer))
+     (let ((filename (page-filename page)))
+       (if (save-page page filename)
            (begin
              (log! 'message (G_ "Saved ~S") filename)
              ;; Reset the changed state of page.
