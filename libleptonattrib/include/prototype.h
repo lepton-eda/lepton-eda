@@ -153,17 +153,8 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
                                TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-#ifdef ENABLE_GTK3
-void
-s_toplevel_save_sheet (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data);
-#else
-void
-s_toplevel_save_sheet (gpointer action,
-                       gpointer parameter,
-                       gpointer user_data);
-#endif
+int
+save_toplevel_pages (LeptonToplevel *toplevel);
 
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();

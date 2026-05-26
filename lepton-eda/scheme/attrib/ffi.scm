@@ -29,6 +29,7 @@
             attrib_set_sheet_data
             attrib_get_sheet_data
             attrib_get_sheets_number
+            attrib_get_toplevel
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
@@ -58,6 +59,8 @@
             s_sheet_data_add_master_pin_list_items
             s_sheet_data_add_master_pin_attrib_list_items
             s_sheet_data_changed
+            s_sheet_data_set_changed
+            s_sheet_data_gtksheet_to_sheetdata
 
             s_string_list_sort_master_comp_list
             s_string_list_sort_master_comp_attrib_list
@@ -71,7 +74,8 @@
             s_table_add_toplevel_net_items_to_net_table
             s_table_add_toplevel_pin_items_to_pin_table
 
-            s_toplevel_save_sheet
+            save_toplevel_pages
+            s_toplevel_sheetdata_to_toplevel
 
             s_visibility_set_invisible
             s_visibility_set_name_and_value
@@ -113,6 +117,7 @@
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheet_data '* '())
 (define-lff attrib_get_sheets_number int '())
+(define-lff attrib_get_toplevel '* '())
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
@@ -146,6 +151,8 @@
 (define-lff s_sheet_data_add_master_pin_list_items void '(*))
 (define-lff s_sheet_data_add_master_pin_attrib_list_items void '(*))
 (define-lff s_sheet_data_changed int '(*))
+(define-lff s_sheet_data_set_changed void (list '* int))
+(define-lff s_sheet_data_gtksheet_to_sheetdata void '())
 
 ;;; s_string_list.c
 (define-lff s_string_list_sort_master_comp_list void '())
@@ -164,7 +171,8 @@
 (define-lff s_table_add_toplevel_pin_items_to_pin_table void '(*))
 
 ;;; s_toplevel.c
-(define-lff s_toplevel_save_sheet void '(* * *))
+(define-lff save_toplevel_pages int '(*))
+(define-lff s_toplevel_sheetdata_to_toplevel void '(* *))
 
 ;;; s_visibility.c
 (define-lff s_visibility_set_invisible void '(* * *))

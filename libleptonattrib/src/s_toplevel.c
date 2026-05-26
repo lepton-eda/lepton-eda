@@ -57,7 +57,7 @@
  *  \param [in] toplevel  The LeptonToplevel to save pages from.
  *  \return The number of failed tries to save a page.
  */
-static gint
+int
 save_toplevel_pages (LeptonToplevel *toplevel)
 {
   const GList *iter;
@@ -87,67 +87,6 @@ save_toplevel_pages (LeptonToplevel *toplevel)
   }
 
   return status;
-}
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Copy data from gtksheet into LeptonToplevel struct
- *
- *  \par Function Description
- * Called when the user invokes "save".  It first
- * places all data from gtksheet into SHEET_DATA.  Then it
- * loops through all pages and saves them.
- *
- * \param action [in] GSimpleAction (GTK3), unused.
- * \param parameter [in] GVariant (GTK3), unused.
- * \param user_data [in] User data, unused.
- */
-#ifdef ENABLE_GTK3
-void
-s_toplevel_save_sheet (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data)
-#else
-void
-s_toplevel_save_sheet (gpointer action,
-                       gpointer parameter,
-                       gpointer user_data)
-#endif
-{
-  GList *iter;
-  LeptonPage *p_current;
-
-  g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
-
-  LeptonToplevel *toplevel = attrib_get_toplevel ();
-
-  g_return_if_fail (toplevel != NULL);
-
-  s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
-  g_debug ("s_toplevel_gtksheet_to_toplevel: "
-           "Done writing stuff from gtksheet into SHEET_DATA.\n");
-
-  /* must iterate over all pages in design */
-  for ( iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *)iter->data;
-    /* only traverse pages which are toplevel */
-    if (lepton_page_get_page_control (p_current) == 0)
-    {
-      s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
-    }
-  }
-
-  g_debug ("s_toplevel_gtksheet_to_toplevel: "
-           "Done writing SHEEET_DATA text back into pr_currnet.\n");
-
-  /* Save all pages in design. */
-  save_toplevel_pages (toplevel);
-  s_sheet_data_set_changed (attrib_get_sheet_data (), FALSE);
-
-  return;
 }
 
 

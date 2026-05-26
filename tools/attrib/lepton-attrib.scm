@@ -145,8 +145,33 @@ Lepton EDA homepage: ~S
     (config-save! config)))
 
 
+;;; Copies data from gtksheet into LeptonToplevel struct.  The
+;;; function is called when the user invokes File -> Save.  It
+;;; first places all data from gtksheet into SHEET_DATA.  Then it
+;;; loops through all pages and saves them.
 (define (save-sheet)
-  (s_toplevel_save_sheet %null-pointer %null-pointer %null-pointer))
+  (define *toplevel (attrib_get_toplevel))
+
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
+
+  ;; Read data from gtksheet into SHEET_DATA.
+  (s_sheet_data_gtksheet_to_sheetdata)
+
+  ;; Iterate over all pages in design.
+  (for-each
+   (lambda (*page)
+     ;; Only traverse pages which are toplevel.
+     (when (zero? (lepton_page_get_page_control *page))
+       ;; Add all objects from page.
+       (s_toplevel_sheetdata_to_toplevel *toplevel *page)))
+   (glist->list
+    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
+    identity))
+
+  ;; Save all pages in design.
+  (save_toplevel_pages *toplevel)
+  (s_sheet_data_set_changed (attrib_get_sheet_data) FALSE))
 
 
 (define (callback-file-save *action *parameter *data)
