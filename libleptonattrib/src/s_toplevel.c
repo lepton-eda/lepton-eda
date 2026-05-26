@@ -145,7 +145,7 @@ s_toplevel_save_sheet (gpointer action,
 
   /* Save all pages in design. */
   save_toplevel_pages (toplevel);
-  s_sheet_data_set_changed (sheet_head, FALSE);
+  s_sheet_data_set_changed (attrib_get_sheet_data (), FALSE);
 
   return;
 }
