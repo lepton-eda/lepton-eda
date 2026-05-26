@@ -156,6 +156,17 @@ Lepton EDA homepage: ~S
   (procedure->pointer void callback-file-export-csv '(* * *)))
 
 
+(define (quit-program return-code)
+  "Unconditionally quit the program with the given RETURN-CODE."
+  (s_clib_free)
+
+  (unless %m4-use-gtk3
+    (gtk_main_quit))
+
+  (exit return-code))
+
+
+
 (define (unsaved-data-dialog)
   (define *dialog (x_dialog_unsaved_data))
 
@@ -163,20 +174,20 @@ Lepton EDA homepage: ~S
 
   (let ((response (gtk_dialog_run *dialog)))
     (cond
-      ((= response GTK_RESPONSE_NO)
-       (attrib_quit 0))
-      ((= response GTK_RESPONSE_YES)
-       (s_toplevel_save_sheet %null-pointer
-                              %null-pointer
-                              %null-pointer)
-       (attrib_quit 0))
-      (else #f)))
+     ((= response GTK_RESPONSE_NO)
+      (quit-program 0))
+     ((= response GTK_RESPONSE_YES)
+      (s_toplevel_save_sheet %null-pointer
+                             %null-pointer
+                             %null-pointer)
+      (quit-program 0))
+     (else #f)))
 
   (gtk_widget_destroy *dialog))
 
 
 ;;; Quit the program using the UI. On execution, the function
-;;; checks for unsaved changes before calling attrib_quit() to
+;;; checks for unsaved changes before calling quit-program() to
 ;;; quit the program.
 (define (callback-file-quit *action *parameter *data)
   (save-geometry)
@@ -192,7 +203,7 @@ Lepton EDA homepage: ~S
 
   (if (true? (s_sheet_data_changed (attrib_get_sheet_data)))
       (unsaved-data-dialog)
-      (attrib_quit 0)))
+      (quit-program 0)))
 
 (define *callback-file-quit
   (procedure->pointer void callback-file-quit '(* * *)))

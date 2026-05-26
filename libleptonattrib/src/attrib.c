@@ -204,23 +204,3 @@ attrib_set_window (GtkWidget *window_widget)
 {
   window = window_widget;
 }
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Quit the program.
- *
- *  Unconditionally quit gattrib. Flushes caches and I/O channels,
- *  calls the GTK function to quit the application then calls exit()
- *  with the appropriate return code.
- *
- *  \param return_code Value to pass to the exit() system call.
- */
-gint attrib_quit(gint return_code)
-{
-  s_clib_free();
-  g_debug ("attrib_quit: Calling gtk_main_quit().\n");
-#ifndef ENABLE_GTK3
-  gtk_main_quit();
-#endif
-  exit(return_code);
-}

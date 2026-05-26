@@ -32,7 +32,6 @@
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
-            attrib_quit
 
             set_verbose_mode
 
@@ -117,7 +116,6 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
-(define-lff attrib_quit int (list int))
 
 ;;; s_misc.c
 (define-lff set_verbose_mode void '())
