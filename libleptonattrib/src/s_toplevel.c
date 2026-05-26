@@ -128,7 +128,7 @@ s_toplevel_save_sheet (gpointer action,
            "Done writing stuff from gtksheet into SHEET_DATA.\n");
 
   /* must iterate over all pages in design */
-  for ( iter = lepton_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
