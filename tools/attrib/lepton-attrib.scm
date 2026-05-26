@@ -145,8 +145,12 @@ Lepton EDA homepage: ~S
     (config-save! config)))
 
 
+(define (save-sheet)
+  (s_toplevel_save_sheet %null-pointer %null-pointer %null-pointer))
+
+
 (define (callback-file-save *action *parameter *data)
-  (s_toplevel_save_sheet *action *parameter *data))
+  (save-sheet))
 (define *callback-file-save
   (procedure->pointer void callback-file-save '(* * *)))
 
@@ -177,9 +181,7 @@ Lepton EDA homepage: ~S
      ((= response GTK_RESPONSE_NO)
       (quit-program 0))
      ((= response GTK_RESPONSE_YES)
-      (s_toplevel_save_sheet %null-pointer
-                             %null-pointer
-                             %null-pointer)
+      (save-sheet)
       (quit-program 0))
      (else #f)))
 
