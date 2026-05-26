@@ -5,6 +5,9 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
+GtkWidget*
+attrib_get_notebook ();
+
 SHEET_DATA*
 attrib_get_sheet_data ();
 

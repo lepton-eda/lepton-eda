@@ -61,6 +61,13 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
+GtkWidget*
+attrib_get_notebook ()
+{
+  return notebook;
+}
+
+
 /*! \var SHEET_DATA *sheet_head
  *
  * The sheet data structure holding info on all schematic objects.
