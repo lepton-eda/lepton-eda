@@ -181,8 +181,6 @@ x_window_init ()
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
 
-  attrib_window_sheets_new ();
-
 } /* x_window_init() */
 
 

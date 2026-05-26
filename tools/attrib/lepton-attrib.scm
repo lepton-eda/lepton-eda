@@ -336,6 +336,9 @@ failure."
 
   (x_window_init)
 
+  ;; Create the array of sheets.
+  (attrib_window_sheets_new)
+
   ;; Restore main window's geometry.
   (gtk_window_move *window-widget x y)
 

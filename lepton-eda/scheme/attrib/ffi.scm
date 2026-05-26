@@ -83,6 +83,7 @@
 
             attrib_run
             attrib_window_new
+            attrib_window_sheets_new
             attrib_window_set_menu_callback
             menu_edit_delattrib
             menu_edit_newattrib
@@ -181,6 +182,7 @@
 ;;; x_window.c
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
+(define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff menu_edit_delattrib void '(* * *))
 (define-lff menu_edit_newattrib void '(* * *))
