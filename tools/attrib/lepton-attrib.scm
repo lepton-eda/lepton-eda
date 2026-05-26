@@ -145,26 +145,22 @@ Lepton EDA homepage: ~S
     (config-save! config)))
 
 
-;;; Saves all the pages of *TOPLEVEL.
-(define (save-pages *toplevel)
+;;; Saves all toplevel pages.
+(define (save-pages)
   (for-each
-   (lambda (*page)
-     (if (true? (f_save *page
-                        (lepton_page_get_filename *page)
-                        %null-pointer))
-         (begin
-           (log! 'message
-                 (G_ "Saved ~S")
-                 (pointer->string (lepton_page_get_filename *page)))
-           ;; Reset the CHANGED flag of page.
-           (lepton_page_set_changed *page 0))
+   (lambda (page)
+     (let ((*page (page->pointer page))
+           (filename (page-filename page)))
+       (if (true? (f_save *page
+                          (string->pointer filename)
+                          %null-pointer))
+           (begin
+             (log! 'message (G_ "Saved ~S") filename)
+             ;; Reset the changed state of page.
+             (set-page-dirty! page #f))
 
-         (log! 'message
-               (G_ "Could NOT save ~S")
-               (pointer->string (lepton_page_get_filename *page)))))
-   (glist->list
-    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
-    identity)))
+           (log! 'message (G_ "Could NOT save ~S") filename))))
+   (active-pages)))
 
 
 ;;; Copies data from gtksheet into LeptonToplevel struct.  The
@@ -192,7 +188,7 @@ Lepton EDA homepage: ~S
     identity))
 
   ;; Save all pages in design.
-  (save-pages *toplevel)
+  (save-pages)
   (s_sheet_data_set_changed (attrib_get_sheet_data) FALSE))
 
 
