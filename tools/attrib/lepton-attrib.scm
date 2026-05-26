@@ -154,17 +154,17 @@ failure."
 
 ;;; Saves all toplevel pages.
 (define (save-pages)
-  (for-each
-   (lambda (page)
-     (let ((filename (page-filename page)))
-       (if (save-page page filename)
-           (begin
-             (log! 'message (G_ "Saved ~S") filename)
-             ;; Reset the changed state of page.
-             (set-page-dirty! page #f))
+  (define (save page)
+    (let ((filename (page-filename page)))
+      (if (save-page page filename)
+          (begin
+            (log! 'message (G_ "Saved ~S") filename)
+            ;; Reset the changed state of page.
+            (set-page-dirty! page #f))
 
-           (log! 'message (G_ "Could NOT save ~S") filename))))
-   (active-pages)))
+          (log! 'message (G_ "Could NOT save ~S") filename))))
+
+  (for-each save (active-pages)))
 
 
 ;;; Copies data from gtksheet into LeptonToplevel struct.  The
