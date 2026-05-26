@@ -4,6 +4,5 @@ libleptonattribinclude_HEADERS = \
 
 noinst_HEADERS = \
 	globals.h \
-	i_vars.h \
 	struct.h \
 	gettext.h
