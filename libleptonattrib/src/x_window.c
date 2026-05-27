@@ -185,34 +185,6 @@ x_window_init ()
 
 
 /*!
- * \brief Edit->New attrib menu item
- *
- * Implement the New attrib menu item
- */
-#ifdef ENABLE_GTK3
-void
-menu_edit_newattrib (GSimpleAction *action,
-                     GVariant *parameter,
-                     gpointer user_data)
-#else
-void
-menu_edit_newattrib (gpointer action,
-                     gpointer parameter,
-                     gpointer user_data)
-#endif
-{
-  gint cur_page;
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-    x_dialog_newattrib();  /* This creates dialog box  */
-  }
-}
-
-/*!
  * \brief Edit->Delete Attribute menu item
  *
  * Implements the Delete Attribute menu item

@@ -271,8 +271,17 @@ failure."
   (procedure->pointer void callback-file-quit '(* * *)))
 
 
+(define (add-attrib)
+  (define *notebook (attrib_get_notebook))
+  (define current-page-id (gtk_notebook_get_current_page *notebook))
+
+  ;; Check that we are on components page.
+  (when (zero? current-page-id)
+    (x_dialog_newattrib)))
+
+
 (define (callback-edit-add-attrib *action *parameter *data)
-  (menu_edit_newattrib *action *parameter *data))
+  (add-attrib))
 (define *callback-edit-add-attrib
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 

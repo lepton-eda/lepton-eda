@@ -42,6 +42,7 @@
             x_dialog_about_dialog
             x_dialog_export_file
             x_dialog_missing_sym
+            x_dialog_newattrib
             x_dialog_unimplemented_feature
             x_dialog_unsaved_data
 
@@ -89,7 +90,6 @@
             attrib_window_sheets_new
             attrib_window_set_menu_callback
             menu_edit_delattrib
-            menu_edit_newattrib
             x_window_add_items
             x_window_init
             ))
@@ -135,6 +135,7 @@
 (define-lff x_dialog_about_dialog void '(* * *))
 (define-lff x_dialog_export_file void '())
 (define-lff x_dialog_missing_sym void '())
+(define-lff x_dialog_newattrib void '())
 (define-lff x_dialog_unimplemented_feature void '())
 (define-lff x_dialog_unsaved_data '* '())
 
@@ -190,6 +191,5 @@
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff menu_edit_delattrib void '(* * *))
-(define-lff menu_edit_newattrib void '(* * *))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())

@@ -328,18 +328,6 @@ menu_edit_delattrib (gpointer action,
                      gpointer user_data);
 #endif
 
-#ifdef ENABLE_GTK3
-void
-menu_edit_newattrib (GSimpleAction *action,
-                     GVariant *parameter,
-                     gpointer user_data);
-#else
-void
-menu_edit_newattrib (gpointer action,
-                     gpointer parameter,
-                     gpointer user_data);
-#endif
-
 void x_window_add_items();
 
 void
