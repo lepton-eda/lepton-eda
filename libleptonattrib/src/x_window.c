@@ -736,6 +736,17 @@ startup (GApplication *app)
 #endif
 
 
+/*! \brief Create the main window.
+ *
+ *  \par Function Description
+ *
+ *  Creates the main program window.
+ *
+ *  The argument \p app is a \c GtkApplication instance in GTK3
+ *  port and is not used in GTK2 port.
+ *
+ *  \param [in] app The \c GtkApplication instance.
+ */
 void
 attrib_window_new (gpointer app)
 {
