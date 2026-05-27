@@ -184,27 +184,6 @@ x_window_init ()
 } /* x_window_init() */
 
 
-/*!
- * \brief Edit->Delete Attribute menu item
- *
- * Implements the Delete Attribute menu item
- */
-#ifdef ENABLE_GTK3
-void
-menu_edit_delattrib (GSimpleAction *action,
-                     GVariant *parameter,
-                     gpointer user_data)
-#else
-void
-menu_edit_delattrib (gpointer action,
-                     gpointer parameter,
-                     gpointer user_data)
-#endif
-{
-  x_dialog_delattrib();
-}
-
-
 /* Menu callbacks */
 /*! \var static GCallback callback_file_save
  *

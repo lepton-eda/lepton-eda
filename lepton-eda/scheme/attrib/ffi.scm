@@ -40,6 +40,7 @@
             x_fileselect_open
 
             x_dialog_about_dialog
+            x_dialog_delattrib
             x_dialog_export_file
             x_dialog_missing_sym
             x_dialog_newattrib
@@ -89,7 +90,6 @@
             attrib_window_new
             attrib_window_sheets_new
             attrib_window_set_menu_callback
-            menu_edit_delattrib
             x_window_add_items
             x_window_init
             ))
@@ -133,6 +133,7 @@
 
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))
+(define-lff x_dialog_delattrib void '())
 (define-lff x_dialog_export_file void '())
 (define-lff x_dialog_missing_sym void '())
 (define-lff x_dialog_newattrib void '())
@@ -190,6 +191,5 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
-(define-lff menu_edit_delattrib void '(* * *))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())

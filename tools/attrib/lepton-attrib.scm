@@ -285,8 +285,13 @@ failure."
 (define *callback-edit-add-attrib
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
+
+(define (delete-attrib)
+  (x_dialog_delattrib))
+
+
 (define (callback-edit-delete-attrib *action *parameter *data)
-  (menu_edit_delattrib *action *parameter *data))
+  (delete-attrib))
 (define *callback-edit-delete-attrib
   (procedure->pointer void callback-edit-delete-attrib '(* * *)))
 
