@@ -185,37 +185,6 @@ x_window_init ()
 
 
 /*!
- * \brief File->Export CSV menu item
- *
- * Implement the File->Export CSV menu item
- */
-#ifdef ENABLE_GTK3
-void
-menu_file_export_csv (GSimpleAction *action,
-                      GVariant *parameter,
-                      gpointer user_data)
-#else
-void
-menu_file_export_csv (gpointer action,
-                      gpointer parameter,
-                      gpointer user_data)
-#endif
-{
-  gint cur_page;
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-    x_dialog_export_file();
-  } else {
-    x_dialog_unimplemented_feature();  /* We only support export
-                                          of components now */
-  }
-}
-
-/*!
  * \brief Edit->New attrib menu item
  *
  * Implement the New attrib menu item

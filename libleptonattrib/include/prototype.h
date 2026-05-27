@@ -340,18 +340,6 @@ menu_edit_newattrib (gpointer action,
                      gpointer user_data);
 #endif
 
-#ifdef ENABLE_GTK3
-void
-menu_file_export_csv (GSimpleAction *action,
-                      GVariant *parameter,
-                      gpointer user_data);
-#else
-void
-menu_file_export_csv (gpointer action,
-                      gpointer parameter,
-                      gpointer user_data);
-#endif
-
 void x_window_add_items();
 
 void

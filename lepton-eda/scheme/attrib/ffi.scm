@@ -25,6 +25,7 @@
 
   #:export (gtk_sheet_set_active_cell
 
+            attrib_get_notebook
             attrib_get_sheet
             attrib_set_sheet_data
             attrib_get_sheet_data
@@ -39,7 +40,9 @@
             x_fileselect_open
 
             x_dialog_about_dialog
+            x_dialog_export_file
             x_dialog_missing_sym
+            x_dialog_unimplemented_feature
             x_dialog_unsaved_data
 
             attrib_sheet_data_get_component_attrib_count
@@ -87,7 +90,6 @@
             attrib_window_set_menu_callback
             menu_edit_delattrib
             menu_edit_newattrib
-            menu_file_export_csv
             x_window_add_items
             x_window_init
             ))
@@ -113,6 +115,7 @@
 
 
 ;;; attrib.c
+(define-lff attrib_get_notebook '* '())
 (define-lff attrib_get_sheet '* (list int))
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheet_data '* '())
@@ -130,7 +133,9 @@
 
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))
+(define-lff x_dialog_export_file void '())
 (define-lff x_dialog_missing_sym void '())
+(define-lff x_dialog_unimplemented_feature void '())
 (define-lff x_dialog_unsaved_data '* '())
 
 ;;; s_sheet_data.c
@@ -186,6 +191,5 @@
 (define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff menu_edit_delattrib void '(* * *))
 (define-lff menu_edit_newattrib void '(* * *))
-(define-lff menu_file_export_csv void '(* * *))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())

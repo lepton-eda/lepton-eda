@@ -201,8 +201,21 @@ failure."
 (define *callback-file-save
   (procedure->pointer void callback-file-save '(* * *)))
 
+
+(define (export-csv)
+  "Export component table info in the CSV format."
+  (define *notebook (attrib_get_notebook))
+  (define current-page-id (gtk_notebook_get_current_page *notebook))
+
+  ;; Check that we are on components page.
+  (if (zero? current-page-id)
+      (x_dialog_export_file)
+      ;; We only support export of components now
+      (x_dialog_unimplemented_feature)))
+
+
 (define (callback-file-export-csv *action *parameter *data)
-  (menu_file_export_csv *action *parameter *data))
+  (export-csv))
 (define *callback-file-export-csv
   (procedure->pointer void callback-file-export-csv '(* * *)))
 
