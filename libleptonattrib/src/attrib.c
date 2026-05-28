@@ -63,12 +63,12 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
-/* \var LeptonToplevel window_toplevel
+/*! \var LeptonToplevel *toplevel
  *
  * The project and UI toplevel structure defining their data and
  * settings.
  */
-static LeptonToplevel *window_toplevel = NULL;
+static LeptonToplevel *toplevel = NULL;
 
 
 /*! \brief Get the project toplevel.
@@ -83,7 +83,7 @@ static LeptonToplevel *window_toplevel = NULL;
 LeptonToplevel*
 x_window_get_toplevel ()
 {
-  return window_toplevel;
+  return toplevel;
 }
 
 /*! \brief Set the project toplevel.
@@ -94,12 +94,12 @@ x_window_get_toplevel ()
  *  toplevel structure embraces all data and settings of the
  *  project and program UI.
  *
- *  \param [in] toplevel The new \c LeptonToplevel instance.
+ *  \param [in] val The new \c LeptonToplevel instance value.
  */
 void
-x_window_set_toplevel (LeptonToplevel *toplevel)
+x_window_set_toplevel (LeptonToplevel *val)
 {
-  window_toplevel = toplevel;
+  toplevel = val;
 }
 
 
