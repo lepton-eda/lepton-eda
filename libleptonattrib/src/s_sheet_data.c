@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,14 @@
 #include "../include/gettext.h"
 
 
+/*! \brief Get the component table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the component table of given sheet data structure.
+ *
+ *  \return The component table.
+ */
 TABLE**
 attrib_sheet_data_get_component_table (SHEET_DATA *data)
 {
@@ -57,6 +65,16 @@ attrib_sheet_data_get_component_table (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the component table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the component table of a sheet data structure to the
+ *  given value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] table The new value of the component table.
+ */
 void
 attrib_sheet_data_set_component_table (SHEET_DATA *data,
                                        TABLE** table)
