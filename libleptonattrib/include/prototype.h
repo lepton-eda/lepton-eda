@@ -6,10 +6,10 @@ G_BEGIN_DECLS
 
 /* attrib.c */
 LeptonToplevel*
-x_window_get_toplevel ();
+attrib_get_toplevel ();
 
 void
-x_window_set_toplevel (LeptonToplevel *toplevel);
+attrib_set_toplevel (LeptonToplevel *toplevel);
 
 #ifdef ENABLE_GTK3
 void

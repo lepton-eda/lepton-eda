@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ s_toplevel_save_sheet ()
 
   g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 
-  LeptonToplevel *toplevel = x_window_get_toplevel ();
+  LeptonToplevel *toplevel = attrib_get_toplevel ();
 
   g_return_if_fail (toplevel != NULL);
 

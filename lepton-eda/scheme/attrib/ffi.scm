@@ -24,6 +24,8 @@
 
   #:export (gtk_init
 
+            attrib_set_toplevel
+
             set_verbose_mode
 
             x_fileselect_open
@@ -33,7 +35,6 @@
             attrib_window_new
             attrib_window_set_window_widget
             x_window_init
-            x_window_set_toplevel
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -45,6 +46,9 @@
   (define-lff-lib arg ... libleptonattrib))
 
 (define-lff-lib gtk_init void '(* *) libgtk)
+
+;;; attrib.c
+(define-lff attrib_set_toplevel void '(*))
 
 ;;; s_misc.c
 (define-lff set_verbose_mode void '())
@@ -58,4 +62,3 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_set_window_widget void '(*))
 (define-lff x_window_init void '())
-(define-lff x_window_set_toplevel void '(*))

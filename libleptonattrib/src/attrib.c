@@ -81,7 +81,7 @@ static LeptonToplevel *toplevel = NULL;
  *  \return The \c LeptonToplevel instance.
  */
 LeptonToplevel*
-x_window_get_toplevel ()
+attrib_get_toplevel ()
 {
   return toplevel;
 }
@@ -97,7 +97,7 @@ x_window_get_toplevel ()
  *  \param [in] val The new \c LeptonToplevel instance value.
  */
 void
-x_window_set_toplevel (LeptonToplevel *val)
+attrib_set_toplevel (LeptonToplevel *val)
 {
   toplevel = val;
 }
