@@ -83,6 +83,14 @@ attrib_sheet_data_set_component_table (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the net table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the net table of given sheet data structure.
+ *
+ *  \return The net table.
+ */
 TABLE**
 attrib_sheet_data_get_net_table (SHEET_DATA *data)
 {
@@ -90,6 +98,16 @@ attrib_sheet_data_get_net_table (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the net table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the net table of a sheet data structure to the given
+ *  value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] table The new value of the net table.
+ */
 void
 attrib_sheet_data_set_net_table (SHEET_DATA *data,
                                  TABLE** table)
