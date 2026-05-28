@@ -85,12 +85,29 @@ x_window_get_toplevel ()
 }
 
 
+/*! \brief Get the main window widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the main window widget.
+ *
+ *  \return The main window widget.
+ */
 GtkWidget*
 attrib_window_get_window_widget ()
 {
   return window;
 }
 
+/*! \brief Set the main window widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the main window widget global variable to the given
+ *  value.
+ *
+ *  \param [in] window_widget The window widget.
+ */
 void
 attrib_window_set_window_widget (GtkWidget *window_widget)
 {
