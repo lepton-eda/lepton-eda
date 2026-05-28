@@ -70,20 +70,6 @@ x_window_set_default_icon( void );
 static void
 x_window_set_title (GList* plist);
 
-static LeptonToplevel *window_toplevel = NULL;
-
-void
-x_window_set_toplevel (LeptonToplevel *toplevel)
-{
-  window_toplevel = toplevel;
-}
-
-LeptonToplevel*
-x_window_get_toplevel ()
-{
-  return window_toplevel;
-}
-
 
 /*! \brief Get the main window widget.
  *

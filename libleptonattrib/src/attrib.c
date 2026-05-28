@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2005-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,21 @@ GtkWidget *notebook;
 GtkSheet **sheets;
 GtkWidget *entry;
 GtkWidget *label;
+
+
+static LeptonToplevel *window_toplevel = NULL;
+
+LeptonToplevel*
+x_window_get_toplevel ()
+{
+  return window_toplevel;
+}
+
+void
+x_window_set_toplevel (LeptonToplevel *toplevel)
+{
+  window_toplevel = toplevel;
+}
 
 
 /*! \brief GTK callback to quit the program.

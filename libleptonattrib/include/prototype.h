@@ -5,6 +5,12 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
+LeptonToplevel*
+x_window_get_toplevel ();
+
+void
+x_window_set_toplevel (LeptonToplevel *toplevel);
+
 #ifdef ENABLE_GTK3
 void
 attrib_really_quit (GSimpleAction *action,
@@ -242,11 +248,6 @@ void x_window_add_items();
 
 void
 x_window_init ();
-
-void
-x_window_set_toplevel (LeptonToplevel *toplevel);
-LeptonToplevel*
-x_window_get_toplevel ();
 
 void
 x_window_set_title_changed (int changed);
