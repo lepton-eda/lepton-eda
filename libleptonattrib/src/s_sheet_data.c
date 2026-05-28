@@ -83,6 +83,14 @@ attrib_sheet_data_set_component_table (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of components of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of components of given sheet data structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_component_count (SHEET_DATA *data)
 {
@@ -90,6 +98,16 @@ attrib_sheet_data_get_component_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of components of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of components of a sheet data structure to the
+ *  given value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of components.
+ */
 void
 attrib_sheet_data_set_component_count (SHEET_DATA *data,
                                        int count)
@@ -98,6 +116,15 @@ attrib_sheet_data_set_component_count (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of component attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of component attribs of given sheet data
+ *  structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_component_attrib_count (SHEET_DATA *data)
 {
@@ -105,6 +132,16 @@ attrib_sheet_data_get_component_attrib_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of component attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of component attribs of a sheet data structure
+ *  to the given value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of component attribs.
+ */
 void
 attrib_sheet_data_set_component_attrib_count (SHEET_DATA *data,
                                               int count)
@@ -146,6 +183,14 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of nets of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of nets of given sheet data structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_net_count (SHEET_DATA *data)
 {
@@ -153,6 +198,16 @@ attrib_sheet_data_get_net_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of nets of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of nets of a sheet data structure to the given
+ *  value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of nets.
+ */
 void
 attrib_sheet_data_set_net_count (SHEET_DATA *data,
                                  int count)
@@ -161,6 +216,15 @@ attrib_sheet_data_set_net_count (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of net attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of net attribs of given sheet data
+ *  structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data)
 {
@@ -168,6 +232,16 @@ attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of net attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of net attribs of a sheet data structure to the
+ *  given value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of net attribs.
+ */
 void
 attrib_sheet_data_set_net_attrib_count (SHEET_DATA *data,
                                         int count)
@@ -209,6 +283,14 @@ attrib_sheet_data_set_pin_table (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of pins of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of pins of given sheet data structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_pin_count (SHEET_DATA *data)
 {
@@ -216,6 +298,16 @@ attrib_sheet_data_get_pin_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of pins of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of pins of a sheet data structure to the given
+ *  value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of pins.
+ */
 void
 attrib_sheet_data_set_pin_count (SHEET_DATA *data,
                                  int count)
@@ -224,6 +316,15 @@ attrib_sheet_data_set_pin_count (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the count of pin attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the count of pin attribs of given sheet data
+ *  structure.
+ *
+ *  \return The count.
+ */
 int
 attrib_sheet_data_get_pin_attrib_count (SHEET_DATA *data)
 {
@@ -231,6 +332,16 @@ attrib_sheet_data_get_pin_attrib_count (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the count of pin attribs of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the count of pin attribs of a sheet data structure to the
+ *  given value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] count The new count of pin attribs.
+ */
 void
 attrib_sheet_data_set_pin_attrib_count (SHEET_DATA *data,
                                         int count)
