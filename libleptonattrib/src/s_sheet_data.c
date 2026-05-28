@@ -116,6 +116,14 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
+/*! \brief Get the pin table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the pin table of given sheet data structure.
+ *
+ *  \return The pin table.
+ */
 TABLE**
 attrib_sheet_data_get_pin_table (SHEET_DATA *data)
 {
@@ -123,6 +131,16 @@ attrib_sheet_data_get_pin_table (SHEET_DATA *data)
 }
 
 
+/*! \brief Set the pin table of sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the pin table of a sheet data structure to the given
+ *  value.
+ *
+ *  \param [in] data The sheet data.
+ *  \param [in] table The new value of the pin table.
+ */
 void
 attrib_sheet_data_set_pin_table (SHEET_DATA *data,
                                  TABLE** table)
