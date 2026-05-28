@@ -55,7 +55,6 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
-SHEET_DATA *sheet_head;
 GtkWidget *window;
 GtkWidget *notebook;
 GtkSheet **sheets;
@@ -63,12 +62,36 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
+/*! \var SHEET_DATA *sheet_head
+ *
+ * The sheet data structure holding info on all schematic objects.
+ */
+SHEET_DATA *sheet_head;
+
+/*! \brief Get the main sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Returns the main sheet data instance containing information on
+ *  all schematic objects.
+ *
+ *  \return The sheet data.
+ */
 SHEET_DATA*
 attrib_get_sheet_data ()
 {
   return sheet_head;
 }
 
+/*! \brief Set the main sheet data.
+ *
+ *  \par Function Description
+ *
+ *  Sets the main sheet data instance to the given value.  The
+ *  data contains information on all schematic objects.
+ *
+ *  \param [in] sheet_data The new #SHEET_DATA instance value.
+ */
 void
 attrib_set_sheet_data (SHEET_DATA *sheet_data)
 {
