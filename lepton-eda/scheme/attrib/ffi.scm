@@ -22,10 +22,7 @@
   #:use-module (lepton ffi lff)
   #:use-module (lepton ffi lib)
 
-  #:export (gtk_init
-            gtk_widget_show_all
-
-            attrib_set_sheet_data
+  #:export (attrib_set_sheet_data
             attrib_set_toplevel
             attrib_set_window
 
@@ -78,9 +75,6 @@
 
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libleptonattrib))
-
-(define-lff-lib gtk_init void '(* *) libgtk)
-(define-lff-lib gtk_widget_show_all void '(*) libgtk)
 
 ;;; attrib.c
 (define-lff attrib_set_sheet_data void '(*))

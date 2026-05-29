@@ -33,6 +33,8 @@
              (lepton toplevel)
              (lepton version)
 
+             (schematic ffi gtk)
+
              (attrib ffi))
 
 ;;; Initialize liblepton library.
