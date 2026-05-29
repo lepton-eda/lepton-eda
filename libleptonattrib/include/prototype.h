@@ -17,6 +17,12 @@ attrib_get_toplevel ();
 void
 attrib_set_toplevel (LeptonToplevel *toplevel);
 
+GtkWidget*
+attrib_get_window ();
+
+void
+attrib_set_window (GtkWidget* window_widget);
+
 #ifdef ENABLE_GTK3
 void
 attrib_really_quit (GSimpleAction *action,
@@ -296,12 +302,6 @@ attrib_run (gpointer activate_callback,
             LeptonToplevel *toplevel);
 GtkWidget*
 attrib_window_new (gpointer app);
-
-GtkWidget*
-attrib_window_get_window_widget ();
-
-void
-attrib_window_set_window_widget (GtkWidget* window_widget);
 
 void x_window_add_items();
 

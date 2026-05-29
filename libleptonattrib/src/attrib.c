@@ -139,6 +139,36 @@ attrib_set_toplevel (LeptonToplevel *val)
 }
 
 
+/*! \brief Get the main window widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the main window widget.
+ *
+ *  \return The main window widget.
+ */
+GtkWidget*
+attrib_get_window ()
+{
+  return window;
+}
+
+/*! \brief Set the main window widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the main window widget global variable to the given
+ *  value.
+ *
+ *  \param [in] window_widget The window widget.
+ */
+void
+attrib_set_window (GtkWidget *window_widget)
+{
+  window = window_widget;
+}
+
+
 /*! \brief GTK callback to quit the program.
  *
  * This is called when the user quits the program using the UI. The

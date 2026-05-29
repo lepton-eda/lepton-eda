@@ -27,6 +27,7 @@
 
             attrib_set_sheet_data
             attrib_set_toplevel
+            attrib_set_window
 
             set_verbose_mode
 
@@ -65,7 +66,6 @@
 
             attrib_run
             attrib_window_new
-            attrib_window_set_window_widget
             x_window_add_items
             x_window_init
             x_window_set_title
@@ -85,6 +85,7 @@
 ;;; attrib.c
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_set_toplevel void '(*))
+(define-lff attrib_set_window void '(*))
 
 ;;; s_misc.c
 (define-lff set_verbose_mode void '())
@@ -132,7 +133,6 @@
 ;;; x_window.c
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_new '* '(*))
-(define-lff attrib_window_set_window_widget void '(*))
 (define-lff x_window_add_items void '())
 (define-lff x_window_init void '())
 (define-lff x_window_set_title void '(*))

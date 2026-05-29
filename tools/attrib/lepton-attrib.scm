@@ -87,7 +87,7 @@ Lepton EDA homepage: ~S
   (define *pages
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
-  (attrib_window_set_window_widget *window-widget)
+  (attrib_set_window *window-widget)
 
   (attrib_set_toplevel *toplevel)
 
