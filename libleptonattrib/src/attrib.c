@@ -55,7 +55,6 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
-GtkWidget *window;
 GtkWidget *notebook;
 GtkSheet **sheets;
 GtkWidget *entry;
@@ -137,6 +136,13 @@ attrib_set_toplevel (LeptonToplevel *val)
 {
   toplevel = val;
 }
+
+
+/*! \var GtkWidget *window
+ *
+ * The main window widget.
+ */
+GtkWidget *window;
 
 
 /*! \brief Get the main window widget.
