@@ -412,8 +412,27 @@ callback_edit_delete_attrib_wrapper (GSimpleAction *action,
 }
 
 
+/*! \var static GCallback callback_visibility_invisible
+ *
+ * The callback set in Scheme to set attribute visibility to
+ * invisible.
+ */
 static GCallback callback_visibility_invisible = NULL;
 
+
+/*! \brief C wrapper for callback_visibility_invisible().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback
+ *  callback_visibility_invisible() which is assigned in Scheme.
+ *  The static wrapper is used to implement corresponding menu
+ *  item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
 static void
 callback_visibility_invisible_wrapper (GSimpleAction *action,
                                        GVariant *parameter,
