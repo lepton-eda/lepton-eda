@@ -214,14 +214,14 @@ Lepton EDA homepage: ~S
     (gtk_window_set_title
      *window-widget
      (string->pointer
-      (if (= page-count 1)
-          (string-append
-           (basename (page-filename (car (active-pages))))
-           " - "
-           %program-basename)
-          (if (> page-count 1)
-              (string-append (G_ "Multiple files") " - " %program-basename)
-              %program-basename)))))
+      (cond
+       ((= page-count 1)
+        (string-append (basename (page-filename (car (active-pages))))
+                       " - "
+                       %program-basename))
+       ((> page-count 1)
+        (string-append (G_ "Multiple files") " - " %program-basename))
+       (else %program-basename)))))
 
   ;; Set default icon.
   (gtk_window_set_default_icon_name (string->pointer %theme-icon-name))
