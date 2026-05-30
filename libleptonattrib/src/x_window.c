@@ -353,8 +353,25 @@ callback_file_quit_wrapper (GSimpleAction *action,
 }
 
 
+/*! \var static GCallback callback_edit_add_attrib
+ *
+ * The callback set in Scheme to add an attrib.
+ */
 static GCallback callback_edit_add_attrib = NULL;
 
+
+/*! \brief C wrapper for callback_edit_add_attrib().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_edit_add_attrib()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
 static void
 callback_edit_add_attrib_wrapper (GSimpleAction *action,
                                   GVariant *parameter,
