@@ -294,8 +294,25 @@ callback_file_save_wrapper (GSimpleAction *action,
 }
 
 
+/*! \var static GCallback callback_file_export_csv
+ *
+ * The callback set in Scheme to export data in CSV format.
+ */
 static GCallback callback_file_export_csv = NULL;
 
+
+/*! \brief C wrapper for callback_file_export_csv().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_export_csv()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
 static void
 callback_file_export_csv_wrapper (GSimpleAction *action,
                                   GVariant *parameter,
