@@ -42,6 +42,7 @@
              (attrib ffi))
 
 
+(define %program-basename (basename (car (program-arguments))))
 (define %theme-icon-name "lepton-attrib")
 
 
@@ -74,7 +75,7 @@ Options:
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
-          (basename (car (program-arguments)))
+          %program-basename
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
 
@@ -208,8 +209,7 @@ Lepton EDA homepage: ~S
     (x_dialog_missing_sym))
 
   ;; Set the main window's title.
-  (let ((program-name (basename (car (program-arguments))))
-        (page-count (length (active-pages))))
+  (let ((page-count (length (active-pages))))
     (gtk_window_set_title
      *window-widget
      (string->pointer
@@ -217,10 +217,10 @@ Lepton EDA homepage: ~S
           (string-append
            (basename (page-filename (car (active-pages))))
            " - "
-           program-name)
+           %program-basename)
           (if (> page-count 1)
-              (string-append (G_ "Multiple files") " - " program-name)
-              program-name)))))
+              (string-append (G_ "Multiple files") " - " %program-basename)
+              %program-basename)))))
 
   ;; Set default icon.
   (gtk_window_set_default_icon_name (string->pointer %theme-icon-name))
