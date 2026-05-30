@@ -261,9 +261,28 @@ menu_edit_delattrib()
   x_dialog_delattrib();
 }
 
+
 /* Menu callbacks */
+
+/*! \var static GCallback callback_file_quit
+ *
+ * The callback set in Scheme to quit the program.
+ */
 static GCallback callback_file_quit = NULL;
 
+
+/*! \brief C wrapper for callback_file_quit().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_quit() which
+ *  is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
 static void
 callback_file_quit_wrapper (GSimpleAction *action,
                             GVariant *parameter,
@@ -273,6 +292,16 @@ callback_file_quit_wrapper (GSimpleAction *action,
 }
 
 
+/*! \brief Set menu item callback by name.
+ *
+ *  \par Function Description
+ *
+ *  Sets \p callback for a menu item denoted by \p name.  The
+ *  function is used to set menu callbacks in Scheme.
+ *
+ *  \param name [in] A name associated with a menu item action.
+ *  \param callback [in] The callback to set.
+ */
 void
 attrib_window_set_menu_callback (char *name,
                                  GCallback callback)
