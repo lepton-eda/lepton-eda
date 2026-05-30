@@ -263,8 +263,25 @@ menu_edit_delattrib()
 
 
 /* Menu callbacks */
+/*! \var static GCallback callback_file_save
+ *
+ * The callback set in Scheme to save files.
+ */
 static GCallback callback_file_save = NULL;
 
+
+/*! \brief C wrapper for callback_file_save().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_save() which
+ *  is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
 static void
 callback_file_save_wrapper (GSimpleAction *action,
                             GVariant *parameter,
