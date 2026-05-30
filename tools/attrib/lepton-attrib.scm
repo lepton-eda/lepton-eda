@@ -64,7 +64,7 @@
   (format #t
           (G_ "Usage: ~A [OPTIONS] FILE ...
 
-lepton-attrib: Lepton EDA attribute editor.
+~A: Lepton EDA attribute editor.
 Presents schematic attributes in easy-to-edit spreadsheet format.
 
 Options:
@@ -75,6 +75,7 @@ Options:
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
+          %program-basename
           %program-basename
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
