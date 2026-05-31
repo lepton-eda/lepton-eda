@@ -98,6 +98,16 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data)
 }
 
 
+/*! \brief Get a sheet by number.
+ *
+ *  \par Function Description
+ *
+ *  Returns a sheet of the \c sheets array by given number.
+ *
+ *  \param [in] i The number of the sheet.
+ *
+ *  \return The sheet.
+ */
 GtkSheet*
 attrib_get_sheet (int i)
 {
