@@ -98,6 +98,13 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data)
 }
 
 
+/*! \brief Get the number of sheets.
+ *
+ *  \par Function Description
+ *
+ *  Returns the number of sheets defined in the global variable
+ *  #NUM_SHEETS.
+ */
 int
 attrib_get_sheets_number ()
 {
