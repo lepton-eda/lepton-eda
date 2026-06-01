@@ -61,6 +61,14 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
+/*! \brief Get the main window notebook.
+ *
+ *  \par Function Description
+ *
+ *  Returns the main window notebook.
+ *
+ *  \return The notebook.
+ */
 GtkWidget*
 attrib_get_notebook ()
 {
