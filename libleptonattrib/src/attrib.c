@@ -55,10 +55,17 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
-GtkWidget *notebook;
 GtkSheet **sheets;
 GtkWidget *entry;
 GtkWidget *label;
+
+
+
+/*! \var GtkWidget *notebook
+ *
+ * The main window notebook.
+ */
+GtkWidget *notebook;
 
 
 /*! \brief Get the main window notebook.
