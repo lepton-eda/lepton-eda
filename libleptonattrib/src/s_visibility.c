@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,13 +82,16 @@
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void
 #ifdef ENABLE_GTK3
+void
 s_visibility_set_invisible (GSimpleAction *action,
                             GVariant *parameter,
                             gpointer user_data)
 #else
-s_visibility_set_invisible ()
+void
+s_visibility_set_invisible (gpointer action,
+                            gpointer parameter,
+                            gpointer user_data)
 #endif
 {
   gint i, j;
@@ -159,13 +162,16 @@ s_visibility_set_invisible ()
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void
 #ifdef ENABLE_GTK3
+void
 s_visibility_set_name_only (GSimpleAction *action,
                             GVariant *parameter,
                             gpointer user_data)
 #else
-s_visibility_set_name_only ()
+void
+s_visibility_set_name_only (gpointer action,
+                            gpointer parameter,
+                            gpointer user_data)
 #endif
 {
   gint i, j;
@@ -226,13 +232,16 @@ s_visibility_set_name_only ()
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void
 #ifdef ENABLE_GTK3
+void
 s_visibility_set_value_only (GSimpleAction *action,
                              GVariant *parameter,
                              gpointer user_data)
 #else
-s_visibility_set_value_only ()
+void
+s_visibility_set_value_only (gpointer action,
+                             gpointer parameter,
+                             gpointer user_data)
 #endif
 {
   gint i, j;
@@ -295,13 +304,16 @@ s_visibility_set_value_only ()
  * variable "sheet".
  *
  */
-void
 #ifdef ENABLE_GTK3
+void
 s_visibility_set_name_and_value (GSimpleAction *action,
                                  GVariant *parameter,
                                  gpointer user_data)
 #else
-s_visibility_set_name_and_value ()
+void
+s_visibility_set_name_and_value (gpointer action,
+                                 gpointer parameter,
+                                 gpointer user_data)
 #endif
 {
   gint i, j;

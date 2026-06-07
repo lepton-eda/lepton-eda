@@ -5,11 +5,20 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
+GtkWidget*
+attrib_get_notebook ();
+
 SHEET_DATA*
 attrib_get_sheet_data ();
 
 void
 attrib_set_sheet_data (SHEET_DATA *sheet_data);
+
+GtkSheet*
+attrib_get_sheet (int i);
+
+int
+attrib_get_sheets_number ();
 
 LeptonToplevel*
 attrib_get_toplevel ();
@@ -22,17 +31,6 @@ attrib_get_window ();
 
 void
 attrib_set_window (GtkWidget* window_widget);
-
-#ifdef ENABLE_GTK3
-void
-attrib_really_quit (GSimpleAction *action,
-                    GVariant *parameter,
-                    gpointer user_data);
-#else
-gboolean attrib_really_quit(void);
-#endif
-
-gint attrib_quit(gint return_code);
 
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
@@ -158,18 +156,6 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
                                TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-void
-s_toplevel_verify_design (LeptonToplevel *toplevel);
-
-void
-#ifdef ENABLE_GTK3
-s_toplevel_save_sheet (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data);
-#else
-s_toplevel_save_sheet ();
-#endif
-
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void
@@ -256,10 +242,22 @@ s_visibility_set_name_and_value (GSimpleAction *action,
                                  GVariant *parameter,
                                  gpointer user_data);
 #else
-void s_visibility_set_invisible();
-void s_visibility_set_name_only();
-void s_visibility_set_value_only();
-void s_visibility_set_name_and_value();
+void
+s_visibility_set_invisible (gpointer action,
+                            gpointer parameter,
+                            gpointer user_data);
+void
+s_visibility_set_name_only (gpointer action,
+                            gpointer parameter,
+                            gpointer user_data);
+void
+s_visibility_set_value_only (gpointer action,
+                             gpointer parameter,
+                             gpointer user_data);
+void
+s_visibility_set_name_and_value (gpointer action,
+                                 gpointer parameter,
+                                 gpointer user_data);
 #endif
 
 void s_visibility_set_cell(gint cur_page, gint row, gint col,
@@ -269,16 +267,25 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
 void x_dialog_newattrib();
 void x_dialog_delattrib();
 void x_dialog_missing_sym();
-void x_dialog_unsaved_data();
+
+GtkWidget*
+x_dialog_unsaved_data ();
+
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
+
 #ifdef ENABLE_GTK3
-void x_dialog_about_dialog (GSimpleAction *action,
-                            GVariant *parameter,
-                            gpointer user_data);
+void
+x_dialog_about_dialog (GSimpleAction *action,
+                       GVariant *parameter,
+                       gpointer user_data);
 #else
-void x_dialog_about_dialog();
+void
+x_dialog_about_dialog (gpointer action,
+                       gpointer parameter,
+                       gpointer user_data);
 #endif
+
 void x_dialog_export_file();
 
 /* ------------- x_gtksheet.c ------------- */
@@ -303,13 +310,16 @@ attrib_run (gpointer activate_callback,
 GtkWidget*
 attrib_window_new (gpointer app);
 
+void
+attrib_window_sheets_new ();
+
+void
+attrib_window_set_menu_callback (char *name,
+                                 GCallback callback);
 void x_window_add_items();
 
 void
 x_window_init ();
-
-void
-x_window_set_title (GList* plist);
 
 void
 x_window_set_title_changed (int changed);

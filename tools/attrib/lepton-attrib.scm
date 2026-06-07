@@ -19,15 +19,22 @@
 
 (use-modules (ice-9 getopt-long)
              (ice-9 receive)
+             (rnrs bytevectors)
              (srfi srfi-1)
              (system foreign)
 
+             (lepton config)
+             (lepton ffi boolean)
              (lepton ffi glib)
+             (lepton ffi gobject)
              (lepton ffi)
              (lepton file-system)
              (lepton init)
              (lepton log)
+             (lepton page foreign)
              (lepton page)
+             (lepton object foreign)
+             (lepton object)
              (lepton rc)
              (lepton toplevel foreign)
              (lepton toplevel)
@@ -36,6 +43,11 @@
              (schematic ffi gtk)
 
              (attrib ffi))
+
+
+(define %program-basename (basename (car (program-arguments))))
+(define %theme-icon-name "lepton-attrib")
+
 
 ;;; Initialize liblepton library.
 (init-liblepton)
@@ -55,7 +67,7 @@
   (format #t
           (G_ "Usage: ~A [OPTIONS] FILE ...
 
-lepton-attrib: Lepton EDA attribute editor.
+~A: Lepton EDA attribute editor.
 Presents schematic attributes in easy-to-edit spreadsheet format.
 
 Options:
@@ -66,7 +78,8 @@ Options:
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
-          (basename (car (program-arguments)))
+          %program-basename
+          %program-basename
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
 
@@ -83,6 +96,283 @@ Lepton EDA homepage: ~S
   (process-gafrc "lepton-attrib" name))
 
 
+;;; Verifies the entire design by looping through all objects in
+;;; the design looking for missing components, that is, those
+;;; components for which no corresponding symbol files was found.
+(define (design-has-missing-symbols?)
+  (define (missing-symbol? object)
+    ;; Look for object, and verify that it has a symbol file
+    ;; attached and signal that problem exists.
+    (and (component? object)
+         (true? (lepton_component_object_get_missing
+                 (object->pointer object)))))
+
+  (define (page-with-missing-symbol? page)
+    (any missing-symbol? (page-contents page)))
+
+  (any page-with-missing-symbol? (active-pages)))
+
+
+;;; Save main window's geometry to the cache config context.
+;;; Almost the same function as in the module (schematic window).
+(define (save-geometry)
+  (define *main-window (attrib_get_window))
+  (define (get-int bv)
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))
+  (define x-bv (make-bytevector (sizeof int) 0))
+  (define y-bv (make-bytevector (sizeof int) 0))
+  (define width-bv (make-bytevector (sizeof int) 0))
+  (define height-bv (make-bytevector (sizeof int) 0))
+
+  (gtk_window_get_position *main-window
+                           (bytevector->pointer x-bv)
+                           (bytevector->pointer y-bv))
+
+  (gtk_window_get_size *main-window
+                       (bytevector->pointer width-bv)
+                       (bytevector->pointer height-bv))
+
+  (let ((config (cache-config-context))
+        (x (get-int x-bv))
+        (y (get-int y-bv))
+        (width (get-int width-bv))
+        (height (get-int height-bv)))
+    (set-config! config "attrib.window-geometry" "x" x)
+    (set-config! config "attrib.window-geometry" "y" y)
+    (set-config! config "attrib.window-geometry" "width" width)
+    (set-config! config "attrib.window-geometry" "height" height)
+
+    (config-save! config)))
+
+
+(define (save-page page filename)
+  "Saves PAGE under FILENAME returning #t on success, or #f on
+failure."
+  (define *page (check-page page 1))
+  (true? (f_save *page (string->pointer filename) %null-pointer)))
+
+
+;;; Saves all toplevel pages.
+(define (save-pages)
+  (define (save page)
+    (let ((filename (page-filename page)))
+      (if (save-page page filename)
+          (begin
+            (log! 'message (G_ "Saved ~S") filename)
+            ;; Reset the changed state of page.
+            (set-page-dirty! page #f))
+
+          (log! 'message (G_ "Could NOT save ~S") filename))))
+
+  (for-each save (active-pages)))
+
+
+;;; Copies data from gtksheet into LeptonToplevel struct.  The
+;;; function is called when the user invokes File -> Save.  It
+;;; first places all data from gtksheet into SHEET_DATA.  Then it
+;;; loops through all pages and saves them.
+(define (save-sheet)
+  (define *toplevel (attrib_get_toplevel))
+
+  (when (null-pointer? *toplevel)
+    (error "NULL toplevel."))
+
+  ;; Read data from gtksheet into SHEET_DATA.
+  (s_sheet_data_gtksheet_to_sheetdata)
+
+  ;; Iterate over all pages in design.
+  (for-each
+   (lambda (*page)
+     ;; Only traverse pages which are toplevel.
+     (when (zero? (lepton_page_get_page_control *page))
+       ;; Add all objects from page.
+       (s_toplevel_sheetdata_to_toplevel *toplevel *page)))
+   (glist->list
+    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
+    identity))
+
+  ;; Save all pages in design.
+  (save-pages)
+  (s_sheet_data_set_changed (attrib_get_sheet_data) FALSE))
+
+
+(define (callback-file-save *action *parameter *data)
+  (save-sheet))
+(define *callback-file-save
+  (procedure->pointer void callback-file-save '(* * *)))
+
+
+(define (export-csv)
+  "Export component table info in the CSV format."
+  (define *notebook (attrib_get_notebook))
+  (define current-page-id (gtk_notebook_get_current_page *notebook))
+
+  ;; Check that we are on components page.
+  (if (zero? current-page-id)
+      (x_dialog_export_file)
+      ;; We only support export of components now
+      (x_dialog_unimplemented_feature)))
+
+
+(define (callback-file-export-csv *action *parameter *data)
+  (export-csv))
+(define *callback-file-export-csv
+  (procedure->pointer void callback-file-export-csv '(* * *)))
+
+
+(define (quit-program return-code)
+  "Unconditionally quit the program with the given RETURN-CODE."
+  (s_clib_free)
+
+  (unless %m4-use-gtk3
+    (gtk_main_quit))
+
+  (exit return-code))
+
+
+
+(define (unsaved-data-dialog)
+  (define *dialog (x_dialog_unsaved_data))
+
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
+
+  (let ((response (gtk_dialog_run *dialog)))
+    (cond
+     ((= response GTK_RESPONSE_NO)
+      (quit-program 0))
+     ((= response GTK_RESPONSE_YES)
+      (save-sheet)
+      (quit-program 0))
+     (else #f)))
+
+  (gtk_widget_destroy *dialog))
+
+
+;;; Quit the program using the UI. On execution, the function
+;;; checks for unsaved changes before calling quit-program() to
+;;; quit the program.
+(define (callback-file-quit *action *parameter *data)
+  (save-geometry)
+  ;; Deactivate the current cell to trigger "deactivate" signal.
+  ;; This allows changing of the sheet_head->CHANGED flag in the
+  ;; on_deactivate() handler function if needed.
+  (for-each
+   (lambda (i)
+     (let ((*sheet (attrib_get_sheet i)))
+       (unless (null-pointer? *sheet)
+         (gtk_sheet_set_active_cell *sheet -1 -1))))
+   (iota (attrib_get_sheets_number)))
+
+  (if (true? (s_sheet_data_changed (attrib_get_sheet_data)))
+      (unsaved-data-dialog)
+      (quit-program 0)))
+
+(define *callback-file-quit
+  (procedure->pointer void callback-file-quit '(* * *)))
+
+
+(define (add-attrib)
+  (define *notebook (attrib_get_notebook))
+  (define current-page-id (gtk_notebook_get_current_page *notebook))
+
+  ;; Check that we are on components page.
+  (when (zero? current-page-id)
+    (x_dialog_newattrib)))
+
+
+(define (callback-edit-add-attrib *action *parameter *data)
+  (add-attrib))
+(define *callback-edit-add-attrib
+  (procedure->pointer void callback-edit-add-attrib '(* * *)))
+
+
+(define (delete-attrib)
+  (x_dialog_delattrib))
+
+
+(define (callback-edit-delete-attrib *action *parameter *data)
+  (delete-attrib))
+(define *callback-edit-delete-attrib
+  (procedure->pointer void callback-edit-delete-attrib '(* * *)))
+
+(define (callback-visibility-invisible *action *parameter *data)
+  (s_visibility_set_invisible *action *parameter *data))
+(define *callback-visibility-invisible
+  (procedure->pointer void callback-visibility-invisible '(* * *)))
+
+(define (callback-visibility-name-only *action *parameter *data)
+  (s_visibility_set_name_only *action *parameter *data))
+(define *callback-visibility-name-only
+  (procedure->pointer void callback-visibility-name-only '(* * *)))
+
+(define (callback-visibility-value-only *action *parameter *data)
+  (s_visibility_set_value_only *action *parameter *data))
+(define *callback-visibility-value-only
+  (procedure->pointer void callback-visibility-value-only '(* * *)))
+
+(define (callback-visibility-name-value *action *parameter *data)
+  (s_visibility_set_name_and_value *action *parameter *data))
+(define *callback-visibility-name-value
+  (procedure->pointer void callback-visibility-name-value '(* * *)))
+
+(define (callback-help-about *action *parameter *data)
+  (x_dialog_about_dialog *action *parameter *data))
+(define *callback-help-about
+  (procedure->pointer void callback-help-about '(* * *)))
+
+
+(define (init-callbacks)
+  (attrib_window_set_menu_callback (string->pointer "file-save")
+                                   *callback-file-save)
+  (attrib_window_set_menu_callback (string->pointer "file-export-csv")
+                                   *callback-file-export-csv)
+  (attrib_window_set_menu_callback (string->pointer "file-quit")
+                                   *callback-file-quit)
+  (attrib_window_set_menu_callback (string->pointer "edit-add-attrib")
+                                   *callback-edit-add-attrib)
+  (attrib_window_set_menu_callback (string->pointer "edit-delete-attrib")
+                                   *callback-edit-delete-attrib)
+  (attrib_window_set_menu_callback (string->pointer "visibility-invisible")
+                                   *callback-visibility-invisible)
+  (attrib_window_set_menu_callback (string->pointer "visibility-name-only")
+                                   *callback-visibility-name-only)
+  (attrib_window_set_menu_callback (string->pointer "visibility-value-only")
+                                   *callback-visibility-value-only)
+  (attrib_window_set_menu_callback (string->pointer "visibility-name-value")
+                                   *callback-visibility-name-value)
+  (attrib_window_set_menu_callback (string->pointer "help-about")
+                                   *callback-help-about))
+
+(define (init-window)
+  (define *window-widget (attrib_get_window))
+  (define cache-config (cache-config-context))
+  (define x (config-int cache-config "attrib.window-geometry" "x"))
+  (define y (config-int cache-config "attrib.window-geometry" "y"))
+  (define width
+    (config-int cache-config "attrib.window-geometry" "width" ))
+  (define height
+    (config-int cache-config "attrib.window-geometry" "height"))
+
+  (g_signal_connect *window-widget
+                    (string->pointer "delete_event")
+                    *callback-file-quit
+                    %null-pointer)
+
+  ;; Init menu functions.
+  (init-callbacks)
+
+  (x_window_init)
+
+  ;; Create the array of sheets.
+  (attrib_window_sheets_new)
+
+  ;; Restore main window's geometry.
+  (gtk_window_move *window-widget x y)
+
+  (when (and (> width 0) (> height 0))
+    (gtk_window_resize *window-widget width height)))
+
+
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
   (define *sheet-data (s_sheet_data_new))
@@ -94,7 +384,7 @@ Lepton EDA homepage: ~S
   (attrib_set_toplevel *toplevel)
 
   ;; Initialize GTK window.
-  (x_window_init)
+  (init-window)
 
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
@@ -178,9 +468,26 @@ Lepton EDA homepage: ~S
   ;; function to update the GtkSheet itself.
   (x_window_add_items)
   ;; Verify correctness of entire design.
-  (s_toplevel_verify_design *toplevel)
+  (when (design-has-missing-symbols?)
+    ;; Dialog gives user option to quit.
+    (x_dialog_missing_sym))
 
-  (x_window_set_title *pages)
+  ;; Set the main window's title.
+  (let ((page-count (length (active-pages))))
+    (gtk_window_set_title
+     *window-widget
+     (string->pointer
+      (cond
+       ((= page-count 1)
+        (string-append (basename (page-filename (car (active-pages))))
+                       " - "
+                       %program-basename))
+       ((> page-count 1)
+        (string-append (G_ "Multiple files") " - " %program-basename))
+       (else %program-basename)))))
+
+  ;; Set default icon.
+  (gtk_window_set_default_icon_name (string->pointer %theme-icon-name))
 
   (gtk_widget_show_all *window-widget))
 

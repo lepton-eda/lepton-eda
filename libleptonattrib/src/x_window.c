@@ -54,18 +54,11 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-/*------------------------------------------------------------------
- * Gattrib specific defines
- *------------------------------------------------------------------*/
-#define GATTRIB_THEME_ICON_NAME "lepton-attrib"
 
 #ifndef ENABLE_GTK3
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 #endif
-
-static void
-x_window_set_default_icon( void );
 
 
 static GtkWidget*
@@ -77,6 +70,23 @@ separator_new ()
   return gtk_vseparator_new ();
 #endif
 }
+
+
+/*! \brief Create the array of sheets.
+ *
+ *  \par Function Description
+ *
+ *  Malloc -- but don't fill out -- space for sheets.  This
+ *  basically sets up the overhead for the sheets.  The memory for
+ *  the actual sheet cells is allocated later, when
+ *  gtk_sheet_new() is invoked.
+ */
+void
+attrib_window_sheets_new ()
+{
+  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
+}
+
 
 /*! \brief Initialises the toplevel gtksheet
  *
@@ -92,12 +102,6 @@ x_window_init ()
 {
   GtkWidget *menu_bar;
   GtkWidget *main_vbox;
-
-  /* Set default icon */
-  x_window_set_default_icon();
-
-  g_signal_connect(window, "delete_event",
-                   G_CALLBACK (attrib_really_quit), 0);
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */
   /* -----  widgets into a vertical column.  ----- */
@@ -177,101 +181,325 @@ x_window_init ()
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
 
-  /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
-  /* This basically sets up the overhead for the sheets, as I understand
-   * it.  The memory for the actual sheet cells is allocated later,
-   * when gtk_sheet_new is invoked, I think.  */
-  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
-
-
-  /* Restore main window's geometry:
-  */
-  EdaConfig* cfg = eda_config_get_cache_context();
-
-  gint x = eda_config_get_int (cfg, "attrib.window-geometry", "x", NULL);
-  gint y = eda_config_get_int (cfg, "attrib.window-geometry", "y", NULL);
-
-  gtk_window_move (GTK_WINDOW (window), x, y);
-
-  gint width  = eda_config_get_int (cfg, "attrib.window-geometry", "width",  NULL);
-  gint height = eda_config_get_int (cfg, "attrib.window-geometry", "height", NULL);
-
-  if (width > 0 && height > 0)
-  {
-    gtk_window_resize (GTK_WINDOW (window), width, height);
-  }
-
 } /* x_window_init() */
 
 
-/*!
- * \brief File->Export CSV menu item
+/* Menu callbacks */
+/*! \var static GCallback callback_file_save
  *
- * Implement the File->Export CSV menu item
+ * The callback set in Scheme to save files.
+ */
+static GCallback callback_file_save = NULL;
+
+
+/*! \brief C wrapper for callback_file_save().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_save() which
+ *  is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
  */
 static void
-#ifdef ENABLE_GTK3
-menu_file_export_csv (GSimpleAction *action,
-                      GVariant *parameter,
-                      gpointer user_data)
-#else
-menu_file_export_csv()
-#endif
+callback_file_save_wrapper (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
 {
-  gint cur_page;
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-    x_dialog_export_file();
-  } else {
-    x_dialog_unimplemented_feature();  /* We only support export
-                                          of components now */
-  }
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_save) (action, parameter, user_data);
 }
 
-/*!
- * \brief Edit->New attrib menu item
+
+/*! \var static GCallback callback_file_export_csv
  *
- * Implement the New attrib menu item
+ * The callback set in Scheme to export data in CSV format.
+ */
+static GCallback callback_file_export_csv = NULL;
+
+
+/*! \brief C wrapper for callback_file_export_csv().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_export_csv()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
  */
 static void
-#ifdef ENABLE_GTK3
-menu_edit_newattrib (GSimpleAction *action,
-                     GVariant *parameter,
-                     gpointer user_data)
-#else
-menu_edit_newattrib()
-#endif
+callback_file_export_csv_wrapper (GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer user_data)
 {
-  gint cur_page;
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-    x_dialog_newattrib();  /* This creates dialog box  */
-  }
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_export_csv) (action, parameter, user_data);
 }
 
-/*!
- * \brief Edit->Delete Attribute menu item
+
+/*! \var static GCallback callback_file_quit
  *
- * Implements the Delete Attribute menu item
+ * The callback set in Scheme to quit the program.
+ */
+static GCallback callback_file_quit = NULL;
+
+
+/*! \brief C wrapper for callback_file_quit().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_file_quit() which
+ *  is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
  */
 static void
-#ifdef ENABLE_GTK3
-menu_edit_delattrib (GSimpleAction *action,
-                     GVariant *parameter,
-                     gpointer user_data)
-#else
-menu_edit_delattrib()
-#endif
+callback_file_quit_wrapper (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
 {
-  x_dialog_delattrib();
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_file_quit) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_edit_add_attrib
+ *
+ * The callback set in Scheme to add an attrib.
+ */
+static GCallback callback_edit_add_attrib = NULL;
+
+
+/*! \brief C wrapper for callback_edit_add_attrib().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_edit_add_attrib()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_edit_add_attrib_wrapper (GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_edit_add_attrib) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_edit_add_attrib
+ *
+ * The callback set in Scheme to delete an attrib.
+ */
+static GCallback callback_edit_delete_attrib = NULL;
+
+
+/*! \brief C wrapper for callback_edit_delete_attrib().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_edit_delete_attrib()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_edit_delete_attrib_wrapper (GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_edit_delete_attrib) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_visibility_invisible
+ *
+ * The callback set in Scheme to set attribute visibility to
+ * invisible.
+ */
+static GCallback callback_visibility_invisible = NULL;
+
+
+/*! \brief C wrapper for callback_visibility_invisible().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback
+ *  callback_visibility_invisible() which is assigned in Scheme.
+ *  The static wrapper is used to implement corresponding menu
+ *  item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_visibility_invisible_wrapper (GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_invisible) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_visibility_name_only
+ *
+ * The callback set in Scheme to set attribute visibility to
+ * show name only.
+ */
+static GCallback callback_visibility_name_only = NULL;
+
+
+/*! \brief C wrapper for callback_visibility_name_only().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback
+ *  callback_visibility_name_only() which is assigned in Scheme.
+ *  The static wrapper is used to implement corresponding menu
+ *  item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_visibility_name_only_wrapper (GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_name_only) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_visibility_value_only
+ *
+ * The callback set in Scheme to set attribute visibility to
+ * show value only.
+ */
+static GCallback callback_visibility_value_only = NULL;
+
+
+/*! \brief C wrapper for callback_visibility_value_only().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback
+ *  callback_visibility_value_only() which is assigned in Scheme.
+ *  The static wrapper is used to implement corresponding menu
+ *  item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_visibility_value_only_wrapper (GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_value_only) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_visibility_name_value
+ *
+ * The callback set in Scheme to set attribute visibility to
+ * show name and value.
+ */
+static GCallback callback_visibility_name_value = NULL;
+
+
+/*! \brief C wrapper for callback_visibility_name_value().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback
+ *  callback_visibility_name_value() which is assigned in Scheme.
+ *  The static wrapper is used to implement corresponding menu
+ *  item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_visibility_name_value_wrapper (GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_visibility_name_value) (action, parameter, user_data);
+}
+
+
+/*! \var static GCallback callback_help_about
+ *
+ * The callback set in Scheme to show the program help.
+ */
+static GCallback callback_help_about = NULL;
+
+
+/*! \brief C wrapper for callback_help_about().
+ *
+ *  \par Function Description
+ *
+ *  C wrapper function for the callback callback_help_about()
+ *  which is assigned in Scheme.  The static wrapper is used to
+ *  implement corresponding menu item.
+ *
+ *  \param action [in] GSimpleAction (GTK3), unused.
+ *  \param parameter [in] GVariant (GTK3), unused.
+ *  \param user_data [in] User data, unused.
+ */
+static void
+callback_help_about_wrapper (GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer user_data)
+{
+  ((void (*)(GSimpleAction*, GVariant*, gpointer)) callback_help_about) (action, parameter, user_data);
+}
+
+
+/*! \brief Set menu item callback by name.
+ *
+ *  \par Function Description
+ *
+ *  Sets \p callback for a menu item denoted by \p name.  The
+ *  function is used to set menu callbacks in Scheme.
+ *
+ *  \param name [in] A name associated with a menu item action.
+ *  \param callback [in] The callback to set.
+ */
+void
+attrib_window_set_menu_callback (char *name,
+                                 GCallback callback)
+{
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (callback != NULL);
+
+  if (strcmp (name, "file-save") == 0) {callback_file_save = callback;}
+  else if (strcmp (name, "file-export-csv") == 0) {callback_file_export_csv = callback;}
+  else if (strcmp (name, "file-quit") == 0) {callback_file_quit = callback;}
+  else if (strcmp (name, "edit-add-attrib") == 0) {callback_edit_add_attrib = callback;}
+  else if (strcmp (name, "edit-delete-attrib") == 0) {callback_edit_delete_attrib = callback;}
+  else if (strcmp (name, "visibility-invisible") == 0) {callback_visibility_invisible = callback;}
+  else if (strcmp (name, "visibility-name-only") == 0) {callback_visibility_name_only = callback;}
+  else if (strcmp (name, "visibility-value-only") == 0) {callback_visibility_value_only = callback;}
+  else if (strcmp (name, "visibility-name-value") == 0) {callback_visibility_name_value = callback;}
+  else if (strcmp (name, "help-about") == 0) {callback_help_about = callback;}
 }
 
 
@@ -393,16 +621,16 @@ static const gchar menu[] =
 #ifdef ENABLE_GTK3
 
 static GActionEntry app_entries[] = {
-  { "file-save", s_toplevel_save_sheet, NULL, NULL, NULL },
-  { "file-export-csv", menu_file_export_csv, NULL, NULL, NULL },
-  { "file-quit", attrib_really_quit, NULL, NULL, NULL },
-  { "edit-add-attrib", menu_edit_newattrib, NULL, NULL, NULL },
-  { "edit-delete-attrib", menu_edit_delattrib, NULL, NULL, NULL },
-  { "visibility-invisible", s_visibility_set_invisible, NULL, NULL, NULL },
-  { "visibility-name-only", s_visibility_set_name_only, NULL, NULL, NULL },
-  { "visibility-value-only", s_visibility_set_value_only, NULL, NULL, NULL },
-  { "visibility-name-value", s_visibility_set_name_and_value, NULL, NULL, NULL },
-  { "help-about", x_dialog_about_dialog, NULL, NULL, NULL },
+  { "file-save", callback_file_save_wrapper, NULL, NULL, NULL },
+  { "file-export-csv", callback_file_export_csv_wrapper, NULL, NULL, NULL },
+  { "file-quit", callback_file_quit_wrapper, NULL, NULL, NULL },
+  { "edit-add-attrib", callback_edit_add_attrib_wrapper, NULL, NULL, NULL },
+  { "edit-delete-attrib", callback_edit_delete_attrib_wrapper, NULL, NULL, NULL },
+  { "visibility-invisible", callback_visibility_invisible_wrapper, NULL, NULL, NULL },
+  { "visibility-name-only", callback_visibility_name_only_wrapper, NULL, NULL, NULL },
+  { "visibility-value-only", callback_visibility_value_only_wrapper, NULL, NULL, NULL },
+  { "visibility-name-value", callback_visibility_name_value_wrapper, NULL, NULL, NULL },
+  { "help-about", callback_help_about_wrapper, NULL, NULL, NULL },
 };
 
 
@@ -412,29 +640,29 @@ static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
   { "file", NULL, "_File"},
-  { "file-save", "document-save", "Save", "<Control>S", "", s_toplevel_save_sheet},
-  { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
+  { "file-save", "document-save", "Save", "<Control>S", "", G_CALLBACK (callback_file_save_wrapper)},
+  { "file-export-csv", NULL, "Export CSV", "", "", G_CALLBACK (callback_file_export_csv_wrapper)},
   /* { "file-print", "document-print", "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
-  { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK(attrib_really_quit)},
+  { "file-quit", "application-exit", "Quit", "<Control>Q", "", G_CALLBACK (callback_file_quit_wrapper)},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},
-  { "edit-add-attrib", NULL, "Add new attrib column", "", "", menu_edit_newattrib},
-  { "edit-delete-attrib", NULL, "Delete attrib column", "", "", menu_edit_delattrib},
+  { "edit-add-attrib", NULL, "Add new attrib column", "", "", G_CALLBACK (callback_edit_add_attrib_wrapper)},
+  { "edit-delete-attrib", NULL, "Delete attrib column", "", "", G_CALLBACK (callback_edit_delete_attrib_wrapper)},
   /* { "edit-find-attrib", "edit-find", "Find attrib value", "<Control>F", "", x_dialog_unimplemented_feature}, */
   /* { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "", x_dialog_unimplemented_feature}, */
   /* { "edit-search-for-refdes", NULL, "Search for refdes", "", "", x_dialog_unimplemented_feature}, */
 
   /* Visibility menu */
   { "visibility", NULL, "_Visibility"},
-  { "visibility-invisible", NULL, "Set selected invisible", "", "", s_visibility_set_invisible},
-  { "visibility-name-only", NULL, "Set selected name visible only", "", "", s_visibility_set_name_only},
-  { "visibility-value-only", NULL, "Set selected value visible only", "", "", s_visibility_set_value_only},
-  { "visibility-name-value", NULL, "Set selected name and value visible", "", "", s_visibility_set_name_and_value},
+  { "visibility-invisible", NULL, "Set selected invisible", "", "", G_CALLBACK (callback_visibility_invisible_wrapper)},
+  { "visibility-name-only", NULL, "Set selected name visible only", "", "", G_CALLBACK (callback_visibility_name_only_wrapper)},
+  { "visibility-value-only", NULL, "Set selected value visible only", "", "", G_CALLBACK (callback_visibility_value_only_wrapper)},
+  { "visibility-name-value", NULL, "Set selected name and value visible", "", "", G_CALLBACK (callback_visibility_name_value_wrapper)},
 
   /* Help menu */
   { "help", NULL, "_Help"},
-  { "help-about", "help-about", "About", "", "", x_dialog_about_dialog},
+  { "help-about", "help-about", "About", "", "", G_CALLBACK (callback_help_about_wrapper)},
 };
 #endif
 
@@ -612,57 +840,6 @@ x_window_add_items()
 #endif
 
   gtk_widget_show_all( GTK_WIDGET(window) );
-}
-
-
-/*! \brief Set application icon
- *
- * Setup default icon for GTK windows
- *
- *  Sets the default window icon by name, to be found in the current icon
- *  theme. The name used is \#define'd above as GATTRIB_THEME_ICON_NAME.
- */
-static void
-x_window_set_default_icon( void )
-{
-  gtk_window_set_default_icon_name( GATTRIB_THEME_ICON_NAME );
-}
-
-
-/*! \brief Set the main window's title.
- *
- *  \param plist  The list of LeptonPage objects (opened pages).
- */
-void
-x_window_set_title (GList* plist)
-{
-  g_return_if_fail (plist != NULL);
-  g_return_if_fail (window != NULL);
-
-  const gchar* prog_name = "lepton-attrib";
-  gchar* title = NULL;
-
-  if (g_list_length (plist) == 1)
-  {
-    const gchar* fpath = lepton_page_get_filename ((LeptonPage *) plist->data);
-    gchar* fname = g_path_get_basename (fpath);
-
-    title = g_strdup_printf ("%s - %s", fname, prog_name);
-
-    g_free (fname);
-  }
-  else
-  if (g_list_length (plist) > 1)
-  {
-    title = g_strdup_printf ("%s - %s", _("Multiple files"), prog_name);
-  }
-  else
-  {
-    title = g_strdup_printf ("%s", prog_name);
-  }
-
-  gtk_window_set_title (GTK_WINDOW (window), title);
-  g_free (title);
 }
 
 

@@ -55,10 +55,32 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
-GtkWidget *notebook;
 GtkSheet **sheets;
 GtkWidget *entry;
 GtkWidget *label;
+
+
+
+/*! \var GtkWidget *notebook
+ *
+ * The main window notebook.
+ */
+GtkWidget *notebook;
+
+
+/*! \brief Get the main window notebook.
+ *
+ *  \par Function Description
+ *
+ *  Returns the main window notebook.
+ *
+ *  \return The notebook.
+ */
+GtkWidget*
+attrib_get_notebook ()
+{
+  return notebook;
+}
 
 
 /*! \var SHEET_DATA *sheet_head
@@ -95,6 +117,37 @@ void
 attrib_set_sheet_data (SHEET_DATA *sheet_data)
 {
   sheet_head = sheet_data;
+}
+
+
+/*! \brief Get a sheet by number.
+ *
+ *  \par Function Description
+ *
+ *  Returns a sheet of the \c sheets array by given number.
+ *
+ *  \param [in] i The number of the sheet.
+ *
+ *  \return The sheet.
+ */
+GtkSheet*
+attrib_get_sheet (int i)
+{
+  return sheets[i];
+}
+
+
+/*! \brief Get the number of sheets.
+ *
+ *  \par Function Description
+ *
+ *  Returns the number of sheets defined in the global variable
+ *  #NUM_SHEETS.
+ */
+int
+attrib_get_sheets_number ()
+{
+  return NUM_SHEETS;
 }
 
 
@@ -172,86 +225,4 @@ void
 attrib_set_window (GtkWidget *window_widget)
 {
   window = window_widget;
-}
-
-
-/*! \brief GTK callback to quit the program.
- *
- * This is called when the user quits the program using the UI. The
- * callback is attached to the GTK window_delete event in
- * x_window_init() and attached to the File->Quit menu item in
- * x_window_create_menu().  On execution, the function checks for
- * unsaved changes before calling gattrib_quit() to quit the program.
- *
- *  \return value 0 to the shell to denote a successful quit.
- */
-#ifdef ENABLE_GTK3
-void
-attrib_really_quit (GSimpleAction *action,
-                    GVariant *parameter,
-                    gpointer user_data)
-#else
-gboolean attrib_really_quit(void)
-#endif
-{
-  /* Save main window's geometry:
-  */
-  gint x = 0;
-  gint y = 0;
-  gtk_window_get_position (GTK_WINDOW (window), &x, &y);
-
-  gint width  = 0;
-  gint height = 0;
-  gtk_window_get_size (GTK_WINDOW (window), &width, &height);
-
-  EdaConfig* cfg = eda_config_get_cache_context();
-
-  eda_config_set_int (cfg, "attrib.window-geometry", "x", x);
-  eda_config_set_int (cfg, "attrib.window-geometry", "y", y);
-  eda_config_set_int (cfg, "attrib.window-geometry", "width", width);
-  eda_config_set_int (cfg, "attrib.window-geometry", "height", height);
-
-  eda_config_save (cfg, NULL);
-
-
-  /* Deactivate the current cell to trigger "deactivate" signal.
-   * This allows changing of the sheet_head->CHANGED flag in the
-   * on_deactivate() handler function if needed.
-  */
-  for (int i = 0; i < NUM_SHEETS; ++i)
-  {
-    if (sheets[i] != NULL)
-    {
-       gtk_sheet_set_active_cell (sheets[i], -1, -1);
-    }
-  }
-
-
-  if (s_sheet_data_changed (sheet_head)) {
-    x_dialog_unsaved_data();
-  } else {
-    attrib_quit(0);
-  }
-#ifndef ENABLE_GTK3
-  return TRUE;
-#endif
-}
-
-/*------------------------------------------------------------------*/
-/*! \brief Quit the program.
- *
- *  Unconditionally quit gattrib. Flushes caches and I/O channels,
- *  calls the GTK function to quit the application then calls exit()
- *  with the appropriate return code.
- *
- *  \param return_code Value to pass to the exit() system call.
- */
-gint attrib_quit(gint return_code)
-{
-  s_clib_free();
-  g_debug ("attrib_quit: Calling gtk_main_quit().\n");
-#ifndef ENABLE_GTK3
-  gtk_main_quit();
-#endif
-  exit(return_code);
 }

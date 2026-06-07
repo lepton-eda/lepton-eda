@@ -50,138 +50,6 @@
 
 /* ===================  Public Functions  ====================== */
 
-/*! \brief Verify the entire design
- *
- * This function loops through all objects in the design looking
- * for missing components, that is, those components for which no
- * corresponding symbol files was found.
- *
- * \param toplevel The LeptonToplevel object to be verified.
- */
-void s_toplevel_verify_design (LeptonToplevel *toplevel)
-{
-  GList *p_iter;
-  const GList *o_iter;
-
-  int missing_sym_flag = 0;
-
-  for (p_iter = lepton_list_get_glist (toplevel->pages);
-       p_iter != NULL;
-       p_iter = g_list_next (p_iter)) {
-    LeptonPage *p_current = (LeptonPage*) p_iter->data;
-
-    for (o_iter = lepton_page_objects (p_current);
-         o_iter != NULL;
-         o_iter = g_list_next (o_iter)) {
-      LeptonObject *o_current = (LeptonObject*) o_iter->data;
-
-      /* --- look for object, and verify that it has a symbol file attached. ---- */
-      if (lepton_object_is_component (o_current) &&
-          lepton_component_object_get_missing (o_current))
-      {
-        missing_sym_flag = 1;  /* flag to signal that problem exists.  */
-      }
-    }
-  }
-
-  if (missing_sym_flag) {
-    x_dialog_missing_sym();  /* dialog gives user option to quit */
-  }
-}
-
-
-/*! \brief Saves all the pages of a LeptonToplevel object.
- *  \par Function Description
- *  Saves all the pages in the <B>toplevel</B> parameter.
- *
- *  \param [in] toplevel  The LeptonToplevel to save pages from.
- *  \return The number of failed tries to save a page.
- */
-static gint
-save_toplevel_pages (LeptonToplevel *toplevel)
-{
-  const GList *iter;
-  LeptonPage *p_current;
-  gint status = 0;
-
-  for ( iter = lepton_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *)iter->data;
-
-    if (f_save (p_current, lepton_page_get_filename (p_current), NULL))
-    {
-      g_message (_("Saved [%1$s]"),
-                 lepton_page_get_filename (p_current));
-      /* reset the CHANGED flag of p_current */
-      lepton_page_set_changed (p_current, 0);
-
-    } else {
-      g_message (_("Could NOT save [%1$s]"),
-                 lepton_page_get_filename (p_current));
-      /* increase the error counter */
-      status++;
-    }
-
-  }
-
-  return status;
-}
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Copy data from gtksheet into LeptonToplevel struct
- *
- * Called when the user invokes "save".  It first
- * places all data from gtksheet into SHEET_DATA.  Then it
- * loops through all pages and saves them.
- */
-void
-#ifdef ENABLE_GTK3
-s_toplevel_save_sheet (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data)
-#else
-s_toplevel_save_sheet ()
-#endif
-{
-  GList *iter;
-  LeptonPage *p_current;
-
-  g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
-
-  LeptonToplevel *toplevel = attrib_get_toplevel ();
-
-  g_return_if_fail (toplevel != NULL);
-
-  s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
-  g_debug ("s_toplevel_gtksheet_to_toplevel: "
-           "Done writing stuff from gtksheet into SHEET_DATA.\n");
-
-  /* must iterate over all pages in design */
-  for ( iter = lepton_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *)iter->data;
-    /* only traverse pages which are toplevel */
-    if (p_current->page_control == 0) {
-      s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
-    }
-  }
-
-  g_debug ("s_toplevel_gtksheet_to_toplevel: "
-           "Done writing SHEEET_DATA text back into pr_currnet.\n");
-
-  /* Save all pages in design. */
-  save_toplevel_pages (toplevel);
-  s_sheet_data_set_changed (sheet_head, FALSE);
-
-  return;
-}
-
-
 /*------------------------------------------------------------------*/
 /*! \brief Add a new attribute to the top level
  *
@@ -447,7 +315,7 @@ s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
          * places all attribs
          * found in the row into new_comp_attrib_pair_list.  */
         new_comp_attrib_pair_list = s_table_create_attrib_pair(temp_uref,
-                                                               sheet_head->component_table,
+                                                               attrib_sheet_data_get_component_table (sheet_head),
                                                                sheet_head->master_comp_list_head,
                                                                sheet_head->comp_attrib_count);
 
