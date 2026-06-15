@@ -58,15 +58,17 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 {
   STRING_LIST *local_list_item;
   char *local_name;
+  char *name_value;
 
   for (local_list_item = name_value_list;
        local_list_item != NULL;
        local_list_item = attrib_string_list_get_next (local_list_item))
   {
-    if (local_list_item->data == NULL)
+    name_value = attrib_string_list_get_data (local_list_item);
+    if (name_value == NULL)
       continue;
 
-    local_name = u_basic_breakup_string(local_list_item->data, '=', 0);
+    local_name = u_basic_breakup_string (name_value, '=', 0);
     if (strcmp(local_name, name) == 0) {
       g_free (local_name);
       return TRUE;
