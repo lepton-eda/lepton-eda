@@ -49,34 +49,19 @@
  *
  * This fcn takes an object, finds its refdes and returns it.
  * \param object Pointer to the object to search for.
+ * \param temp_uref The value of "refdes" or "uref" attribute.
  * \return For normal components, it returns a pointer to a
  *         string containing the refdes. If the component is slotted,
  *         it returns a refdes of the form
  *         refdes.slot. If no refdes is found, it returns NULL.
  */
-char *s_attrib_get_refdes(LeptonObject *object)
+char*
+s_attrib_get_refdes (LeptonObject *object,
+                     char *temp_uref)
 {
-  char *temp_uref;
   char *numslots_value;
   char *slot_value;
   LeptonObject *slot_text_object;
-
-  /*------ Try to get the refdes -----*/
-  temp_uref = lepton_attrib_search_object_attribs_by_name (object, "refdes", 0);
-  if (!temp_uref) {
-    temp_uref = lepton_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
-    if (temp_uref) {
-      fprintf (stderr, _("WARNING: "));
-      fprintf (stderr,
-               _("Found uref=%1$s, uref= is deprecated, please use refdes=\n"),
-               temp_uref);
-    } else {        /* didn't find refdes.  Report error to log. */
-      g_debug ("s_attrib_get_refdes: "
-               "Found non-graphical component with no refdes: component basename = %s\n",
-               lepton_component_object_get_basename (object));
-      return NULL;
-    }
-  }
 
   g_debug ("s_attrib_get_refdes: "
            "Found component with refdes %s.\n", temp_uref);

@@ -357,8 +357,45 @@ failure."
                        (loop (attrib_string_list_get_next *item))))))))))
 
 
+
+(define (object-refdes *object)
+  ;; Try to get the refdes.
+  (define *temp-refdes
+    (lepton_attrib_search_object_attribs_by_name
+     *object
+     (string->pointer "refdes")
+     0))
+
+  (if (null-pointer? *temp-refdes)
+      ;; Check the deprecated 'uref' attribute.
+      (let ((*temp-uref
+             (lepton_attrib_search_object_attribs_by_name
+              *object
+              (string->pointer "uref")
+              0)))
+        (if (not (null-pointer? *temp-uref))
+            (begin
+              (format (current-error-port) (G_ "WARNING: "))
+              (format (current-error-port)
+                      (G_ "Found uref=~S, uref= is deprecated, please use refdes=\n")
+                      (pointer->string *temp-uref))
+              *temp-uref)
+            (begin
+              ;; Didn't find refdes.  Report error to log.
+              (log! 'debug
+                    "component-refdes(): Found non-graphical component with no refdes: component basename = ~S"
+                    (pointer->string (lepton_component_object_get_basename *object)))
+              %null-pointer)))
+
+      *temp-refdes))
+
+
 (define (component-refdes *object)
-  (s_attrib_get_refdes *object))
+  (define *refdes (object-refdes *object))
+
+  (if (null-pointer? *refdes)
+      *refdes
+      (s_attrib_get_refdes *object *refdes)))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the

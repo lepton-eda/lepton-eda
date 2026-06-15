@@ -186,7 +186,7 @@
 (define-lff attrib_set_window void '(*))
 
 ;; s_attrib.c
-(define-lff s_attrib_get_refdes '* '(*))
+(define-lff s_attrib_get_refdes '* '(* *))
 
 ;;; s_misc.c
 (define-lff s_misc_remaining_string '* (list '* int int))
