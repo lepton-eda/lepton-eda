@@ -44,7 +44,6 @@
             attrib_set_window
 
             s_attrib_get_refdes
-            s_attrib_name_in_list
 
             s_misc_remaining_string
             set_verbose_mode
@@ -188,7 +187,6 @@
 
 ;; s_attrib.c
 (define-lff s_attrib_get_refdes '* '(*))
-(define-lff s_attrib_name_in_list int '(* *))
 
 ;;; s_misc.c
 (define-lff s_misc_remaining_string '* (list '* int int))

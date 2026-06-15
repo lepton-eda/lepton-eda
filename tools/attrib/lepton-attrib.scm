@@ -333,9 +333,29 @@ failure."
                   (attrib_string_list_get_next *list-element))))))
 
 
-
+;;; Detects "name" in STRING_LIST.
+;;;
+;;; This function is passed a STRING_LIST of name=value pairs
+;;; *NAME-VALUE-LIST, and *NAME.  Returns 1 (TRUE) if the name is
+;;; in the STRING_LIST, otherwise it returns 0 (FALSE).
 (define (name-in-list? *name-value-list *name)
-  (s_attrib_name_in_list *name-value-list *name))
+  (let loop ((*item *name-value-list))
+    (if (null-pointer? *item)
+        FALSE
+        (let ((*name-value (attrib_string_list_get_data *item)))
+          (if (null-pointer? *name-value)
+              (loop (attrib_string_list_get_next *item))
+              (let ((*found-name (u_basic_breakup_string *name-value
+                                                         (char->integer #\=)
+                                                         0)))
+                (if (string= (pointer->string *found-name)
+                             (pointer->string *name))
+                    (begin
+                      (g_free *found-name)
+                      TRUE)
+                    (begin
+                      (g_free *found-name)
+                      (loop (attrib_string_list_get_next *item))))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
