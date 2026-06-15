@@ -357,6 +357,10 @@ failure."
                        (loop (attrib_string_list_get_next *item))))))))))
 
 
+(define (component-refdes *object)
+  (s_attrib_get_refdes *object))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -470,7 +474,7 @@ failure."
                ;; lives.  Then get visibility of the new attrib
                ;; stored in the component table We'll need this
                ;; later.
-               (*refdes (g_strdup (s_attrib_get_refdes *object)))
+               (*refdes (g_strdup (component-refdes *object)))
                (row (string-list-id
                      (attrib_sheet_data_get_component_list
                       *sheet-data)
@@ -619,7 +623,7 @@ failure."
              ;; Ignore graphical components.
              (g_free *graphical)
 
-             (let ((*temp-uref (s_attrib_get_refdes *object)))
+             (let ((*temp-uref (component-refdes *object)))
                (if (not (null-pointer? *temp-uref))
                    (let ((*new-component-attrib-pair-list
                           (make-attrib-pair
@@ -867,7 +871,7 @@ failure."
        ;;      refdes:pinnumber
        ;;  4.  Stick the attribs into the LeptonToplevel data
        ;;      structure.
-       (let ((*temp-uref (s_attrib_get_refdes *object)))
+       (let ((*temp-uref (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (unless (null-pointer? *temp-uref)
            (for-each
@@ -1934,7 +1938,7 @@ Please check your design.")))
                 (not (null-pointer? (lepton_object_get_attribs *object))))
        (verbose_print (string->pointer " C"))
 
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
@@ -2033,7 +2037,7 @@ Please check your design.")))
   (for-each
    (lambda (*object)
      (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (if (not (null-pointer? *temp-refdes))
              ;; Now iterate through lower level objects looking
@@ -2100,7 +2104,7 @@ Please check your design.")))
   (for-each
    (lambda (*object)
      (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (unless (null-pointer? *temp-refdes)
            ;; Now iterate through lower level objects looking for
@@ -2172,7 +2176,7 @@ Please check your design.")))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
        ;; Don't process part if it lacks a refdes.
-       (let ((*temp-refdes (g_strdup (s_attrib_get_refdes *object))))
+       (let ((*temp-refdes (g_strdup (component-refdes *object))))
          (when (not (null-pointer? *temp-refdes))
            (verbose_print (string->pointer " C"))
            ;; Having found a component, we loop over all attribs
@@ -2366,7 +2370,7 @@ Please check your design.")))
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Don't process part if it lacks a refdes.
          (when (not (null-pointer? *temp-refdes))
            ;; Now iterate through lower level objects looking for
