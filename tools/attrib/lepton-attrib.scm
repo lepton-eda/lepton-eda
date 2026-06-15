@@ -333,6 +333,11 @@ failure."
                   (attrib_string_list_get_next *list-element))))))
 
 
+
+(define (name-in-list? *name-value-list *name)
+  (s_attrib_name_in_list *name-value-list *name))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -399,7 +404,7 @@ failure."
          (when (and (not (string= old-attrib-name "refdes"))
                     (not (string= old-attrib-name "net"))
                     (not (string= old-attrib-name "slot"))
-                    (false? (s_attrib_name_in_list
+                    (false? (name-in-list?
                              *new-component-attrib-pair-list
                              *old-attrib-name)))
            (s_string_list_add_item *complete-component-attrib-list
