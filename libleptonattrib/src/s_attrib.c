@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 
   for (local_list_item = name_value_list;
        local_list_item != NULL;
-       local_list_item = local_list_item->next) {
-
+       local_list_item = attrib_string_list_get_next (local_list_item))
+  {
     if (local_list_item->data == NULL)
       continue;
 
