@@ -433,6 +433,10 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
+(define (str-attrib-value *name-value)
+  (s_misc_remaining_string *name-value (char->integer #\=) 1))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -566,10 +570,8 @@ failure."
                                 *new-component-attrib-pair-list
                                 (attrib_string_list_get_data
                                  *local-list)))
-                        (s_misc_remaining_string
-                         (attrib_string_list_get_data *local-list)
-                         (char->integer #\=)
-                         1)
+                        (str-attrib-value
+                         (attrib_string_list_get_data *local-list))
                         %null-pointer)))
                ;; We need a better place to get this info since the
                ;; TABLE can be out of date.
@@ -2199,9 +2201,7 @@ Please check your design.")))
                              (u_basic_breakup_string *attrib-text
                                                      (char->integer #\=)
                                                      0))
-                            (*attrib-value (s_misc_remaining_string *attrib-text
-                                                                    (char->integer #\=)
-                                                                    1)))
+                            (*attrib-value (str-attrib-value *attrib-text)))
                        ;; Don't include "pinnumber" because it is
                        ;; already in other master list.  Also
                        ;; guard against pathalogical symbols which
@@ -2266,10 +2266,7 @@ Please check your design.")))
                         (u_basic_breakup_string *attrib-text
                                                 (char->integer #\=)
                                                 0))
-                       (*attrib-value
-                        (s_misc_remaining_string *attrib-text
-                                                 (char->integer #\=)
-                                                 1))
+                       (*attrib-value (str-attrib-value *attrib-text))
                        (old-visibility
                         (if (true? (lepton_text_object_is_visible *attrib))
                             VISIBLE
@@ -2381,10 +2378,7 @@ Please check your design.")))
                       (u_basic_breakup_string *attrib-text
                                               (char->integer #\=)
                                               0))
-                     (*attrib-value
-                      (s_misc_remaining_string *attrib-text
-                                               (char->integer #\=)
-                                               1)))
+                     (*attrib-value (str-attrib-value *attrib-text)))
                 ;; Don't include "netname".
                 (unless (string= (pointer->string *attrib-name) "netname")
                   (let ((row
@@ -2475,10 +2469,7 @@ Please check your design.")))
                                (u_basic_breakup_string *attrib-text
                                                        (char->integer #\=)
                                                        0))
-                              (*attrib-value
-                               (s_misc_remaining_string *attrib-text
-                                                        (char->integer #\=)
-                                                        1)))
+                              (*attrib-value (str-attrib-value *attrib-text)))
 
                          (when (and (not (string= (pointer->string *attrib-name)
                                                   "pinnumber"))
