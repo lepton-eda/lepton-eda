@@ -39,11 +39,6 @@ attrib_set_window (GtkWidget* window_widget);
 int cmp(STRING_LIST *a, STRING_LIST *b);
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
 
-/* ------------- s_attrib.c ------------- */
-char*
-s_attrib_get_refdes (LeptonObject *object,
-                     char *temp_uref);
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();

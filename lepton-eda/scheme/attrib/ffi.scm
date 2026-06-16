@@ -43,8 +43,6 @@
             attrib_get_window
             attrib_set_window
 
-            s_attrib_get_refdes
-
             s_misc_remaining_string
             set_verbose_mode
             u_basic_breakup_string
@@ -184,9 +182,6 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
-
-;; s_attrib.c
-(define-lff s_attrib_get_refdes '* '(* *))
 
 ;;; s_misc.c
 (define-lff s_misc_remaining_string '* (list '* int int))

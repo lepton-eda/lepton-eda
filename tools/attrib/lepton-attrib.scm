@@ -390,12 +390,47 @@ failure."
       *temp-refdes))
 
 
+;;; Locates the refdes associated with *OBJECT.  For normal
+;;; components, the function returns a pointer to a string
+;;; containing the refdes, or NULL if no refdes is found.  If the
+;;; component is slotted, it returns a reference designator of the
+;;; form "REFDES (slot SLOT)".  If no refdes is found, it returns
+;;; NULL.
 (define (component-refdes *object)
   (define *refdes (object-refdes *object))
 
   (if (null-pointer? *refdes)
       *refdes
-      (s_attrib_get_refdes *object *refdes)))
+
+      ;; Now append .slot to refdes if part is slotted.  Find out
+      ;; if this is a multislotted component.
+      (let ((*numslots-value
+             (lepton_attrib_search_object_attribs_by_name
+              *object
+              (string->pointer "numslots")
+              0)))
+        (if (null-pointer? *numslots-value)
+            ;; Return refdes as is.
+            *refdes
+            (let* ((*slot-object (bytevector->pointer
+                                  (make-bytevector (sizeof '*)) 0))
+                   (*slot-value (lepton_slot_search *object *slot-object)))
+              ;; This is a slotted component.  Append slot number
+              ;; to refdes.  Mark component as slotted only if it
+              ;; has a "slot" attribute.
+              (if (null-pointer? *slot-value)
+                  ;; Return refdes as is.
+                  *refdes
+                  ;; The value will be freed in external
+                  ;; functions, so let's avoid double free by
+                  ;; using g_strdup() here as Scheme frees its
+                  ;; pointers automatically.
+                  (g_strdup
+                   (string->pointer
+                    (format #f
+                            (G_ "~A (slot ~A)")
+                            (pointer->string *refdes)
+                            (pointer->string *slot-value))))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
