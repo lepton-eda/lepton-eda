@@ -863,18 +863,11 @@ failure."
               (u_basic_breakup_string *new-name-value-pair
                                       (char->integer #\=)
                                       0))
-             (*value (u_basic_breakup_string *new-name-value-pair
-                                             (char->integer #\=)
-                                             1))
-             (*new-attrib-value
-              (if (or (null-pointer? *value)
-                      (string-null? (pointer->string *value)))
-                  (begin
-                    (g_free *value)
-                    ;; u_basic_breakup_string() doesn't return
-                    ;; NULL for empty substring.
-                    %null-pointer)
-                  *value))
+             (value (str-attrib-value *new-name-value-pair))
+             (*new-attrib-value (if (or (not value)
+                                        (string-null? value))
+                                    %null-pointer
+                                    (g_strdup (string->pointer value))))
              (*old-attrib-value
               (lepton_attrib_search_attached_attribs_by_name
                *pin
