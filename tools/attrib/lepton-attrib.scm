@@ -863,11 +863,7 @@ failure."
               (u_basic_breakup_string *new-name-value-pair
                                       (char->integer #\=)
                                       0))
-             (value (str-attrib-value *new-name-value-pair))
-             (*new-attrib-value (if (or (not value)
-                                        (string-null? value))
-                                    %null-pointer
-                                    (g_strdup (string->pointer value))))
+             (new-attrib-value (str-attrib-value *new-name-value-pair))
              (*old-attrib-value
               (lepton_attrib_search_attached_attribs_by_name
                *pin
@@ -875,31 +871,31 @@ failure."
                0)))
         ;; Four cases to consider: Case 1: old and new attribs exist
         (if (and (not (null-pointer? *old-attrib-value))
-                 (not (null-pointer? *new-attrib-value))
-                 (not (string-null? (pointer->string *new-attrib-value))))
+                 new-attrib-value
+                 (not (string-null? new-attrib-value)))
             ;; Simply write new attrib into place of old one.
             (replace-attrib *pin
                             *new-attrib-name
-                            *new-attrib-value
+                            (string->pointer new-attrib-value)
                             LEAVE_VISIBILITY_ALONE
                             LEAVE_NAME_VALUE_ALONE)
             ;; Four cases to consider: Case 2: old attrib exists, new one
             ;; doesn't.
             (if (and (not (null-pointer? *old-attrib-value))
-                     (null-pointer? *new-attrib-value))
+                     (not new-attrib-value))
                 ;; Remove attrib from pin.
                 (remove-attrib *toplevel *pin *new-attrib-name)
                 ;; Four cases to consider: Case 3: No old attrib, new one
                 ;; exists.
                 (if (and (null-pointer? *old-attrib-value)
-                         (not (null-pointer? *new-attrib-value))
+                         new-attrib-value
                          ;; One last sanity check.
-                         (not (string-null? (pointer->string *new-attrib-value))))
+                         (not (string-null? new-attrib-value)))
                     ;; Add new attrib to pin.
                     (let ((name-value-pair
                            (string-append (pointer->string *new-attrib-name)
                                           "="
-                                          (pointer->string *new-attrib-value))))
+                                          new-attrib-value)))
                       (add-object-attrib (pointer->object *pin)
                                          name-value-pair
                                          INVISIBLE
@@ -911,7 +907,6 @@ failure."
         ;; Free everything and iterate.
         (g_free *new-name-value-pair)
         (g_free *new-attrib-name)
-        (g_free *new-attrib-value)
         (g_free *old-attrib-value)
         (loop (attrib_string_list_get_next *local-list))))))
 
