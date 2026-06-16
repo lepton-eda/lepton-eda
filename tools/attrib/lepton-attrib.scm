@@ -435,10 +435,8 @@ failure."
 
 (define (str-attrib-value *name-value)
   (define str (pointer->string *name-value))
-  (define value
-    (false-if-exception
-     (string-trim (substring str (1+ (string-index str #\=))))))
-  (if value (string->pointer value) %null-pointer))
+  (false-if-exception
+   (string-trim (substring str (1+ (string-index str #\=))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
@@ -563,31 +561,29 @@ failure."
                         (attrib_sheet_data_get_component_attrib_list
                          *sheet-data)
                         *new-attrib-name))
-               (*new-attrib-value
+               (new-attrib-value
                 ;; If attribute has been deleted from the sheet,
                 ;; here is where we detect that.  The attrib will
                 ;; be deleted below.
-                (if (or (= row -1)
-                        (= column -1))
-                    %null-pointer
-                    (if (true? (s_string_list_in_list
-                                *new-component-attrib-pair-list
-                                (attrib_string_list_get_data
-                                 *local-list)))
-                        (str-attrib-value
-                         (attrib_string_list_get_data *local-list))
-                        %null-pointer)))
+                (and (not (or (= row -1)
+                              (= column -1)))
+                     (true? (s_string_list_in_list
+                             *new-component-attrib-pair-list
+                             (attrib_string_list_get_data
+                              *local-list)))
+                     (str-attrib-value
+                      (attrib_string_list_get_data *local-list))))
                ;; We need a better place to get this info since the
                ;; TABLE can be out of date.
                (visibility
-                (if (null-pointer? *new-attrib-value)
+                (if (not new-attrib-value)
                     0
                     (attrib_table_get_visibility
                      (attrib_sheet_data_get_component_table *sheet-data)
                      row
                      column)))
                (show-name-value
-                (if (null-pointer? *new-attrib-value)
+                (if (not new-attrib-value)
                     0
                     (attrib_table_get_show_name_value
                      (attrib_sheet_data_get_component_table *sheet-data)
@@ -597,30 +593,30 @@ failure."
 
           ;; Four cases to consider: Case 1.
           (if (and (not (null-pointer? *old-attrib-value))
-                   (not (null-pointer? *new-attrib-value))
-                   (not (string-null? (pointer->string *new-attrib-value))))
+                   new-attrib-value
+                   (not (string-null? new-attrib-value)))
               ;; simply write new attrib into place of old one.
               (replace-attrib *object
                               *new-attrib-name
-                              *new-attrib-value
+                              (string->pointer new-attrib-value)
                               visibility
                               show-name-value)
 
               ;; Four cases to consider: Case 2.
               (if (and (not (null-pointer? *old-attrib-value))
-                       (null-pointer? *new-attrib-value))
+                       (not new-attrib-value))
                   ;; Remove attrib from component.
                   (remove-attrib *toplevel *object *old-attrib-name)
                   ;; Four cases to consider: Case 3.
                   (if (and (null-pointer? *old-attrib-value)
-                           (not (null-pointer? *new-attrib-value))
+                           new-attrib-value
                            ;; One last sanity check, then add attrib.
-                           (not (string-null? (pointer->string *new-attrib-value))))
+                           (not (string-null? new-attrib-value)))
                       ;; Add new attrib to component.
                       (let ((name-value-pair
                              (string-append (pointer->string *new-attrib-name)
                                             "="
-                                            (pointer->string *new-attrib-value))))
+                                            new-attrib-value)))
                         (add-object-attrib (pointer->object *object)
                                            name-value-pair
                                            visibility
@@ -2204,14 +2200,14 @@ Please check your design.")))
                              (u_basic_breakup_string *attrib-text
                                                      (char->integer #\=)
                                                      0))
-                            (*attrib-value (str-attrib-value *attrib-text)))
+                            (attrib-value (str-attrib-value *attrib-text)))
                        ;; Don't include "pinnumber" because it is
                        ;; already in other master list.  Also
                        ;; guard against pathalogical symbols which
                        ;; have non-attrib text inside pins.
                        (when (and (not (string= (pointer->string *attrib-name)
                                                 "pinnumber"))
-                                  (not (null-pointer? *attrib-value)))
+                                  attrib-value)
                          (s_string_list_add_item
                           (attrib_sheet_data_get_pin_attrib_list *sheet-data)
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
@@ -2268,7 +2264,7 @@ Please check your design.")))
                         (u_basic_breakup_string *attrib-text
                                                 (char->integer #\=)
                                                 0))
-                       (*attrib-value (str-attrib-value *attrib-text))
+                       (attrib-value (str-attrib-value *attrib-text))
                        (old-visibility
                         (if (true? (lepton_text_object_is_visible *attrib))
                             VISIBLE
@@ -2328,7 +2324,9 @@ Please check your design.")))
                             (attrib_table_set_attrib_value *component-table
                                                            row
                                                            column
-                                                           *attrib-value)
+                                                           (if attrib-value
+                                                               (string->pointer attrib-value)
+                                                               %null-pointer))
                             (attrib_table_set_visibility *component-table
                                                          row
                                                          column
@@ -2379,7 +2377,7 @@ Please check your design.")))
                       (u_basic_breakup_string *attrib-text
                                               (char->integer #\=)
                                               0))
-                     (*attrib-value (str-attrib-value *attrib-text)))
+                     (attrib-value (str-attrib-value *attrib-text)))
                 ;; Don't include "netname".
                 (unless (string= (pointer->string *attrib-name) "netname")
                   (let ((row
@@ -2410,7 +2408,9 @@ Please check your design.")))
                     (attrib_table_set_attrib_value *net-table
                                                    row
                                                    column
-                                                   *attrib-value)))
+                                                   (if attrib-value
+                                                       (string->pointer attrib-value)
+                                                       %null-pointer))))
                 (g_free *attrib-name)
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
@@ -2469,11 +2469,11 @@ Please check your design.")))
                                (u_basic_breakup_string *attrib-text
                                                        (char->integer #\=)
                                                        0))
-                              (*attrib-value (str-attrib-value *attrib-text)))
+                              (attrib-value (str-attrib-value *attrib-text)))
 
                          (when (and (not (string= (pointer->string *attrib-name)
                                                   "pinnumber"))
-                                    (not (null-pointer? *attrib-value)))
+                                    attrib-value)
                            ;; Don't include "pinnumber" because it
                            ;; is already in other master list.
                            ;; Also must ensure that value is
@@ -2519,7 +2519,9 @@ Please check your design.")))
                                    (attrib_table_set_attrib_value *pin-table
                                                                   row
                                                                   column
-                                                                  *attrib-value)))))
+                                                                  (if attrib-value
+                                                                      (string->pointer attrib-value)
+                                                                      %null-pointer))))))
                          (g_free *attrib-name)
                          (g_free *attrib-text))))
 
