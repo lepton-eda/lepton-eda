@@ -180,6 +180,12 @@ failure."
   (if (= visible? VISIBLE) #t #f))
 
 
+(define (str-attrib-value *name-value)
+  (define str (pointer->string *name-value))
+  (false-if-exception
+   (string-trim (substring str (1+ (string-index str #\=))))))
+
+
 ;;; Attaches an attribute produced from NAME-VALUE-PAIR to
 ;;; OBJECT applying the properties VISIBILITY and SHOW-NAME-VALUE
 ;;; to the attribute.
@@ -431,12 +437,6 @@ failure."
                             (G_ "~A (slot ~A)")
                             (pointer->string *refdes)
                             (pointer->string *slot-value))))))))))
-
-
-(define (str-attrib-value *name-value)
-  (define str (pointer->string *name-value))
-  (false-if-exception
-   (string-trim (substring str (1+ (string-index str #\=))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
