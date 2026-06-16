@@ -43,7 +43,6 @@
             attrib_get_window
             attrib_set_window
 
-            s_misc_remaining_string
             set_verbose_mode
             u_basic_breakup_string
             verbose_done
@@ -184,7 +183,6 @@
 (define-lff attrib_set_window void '(*))
 
 ;;; s_misc.c
-(define-lff s_misc_remaining_string '* (list '* int int))
 (define-lff set_verbose_mode void '())
 (define-lff u_basic_breakup_string '* (list '* int int))
 (define-lff verbose_done void '())

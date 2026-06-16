@@ -109,36 +109,6 @@ void verbose_reset_index(void)
 /*------------------------------------------------------------------
  * Gattrib specific utilities
  *------------------------------------------------------------------*/
-char *s_misc_remaining_string(gchar *string, gchar delimiter, gint count)
-{
-  gint i;
-  gchar *remaining;
-  gchar *return_value;
-
-  /* find count'th delimiter */
-  remaining = string;
-  for (i = 0; i < count; i++) {
-    remaining = strchr(remaining, delimiter);
-    if (!remaining) {
-      return (NULL);
-    }
-    remaining++;
-  }
-
-  /* skip whitespace */
-  while (*remaining == ' ') {
-    remaining++;
-  }
-  if (!(*remaining)) {
-    return (NULL);
-  }
-
-  /* copy remainder into allocated return string */
-  return_value = g_strdup(remaining);
-
-  /* return string */
-  return (return_value);
-}
 
 
 /* the delimiter is what is passed in or spaces */

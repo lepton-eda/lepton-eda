@@ -434,7 +434,11 @@ failure."
 
 
 (define (str-attrib-value *name-value)
-  (s_misc_remaining_string *name-value (char->integer #\=) 1))
+  (define str (pointer->string *name-value))
+  (define value
+    (false-if-exception
+     (string-trim (substring str (1+ (string-index str #\=))))))
+  (if value (string->pointer value) %null-pointer))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
@@ -630,7 +634,6 @@ failure."
 
           ;; free everything and iterate
           (g_free *new-attrib-name)
-          (g_free *new-attrib-value)
           (g_free *old-attrib-name)
           (g_free *old-attrib-value)
           (loop (attrib_string_list_get_next *local-list)))))))
@@ -2214,7 +2217,6 @@ Please check your design.")))
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
                           *attrib-name))
 
-                       (g_free *attrib-value)
                        (g_free *attrib-name)
                        (g_free *attrib-text))))
 
@@ -2336,8 +2338,7 @@ Please check your design.")))
                                                               column
                                                               old-show-name-value)))))
                   (g_free *attrib-name)
-                  (g_free *attrib-text)
-                  (g_free *attrib-value))))
+                  (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
    (glist->list *objects identity))
@@ -2411,8 +2412,7 @@ Please check your design.")))
                                                    column
                                                    *attrib-value)))
                 (g_free *attrib-name)
-                (g_free *attrib-text)
-                (g_free *attrib-value))))
+                (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
    (glist->list *objects identity))
@@ -2521,8 +2521,7 @@ Please check your design.")))
                                                                   column
                                                                   *attrib-value)))))
                          (g_free *attrib-name)
-                         (g_free *attrib-text)
-                         (g_free *attrib-value))))
+                         (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
                                  *child-object)
