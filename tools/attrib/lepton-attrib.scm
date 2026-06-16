@@ -870,7 +870,7 @@ failure."
                       (string-null? (pointer->string *value)))
                   (begin
                     (g_free *value)
-                    ;; s_misc_remaining_string() doesn't return
+                    ;; u_basic_breakup_string() doesn't return
                     ;; NULL for empty substring.
                     %null-pointer)
                   *value))
