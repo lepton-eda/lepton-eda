@@ -2335,10 +2335,11 @@ Please check your design.")))
               ;; Found an attribute.
               (let* ((*attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*attrib-name (*str-attrib-name *attrib-text))
+                     (name (str-attrib-name *attrib-text))
                      (attrib-value (str-attrib-value *attrib-text)))
                 ;; Don't include "netname".
-                (unless (string= (pointer->string *attrib-name) "netname")
+                (when (and name
+                           (not (string= name "netname")))
                   (let ((row
                          (string-list-id
                           (attrib_sheet_data_get_net_list *sheet-data)
@@ -2346,7 +2347,7 @@ Please check your design.")))
                         (column
                          (string-list-id
                           (attrib_sheet_data_get_net_attrib_list *sheet-data)
-                          *attrib-name)))
+                          (string->pointer name))))
                     ;; Get row and column where to put this attrib.
                     (attrib_table_set_row *net-table
                                           row
@@ -2363,14 +2364,13 @@ Please check your design.")))
                     (attrib_table_set_column_name *net-table
                                                   row
                                                   column
-                                                  *attrib-name)
+                                                  (string->pointer name))
                     (attrib_table_set_attrib_value *net-table
                                                    row
                                                    column
                                                    (if attrib-value
                                                        (string->pointer attrib-value)
                                                        %null-pointer))))
-                (g_free *attrib-name)
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
