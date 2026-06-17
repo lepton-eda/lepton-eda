@@ -2228,7 +2228,7 @@ Please check your design.")))
                 ;; Found an attribute.
                 (let* ((*attrib-text
                         (g_strdup (lepton_text_object_get_string *attrib)))
-                       (*attrib-name (*str-attrib-name *attrib-text))
+                       (name (str-attrib-name *attrib-text))
                        (attrib-value (str-attrib-value *attrib-text))
                        (old-visibility
                         (if (true? (lepton_text_object_is_visible *attrib))
@@ -2240,12 +2240,10 @@ Please check your design.")))
                   ;; Don't include "refdes" or "slot" because they
                   ;; form the row name.  Also don't include "net"
                   ;; per bug found by Steve W.  4.3.2007 -- SDB.
-                  (when (and (not (string= (pointer->string *attrib-name)
-                                           "refdes"))
-                             (not (string= (pointer->string *attrib-name)
-                                           "net"))
-                             (not (string= (pointer->string *attrib-name)
-                                           "slot")))
+                  (when (and name
+                             (not (string= name "refdes"))
+                             (not (string= name "net"))
+                             (not (string= name "slot")))
                     ;; Get row and column where to put this
                     ;; attrib.
 
@@ -2257,7 +2255,7 @@ Please check your design.")))
                           (column
                            (string-list-id
                             (attrib_sheet_data_get_component_attrib_list *sheet-data)
-                            *attrib-name)))
+                            (string->pointer name))))
                       (if (or (= row -1)
                               (= column -1))
                           (begin
@@ -2285,7 +2283,7 @@ Please check your design.")))
                             (attrib_table_set_column_name *component-table
                                                           row
                                                           column
-                                                          *attrib-name)
+                                                          (string->pointer name))
                             (attrib_table_set_attrib_value *component-table
                                                            row
                                                            column
@@ -2300,7 +2298,6 @@ Please check your design.")))
                                                               row
                                                               column
                                                               old-show-name-value)))))
-                  (g_free *attrib-name)
                   (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
