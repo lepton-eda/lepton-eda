@@ -343,9 +343,9 @@ failure."
 ;;; Detects "name" in STRING_LIST.
 ;;;
 ;;; This function is passed a STRING_LIST of name=value pairs
-;;; *NAME-VALUE-LIST, and *NAME.  Returns #t if the name is in the
+;;; *NAME-VALUE-LIST, and NAME.  Returns #t if the name is in the
 ;;; STRING_LIST, otherwise it returns #f.
-(define (name-in-list? *name-value-list *name)
+(define (name-in-list? *name-value-list name)
   (let loop ((*item *name-value-list))
     (and (not (null-pointer? *item))
          (let ((*name-value (attrib_string_list_get_data *item)))
@@ -353,8 +353,7 @@ failure."
                (loop (attrib_string_list_get_next *item))
                (let ((found-name (str-attrib-name *name-value)))
                  (or (and found-name
-                          (string= found-name
-                                   (pointer->string *name)))
+                          (string= found-name name))
                      (loop (attrib_string_list_get_next *item)))))))))
 
 
@@ -497,7 +496,7 @@ failure."
                     (not (string= old-attrib-name "slot"))
                     (not (name-in-list?
                           *new-component-attrib-pair-list
-                          (string->pointer old-attrib-name))))
+                          old-attrib-name)))
            (s_string_list_add_item *complete-component-attrib-list
                                    *count
                                    *old-name-value-pair))
