@@ -519,13 +519,15 @@ failure."
       (unless (null-pointer? *local-list)
         ;; Now get the old attrib name & value from
         ;; *complete-component-attrib-list and value from object.
-        (let* ((*old-attrib-name
-                (*str-attrib-name (attrib_string_list_get_data *local-list)))
+        (let* ((old-attrib-name
+                (str-attrib-name (attrib_string_list_get_data *local-list)))
                (*old-attrib-value
-                (lepton_attrib_search_attached_attribs_by_name
-                 *object
-                 *old-attrib-name
-                 0))
+                (if old-attrib-name
+                    (lepton_attrib_search_attached_attribs_by_name
+                     *object
+                     (string->pointer old-attrib-name)
+                     0)
+                    %null-pointer))
                ;; Next try to get this attrib from
                ;; *new-component-attrib-list.
                (*new-attrib-name
@@ -588,7 +590,9 @@ failure."
               (if (and (not (null-pointer? *old-attrib-value))
                        (not new-attrib-value))
                   ;; Remove attrib from component.
-                  (remove-attrib *toplevel *object *old-attrib-name)
+                  (remove-attrib *toplevel
+                                 *object
+                                 (string->pointer old-attrib-name))
                   ;; Four cases to consider: Case 3.
                   (if (and (null-pointer? *old-attrib-value)
                            new-attrib-value
@@ -612,7 +616,6 @@ failure."
 
           ;; free everything and iterate
           (g_free *new-attrib-name)
-          (g_free *old-attrib-name)
           (g_free *old-attrib-value)
           (loop (attrib_string_list_get_next *local-list)))))))
 
