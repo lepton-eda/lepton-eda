@@ -103,9 +103,6 @@ extern GtkSheet **sheets;             /* These are the spreadsheet widgets thems
 extern GtkWidget *entry;
 extern GtkWidget *label;
 
-/* command line switch settings */
-extern int verbose_mode;
-
 /* Used to identify colors */
 #define BLACK           0
 #define WHITE           1

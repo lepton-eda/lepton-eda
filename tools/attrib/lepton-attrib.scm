@@ -103,7 +103,6 @@
 Presents schematic attributes in easy-to-edit spreadsheet format.
 
 Options:
-  -v, --verbose          Verbose mode on
   -V, --version          Show version information
   -h, --help             This help menu
 
@@ -2583,14 +2582,12 @@ Please check your design.")))
 
 
 (let* ((option-spec '((help (single-char #\h))
-                      (verbose (single-char #\v))
                       (version (single-char #\V))))
 
        (options (getopt-long (program-arguments) option-spec))
        (help (option-ref options 'help #f))
        (version (option-ref options 'version #f))
-       (files (option-ref options '() '()))
-       (verbose? (option-ref options 'verbose #f)))
+       (files (option-ref options '() '())))
 
   (when help (usage))
   ;; Output version to stdout and exit, if requested.

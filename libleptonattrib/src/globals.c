@@ -34,6 +34,3 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-
-/* command line arguments */
-int verbose_mode=FALSE; //!< Reflects the value of the command line flag
