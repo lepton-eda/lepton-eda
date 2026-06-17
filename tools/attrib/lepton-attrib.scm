@@ -531,8 +531,13 @@ failure."
                     %null-pointer))
                ;; Next try to get this attrib from
                ;; *new-component-attrib-list.
+               (new-attrib-name
+                (str-attrib-name
+                 (attrib_string_list_get_data *local-list)))
                (*new-attrib-name
-                (*str-attrib-name (attrib_string_list_get_data *local-list)))
+                (if new-attrib-name
+                    (string->pointer new-attrib-name)
+                    %null-pointer))
                ;; Now get row and column where this new attrib
                ;; lives.  Then get visibility of the new attrib
                ;; stored in the component table We'll need this
@@ -601,7 +606,7 @@ failure."
                            (not (string-null? new-attrib-value)))
                       ;; Add new attrib to component.
                       (let ((name-value-pair
-                             (string-append (pointer->string *new-attrib-name)
+                             (string-append new-attrib-name
                                             "="
                                             new-attrib-value)))
                         (add-object-attrib (pointer->object *object)
@@ -616,7 +621,6 @@ failure."
           ;; Toggle attribute visibility and name/value setting.
 
           ;; free everything and iterate
-          (g_free *new-attrib-name)
           (g_free *old-attrib-value)
           (loop (attrib_string_list_get_next *local-list)))))))
 
