@@ -2028,21 +2028,18 @@ Please check your design.")))
             ;; Found an attribute.
             (let* ((*attrib-text
                     (g_strdup (lepton_text_object_get_string *attrib)))
-                   (*attrib-name (*str-attrib-name *attrib-text)))
+                   (name (str-attrib-name *attrib-text)))
               ;; Don't include "refdes" or "slot" because they
               ;; form the row name.  Also don't include "net" per
               ;; bug found by Steve W. -- 4.3.2007, SDB.
-              (when (and (not (string= (pointer->string *attrib-name)
-                                       "refdes"))
-                         (not (string= (pointer->string *attrib-name)
-                                       "net"))
-                         (not (string= (pointer->string *attrib-name)
-                                       "slot")) )
+              (when (and name
+                         (not (string= name "refdes"))
+                         (not (string= name "net"))
+                         (not (string= name "slot")))
                 (s_string_list_add_item
                  (attrib_sheet_data_get_component_attrib_list *sheet-data)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
-                 *attrib-name))
-              (g_free *attrib-name)
+                 (string->pointer name)))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
