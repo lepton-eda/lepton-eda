@@ -351,15 +351,11 @@ failure."
          (let ((*name-value (attrib_string_list_get_data *item)))
            (if (null-pointer? *name-value)
                (loop (attrib_string_list_get_next *item))
-               (let ((*found-name (*str-attrib-name *name-value)))
-                 (if (string= (pointer->string *found-name)
-                              (pointer->string *name))
-                     (begin
-                       (g_free *found-name)
-                       #t)
-                     (begin
-                       (g_free *found-name)
-                       (loop (attrib_string_list_get_next *item))))))))))
+               (let ((found-name (str-attrib-name *name-value)))
+                 (or (and found-name
+                          (string= found-name
+                                   (pointer->string *name)))
+                     (loop (attrib_string_list_get_next *item)))))))))
 
 
 
