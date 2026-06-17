@@ -180,8 +180,13 @@ failure."
   (if (= visible? VISIBLE) #t #f))
 
 
-(define (str-attrib-name *name-value)
+(define (*str-attrib-name *name-value)
   (u_basic_breakup_string *name-value (char->integer #\=) 0))
+
+(define (str-attrib-name *name-value)
+  (define str (pointer->string *name-value))
+  (false-if-exception
+   (string-trim (string-take str (string-index str #\=)))))
 
 
 (define (str-attrib-value *name-value)
@@ -255,7 +260,7 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name (str-attrib-name *old-attrib-text)))
+                     (*old-attrib-name (*str-attrib-name *old-attrib-text)))
                 (if (string= (pointer->string *old-attrib-name)
                              (pointer->string *new-attrib-name))
                     ;; Create attrib=value text string.
@@ -301,7 +306,7 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name (str-attrib-name *old-attrib-text)))
+                     (*old-attrib-name (*str-attrib-name *old-attrib-text)))
                 (if (string= (pointer->string *old-attrib-name)
                              (pointer->string *attrib-name))
                     ;; We've found the attrib.  Delete it and then
@@ -348,7 +353,7 @@ failure."
          (let ((*name-value (attrib_string_list_get_data *item)))
            (if (null-pointer? *name-value)
                (loop (attrib_string_list_get_next *item))
-               (let ((*found-name (str-attrib-name *name-value)))
+               (let ((*found-name (*str-attrib-name *name-value)))
                  (if (string= (pointer->string *found-name)
                               (pointer->string *name))
                      (begin
@@ -486,7 +491,7 @@ failure."
                 (not (null-pointer? (lepton_object_get_text *attrib))))
        (let* ((*old-name-value-pair
                (g_strdup (lepton_text_object_get_string *attrib)))
-              (*old-attrib-name (str-attrib-name *old-name-value-pair))
+              (*old-attrib-name (*str-attrib-name *old-name-value-pair))
               (old-attrib-name (if (null-pointer? *old-attrib-name)
                                    ""
                                    (pointer->string *old-attrib-name))))
@@ -525,7 +530,7 @@ failure."
         ;; Now get the old attrib name & value from
         ;; *complete-component-attrib-list and value from object.
         (let* ((*old-attrib-name
-                (str-attrib-name (attrib_string_list_get_data *local-list)))
+                (*str-attrib-name (attrib_string_list_get_data *local-list)))
                (*old-attrib-value
                 (lepton_attrib_search_attached_attribs_by_name
                  *object
@@ -534,7 +539,7 @@ failure."
                ;; Next try to get this attrib from
                ;; *new-component-attrib-list.
                (*new-attrib-name
-                (str-attrib-name (attrib_string_list_get_data *local-list)))
+                (*str-attrib-name (attrib_string_list_get_data *local-list)))
                ;; Now get row and column where this new attrib
                ;; lives.  Then get visibility of the new attrib
                ;; stored in the component table We'll need this
@@ -846,7 +851,7 @@ failure."
     (unless (null-pointer? *local-list)
       (let* ((*new-name-value-pair
               (g_strdup (attrib_string_list_get_data *local-list)))
-             (*new-attrib-name (str-attrib-name *new-name-value-pair))
+             (*new-attrib-name (*str-attrib-name *new-name-value-pair))
              (new-attrib-value (str-attrib-value *new-name-value-pair))
              (*old-attrib-value
               (lepton_attrib_search_attached_attribs_by_name
@@ -2022,7 +2027,7 @@ Please check your design.")))
             ;; Found an attribute.
             (let* ((*attrib-text
                     (g_strdup (lepton_text_object_get_string *attrib)))
-                   (*attrib-name (str-attrib-name *attrib-text)))
+                   (*attrib-name (*str-attrib-name *attrib-text)))
               ;; Don't include "refdes" or "slot" because they
               ;; form the row name.  Also don't include "net" per
               ;; bug found by Steve W. -- 4.3.2007, SDB.
@@ -2165,7 +2170,7 @@ Please check your design.")))
                      (let* ((*attrib-text
                              (g_strdup
                               (lepton_text_object_get_string *pin-attrib)))
-                            (*attrib-name (str-attrib-name *attrib-text))
+                            (*attrib-name (*str-attrib-name *attrib-text))
                             (attrib-value (str-attrib-value *attrib-text)))
                        ;; Don't include "pinnumber" because it is
                        ;; already in other master list.  Also
@@ -2226,7 +2231,7 @@ Please check your design.")))
                 ;; Found an attribute.
                 (let* ((*attrib-text
                         (g_strdup (lepton_text_object_get_string *attrib)))
-                       (*attrib-name (str-attrib-name *attrib-text))
+                       (*attrib-name (*str-attrib-name *attrib-text))
                        (attrib-value (str-attrib-value *attrib-text))
                        (old-visibility
                         (if (true? (lepton_text_object_is_visible *attrib))
@@ -2336,7 +2341,7 @@ Please check your design.")))
               ;; Found an attribute.
               (let* ((*attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*attrib-name (str-attrib-name *attrib-text))
+                     (*attrib-name (*str-attrib-name *attrib-text))
                      (attrib-value (str-attrib-value *attrib-text)))
                 ;; Don't include "netname".
                 (unless (string= (pointer->string *attrib-name) "netname")
@@ -2425,7 +2430,7 @@ Please check your design.")))
                        (let* ((*attrib-text
                                (g_strdup
                                 (lepton_text_object_get_string *pin-attrib)))
-                              (*attrib-name (str-attrib-name *attrib-text))
+                              (*attrib-name (*str-attrib-name *attrib-text))
                               (attrib-value (str-attrib-value *attrib-text)))
 
                          (when (and (not (string= (pointer->string *attrib-name)
