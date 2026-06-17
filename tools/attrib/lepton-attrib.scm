@@ -2424,11 +2424,11 @@ Please check your design.")))
                        (let* ((*attrib-text
                                (g_strdup
                                 (lepton_text_object_get_string *pin-attrib)))
-                              (*attrib-name (*str-attrib-name *attrib-text))
+                              (name (str-attrib-name *attrib-text))
                               (attrib-value (str-attrib-value *attrib-text)))
 
-                         (when (and (not (string= (pointer->string *attrib-name)
-                                                  "pinnumber"))
+                         (when (and name
+                                    (not (string= name "pinnumber"))
                                     attrib-value)
                            ;; Don't include "pinnumber" because it
                            ;; is already in other master list.
@@ -2445,7 +2445,7 @@ Please check your design.")))
                                   (string-list-id
                                    (attrib_sheet_data_get_pin_attrib_list
                                     *sheet-data)
-                                   *attrib-name)))
+                                   (string->pointer name))))
                              ;; Sanity check.
                              (if (or (= row -1)
                                      (= column -1))
@@ -2471,14 +2471,13 @@ Please check your design.")))
                                    (attrib_table_set_column_name *pin-table
                                                                  row
                                                                  column
-                                                                 *attrib-name)
+                                                                 (string->pointer name))
                                    (attrib_table_set_attrib_value *pin-table
                                                                   row
                                                                   column
                                                                   (if attrib-value
                                                                       (string->pointer attrib-value)
                                                                       %null-pointer))))))
-                         (g_free *attrib-name)
                          (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
