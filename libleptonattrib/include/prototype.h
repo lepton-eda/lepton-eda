@@ -283,7 +283,6 @@ attrib_table_row_new (int columns);
 void set_verbose_mode ();
 void verbose_print (const char *string);
 void verbose_done(void);
-void verbose_reset_index(void);
 
 /* ------------- x_dialog.c ------------- */
 

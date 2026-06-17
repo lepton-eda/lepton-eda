@@ -92,15 +92,3 @@ void verbose_done(void)
         char_index = 0;
     }
 }
-
-/*! \brief Reset the running character count
- *
- * Reset the current characted count.
- *
- * Identical to function defined in gnetlist/src/s_misc.c
- */
-
-void verbose_reset_index(void)
-{
-    char_index = 0;
-}
