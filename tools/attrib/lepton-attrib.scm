@@ -260,9 +260,10 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name (*str-attrib-name *old-attrib-text)))
-                (if (string= (pointer->string *old-attrib-name)
-                             (pointer->string *new-attrib-name))
+                     (old-attrib-name (str-attrib-name *old-attrib-text)))
+                (if (and old-attrib-name
+                         (string= old-attrib-name
+                                  (pointer->string *new-attrib-name)))
                     ;; Create attrib=value text string.
                     (let ((*new-attrib-text
                            (string->pointer
@@ -275,11 +276,9 @@ failure."
                       (unless (= show-name-value LEAVE_NAME_VALUE_ALONE)
                         (lepton_text_object_set_show *attrib show-name-value))
                       ;; We are done -- leave.
-                      (g_free *old-attrib-text)
-                      (g_free *old-attrib-name))
+                      (g_free *old-attrib-text))
                     (begin
                       (g_free *old-attrib-text)
-                      (g_free *old-attrib-name)
                       (loop (cdr *attrib-ls)))))
               (loop (cdr *attrib-ls)))))))
 
