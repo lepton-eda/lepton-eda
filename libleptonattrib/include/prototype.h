@@ -285,11 +285,6 @@ void verbose_print (const char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
 
-char*
-u_basic_breakup_string (char *string,
-                        char delimiter,
-                        int count);
-
 /* ------------- x_dialog.c ------------- */
 
 void x_dialog_unimplemented_feature();

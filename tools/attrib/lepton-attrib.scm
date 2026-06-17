@@ -180,9 +180,6 @@ failure."
   (if (= visible? VISIBLE) #t #f))
 
 
-(define (*str-attrib-name *name-value)
-  (u_basic_breakup_string *name-value (char->integer #\=) 0))
-
 (define (str-attrib-name *name-value)
   (define str (pointer->string *name-value))
   (false-if-exception
