@@ -328,7 +328,8 @@ failure."
 (define (string-list-id *ls *str)
   (let loop ((count 0)
              (*list-element *ls))
-    (if (null-pointer? *list-element)
+    (if (or (null-pointer? *str)
+            (null-pointer? *list-element))
         ;; Return code when string is not in master list.
         -1
         (if (string= (pointer->string
