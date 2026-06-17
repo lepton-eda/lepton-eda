@@ -43,10 +43,6 @@
             attrib_get_window
             attrib_set_window
 
-            set_verbose_mode
-            verbose_done
-            verbose_print
-
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
@@ -180,11 +176,6 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
-
-;;; s_misc.c
-(define-lff set_verbose_mode void '())
-(define-lff verbose_done void '())
-(define-lff verbose_print void '(*))
 
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))

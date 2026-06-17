@@ -279,11 +279,6 @@ attrib_table_new (int rows);
 TABLE*
 attrib_table_row_new (int columns);
 
-/* ------------- s_misc.c ------------- */
-void set_verbose_mode ();
-void verbose_print (const char *string);
-void verbose_done(void);
-
 /* ------------- x_dialog.c ------------- */
 
 void x_dialog_unimplemented_feature();

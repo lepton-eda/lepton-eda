@@ -52,7 +52,6 @@
 
 (define %program-basename (basename (car (program-arguments))))
 (define %theme-icon-name "lepton-attrib")
-(define %verbose-mode #f)
 
 
 ;;; liblepton/include/liblepton/defines.h
@@ -127,7 +126,6 @@ Lepton EDA homepage: ~S
 
 (define (process-gafrc* name)
   (process-gafrc "lepton-attrib" name))
-
 
 ;;; Verifies the entire design by looping through all objects in
 ;;; the design looking for missing components, that is, those
@@ -1974,9 +1972,6 @@ Please check your design.")))
 (define (add-components *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master component list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -1984,7 +1979,6 @@ Please check your design.")))
      ;; Only process if this is a component with attributes.
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer? (lepton_object_get_attribs *object))))
-       (verbose_print (string->pointer " C"))
 
        (let ((*temp-refdes (component-refdes *object)))
          ;; Now that we have refdes, store refdes and attach
@@ -2004,9 +1998,6 @@ Please check your design.")))
 (define (add-component-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master component attrib list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2015,7 +2006,6 @@ Please check your design.")))
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
-       (verbose_print (string->pointer " C"))
 
        ;; Iterate through all attribs found on component.
        (for-each
@@ -2070,9 +2060,6 @@ Please check your design.")))
 ;;; doesn't return a value.
 (define (add-pins *objects)
   (define *sheet-data (attrib_get_sheet_data))
-
-  (when %verbose-mode
-    (format #t (G_ "Start master pin list creation.\n")))
 
   ;; Iterate through all objects found on page looking for
   ;; components.
@@ -2138,9 +2125,6 @@ Please check your design.")))
 (define (add-pin-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master pin attrib list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2200,9 +2184,6 @@ Please check your design.")))
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start internal component TABLE creation\n")))
-
   ;; Iterate through all objects found on page.
   (for-each
    (lambda (*object)
@@ -2213,7 +2194,6 @@ Please check your design.")))
        ;; Don't process part if it lacks a refdes.
        (let ((*temp-refdes (g_strdup (component-refdes *object))))
          (when (not (null-pointer? *temp-refdes))
-           (verbose_print (string->pointer " C"))
            ;; Having found a component, we loop over all attribs
            ;; in this component, and stick them into cells in the
            ;; table.
@@ -2298,9 +2278,7 @@ Please check your design.")))
                   (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 ;;; Process *OBJECTS and add attribs of net ones to the net table.
@@ -2321,7 +2299,6 @@ Please check your design.")))
                *object
                (string->pointer "netname")
                0)))
-         (verbose_print (string->pointer " N"))
 
          ;; Having found a net, we stick it into the table.
          (for-each
@@ -2371,9 +2348,7 @@ Please check your design.")))
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 ;;; Process *OBJECTS and add attribs of pin ones to the pin table.
@@ -2381,9 +2356,6 @@ Please check your design.")))
   (define *sheet-data (attrib_get_sheet_data))
   (define *pin-table
     (attrib_sheet_data_get_pin_table *sheet-data))
-
-  (when %verbose-mode
-    (format #t (G_ "Start internal pin TABLE creation\n")))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -2488,9 +2460,7 @@ Please check your design.")))
 
          (g_free *temp-refdes))))
 
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 (define (activate *app *toplevel)
@@ -2627,9 +2597,6 @@ Please check your design.")))
   (when version
     (display-lepton-version #:print-name #t #:copyright #t)
     (exit 0))
-  (when verbose?
-    (set_verbose_mode)
-    (set! %verbose-mode #t))
 
   (receive (readable-files unreadable-files)
       (partition file-readable? files)
