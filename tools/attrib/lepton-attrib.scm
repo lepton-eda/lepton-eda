@@ -305,9 +305,10 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name (*str-attrib-name *old-attrib-text)))
-                (if (string= (pointer->string *old-attrib-name)
-                             (pointer->string *attrib-name))
+                     (old-attrib-name (str-attrib-name *old-attrib-text)))
+                (if (and old-attrib-name
+                         (string= old-attrib-name
+                                  (pointer->string *attrib-name)))
                     ;; We've found the attrib.  Delete it and then
                     ;; return.
                     (let ((*active-page
@@ -315,11 +316,9 @@ failure."
                       (lepton_object_delete *attrib)
                       (lepton_page_set_changed *active-page 1)
                       ;; We are done -- leave.
-                      (g_free *old-attrib-text)
-                      (g_free *old-attrib-name))
+                      (g_free *old-attrib-text))
                     (begin
                       (g_free *old-attrib-text)
-                      (g_free *old-attrib-name)
                       (loop (cdr *attrib-ls)))))
 
               (loop (cdr *attrib-ls)))))))
