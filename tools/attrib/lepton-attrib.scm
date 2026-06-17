@@ -485,27 +485,24 @@ failure."
                 (not (null-pointer? (lepton_object_get_text *attrib))))
        (let* ((*old-name-value-pair
                (g_strdup (lepton_text_object_get_string *attrib)))
-              (*old-attrib-name (*str-attrib-name *old-name-value-pair))
-              (old-attrib-name (if (null-pointer? *old-attrib-name)
-                                   ""
-                                   (pointer->string *old-attrib-name))))
+              (old-attrib-name (str-attrib-name *old-name-value-pair)))
          ;; Found a name=value attribute pair.
 
          ;; Don't put "refdes" or "slot" into list.
          ;; Don't put old name=value pair into list if a
          ;; new one is already in there.
-         (when (and (not (string= old-attrib-name "refdes"))
+         (when (and old-attrib-name
+                    (not (string= old-attrib-name "refdes"))
                     (not (string= old-attrib-name "net"))
                     (not (string= old-attrib-name "slot"))
                     (not (name-in-list?
                           *new-component-attrib-pair-list
-                          *old-attrib-name)))
+                          (string->pointer old-attrib-name))))
            (s_string_list_add_item *complete-component-attrib-list
                                    *count
                                    *old-name-value-pair))
 
-         (g_free *old-name-value-pair)
-         (g_free *old-attrib-name))))
+         (g_free *old-name-value-pair))))
    (glist->list (lepton_object_get_attribs *object) identity))
 
   ;; Now the main business of this function: updating the attribs
