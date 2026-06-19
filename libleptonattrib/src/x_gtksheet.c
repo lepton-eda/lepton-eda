@@ -90,30 +90,13 @@ attrib_gtksheet_set_current_cell_text (char* text)
 }
 
 
-gboolean
-attrib_gtksheet_deactivate (GtkSheet* sheet,
-                            gint      row,
-                            gint      column,
-                            gpointer  data)
-{
-  gchar* str = gtk_sheet_get_entry_text (sheet);
-
-  if (strcmp (str, attrib_gtksheet_get_current_cell_text ()) != 0)
-  {
-    s_sheet_data_set_changed (sheet_head, TRUE);
-  }
-
-  return TRUE; /* TRUE => allow deactivation */
-}
-
-
 /*! \brief Call it just after the sheet has been saved.
  *
  *  \par Function Description
  *
  *  Update the current_cell_text global variable, so that
- *  attrib_gtksheet_deactivate() handler won't mark the sheet as
- *  modified when the current cell is deactivated.
+ *  deactivate() handler won't mark the sheet as modified when the
+ *  current cell is deactivated.
  *
  *  We need this to handle a particular use case:
  *  while editing text in a cell, instead of pressing Enter
