@@ -20,6 +20,9 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data);
 GtkSheet*
 attrib_get_sheet (int i);
 
+void
+attrib_set_sheet (int i,
+                  GtkSheet* sheet);
 int
 attrib_get_sheets_number ();
 
