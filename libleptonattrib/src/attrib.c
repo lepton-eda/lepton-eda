@@ -152,6 +152,24 @@ attrib_get_sheet (int i)
 }
 
 
+/*! \brief Set a sheet by number.
+ *
+ *  \par Function Description
+ *
+ *  Sets a sheet with given number of the \c sheets array to \p
+ *  sheet.
+ *
+ *  \param [in] i The number of the sheet to set.
+ *  \param [in] sheet The new sheet.
+ */
+void
+attrib_set_sheet (int i,
+                  GtkSheet* sheet)
+{
+  sheets[i] = sheet;
+}
+
+
 /*! \brief Get the number of sheets.
  *
  *  \par Function Description
