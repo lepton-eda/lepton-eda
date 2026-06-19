@@ -288,6 +288,12 @@ void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 
 /* ------------- x_gtksheet.c ------------- */
+char*
+attrib_gtksheet_get_current_cell_text ();
+
+void
+attrib_gtksheet_set_current_cell_text (char* text);
+
 gboolean
 attrib_gtksheet_activate (GtkSheet* sheet,
                           gint      row,
