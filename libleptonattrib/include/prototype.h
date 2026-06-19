@@ -162,8 +162,6 @@ void
 attrib_sheet_data_set_changed (SHEET_DATA* data,
                                int changed);
 
-void s_sheet_data_set_changed (SHEET_DATA* data, int changed);
-
 
 /* ------------- s_string_list.c ------------- */
 char*

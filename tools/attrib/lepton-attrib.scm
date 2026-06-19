@@ -989,7 +989,13 @@ failure."
 
 
 (define (set-sheet-data-changed *sheet-data changed)
-  (s_sheet_data_set_changed *sheet-data changed))
+  (attrib_sheet_data_set_changed *sheet-data changed)
+
+  (x_window_set_title_changed changed)
+
+  (when (false? changed)
+    ;; See comments in x_gtksheet_set_saved().
+    (x_gtksheet_set_saved)))
 
 
 ;;; Copies data from gtksheet into LeptonToplevel struct.  The
