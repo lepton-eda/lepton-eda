@@ -1915,7 +1915,15 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
 
 (define (callback-gtksheet-deactivate *sheet row column *user-data)
-  (attrib_gtksheet_deactivate *sheet row column %null-pointer))
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *entry-str (gtk_sheet_get_entry_text *sheet))
+  (define *cell-str (attrib_gtksheet_get_current_cell_text))
+
+  (unless (string= (pointer->string *entry-str)
+                   (pointer->string *cell-str))
+    (s_sheet_data_set_changed *sheet-data TRUE))
+  ;; TRUE => allow deactivation.
+  TRUE)
 
 (define *callback-gtksheet-deactivate
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
