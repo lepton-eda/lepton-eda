@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ attrib_gtksheet_set_current_cell_text (char* text)
 void
 x_gtksheet_set_saved()
 {
-  attrib_gtksheet_set_current_cell_text (gtk_sheet_get_entry_text (sheets[0]));
+  attrib_gtksheet_set_current_cell_text (gtk_sheet_get_entry_text (attrib_get_sheet (0)));
 }
 
 
