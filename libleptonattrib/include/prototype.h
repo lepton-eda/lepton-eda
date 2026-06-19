@@ -321,6 +321,20 @@ gboolean
 x_dialog_confirm_overwrite (const gchar* fname);
 
 /* ------------- x_gtksheet.c ------------- */
+gboolean
+attrib_gtksheet_activate (GtkSheet* sheet,
+                          gint      row,
+                          gint      column,
+                          gpointer  data);
+gboolean
+attrib_gtksheet_deactivate (GtkSheet* sheet,
+                            gint      row,
+                            gint      column,
+                            gpointer  data);
+void
+attrib_gtksheet_show_entry (GtkWidget *widget,
+                            gpointer data);
+
 void x_gtksheet_set_saved();
 void x_gtksheet_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
