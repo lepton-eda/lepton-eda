@@ -485,3 +485,57 @@ gtk_string_to_file_chooser_action (char *s)
 
   return result;
 }
+
+
+/*! \brief Transform a \c GtkJustification value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkJustification value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The justification value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_justification_to_string (int val)
+{
+  const char *result = "unknown";
+
+  switch (val)
+  {
+  case GTK_JUSTIFY_LEFT: result = "left"; break;
+  case GTK_JUSTIFY_RIGHT: result = "right"; break;
+  case GTK_JUSTIFY_CENTER: result = "center"; break;
+  case GTK_JUSTIFY_FILL: result = "fill"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkJustification value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkJustification value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkJustification value.
+ */
+int
+schematic_gtk_justification_from_string (char *s)
+{
+  int result = GTK_JUSTIFY_LEFT;
+
+  if (strcmp (s, "left") == 0) {result = GTK_JUSTIFY_LEFT; }
+  else if (strcmp (s, "right") == 0) {result = GTK_JUSTIFY_RIGHT; }
+  else if (strcmp (s, "center") == 0) {result = GTK_JUSTIFY_CENTER; }
+  else if (strcmp (s, "fill") == 0) {result = GTK_JUSTIFY_FILL; }
+
+  return result;
+}

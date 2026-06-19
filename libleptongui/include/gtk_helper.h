@@ -69,6 +69,12 @@ gtk_file_chooser_action_to_string (int action);
 int
 gtk_string_to_file_chooser_action (char *s);
 
+const char*
+schematic_gtk_justification_to_string (int val);
+
+int
+schematic_gtk_justification_from_string (char *s);
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */
