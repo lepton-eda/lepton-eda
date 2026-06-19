@@ -988,16 +988,19 @@ failure."
                       columns-number)))
 
 
+(define %current-cell-text "")
+
 ;;; Returns stored text of the current cell.
 (define (current-cell-text)
-  (attrib_gtksheet_get_current_cell_text))
+  %current-cell-text)
 
 ;;; Stores the current cell text *TEXT in an internal variable.
 (define (set-current-cell-text! *text)
-  (attrib_gtksheet_set_current_cell_text *text))
+  (set! %current-cell-text
+        (if (null-pointer? *text) "" (pointer->string *text))))
 
 
-;;; Update the current_cell_text global variable, so that
+;;; Update the %current-cell-text global variable, so that
 ;;; deactivate() handler won't mark the sheet as modified when the
 ;;; current cell is deactivated.  Call it just after the sheet has
 ;;; been saved.
@@ -1005,7 +1008,7 @@ failure."
 ;;; We need this to handle a particular use case: while editing
 ;;; text in a cell, instead of pressing Enter to commit the
 ;;; changes, the user presses Ctrl+S (Save).  If we do not update
-;;; current_cell_text after that, the consequent cell deactivation
+;;; %current-cell-text after that, the consequent cell deactivation
 ;;; will mark the document as dirty, while it is, in fact, just
 ;;; has been saved.
 (define (update-current-cell-text)
@@ -1951,10 +1954,9 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 (define (callback-gtksheet-deactivate *sheet row column *user-data)
   (define *sheet-data (attrib_get_sheet_data))
   (define *entry-str (gtk_sheet_get_entry_text *sheet))
-  (define *cell-str (current-cell-text))
+  (define cell-str (current-cell-text))
 
-  (unless (string= (pointer->string *entry-str)
-                   (pointer->string *cell-str))
+  (unless (string= (pointer->string *entry-str) cell-str)
     (set-sheet-data-changed *sheet-data TRUE))
   ;; TRUE => allow deactivation.
   TRUE)

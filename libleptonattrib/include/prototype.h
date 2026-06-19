@@ -319,12 +319,6 @@ gboolean
 x_dialog_confirm_overwrite (const gchar* fname);
 
 /* ------------- x_gtksheet.c ------------- */
-char*
-attrib_gtksheet_get_current_cell_text ();
-
-void
-attrib_gtksheet_set_current_cell_text (char* text);
-
 void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
