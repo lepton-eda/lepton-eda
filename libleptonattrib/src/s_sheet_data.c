@@ -675,20 +675,6 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 }
 
 
-void
-s_sheet_data_set_changed (SHEET_DATA* data, int changed)
-{
-  attrib_sheet_data_set_changed (data, changed);
-
-  x_window_set_title_changed (changed);
-
-  if (!changed)
-  {
-    x_gtksheet_set_saved(); /* see comments in x_gtksheet_set_saved() */
-  }
-}
-
-
 /*!
  * \brief Create a new SHEET_DATA struct.
  *

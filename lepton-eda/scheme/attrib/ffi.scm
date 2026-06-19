@@ -64,6 +64,7 @@
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
+            x_gtksheet_set_saved
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -103,7 +104,6 @@
             attrib_sheet_data_set_pin_list
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
-            s_sheet_data_set_changed
 
             attrib_string_list_get_data
             attrib_string_list_get_next
@@ -147,6 +147,7 @@
             attrib_window_new
             attrib_window_sheets_new
             attrib_window_set_menu_callback
+            x_window_set_title_changed
             separator_new
             ))
 
@@ -211,6 +212,7 @@
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
+(define-lff x_gtksheet_set_saved void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
@@ -251,7 +253,6 @@
 (define-lff attrib_sheet_data_set_pin_list void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
-(define-lff s_sheet_data_set_changed void (list '* int))
 
 ;;; s_string_list.c
 (define-lff attrib_string_list_get_data '* '(*))
@@ -298,4 +299,5 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
+(define-lff x_window_set_title_changed void (list int))
 (define-lff separator_new '* '())
