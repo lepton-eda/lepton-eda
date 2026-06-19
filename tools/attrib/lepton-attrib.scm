@@ -1768,6 +1768,10 @@ failure."
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
 
 
+(define (init-gtksheet)
+  (x_gtksheet_init))
+
+
 ;;; Adds all items to the top level window.
 (define (add-items)
   (define *sheet-data (attrib_get_sheet_data))
@@ -1816,7 +1820,7 @@ Please check your design.")))
 
   ;; Initialize the gtksheet.  This creates a new gtksheet having
   ;; dimensions specified in component-count etc.
-  (x_gtksheet_init)
+  (init-gtksheet)
 
   (when (> component-count 0)
     (x_gtksheet_add_row_labels
