@@ -107,7 +107,6 @@
             s_string_list_new
             s_string_list_add_item
             s_string_list_delete_item
-            s_string_list_duplicate_string_list
             s_string_list_find_in_list
             s_string_list_get_data_at_index
             s_string_list_in_list
@@ -253,7 +252,6 @@
 (define-lff s_string_list_new '* '())
 (define-lff s_string_list_add_item void '(* * *))
 (define-lff s_string_list_delete_item void '(* * *))
-(define-lff s_string_list_duplicate_string_list '* '(*))
 (define-lff s_string_list_find_in_list int '(* *))
 (define-lff s_string_list_get_data_at_index '* (list '* int))
 (define-lff s_string_list_in_list int '(* *))

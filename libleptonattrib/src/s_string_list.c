@@ -140,38 +140,6 @@ STRING_LIST *s_string_list_new() {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Duplicate a STRING_LIST
- *
- * Given a STRING_LIST, duplicate it and returns a pointer
- * to the new, duplicate list.
- * \param old_string_list pointer to the STRING_LIST to be duplicated
- * \returns a pointer to the duplicate STRING_LIST
- */
-STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
-  STRING_LIST *new_string_list;
-  STRING_LIST *local_string_list;
-  char *data;
-  gint count;
-
-  new_string_list = s_string_list_new();
-
-  if (attrib_string_list_get_data (old_string_list) == NULL)
-    /* This is an empty string list */
-    return new_string_list;
-
-  local_string_list = old_string_list;
-  while (local_string_list != NULL) {
-    data = g_strdup (attrib_string_list_get_data (local_string_list));
-    s_string_list_add_item(new_string_list, &count, data);
-    g_free(data);
-    local_string_list = attrib_string_list_get_next (local_string_list);
-  }
-
-  return new_string_list;
-}
-
-
-/*------------------------------------------------------------------*/
 /*! \brief Add an item to a STRING_LIST
  *
  * Inserts the item into a STRING_LIST.

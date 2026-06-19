@@ -431,7 +431,20 @@ failure."
 ;;; Duplicates string list *LS and returns a pointer to the new,
 ;;; duplicate list.
 (define (duplicate-string-list *ls)
-  (s_string_list_duplicate_string_list *ls))
+  (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
+  (define *new-ls (s_string_list_new))
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      ;; This is an empty string list.
+      *new-ls
+
+      (let loop ((*current-ls *ls))
+        (if (null-pointer? *current-ls)
+            *new-ls
+            (let ((*data (g_strdup
+                          (attrib_string_list_get_data *current-ls))))
+              (s_string_list_add_item *new-ls *count *data)
+              (g_free *data)
+              (loop (attrib_string_list_get_next *current-ls)))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
