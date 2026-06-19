@@ -1906,7 +1906,9 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
-  (attrib_gtksheet_activate *sheet row column %null-pointer))
+  (attrib_gtksheet_set_current_cell_text
+   (gtk_sheet_get_entry_text *sheet))
+  FALSE)
 
 (define *callback-gtksheet-activate
   (procedure->pointer int callback-gtksheet-activate (list '* int int '*)))

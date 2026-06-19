@@ -31,6 +31,7 @@
             gtk_sheet_delete_columns
             gtk_sheet_get_active_cell
             gtk_sheet_get_entry
+            gtk_sheet_get_entry_text
             gtk_sheet_get_selection
             gtk_sheet_insert_columns
             gtk_sheet_new
@@ -66,7 +67,7 @@
             x_dialog_unimplemented_feature
             x_dialog_unsaved_data
 
-            attrib_gtksheet_activate
+            attrib_gtksheet_set_current_cell_text
             attrib_gtksheet_deactivate
             attrib_gtksheet_show_entry
             x_gtksheet_add_cell_item
@@ -186,6 +187,7 @@
 (define-lff-lib gtk_sheet_delete_columns void (list '* unsigned-int unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_get_active_cell void '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_get_entry '* '(*) libgtksheet)
+(define-lff-lib gtk_sheet_get_entry_text '* '(*) libgtksheet)
 (define-lff-lib gtk_sheet_get_selection int '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_insert_columns void (list '* unsigned-int unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_new '* (list unsigned-int unsigned-int '*) libgtksheet)
@@ -226,7 +228,7 @@
 (define-lff x_dialog_unsaved_data '* '())
 
 ;;; x_gtksheet.c
-(define-lff attrib_gtksheet_activate int (list '* int int '*))
+(define-lff attrib_gtksheet_set_current_cell_text void '(*))
 (define-lff attrib_gtksheet_deactivate int (list '* int int '*))
 (define-lff attrib_gtksheet_show_entry void '(* *))
 (define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))

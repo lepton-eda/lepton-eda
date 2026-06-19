@@ -91,18 +91,6 @@ attrib_gtksheet_set_current_cell_text (char* text)
 
 
 gboolean
-attrib_gtksheet_activate (GtkSheet* sheet,
-                          gint      row,
-                          gint      column,
-                          gpointer  data)
-{
-  attrib_gtksheet_set_current_cell_text (gtk_sheet_get_entry_text (sheet));
-
-  return FALSE; /* ignored */
-}
-
-
-gboolean
 attrib_gtksheet_deactivate (GtkSheet* sheet,
                             gint      row,
                             gint      column,

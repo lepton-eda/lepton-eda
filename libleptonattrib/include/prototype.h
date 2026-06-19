@@ -328,11 +328,6 @@ void
 attrib_gtksheet_set_current_cell_text (char* text);
 
 gboolean
-attrib_gtksheet_activate (GtkSheet* sheet,
-                          gint      row,
-                          gint      column,
-                          gpointer  data);
-gboolean
 attrib_gtksheet_deactivate (GtkSheet* sheet,
                             gint      row,
                             gint      column,
