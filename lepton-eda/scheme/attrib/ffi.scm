@@ -76,7 +76,6 @@
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
-            x_gtksheet_set_saved
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -238,7 +237,6 @@
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
-(define-lff x_gtksheet_set_saved void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
