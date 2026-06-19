@@ -1905,8 +1905,157 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
 
 
+(define (callback-gtksheet-activate *sheet row column *user-data)
+  (attrib_gtksheet_activate *sheet row column %null-pointer))
+
+(define *callback-gtksheet-activate
+  (procedure->pointer int callback-gtksheet-activate (list '* int int '*)))
+
+
+(define (callback-gtksheet-deactivate *sheet row column *user-data)
+  (attrib_gtksheet_deactivate *sheet row column %null-pointer))
+
+(define *callback-gtksheet-deactivate
+  (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
+
+
+(define (callback-gtksheet-entry-changed *entry *user-data)
+  (attrib_gtksheet_show_entry *entry %null-pointer))
+
+(define *callback-gtksheet-entry-changed
+  (procedure->pointer void callback-gtksheet-entry-changed '(* *)))
+
+
+;;; Creates and initializes the GtkSheet widget, which is the
+;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
-  (x_gtksheet_init))
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *notebook (attrib_get_notebook))
+  (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
+
+  ;; Create three new sheets.
+
+  ;; Components.
+  (let ((component-count
+         (attrib_sheet_data_get_component_count *sheet-data))
+        (component-attrib-count
+         (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+    (if (and (> component-count 0) (> component-attrib-count 0))
+        (let ((*component-sheet
+               (gtk_sheet_new component-count
+                              component-attrib-count
+                              (string->pointer (G_ "Components")))))
+          (attrib_set_sheet 0 *component-sheet))
+        (x_dialog_fatal_error
+         (string->pointer
+          (G_ "No components found in design.  Please check your schematic and try again!\n"))
+         1)))
+
+  ;; Nets.
+  (let ((net-count (attrib_sheet_data_get_net_count *sheet-data))
+        (net-attrib-count
+         (attrib_sheet_data_get_net_attrib_count *sheet-data)))
+    (if (and (> net-count 0) (> net-attrib-count 0))
+        (let ((*net-sheet
+               (gtk_sheet_new net-count
+                              net-attrib-count
+                              (string->pointer (G_ "Nets")))))
+          (attrib_set_sheet 1 *net-sheet)
+          ;; Disallow editing of attribs for now.
+          (gtk_sheet_set_locked *net-sheet TRUE))
+        (let ((*net-sheet
+               (gtk_sheet_new 1 1 (string->pointer (G_ "Nets")))))
+          (attrib_set_sheet 1 *net-sheet)
+          (gtk_sheet_row_button_add_label *net-sheet
+                                          0
+                                          (string->pointer (G_ "TBD")))
+          (gtk_sheet_row_button_justify *net-sheet
+                                        0
+                                        GTK_JUSTIFY_LEFT)
+          (gtk_sheet_column_button_add_label *net-sheet
+                                             0
+                                             (string->pointer (G_ "TBD")))
+          (gtk_sheet_column_button_justify *net-sheet
+                                           0
+                                           GTK_JUSTIFY_LEFT)
+          ;; Disallow editing of attribs for now.
+          (gtk_sheet_set_locked *net-sheet TRUE))))
+
+
+  ;; Pins
+  (let ((pin-count (attrib_sheet_data_get_pin_count *sheet-data))
+        (pin-attrib-count
+         (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
+    (if (and (> pin-count 0) (> pin-attrib-count 0))
+        (let ((*pin-sheet (gtk_sheet_new pin-count
+                                         pin-attrib-count
+                                         (string->pointer (G_ "Pins")))))
+          (attrib_set_sheet 2 *pin-sheet)
+          ;; Disallow editing of attribs for now.
+          (gtk_sheet_set_locked *pin-sheet TRUE))
+        (let ((*pin-sheet
+               (gtk_sheet_new 1 1 (string->pointer (G_ "Pins")))))
+          (attrib_set_sheet 2 *pin-sheet)
+          ;; Disallow editing of attribs for now.
+          (gtk_sheet_set_locked *pin-sheet TRUE))))
+
+
+  ;; Finally stick labels on the notebooks holding the two sheets.
+  (do ((i 0 (1+ i)))
+      ((= i (attrib_get_sheets_number)))
+    (let ((*current-sheet (attrib_get_sheet i)))
+      ;; Is this check needed?
+      ;; Yes, it prevents us from segfaulting on empty nets sheet.
+      (unless (null-pointer? *current-sheet)
+        (let ((*scrolled-window
+               (gtk_scrolled_window_new %null-pointer
+                                        %null-pointer)))
+          (gtk_container_add *scrolled-window *current-sheet)
+
+          ;; First remove old notebook page.
+          (unless (null-pointer? *notebook)
+            (gtk_notebook_remove_page *notebook i))
+
+          ;; Then add new, updated notebook page
+          (let ((*label
+                 (gtk_label_new (string->pointer
+                                 (cond
+                                  ((= i 0) (G_ "Components"))
+                                  ((= i 1) (G_ "Nets"))
+                                  ((= i 2) (G_ "Pins"))
+                                  (else
+                                   (error "Wrong sheet number.")))))))
+
+            (gtk_notebook_append_page *notebook
+                                      *scrolled-window
+                                      *label))
+
+          (gtk_widget_show *current-sheet)
+          (gtk_widget_show *scrolled-window)
+          ;; Show updated notebook.
+          (gtk_widget_show *notebook)
+
+
+          ;; The "changed" signal raised when user changes
+          ;; anything in entry cell.  Note that the entry cell is
+          ;; the text entry field at the top of the sheet's
+          ;; working area (like in MS E*cel).  This has been
+          ;; removed from the program, but the code is left in
+          ;; just in case we want to put it back.
+          (g_signal_connect (gtk_sheet_get_entry *current-sheet)
+                            (string->pointer "changed")
+                            *callback-gtksheet-entry-changed
+                            %null-pointer)
+
+          (g_signal_connect *current-sheet
+                            (string->pointer "activate")
+                            *callback-gtksheet-activate
+                            %null-pointer)
+
+          (g_signal_connect *current-sheet
+                            (string->pointer "deactivate")
+                            *callback-gtksheet-deactivate
+                            %null-pointer))))))
 
 
 ;;; Adds all items to the top level window.
