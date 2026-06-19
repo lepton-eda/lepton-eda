@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,16 +155,16 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
 
   new_string_list = s_string_list_new();
 
-  if (old_string_list->data == NULL)
+  if (attrib_string_list_get_data (old_string_list) == NULL)
     /* This is an empty string list */
     return new_string_list;
 
   local_string_list = old_string_list;
   while (local_string_list != NULL) {
-    data = g_strdup(local_string_list->data);
+    data = g_strdup (attrib_string_list_get_data (local_string_list));
     s_string_list_add_item(new_string_list, &count, data);
     g_free(data);
-    local_string_list = local_string_list->next;
+    local_string_list = attrib_string_list_get_next (local_string_list);
   }
 
   return new_string_list;
