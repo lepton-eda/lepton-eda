@@ -129,17 +129,27 @@ x_gtksheet_init()
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
 
+  int component_count = attrib_sheet_data_get_component_count (sheet_head);
+  int component_attrib_count =
+    attrib_sheet_data_get_component_attrib_count (sheet_head);
   /* -----  Components  ----- */
-  if ((sheet_head->comp_count > 0) && (sheet_head->comp_attrib_count >0)) {
-    sheets[0] = (GtkSheet *) gtk_sheet_new((guint) sheet_head->comp_count, (guint) sheet_head->comp_attrib_count, _("Components"));
+  if ((component_count > 0) && (component_attrib_count > 0))
+  {
+    sheets[0] = (GtkSheet *) gtk_sheet_new ((guint) component_count,
+                                            (guint) component_attrib_count,
+                                            _("Components"));
   } else {
     x_dialog_fatal_error(_("No components found in design.  Please check your schematic and try again!\n"), 1);
   }
 
-
+  int net_count = attrib_sheet_data_get_net_count (sheet_head);
+  int net_attrib_count = attrib_sheet_data_get_net_attrib_count (sheet_head);
   /* -----  Nets  ----- */
-  if ((sheet_head->net_count > 0) && (sheet_head->net_attrib_count >0)) {
-    sheets[1] = (GtkSheet *) gtk_sheet_new(sheet_head->net_count, sheet_head->net_attrib_count, _("Nets"));
+  if ((net_count > 0) && (net_attrib_count > 0))
+  {
+    sheets[1] = (GtkSheet *) gtk_sheet_new (net_count,
+                                            net_attrib_count,
+                                            _("Nets"));
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
   } else {
     sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, _("Nets"));
@@ -150,10 +160,14 @@ x_gtksheet_init()
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
   }
 
-
+  int pin_count = attrib_sheet_data_get_pin_count (sheet_head);
+  int pin_attrib_count = attrib_sheet_data_get_pin_attrib_count (sheet_head);
   /* -----  Pins  ----- */
-  if ((sheet_head->pin_count > 0) && (sheet_head->pin_attrib_count >0)) {
-    sheets[2] = (GtkSheet *) gtk_sheet_new(sheet_head->pin_count, sheet_head->pin_attrib_count, _("Pins"));
+  if ((pin_count > 0) && (pin_attrib_count > 0))
+  {
+    sheets[2] = (GtkSheet *) gtk_sheet_new (pin_count,
+                                            pin_attrib_count,
+                                            _("Pins"));
     gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);   /* disallow editing of attribs for now */
   } else {
     sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, _("Pins"));
