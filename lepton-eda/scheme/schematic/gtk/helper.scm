@@ -25,6 +25,8 @@
             symbol->gtk-buttons-type
             gtk-file-chooser-action->symbol
             symbol->gtk-file-chooser-action
+            gtk-justification->symbol
+            symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
             gtk-response->symbol
@@ -47,6 +49,17 @@
 (define (symbol->gtk-file-chooser-action sym)
   "Transforms symbol SYM to corresponding GtkFileChooserAction value."
   (gtk_string_to_file_chooser_action
+   (string->pointer (symbol->string sym))))
+
+
+(define (gtk-justification->symbol justify)
+  "Transforms GtkJustification value JUSTIFY to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_justification_to_string justify))))
+
+(define (symbol->gtk-justification sym)
+  "Transforms symbol SYM to corresponding GtkJustification value."
+  (schematic_gtk_justification_from_string
    (string->pointer (symbol->string sym))))
 
 

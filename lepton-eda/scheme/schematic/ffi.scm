@@ -54,6 +54,8 @@
             gtk_string_to_response
             gtk_widget_get_gtk_window
             gtk_widget_pack_child
+            schematic_gtk_justification_to_string
+            schematic_gtk_justification_from_string
 
             generic_confirm_dialog
             generic_error_dialog
@@ -736,6 +738,8 @@
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
 (define-lff gtk_widget_pack_child void '(* *))
+(define-lff schematic_gtk_justification_to_string '* (list int))
+(define-lff schematic_gtk_justification_from_string int '(*))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
