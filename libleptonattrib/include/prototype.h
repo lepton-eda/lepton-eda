@@ -173,7 +173,6 @@ STRING_LIST*
 attrib_string_list_get_next (STRING_LIST *list);
 
 STRING_LIST *s_string_list_new();
-STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list);
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item);
 void s_string_list_delete_item(STRING_LIST **list, int *count, char *item);
 int s_string_list_in_list(STRING_LIST *list, char *item);
