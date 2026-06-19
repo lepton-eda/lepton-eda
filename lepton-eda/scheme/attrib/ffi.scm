@@ -35,8 +35,8 @@
             attrib_get_notebook
             attrib_set_notebook
             attrib_get_sheet
-            attrib_set_sheet_data
             attrib_get_sheet_data
+            attrib_set_sheet_data
             attrib_get_sheets_number
             attrib_get_toplevel
             attrib_set_toplevel
@@ -181,8 +181,8 @@
 (define-lff attrib_get_notebook '* '())
 (define-lff attrib_set_notebook void '(*))
 (define-lff attrib_get_sheet '* (list int))
-(define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheet_data '* '())
+(define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheets_number int '())
 (define-lff attrib_get_toplevel '* '())
 (define-lff attrib_set_toplevel void '(*))
