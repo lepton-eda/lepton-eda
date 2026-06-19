@@ -2704,6 +2704,10 @@ Please check your design.")))
    (glist->list *objects identity)))
 
 
+(define (sort-component-list)
+  (s_string_list_sort_master_comp_list))
+
+
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
   (define *sheet-data (make-sheet-data))
@@ -2740,7 +2744,7 @@ Please check your design.")))
    (glist->list *pages identity))
 
   ;; Sort the master lists.
-  (s_string_list_sort_master_comp_list)
+  (sort-component-list)
   (s_string_list_sort_master_comp_attrib_list)
 
   ;; Note that this must be changed.  We need to input the
