@@ -57,17 +57,14 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-static void show_entry(GtkWidget *widget, gpointer data);
-
-
 static gchar* current_cell_text = NULL;
 
 
-static gboolean
-on_activate (GtkSheet* sheet,
-             gint      row,
-             gint      column,
-             gpointer  data)
+gboolean
+attrib_gtksheet_activate (GtkSheet* sheet,
+                          gint      row,
+                          gint      column,
+                          gpointer  data)
 {
   current_cell_text = gtk_sheet_get_entry_text (sheet);
 
@@ -75,11 +72,11 @@ on_activate (GtkSheet* sheet,
 }
 
 
-static gboolean
-on_deactivate (GtkSheet* sheet,
-               gint      row,
-               gint      column,
-               gpointer  data)
+gboolean
+attrib_gtksheet_deactivate (GtkSheet* sheet,
+                            gint      row,
+                            gint      column,
+                            gpointer  data)
 {
   gchar* str = gtk_sheet_get_entry_text (sheet);
 
@@ -97,8 +94,8 @@ on_deactivate (GtkSheet* sheet,
  *  \par Function Description
  *
  *  Update the current_cell_text global variable, so that
- *  on_deactivate() handler won't mark the sheet as modified
- *  when the current cell is deactivated.
+ *  attrib_gtksheet_deactivate() handler won't mark the sheet as
+ *  modified when the current cell is deactivated.
  *
  *  We need this to handle a particular use case:
  *  while editing text in a cell, instead of pressing Enter
@@ -223,17 +220,18 @@ x_gtksheet_init()
        *  sheet's working area (like in MS E*cel).   I have removed this from
        *  gattrib, but leave the code in just in case I want to put it back.  */
       g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (current_sheet)),
-                        "changed", (GCallback) show_entry, NULL);
-
+                        "changed",
+                        (GCallback) attrib_gtksheet_show_entry,
+                        NULL);
 
       g_signal_connect (current_sheet,
                         "activate",
-                        G_CALLBACK (&on_activate),
+                        G_CALLBACK (&attrib_gtksheet_activate),
                         NULL);
 
       g_signal_connect (current_sheet,
                         "deactivate",
-                        G_CALLBACK (&on_deactivate),
+                        G_CALLBACK (&attrib_gtksheet_deactivate),
                         NULL);
 
     }
@@ -528,8 +526,9 @@ x_gtksheet_set_cell_text_color (GtkSheet *sheet,
  * \param widget
  * \param data
  */
-static void
-show_entry(GtkWidget *widget, gpointer data)
+void
+attrib_gtksheet_show_entry (GtkWidget *widget,
+                            gpointer data)
 {
  gchar *text;
  GtkSheet *sheet;
