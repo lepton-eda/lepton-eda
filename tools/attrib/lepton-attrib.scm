@@ -428,6 +428,12 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
+;;; Duplicates string list *LS and returns a pointer to the new,
+;;; duplicate list.
+(define (duplicate-string-list *ls)
+  (s_string_list_duplicate_string_list *ls))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -464,7 +470,7 @@ failure."
 
   ;; First duplicate the list.
   (define *complete-component-attrib-list
-    (s_string_list_duplicate_string_list *new-component-attrib-pair-list))
+    (duplicate-string-list *new-component-attrib-pair-list))
   ;; This is to fake out a function called later.
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
