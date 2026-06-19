@@ -988,6 +988,10 @@ failure."
                       columns-number)))
 
 
+(define (set-sheet-data-changed *sheet-data changed)
+  (s_sheet_data_set_changed *sheet-data changed))
+
+
 ;;; Copies data from gtksheet into LeptonToplevel struct.  The
 ;;; function is called when the user invokes File -> Save.  It
 ;;; first places all data from gtksheet into SHEET_DATA.  Then it
@@ -1015,7 +1019,7 @@ failure."
 
   ;; Save all pages in design.
   (save-pages)
-  (s_sheet_data_set_changed (attrib_get_sheet_data) FALSE))
+  (set-sheet-data-changed (attrib_get_sheet_data) FALSE))
 
 
 (define (callback-file-save *action *parameter *data)
@@ -1546,7 +1550,7 @@ failure."
         (gtk_sheet_delete_columns *sheet num 1)
 
         ;; Set changed flag so user is prompted when exiting.
-        (s_sheet_data_set_changed *sheet-data TRUE))))
+        (set-sheet-data-changed *sheet-data TRUE))))
 
 
 ;;; Delete an attribute column.
@@ -1569,13 +1573,13 @@ failure."
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet mincol 1)
           ;; Set changed flag so user is prompted when exiting.
-          (s_sheet_data_set_changed *sheet-data TRUE))
+          (set-sheet-data-changed *sheet-data TRUE))
          ;; Pin sheet.
          ((= current-page-id 2)
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet mincol 1)
           ;; Set changed flag so user is prompted when exiting.
-          (s_sheet_data_set_changed *sheet-data TRUE)))))))
+          (set-sheet-data-changed *sheet-data TRUE)))))))
 
 
 ;; Runs the Delete attribute dialog.
@@ -1685,12 +1689,12 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
     ;; Question:  how to sanity check (row, column) selection?
     (attrib_table_set_visibility *table row column visible)
     ;; Cell has been updated.
-    (s_sheet_data_set_changed *sheet-data TRUE)
+    (set-sheet-data-changed *sheet-data TRUE)
 
     (unless (= show LEAVE_NAME_VALUE_ALONE)
       (attrib_table_set_show_name_value *table row column show)
       ;; Cell has been updated.
-      (s_sheet_data_set_changed *sheet-data TRUE))))
+      (set-sheet-data-changed *sheet-data TRUE))))
 
 
 (define (set-cells-attribs-visibility visible show color)
@@ -1921,7 +1925,7 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
   (unless (string= (pointer->string *entry-str)
                    (pointer->string *cell-str))
-    (s_sheet_data_set_changed *sheet-data TRUE))
+    (set-sheet-data-changed *sheet-data TRUE))
   ;; TRUE => allow deactivation.
   TRUE)
 
