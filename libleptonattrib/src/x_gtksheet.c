@@ -126,6 +126,10 @@ x_gtksheet_init()
   const gchar *folder[]= {_("Components"),
                           _("Nets"),
                           _("Pins")};
+  GtkSheet *component_sheet = NULL;
+  GtkSheet *net_sheet = NULL;
+  GtkSheet *pin_sheet = NULL;
+  GtkSheet *current_sheet = NULL;
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
 
@@ -135,9 +139,11 @@ x_gtksheet_init()
   /* -----  Components  ----- */
   if ((component_count > 0) && (component_attrib_count > 0))
   {
-    sheets[0] = (GtkSheet *) gtk_sheet_new ((guint) component_count,
-                                            (guint) component_attrib_count,
-                                            _("Components"));
+    component_sheet =
+      (GtkSheet *) gtk_sheet_new ((guint) component_count,
+                                  (guint) component_attrib_count,
+                                  _("Components"));
+    attrib_set_sheet (0, component_sheet);
   } else {
     x_dialog_fatal_error(_("No components found in design.  Please check your schematic and try again!\n"), 1);
   }
@@ -147,17 +153,22 @@ x_gtksheet_init()
   /* -----  Nets  ----- */
   if ((net_count > 0) && (net_attrib_count > 0))
   {
-    sheets[1] = (GtkSheet *) gtk_sheet_new (net_count,
-                                            net_attrib_count,
-                                            _("Nets"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
+    net_sheet =
+      (GtkSheet *) gtk_sheet_new (net_count,
+                                  net_attrib_count,
+                                  _("Nets"));
+    attrib_set_sheet (1, net_sheet);
+    /* Disallow editing of attribs for now. */
+    gtk_sheet_set_locked (GTK_SHEET (net_sheet), TRUE);
   } else {
-    sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, _("Nets"));
-    gtk_sheet_row_button_add_label(sheets[1], 0, _("TBD"));
-    gtk_sheet_row_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
-    gtk_sheet_column_button_add_label(sheets[1], 0, _("TBD"));
-    gtk_sheet_column_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
-    gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
+    net_sheet = (GtkSheet *) gtk_sheet_new (1, 1, _("Nets"));
+    attrib_set_sheet (1, net_sheet);
+    gtk_sheet_row_button_add_label (net_sheet, 0, _("TBD"));
+    gtk_sheet_row_button_justify (net_sheet, 0, GTK_JUSTIFY_LEFT);
+    gtk_sheet_column_button_add_label (net_sheet, 0, _("TBD"));
+    gtk_sheet_column_button_justify (net_sheet, 0, GTK_JUSTIFY_LEFT);
+    /* Disallow editing of attribs for now. */
+    gtk_sheet_set_locked (GTK_SHEET (net_sheet), TRUE);
   }
 
   int pin_count = attrib_sheet_data_get_pin_count (sheet_head);
@@ -165,24 +176,31 @@ x_gtksheet_init()
   /* -----  Pins  ----- */
   if ((pin_count > 0) && (pin_attrib_count > 0))
   {
-    sheets[2] = (GtkSheet *) gtk_sheet_new (pin_count,
+    pin_sheet = (GtkSheet *) gtk_sheet_new (pin_count,
                                             pin_attrib_count,
                                             _("Pins"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);   /* disallow editing of attribs for now */
+    attrib_set_sheet (2, pin_sheet);
+    /* Disallow editing of attribs for now. */
+    gtk_sheet_set_locked (GTK_SHEET (pin_sheet), TRUE);
   } else {
-    sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, _("Pins"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);    /* disallow editing of attribs for now */
+    pin_sheet = (GtkSheet *) gtk_sheet_new (1, 1, _("Pins"));
+    attrib_set_sheet (2, pin_sheet);
+    /* Disallow editing of attribs for now. */
+    gtk_sheet_set_locked (GTK_SHEET (pin_sheet), TRUE);
   }
 
 
   /* --- Finally stick labels on the notebooks holding the two sheets. --- */
   for(i=0; i<NUM_SHEETS; i++){
-    if (sheets[i] != NULL) {  /* is this check needed?
-                               * Yes, it prevents us from segfaulting on empty nets sheet. */
+    current_sheet = attrib_get_sheet (i);
+    /* Is this check needed?
+     * Yes, it prevents us from segfaulting on empty nets sheet. */
+    if (current_sheet != NULL)
+    {
 
       GtkWidget* scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 
-      gtk_container_add( GTK_CONTAINER(scrolled_window), GTK_WIDGET(sheets[i]) );
+      gtk_container_add (GTK_CONTAINER (scrolled_window), GTK_WIDGET (current_sheet));
 
       /* First remove old notebook page.  I should probably do some checking here. */
       if (notebook != NULL)
@@ -195,7 +213,7 @@ x_gtksheet_init()
       gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolled_window,
                                GTK_WIDGET(label) );
 
-      gtk_widget_show( GTK_WIDGET(sheets[i]) );
+      gtk_widget_show (GTK_WIDGET (current_sheet));
       gtk_widget_show( scrolled_window );
       gtk_widget_show( GTK_WIDGET(notebook) );  /* show updated notebook  */
 
@@ -204,16 +222,16 @@ x_gtksheet_init()
       /*  Note that the entry cell is the text entry field at the top of the
        *  sheet's working area (like in MS E*cel).   I have removed this from
        *  gattrib, but leave the code in just in case I want to put it back.  */
-      g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (sheets[i])),
+      g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (current_sheet)),
                         "changed", (GCallback) show_entry, NULL);
 
 
-      g_signal_connect (sheets[i],
+      g_signal_connect (current_sheet,
                         "activate",
                         G_CALLBACK (&on_activate),
                         NULL);
 
-      g_signal_connect (sheets[i],
+      g_signal_connect (current_sheet,
                         "deactivate",
                         G_CALLBACK (&on_deactivate),
                         NULL);
