@@ -96,7 +96,7 @@ attrib_gtksheet_activate (GtkSheet* sheet,
                           gint      column,
                           gpointer  data)
 {
-  current_cell_text = gtk_sheet_get_entry_text (sheet);
+  attrib_gtksheet_set_current_cell_text (gtk_sheet_get_entry_text (sheet));
 
   return FALSE; /* ignored */
 }
@@ -110,7 +110,7 @@ attrib_gtksheet_deactivate (GtkSheet* sheet,
 {
   gchar* str = gtk_sheet_get_entry_text (sheet);
 
-  if (strcmp (str, current_cell_text) != 0)
+  if (strcmp (str, attrib_gtksheet_get_current_cell_text ()) != 0)
   {
     s_sheet_data_set_changed (sheet_head, TRUE);
   }
@@ -137,7 +137,7 @@ attrib_gtksheet_deactivate (GtkSheet* sheet,
 void
 x_gtksheet_set_saved()
 {
-  current_cell_text = gtk_sheet_get_entry_text (sheets[0]);
+  attrib_gtksheet_set_current_cell_text (gtk_sheet_get_entry_text (sheets[0]));
 }
 
 
