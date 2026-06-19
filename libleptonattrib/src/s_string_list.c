@@ -414,7 +414,7 @@ void s_string_list_sort_master_comp_list() {
   STRING_LIST *local_list, *p;
 
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
-  local_list = sheet_head->master_comp_list_head;
+  local_list = attrib_sheet_data_get_component_list (sheet_head);
   for (p=local_list; p; p=p->next)
     p->pos = 0;
   local_list = listsort(local_list, 0, 1);
