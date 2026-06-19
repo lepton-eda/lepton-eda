@@ -60,6 +60,36 @@
 static gchar* current_cell_text = NULL;
 
 
+/*! \brief Get current cell text.
+ *
+ *  \par Function Description
+ *
+ *  Returns the text of the current cell.
+ *
+ *  \return The text.
+ */
+char*
+attrib_gtksheet_get_current_cell_text ()
+{
+  return current_cell_text;
+}
+
+
+/*! \brief Set current cell text.
+ *
+ *  \par Function Description
+ *
+ *  Sets the text of the current cell to the given value.
+ *
+ *  \param [in] text The new text.
+ */
+void
+attrib_gtksheet_set_current_cell_text (char* text)
+{
+  current_cell_text = text;
+}
+
+
 gboolean
 attrib_gtksheet_activate (GtkSheet* sheet,
                           gint      row,
