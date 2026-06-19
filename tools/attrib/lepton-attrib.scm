@@ -1061,6 +1061,15 @@ failure."
                       columns-number)))
 
 
+;;; Returns stored text of the current cell.
+(define (current-cell-text)
+  (attrib_gtksheet_get_current_cell_text))
+
+;;; Stores the current cell text *TEXT in an internal variable.
+(define (set-current-cell-text! *text)
+  (attrib_gtksheet_set_current_cell_text *text))
+
+
 ;;; Update the current_cell_text global variable, so that
 ;;; deactivate() handler won't mark the sheet as modified when the
 ;;; current cell is deactivated.  Call it just after the sheet has
@@ -1073,7 +1082,7 @@ failure."
 ;;; will mark the document as dirty, while it is, in fact, just
 ;;; has been saved.
 (define (update-current-cell-text)
-  (attrib_gtksheet_set_current_cell_text
+  (set-current-cell-text!
    (gtk_sheet_get_entry_text (attrib_get_sheet 0))))
 
 
@@ -1794,7 +1803,7 @@ failure."
 
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
-  (attrib_gtksheet_set_current_cell_text
+  (set-current-cell-text!
    (gtk_sheet_get_entry_text *sheet))
   FALSE)
 
@@ -1805,7 +1814,7 @@ failure."
 (define (callback-gtksheet-deactivate *sheet row column *user-data)
   (define *sheet-data (attrib_get_sheet_data))
   (define *entry-str (gtk_sheet_get_entry_text *sheet))
-  (define *cell-str (attrib_gtksheet_get_current_cell_text))
+  (define *cell-str (current-cell-text))
 
   (unless (string= (pointer->string *entry-str)
                    (pointer->string *cell-str))
