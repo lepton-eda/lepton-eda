@@ -1442,7 +1442,7 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls 0 1)))
+  (let ((*sorted-ls (listsort *ls 1)))
     ;; Do this after sorting is done.  This resets the order of
     ;; the individual items in the list.
     (let loop ((*item *sorted-ls)
@@ -1493,7 +1493,7 @@ failure."
         (and new-position
              (attrib_string_list_set_pos *item new-position)))))
 
-  (let ((*sorted-ls (listsort *ls 0 1)))
+  (let ((*sorted-ls (listsort *ls 1)))
     (attrib_sheet_data_set_component_attrib_list *sheet-data *sorted-ls)
 
     ;; Do this after sorting is done.  This resets the order of
@@ -1541,7 +1541,7 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls 0 1)))
+  (let ((*sorted-ls (listsort *ls 1)))
     ;; Do this after sorting is done.  This resets the order of
     ;; the individual items in the list.
     (let loop ((*item *sorted-ls)

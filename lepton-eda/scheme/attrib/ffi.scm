@@ -199,7 +199,7 @@
 (define-lff x_dialog_unimplemented_feature void '())
 
 ;;; listsort.c
-(define-lff listsort '* (list '* int int))
+(define-lff listsort '* (list '* int))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
