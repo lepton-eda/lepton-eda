@@ -451,8 +451,9 @@ void s_string_list_sort_master_comp_list() {
   }
 
   /* Now go to first item in local list and reassign list head to new first element */
-  while (local_list->prev != NULL) {
-    local_list = local_list->prev;
+  while (attrib_string_list_get_prev (local_list) != NULL)
+  {
+    local_list = attrib_string_list_get_prev (local_list);
   }
 
   sheet_head->master_comp_list_head = local_list;
