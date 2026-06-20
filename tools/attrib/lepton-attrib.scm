@@ -2708,6 +2708,11 @@ Please check your design.")))
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_component_list *sheet-data))
 
+  ;; Set 'pos' field of each item of the list to zero.
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item 0))
+
   (s_string_list_sort_master_comp_list *ls))
 
 

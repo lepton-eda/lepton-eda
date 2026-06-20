@@ -104,6 +104,7 @@
 
             attrib_string_list_get_data
             attrib_string_list_get_next
+            attrib_string_list_set_pos
             s_string_list_new
             s_string_list_add_item
             s_string_list_delete_item
@@ -249,6 +250,7 @@
 ;;; s_string_list.c
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_get_next '* '(*))
+(define-lff attrib_string_list_set_pos void (list '* int))
 (define-lff s_string_list_new '* '())
 (define-lff s_string_list_add_item void '(* * *))
 (define-lff s_string_list_delete_item void '(* * *))
