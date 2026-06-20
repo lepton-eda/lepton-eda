@@ -453,7 +453,8 @@ void s_string_list_sort_master_comp_attrib_list() {
    * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
    * certain attribs to go first.
    */
-  for (p=local_list; p; p=p->next) {
+  for (p = local_list; p; p = attrib_string_list_get_next (p))
+  {
     int i;
     p->pos = DEFAULT_ATTRIB_POS;
     for (i=0; i < (gint) NUM_CERTAINS; i++) {
@@ -473,7 +474,7 @@ void s_string_list_sort_master_comp_attrib_list() {
   while (local_list != NULL) {
     local_list->pos = i;
     i++;
-    local_list = local_list->next;
+    local_list = attrib_string_list_get_next (local_list);
   }
 
   return;
