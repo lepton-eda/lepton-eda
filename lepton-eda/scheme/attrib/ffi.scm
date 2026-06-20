@@ -107,13 +107,13 @@
             attrib_string_list_get_data
             attrib_string_list_get_next
             attrib_string_list_set_pos
+            attrib_string_list_get_prev
             s_string_list_new
             s_string_list_add_item
             s_string_list_delete_item
             s_string_list_find_in_list
             s_string_list_get_data_at_index
             s_string_list_in_list
-            s_string_list_sort_master_comp_list
             s_string_list_sort_master_comp_attrib_list
             s_string_list_sort_master_net_list
             s_string_list_sort_master_net_attrib_list
@@ -256,13 +256,13 @@
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_pos void (list '* int))
+(define-lff attrib_string_list_get_prev '* '(*))
 (define-lff s_string_list_new '* '())
 (define-lff s_string_list_add_item void '(* * *))
 (define-lff s_string_list_delete_item void '(* * *))
 (define-lff s_string_list_find_in_list int '(* *))
 (define-lff s_string_list_get_data_at_index '* (list '* int))
 (define-lff s_string_list_in_list int '(* *))
-(define-lff s_string_list_sort_master_comp_list void '(*))
 (define-lff s_string_list_sort_master_comp_attrib_list void '())
 (define-lff s_string_list_sort_master_net_list void '())
 (define-lff s_string_list_sort_master_net_attrib_list void '())

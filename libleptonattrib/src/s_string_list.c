@@ -417,31 +417,6 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 }
 
 
-/*------------------------------------------------------------------*/
-/*! \brief Sort the master component list
- *
- * Takes the master comp list
- * sheet_head->master_comp_list_head
- * and sorts it in this order:
- * - all refdeses in alphabetical order
- * Right now it does nothing other than fill in the "position"
- * and "length" variables.
- */
-void
-s_string_list_sort_master_comp_list (STRING_LIST *local_list)
-{
-  /* Now go to first item in local list and reassign list head to new first element */
-  while (attrib_string_list_get_prev (local_list) != NULL)
-  {
-    local_list = attrib_string_list_get_prev (local_list);
-  }
-
-  attrib_sheet_data_set_component_list (sheet_head, local_list);
-
-  return;
-}
-
-
 /* This list overrides the alphanumeric sort.  Attribs not found in
    this list are sorted as if they had a value of DEFAULT_ATTRIB_POS
    within this list, but alphanumerically relative to each other.  */
