@@ -127,13 +127,11 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
  * - list = listsort(mylist);
  *
  * \param list The linked STRING_LIST to be sorted
- * \param is_double TRUE if this is a doubly-linked list
  * \returns a pointer to the new head of the list
  */
 /*----------------------------------------------------------------*/
 STRING_LIST*
-listsort (STRING_LIST *list,
-          int is_double)
+listsort (STRING_LIST *list)
 {
     STRING_LIST *p, *q, *e, *tail;
     int insize, nmerges, psize, qsize, i;
@@ -193,10 +191,9 @@ listsort (STRING_LIST *list,
                 } else {
                     list = e;
                 }
-                if (is_double) {
-                    /* Maintain reverse pointers in a doubly linked list. */
-                    e->prev = tail;
-                }
+                /* Maintain reverse pointers in a doubly linked list. */
+                e->prev = tail;
+
                 tail = e;
             }
 
