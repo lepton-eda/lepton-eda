@@ -47,7 +47,10 @@ attrib_gtksheet_state_from_string (char *s);
 
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
-STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
+
+STRING_LIST*
+listsort (STRING_LIST *list,
+          int is_double);
 
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*

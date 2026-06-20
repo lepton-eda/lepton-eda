@@ -202,7 +202,7 @@
 (define-lff attrib_gtksheet_show_entry void '(* *))
 
 ;;; listsort.c
-(define-lff listsort '* (list '* int int))
+(define-lff listsort '* (list '* int))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())

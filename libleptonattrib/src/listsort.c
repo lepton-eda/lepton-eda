@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright 2001 Simon Tatham.
  * Copyright 2004-2013 gEDA Contributors
- * Copyright 2017-2021 Lepton EDA Contributors
+ * Copyright 2017-2026 Lepton EDA Contributors
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -127,13 +127,15 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
  * - list = listsort(mylist);
  *
  * \param list The linked STRING_LIST to be sorted
- * \param is_circular TRUE if this is a circularly linked list
  * \param is_double TRUE if this is a doubly-linked list
  * \returns a pointer to the new head of the list
  */
 /*----------------------------------------------------------------*/
-STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
-    STRING_LIST *p, *q, *e, *tail, *oldhead;
+STRING_LIST*
+listsort (STRING_LIST *list,
+          int is_double)
+{
+    STRING_LIST *p, *q, *e, *tail;
     int insize, nmerges, psize, qsize, i;
 
     /*
@@ -147,7 +149,6 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
 
     while (1) {
         p = list;
-        oldhead = list;                /* only used for circular linkage */
         list = NULL;
         tail = NULL;
 
@@ -160,10 +161,7 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
             psize = 0;
             for (i = 0; i < insize; i++) {
                 psize++;
-                if (is_circular)
-                    q = (q->next == oldhead ? NULL : q->next);
-                else
-                    q = q->next;
+                q = q->next;
                 if (!q) break;
             }
 
@@ -177,20 +175,16 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
                 if (psize == 0) {
                     /* p is empty; e must come from q. */
                     e = q; q = q->next; qsize--;
-                    if (is_circular && q == oldhead) q = NULL;
                 } else if (qsize == 0 || !q) {
                     /* q is empty; e must come from p. */
                     e = p; p = p->next; psize--;
-                    if (is_circular && p == oldhead) p = NULL;
                 } else if (cmp(p,q) <= 0) {
                     /* First element of p is lower (or same);
                      * e must come from p. */
                     e = p; p = p->next; psize--;
-                    if (is_circular && p == oldhead) p = NULL;
                 } else {
                     /* First element of q is lower; e must come from q. */
                     e = q; q = q->next; qsize--;
-                    if (is_circular && q == oldhead) q = NULL;
                 }
 
                 /* add the next element to the merged list */
@@ -209,12 +203,7 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
             /* now p has stepped `insize' places along, and q has too */
             p = q;
         }
-        if (is_circular) {
-            tail->next = list;
-            if (is_double)
-                list->prev = tail;
-        } else
-            tail->next = NULL;
+        tail->next = NULL;
 
         /* If we have done only one merge, we're finished. */
         if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
