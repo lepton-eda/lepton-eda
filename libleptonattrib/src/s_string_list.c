@@ -432,9 +432,6 @@ s_string_list_sort_master_comp_list (STRING_LIST *local_list)
 {
   int i = 0;
 
-  /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
-  local_list = listsort(local_list, 0, 1);
-
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
   while (local_list != NULL) {  /* make sure item is not null */
