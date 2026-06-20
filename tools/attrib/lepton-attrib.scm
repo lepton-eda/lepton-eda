@@ -2705,7 +2705,10 @@ Please check your design.")))
 
 
 (define (sort-component-list)
-  (s_string_list_sort_master_comp_list))
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_component_list *sheet-data))
+
+  (s_string_list_sort_master_comp_list *ls))
 
 
 (define (activate *app *toplevel)
