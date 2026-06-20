@@ -456,11 +456,11 @@ void s_string_list_sort_master_comp_attrib_list() {
   for (p = local_list; p; p = attrib_string_list_get_next (p))
   {
     int i;
-    p->pos = DEFAULT_ATTRIB_POS;
+    attrib_string_list_set_pos (p, DEFAULT_ATTRIB_POS);
     for (i=0; i < (gint) NUM_CERTAINS; i++) {
       if (p->data != NULL
           && (strcmp (certain_attribs[i].attrib, p->data) == 0)) {
-        p->pos = certain_attribs[i].pos;
+        attrib_string_list_set_pos (p, certain_attribs[i].pos);
         break;
       }
     }
@@ -472,7 +472,7 @@ void s_string_list_sort_master_comp_attrib_list() {
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
   while (local_list != NULL) {
-    local_list->pos = i;
+    attrib_string_list_set_pos (local_list, i);
     i++;
     local_list = attrib_string_list_get_next (local_list);
   }
