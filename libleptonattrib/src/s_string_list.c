@@ -458,8 +458,10 @@ void s_string_list_sort_master_comp_attrib_list() {
     int i;
     attrib_string_list_set_pos (p, DEFAULT_ATTRIB_POS);
     for (i=0; i < (gint) NUM_CERTAINS; i++) {
-      if (p->data != NULL
-          && (strcmp (certain_attribs[i].attrib, p->data) == 0)) {
+      if ((attrib_string_list_get_data (p) != NULL)
+          && (strcmp (certain_attribs[i].attrib,
+                      attrib_string_list_get_data (p)) == 0))
+      {
         attrib_string_list_set_pos (p, certain_attribs[i].pos);
         break;
       }
