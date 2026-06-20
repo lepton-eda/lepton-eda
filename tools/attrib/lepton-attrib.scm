@@ -2704,6 +2704,8 @@ Please check your design.")))
    (glist->list *objects identity)))
 
 
+;;; Sorts the component list and fills in the 'pos' fields of the
+;;; list items.
 (define (sort-component-list)
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_component_list *sheet-data))
@@ -2725,7 +2727,11 @@ Please check your design.")))
         (attrib_string_list_set_pos *item i)
         (if (null-pointer? (attrib_string_list_get_next *item))
             ;; Leave loop *before* iterating to NULL EOL marker.
-            (s_string_list_sort_master_comp_list *item)
+            (let loop-back ((*new-ls *item))
+              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                  (attrib_sheet_data_set_component_list *sheet-data *new-ls)
+                  (loop-back (attrib_string_list_get_prev *new-ls))))
+
             (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
