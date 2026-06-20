@@ -430,21 +430,6 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 void
 s_string_list_sort_master_comp_list (STRING_LIST *local_list)
 {
-  int i = 0;
-
-  /* Do this after sorting is done.  This resets the order of the individual items
-   * in the list.  */
-  while (local_list != NULL) {  /* make sure item is not null */
-    attrib_string_list_set_pos (local_list, i);
-    if (attrib_string_list_get_next (local_list) != NULL)
-    {
-      i++;
-      local_list = attrib_string_list_get_next (local_list);
-    } else {
-      break;                    /* leave loop *before* iterating to NULL EOL marker */
-    }
-  }
-
   /* Now go to first item in local list and reassign list head to new first element */
   while (attrib_string_list_get_prev (local_list) != NULL)
   {

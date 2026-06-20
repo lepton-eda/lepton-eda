@@ -2716,7 +2716,17 @@ Please check your design.")))
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
   (let ((*sorted-ls (listsort *ls 0 1)))
-    (s_string_list_sort_master_comp_list *sorted-ls)))
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (let loop ((*item *sorted-ls)
+               (i 0))
+      (unless (null-pointer? *item)
+        ;; Make sure item is not NULL.
+        (attrib_string_list_set_pos *item i)
+        (if (null-pointer? (attrib_string_list_get_next *item))
+            ;; Leave loop *before* iterating to NULL EOL marker.
+            (s_string_list_sort_master_comp_list *item)
+            (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
 (define (activate *app *toplevel)
