@@ -442,12 +442,11 @@ static struct {
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  */
-void s_string_list_sort_master_comp_attrib_list() {
+void
+s_string_list_sort_master_comp_attrib_list (STRING_LIST *local_list)
+{
   int i = 0;
-  STRING_LIST *local_list, *p;
-
-  /* Here's where we do the sort */
-  local_list = attrib_sheet_data_get_component_attrib_list (sheet_head);
+  STRING_LIST *p;
 
   /*
    * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
