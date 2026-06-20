@@ -166,6 +166,9 @@ attrib_string_list_get_data (STRING_LIST *list);
 int
 attrib_string_list_get_pos (STRING_LIST *list);
 
+void
+attrib_string_list_set_pos (STRING_LIST *list,
+                            int pos);
 STRING_LIST*
 attrib_string_list_get_prev (STRING_LIST *list);
 
