@@ -1319,6 +1319,10 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+(define (sort-component-attrib-list)
+  (s_string_list_sort_master_comp_attrib_list))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -1463,7 +1467,7 @@ failure."
        (attrib_sheet_data_get_component_attrib_list *sheet-data)
        (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
        *name)
-      (s_string_list_sort_master_comp_attrib_list)
+      (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
       ;; This is necessary to tell gtk_sheet_insert_columns
@@ -1537,7 +1541,7 @@ failure."
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
         ;; This renumbers list also.
-        (s_string_list_sort_master_comp_attrib_list)
+        (sort-component-attrib-list)
 
         (g_free *attrib-name)
 
@@ -2772,7 +2776,7 @@ Please check your design.")))
 
   ;; Sort the master lists.
   (sort-component-list)
-  (s_string_list_sort_master_comp_attrib_list)
+  (sort-component-attrib-list)
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
