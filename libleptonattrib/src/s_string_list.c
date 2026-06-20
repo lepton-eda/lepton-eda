@@ -447,7 +447,7 @@ void s_string_list_sort_master_comp_attrib_list() {
   STRING_LIST *local_list, *p;
 
   /* Here's where we do the sort */
-  local_list = sheet_head->master_comp_attrib_list_head;
+  local_list = attrib_sheet_data_get_component_attrib_list (sheet_head);
 
   /*
    * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
