@@ -2713,7 +2713,10 @@ Please check your design.")))
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  (s_string_list_sort_master_comp_list *ls))
+  ;; Here's where we do the sort.  The sort is done using a
+  ;; function found on the web.
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    (s_string_list_sort_master_comp_list *sorted-ls)))
 
 
 (define (activate *app *toplevel)

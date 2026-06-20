@@ -63,6 +63,8 @@
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
 
+            listsort
+
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
             attrib_sheet_data_set_changed
@@ -206,6 +208,9 @@
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
+
+;;; listsort.c
+(define-lff listsort '* (list '* int int))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
