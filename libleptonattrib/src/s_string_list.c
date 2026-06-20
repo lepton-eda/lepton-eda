@@ -469,7 +469,7 @@ void s_string_list_sort_master_comp_attrib_list() {
   }
 
   local_list = listsort(local_list, 0, 1);
-  sheet_head->master_comp_attrib_list_head = local_list;
+  attrib_sheet_data_set_component_attrib_list (sheet_head, local_list);
 
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
