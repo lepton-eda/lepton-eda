@@ -1319,9 +1319,35 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+;;; This list overrides the alphanumeric sort.  Attribs not found
+;;; in this list are sorted as if they had a value of
+;;; %default-attrib-pos within this list, but alphanumerically
+;;; relative to each other.
+;;;
+;;; Each record has the form: '(attrib-name . position)
+(define certain-attribs
+  '(("device" . 1)
+    ("footprint" . 2)
+    ("value" . 3)
+    ("symversion" . 200)))
+
+(define %default-attrib-pos 100)
+
 (define (sort-component-attrib-list)
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_component_attrib_list *sheet-data))
+
+  ;; Note that this sort is TBD -- it is more than just an
+  ;; alphabetic sort 'cause we want certain attribs to go first.
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item %default-attrib-pos)
+
+    (when (not (null-pointer? (attrib_string_list_get_data *item)))
+      (let* ((name (pointer->string (attrib_string_list_get_data *item)))
+             (new-position (assoc-ref certain-attribs name)))
+        (and new-position
+             (attrib_string_list_set_pos *item new-position)))))
 
   (s_string_list_sort_master_comp_attrib_list *ls))
 

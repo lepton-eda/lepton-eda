@@ -417,21 +417,6 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 }
 
 
-/* This list overrides the alphanumeric sort.  Attribs not found in
-   this list are sorted as if they had a value of DEFAULT_ATTRIB_POS
-   within this list, but alphanumerically relative to each other.  */
-static struct {
-  const char *attrib;
-  int pos;
-} certain_attribs[] = {
-  {"device", 1},
-  {"footprint", 2},
-  {"value", 3},
-  {"symversion", 200}
-};
-#define NUM_CERTAINS (sizeof(certain_attribs)/sizeof(certain_attribs[0]))
-#define DEFAULT_ATTRIB_POS 100
-
 /*------------------------------------------------------------------*/
 /*! \brief Sort the master component attribute list
  *
@@ -446,26 +431,6 @@ void
 s_string_list_sort_master_comp_attrib_list (STRING_LIST *local_list)
 {
   int i = 0;
-  STRING_LIST *p;
-
-  /*
-   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
-   * certain attribs to go first.
-   */
-  for (p = local_list; p; p = attrib_string_list_get_next (p))
-  {
-    int i;
-    attrib_string_list_set_pos (p, DEFAULT_ATTRIB_POS);
-    for (i=0; i < (gint) NUM_CERTAINS; i++) {
-      if ((attrib_string_list_get_data (p) != NULL)
-          && (strcmp (certain_attribs[i].attrib,
-                      attrib_string_list_get_data (p)) == 0))
-      {
-        attrib_string_list_set_pos (p, certain_attribs[i].pos);
-        break;
-      }
-    }
-  }
 
   local_list = listsort(local_list, 0, 1);
   attrib_sheet_data_set_component_attrib_list (sheet_head, local_list);
