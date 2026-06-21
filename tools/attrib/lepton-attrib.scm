@@ -1450,6 +1450,10 @@ failure."
             (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
+(define (sort-pin-attrib-list)
+  (s_string_list_sort_master_pin_attrib_list))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -2881,7 +2885,7 @@ Please check your design.")))
   (sort-net-attrib-list)
 
   (sort-pin-list)
-  (s_string_list_sort_master_pin_attrib_list)
+  (sort-pin-attrib-list)
 
   ;; Create and load the tables.
   (attrib_sheet_data_set_component_table
