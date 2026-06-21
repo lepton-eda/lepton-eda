@@ -457,7 +457,7 @@ void s_string_list_sort_master_pin_list() {
     local_list = attrib_string_list_get_prev (local_list);
   }
 
-  sheet_head->master_pin_list_head = local_list;
+  attrib_sheet_data_set_pin_list (sheet_head, local_list);
 
   return;
 }
