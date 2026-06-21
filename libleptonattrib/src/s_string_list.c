@@ -428,12 +428,13 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
  * and "length" variables.
  */
 /*------------------------------------------------------------------*/
-void s_string_list_sort_master_pin_list() {
+void
+s_string_list_sort_master_pin_list (STRING_LIST *local_list)
+{
   int i = 0;
-  STRING_LIST *local_list, *p;
+  STRING_LIST *p;
 
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
-  local_list = attrib_sheet_data_get_pin_list (sheet_head);
   for (p = local_list; p; p = attrib_string_list_get_next (p))
     attrib_string_list_set_pos (p, 0);
   local_list = listsort(local_list, 0, 1);

@@ -1421,7 +1421,10 @@ failure."
 
 
 (define (sort-pin-list)
-  (s_string_list_sort_master_pin_list))
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
+
+  (s_string_list_sort_master_pin_list *ls))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
