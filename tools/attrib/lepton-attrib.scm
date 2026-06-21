@@ -1420,6 +1420,10 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+(define (sort-pin-list)
+  (s_string_list_sort_master_pin_list))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -2850,7 +2854,7 @@ Please check your design.")))
   (sort-net-list)
   (sort-net-attrib-list)
 
-  (s_string_list_sort_master_pin_list)
+  (sort-pin-list)
   (s_string_list_sort_master_pin_attrib_list)
 
   ;; Create and load the tables.
