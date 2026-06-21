@@ -1394,8 +1394,17 @@ failure."
       (attrib_string_list_set_pos *item i))))
 
 
+;;; Sorts the list of nets in alphabetical order.
 (define (sort-net-list)
-  (s_string_list_sort_master_net_list))
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_net_list *sheet-data))
+
+  ;; Do this after sorting is done.  This resets the order of the
+  ;; individual items in the list.
+  (do ((*item *ls (attrib_string_list_get_next *item))
+       (i 0 (1+ i)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item i)))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
