@@ -446,7 +446,7 @@ void s_string_list_sort_master_pin_attrib_list() {
   while (local_list != NULL) {
     attrib_string_list_set_pos (local_list, i);
     i++;
-    local_list = local_list->next;
+    local_list = attrib_string_list_get_next (local_list);
   }
 
   return;
