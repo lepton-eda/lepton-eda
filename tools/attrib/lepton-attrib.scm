@@ -1407,6 +1407,10 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+(define (sort-net-attrib-list)
+  (s_string_list_sort_master_net_attrib_list))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -2835,7 +2839,7 @@ Please check your design.")))
   ;; entire project before doing anything with the nets because
   ;; we need to first determine where they are all connected!
   (sort-net-list)
-  (s_string_list_sort_master_net_attrib_list)
+  (sort-net-attrib-list)
 
   (s_string_list_sort_master_pin_list)
   (s_string_list_sort_master_pin_attrib_list)
