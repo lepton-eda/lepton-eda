@@ -260,7 +260,7 @@
 (define-lff s_string_list_find_in_list int '(* *))
 (define-lff s_string_list_get_data_at_index '* (list '* int))
 (define-lff s_string_list_in_list int '(* *))
-(define-lff s_string_list_sort_master_pin_list void '())
+(define-lff s_string_list_sort_master_pin_list void '(*))
 (define-lff s_string_list_sort_master_pin_attrib_list void '())
 
 ;;; s_table.c
