@@ -1420,6 +1420,7 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+;;; Sort the pin list in alphabetical order.
 (define (sort-pin-list)
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
@@ -1438,7 +1439,12 @@ failure."
       ;; Make sure item is not NULL.  Leave loop *before*
       ;; iterating to NULL EOL marker.
       (if (null-pointer? (attrib_string_list_get_next *item))
-          (s_string_list_sort_master_pin_list *item)
+          (let loop-back ((*new-ls *item))
+            ;; Now go to first item in local list and reassign
+            ;; list head to new first element.
+            (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                (attrib_sheet_data_set_pin_list *sheet-data *new-ls)
+                (loop-back (attrib_string_list_get_prev *new-ls))))
           (begin
             (attrib_string_list_set_pos *item i)
             (loop (attrib_string_list_get_next *item) (1+ i)))))))
