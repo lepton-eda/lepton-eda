@@ -1319,6 +1319,37 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+;;; Sorts the component list and fills in the 'pos' fields of the
+;;; list items.
+(define (sort-component-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_component_list *sheet-data))
+
+  ;; Set 'pos' field of each item of the list to zero.
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item 0))
+
+  ;; Here's where we do the sort.  The sort is done using a
+  ;; function found on the web.
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (let loop ((*item *sorted-ls)
+               (i 0))
+      (unless (null-pointer? *item)
+        ;; Make sure item is not NULL.
+        (attrib_string_list_set_pos *item i)
+        (if (null-pointer? (attrib_string_list_get_next *item))
+            ;; Leave loop *before* iterating to NULL EOL marker.
+            (let loop-back ((*new-ls *item))
+              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                  (attrib_sheet_data_set_component_list *sheet-data *new-ls)
+                  (loop-back (attrib_string_list_get_prev *new-ls))))
+
+            (loop (attrib_string_list_get_next *item) (1+ i)))))))
+
+
 ;;; This list overrides the alphanumeric sort.  Attribs not found
 ;;; in this list are sorted as if they had a value of
 ;;; %default-attrib-pos within this list, but alphanumerically
@@ -2746,37 +2777,6 @@ Please check your design.")))
          (g_free *temp-refdes))))
 
    (glist->list *objects identity)))
-
-
-;;; Sorts the component list and fills in the 'pos' fields of the
-;;; list items.
-(define (sort-component-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (attrib_sheet_data_get_component_list *sheet-data))
-
-  ;; Set 'pos' field of each item of the list to zero.
-  (do ((*item *ls (attrib_string_list_get_next *item)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item 0))
-
-  ;; Here's where we do the sort.  The sort is done using a
-  ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls 0 1)))
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (let loop ((*item *sorted-ls)
-               (i 0))
-      (unless (null-pointer? *item)
-        ;; Make sure item is not NULL.
-        (attrib_string_list_set_pos *item i)
-        (if (null-pointer? (attrib_string_list_get_next *item))
-            ;; Leave loop *before* iterating to NULL EOL marker.
-            (let loop-back ((*new-ls *item))
-              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
-                  (attrib_sheet_data_set_component_list *sheet-data *new-ls)
-                  (loop-back (attrib_string_list_get_prev *new-ls))))
-
-            (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
 (define (activate *app *toplevel)
