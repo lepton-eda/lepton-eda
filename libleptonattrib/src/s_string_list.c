@@ -418,34 +418,6 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Sort the master net attribute list
- *
- * Take the master net attribute list
- * sheet_head->master_net_attrib_list_head
- * and sort it in this order:
- * value, footprint, model-name, file,
- * - all other attributes in alphabetical order
- */
-/*------------------------------------------------------------------*/
-void s_string_list_sort_master_net_attrib_list() {
-  int i = 0;
-  STRING_LIST *local_list;
-
-
-  /* Do this after sorting is done.  This resets the order of the individual items
-   * in the list.  */
-  local_list = attrib_sheet_data_get_net_attrib_list (sheet_head);
-  while (local_list != NULL) {
-    attrib_string_list_set_pos (local_list, i);
-    i++;
-    local_list = attrib_string_list_get_next (local_list);
-  }
-
-  return;
-}
-
-
-/*------------------------------------------------------------------*/
 /*! \brief Sort the master pin list
  *
  * Take the master pin list
