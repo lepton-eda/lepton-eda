@@ -1424,6 +1424,10 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
 
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item 0))
+
   (s_string_list_sort_master_pin_list *ls))
 
 
