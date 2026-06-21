@@ -81,7 +81,7 @@ attrib_gtksheet_show_entry (GtkWidget *widget,
 
  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
 
- sheet = GTK_SHEET(sheets[cur_page]);
+ sheet = GTK_SHEET (attrib_get_sheet (cur_page));
  if (sheet != NULL) {
    sheet_entry = gtk_sheet_get_entry( GTK_SHEET(sheet) );
  }
