@@ -415,39 +415,3 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
   }
   return local_item->data;
 }
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Sort the master pin attribute list
- *
- * Takes the master pin attrib list
- * sheet_head->master_pin_attrib_list_head
- * and sorts it in this order:
- * - all pin attribs in alphabetical order
- * Right now it does nothing other than fill in the "position"
- * and "length" variables.
- */
-/*------------------------------------------------------------------*/
-void s_string_list_sort_master_pin_attrib_list() {
-  int i = 0;
-  STRING_LIST *local_list;
-
-  /* Here's where we do the sort */
-
-  /*
-   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
-   * certain attribs to go first.
-   */
-
-
-  /* Do this after sorting is done.  This resets the order of the individual items
-   * in the list.  */
-  local_list = attrib_sheet_data_get_pin_attrib_list (sheet_head);
-  while (local_list != NULL) {
-    attrib_string_list_set_pos (local_list, i);
-    i++;
-    local_list = attrib_string_list_get_next (local_list);
-  }
-
-  return;
-}

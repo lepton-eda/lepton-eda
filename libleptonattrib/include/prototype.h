@@ -182,9 +182,6 @@ int s_string_list_in_list(STRING_LIST *list, char *item);
 gint s_string_list_find_in_list (STRING_LIST *list, char *item);
 gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index);
 
-void s_string_list_sort_master_pin_attrib_list();
-
-
 /* ------------- s_table.c ------------- */
 int
 attrib_table_get_column (TABLE **table,
