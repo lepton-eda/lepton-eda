@@ -434,7 +434,7 @@ void s_string_list_sort_master_net_list() {
    * in the list.  */
   local_list = attrib_sheet_data_get_net_list (sheet_head);
   while (local_list != NULL) {
-    local_list->pos = i;
+    attrib_string_list_set_pos (local_list, i);
     i++;
     local_list = local_list->next;
   }
