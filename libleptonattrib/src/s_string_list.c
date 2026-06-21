@@ -435,13 +435,13 @@ void s_string_list_sort_master_pin_list() {
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
   local_list = attrib_sheet_data_get_pin_list (sheet_head);
   for (p = local_list; p; p = attrib_string_list_get_next (p))
-    p->pos = 0;
+    attrib_string_list_set_pos (p, 0);
   local_list = listsort(local_list, 0, 1);
 
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
   while (local_list != NULL) {  /* make sure item is not null */
-    local_list->pos = i;
+    attrib_string_list_set_pos (local_list, i);
     if (attrib_string_list_get_next (local_list) != NULL)
     {
       i++;
