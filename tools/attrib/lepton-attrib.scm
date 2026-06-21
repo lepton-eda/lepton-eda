@@ -1428,7 +1428,20 @@ failure."
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  (s_string_list_sort_master_pin_list *ls))
+  ;; Here's where we do the sort.  The sort is done using a
+  ;; function found on the web.
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (let loop ((*item *sorted-ls)
+               (i 0))
+      ;; Make sure item is not NULL.  Leave loop *before*
+      ;; iterating to NULL EOL marker.
+      (if (null-pointer? (attrib_string_list_get_next *item))
+          (s_string_list_sort_master_pin_list *item)
+          (begin
+            (attrib_string_list_set_pos *item i)
+            (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
