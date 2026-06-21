@@ -434,7 +434,7 @@ void s_string_list_sort_master_net_attrib_list() {
 
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
-  local_list = sheet_head->master_net_attrib_list_head;
+  local_list = attrib_sheet_data_get_net_attrib_list (sheet_head);
   while (local_list != NULL) {
     local_list->pos = i;
     i++;
