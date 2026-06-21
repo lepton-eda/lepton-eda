@@ -434,7 +434,7 @@ void s_string_list_sort_master_pin_list() {
 
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
   local_list = attrib_sheet_data_get_pin_list (sheet_head);
-  for (p=local_list; p; p=p->next)
+  for (p = local_list; p; p = attrib_string_list_get_next (p))
     p->pos = 0;
   local_list = listsort(local_list, 0, 1);
 
@@ -442,9 +442,10 @@ void s_string_list_sort_master_pin_list() {
    * in the list.  */
   while (local_list != NULL) {  /* make sure item is not null */
     local_list->pos = i;
-    if (local_list->next != NULL) {
+    if (attrib_string_list_get_next (local_list) != NULL)
+    {
       i++;
-      local_list = local_list->next;
+      local_list = attrib_string_list_get_next (local_list);
     } else {
       break;                    /* leave loop *before* iterating to NULL EOL marker */
     }
