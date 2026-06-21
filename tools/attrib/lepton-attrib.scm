@@ -2288,8 +2288,12 @@ failure."
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
 
 
-(define (callback-gtksheet-entry-changed *entry *user-data)
+(define (show-entry *entry)
   (attrib_gtksheet_show_entry *entry %null-pointer))
+
+
+(define (callback-gtksheet-entry-changed *entry *user-data)
+  (show-entry *entry))
 
 (define *callback-gtksheet-entry-changed
   (procedure->pointer void callback-gtksheet-entry-changed '(* *)))
