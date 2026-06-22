@@ -640,35 +640,6 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 #endif
 
 
-/*! \brief Indicate if document has \a changed in the title.
- */
-void
-x_window_set_title_changed (int changed)
-{
-  const gchar* title = gtk_window_get_title (GTK_WINDOW (window));
-  const gchar* prefix = "* ";
-
-  if (changed)
-  {
-    if (!g_str_has_prefix (title, prefix))
-    {
-      gchar* title_new = g_strdup_printf ("%s%s", prefix, title);
-      gtk_window_set_title (GTK_WINDOW (window), title_new);
-      g_free (title_new);
-    }
-  }
-  else
-  {
-    if (g_str_has_prefix (title, prefix))
-    {
-      gchar* title_new = g_strdup (title + strlen (prefix));
-      gtk_window_set_title (GTK_WINDOW (window), title_new);
-      g_free (title_new);
-    }
-  }
-}
-
-
 #ifdef ENABLE_GTK3
 static void
 startup (GApplication *app)

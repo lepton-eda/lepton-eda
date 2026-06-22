@@ -144,7 +144,6 @@
             attrib_window_new
             attrib_window_sheets_new
             attrib_window_set_menu_callback
-            x_window_set_title_changed
             separator_new
             ))
 
@@ -293,5 +292,4 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
-(define-lff x_window_set_title_changed void (list int))
 (define-lff separator_new '* '())
