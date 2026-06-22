@@ -1799,6 +1799,8 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (attrib_window_set_menu_callback (string->pointer "help-about")
                                    *callback-help-about))
 
+
+;;; Initialises the toplevel window widgets.
 (define (init-window-widgets)
   (define *window-widget (attrib_get_window))
   ;; Create main vertical box.  This is a container which
@@ -1809,6 +1811,36 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (define *statusbar (gtk_statusbar_new))
   (define *statusbar-message-area
     (gtk_statusbar_get_message_area *statusbar))
+
+  (define *label-color-legend (gtk_label_new %null-pointer))
+
+  (define *label-invisible (gtk_label_new %null-pointer))
+  (define format-invisible "<span foreground=\"grey\"> ~A </span>")
+  (define string-invisible (G_ "Invisible"))
+  (define *markup-invisible
+    (string->pointer
+     (format #f "~?" format-invisible (list string-invisible))))
+
+  (define *label-value (gtk_label_new %null-pointer))
+  (define format-value "<span foreground=\"black\"> ~A </span>")
+  (define string-value (G_ "Show value"))
+  (define *markup-value
+    (string->pointer
+     (format #f "~?" format-value (list string-value))))
+
+  (define *label-name (gtk_label_new %null-pointer))
+  (define format-name "<span foreground=\"red\"> ~A </span>")
+  (define string-name (G_ "Show name"))
+  (define *markup-name
+    (string->pointer
+     (format #f "~?" format-name (list string-name))))
+
+  (define *label-name-value (gtk_label_new %null-pointer))
+  (define format-name-value "<span foreground=\"blue\"> ~A </span>")
+  (define string-name-value (G_ "Show name and value"))
+  (define *markup-name-value
+    (string->pointer
+     (format #f "~?" format-name-value (list string-name-value))))
 
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
@@ -1826,7 +1858,30 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   ;; Status bar.
   (gtk_box_pack_start *main-vbox *statusbar FALSE TRUE 0)
 
-  (x_window_init *statusbar-message-area))
+  (gtk_label_set_markup *label-color-legend
+                        (string->pointer (G_ "   Color Legend:  ")))
+
+  (gtk_label_set_markup *label-invisible *markup-invisible)
+
+  (gtk_label_set_markup *label-value *markup-value)
+
+  (gtk_label_set_markup *label-name *markup-name)
+
+  (gtk_label_set_markup *label-name-value *markup-name-value)
+
+  (gtk_box_pack_start *statusbar-message-area *label-color-legend FALSE TRUE 0)
+  (gtk_box_pack_start *statusbar-message-area (separator_new) FALSE TRUE 0)
+
+  (gtk_box_pack_start *statusbar-message-area *label-invisible FALSE TRUE 0)
+  (gtk_box_pack_start *statusbar-message-area (separator_new) FALSE TRUE 0)
+
+  (gtk_box_pack_start *statusbar-message-area *label-value FALSE TRUE 0)
+  (gtk_box_pack_start *statusbar-message-area (separator_new) FALSE TRUE 0)
+
+  (gtk_box_pack_start *statusbar-message-area *label-name FALSE TRUE 0)
+  (gtk_box_pack_start *statusbar-message-area (separator_new) FALSE TRUE 0)
+
+  (gtk_box_pack_start *statusbar-message-area *label-name-value FALSE TRUE 0))
 
 
 (define (init-window)

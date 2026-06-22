@@ -61,7 +61,7 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 #endif
 
 
-static GtkWidget*
+GtkWidget*
 separator_new ()
 {
 #ifdef ENABLE_GTK3
@@ -110,68 +110,6 @@ attrib_window_menubar_new (GtkWidget *window)
   return menu_bar;
 #endif
 }
-
-
-/*! \brief Initialises the toplevel gtksheet
- *
- * This function initializes the toplevel gtksheet stuff.
- *
- *  It basically just initializes the following widgets:
- *  GTK_WINDOW *window
- *  GTK_CONTAINER *main_vbox
- *  GTK_MENU
- */
-void
-x_window_init (GtkWidget *marea)
-{
-  GtkWidget* label_1 = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label_1), _("   Color Legend:  "));
-
-  char *markup;
-
-  GtkWidget* label_inv = gtk_label_new (NULL);
-  const char *format_inv = "<span foreground=\"grey\">\%s</span>";
-  const char *str_inv = _(" Invisible ");
-  markup = g_markup_printf_escaped (format_inv, str_inv);
-  gtk_label_set_markup (GTK_LABEL (label_inv), markup);
-  g_free (markup);
-
-  GtkWidget* label_val = gtk_label_new (NULL);
-  const char *format_val = "<span foreground=\"black\">\%s</span>";
-  const char *str_val = _(" Show value ");
-  markup = g_markup_printf_escaped (format_val, str_val);
-  gtk_label_set_markup (GTK_LABEL (label_val), markup);
-  g_free (markup);
-
-  GtkWidget* label_name = gtk_label_new (NULL);
-  const char *format_name = "<span foreground=\"red\">\%s</span>";
-  const char *str_name = _(" Show name ");
-  markup = g_markup_printf_escaped (format_name, str_name);
-  gtk_label_set_markup (GTK_LABEL (label_name), markup);
-  g_free (markup);
-
-  GtkWidget* label_name_val = gtk_label_new (NULL);
-  const char *format_name_val = "<span foreground=\"blue\">\%s</span>";
-  const char *str_name_val = _(" Show name and value ");
-  markup = g_markup_printf_escaped (format_name_val, str_name_val);
-  gtk_label_set_markup (GTK_LABEL (label_name_val), markup);
-  g_free (markup);
-
-  gtk_box_pack_start (GTK_BOX (marea), label_1, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (marea), label_inv, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (marea), label_val, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (marea), label_name, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
-
-} /* x_window_init() */
 
 
 /* Menu callbacks */

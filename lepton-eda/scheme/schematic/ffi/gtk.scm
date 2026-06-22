@@ -77,6 +77,7 @@
             gtk_init
 
             gtk_label_new
+            gtk_label_set_markup
 
             gtk_list_store_clear
 
@@ -244,6 +245,7 @@
 (define-lff gtk_init void '(* *))
 
 (define-lff gtk_label_new '* '(*))
+(define-lff gtk_label_set_markup void '(* *))
 
 (define-lff gtk_list_store_clear void '(*))
 

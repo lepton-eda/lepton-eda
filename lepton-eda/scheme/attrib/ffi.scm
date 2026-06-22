@@ -150,7 +150,7 @@
             attrib_window_new
             attrib_window_sheets_new
             attrib_window_set_menu_callback
-            x_window_init
+            separator_new
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -307,4 +307,4 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
-(define-lff x_window_init void '(*))
+(define-lff separator_new '* '())
