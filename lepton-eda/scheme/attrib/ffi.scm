@@ -33,6 +33,7 @@
             gtk_sheet_unselect_range
 
             attrib_get_notebook
+            attrib_set_notebook
             attrib_get_sheet
             attrib_set_sheet_data
             attrib_get_sheet_data
@@ -180,6 +181,7 @@
 
 ;;; attrib.c
 (define-lff attrib_get_notebook '* '())
+(define-lff attrib_set_notebook void '(*))
 (define-lff attrib_get_sheet '* (list int))
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheet_data '* '())
