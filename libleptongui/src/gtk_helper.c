@@ -539,3 +539,27 @@ schematic_gtk_justification_from_string (char *s)
 
   return result;
 }
+
+
+/*! \brief Create a vertical box widget.
+ *
+ * \par Function Description
+ *
+ * Returns a new vertical box widget.  This function provides a
+ * uniform way to make vertical box widgets in Scheme for both
+ * GTK2 and GTK3 ports..
+ *
+ * \param [in] homogeneous Whether the box is homogeneous.
+ * \param [in] spacing The spacing of the box.
+ * \return The box widget.
+ */
+GtkWidget*
+schematic_gtk_vbox_new (gboolean homogeneous,
+                        gint spacing)
+{
+#ifdef ENABLE_GTK3
+  return gtk_box_new (GTK_ORIENTATION_VERTICAL, spacing);
+#else
+  return gtk_vbox_new (homogeneous, spacing);
+#endif
+}

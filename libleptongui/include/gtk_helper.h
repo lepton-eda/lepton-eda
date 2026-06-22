@@ -75,6 +75,9 @@ schematic_gtk_justification_to_string (int val);
 int
 schematic_gtk_justification_from_string (char *s);
 
+GtkWidget*
+schematic_gtk_vbox_new (gboolean homogeneous,
+                        gint spacing);
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */
