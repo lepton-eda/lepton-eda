@@ -303,4 +303,4 @@
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
-(define-lff x_window_init void '())
+(define-lff x_window_init void '(*))

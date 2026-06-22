@@ -343,7 +343,7 @@ void
 attrib_window_set_menu_callback (char *name,
                                  GCallback callback);
 void
-x_window_init ();
+x_window_init (GtkWidget *main_vbox);
 
 void
 x_window_set_title_changed (int changed);

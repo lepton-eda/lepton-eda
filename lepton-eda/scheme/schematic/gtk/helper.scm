@@ -32,7 +32,9 @@
             gtk-position-type->symbol
             symbol->gtk-position-type
             gtk-response->symbol
-            symbol->gtk-response))
+            symbol->gtk-response)
+
+  #:re-export (schematic_gtk_vbox_new))
 
 (define (gtk-buttons-type->symbol type)
   "Transforms GtkButtonsType value TYPE to Scheme symbol."
