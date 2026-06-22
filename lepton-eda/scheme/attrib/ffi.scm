@@ -145,6 +145,7 @@
             attrib_table_row_new
 
             attrib_run
+            attrib_window_menubar_new
             attrib_window_new
             attrib_window_sheets_new
             attrib_window_set_menu_callback
@@ -300,6 +301,7 @@
 
 ;;; x_window.c
 (define-lff attrib_run int '(* *))
+(define-lff attrib_window_menubar_new '* '(*))
 (define-lff attrib_window_new '* '(*))
 (define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))

@@ -124,12 +124,6 @@ attrib_window_menubar_new (GtkWidget *window)
 void
 x_window_init (GtkWidget *main_vbox)
 {
-  GtkWidget *menu_bar;
-
-  /* -----  Now create menu bar  ----- */
-  menu_bar = attrib_window_menubar_new (window);
-  gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
-
   /* -----  Now init notebook widget  ----- */
   notebook = gtk_notebook_new();
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_BOTTOM);

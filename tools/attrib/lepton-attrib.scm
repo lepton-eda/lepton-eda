@@ -1804,9 +1804,13 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   ;; Create main vertical box.  This is a container which
   ;; organizes child widgets into a vertical column.
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
+  (define *menubar (attrib_window_menubar_new *window-widget))
 
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
+
+  ;; Add menu bar.
+  (gtk_box_pack_start *main-vbox *menubar FALSE TRUE 0)
 
   (x_window_init *main-vbox))
 
