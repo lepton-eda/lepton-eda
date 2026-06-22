@@ -1806,6 +1806,9 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
   (define *menubar (attrib_window_menubar_new *window-widget))
   (define *notebook (gtk_notebook_new))
+  (define *statusbar (gtk_statusbar_new))
+  (define *statusbar-message-area
+    (gtk_statusbar_get_message_area *statusbar))
 
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
@@ -1820,7 +1823,10 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (gtk_box_pack_start *main-vbox *notebook TRUE TRUE 0)
   (attrib_set_notebook *notebook)
 
-  (x_window_init *main-vbox))
+  ;; Status bar.
+  (gtk_box_pack_start *main-vbox *statusbar FALSE TRUE 0)
+
+  (x_window_init *statusbar-message-area))
 
 
 (define (init-window)

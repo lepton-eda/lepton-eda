@@ -128,6 +128,9 @@
             gtk_spin_button_get_value_as_int
             gtk_spin_button_set_value
 
+            gtk_statusbar_new
+            gtk_statusbar_get_message_area
+
             gtk_toggle_button_get_active
             gtk_toggle_button_set_active
 
@@ -292,6 +295,9 @@
 
 (define-lff gtk_spin_button_get_value_as_int int '(*))
 (define-lff gtk_spin_button_set_value void (list '* double))
+
+(define-lff gtk_statusbar_new '* '())
+(define-lff gtk_statusbar_get_message_area '* '(*))
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 

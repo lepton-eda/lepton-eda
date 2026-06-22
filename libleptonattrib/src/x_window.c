@@ -122,14 +122,8 @@ attrib_window_menubar_new (GtkWidget *window)
  *  GTK_MENU
  */
 void
-x_window_init (GtkWidget *main_vbox)
+x_window_init (GtkWidget *marea)
 {
-  /* Status bar:
-  */
-  GtkWidget* sbar = gtk_statusbar_new();
-  gtk_box_pack_start (GTK_BOX (main_vbox), sbar, FALSE, TRUE, 0);
-  GtkWidget* marea = gtk_statusbar_get_message_area (GTK_STATUSBAR (sbar));
-
   GtkWidget* label_1 = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label_1), _("   Color Legend:  "));
 
