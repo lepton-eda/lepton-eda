@@ -88,6 +88,19 @@ attrib_window_sheets_new ()
 }
 
 
+GtkWidget*
+attrib_window_menubar_new (GtkWidget *window)
+{
+#ifdef ENABLE_GTK3
+  return gtk_menu_bar_new ();
+#else /* GTK2 */
+  GtkWidget *menu_bar;
+  x_window_create_menu(GTK_WINDOW(window), &menu_bar);
+  return menu_bar;
+#endif
+}
+
+
 /*! \brief Initialises the toplevel gtksheet
  *
  * This function initializes the toplevel gtksheet stuff.
@@ -103,11 +116,7 @@ x_window_init (GtkWidget *main_vbox)
   GtkWidget *menu_bar;
 
   /* -----  Now create menu bar  ----- */
-#ifdef ENABLE_GTK3
-  menu_bar = gtk_menu_bar_new ();
-#else /* GTK2 */
-  x_window_create_menu(GTK_WINDOW(window), &menu_bar);
-#endif
+  menu_bar = attrib_window_menubar_new (window);
   gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
 
   /* -----  Now init notebook widget  ----- */

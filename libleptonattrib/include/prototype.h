@@ -334,6 +334,9 @@ int
 attrib_run (gpointer activate_callback,
             LeptonToplevel *toplevel);
 GtkWidget*
+attrib_window_menubar_new (GtkWidget *window);
+
+GtkWidget*
 attrib_window_new (gpointer app);
 
 void
