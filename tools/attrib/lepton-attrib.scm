@@ -1805,12 +1805,20 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   ;; organizes child widgets into a vertical column.
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
   (define *menubar (attrib_window_menubar_new *window-widget))
+  (define *notebook (gtk_notebook_new))
 
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
 
   ;; Add menu bar.
   (gtk_box_pack_start *main-vbox *menubar FALSE TRUE 0)
+
+  ;; Init notebook widget.
+  (gtk_notebook_set_tab_pos *notebook
+                            (symbol->gtk-position-type 'bottom))
+  (gtk_notebook_set_show_tabs *notebook TRUE)
+  (gtk_box_pack_start *main-vbox *notebook TRUE TRUE 0)
+  (attrib_set_notebook *notebook)
 
   (x_window_init *main-vbox))
 

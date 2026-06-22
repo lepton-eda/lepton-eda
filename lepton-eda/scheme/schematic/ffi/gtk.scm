@@ -102,6 +102,8 @@
             gtk_notebook_remove_page
             gtk_notebook_get_current_page
             gtk_notebook_set_current_page
+            gtk_notebook_set_show_tabs
+            gtk_notebook_set_tab_pos
             gtk_notebook_set_tab_reorderable
 
             GTK_RESPONSE_NONE
@@ -264,6 +266,8 @@
 (define-lff gtk_notebook_remove_page void (list '* int))
 (define-lff gtk_notebook_get_current_page int '(*))
 (define-lff gtk_notebook_set_current_page void (list '* int))
+(define-lff gtk_notebook_set_show_tabs void (list '* int))
+(define-lff gtk_notebook_set_tab_pos void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
 
 ;;; Definitions from gtkdialog.h.
