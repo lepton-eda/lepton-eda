@@ -1016,10 +1016,14 @@ failure."
    (gtk_sheet_get_entry_text (attrib_get_sheet 0))))
 
 
+(define (set-title-changed changed)
+  (x_window_set_title_changed changed))
+
+
 (define (set-sheet-data-changed *sheet-data changed)
   (attrib_sheet_data_set_changed *sheet-data changed)
 
-  (x_window_set_title_changed changed)
+  (set-title-changed changed)
 
   (when (false? changed)
     (update-current-cell-text)))
