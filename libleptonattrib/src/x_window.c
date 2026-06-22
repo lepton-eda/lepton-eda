@@ -102,9 +102,6 @@ x_window_init (GtkWidget *main_vbox)
 {
   GtkWidget *menu_bar;
 
-  gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
-  gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
-
   /* -----  Now create menu bar  ----- */
 #ifdef ENABLE_GTK3
   menu_bar = gtk_menu_bar_new ();

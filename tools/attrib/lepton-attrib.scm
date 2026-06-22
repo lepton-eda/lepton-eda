@@ -1800,9 +1800,13 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
                                    *callback-help-about))
 
 (define (init-window-widgets)
-  ;; Now create main_vbox.  This is a container which organizes
-  ;; child widgets into a vertical column.
+  (define *window-widget (attrib_get_window))
+  ;; Create main vertical box.  This is a container which
+  ;; organizes child widgets into a vertical column.
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
+
+  (gtk_container_set_border_width *main-vbox 1)
+  (gtk_container_add *window-widget *main-vbox)
 
   (x_window_init *main-vbox))
 
