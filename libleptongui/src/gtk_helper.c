@@ -541,6 +541,60 @@ schematic_gtk_justification_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkPositionType value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkPositionType value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The position type value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_position_type_to_string (int val)
+{
+  const char *result = "left";
+
+  switch (val)
+  {
+  case GTK_POS_LEFT: result = "left"; break;
+  case GTK_POS_RIGHT: result = "right"; break;
+  case GTK_POS_TOP: result = "top"; break;
+  case GTK_POS_BOTTOM: result = "bottom"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkPositionType value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkPositionType value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkPositionType value.
+ */
+int
+schematic_gtk_position_type_from_string (char *s)
+{
+  int result = GTK_POS_LEFT;
+
+  if (strcmp (s, "left") == 0) {result = GTK_POS_LEFT; }
+  else if (strcmp (s, "right") == 0) {result = GTK_POS_RIGHT; }
+  else if (strcmp (s, "top") == 0) {result = GTK_POS_TOP; }
+  else if (strcmp (s, "bottom") == 0) {result = GTK_POS_BOTTOM; }
+
+  return result;
+}
+
+
 /*! \brief Create a vertical box widget.
  *
  * \par Function Description

@@ -29,6 +29,8 @@
             symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
+            gtk-position-type->symbol
+            symbol->gtk-position-type
             gtk-response->symbol
             symbol->gtk-response))
 
@@ -70,6 +72,17 @@
 (define (symbol->gtk-message-type sym)
   "Transforms symbol SYM to corresponding GtkMessageType value."
   (gtk_string_to_message_type (string->pointer (symbol->string sym))))
+
+
+(define (gtk-position-type->symbol type)
+  "Transforms GtkPositionType value TYPE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_position_type_to_string type))))
+
+(define (symbol->gtk-position-type sym)
+  "Transforms symbol SYM to corresponding GtkPositionType value."
+  (schematic_gtk_position_type_from_string
+   (string->pointer (symbol->string sym))))
 
 
 (define (gtk-response->symbol response)
