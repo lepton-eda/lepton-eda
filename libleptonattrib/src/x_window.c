@@ -88,6 +88,17 @@ attrib_window_sheets_new ()
 }
 
 
+/*! \brief Create the menubar widget.
+ *
+ *  \par Function Description
+ *
+ *  This function provides a uniform way to create menubar in
+ *  Scheme for both GTK2 and GTK3 ports.
+ *
+ *  \param [in] window The main window widget.
+ *
+ *  \return The menubar widget.
+ */
 GtkWidget*
 attrib_window_menubar_new (GtkWidget *window)
 {
