@@ -161,6 +161,7 @@
             gtk_window_set_default_icon_name
             gtk_window_get_position
             gtk_window_get_size
+            gtk_window_get_title
             gtk_window_set_title
             gtk_window_set_transient_for
             gtk_window_set_type_hint
@@ -341,6 +342,7 @@
 (define-lff gtk_window_set_default_icon_name void '(*))
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_get_size void '(* * *))
+(define-lff gtk_window_get_title '* '(*))
 (define-lff gtk_window_set_title void '(* *))
 (define-lff gtk_window_set_transient_for void '(* *))
 (define-lff gtk_window_set_type_hint void (list '* int))

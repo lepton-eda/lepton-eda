@@ -351,7 +351,4 @@ attrib_window_set_menu_callback (char *name,
 GtkWidget*
 separator_new ();
 
-void
-x_window_set_title_changed (int changed);
-
 G_END_DECLS

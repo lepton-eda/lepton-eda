@@ -1016,8 +1016,24 @@ failure."
    (gtk_sheet_get_entry_text (attrib_get_sheet 0))))
 
 
+;;; Indicate if document is flagged as changed in the title.
 (define (set-title-changed changed)
-  (x_window_set_title_changed changed))
+  (define *window-widget (attrib_get_window))
+  (define *title (gtk_window_get_title *window-widget))
+  (define title
+    (if (null-pointer? *title) "" (pointer->string *title)))
+  (define prefix "* ")
+
+  (if (true? changed)
+      (unless (string-prefix? prefix title)
+        (gtk_window_set_title
+         *window-widget
+         (string->pointer (string-append prefix title))))
+      (when (string-prefix? prefix title)
+        (gtk_window_set_title
+         *window-widget
+         (string->pointer
+          (string-drop title (string-length prefix)))))))
 
 
 (define (set-sheet-data-changed *sheet-data changed)
