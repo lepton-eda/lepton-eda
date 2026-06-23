@@ -2196,11 +2196,16 @@ failure."
     (string->pointer
      (format #f "~?" format-name-value (list string-name-value))))
 
+  (define *entry (gtk_entry_new))
+
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
 
   ;; Add menu bar.
   (gtk_box_pack_start *main-vbox *menubar FALSE TRUE 0)
+
+  ;; Add entry.
+  (gtk_box_pack_start *main-vbox *entry FALSE TRUE 0)
 
   ;; Init notebook widget.
   (gtk_notebook_set_tab_pos *notebook
