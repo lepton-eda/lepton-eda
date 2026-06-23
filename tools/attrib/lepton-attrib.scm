@@ -3074,9 +3074,6 @@ Please check your design.")))
 
   (attrib_set_toplevel *toplevel)
 
-  ;; Initialize GTK window.
-  (init-window)
-
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
 
@@ -3144,6 +3141,9 @@ Please check your design.")))
        (objects->pin-table (lepton_page_objects *page))))
 
    (glist->list *pages identity))
+
+  ;; Initialize GTK window.
+  (init-window)
 
   ;; Update windows.
   ;; This updates the top level stuff, and then calls another
