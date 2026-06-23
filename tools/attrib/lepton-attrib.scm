@@ -2172,14 +2172,6 @@ failure."
                     *callback-delete-window
                     %null-pointer)
 
-  ;; Init menu functions.
-  (init-callbacks)
-
-  (init-window-widgets)
-
-  ;; Create the array of sheets.
-  (attrib_window_sheets_new)
-
   ;; Restore main window's geometry.
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
 
@@ -3144,6 +3136,14 @@ Please check your design.")))
 
   ;; Initialize GTK window.
   (init-window)
+
+  ;; Init menu functions.
+  (init-callbacks)
+
+  (init-window-widgets)
+
+  ;; Create the array of sheets.
+  (attrib_window_sheets_new)
 
   ;; Update windows.
   ;; This updates the top level stuff, and then calls another
