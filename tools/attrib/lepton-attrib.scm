@@ -2289,7 +2289,8 @@ failure."
 
 
 (define (show-entry *entry)
-  (attrib_gtksheet_show_entry *entry %null-pointer))
+  (when (true? (gtk_widget_has_focus *entry))
+    (attrib_gtksheet_show_entry *entry %null-pointer)))
 
 
 (define (callback-gtksheet-entry-changed *entry *user-data)
