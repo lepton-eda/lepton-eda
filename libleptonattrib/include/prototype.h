@@ -301,7 +301,7 @@ void x_dialog_fatal_error(const gchar *string, gint return_code);
 /* ------------- x_gtksheet.c ------------- */
 void
 attrib_gtksheet_show_entry (GtkWidget *widget,
-                            gpointer data);
+                            GtkSheet *sheet);
 
 /* ------------- x_window.c ------------- */
 int

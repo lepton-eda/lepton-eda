@@ -68,20 +68,14 @@
  */
 void
 attrib_gtksheet_show_entry (GtkWidget *widget,
-                            gpointer data)
+                            GtkSheet *sheet)
 {
  gchar *text;
- GtkSheet *sheet;
  GtkWidget *sheet_entry = NULL;
  GtkWidget *entry;
- gint cur_page;
-
 
  entry = attrib_get_entry ();
 
- cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
- sheet = GTK_SHEET (attrib_get_sheet (cur_page));
  if (sheet != NULL) {
    sheet_entry = gtk_sheet_get_entry( GTK_SHEET(sheet) );
  }
