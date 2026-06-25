@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,11 +114,12 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
  * This function opens a file chooser dialog and waits for the
  * user to select at least one file to load as a new page.
  *
+ * \param window The main program window.
  * \returns GSList* list of files to be opened, or NULL if the
  *          user cancelled the dialog
  */
 GSList *
-x_fileselect_open (void)
+x_fileselect_open (GtkWidget *window)
 {
   GtkWidget *dialog;
   GSList *filenames = NULL;

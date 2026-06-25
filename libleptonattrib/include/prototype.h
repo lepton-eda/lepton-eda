@@ -330,7 +330,7 @@ int x_gtksheet_get_min_col(GtkSheet *sheet);
 int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_fileselect.c ------------- */
-GSList *x_fileselect_open (void);
+GSList *x_fileselect_open (GtkWidget *window);
 
 /* ------------- x_window.c ------------- */
 int

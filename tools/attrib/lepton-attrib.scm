@@ -2804,7 +2804,9 @@ Please check your design.")))
           (let ((files (if (null? readable-files)
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
-                           (gslist->list (x_fileselect_open) pointer->string 'free)
+                           (gslist->list
+                            (x_fileselect_open (attrib_get_window))
+                            pointer->string 'free)
                            readable-files)))
             (if (null? files)
                 (exit 0)
