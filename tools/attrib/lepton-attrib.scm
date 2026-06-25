@@ -2291,7 +2291,7 @@ failure."
 
 
 ;;; Update text entry box on sheet cell contents change.
-(define (show-entry *sheet)
+(define (callback-gtksheet-changed *sheet row column *user-data)
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
   (define *main-entry (attrib_get_entry))
 
@@ -2299,10 +2299,6 @@ failure."
              (not (null-pointer? *main-entry)))
     (gtk_entry_set_text *main-entry
                         (gtk_entry_get_text *sheet-entry))))
-
-
-(define (callback-gtksheet-changed *sheet row column *user-data)
-  (show-entry *sheet))
 
 (define *callback-gtksheet-changed
   (procedure->pointer void callback-gtksheet-changed (list '* int int '*)))
