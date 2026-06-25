@@ -2304,6 +2304,28 @@ failure."
   (procedure->pointer void callback-gtksheet-changed (list '* int int '*)))
 
 
+(define (callback-entry-changed *entry *user-data)
+  (define current-page-id (notebook-current-page-id))
+  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet-entry (gtk_sheet_get_entry *sheet))
+  (unless (null-pointer? *sheet-entry)
+    (let* ((*entry-text (gtk_entry_get_text *entry))
+           (entry-text
+            (if (null-pointer? *entry-text)
+                ""
+                (pointer->string *entry-text)))
+           (*sheet-entry-text (gtk_entry_get_text *sheet-entry))
+           (sheet-entry-text
+            (if (null-pointer? *sheet-entry-text)
+                ""
+                (pointer->string *sheet-entry-text))))
+      (unless (string= entry-text sheet-entry-text)
+        (gtk_sheet_set_entry_text *sheet *entry-text)))))
+
+(define *callback-entry-changed
+  (procedure->pointer void callback-entry-changed '(* *)))
+
+
 ;;; Creates and initializes the GtkSheet widget, which is the
 ;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
@@ -2523,6 +2545,12 @@ Please check your design.")))
   ;; Initialize the gtksheet.  This creates a new gtksheet having
   ;; dimensions specified in component-count etc.
   (init-gtksheet)
+
+  (let ((*main-entry (attrib_get_entry)))
+    (g_signal_connect *main-entry
+                      (string->pointer "changed")
+                      *callback-entry-changed
+                      %null-pointer))
 
   (gtk_sheet_set_clip_text (component-sheet) TRUE)
   (gtk_sheet_set_clip_text (net-sheet) TRUE)
