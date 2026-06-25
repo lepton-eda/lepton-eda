@@ -59,41 +59,6 @@ GtkSheet **sheets;
 GtkWidget *label;
 
 
-/*! \var GtkWidget *entry
- *
- * The main entry for all sheets.
- */
-GtkWidget *entry;
-
-
-/*! \brief Get the main sheet entry.
- *
- *  \par Function Description
- *
- *  Returns the main sheet entry.
- *
- *  \return The entry.
- */
-GtkWidget*
-attrib_get_entry ()
-{
-  return entry;
-}
-
-
-/*! \brief Set the main sheet entry.
- *
- *  \par Function Description
- *
- *  Sets the main sheet entry widget to the given value.
- *
- *  \param [in] widget The new entry widget.
- */
-void
-attrib_set_entry (GtkWidget* widget)
-{
-  entry = widget;
-}
 
 
 /*! \var GtkWidget *notebook
