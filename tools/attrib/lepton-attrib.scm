@@ -2290,6 +2290,14 @@ failure."
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
 
 
+;;; Compare two C strings
+(define (*string= *s1 *s2)
+  (or (and (null-pointer? *s1) (null-pointer? *s2))
+      (and (not (null-pointer? *s1))
+           (not (null-pointer? *s2))
+           (string= (pointer->string *s1) (pointer->string *s2)))))
+
+
 ;;; Update text entry box on sheet cell contents change.
 (define (callback-gtksheet-changed *sheet row column *user-data)
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
@@ -2309,17 +2317,9 @@ failure."
   (define *sheet (attrib_get_sheet current-page-id))
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
   (unless (null-pointer? *sheet-entry)
-    (let* ((*entry-text (gtk_entry_get_text *entry))
-           (entry-text
-            (if (null-pointer? *entry-text)
-                ""
-                (pointer->string *entry-text)))
-           (*sheet-entry-text (gtk_entry_get_text *sheet-entry))
-           (sheet-entry-text
-            (if (null-pointer? *sheet-entry-text)
-                ""
-                (pointer->string *sheet-entry-text))))
-      (unless (string= entry-text sheet-entry-text)
+    (let ((*entry-text (gtk_entry_get_text *entry))
+          (*sheet-entry-text (gtk_entry_get_text *sheet-entry)))
+      (unless (*string= *entry-text *sheet-entry-text)
         (gtk_sheet_set_entry_text *sheet *entry-text)))))
 
 (define *callback-entry-changed
