@@ -2305,8 +2305,10 @@ failure."
 
   (when (and (true? (gtk_widget_has_focus *sheet-entry))
              (not (null-pointer? *main-entry)))
-    (gtk_entry_set_text *main-entry
-                        (gtk_entry_get_text *sheet-entry))))
+    (let ((*entry-text (gtk_entry_get_text *main-entry))
+          (*sheet-entry-text (gtk_entry_get_text *sheet-entry)))
+      (unless (*string= *entry-text *sheet-entry-text)
+        (gtk_entry_set_text *main-entry *sheet-entry-text)))))
 
 (define *callback-gtksheet-changed
   (procedure->pointer void callback-gtksheet-changed (list '* int int '*)))
