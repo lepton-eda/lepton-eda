@@ -100,6 +100,4 @@ extern GtkWidget *notebook;
 
 extern GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
 
-extern GtkWidget *label;
-
 #endif

@@ -56,9 +56,6 @@
 #include "../include/globals.h"
 
 GtkSheet **sheets;
-GtkWidget *label;
-
-
 
 
 /*! \var GtkWidget *notebook
