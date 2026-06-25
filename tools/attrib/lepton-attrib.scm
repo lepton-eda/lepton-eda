@@ -2081,6 +2081,16 @@ failure."
           (set-cell-text-color *sheet i j color))))))
 
 
+;;; The main program entry.
+(define %main-entry #f)
+
+(define (set-main-entry! *entry)
+  (set! %main-entry *entry))
+
+(define (main-entry)
+  %main-entry)
+
+
 ;;; Sets the selected sheet cells to INVISIBLE.
 (define (set-cells-attribs-invisible)
   (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE 'grey))
@@ -2198,7 +2208,7 @@ failure."
 
   (define *entry (gtk_entry_new))
 
-  (attrib_set_entry *entry)
+  (set-main-entry! *entry)
 
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
@@ -2267,7 +2277,7 @@ failure."
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
   (define *entry-text (gtk_sheet_get_entry_text *sheet))
-  (gtk_entry_set_text (attrib_get_entry) *entry-text)
+  (gtk_entry_set_text (main-entry) *entry-text)
   (g_free *entry-text)
   FALSE)
 
@@ -2301,7 +2311,7 @@ failure."
 ;;; Update text entry box on sheet cell contents change.
 (define (callback-gtksheet-changed *sheet row column *user-data)
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
-  (define *main-entry (attrib_get_entry))
+  (define *main-entry (main-entry))
 
   (when (and (true? (gtk_widget_has_focus *sheet-entry))
              (not (null-pointer? *main-entry)))
@@ -2548,7 +2558,7 @@ Please check your design.")))
   ;; dimensions specified in component-count etc.
   (init-gtksheet)
 
-  (let ((*main-entry (attrib_get_entry)))
+  (let ((*main-entry (main-entry)))
     (g_signal_connect *main-entry
                       (string->pointer "changed")
                       *callback-entry-changed

@@ -5,11 +5,6 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
-GtkWidget*
-attrib_get_entry ();
-
-void
-attrib_set_entry (GtkWidget* widget);
 
 GtkWidget*
 attrib_get_notebook ();

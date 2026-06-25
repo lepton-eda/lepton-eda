@@ -45,8 +45,6 @@
             gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
 
-            attrib_get_entry
-            attrib_set_entry
             attrib_get_notebook
             attrib_set_notebook
             attrib_get_sheet
@@ -182,8 +180,6 @@
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
 
 ;;; attrib.c
-(define-lff attrib_get_entry '* '())
-(define-lff attrib_set_entry void '(*))
 (define-lff attrib_get_notebook '* '())
 (define-lff attrib_set_notebook void '(*))
 (define-lff attrib_get_sheet '* (list int))
