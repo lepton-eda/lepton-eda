@@ -2290,7 +2290,9 @@ failure."
 
 (define (show-entry *entry)
   (when (true? (gtk_widget_has_focus *entry))
-    (attrib_gtksheet_show_entry *entry %null-pointer)))
+    (let* ((current-page-id (notebook-current-page-id))
+           (*sheet (attrib_get_sheet current-page-id)))
+      (attrib_gtksheet_show_entry *entry *sheet))))
 
 
 (define (callback-gtksheet-entry-changed *entry *user-data)
