@@ -63,8 +63,6 @@
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
-            attrib_gtksheet_show_entry
-
             listsort
 
             attrib_sheet_data_new
@@ -201,9 +199,6 @@
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
 (define-lff x_dialog_unimplemented_feature void '())
-
-;;; x_gtksheet.c
-(define-lff attrib_gtksheet_show_entry void '(* *))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))

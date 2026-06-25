@@ -2198,6 +2198,8 @@ failure."
 
   (define *entry (gtk_entry_new))
 
+  (attrib_set_entry *entry)
+
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
 
@@ -2288,11 +2290,16 @@ failure."
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
 
 
+;;; Update text entry box on sheet cell contents change.
 (define (show-entry *sheet)
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
-  (when (true? (gtk_widget_has_focus *sheet-entry))
-    (let ((current-page-id (notebook-current-page-id)))
-      (attrib_gtksheet_show_entry *sheet-entry *sheet))))
+  (define *main-entry (attrib_get_entry))
+
+  (when (and (true? (gtk_widget_has_focus *sheet-entry))
+             (not (null-pointer? *main-entry)))
+    (let ((current-page-id (notebook-current-page-id))
+          (*text (gtk_entry_get_text *sheet-entry)))
+      (gtk_entry_set_text *main-entry *text))))
 
 
 (define (callback-gtksheet-changed *sheet row column *user-data)
