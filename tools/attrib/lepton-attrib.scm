@@ -1206,8 +1206,7 @@ failure."
 ;;; will mark the document as dirty, while it is, in fact, just
 ;;; has been saved.
 (define (update-current-cell-text)
-  (define *entry-text
-    (gtk_sheet_get_entry_text (attrib_get_sheet 0)))
+  (define *entry-text (gtk_sheet_get_entry_text (current-sheet)))
   (set-current-cell-text! *entry-text)
   (g_free *entry-text))
 
