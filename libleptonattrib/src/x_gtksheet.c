@@ -76,9 +76,6 @@ attrib_gtksheet_show_entry (GtkWidget *widget,
  GtkWidget *entry;
  gint cur_page;
 
- if (!gtk_widget_has_focus (widget)) {
-   return;
- }
 
  entry = attrib_get_entry ();
 
