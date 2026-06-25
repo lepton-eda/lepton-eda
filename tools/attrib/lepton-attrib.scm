@@ -1211,9 +1211,20 @@ failure."
   (g_free *entry-text))
 
 
+;;; The program window.
+(define %window %null-pointer)
+
+(define (set-window! *window)
+  (set! %window *window))
+
+(define (window)
+  %window)
+
+
+
 ;;; Indicate if document is flagged as changed in the title.
 (define (set-title-changed changed?)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
   (define *title (gtk_window_get_title *window-widget))
   (define title
     (if (null-pointer? *title) "" (pointer->string *title)))
@@ -1402,7 +1413,7 @@ failure."
 ;;; unsaved changes before calling quit-program() to quit the
 ;;; program.
 (define (attrib-quit)
-  (define *window (attrib_get_window))
+  (define *window (window))
   ;; Save main window's geometry to the cache config context.
   (save-gtk-window-geometry *window "attrib.window-geometry")
   ;; Deactivate the current cell to trigger "deactivate" signal.
@@ -2088,7 +2099,7 @@ failure."
 
 ;;; Initialises the toplevel window widgets.
 (define (init-window-widgets)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
   ;; Create main vertical box.  This is a container which
   ;; organizes child widgets into a vertical column.
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
@@ -2178,7 +2189,7 @@ failure."
 
 
 (define (init-window)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
 
   (g_signal_connect *window-widget
                     (string->pointer "delete_event")
@@ -2418,7 +2429,7 @@ failure."
 ;;; Adds all items to the top level window.
 (define (add-items)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *window (attrib_get_window))
+  (define *window (window))
 
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
@@ -3075,7 +3086,7 @@ Please check your design.")))
   (define *pages
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
-  (attrib_set_window *window-widget)
+  (set-window! *window-widget)
 
   (attrib_set_toplevel *toplevel)
 
