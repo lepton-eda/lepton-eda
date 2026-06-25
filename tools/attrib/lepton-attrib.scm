@@ -2267,7 +2267,7 @@ failure."
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
   (define *entry-text (gtk_sheet_get_entry_text *sheet))
-  (set-current-cell-text! *entry-text)
+  (gtk_entry_set_text (attrib_get_entry) *entry-text)
   (g_free *entry-text)
   FALSE)
 
