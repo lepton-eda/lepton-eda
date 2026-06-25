@@ -27,12 +27,6 @@ attrib_get_toplevel ();
 void
 attrib_set_toplevel (LeptonToplevel *toplevel);
 
-GtkWidget*
-attrib_get_window ();
-
-void
-attrib_set_window (GtkWidget* window_widget);
-
 const char*
 attrib_gtksheet_state_to_string (int val);
 

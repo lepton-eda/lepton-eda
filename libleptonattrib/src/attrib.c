@@ -184,43 +184,6 @@ attrib_set_toplevel (LeptonToplevel *val)
 }
 
 
-/*! \var GtkWidget *window
- *
- * The main window widget.
- */
-GtkWidget *window;
-
-
-/*! \brief Get the main window widget.
- *
- *  \par Function Description
- *
- *  Returns the main window widget.
- *
- *  \return The main window widget.
- */
-GtkWidget*
-attrib_get_window ()
-{
-  return window;
-}
-
-/*! \brief Set the main window widget.
- *
- *  \par Function Description
- *
- *  Sets the main window widget global variable to the given
- *  value.
- *
- *  \param [in] window_widget The window widget.
- */
-void
-attrib_set_window (GtkWidget *window_widget)
-{
-  window = window_widget;
-}
-
-
 /*! \brief Transform a \c GtkSheetState value to string.
  *
  * \par Function Description
