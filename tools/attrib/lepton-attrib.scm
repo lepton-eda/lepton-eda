@@ -1843,6 +1843,10 @@ failure."
         (set-sheet-data-changed #t))))
 
 
+(define (current-sheet)
+  (attrib_get_sheet (notebook-current-page-id)))
+
+
 (define (gtksheet-state->symbol state)
   "Transforms GtkSheetState value STATE to Scheme symbol."
   (string->symbol
@@ -1882,7 +1886,7 @@ failure."
 ;;; Runs the Delete attribute dialog.
 (define (delete-attrib)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (unless (null-pointer? *sheet)
     (let ((column (selected-sheet-column *sheet)))
       (when (and column
@@ -1956,7 +1960,7 @@ failure."
 
 (define (set-cells-attribs-visibility visible show color)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define state-bv (make-bytevector (sizeof int) 0))
   (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
 
@@ -2226,7 +2230,7 @@ failure."
 
 (define (callback-entry-changed *entry *user-data)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
   (unless (null-pointer? *sheet-entry)
     (let ((*entry-text (gtk_entry_get_text *entry))
