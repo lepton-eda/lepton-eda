@@ -1347,9 +1347,19 @@ failure."
     'suffix)))
 
 
+;;; The program notebook.
+(define %notebook #f)
+
+(define (set-notebook! *notebook)
+  (set! %notebook *notebook))
+
+(define (notebook)
+  %notebook)
+
+
 ;;; Returns the current page index of the program notebook widget.
 (define (notebook-current-page-id)
-  (gtk_notebook_get_current_page (attrib_get_notebook)))
+  (gtk_notebook_get_current_page (notebook)))
 
 
 (define (export-csv)
@@ -2136,7 +2146,7 @@ failure."
                             (symbol->gtk-position-type 'bottom))
   (gtk_notebook_set_show_tabs *notebook TRUE)
   (gtk_box_pack_start *main-vbox *notebook TRUE TRUE 0)
-  (attrib_set_notebook *notebook)
+  (set-notebook! *notebook)
 
   ;; Status bar.
   (gtk_box_pack_start *main-vbox *statusbar FALSE TRUE 0)
@@ -2245,7 +2255,7 @@ failure."
 ;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *notebook (attrib_get_notebook))
+  (define *notebook (notebook))
 
   ;; Create three new sheets.
 
