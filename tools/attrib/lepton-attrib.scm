@@ -2297,9 +2297,8 @@ failure."
 
   (when (and (true? (gtk_widget_has_focus *sheet-entry))
              (not (null-pointer? *main-entry)))
-    (let ((current-page-id (notebook-current-page-id))
-          (*text (gtk_entry_get_text *sheet-entry)))
-      (gtk_entry_set_text *main-entry *text))))
+    (gtk_entry_set_text *main-entry
+                        (gtk_entry_get_text *sheet-entry))))
 
 
 (define (callback-gtksheet-changed *sheet row column *user-data)
