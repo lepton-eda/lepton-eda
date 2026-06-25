@@ -56,34 +56,3 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 #include "../include/gettext.h"
-
-
-/*! \brief Show text entry box
- *
- * Displays a text entry box at the top of the working area.
- *         It is removed since it is not needed now, but may come in
- *         handy later. Therefore I keep the code around.
- * \param widget
- * \param data
- */
-void
-attrib_gtksheet_show_entry (GtkWidget *sheet_entry,
-                            GtkSheet *sheet)
-{
- gchar *text;
- GtkWidget *entry;
-
- entry = attrib_get_entry ();
-
- /*  Here's another place where we mix entry and sheet_entry  */
- if (entry != NULL) {
-   text = (gchar *) gtk_entry_get_text (GTK_ENTRY(sheet_entry));
-   if( text != NULL ) {
-     gtk_entry_set_text(GTK_ENTRY(entry),  text);
-   }
-   else {
-     gtk_entry_set_text(GTK_ENTRY(entry), (const gchar *) "");
-     /* gtk_entry_set_text(GTK_ENTRY(entry), NULL); */
-   }
- }
-}

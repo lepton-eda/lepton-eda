@@ -298,11 +298,6 @@ attrib_table_row_new (int columns);
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 
-/* ------------- x_gtksheet.c ------------- */
-void
-attrib_gtksheet_show_entry (GtkWidget *widget,
-                            GtkSheet *sheet);
-
 /* ------------- x_window.c ------------- */
 int
 attrib_run (gpointer activate_callback,
