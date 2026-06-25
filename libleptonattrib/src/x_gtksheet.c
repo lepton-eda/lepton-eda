@@ -67,18 +67,13 @@
  * \param data
  */
 void
-attrib_gtksheet_show_entry (GtkWidget *widget,
+attrib_gtksheet_show_entry (GtkWidget *sheet_entry,
                             GtkSheet *sheet)
 {
  gchar *text;
- GtkWidget *sheet_entry = NULL;
  GtkWidget *entry;
 
  entry = attrib_get_entry ();
-
- if (sheet != NULL) {
-   sheet_entry = gtk_sheet_get_entry( GTK_SHEET(sheet) );
- }
 
  /*  Here's another place where we mix entry and sheet_entry  */
  if (entry != NULL) {
