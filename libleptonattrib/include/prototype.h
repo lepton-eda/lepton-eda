@@ -6,12 +6,6 @@ G_BEGIN_DECLS
 
 /* attrib.c */
 
-GtkWidget*
-attrib_get_notebook ();
-
-void
-attrib_set_notebook (GtkWidget* widget);
-
 SHEET_DATA*
 attrib_get_sheet_data ();
 

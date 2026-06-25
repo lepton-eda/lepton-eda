@@ -58,43 +58,6 @@
 GtkSheet **sheets;
 
 
-/*! \var GtkWidget *notebook
- *
- * The main window notebook.
- */
-GtkWidget *notebook;
-
-
-/*! \brief Get the main window notebook.
- *
- *  \par Function Description
- *
- *  Returns the main window notebook.
- *
- *  \return The notebook.
- */
-GtkWidget*
-attrib_get_notebook ()
-{
-  return notebook;
-}
-
-
-/*! \brief Set the main window notebook.
- *
- *  \par Function Description
- *
- *  Sets the main window notebook widget to the given value.
- *
- *  \param [in] widget The new notebook widget.
- */
-void
-attrib_set_notebook (GtkWidget* widget)
-{
-  notebook = widget;
-}
-
-
 /*! \var SHEET_DATA *sheet_head
  *
  * The sheet data structure holding info on all schematic objects.
