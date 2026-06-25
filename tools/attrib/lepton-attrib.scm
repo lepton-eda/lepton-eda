@@ -2288,18 +2288,18 @@ failure."
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
 
 
-(define (show-entry *entry)
-  (when (true? (gtk_widget_has_focus *entry))
-    (let* ((current-page-id (notebook-current-page-id))
-           (*sheet (attrib_get_sheet current-page-id)))
-      (attrib_gtksheet_show_entry *entry *sheet))))
+(define (show-entry *sheet)
+  (define *sheet-entry (gtk_sheet_get_entry *sheet))
+  (when (true? (gtk_widget_has_focus *sheet-entry))
+    (let ((current-page-id (notebook-current-page-id)))
+      (attrib_gtksheet_show_entry *sheet-entry *sheet))))
 
 
-(define (callback-gtksheet-entry-changed *entry *user-data)
-  (show-entry *entry))
+(define (callback-gtksheet-changed *sheet row column *user-data)
+  (show-entry *sheet))
 
-(define *callback-gtksheet-entry-changed
-  (procedure->pointer void callback-gtksheet-entry-changed '(* *)))
+(define *callback-gtksheet-changed
+  (procedure->pointer void callback-gtksheet-changed (list '* int int '*)))
 
 
 ;;; Creates and initializes the GtkSheet widget, which is the
@@ -2417,9 +2417,9 @@ failure."
           ;; working area (like in MS E*cel).  This has been
           ;; removed from the program, but the code is left in
           ;; just in case we want to put it back.
-          (g_signal_connect (gtk_sheet_get_entry *current-sheet)
+          (g_signal_connect *current-sheet
                             (string->pointer "changed")
-                            *callback-gtksheet-entry-changed
+                            *callback-gtksheet-changed
                             %null-pointer)
 
           (g_signal_connect *current-sheet
