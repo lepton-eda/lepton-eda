@@ -83,8 +83,9 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
    * font_combo is a global.  Where is it set?  */
   GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
 
-  if (style->private_font)
-    char_width = gdk_char_width (style->private_font, (gchar) 'X');
+  GdkFont *font = gtk_style_get_font (style);
+  if (font != NULL)
+    char_width = gdk_char_width (font, (gchar) 'X');
   else
   #endif
     char_width = 12;
