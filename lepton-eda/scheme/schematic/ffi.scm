@@ -36,8 +36,6 @@
 
             g_init_window
 
-            f_save
-
             g_read_file
 
             gdk_window_type_hint_to_string
@@ -716,9 +714,6 @@
 
 ;;; rotation_combo.c
 (define-lff schematic_rotation_combo_get_angle int '(*))
-
-;;; f_basic.c
-(define-lff f_save int '(* * *))
 
 ;;; g_basic.c
 (define-lff g_read_file int '(* * *))
