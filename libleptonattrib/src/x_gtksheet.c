@@ -59,36 +59,6 @@
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Add column labels to GtkSheet
- *
- * Add column labels to GtkSheet.
- * \param sheet GtkSheet to add columns to
- * \param count
- * \param list_head pointer to top of STRING_LIST
- */
-void
-x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
-{
-  STRING_LIST *string_list_item;
-  gchar *text;
-  int j;
-
-  /* Leave if no items to add are available */
-  if ((count == 0) || (list_head == NULL)) return;
-
-  string_list_item = list_head;
-  for (j = 0; j < count; j++) {
-    text = (gchar *) g_strdup (attrib_string_list_get_data (string_list_item));
-    gtk_sheet_column_button_add_label(sheet, j, text);
-    gtk_sheet_column_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
-    /* need to resize the column width here . . . */
-    g_free(text);
-    string_list_item = attrib_string_list_get_next (string_list_item);
-  }
-}
-
-
-/*------------------------------------------------------------------*/
 /*! \brief Add a cell item to the GtkSheet
  *
  * Add a cell item to the GtkSheet

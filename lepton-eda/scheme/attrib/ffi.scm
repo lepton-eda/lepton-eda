@@ -58,7 +58,6 @@
 
             attrib_gtksheet_show_entry
             x_gtksheet_add_cell_item
-            x_gtksheet_add_col_labels
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
@@ -196,7 +195,6 @@
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
 (define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))
-(define-lff x_gtksheet_add_col_labels void (list '* int '*))
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
