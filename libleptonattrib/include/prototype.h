@@ -290,8 +290,6 @@ void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
 
-void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
-                              char *text, gint visibility, gint show_name_value);
 void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
                                     gint color_name);
 int x_gtksheet_get_min_col(GtkSheet *sheet);

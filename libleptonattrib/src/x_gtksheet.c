@@ -58,53 +58,6 @@
 #include "../include/gettext.h"
 
 
-/*------------------------------------------------------------------*/
-/*! \brief Add a cell item to the GtkSheet
- *
- * Add a cell item to the GtkSheet
- * \param sheet GtkSheet to add the cell item to
- * \param i
- * \param j
- * \param text
- * \param visibility
- * \param show_name_value
- */
-void
-x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j,
-                         gchar *text,
-                         gint visibility,
-                         gint show_name_value)
-{
-
-  /*  Should I do some sanity checking here?  */
-
-  gtk_sheet_set_cell(sheet, i, j, GTK_JUSTIFY_LEFT, text);
-  if (visibility == INVISIBLE) {
-    x_gtksheet_set_cell_text_color(sheet, i, j, GREY);
-  } else {
-    switch(show_name_value) {
-
-    case(SHOW_NAME_VALUE):
-        x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);
-        break;
-
-    case(SHOW_NAME):
-        x_gtksheet_set_cell_text_color(sheet, i, j, RED);
-        break;
-
-    case(SHOW_VALUE):
-        x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
-        break;
-    }
-  } /* if (visibility == INVISIBLE) */
-
-
-
-  /* Need to find a way to ensure that the text in a cell is clipped.
-   * Otherwise, long attribs overwrite adjacent cells.  */
-}
-
-
 /*! \brief Get the first column selected in the GtkSheet
  *
  * Get the first column selected in the GtkSheet
