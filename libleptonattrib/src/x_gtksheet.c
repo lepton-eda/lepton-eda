@@ -114,7 +114,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
-    text = (gchar *) g_strdup(string_list_item->data);
+    text = (gchar *) g_strdup (attrib_string_list_get_data (string_list_item));
     new_width = char_width * strlen(text);
     if (new_width > width)
       width = new_width;
