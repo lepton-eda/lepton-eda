@@ -1978,6 +1978,35 @@ failure."
           -1))))
 
 
+;;; Returns the index of the last column selected in the GtkSheet
+;;; *SHEET, or -1 if no column is selected.
+(define (sheet-max-column *sheet)
+  (define state-bv (make-bytevector (sizeof int) 0))
+  (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
+
+  (let ((result (gtk_sheet_get_selection
+                 *sheet
+                 (bytevector->pointer state-bv)
+                 (bytevector->pointer range-bv))))
+    (when (false? result)
+      (error "Could not obtain sheet selection."))
+    (let* ((range-ls
+            (parse-c-struct (bytevector->pointer range-bv)
+                            (list int int int int)))
+           (start-row (first range-ls))
+           (start-column (second range-ls))
+           (end-row (third range-ls))
+           (end-column (fourth range-ls))
+           (selection-state (gtksheet-state->symbol
+                             (bytevector-sint-ref state-bv
+                                                  0
+                                                  (native-endianness)
+                                                  (sizeof int)))))
+      (if (eq? selection-state 'column)
+          end-column
+          -1))))
+
+
 ;;; Delete an attribute column.
 (define (delete-attrib-column)
   (define *sheet-data (attrib_get_sheet_data))
@@ -1985,7 +2014,7 @@ failure."
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
     (let ((mincol (sheet-min-column *sheet))
-          (maxcol (x_gtksheet_get_max_col *sheet)))
+          (maxcol (sheet-max-column *sheet)))
       (unless (or (not (= mincol maxcol))
                   (= mincol -1)
                   (= maxcol -1))
@@ -2013,7 +2042,7 @@ failure."
   (define *sheet (attrib_get_sheet (notebook-current-page-id)))
   (unless (null-pointer? *sheet)
     (let ((mincol (sheet-min-column *sheet))
-          (maxcol (x_gtksheet_get_max_col *sheet)))
+          (maxcol (sheet-max-column *sheet)))
       ;; Check improper selection.
       (unless (or (not (= mincol maxcol))
                   (= mincol -1)
