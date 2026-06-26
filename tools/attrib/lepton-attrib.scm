@@ -1943,13 +1943,17 @@ failure."
         (set-sheet-data-changed *sheet-data TRUE))))
 
 
+(define (sheet-min-column *sheet)
+  (x_gtksheet_get_min_col *sheet))
+
+
 ;;; Delete an attribute column.
 (define (delete-attrib-column)
   (define *sheet-data (attrib_get_sheet_data))
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
-    (let ((mincol (x_gtksheet_get_min_col *sheet))
+    (let ((mincol (sheet-min-column *sheet))
           (maxcol (x_gtksheet_get_max_col *sheet)))
       (unless (or (not (= mincol maxcol))
                   (= mincol -1)
