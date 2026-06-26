@@ -299,7 +299,6 @@ attrib_gtksheet_show_entry (GtkWidget *widget,
 
 void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
                                     gint color_name);
-int x_gtksheet_get_min_col(GtkSheet *sheet);
 int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_window.c ------------- */

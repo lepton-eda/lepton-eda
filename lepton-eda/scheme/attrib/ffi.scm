@@ -54,6 +54,8 @@
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
+            attrib_gtksheet_state_from_string
+            attrib_gtksheet_state_to_string
 
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
@@ -61,7 +63,6 @@
             attrib_gtksheet_show_entry
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
-            x_gtksheet_get_min_col
 
             listsort
 
@@ -190,6 +191,8 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
+(define-lff attrib_gtksheet_state_from_string int '(*))
+(define-lff attrib_gtksheet_state_to_string '* (list int))
 
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
@@ -199,7 +202,6 @@
 (define-lff attrib_gtksheet_show_entry void '(* *))
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
-(define-lff x_gtksheet_get_min_col int '(*))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))
