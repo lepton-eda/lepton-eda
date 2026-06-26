@@ -1979,14 +1979,15 @@ failure."
            start-column))))
 
 
-;;; Delete an attribute column.
-(define (delete-attrib-column)
+;;; Runs the Delete attribute dialog.
+(define (delete-attrib)
   (define *sheet-data (attrib_get_sheet_data))
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
     (let ((column (selected-sheet-column *sheet)))
-      (when column
+      (when (and column
+                 (delete-attrib-dialog))
         (cond
          ;; Component sheet.
          ((= current-page-id 0)
@@ -2003,21 +2004,6 @@ failure."
           (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
           (set-sheet-data-changed *sheet-data TRUE)))))))
-
-
-;; Runs the Delete attribute dialog.
-(define (delete-attrib)
-  ;; First verify that exactly one column is selected.
-  (define *sheet (attrib_get_sheet (notebook-current-page-id)))
-  (unless (null-pointer? *sheet)
-    (let ((column (selected-sheet-column *sheet)))
-      ;; Check improper selection.
-      (when column
-        ;; Create the dialog.
-        (when (delete-attrib-dialog)
-          ;; Actually delete the attrib column.  This function
-          ;; figures out which column to delete.
-          (delete-attrib-column))))))
 
 
 (define (callback-edit-delete-attrib *action *parameter *data)
