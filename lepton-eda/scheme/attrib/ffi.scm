@@ -37,6 +37,7 @@
             gtk_sheet_new
             gtk_sheet_row_button_add_label
             gtk_sheet_row_button_justify
+            gtk_sheet_set_cell
             gtk_sheet_set_locked
             gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
@@ -57,7 +58,6 @@
             x_dialog_unimplemented_feature
 
             attrib_gtksheet_show_entry
-            x_gtksheet_add_cell_item
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
@@ -171,6 +171,7 @@
 (define-lff-lib gtk_sheet_new '* (list unsigned-int unsigned-int '*) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_add_label void (list '* int '*) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
+(define-lff-lib gtk_sheet_set_cell void (list '* int int int '*) libgtksheet)
 (define-lff-lib gtk_sheet_set_locked void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_set_row_titles_width void (list '* unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
@@ -194,7 +195,6 @@
 
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
-(define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
