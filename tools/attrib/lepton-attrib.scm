@@ -2430,9 +2430,6 @@ failure."
 
 ;;; Adds a cell item to the GtkSheet *SHEET at the address (I . J)
 ;;; with *TEXT, VISIBILITY, and SHOW-NAME-VALUE.
-;;;
-;;; TODO: Need to find a way to ensure that the text in a cell is
-;;; clipped.  Otherwise, long attribs overwrite adjacent cells.
 (define (add-cell-item *sheet i j *text visibility show-name-value)
   (gtk_sheet_set_cell *sheet i j GTK_JUSTIFY_LEFT *text)
   (if (= visibility INVISIBLE)
@@ -2495,6 +2492,10 @@ Please check your design.")))
   ;; Initialize the gtksheet.  This creates a new gtksheet having
   ;; dimensions specified in component-count etc.
   (init-gtksheet)
+
+  (gtk_sheet_set_clip_text (component-sheet) TRUE)
+  (gtk_sheet_set_clip_text (net-sheet) TRUE)
+  (gtk_sheet_set_clip_text (pin-sheet) TRUE)
 
   (when (> component-count 0)
     (add-row-labels
