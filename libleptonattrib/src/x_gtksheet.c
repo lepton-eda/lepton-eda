@@ -60,13 +60,10 @@
 
 #ifndef ENABLE_GTK3
 /*! \brief Set the text color of a cell (GTK2) */
-static void
+GdkColor*
 _set_cell_text_color (GtkSheet *sheet,
-                      gint row,
-                      gint col,
                       gint color_name)
 {
-  GtkSheetRange *range;
   GdkColormap *cmap;
   GdkColor *color;
 
@@ -93,33 +90,21 @@ _set_cell_text_color (GtkSheet *sheet,
 
   if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
     g_error (_("couldn't allocate color"));
-    return;
+    return NULL;
   }
-  /*   g_free(cmap); */
-
-  /* XXXXX  Attempt to set cell color */
-  range = g_new (GtkSheetRange, 1);
-  range->row0 = row;
-  range->rowi = row;
-  range->col0 = col;
-  range->coli = col;
-
-  /* Now set color */
-  gtk_sheet_range_set_foreground(sheet, range, color);
-  g_free(color);
-  g_free(range);
+  else
+  {
+    return color;
+  }
 }
 
 #else
 
 /*! \brief Set the text color of a cell (GTK3) */
-static void
+GdkRGBA*
 _set_cell_text_color_gtk3 (GtkSheet *sheet,
-                           gint row,
-                           gint col,
                            gint color_name)
 {
-  GtkSheetRange *range;
   GdkRGBA *color;
 
   color = g_new (GdkRGBA, 1);
@@ -142,17 +127,7 @@ _set_cell_text_color_gtk3 (GtkSheet *sheet,
   break;
   }
 
-  /* XXXXX  Attempt to set cell color */
-  range = g_new (GtkSheetRange, 1);
-  range->row0 = row;
-  range->rowi = row;
-  range->col0 = col;
-  range->coli = col;
-
-  /* Now set color */
-  gtk_sheet_range_set_foreground (sheet, range, color);
-  g_free (color);
-  g_free(range);
+  return color;
 }
 #endif
 
@@ -162,11 +137,31 @@ x_gtksheet_set_cell_text_color (GtkSheet *sheet,
                                 gint col,
                                 gint color_name)
 {
-  #ifdef ENABLE_GTK3
-  _set_cell_text_color_gtk3 (sheet, row, col, color_name);
+  GtkSheetRange *range;
+
+#ifdef ENABLE_GTK3
+  GdkRGBA *color =
+    _set_cell_text_color_gtk3 (sheet, color_name);
   #else
-  _set_cell_text_color (sheet, row, col, color_name);
+  GdkColor *color =
+    _set_cell_text_color (sheet, color_name);
   #endif
+
+  /* XXXXX  Attempt to set cell color */
+  range = g_new (GtkSheetRange, 1);
+  range->row0 = row;
+  range->rowi = row;
+  range->col0 = col;
+  range->coli = col;
+
+  /* Now set color */
+  if (color != NULL)
+  {
+    gtk_sheet_range_set_foreground (sheet, range, color);
+    g_free (color);
+  }
+
+  g_free (range);
 }
 
 
