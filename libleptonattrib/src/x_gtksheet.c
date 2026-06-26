@@ -57,6 +57,38 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
+
+/*! \brief Get 'X' char width for the widget style font.
+ *
+ *  \par Function Description
+ *
+ *  Return the width of the character 'X' for the widget style
+ *  font, if possible.  Otherwise, return 12.
+ *
+ * \return The 'X' character width.
+ */
+int
+attrib_gtksheet_get_char_width (GtkWidget *widget)
+{
+#ifdef ENABLE_GTK3
+  return 12;
+#else
+  /* Get character width based upon "X", which is a large char. */
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (widget));
+
+  GdkFont *font = gtk_style_get_font (style);
+  if (font != NULL)
+  {
+    return gdk_char_width (font, (gchar) 'X');
+  }
+  else
+  {
+    return 12;
+  }
+#endif
+}
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Add row labels to GtkSheet
  *
@@ -78,16 +110,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   /* Leave if no items to add are available */
   if ((count == 0) || (list_head == NULL)) return;
 
-  #ifndef ENABLE_GTK3
-  /* Get character width based upon "X", which is a large char. */
-  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
-
-  GdkFont *font = gtk_style_get_font (style);
-  if (font != NULL)
-    char_width = gdk_char_width (font, (gchar) 'X');
-  else
-  #endif
-    char_width = 12;
+  char_width = attrib_gtksheet_get_char_width (GTK_WIDGET (sheet));
 
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
