@@ -1943,8 +1943,39 @@ failure."
         (set-sheet-data-changed *sheet-data TRUE))))
 
 
+(define (gtksheet-state->symbol state)
+  "Transforms GtkSheetState value STATE to Scheme symbol."
+  (string->symbol
+   (pointer->string (attrib_gtksheet_state_to_string state))))
+
+
+;;; Returns the index of the first column selected in the GtkSheet
+;;; *SHEET, or -1 if no column is selected.
 (define (sheet-min-column *sheet)
-  (x_gtksheet_get_min_col *sheet))
+  (define state-bv (make-bytevector (sizeof int) 0))
+  (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
+
+  (let ((result (gtk_sheet_get_selection
+                 *sheet
+                 (bytevector->pointer state-bv)
+                 (bytevector->pointer range-bv))))
+    (when (false? result)
+      (error "Could not obtain sheet selection."))
+    (let* ((range-ls
+            (parse-c-struct (bytevector->pointer range-bv)
+                            (list int int int int)))
+           (start-row (first range-ls))
+           (start-column (second range-ls))
+           (end-row (third range-ls))
+           (end-column (fourth range-ls))
+           (selection-state (gtksheet-state->symbol
+                             (bytevector-sint-ref state-bv
+                                                  0
+                                                  (native-endianness)
+                                                  (sizeof int)))))
+      (if (eq? selection-state 'column)
+          start-column
+          -1))))
 
 
 ;;; Delete an attribute column.
@@ -1981,7 +2012,7 @@ failure."
   ;; First verify that exactly one column is selected.
   (define *sheet (attrib_get_sheet (notebook-current-page-id)))
   (unless (null-pointer? *sheet)
-    (let ((mincol (x_gtksheet_get_min_col *sheet))
+    (let ((mincol (sheet-min-column *sheet))
           (maxcol (x_gtksheet_get_max_col *sheet)))
       ;; Check improper selection.
       (unless (or (not (= mincol maxcol))

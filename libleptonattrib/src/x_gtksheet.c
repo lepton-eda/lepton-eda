@@ -58,24 +58,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the first column selected in the GtkSheet
- *
- * Get the first column selected in the GtkSheet
- * Returns the index of the first column selected, or -1 if
- *         no column is selected.
- * \param sheet GtkSheet to query
- * \returns index of the first column selected, or -1 if
- *          no column is selected.
- */
-int x_gtksheet_get_min_col(GtkSheet *sheet) {
-  if (sheet->state == GTK_SHEET_COLUMN_SELECTED) {
-    return sheet->range.col0;
-  } else {
-    return -1;
-  }
-}
-
-
 /*! \brief Get the last column selected in the GtkSheet
  *
  * Get the last column selected in the GtkSheet
