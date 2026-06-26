@@ -89,6 +89,8 @@
             eda_renderer_new
             eda_renderer_set_color_map
 
+            g_read_file
+
             export_config
             lepton_export_eps
             lepton_export_pdf
@@ -798,6 +800,9 @@
 ;;; f_basic.c
 (define-lff f_open int (list '* '* '* int '*))
 (define-lff f_save int '(* * *))
+
+;;; g_basic.c
+(define-lff g_read_file int '(* * *))
 
 ;;; export.c
 (define-lff export_config void '())
