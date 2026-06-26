@@ -75,27 +75,19 @@ _set_cell_text_color (GtkSheet *sheet,
   color = g_new (GdkColor, 1);
   switch(color_name) {
   case RED:
-    color->red = 0xffff;
-    color->green = 0x0;
-    color->blue = 0x0;
+    gdk_color_parse ("red",  color);
   break;
 
   case BLUE:
-    color->red = 0x0;
-    color->green = 0x0;
-    color->blue = 0xffff;
+    gdk_color_parse ("blue",  color);
   break;
 
   case BLACK:
-    color->red = 0x0;
-    color->green = 0x0;
-    color->blue = 0x0;
+    gdk_color_parse ("black",  color);
   break;
 
   case GREY:
-    color->red = 0x9999;
-    color->green = 0x9999;
-    color->blue = 0x9999;
+    gdk_color_parse ("grey",  color);
   break;
   }
 
