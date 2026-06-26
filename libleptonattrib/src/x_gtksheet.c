@@ -83,7 +83,7 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
     gtk_sheet_column_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
     /* need to resize the column width here . . . */
     g_free(text);
-    string_list_item = string_list_item->next;
+    string_list_item = attrib_string_list_get_next (string_list_item);
   }
 }
 
