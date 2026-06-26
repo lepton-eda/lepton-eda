@@ -289,6 +289,8 @@ void x_dialog_fatal_error(const gchar *string, gint return_code);
 void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
+int
+attrib_gtksheet_get_char_width (GtkWidget *widget);
 
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
