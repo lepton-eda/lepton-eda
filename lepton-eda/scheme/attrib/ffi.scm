@@ -38,6 +38,7 @@
             gtk_sheet_row_button_add_label
             gtk_sheet_row_button_justify
             gtk_sheet_set_cell
+            gtk_sheet_set_clip_text
             gtk_sheet_set_locked
             gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
@@ -172,6 +173,7 @@
 (define-lff-lib gtk_sheet_row_button_add_label void (list '* int '*) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
 (define-lff-lib gtk_sheet_set_cell void (list '* int int int '*) libgtksheet)
+(define-lff-lib gtk_sheet_set_clip_text void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_set_locked void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_set_row_titles_width void (list '* unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
