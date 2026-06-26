@@ -1951,7 +1951,7 @@ failure."
 
 ;;; Returns the index of the first column selected in the GtkSheet
 ;;; *SHEET, or -1 if no column is selected.
-(define (sheet-min-column *sheet)
+(define (selected-sheet-column *sheet)
   (define state-bv (make-bytevector (sizeof int) 0))
   (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
 
@@ -1973,38 +1973,10 @@ failure."
                                                   0
                                                   (native-endianness)
                                                   (sizeof int)))))
-      (if (eq? selection-state 'column)
-          start-column
-          -1))))
-
-
-;;; Returns the index of the last column selected in the GtkSheet
-;;; *SHEET, or -1 if no column is selected.
-(define (sheet-max-column *sheet)
-  (define state-bv (make-bytevector (sizeof int) 0))
-  (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
-
-  (let ((result (gtk_sheet_get_selection
-                 *sheet
-                 (bytevector->pointer state-bv)
-                 (bytevector->pointer range-bv))))
-    (when (false? result)
-      (error "Could not obtain sheet selection."))
-    (let* ((range-ls
-            (parse-c-struct (bytevector->pointer range-bv)
-                            (list int int int int)))
-           (start-row (first range-ls))
-           (start-column (second range-ls))
-           (end-row (third range-ls))
-           (end-column (fourth range-ls))
-           (selection-state (gtksheet-state->symbol
-                             (bytevector-sint-ref state-bv
-                                                  0
-                                                  (native-endianness)
-                                                  (sizeof int)))))
-      (if (eq? selection-state 'column)
-          end-column
-          -1))))
+      (and (eq? selection-state 'column)
+           (= start-column end-column)
+           (not (= start-column -1))
+           start-column))))
 
 
 ;;; Delete an attribute column.
@@ -2013,25 +1985,22 @@ failure."
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
-    (let ((mincol (sheet-min-column *sheet))
-          (maxcol (sheet-max-column *sheet)))
-      (unless (or (not (= mincol maxcol))
-                  (= mincol -1)
-                  (= maxcol -1))
+    (let ((column (selected-sheet-column *sheet)))
+      (when column
         (cond
          ;; Component sheet.
          ((= current-page-id 0)
-          (delete-component-attrib-column *sheet mincol))
+          (delete-component-attrib-column *sheet column))
          ;; Net sheet.
          ((= current-page-id 1)
           ;; Delete column on gtksheet.
-          (gtk_sheet_delete_columns *sheet mincol 1)
+          (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
           (set-sheet-data-changed *sheet-data TRUE))
          ;; Pin sheet.
          ((= current-page-id 2)
           ;; Delete column on gtksheet.
-          (gtk_sheet_delete_columns *sheet mincol 1)
+          (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
           (set-sheet-data-changed *sheet-data TRUE)))))))
 
@@ -2041,12 +2010,9 @@ failure."
   ;; First verify that exactly one column is selected.
   (define *sheet (attrib_get_sheet (notebook-current-page-id)))
   (unless (null-pointer? *sheet)
-    (let ((mincol (sheet-min-column *sheet))
-          (maxcol (sheet-max-column *sheet)))
+    (let ((column (selected-sheet-column *sheet)))
       ;; Check improper selection.
-      (unless (or (not (= mincol maxcol))
-                  (= mincol -1)
-                  (= maxcol -1))
+      (when column
         ;; Create the dialog.
         (when (delete-attrib-dialog)
           ;; Actually delete the attrib column.  This function
