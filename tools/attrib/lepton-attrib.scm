@@ -2381,6 +2381,10 @@ failure."
                             %null-pointer))))))
 
 
+(define (add-row-labels *sheet count *object-ls)
+  (x_gtksheet_add_row_labels *sheet count *object-ls))
+
+
 ;;; Adds all items to the top level window.
 (define (add-items)
   (define *sheet-data (attrib_get_sheet_data))
@@ -2432,7 +2436,7 @@ Please check your design.")))
   (init-gtksheet)
 
   (when (> component-count 0)
-    (x_gtksheet_add_row_labels
+    (add-row-labels
      (component-sheet)
      component-count
      (attrib_sheet_data_get_component_list *sheet-data))
@@ -2445,7 +2449,7 @@ Please check your design.")))
   ;; 'netname') has to be implemented.
   (if (> net-count 0)
       (begin
-        (x_gtksheet_add_row_labels
+        (add-row-labels
          (net-sheet)
          net-count
          (attrib_sheet_data_get_net_list *sheet-data))
@@ -2454,15 +2458,13 @@ Please check your design.")))
          net-attrib-count
          (attrib_sheet_data_get_net_attrib_list *sheet-data)))
       (begin
-        (x_gtksheet_add_row_labels (net-sheet)
-                                   1
-                                   %null-pointer)
+        (add-row-labels (net-sheet) 1 %null-pointer)
         (x_gtksheet_add_col_labels (net-sheet)
                                    1
                                    %null-pointer)))
 
   (when (> pin-count 0)
-    (x_gtksheet_add_row_labels
+    (add-row-labels
      (pin-sheet)
      pin-count
      (attrib_sheet_data_get_pin_list *sheet-data))
