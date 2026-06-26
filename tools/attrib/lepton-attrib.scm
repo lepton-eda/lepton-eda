@@ -1585,8 +1585,24 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
+;;; *OBJECT-LS.
 (define (add-column-labels *sheet count *object-ls)
-  (x_gtksheet_add_col_labels *sheet count *object-ls))
+  ;; Leave if no items to add are available.
+  (unless (or (zero? count)
+              (null-pointer? *object-ls))
+    (let loop ((j 0)
+               (*item *object-ls))
+
+      (unless (or (>= j count)
+                  (null-pointer? *item))
+        (let ((*text (g_strdup (attrib_string_list_get_data *item))))
+          (gtk_sheet_column_button_add_label *sheet j *text)
+          (gtk_sheet_column_button_justify *sheet j GTK_JUSTIFY_LEFT)
+          ;; TODO: Need to resize the column width here.
+          (g_free *text)
+          (loop (1+ j)
+                (attrib_string_list_get_next *item)))))))
 
 
 ;;; Looks for item *NAME in the list *LS, and returns the index
