@@ -80,6 +80,7 @@
 (define CYAN 6)
 (define GREY 7)
 
+(define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 ;;; Initialize liblepton library.
 (init-liblepton)
@@ -2254,7 +2255,6 @@ failure."
 (define (init-gtksheet)
   (define *sheet-data (attrib_get_sheet_data))
   (define *notebook (attrib_get_notebook))
-  (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
   ;; Create three new sheets.
 
@@ -2381,8 +2381,33 @@ failure."
                             %null-pointer))))))
 
 
+;;; Adds row labels from *OBJECT-LS to GtkSheet *SHEET for COUNT
+;;; of objects.
 (define (add-row-labels *sheet count *object-ls)
-  (x_gtksheet_add_row_labels *sheet count *object-ls))
+  ;; Leave if no items to add are available.
+  (unless (or (null-pointer? *object-ls)
+              (zero? count))
+    (let ((char-width (attrib_gtksheet_get_char_width *sheet)))
+      (let loop ((j 0)
+                 (*item *object-ls)
+                 (width 0))
+        (if (or (null-pointer? *item)
+                (>= j count))
+
+            (gtk_sheet_set_row_titles_width *sheet (+ width 8))
+
+            (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
+                   (new-width (* char-width
+                                 (string-length (pointer->string *text))))
+                   (max-width (if (> new-width width)
+                                  new-width
+                                  width)))
+              (gtk_sheet_row_button_add_label *sheet j *text)
+              (gtk_sheet_row_button_justify *sheet j GTK_JUSTIFY_LEFT)
+              (g_free *text)
+              (loop (1+ j)
+                    (attrib_string_list_get_next *item)
+                    max-width)))))))
 
 
 ;;; Adds all items to the top level window.

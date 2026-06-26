@@ -292,7 +292,6 @@ attrib_gtksheet_show_entry (GtkWidget *widget,
 int
 attrib_gtksheet_get_char_width (GtkWidget *widget);
 
-void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
                               char *text, gint visibility, gint show_name_value);

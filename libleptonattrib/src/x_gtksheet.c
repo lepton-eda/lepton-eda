@@ -90,47 +90,6 @@ attrib_gtksheet_get_char_width (GtkWidget *widget)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Add row labels to GtkSheet
- *
- * Add row labels to GtkSheet
- * \param sheet Pointer to the GtkSheet object
- * \param count Number of row labels to add
- * \param list_head Top of the string list
- */
-void
-x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
-{
-  STRING_LIST *string_list_item;
-  gchar *text;
-  int j;
-  int width = 0;
-  int new_width = 0;
-  int char_width;
-
-  /* Leave if no items to add are available */
-  if ((count == 0) || (list_head == NULL)) return;
-
-  char_width = attrib_gtksheet_get_char_width (GTK_WIDGET (sheet));
-
-  string_list_item = list_head;
-  for (j = 0; j < count; j++) {
-    text = (gchar *) g_strdup (attrib_string_list_get_data (string_list_item));
-    new_width = char_width * strlen(text);
-    if (new_width > width)
-      width = new_width;
-
-    gtk_sheet_row_button_add_label(sheet, j, text);
-    gtk_sheet_row_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
-    g_free(text);
-    string_list_item = attrib_string_list_get_next (string_list_item);
-  }
-
-
-  gtk_sheet_set_row_titles_width(sheet, width+8);
-}
-
-
-/*------------------------------------------------------------------*/
 /*! \brief Add column labels to GtkSheet
  *
  * Add column labels to GtkSheet.
