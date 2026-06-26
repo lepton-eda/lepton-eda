@@ -259,3 +259,57 @@ attrib_set_window (GtkWidget *window_widget)
 {
   window = window_widget;
 }
+
+
+/*! \brief Transform a \c GtkSheetState value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkSheetState value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The sheet state value.
+ * \return The string corresponding to the value.
+ */
+const char*
+attrib_gtksheet_state_to_string (int val)
+{
+  const char *result = "normal";
+
+  switch (val)
+  {
+  case GTK_SHEET_NORMAL: result = "normal"; break;
+  case GTK_SHEET_ROW_SELECTED: result = "row"; break;
+  case GTK_SHEET_COLUMN_SELECTED: result = "column"; break;
+  case GTK_SHEET_RANGE_SELECTED: result = "range"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkSheetState value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkSheetState value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkSheetState value.
+ */
+int
+attrib_gtksheet_state_from_string (char *s)
+{
+  int result = GTK_SHEET_NORMAL;
+
+  if (strcmp (s, "normal") == 0) {result = GTK_SHEET_NORMAL; }
+  else if (strcmp (s, "row") == 0) {result = GTK_SHEET_ROW_SELECTED; }
+  else if (strcmp (s, "column") == 0) {result = GTK_SHEET_COLUMN_SELECTED; }
+  else if (strcmp (s, "range") == 0) {result = GTK_SHEET_RANGE_SELECTED; }
+
+  return result;
+}
