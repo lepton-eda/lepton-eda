@@ -122,7 +122,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
     gtk_sheet_row_button_add_label(sheet, j, text);
     gtk_sheet_row_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
     g_free(text);
-    string_list_item = string_list_item->next;
+    string_list_item = attrib_string_list_get_next (string_list_item);
   }
 
 
