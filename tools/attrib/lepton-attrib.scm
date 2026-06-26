@@ -2427,6 +2427,9 @@ failure."
                   (attrib_string_list_get_next *item)
                   max-width))))))
 
+(define (add-cell-item *sheet i j *text visibility show-name-value)
+  (x_gtksheet_add_cell_item *sheet i j *text visibility show-name-value))
+
 
 ;;; Adds all items to the top level window.
 (define (add-items)
@@ -2527,12 +2530,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *component-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (component-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (component-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota component-attrib-count)))
    (iota component-count))
 
@@ -2548,12 +2551,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *net-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (net-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (net-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota net-attrib-count)))
    (iota net-count))
 
@@ -2569,12 +2572,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *pin-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (pin-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (pin-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota pin-attrib-count)))
    (iota pin-count))
 
