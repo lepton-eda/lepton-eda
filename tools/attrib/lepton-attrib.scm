@@ -1585,6 +1585,10 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+(define (add-column-labels *sheet count *object-ls)
+  (x_gtksheet_add_col_labels *sheet count *object-ls))
+
+
 ;;; Looks for item *NAME in the list *LS, and returns the index
 ;;; (-1 if absent).
 (define (string-list-item-id *ls *name)
@@ -1780,7 +1784,7 @@ failure."
 
         ;; Fill out new sheet with new stuff from gtksheet.
         (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
-        (x_gtksheet_add_col_labels
+        (add-column-labels
          (attrib_get_sheet 0)
          (attrib_sheet_data_get_component_attrib_count *sheet-data)
          (attrib_sheet_data_get_component_attrib_list *sheet-data))))))
@@ -2463,7 +2467,7 @@ Please check your design.")))
      (component-sheet)
      component-count
      (attrib_sheet_data_get_component_list *sheet-data))
-    (x_gtksheet_add_col_labels
+    (add-column-labels
      (component-sheet)
      component-attrib-count
      (attrib_sheet_data_get_component_attrib_list *sheet-data)))
@@ -2476,22 +2480,20 @@ Please check your design.")))
          (net-sheet)
          net-count
          (attrib_sheet_data_get_net_list *sheet-data))
-        (x_gtksheet_add_col_labels
+        (add-column-labels
          (net-sheet)
          net-attrib-count
          (attrib_sheet_data_get_net_attrib_list *sheet-data)))
       (begin
         (add-row-labels (net-sheet) 1 %null-pointer)
-        (x_gtksheet_add_col_labels (net-sheet)
-                                   1
-                                   %null-pointer)))
+        (add-column-labels (net-sheet) 1 %null-pointer)))
 
   (when (> pin-count 0)
     (add-row-labels
      (pin-sheet)
      pin-count
      (attrib_sheet_data_get_pin_list *sheet-data))
-    (x_gtksheet_add_col_labels
+    (add-column-labels
      (pin-sheet)
      pin-attrib-count
      (attrib_sheet_data_get_pin_attrib_list *sheet-data)))
