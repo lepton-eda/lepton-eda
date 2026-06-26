@@ -58,6 +58,24 @@
 #include "../include/gettext.h"
 
 
+const char*
+attrib_color_name_to_string (int color_name)
+{
+  const char *result = NULL;
+
+  switch (color_name)
+  {
+  case RED: result = "red"; break;
+  case BLUE: result = "blue"; break;
+  case BLACK: result = "black"; break;
+  case GREY: result = "grey"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
 #ifndef ENABLE_GTK3
 /*! \brief Set the text color of a cell (GTK2) */
 GdkColor*
@@ -70,23 +88,9 @@ _set_cell_text_color (GtkSheet *sheet,
   /* First get the system color map and allocate the color */
   cmap = gdk_colormap_get_system ();
   color = g_new (GdkColor, 1);
-  switch(color_name) {
-  case RED:
-    gdk_color_parse ("red",  color);
-  break;
 
-  case BLUE:
-    gdk_color_parse ("blue",  color);
-  break;
-
-  case BLACK:
-    gdk_color_parse ("black",  color);
-  break;
-
-  case GREY:
-    gdk_color_parse ("grey",  color);
-  break;
-  }
+  const char *spec = attrib_color_name_to_string (color_name);
+  gdk_color_parse (spec, color);
 
   if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
     g_error (_("couldn't allocate color"));
@@ -109,23 +113,8 @@ _set_cell_text_color_gtk3 (GtkSheet *sheet,
 
   color = g_new (GdkRGBA, 1);
 
-  switch(color_name) {
-  case RED:
-    gdk_rgba_parse (color, "red");
-  break;
-
-  case BLUE:
-    gdk_rgba_parse (color, "blue");
-  break;
-
-  case BLACK:
-    gdk_rgba_parse (color, "black");
-  break;
-
-  case GREY:
-    gdk_rgba_parse (color, "grey");
-  break;
-  }
+  const char *spec = attrib_color_name_to_string (color_name);
+  gdk_rgba_parse (color, spec);
 
   return color;
 }
