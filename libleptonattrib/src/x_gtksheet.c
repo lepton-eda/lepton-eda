@@ -120,23 +120,25 @@ _set_cell_text_color_gtk3 (GtkSheet *sheet,
                            gint color_name)
 {
   GtkSheetRange *range;
-  GdkRGBA color;
+  GdkRGBA *color;
+
+  color = g_new (GdkRGBA, 1);
 
   switch(color_name) {
   case RED:
-    gdk_rgba_parse (&color, "red");
+    gdk_rgba_parse (color, "red");
   break;
 
   case BLUE:
-    gdk_rgba_parse (&color, "blue");
+    gdk_rgba_parse (color, "blue");
   break;
 
   case BLACK:
-    gdk_rgba_parse (&color, "black");
+    gdk_rgba_parse (color, "black");
   break;
 
   case GREY:
-    gdk_rgba_parse (&color, "grey");
+    gdk_rgba_parse (color, "grey");
   break;
   }
 
@@ -148,7 +150,8 @@ _set_cell_text_color_gtk3 (GtkSheet *sheet,
   range->coli = col;
 
   /* Now set color */
-  gtk_sheet_range_set_foreground(sheet, range, &color);
+  gtk_sheet_range_set_foreground (sheet, range, color);
+  g_free (color);
   g_free(range);
 }
 #endif
