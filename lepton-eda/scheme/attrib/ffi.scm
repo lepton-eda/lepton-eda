@@ -35,6 +35,7 @@
             gtk_sheet_get_selection
             gtk_sheet_insert_columns
             gtk_sheet_new
+            gtk_sheet_range_set_foreground
             gtk_sheet_row_button_add_label
             gtk_sheet_row_button_justify
             gtk_sheet_set_cell
@@ -170,6 +171,7 @@
 (define-lff-lib gtk_sheet_get_selection int '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_insert_columns void (list '* unsigned-int unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_new '* (list unsigned-int unsigned-int '*) libgtksheet)
+(define-lff-lib gtk_sheet_range_set_foreground void '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_add_label void (list '* int '*) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
 (define-lff-lib gtk_sheet_set_cell void (list '* int int int '*) libgtksheet)
@@ -199,7 +201,7 @@
 
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
-(define-lff x_gtksheet_set_cell_text_color void (list '* int int '*))
+(define-lff x_gtksheet_set_cell_text_color '* '(*))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))

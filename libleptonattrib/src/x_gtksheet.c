@@ -98,14 +98,9 @@ _set_cell_text_color_gtk3 (char *color_spec)
 }
 #endif
 
-void
-x_gtksheet_set_cell_text_color (GtkSheet *sheet,
-                                gint row,
-                                gint col,
-                                char *color_spec)
+gpointer
+x_gtksheet_set_cell_text_color (char *color_spec)
 {
-  GtkSheetRange *range;
-
 #ifdef ENABLE_GTK3
   GdkRGBA *color =
     _set_cell_text_color_gtk3 (color_spec);
@@ -114,21 +109,7 @@ x_gtksheet_set_cell_text_color (GtkSheet *sheet,
     _set_cell_text_color (color_spec);
   #endif
 
-  /* XXXXX  Attempt to set cell color */
-  range = g_new (GtkSheetRange, 1);
-  range->row0 = row;
-  range->rowi = row;
-  range->col0 = col;
-  range->coli = col;
-
-  /* Now set color */
-  if (color != NULL)
-  {
-    gtk_sheet_range_set_foreground (sheet, range, color);
-    g_free (color);
-  }
-
-  g_free (range);
+  return (gpointer) color;
 }
 
 
