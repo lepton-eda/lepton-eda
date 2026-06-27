@@ -79,8 +79,7 @@ attrib_color_name_to_string (int color_name)
 #ifndef ENABLE_GTK3
 /*! \brief Set the text color of a cell (GTK2) */
 GdkColor*
-_set_cell_text_color (GtkSheet *sheet,
-                      gint color_name)
+_set_cell_text_color (gint color_name)
 {
   GdkColormap *cmap;
   GdkColor *color;
@@ -106,8 +105,7 @@ _set_cell_text_color (GtkSheet *sheet,
 
 /*! \brief Set the text color of a cell (GTK3) */
 GdkRGBA*
-_set_cell_text_color_gtk3 (GtkSheet *sheet,
-                           gint color_name)
+_set_cell_text_color_gtk3 (gint color_name)
 {
   GdkRGBA *color;
 
@@ -130,10 +128,10 @@ x_gtksheet_set_cell_text_color (GtkSheet *sheet,
 
 #ifdef ENABLE_GTK3
   GdkRGBA *color =
-    _set_cell_text_color_gtk3 (sheet, color_name);
+    _set_cell_text_color_gtk3 (color_name);
   #else
   GdkColor *color =
-    _set_cell_text_color (sheet, color_name);
+    _set_cell_text_color (color_name);
   #endif
 
   /* XXXXX  Attempt to set cell color */
