@@ -2452,15 +2452,12 @@ failure."
 ;;; with *TEXT, VISIBILITY, and SHOW-NAME-VALUE.
 (define (add-cell-item *sheet i j *text visibility show-name-value)
   (gtk_sheet_set_cell *sheet i j GTK_JUSTIFY_LEFT *text)
-  (if (= visibility INVISIBLE)
-      (set-cell-text-color *sheet i j GREY)
-      (cond
-       ((= show-name-value SHOW_NAME_VALUE)
-        (set-cell-text-color *sheet i j BLUE))
-       ((= show-name-value SHOW_NAME)
-        (set-cell-text-color *sheet i j RED))
-       ((= show-name-value SHOW_VALUE)
-        (set-cell-text-color *sheet i j BLACK)))))
+  (set-cell-text-color *sheet i j (if (= visibility INVISIBLE)
+                                      GREY
+                                      (cond
+                                       ((= show-name-value SHOW_NAME_VALUE) BLUE)
+                                       ((= show-name-value SHOW_NAME) RED)
+                                       ((= show-name-value SHOW_VALUE) BLACK)))))
 
 
 ;;; Adds all items to the top level window.
