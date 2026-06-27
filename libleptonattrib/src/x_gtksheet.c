@@ -58,6 +58,16 @@
 #include "../include/gettext.h"
 
 
+/*! \brief Parse GDK color.
+ *
+ * \par Function Description
+ *
+ * The function parses color spec and returns the \c GdkColor or
+ * \c GdkRGBA instance depending on the GTK version used.
+ *
+ * \param [in] color_spec The color spec.
+ * \return The color structure.
+ */
 /*! \brief Set the text color of a cell. */
 gpointer
 x_gtksheet_set_cell_text_color (char *color_spec)
