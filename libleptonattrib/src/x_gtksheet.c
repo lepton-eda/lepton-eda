@@ -68,20 +68,9 @@ x_gtksheet_set_cell_text_color (char *color_spec)
   gdk_rgba_parse (color, color_spec);
 
 #else
-  GdkColormap *cmap;
-  GdkColor *color;
-
-  /* Get the system color map and allocate the color. */
-  cmap = gdk_colormap_get_system ();
-  color = g_new (GdkColor, 1);
+  GdkColor *color = g_new (GdkColor, 1);
 
   gdk_color_parse (color_spec, color);
-
-  if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE))
-  {
-    g_error (_("couldn't allocate color"));
-    return NULL;
-  }
 
 #endif
 
