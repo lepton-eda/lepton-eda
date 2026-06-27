@@ -58,56 +58,32 @@
 #include "../include/gettext.h"
 
 
-#ifndef ENABLE_GTK3
-/*! \brief Set the text color of a cell (GTK2) */
-GdkColor*
-_set_cell_text_color (char *color_spec)
+/*! \brief Set the text color of a cell. */
+gpointer
+x_gtksheet_set_cell_text_color (char *color_spec)
 {
+#ifdef ENABLE_GTK3
+  GdkRGBA *color = g_new (GdkRGBA, 1);
+
+  gdk_rgba_parse (color, color_spec);
+
+#else
   GdkColormap *cmap;
   GdkColor *color;
 
-  /* First get the system color map and allocate the color */
+  /* Get the system color map and allocate the color. */
   cmap = gdk_colormap_get_system ();
   color = g_new (GdkColor, 1);
 
   gdk_color_parse (color_spec, color);
 
-  if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
+  if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE))
+  {
     g_error (_("couldn't allocate color"));
     return NULL;
   }
-  else
-  {
-    return color;
-  }
-}
 
-#else
-
-/*! \brief Set the text color of a cell (GTK3) */
-GdkRGBA*
-_set_cell_text_color_gtk3 (char *color_spec)
-{
-  GdkRGBA *color;
-
-  color = g_new (GdkRGBA, 1);
-
-  gdk_rgba_parse (color, color_spec);
-
-  return color;
-}
 #endif
-
-gpointer
-x_gtksheet_set_cell_text_color (char *color_spec)
-{
-#ifdef ENABLE_GTK3
-  GdkRGBA *color =
-    _set_cell_text_color_gtk3 (color_spec);
-  #else
-  GdkColor *color =
-    _set_cell_text_color (color_spec);
-  #endif
 
   return (gpointer) color;
 }
