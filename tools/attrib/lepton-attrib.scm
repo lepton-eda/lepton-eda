@@ -2041,6 +2041,10 @@ failure."
       (set-sheet-data-changed *sheet-data TRUE))))
 
 
+(define (set-cell-text-color *sheet i j color)
+  (x_gtksheet_set_cell_text_color *sheet i j color))
+
+
 (define (set-cells-attribs-visibility visible show color)
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
@@ -2074,7 +2078,7 @@ failure."
           ;; Set visibility of cell in sheet data.
           (set-cell-attrib-visibility current-page-id i j visible show)
           ;; Set cell in gtksheet to desired color.
-          (x_gtksheet_set_cell_text_color *sheet i j color))))))
+          (set-cell-text-color *sheet i j color))))))
 
 
 ;;; Sets the selected sheet cells to INVISIBLE.
@@ -2449,14 +2453,14 @@ failure."
 (define (add-cell-item *sheet i j *text visibility show-name-value)
   (gtk_sheet_set_cell *sheet i j GTK_JUSTIFY_LEFT *text)
   (if (= visibility INVISIBLE)
-      (x_gtksheet_set_cell_text_color *sheet i j GREY)
+      (set-cell-text-color *sheet i j GREY)
       (cond
        ((= show-name-value SHOW_NAME_VALUE)
-        (x_gtksheet_set_cell_text_color *sheet i j BLUE))
+        (set-cell-text-color *sheet i j BLUE))
        ((= show-name-value SHOW_NAME)
-        (x_gtksheet_set_cell_text_color *sheet i j RED))
+        (set-cell-text-color *sheet i j RED))
        ((= show-name-value SHOW_VALUE)
-        (x_gtksheet_set_cell_text_color *sheet i j BLACK)))))
+        (set-cell-text-color *sheet i j BLACK)))))
 
 
 ;;; Adds all items to the top level window.
