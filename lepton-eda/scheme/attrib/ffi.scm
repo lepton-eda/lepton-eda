@@ -62,7 +62,6 @@
             x_dialog_unimplemented_feature
 
             attrib_gtksheet_show_entry
-            x_gtksheet_set_cell_text_color
 
             listsort
 
@@ -201,7 +200,6 @@
 
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
-(define-lff x_gtksheet_set_cell_text_color '* '(*))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))

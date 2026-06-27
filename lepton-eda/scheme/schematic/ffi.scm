@@ -55,6 +55,7 @@
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
             schematic_gtk_vbox_new
+            schematic_gdk_color_parse
             schematic_pango_text_width
 
             generic_confirm_dialog
@@ -737,6 +738,7 @@
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
 (define-lff schematic_gtk_vbox_new '* (list int int))
+(define-lff schematic_gdk_color_parse '* '(*))
 (define-lff schematic_pango_text_width int '(* *))
 
 ;;; o_attrib.c

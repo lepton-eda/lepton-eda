@@ -34,7 +34,8 @@
             gtk-response->symbol
             symbol->gtk-response)
 
-  #:re-export (schematic_gtk_vbox_new
+  #:re-export (schematic_gdk_color_parse
+               schematic_gtk_vbox_new
                schematic_pango_text_width))
 
 (define (gtk-buttons-type->symbol type)
