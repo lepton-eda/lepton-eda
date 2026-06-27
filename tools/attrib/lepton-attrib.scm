@@ -70,16 +70,6 @@
 ;;; liblepton/include/liblepton/text_object.h:
 (define DEFAULT_TEXT_SIZE 10)
 
-;;; libleptonattrib/include/globals.h
-(define BLACK 0)
-(define WHITE 1)
-(define RED 2)
-(define GREEN 3)
-(define BLUE 4)
-(define YELLOW 5)
-(define CYAN 6)
-(define GREY 7)
-
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 ;;; Initialize liblepton library.
@@ -2042,7 +2032,8 @@ failure."
 
 
 (define (set-cell-text-color *sheet i j color)
-  (x_gtksheet_set_cell_text_color *sheet i j color))
+  (define *color-spec (string->pointer (symbol->string color)))
+  (x_gtksheet_set_cell_text_color *sheet i j *color-spec))
 
 
 (define (set-cells-attribs-visibility visible show color)
@@ -2083,7 +2074,7 @@ failure."
 
 ;;; Sets the selected sheet cells to INVISIBLE.
 (define (set-cells-attribs-invisible)
-  (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE GREY))
+  (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE 'grey))
 
 
 (define (callback-visibility-invisible *action *parameter *data)
@@ -2094,7 +2085,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_NAME.
 (define (set-cells-attribs-visible-name)
-  (set-cells-attribs-visibility VISIBLE SHOW_NAME RED))
+  (set-cells-attribs-visibility VISIBLE SHOW_NAME 'red))
 
 
 (define (callback-visibility-name-only *action *parameter *data)
@@ -2105,7 +2096,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_VALUE.
 (define (set-cells-attribs-visible-value)
-  (set-cells-attribs-visibility VISIBLE SHOW_VALUE BLACK))
+  (set-cells-attribs-visibility VISIBLE SHOW_VALUE 'black))
 
 
 (define (callback-visibility-value-only *action *parameter *data)
@@ -2116,7 +2107,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_NAME_VALUE.
 (define (set-cells-attribs-visible-name-value)
-  (set-cells-attribs-visibility VISIBLE SHOW_NAME_VALUE BLUE))
+  (set-cells-attribs-visibility VISIBLE SHOW_NAME_VALUE 'blue))
 
 
 (define (callback-visibility-name-value *action *parameter *data)
@@ -2453,11 +2444,11 @@ failure."
 (define (add-cell-item *sheet i j *text visibility show-name-value)
   (gtk_sheet_set_cell *sheet i j GTK_JUSTIFY_LEFT *text)
   (set-cell-text-color *sheet i j (if (= visibility INVISIBLE)
-                                      GREY
+                                      'grey
                                       (cond
-                                       ((= show-name-value SHOW_NAME_VALUE) BLUE)
-                                       ((= show-name-value SHOW_NAME) RED)
-                                       ((= show-name-value SHOW_VALUE) BLACK)))))
+                                       ((= show-name-value SHOW_NAME_VALUE) 'blue)
+                                       ((= show-name-value SHOW_NAME) 'red)
+                                       ((= show-name-value SHOW_VALUE) 'black)))))
 
 
 ;;; Adds all items to the top level window.
