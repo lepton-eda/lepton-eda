@@ -2037,7 +2037,7 @@ failure."
                                           (native-endianness)
                                           (sizeof int)))
   (define *range (bytevector->pointer range-bv))
-  (define *color (x_gtksheet_set_cell_text_color *color-spec))
+  (define *color (schematic_gdk_color_parse *color-spec))
 
   ;; Set color.
   (unless (null-pointer? *color)

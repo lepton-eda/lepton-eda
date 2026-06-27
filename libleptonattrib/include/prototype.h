@@ -297,9 +297,6 @@ void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
 
-gpointer
-x_gtksheet_set_cell_text_color (char *color_spec);
-
 /* ------------- x_window.c ------------- */
 int
 attrib_run (gpointer activate_callback,
