@@ -2033,7 +2033,16 @@ failure."
 
 (define (set-cell-text-color *sheet i j color)
   (define *color-spec (string->pointer (symbol->string color)))
-  (x_gtksheet_set_cell_text_color *sheet i j *color-spec))
+  (define range-bv (sint-list->bytevector (list i j i j)
+                                          (native-endianness)
+                                          (sizeof int)))
+  (define *range (bytevector->pointer range-bv))
+  (define *color (x_gtksheet_set_cell_text_color *color-spec))
+
+  ;; Set color.
+  (unless (null-pointer? *color)
+    (gtk_sheet_range_set_foreground *sheet *range *color)
+    (g_free *color)))
 
 
 (define (set-cells-attribs-visibility visible show color)
