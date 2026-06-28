@@ -399,13 +399,6 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
   gint i;
   STRING_LIST *local_item;
 
-  /* First check to see if list is empty.  If empty, return
-   * NULL automatically.  */
-  if (attrib_string_list_get_data (list) == NULL)
-  {
-    return NULL;
-  }
-
   local_item = list;
   for (i = 0 ; i < index ; i++) {
     if (local_item == NULL) {
