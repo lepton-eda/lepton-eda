@@ -7,7 +7,6 @@ libleptonattrib_la_SOURCES = \
 	s_string_list.c \
 	s_table.c \
 	x_dialog.c \
-	x_gtksheet.c \
 	x_window.c
 
 libleptonattrib_la_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
