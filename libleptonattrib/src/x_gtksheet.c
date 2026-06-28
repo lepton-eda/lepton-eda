@@ -68,24 +68,19 @@
  * \return The 'X' character width.
  */
 int
-attrib_gtksheet_get_char_width (GtkWidget *widget)
+attrib_gtksheet_get_char_width (GtkWidget *widget,
+                                char *text)
 {
-#ifdef ENABLE_GTK3
-  return 12;
-#else
-  /* Get character width based upon "X", which is a large char. */
-  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (widget));
+  int width;
 
-  GdkFont *font = gtk_style_get_font (style);
-  if (font != NULL)
-  {
-    return gdk_char_width (font, (gchar) 'X');
-  }
-  else
-  {
-    return 12;
-  }
-#endif
+  PangoLayout* layout =
+    gtk_widget_create_pango_layout (widget, text);
+
+  pango_layout_get_size (layout, &width, NULL);
+
+  g_object_unref (G_OBJECT (layout));
+
+  return width / PANGO_SCALE;
 }
 
 

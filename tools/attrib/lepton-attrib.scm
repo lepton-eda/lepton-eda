@@ -2387,27 +2387,25 @@ failure."
   ;; Leave if no items to add are available.
   (unless (or (null-pointer? *object-ls)
               (zero? count))
-    (let ((char-width (attrib_gtksheet_get_char_width *sheet)))
-      (let loop ((j 0)
-                 (*item *object-ls)
-                 (width 0))
-        (if (or (null-pointer? *item)
-                (>= j count))
+    (let loop ((j 0)
+               (*item *object-ls)
+               (width 0))
+      (if (or (null-pointer? *item)
+              (>= j count))
 
-            (gtk_sheet_set_row_titles_width *sheet (+ width 8))
+          (gtk_sheet_set_row_titles_width *sheet (+ width 8))
 
-            (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
-                   (new-width (* char-width
-                                 (string-length (pointer->string *text))))
-                   (max-width (if (> new-width width)
-                                  new-width
-                                  width)))
-              (gtk_sheet_row_button_add_label *sheet j *text)
-              (gtk_sheet_row_button_justify *sheet j GTK_JUSTIFY_LEFT)
-              (g_free *text)
-              (loop (1+ j)
-                    (attrib_string_list_get_next *item)
-                    max-width)))))))
+          (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
+                 (new-width (attrib_gtksheet_get_char_width *sheet *text))
+                 (max-width (if (> new-width width)
+                                new-width
+                                width)))
+            (gtk_sheet_row_button_add_label *sheet j *text)
+            (gtk_sheet_row_button_justify *sheet j GTK_JUSTIFY_LEFT)
+            (g_free *text)
+            (loop (1+ j)
+                  (attrib_string_list_get_next *item)
+                  max-width))))))
 
 
 ;;; Adds all items to the top level window.

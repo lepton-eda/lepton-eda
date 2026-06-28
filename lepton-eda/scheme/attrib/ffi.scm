@@ -195,7 +195,7 @@
 (define-lff x_dialog_unimplemented_feature void '())
 
 ;;; x_gtksheet.c
-(define-lff attrib_gtksheet_get_char_width int '(*))
+(define-lff attrib_gtksheet_get_char_width int '(* *))
 (define-lff attrib_gtksheet_show_entry void '(* *))
 (define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))
 (define-lff x_gtksheet_add_col_labels void (list '* int '*))
