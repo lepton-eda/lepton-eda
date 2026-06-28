@@ -84,6 +84,9 @@ schematic_gtk_position_type_from_string (char *s);
 GtkWidget*
 schematic_gtk_vbox_new (gboolean homogeneous,
                         gint spacing);
+int
+schematic_pango_text_width (GtkWidget *widget,
+                            char *text);
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */

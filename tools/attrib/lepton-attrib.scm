@@ -2396,7 +2396,7 @@ failure."
           (gtk_sheet_set_row_titles_width *sheet (+ width 8))
 
           (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
-                 (new-width (attrib_gtksheet_get_char_width *sheet *text))
+                 (new-width (schematic_pango_text_width *sheet *text))
                  (max-width (if (> new-width width)
                                 new-width
                                 width)))

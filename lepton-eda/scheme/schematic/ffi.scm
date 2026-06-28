@@ -55,6 +55,7 @@
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
             schematic_gtk_vbox_new
+            schematic_pango_text_width
 
             generic_confirm_dialog
             generic_error_dialog
@@ -736,6 +737,7 @@
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
 (define-lff schematic_gtk_vbox_new '* (list int int))
+(define-lff schematic_pango_text_width int '(* *))
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
