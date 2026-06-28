@@ -1175,6 +1175,10 @@ failure."
   (procedure->pointer void callback-file-save '(* * *)))
 
 
+(define (id->string-list-data *ls id)
+  (s_string_list_get_data_at_index *ls id))
+
+
 ;;; Export design components to CSV for external processing.
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
@@ -1187,14 +1191,14 @@ failure."
 
   (define (id->attrib-name id)
     (pointer->string
-     (s_string_list_get_data_at_index
+     (id->string-list-data
       (attrib_sheet_data_get_component_attrib_list
        *sheet-data)
       id)))
 
   (define (id->component-refdes id)
     (pointer->string
-     (s_string_list_get_data_at_index
+     (id->string-list-data
       (attrib_sheet_data_get_component_list *sheet-data)
       id)))
 
