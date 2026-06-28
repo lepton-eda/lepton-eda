@@ -411,7 +411,7 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
     if (local_item == NULL) {
       return NULL;
     } else {
-      local_item = local_item->next;
+      local_item = attrib_string_list_get_next (local_item);
     }
   }
   return attrib_string_list_get_data (local_item);
