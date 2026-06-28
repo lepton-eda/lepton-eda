@@ -290,7 +290,8 @@ void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
 int
-attrib_gtksheet_get_char_width (GtkWidget *widget);
+attrib_gtksheet_get_char_width (GtkWidget *widget,
+                                char *text);
 
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
