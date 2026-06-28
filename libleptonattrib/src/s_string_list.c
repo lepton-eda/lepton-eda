@@ -401,7 +401,8 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 
   /* First check to see if list is empty.  If empty, return
    * NULL automatically.  */
-  if (list->data == NULL) {
+  if (attrib_string_list_get_data (list) == NULL)
+  {
     return NULL;
   }
 
@@ -413,5 +414,5 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
       local_item = local_item->next;
     }
   }
-  return local_item->data;
+  return attrib_string_list_get_data (local_item);
 }
