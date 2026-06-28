@@ -1176,7 +1176,12 @@ failure."
 
 
 (define (id->string-list-data *ls id)
-  (s_string_list_get_data_at_index *ls id))
+  ;; First check to see if list is empty.  If empty, return NULL
+  ;; automatically.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      %null-pointer
+
+      (s_string_list_get_data_at_index *ls id)))
 
 
 ;;; Export design components to CSV for external processing.
