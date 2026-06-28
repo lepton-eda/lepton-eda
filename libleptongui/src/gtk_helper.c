@@ -617,3 +617,29 @@ schematic_gtk_vbox_new (gboolean homogeneous,
   return gtk_vbox_new (homogeneous, spacing);
 #endif
 }
+
+
+/*! \brief Get widget text width.
+ *
+ *  \par Function Description
+ *
+ *  Return the width of widget text taking into account the widget
+ *  style.
+ *
+ * \return The text width.
+ */
+int
+schematic_pango_text_width (GtkWidget *widget,
+                            char *text)
+{
+  int width;
+
+  PangoLayout* layout =
+    gtk_widget_create_pango_layout (widget, text);
+
+  pango_layout_get_size (layout, &width, NULL);
+
+  g_object_unref (G_OBJECT (layout));
+
+  return width / PANGO_SCALE;
+}

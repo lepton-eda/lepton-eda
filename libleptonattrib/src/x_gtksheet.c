@@ -58,32 +58,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get 'X' char width for the widget style font.
- *
- *  \par Function Description
- *
- *  Return the width of the character 'X' for the widget style
- *  font, if possible.  Otherwise, return 12.
- *
- * \return The 'X' character width.
- */
-int
-attrib_gtksheet_get_char_width (GtkWidget *widget,
-                                char *text)
-{
-  int width;
-
-  PangoLayout* layout =
-    gtk_widget_create_pango_layout (widget, text);
-
-  pango_layout_get_size (layout, &width, NULL);
-
-  g_object_unref (G_OBJECT (layout));
-
-  return width / PANGO_SCALE;
-}
-
-
 /*------------------------------------------------------------------*/
 /*! \brief Add column labels to GtkSheet
  *
