@@ -1175,13 +1175,19 @@ failure."
   (procedure->pointer void callback-file-save '(* * *)))
 
 
+;;; Returns the item with the index ID from the string list *LS.
 (define (id->string-list-data *ls id)
   ;; First check to see if list is empty.  If empty, return NULL
   ;; automatically.
   (if (null-pointer? (attrib_string_list_get_data *ls))
       %null-pointer
-
-      (s_string_list_get_data_at_index *ls id)))
+      (let loop ((*item *ls)
+                 (i 0))
+        (if (= i id)
+            (attrib_string_list_get_data *item)
+            (if (null-pointer? *item)
+                %null-pointer
+                (loop (attrib_string_list_get_next *item) (1+ i)))))))
 
 
 ;;; Export design components to CSV for external processing.
