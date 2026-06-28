@@ -383,29 +383,3 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
   return -1;
 
 }
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Get an item from a STRING_LIST by index
- *
- * Returns the index'th item in the string list.
- * \param list pointer to STRING_LIST to get from
- * \param index index of item to return
- * \returns NULL if there is a problem otherwise a pointer to
- *          the string.
- */
-gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
-{
-  gint i;
-  STRING_LIST *local_item;
-
-  local_item = list;
-  for (i = 0 ; i < index ; i++) {
-    if (local_item == NULL) {
-      return NULL;
-    } else {
-      local_item = attrib_string_list_get_next (local_item);
-    }
-  }
-  return attrib_string_list_get_data (local_item);
-}
