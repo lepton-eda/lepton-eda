@@ -172,9 +172,15 @@ attrib_string_list_set_pos (STRING_LIST *list,
 STRING_LIST*
 attrib_string_list_get_prev (STRING_LIST *list);
 
+void
+attrib_string_list_set_prev (STRING_LIST *list,
+                             STRING_LIST *item);
 STRING_LIST*
 attrib_string_list_get_next (STRING_LIST *list);
 
+void
+attrib_string_list_set_next (STRING_LIST *list,
+                             STRING_LIST *item);
 STRING_LIST *s_string_list_new();
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item);
 void s_string_list_delete_item(STRING_LIST **list, int *count, char *item);
