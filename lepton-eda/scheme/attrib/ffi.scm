@@ -104,13 +104,13 @@
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
+            attrib_string_list_delete_found_item
             attrib_string_list_get_data
             attrib_string_list_get_next
             attrib_string_list_set_pos
             attrib_string_list_get_prev
             s_string_list_new
             s_string_list_add_item
-            s_string_list_delete_item
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -245,13 +245,13 @@
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
 ;;; s_string_list.c
+(define-lff attrib_string_list_delete_found_item void '(* * *))
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_pos void (list '* int))
 (define-lff attrib_string_list_get_prev '* '(*))
 (define-lff s_string_list_new '* '())
 (define-lff s_string_list_add_item void '(* * *))
-(define-lff s_string_list_delete_item void '(* * *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))

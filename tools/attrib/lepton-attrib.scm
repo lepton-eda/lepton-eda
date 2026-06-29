@@ -1719,6 +1719,8 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
+;;; Deletes the item *NAME from a STRING_LIST *LS (**LS is a
+;;; pointer to pointer).
 (define (delete-string-list-item **ls *ls *counter *name)
   ;; First check to see if list is empty.  If empty, spew error
   ;; and return.
@@ -1728,7 +1730,30 @@ failure."
         (format (current-error-port)
                 (G_ "Tried to remove item from empty list.\n")))
 
-      (s_string_list_delete_item **ls *counter *name)))
+      ;; Now loop through list looking for item.
+      (let loop ((*item *ls))
+        (if (null-pointer? *item)
+            ;; If we are here, it's 'cause we didn't find the
+            ;; item.  Spew error and return.
+            (begin
+              (format (current-error-port)
+                      "delete-string-list-item(): ")
+              (format (current-error-port)
+                      (G_ "Couldn't delete item ~S\n")
+                      (pointer->string *name)))
+            (let ((*trial-item (g_strdup
+                                (attrib_string_list_get_data *item))))
+              (if (string= (pointer->string *trial-item)
+                           (pointer->string *name))
+                  (begin
+                    (attrib_string_list_delete_found_item **ls
+                                                          *counter
+                                                          *item)
+                    ;; Free trial item before returning.
+                    (g_free *trial-item))
+                  (begin
+                    (g_free *trial-item)
+                    (loop (attrib_string_list_get_next *item)))))))))
 
 
 (define (delete-component-attrib-column *sheet num)
