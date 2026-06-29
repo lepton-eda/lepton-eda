@@ -163,6 +163,9 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 char*
 attrib_string_list_get_data (STRING_LIST *list);
 
+void
+attrib_string_list_set_data (STRING_LIST *list,
+                             char *data);
 int
 attrib_string_list_get_pos (STRING_LIST *list);
 
