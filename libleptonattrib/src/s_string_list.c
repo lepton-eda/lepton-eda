@@ -240,7 +240,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
     }
     g_free(trial_item);
     prev = list;
-    list = list->next;
+    list = attrib_string_list_get_next (list);
   }
 
   /* If we are here, it's 'cause we didn't find the item pre-existing in the list. */
