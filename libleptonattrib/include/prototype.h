@@ -160,6 +160,10 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 
 
 /* ------------- s_string_list.c ------------- */
+void
+attrib_string_list_delete_found_item (STRING_LIST **list,
+                                      int *count,
+                                      STRING_LIST *list_item);
 char*
 attrib_string_list_get_data (STRING_LIST *list);
 
@@ -183,7 +187,6 @@ attrib_string_list_set_next (STRING_LIST *list,
                              STRING_LIST *item);
 STRING_LIST *s_string_list_new();
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item);
-void s_string_list_delete_item(STRING_LIST **list, int *count, char *item);
 
 /* ------------- s_table.c ------------- */
 int
