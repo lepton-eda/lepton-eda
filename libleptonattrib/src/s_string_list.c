@@ -121,6 +121,24 @@ attrib_string_list_get_prev (STRING_LIST *list)
 }
 
 
+/*! \brief Set the \a prev field of a string list.
+ *
+ *  \par Function Description
+ *
+ *  Sets the \a prev field of a string list.  It is a pointer to
+ *  the previous item in the linked list.
+ *
+ *  \param [in] list The string list.
+ *  \param [in] item The new previous list item.
+ */
+void
+attrib_string_list_set_prev (STRING_LIST *list,
+                             STRING_LIST *item)
+{
+  list->prev = item;
+}
+
+
 /*! \brief Get the \a next field of a string list.
  *
  *  \par Function Description
@@ -135,6 +153,24 @@ STRING_LIST*
 attrib_string_list_get_next (STRING_LIST *list)
 {
   return list->next;
+}
+
+
+/*! \brief Set the \a next field of a string list.
+ *
+ *  \par Function Description
+ *
+ *  Sets the \a next field of a string list.  It is a pointer to
+ *  the next item in the linked list.
+ *
+ *  \param [in] list The string list.
+ *  \param [in] item The new next list item.
+ */
+void
+attrib_string_list_set_next (STRING_LIST *list,
+                             STRING_LIST *item)
+{
+  list->next = item;
 }
 
 
