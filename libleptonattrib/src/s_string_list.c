@@ -238,7 +238,8 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   STRING_LIST *prev_item = NULL;
 
   /* First check to see if list is empty.  If empty, spew error and return */
-  if ( (*list)->data == NULL) {
+  if (attrib_string_list_get_data (*list) == NULL)
+  {
     fprintf (stderr, "s_string_list_delete_item: ");
     fprintf (stderr, _("Tried to remove item from empty list.\n"));
     return;
@@ -251,7 +252,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   /* Now loop through list looking for item */
   list_item = (*list);
   while (list_item != NULL) {
-    trial_item = (gchar *) g_strdup(list_item->data);
+    trial_item = (gchar *) g_strdup (attrib_string_list_get_data (list_item));
     g_debug ("s_string_list_delete_item: "
              "Matching item against trial item = %s from list.\n",
              trial_item);
