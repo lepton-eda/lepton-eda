@@ -375,7 +375,7 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
       return index;
     }
     g_free(trial_item);
-    list = list->next;
+    list = attrib_string_list_get_next (list);
     index++;
   }
 
