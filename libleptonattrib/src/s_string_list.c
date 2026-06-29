@@ -305,7 +305,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
         (*list) = NULL;
       } else if (next_item == NULL && prev_item != NULL) {
         /* at list's end */
-        prev_item->next = NULL;
+        attrib_string_list_set_next (prev_item, NULL);
       } else if (next_item != NULL && prev_item == NULL) {
         /* at list's beginning */
         next_item->prev = NULL;
@@ -313,7 +313,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
         /*  g_free(list);  */
       } else {
         /* normal case of element in middle of list */
-        prev_item->next = next_item;
+        attrib_string_list_set_next (prev_item, next_item);
         next_item->prev = prev_item;
       }
 
