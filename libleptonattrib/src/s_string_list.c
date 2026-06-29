@@ -295,7 +295,4 @@ attrib_string_list_delete_found_item (STRING_LIST **list,
            "Free list_item.\n");
   /* free current list item */
   g_free (list_item);
-  /* decrement count */
-  (*count)--;
-  /* Do we need to re-number the list? */
 }

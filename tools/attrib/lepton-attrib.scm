@@ -1753,6 +1753,11 @@ failure."
                                                           *item
                                                           *prev-item
                                                           *next-item)
+                    ;; Decrement count.
+                    ;; Do we need to re-number the list?
+                    (let* ((count-bv (pointer->bytevector *counter (sizeof int)))
+                           (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+                      (bytevector-sint-set! count-bv 0 (1- count) (native-endianness) (sizeof int)))
                     ;; Free trial item before returning.
                     (g_free *trial-item))
                   (begin
