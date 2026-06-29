@@ -256,27 +256,3 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   return;
 
 }
-
-
-void
-attrib_string_list_delete_found_item (STRING_LIST **list,
-                                      int *count,
-                                      STRING_LIST *list_item,
-                                      STRING_LIST *prev_item,
-                                      STRING_LIST *next_item)
-{
-  if (next_item != NULL && prev_item == NULL)
-  {
-    /* at list's beginning */
-    attrib_string_list_set_prev (next_item, NULL);
-    /* also need to fix pointer to list head */
-    (*list) = next_item;
-    /*  g_free(list);  */
-  }
-  else
-  {
-    /* normal case of element in middle of list */
-    attrib_string_list_set_next (prev_item, next_item);
-    attrib_string_list_set_prev (next_item, prev_item);
-  }
-}

@@ -1763,11 +1763,22 @@ failure."
                             ;; At list's end.
                             (attrib_string_list_set_next *prev-item
                                                          %null-pointer)
-                            (attrib_string_list_delete_found_item **ls
-                                                                  *counter
-                                                                  *item
-                                                                  *prev-item
-                                                                  *next-item)))
+                            (if (and (not (null-pointer? *next-item))
+                                     (null-pointer? *prev-item))
+                                (begin
+                                  ;; At list's beginning.
+                                  (attrib_string_list_set_prev *next-item
+                                                               %null-pointer)
+                                  ;; Also need to fix pointer to
+                                  ;; list head.
+                                  (list-setter *sheet-data *next-item))
+                                (begin
+                                  ;; Normal case of element in
+                                  ;; middle of list.
+                                  (attrib_string_list_set_next *prev-item
+                                                               *next-item)
+                                  (attrib_string_list_set_prev *next-item
+                                                               *prev-item)))))
                     ;; Free current list item.
                     (g_free *item)
                     ;; Decrement count.
