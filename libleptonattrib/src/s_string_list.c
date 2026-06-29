@@ -260,7 +260,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
       /* found item, now delete it. */
       g_debug ("s_string_list_delete_item: "
                "Match found.\n");
-      prev_item = list_item->prev;
+      prev_item = attrib_string_list_get_prev (list_item);
       next_item = list_item->next;
 
       /* Check position in list */
