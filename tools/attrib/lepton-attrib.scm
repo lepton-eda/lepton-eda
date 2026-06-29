@@ -428,6 +428,10 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
+(define (add-string-list-item *ls *count *data)
+  (s_string_list_add_item *ls *count *data))
+
+
 ;;; Duplicates string list *LS and returns a pointer to the new,
 ;;; duplicate list.
 (define (duplicate-string-list *ls)
@@ -442,7 +446,7 @@ failure."
             *new-ls
             (let ((*data (g_strdup
                           (attrib_string_list_get_data *current-ls))))
-              (s_string_list_add_item *new-ls *count *data)
+              (add-string-list-item *new-ls *count *data)
               (g_free *data)
               (loop (attrib_string_list_get_next *current-ls)))))))
 
@@ -537,7 +541,7 @@ failure."
                     (not (name-in-list?
                           *new-component-attrib-pair-list
                           old-attrib-name)))
-           (s_string_list_add_item *complete-component-attrib-list
+           (add-string-list-item *complete-component-attrib-list
                                    *count
                                    *old-name-value-pair))
 
@@ -700,7 +704,7 @@ failure."
                          (string-append (pointer->string *attrib-name)
                                         "="
                                         (pointer->string *attrib-value)))))
-                  (s_string_list_add_item *attrib-pair-list
+                  (add-string-list-item *attrib-pair-list
                                           *count
                                           *name-value-pair)))
               (loop (1+ column)))))))
@@ -839,7 +843,7 @@ failure."
                          (*name-value-pair (string->pointer name-value-pair)))
 
                     ;; Add name=value to the new list.
-                    (s_string_list_add_item *new-attrib-list *count *name-value-pair)
+                    (add-string-list-item *new-attrib-list *count *name-value-pair)
 
                     ;; Sanity check
                     (let ((count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
@@ -1676,7 +1680,7 @@ failure."
            (attrib_sheet_data_get_component_attrib_count *sheet-data))
           (*name (string->pointer name)))
 
-      (s_string_list_add_item
+      (add-string-list-item
        (attrib_sheet_data_get_component_attrib_list *sheet-data)
        (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
        *name)
@@ -2518,7 +2522,7 @@ Please check your design.")))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
-           (s_string_list_add_item
+           (add-string-list-item
             (attrib_sheet_data_get_component_list *sheet-data)
             (attrib_sheet_data_get_component_counter_address *sheet-data)
             *temp-refdes)
@@ -2557,7 +2561,7 @@ Please check your design.")))
                          (not (string= name "refdes"))
                          (not (string= name "net"))
                          (not (string= name "slot")))
-                (s_string_list_add_item
+                (add-string-list-item
                  (attrib_sheet_data_get_component_attrib_list *sheet-data)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
                  (string->pointer name)))
@@ -2619,7 +2623,7 @@ Please check your design.")))
                                 (string-append (pointer->string *temp-refdes)
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
-                          (s_string_list_add_item
+                          (add-string-list-item
                            (attrib_sheet_data_get_pin_list *sheet-data)
                            (attrib_sheet_data_get_pin_counter_address *sheet-data)
                            *row-label))
@@ -2692,7 +2696,7 @@ Please check your design.")))
                        (when (and attrib-name
                                   (not (string= attrib-name "pinnumber"))
                                   attrib-value)
-                         (s_string_list_add_item
+                         (add-string-list-item
                           (attrib_sheet_data_get_pin_attrib_list *sheet-data)
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
                           (string->pointer attrib-name)))
