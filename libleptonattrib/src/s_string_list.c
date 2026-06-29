@@ -361,13 +361,14 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
   gchar *trial_item = NULL;
 
   /* First check to see if list is empty.  If empty, return -1. */
-  if (list->data == NULL) {
+  if (attrib_string_list_get_data (list) == NULL)
+  {
     return -1;
   }
 
   /* Otherwise, loop through list looking for the item */
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);
+    trial_item = (gchar *) g_strdup (attrib_string_list_get_data (list));
     if (strcmp(trial_item, item) == 0) {
       /* Found item in list; return index. */
       g_free(trial_item);
