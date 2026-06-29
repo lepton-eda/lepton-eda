@@ -69,6 +69,24 @@ attrib_string_list_get_data (STRING_LIST *list)
 }
 
 
+/*! \brief Set the \a data field of a string list item.
+ *
+ *  \par Function Description
+ *
+ *  Sets the \a data field of a string list item to the given
+ *  value.
+ *
+ *  \param [in] list The string list item.
+ *  \param [in] data The new data.
+ */
+void
+attrib_string_list_set_data (STRING_LIST *list,
+                             char *data)
+{
+  list->data = data;
+}
+
+
 /*! \brief Get the \a pos field of a string list.
  *
  *  \par Function Description
