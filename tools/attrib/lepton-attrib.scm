@@ -1753,6 +1753,9 @@ failure."
                                                           *item
                                                           *prev-item
                                                           *next-item)
+
+                    ;; Free current list item.
+                    (g_free *item)
                     ;; Decrement count.
                     ;; Do we need to re-number the list?
                     (let* ((count-bv (pointer->bytevector *counter (sizeof int)))

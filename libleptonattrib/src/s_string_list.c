@@ -290,9 +290,4 @@ attrib_string_list_delete_found_item (STRING_LIST **list,
     attrib_string_list_set_next (prev_item, next_item);
     attrib_string_list_set_prev (next_item, prev_item);
   }
-
-  g_debug ("s_string_list_delete_item: "
-           "Free list_item.\n");
-  /* free current list item */
-  g_free (list_item);
 }
