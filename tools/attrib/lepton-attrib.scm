@@ -1719,7 +1719,9 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-;;; Deletes the item *NAME from a STRING_LIST *LS.
+;;; Deletes the item *NAME from a STRING_LIST *LS.  The function
+;;; also decrements the list counter *COUNTER.  *SHEET-DATA is
+;;; used to set the list to the new value using LIST-SETTER.
 (define (delete-string-list-item *sheet-data
                                  list-setter
                                  *ls
