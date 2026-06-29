@@ -447,6 +447,10 @@ failure."
               (loop (attrib_string_list_get_next *current-ls)))))))
 
 
+(define (attrib-in-string-list? *ls *name)
+  (s_string_list_in_list *ls *name))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -570,7 +574,7 @@ failure."
                 ;; be deleted below.
                 (and (not (or (= row -1)
                               (= column -1)))
-                     (true? (s_string_list_in_list
+                     (true? (attrib-in-string-list?
                              *new-component-attrib-pair-list
                              (attrib_string_list_get_data
                               *local-list)))
