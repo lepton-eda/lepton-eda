@@ -261,17 +261,10 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 void
 attrib_string_list_delete_found_item (STRING_LIST **list,
                                       int *count,
-                                      STRING_LIST *list_item)
+                                      STRING_LIST *list_item,
+                                      STRING_LIST *prev_item,
+                                      STRING_LIST *next_item)
 {
-  STRING_LIST *next_item = NULL;
-  STRING_LIST *prev_item = NULL;
-
-  /* found item, now delete it. */
-  g_debug ("s_string_list_delete_item: "
-           "Match found.\n");
-  prev_item = attrib_string_list_get_prev (list_item);
-  next_item = attrib_string_list_get_next (list_item);
-
   /* Check position in list */
   if (next_item == NULL && prev_item == NULL)
   {

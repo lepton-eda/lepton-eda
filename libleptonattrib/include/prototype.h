@@ -163,7 +163,9 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 void
 attrib_string_list_delete_found_item (STRING_LIST **list,
                                       int *count,
-                                      STRING_LIST *list_item);
+                                      STRING_LIST *list_item,
+                                      STRING_LIST *prev_item,
+                                      STRING_LIST *next_item);
 char*
 attrib_string_list_get_data (STRING_LIST *list);
 
