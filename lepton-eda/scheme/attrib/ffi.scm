@@ -245,7 +245,7 @@
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
 ;;; s_string_list.c
-(define-lff attrib_string_list_delete_found_item void '(* * *))
+(define-lff attrib_string_list_delete_found_item void '(* * * * *))
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_pos void (list '* int))

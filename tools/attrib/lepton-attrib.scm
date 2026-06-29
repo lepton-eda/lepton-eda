@@ -1745,10 +1745,14 @@ failure."
                                 (attrib_string_list_get_data *item))))
               (if (string= (pointer->string *trial-item)
                            (pointer->string *name))
-                  (begin
+                  ;; Found item, now delete it.
+                  (let ((*prev-item (attrib_string_list_get_prev *item))
+                        (*next-item (attrib_string_list_get_next *item)))
                     (attrib_string_list_delete_found_item **ls
                                                           *counter
-                                                          *item)
+                                                          *item
+                                                          *prev-item
+                                                          *next-item)
                     ;; Free trial item before returning.
                     (g_free *trial-item))
                   (begin
