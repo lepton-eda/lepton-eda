@@ -217,7 +217,8 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 
   /* First check to see if list is empty.  Handle insertion of first item
      into empty list separately.  (Is this necessary?) */
-  if (list->data == NULL) {
+  if (attrib_string_list_get_data (list) == NULL)
+  {
     g_debug ("s_string_list_add_item: "
              "About to place first item in list.\n");
     list->data = (gchar *) g_strdup(item);
@@ -231,7 +232,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* Otherwise, loop through list looking for duplicates */
   prev = list;
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);
+    trial_item = (gchar *) g_strdup (attrib_string_list_get_data (list));
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  Just return. */
       g_free(trial_item);
