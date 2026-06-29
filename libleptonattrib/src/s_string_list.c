@@ -308,13 +308,13 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
         attrib_string_list_set_next (prev_item, NULL);
       } else if (next_item != NULL && prev_item == NULL) {
         /* at list's beginning */
-        next_item->prev = NULL;
+        attrib_string_list_set_prev (next_item, NULL);
         (*list) = next_item;         /* also need to fix pointer to list head */
         /*  g_free(list);  */
       } else {
         /* normal case of element in middle of list */
         attrib_string_list_set_next (prev_item, next_item);
-        next_item->prev = prev_item;
+        attrib_string_list_set_prev (next_item, prev_item);
       }
 
       g_debug ("s_string_list_delete_item: "
