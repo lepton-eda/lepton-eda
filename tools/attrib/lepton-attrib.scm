@@ -1480,6 +1480,10 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+(define (string-list-item-id *ls *name)
+  (s_string_list_find_in_list *ls *name))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -1630,7 +1634,7 @@ failure."
       ;; This is necessary to tell gtk_sheet_insert_columns
       ;; where the data should be shifted.
       (let ((new-index
-             (s_string_list_find_in_list
+             (string-list-item-id
               (attrib_sheet_data_get_component_attrib_list *sheet-data)
               *name)))
 
