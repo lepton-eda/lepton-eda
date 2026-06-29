@@ -1721,7 +1721,12 @@ failure."
 
 ;;; Deletes the item *NAME from a STRING_LIST *LS (**LS is a
 ;;; pointer to pointer).
-(define (delete-string-list-item **ls *ls *counter *name)
+(define (delete-string-list-item *sheet-data
+                                 list-setter
+                                 **ls
+                                 *ls
+                                 *counter
+                                 *name)
   ;; First check to see if list is empty.  If empty, spew error
   ;; and return.
   (if (null-pointer? (attrib_string_list_get_data *ls))
@@ -1748,12 +1753,16 @@ failure."
                   ;; Found item, now delete it.
                   (let ((*prev-item (attrib_string_list_get_prev *item))
                         (*next-item (attrib_string_list_get_next *item)))
-                    (attrib_string_list_delete_found_item **ls
-                                                          *counter
-                                                          *item
-                                                          *prev-item
-                                                          *next-item)
-
+                    ;; Check position in list.
+                    (if (and (null-pointer? *next-item)
+                             (null-pointer? *prev-item))
+                        ;; Pathological case of one item list.
+                        (list-setter *sheet-data %null-pointer)
+                        (attrib_string_list_delete_found_item **ls
+                                                              *counter
+                                                              *item
+                                                              *prev-item
+                                                              *next-item))
                     ;; Free current list item.
                     (g_free *item)
                     ;; Decrement count.
@@ -1799,6 +1808,8 @@ failure."
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
 
         (delete-string-list-item
+         *sheet-data
+         attrib_sheet_data_set_component_attrib_list
          (attrib_sheet_data_get_component_attrib_list_address *sheet-data)
          (attrib_sheet_data_get_component_attrib_list *sheet-data)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
