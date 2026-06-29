@@ -258,6 +258,56 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 }
 
 
+void
+attrib_string_list_delete_found_item (STRING_LIST **list,
+                                      int *count,
+                                      STRING_LIST *list_item)
+{
+  STRING_LIST *next_item = NULL;
+  STRING_LIST *prev_item = NULL;
+
+  /* found item, now delete it. */
+  g_debug ("s_string_list_delete_item: "
+           "Match found.\n");
+  prev_item = attrib_string_list_get_prev (list_item);
+  next_item = attrib_string_list_get_next (list_item);
+
+  /* Check position in list */
+  if (next_item == NULL && prev_item == NULL)
+  {
+    /* pathological case of one item list. */
+    (*list) = NULL;
+  }
+  else if (next_item == NULL && prev_item != NULL)
+  {
+    /* at list's end */
+    attrib_string_list_set_next (prev_item, NULL);
+  }
+  else if (next_item != NULL && prev_item == NULL)
+  {
+    /* at list's beginning */
+    attrib_string_list_set_prev (next_item, NULL);
+    /* also need to fix pointer to list head */
+    (*list) = next_item;
+    /*  g_free(list);  */
+  }
+  else
+  {
+    /* normal case of element in middle of list */
+    attrib_string_list_set_next (prev_item, next_item);
+    attrib_string_list_set_prev (next_item, prev_item);
+  }
+
+  g_debug ("s_string_list_delete_item: "
+           "Free list_item.\n");
+  /* free current list item */
+  g_free (list_item);
+  /* decrement count */
+  (*count)--;
+  /* Do we need to re-number the list? */
+}
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Delete an item from a STRING_LIST
  *
@@ -270,8 +320,6 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 
   gchar *trial_item = NULL;
   STRING_LIST *list_item;
-  STRING_LIST *next_item = NULL;
-  STRING_LIST *prev_item = NULL;
 
   g_debug ("s_string_list_delete_item: "
            "About to delete item %s from list.\n",
@@ -285,35 +333,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
              "Matching item against trial item = %s from list.\n",
              trial_item);
     if (strcmp(trial_item, item) == 0) {
-      /* found item, now delete it. */
-      g_debug ("s_string_list_delete_item: "
-               "Match found.\n");
-      prev_item = attrib_string_list_get_prev (list_item);
-      next_item = attrib_string_list_get_next (list_item);
-
-      /* Check position in list */
-      if (next_item == NULL && prev_item == NULL) {
-        /* pathological case of one item list. */
-        (*list) = NULL;
-      } else if (next_item == NULL && prev_item != NULL) {
-        /* at list's end */
-        attrib_string_list_set_next (prev_item, NULL);
-      } else if (next_item != NULL && prev_item == NULL) {
-        /* at list's beginning */
-        attrib_string_list_set_prev (next_item, NULL);
-        (*list) = next_item;         /* also need to fix pointer to list head */
-        /*  g_free(list);  */
-      } else {
-        /* normal case of element in middle of list */
-        attrib_string_list_set_next (prev_item, next_item);
-        attrib_string_list_set_prev (next_item, prev_item);
-      }
-
-      g_debug ("s_string_list_delete_item: "
-               "Free list_item.\n");
-      g_free(list_item);  /* free current list item */
-      (*count)--;       /* decrement count */
-      /* Do we need to re-number the list? */
+      attrib_string_list_delete_found_item (list, count, list_item);
 
       g_debug ("s_string_list_delete_item: "
                "Free trial_item.\n");
