@@ -239,10 +239,13 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   {
     g_debug ("s_string_list_add_item: "
              "About to place first item in list.\n");
-    list->data = (gchar *) g_strdup(item);
-    list->next = NULL;
-    list->prev = NULL;  /* this may have already been initialized. . . . */
-    list->pos = *count; /* This enumerates the pos on the list.  Value is reset later by sorting. */
+    attrib_string_list_set_data (list, (gchar *) g_strdup (item));
+    attrib_string_list_set_next (list, NULL);
+    /* This may have already been initialized. */
+    attrib_string_list_set_prev (list, NULL);
+    /* This enumerates the pos on the list.  Value is reset later
+     * by sorting. */
+    attrib_string_list_set_pos (list, *count);
     (*count)++;  /* increment count to 1 */
     return;
   }
@@ -265,11 +268,16 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* In this case, we insert it. */
 
   local_list = (STRING_LIST *) g_malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
-  local_list->data = (gchar *) g_strdup(item);   /* copy data into list */
-  local_list->next = NULL;
-  local_list->prev = prev;  /* point this item to last entry in old list */
-  prev->next = local_list;  /* make last item in old list point to this one. */
-  local_list->pos = *count; /* This enumerates the pos on the list.  Value is reset later by sorting. */
+  /* Copy data into list. */
+  attrib_string_list_set_data (local_list, (gchar *) g_strdup (item));
+  attrib_string_list_set_next (local_list, NULL);
+  /* Point this item to last entry in old list. */
+  attrib_string_list_set_prev (local_list, prev);
+  /* Make last item in old list point to this one. */
+  attrib_string_list_set_next (prev, local_list);
+  /* This enumerates the pos on the list.  Value is reset later by
+   * sorting. */
+  attrib_string_list_set_pos (local_list, *count);
   (*count)++;  /* increment count */
   /*   list = local_list;  */
   return;
