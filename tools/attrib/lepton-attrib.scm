@@ -1719,11 +1719,9 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-;;; Deletes the item *NAME from a STRING_LIST *LS (**LS is a
-;;; pointer to pointer).
+;;; Deletes the item *NAME from a STRING_LIST *LS.
 (define (delete-string-list-item *sheet-data
                                  list-setter
-                                 **ls
                                  *ls
                                  *counter
                                  *name)
@@ -1826,7 +1824,6 @@ failure."
         (delete-string-list-item
          *sheet-data
          attrib_sheet_data_set_component_attrib_list
-         (attrib_sheet_data_get_component_attrib_list_address *sheet-data)
          (attrib_sheet_data_get_component_attrib_list *sheet-data)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
