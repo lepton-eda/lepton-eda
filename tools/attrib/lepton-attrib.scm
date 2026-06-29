@@ -1480,8 +1480,34 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+;;; Looks for item *NAME in the list *LS, and returns the index
+;;; (-1 if absent).
 (define (string-list-item-id *ls *name)
-  (s_string_list_find_in_list *ls *name))
+  ;; First check to see if list is empty.  If empty, return -1.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      -1
+
+      ;; Otherwise, loop through list looking for the item.
+      (let loop ((index 0)
+                 (*ls *ls))
+        (if (null-pointer? *ls)
+            ;; If we are here, it's 'cause we didn't find the item
+            ;; pre-existing in the list.  In this case, return -1.
+            -1
+            (let ((*item (g_strdup
+                          (attrib_string_list_get_data *ls))))
+              (if (string= (pointer->string *item)
+                           (pointer->string *name))
+
+                  (begin
+                    ;; Found item in list; return index.
+                    (g_free *item)
+                    index)
+
+                  (begin
+                    (g_free *item)
+                    (loop (1+ index)
+                          (attrib_string_list_get_next *ls)))))))))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
