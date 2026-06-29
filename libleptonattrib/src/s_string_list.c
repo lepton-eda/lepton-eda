@@ -265,13 +265,7 @@ attrib_string_list_delete_found_item (STRING_LIST **list,
                                       STRING_LIST *prev_item,
                                       STRING_LIST *next_item)
 {
-  /* Check position in list */
-  if (next_item == NULL && prev_item == NULL)
-  {
-    /* pathological case of one item list. */
-    (*list) = NULL;
-  }
-  else if (next_item == NULL && prev_item != NULL)
+  if (next_item == NULL && prev_item != NULL)
   {
     /* at list's end */
     attrib_string_list_set_next (prev_item, NULL);
