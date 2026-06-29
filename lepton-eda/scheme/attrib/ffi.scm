@@ -111,7 +111,6 @@
             s_string_list_new
             s_string_list_add_item
             s_string_list_delete_item
-            s_string_list_in_list
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -253,7 +252,6 @@
 (define-lff s_string_list_new '* '())
 (define-lff s_string_list_add_item void '(* * *))
 (define-lff s_string_list_delete_item void '(* * *))
-(define-lff s_string_list_in_list int '(* *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))

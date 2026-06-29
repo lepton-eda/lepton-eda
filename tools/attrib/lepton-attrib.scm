@@ -447,8 +447,30 @@ failure."
               (loop (attrib_string_list_get_next *current-ls)))))))
 
 
+;;; Looks for item *NAME in the list *LS and returns 0 if it is
+;;; absent, 1 if present.
 (define (attrib-in-string-list? *ls *name)
-  (s_string_list_in_list *ls *name))
+  ;; First check to see if list is empty.  If empty, return
+  ;; 0 automatically.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      0
+
+      ;; Otherwise, loop through list looking for duplicates.
+      (let loop ((*ls *ls))
+        (if (null-pointer? *ls)
+            ;; If we are here, it's 'cause we didn't find the item
+            ;; pre-existing in the list.  In this case, return 0.
+            0
+            (let ((*item (g_strdup (attrib_string_list_get_data *ls))))
+              (if (string= (pointer->string *item)
+                           (pointer->string *name))
+                  ;; Found item already in list.  Return 1.
+                  (begin
+                    (g_free *item)
+                    1)
+                  (begin
+                    (g_free *item)
+                    (loop (attrib_string_list_get_next *ls)))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
