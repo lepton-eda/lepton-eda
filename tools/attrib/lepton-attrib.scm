@@ -1719,6 +1719,10 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
+(define (delete-string-list-item **ls *counter *name)
+  (s_string_list_delete_item **ls *counter *name))
+
+
 (define (delete-component-attrib-column *sheet num)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Get name (label) of the column to delete from the gtk sheet.
@@ -1749,7 +1753,7 @@ failure."
          (attrib_sheet_data_get_component_count *sheet-data)
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
 
-        (s_string_list_delete_item
+        (delete-string-list-item
          (attrib_sheet_data_get_component_attrib_list_address *sheet-data)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
