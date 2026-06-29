@@ -1719,8 +1719,16 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-(define (delete-string-list-item **ls *counter *name)
-  (s_string_list_delete_item **ls *counter *name))
+(define (delete-string-list-item **ls *ls *counter *name)
+  ;; First check to see if list is empty.  If empty, spew error
+  ;; and return.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      (begin
+        (format (current-error-port) "delete-string-list-item(): ")
+        (format (current-error-port)
+                (G_ "Tried to remove item from empty list.\n")))
+
+      (s_string_list_delete_item **ls *counter *name)))
 
 
 (define (delete-component-attrib-column *sheet num)
@@ -1755,6 +1763,7 @@ failure."
 
         (delete-string-list-item
          (attrib_sheet_data_get_component_attrib_list_address *sheet-data)
+         (attrib_sheet_data_get_component_attrib_list *sheet-data)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
         ;; This renumbers list also.
