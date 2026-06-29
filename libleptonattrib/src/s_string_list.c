@@ -322,13 +322,14 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
   /* First check to see if list is empty.  If empty, return
    * 0 automatically.  (I probably don't need to handle this
    * separately.)  */
-  if (list->data == NULL) {
+  if (attrib_string_list_get_data (list) == NULL)
+  {
     return 0;
   }
 
   /* Otherwise, loop through list looking for duplicates */
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);
+    trial_item = (gchar *) g_strdup (attrib_string_list_get_data (list));
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  return 1. */
       g_free(trial_item);
