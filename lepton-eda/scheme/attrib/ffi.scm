@@ -107,6 +107,7 @@
             attrib_string_list_delete_found_item
             attrib_string_list_get_data
             attrib_string_list_get_next
+            attrib_string_list_set_next
             attrib_string_list_set_pos
             attrib_string_list_get_prev
             s_string_list_new
@@ -248,6 +249,7 @@
 (define-lff attrib_string_list_delete_found_item void '(* * * * *))
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_get_next '* '(*))
+(define-lff attrib_string_list_set_next void '(* *))
 (define-lff attrib_string_list_set_pos void (list '* int))
 (define-lff attrib_string_list_get_prev '* '(*))
 (define-lff s_string_list_new '* '())

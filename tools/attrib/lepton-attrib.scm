@@ -1758,11 +1758,16 @@ failure."
                              (null-pointer? *prev-item))
                         ;; Pathological case of one item list.
                         (list-setter *sheet-data %null-pointer)
-                        (attrib_string_list_delete_found_item **ls
-                                                              *counter
-                                                              *item
-                                                              *prev-item
-                                                              *next-item))
+                        (if (and (null-pointer? *next-item)
+                                 (not (null-pointer? *prev-item)))
+                            ;; At list's end.
+                            (attrib_string_list_set_next *prev-item
+                                                         %null-pointer)
+                            (attrib_string_list_delete_found_item **ls
+                                                                  *counter
+                                                                  *item
+                                                                  *prev-item
+                                                                  *next-item)))
                     ;; Free current list item.
                     (g_free *item)
                     ;; Decrement count.
