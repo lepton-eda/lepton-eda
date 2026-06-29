@@ -336,7 +336,7 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
       return 1;
     }
     g_free(trial_item);
-    list = list->next;
+    list = attrib_string_list_get_next (list);
   }
 
   /* If we are here, it's 'cause we didn't find the item
