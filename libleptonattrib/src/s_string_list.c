@@ -261,7 +261,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
       g_debug ("s_string_list_delete_item: "
                "Match found.\n");
       prev_item = attrib_string_list_get_prev (list_item);
-      next_item = list_item->next;
+      next_item = attrib_string_list_get_next (list_item);
 
       /* Check position in list */
       if (next_item == NULL && prev_item == NULL) {
@@ -295,7 +295,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
       return;
     }
     g_free(trial_item);
-    list_item = list_item->next;
+    list_item = attrib_string_list_get_next (list_item);
   }
 
   /* If we are here, it's 'cause we didn't find the item.
