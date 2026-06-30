@@ -112,6 +112,36 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
   return 0;
 }
 
+
+STRING_LIST*
+attrib_listsort_get_next_element (STRING_LIST *p,
+                                  STRING_LIST *q,
+                                  gboolean zero_p,
+                                  gboolean zero_q,
+                                  gboolean p_lower)
+{
+  if (zero_p)
+  {
+    return q;
+  }
+  /* q is empty; e must come from p. */
+  else if (zero_q)
+  {
+    return p;
+  }
+  /* First element of p is lower (or same); e must come from p. */
+  else if (p_lower)
+  {
+    return p;
+  }
+  /* First element of q is lower; e must come from q. */
+  else
+  {
+    return q;
+  }
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -168,26 +198,27 @@ listsort (STRING_LIST *list)
                 /* Decide whether next element of merge comes from
                    p or q. */
 
+                e = attrib_listsort_get_next_element (p, q, zero_p, zero_q, p_lower);
                 /* p is empty; e must come from q. */
                 if (zero_p)
                 {
-                    e = q; q = attrib_string_list_get_next (q); qsize--;
+                  q = attrib_string_list_get_next (q); qsize--;
                 }
                 /* q is empty; e must come from p. */
                 else if (zero_q)
                 {
-                    e = p; p = attrib_string_list_get_next (p); psize--;
+                  p = attrib_string_list_get_next (p); psize--;
                 }
                 /* First element of p is lower (or same); e must
                  * come from p. */
                 else if (p_lower)
                 {
-                    e = p; p = attrib_string_list_get_next (p); psize--;
+                  p = attrib_string_list_get_next (p); psize--;
                 }
                 /* First element of q is lower; e must come from q. */
                 else
                 {
-                    e = q; q = attrib_string_list_get_next (q); qsize--;
+                  q = attrib_string_list_get_next (q); qsize--;
                 }
 
                 /* add the next element to the merged list */
