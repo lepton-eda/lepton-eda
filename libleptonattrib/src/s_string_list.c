@@ -207,22 +207,3 @@ attrib_string_list_new ()
 {
   return (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
 }
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Return a pointer to a new STRING_LIST
- *
- * Returns a pointer to a new STRING_LIST struct. This list is empty.
- * \returns pointer to the new STRING_LIST struct.
- */
-STRING_LIST *s_string_list_new() {
-  STRING_LIST *local_string_list;
-
-  local_string_list = attrib_string_list_new ();
-  attrib_string_list_set_data (local_string_list, NULL);
-  attrib_string_list_set_next (local_string_list, NULL);
-  attrib_string_list_set_prev (local_string_list, NULL);
-  attrib_string_list_set_pos (local_string_list, -1);
-
-  return local_string_list;
-}

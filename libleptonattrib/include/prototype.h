@@ -187,7 +187,6 @@ attrib_string_list_get_next (STRING_LIST *list);
 void
 attrib_string_list_set_next (STRING_LIST *list,
                              STRING_LIST *item);
-STRING_LIST *s_string_list_new();
 
 /* ------------- s_table.c ------------- */
 int
