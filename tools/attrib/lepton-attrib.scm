@@ -435,7 +435,24 @@ failure."
         (format (current-error-port)
                 (G_ "Tried to add to a NULL list.\n")))
 
-      (s_string_list_add_item *ls *count *data)))
+      ;; First check to see if list is empty.  Handle insertion of
+      ;; first item into empty list separately.  (Is this
+      ;; necessary?)
+      (if (null-pointer? (attrib_string_list_get_data *ls))
+          (begin
+            (attrib_string_list_set_data *ls (g_strdup *data))
+            (attrib_string_list_set_next *ls %null-pointer)
+            ;; This may have already been initialized.
+            (attrib_string_list_set_prev *ls %null-pointer)
+            (let* ((count-bv (pointer->bytevector *count (sizeof int)))
+                   (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+              ;; This enumerates the pos on the list.  Value is
+              ;; reset later by sorting.
+              (attrib_string_list_set_pos *ls count)
+              ;; Increment count to 1.
+              (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+
+          (s_string_list_add_item *ls *count *data))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,

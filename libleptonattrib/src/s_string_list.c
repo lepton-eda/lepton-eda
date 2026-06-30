@@ -227,23 +227,6 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   STRING_LIST *prev;
   STRING_LIST *local_list;
 
-  /* First check to see if list is empty.  Handle insertion of first item
-     into empty list separately.  (Is this necessary?) */
-  if (attrib_string_list_get_data (list) == NULL)
-  {
-    g_debug ("s_string_list_add_item: "
-             "About to place first item in list.\n");
-    attrib_string_list_set_data (list, (gchar *) g_strdup (item));
-    attrib_string_list_set_next (list, NULL);
-    /* This may have already been initialized. */
-    attrib_string_list_set_prev (list, NULL);
-    /* This enumerates the pos on the list.  Value is reset later
-     * by sorting. */
-    attrib_string_list_set_pos (list, *count);
-    (*count)++;  /* increment count to 1 */
-    return;
-  }
-
   /* Otherwise, loop through list looking for duplicates */
   prev = list;
   while (list != NULL) {
