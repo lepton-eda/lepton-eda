@@ -452,7 +452,22 @@ failure."
               ;; Increment count to 1.
               (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
 
-          (s_string_list_add_item *ls *count *data))))
+          ;; Otherwise, loop through list looking for duplicates.
+          (let loop ((*prev *ls)
+                     (*next-ls *ls))
+               (if (null-pointer? *next-ls)
+                   (s_string_list_add_item *prev *count *data)
+                   (let ((*item (g_strdup
+                                 (attrib_string_list_get_data *next-ls))))
+                     (if (string= (pointer->string *item)
+                                  (pointer->string *data))
+                         ;; Found item already in list.  Just return.
+                         (g_free *item)
+
+                         (begin
+                           (g_free *item)
+                           (loop *next-ls
+                                 (attrib_string_list_get_next *next-ls))))))))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
