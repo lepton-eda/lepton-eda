@@ -429,7 +429,13 @@ failure."
 
 
 (define (add-string-list-item *ls *count *data)
-  (s_string_list_add_item *ls *count *data))
+  (if (null-pointer? *ls)
+      (begin
+        (format (current-error-port) "add-string-list-item(): ")
+        (format (current-error-port)
+                (G_ "Tried to add to a NULL list.\n")))
+
+      (s_string_list_add_item *ls *count *data)))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
