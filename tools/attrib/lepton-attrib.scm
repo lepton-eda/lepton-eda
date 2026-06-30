@@ -1429,6 +1429,10 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+(define (sort-attrib-list *ls)
+  (listsort *ls))
+
+
 ;;; Sorts the component list and fills in the 'pos' fields of the
 ;;; list items.
 (define (sort-component-list)
@@ -1442,7 +1446,7 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls)))
+  (let ((*sorted-ls (sort-attrib-list *ls)))
     ;; Do this after sorting is done.  This resets the order of
     ;; the individual items in the list.
     (let loop ((*item *sorted-ls)
@@ -1493,7 +1497,7 @@ failure."
         (and new-position
              (attrib_string_list_set_pos *item new-position)))))
 
-  (let ((*sorted-ls (listsort *ls)))
+  (let ((*sorted-ls (sort-attrib-list *ls)))
     (attrib_sheet_data_set_component_attrib_list *sheet-data *sorted-ls)
 
     ;; Do this after sorting is done.  This resets the order of
@@ -1541,7 +1545,7 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls)))
+  (let ((*sorted-ls (sort-attrib-list *ls)))
     ;; Do this after sorting is done.  This resets the order of
     ;; the individual items in the list.
     (let loop ((*item *sorted-ls)
