@@ -192,6 +192,23 @@ attrib_string_list_set_next (STRING_LIST *list,
 }
 
 
+/*! \brief Create a new #STRING_LIST.
+ *
+ *  \par Function Description
+ *
+ *  Allocates and returns a new #STRING_LIST list consisting of
+ *  one uninitialized item.  The list must be freed with g_free()
+ *  after use.
+ *
+ *  \return The string list.
+ */
+STRING_LIST*
+attrib_string_list_new ()
+{
+  return (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
+}
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Return a pointer to a new STRING_LIST
  *
@@ -201,7 +218,7 @@ attrib_string_list_set_next (STRING_LIST *list,
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
 
-  local_string_list = (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
+  local_string_list = attrib_string_list_new ();
   local_string_list->data = NULL;
   local_string_list->next = NULL;
   local_string_list->prev = NULL;
@@ -231,7 +248,8 @@ s_string_list_add_item (STRING_LIST *prev,
   /* If we are here, it's 'cause we didn't find the item pre-existing in the list. */
   /* In this case, we insert it. */
 
-  local_list = (STRING_LIST *) g_malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
+  /* Allocate space for this list entry. */
+  local_list = attrib_string_list_new ();
   /* Copy data into list. */
   attrib_string_list_set_data (local_list, (gchar *) g_strdup (item));
   attrib_string_list_set_next (local_list, NULL);
