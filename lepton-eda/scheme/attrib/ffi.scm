@@ -111,7 +111,6 @@
             attrib_string_list_set_pos
             attrib_string_list_get_prev
             attrib_string_list_set_prev
-            s_string_list_new
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -253,7 +252,6 @@
 (define-lff attrib_string_list_set_pos void (list '* int))
 (define-lff attrib_string_list_get_prev '* '(*))
 (define-lff attrib_string_list_set_prev void '(* *))
-(define-lff s_string_list_new '* '())
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))
