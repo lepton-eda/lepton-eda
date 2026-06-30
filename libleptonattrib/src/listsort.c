@@ -194,32 +194,16 @@ listsort (STRING_LIST *list)
                 gboolean zero_p = (psize == 0);
                 gboolean zero_q = (!zero_p && (qsize == 0 || q == NULL));
                 gboolean p_lower = (!zero_p && !zero_q && (cmp (p, q) <= 0));
+                gboolean q_lower = (!zero_p && !zero_q && !p_lower);
 
                 /* Decide whether next element of merge comes from
                    p or q. */
 
                 e = attrib_listsort_get_next_element (p, q, zero_p, zero_q, p_lower);
-                /* p is empty; e must come from q. */
-                if (zero_p)
-                {
-                  q = attrib_string_list_get_next (q); qsize--;
-                }
-                /* q is empty; e must come from p. */
-                else if (zero_q)
-                {
-                  p = attrib_string_list_get_next (p); psize--;
-                }
-                /* First element of p is lower (or same); e must
-                 * come from p. */
-                else if (p_lower)
-                {
-                  p = attrib_string_list_get_next (p); psize--;
-                }
-                /* First element of q is lower; e must come from q. */
-                else
-                {
-                  q = attrib_string_list_get_next (q); qsize--;
-                }
+                q = (zero_p || q_lower) ? attrib_string_list_get_next (q) : q;
+                p = (zero_q || p_lower) ? attrib_string_list_get_next (p) : p;
+                if (zero_p || q_lower) qsize--;
+                if (zero_q || p_lower) psize--;
 
                 /* add the next element to the merged list */
                 if (tail) {
