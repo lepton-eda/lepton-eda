@@ -219,10 +219,10 @@ STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
 
   local_string_list = attrib_string_list_new ();
-  local_string_list->data = NULL;
-  local_string_list->next = NULL;
-  local_string_list->prev = NULL;
-  local_string_list->pos = -1;   /* can look for this later . . .  */
+  attrib_string_list_set_data (local_string_list, NULL);
+  attrib_string_list_set_next (local_string_list, NULL);
+  attrib_string_list_set_prev (local_string_list, NULL);
+  attrib_string_list_set_pos (local_string_list, -1);
 
   return local_string_list;
 }
