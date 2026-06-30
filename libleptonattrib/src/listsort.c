@@ -161,20 +161,32 @@ listsort (STRING_LIST *list)
 
             /* now we have two lists; merge them */
             while (psize > 0 || (qsize > 0 && q)) {
+                gboolean zero_p = (psize == 0);
+                gboolean zero_q = (!zero_p && (qsize == 0 || q == NULL));
+                gboolean p_lower = (!zero_p && !zero_q && (cmp (p, q) <= 0));
 
-                /* decide whether next element of merge comes from p or q */
-                if (psize == 0) {
-                    /* p is empty; e must come from q. */
+                /* Decide whether next element of merge comes from
+                   p or q. */
+
+                /* p is empty; e must come from q. */
+                if (zero_p)
+                {
                     e = q; q = attrib_string_list_get_next (q); qsize--;
-                } else if (qsize == 0 || !q) {
-                    /* q is empty; e must come from p. */
+                }
+                /* q is empty; e must come from p. */
+                else if (zero_q)
+                {
                     e = p; p = attrib_string_list_get_next (p); psize--;
-                } else if (cmp(p,q) <= 0) {
-                    /* First element of p is lower (or same);
-                     * e must come from p. */
+                }
+                /* First element of p is lower (or same); e must
+                 * come from p. */
+                else if (p_lower)
+                {
                     e = p; p = attrib_string_list_get_next (p); psize--;
-                } else {
-                    /* First element of q is lower; e must come from q. */
+                }
+                /* First element of q is lower; e must come from q. */
+                else
+                {
                     e = q; q = attrib_string_list_get_next (q); qsize--;
                 }
 
