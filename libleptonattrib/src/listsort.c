@@ -84,8 +84,8 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
   char *a = attrib_string_list_get_data (al);
   char *b = attrib_string_list_get_data (bl);
 
-  if (al->pos != bl->pos)
-    return al->pos - bl->pos;
+  if (attrib_string_list_get_pos (al) != attrib_string_list_get_pos (bl))
+    return attrib_string_list_get_pos (al) - attrib_string_list_get_pos (bl);
 
   while (*a && *b)
     {
