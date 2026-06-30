@@ -227,12 +227,6 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   STRING_LIST *prev;
   STRING_LIST *local_list;
 
-  if (list == NULL) {
-    fprintf (stderr, "s_string_list_add_item: ");
-    fprintf (stderr, _("Tried to add to a NULL list.\n"));
-    return;
-  }
-
   /* First check to see if list is empty.  Handle insertion of first item
      into empty list separately.  (Is this necessary?) */
   if (attrib_string_list_get_data (list) == NULL)
