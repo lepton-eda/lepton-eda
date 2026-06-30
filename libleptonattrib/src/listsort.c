@@ -81,8 +81,8 @@
  */
 /*----------------------------------------------------------------*/
 int cmp(STRING_LIST *al, STRING_LIST *bl) {
-  char *a = al->data;
-  char *b = bl->data;
+  char *a = attrib_string_list_get_data (al);
+  char *b = attrib_string_list_get_data (bl);
 
   if (al->pos != bl->pos)
     return al->pos - bl->pos;
