@@ -318,6 +318,10 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
+(define (make-string-list)
+  (s_string_list_new))
+
+
 ;;; Returns the index of the string *STR in the list *LS.
 (define (string-list-id *ls *str)
   (let loop ((count 0)
@@ -500,7 +504,7 @@ failure."
 ;;; duplicate list.
 (define (duplicate-string-list *ls)
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
-  (define *new-ls (s_string_list_new))
+  (define *new-ls (make-string-list))
   (if (null-pointer? (attrib_string_list_get_data *ls))
       ;; This is an empty string list.
       *new-ls
@@ -738,7 +742,7 @@ failure."
 ;;;
 ;;; If the row holds no attribs, it just returns NULL.
 (define (make-attrib-pair *row-name *table *row-list attribs-number)
-  (define *attrib-pair-list (s_string_list_new))
+  (define *attrib-pair-list (make-string-list))
   (define row (string-list-id *row-list *row-name))
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
@@ -882,7 +886,7 @@ failure."
             ;; into new attrib list.
 
             ;; Init the new attrib list.
-            (let loop ((*new-attrib-list (s_string_list_new))
+            (let loop ((*new-attrib-list (make-string-list))
                        (i 0)
                        (*local-attrib-list
                         (attrib_sheet_data_get_pin_attrib_list *sheet-data)))
@@ -2544,23 +2548,23 @@ Please check your design.")))
 
   ;; Now we create the first cell in each master list.
   (attrib_sheet_data_set_component_list *sheet-data
-                                        (s_string_list_new))
+                                        (make-string-list))
   (attrib_sheet_data_set_component_attrib_list *sheet-data
-                                               (s_string_list_new))
+                                               (make-string-list))
   (attrib_sheet_data_set_component_count *sheet-data 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_net_list *sheet-data
-                                  (s_string_list_new))
+                                  (make-string-list))
   (attrib_sheet_data_set_net_attrib_list *sheet-data
-                                         (s_string_list_new))
+                                         (make-string-list))
   (attrib_sheet_data_set_net_count *sheet-data 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_pin_list *sheet-data
-                                  (s_string_list_new))
+                                  (make-string-list))
   (attrib_sheet_data_set_pin_attrib_list *sheet-data
-                                         (s_string_list_new))
+                                         (make-string-list))
   (attrib_sheet_data_set_pin_count *sheet-data 0)
   (attrib_sheet_data_set_pin_attrib_count *sheet-data 0)
 
