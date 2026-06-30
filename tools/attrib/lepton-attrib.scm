@@ -428,6 +428,9 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
+;;; Adds the item *DATA to STRING_LIST *LS incrementing *COUNT.
+;;; It first passes through the list to make sure that there are
+;;; no duplications.
 (define (add-string-list-item *ls *count *data)
   (if (null-pointer? *ls)
       (begin
@@ -456,7 +459,30 @@ failure."
           (let loop ((*prev *ls)
                      (*next-ls *ls))
                (if (null-pointer? *next-ls)
-                   (s_string_list_add_item *prev *count *data)
+                   ;; If we are here, it's 'cause we didn't find
+                   ;; the item pre-existing in the list.  In this
+                   ;; case, we insert it.
+
+                   ;; Allocate space for this list entry.
+                   (let ((*new-ls (attrib_string_list_new)))
+                     ;; Copy data into list.
+                     (attrib_string_list_set_data *new-ls
+                                                  (g_strdup *data))
+                     (attrib_string_list_set_next *new-ls
+                                                  %null-pointer)
+                     ;; Point this item to last entry in old list.
+                     (attrib_string_list_set_prev *new-ls *prev)
+                     ;; Make last item in old list point to this
+                     ;; one.
+                     (attrib_string_list_set_next *prev *new-ls)
+
+                     (let* ((count-bv (pointer->bytevector *count (sizeof int)))
+                            (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+                       ;; This enumerates the pos on the list.
+                       ;; Value is reset later by sorting.
+                       (attrib_string_list_set_pos *new-ls count)
+                       ;; Increment count.
+                       (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
                    (let ((*item (g_strdup
                                  (attrib_string_list_get_data *next-ls))))
                      (if (string= (pointer->string *item)

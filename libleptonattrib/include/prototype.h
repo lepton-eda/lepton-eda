@@ -188,10 +188,6 @@ void
 attrib_string_list_set_next (STRING_LIST *list,
                              STRING_LIST *item);
 STRING_LIST *s_string_list_new();
-void
-s_string_list_add_item (STRING_LIST *prev,
-                        int *count,
-                        char *item);
 
 /* ------------- s_table.c ------------- */
 int
