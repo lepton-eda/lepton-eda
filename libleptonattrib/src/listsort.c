@@ -136,13 +136,6 @@ listsort (STRING_LIST *list)
     STRING_LIST *p, *q, *e, *tail;
     int insize, nmerges, psize, qsize, i;
 
-    /*
-     * Silly special case: if `list' was passed in as NULL, return
-     * NULL immediately.
-     */
-    if (!list)
-        return NULL;
-
     insize = 1;
 
     while (1) {
