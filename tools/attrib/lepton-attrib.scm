@@ -1430,7 +1430,11 @@ failure."
 
 
 (define (sort-attrib-list *ls)
-  (listsort *ls))
+  ;; Silly special case: if *LS was passed in as NULL, return NULL
+  ;; immediately.
+  (if (null-pointer? *ls)
+      %null-pointer
+      (listsort *ls)))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the
