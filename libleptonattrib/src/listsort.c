@@ -187,7 +187,7 @@ listsort (STRING_LIST *list)
 
                 /* add the next element to the merged list */
                 if (tail) {
-                    tail->next = e;
+                    attrib_string_list_set_next (tail, e);
                 } else {
                     list = e;
                 }
@@ -200,7 +200,7 @@ listsort (STRING_LIST *list)
             /* now p has stepped `insize' places along, and q has too */
             p = q;
         }
-        tail->next = NULL;
+        attrib_string_list_set_next (tail, NULL);
 
         /* If we have done only one merge, we're finished. */
         if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
