@@ -217,29 +217,16 @@ STRING_LIST *s_string_list_new() {
  * Inserts the item into a STRING_LIST.
  * It first passes through the
  * list to make sure that there are no duplications.
- * \param list pointer to STRING_LIST to be added to.
+ * \param prev pointer to STRING_LIST to be added to.
  * \param count FIXME Don't know what this does - input or output? both?
  * \param item pointer to string to be added
  */
-void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
-
-  gchar *trial_item = NULL;
-  STRING_LIST *prev;
+void
+s_string_list_add_item (STRING_LIST *prev,
+                        int *count,
+                        char *item)
+{
   STRING_LIST *local_list;
-
-  /* Otherwise, loop through list looking for duplicates */
-  prev = list;
-  while (list != NULL) {
-    trial_item = (gchar *) g_strdup (attrib_string_list_get_data (list));
-    if (strcmp(trial_item, item) == 0) {
-      /* Found item already in list.  Just return. */
-      g_free(trial_item);
-      return;
-    }
-    g_free(trial_item);
-    prev = list;
-    list = attrib_string_list_get_next (list);
-  }
 
   /* If we are here, it's 'cause we didn't find the item pre-existing in the list. */
   /* In this case, we insert it. */
