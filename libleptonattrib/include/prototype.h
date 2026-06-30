@@ -160,6 +160,9 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 
 
 /* ------------- s_string_list.c ------------- */
+STRING_LIST*
+attrib_string_list_new ();
+
 char*
 attrib_string_list_get_data (STRING_LIST *list);
 

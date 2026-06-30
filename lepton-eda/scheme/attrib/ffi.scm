@@ -103,6 +103,7 @@
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
+            attrib_string_list_new
             attrib_string_list_get_data
             attrib_string_list_set_data
             attrib_string_list_get_next
@@ -245,6 +246,7 @@
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
 ;;; s_string_list.c
+(define-lff attrib_string_list_new '* '())
 (define-lff attrib_string_list_get_data '* '(*))
 (define-lff attrib_string_list_set_data void '(* *))
 (define-lff attrib_string_list_get_next '* '(*))
