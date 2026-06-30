@@ -159,7 +159,7 @@ listsort (STRING_LIST *list)
             psize = 0;
             for (i = 0; i < insize; i++) {
                 psize++;
-                q = q->next;
+                q = attrib_string_list_get_next (q);
                 if (!q) break;
             }
 
@@ -172,17 +172,17 @@ listsort (STRING_LIST *list)
                 /* decide whether next element of merge comes from p or q */
                 if (psize == 0) {
                     /* p is empty; e must come from q. */
-                    e = q; q = q->next; qsize--;
+                    e = q; q = attrib_string_list_get_next (q); qsize--;
                 } else if (qsize == 0 || !q) {
                     /* q is empty; e must come from p. */
-                    e = p; p = p->next; psize--;
+                    e = p; p = attrib_string_list_get_next (p); psize--;
                 } else if (cmp(p,q) <= 0) {
                     /* First element of p is lower (or same);
                      * e must come from p. */
-                    e = p; p = p->next; psize--;
+                    e = p; p = attrib_string_list_get_next (p); psize--;
                 } else {
                     /* First element of q is lower; e must come from q. */
-                    e = q; q = q->next; qsize--;
+                    e = q; q = attrib_string_list_get_next (q); qsize--;
                 }
 
                 /* add the next element to the merged list */
