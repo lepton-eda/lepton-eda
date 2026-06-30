@@ -192,7 +192,7 @@ listsort (STRING_LIST *list)
                     list = e;
                 }
                 /* Maintain reverse pointers in a doubly linked list. */
-                e->prev = tail;
+                attrib_string_list_set_prev (e, tail);
 
                 tail = e;
             }
