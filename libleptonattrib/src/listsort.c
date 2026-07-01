@@ -216,18 +216,3 @@ attrib_listsort_set_p_size (int val)
 {
   psize = val;
 }
-
-
-static int qsize = 0;
-
-int
-attrib_listsort_get_q_size ()
-{
-  return qsize;
-}
-
-void
-attrib_listsort_set_q_size (int val)
-{
-  qsize = val;
-}

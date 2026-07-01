@@ -1478,19 +1478,18 @@ failure."
                 (attrib_listsort_set_q
                  (attrib_string_list_get_next (attrib_listsort_get_q))))
 
+              ;; Now we have two lists; merge them.
+
               ;; If Q hasn't fallen off end, we have two lists to
               ;; merge.
-              (attrib_listsort_set_q_size insize)
-
-              ;; Now we have two lists; merge them.
-              (let loop-merge ()
+              (let loop-merge ((q-size insize))
                 (when (or (> (attrib_listsort_get_p_size) 0)
-                          (and (> (attrib_listsort_get_q_size) 0)
+                          (and (> q-size 0)
                                (not (null-pointer? (attrib_listsort_get_q)))))
 
                   (let* ((zero-p? (zero? (attrib_listsort_get_p_size)))
                          (zero-q? (and (not zero-p?)
-                                       (or (zero? (attrib_listsort_get_q_size))
+                                       (or (zero? q-size)
                                            (null-pointer? (attrib_listsort_get_q)))))
                          (p-lower? (and (not zero-p?)
                                         (not zero-q?)
@@ -1515,9 +1514,6 @@ failure."
                      (if (or zero-q? p-lower?)
                          (attrib_string_list_get_next (attrib_listsort_get_p))
                          (attrib_listsort_get_p)))
-                    (when (or zero-p? q-lower?)
-                      (attrib_listsort_set_q_size
-                       (1- (attrib_listsort_get_q_size))))
                     (when (or zero-q? p-lower?)
                       (attrib_listsort_set_p_size
                        (1- (attrib_listsort_get_p_size))))
@@ -1538,7 +1534,9 @@ failure."
                     (attrib_listsort_set_tail
                      (attrib_listsort_get_new_element))
 
-                    (loop-merge))))
+                    (loop-merge (if (or zero-p? q-lower?)
+                                    (1- q-size)
+                                    q-size)))))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
