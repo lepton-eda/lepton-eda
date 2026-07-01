@@ -1446,7 +1446,11 @@ failure."
           ;; Count number of merges we do in this pass.
           (attrib_listsort_set_merges_number 0)
 
-          (listsort)
+          (let loop-p ((*p (attrib_listsort_get_p)))
+            (unless (null-pointer? *p)
+              (listsort)
+              (loop-p (attrib_listsort_get_p))))
+
           (attrib_string_list_set_next (attrib_listsort_get_tail)
                                        %null-pointer)
 
