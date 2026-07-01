@@ -108,9 +108,6 @@ attrib_listsort_get_q_size ();
 void
 attrib_listsort_set_q_size (int val);
 
-void
-listsort ();
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();

@@ -83,7 +83,6 @@
             attrib_listsort_set_p_size
             attrib_listsort_get_q_size
             attrib_listsort_set_q_size
-            listsort
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -242,7 +241,6 @@
 (define-lff attrib_listsort_set_p_size void (list int))
 (define-lff attrib_listsort_get_q_size int '())
 (define-lff attrib_listsort_set_q_size void (list int))
-(define-lff listsort void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
