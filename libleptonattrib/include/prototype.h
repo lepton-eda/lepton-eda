@@ -49,6 +49,66 @@ attrib_gtksheet_state_from_string (char *s);
 int cmp(STRING_LIST *a, STRING_LIST *b);
 
 STRING_LIST*
+attrib_listsort_get_next_element (STRING_LIST *p,
+                                  STRING_LIST *q,
+                                  gboolean zero_p,
+                                  gboolean zero_q,
+                                  gboolean p_lower);
+STRING_LIST*
+attrib_listsort_get_list ();
+
+void
+attrib_listsort_set_list (STRING_LIST *val);
+
+STRING_LIST*
+attrib_listsort_get_tail ();
+
+void
+attrib_listsort_set_tail (STRING_LIST *val);
+
+STRING_LIST*
+attrib_listsort_get_new_element ();
+
+void
+attrib_listsort_set_new_element (STRING_LIST *val);
+
+STRING_LIST*
+attrib_listsort_get_p ();
+
+void
+attrib_listsort_set_p (STRING_LIST *val);
+
+STRING_LIST*
+attrib_listsort_get_q ();
+
+void
+attrib_listsort_set_q (STRING_LIST *val);
+
+int
+attrib_listsort_get_insize ();
+
+void
+attrib_listsort_set_insize (int val);
+
+int
+attrib_listsort_get_merges_number ();
+
+void
+attrib_listsort_set_merges_number (int val);
+
+int
+attrib_listsort_get_p_size ();
+
+void
+attrib_listsort_set_p_size (int val);
+
+int
+attrib_listsort_get_q_size ();
+
+void
+attrib_listsort_set_q_size (int val);
+
+STRING_LIST*
 listsort (STRING_LIST *list);
 
 /* ------------- s_sheet_data.c ------------- */
