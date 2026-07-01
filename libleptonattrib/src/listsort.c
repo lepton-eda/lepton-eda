@@ -298,14 +298,6 @@ attrib_listsort_set_q_size (int val)
 void
 listsort ()
 {
-  int i;
-
-            for (i = 0; i < attrib_listsort_get_insize (); i++) {
-              attrib_listsort_set_p_size (1 + attrib_listsort_get_p_size ());
-                attrib_listsort_set_q (attrib_string_list_get_next (attrib_listsort_get_q ()));
-                if (attrib_listsort_get_q () == NULL) break;
-            }
-
             /* if q hasn't fallen off end, we have two lists to merge */
             attrib_listsort_set_q_size (attrib_listsort_get_insize ());
 
