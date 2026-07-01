@@ -172,6 +172,21 @@ attrib_listsort_set_tail (STRING_LIST *val)
 }
 
 
+static STRING_LIST *new_element = NULL;
+
+STRING_LIST*
+attrib_listsort_get_new_element ()
+{
+  return new_element;
+}
+
+void
+attrib_listsort_set_new_element (STRING_LIST *val)
+{
+  new_element = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -193,7 +208,7 @@ attrib_listsort_set_tail (STRING_LIST *val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    STRING_LIST *p, *q, *e;
+    STRING_LIST *p, *q;
     int insize, nmerges, psize, qsize, i;
 
     insize = 1;
@@ -232,7 +247,7 @@ listsort (STRING_LIST *list)
                 /* Decide whether next element of merge comes from
                    p or q. */
 
-                e = attrib_listsort_get_next_element (p, q, zero_p, zero_q, p_lower);
+                attrib_listsort_set_new_element (attrib_listsort_get_next_element (p, q, zero_p, zero_q, p_lower));
                 q = (zero_p || q_lower) ? attrib_string_list_get_next (q) : q;
                 p = (zero_q || p_lower) ? attrib_string_list_get_next (p) : p;
                 if (zero_p || q_lower) qsize--;
@@ -241,14 +256,16 @@ listsort (STRING_LIST *list)
                 /* add the next element to the merged list */
                 if (attrib_listsort_get_tail () != NULL)
                 {
-                  attrib_string_list_set_next (attrib_listsort_get_tail (), e);
+                  attrib_string_list_set_next (attrib_listsort_get_tail (),
+                                               attrib_listsort_get_new_element ());
                 } else {
-                  attrib_listsort_set_list (e);
+                  attrib_listsort_set_list (attrib_listsort_get_new_element ());
                 }
                 /* Maintain reverse pointers in a doubly linked list. */
-                attrib_string_list_set_prev (e, attrib_listsort_get_tail ());
+                attrib_string_list_set_prev (attrib_listsort_get_new_element (),
+                                             attrib_listsort_get_tail ());
 
-                attrib_listsort_set_tail (e);
+                attrib_listsort_set_tail (attrib_listsort_get_new_element ());
             }
 
             /* now p has stepped `insize' places along, and q has too */
