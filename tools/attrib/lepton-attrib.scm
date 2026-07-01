@@ -1432,6 +1432,9 @@ failure."
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define (sort-attrib-list *ls)
+  (define (next-element *p *q zero_p zero_q p_lower)
+    (attrib_listsort_get_next_element *p *q zero_p zero_q p_lower))
+
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
   (if (null-pointer? *ls)
@@ -1488,11 +1491,11 @@ failure."
                     ;; Decide whether next element of merge comes
                     ;; from P or Q.
                     (attrib_listsort_set_new_element
-                     (attrib_listsort_get_next_element (attrib_listsort_get_p)
-                                                       (attrib_listsort_get_q)
-                                                       (if zero-p? TRUE FALSE)
-                                                       (if zero-q? TRUE FALSE)
-                                                       (if p-lower? TRUE FALSE)))
+                     (next-element (attrib_listsort_get_p)
+                                   (attrib_listsort_get_q)
+                                   (if zero-p? TRUE FALSE)
+                                   (if zero-q? TRUE FALSE)
+                                   (if p-lower? TRUE FALSE)))
                     (attrib_listsort_set_q
                      (if (or zero-p? q-lower?)
                          (attrib_string_list_get_next (attrib_listsort_get_q))
