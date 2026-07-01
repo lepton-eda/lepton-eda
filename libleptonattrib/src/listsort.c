@@ -300,8 +300,6 @@ listsort ()
 {
   int i;
 
-        while (attrib_listsort_get_p () != NULL)
-        {
           /* There exists a merge to be done. */
           attrib_listsort_set_merges_number (1 + attrib_listsort_get_merges_number ());
             /* step `insize' places along from p */
@@ -353,5 +351,4 @@ listsort ()
 
             /* now p has stepped `insize' places along, and q has too */
             attrib_listsort_set_p (attrib_listsort_get_q ());
-        }
 }
