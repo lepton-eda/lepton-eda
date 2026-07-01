@@ -175,7 +175,8 @@ listsort (STRING_LIST *list)
 
         nmerges = 0;  /* count number of merges we do in this pass */
 
-        while (p) {
+        while (p != NULL)
+        {
             nmerges++;  /* there exists a merge to be done */
             /* step `insize' places along from p */
             q = p;
@@ -183,14 +184,15 @@ listsort (STRING_LIST *list)
             for (i = 0; i < insize; i++) {
                 psize++;
                 q = attrib_string_list_get_next (q);
-                if (!q) break;
+                if (q == NULL) break;
             }
 
             /* if q hasn't fallen off end, we have two lists to merge */
             qsize = insize;
 
             /* now we have two lists; merge them */
-            while (psize > 0 || (qsize > 0 && q)) {
+            while (psize > 0 || (qsize > 0 && q != NULL))
+            {
                 gboolean zero_p = (psize == 0);
                 gboolean zero_q = (!zero_p && (qsize == 0 || q == NULL));
                 gboolean p_lower = (!zero_p && !zero_q && (cmp (p, q) <= 0));
@@ -206,7 +208,8 @@ listsort (STRING_LIST *list)
                 if (zero_q || p_lower) psize--;
 
                 /* add the next element to the merged list */
-                if (tail) {
+                if (tail != NULL)
+                {
                     attrib_string_list_set_next (tail, e);
                 } else {
                     list = e;
