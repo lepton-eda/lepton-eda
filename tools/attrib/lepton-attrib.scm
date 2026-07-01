@@ -1449,6 +1449,9 @@ failure."
           (let loop-p ((*p (attrib_listsort_get_p)))
             (unless (null-pointer? *p)
               (listsort)
+              ;; Now P has stepped INSIZE places along, and Q has too.
+              (attrib_listsort_set_p (attrib_listsort_get_q))
+
               (loop-p (attrib_listsort_get_p))))
 
           (attrib_string_list_set_next (attrib_listsort_get_tail)

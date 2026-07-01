@@ -348,7 +348,4 @@ listsort ()
 
                 attrib_listsort_set_tail (attrib_listsort_get_new_element ());
             }
-
-            /* now p has stepped `insize' places along, and q has too */
-            attrib_listsort_set_p (attrib_listsort_get_q ());
 }
