@@ -64,7 +64,6 @@
             attrib_gtksheet_show_entry
 
             cmp
-            attrib_listsort_get_next_element
             attrib_listsort_get_list
             attrib_listsort_set_list
             attrib_listsort_get_tail
@@ -222,7 +221,6 @@
 
 ;;; listsort.c
 (define-lff cmp int '(* *))
-(define-lff attrib_listsort_get_next_element '* (list '* '* int int int))
 (define-lff attrib_listsort_get_list '* '())
 (define-lff attrib_listsort_set_list void '(*))
 (define-lff attrib_listsort_get_tail '* '())

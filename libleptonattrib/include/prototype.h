@@ -49,12 +49,6 @@ attrib_gtksheet_state_from_string (char *s);
 int cmp(STRING_LIST *a, STRING_LIST *b);
 
 STRING_LIST*
-attrib_listsort_get_next_element (STRING_LIST *p,
-                                  STRING_LIST *q,
-                                  gboolean zero_p,
-                                  gboolean zero_q,
-                                  gboolean p_lower);
-STRING_LIST*
 attrib_listsort_get_list ();
 
 void

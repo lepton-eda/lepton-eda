@@ -1432,8 +1432,20 @@ failure."
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define (sort-attrib-list *ls)
-  (define (next-element *p *q zero_p zero_q p_lower)
-    (attrib_listsort_get_next_element *p *q zero_p zero_q p_lower))
+  (define (next-element *p *q zero-p? zero-q? p-lower?)
+    ;; P is empty; E must come from Q.
+    (if zero-p?
+        *q
+        ;; Q is empty; E must come from P.
+        (if zero-q?
+            *p
+            ;; First element of P is lower (or same); E must come
+            ;; from P.
+            (if p-lower?
+                *p
+                ;; First element of Q is lower; E must come from
+                ;; Q.
+                *q))))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1493,9 +1505,9 @@ failure."
                     (attrib_listsort_set_new_element
                      (next-element (attrib_listsort_get_p)
                                    (attrib_listsort_get_q)
-                                   (if zero-p? TRUE FALSE)
-                                   (if zero-q? TRUE FALSE)
-                                   (if p-lower? TRUE FALSE)))
+                                   zero-p?
+                                   zero-q?
+                                   p-lower?))
                     (attrib_listsort_set_q
                      (if (or zero-p? q-lower?)
                          (attrib_string_list_get_next (attrib_listsort_get_q))
