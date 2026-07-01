@@ -1448,6 +1448,12 @@ failure."
 
           (let loop-p ((*p (attrib_listsort_get_p)))
             (unless (null-pointer? *p)
+              ;; There exists a merge to be done.
+              (attrib_listsort_set_merges_number
+               (1+ (attrib_listsort_get_merges_number)))
+              ;; Step INSIZE places along from P.
+              (attrib_listsort_set_q (attrib_listsort_get_p))
+              (attrib_listsort_set_p_size 0)
               (listsort)
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
