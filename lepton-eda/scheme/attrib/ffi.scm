@@ -68,8 +68,6 @@
             attrib_listsort_set_list
             attrib_listsort_get_tail
             attrib_listsort_set_tail
-            attrib_listsort_get_new_element
-            attrib_listsort_set_new_element
             attrib_listsort_get_p
             attrib_listsort_set_p
             attrib_listsort_get_q
@@ -221,8 +219,6 @@
 (define-lff attrib_listsort_set_list void '(*))
 (define-lff attrib_listsort_get_tail '* '())
 (define-lff attrib_listsort_set_tail void '(*))
-(define-lff attrib_listsort_get_new_element '* '())
-(define-lff attrib_listsort_set_new_element void '(*))
 (define-lff attrib_listsort_get_p '* '())
 (define-lff attrib_listsort_set_p void '(*))
 (define-lff attrib_listsort_get_q '* '())

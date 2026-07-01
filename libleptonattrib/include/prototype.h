@@ -61,12 +61,6 @@ void
 attrib_listsort_set_tail (STRING_LIST *val);
 
 STRING_LIST*
-attrib_listsort_get_new_element ();
-
-void
-attrib_listsort_set_new_element (STRING_LIST *val);
-
-STRING_LIST*
 attrib_listsort_get_p ();
 
 void

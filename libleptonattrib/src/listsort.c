@@ -143,21 +143,6 @@ attrib_listsort_set_tail (STRING_LIST *val)
 }
 
 
-static STRING_LIST *new_element = NULL;
-
-STRING_LIST*
-attrib_listsort_get_new_element ()
-{
-  return new_element;
-}
-
-void
-attrib_listsort_set_new_element (STRING_LIST *val)
-{
-  new_element = val;
-}
-
-
 static STRING_LIST *p = NULL;
 
 STRING_LIST*
