@@ -1496,16 +1496,15 @@ failure."
                                         (<= (cmp (attrib_listsort_get_p)
                                                  (attrib_listsort_get_q))
                                             0)))
-                         (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?))))
-
-                    ;; Decide whether next element of merge comes
-                    ;; from P or Q.
-                    (attrib_listsort_set_new_element
-                     (next-element (attrib_listsort_get_p)
-                                   (attrib_listsort_get_q)
-                                   zero-p?
-                                   zero-q?
-                                   p-lower?))
+                         (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?)))
+                         ;; Decide whether next element of merge
+                         ;; comes from P or Q.
+                         (*new-element
+                          (next-element (attrib_listsort_get_p)
+                                        (attrib_listsort_get_q)
+                                        zero-p?
+                                        zero-q?
+                                        p-lower?)))
                     (attrib_listsort_set_q
                      (if (or zero-p? q-lower?)
                          (attrib_string_list_get_next (attrib_listsort_get_q))
@@ -1521,18 +1520,15 @@ failure."
                     ;; Add the next element to the merged list.
                     (if (not (null-pointer? (attrib_listsort_get_tail)))
                         (attrib_string_list_set_next
-                         (attrib_listsort_get_tail)
-                         (attrib_listsort_get_new_element))
-                        (attrib_listsort_set_list
-                         (attrib_listsort_get_new_element)))
+                         (attrib_listsort_get_tail) *new-element)
+                        (attrib_listsort_set_list *new-element))
                     ;; Maintain reverse pointers in a doubly
                     ;; linked list.
                     (attrib_string_list_set_prev
-                     (attrib_listsort_get_new_element)
+                     *new-element
                      (attrib_listsort_get_tail))
 
-                    (attrib_listsort_set_tail
-                     (attrib_listsort_get_new_element))
+                    (attrib_listsort_set_tail *new-element)
 
                     (loop-merge (if (or zero-p? q-lower?)
                                     (1- q-size)
