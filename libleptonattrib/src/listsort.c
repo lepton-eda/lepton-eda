@@ -217,6 +217,21 @@ attrib_listsort_set_q (STRING_LIST *val)
 }
 
 
+static int insize = 0;
+
+int
+attrib_listsort_get_insize ()
+{
+  return insize;
+}
+
+void
+attrib_listsort_set_insize (int val)
+{
+  insize = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -238,9 +253,9 @@ attrib_listsort_set_q (STRING_LIST *val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    int insize, nmerges, psize, qsize, i;
+    int nmerges, psize, qsize, i;
 
-    insize = 1;
+    attrib_listsort_set_insize (1);
     attrib_listsort_set_list (list);
 
     while (1) {
@@ -256,14 +271,14 @@ listsort (STRING_LIST *list)
             /* step `insize' places along from p */
             attrib_listsort_set_q (attrib_listsort_get_p ());
             psize = 0;
-            for (i = 0; i < insize; i++) {
+            for (i = 0; i < attrib_listsort_get_insize (); i++) {
                 psize++;
                 attrib_listsort_set_q (attrib_string_list_get_next (attrib_listsort_get_q ()));
                 if (attrib_listsort_get_q () == NULL) break;
             }
 
             /* if q hasn't fallen off end, we have two lists to merge */
-            qsize = insize;
+            qsize = attrib_listsort_get_insize ();
 
             /* now we have two lists; merge them */
             while (psize > 0 || (qsize > 0 && attrib_listsort_get_q () != NULL))
@@ -307,6 +322,6 @@ listsort (STRING_LIST *list)
           return attrib_listsort_get_list ();
 
         /* Otherwise repeat, merging lists twice the size */
-        insize *= 2;
+        attrib_listsort_set_insize (attrib_listsort_get_insize () * 2);
     }
 }
