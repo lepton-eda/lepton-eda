@@ -1429,6 +1429,8 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+;;; Sorts *LS which is a double linked list and returns a new
+;;; linked list.
 (define (sort-attrib-list *ls)
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1466,13 +1468,64 @@ failure."
               ;; merge.
               (attrib_listsort_set_q_size (attrib_listsort_get_insize))
 
-            ;; Now we have two lists; merge them.
-            (let loop-merge ()
-              (when (or (> (attrib_listsort_get_p_size) 0)
-                        (and (> (attrib_listsort_get_q_size) 0)
-                             (not (null-pointer? (attrib_listsort_get_q)))))
-                (listsort)
-                (loop-merge)))
+              ;; Now we have two lists; merge them.
+              (let loop-merge ()
+                (when (or (> (attrib_listsort_get_p_size) 0)
+                          (and (> (attrib_listsort_get_q_size) 0)
+                               (not (null-pointer? (attrib_listsort_get_q)))))
+
+                  (let* ((zero-p? (zero? (attrib_listsort_get_p_size)))
+                         (zero-q? (and (not zero-p?)
+                                       (or (zero? (attrib_listsort_get_q_size))
+                                           (null-pointer? (attrib_listsort_get_q)))))
+                         (p-lower? (and (not zero-p?)
+                                        (not zero-q?)
+                                        (<= (cmp (attrib_listsort_get_p)
+                                                 (attrib_listsort_get_q))
+                                            0)))
+                         (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?))))
+
+                    ;; Decide whether next element of merge comes
+                    ;; from P or Q.
+                    (attrib_listsort_set_new_element
+                     (attrib_listsort_get_next_element (attrib_listsort_get_p)
+                                                       (attrib_listsort_get_q)
+                                                       (if zero-p? TRUE FALSE)
+                                                       (if zero-q? TRUE FALSE)
+                                                       (if p-lower? TRUE FALSE)))
+                    (attrib_listsort_set_q
+                     (if (or zero-p? q-lower?)
+                         (attrib_string_list_get_next (attrib_listsort_get_q))
+                         (attrib_listsort_get_q)))
+                    (attrib_listsort_set_p
+                     (if (or zero-q? p-lower?)
+                         (attrib_string_list_get_next (attrib_listsort_get_p))
+                         (attrib_listsort_get_p)))
+                    (when (or zero-p? q-lower?)
+                      (attrib_listsort_set_q_size
+                       (1- (attrib_listsort_get_q_size))))
+                    (when (or zero-q? p-lower?)
+                      (attrib_listsort_set_p_size
+                       (1- (attrib_listsort_get_p_size))))
+
+                    ;; Add the next element to the merged list.
+                    (if (not (null-pointer? (attrib_listsort_get_tail)))
+                        (attrib_string_list_set_next
+                         (attrib_listsort_get_tail)
+                         (attrib_listsort_get_new_element))
+                        (attrib_listsort_set_list
+                         (attrib_listsort_get_new_element)))
+                    ;; Maintain reverse pointers in a doubly
+                    ;; linked list.
+                    (attrib_string_list_set_prev
+                     (attrib_listsort_get_new_element)
+                     (attrib_listsort_get_tail))
+
+                    (attrib_listsort_set_tail
+                     (attrib_listsort_get_new_element))
+
+                    (loop-merge))))
+
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
 
