@@ -247,6 +247,21 @@ attrib_listsort_set_merges_number (int val)
 }
 
 
+static int psize = 0;
+
+int
+attrib_listsort_get_p_size ()
+{
+  return psize;
+}
+
+void
+attrib_listsort_set_p_size (int val)
+{
+  psize = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -268,7 +283,7 @@ attrib_listsort_set_merges_number (int val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    int psize, qsize, i;
+    int qsize, i;
 
     attrib_listsort_set_insize (1);
     attrib_listsort_set_list (list);
@@ -287,9 +302,9 @@ listsort (STRING_LIST *list)
           attrib_listsort_set_merges_number (1 + attrib_listsort_get_merges_number ());
             /* step `insize' places along from p */
             attrib_listsort_set_q (attrib_listsort_get_p ());
-            psize = 0;
+            attrib_listsort_set_p_size (0);
             for (i = 0; i < attrib_listsort_get_insize (); i++) {
-                psize++;
+              attrib_listsort_set_p_size (1 + attrib_listsort_get_p_size ());
                 attrib_listsort_set_q (attrib_string_list_get_next (attrib_listsort_get_q ()));
                 if (attrib_listsort_get_q () == NULL) break;
             }
@@ -298,9 +313,9 @@ listsort (STRING_LIST *list)
             qsize = attrib_listsort_get_insize ();
 
             /* now we have two lists; merge them */
-            while (psize > 0 || (qsize > 0 && attrib_listsort_get_q () != NULL))
+            while (attrib_listsort_get_p_size () > 0 || (qsize > 0 && attrib_listsort_get_q () != NULL))
             {
-                gboolean zero_p = (psize == 0);
+              gboolean zero_p = (attrib_listsort_get_p_size () == 0);
                 gboolean zero_q = (!zero_p && (qsize == 0 || attrib_listsort_get_q () == NULL));
                 gboolean p_lower = (!zero_p && !zero_q && (cmp (attrib_listsort_get_p (), attrib_listsort_get_q ()) <= 0));
                 gboolean q_lower = (!zero_p && !zero_q && !p_lower);
@@ -312,7 +327,7 @@ listsort (STRING_LIST *list)
                 attrib_listsort_set_q ((zero_p || q_lower) ? attrib_string_list_get_next (attrib_listsort_get_q ()) : attrib_listsort_get_q ());
                 attrib_listsort_set_p ((zero_q || p_lower) ? attrib_string_list_get_next (attrib_listsort_get_p ()) : attrib_listsort_get_p ());
                 if (zero_p || q_lower) qsize--;
-                if (zero_q || p_lower) psize--;
+                if (zero_q || p_lower) attrib_listsort_set_p_size (attrib_listsort_get_p_size () - 1);
 
                 /* add the next element to the merged list */
                 if (attrib_listsort_get_tail () != NULL)
