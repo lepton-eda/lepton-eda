@@ -232,6 +232,21 @@ attrib_listsort_set_insize (int val)
 }
 
 
+static int nmerges = 0;
+
+int
+attrib_listsort_get_merges_number ()
+{
+  return nmerges;
+}
+
+void
+attrib_listsort_set_merges_number (int val)
+{
+  nmerges = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -253,7 +268,7 @@ attrib_listsort_set_insize (int val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    int nmerges, psize, qsize, i;
+    int psize, qsize, i;
 
     attrib_listsort_set_insize (1);
     attrib_listsort_set_list (list);
@@ -263,11 +278,13 @@ listsort (STRING_LIST *list)
       attrib_listsort_set_list (NULL);
       attrib_listsort_set_tail (NULL);
 
-        nmerges = 0;  /* count number of merges we do in this pass */
+      /* Count number of merges we do in this pass. */
+      attrib_listsort_set_merges_number (0);
 
         while (attrib_listsort_get_p () != NULL)
         {
-            nmerges++;  /* there exists a merge to be done */
+          /* There exists a merge to be done. */
+          attrib_listsort_set_merges_number (1 + attrib_listsort_get_merges_number ());
             /* step `insize' places along from p */
             attrib_listsort_set_q (attrib_listsort_get_p ());
             psize = 0;
@@ -318,7 +335,8 @@ listsort (STRING_LIST *list)
         attrib_string_list_set_next (attrib_listsort_get_tail (), NULL);
 
         /* If we have done only one merge, we're finished. */
-        if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
+        /* Allow for nmerges==0, the empty list case. */
+        if (attrib_listsort_get_merges_number() <= 1)
           return attrib_listsort_get_list ();
 
         /* Otherwise repeat, merging lists twice the size */
