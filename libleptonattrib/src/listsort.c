@@ -298,11 +298,6 @@ attrib_listsort_set_q_size (int val)
 void
 listsort ()
 {
-            /* now we have two lists; merge them */
-            while (attrib_listsort_get_p_size () > 0
-                   || (attrib_listsort_get_q_size () > 0
-                       && attrib_listsort_get_q () != NULL))
-            {
               gboolean zero_p = (attrib_listsort_get_p_size () == 0);
               gboolean zero_q = (!zero_p && (attrib_listsort_get_q_size () == 0
                                              || attrib_listsort_get_q () == NULL));
@@ -331,5 +326,4 @@ listsort ()
                                              attrib_listsort_get_tail ());
 
                 attrib_listsort_set_tail (attrib_listsort_get_new_element ());
-            }
 }

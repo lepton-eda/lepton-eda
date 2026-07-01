@@ -1466,7 +1466,13 @@ failure."
               ;; merge.
               (attrib_listsort_set_q_size (attrib_listsort_get_insize))
 
-              (listsort)
+            ;; Now we have two lists; merge them.
+            (let loop-merge ()
+              (when (or (> (attrib_listsort_get_p_size) 0)
+                        (and (> (attrib_listsort_get_q_size) 0)
+                             (not (null-pointer? (attrib_listsort_get_q)))))
+                (listsort)
+                (loop-merge)))
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
 
