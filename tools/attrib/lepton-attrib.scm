@@ -1434,7 +1434,11 @@ failure."
   ;; immediately.
   (if (null-pointer? *ls)
       %null-pointer
-      (listsort *ls)))
+      (begin
+        (attrib_listsort_set_insize 1)
+        (attrib_listsort_set_list *ls)
+
+        (listsort *ls))))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the

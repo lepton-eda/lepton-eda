@@ -300,9 +300,6 @@ listsort (STRING_LIST *list)
 {
   int i;
 
-    attrib_listsort_set_insize (1);
-    attrib_listsort_set_list (list);
-
     while (1) {
       attrib_listsort_set_p (attrib_listsort_get_list ());
       attrib_listsort_set_list (NULL);
