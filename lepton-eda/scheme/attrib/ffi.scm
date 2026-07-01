@@ -63,6 +63,26 @@
 
             attrib_gtksheet_show_entry
 
+            cmp
+            attrib_listsort_get_next_element
+            attrib_listsort_get_list
+            attrib_listsort_set_list
+            attrib_listsort_get_tail
+            attrib_listsort_set_tail
+            attrib_listsort_get_new_element
+            attrib_listsort_set_new_element
+            attrib_listsort_get_p
+            attrib_listsort_set_p
+            attrib_listsort_get_q
+            attrib_listsort_set_q
+            attrib_listsort_get_insize
+            attrib_listsort_set_insize
+            attrib_listsort_get_merges_number
+            attrib_listsort_set_merges_number
+            attrib_listsort_get_p_size
+            attrib_listsort_set_p_size
+            attrib_listsort_get_q_size
+            attrib_listsort_set_q_size
             listsort
 
             attrib_sheet_data_new
@@ -202,6 +222,26 @@
 (define-lff attrib_gtksheet_show_entry void '(* *))
 
 ;;; listsort.c
+(define-lff cmp int '(* *))
+(define-lff attrib_listsort_get_next_element '* (list '* '* int int int))
+(define-lff attrib_listsort_get_list '* '())
+(define-lff attrib_listsort_set_list void '(*))
+(define-lff attrib_listsort_get_tail '* '())
+(define-lff attrib_listsort_set_tail void '(*))
+(define-lff attrib_listsort_get_new_element '* '())
+(define-lff attrib_listsort_set_new_element void '(*))
+(define-lff attrib_listsort_get_p '* '())
+(define-lff attrib_listsort_set_p void '(*))
+(define-lff attrib_listsort_get_q '* '())
+(define-lff attrib_listsort_set_q void '(*))
+(define-lff attrib_listsort_get_insize int '())
+(define-lff attrib_listsort_set_insize void (list int))
+(define-lff attrib_listsort_get_merges_number int '())
+(define-lff attrib_listsort_set_merges_number void (list int))
+(define-lff attrib_listsort_get_p_size int '())
+(define-lff attrib_listsort_set_p_size void (list int))
+(define-lff attrib_listsort_get_q_size int '())
+(define-lff attrib_listsort_set_q_size void (list int))
 (define-lff listsort '* '(*))
 
 ;;; s_sheet_data.c
