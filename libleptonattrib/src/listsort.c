@@ -157,6 +157,21 @@ attrib_listsort_set_list (STRING_LIST *val)
 }
 
 
+static STRING_LIST *tail = NULL;
+
+STRING_LIST*
+attrib_listsort_get_tail ()
+{
+  return tail;
+}
+
+void
+attrib_listsort_set_tail (STRING_LIST *val)
+{
+  tail = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -178,7 +193,7 @@ attrib_listsort_set_list (STRING_LIST *val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    STRING_LIST *p, *q, *e, *tail;
+    STRING_LIST *p, *q, *e;
     int insize, nmerges, psize, qsize, i;
 
     insize = 1;
@@ -187,7 +202,7 @@ listsort (STRING_LIST *list)
     while (1) {
       p = attrib_listsort_get_list ();
       attrib_listsort_set_list (NULL);
-        tail = NULL;
+      attrib_listsort_set_tail (NULL);
 
         nmerges = 0;  /* count number of merges we do in this pass */
 
@@ -224,22 +239,22 @@ listsort (STRING_LIST *list)
                 if (zero_q || p_lower) psize--;
 
                 /* add the next element to the merged list */
-                if (tail != NULL)
+                if (attrib_listsort_get_tail () != NULL)
                 {
-                    attrib_string_list_set_next (tail, e);
+                  attrib_string_list_set_next (attrib_listsort_get_tail (), e);
                 } else {
                   attrib_listsort_set_list (e);
                 }
                 /* Maintain reverse pointers in a doubly linked list. */
-                attrib_string_list_set_prev (e, tail);
+                attrib_string_list_set_prev (e, attrib_listsort_get_tail ());
 
-                tail = e;
+                attrib_listsort_set_tail (e);
             }
 
             /* now p has stepped `insize' places along, and q has too */
             p = q;
         }
-        attrib_string_list_set_next (tail, NULL);
+        attrib_string_list_set_next (attrib_listsort_get_tail (), NULL);
 
         /* If we have done only one merge, we're finished. */
         if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
