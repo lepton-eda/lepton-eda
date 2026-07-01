@@ -113,35 +113,6 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
 }
 
 
-STRING_LIST*
-attrib_listsort_get_next_element (STRING_LIST *p,
-                                  STRING_LIST *q,
-                                  gboolean zero_p,
-                                  gboolean zero_q,
-                                  gboolean p_lower)
-{
-  if (zero_p)
-  {
-    return q;
-  }
-  /* q is empty; e must come from p. */
-  else if (zero_q)
-  {
-    return p;
-  }
-  /* First element of p is lower (or same); e must come from p. */
-  else if (p_lower)
-  {
-    return p;
-  }
-  /* First element of q is lower; e must come from q. */
-  else
-  {
-    return q;
-  }
-}
-
-
 static STRING_LIST *list = NULL;
 
 STRING_LIST*
