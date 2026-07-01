@@ -187,6 +187,21 @@ attrib_listsort_set_new_element (STRING_LIST *val)
 }
 
 
+static STRING_LIST *p = NULL;
+
+STRING_LIST*
+attrib_listsort_get_p ()
+{
+  return p;
+}
+
+void
+attrib_listsort_set_p (STRING_LIST *val)
+{
+  p = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -208,24 +223,24 @@ attrib_listsort_set_new_element (STRING_LIST *val)
 STRING_LIST*
 listsort (STRING_LIST *list)
 {
-    STRING_LIST *p, *q;
+    STRING_LIST *q;
     int insize, nmerges, psize, qsize, i;
 
     insize = 1;
     attrib_listsort_set_list (list);
 
     while (1) {
-      p = attrib_listsort_get_list ();
+      attrib_listsort_set_p (attrib_listsort_get_list ());
       attrib_listsort_set_list (NULL);
       attrib_listsort_set_tail (NULL);
 
         nmerges = 0;  /* count number of merges we do in this pass */
 
-        while (p != NULL)
+        while (attrib_listsort_get_p () != NULL)
         {
             nmerges++;  /* there exists a merge to be done */
             /* step `insize' places along from p */
-            q = p;
+            q = attrib_listsort_get_p ();
             psize = 0;
             for (i = 0; i < insize; i++) {
                 psize++;
@@ -241,15 +256,15 @@ listsort (STRING_LIST *list)
             {
                 gboolean zero_p = (psize == 0);
                 gboolean zero_q = (!zero_p && (qsize == 0 || q == NULL));
-                gboolean p_lower = (!zero_p && !zero_q && (cmp (p, q) <= 0));
+                gboolean p_lower = (!zero_p && !zero_q && (cmp (attrib_listsort_get_p (), q) <= 0));
                 gboolean q_lower = (!zero_p && !zero_q && !p_lower);
 
                 /* Decide whether next element of merge comes from
                    p or q. */
 
-                attrib_listsort_set_new_element (attrib_listsort_get_next_element (p, q, zero_p, zero_q, p_lower));
+                attrib_listsort_set_new_element (attrib_listsort_get_next_element (attrib_listsort_get_p (), q, zero_p, zero_q, p_lower));
                 q = (zero_p || q_lower) ? attrib_string_list_get_next (q) : q;
-                p = (zero_q || p_lower) ? attrib_string_list_get_next (p) : p;
+                attrib_listsort_set_p ((zero_q || p_lower) ? attrib_string_list_get_next (attrib_listsort_get_p ()) : attrib_listsort_get_p ());
                 if (zero_p || q_lower) qsize--;
                 if (zero_q || p_lower) psize--;
 
@@ -269,7 +284,7 @@ listsort (STRING_LIST *list)
             }
 
             /* now p has stepped `insize' places along, and q has too */
-            p = q;
+            attrib_listsort_set_p (q);
         }
         attrib_string_list_set_next (attrib_listsort_get_tail (), NULL);
 
