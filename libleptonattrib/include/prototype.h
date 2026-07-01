@@ -79,12 +79,6 @@ void
 attrib_listsort_set_q (STRING_LIST *val);
 
 int
-attrib_listsort_get_insize ();
-
-void
-attrib_listsort_set_insize (int val);
-
-int
 attrib_listsort_get_merges_number ();
 
 void

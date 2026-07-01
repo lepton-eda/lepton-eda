@@ -74,8 +74,6 @@
             attrib_listsort_set_p
             attrib_listsort_get_q
             attrib_listsort_set_q
-            attrib_listsort_get_insize
-            attrib_listsort_set_insize
             attrib_listsort_get_merges_number
             attrib_listsort_set_merges_number
             attrib_listsort_get_p_size
@@ -231,8 +229,6 @@
 (define-lff attrib_listsort_set_p void '(*))
 (define-lff attrib_listsort_get_q '* '())
 (define-lff attrib_listsort_set_q void '(*))
-(define-lff attrib_listsort_get_insize int '())
-(define-lff attrib_listsort_set_insize void (list int))
 (define-lff attrib_listsort_get_merges_number int '())
 (define-lff attrib_listsort_set_merges_number void (list int))
 (define-lff attrib_listsort_get_p_size int '())
