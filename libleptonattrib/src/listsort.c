@@ -295,18 +295,10 @@ attrib_listsort_set_q_size (int val)
  * \returns a pointer to the new head of the list
  */
 /*----------------------------------------------------------------*/
-STRING_LIST*
-listsort (STRING_LIST *list)
+void
+listsort ()
 {
   int i;
-
-    while (1) {
-      attrib_listsort_set_p (attrib_listsort_get_list ());
-      attrib_listsort_set_list (NULL);
-      attrib_listsort_set_tail (NULL);
-
-      /* Count number of merges we do in this pass. */
-      attrib_listsort_set_merges_number (0);
 
         while (attrib_listsort_get_p () != NULL)
         {
@@ -362,14 +354,4 @@ listsort (STRING_LIST *list)
             /* now p has stepped `insize' places along, and q has too */
             attrib_listsort_set_p (attrib_listsort_get_q ());
         }
-        attrib_string_list_set_next (attrib_listsort_get_tail (), NULL);
-
-        /* If we have done only one merge, we're finished. */
-        /* Allow for nmerges==0, the empty list case. */
-        if (attrib_listsort_get_merges_number() <= 1)
-          return attrib_listsort_get_list ();
-
-        /* Otherwise repeat, merging lists twice the size */
-        attrib_listsort_set_insize (attrib_listsort_get_insize () * 2);
-    }
 }
