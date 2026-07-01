@@ -142,6 +142,21 @@ attrib_listsort_get_next_element (STRING_LIST *p,
 }
 
 
+static STRING_LIST *list = NULL;
+
+STRING_LIST*
+attrib_listsort_get_list ()
+{
+  return list;
+}
+
+void
+attrib_listsort_set_list (STRING_LIST *val)
+{
+  list = val;
+}
+
+
 /*----------------------------------------------------------------*/
 /*! \brief Sort the linked list
  *
@@ -167,10 +182,11 @@ listsort (STRING_LIST *list)
     int insize, nmerges, psize, qsize, i;
 
     insize = 1;
+    attrib_listsort_set_list (list);
 
     while (1) {
-        p = list;
-        list = NULL;
+      p = attrib_listsort_get_list ();
+      attrib_listsort_set_list (NULL);
         tail = NULL;
 
         nmerges = 0;  /* count number of merges we do in this pass */
@@ -212,7 +228,7 @@ listsort (STRING_LIST *list)
                 {
                     attrib_string_list_set_next (tail, e);
                 } else {
-                    list = e;
+                  attrib_listsort_set_list (e);
                 }
                 /* Maintain reverse pointers in a doubly linked list. */
                 attrib_string_list_set_prev (e, tail);
@@ -227,7 +243,7 @@ listsort (STRING_LIST *list)
 
         /* If we have done only one merge, we're finished. */
         if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
-            return list;
+          return attrib_listsort_get_list ();
 
         /* Otherwise repeat, merging lists twice the size */
         insize *= 2;
