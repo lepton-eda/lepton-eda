@@ -1452,10 +1452,9 @@ failure."
   (if (null-pointer? *ls)
       %null-pointer
       (begin
-        (attrib_listsort_set_insize 1)
         (attrib_listsort_set_list *ls)
 
-        (let loop ()
+        (let loop ((insize 1))
           (attrib_listsort_set_p (attrib_listsort_get_list))
           (attrib_listsort_set_list %null-pointer)
           (attrib_listsort_set_tail %null-pointer)
@@ -1472,7 +1471,7 @@ failure."
               (attrib_listsort_set_q (attrib_listsort_get_p))
               (attrib_listsort_set_p_size 0)
               (do ((i 0 (1+ i)))
-                  ((or (>= i (attrib_listsort_get_insize))
+                  ((or (>= i insize)
                        (null-pointer? (attrib_listsort_get_q))))
                 (attrib_listsort_set_p_size
                  (1+ (attrib_listsort_get_p_size)))
@@ -1481,7 +1480,7 @@ failure."
 
               ;; If Q hasn't fallen off end, we have two lists to
               ;; merge.
-              (attrib_listsort_set_q_size (attrib_listsort_get_insize))
+              (attrib_listsort_set_q_size insize)
 
               ;; Now we have two lists; merge them.
               (let loop-merge ()
@@ -1555,10 +1554,7 @@ failure."
               (attrib_listsort_get_list)
 
               ;; Otherwise repeat, merging lists twice the size.
-              (begin
-                (attrib_listsort_set_insize
-                 (* (attrib_listsort_get_insize) 2))
-                (loop)))))))
+              (loop (* insize 2)))))))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the

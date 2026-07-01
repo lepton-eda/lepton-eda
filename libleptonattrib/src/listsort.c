@@ -188,21 +188,6 @@ attrib_listsort_set_q (STRING_LIST *val)
 }
 
 
-static int insize = 0;
-
-int
-attrib_listsort_get_insize ()
-{
-  return insize;
-}
-
-void
-attrib_listsort_set_insize (int val)
-{
-  insize = val;
-}
-
-
 static int nmerges = 0;
 
 int
