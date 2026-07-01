@@ -1462,6 +1462,10 @@ failure."
                 (attrib_listsort_set_q
                  (attrib_string_list_get_next (attrib_listsort_get_q))))
 
+              ;; If Q hasn't fallen off end, we have two lists to
+              ;; merge.
+              (attrib_listsort_set_q_size (attrib_listsort_get_insize))
+
               (listsort)
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
