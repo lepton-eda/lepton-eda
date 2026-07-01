@@ -77,8 +77,6 @@
             attrib_listsort_set_merges_number
             attrib_listsort_get_p_size
             attrib_listsort_set_p_size
-            attrib_listsort_get_q_size
-            attrib_listsort_set_q_size
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -230,8 +228,6 @@
 (define-lff attrib_listsort_set_merges_number void (list int))
 (define-lff attrib_listsort_get_p_size int '())
 (define-lff attrib_listsort_set_p_size void (list int))
-(define-lff attrib_listsort_get_q_size int '())
-(define-lff attrib_listsort_set_q_size void (list int))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
