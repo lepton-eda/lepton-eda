@@ -1433,21 +1433,6 @@ failure."
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define (sort-attrib-list *ls)
-  (define (next-element *p *q zero-p? zero-q? p-lower?)
-    ;; P is empty; E must come from Q.
-    (if zero-p?
-        *q
-        ;; Q is empty; E must come from P.
-        (if zero-q?
-            *p
-            ;; First element of P is lower (or same); E must come
-            ;; from P.
-            (if p-lower?
-                *p
-                ;; First element of Q is lower; E must come from
-                ;; Q.
-                *q))))
-
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
   (if (null-pointer? *ls)
@@ -1489,18 +1474,25 @@ failure."
                           (and (> q-size 0)
                                (not (null-pointer? *q))))
 
-                      (let* ((zero-p? (zero? p-size))
+                      (let* (
+                             ;; P is empty; element must come from Q.
+                             (zero-p? (zero? p-size))
+                             ;; Q is empty; element must come from P.
                              (zero-q? (and (not zero-p?)
                                            (or (zero? q-size)
                                                (null-pointer? *q))))
+                             ;; First element of P is lower (or
+                             ;; same); element must come from P.
                              (p-lower? (and (not zero-p?)
                                             (not zero-q?)
                                             (<= (cmp *p *q) 0)))
+                             ;; First element of Q is lower;
+                             ;; element must come from Q.
                              (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?)))
+                             (select-q? (or zero-p? q-lower?))
                              ;; Decide whether next element of merge
                              ;; comes from P or Q.
-                             (*new-element
-                              (next-element *p *q zero-p? zero-q? p-lower?))
+                             (*new-element (if select-q? *q *p))
                              (*tail (attrib_listsort_get_tail)))
 
                         ;; Add the next element to the merged list.
@@ -1513,16 +1505,12 @@ failure."
 
                         (attrib_listsort_set_tail *new-element)
 
-                        (loop-merge (if (or zero-p? q-lower?)
-                                        (1- q-size)
-                                        q-size)
-                                    (if (or zero-q? p-lower?)
-                                        (1- p-size)
-                                        p-size)
-                                    (if (or zero-q? p-lower?)
-                                        (attrib_string_list_get_next *p)
-                                        *p)
-                                    (if (or zero-p? q-lower?)
+                        (loop-merge (if select-q? (1- q-size) q-size)
+                                    (if select-q? p-size (1- p-size))
+                                    (if select-q?
+                                        *p
+                                        (attrib_string_list_get_next *p))
+                                    (if select-q?
                                         (attrib_string_list_get_next *q)
                                         *q)))
 
