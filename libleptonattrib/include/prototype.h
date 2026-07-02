@@ -78,12 +78,6 @@ attrib_listsort_get_merges_number ();
 void
 attrib_listsort_set_merges_number (int val);
 
-int
-attrib_listsort_get_p_size ();
-
-void
-attrib_listsort_set_p_size (int val);
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();
