@@ -1470,11 +1470,7 @@ failure."
                            (attrib_string_list_get_next *q)
                            *q)
                        *new-element))
-
-        (begin
-          (attrib_listsort_set_q *q)
-          (attrib_listsort_set_p *p)
-          (attrib_listsort_set_tail *tail))))
+        (values *q *p *tail)))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1509,11 +1505,15 @@ failure."
 
                 ;; If Q hasn't fallen off end, we have two lists to
                 ;; merge.
-                (merge-lists insize
-                             found-p-size
-                             *p
-                             *found-q
-                             (attrib_listsort_get_tail)))
+                (let-values (((*q *p *tail)
+                              (merge-lists insize
+                                           found-p-size
+                                           *p
+                                           *found-q
+                                           (attrib_listsort_get_tail))))
+                  (attrib_listsort_set_q *q)
+                  (attrib_listsort_set_p *p)
+                  (attrib_listsort_set_tail *tail)))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
