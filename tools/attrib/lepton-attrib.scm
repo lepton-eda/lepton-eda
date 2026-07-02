@@ -1470,7 +1470,7 @@ failure."
               ;; Step INSIZE places along from P.
               (do ((i 0 (1+ i))
                    (p-size 1 (1+ p-size))
-                   (*q (attrib_listsort_get_p) (attrib_string_list_get_next *q)))
+                   (*q *p (attrib_string_list_get_next *q)))
                   ((or (>= i insize)
                        (null-pointer? *q)))
                 (attrib_listsort_set_p_size p-size)
