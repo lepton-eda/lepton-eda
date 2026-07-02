@@ -1509,13 +1509,10 @@ failure."
                                           *found-q
                                           (attrib_listsort_get_tail))))
 
+                (attrib_listsort_set_tail *tail)
                 ;; Now P has stepped INSIZE places along, and Q
                 ;; has too.
-                (attrib_listsort_set_q *q)
-                (attrib_listsort_set_p *q)
-                (attrib_listsort_set_tail *tail)
-
-                (loop-p (attrib_listsort_get_p)))))
+                (loop-p *q))))
 
           (attrib_string_list_set_next (attrib_listsort_get_tail)
                                        %null-pointer)
