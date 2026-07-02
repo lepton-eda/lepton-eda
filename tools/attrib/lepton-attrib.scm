@@ -1479,7 +1479,8 @@ failure."
                 (let loop-merge ((q-size insize)
                                  (p-size found-p-size)
                                  (*p (attrib_listsort_get_p))
-                                 (*q *found-q))
+                                 (*q *found-q)
+                                 (*tail (attrib_listsort_get_tail)))
                   (if (or (> p-size 0)
                           (and (> q-size 0)
                                (not (null-pointer? *q))))
@@ -1487,8 +1488,7 @@ failure."
                       (let* ((select-q (select-q? *p p-size *q q-size))
                              ;; Decide whether next element of merge
                              ;; comes from P or Q.
-                             (*new-element (if select-q *q *p))
-                             (*tail (attrib_listsort_get_tail)))
+                             (*new-element (if select-q *q *p)))
 
                         ;; Add the next element to the merged list.
                         (if (not (null-pointer? *tail))
@@ -1498,8 +1498,6 @@ failure."
                         ;; linked list.
                         (attrib_string_list_set_prev *new-element *tail)
 
-                        (attrib_listsort_set_tail *new-element)
-
                         (loop-merge (if select-q (1- q-size) q-size)
                                     (if select-q p-size (1- p-size))
                                     (if select-q
@@ -1507,11 +1505,13 @@ failure."
                                         (attrib_string_list_get_next *p))
                                     (if select-q
                                         (attrib_string_list_get_next *q)
-                                        *q)))
+                                        *q)
+                                    *new-element))
 
                       (begin
                         (attrib_listsort_set_q *q)
-                        (attrib_listsort_set_p *p)))))
+                        (attrib_listsort_set_p *p)
+                        (attrib_listsort_set_tail *tail)))))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
