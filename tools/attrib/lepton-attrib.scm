@@ -1511,7 +1511,7 @@ failure."
                 ;; merge.
                 (merge-lists insize
                              found-p-size
-                             (attrib_listsort_get_p)
+                             *p
                              *found-q
                              (attrib_listsort_get_tail)))
 
