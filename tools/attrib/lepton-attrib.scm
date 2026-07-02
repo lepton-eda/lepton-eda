@@ -1479,15 +1479,15 @@ failure."
       (begin
         (attrib_listsort_set_list *ls)
 
-        (let loop ((insize 1))
-          (attrib_listsort_set_p (attrib_listsort_get_list))
+        (let loop ((insize 1)
+                   (*new-ls (attrib_listsort_get_list)))
           (attrib_listsort_set_list %null-pointer)
           (attrib_listsort_set_tail %null-pointer)
 
           ;; Count number of merges we do in this pass.
           (attrib_listsort_set_merges_number 0)
 
-          (let loop-p ((*p (attrib_listsort_get_p)))
+          (let loop-p ((*p *new-ls))
             (unless (null-pointer? *p)
               ;; There exists a merge to be done.
               (attrib_listsort_set_merges_number
@@ -1523,7 +1523,8 @@ failure."
               (attrib_listsort_get_list)
 
               ;; Otherwise repeat, merging lists twice the size.
-              (loop (* insize 2)))))))
+              (loop (* insize 2)
+                    (attrib_listsort_get_list)))))))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the
