@@ -1486,32 +1486,28 @@ failure."
                           (and (> q-size 0)
                                (not (null-pointer? (attrib_listsort_get_q)))))
 
-                  (let* ((zero-p? (zero? p-size))
+                  (let* ((*p (attrib_listsort_get_p))
+                         (*q (attrib_listsort_get_q))
+                         (zero-p? (zero? p-size))
                          (zero-q? (and (not zero-p?)
                                        (or (zero? q-size)
-                                           (null-pointer? (attrib_listsort_get_q)))))
+                                           (null-pointer? *q))))
                          (p-lower? (and (not zero-p?)
                                         (not zero-q?)
-                                        (<= (cmp (attrib_listsort_get_p)
-                                                 (attrib_listsort_get_q))
-                                            0)))
+                                        (<= (cmp *p *q) 0)))
                          (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?)))
                          ;; Decide whether next element of merge
                          ;; comes from P or Q.
                          (*new-element
-                          (next-element (attrib_listsort_get_p)
-                                        (attrib_listsort_get_q)
-                                        zero-p?
-                                        zero-q?
-                                        p-lower?)))
+                          (next-element *p *q zero-p? zero-q? p-lower?)))
                     (attrib_listsort_set_q
                      (if (or zero-p? q-lower?)
-                         (attrib_string_list_get_next (attrib_listsort_get_q))
-                         (attrib_listsort_get_q)))
+                         (attrib_string_list_get_next *q)
+                         *q))
                     (attrib_listsort_set_p
                      (if (or zero-q? p-lower?)
-                         (attrib_string_list_get_next (attrib_listsort_get_p))
-                         (attrib_listsort_get_p)))
+                         (attrib_string_list_get_next *p)
+                         *p))
 
                     ;; Add the next element to the merged list.
                     (if (not (null-pointer? (attrib_listsort_get_tail)))
