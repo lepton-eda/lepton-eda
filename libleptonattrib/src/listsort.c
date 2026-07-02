@@ -143,21 +143,6 @@ attrib_listsort_set_tail (STRING_LIST *val)
 }
 
 
-static STRING_LIST *p = NULL;
-
-STRING_LIST*
-attrib_listsort_get_p ()
-{
-  return p;
-}
-
-void
-attrib_listsort_set_p (STRING_LIST *val)
-{
-  p = val;
-}
-
-
 static int nmerges = 0;
 
 int

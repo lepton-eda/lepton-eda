@@ -60,12 +60,6 @@ attrib_listsort_get_tail ();
 void
 attrib_listsort_set_tail (STRING_LIST *val);
 
-STRING_LIST*
-attrib_listsort_get_p ();
-
-void
-attrib_listsort_set_p (STRING_LIST *val);
-
 int
 attrib_listsort_get_merges_number ();
 
