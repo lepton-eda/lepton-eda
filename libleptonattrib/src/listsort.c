@@ -186,18 +186,3 @@ attrib_listsort_set_merges_number (int val)
 {
   nmerges = val;
 }
-
-
-static int psize = 0;
-
-int
-attrib_listsort_get_p_size ()
-{
-  return psize;
-}
-
-void
-attrib_listsort_set_p_size (int val)
-{
-  psize = val;
-}
