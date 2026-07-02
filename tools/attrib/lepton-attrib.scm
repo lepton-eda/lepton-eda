@@ -1481,14 +1481,14 @@ failure."
               ;; If Q hasn't fallen off end, we have two lists to
               ;; merge.
               (let loop-merge ((q-size insize)
-                               (p-size (attrib_listsort_get_p_size)))
+                               (p-size (attrib_listsort_get_p_size))
+                               (*p (attrib_listsort_get_p))
+                               (*q (attrib_listsort_get_q)))
                 (when (or (> p-size 0)
                           (and (> q-size 0)
                                (not (null-pointer? (attrib_listsort_get_q)))))
 
-                  (let* ((*p (attrib_listsort_get_p))
-                         (*q (attrib_listsort_get_q))
-                         (zero-p? (zero? p-size))
+                  (let* ((zero-p? (zero? p-size))
                          (zero-q? (and (not zero-p?)
                                        (or (zero? q-size)
                                            (null-pointer? *q))))
@@ -1527,7 +1527,9 @@ failure."
                                     q-size)
                                 (if (or zero-q? p-lower?)
                                     (1- p-size)
-                                    p-size)))))
+                                    p-size)
+                                (attrib_listsort_get_p)
+                                (attrib_listsort_get_q)))))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
