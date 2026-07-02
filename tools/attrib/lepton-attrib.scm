@@ -1500,18 +1500,16 @@ failure."
                              ;; Decide whether next element of merge
                              ;; comes from P or Q.
                              (*new-element
-                              (next-element *p *q zero-p? zero-q? p-lower?)))
+                              (next-element *p *q zero-p? zero-q? p-lower?))
+                             (*tail (attrib_listsort_get_tail)))
 
                         ;; Add the next element to the merged list.
-                        (if (not (null-pointer? (attrib_listsort_get_tail)))
-                            (attrib_string_list_set_next
-                             (attrib_listsort_get_tail) *new-element)
+                        (if (not (null-pointer? *tail))
+                            (attrib_string_list_set_next *tail *new-element)
                             (attrib_listsort_set_list *new-element))
                         ;; Maintain reverse pointers in a doubly
                         ;; linked list.
-                        (attrib_string_list_set_prev
-                         *new-element
-                         (attrib_listsort_get_tail))
+                        (attrib_string_list_set_prev *new-element *tail)
 
                         (attrib_listsort_set_tail *new-element)
 
