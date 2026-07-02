@@ -1486,7 +1486,7 @@ failure."
                                (*q (attrib_listsort_get_q)))
                 (when (or (> p-size 0)
                           (and (> q-size 0)
-                               (not (null-pointer? (attrib_listsort_get_q)))))
+                               (not (null-pointer? *q))))
 
                   (let* ((zero-p? (zero? p-size))
                          (zero-q? (and (not zero-p?)
