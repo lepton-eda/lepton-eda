@@ -1470,7 +1470,7 @@ failure."
                            (attrib_string_list_get_next *q)
                            *q)
                        *new-element))
-        (values *q *p *tail)))
+        (values *q *tail)))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1502,7 +1502,7 @@ failure."
                                   (values p-size *q))))
                             ;; If Q hasn't fallen off end, we have
                             ;; two lists to merge; merge them.
-                            ((*q *p *tail)
+                            ((*q *tail)
                              (merge-lists insize
                                           found-p-size
                                           *p
