@@ -1484,52 +1484,52 @@ failure."
                                (p-size (attrib_listsort_get_p_size))
                                (*p (attrib_listsort_get_p))
                                (*q (attrib_listsort_get_q)))
-                (when (or (> p-size 0)
-                          (and (> q-size 0)
-                               (not (null-pointer? *q))))
+                (if (or (> p-size 0)
+                        (and (> q-size 0)
+                             (not (null-pointer? *q))))
 
-                  (let* ((zero-p? (zero? p-size))
-                         (zero-q? (and (not zero-p?)
-                                       (or (zero? q-size)
-                                           (null-pointer? *q))))
-                         (p-lower? (and (not zero-p?)
-                                        (not zero-q?)
-                                        (<= (cmp *p *q) 0)))
-                         (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?)))
-                         ;; Decide whether next element of merge
-                         ;; comes from P or Q.
-                         (*new-element
-                          (next-element *p *q zero-p? zero-q? p-lower?)))
-                    (attrib_listsort_set_q
-                     (if (or zero-p? q-lower?)
-                         (attrib_string_list_get_next *q)
-                         *q))
-                    (attrib_listsort_set_p
-                     (if (or zero-q? p-lower?)
-                         (attrib_string_list_get_next *p)
-                         *p))
+                    (let* ((zero-p? (zero? p-size))
+                           (zero-q? (and (not zero-p?)
+                                         (or (zero? q-size)
+                                             (null-pointer? *q))))
+                           (p-lower? (and (not zero-p?)
+                                          (not zero-q?)
+                                          (<= (cmp *p *q) 0)))
+                           (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?)))
+                           ;; Decide whether next element of merge
+                           ;; comes from P or Q.
+                           (*new-element
+                            (next-element *p *q zero-p? zero-q? p-lower?)))
 
-                    ;; Add the next element to the merged list.
-                    (if (not (null-pointer? (attrib_listsort_get_tail)))
-                        (attrib_string_list_set_next
-                         (attrib_listsort_get_tail) *new-element)
-                        (attrib_listsort_set_list *new-element))
-                    ;; Maintain reverse pointers in a doubly
-                    ;; linked list.
-                    (attrib_string_list_set_prev
-                     *new-element
-                     (attrib_listsort_get_tail))
+                      ;; Add the next element to the merged list.
+                      (if (not (null-pointer? (attrib_listsort_get_tail)))
+                          (attrib_string_list_set_next
+                           (attrib_listsort_get_tail) *new-element)
+                          (attrib_listsort_set_list *new-element))
+                      ;; Maintain reverse pointers in a doubly
+                      ;; linked list.
+                      (attrib_string_list_set_prev
+                       *new-element
+                       (attrib_listsort_get_tail))
 
-                    (attrib_listsort_set_tail *new-element)
+                      (attrib_listsort_set_tail *new-element)
 
-                    (loop-merge (if (or zero-p? q-lower?)
-                                    (1- q-size)
-                                    q-size)
-                                (if (or zero-q? p-lower?)
-                                    (1- p-size)
-                                    p-size)
-                                (attrib_listsort_get_p)
-                                (attrib_listsort_get_q)))))
+                      (loop-merge (if (or zero-p? q-lower?)
+                                      (1- q-size)
+                                      q-size)
+                                  (if (or zero-q? p-lower?)
+                                      (1- p-size)
+                                      p-size)
+                                  (if (or zero-q? p-lower?)
+                                      (attrib_string_list_get_next *p)
+                                      *p)
+                                  (if (or zero-p? q-lower?)
+                                      (attrib_string_list_get_next *q)
+                                      *q)))
+
+                    (begin
+                      (attrib_listsort_set_q *q)
+                      (attrib_listsort_set_p *p))))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
