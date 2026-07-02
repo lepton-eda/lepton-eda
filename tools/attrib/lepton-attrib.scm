@@ -1434,22 +1434,14 @@ failure."
 ;;; linked list.
 (define (sort-attrib-list *ls)
   (define (select-q? *p p-size *q q-size)
-    (let* (
-           ;; P is empty; element must come from Q.
-           (zero-p? (zero? p-size))
-           ;; Q is empty; element must come from P.
-           (zero-q? (and (not zero-p?)
-                         (or (zero? q-size)
-                             (null-pointer? *q))))
-           ;; First element of P is lower (or same); element must
-           ;; come from P.
-           (p-lower? (and (not zero-p?)
-                          (not zero-q?)
-                          (<= (cmp *p *q) 0)))
-           ;; First element of Q is lower; element must come from
-           ;; Q.
-           (q-lower? (and (not zero-p?) (not zero-q?) (not p-lower?))))
-      (or zero-p? q-lower?)))
+    ;; P is empty; element must come from Q.
+    (or (zero? p-size)
+        ;; Q is empty; element must come from P.
+        (not (or (zero? q-size)
+                 (null-pointer? *q)
+                 ;; First element of P is lower (or same); element
+                 ;; must come from P.
+                 (<= (cmp *p *q) 0)))))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
