@@ -1468,14 +1468,13 @@ failure."
               (attrib_listsort_set_merges_number
                (1+ (attrib_listsort_get_merges_number)))
               ;; Step INSIZE places along from P.
-              (attrib_listsort_set_q (attrib_listsort_get_p))
               (do ((i 0 (1+ i))
-                   (p-size 1 (1+ p-size)))
+                   (p-size 1 (1+ p-size))
+                   (*q (attrib_listsort_get_p) (attrib_string_list_get_next *q)))
                   ((or (>= i insize)
-                       (null-pointer? (attrib_listsort_get_q))))
+                       (null-pointer? *q)))
                 (attrib_listsort_set_p_size p-size)
-                (attrib_listsort_set_q
-                 (attrib_string_list_get_next (attrib_listsort_get_q))))
+                (attrib_listsort_set_q (attrib_string_list_get_next *q)))
 
               ;; Now we have two lists; merge them.
 
