@@ -1443,6 +1443,39 @@ failure."
                  ;; must come from P.
                  (<= (cmp *p *q) 0)))))
 
+  (define (merge-lists q-size p-size *p *q *tail)
+    (if (or (> p-size 0)
+            (and (> q-size 0)
+                 (not (null-pointer? *q))))
+
+        (let* ((select-q (select-q? *p p-size *q q-size))
+               ;; Decide whether next element of merge
+               ;; comes from P or Q.
+               (*new-element (if select-q *q *p)))
+
+          ;; Add the next element to the merged list.
+          (if (not (null-pointer? *tail))
+              (attrib_string_list_set_next *tail *new-element)
+              (attrib_listsort_set_list *new-element))
+          ;; Maintain reverse pointers in a doubly
+          ;; linked list.
+          (attrib_string_list_set_prev *new-element *tail)
+
+          (merge-lists (if select-q (1- q-size) q-size)
+                       (if select-q p-size (1- p-size))
+                       (if select-q
+                           *p
+                           (attrib_string_list_get_next *p))
+                       (if select-q
+                           (attrib_string_list_get_next *q)
+                           *q)
+                       *new-element))
+
+        (begin
+          (attrib_listsort_set_q *q)
+          (attrib_listsort_set_p *p)
+          (attrib_listsort_set_tail *tail))))
+
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
   (if (null-pointer? *ls)
@@ -1476,42 +1509,11 @@ failure."
 
                 ;; If Q hasn't fallen off end, we have two lists to
                 ;; merge.
-                (let loop-merge ((q-size insize)
-                                 (p-size found-p-size)
-                                 (*p (attrib_listsort_get_p))
-                                 (*q *found-q)
-                                 (*tail (attrib_listsort_get_tail)))
-                  (if (or (> p-size 0)
-                          (and (> q-size 0)
-                               (not (null-pointer? *q))))
-
-                      (let* ((select-q (select-q? *p p-size *q q-size))
-                             ;; Decide whether next element of merge
-                             ;; comes from P or Q.
-                             (*new-element (if select-q *q *p)))
-
-                        ;; Add the next element to the merged list.
-                        (if (not (null-pointer? *tail))
-                            (attrib_string_list_set_next *tail *new-element)
-                            (attrib_listsort_set_list *new-element))
-                        ;; Maintain reverse pointers in a doubly
-                        ;; linked list.
-                        (attrib_string_list_set_prev *new-element *tail)
-
-                        (loop-merge (if select-q (1- q-size) q-size)
-                                    (if select-q p-size (1- p-size))
-                                    (if select-q
-                                        *p
-                                        (attrib_string_list_get_next *p))
-                                    (if select-q
-                                        (attrib_string_list_get_next *q)
-                                        *q)
-                                    *new-element))
-
-                      (begin
-                        (attrib_listsort_set_q *q)
-                        (attrib_listsort_set_p *p)
-                        (attrib_listsort_set_tail *tail)))))
+                (merge-lists insize
+                             found-p-size
+                             (attrib_listsort_get_p)
+                             *found-q
+                             (attrib_listsort_get_tail)))
 
               ;; Now P has stepped INSIZE places along, and Q has too.
               (attrib_listsort_set_p (attrib_listsort_get_q))
