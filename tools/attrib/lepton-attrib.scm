@@ -22,6 +22,7 @@
              (ice-9 receive)
              (rnrs bytevectors)
              (srfi srfi-1)
+             (srfi srfi-11)
              (system foreign)
 
              (lepton attrib)
@@ -1468,14 +1469,13 @@ failure."
               (attrib_listsort_set_merges_number
                (1+ (attrib_listsort_get_merges_number)))
               ;; Step INSIZE places along from P.
-              (let ((found-p-size
-                     (do ((i 0 (1+ i))
-                          (p-size 0 (1+ p-size))
-                          (*q *p (attrib_string_list_get_next *q)))
-                         ((or (>= i insize)
-                              (null-pointer? *q))
-                          p-size)
-                       (attrib_listsort_set_q (attrib_string_list_get_next *q)))))
+              (let-values (((found-p-size *found-q)
+                            (do ((i 0 (1+ i))
+                                 (p-size 0 (1+ p-size))
+                                 (*q *p (attrib_string_list_get_next *q)))
+                                ((or (>= i insize)
+                                     (null-pointer? *q))
+                                 (values p-size *q)))))
 
                 ;; Now we have two lists; merge them.
 
@@ -1484,7 +1484,7 @@ failure."
                 (let loop-merge ((q-size insize)
                                  (p-size found-p-size)
                                  (*p (attrib_listsort_get_p))
-                                 (*q (attrib_listsort_get_q)))
+                                 (*q *found-q))
                   (if (or (> p-size 0)
                           (and (> q-size 0)
                                (not (null-pointer? *q))))
