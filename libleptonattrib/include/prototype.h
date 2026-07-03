@@ -48,12 +48,6 @@ attrib_gtksheet_state_from_string (char *s);
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
 
-STRING_LIST*
-attrib_listsort_get_list ();
-
-void
-attrib_listsort_set_list (STRING_LIST *val);
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();
