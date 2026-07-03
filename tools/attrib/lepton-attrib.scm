@@ -1433,98 +1433,36 @@ failure."
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define (sort-attrib-list *ls)
-  (define (select-q? *p p-size *q q-size)
-    ;; P is empty; element must come from Q.
-    (or (zero? p-size)
-        ;; Q is empty; element must come from P.
-        (not (or (zero? q-size)
-                 (null-pointer? *q)
-                 ;; First element of P is lower (or same); element
-                 ;; must come from P.
-                 (<= (cmp *p *q) 0)))))
+  (define (maintain-interlinks ls)
+    (unless (null? ls)
+      ;; Add prev link for the first item.
+      (attrib_string_list_set_prev (car ls) %null-pointer)
+      (let loop ((ls ls))
+        (unless (null? ls)
+          (let ((*item (car ls))
+                (tail-ls (cdr ls)))
+            (if (null? tail-ls)
+                ;; Add next link for the last item.
+                (attrib_string_list_set_next *item %null-pointer)
+                ;; Add both links for an ordinary item.
+                (let ((*next-item (car tail-ls)))
+                  (attrib_string_list_set_next *item *next-item)
+                  (attrib_string_list_set_prev *next-item *item)
+                  (loop tail-ls))))))))
+  (define *out-ls
+    (let loop ((*item *ls)
+               (*pointer-ls '()))
+      (if (null-pointer? *item)
+          (let ((*sorted-ls
+                 (sort-list *pointer-ls (lambda (*x *y) (<= (cmp *x *y) 0)))))
+            *sorted-ls)
+          (loop (attrib_string_list_get_next *item)
+                (cons *item *pointer-ls)))))
 
-  (define (merge-lists q-size p-size *p *q *tail *out-ls)
-    (if (or (> p-size 0)
-            (and (> q-size 0)
-                 (not (null-pointer? *q))))
-
-        (let* ((select-q (select-q? *p p-size *q q-size))
-               ;; Decide whether next element of merge
-               ;; comes from P or Q.
-               (*new-element (if select-q *q *p))
-               (null-tail? (null-pointer? *tail)))
-
-          ;; Add the next element to the merged list.
-          (unless null-tail?
-            (attrib_string_list_set_next *tail *new-element))
-          ;; Maintain reverse pointers in a doubly
-          ;; linked list.
-          (attrib_string_list_set_prev *new-element *tail)
-
-          (merge-lists (if select-q (1- q-size) q-size)
-                       (if select-q p-size (1- p-size))
-                       (if select-q
-                           *p
-                           (attrib_string_list_get_next *p))
-                       (if select-q
-                           (attrib_string_list_get_next *q)
-                           *q)
-                       *new-element
-                       (if null-tail? *new-element *out-ls)))
-        (values *q *tail *out-ls)))
-
-  (define (merge-part *p merge-size merge-number *prev-tail *out-ls)
-    (define first-run? (null-pointer? *prev-tail))
-    (define *processed-ls (if first-run? %null-pointer *out-ls))
-    (if (null-pointer? *p)
-        (begin
-          (attrib_string_list_set_next *prev-tail
-                                       %null-pointer)
-          (values merge-number *processed-ls *prev-tail))
-
-        ;; There exists a merge to be done.
-        ;; Step INSIZE places along from P.
-        (let*-values (((found-p-size *found-q)
-                       (do ((i 0 (1+ i))
-                            (p-size 0 (1+ p-size))
-                            (*q *p (attrib_string_list_get_next *q)))
-                           ((or (>= i merge-size)
-                                (null-pointer? *q))
-                            (values p-size *q))))
-                      ;; If Q hasn't fallen off end, we have two
-                      ;; lists to merge; merge them.
-                      ((*q *tail *new-out-ls)
-                       (merge-lists merge-size
-                                    found-p-size
-                                    *p
-                                    *found-q
-                                    *prev-tail
-                                    *processed-ls)))
-
-          ;; Now P has stepped INSIZE places along, and Q has too.
-          (merge-part *q merge-size (1+ merge-number) *tail *new-out-ls))))
-
-  ;; Silly special case: if *LS was passed in as NULL, return NULL
-  ;; immediately.
-  (if (null-pointer? *ls)
+  (maintain-interlinks *out-ls)
+  (if (null? *out-ls)
       %null-pointer
-      (let loop ((insize 1)
-                 (*new-ls *ls))
-        ;; Count number of merges we do in this pass.
-        (let-values (((merges-number *out-ls *tail)
-                      (merge-part *new-ls insize 0 %null-pointer %null-pointer)))
-
-          ;; If we have done only one merge, we're finished.
-          ;; Allow for zero merges, the empty list case.
-          (if (<= merges-number 1)
-            (let loop-back ((*new-ls *tail))
-              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
-                  *new-ls
-                  (loop-back (attrib_string_list_get_prev *new-ls))))
-
-              ;; Otherwise repeat, merging lists twice the size.
-              (loop (* insize 2) *out-ls))))))
-
+      (car *out-ls)))
 
 ;;; Sorts the component list and fills in the 'pos' fields of the
 ;;; list items.
@@ -1537,8 +1475,6 @@ failure."
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  ;; Here's where we do the sort.  The sort is done using a
-  ;; function found on the web.
   (attrib_sheet_data_set_component_list *sheet-data
                                         (sort-attrib-list *ls)))
 
@@ -1615,8 +1551,6 @@ failure."
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  ;; Here's where we do the sort.  The sort is done using a
-  ;; function found on the web.
   (attrib_sheet_data_set_pin_list *sheet-data
                                   (sort-attrib-list *ls)))
 
