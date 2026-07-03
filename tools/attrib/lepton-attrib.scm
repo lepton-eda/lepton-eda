@@ -1539,18 +1539,8 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (sort-attrib-list *ls)))
-    (attrib_sheet_data_set_component_list *sheet-data *sorted-ls)
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (let loop ((*item *sorted-ls)
-               (i 0))
-      (unless (null-pointer? *item)
-        ;; Make sure item is not NULL.
-        (attrib_string_list_set_pos *item i)
-        (unless (null-pointer? (attrib_string_list_get_next *item))
-          ;; Leave loop *before* iterating to NULL EOL marker.
-          (loop (attrib_string_list_get_next *item) (1+ i)))))))
+  (attrib_sheet_data_set_component_list *sheet-data
+                                        (sort-attrib-list *ls)))
 
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
