@@ -66,8 +66,6 @@
             cmp
             attrib_listsort_get_list
             attrib_listsort_set_list
-            attrib_listsort_get_tail
-            attrib_listsort_set_tail
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -209,8 +207,6 @@
 (define-lff cmp int '(* *))
 (define-lff attrib_listsort_get_list '* '())
 (define-lff attrib_listsort_set_list void '(*))
-(define-lff attrib_listsort_get_tail '* '())
-(define-lff attrib_listsort_set_tail void '(*))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())

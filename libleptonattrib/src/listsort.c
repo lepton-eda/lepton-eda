@@ -126,18 +126,3 @@ attrib_listsort_set_list (STRING_LIST *val)
 {
   list = val;
 }
-
-
-static STRING_LIST *tail = NULL;
-
-STRING_LIST*
-attrib_listsort_get_tail ()
-{
-  return tail;
-}
-
-void
-attrib_listsort_set_tail (STRING_LIST *val)
-{
-  tail = val;
-}
