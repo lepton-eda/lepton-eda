@@ -1474,7 +1474,10 @@ failure."
 
   (define (merge-part *p merge-size merge-number)
     (if (null-pointer? *p)
-        (values merge-number (attrib_listsort_get_list))
+        (begin
+          (attrib_string_list_set_next (attrib_listsort_get_tail)
+                                       %null-pointer)
+          (values merge-number (attrib_listsort_get_list)))
 
         ;; There exists a merge to be done.
         ;; Step INSIZE places along from P.
@@ -1510,9 +1513,6 @@ failure."
         ;; Count number of merges we do in this pass.
         (let-values (((merges-number *out-ls)
                       (merge-part *new-ls insize 0)))
-
-          (attrib_string_list_set_next (attrib_listsort_get_tail)
-                                       %null-pointer)
 
           ;; If we have done only one merge, we're finished.
           ;; Allow for zero merges, the empty list case.
