@@ -1475,11 +1475,12 @@ failure."
 
   (define (merge-part *p merge-size merge-number *prev-tail *out-ls)
     (define first-run? (null-pointer? *prev-tail))
+    (define *processed-ls (if first-run? %null-pointer *out-ls))
     (if (null-pointer? *p)
         (begin
           (attrib_string_list_set_next *prev-tail
                                        %null-pointer)
-          (values merge-number (if first-run? %null-pointer *out-ls)))
+          (values merge-number *processed-ls))
 
         ;; There exists a merge to be done.
         ;; Step INSIZE places along from P.
@@ -1498,7 +1499,7 @@ failure."
                                     *p
                                     *found-q
                                     *prev-tail
-                                    (if first-run? %null-pointer *out-ls))))
+                                    *processed-ls)))
 
           ;; Now P has stepped INSIZE places along, and Q has too.
           (merge-part *q merge-size (1+ merge-number) *tail *new-out-ls))))
