@@ -1430,6 +1430,10 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+(define (compare-lists *a *b)
+  (cmp *a *b))
+
+
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define (sort-attrib-list *ls)
@@ -1454,7 +1458,8 @@ failure."
                (*pointer-ls '()))
       (if (null-pointer? *item)
           (let ((*sorted-ls
-                 (sort-list *pointer-ls (lambda (*x *y) (<= (cmp *x *y) 0)))))
+                 (sort-list *pointer-ls
+                            (lambda (*x *y) (<= (compare-lists *x *y) 0)))))
             *sorted-ls)
           (loop (attrib_string_list_get_next *item)
                 (cons *item *pointer-ls)))))
