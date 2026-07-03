@@ -1472,31 +1472,31 @@ failure."
                        *new-element))
         (values *q *tail)))
 
-  (define (merge-part *p merge-size)
-    (unless (null-pointer? *p)
-      ;; There exists a merge to be done.
-      (attrib_listsort_set_merges_number
-       (1+ (attrib_listsort_get_merges_number)))
-      ;; Step INSIZE places along from P.
-      (let*-values (((found-p-size *found-q)
-                     (do ((i 0 (1+ i))
-                          (p-size 0 (1+ p-size))
-                          (*q *p (attrib_string_list_get_next *q)))
-                         ((or (>= i merge-size)
-                              (null-pointer? *q))
-                          (values p-size *q))))
-                    ;; If Q hasn't fallen off end, we have two
-                    ;; lists to merge; merge them.
-                    ((*q *tail)
-                     (merge-lists merge-size
-                                  found-p-size
-                                  *p
-                                  *found-q
-                                  (attrib_listsort_get_tail))))
+  (define (merge-part *p merge-size merge-number)
+    (if (null-pointer? *p)
+        merge-number
 
-        (attrib_listsort_set_tail *tail)
-        ;; Now P has stepped INSIZE places along, and Q has too.
-        (merge-part *q merge-size))))
+        ;; There exists a merge to be done.
+        ;; Step INSIZE places along from P.
+        (let*-values (((found-p-size *found-q)
+                       (do ((i 0 (1+ i))
+                            (p-size 0 (1+ p-size))
+                            (*q *p (attrib_string_list_get_next *q)))
+                           ((or (>= i merge-size)
+                                (null-pointer? *q))
+                            (values p-size *q))))
+                      ;; If Q hasn't fallen off end, we have two
+                      ;; lists to merge; merge them.
+                      ((*q *tail)
+                       (merge-lists merge-size
+                                    found-p-size
+                                    *p
+                                    *found-q
+                                    (attrib_listsort_get_tail))))
+
+          (attrib_listsort_set_tail *tail)
+          ;; Now P has stepped INSIZE places along, and Q has too.
+          (merge-part *q merge-size (1+ merge-number)))))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1508,21 +1508,19 @@ failure."
         (attrib_listsort_set_tail %null-pointer)
 
         ;; Count number of merges we do in this pass.
-        (attrib_listsort_set_merges_number 0)
+        (let ((merges-number (merge-part *new-ls insize 0)))
 
-        (merge-part *new-ls insize)
+          (attrib_string_list_set_next (attrib_listsort_get_tail)
+                                       %null-pointer)
 
-        (attrib_string_list_set_next (attrib_listsort_get_tail)
-                                     %null-pointer)
+          ;; If we have done only one merge, we're finished.
+          ;; Allow for zero merges, the empty list case.
+          (if (<= merges-number 1)
+              (attrib_listsort_get_list)
 
-        ;; If we have done only one merge, we're finished.
-        ;; Allow for zero merges, the empty list case.
-        (if (<= (attrib_listsort_get_merges_number) 1)
-            (attrib_listsort_get_list)
-
-            ;; Otherwise repeat, merging lists twice the size.
-            (loop (* insize 2)
-                  (attrib_listsort_get_list))))))
+              ;; Otherwise repeat, merging lists twice the size.
+              (loop (* insize 2)
+                    (attrib_listsort_get_list)))))))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the

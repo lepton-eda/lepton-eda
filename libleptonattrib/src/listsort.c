@@ -141,18 +141,3 @@ attrib_listsort_set_tail (STRING_LIST *val)
 {
   tail = val;
 }
-
-
-static int nmerges = 0;
-
-int
-attrib_listsort_get_merges_number ()
-{
-  return nmerges;
-}
-
-void
-attrib_listsort_set_merges_number (int val)
-{
-  nmerges = val;
-}

@@ -68,8 +68,6 @@
             attrib_listsort_set_list
             attrib_listsort_get_tail
             attrib_listsort_set_tail
-            attrib_listsort_get_merges_number
-            attrib_listsort_set_merges_number
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -213,8 +211,6 @@
 (define-lff attrib_listsort_set_list void '(*))
 (define-lff attrib_listsort_get_tail '* '())
 (define-lff attrib_listsort_set_tail void '(*))
-(define-lff attrib_listsort_get_merges_number int '())
-(define-lff attrib_listsort_set_merges_number void (list int))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())

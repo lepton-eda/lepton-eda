@@ -60,12 +60,6 @@ attrib_listsort_get_tail ();
 void
 attrib_listsort_set_tail (STRING_LIST *val);
 
-int
-attrib_listsort_get_merges_number ();
-
-void
-attrib_listsort_set_merges_number (int val);
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();
