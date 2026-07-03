@@ -1617,18 +1617,8 @@ failure."
 
   ;; Here's where we do the sort.  The sort is done using a
   ;; function found on the web.
-  (let ((*sorted-ls (sort-attrib-list *ls)))
-    (attrib_sheet_data_set_pin_list *sheet-data *sorted-ls)
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (let loop ((*item *sorted-ls)
-               (i 0))
-      ;; Make sure item is not NULL.  Leave loop *before*
-      ;; iterating to NULL EOL marker.
-      (unless (null-pointer? (attrib_string_list_get_next *item))
-        (begin
-          (attrib_string_list_set_pos *item i)
-          (loop (attrib_string_list_get_next *item) (1+ i)))))))
+  (attrib_sheet_data_set_pin_list *sheet-data
+                                  (sort-attrib-list *ls)))
 
 
 ;;; Sorts the pin attribute list in alphabetical order.
