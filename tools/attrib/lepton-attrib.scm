@@ -1443,7 +1443,7 @@ failure."
                  ;; must come from P.
                  (<= (cmp *p *q) 0)))))
 
-  (define (merge-lists q-size p-size *p *q *tail)
+  (define (merge-lists q-size p-size *p *q *tail *out-ls)
     (if (or (> p-size 0)
             (and (> q-size 0)
                  (not (null-pointer? *q))))
@@ -1451,12 +1451,12 @@ failure."
         (let* ((select-q (select-q? *p p-size *q q-size))
                ;; Decide whether next element of merge
                ;; comes from P or Q.
-               (*new-element (if select-q *q *p)))
+               (*new-element (if select-q *q *p))
+               (null-tail? (null-pointer? *tail)))
 
           ;; Add the next element to the merged list.
-          (if (not (null-pointer? *tail))
-              (attrib_string_list_set_next *tail *new-element)
-              (attrib_listsort_set_list *new-element))
+          (unless null-tail?
+            (attrib_string_list_set_next *tail *new-element))
           ;; Maintain reverse pointers in a doubly
           ;; linked list.
           (attrib_string_list_set_prev *new-element *tail)
@@ -1469,16 +1469,16 @@ failure."
                        (if select-q
                            (attrib_string_list_get_next *q)
                            *q)
-                       *new-element))
-        (values *q *tail)))
+                       *new-element
+                       (if null-tail? *new-element *out-ls)))
+        (values *q *tail *out-ls)))
 
-  (define (merge-part *p merge-size merge-number *prev-tail first-run?)
-    (when first-run? (attrib_listsort_set_list %null-pointer))
+  (define (merge-part *p merge-size merge-number *prev-tail first-run? *out-ls)
     (if (null-pointer? *p)
         (begin
           (attrib_string_list_set_next *prev-tail
                                        %null-pointer)
-          (values merge-number (attrib_listsort_get_list)))
+          (values merge-number (if first-run? %null-pointer *out-ls)))
 
         ;; There exists a merge to be done.
         ;; Step INSIZE places along from P.
@@ -1491,15 +1491,16 @@ failure."
                             (values p-size *q))))
                       ;; If Q hasn't fallen off end, we have two
                       ;; lists to merge; merge them.
-                      ((*q *tail)
+                      ((*q *tail *new-out-ls)
                        (merge-lists merge-size
                                     found-p-size
                                     *p
                                     *found-q
-                                    *prev-tail)))
+                                    *prev-tail
+                                    (if first-run? %null-pointer *out-ls))))
 
           ;; Now P has stepped INSIZE places along, and Q has too.
-          (merge-part *q merge-size (1+ merge-number) *tail #f))))
+          (merge-part *q merge-size (1+ merge-number) *tail #f *new-out-ls))))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1509,7 +1510,7 @@ failure."
                  (*new-ls *ls))
         ;; Count number of merges we do in this pass.
         (let-values (((merges-number *out-ls)
-                      (merge-part *new-ls insize 0 %null-pointer #t)))
+                      (merge-part *new-ls insize 0 %null-pointer #t %null-pointer)))
 
           ;; If we have done only one merge, we're finished.
           ;; Allow for zero merges, the empty list case.

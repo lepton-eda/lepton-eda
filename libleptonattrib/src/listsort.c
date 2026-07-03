@@ -111,18 +111,3 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
     return -1;
   return 0;
 }
-
-
-static STRING_LIST *list = NULL;
-
-STRING_LIST*
-attrib_listsort_get_list ()
-{
-  return list;
-}
-
-void
-attrib_listsort_set_list (STRING_LIST *val)
-{
-  list = val;
-}

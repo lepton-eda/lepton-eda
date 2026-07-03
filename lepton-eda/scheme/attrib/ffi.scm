@@ -63,8 +63,6 @@
             x_dialog_unimplemented_feature
 
             cmp
-            attrib_listsort_get_list
-            attrib_listsort_set_list
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -202,8 +200,6 @@
 
 ;;; listsort.c
 (define-lff cmp int '(* *))
-(define-lff attrib_listsort_get_list '* '())
-(define-lff attrib_listsort_set_list void '(*))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
