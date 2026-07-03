@@ -1480,7 +1480,7 @@ failure."
         (begin
           (attrib_string_list_set_next *prev-tail
                                        %null-pointer)
-          (values merge-number *processed-ls))
+          (values merge-number *processed-ls *prev-tail))
 
         ;; There exists a merge to be done.
         ;; Step INSIZE places along from P.
@@ -1511,13 +1511,16 @@ failure."
       (let loop ((insize 1)
                  (*new-ls *ls))
         ;; Count number of merges we do in this pass.
-        (let-values (((merges-number *out-ls)
+        (let-values (((merges-number *out-ls *tail)
                       (merge-part *new-ls insize 0 %null-pointer %null-pointer)))
 
           ;; If we have done only one merge, we're finished.
           ;; Allow for zero merges, the empty list case.
           (if (<= merges-number 1)
-              *out-ls
+            (let loop-back ((*new-ls *tail))
+              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                  *new-ls
+                  (loop-back (attrib_string_list_get_prev *new-ls))))
 
               ;; Otherwise repeat, merging lists twice the size.
               (loop (* insize 2) *out-ls))))))
