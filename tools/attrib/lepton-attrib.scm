@@ -1473,7 +1473,8 @@ failure."
                        (if null-tail? *new-element *out-ls)))
         (values *q *tail *out-ls)))
 
-  (define (merge-part *p merge-size merge-number *prev-tail first-run? *out-ls)
+  (define (merge-part *p merge-size merge-number *prev-tail *out-ls)
+    (define first-run? (null-pointer? *prev-tail))
     (if (null-pointer? *p)
         (begin
           (attrib_string_list_set_next *prev-tail
@@ -1500,7 +1501,7 @@ failure."
                                     (if first-run? %null-pointer *out-ls))))
 
           ;; Now P has stepped INSIZE places along, and Q has too.
-          (merge-part *q merge-size (1+ merge-number) *tail #f *new-out-ls))))
+          (merge-part *q merge-size (1+ merge-number) *tail *new-out-ls))))
 
   ;; Silly special case: if *LS was passed in as NULL, return NULL
   ;; immediately.
@@ -1510,7 +1511,7 @@ failure."
                  (*new-ls *ls))
         ;; Count number of merges we do in this pass.
         (let-values (((merges-number *out-ls)
-                      (merge-part *new-ls insize 0 %null-pointer #t %null-pointer)))
+                      (merge-part *new-ls insize 0 %null-pointer %null-pointer)))
 
           ;; If we have done only one merge, we're finished.
           ;; Allow for zero merges, the empty list case.
