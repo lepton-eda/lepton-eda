@@ -1476,55 +1476,52 @@ failure."
   ;; immediately.
   (if (null-pointer? *ls)
       %null-pointer
-      (begin
-        (attrib_listsort_set_list *ls)
+      (let loop ((insize 1)
+                 (*new-ls *ls))
+        (attrib_listsort_set_list %null-pointer)
+        (attrib_listsort_set_tail %null-pointer)
 
-        (let loop ((insize 1)
-                   (*new-ls (attrib_listsort_get_list)))
-          (attrib_listsort_set_list %null-pointer)
-          (attrib_listsort_set_tail %null-pointer)
+        ;; Count number of merges we do in this pass.
+        (attrib_listsort_set_merges_number 0)
 
-          ;; Count number of merges we do in this pass.
-          (attrib_listsort_set_merges_number 0)
+        (let loop-p ((*p *new-ls))
+          (unless (null-pointer? *p)
+            ;; There exists a merge to be done.
+            (attrib_listsort_set_merges_number
+             (1+ (attrib_listsort_get_merges_number)))
+            ;; Step INSIZE places along from P.
+            (let*-values (((found-p-size *found-q)
+                           (do ((i 0 (1+ i))
+                                (p-size 0 (1+ p-size))
+                                (*q *p (attrib_string_list_get_next *q)))
+                               ((or (>= i insize)
+                                    (null-pointer? *q))
+                                (values p-size *q))))
+                          ;; If Q hasn't fallen off end, we have
+                          ;; two lists to merge; merge them.
+                          ((*q *tail)
+                           (merge-lists insize
+                                        found-p-size
+                                        *p
+                                        *found-q
+                                        (attrib_listsort_get_tail))))
 
-          (let loop-p ((*p *new-ls))
-            (unless (null-pointer? *p)
-              ;; There exists a merge to be done.
-              (attrib_listsort_set_merges_number
-               (1+ (attrib_listsort_get_merges_number)))
-              ;; Step INSIZE places along from P.
-              (let*-values (((found-p-size *found-q)
-                             (do ((i 0 (1+ i))
-                                  (p-size 0 (1+ p-size))
-                                  (*q *p (attrib_string_list_get_next *q)))
-                                 ((or (>= i insize)
-                                      (null-pointer? *q))
-                                  (values p-size *q))))
-                            ;; If Q hasn't fallen off end, we have
-                            ;; two lists to merge; merge them.
-                            ((*q *tail)
-                             (merge-lists insize
-                                          found-p-size
-                                          *p
-                                          *found-q
-                                          (attrib_listsort_get_tail))))
+              (attrib_listsort_set_tail *tail)
+              ;; Now P has stepped INSIZE places along, and Q
+              ;; has too.
+              (loop-p *q))))
 
-                (attrib_listsort_set_tail *tail)
-                ;; Now P has stepped INSIZE places along, and Q
-                ;; has too.
-                (loop-p *q))))
+        (attrib_string_list_set_next (attrib_listsort_get_tail)
+                                     %null-pointer)
 
-          (attrib_string_list_set_next (attrib_listsort_get_tail)
-                                       %null-pointer)
+        ;; If we have done only one merge, we're finished.
+        ;; Allow for zero merges, the empty list case.
+        (if (<= (attrib_listsort_get_merges_number) 1)
+            (attrib_listsort_get_list)
 
-          ;; If we have done only one merge, we're finished.
-          ;; Allow for zero merges, the empty list case.
-          (if (<= (attrib_listsort_get_merges_number) 1)
-              (attrib_listsort_get_list)
-
-              ;; Otherwise repeat, merging lists twice the size.
-              (loop (* insize 2)
-                    (attrib_listsort_get_list)))))))
+            ;; Otherwise repeat, merging lists twice the size.
+            (loop (* insize 2)
+                  (attrib_listsort_get_list))))))
 
 
 ;;; Sorts the component list and fills in the 'pos' fields of the
