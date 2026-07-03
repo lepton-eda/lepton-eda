@@ -1576,15 +1576,8 @@ failure."
         (and new-position
              (attrib_string_list_set_pos *item new-position)))))
 
-  (let ((*sorted-ls (sort-attrib-list *ls)))
-    (attrib_sheet_data_set_component_attrib_list *sheet-data *sorted-ls)
-
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (do ((*item *sorted-ls (attrib_string_list_get_next *item))
-         (i 0 (1+ i)))
-        ((null-pointer? *item))
-      (attrib_string_list_set_pos *item i))))
+  (attrib_sheet_data_set_component_attrib_list *sheet-data
+                                               (sort-attrib-list *ls)))
 
 
 ;;; Sorts the list of nets in alphabetical order.
