@@ -1432,6 +1432,51 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+(define %high-priority-attribs
+  '("device"
+    "footprint"
+    "value"))
+
+(define %low-priority-attribs
+  '("symversion"))
+
+
+(define (higher-priority? x)
+  (member x %high-priority-attribs))
+
+
+(define (lower-priority? x)
+  (member x %low-priority-attribs))
+
+
+(define (*string-list<? *a *b)
+  (define *string-a (attrib_string_list_get_data *a))
+  (define *string-b (attrib_string_list_get_data *b))
+  (define pos-a (attrib_string_list_get_pos *a))
+  (define pos-b (attrib_string_list_get_pos *b))
+
+  (when (or (null-pointer? *string-a)
+            (null-pointer? *string-b))
+    (error "NULL string."))
+
+  (let ((a (pointer->string *string-a))
+        (b (pointer->string *string-b)))
+    (cond
+     ((higher-priority? a)
+      (or (not (higher-priority? b))
+          (< (list-index (lambda (x) (string= x a)) %high-priority-attribs)
+             (list-index (lambda (x) (string= x b)) %high-priority-attribs))))
+     ((lower-priority? a)
+      (and (lower-priority? b)
+           (< (list-index (lambda (x) (string= x a)) %low-priority-attribs)
+              (list-index (lambda (x) (string= x b)) %low-priority-attribs))))
+     (else
+      (or (lower-priority? b)
+          (and (not (higher-priority? b))
+               (refdes<? (pointer->string *string-a)
+                         (pointer->string *string-b))))))))
+
+
 (define (string-list<? *a *b)
   (define *string-a (attrib_string_list_get_data *a))
   (define *string-b (attrib_string_list_get_data *b))
@@ -1442,15 +1487,13 @@ failure."
             (null-pointer? *string-b))
     (error "NULL string."))
 
-  (if (= pos-a pos-b)
-      (refdes<? (pointer->string *string-a)
-                (pointer->string *string-b))
-      (< pos-a pos-b)))
+  (refdes<? (pointer->string *string-a)
+            (pointer->string *string-b)))
 
 
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
-(define (sort-attrib-list *ls)
+(define* (sort-attrib-list *ls #:key (priority? #f))
   (define (maintain-interlinks ls)
     (unless (null? ls)
       ;; Add prev link for the first item.
@@ -1476,7 +1519,9 @@ failure."
                 (cons *item *pointer-ls)))))
 
   (define *sorted-ls
-    (sort-list *out-ls string-list<?))
+    (if priority?
+        (sort-list *out-ls *string-list<?)
+        (sort-list *out-ls string-list<?)))
 
   (maintain-interlinks *sorted-ls)
 
@@ -1532,8 +1577,9 @@ failure."
         (and new-position
              (attrib_string_list_set_pos *item new-position)))))
 
-  (attrib_sheet_data_set_component_attrib_list *sheet-data
-                                               (sort-attrib-list *ls)))
+  (attrib_sheet_data_set_component_attrib_list
+   *sheet-data
+   (sort-attrib-list *ls #:priority? 'yes)))
 
 
 ;;; Sorts the list of nets in alphabetical order.
