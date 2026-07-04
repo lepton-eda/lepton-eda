@@ -318,7 +318,6 @@ failure."
     (attrib_string_list_set_data *ls %null-pointer)
     (attrib_string_list_set_next *ls %null-pointer)
     (attrib_string_list_set_prev *ls %null-pointer)
-    (attrib_string_list_set_pos *ls -1)
     *ls))
 
 
@@ -453,9 +452,6 @@ failure."
             (attrib_string_list_set_prev *ls %null-pointer)
             (let* ((count-bv (pointer->bytevector *count (sizeof int)))
                    (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-              ;; This enumerates the pos on the list.  Value is
-              ;; reset later by sorting.
-              (attrib_string_list_set_pos *ls count)
               ;; Increment count to 1.
               (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
 
@@ -482,9 +478,6 @@ failure."
 
                      (let* ((count-bv (pointer->bytevector *count (sizeof int)))
                             (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                       ;; This enumerates the pos on the list.
-                       ;; Value is reset later by sorting.
-                       (attrib_string_list_set_pos *new-ls count)
                        ;; Increment count.
                        (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
                    (let ((*item (g_strdup
@@ -1452,8 +1445,6 @@ failure."
 (define (*string-list<? *a *b)
   (define *string-a (attrib_string_list_get_data *a))
   (define *string-b (attrib_string_list_get_data *b))
-  (define pos-a (attrib_string_list_get_pos *a))
-  (define pos-b (attrib_string_list_get_pos *b))
 
   (when (or (null-pointer? *string-a)
             (null-pointer? *string-b))
@@ -1480,8 +1471,6 @@ failure."
 (define (string-list<? *a *b)
   (define *string-a (attrib_string_list_get_data *a))
   (define *string-b (attrib_string_list_get_data *b))
-  (define pos-a (attrib_string_list_get_pos *a))
-  (define pos-b (attrib_string_list_get_pos *b))
 
   (when (or (null-pointer? *string-a)
             (null-pointer? *string-b))
@@ -1535,11 +1524,6 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_component_list *sheet-data))
 
-  ;; Set 'pos' field of each item of the list to zero.
-  (do ((*item *ls (attrib_string_list_get_next *item)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item 0))
-
   (attrib_sheet_data_set_component_list *sheet-data
                                         (sort-attrib-list *ls)))
 
@@ -1565,18 +1549,6 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_component_attrib_list *sheet-data))
 
-  ;; Note that this sort is TBD -- it is more than just an
-  ;; alphabetic sort 'cause we want certain attribs to go first.
-  (do ((*item *ls (attrib_string_list_get_next *item)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item %default-attrib-pos)
-
-    (when (not (null-pointer? (attrib_string_list_get_data *item)))
-      (let* ((name (pointer->string (attrib_string_list_get_data *item)))
-             (new-position (assoc-ref certain-attribs name)))
-        (and new-position
-             (attrib_string_list_set_pos *item new-position)))))
-
   (attrib_sheet_data_set_component_attrib_list
    *sheet-data
    (sort-attrib-list *ls #:priority? 'yes)))
@@ -1596,10 +1568,6 @@ failure."
 (define (sort-pin-list)
   (define *sheet-data (attrib_get_sheet_data))
   (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
-
-  (do ((*item *ls (attrib_string_list_get_next *item)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item 0))
 
   (attrib_sheet_data_set_pin_list *sheet-data
                                   (sort-attrib-list *ls)))
