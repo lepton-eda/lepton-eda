@@ -1432,7 +1432,7 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
-(define (compare-lists *a *b)
+(define (string-list<? *a *b)
   (define *string-a (attrib_string_list_get_data *a))
   (define *string-b (attrib_string_list_get_data *b))
   (define pos-a (attrib_string_list_get_pos *a))
@@ -1476,7 +1476,7 @@ failure."
                 (cons *item *pointer-ls)))))
 
   (define *sorted-ls
-    (sort-list *out-ls compare-lists))
+    (sort-list *out-ls string-list<?))
 
   (maintain-interlinks *sorted-ls)
 
