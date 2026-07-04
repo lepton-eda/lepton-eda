@@ -1443,12 +1443,9 @@ failure."
     (error "NULL string."))
 
   (if (= pos-a pos-b)
-      (let ((a (pointer->string *string-a))
-            (b (pointer->string *string-b)))
-        (if (refdes<? a b)
-            -1
-            1))
-      (- pos-a pos-b)))
+      (refdes<? (pointer->string *string-a)
+                (pointer->string *string-b))
+      (< pos-a pos-b)))
 
 
 ;;; Sorts *LS which is a double linked list and returns a new
@@ -1475,8 +1472,7 @@ failure."
                (*pointer-ls '()))
       (if (null-pointer? *item)
           (let ((*sorted-ls
-                 (sort-list *pointer-ls
-                            (lambda (*x *y) (<= (compare-lists *x *y) 0)))))
+                 (sort-list *pointer-ls compare-lists)))
             *sorted-ls)
           (loop (attrib_string_list_get_next *item)
                 (cons *item *pointer-ls)))))
