@@ -46,7 +46,8 @@ attrib_gtksheet_state_from_string (char *s);
 
 
 /* -------------- listsort.c ----------------- */
-int cmp(STRING_LIST *a, STRING_LIST *b);
+int
+cmp (char *a, char *b);
 
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*

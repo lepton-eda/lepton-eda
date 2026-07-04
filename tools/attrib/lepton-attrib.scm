@@ -1431,7 +1431,14 @@ failure."
 
 
 (define (compare-lists *a *b)
-  (cmp *a *b))
+  (define *string-a (attrib_string_list_get_data *a))
+  (define *string-b (attrib_string_list_get_data *b))
+  (define pos-a (attrib_string_list_get_pos *a))
+  (define pos-b (attrib_string_list_get_pos *b))
+
+  (if (= pos-a pos-b)
+      (cmp *string-a *string-b)
+      (- pos-a pos-b)))
 
 
 ;;; Sorts *LS which is a double linked list and returns a new
