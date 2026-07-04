@@ -87,41 +87,6 @@ attrib_string_list_set_data (STRING_LIST *list,
 }
 
 
-/*! \brief Get the \a pos field of a string list.
- *
- *  \par Function Description
- *
- *  Returns the \a pos field of a string list.  It is a position
- *  of string list data on spreadsheet.
- *
- *  \param [in] list The string list.
- *  \return The position.
- */
-int
-attrib_string_list_get_pos (STRING_LIST *list)
-{
-  return list->pos;
-}
-
-
-/*! \brief Set the \a pos field of a string list.
- *
- *  \par Function Description
- *
- *  Sets the \a pos field of a string list to the given value.  It
- *  is a position of string list data on spreadsheet.
- *
- *  \param [in] list The string list.
- *  \param [in] pos The new position.
- */
-void
-attrib_string_list_set_pos (STRING_LIST *list,
-                            int pos)
-{
-  list->pos = pos;
-}
-
-
 /*! \brief Get the \a prev field of a string list.
  *
  *  \par Function Description
