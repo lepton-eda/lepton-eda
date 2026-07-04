@@ -75,18 +75,13 @@
 /*! \brief Compare values of string data
  *
  * Comparison function -- compare values of string data.
- * \param al pointer to first STRING_LIST item to be compared
- * \param bl pointer to second STRING_LIST item to be compared
- * \returns +ve if al > bl, -ve if al < bl, 0 if al = bl
+ * \param a [in] pointer to first string to be compared
+ * \param b [in] pointer to second string to be compared
+ * \returns +1 if a > b, -1 if a < b, 0 if a = b
  */
 /*----------------------------------------------------------------*/
-int cmp(STRING_LIST *al, STRING_LIST *bl) {
-  char *a = attrib_string_list_get_data (al);
-  char *b = attrib_string_list_get_data (bl);
-
-  if (attrib_string_list_get_pos (al) != attrib_string_list_get_pos (bl))
-    return attrib_string_list_get_pos (al) - attrib_string_list_get_pos (bl);
-
+int
+cmp (char *a, char *b) {
   while (*a && *b)
     {
       if (isdigit ((int) *a) && isdigit ((int) *b))
