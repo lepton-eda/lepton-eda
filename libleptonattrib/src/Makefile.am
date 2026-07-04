@@ -2,7 +2,6 @@ lib_LTLIBRARIES = libleptonattrib.la
 
 libleptonattrib_la_SOURCES = \
 	attrib.c \
-	listsort.c \
 	s_sheet_data.c \
 	s_string_list.c \
 	s_table.c \

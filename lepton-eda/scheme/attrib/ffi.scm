@@ -62,8 +62,6 @@
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
-            cmp
-
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
             attrib_sheet_data_set_changed
@@ -198,9 +196,6 @@
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
 (define-lff x_dialog_unimplemented_feature void '())
-
-;;; listsort.c
-(define-lff cmp int '(* *))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
