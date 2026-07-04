@@ -63,8 +63,6 @@
 
             attrib_gtksheet_show_entry
 
-            cmp
-
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
             attrib_sheet_data_set_changed
@@ -201,9 +199,6 @@
 
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
-
-;;; listsort.c
-(define-lff cmp int '(* *))
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
