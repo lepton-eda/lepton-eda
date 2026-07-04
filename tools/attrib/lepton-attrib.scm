@@ -1471,16 +1471,18 @@ failure."
     (let loop ((*item *ls)
                (*pointer-ls '()))
       (if (null-pointer? *item)
-          (let ((*sorted-ls
-                 (sort-list *pointer-ls compare-lists)))
-            *sorted-ls)
+          *pointer-ls
           (loop (attrib_string_list_get_next *item)
                 (cons *item *pointer-ls)))))
 
-  (maintain-interlinks *out-ls)
-  (if (null? *out-ls)
+  (define *sorted-ls
+    (sort-list *out-ls compare-lists))
+
+  (maintain-interlinks *sorted-ls)
+
+  (if (null? *sorted-ls)
       %null-pointer
-      (car *out-ls)))
+      (car *sorted-ls)))
 
 ;;; Sorts the component list and fills in the 'pos' fields of the
 ;;; list items.
