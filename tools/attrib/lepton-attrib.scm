@@ -43,6 +43,8 @@
              (lepton toplevel)
              (lepton version)
 
+             (netlist attrib compare)
+
              (schematic ffi gtk)
              (schematic gtk geometry)
              (schematic gtk helper)
@@ -1436,8 +1438,16 @@ failure."
   (define pos-a (attrib_string_list_get_pos *a))
   (define pos-b (attrib_string_list_get_pos *b))
 
+  (when (or (null-pointer? *string-a)
+            (null-pointer? *string-b))
+    (error "NULL string."))
+
   (if (= pos-a pos-b)
-      (cmp *string-a *string-b)
+      (let ((a (pointer->string *string-a))
+            (b (pointer->string *string-b)))
+        (if (refdes<? a b)
+            -1
+            1))
       (- pos-a pos-b)))
 
 
