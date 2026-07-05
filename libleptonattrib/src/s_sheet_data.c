@@ -60,7 +60,7 @@
  *
  *  \return The component list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_component_list (SHEET_DATA *data)
 {
   return data->master_comp_list_head;
@@ -79,7 +79,7 @@ attrib_sheet_data_get_component_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_component_list (SHEET_DATA *data,
-                                      STRING_LIST *list)
+                                      GList *list)
 {
   data->master_comp_list_head = list;
 }
@@ -96,7 +96,7 @@ attrib_sheet_data_set_component_list (SHEET_DATA *data,
  *
  *  \return The component attribute list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_component_attrib_list (SHEET_DATA *data)
 {
   return data->master_comp_attrib_list_head;
@@ -115,7 +115,7 @@ attrib_sheet_data_get_component_attrib_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_component_attrib_list (SHEET_DATA *data,
-                                             STRING_LIST *list)
+                                             GList *list)
 {
   data->master_comp_attrib_list_head = list;
 }
@@ -131,7 +131,7 @@ attrib_sheet_data_set_component_attrib_list (SHEET_DATA *data,
  *
  *  \return The net list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_net_list (SHEET_DATA *data)
 {
   return data->master_net_list_head;
@@ -149,7 +149,7 @@ attrib_sheet_data_get_net_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_net_list (SHEET_DATA *data,
-                                STRING_LIST *list)
+                                GList *list)
 {
   data->master_net_list_head = list;
 }
@@ -165,7 +165,7 @@ attrib_sheet_data_set_net_list (SHEET_DATA *data,
  *
  *  \return The net attribute list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_net_attrib_list (SHEET_DATA *data)
 {
   return data->master_net_attrib_list_head;
@@ -184,7 +184,7 @@ attrib_sheet_data_get_net_attrib_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_net_attrib_list (SHEET_DATA *data,
-                                       STRING_LIST *list)
+                                       GList *list)
 {
   data->master_net_attrib_list_head = list;
 }
@@ -200,7 +200,7 @@ attrib_sheet_data_set_net_attrib_list (SHEET_DATA *data,
  *
  *  \return The pin list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_pin_list (SHEET_DATA *data)
 {
   return data->master_pin_list_head;
@@ -218,7 +218,7 @@ attrib_sheet_data_get_pin_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_pin_list (SHEET_DATA *data,
-                                STRING_LIST *list)
+                                GList *list)
 {
   data->master_pin_list_head = list;
 }
@@ -234,7 +234,7 @@ attrib_sheet_data_set_pin_list (SHEET_DATA *data,
  *
  *  \return The pin attribute list.
  */
-STRING_LIST*
+GList*
 attrib_sheet_data_get_pin_attrib_list (SHEET_DATA *data)
 {
   return data->master_pin_attrib_list_head;
@@ -253,7 +253,7 @@ attrib_sheet_data_get_pin_attrib_list (SHEET_DATA *data)
  */
 void
 attrib_sheet_data_set_pin_attrib_list (SHEET_DATA *data,
-                                       STRING_LIST *list)
+                                       GList *list)
 {
   data->master_pin_attrib_list_head = list;
 }
