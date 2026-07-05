@@ -130,7 +130,6 @@ struct st_table {
 /* -------------------------------------------------------------------- */
 struct st_string_list {
   gchar *data;     /*!< points to zero-terminated string */
-  int length;      /*!< number of items in list */
   STRING_LIST *prev; /*!< pointer to previous item in linked list */
   STRING_LIST *next; /*!< pointer to next item in linked list */
 };
