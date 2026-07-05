@@ -20,11 +20,11 @@
 
 /*------------------------------------------------------------------*/
 /*! \file
- *  \brief Functions involved in manipulating the STRING_LIST
+ *  \brief Functions involved in manipulating the GList
  *         structure.
  *
- * This file holds functions involved in manipulating the STRING_LIST
- * structure.  STRING_LIST is basically a linked list of strings
+ * This file holds functions involved in manipulating the GList
+ * structure.  GList is basically a linked list of strings
  * (text).
  *
  * \todo This could be implemented using an underlying GList
@@ -63,9 +63,9 @@
  *  \return The data.
  */
 char*
-attrib_string_list_get_data (STRING_LIST *list)
+attrib_string_list_get_data (GList *list)
 {
-  return list->data;
+  return (char*) list->data;
 }
 
 
@@ -80,7 +80,7 @@ attrib_string_list_get_data (STRING_LIST *list)
  *  \param [in] data The new data.
  */
 void
-attrib_string_list_set_data (STRING_LIST *list,
+attrib_string_list_set_data (GList *list,
                              char *data)
 {
   list->data = data;
@@ -97,8 +97,8 @@ attrib_string_list_set_data (STRING_LIST *list,
  *  \param [in] list The string list.
  *  \return The previous list item.
  */
-STRING_LIST*
-attrib_string_list_get_prev (STRING_LIST *list)
+GList*
+attrib_string_list_get_prev (GList *list)
 {
   return list->prev;
 }
@@ -115,8 +115,8 @@ attrib_string_list_get_prev (STRING_LIST *list)
  *  \param [in] item The new previous list item.
  */
 void
-attrib_string_list_set_prev (STRING_LIST *list,
-                             STRING_LIST *item)
+attrib_string_list_set_prev (GList *list,
+                             GList *item)
 {
   list->prev = item;
 }
@@ -132,8 +132,8 @@ attrib_string_list_set_prev (STRING_LIST *list,
  *  \param [in] list The string list.
  *  \return The next list item.
  */
-STRING_LIST*
-attrib_string_list_get_next (STRING_LIST *list)
+GList*
+attrib_string_list_get_next (GList *list)
 {
   return list->next;
 }
@@ -150,25 +150,25 @@ attrib_string_list_get_next (STRING_LIST *list)
  *  \param [in] item The new next list item.
  */
 void
-attrib_string_list_set_next (STRING_LIST *list,
-                             STRING_LIST *item)
+attrib_string_list_set_next (GList *list,
+                             GList *item)
 {
   list->next = item;
 }
 
 
-/*! \brief Create a new #STRING_LIST.
+/*! \brief Create a new #GList.
  *
  *  \par Function Description
  *
- *  Allocates and returns a new #STRING_LIST list consisting of
+ *  Allocates and returns a new #GList list consisting of
  *  one uninitialized item.  The list must be freed with g_free()
  *  after use.
  *
  *  \return The string list.
  */
-STRING_LIST*
+GList*
 attrib_string_list_new ()
 {
-  return (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
+  return (GList*) g_malloc (sizeof (GList));
 }
