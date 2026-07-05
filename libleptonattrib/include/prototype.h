@@ -163,9 +163,6 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 GList*
 attrib_string_list_new ();
 
-char*
-attrib_string_list_get_data (GList *list);
-
 void
 attrib_string_list_set_data (GList *list,
                              char *data);

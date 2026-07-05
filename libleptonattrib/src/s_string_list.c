@@ -52,23 +52,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the \a data field of a string list.
- *
- *  \par Function Description
- *
- *  Returns the \a data field of a string list.  It points to a
- *  zero-terminated string.
- *
- *  \param [in] list The string list.
- *  \return The data.
- */
-char*
-attrib_string_list_get_data (GList *list)
-{
-  return (char*) list->data;
-}
-
-
 /*! \brief Set the \a data field of a string list item.
  *
  *  \par Function Description

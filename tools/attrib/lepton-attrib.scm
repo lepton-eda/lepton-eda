@@ -329,8 +329,7 @@ failure."
             (null-pointer? *list-element))
         ;; Return code when string is not in master list.
         -1
-        (if (string= (pointer->string
-                      (attrib_string_list_get_data *list-element))
+        (if (string= (pointer->string (glist-data *list-element))
                      (pointer->string *str))
             count
 
@@ -346,7 +345,7 @@ failure."
 (define (name-in-list? *name-value-list name)
   (let loop ((*item *name-value-list))
     (and (not (null-pointer? *item))
-         (let ((*name-value (attrib_string_list_get_data *item)))
+         (let ((*name-value (glist-data *item)))
            (if (null-pointer? *name-value)
                (loop (attrib_string_list_get_next *item))
                (let ((found-name (str-attrib-name *name-value)))
@@ -444,7 +443,7 @@ failure."
       ;; First check to see if list is empty.  Handle insertion of
       ;; first item into empty list separately.  (Is this
       ;; necessary?)
-      (if (null-pointer? (attrib_string_list_get_data *ls))
+      (if (null-pointer? (glist-data *ls))
           (begin
             (attrib_string_list_set_data *ls (g_strdup *data))
             (attrib_string_list_set_next *ls %null-pointer)
@@ -480,8 +479,7 @@ failure."
                             (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
                        ;; Increment count.
                        (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
-                   (let ((*item (g_strdup
-                                 (attrib_string_list_get_data *next-ls))))
+                   (let ((*item (g_strdup (glist-data *next-ls))))
                      (if (string= (pointer->string *item)
                                   (pointer->string *data))
                          ;; Found item already in list.  Just return.
@@ -498,15 +496,14 @@ failure."
 (define (duplicate-string-list *ls)
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
   (define *new-ls (make-string-list))
-  (if (null-pointer? (attrib_string_list_get_data *ls))
+  (if (null-pointer? (glist-data *ls))
       ;; This is an empty string list.
       *new-ls
 
       (let loop ((*current-ls *ls))
         (if (null-pointer? *current-ls)
             *new-ls
-            (let ((*data (g_strdup
-                          (attrib_string_list_get_data *current-ls))))
+            (let ((*data (g_strdup (glist-data *current-ls))))
               (add-string-list-item *new-ls *count *data)
               (g_free *data)
               (loop (attrib_string_list_get_next *current-ls)))))))
@@ -517,7 +514,7 @@ failure."
 (define (attrib-in-string-list? *ls *name)
   ;; First check to see if list is empty.  If empty, return
   ;; 0 automatically.
-  (if (null-pointer? (attrib_string_list_get_data *ls))
+  (if (null-pointer? (glist-data *ls))
       0
 
       ;; Otherwise, loop through list looking for duplicates.
@@ -526,7 +523,7 @@ failure."
             ;; If we are here, it's 'cause we didn't find the item
             ;; pre-existing in the list.  In this case, return 0.
             0
-            (let ((*item (g_strdup (attrib_string_list_get_data *ls))))
+            (let ((*item (g_strdup (glist-data *ls))))
               (if (string= (pointer->string *item)
                            (pointer->string *name))
                   ;; Found item already in list.  Return 1.
@@ -618,14 +615,14 @@ failure."
   ;; First handle a special case: the component has no attribs
   ;; (beside refdes).
   (unless (null-pointer?
-           (attrib_string_list_get_data *complete-component-attrib-list))
+           (glist-data *complete-component-attrib-list))
     ;; Now the normal case.
     (let loop ((*local-list *complete-component-attrib-list))
       (unless (null-pointer? *local-list)
         ;; Now get the old attrib name & value from
         ;; *complete-component-attrib-list and value from object.
         (let* ((old-attrib-name
-                (str-attrib-name (attrib_string_list_get_data *local-list)))
+                (str-attrib-name (glist-data *local-list)))
                (*old-attrib-value
                 (if old-attrib-name
                     (lepton_attrib_search_attached_attribs_by_name
@@ -636,8 +633,7 @@ failure."
                ;; Next try to get this attrib from
                ;; *new-component-attrib-list.
                (new-attrib-name
-                (str-attrib-name
-                 (attrib_string_list_get_data *local-list)))
+                (str-attrib-name (glist-data *local-list)))
                (*new-attrib-name
                 (if new-attrib-name
                     (string->pointer new-attrib-name)
@@ -663,10 +659,8 @@ failure."
                               (= column -1)))
                      (true? (attrib-in-string-list?
                              *new-component-attrib-pair-list
-                             (attrib_string_list_get_data
-                              *local-list)))
-                     (str-attrib-value
-                      (attrib_string_list_get_data *local-list))))
+                             (glist-data *local-list)))
+                     (str-attrib-value (glist-data *local-list))))
                ;; We need a better place to get this info since the
                ;; TABLE can be out of date.
                (visibility
@@ -890,7 +884,7 @@ failure."
                   ;; attrib name from column headings.
                   (let* ((new-attrib-name
                           (pointer->string
-                           (attrib_string_list_get_data *local-attrib-list)))
+                           (glist-data *local-attrib-list)))
                          (*table-value
                           (attrib_table_get_attrib_value
                            (attrib_sheet_data_get_pin_table *sheet-data) row i))
@@ -952,7 +946,7 @@ failure."
   (let loop ((*local-list *pin-attrib-list))
     (unless (null-pointer? *local-list)
       (let* ((*new-name-value-pair
-              (g_strdup (attrib_string_list_get_data *local-list)))
+              (g_strdup (glist-data *local-list)))
              (new-attrib-name (str-attrib-name *new-name-value-pair))
              (new-attrib-value (str-attrib-value *new-name-value-pair))
              (*old-attrib-value
@@ -1087,13 +1081,12 @@ failure."
               (*row-list-item *row-list))
     (when (< row rows-number)
       (let ((*row-title
-             (g_strdup (attrib_string_list_get_data *row-list-item))))
+             (g_strdup (glist-data *row-list-item))))
         (let loopc ((column 0)
                     (*column-list-item *column-list))
           (when (< column columns-number)
             (let ((*column-title
-                   (g_strdup
-                    (attrib_string_list_get_data *column-list-item)))
+                   (g_strdup (glist-data *column-list-item)))
                   ;; Get value of attrib in cell.
                   (*attrib-value
                    (gtk_sheet_cell_get_text *gtk-sheet row column)))
@@ -1270,12 +1263,12 @@ failure."
 (define (id->string-list-data *ls id)
   ;; First check to see if list is empty.  If empty, return NULL
   ;; automatically.
-  (if (null-pointer? (attrib_string_list_get_data *ls))
+  (if (null-pointer? (glist-data *ls))
       %null-pointer
       (let loop ((*item *ls)
                  (i 0))
         (if (= i id)
-            (attrib_string_list_get_data *item)
+            (glist-data *item)
             (if (null-pointer? *item)
                 %null-pointer
                 (loop (attrib_string_list_get_next *item) (1+ i)))))))
@@ -1443,8 +1436,8 @@ failure."
 
 
 (define (*string-list<? *a *b)
-  (define *string-a (attrib_string_list_get_data *a))
-  (define *string-b (attrib_string_list_get_data *b))
+  (define *string-a (glist-data *a))
+  (define *string-b (glist-data *b))
 
   (when (or (null-pointer? *string-a)
             (null-pointer? *string-b))
@@ -1469,8 +1462,8 @@ failure."
 
 
 (define (string-list<? *a *b)
-  (define *string-a (attrib_string_list_get_data *a))
-  (define *string-b (attrib_string_list_get_data *b))
+  (define *string-a (glist-data *a))
+  (define *string-b (glist-data *b))
 
   (when (or (null-pointer? *string-a)
             (null-pointer? *string-b))
@@ -1589,7 +1582,7 @@ failure."
 
       (unless (or (>= j count)
                   (null-pointer? *item))
-        (let ((*text (g_strdup (attrib_string_list_get_data *item))))
+        (let ((*text (g_strdup (glist-data *item))))
           (gtk_sheet_column_button_add_label *sheet j *text)
           (gtk_sheet_column_button_justify *sheet j GTK_JUSTIFY_LEFT)
           ;; TODO: Need to resize the column width here.
@@ -1602,7 +1595,7 @@ failure."
 ;;; (-1 if absent).
 (define (string-list-item-id *ls *name)
   ;; First check to see if list is empty.  If empty, return -1.
-  (if (null-pointer? (attrib_string_list_get_data *ls))
+  (if (null-pointer? (glist-data *ls))
       -1
 
       ;; Otherwise, loop through list looking for the item.
@@ -1612,8 +1605,7 @@ failure."
             ;; If we are here, it's 'cause we didn't find the item
             ;; pre-existing in the list.  In this case, return -1.
             -1
-            (let ((*item (g_strdup
-                          (attrib_string_list_get_data *ls))))
+            (let ((*item (g_strdup (glist-data *ls))))
               (if (string= (pointer->string *item)
                            (pointer->string *name))
 
@@ -1821,7 +1813,7 @@ failure."
                                  *name)
   ;; First check to see if list is empty.  If empty, spew error
   ;; and return.
-  (if (null-pointer? (attrib_string_list_get_data *ls))
+  (if (null-pointer? (glist-data *ls))
       (begin
         (format (current-error-port) "delete-string-list-item(): ")
         (format (current-error-port)
@@ -1838,8 +1830,7 @@ failure."
               (format (current-error-port)
                       (G_ "Couldn't delete item ~S\n")
                       (pointer->string *name)))
-            (let ((*trial-item (g_strdup
-                                (attrib_string_list_get_data *item))))
+            (let ((*trial-item (g_strdup (glist-data *item))))
               (if (string= (pointer->string *trial-item)
                            (pointer->string *name))
                   ;; Found item, now delete it.
@@ -2486,7 +2477,7 @@ failure."
 
           (gtk_sheet_set_row_titles_width *sheet (+ width 8))
 
-          (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
+          (let* ((*text (g_strdup (glist-data *item)))
                  (new-width (schematic_pango_text_width *sheet *text))
                  (max-width (if (> new-width width)
                                 new-width
