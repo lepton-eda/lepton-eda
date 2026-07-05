@@ -58,7 +58,6 @@
 typedef struct st_sheet_data SHEET_DATA;
 typedef struct st_table TABLE;
 typedef struct st_pin_list PIN_LIST;
-typedef struct st_main_window MAIN_WINDOW;
 
 
 /* -------------------------------------------------------------------- */
