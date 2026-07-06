@@ -88,6 +88,13 @@
   (set! %sheet-component-list *ls))
 
 
+(define (sheet-component-count *sheet-data)
+  (attrib_sheet_data_get_component_count *sheet-data))
+
+(define (set-sheet-component-count! *sheet-data count)
+  (attrib_sheet_data_set_component_count *sheet-data count))
+
+
 ;;; Sorted list of all component attribs used in design.
 (define %sheet-component-attrib-list %null-pointer)
 
@@ -1145,7 +1152,7 @@ failure."
 (define (spreadsheet-data->tables)
   (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
-  (let ((rows-number (attrib_sheet_data_get_component_count *sheet-data))
+  (let ((rows-number (sheet-component-count *sheet-data))
         (columns-number
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 0))
@@ -1306,8 +1313,7 @@ failure."
 ;;; Export design components to CSV for external processing.
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
-  (define rows-number
-    (attrib_sheet_data_get_component_count *sheet-data))
+  (define rows-number (sheet-component-count *sheet-data))
   (define columns-number
     (attrib_sheet_data_get_component_attrib_count *sheet-data))
   (define *component-table
@@ -1791,7 +1797,7 @@ failure."
          *sheet-data
          (resize-table
           (attrib_sheet_data_get_component_table *sheet-data)
-          (attrib_sheet_data_get_component_count *sheet-data)
+          (sheet-component-count *sheet-data)
           old-component-attrib-count
           (attrib_sheet_data_get_component_attrib_count *sheet-data)))
 
@@ -1910,12 +1916,12 @@ failure."
              (copy-table/delete-column
               (attrib_sheet_data_get_component_table *sheet-data)
               num
-              (attrib_sheet_data_get_component_count *sheet-data)
+              (sheet-component-count *sheet-data)
               (attrib_sheet_data_get_component_attrib_count *sheet-data))))
         ;; Destroy the current TABLE array:
         (destroy-table
          (attrib_sheet_data_get_component_table *sheet-data)
-         (attrib_sheet_data_get_component_count *sheet-data)
+         (sheet-component-count *sheet-data)
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
 
         (delete-string-list-item
@@ -2353,8 +2359,7 @@ failure."
   ;; Create three new sheets.
 
   ;; Components.
-  (let ((component-count
-         (attrib_sheet_data_get_component_count *sheet-data))
+  (let ((component-count (sheet-component-count *sheet-data))
         (component-attrib-count
          (attrib_sheet_data_get_component_attrib_count *sheet-data)))
     (if (and (> component-count 0) (> component-attrib-count 0))
@@ -2521,8 +2526,7 @@ failure."
     (attrib_sheet_data_get_component_table *sheet-data))
   (define (component-sheet)
     (attrib_get_sheet 0))
-  (define component-count
-    (attrib_sheet_data_get_component_count *sheet-data))
+  (define component-count (sheet-component-count *sheet-data))
   (define component-attrib-count
     (attrib_sheet_data_get_component_attrib_count *sheet-data))
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
@@ -2684,7 +2688,7 @@ Please check your design.")))
   ;; Now we create the first cell in each master list.
   (set-sheet-component-list! (make-string-list))
   (set-sheet-component-attrib-list! (make-string-list))
-  (attrib_sheet_data_set_component_count *sheet-data 0)
+  (set-sheet-component-count! *sheet-data 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
   (set-sheet-net-list! (make-string-list))
@@ -3243,7 +3247,7 @@ Please check your design.")))
   ;; Create and load the tables.
   (attrib_sheet_data_set_component_table
    *sheet-data
-   (make-table (attrib_sheet_data_get_component_count *sheet-data)
+   (make-table (sheet-component-count *sheet-data)
                (attrib_sheet_data_get_component_attrib_count *sheet-data)))
   (attrib_sheet_data_set_net_table
    *sheet-data
