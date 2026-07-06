@@ -70,7 +70,6 @@ typedef struct st_main_window MAIN_WINDOW;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  GList *master_comp_attrib_list_head;  /*!< Sorted list of all component attribs used in design */
   int comp_count;                             /*!< This cannnot change -- user must edit design using gschem */
   int comp_attrib_count;                      /*!< This can change in this prog if the user adds attribs */
 
