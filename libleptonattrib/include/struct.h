@@ -73,7 +73,6 @@ struct st_sheet_data {
   int comp_count;                             /*!< This cannnot change -- user must edit design using gschem */
   int comp_attrib_count;                      /*!< This can change in this prog if the user adds attribs */
 
-  GList *master_net_attrib_list_head;   /*!< Sorted list of all net attribs used in design */
   int net_count;                              /*!< This cannnot change -- user must edit design using gschem */
   int net_attrib_count;                       /*!< This can change in this prog if the user adds attribs */
 
