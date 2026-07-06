@@ -112,6 +112,13 @@
   (set! %sheet-net-list *ls))
 
 
+(define (sheet-net-attrib-list *sheet-data)
+  (attrib_sheet_data_get_net_attrib_list *sheet-data))
+
+(define (set-sheet-net-attrib-list! *sheet-data *ls)
+  (attrib_sheet_data_set_net_attrib_list *sheet-data *ls))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -1134,8 +1141,7 @@ failure."
          (attrib_sheet_data_get_net_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 1))
         (*row-list (sheet-net-list))
-        (*column-list
-         (attrib_sheet_data_get_net_attrib_list *sheet-data))
+        (*column-list (sheet-net-attrib-list *sheet-data))
         (*table (attrib_sheet_data_get_net_table *sheet-data)))
 
     (gtk-sheet->table *gtk-sheet
@@ -2563,10 +2569,9 @@ Please check your design.")))
   (if (> net-count 0)
       (begin
         (add-row-labels (net-sheet) net-count (sheet-net-list))
-        (add-column-labels
-         (net-sheet)
-         net-attrib-count
-         (attrib_sheet_data_get_net_attrib_list *sheet-data)))
+        (add-column-labels (net-sheet)
+                           net-attrib-count
+                           (sheet-net-attrib-list *sheet-data)))
       (begin
         (add-row-labels (net-sheet) 1 %null-pointer)
         (add-column-labels (net-sheet) 1 %null-pointer)))
@@ -2669,8 +2674,7 @@ Please check your design.")))
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
   (set-sheet-net-list! (make-string-list))
-  (attrib_sheet_data_set_net_attrib_list *sheet-data
-                                         (make-string-list))
+  (set-sheet-net-attrib-list! *sheet-data (make-string-list))
   (attrib_sheet_data_set_net_count *sheet-data 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
@@ -3037,7 +3041,7 @@ Please check your design.")))
                                          *temp-netname))
                         (column
                          (string-list-id
-                          (attrib_sheet_data_get_net_attrib_list *sheet-data)
+                          (sheet-net-attrib-list *sheet-data)
                           (string->pointer name))))
                     ;; Get row and column where to put this attrib.
                     (attrib_table_set_row *net-table
