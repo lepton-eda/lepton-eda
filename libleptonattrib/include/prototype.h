@@ -166,9 +166,6 @@ attrib_string_list_new ();
 void
 attrib_string_list_set_data (GList *list,
                              char *data);
-GList*
-attrib_string_list_get_prev (GList *list);
-
 void
 attrib_string_list_set_prev (GList *list,
                              GList *item);

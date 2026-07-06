@@ -70,23 +70,6 @@ attrib_string_list_set_data (GList *list,
 }
 
 
-/*! \brief Get the \a prev field of a string list.
- *
- *  \par Function Description
- *
- *  Returns the \a prev field of a string list.  It is a pointer
- *  to the previous item in the linked list.
- *
- *  \param [in] list The string list.
- *  \return The previous list item.
- */
-GList*
-attrib_string_list_get_prev (GList *list)
-{
-  return list->prev;
-}
-
-
 /*! \brief Set the \a prev field of a string list.
  *
  *  \par Function Description

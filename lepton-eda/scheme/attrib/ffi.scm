@@ -104,7 +104,6 @@
             attrib_string_list_set_data
             attrib_string_list_get_next
             attrib_string_list_set_next
-            attrib_string_list_get_prev
             attrib_string_list_set_prev
 
             attrib_table_init_attrib_value
@@ -235,7 +234,6 @@
 (define-lff attrib_string_list_set_data void '(* *))
 (define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_next void '(* *))
-(define-lff attrib_string_list_get_prev '* '(*))
 (define-lff attrib_string_list_set_prev void '(* *))
 
 ;;; s_table.c
