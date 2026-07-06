@@ -88,11 +88,18 @@
   (set! %sheet-component-list *ls))
 
 
-(define (sheet-component-count *sheet-data)
-  (attrib_sheet_data_get_component_count *sheet-data))
+;;; The count of components.  The value set in the program cannot
+;;; change -- user must edit design using the schematic capture
+;;; program.
+(define %sheet-component-count 0)
 
-(define (set-sheet-component-count! *sheet-data count)
-  (attrib_sheet_data_set_component_count *sheet-data count))
+;;; Returns the count of sheet components.
+(define (sheet-component-count)
+  %sheet-component-count)
+
+;;; Sets the count of sheet components to COUNT.
+(define (set-sheet-component-count! count)
+  (set! %sheet-component-count count))
 
 
 ;;; Sorted list of all component attribs used in design.
@@ -505,7 +512,7 @@ failure."
 ;;; Adds the item *DATA to GList *LS incrementing *COUNT.
 ;;; It first passes through the list to make sure that there are
 ;;; no duplications.
-(define (add-string-list-item *ls *count *data)
+(define (add-string-list-item *ls *count *data update-counter-thunk)
   (if (null-pointer? *ls)
       (begin
         (format (current-error-port) "add-string-list-item(): ")
@@ -528,6 +535,8 @@ failure."
                      (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
                 ;; Increment count to 1.
                 (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+            (when update-counter-thunk
+              (update-counter-thunk))
             *ls)
 
           ;; Otherwise, loop through list looking for duplicates.
@@ -540,6 +549,8 @@ failure."
                            (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
                       ;; Increment count.
                       (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+                  (when update-counter-thunk
+                    (update-counter-thunk))
                   (g_list_append *ls (g_strdup *data))))))))
 
 
@@ -555,7 +566,7 @@ failure."
         (if (null-pointer? *current-ls)
             *new-ls
             (let ((*data (g_strdup (glist-data *current-ls))))
-              (add-string-list-item *new-ls #f *data)
+              (add-string-list-item *new-ls #f *data #f)
               (g_free *data)
               (loop (glist-next *current-ls)))))))
 
@@ -650,7 +661,8 @@ failure."
                           old-attrib-name)))
            (add-string-list-item *complete-component-attrib-list
                                  #f
-                                 *old-name-value-pair))
+                                 *old-name-value-pair
+                                 #f))
 
          (g_free *old-name-value-pair))))
    (glist->list (lepton_object_get_attribs *object) identity))
@@ -804,8 +816,9 @@ failure."
                                         "="
                                         (pointer->string *attrib-value)))))
                   (add-string-list-item *attrib-pair-list
-                                          *count
-                                          *name-value-pair)))
+                                        *count
+                                        *name-value-pair
+                                        #f)))
               (loop (1+ column)))))))
 
 
@@ -939,7 +952,7 @@ failure."
                          (*name-value-pair (string->pointer name-value-pair)))
 
                     ;; Add name=value to the new list.
-                    (add-string-list-item *new-attrib-list *count *name-value-pair)
+                    (add-string-list-item *new-attrib-list *count *name-value-pair #f)
 
                     ;; Sanity check
                     (let ((count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
@@ -1152,7 +1165,7 @@ failure."
 (define (spreadsheet-data->tables)
   (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
-  (let ((rows-number (sheet-component-count *sheet-data))
+  (let ((rows-number (sheet-component-count))
         (columns-number
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 0))
@@ -1313,7 +1326,7 @@ failure."
 ;;; Export design components to CSV for external processing.
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
-  (define rows-number (sheet-component-count *sheet-data))
+  (define rows-number (sheet-component-count))
   (define columns-number
     (attrib_sheet_data_get_component_attrib_count *sheet-data))
   (define *component-table
@@ -1782,7 +1795,8 @@ failure."
       (add-string-list-item
        (sheet-component-attrib-list)
        (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
-       *name)
+       *name
+       #f)
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
@@ -1797,7 +1811,7 @@ failure."
          *sheet-data
          (resize-table
           (attrib_sheet_data_get_component_table *sheet-data)
-          (sheet-component-count *sheet-data)
+          (sheet-component-count)
           old-component-attrib-count
           (attrib_sheet_data_get_component_attrib_count *sheet-data)))
 
@@ -1916,12 +1930,12 @@ failure."
              (copy-table/delete-column
               (attrib_sheet_data_get_component_table *sheet-data)
               num
-              (sheet-component-count *sheet-data)
+              (sheet-component-count)
               (attrib_sheet_data_get_component_attrib_count *sheet-data))))
         ;; Destroy the current TABLE array:
         (destroy-table
          (attrib_sheet_data_get_component_table *sheet-data)
-         (sheet-component-count *sheet-data)
+         (sheet-component-count)
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
 
         (delete-string-list-item
@@ -2359,7 +2373,7 @@ failure."
   ;; Create three new sheets.
 
   ;; Components.
-  (let ((component-count (sheet-component-count *sheet-data))
+  (let ((component-count (sheet-component-count))
         (component-attrib-count
          (attrib_sheet_data_get_component_attrib_count *sheet-data)))
     (if (and (> component-count 0) (> component-attrib-count 0))
@@ -2526,7 +2540,7 @@ failure."
     (attrib_sheet_data_get_component_table *sheet-data))
   (define (component-sheet)
     (attrib_get_sheet 0))
-  (define component-count (sheet-component-count *sheet-data))
+  (define component-count (sheet-component-count))
   (define component-attrib-count
     (attrib_sheet_data_get_component_attrib_count *sheet-data))
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
@@ -2688,7 +2702,7 @@ Please check your design.")))
   ;; Now we create the first cell in each master list.
   (set-sheet-component-list! (make-string-list))
   (set-sheet-component-attrib-list! (make-string-list))
-  (set-sheet-component-count! *sheet-data 0)
+  (set-sheet-component-count! 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
   (set-sheet-net-list! (make-string-list))
@@ -2711,6 +2725,9 @@ Please check your design.")))
 (define (add-components *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
+  (define (increment-component-counter)
+    (set-sheet-component-count! (1+ (sheet-component-count))))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2725,8 +2742,9 @@ Please check your design.")))
          (unless (null-pointer? *temp-refdes)
            (add-string-list-item
             (sheet-component-list)
-            (attrib_sheet_data_get_component_counter_address *sheet-data)
-            *temp-refdes)
+            #f
+            *temp-refdes
+            increment-component-counter)
            (g_free *temp-refdes)))))
    (glist->list *objects identity)))
 
@@ -2765,7 +2783,8 @@ Please check your design.")))
                 (add-string-list-item
                  (sheet-component-attrib-list)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
-                 (string->pointer name)))
+                 (string->pointer name)
+                 #f))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
@@ -2827,7 +2846,8 @@ Please check your design.")))
                           (add-string-list-item
                            (sheet-pin-list)
                            (attrib_sheet_data_get_pin_counter_address *sheet-data)
-                           *row-label))
+                           *row-label
+                           #f))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
@@ -2900,7 +2920,8 @@ Please check your design.")))
                          (add-string-list-item
                           (sheet-pin-attrib-list)
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
-                          (string->pointer attrib-name)))
+                          (string->pointer attrib-name)
+                          #f))
 
                        (g_free *attrib-text))))
 
@@ -3247,7 +3268,7 @@ Please check your design.")))
   ;; Create and load the tables.
   (attrib_sheet_data_set_component_table
    *sheet-data
-   (make-table (sheet-component-count *sheet-data)
+   (make-table (sheet-component-count)
                (attrib_sheet_data_get_component_attrib_count *sheet-data)))
   (attrib_sheet_data_set_net_table
    *sheet-data

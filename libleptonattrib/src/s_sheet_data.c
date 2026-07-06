@@ -83,55 +83,6 @@ attrib_sheet_data_set_component_table (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the count of components of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the count of components of given sheet data structure.
- *
- *  \return The count.
- */
-int
-attrib_sheet_data_get_component_count (SHEET_DATA *data)
-{
-  return data->comp_count;
-}
-
-
-/*! \brief Set the count of components of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the count of components of a sheet data structure to the
- *  given value.
- *
- *  \param [in] data The sheet data.
- *  \param [in] count The new count of components.
- */
-void
-attrib_sheet_data_set_component_count (SHEET_DATA *data,
-                                       int count)
-{
-  data->comp_count = count;
-}
-
-
-/*! \brief Get the address of component counter of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the address of component counter of given sheet data
- *  structure.
- *
- *  \return The address.
- */
-int*
-attrib_sheet_data_get_component_counter_address (SHEET_DATA *data)
-{
-  return &(data->comp_count);
-}
-
-
 /*! \brief Get the count of component attribs of sheet data.
  *
  *  \par Function Description
