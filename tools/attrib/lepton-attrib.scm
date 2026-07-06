@@ -452,45 +452,16 @@ failure."
             *ls)
 
           ;; Otherwise, loop through list looking for duplicates.
-          (let loop ((*prev *ls)
-                     (*next-ls *ls))
-               (if (null-pointer? *next-ls)
-                   ;; If we are here, it's 'cause we didn't find
-                   ;; the item pre-existing in the list.  In this
-                   ;; case, we insert it.
-
-                   ;; Allocate space for this list entry.
-                   (let ((*new-ls (attrib_string_list_new)))
-                     ;; Copy data into list.
-                     (attrib_string_list_set_data *new-ls
-                                                  (g_strdup *data))
-                     (attrib_string_list_set_next *new-ls
-                                                  %null-pointer)
-                     ;; Point this item to last entry in old list.
-                     (attrib_string_list_set_prev *new-ls *prev)
-                     ;; Make last item in old list point to this
-                     ;; one.
-                     (attrib_string_list_set_next *prev *new-ls)
-
-                     (when *count
-                       (let* ((count-bv (pointer->bytevector *count (sizeof int)))
-                              (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                         ;; Increment count.
-                         (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
-                     *ls)
-
-                   (let ((*item (g_strdup (glist-data *next-ls))))
-                     (if (string= (pointer->string *item)
-                                  (pointer->string *data))
-                         ;; Found item already in list.  Just return.
-                         (begin
-                           (g_free *item)
-                           *ls)
-
-                         (begin
-                           (g_free *item)
-                           (loop *next-ls
-                                 (glist-next *next-ls))))))))))
+          (let* ((ls (glist->list *ls pointer->string)))
+            (if (member (pointer->string *data) ls)
+                *ls
+                (begin
+                  (when *count
+                    (let* ((count-bv (pointer->bytevector *count (sizeof int)))
+                           (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+                      ;; Increment count.
+                      (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+                  (g_list_append *ls (g_strdup *data))))))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
