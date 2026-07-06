@@ -68,9 +68,6 @@
             attrib_sheet_data_get_component_attrib_count
             attrib_sheet_data_set_component_attrib_count
             attrib_sheet_data_get_component_attrib_counter_address
-            attrib_sheet_data_get_component_count
-            attrib_sheet_data_set_component_count
-            attrib_sheet_data_get_component_counter_address
             attrib_sheet_data_get_component_table
             attrib_sheet_data_set_component_table
             attrib_sheet_data_get_net_attrib_count
@@ -187,9 +184,6 @@
 (define-lff attrib_sheet_data_get_component_attrib_count int '(*))
 (define-lff attrib_sheet_data_set_component_attrib_count void (list '* int))
 (define-lff attrib_sheet_data_get_component_attrib_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_component_count int '(*))
-(define-lff attrib_sheet_data_set_component_count void (list '* int))
-(define-lff attrib_sheet_data_get_component_counter_address '* '(*))
 (define-lff attrib_sheet_data_get_component_table '* '(*))
 (define-lff attrib_sheet_data_set_component_table void '(* *))
 (define-lff attrib_sheet_data_get_net_attrib_count int '(*))

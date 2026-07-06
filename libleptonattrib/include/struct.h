@@ -70,7 +70,6 @@ typedef struct st_main_window MAIN_WINDOW;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  int comp_count;                             /*!< This cannnot change -- user must edit design using gschem */
   int comp_attrib_count;                      /*!< This can change in this prog if the user adds attribs */
 
   int net_count;                              /*!< This cannnot change -- user must edit design using gschem */
