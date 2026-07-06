@@ -164,11 +164,17 @@
   (set! %sheet-net-attrib-list *ls))
 
 
-(define (sheet-net-attrib-count *sheet-data)
-  (attrib_sheet_data_get_net_attrib_count *sheet-data))
+;;; The count of net attribs.  This value can change if the user
+;;; adds attribs.
+(define %sheet-net-attrib-count 0)
 
-(define (set-sheet-net-attrib-count! *sheet-data count)
-  (attrib_sheet_data_set_net_attrib_count *sheet-data count))
+;;; Returns the count of sheet net attribs.
+(define (sheet-net-attrib-count)
+  %sheet-net-attrib-count)
+
+;;; Sets the count of sheet net attribs to COUNT.
+(define (set-sheet-net-attrib-count! count)
+  (set! %sheet-net-attrib-count count))
 
 
 ;;; Sorted list of all refdes:pin items used in design.
@@ -1215,7 +1221,7 @@ failure."
 
   ;; Next handle net sheet.
   (let ((rows-number (sheet-net-count))
-        (columns-number (sheet-net-attrib-count *sheet-data))
+        (columns-number (sheet-net-attrib-count))
         (*gtk-sheet (attrib_get_sheet 1))
         (*row-list (sheet-net-list))
         (*column-list (sheet-net-attrib-list))
@@ -2424,7 +2430,7 @@ failure."
 
   ;; Nets.
   (let ((net-count (sheet-net-count))
-        (net-attrib-count (sheet-net-attrib-count *sheet-data)))
+        (net-attrib-count (sheet-net-attrib-count)))
     (if (and (> net-count 0) (> net-attrib-count 0))
         (let ((*net-sheet
                (gtk_sheet_new net-count
@@ -2586,7 +2592,7 @@ failure."
   (define (net-sheet)
     (attrib_get_sheet 1))
   (define net-count (sheet-net-count))
-  (define net-attrib-count (sheet-net-attrib-count *sheet-data))
+  (define net-attrib-count (sheet-net-attrib-count))
 
   ;; Do sanity checks.
   (when (zero? component-count)
@@ -2740,7 +2746,7 @@ Please check your design.")))
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
   (set-sheet-net-count! 0)
-  (set-sheet-net-attrib-count! *sheet-data 0)
+  (set-sheet-net-attrib-count! 0)
 
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
@@ -3304,8 +3310,7 @@ Please check your design.")))
                (sheet-component-attrib-count)))
   (attrib_sheet_data_set_net_table
    *sheet-data
-   (make-table (sheet-net-count)
-               (sheet-net-attrib-count *sheet-data)))
+   (make-table (sheet-net-count) (sheet-net-attrib-count)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
    (make-table (attrib_sheet_data_get_pin_count *sheet-data)

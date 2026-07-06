@@ -116,40 +116,6 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the count of net attribs of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the count of net attribs of given sheet data
- *  structure.
- *
- *  \return The count.
- */
-int
-attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data)
-{
-  return data->net_attrib_count;
-}
-
-
-/*! \brief Set the count of net attribs of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the count of net attribs of a sheet data structure to the
- *  given value.
- *
- *  \param [in] data The sheet data.
- *  \param [in] count The new count of net attribs.
- */
-void
-attrib_sheet_data_set_net_attrib_count (SHEET_DATA *data,
-                                        int count)
-{
-  data->net_attrib_count = count;
-}
-
-
 /*! \brief Get the pin table of sheet data.
  *
  *  \par Function Description
