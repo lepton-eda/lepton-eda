@@ -50,12 +50,6 @@ SHEET_DATA*
 attrib_sheet_data_new();
 
 GList*
-attrib_sheet_data_get_net_attrib_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_attrib_list (SHEET_DATA *data,
-                                       GList *list);
-GList*
 attrib_sheet_data_get_pin_list (SHEET_DATA *data);
 
 void

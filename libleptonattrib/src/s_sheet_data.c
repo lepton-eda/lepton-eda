@@ -50,41 +50,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the net attribute list of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the net attribute list of given sheet data structure.
- *
- *  \param [in] data The sheet data.
- *
- *  \return The net attribute list.
- */
-GList*
-attrib_sheet_data_get_net_attrib_list (SHEET_DATA *data)
-{
-  return data->master_net_attrib_list_head;
-}
-
-
-/*! \brief Set the net attribute list of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the net attribute list of given sheet data instance to \p
- *  list.
- *
- *  \param [in] data The sheet data.
- *  \param [in] list The net attribute list.
- */
-void
-attrib_sheet_data_set_net_attrib_list (SHEET_DATA *data,
-                                       GList *list)
-{
-  data->master_net_attrib_list_head = list;
-}
-
-
 /*! \brief Get the pin list of sheet data.
  *
  *  \par Function Description
