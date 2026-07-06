@@ -123,6 +123,13 @@
   (set! %sheet-net-attrib-list *ls))
 
 
+(define (sheet-pin-list *sheet-data)
+  (attrib_sheet_data_get_pin_list *sheet-data))
+
+(define (set-sheet-pin-list! *sheet-data *ls)
+  (attrib_sheet_data_set_pin_list *sheet-data *ls))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -868,9 +875,8 @@ failure."
                (string-append (pointer->string *refdes)
                               ":"
                               (pointer->string *pinnumber))))
-             (row (string-list-id
-                   (attrib_sheet_data_get_pin_list *sheet-data)
-                   *row-label)))
+             (row (string-list-id (sheet-pin-list *sheet-data)
+                                  *row-label)))
 
         ;; Sanity check.
         (if (= row -1)
@@ -1160,7 +1166,7 @@ failure."
         (columns-number
          (attrib_sheet_data_get_pin_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 2))
-        (*row-list (attrib_sheet_data_get_pin_list *sheet-data))
+        (*row-list (sheet-pin-list *sheet-data))
         (*column-list
          (attrib_sheet_data_get_pin_attrib_list *sheet-data))
         (*table (attrib_sheet_data_get_pin_table *sheet-data)))
@@ -1561,10 +1567,9 @@ failure."
 ;;; Sort the pin list in alphabetical order.
 (define (sort-pin-list)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
+  (define *ls (sheet-pin-list *sheet-data))
 
-  (attrib_sheet_data_set_pin_list *sheet-data
-                                  (sort-attrib-list *ls)))
+  (set-sheet-pin-list! *sheet-data (sort-attrib-list *ls)))
 
 
 ;;; Sorts the pin attribute list in alphabetical order.
@@ -2581,10 +2586,9 @@ Please check your design.")))
         (add-column-labels (net-sheet) 1 %null-pointer)))
 
   (when (> pin-count 0)
-    (add-row-labels
-     (pin-sheet)
-     pin-count
-     (attrib_sheet_data_get_pin_list *sheet-data))
+    (add-row-labels (pin-sheet)
+                    pin-count
+                    (sheet-pin-list *sheet-data))
     (add-column-labels
      (pin-sheet)
      pin-attrib-count
@@ -2682,8 +2686,7 @@ Please check your design.")))
   (attrib_sheet_data_set_net_count *sheet-data 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
-  (attrib_sheet_data_set_pin_list *sheet-data
-                                  (make-string-list))
+  (set-sheet-pin-list! *sheet-data (make-string-list))
   (attrib_sheet_data_set_pin_attrib_list *sheet-data
                                          (make-string-list))
   (attrib_sheet_data_set_pin_count *sheet-data 0)
@@ -2813,7 +2816,7 @@ Please check your design.")))
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
                           (add-string-list-item
-                           (attrib_sheet_data_get_pin_list *sheet-data)
+                           (sheet-pin-list *sheet-data)
                            (attrib_sheet_data_get_pin_counter_address *sheet-data)
                            *row-label))
                         (begin
@@ -3132,7 +3135,7 @@ Please check your design.")))
                            ;; Get row and column where to put this attrib.
                            (let ((row
                                   (string-list-id
-                                   (attrib_sheet_data_get_pin_list *sheet-data)
+                                   (sheet-pin-list *sheet-data)
                                    *row-label))
                                  (column
                                   (string-list-id
