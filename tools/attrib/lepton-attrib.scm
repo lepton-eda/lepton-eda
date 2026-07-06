@@ -88,11 +88,16 @@
   (set! %sheet-component-list *ls))
 
 
-(define (sheet-component-attrib-list *sheet-data)
-  (attrib_sheet_data_get_component_attrib_list *sheet-data))
+;;; Sorted list of all component attribs used in design.
+(define %sheet-component-attrib-list %null-pointer)
 
-(define (set-sheet-component-attrib-list! *sheet-data *ls)
-  (attrib_sheet_data_set_component_attrib_list *sheet-data *ls))
+;;; Gets the sheet component attribute list.
+(define (sheet-component-attrib-list)
+  %sheet-component-attrib-list)
+
+;;; Sets the sheet component attribute list to *LS.
+(define (set-sheet-component-attrib-list! *ls)
+  (set! %sheet-component-attrib-list *ls))
 
 
 ;;; Initialize liblepton library.
@@ -634,9 +639,8 @@ failure."
                ;; later.
                (*refdes (g_strdup (component-refdes *object)))
                (row (string-list-id (sheet-component-list) *refdes))
-               (column (string-list-id
-                        (sheet-component-attrib-list *sheet-data)
-                        *new-attrib-name))
+               (column (string-list-id (sheet-component-attrib-list)
+                                       *new-attrib-name))
                (new-attrib-value
                 ;; If attribute has been deleted from the sheet,
                 ;; here is where we detect that.  The attrib will
@@ -1102,7 +1106,7 @@ failure."
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 0))
         (*row-list (sheet-component-list))
-        (*column-list (sheet-component-attrib-list *sheet-data))
+        (*column-list (sheet-component-attrib-list))
         (*table (attrib_sheet_data_get_component_table *sheet-data)))
 
     (gtk-sheet->table *gtk-sheet
@@ -1269,8 +1273,7 @@ failure."
 
   (define (id->attrib-name id)
     (pointer->string
-     (id->string-list-data (sheet-component-attrib-list *sheet-data)
-                           id)))
+     (id->string-list-data (sheet-component-attrib-list) id)))
 
   (define (id->component-refdes id)
     (pointer->string
@@ -1517,10 +1520,9 @@ failure."
 ;;; last, all other attributes are sorted in alphabetical order.
 (define (sort-component-attrib-list)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (sheet-component-attrib-list *sheet-data))
+  (define *ls (sheet-component-attrib-list))
 
   (set-sheet-component-attrib-list!
-   *sheet-data
    (sort-attrib-list *ls #:priority? 'yes)))
 
 
@@ -1736,7 +1738,7 @@ failure."
           (*name (string->pointer name)))
 
       (add-string-list-item
-       (sheet-component-attrib-list *sheet-data)
+       (sheet-component-attrib-list)
        (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
        *name)
       (sort-component-attrib-list)
@@ -1745,9 +1747,8 @@ failure."
       ;; This is necessary to tell gtk_sheet_insert_columns
       ;; where the data should be shifted.
       (let ((new-index
-             (string-list-item-id
-              (sheet-component-attrib-list *sheet-data)
-              *name)))
+             (string-list-item-id (sheet-component-attrib-list)
+                                  *name)))
 
         ;; Resize table to accomodate new attrib column.
         (attrib_sheet_data_set_component_table
@@ -1763,7 +1764,7 @@ failure."
         (add-column-labels
          (attrib_get_sheet 0)
          (attrib_sheet_data_get_component_attrib_count *sheet-data)
-         (sheet-component-attrib-list *sheet-data))))))
+         (sheet-component-attrib-list))))))
 
 
 (define (add-attrib)
@@ -1815,7 +1816,7 @@ failure."
                     (if (and (null-pointer? *next-item)
                              (null-pointer? *prev-item))
                         ;; Pathological case of one item list.
-                        (list-setter *sheet-data %null-pointer)
+                        (list-setter %null-pointer)
                         (if (and (null-pointer? *next-item)
                                  (not (null-pointer? *prev-item)))
                             ;; At list's end.
@@ -1829,7 +1830,7 @@ failure."
                                                                %null-pointer)
                                   ;; Also need to fix pointer to
                                   ;; list head.
-                                  (list-setter *sheet-data *next-item))
+                                  (list-setter *next-item))
                                 (begin
                                   ;; Normal case of element in
                                   ;; middle of list.
@@ -1884,7 +1885,7 @@ failure."
         (delete-string-list-item
          *sheet-data
          set-sheet-component-attrib-list!
-         (sheet-component-attrib-list *sheet-data)
+         (sheet-component-attrib-list)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
         ;; This renumbers list also.
@@ -2543,7 +2544,7 @@ Please check your design.")))
     (add-column-labels
      (component-sheet)
      component-attrib-count
-     (sheet-component-attrib-list *sheet-data)))
+     (sheet-component-attrib-list)))
 
   ;; This is not ready.  Processing of net attributes ('net' and
   ;; 'netname') has to be implemented.
@@ -2654,8 +2655,7 @@ Please check your design.")))
 
   ;; Now we create the first cell in each master list.
   (set-sheet-component-list! (make-string-list))
-  (set-sheet-component-attrib-list! *sheet-data
-                                               (make-string-list))
+  (set-sheet-component-attrib-list! (make-string-list))
   (attrib_sheet_data_set_component_count *sheet-data 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
@@ -2735,7 +2735,7 @@ Please check your design.")))
                          (not (string= name "net"))
                          (not (string= name "slot")))
                 (add-string-list-item
-                 (sheet-component-attrib-list *sheet-data)
+                 (sheet-component-attrib-list)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
                  (string->pointer name)))
               (g_free *attrib-text))))
@@ -2941,7 +2941,7 @@ Please check your design.")))
                                            *temp-refdes))
                           (column
                            (string-list-id
-                            (sheet-component-attrib-list *sheet-data)
+                            (sheet-component-attrib-list)
                             (string->pointer name))))
                       (if (or (= row -1)
                               (= column -1))
