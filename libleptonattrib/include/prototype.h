@@ -49,12 +49,6 @@ attrib_gtksheet_state_from_string (char *s);
 SHEET_DATA*
 attrib_sheet_data_new();
 
-GList*
-attrib_sheet_data_get_pin_attrib_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_attrib_list (SHEET_DATA *data,
-                                       GList *list);
 TABLE**
 attrib_sheet_data_get_component_table (SHEET_DATA *data);
 
