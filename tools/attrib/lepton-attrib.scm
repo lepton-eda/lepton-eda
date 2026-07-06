@@ -431,7 +431,8 @@ failure."
       (begin
         (format (current-error-port) "add-string-list-item(): ")
         (format (current-error-port)
-                (G_ "Tried to add to a NULL list.\n")))
+                (G_ "Tried to add to a NULL list.\n"))
+        %null-pointer)
 
       ;; First check to see if list is empty.  Handle insertion of
       ;; first item into empty list separately.  (Is this
@@ -447,7 +448,8 @@ failure."
               (let* ((count-bv (pointer->bytevector *count (sizeof int)))
                      (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
                 ;; Increment count to 1.
-                (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int)))))
+                (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+            *ls)
 
           ;; Otherwise, loop through list looking for duplicates.
           (let loop ((*prev *ls)
@@ -474,13 +476,16 @@ failure."
                        (let* ((count-bv (pointer->bytevector *count (sizeof int)))
                               (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
                          ;; Increment count.
-                         (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int)))))
+                         (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+                     *ls)
 
                    (let ((*item (g_strdup (glist-data *next-ls))))
                      (if (string= (pointer->string *item)
                                   (pointer->string *data))
                          ;; Found item already in list.  Just return.
-                         (g_free *item)
+                         (begin
+                           (g_free *item)
+                           *ls)
 
                          (begin
                            (g_free *item)
