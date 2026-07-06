@@ -333,8 +333,7 @@ failure."
                      (pointer->string *str))
             count
 
-            (loop (1+ count)
-                  (attrib_string_list_get_next *list-element))))))
+            (loop (1+ count) (glist-next *list-element))))))
 
 
 ;;; Detects "name" in STRING_LIST.
@@ -347,11 +346,11 @@ failure."
     (and (not (null-pointer? *item))
          (let ((*name-value (glist-data *item)))
            (if (null-pointer? *name-value)
-               (loop (attrib_string_list_get_next *item))
+               (loop (glist-next *item))
                (let ((found-name (str-attrib-name *name-value)))
                  (or (and found-name
                           (string= found-name name))
-                     (loop (attrib_string_list_get_next *item)))))))))
+                     (loop (glist-next *item)))))))))
 
 
 
@@ -488,7 +487,7 @@ failure."
                          (begin
                            (g_free *item)
                            (loop *next-ls
-                                 (attrib_string_list_get_next *next-ls))))))))))
+                                 (glist-next *next-ls))))))))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
@@ -506,7 +505,7 @@ failure."
             (let ((*data (g_strdup (glist-data *current-ls))))
               (add-string-list-item *new-ls *count *data)
               (g_free *data)
-              (loop (attrib_string_list_get_next *current-ls)))))))
+              (loop (glist-next *current-ls)))))))
 
 
 ;;; Looks for item *NAME in the list *LS and returns 0 if it is
@@ -532,7 +531,7 @@ failure."
                     1)
                   (begin
                     (g_free *item)
-                    (loop (attrib_string_list_get_next *ls)))))))))
+                    (loop (glist-next *ls)))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
@@ -720,7 +719,7 @@ failure."
 
           ;; free everything and iterate
           (g_free *old-attrib-value)
-          (loop (attrib_string_list_get_next *local-list)))))))
+          (loop (glist-next *local-list)))))))
 
 
 ;;; Takes *TABLE, *ROW-LIST, *ROW-NAME, and ATTRIBS-NUMBER, and
@@ -913,7 +912,7 @@ failure."
                           ;; Iterate.
                           (loop *new-attrib-list
                                 (1+ i)
-                                (attrib_string_list_get_next *local-attrib-list)))))))))
+                                (glist-next *local-attrib-list)))))))))
 
       (begin
         (format (current-error-port) "pin->pin-attrib-list(): ")
@@ -996,7 +995,7 @@ failure."
         ;; Free everything and iterate.
         (g_free *new-name-value-pair)
         (g_free *old-attrib-value)
-        (loop (attrib_string_list_get_next *local-list))))))
+        (loop (glist-next *local-list))))))
 
 
 (define (update-design-pins *toplevel *page)
@@ -1098,11 +1097,9 @@ failure."
               (attrib_table_set_column_name *table row column *column-title)
 
               ;; Get next column list item and then iterate.
-              (loopc (1+ column)
-                     (attrib_string_list_get_next *column-list-item)))))
+              (loopc (1+ column) (glist-next *column-list-item)))))
 
-        (loopr (1+ row)
-               (attrib_string_list_get_next *row-list-item))))))
+        (loopr (1+ row) (glist-next *row-list-item))))))
 
 
 ;;; Pushes spreadsheet data to tables.
@@ -1271,7 +1268,7 @@ failure."
             (glist-data *item)
             (if (null-pointer? *item)
                 %null-pointer
-                (loop (attrib_string_list_get_next *item) (1+ i)))))))
+                (loop (glist-next *item) (1+ i)))))))
 
 
 ;;; Export design components to CSV for external processing.
@@ -1497,8 +1494,7 @@ failure."
                (*pointer-ls '()))
       (if (null-pointer? *item)
           *pointer-ls
-          (loop (attrib_string_list_get_next *item)
-                (cons *item *pointer-ls)))))
+          (loop (glist-next *item) (cons *item *pointer-ls)))))
 
   (define *sorted-ls
     (if priority?
@@ -1587,8 +1583,7 @@ failure."
           (gtk_sheet_column_button_justify *sheet j GTK_JUSTIFY_LEFT)
           ;; TODO: Need to resize the column width here.
           (g_free *text)
-          (loop (1+ j)
-                (attrib_string_list_get_next *item)))))))
+          (loop (1+ j) (glist-next *item)))))))
 
 
 ;;; Looks for item *NAME in the list *LS, and returns the index
@@ -1616,8 +1611,7 @@ failure."
 
                   (begin
                     (g_free *item)
-                    (loop (1+ index)
-                          (attrib_string_list_get_next *ls)))))))))
+                    (loop (1+ index) (glist-next *ls)))))))))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
@@ -1835,7 +1829,7 @@ failure."
                            (pointer->string *name))
                   ;; Found item, now delete it.
                   (let ((*prev-item (glist-prev *item))
-                        (*next-item (attrib_string_list_get_next *item)))
+                        (*next-item (glist-next *item)))
                     ;; Check position in list.
                     (if (and (null-pointer? *next-item)
                              (null-pointer? *prev-item))
@@ -1873,7 +1867,7 @@ failure."
                     (g_free *trial-item))
                   (begin
                     (g_free *trial-item)
-                    (loop (attrib_string_list_get_next *item)))))))))
+                    (loop (glist-next *item)))))))))
 
 
 (define (delete-component-attrib-column *sheet num)
@@ -2485,9 +2479,7 @@ failure."
             (gtk_sheet_row_button_add_label *sheet j *text)
             (gtk_sheet_row_button_justify *sheet j GTK_JUSTIFY_LEFT)
             (g_free *text)
-            (loop (1+ j)
-                  (attrib_string_list_get_next *item)
-                  max-width))))))
+            (loop (1+ j) (glist-next *item) max-width))))))
 
 
 ;;; Adds a cell item to the GtkSheet *SHEET at the address (I . J)

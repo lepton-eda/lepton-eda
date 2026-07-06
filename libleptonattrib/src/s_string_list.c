@@ -88,23 +88,6 @@ attrib_string_list_set_prev (GList *list,
 }
 
 
-/*! \brief Get the \a next field of a string list.
- *
- *  \par Function Description
- *
- *  Returns the \a next field of a string list.  It is a pointer
- *  to the next item in the linked list.
- *
- *  \param [in] list The string list.
- *  \return The next list item.
- */
-GList*
-attrib_string_list_get_next (GList *list)
-{
-  return list->next;
-}
-
-
 /*! \brief Set the \a next field of a string list.
  *
  *  \par Function Description

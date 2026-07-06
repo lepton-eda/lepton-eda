@@ -102,7 +102,6 @@
 
             attrib_string_list_new
             attrib_string_list_set_data
-            attrib_string_list_get_next
             attrib_string_list_set_next
             attrib_string_list_set_prev
 
@@ -235,7 +234,6 @@
 ;;; s_string_list.c
 (define-lff attrib_string_list_new '* '())
 (define-lff attrib_string_list_set_data void '(* *))
-(define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_next void '(* *))
 (define-lff attrib_string_list_set_prev void '(* *))
 
