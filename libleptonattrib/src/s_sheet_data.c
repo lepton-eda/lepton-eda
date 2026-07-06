@@ -50,41 +50,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the component list of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the component list of given sheet data structure.
- *
- *  \param [in] data The sheet data.
- *
- *  \return The component list.
- */
-GList*
-attrib_sheet_data_get_component_list (SHEET_DATA *data)
-{
-  return data->master_comp_list_head;
-}
-
-
-/*! \brief Set the component list of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the component list of given sheet data instance to \p
- *  list.
- *
- *  \param [in] data The sheet data.
- *  \param [in] list The component list.
- */
-void
-attrib_sheet_data_set_component_list (SHEET_DATA *data,
-                                      GList *list)
-{
-  data->master_comp_list_head = list;
-}
-
-
 /*! \brief Get the component attribute list of sheet data.
  *
  *  \par Function Description

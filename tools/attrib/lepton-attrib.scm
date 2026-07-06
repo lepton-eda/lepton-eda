@@ -76,11 +76,16 @@
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 
-(define (sheet-component-list *sheet-data)
-  (attrib_sheet_data_get_component_list *sheet-data))
+;;; Sorted list of all component refdeses used in design.
+(define %sheet-component-list %null-pointer)
 
-(define (set-sheet-component-list! *sheet-data *ls)
-  (attrib_sheet_data_set_component_list *sheet-data *ls))
+;;; Gets the sheet component list.
+(define (sheet-component-list)
+  %sheet-component-list)
+
+;;; Sets the sheet component list to *LS.
+(define (set-sheet-component-list! *ls)
+  (set! %sheet-component-list *ls))
 
 
 ;;; Initialize liblepton library.
@@ -621,8 +626,7 @@ failure."
                ;; stored in the component table We'll need this
                ;; later.
                (*refdes (g_strdup (component-refdes *object)))
-               (row (string-list-id (sheet-component-list *sheet-data)
-                                    *refdes))
+               (row (string-list-id (sheet-component-list) *refdes))
                (column (string-list-id
                         (attrib_sheet_data_get_component_attrib_list
                          *sheet-data)
@@ -766,7 +770,7 @@ failure."
                           (make-attrib-pair
                            *temp-uref
                            (attrib_sheet_data_get_component_table *sheet-data)
-                           (sheet-component-list *sheet-data)
+                           (sheet-component-list)
                            (attrib_sheet_data_get_component_attrib_count *sheet-data))))
                      ;; Must create a name=value pair list for
                      ;; each particular component which we can
@@ -1091,7 +1095,7 @@ failure."
         (columns-number
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 0))
-        (*row-list (sheet-component-list *sheet-data))
+        (*row-list (sheet-component-list))
         (*column-list
          (attrib_sheet_data_get_component_attrib_list *sheet-data))
         (*table (attrib_sheet_data_get_component_table *sheet-data)))
@@ -1267,7 +1271,7 @@ failure."
 
   (define (id->component-refdes id)
     (pointer->string
-     (id->string-list-data (sheet-component-list *sheet-data) id)))
+     (id->string-list-data (sheet-component-list) id)))
 
   (define (ids->attrib-value i j)
     (define *val
@@ -1486,9 +1490,9 @@ failure."
 ;;; list items.
 (define (sort-component-list)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (sheet-component-list *sheet-data))
+  (define *ls (sheet-component-list))
 
-  (set-sheet-component-list! *sheet-data (sort-attrib-list *ls)))
+  (set-sheet-component-list! (sort-attrib-list *ls)))
 
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
@@ -2532,7 +2536,7 @@ Please check your design.")))
     (add-row-labels
      (component-sheet)
      component-count
-     (sheet-component-list *sheet-data))
+     (sheet-component-list))
     (add-column-labels
      (component-sheet)
      component-attrib-count
@@ -2646,7 +2650,7 @@ Please check your design.")))
   (attrib_sheet_data_set_pin_table *sheet-data %null-pointer)
 
   ;; Now we create the first cell in each master list.
-  (set-sheet-component-list! *sheet-data (make-string-list))
+  (set-sheet-component-list! (make-string-list))
   (attrib_sheet_data_set_component_attrib_list *sheet-data
                                                (make-string-list))
   (attrib_sheet_data_set_component_count *sheet-data 0)
@@ -2689,7 +2693,7 @@ Please check your design.")))
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
            (add-string-list-item
-            (sheet-component-list *sheet-data)
+            (sheet-component-list)
             (attrib_sheet_data_get_component_counter_address *sheet-data)
             *temp-refdes)
            (g_free *temp-refdes)))))
@@ -2930,9 +2934,8 @@ Please check your design.")))
 
                     ;; Sanity check.
                     (let ((row
-                           (string-list-id
-                            (sheet-component-list *sheet-data)
-                            *temp-refdes))
+                           (string-list-id (sheet-component-list)
+                                           *temp-refdes))
                           (column
                            (string-list-id
                             (attrib_sheet_data_get_component_attrib_list *sheet-data)
