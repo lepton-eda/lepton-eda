@@ -79,8 +79,6 @@
             attrib_sheet_data_set_net_attrib_list
             attrib_sheet_data_get_net_count
             attrib_sheet_data_set_net_count
-            attrib_sheet_data_get_net_list
-            attrib_sheet_data_set_net_list
             attrib_sheet_data_get_net_table
             attrib_sheet_data_set_net_table
             attrib_sheet_data_get_pin_attrib_count
@@ -206,8 +204,6 @@
 (define-lff attrib_sheet_data_set_net_attrib_list void '(* *))
 (define-lff attrib_sheet_data_get_net_count int '(*))
 (define-lff attrib_sheet_data_set_net_count void (list '* int))
-(define-lff attrib_sheet_data_get_net_list '* '(*))
-(define-lff attrib_sheet_data_set_net_list void '(* *))
 (define-lff attrib_sheet_data_get_net_table '* '(*))
 (define-lff attrib_sheet_data_set_net_table void '(* *))
 (define-lff attrib_sheet_data_get_pin_attrib_count int '(*))

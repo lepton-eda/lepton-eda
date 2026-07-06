@@ -100,11 +100,16 @@
   (set! %sheet-component-attrib-list *ls))
 
 
-(define (sheet-net-list *sheet-data)
-  (attrib_sheet_data_get_net_list *sheet-data))
+;;; Sorted list of all nets used in design.
+(define %sheet-net-list %null-pointer)
 
-(define (set-sheet-net-list! *sheet-data *ls)
-  (attrib_sheet_data_set_net_list *sheet-data *ls))
+;;; Gets the sheet net list.
+(define (sheet-net-list)
+  %sheet-net-list)
+
+;;; Sets the sheet net list to *LS.
+(define (set-sheet-net-list! *ls)
+  (set! %sheet-net-list *ls))
 
 
 ;;; Initialize liblepton library.
@@ -1128,7 +1133,7 @@ failure."
         (columns-number
          (attrib_sheet_data_get_net_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 1))
-        (*row-list (sheet-net-list *sheet-data))
+        (*row-list (sheet-net-list))
         (*column-list
          (attrib_sheet_data_get_net_attrib_list *sheet-data))
         (*table (attrib_sheet_data_get_net_table *sheet-data)))
@@ -2557,10 +2562,7 @@ Please check your design.")))
   ;; 'netname') has to be implemented.
   (if (> net-count 0)
       (begin
-        (add-row-labels
-         (net-sheet)
-         net-count
-         (sheet-net-list *sheet-data))
+        (add-row-labels (net-sheet) net-count (sheet-net-list))
         (add-column-labels
          (net-sheet)
          net-attrib-count
@@ -2666,7 +2668,7 @@ Please check your design.")))
   (attrib_sheet_data_set_component_count *sheet-data 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
-  (set-sheet-net-list! *sheet-data (make-string-list))
+  (set-sheet-net-list! (make-string-list))
   (attrib_sheet_data_set_net_attrib_list *sheet-data
                                          (make-string-list))
   (attrib_sheet_data_set_net_count *sheet-data 0)
@@ -3031,7 +3033,7 @@ Please check your design.")))
                 (when (and name
                            (not (string= name "netname")))
                   (let ((row
-                         (string-list-id (sheet-net-list *sheet-data)
+                         (string-list-id (sheet-net-list)
                                          *temp-netname))
                         (column
                          (string-list-id
