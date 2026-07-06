@@ -1578,10 +1578,7 @@ failure."
 
 ;;; Sort the pin list in alphabetical order.
 (define (sort-pin-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (sheet-pin-list))
-
-  (set-sheet-pin-list! (sort-attrib-list *ls)))
+  (set-sheet-pin-list! (sort-attrib-list (sheet-pin-list))))
 
 
 ;;; Sorts the pin attribute list in alphabetical order.
