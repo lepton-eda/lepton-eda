@@ -87,8 +87,6 @@
             attrib_sheet_data_get_pin_count
             attrib_sheet_data_set_pin_count
             attrib_sheet_data_get_pin_counter_address
-            attrib_sheet_data_get_pin_list
-            attrib_sheet_data_set_pin_list
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
@@ -210,8 +208,6 @@
 (define-lff attrib_sheet_data_get_pin_count int '(*))
 (define-lff attrib_sheet_data_set_pin_count void (list '* int))
 (define-lff attrib_sheet_data_get_pin_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_pin_list '* '(*))
-(define-lff attrib_sheet_data_set_pin_list void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
