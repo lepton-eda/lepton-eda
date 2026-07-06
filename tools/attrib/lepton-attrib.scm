@@ -574,8 +574,6 @@ failure."
   ;; First duplicate the list.
   (define *complete-component-attrib-list
     (duplicate-string-list *new-component-attrib-pair-list))
-  ;; This is to fake out a function called later.
-  (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
   (when (null-pointer? *object)
     (error "NULL object."))
@@ -602,8 +600,8 @@ failure."
                           *new-component-attrib-pair-list
                           old-attrib-name)))
            (add-string-list-item *complete-component-attrib-list
-                                   *count
-                                   *old-name-value-pair))
+                                 #f
+                                 *old-name-value-pair))
 
          (g_free *old-name-value-pair))))
    (glist->list (lepton_object_get_attribs *object) identity))
