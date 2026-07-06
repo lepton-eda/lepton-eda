@@ -1537,10 +1537,8 @@ failure."
 ;;; Sorts the component list and fills in the 'pos' fields of the
 ;;; list items.
 (define (sort-component-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (sheet-component-list))
-
-  (set-sheet-component-list! (sort-attrib-list *ls)))
+  (set-sheet-component-list!
+   (sort-attrib-list (sheet-component-list))))
 
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
