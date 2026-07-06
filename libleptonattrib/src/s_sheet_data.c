@@ -116,39 +116,6 @@ attrib_sheet_data_set_net_table (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the count of nets of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the count of nets of given sheet data structure.
- *
- *  \return The count.
- */
-int
-attrib_sheet_data_get_net_count (SHEET_DATA *data)
-{
-  return data->net_count;
-}
-
-
-/*! \brief Set the count of nets of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the count of nets of a sheet data structure to the given
- *  value.
- *
- *  \param [in] data The sheet data.
- *  \param [in] count The new count of nets.
- */
-void
-attrib_sheet_data_set_net_count (SHEET_DATA *data,
-                                 int count)
-{
-  data->net_count = count;
-}
-
-
 /*! \brief Get the count of net attribs of sheet data.
  *
  *  \par Function Description
