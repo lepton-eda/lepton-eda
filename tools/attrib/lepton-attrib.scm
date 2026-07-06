@@ -114,6 +114,13 @@
   (set! %sheet-component-attrib-list *ls))
 
 
+(define (sheet-component-attrib-count *sheet-data)
+  (attrib_sheet_data_get_component_attrib_count *sheet-data))
+
+(define (set-sheet-component-attrib-count! *sheet-data count)
+  (attrib_sheet_data_set_component_attrib_count *sheet-data count))
+
+
 ;;; Sorted list of all nets used in design.
 (define %sheet-net-list %null-pointer)
 
@@ -848,7 +855,7 @@ failure."
                            *temp-uref
                            (attrib_sheet_data_get_component_table *sheet-data)
                            (sheet-component-list)
-                           (attrib_sheet_data_get_component_attrib_count *sheet-data))))
+                           (sheet-component-attrib-count *sheet-data))))
                      ;; Must create a name=value pair list for
                      ;; each particular component which we can
                      ;; pass to function updating *OBJECT.  This
@@ -1166,8 +1173,7 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
   (let ((rows-number (sheet-component-count))
-        (columns-number
-         (attrib_sheet_data_get_component_attrib_count *sheet-data))
+        (columns-number (sheet-component-attrib-count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 0))
         (*row-list (sheet-component-list))
         (*column-list (sheet-component-attrib-list))
@@ -1327,8 +1333,7 @@ failure."
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
   (define rows-number (sheet-component-count))
-  (define columns-number
-    (attrib_sheet_data_get_component_attrib_count *sheet-data))
+  (define columns-number (sheet-component-attrib-count *sheet-data))
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
 
@@ -1789,7 +1794,7 @@ failure."
     ;; the new attrib.  However, that is difficult.  Therefore, I
     ;; will just destroy the old table and recreate it for now.
     (let ((old-component-attrib-count
-           (attrib_sheet_data_get_component_attrib_count *sheet-data))
+           (sheet-component-attrib-count *sheet-data))
           (*name (string->pointer name)))
 
       (add-string-list-item
@@ -1813,13 +1818,13 @@ failure."
           (attrib_sheet_data_get_component_table *sheet-data)
           (sheet-component-count)
           old-component-attrib-count
-          (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+          (sheet-component-attrib-count *sheet-data)))
 
         ;; Fill out new sheet with new stuff from gtksheet.
         (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
         (add-column-labels
          (attrib_get_sheet 0)
-         (attrib_sheet_data_get_component_attrib_count *sheet-data)
+         (sheet-component-attrib-count *sheet-data)
          (sheet-component-attrib-list))))))
 
 
@@ -1931,12 +1936,12 @@ failure."
               (attrib_sheet_data_get_component_table *sheet-data)
               num
               (sheet-component-count)
-              (attrib_sheet_data_get_component_attrib_count *sheet-data))))
+              (sheet-component-attrib-count *sheet-data))))
         ;; Destroy the current TABLE array:
         (destroy-table
          (attrib_sheet_data_get_component_table *sheet-data)
          (sheet-component-count)
-         (attrib_sheet_data_get_component_attrib_count *sheet-data))
+         (sheet-component-attrib-count *sheet-data))
 
         (delete-string-list-item
          *sheet-data
@@ -2375,7 +2380,7 @@ failure."
   ;; Components.
   (let ((component-count (sheet-component-count))
         (component-attrib-count
-         (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+         (sheet-component-attrib-count *sheet-data)))
     (if (and (> component-count 0) (> component-attrib-count 0))
         (let ((*component-sheet
                (gtk_sheet_new component-count
@@ -2542,7 +2547,7 @@ failure."
     (attrib_get_sheet 0))
   (define component-count (sheet-component-count))
   (define component-attrib-count
-    (attrib_sheet_data_get_component_attrib_count *sheet-data))
+    (sheet-component-attrib-count *sheet-data))
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
   (define (pin-sheet)
     (attrib_get_sheet 2))
@@ -2703,7 +2708,7 @@ Please check your design.")))
   (set-sheet-component-list! (make-string-list))
   (set-sheet-component-attrib-list! (make-string-list))
   (set-sheet-component-count! 0)
-  (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
+  (set-sheet-component-attrib-count! *sheet-data 0)
 
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
@@ -3269,7 +3274,7 @@ Please check your design.")))
   (attrib_sheet_data_set_component_table
    *sheet-data
    (make-table (sheet-component-count)
-               (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+               (sheet-component-attrib-count *sheet-data)))
   (attrib_sheet_data_set_net_table
    *sheet-data
    (make-table (attrib_sheet_data_get_net_count *sheet-data)
