@@ -139,11 +139,17 @@
   (set! %sheet-net-list *ls))
 
 
-(define (sheet-net-count *sheet-data)
-  (attrib_sheet_data_get_net_count *sheet-data))
+;;; The count of nets.  The value set in the program cannot change
+;;; -- user must edit design using the schematic capture program.
+(define %sheet-net-count 0)
 
-(define (set-sheet-net-count! *sheet-data count)
-  (attrib_sheet_data_set_net_count *sheet-data count))
+;;; Returns the count of sheet nets.
+(define (sheet-net-count)
+  %sheet-net-count)
+
+;;; Sets the count of sheet nets to COUNT.
+(define (set-sheet-net-count! count)
+  (set! %sheet-net-count count))
 
 
 ;;; Sorted list of all net attribs used in design.
@@ -1201,7 +1207,7 @@ failure."
                       columns-number))
 
   ;; Next handle net sheet.
-  (let ((rows-number (sheet-net-count *sheet-data))
+  (let ((rows-number (sheet-net-count))
         (columns-number
          (attrib_sheet_data_get_net_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 1))
@@ -2411,7 +2417,7 @@ failure."
          1)))
 
   ;; Nets.
-  (let ((net-count (sheet-net-count *sheet-data))
+  (let ((net-count (sheet-net-count))
         (net-attrib-count
          (attrib_sheet_data_get_net_attrib_count *sheet-data)))
     (if (and (> net-count 0) (> net-attrib-count 0))
@@ -2574,7 +2580,7 @@ failure."
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
   (define (net-sheet)
     (attrib_get_sheet 1))
-  (define net-count (sheet-net-count *sheet-data))
+  (define net-count (sheet-net-count))
   (define net-attrib-count
     (attrib_sheet_data_get_net_attrib_count *sheet-data))
 
@@ -2729,7 +2735,7 @@ Please check your design.")))
 
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
-  (set-sheet-net-count! *sheet-data 0)
+  (set-sheet-net-count! 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
   (set-sheet-pin-list! (make-string-list))
@@ -3294,7 +3300,7 @@ Please check your design.")))
                (sheet-component-attrib-count)))
   (attrib_sheet_data_set_net_table
    *sheet-data
-   (make-table (sheet-net-count *sheet-data)
+   (make-table (sheet-net-count)
                (attrib_sheet_data_get_net_attrib_count *sheet-data)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
