@@ -50,40 +50,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the pin list of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the pin list of given sheet data structure.
- *
- *  \param [in] data The sheet data.
- *
- *  \return The pin list.
- */
-GList*
-attrib_sheet_data_get_pin_list (SHEET_DATA *data)
-{
-  return data->master_pin_list_head;
-}
-
-
-/*! \brief Set the pin list of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the pin list of given sheet data instance to \p list.
- *
- *  \param [in] data The sheet data.
- *  \param [in] list The pin list.
- */
-void
-attrib_sheet_data_set_pin_list (SHEET_DATA *data,
-                                GList *list)
-{
-  data->master_pin_list_head = list;
-}
-
-
 /*! \brief Get the pin attribute list of sheet data.
  *
  *  \par Function Description
