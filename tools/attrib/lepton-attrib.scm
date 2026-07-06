@@ -114,11 +114,17 @@
   (set! %sheet-component-attrib-list *ls))
 
 
-(define (sheet-component-attrib-count *sheet-data)
-  (attrib_sheet_data_get_component_attrib_count *sheet-data))
+;;; The count of component attribs.  This value can change if the
+;;; user adds attribs.
+(define %sheet-component-attrib-count 0)
 
-(define (set-sheet-component-attrib-count! *sheet-data count)
-  (attrib_sheet_data_set_component_attrib_count *sheet-data count))
+;;; Returns the count of sheet component attribs.
+(define (sheet-component-attrib-count)
+  %sheet-component-attrib-count)
+
+;;; Sets the count of sheet component attribs to COUNT.
+(define (set-sheet-component-attrib-count! count)
+  (set! %sheet-component-attrib-count count))
 
 
 ;;; Sorted list of all nets used in design.
@@ -855,7 +861,7 @@ failure."
                            *temp-uref
                            (attrib_sheet_data_get_component_table *sheet-data)
                            (sheet-component-list)
-                           (sheet-component-attrib-count *sheet-data))))
+                           (sheet-component-attrib-count))))
                      ;; Must create a name=value pair list for
                      ;; each particular component which we can
                      ;; pass to function updating *OBJECT.  This
@@ -1173,7 +1179,7 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
   (let ((rows-number (sheet-component-count))
-        (columns-number (sheet-component-attrib-count *sheet-data))
+        (columns-number (sheet-component-attrib-count))
         (*gtk-sheet (attrib_get_sheet 0))
         (*row-list (sheet-component-list))
         (*column-list (sheet-component-attrib-list))
@@ -1333,7 +1339,7 @@ failure."
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
   (define rows-number (sheet-component-count))
-  (define columns-number (sheet-component-attrib-count *sheet-data))
+  (define columns-number (sheet-component-attrib-count))
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
 
@@ -1657,6 +1663,16 @@ failure."
                     (loop (1+ index) (glist-next *ls)))))))))
 
 
+(define (increment-component-attrib-counter)
+  (set-sheet-component-attrib-count!
+   (1+ (sheet-component-attrib-count))))
+
+
+(define (decrement-component-attrib-counter)
+  (set-sheet-component-attrib-count!
+   (1- (sheet-component-attrib-count))))
+
+
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -1793,15 +1809,14 @@ failure."
     ;; Eventually, I want to just resize the table to accomodate
     ;; the new attrib.  However, that is difficult.  Therefore, I
     ;; will just destroy the old table and recreate it for now.
-    (let ((old-component-attrib-count
-           (sheet-component-attrib-count *sheet-data))
+    (let ((old-component-attrib-count (sheet-component-attrib-count))
           (*name (string->pointer name)))
 
       (add-string-list-item
        (sheet-component-attrib-list)
-       (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
+       #f
        *name
-       #f)
+       increment-component-attrib-counter)
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
@@ -1817,14 +1832,13 @@ failure."
          (resize-table
           (attrib_sheet_data_get_component_table *sheet-data)
           (sheet-component-count)
-          old-component-attrib-count
-          (sheet-component-attrib-count *sheet-data)))
+          old-component-attrib-count (sheet-component-attrib-count)))
 
         ;; Fill out new sheet with new stuff from gtksheet.
         (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
         (add-column-labels
          (attrib_get_sheet 0)
-         (sheet-component-attrib-count *sheet-data)
+         (sheet-component-attrib-count)
          (sheet-component-attrib-list))))))
 
 
@@ -1846,8 +1860,8 @@ failure."
 (define (delete-string-list-item *sheet-data
                                  list-setter
                                  *ls
-                                 *counter
-                                 *name)
+                                 *name
+                                 update-counter-thunk)
   ;; First check to see if list is empty.  If empty, spew error
   ;; and return.
   (if (null-pointer? (glist-data *ls))
@@ -1902,10 +1916,7 @@ failure."
                     ;; Free current list item.
                     (g_free *item)
                     ;; Decrement count.
-                    ;; Do we need to re-number the list?
-                    (let* ((count-bv (pointer->bytevector *counter (sizeof int)))
-                           (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                      (bytevector-sint-set! count-bv 0 (1- count) (native-endianness) (sizeof int)))
+                    (update-counter-thunk)
                     ;; Free trial item before returning.
                     (g_free *trial-item))
                   (begin
@@ -1936,19 +1947,19 @@ failure."
               (attrib_sheet_data_get_component_table *sheet-data)
               num
               (sheet-component-count)
-              (sheet-component-attrib-count *sheet-data))))
+              (sheet-component-attrib-count))))
         ;; Destroy the current TABLE array:
         (destroy-table
          (attrib_sheet_data_get_component_table *sheet-data)
          (sheet-component-count)
-         (sheet-component-attrib-count *sheet-data))
+         (sheet-component-attrib-count))
 
         (delete-string-list-item
          *sheet-data
          set-sheet-component-attrib-list!
          (sheet-component-attrib-list)
-         (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
-         *attrib-name)
+         *attrib-name
+         decrement-component-attrib-counter)
         ;; This renumbers list also.
         (sort-component-attrib-list)
 
@@ -2379,8 +2390,7 @@ failure."
 
   ;; Components.
   (let ((component-count (sheet-component-count))
-        (component-attrib-count
-         (sheet-component-attrib-count *sheet-data)))
+        (component-attrib-count (sheet-component-attrib-count)))
     (if (and (> component-count 0) (> component-attrib-count 0))
         (let ((*component-sheet
                (gtk_sheet_new component-count
@@ -2546,8 +2556,7 @@ failure."
   (define (component-sheet)
     (attrib_get_sheet 0))
   (define component-count (sheet-component-count))
-  (define component-attrib-count
-    (sheet-component-attrib-count *sheet-data))
+  (define component-attrib-count (sheet-component-attrib-count))
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
   (define (pin-sheet)
     (attrib_get_sheet 2))
@@ -2708,7 +2717,7 @@ Please check your design.")))
   (set-sheet-component-list! (make-string-list))
   (set-sheet-component-attrib-list! (make-string-list))
   (set-sheet-component-count! 0)
-  (set-sheet-component-attrib-count! *sheet-data 0)
+  (set-sheet-component-attrib-count! 0)
 
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
@@ -2787,9 +2796,9 @@ Please check your design.")))
                          (not (string= name "slot")))
                 (add-string-list-item
                  (sheet-component-attrib-list)
-                 (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
+                 #f
                  (string->pointer name)
-                 #f))
+                 increment-component-attrib-counter))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
@@ -3274,7 +3283,7 @@ Please check your design.")))
   (attrib_sheet_data_set_component_table
    *sheet-data
    (make-table (sheet-component-count)
-               (sheet-component-attrib-count *sheet-data)))
+               (sheet-component-attrib-count)))
   (attrib_sheet_data_set_net_table
    *sheet-data
    (make-table (attrib_sheet_data_get_net_count *sheet-data)
