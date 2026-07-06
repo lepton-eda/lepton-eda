@@ -1834,7 +1834,7 @@ failure."
               (if (string= (pointer->string *trial-item)
                            (pointer->string *name))
                   ;; Found item, now delete it.
-                  (let ((*prev-item (attrib_string_list_get_prev *item))
+                  (let ((*prev-item (glist-prev *item))
                         (*next-item (attrib_string_list_get_next *item)))
                     ;; Check position in list.
                     (if (and (null-pointer? *next-item)
