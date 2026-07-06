@@ -323,17 +323,11 @@ failure."
 
 ;;; Returns the index of the string *STR in the list *LS.
 (define (string-list-id *ls *str)
-  (let loop ((count 0)
-             (*list-element *ls))
-    (if (or (null-pointer? *str)
-            (null-pointer? *list-element))
-        ;; Return code when string is not in master list.
-        -1
-        (if (string= (pointer->string (glist-data *list-element))
-                     (pointer->string *str))
-            count
-
-            (loop (1+ count) (glist-next *list-element))))))
+  (define str (pointer->string *str))
+  (or (list-index (lambda (s) (string= s str))
+                  (glist->list *ls pointer->string))
+      ;; Return code when string is not in master list.
+      -1))
 
 
 ;;; Detects "name" in STRING_LIST.
