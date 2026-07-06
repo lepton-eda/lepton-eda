@@ -138,6 +138,14 @@
 (define (set-sheet-net-list! *ls)
   (set! %sheet-net-list *ls))
 
+
+(define (sheet-net-count *sheet-data)
+  (attrib_sheet_data_get_net_count *sheet-data))
+
+(define (set-sheet-net-count! *sheet-data count)
+  (attrib_sheet_data_set_net_count *sheet-data count))
+
+
 ;;; Sorted list of all net attribs used in design.
 (define %sheet-net-attrib-list %null-pointer)
 
@@ -1193,7 +1201,7 @@ failure."
                       columns-number))
 
   ;; Next handle net sheet.
-  (let ((rows-number (attrib_sheet_data_get_net_count *sheet-data))
+  (let ((rows-number (sheet-net-count *sheet-data))
         (columns-number
          (attrib_sheet_data_get_net_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 1))
@@ -2403,7 +2411,7 @@ failure."
          1)))
 
   ;; Nets.
-  (let ((net-count (attrib_sheet_data_get_net_count *sheet-data))
+  (let ((net-count (sheet-net-count *sheet-data))
         (net-attrib-count
          (attrib_sheet_data_get_net_attrib_count *sheet-data)))
     (if (and (> net-count 0) (> net-attrib-count 0))
@@ -2566,7 +2574,7 @@ failure."
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
   (define (net-sheet)
     (attrib_get_sheet 1))
-  (define net-count (attrib_sheet_data_get_net_count *sheet-data))
+  (define net-count (sheet-net-count *sheet-data))
   (define net-attrib-count
     (attrib_sheet_data_get_net_attrib_count *sheet-data))
 
@@ -2721,7 +2729,7 @@ Please check your design.")))
 
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
-  (attrib_sheet_data_set_net_count *sheet-data 0)
+  (set-sheet-net-count! *sheet-data 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
   (set-sheet-pin-list! (make-string-list))
@@ -3286,7 +3294,7 @@ Please check your design.")))
                (sheet-component-attrib-count)))
   (attrib_sheet_data_set_net_table
    *sheet-data
-   (make-table (attrib_sheet_data_get_net_count *sheet-data)
+   (make-table (sheet-net-count *sheet-data)
                (attrib_sheet_data_get_net_attrib_count *sheet-data)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
