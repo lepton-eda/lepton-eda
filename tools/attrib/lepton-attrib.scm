@@ -312,7 +312,7 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
-;;; Creates and returns new empty STRING_LIST *LS.
+;;; Creates and returns new empty GList *LS.
 (define (make-string-list)
   (let ((*ls (attrib_string_list_new)))
     (attrib_string_list_set_data *ls %null-pointer)
@@ -338,9 +338,9 @@ failure."
 
 ;;; Detects "name" in STRING_LIST.
 ;;;
-;;; This function is passed a STRING_LIST of name=value pairs
+;;; This function is passed a GList of name=value pairs
 ;;; *NAME-VALUE-LIST, and NAME.  Returns #t if the name is in the
-;;; STRING_LIST, otherwise it returns #f.
+;;; GList, otherwise it returns #f.
 (define (name-in-list? *name-value-list name)
   (let loop ((*item *name-value-list))
     (and (not (null-pointer? *item))
@@ -429,7 +429,7 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
-;;; Adds the item *DATA to STRING_LIST *LS incrementing *COUNT.
+;;; Adds the item *DATA to GList *LS incrementing *COUNT.
 ;;; It first passes through the list to make sure that there are
 ;;; no duplications.
 (define (add-string-list-item *ls *count *data)
@@ -723,7 +723,7 @@ failure."
 
 
 ;;; Takes *TABLE, *ROW-LIST, *ROW-NAME, and ATTRIBS-NUMBER, and
-;;; returns a STRING_LIST list holding name=value pairs for all
+;;; returns a GList list holding name=value pairs for all
 ;;; attribs pertainent to that particular row.
 ;;;
 ;;; If the row holds no attribs, it just returns NULL.
@@ -826,7 +826,7 @@ failure."
 
 ;;; Returns a list of attributes attached to *PIN of the component
 ;;; with reference designator *REFDES.  The returned list is a
-;;; STRING_LIST where the data holds a name=value string.
+;;; GList where the data holds a name=value string.
 ;;; The algorithm is as follows:
 ;;; - Form refdes:pinnumber label for this pin.
 ;;; - Get row number of this refdes:pinnumber
@@ -1797,7 +1797,7 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-;;; Deletes the item *NAME from a STRING_LIST *LS.  The function
+;;; Deletes the item *NAME from a GList *LS.  The function
 ;;; also decrements the list counter *COUNTER.  *SHEET-DATA is
 ;;; used to set the list to the new value using LIST-SETTER.
 (define (delete-string-list-item *sheet-data
