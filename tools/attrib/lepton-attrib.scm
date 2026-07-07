@@ -1315,7 +1315,7 @@ failure."
           (string-drop title (string-length prefix)))))))
 
 
-(define (set-sheet-data-changed *sheet-data changed)
+(define (set-sheet-data-changed changed)
   (set-sheet-changed! (true? changed))
 
   (set-title-changed changed)
@@ -1351,7 +1351,7 @@ failure."
 
   ;; Save all pages in design.
   (save-pages)
-  (set-sheet-data-changed (attrib_get_sheet_data) FALSE))
+  (set-sheet-data-changed FALSE))
 
 
 (define (callback-file-save *action *parameter *data)
@@ -2011,7 +2011,7 @@ failure."
         (gtk_sheet_delete_columns *sheet num 1)
 
         ;; Set changed flag so user is prompted when exiting.
-        (set-sheet-data-changed *sheet-data TRUE))))
+        (set-sheet-data-changed TRUE))))
 
 
 (define (gtksheet-state->symbol state)
@@ -2052,7 +2052,6 @@ failure."
 
 ;;; Runs the Delete attribute dialog.
 (define (delete-attrib)
-  (define *sheet-data (attrib_get_sheet_data))
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
@@ -2068,13 +2067,13 @@ failure."
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
-          (set-sheet-data-changed *sheet-data TRUE))
+          (set-sheet-data-changed TRUE))
          ;; Pin sheet.
          ((= current-page-id 2)
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
-          (set-sheet-data-changed *sheet-data TRUE)))))))
+          (set-sheet-data-changed TRUE)))))))
 
 
 (define (callback-edit-delete-attrib *action *parameter *data)
@@ -2104,12 +2103,12 @@ failure."
     ;; Question:  how to sanity check (row, column) selection?
     (attrib_table_set_visibility *table row column visible)
     ;; Cell has been updated.
-    (set-sheet-data-changed *sheet-data TRUE)
+    (set-sheet-data-changed TRUE)
 
     (unless (= show LEAVE_NAME_VALUE_ALONE)
       (attrib_table_set_show_name_value *table row column show)
       ;; Cell has been updated.
-      (set-sheet-data-changed *sheet-data TRUE))))
+      (set-sheet-data-changed TRUE))))
 
 
 (define (set-cell-text-color *sheet i j color)
@@ -2367,12 +2366,11 @@ failure."
 
 
 (define (callback-gtksheet-deactivate *sheet row column *user-data)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *entry-str (gtk_sheet_get_entry_text *sheet))
   (define cell-str (current-cell-text))
 
   (unless (string= (pointer->string *entry-str) cell-str)
-    (set-sheet-data-changed *sheet-data TRUE))
+    (set-sheet-data-changed TRUE))
   (g_free *entry-str)
   ;; TRUE => allow deactivation.
   TRUE)
