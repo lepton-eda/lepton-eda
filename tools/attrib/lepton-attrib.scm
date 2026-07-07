@@ -1829,64 +1829,18 @@ failure."
 (define (delete-string-list-item list-setter
                                  *ls
                                  *name)
-  ;; First check to see if list is empty.  If empty, spew error
-  ;; and return.
-  (if (null-pointer? (glist-data *ls))
-      (begin
-        (format (current-error-port) "delete-string-list-item(): ")
-        (format (current-error-port)
-                (G_ "Tried to remove item from empty list.\n")))
-
-      ;; Now loop through list looking for item.
-      (let loop ((*item *ls))
-        (if (null-pointer? *item)
-            ;; If we are here, it's 'cause we didn't find the
-            ;; item.  Spew error and return.
-            (begin
-              (format (current-error-port)
-                      "delete-string-list-item(): ")
-              (format (current-error-port)
-                      (G_ "Couldn't delete item ~S\n")
-                      (pointer->string *name)))
-            (let ((*trial-item (g_strdup (glist-data *item))))
-              (if (string= (pointer->string *trial-item)
-                           (pointer->string *name))
-                  ;; Found item, now delete it.
-                  (let ((*prev-item (glist-prev *item))
-                        (*next-item (glist-next *item)))
-                    ;; Check position in list.
-                    (if (and (null-pointer? *next-item)
-                             (null-pointer? *prev-item))
-                        ;; Pathological case of one item list.
-                        (list-setter %null-pointer)
-                        (if (and (null-pointer? *next-item)
-                                 (not (null-pointer? *prev-item)))
-                            ;; At list's end.
-                            (attrib_string_list_set_next *prev-item
-                                                         %null-pointer)
-                            (if (and (not (null-pointer? *next-item))
-                                     (null-pointer? *prev-item))
-                                (begin
-                                  ;; At list's beginning.
-                                  (attrib_string_list_set_prev *next-item
-                                                               %null-pointer)
-                                  ;; Also need to fix pointer to
-                                  ;; list head.
-                                  (list-setter *next-item))
-                                (begin
-                                  ;; Normal case of element in
-                                  ;; middle of list.
-                                  (attrib_string_list_set_next *prev-item
-                                                               *next-item)
-                                  (attrib_string_list_set_prev *next-item
-                                                               *prev-item)))))
-                    ;; Free current list item.
-                    (g_free *item)
-                    ;; Free trial item before returning.
-                    (g_free *trial-item))
-                  (begin
-                    (g_free *trial-item)
-                    (loop (glist-next *item)))))))))
+  ;; The comparison function for g_list_find_custom() should
+  ;; return 0 when the desired element is found.
+  (define (compare-c-strings *a *b)
+    (if (*string= *a *b) 0 1))
+  (define *compare-c-strings
+    (procedure->pointer int compare-c-strings '(* *)))
+  (let ((*item (g_list_find_custom *ls *name *compare-c-strings)))
+    (if (null-pointer? *item)
+        *ls
+        (let ((*new-ls (g_list_delete_link *ls *item)))
+          (list-setter *new-ls)
+          *new-ls))))
 
 
 (define (delete-component-attrib-column *sheet num)
