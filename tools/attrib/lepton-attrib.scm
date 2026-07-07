@@ -959,11 +959,10 @@ failure."
                           (string-append new-attrib-name "=" new-attrib-value))
                          (*name-value-pair (string->pointer name-value-pair)))
 
-                    ;; Add name=value to the new list.
-                    (add-string-list-item *new-attrib-list *name-value-pair)
-
                     ;; Iterate.
-                    (loop *new-attrib-list
+                    ;; Add name=value to the new list.
+                    (loop (add-string-list-item *new-attrib-list
+                                                *name-value-pair)
                           (1+ i)
                           (glist-next *local-attrib-list)))))))
 
