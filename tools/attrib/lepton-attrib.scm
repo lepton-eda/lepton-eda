@@ -580,9 +580,8 @@ failure."
       (let loop ((*current-ls *ls))
         (if (null-pointer? *current-ls)
             *new-ls
-            (let ((*data (g_strdup (glist-data *current-ls))))
-              (add-string-list-item *new-ls *data)
-              (g_free *data)
+            (begin
+              (add-string-list-item *new-ls (glist-data *current-ls))
               (loop (glist-next *current-ls)))))))
 
 
