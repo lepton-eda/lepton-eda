@@ -157,17 +157,10 @@
 (define (set-sheet-pin-list! *ls)
   (set! %sheet-pin-list *ls))
 
-;;; The count of pins.  The value set in the program cannot change
-;;; -- user must edit design using the schematic capture program.
-(define %sheet-pin-count 0)
 
 ;;; Returns the count of sheet pins.
 (define (sheet-pin-count)
-  %sheet-pin-count)
-
-;;; Sets the count of sheet pins to COUNT.
-(define (set-sheet-pin-count! count)
-  (set! %sheet-pin-count count))
+  (length (glist->list (sheet-pin-list) identity)))
 
 
 ;;; Sorted list of all pin attribs used in design.
@@ -2790,9 +2783,6 @@ Please check your design.")))
 (define (add-pins *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (define (increment-pin-counter)
-    (set-sheet-pin-count! (1+ (sheet-pin-count))))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2820,7 +2810,7 @@ Please check your design.")))
                           (add-string-list-item
                            (sheet-pin-list)
                            *row-label
-                           increment-pin-counter))
+                           #f))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
