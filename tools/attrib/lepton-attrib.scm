@@ -156,17 +156,9 @@
   (set! %sheet-net-attrib-list *ls))
 
 
-;;; The count of net attribs.  This value can change if the user
-;;; adds attribs.
-(define %sheet-net-attrib-count 0)
-
 ;;; Returns the count of sheet net attribs.
 (define (sheet-net-attrib-count)
-  %sheet-net-attrib-count)
-
-;;; Sets the count of sheet net attribs to COUNT.
-(define (set-sheet-net-attrib-count! count)
-  (set! %sheet-net-attrib-count count))
+  (length (glist->list (sheet-net-attrib-list) identity)))
 
 
 ;;; Sorted list of all refdes:pin items used in design.
