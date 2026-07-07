@@ -810,24 +810,26 @@ failure."
                 (G_ "We didn't find the row name in the row list!\n"))
         *attrib-pair-list)
 
-      (let loop ((column 0))
+      (let loop ((column 0)
+                 (*out-ls *attrib-pair-list))
         (if (>= column attribs-number)
-            *attrib-pair-list
+            *out-ls
             (let ((*attrib-value
                    (attrib_table_get_attrib_value *table row column)))
               ;; Pull attrib from table.  If non-null add it to
               ;; the pair list.
-              (unless (null-pointer? *attrib-value)
-                (let* ((*attrib-name
-                        (attrib_table_get_column_name *table row column))
-                       (*name-value-pair
-                        (string->pointer
-                         (string-append (pointer->string *attrib-name)
-                                        "="
-                                        (pointer->string *attrib-value)))))
-                  (add-string-list-item *attrib-pair-list
-                                        *name-value-pair)))
-              (loop (1+ column)))))))
+              (loop (1+ column)
+                    (if (null-pointer? *attrib-value)
+                        *out-ls
+                        (let* ((*attrib-name
+                                (attrib_table_get_column_name *table row column))
+                               (*name-value-pair
+                                (string->pointer
+                                 (string-append (pointer->string *attrib-name)
+                                                "="
+                                                (pointer->string *attrib-value)))))
+                          (add-string-list-item *out-ls
+                                                *name-value-pair)))))))))
 
 
 (define (update-design-components *toplevel *page)
