@@ -2680,8 +2680,6 @@ Please check your design.")))
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
 
-  (set-sheet-changed! #f)
-
   *sheet-data)
 
 
