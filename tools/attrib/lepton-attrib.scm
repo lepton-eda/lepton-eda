@@ -2737,18 +2737,12 @@ Please check your design.")))
   ;; Now we create the first cell in each master list.
   (set-sheet-component-list! (make-string-list))
   (set-sheet-component-attrib-list! (make-string-list))
-  (set-sheet-component-count! 0)
-  (set-sheet-component-attrib-count! 0)
 
   (set-sheet-net-list! (make-string-list))
   (set-sheet-net-attrib-list! (make-string-list))
-  (set-sheet-net-count! 0)
-  (set-sheet-net-attrib-count! 0)
 
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
-  (set-sheet-pin-count! 0)
-  (set-sheet-pin-attrib-count! 0)
 
   (attrib_sheet_data_set_changed *sheet-data FALSE)
 
