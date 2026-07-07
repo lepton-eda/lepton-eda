@@ -1296,14 +1296,14 @@ failure."
 
 
 ;;; Indicate if document is flagged as changed in the title.
-(define (set-title-changed changed)
+(define (set-title-changed changed?)
   (define *window-widget (attrib_get_window))
   (define *title (gtk_window_get_title *window-widget))
   (define title
     (if (null-pointer? *title) "" (pointer->string *title)))
   (define prefix "* ")
 
-  (if (true? changed)
+  (if changed?
       (unless (string-prefix? prefix title)
         (gtk_window_set_title
          *window-widget
@@ -1315,12 +1315,12 @@ failure."
           (string-drop title (string-length prefix)))))))
 
 
-(define (set-sheet-data-changed changed)
-  (set-sheet-changed! (true? changed))
+(define (set-sheet-data-changed changed?)
+  (set-sheet-changed! changed?)
 
-  (set-title-changed changed)
+  (set-title-changed changed?)
 
-  (when (false? changed)
+  (unless changed?
     (update-current-cell-text)))
 
 
@@ -1351,7 +1351,7 @@ failure."
 
   ;; Save all pages in design.
   (save-pages)
-  (set-sheet-data-changed FALSE))
+  (set-sheet-data-changed #f))
 
 
 (define (callback-file-save *action *parameter *data)
@@ -2011,7 +2011,7 @@ failure."
         (gtk_sheet_delete_columns *sheet num 1)
 
         ;; Set changed flag so user is prompted when exiting.
-        (set-sheet-data-changed TRUE))))
+        (set-sheet-data-changed #t))))
 
 
 (define (gtksheet-state->symbol state)
@@ -2067,13 +2067,13 @@ failure."
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
-          (set-sheet-data-changed TRUE))
+          (set-sheet-data-changed #t))
          ;; Pin sheet.
          ((= current-page-id 2)
           ;; Delete column on gtksheet.
           (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
-          (set-sheet-data-changed TRUE)))))))
+          (set-sheet-data-changed #t)))))))
 
 
 (define (callback-edit-delete-attrib *action *parameter *data)
@@ -2103,12 +2103,12 @@ failure."
     ;; Question:  how to sanity check (row, column) selection?
     (attrib_table_set_visibility *table row column visible)
     ;; Cell has been updated.
-    (set-sheet-data-changed TRUE)
+    (set-sheet-data-changed #t)
 
     (unless (= show LEAVE_NAME_VALUE_ALONE)
       (attrib_table_set_show_name_value *table row column show)
       ;; Cell has been updated.
-      (set-sheet-data-changed TRUE))))
+      (set-sheet-data-changed #t))))
 
 
 (define (set-cell-text-color *sheet i j color)
@@ -2370,7 +2370,7 @@ failure."
   (define cell-str (current-cell-text))
 
   (unless (string= (pointer->string *entry-str) cell-str)
-    (set-sheet-data-changed TRUE))
+    (set-sheet-data-changed #t))
   (g_free *entry-str)
   ;; TRUE => allow deactivation.
   TRUE)
