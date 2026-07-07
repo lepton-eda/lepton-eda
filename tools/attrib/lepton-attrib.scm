@@ -2819,9 +2819,10 @@ Please check your design.")))
                        (when (and attrib-name
                                   (not (string= attrib-name "pinnumber"))
                                   attrib-value)
-                         (add-string-list-item
-                          (sheet-pin-attrib-list)
-                          (string->pointer attrib-name)))
+                         (set-sheet-pin-attrib-list!
+                          (add-string-list-item
+                           (sheet-pin-attrib-list)
+                           (string->pointer attrib-name))))
 
                        (g_free *attrib-text))))
 
