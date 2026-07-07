@@ -546,7 +546,7 @@ failure."
 ;;; elements using UPDATE-COUNTER-THUNK if it is not #f.  It first
 ;;; passes through the list to make sure that there are no
 ;;; duplications.
-(define (add-string-list-item *ls *data update-counter-thunk)
+(define (add-string-list-item *ls *data)
   (if (null-pointer? *ls)
       (g_list_append *ls (g_strdup *data))
 
@@ -560,18 +560,13 @@ failure."
             ;; This may have already been initialized.
             (attrib_string_list_set_prev *ls %null-pointer)
 
-            (when update-counter-thunk
-              (update-counter-thunk))
             *ls)
 
           ;; Otherwise, loop through list looking for duplicates.
           (let* ((ls (glist->list *ls pointer->string)))
             (if (member (pointer->string *data) ls)
                 *ls
-                (begin
-                  (when update-counter-thunk
-                    (update-counter-thunk))
-                  (g_list_append *ls (g_strdup *data))))))))
+                (g_list_append *ls (g_strdup *data)))))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
@@ -586,7 +581,7 @@ failure."
         (if (null-pointer? *current-ls)
             *new-ls
             (let ((*data (g_strdup (glist-data *current-ls))))
-              (add-string-list-item *new-ls *data #f)
+              (add-string-list-item *new-ls *data)
               (g_free *data)
               (loop (glist-next *current-ls)))))))
 
@@ -680,8 +675,7 @@ failure."
                           *new-component-attrib-pair-list
                           old-attrib-name)))
            (add-string-list-item *complete-component-attrib-list
-                                 *old-name-value-pair
-                                 #f))
+                                 *old-name-value-pair))
 
          (g_free *old-name-value-pair))))
    (glist->list (lepton_object_get_attribs *object) identity))
@@ -834,8 +828,7 @@ failure."
                                         "="
                                         (pointer->string *attrib-value)))))
                   (add-string-list-item *attrib-pair-list
-                                        *name-value-pair
-                                        #f)))
+                                        *name-value-pair)))
               (loop (1+ column)))))))
 
 
@@ -967,7 +960,7 @@ failure."
                          (*name-value-pair (string->pointer name-value-pair)))
 
                     ;; Add name=value to the new list.
-                    (add-string-list-item *new-attrib-list *name-value-pair #f)
+                    (add-string-list-item *new-attrib-list *name-value-pair)
 
                     ;; Iterate.
                     (loop *new-attrib-list
@@ -1793,7 +1786,7 @@ failure."
           (*name (string->pointer name)))
 
       (set-sheet-component-attrib-list!
-       (add-string-list-item (sheet-component-attrib-list) *name #f))
+       (add-string-list-item (sheet-component-attrib-list) *name))
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
@@ -2709,7 +2702,7 @@ Please check your design.")))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
-           (add-string-list-item (sheet-component-list) *temp-refdes #f)
+           (add-string-list-item (sheet-component-list) *temp-refdes)
            (g_free *temp-refdes)))))
    (glist->list *objects identity)))
 
@@ -2745,10 +2738,8 @@ Please check your design.")))
                          (not (string= name "refdes"))
                          (not (string= name "net"))
                          (not (string= name "slot")))
-                (add-string-list-item
-                 (sheet-component-attrib-list)
-                 (string->pointer name)
-                 #f))
+                (add-string-list-item (sheet-component-attrib-list)
+                                      (string->pointer name)))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
@@ -2807,10 +2798,8 @@ Please check your design.")))
                                 (string-append (pointer->string *temp-refdes)
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
-                          (add-string-list-item
-                           (sheet-pin-list)
-                           *row-label
-                           #f))
+                          (add-string-list-item (sheet-pin-list)
+                                                *row-label))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
@@ -2882,8 +2871,7 @@ Please check your design.")))
                                   attrib-value)
                          (add-string-list-item
                           (sheet-pin-attrib-list)
-                          (string->pointer attrib-name)
-                          #f))
+                          (string->pointer attrib-name)))
 
                        (g_free *attrib-text))))
 
