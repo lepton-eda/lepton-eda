@@ -1825,7 +1825,7 @@ failure."
 
 
 ;;; Deletes the item *NAME from a GList *LS.
-(define (delete-string-list-item *ls *name)
+(define (delete-glist-item *ls *name)
   ;; The comparison function for g_list_find_custom() should
   ;; return 0 when the desired element is found.
   (define (compare-c-strings *a *b)
@@ -1870,8 +1870,8 @@ failure."
          (sheet-component-attrib-count))
 
         (set-sheet-component-attrib-list!
-         (delete-string-list-item (sheet-component-attrib-list)
-                                  *attrib-name))
+         (delete-glist-item (sheet-component-attrib-list)
+                            *attrib-name))
         ;; This renumbers list also.
         (sort-component-attrib-list)
 
