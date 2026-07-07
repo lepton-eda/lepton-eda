@@ -197,17 +197,9 @@
   (set! %sheet-pin-attrib-list *ls))
 
 
-;;; The count of pin attribs.  This value can change if the user
-;;; adds attribs.
-(define %sheet-pin-attrib-count 0)
-
 ;;; Returns the count of sheet pin attribs.
 (define (sheet-pin-attrib-count)
-  %sheet-pin-attrib-count)
-
-;;; Sets the count of sheet pin attribs.
-(define (set-sheet-pin-attrib-count! count)
-  (set! %sheet-pin-attrib-count count))
+  (length (glist->list (sheet-pin-attrib-list) identity)))
 
 
 ;;; Whether the sheet was changed.  For 'file not saved' warning
@@ -2897,9 +2889,6 @@ Please check your design.")))
 (define (add-pin-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (define (increment-pin-attrib-counter)
-    (set-sheet-pin-attrib-count! (1+ (sheet-pin-attrib-count))))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2936,7 +2925,7 @@ Please check your design.")))
                          (add-string-list-item
                           (sheet-pin-attrib-list)
                           (string->pointer attrib-name)
-                          increment-pin-attrib-counter))
+                          #f))
 
                        (g_free *attrib-text))))
 
