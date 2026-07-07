@@ -124,7 +124,9 @@
 
 ;;; Returns the count of sheet nets.
 (define (sheet-net-count)
-  (length (glist->list (sheet-net-list) identity)))
+  ;; Disable the counter for now to correctly show the "TBD" labels.
+  ;; (length (glist->list (sheet-net-list) identity))
+  0)
 
 
 ;;; Sorted list of all net attribs used in design.
