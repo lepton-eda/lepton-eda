@@ -213,6 +213,13 @@
   (set! %sheet-pin-attrib-list *ls))
 
 
+(define (sheet-pin-attrib-count *sheet-data)
+  (attrib_sheet_data_get_pin_attrib_count *sheet-data))
+
+(define (set-sheet-pin-attrib-count! *sheet-data count)
+  (attrib_sheet_data_set_pin_attrib_count *sheet-data count))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -1248,8 +1255,7 @@ failure."
 
   ;; Finally handle component pin sheet.
   (let ((rows-number (sheet-pin-count))
-        (columns-number
-         (attrib_sheet_data_get_pin_attrib_count *sheet-data))
+        (columns-number (sheet-pin-attrib-count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 2))
         (*row-list (sheet-pin-list))
         (*column-list (sheet-pin-attrib-list))
@@ -2472,8 +2478,7 @@ failure."
 
   ;; Pins
   (let ((pin-count (sheet-pin-count))
-        (pin-attrib-count
-         (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
+        (pin-attrib-count (sheet-pin-attrib-count *sheet-data)))
     (if (and (> pin-count 0) (> pin-attrib-count 0))
         (let ((*pin-sheet (gtk_sheet_new pin-count
                                          pin-attrib-count
@@ -2598,8 +2603,7 @@ failure."
   (define (pin-sheet)
     (attrib_get_sheet 2))
   (define pin-count (sheet-pin-count))
-  (define pin-attrib-count
-    (attrib_sheet_data_get_pin_attrib_count *sheet-data))
+  (define pin-attrib-count (sheet-pin-attrib-count *sheet-data))
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
   (define (net-sheet)
     (attrib_get_sheet 1))
@@ -2763,7 +2767,7 @@ Please check your design.")))
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
   (set-sheet-pin-count! 0)
-  (attrib_sheet_data_set_pin_attrib_count *sheet-data 0)
+  (set-sheet-pin-attrib-count! *sheet-data 0)
 
   (attrib_sheet_data_set_changed *sheet-data FALSE)
 
@@ -3329,7 +3333,7 @@ Please check your design.")))
   (attrib_sheet_data_set_pin_table
    *sheet-data
    (make-table (sheet-pin-count)
-               (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
+               (sheet-pin-attrib-count *sheet-data)))
 
   ;; Must iterate over all pages in design.
   (for-each
