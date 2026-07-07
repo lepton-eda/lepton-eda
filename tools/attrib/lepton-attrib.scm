@@ -577,12 +577,13 @@ failure."
       ;; This is an empty string list.
       *new-ls
 
-      (let loop ((*current-ls *ls))
+      (let loop ((*current-ls *ls)
+                 (*out-ls %null-pointer))
         (if (null-pointer? *current-ls)
-            *new-ls
-            (begin
-              (add-string-list-item *new-ls (glist-data *current-ls))
-              (loop (glist-next *current-ls)))))))
+            *out-ls
+            (loop (glist-next *current-ls)
+                  (add-string-list-item *out-ls
+                                        (glist-data *current-ls)))))))
 
 
 ;;; Looks for item *NAME in the list *LS and returns 0 if it is
