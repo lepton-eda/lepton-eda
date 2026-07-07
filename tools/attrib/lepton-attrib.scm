@@ -574,10 +574,11 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
-;;; Adds the item *DATA to GList *LS incrementing *COUNT.
-;;; It first passes through the list to make sure that there are
-;;; no duplications.
-(define (add-string-list-item *ls *count *data update-counter-thunk)
+;;; Adds the item *DATA to GList *LS incrementing the count of
+;;; elements using UPDATE-COUNTER-THUNK if it is not #f.  It first
+;;; passes through the list to make sure that there are no
+;;; duplications.
+(define (add-string-list-item *ls *data update-counter-thunk)
   (if (null-pointer? *ls)
       (begin
         (format (current-error-port) "add-string-list-item(): ")
@@ -595,11 +596,6 @@ failure."
             ;; This may have already been initialized.
             (attrib_string_list_set_prev *ls %null-pointer)
 
-            (when *count
-              (let* ((count-bv (pointer->bytevector *count (sizeof int)))
-                     (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                ;; Increment count to 1.
-                (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
             (when update-counter-thunk
               (update-counter-thunk))
             *ls)
@@ -609,11 +605,6 @@ failure."
             (if (member (pointer->string *data) ls)
                 *ls
                 (begin
-                  (when *count
-                    (let* ((count-bv (pointer->bytevector *count (sizeof int)))
-                           (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                      ;; Increment count.
-                      (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
                   (when update-counter-thunk
                     (update-counter-thunk))
                   (g_list_append *ls (g_strdup *data))))))))
@@ -631,7 +622,7 @@ failure."
         (if (null-pointer? *current-ls)
             *new-ls
             (let ((*data (g_strdup (glist-data *current-ls))))
-              (add-string-list-item *new-ls #f *data #f)
+              (add-string-list-item *new-ls *data #f)
               (g_free *data)
               (loop (glist-next *current-ls)))))))
 
@@ -725,7 +716,6 @@ failure."
                           *new-component-attrib-pair-list
                           old-attrib-name)))
            (add-string-list-item *complete-component-attrib-list
-                                 #f
                                  *old-name-value-pair
                                  #f))
 
@@ -852,7 +842,6 @@ failure."
 (define (make-attrib-pair *row-name *table *row-list attribs-number)
   (define *attrib-pair-list (make-string-list))
   (define row (string-list-id *row-list *row-name))
-  (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
   ;; Sanity check.
   (if (= row -1)
@@ -881,7 +870,6 @@ failure."
                                         "="
                                         (pointer->string *attrib-value)))))
                   (add-string-list-item *attrib-pair-list
-                                        *count
                                         *name-value-pair
                                         #f)))
               (loop (1+ column)))))))
@@ -958,8 +946,6 @@ failure."
 ;;; - Return list of name=value pairs found.
 (define (pin->pin-attrib-list *refdes *pin)
   (define *sheet-data (attrib_get_sheet_data))
-  (define count-bv (make-bytevector (sizeof int) 0))
-  (define *count (bytevector->pointer count-bv))
   (define *pinnumber
     (lepton_attrib_search_object_attribs_by_name
      *pin
@@ -1017,22 +1003,12 @@ failure."
                          (*name-value-pair (string->pointer name-value-pair)))
 
                     ;; Add name=value to the new list.
-                    (add-string-list-item *new-attrib-list *count *name-value-pair #f)
+                    (add-string-list-item *new-attrib-list *name-value-pair #f)
 
-                    ;; Sanity check
-                    (let ((count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
-                      (if (not (= count (1+ i)))
-                          (begin
-                            ;; For some reason, we have lost a
-                            ;; *name-value-pair somewhere...
-                            (format (current-error-port) "pin->pin-attrib-list(): ")
-                            (format (current-error-port) "count != i.\n")
-                            (exit -1))
-
-                          ;; Iterate.
-                          (loop *new-attrib-list
-                                (1+ i)
-                                (glist-next *local-attrib-list)))))))))
+                    ;; Iterate.
+                    (loop *new-attrib-list
+                          (1+ i)
+                          (glist-next *local-attrib-list)))))))
 
       (begin
         (format (current-error-port) "pin->pin-attrib-list(): ")
@@ -1864,7 +1840,6 @@ failure."
 
       (add-string-list-item
        (sheet-component-attrib-list)
-       #f
        *name
        increment-component-attrib-counter)
       (sort-component-attrib-list)
@@ -2802,7 +2777,6 @@ Please check your design.")))
          (unless (null-pointer? *temp-refdes)
            (add-string-list-item
             (sheet-component-list)
-            #f
             *temp-refdes
             increment-component-counter)
            (g_free *temp-refdes)))))
@@ -2842,7 +2816,6 @@ Please check your design.")))
                          (not (string= name "slot")))
                 (add-string-list-item
                  (sheet-component-attrib-list)
-                 #f
                  (string->pointer name)
                  increment-component-attrib-counter))
               (g_free *attrib-text))))
@@ -2908,7 +2881,6 @@ Please check your design.")))
                                                (pointer->string *temp-pinnumber)))))
                           (add-string-list-item
                            (sheet-pin-list)
-                           #f
                            *row-label
                            increment-pin-counter))
                         (begin
@@ -2985,7 +2957,6 @@ Please check your design.")))
                                   attrib-value)
                          (add-string-list-item
                           (sheet-pin-attrib-list)
-                          #f
                           (string->pointer attrib-name)
                           increment-pin-attrib-counter))
 
