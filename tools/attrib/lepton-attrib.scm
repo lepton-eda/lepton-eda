@@ -813,15 +813,13 @@ failure."
       (let loop ((column 0))
         (if (>= column attribs-number)
             *attrib-pair-list
-            (begin
+            (let ((*attrib-value
+                   (attrib_table_get_attrib_value *table row column)))
               ;; Pull attrib from table.  If non-null add it to
               ;; the pair list.
-              (unless (null-pointer?
-                       (attrib_table_get_attrib_value *table row column))
+              (unless (null-pointer? *attrib-value)
                 (let* ((*attrib-name
                         (attrib_table_get_column_name *table row column))
-                       (*attrib-value
-                        (attrib_table_get_attrib_value *table row column))
                        (*name-value-pair
                         (string->pointer
                          (string-append (pointer->string *attrib-name)
