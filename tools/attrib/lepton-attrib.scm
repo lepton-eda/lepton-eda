@@ -561,11 +561,7 @@ failure."
 ;;; duplications.
 (define (add-string-list-item *ls *data update-counter-thunk)
   (if (null-pointer? *ls)
-      (begin
-        (format (current-error-port) "add-string-list-item(): ")
-        (format (current-error-port)
-                (G_ "Tried to add to a NULL list.\n"))
-        %null-pointer)
+      (g_list_append *ls (g_strdup *data))
 
       ;; First check to see if list is empty.  Handle insertion of
       ;; first item into empty list separately.  (Is this
@@ -1809,7 +1805,8 @@ failure."
     (let ((old-component-attrib-count (sheet-component-attrib-count))
           (*name (string->pointer name)))
 
-      (add-string-list-item (sheet-component-attrib-list) *name #f)
+      (set-sheet-component-attrib-list!
+       (add-string-list-item (sheet-component-attrib-list) *name #f))
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
