@@ -213,11 +213,17 @@
   (set! %sheet-pin-attrib-list *ls))
 
 
-(define (sheet-pin-attrib-count *sheet-data)
-  (attrib_sheet_data_get_pin_attrib_count *sheet-data))
+;;; The count of pin attribs.  This value can change if the user
+;;; adds attribs.
+(define %sheet-pin-attrib-count 0)
 
-(define (set-sheet-pin-attrib-count! *sheet-data count)
-  (attrib_sheet_data_set_pin_attrib_count *sheet-data count))
+;;; Returns the count of sheet pin attribs.
+(define (sheet-pin-attrib-count)
+  %sheet-pin-attrib-count)
+
+;;; Sets the count of sheet pin attribs.
+(define (set-sheet-pin-attrib-count! count)
+  (set! %sheet-pin-attrib-count count))
 
 
 ;;; Initialize liblepton library.
@@ -1255,7 +1261,7 @@ failure."
 
   ;; Finally handle component pin sheet.
   (let ((rows-number (sheet-pin-count))
-        (columns-number (sheet-pin-attrib-count *sheet-data))
+        (columns-number (sheet-pin-attrib-count))
         (*gtk-sheet (attrib_get_sheet 2))
         (*row-list (sheet-pin-list))
         (*column-list (sheet-pin-attrib-list))
@@ -2478,7 +2484,7 @@ failure."
 
   ;; Pins
   (let ((pin-count (sheet-pin-count))
-        (pin-attrib-count (sheet-pin-attrib-count *sheet-data)))
+        (pin-attrib-count (sheet-pin-attrib-count)))
     (if (and (> pin-count 0) (> pin-attrib-count 0))
         (let ((*pin-sheet (gtk_sheet_new pin-count
                                          pin-attrib-count
@@ -2603,7 +2609,7 @@ failure."
   (define (pin-sheet)
     (attrib_get_sheet 2))
   (define pin-count (sheet-pin-count))
-  (define pin-attrib-count (sheet-pin-attrib-count *sheet-data))
+  (define pin-attrib-count (sheet-pin-attrib-count))
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
   (define (net-sheet)
     (attrib_get_sheet 1))
@@ -2767,7 +2773,7 @@ Please check your design.")))
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
   (set-sheet-pin-count! 0)
-  (set-sheet-pin-attrib-count! *sheet-data 0)
+  (set-sheet-pin-attrib-count! 0)
 
   (attrib_sheet_data_set_changed *sheet-data FALSE)
 
@@ -2941,6 +2947,9 @@ Please check your design.")))
 (define (add-pin-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
+  (define (increment-pin-attrib-counter)
+    (set-sheet-pin-attrib-count! (1+ (sheet-pin-attrib-count))))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2976,9 +2985,9 @@ Please check your design.")))
                                   attrib-value)
                          (add-string-list-item
                           (sheet-pin-attrib-list)
-                          (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
+                          #f
                           (string->pointer attrib-name)
-                          #f))
+                          increment-pin-attrib-counter))
 
                        (g_free *attrib-text))))
 
@@ -3332,8 +3341,7 @@ Please check your design.")))
    (make-table (sheet-net-count) (sheet-net-attrib-count)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
-   (make-table (sheet-pin-count)
-               (sheet-pin-attrib-count *sheet-data)))
+   (make-table (sheet-pin-count) (sheet-pin-attrib-count)))
 
   ;; Must iterate over all pages in design.
   (for-each
