@@ -189,6 +189,13 @@
   (set! %sheet-pin-list *ls))
 
 
+(define (sheet-pin-count *sheet-data)
+  (attrib_sheet_data_get_pin_count *sheet-data))
+
+(define (set-sheet-pin-count! *sheet-data count)
+  (attrib_sheet_data_set_pin_count *sheet-data count))
+
+
 ;;; Sorted list of all pin attribs used in design.
 (define %sheet-pin-attrib-list %null-pointer)
 
@@ -1235,7 +1242,7 @@ failure."
                       columns-number))
 
   ;; Finally handle component pin sheet.
-  (let ((rows-number (attrib_sheet_data_get_pin_count *sheet-data))
+  (let ((rows-number (sheet-pin-count *sheet-data))
         (columns-number
          (attrib_sheet_data_get_pin_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 2))
@@ -2459,7 +2466,7 @@ failure."
 
 
   ;; Pins
-  (let ((pin-count (attrib_sheet_data_get_pin_count *sheet-data))
+  (let ((pin-count (sheet-pin-count *sheet-data))
         (pin-attrib-count
          (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
     (if (and (> pin-count 0) (> pin-attrib-count 0))
@@ -2585,7 +2592,7 @@ failure."
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
   (define (pin-sheet)
     (attrib_get_sheet 2))
-  (define pin-count (attrib_sheet_data_get_pin_count *sheet-data))
+  (define pin-count (sheet-pin-count *sheet-data))
   (define pin-attrib-count
     (attrib_sheet_data_get_pin_attrib_count *sheet-data))
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
@@ -2750,7 +2757,7 @@ Please check your design.")))
 
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
-  (attrib_sheet_data_set_pin_count *sheet-data 0)
+  (set-sheet-pin-count! *sheet-data 0)
   (attrib_sheet_data_set_pin_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_changed *sheet-data FALSE)
@@ -3313,7 +3320,7 @@ Please check your design.")))
    (make-table (sheet-net-count) (sheet-net-attrib-count)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
-   (make-table (attrib_sheet_data_get_pin_count *sheet-data)
+   (make-table (sheet-pin-count *sheet-data)
                (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
 
   ;; Must iterate over all pages in design.
