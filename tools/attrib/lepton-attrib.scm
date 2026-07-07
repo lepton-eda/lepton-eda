@@ -88,18 +88,9 @@
   (set! %sheet-component-list *ls))
 
 
-;;; The count of components.  The value set in the program cannot
-;;; change -- user must edit design using the schematic capture
-;;; program.
-(define %sheet-component-count 0)
-
 ;;; Returns the count of sheet components.
 (define (sheet-component-count)
-  %sheet-component-count)
-
-;;; Sets the count of sheet components to COUNT.
-(define (set-sheet-component-count! count)
-  (set! %sheet-component-count count))
+  (length (glist->list (sheet-component-list) identity)))
 
 
 ;;; Sorted list of all component attribs used in design.
@@ -1856,14 +1847,11 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-;;; Deletes the item *NAME from a GList *LS.  The function
-;;; also decrements the list counter *COUNTER.  *SHEET-DATA is
-;;; used to set the list to the new value using LIST-SETTER.
-(define (delete-string-list-item *sheet-data
-                                 list-setter
+;;; Deletes the item *NAME from a GList *LS.  The list is set to
+;;; the new value using LIST-SETTER.
+(define (delete-string-list-item list-setter
                                  *ls
-                                 *name
-                                 update-counter-thunk)
+                                 *name)
   ;; First check to see if list is empty.  If empty, spew error
   ;; and return.
   (if (null-pointer? (glist-data *ls))
@@ -1917,9 +1905,6 @@ failure."
                                                                *prev-item)))))
                     ;; Free current list item.
                     (g_free *item)
-                    ;; Decrement count.
-                    (when update-counter-thunk
-                      (update-counter-thunk))
                     ;; Free trial item before returning.
                     (g_free *trial-item))
                   (begin
@@ -1958,11 +1943,9 @@ failure."
          (sheet-component-attrib-count))
 
         (delete-string-list-item
-         *sheet-data
          set-sheet-component-attrib-list!
          (sheet-component-attrib-list)
-         *attrib-name
-         #f)
+         *attrib-name)
         ;; This renumbers list also.
         (sort-component-attrib-list)
 
@@ -2730,9 +2713,6 @@ Please check your design.")))
 (define (add-components *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (define (increment-component-counter)
-    (set-sheet-component-count! (1+ (sheet-component-count))))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2745,10 +2725,7 @@ Please check your design.")))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
-           (add-string-list-item
-            (sheet-component-list)
-            *temp-refdes
-            increment-component-counter)
+           (add-string-list-item (sheet-component-list) *temp-refdes #f)
            (g_free *temp-refdes)))))
    (glist->list *objects identity)))
 
