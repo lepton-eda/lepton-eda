@@ -2686,8 +2686,9 @@ Please check your design.")))
                          (not (string= name "refdes"))
                          (not (string= name "net"))
                          (not (string= name "slot")))
-                (add-string-list-item (sheet-component-attrib-list)
-                                      (string->pointer name)))
+                (set-sheet-component-attrib-list!
+                 (add-string-list-item (sheet-component-attrib-list)
+                                       (string->pointer name))))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
