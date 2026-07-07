@@ -68,15 +68,6 @@ void
 attrib_sheet_data_set_pin_table (SHEET_DATA *data,
                                  TABLE** table);
 int
-attrib_sheet_data_get_pin_attrib_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_attrib_count (SHEET_DATA *data,
-                                        int count);
-int*
-attrib_sheet_data_get_pin_attrib_counter_address (SHEET_DATA *data);
-
-int
 attrib_sheet_data_get_changed (const SHEET_DATA* data);
 
 void
