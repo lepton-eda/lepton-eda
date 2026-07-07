@@ -2649,7 +2649,8 @@ Please check your design.")))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
-           (add-string-list-item (sheet-component-list) *temp-refdes)
+           (set-sheet-component-list!
+            (add-string-list-item (sheet-component-list) *temp-refdes))
            (g_free *temp-refdes)))))
    (glist->list *objects identity)))
 
