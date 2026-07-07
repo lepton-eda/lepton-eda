@@ -114,17 +114,9 @@
   (set! %sheet-component-attrib-list *ls))
 
 
-;;; The count of component attribs.  This value can change if the
-;;; user adds attribs.
-(define %sheet-component-attrib-count 0)
-
 ;;; Returns the count of sheet component attribs.
 (define (sheet-component-attrib-count)
-  %sheet-component-attrib-count)
-
-;;; Sets the count of sheet component attribs to COUNT.
-(define (set-sheet-component-attrib-count! count)
-  (set! %sheet-component-attrib-count count))
+  (length (glist->list (sheet-component-attrib-list) identity)))
 
 
 ;;; Sorted list of all nets used in design.
@@ -1703,16 +1695,6 @@ failure."
                     (loop (1+ index) (glist-next *ls)))))))))
 
 
-(define (increment-component-attrib-counter)
-  (set-sheet-component-attrib-count!
-   (1+ (sheet-component-attrib-count))))
-
-
-(define (decrement-component-attrib-counter)
-  (set-sheet-component-attrib-count!
-   (1- (sheet-component-attrib-count))))
-
-
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
@@ -1852,10 +1834,7 @@ failure."
     (let ((old-component-attrib-count (sheet-component-attrib-count))
           (*name (string->pointer name)))
 
-      (add-string-list-item
-       (sheet-component-attrib-list)
-       *name
-       increment-component-attrib-counter)
+      (add-string-list-item (sheet-component-attrib-list) *name #f)
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
@@ -1955,7 +1934,8 @@ failure."
                     ;; Free current list item.
                     (g_free *item)
                     ;; Decrement count.
-                    (update-counter-thunk)
+                    (when update-counter-thunk
+                      (update-counter-thunk))
                     ;; Free trial item before returning.
                     (g_free *trial-item))
                   (begin
@@ -1998,7 +1978,7 @@ failure."
          set-sheet-component-attrib-list!
          (sheet-component-attrib-list)
          *attrib-name
-         decrement-component-attrib-counter)
+         #f)
         ;; This renumbers list also.
         (sort-component-attrib-list)
 
@@ -2823,7 +2803,7 @@ Please check your design.")))
                 (add-string-list-item
                  (sheet-component-attrib-list)
                  (string->pointer name)
-                 increment-component-attrib-counter))
+                 #f))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
