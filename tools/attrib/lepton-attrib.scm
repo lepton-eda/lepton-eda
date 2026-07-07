@@ -122,17 +122,9 @@
   (set! %sheet-net-list *ls))
 
 
-;;; The count of nets.  The value set in the program cannot change
-;;; -- user must edit design using the schematic capture program.
-(define %sheet-net-count 0)
-
 ;;; Returns the count of sheet nets.
 (define (sheet-net-count)
-  %sheet-net-count)
-
-;;; Sets the count of sheet nets to COUNT.
-(define (set-sheet-net-count! count)
-  (set! %sheet-net-count count))
+  (length (glist->list (sheet-net-list) identity)))
 
 
 ;;; Sorted list of all net attribs used in design.
