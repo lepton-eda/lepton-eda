@@ -188,12 +188,17 @@
 (define (set-sheet-pin-list! *ls)
   (set! %sheet-pin-list *ls))
 
+;;; The count of pins.  The value set in the program cannot change
+;;; -- user must edit design using the schematic capture program.
+(define %sheet-pin-count 0)
 
-(define (sheet-pin-count *sheet-data)
-  (attrib_sheet_data_get_pin_count *sheet-data))
+;;; Returns the count of sheet pins.
+(define (sheet-pin-count)
+  %sheet-pin-count)
 
-(define (set-sheet-pin-count! *sheet-data count)
-  (attrib_sheet_data_set_pin_count *sheet-data count))
+;;; Sets the count of sheet pins to COUNT.
+(define (set-sheet-pin-count! count)
+  (set! %sheet-pin-count count))
 
 
 ;;; Sorted list of all pin attribs used in design.
@@ -1242,7 +1247,7 @@ failure."
                       columns-number))
 
   ;; Finally handle component pin sheet.
-  (let ((rows-number (sheet-pin-count *sheet-data))
+  (let ((rows-number (sheet-pin-count))
         (columns-number
          (attrib_sheet_data_get_pin_attrib_count *sheet-data))
         (*gtk-sheet (attrib_get_sheet 2))
@@ -2466,7 +2471,7 @@ failure."
 
 
   ;; Pins
-  (let ((pin-count (sheet-pin-count *sheet-data))
+  (let ((pin-count (sheet-pin-count))
         (pin-attrib-count
          (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
     (if (and (> pin-count 0) (> pin-attrib-count 0))
@@ -2592,7 +2597,7 @@ failure."
   (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
   (define (pin-sheet)
     (attrib_get_sheet 2))
-  (define pin-count (sheet-pin-count *sheet-data))
+  (define pin-count (sheet-pin-count))
   (define pin-attrib-count
     (attrib_sheet_data_get_pin_attrib_count *sheet-data))
   (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
@@ -2757,7 +2762,7 @@ Please check your design.")))
 
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
-  (set-sheet-pin-count! *sheet-data 0)
+  (set-sheet-pin-count! 0)
   (attrib_sheet_data_set_pin_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_changed *sheet-data FALSE)
@@ -2864,6 +2869,9 @@ Please check your design.")))
 (define (add-pins *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
+  (define (increment-pin-counter)
+    (set-sheet-pin-count! (1+ (sheet-pin-count))))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2890,9 +2898,9 @@ Please check your design.")))
                                                (pointer->string *temp-pinnumber)))))
                           (add-string-list-item
                            (sheet-pin-list)
-                           (attrib_sheet_data_get_pin_counter_address *sheet-data)
+                           #f
                            *row-label
-                           #f))
+                           increment-pin-counter))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
@@ -3320,7 +3328,7 @@ Please check your design.")))
    (make-table (sheet-net-count) (sheet-net-attrib-count)))
   (attrib_sheet_data_set_pin_table
    *sheet-data
-   (make-table (sheet-pin-count *sheet-data)
+   (make-table (sheet-pin-count)
                (attrib_sheet_data_get_pin_attrib_count *sheet-data)))
 
   ;; Must iterate over all pages in design.

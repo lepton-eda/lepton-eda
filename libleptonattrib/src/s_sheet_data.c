@@ -149,55 +149,6 @@ attrib_sheet_data_set_pin_table (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the count of pins of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the count of pins of given sheet data structure.
- *
- *  \return The count.
- */
-int
-attrib_sheet_data_get_pin_count (SHEET_DATA *data)
-{
-  return data->pin_count;
-}
-
-
-/*! \brief Set the count of pins of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the count of pins of a sheet data structure to the given
- *  value.
- *
- *  \param [in] data The sheet data.
- *  \param [in] count The new count of pins.
- */
-void
-attrib_sheet_data_set_pin_count (SHEET_DATA *data,
-                                 int count)
-{
-  data->pin_count = count;
-}
-
-
-/*! \brief Get the address of pin counter of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the address of pin counter of given sheet data
- *  structure.
- *
- *  \return The address.
- */
-int*
-attrib_sheet_data_get_pin_counter_address (SHEET_DATA *data)
-{
-  return &(data->pin_count);
-}
-
-
 /*! \brief Get the count of pin attribs of sheet data.
  *
  *  \par Function Description
