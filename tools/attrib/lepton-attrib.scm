@@ -1480,8 +1480,8 @@ failure."
   ;; Save main window's geometry to the cache config context.
   (save-gtk-window-geometry *window "attrib.window-geometry")
   ;; Deactivate the current cell to trigger "deactivate" signal.
-  ;; This allows changing of the sheet_head->CHANGED flag in the
-  ;; on_deactivate() handler function if needed.
+  ;; This allows changing of the sheet 'changed' flag in the
+  ;; 'deactivate' callback if needed.
   (for-each
    (lambda (i)
      (let ((*sheet (attrib_get_sheet i)))
