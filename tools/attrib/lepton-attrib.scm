@@ -1824,23 +1824,19 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
-;;; Deletes the item *NAME from a GList *LS.  The list is set to
-;;; the new value using LIST-SETTER.
-(define (delete-string-list-item list-setter
-                                 *ls
-                                 *name)
+;;; Deletes the item *NAME from a GList *LS.
+(define (delete-string-list-item *ls *name)
   ;; The comparison function for g_list_find_custom() should
   ;; return 0 when the desired element is found.
   (define (compare-c-strings *a *b)
     (if (*string= *a *b) 0 1))
   (define *compare-c-strings
     (procedure->pointer int compare-c-strings '(* *)))
-  (let ((*item (g_list_find_custom *ls *name *compare-c-strings)))
-    (if (null-pointer? *item)
-        *ls
-        (let ((*new-ls (g_list_delete_link *ls *item)))
-          (list-setter *new-ls)
-          *new-ls))))
+  (define *item (g_list_find_custom *ls *name *compare-c-strings))
+
+  (if (null-pointer? *item)
+      *ls
+      (g_list_delete_link *ls *item)))
 
 
 (define (delete-component-attrib-column *sheet num)
@@ -1873,10 +1869,9 @@ failure."
          (sheet-component-count)
          (sheet-component-attrib-count))
 
-        (delete-string-list-item
-         set-sheet-component-attrib-list!
-         (sheet-component-attrib-list)
-         *attrib-name)
+        (set-sheet-component-attrib-list!
+         (delete-string-list-item (sheet-component-attrib-list)
+                                  *attrib-name))
         ;; This renumbers list also.
         (sort-component-attrib-list)
 
