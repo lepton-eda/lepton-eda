@@ -2747,8 +2747,9 @@ Please check your design.")))
                                 (string-append (pointer->string *temp-refdes)
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
-                          (add-string-list-item (sheet-pin-list)
-                                                *row-label))
+                          (set-sheet-pin-list!
+                           (add-string-list-item (sheet-pin-list)
+                                                 *row-label)))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
