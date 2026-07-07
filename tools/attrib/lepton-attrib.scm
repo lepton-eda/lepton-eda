@@ -226,6 +226,13 @@
   (set! %sheet-pin-attrib-count count))
 
 
+(define (sheet-changed *sheet-data)
+  (attrib_sheet_data_get_changed *sheet-data))
+
+(define (set-sheet-changed! *sheet-data state)
+  (attrib_sheet_data_set_changed *sheet-data state))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -1302,7 +1309,7 @@ failure."
 
 
 (define (set-sheet-data-changed *sheet-data changed)
-  (attrib_sheet_data_set_changed *sheet-data changed)
+  (set-sheet-changed! *sheet-data changed)
 
   (set-title-changed changed)
 
@@ -1475,7 +1482,7 @@ failure."
          (gtk_sheet_set_active_cell *sheet -1 -1))))
    (iota (attrib_get_sheets_number)))
 
-  (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
+  (if (true? (sheet-changed (attrib_get_sheet_data)))
       (case (unsaved-changes-dialog *window %program-basename)
         ((quit) (quit-program 0))
         ((save) (save-sheet) (quit-program 0))
@@ -2744,7 +2751,7 @@ Please check your design.")))
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
 
-  (attrib_sheet_data_set_changed *sheet-data FALSE)
+  (set-sheet-changed! *sheet-data FALSE)
 
   *sheet-data)
 
