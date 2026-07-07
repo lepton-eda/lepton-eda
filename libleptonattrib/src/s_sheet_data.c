@@ -149,40 +149,6 @@ attrib_sheet_data_set_pin_table (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the \a changed flag of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the \a changed flag of given sheet data instance.
- *
- *  \param [in] data The sheet data.
- *
- *  \return The count.
- */
-int
-attrib_sheet_data_get_changed (const SHEET_DATA* data)
-{
-  return data->CHANGED;
-}
-
-
-/*! \brief Set the \a changed flag of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the \a changed flag of given sheet data instance.
- *
- *  \param [in] data The sheet data.
- *  \param [in] changed The new \a changed flag value.
- */
-void
-attrib_sheet_data_set_changed (SHEET_DATA* data,
-                               int changed)
-{
-  data->CHANGED = changed;
-}
-
-
 /*!
  * \brief Create a new SHEET_DATA struct.
  *

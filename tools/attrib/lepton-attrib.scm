@@ -226,11 +226,18 @@
   (set! %sheet-pin-attrib-count count))
 
 
-(define (sheet-changed *sheet-data)
-  (attrib_sheet_data_get_changed *sheet-data))
+;;; Whether the sheet was changed.  For 'file not saved' warning
+;;; upon exit.
+(define %sheet-changed #f)
 
-(define (set-sheet-changed! *sheet-data state)
-  (attrib_sheet_data_set_changed *sheet-data state))
+;;; Returns #t if the sheet has been changed, #f otherwise.
+(define (sheet-changed?)
+  %sheet-changed)
+
+;;; Sets the 'changed' flag of the sheet to STATE which is
+;;; optional and #t by default.
+(define* (set-sheet-changed! #:optional (state #t))
+  (set! %sheet-changed state))
 
 
 ;;; Initialize liblepton library.
@@ -1309,7 +1316,7 @@ failure."
 
 
 (define (set-sheet-data-changed *sheet-data changed)
-  (set-sheet-changed! *sheet-data changed)
+  (set-sheet-changed! (true? changed))
 
   (set-title-changed changed)
 
@@ -1482,7 +1489,7 @@ failure."
          (gtk_sheet_set_active_cell *sheet -1 -1))))
    (iota (attrib_get_sheets_number)))
 
-  (if (true? (sheet-changed (attrib_get_sheet_data)))
+  (if (sheet-changed?)
       (case (unsaved-changes-dialog *window %program-basename)
         ((quit) (quit-program 0))
         ((save) (save-sheet) (quit-program 0))
@@ -2751,7 +2758,7 @@ Please check your design.")))
   (set-sheet-pin-list! (make-string-list))
   (set-sheet-pin-attrib-list! (make-string-list))
 
-  (set-sheet-changed! *sheet-data FALSE)
+  (set-sheet-changed! #f)
 
   *sheet-data)
 
