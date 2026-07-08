@@ -680,126 +680,125 @@ failure."
                                             *old-name-value-pair)
                       *new-attribs))))))
 
-  ;; First duplicate the list.  Then create a complete list of
-  ;; unique attribute names.  This will be used in the loop below
-  ;; when updating attributes.
-  (define *complete-component-attrib-list
-    (update-attrib-list
-     (duplicate-string-list *new-component-attrib-pair-list)))
-
   (when (null-pointer? *object)
     (error "NULL object."))
 
-  ;; Now the main business of this function: updating the attribs
-  ;; attached to this object.  Loop on name=value pairs held in
-  ;; *complete-component-attrib-list, and then use this to get the
-  ;; name=value pairs out of *new-component-attrib-pair-list and
-  ;; from object.
+  ;; First duplicate the list.  Then create a complete list of
+  ;; unique attribute names.  This will be used in the loop below
+  ;; when updating attributes.
+  (let ((*complete-component-attrib-list
+         (update-attrib-list
+          (duplicate-string-list *new-component-attrib-pair-list))))
+   ;; Now the main business of this function: updating the attribs
+   ;; attached to this object.  Loop on name=value pairs held in
+   ;; *complete-component-attrib-list, and then use this to get the
+   ;; name=value pairs out of *new-component-attrib-pair-list and
+   ;; from object.
 
-  ;; First handle a special case: the component has no attribs
-  ;; (beside refdes).
-  (unless (null-pointer?
-           (glist-data *complete-component-attrib-list))
-    ;; Now the normal case.
-    (let loop ((*local-list *complete-component-attrib-list))
-      (unless (null-pointer? *local-list)
-        ;; Now get the old attrib name & value from
-        ;; *complete-component-attrib-list and value from object.
-        (let* ((old-attrib-name
-                (str-attrib-name (glist-data *local-list)))
-               (*old-attrib-value
-                (if old-attrib-name
-                    (lepton_attrib_search_attached_attribs_by_name
-                     *object
-                     (string->pointer old-attrib-name)
-                     0)
-                    %null-pointer))
-               ;; Next try to get this attrib from
-               ;; *new-component-attrib-list.
-               (new-attrib-name
-                (str-attrib-name (glist-data *local-list)))
-               (*new-attrib-name
-                (if new-attrib-name
-                    (string->pointer new-attrib-name)
-                    %null-pointer))
-               ;; Now get row and column where this new attrib
-               ;; lives.  Then get visibility of the new attrib
-               ;; stored in the component table We'll need this
-               ;; later.
-               (*refdes (g_strdup (component-refdes *object)))
-               (row (string-list-id (sheet-component-list) *refdes))
-               (column (string-list-id (sheet-component-attrib-list)
-                                       *new-attrib-name))
-               (new-attrib-value
-                ;; If attribute has been deleted from the sheet,
-                ;; here is where we detect that.  The attrib will
-                ;; be deleted below.
-                (and (not (or (= row -1)
-                              (= column -1)))
-                     (true? (attrib-in-string-list?
-                             *new-component-attrib-pair-list
-                             (glist-data *local-list)))
-                     (str-attrib-value (glist-data *local-list))))
-               ;; We need a better place to get this info since the
-               ;; TABLE can be out of date.
-               (visibility
-                (if (not new-attrib-value)
-                    0
-                    (attrib_table_get_visibility
-                     (attrib_sheet_data_get_component_table *sheet-data)
-                     row
-                     column)))
-               (show-name-value
-                (if (not new-attrib-value)
-                    0
-                    (attrib_table_get_show_name_value
-                     (attrib_sheet_data_get_component_table *sheet-data)
-                     row
-                     column))))
-          (g_free *refdes)
+   ;; First handle a special case: the component has no attribs
+   ;; (beside refdes).
+   (unless (null-pointer?
+            (glist-data *complete-component-attrib-list))
+     ;; Now the normal case.
+     (let loop ((*local-list *complete-component-attrib-list))
+       (unless (null-pointer? *local-list)
+         ;; Now get the old attrib name & value from
+         ;; *complete-component-attrib-list and value from object.
+         (let* ((old-attrib-name
+                 (str-attrib-name (glist-data *local-list)))
+                (*old-attrib-value
+                 (if old-attrib-name
+                     (lepton_attrib_search_attached_attribs_by_name
+                      *object
+                      (string->pointer old-attrib-name)
+                      0)
+                     %null-pointer))
+                ;; Next try to get this attrib from
+                ;; *new-component-attrib-list.
+                (new-attrib-name
+                 (str-attrib-name (glist-data *local-list)))
+                (*new-attrib-name
+                 (if new-attrib-name
+                     (string->pointer new-attrib-name)
+                     %null-pointer))
+                ;; Now get row and column where this new attrib
+                ;; lives.  Then get visibility of the new attrib
+                ;; stored in the component table We'll need this
+                ;; later.
+                (*refdes (g_strdup (component-refdes *object)))
+                (row (string-list-id (sheet-component-list) *refdes))
+                (column (string-list-id (sheet-component-attrib-list)
+                                        *new-attrib-name))
+                (new-attrib-value
+                 ;; If attribute has been deleted from the sheet,
+                 ;; here is where we detect that.  The attrib will
+                 ;; be deleted below.
+                 (and (not (or (= row -1)
+                               (= column -1)))
+                      (true? (attrib-in-string-list?
+                              *new-component-attrib-pair-list
+                              (glist-data *local-list)))
+                      (str-attrib-value (glist-data *local-list))))
+                ;; We need a better place to get this info since the
+                ;; TABLE can be out of date.
+                (visibility
+                 (if (not new-attrib-value)
+                     0
+                     (attrib_table_get_visibility
+                      (attrib_sheet_data_get_component_table *sheet-data)
+                      row
+                      column)))
+                (show-name-value
+                 (if (not new-attrib-value)
+                     0
+                     (attrib_table_get_show_name_value
+                      (attrib_sheet_data_get_component_table *sheet-data)
+                      row
+                      column))))
+           (g_free *refdes)
 
-          ;; Four cases to consider: Case 1.
-          (if (and (not (null-pointer? *old-attrib-value))
-                   new-attrib-value
-                   (not (string-null? new-attrib-value)))
-              ;; simply write new attrib into place of old one.
-              (replace-attrib *object
-                              *new-attrib-name
-                              (string->pointer new-attrib-value)
-                              visibility
-                              show-name-value)
+           ;; Four cases to consider: Case 1.
+           (if (and (not (null-pointer? *old-attrib-value))
+                    new-attrib-value
+                    (not (string-null? new-attrib-value)))
+               ;; simply write new attrib into place of old one.
+               (replace-attrib *object
+                               *new-attrib-name
+                               (string->pointer new-attrib-value)
+                               visibility
+                               show-name-value)
 
-              ;; Four cases to consider: Case 2.
-              (if (and (not (null-pointer? *old-attrib-value))
-                       (not new-attrib-value))
-                  ;; Remove attrib from component.
-                  (remove-attrib *toplevel
-                                 *object
-                                 (string->pointer old-attrib-name))
-                  ;; Four cases to consider: Case 3.
-                  (if (and (null-pointer? *old-attrib-value)
-                           new-attrib-value
-                           ;; One last sanity check, then add attrib.
-                           (not (string-null? new-attrib-value)))
-                      ;; Add new attrib to component.
-                      (let ((name-value-pair
-                             (string-append new-attrib-name
-                                            "="
-                                            new-attrib-value)))
-                        (add-object-attrib (pointer->object *object)
-                                           name-value-pair
-                                           visibility
-                                           show-name-value))
-                      ;; Four cases to consider: Case 4.
-                      (begin
-                        ;; Do nothing.
-                        #f))))
+               ;; Four cases to consider: Case 2.
+               (if (and (not (null-pointer? *old-attrib-value))
+                        (not new-attrib-value))
+                   ;; Remove attrib from component.
+                   (remove-attrib *toplevel
+                                  *object
+                                  (string->pointer old-attrib-name))
+                   ;; Four cases to consider: Case 3.
+                   (if (and (null-pointer? *old-attrib-value)
+                            new-attrib-value
+                            ;; One last sanity check, then add attrib.
+                            (not (string-null? new-attrib-value)))
+                       ;; Add new attrib to component.
+                       (let ((name-value-pair
+                              (string-append new-attrib-name
+                                             "="
+                                             new-attrib-value)))
+                         (add-object-attrib (pointer->object *object)
+                                            name-value-pair
+                                            visibility
+                                            show-name-value))
+                       ;; Four cases to consider: Case 4.
+                       (begin
+                         ;; Do nothing.
+                         #f))))
 
-          ;; Toggle attribute visibility and name/value setting.
+           ;; Toggle attribute visibility and name/value setting.
 
-          ;; free everything and iterate
-          (g_free *old-attrib-value)
-          (loop (glist-next *local-list)))))))
+           ;; free everything and iterate
+           (g_free *old-attrib-value)
+           (loop (glist-next *local-list))))))))
 
 
 ;;; Takes *TABLE, *ROW-LIST, *ROW-NAME, and ATTRIBS-NUMBER, and
