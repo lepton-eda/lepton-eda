@@ -680,16 +680,15 @@ failure."
                                             *old-name-value-pair)
                       *new-attribs))))))
 
-  ;; First duplicate the list.
+  ;; First duplicate the list.  Then create a complete list of
+  ;; unique attribute names.  This will be used in the loop below
+  ;; when updating attributes.
   (define *complete-component-attrib-list
-    (duplicate-string-list *new-component-attrib-pair-list))
+    (update-attrib-list
+     (duplicate-string-list *new-component-attrib-pair-list)))
 
   (when (null-pointer? *object)
     (error "NULL object."))
-
-  ;; Now create a complete list of unique attribute names.  This
-  ;; will be used in the loop below when updating attributes.
-  (update-attrib-list *complete-component-attrib-list)
 
   ;; Now the main business of this function: updating the attribs
   ;; attached to this object.  Loop on name=value pairs held in
