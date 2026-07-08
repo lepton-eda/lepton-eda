@@ -668,7 +668,7 @@ failure."
         *new-attribs
         (let* ((*attrib (car *old-attribs))
                (*old-name-value-pair
-                (g_strdup (lepton_text_object_get_string *attrib)))
+                (lepton_text_object_get_string *attrib))
                (old-attrib-name (str-attrib-name *old-name-value-pair)))
 
           ;; Found a name=value attribute pair.
@@ -684,14 +684,9 @@ failure."
                          (not (name-in-list?
                                *new-component-attrib-pair-list
                                old-attrib-name)))
-                    (let ((*updated-attribs
-                           (add-string-list-item *new-attribs
-                                                 *old-name-value-pair)))
-                      (g_free *old-name-value-pair)
-                      *updated-attribs)
-                    (begin
-                      (g_free *old-name-value-pair)
-                      *new-attribs))))))
+                    (add-string-list-item *new-attribs
+                                          *old-name-value-pair)
+                    *new-attribs)))))
 
   ;; Now the main business of this function: updating the attribs
   ;; attached to this object.  Loop on name=value pairs held in
