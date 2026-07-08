@@ -646,47 +646,50 @@ failure."
   ;; delete those attribs in the object which don't appear in
   ;; *new-component-attrib-pair-list.
 
-  ;; First duplicate the list.
-  (define *complete-component-attrib-list
-    (duplicate-string-list *new-component-attrib-pair-list))
-
   (define (text-attrib? *attrib)
     (and (true? (lepton_object_is_text *attrib))
          (not (null-pointer? (lepton_object_get_text *attrib)))))
+
+  (define (update-attrib-list *attrib-list)
+    (let loop ((*old-attribs
+                (filter text-attrib?
+                        (glist->list (lepton_object_get_attribs *object)
+                                     identity)))
+               (*new-attribs *attrib-list))
+      (if (null? *old-attribs)
+          *new-attribs
+          (let* ((*attrib (car *old-attribs))
+                 (*old-name-value-pair
+                  (lepton_text_object_get_string *attrib))
+                 (old-attrib-name (str-attrib-name *old-name-value-pair)))
+
+            ;; Found a name=value attribute pair.
+
+            (loop (cdr *old-attribs)
+                  ;; Don't put "refdes" or "slot" into list.
+                  ;; Don't put old name=value pair into list if a
+                  ;; new one is already in there.
+                  (if (and old-attrib-name
+                           (not (string= old-attrib-name "refdes"))
+                           (not (string= old-attrib-name "net"))
+                           (not (string= old-attrib-name "slot"))
+                           (not (name-in-list?
+                                 *new-component-attrib-pair-list
+                                 old-attrib-name)))
+                      (add-string-list-item *new-attribs
+                                            *old-name-value-pair)
+                      *new-attribs))))))
+
+  ;; First duplicate the list.
+  (define *complete-component-attrib-list
+    (duplicate-string-list *new-component-attrib-pair-list))
 
   (when (null-pointer? *object)
     (error "NULL object."))
 
   ;; Now create a complete list of unique attribute names.  This
   ;; will be used in the loop below when updating attributes.
-  (let loop ((*old-attribs
-              (filter text-attrib?
-                      (glist->list (lepton_object_get_attribs *object)
-                                   identity)))
-             (*new-attribs *complete-component-attrib-list))
-    (if (null? *old-attribs)
-        *new-attribs
-        (let* ((*attrib (car *old-attribs))
-               (*old-name-value-pair
-                (lepton_text_object_get_string *attrib))
-               (old-attrib-name (str-attrib-name *old-name-value-pair)))
-
-          ;; Found a name=value attribute pair.
-
-          (loop (cdr *old-attribs)
-                ;; Don't put "refdes" or "slot" into list.
-                ;; Don't put old name=value pair into list if a
-                ;; new one is already in there.
-                (if (and old-attrib-name
-                         (not (string= old-attrib-name "refdes"))
-                         (not (string= old-attrib-name "net"))
-                         (not (string= old-attrib-name "slot"))
-                         (not (name-in-list?
-                               *new-component-attrib-pair-list
-                               old-attrib-name)))
-                    (add-string-list-item *new-attribs
-                                          *old-name-value-pair)
-                    *new-attribs)))))
+  (update-attrib-list *complete-component-attrib-list)
 
   ;; Now the main business of this function: updating the attribs
   ;; attached to this object.  Loop on name=value pairs held in
