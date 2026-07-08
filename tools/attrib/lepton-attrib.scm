@@ -650,6 +650,10 @@ failure."
   (define *complete-component-attrib-list
     (duplicate-string-list *new-component-attrib-pair-list))
 
+  (define (text-attrib? *attrib)
+    (and (true? (lepton_object_is_text *attrib))
+         (not (null-pointer? (lepton_object_get_text *attrib)))))
+
   (when (null-pointer? *object)
     (error "NULL object."))
 
@@ -659,8 +663,7 @@ failure."
          (glist->list (lepton_object_get_attribs *object) identity)))
     (for-each
      (lambda (*attrib)
-       (when (and (true? (lepton_object_is_text *attrib))
-                  (not (null-pointer? (lepton_object_get_text *attrib))))
+       (when (text-attrib? *attrib)
          (let* ((*old-name-value-pair
                  (g_strdup (lepton_text_object_get_string *attrib)))
                 (old-attrib-name (str-attrib-name *old-name-value-pair)))
