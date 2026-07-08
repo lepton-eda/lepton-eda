@@ -659,32 +659,39 @@ failure."
 
   ;; Now create a complete list of unique attribute names.  This
   ;; will be used in the loop below when updating attributes.
-  (let ((*attribs
-         (filter text-attrib?
-                 (glist->list (lepton_object_get_attribs *object)
-                              identity))))
-    (for-each
-     (lambda (*attrib)
-       (let* ((*old-name-value-pair
-               (g_strdup (lepton_text_object_get_string *attrib)))
-              (old-attrib-name (str-attrib-name *old-name-value-pair)))
-         ;; Found a name=value attribute pair.
+  (let loop ((*old-attribs
+              (filter text-attrib?
+                      (glist->list (lepton_object_get_attribs *object)
+                                   identity)))
+             (*new-attribs *complete-component-attrib-list))
+    (if (null? *old-attribs)
+        *new-attribs
+        (let* ((*attrib (car *old-attribs))
+               (*old-name-value-pair
+                (g_strdup (lepton_text_object_get_string *attrib)))
+               (old-attrib-name (str-attrib-name *old-name-value-pair)))
 
-         ;; Don't put "refdes" or "slot" into list.
-         ;; Don't put old name=value pair into list if a
-         ;; new one is already in there.
-         (when (and old-attrib-name
-                    (not (string= old-attrib-name "refdes"))
-                    (not (string= old-attrib-name "net"))
-                    (not (string= old-attrib-name "slot"))
-                    (not (name-in-list?
-                          *new-component-attrib-pair-list
-                          old-attrib-name)))
-           (add-string-list-item *complete-component-attrib-list
-                                 *old-name-value-pair))
+          ;; Found a name=value attribute pair.
 
-         (g_free *old-name-value-pair)))
-     *attribs))
+          (loop (cdr *old-attribs)
+                ;; Don't put "refdes" or "slot" into list.
+                ;; Don't put old name=value pair into list if a
+                ;; new one is already in there.
+                (if (and old-attrib-name
+                         (not (string= old-attrib-name "refdes"))
+                         (not (string= old-attrib-name "net"))
+                         (not (string= old-attrib-name "slot"))
+                         (not (name-in-list?
+                               *new-component-attrib-pair-list
+                               old-attrib-name)))
+                    (let ((*updated-attribs
+                           (add-string-list-item *new-attribs
+                                                 *old-name-value-pair)))
+                      (g_free *old-name-value-pair)
+                      *updated-attribs)
+                    (begin
+                      (g_free *old-name-value-pair)
+                      *new-attribs))))))
 
   ;; Now the main business of this function: updating the attribs
   ;; attached to this object.  Loop on name=value pairs held in
