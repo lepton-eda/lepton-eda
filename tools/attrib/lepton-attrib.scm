@@ -1504,22 +1504,14 @@ failure."
 ;;; Sorts *LS which is a double linked list and returns a new
 ;;; linked list.
 (define* (sort-attrib-list *ls #:key (priority? #f))
-  (define (maintain-interlinks ls)
-    (unless (null? ls)
-      ;; Add prev link for the first item.
-      (attrib_string_list_set_prev (car ls) %null-pointer)
-      (let loop ((ls ls))
-        (unless (null? ls)
-          (let ((*item (car ls))
-                (tail-ls (cdr ls)))
-            (if (null? tail-ls)
-                ;; Add next link for the last item.
-                (attrib_string_list_set_next *item %null-pointer)
-                ;; Add both links for an ordinary item.
-                (let ((*next-item (car tail-ls)))
-                  (attrib_string_list_set_next *item *next-item)
-                  (attrib_string_list_set_prev *next-item *item)
-                  (loop tail-ls))))))))
+  (define (list->glist ls)
+    (let loop ((ls ls)
+               (*gls %null-pointer))
+      (if (null? ls)
+          *gls
+          (loop (cdr ls)
+                (g_list_append *gls (glist-data (car ls)))))))
+
   (define *out-ls
     (let loop ((*item *ls)
                (*pointer-ls '()))
@@ -1532,11 +1524,7 @@ failure."
         (sort-list *out-ls *string-list<?)
         (sort-list *out-ls string-list<?)))
 
-  (maintain-interlinks *sorted-ls)
-
-  (if (null? *sorted-ls)
-      %null-pointer
-      (car *sorted-ls)))
+  (list->glist *sorted-ls))
 
 ;;; Sorts the component list.
 (define (sort-component-list)
