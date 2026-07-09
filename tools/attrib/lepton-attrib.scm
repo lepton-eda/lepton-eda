@@ -560,18 +560,13 @@ failure."
 ;;; Duplicates string list *LS and returns a pointer to the new,
 ;;; duplicate list.
 (define (duplicate-string-list *ls)
-  (define *new-ls (make-string-list))
-  (if (null-pointer? (glist-data *ls))
-      ;; This is an empty string list.
-      *new-ls
-
-      (let loop ((*current-ls *ls)
-                 (*out-ls %null-pointer))
-        (if (null-pointer? *current-ls)
-            *out-ls
-            (loop (glist-next *current-ls)
-                  (add-glist-item *out-ls
-                                  (glist-data *current-ls)))))))
+  (let loop ((*current-ls *ls)
+             (*out-ls %null-pointer))
+    (if (null-pointer? *current-ls)
+        *out-ls
+        (loop (glist-next *current-ls)
+              (add-glist-item *out-ls
+                              (glist-data *current-ls))))))
 
 
 ;;; Looks for item *NAME in the list *LS and returns 0 if it is
