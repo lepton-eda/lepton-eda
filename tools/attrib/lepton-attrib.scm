@@ -547,20 +547,16 @@ failure."
 ;;; passes through the list to make sure that there are no
 ;;; duplications.
 (define (add-string-list-item *ls *data)
-  (if (null-pointer? *ls)
-      (g_list_append *ls (g_strdup *data))
+  (if (or (null-pointer? *ls)
+          ;; This can be thrown out along with make-string-list().
+          (null-pointer? (glist-data *ls)))
+      (g_list_append %null-pointer (g_strdup *data))
 
-      ;; First check to see if list is empty.  Handle insertion of
-      ;; first item into empty list separately.  (Is this
-      ;; necessary?)
-      (if (null-pointer? (glist-data *ls))
-          (g_list_append %null-pointer (g_strdup *data))
-
-          ;; Otherwise, loop through list looking for duplicates.
-          (let* ((ls (glist->list *ls pointer->string)))
-            (if (member (pointer->string *data) ls)
-                *ls
-                (g_list_append *ls (g_strdup *data)))))))
+      ;; Otherwise, loop through list looking for duplicates.
+      (let* ((ls (glist->list *ls pointer->string)))
+        (if (member (pointer->string *data) ls)
+            *ls
+            (g_list_append *ls (g_strdup *data))))))
 
 
 ;;; Duplicates string list *LS and returns a pointer to the new,
