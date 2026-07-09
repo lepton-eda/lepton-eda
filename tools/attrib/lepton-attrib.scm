@@ -544,7 +544,7 @@ failure."
 
 ;;; Adds the item *DATA to GList *LS.  It first passes through the
 ;;; list to make sure that there are no duplications.
-(define (add-string-list-item *ls *data)
+(define (add-glist-item *ls *data)
   (if (or (null-pointer? *ls)
           ;; This can be thrown out along with make-string-list().
           (null-pointer? (glist-data *ls)))
@@ -570,8 +570,8 @@ failure."
         (if (null-pointer? *current-ls)
             *out-ls
             (loop (glist-next *current-ls)
-                  (add-string-list-item *out-ls
-                                        (glist-data *current-ls)))))))
+                  (add-glist-item *out-ls
+                                  (glist-data *current-ls)))))))
 
 
 ;;; Looks for item *NAME in the list *LS and returns 0 if it is
@@ -664,8 +664,8 @@ failure."
                            (not (name-in-list?
                                  *new-component-attrib-pair-list
                                  old-attrib-name)))
-                      (add-string-list-item *new-attribs
-                                            *old-name-value-pair)
+                      (add-glist-item *new-attribs
+                                      *old-name-value-pair)
                       *new-attribs))))))
 
   (when (null-pointer? *object)
@@ -825,8 +825,8 @@ failure."
                                  (string-append (pointer->string *attrib-name)
                                                 "="
                                                 (pointer->string *attrib-value)))))
-                          (add-string-list-item *out-ls
-                                                *name-value-pair)))))))))
+                          (add-glist-item *out-ls
+                                          *name-value-pair)))))))))
 
 
 (define (update-design-components *toplevel *page)
@@ -958,8 +958,8 @@ failure."
 
                     ;; Iterate.
                     ;; Add name=value to the new list.
-                    (loop (add-string-list-item *new-attrib-list
-                                                *name-value-pair)
+                    (loop (add-glist-item *new-attrib-list
+                                          *name-value-pair)
                           (1+ i)
                           (glist-next *local-attrib-list)))))))
 
@@ -1782,7 +1782,7 @@ failure."
           (*name (string->pointer name)))
 
       (set-sheet-component-attrib-list!
-       (add-string-list-item (sheet-component-attrib-list) *name))
+       (add-glist-item (sheet-component-attrib-list) *name))
       (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
@@ -2646,7 +2646,7 @@ Please check your design.")))
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
            (set-sheet-component-list!
-            (add-string-list-item (sheet-component-list) *temp-refdes))
+            (add-glist-item (sheet-component-list) *temp-refdes))
            (g_free *temp-refdes)))))
    (glist->list *objects identity)))
 
@@ -2683,8 +2683,8 @@ Please check your design.")))
                          (not (string= name "net"))
                          (not (string= name "slot")))
                 (set-sheet-component-attrib-list!
-                 (add-string-list-item (sheet-component-attrib-list)
-                                       (string->pointer name))))
+                 (add-glist-item (sheet-component-attrib-list)
+                                 (string->pointer name))))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
@@ -2744,8 +2744,8 @@ Please check your design.")))
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
                           (set-sheet-pin-list!
-                           (add-string-list-item (sheet-pin-list)
-                                                 *row-label)))
+                           (add-glist-item (sheet-pin-list)
+                                           *row-label)))
                         (begin
                           ;; Didn't find pinnumber.  Report error
                           ;; to log.
@@ -2816,7 +2816,7 @@ Please check your design.")))
                                   (not (string= attrib-name "pinnumber"))
                                   attrib-value)
                          (set-sheet-pin-attrib-list!
-                          (add-string-list-item
+                          (add-glist-item
                            (sheet-pin-attrib-list)
                            (string->pointer attrib-name))))
 
