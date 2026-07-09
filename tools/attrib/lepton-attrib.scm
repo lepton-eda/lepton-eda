@@ -554,13 +554,7 @@ failure."
       ;; first item into empty list separately.  (Is this
       ;; necessary?)
       (if (null-pointer? (glist-data *ls))
-          (begin
-            (attrib_string_list_set_data *ls (g_strdup *data))
-            (attrib_string_list_set_next *ls %null-pointer)
-            ;; This may have already been initialized.
-            (attrib_string_list_set_prev *ls %null-pointer)
-
-            *ls)
+          (g_list_append %null-pointer (g_strdup *data))
 
           ;; Otherwise, loop through list looking for duplicates.
           (let* ((ls (glist->list *ls pointer->string)))
