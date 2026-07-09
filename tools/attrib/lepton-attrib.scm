@@ -542,10 +542,8 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
-;;; Adds the item *DATA to GList *LS incrementing the count of
-;;; elements using UPDATE-COUNTER-THUNK if it is not #f.  It first
-;;; passes through the list to make sure that there are no
-;;; duplications.
+;;; Adds the item *DATA to GList *LS.  It first passes through the
+;;; list to make sure that there are no duplications.
 (define (add-string-list-item *ls *data)
   (if (or (null-pointer? *ls)
           ;; This can be thrown out along with make-string-list().
