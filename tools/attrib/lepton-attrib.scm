@@ -2597,16 +2597,6 @@ Please check your design.")))
   ;; We will malloc and fill out the pin table later.
   (attrib_sheet_data_set_pin_table *sheet-data %null-pointer)
 
-  ;; Now we create the first cell in each master list.
-  (set-sheet-component-list! (make-string-list))
-  (set-sheet-component-attrib-list! (make-string-list))
-
-  (set-sheet-net-list! (make-string-list))
-  (set-sheet-net-attrib-list! (make-string-list))
-
-  (set-sheet-pin-list! (make-string-list))
-  (set-sheet-pin-attrib-list! (make-string-list))
-
   *sheet-data)
 
 
