@@ -1538,8 +1538,7 @@ failure."
       %null-pointer
       (car *sorted-ls)))
 
-;;; Sorts the component list and fills in the 'pos' fields of the
-;;; list items.
+;;; Sorts the component list.
 (define (sort-component-list)
   (set-sheet-component-list!
    (sort-attrib-list (sheet-component-list))))
