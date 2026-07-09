@@ -928,7 +928,7 @@ failure."
             ;; into new attrib list.
 
             ;; Init the new attrib list.
-            (let loop ((*new-attrib-list (make-string-list))
+            (let loop ((*new-attrib-list %null-pointer)
                        (i 0)
                        (*local-attrib-list (sheet-pin-attrib-list)))
               (if (null-pointer? *local-attrib-list)
