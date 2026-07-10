@@ -50,39 +50,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Get the component table of sheet data.
- *
- *  \par Function Description
- *
- *  Returns the component table of given sheet data structure.
- *
- *  \return The component table.
- */
-TABLE**
-attrib_sheet_data_get_component_table (SHEET_DATA *data)
-{
-  return data->component_table;
-}
-
-
-/*! \brief Set the component table of sheet data.
- *
- *  \par Function Description
- *
- *  Sets the component table of a sheet data structure to the
- *  given value.
- *
- *  \param [in] data The sheet data.
- *  \param [in] table The new value of the component table.
- */
-void
-attrib_sheet_data_set_component_table (SHEET_DATA *data,
-                                       TABLE** table)
-{
-  data->component_table = table;
-}
-
-
 /*! \brief Get the net table of sheet data.
  *
  *  \par Function Description
