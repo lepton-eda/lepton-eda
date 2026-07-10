@@ -206,6 +206,13 @@
   (set! %component-table *table))
 
 
+(define (net-table *sheet-data)
+  (attrib_sheet_data_get_net_table *sheet-data))
+
+(define (set-net-table! *sheet-data *table)
+  (attrib_sheet_data_set_net_table *sheet-data *table))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -1169,7 +1176,7 @@ failure."
         (*gtk-sheet (attrib_get_sheet 1))
         (*row-list (sheet-net-list))
         (*column-list (sheet-net-attrib-list))
-        (*table (attrib_sheet_data_get_net_table *sheet-data)))
+        (*table (net-table *sheet-data)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1930,8 +1937,7 @@ failure."
   (define *table
     (cond
      ((= page-id 0) (component-table))
-     ((= page-id 1)
-      (attrib_sheet_data_get_net_table *sheet-data))
+     ((= page-id 1) (net-table *sheet-data))
      ((= page-id 2)
       (attrib_sheet_data_get_pin_table *sheet-data))
      (else #f)))
@@ -2435,7 +2441,7 @@ failure."
     (attrib_get_sheet 2))
   (define pin-count (sheet-pin-count))
   (define pin-attrib-count (sheet-pin-attrib-count))
-  (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
+  (define *net-table (net-table *sheet-data))
   (define (net-sheet)
     (attrib_get_sheet 1))
   (define net-count (sheet-net-count))
@@ -2579,7 +2585,7 @@ Please check your design.")))
   (set-component-table! %null-pointer)
 
   ;; We will malloc and fill out the net table later.
-  (attrib_sheet_data_set_net_table *sheet-data %null-pointer)
+  (set-net-table! *sheet-data %null-pointer)
 
   ;; We will malloc and fill out the pin table later.
   (attrib_sheet_data_set_pin_table *sheet-data %null-pointer)
@@ -2898,8 +2904,7 @@ Please check your design.")))
 ;;; Process *OBJECTS and add attribs of net ones to the net table.
 (define (objects->net-table *objects)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *net-table
-    (attrib_sheet_data_get_net_table *sheet-data))
+  (define *net-table (net-table *sheet-data))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -3123,7 +3128,7 @@ Please check your design.")))
   ;; Create and load the tables.
   (set-component-table! (make-table (sheet-component-count)
                                     (sheet-component-attrib-count)))
-  (attrib_sheet_data_set_net_table
+  (set-net-table!
    *sheet-data
    (make-table (sheet-net-count) (sheet-net-attrib-count)))
   (attrib_sheet_data_set_pin_table
