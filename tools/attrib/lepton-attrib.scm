@@ -194,6 +194,9 @@
   (set! %sheet-changed state))
 
 
+(define (component-table *sheet-data)
+  (attrib_sheet_data_get_component_table *sheet-data))
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -712,14 +715,14 @@ failure."
                   (if (not new-attrib-value)
                       0
                       (attrib_table_get_visibility
-                       (attrib_sheet_data_get_component_table *sheet-data)
+                       (component-table *sheet-data)
                        row
                        column)))
                  (show-name-value
                   (if (not new-attrib-value)
                       0
                       (attrib_table_get_show_name_value
-                       (attrib_sheet_data_get_component_table *sheet-data)
+                       (component-table *sheet-data)
                        row
                        column))))
             (g_free *refdes)
@@ -831,7 +834,7 @@ failure."
                    (let ((*new-component-attrib-pair-list
                           (make-attrib-pair
                            *temp-uref
-                           (attrib_sheet_data_get_component_table *sheet-data)
+                           (component-table *sheet-data)
                            (sheet-component-list)
                            (sheet-component-attrib-count))))
                      ;; Must create a name=value pair list for
@@ -1142,7 +1145,7 @@ failure."
         (*gtk-sheet (attrib_get_sheet 0))
         (*row-list (sheet-component-list))
         (*column-list (sheet-component-attrib-list))
-        (*table (attrib_sheet_data_get_component_table *sheet-data)))
+        (*table (component-table *sheet-data)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1296,8 +1299,7 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define rows-number (sheet-component-count))
   (define columns-number (sheet-component-attrib-count))
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
+  (define *component-table (component-table *sheet-data))
 
   (define (id->attrib-name id)
     (pointer->string
@@ -1754,10 +1756,10 @@ failure."
         ;; Resize table to accomodate new attrib column.
         (attrib_sheet_data_set_component_table
          *sheet-data
-         (resize-table
-          (attrib_sheet_data_get_component_table *sheet-data)
-          (sheet-component-count)
-          old-component-attrib-count (sheet-component-attrib-count)))
+         (resize-table (component-table *sheet-data)
+                       (sheet-component-count)
+                       old-component-attrib-count
+                       (sheet-component-attrib-count)))
 
         ;; Fill out new sheet with new stuff from gtksheet.
         (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
@@ -1813,16 +1815,14 @@ failure."
       ;; Make a copy of the TABLE array, minus data in column to
       ;; delete.
       (let ((*new-table
-             (copy-table/delete-column
-              (attrib_sheet_data_get_component_table *sheet-data)
-              num
-              (sheet-component-count)
-              (sheet-component-attrib-count))))
+             (copy-table/delete-column (component-table *sheet-data)
+                                       num
+                                       (sheet-component-count)
+                                       (sheet-component-attrib-count))))
         ;; Destroy the current TABLE array:
-        (destroy-table
-         (attrib_sheet_data_get_component_table *sheet-data)
-         (sheet-component-count)
-         (sheet-component-attrib-count))
+        (destroy-table (component-table *sheet-data)
+                       (sheet-component-count)
+                       (sheet-component-attrib-count))
 
         (set-sheet-component-attrib-list!
          (delete-glist-item (sheet-component-attrib-list)
@@ -1921,8 +1921,7 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define *table
     (cond
-     ((= page-id 0)
-      (attrib_sheet_data_get_component_table *sheet-data))
+     ((= page-id 0) (component-table *sheet-data))
      ((= page-id 1)
       (attrib_sheet_data_get_net_table *sheet-data))
      ((= page-id 2)
@@ -2418,8 +2417,7 @@ failure."
   (define *sheet-data (attrib_get_sheet_data))
   (define *window (attrib_get_window))
 
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
+  (define *component-table (component-table *sheet-data))
   (define (component-sheet)
     (attrib_get_sheet 0))
   (define component-count (sheet-component-count))
@@ -2791,8 +2789,7 @@ Please check your design.")))
 ;;; component table.
 (define (objects->component-table *objects)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
+  (define *component-table (component-table *sheet-data))
 
   ;; Iterate through all objects found on page.
   (for-each
