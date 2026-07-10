@@ -69,20 +69,6 @@ attrib_sheet_data_set_pin_table (SHEET_DATA *data,
                                  TABLE** table);
 
 
-/* ------------- s_string_list.c ------------- */
-GList*
-attrib_string_list_new ();
-
-void
-attrib_string_list_set_data (GList *list,
-                             char *data);
-void
-attrib_string_list_set_prev (GList *list,
-                             GList *item);
-void
-attrib_string_list_set_next (GList *list,
-                             GList *item);
-
 /* ------------- s_table.c ------------- */
 int
 attrib_table_get_column (TABLE **table,

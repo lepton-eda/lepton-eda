@@ -70,11 +70,6 @@
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
-            attrib_string_list_new
-            attrib_string_list_set_data
-            attrib_string_list_set_next
-            attrib_string_list_set_prev
-
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
             attrib_table_set_attrib_value
@@ -170,12 +165,6 @@
 (define-lff attrib_sheet_data_set_net_table void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
-
-;;; s_string_list.c
-(define-lff attrib_string_list_new '* '())
-(define-lff attrib_string_list_set_data void '(* *))
-(define-lff attrib_string_list_set_next void '(* *))
-(define-lff attrib_string_list_set_prev void '(* *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))
