@@ -206,6 +206,10 @@
 (define (component-table *sheet-data)
   (attrib_sheet_data_get_component_table *sheet-data))
 
+(define (set-component-table! *sheet-data *table)
+  (attrib_sheet_data_set_component_table *sheet-data *table))
+
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -1774,7 +1778,7 @@ failure."
                                   *name)))
 
         ;; Resize table to accomodate new attrib column.
-        (attrib_sheet_data_set_component_table
+        (set-component-table!
          *sheet-data
          (resize-table (component-table *sheet-data)
                        (sheet-component-count)
@@ -1853,7 +1857,7 @@ failure."
         (g_free *attrib-name)
 
         ;; Use the copy made above as the current TABLE array.
-        (attrib_sheet_data_set_component_table *sheet-data *new-table)
+        (set-component-table! *sheet-data *new-table)
 
         ;; Delete column on gtksheet.
         (gtk_sheet_delete_columns *sheet num 1)
@@ -2580,7 +2584,7 @@ Please check your design.")))
   (define *sheet-data (attrib_sheet_data_new))
 
   ;; We will malloc and fill out the component table later.
-  (attrib_sheet_data_set_component_table *sheet-data %null-pointer)
+  (set-component-table! *sheet-data %null-pointer)
 
   ;; We will malloc and fill out the net table later.
   (attrib_sheet_data_set_net_table *sheet-data %null-pointer)
@@ -3120,7 +3124,7 @@ Please check your design.")))
   (sort-pin-attrib-list)
 
   ;; Create and load the tables.
-  (attrib_sheet_data_set_component_table
+  (set-component-table!
    *sheet-data
    (make-table (sheet-component-count)
                (sheet-component-attrib-count)))
