@@ -431,15 +431,6 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
-;;; Creates and returns new empty GList *LS.
-(define (make-string-list)
-  (let ((*ls (attrib_string_list_new)))
-    (attrib_string_list_set_data *ls %null-pointer)
-    (attrib_string_list_set_next *ls %null-pointer)
-    (attrib_string_list_set_prev *ls %null-pointer)
-    *ls))
-
-
 ;;; Returns the index of the string *STR in the list *LS.
 (define (string-list-id *ls *str)
   (define str (pointer->string *str))
