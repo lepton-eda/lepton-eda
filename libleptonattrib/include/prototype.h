@@ -50,12 +50,6 @@ SHEET_DATA*
 attrib_sheet_data_new();
 
 TABLE**
-attrib_sheet_data_get_component_table (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_table (SHEET_DATA *data,
-                                       TABLE** table);
-TABLE**
 attrib_sheet_data_get_net_table (SHEET_DATA *data);
 
 void

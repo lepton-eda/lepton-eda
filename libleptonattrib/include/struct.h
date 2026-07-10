@@ -70,7 +70,6 @@ typedef struct st_main_window MAIN_WINDOW;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  TABLE **component_table;                    /*!< points to 2d array of component attribs */
   TABLE **net_table;                          /*!< points to 2d array of net attribs */
   TABLE **pin_table;                          /*!< points to 2d array of pin attribs */
 };
