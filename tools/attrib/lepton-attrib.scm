@@ -545,9 +545,7 @@ failure."
 ;;; Adds the item *DATA to GList *LS.  It first passes through the
 ;;; list to make sure that there are no duplications.
 (define (add-glist-item *ls *data)
-  (if (or (null-pointer? *ls)
-          ;; This can be thrown out along with make-string-list().
-          (null-pointer? (glist-data *ls)))
+  (if (null-pointer? *ls)
       (g_list_append %null-pointer (g_strdup *data))
 
       ;; Otherwise, loop through list looking for duplicates.
@@ -574,25 +572,21 @@ failure."
 (define (attrib-in-string-list? *ls *name)
   ;; First check to see if list is empty.  If empty, return
   ;; 0 automatically.
-  (if (null-pointer? (glist-data *ls))
-      0
-
-      ;; Otherwise, loop through list looking for duplicates.
-      (let loop ((*ls *ls))
-        (if (null-pointer? *ls)
-            ;; If we are here, it's 'cause we didn't find the item
-            ;; pre-existing in the list.  In this case, return 0.
-            0
-            (let ((*item (g_strdup (glist-data *ls))))
-              (if (string= (pointer->string *item)
-                           (pointer->string *name))
-                  ;; Found item already in list.  Return 1.
-                  (begin
-                    (g_free *item)
-                    1)
-                  (begin
-                    (g_free *item)
-                    (loop (glist-next *ls)))))))))
+  (let loop ((*ls *ls))
+    (if (null-pointer? *ls)
+        ;; If we are here, it's 'cause we didn't find the item
+        ;; pre-existing in the list.  In this case, return 0.
+        0
+        (let ((*item (g_strdup (glist-data *ls))))
+          (if (string= (pointer->string *item)
+                       (pointer->string *name))
+              ;; Found item already in list.  Return 1.
+              (begin
+                (g_free *item)
+                1)
+              (begin
+                (g_free *item)
+                (loop (glist-next *ls))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
@@ -672,116 +666,115 @@ failure."
   (let ((*complete-component-attrib-list
          (update-attrib-list
           (duplicate-string-list *new-component-attrib-pair-list))))
-   ;; Now the main business of this function: updating the attribs
-   ;; attached to this object.  Loop on name=value pairs held in
-   ;; *complete-component-attrib-list, and then use this to get the
-   ;; name=value pairs out of *new-component-attrib-pair-list and
-   ;; from object.
+    ;; Now the main business of this function: updating the attribs
+    ;; attached to this object.  Loop on name=value pairs held in
+    ;; *complete-component-attrib-list, and then use this to get the
+    ;; name=value pairs out of *new-component-attrib-pair-list and
+    ;; from object.
 
-   ;; First handle a special case: the component has no attribs
-   ;; (beside refdes).
-   (unless (null-pointer?
-            (glist-data *complete-component-attrib-list))
-     ;; Now the normal case.
-     (let loop ((*local-list *complete-component-attrib-list))
-       (unless (null-pointer? *local-list)
-         ;; Now get the old attrib name & value from
-         ;; *complete-component-attrib-list and value from object.
-         (let* ((old-attrib-name
-                 (str-attrib-name (glist-data *local-list)))
-                (*old-attrib-value
-                 (if old-attrib-name
-                     (lepton_attrib_search_attached_attribs_by_name
-                      *object
-                      (string->pointer old-attrib-name)
-                      0)
-                     %null-pointer))
-                ;; Next try to get this attrib from
-                ;; *new-component-attrib-list.
-                (new-attrib-name
-                 (str-attrib-name (glist-data *local-list)))
-                (*new-attrib-name
-                 (if new-attrib-name
-                     (string->pointer new-attrib-name)
-                     %null-pointer))
-                ;; Now get row and column where this new attrib
-                ;; lives.  Then get visibility of the new attrib
-                ;; stored in the component table We'll need this
-                ;; later.
-                (*refdes (g_strdup (component-refdes *object)))
-                (row (string-list-id (sheet-component-list) *refdes))
-                (column (string-list-id (sheet-component-attrib-list)
-                                        *new-attrib-name))
-                (new-attrib-value
-                 ;; If attribute has been deleted from the sheet,
-                 ;; here is where we detect that.  The attrib will
-                 ;; be deleted below.
-                 (and (not (or (= row -1)
-                               (= column -1)))
-                      (true? (attrib-in-string-list?
-                              *new-component-attrib-pair-list
-                              (glist-data *local-list)))
-                      (str-attrib-value (glist-data *local-list))))
-                ;; We need a better place to get this info since the
-                ;; TABLE can be out of date.
-                (visibility
-                 (if (not new-attrib-value)
-                     0
-                     (attrib_table_get_visibility
-                      (attrib_sheet_data_get_component_table *sheet-data)
-                      row
-                      column)))
-                (show-name-value
-                 (if (not new-attrib-value)
-                     0
-                     (attrib_table_get_show_name_value
-                      (attrib_sheet_data_get_component_table *sheet-data)
-                      row
-                      column))))
-           (g_free *refdes)
+    ;; First handle a special case: the component has no attribs
+    ;; (beside refdes).
+    (unless (null-pointer? *complete-component-attrib-list)
+      ;; Now the normal case.
+      (let loop ((*local-list *complete-component-attrib-list))
+        (unless (null-pointer? *local-list)
+          ;; Now get the old attrib name & value from
+          ;; *complete-component-attrib-list and value from object.
+          (let* ((old-attrib-name
+                  (str-attrib-name (glist-data *local-list)))
+                 (*old-attrib-value
+                  (if old-attrib-name
+                      (lepton_attrib_search_attached_attribs_by_name
+                       *object
+                       (string->pointer old-attrib-name)
+                       0)
+                      %null-pointer))
+                 ;; Next try to get this attrib from
+                 ;; *new-component-attrib-list.
+                 (new-attrib-name
+                  (str-attrib-name (glist-data *local-list)))
+                 (*new-attrib-name
+                  (if new-attrib-name
+                      (string->pointer new-attrib-name)
+                      %null-pointer))
+                 ;; Now get row and column where this new attrib
+                 ;; lives.  Then get visibility of the new attrib
+                 ;; stored in the component table We'll need this
+                 ;; later.
+                 (*refdes (g_strdup (component-refdes *object)))
+                 (row (string-list-id (sheet-component-list) *refdes))
+                 (column (string-list-id (sheet-component-attrib-list)
+                                         *new-attrib-name))
+                 (new-attrib-value
+                  ;; If attribute has been deleted from the sheet,
+                  ;; here is where we detect that.  The attrib will
+                  ;; be deleted below.
+                  (and (not (or (= row -1)
+                                (= column -1)))
+                       (true? (attrib-in-string-list?
+                               *new-component-attrib-pair-list
+                               (glist-data *local-list)))
+                       (str-attrib-value (glist-data *local-list))))
+                 ;; We need a better place to get this info since the
+                 ;; TABLE can be out of date.
+                 (visibility
+                  (if (not new-attrib-value)
+                      0
+                      (attrib_table_get_visibility
+                       (attrib_sheet_data_get_component_table *sheet-data)
+                       row
+                       column)))
+                 (show-name-value
+                  (if (not new-attrib-value)
+                      0
+                      (attrib_table_get_show_name_value
+                       (attrib_sheet_data_get_component_table *sheet-data)
+                       row
+                       column))))
+            (g_free *refdes)
 
-           ;; Four cases to consider: Case 1.
-           (if (and (not (null-pointer? *old-attrib-value))
-                    new-attrib-value
-                    (not (string-null? new-attrib-value)))
-               ;; simply write new attrib into place of old one.
-               (replace-attrib *object
-                               *new-attrib-name
-                               (string->pointer new-attrib-value)
-                               visibility
-                               show-name-value)
+            ;; Four cases to consider: Case 1.
+            (if (and (not (null-pointer? *old-attrib-value))
+                     new-attrib-value
+                     (not (string-null? new-attrib-value)))
+                ;; simply write new attrib into place of old one.
+                (replace-attrib *object
+                                *new-attrib-name
+                                (string->pointer new-attrib-value)
+                                visibility
+                                show-name-value)
 
-               ;; Four cases to consider: Case 2.
-               (if (and (not (null-pointer? *old-attrib-value))
-                        (not new-attrib-value))
-                   ;; Remove attrib from component.
-                   (remove-attrib *toplevel
-                                  *object
-                                  (string->pointer old-attrib-name))
-                   ;; Four cases to consider: Case 3.
-                   (if (and (null-pointer? *old-attrib-value)
-                            new-attrib-value
-                            ;; One last sanity check, then add attrib.
-                            (not (string-null? new-attrib-value)))
-                       ;; Add new attrib to component.
-                       (let ((name-value-pair
-                              (string-append new-attrib-name
-                                             "="
-                                             new-attrib-value)))
-                         (add-object-attrib (pointer->object *object)
-                                            name-value-pair
-                                            visibility
-                                            show-name-value))
-                       ;; Four cases to consider: Case 4.
-                       (begin
-                         ;; Do nothing.
-                         #f))))
+                ;; Four cases to consider: Case 2.
+                (if (and (not (null-pointer? *old-attrib-value))
+                         (not new-attrib-value))
+                    ;; Remove attrib from component.
+                    (remove-attrib *toplevel
+                                   *object
+                                   (string->pointer old-attrib-name))
+                    ;; Four cases to consider: Case 3.
+                    (if (and (null-pointer? *old-attrib-value)
+                             new-attrib-value
+                             ;; One last sanity check, then add attrib.
+                             (not (string-null? new-attrib-value)))
+                        ;; Add new attrib to component.
+                        (let ((name-value-pair
+                               (string-append new-attrib-name
+                                              "="
+                                              new-attrib-value)))
+                          (add-object-attrib (pointer->object *object)
+                                             name-value-pair
+                                             visibility
+                                             show-name-value))
+                        ;; Four cases to consider: Case 4.
+                        (begin
+                          ;; Do nothing.
+                          #f))))
 
-           ;; Toggle attribute visibility and name/value setting.
+            ;; Toggle attribute visibility and name/value setting.
 
-           ;; free everything and iterate
-           (g_free *old-attrib-value)
-           (loop (glist-next *local-list))))))))
+            ;; free everything and iterate
+            (g_free *old-attrib-value)
+            (loop (glist-next *local-list))))))))
 
 
 ;;; Takes *TABLE, *ROW-LIST, *ROW-NAME, and ATTRIBS-NUMBER, and
@@ -790,7 +783,6 @@ failure."
 ;;;
 ;;; If the row holds no attribs, it just returns NULL.
 (define (make-attrib-pair *row-name *table *row-list attribs-number)
-  (define *attrib-pair-list (make-string-list))
   (define row (string-list-id *row-list *row-name))
 
   ;; Sanity check.
@@ -800,10 +792,10 @@ failure."
         (format (current-error-port) "make-attrib pair(): ")
         (format (current-error-port)
                 (G_ "We didn't find the row name in the row list!\n"))
-        *attrib-pair-list)
+        %null-pointer)
 
       (let loop ((column 0)
-                 (*out-ls *attrib-pair-list))
+                 (*out-ls %null-pointer))
         (if (>= column attribs-number)
             *out-ls
             (let ((*attrib-value
@@ -1599,29 +1591,24 @@ failure."
 ;;; Looks for item *NAME in the list *LS, and returns the index
 ;;; (-1 if absent).
 (define (string-list-item-id *ls *name)
-  ;; First check to see if list is empty.  If empty, return -1.
-  (if (null-pointer? (glist-data *ls))
-      -1
+  (let loop ((index 0)
+             (*ls *ls))
+    (if (null-pointer? *ls)
+        ;; If we are here, it's 'cause we didn't find the item
+        ;; pre-existing in the list.  In this case, return -1.
+        -1
+        (let ((*item (g_strdup (glist-data *ls))))
+          (if (string= (pointer->string *item)
+                       (pointer->string *name))
 
-      ;; Otherwise, loop through list looking for the item.
-      (let loop ((index 0)
-                 (*ls *ls))
-        (if (null-pointer? *ls)
-            ;; If we are here, it's 'cause we didn't find the item
-            ;; pre-existing in the list.  In this case, return -1.
-            -1
-            (let ((*item (g_strdup (glist-data *ls))))
-              (if (string= (pointer->string *item)
-                           (pointer->string *name))
+              (begin
+                ;; Found item in list; return index.
+                (g_free *item)
+                index)
 
-                  (begin
-                    ;; Found item in list; return index.
-                    (g_free *item)
-                    index)
-
-                  (begin
-                    (g_free *item)
-                    (loop (1+ index) (glist-next *ls)))))))))
+              (begin
+                (g_free *item)
+                (loop (1+ index) (glist-next *ls))))))))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
