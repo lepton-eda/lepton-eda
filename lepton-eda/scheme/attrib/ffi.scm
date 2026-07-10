@@ -57,8 +57,6 @@
             x_dialog_unimplemented_feature
 
             attrib_sheet_data_new
-            attrib_sheet_data_get_net_table
-            attrib_sheet_data_set_net_table
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
@@ -142,8 +140,6 @@
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
-(define-lff attrib_sheet_data_get_net_table '* '(*))
-(define-lff attrib_sheet_data_set_net_table void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
