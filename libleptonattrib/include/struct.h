@@ -47,29 +47,7 @@
 
 
 /* ========  Data structures used in processing below here  ========== */
-
-
-/* ----------------------------------------------------------------- *
- *  The sheet data hierarchy built by the prog should look like this:
- *  SHEET_DATA->(GList *master_XXX_list)          // list of comps/nets/pins (row labels)
- *            ->(GList *master_XXX_attrib_list)   // list of attached names  (column labels)
- *            ->(TABLE *XXX_table)                      // table of attrib values (table entries)
- * ----------------------------------------------------------------- */
-typedef struct st_sheet_data SHEET_DATA;
 typedef struct st_table TABLE;
-
-
-/* -------------------------------------------------------------------- */
-/*! \brief Sheet data structure
- *
- * st_sheet_data defines SHEET_DATA, and holds master lists holding
- * sorted lists of comp/netlist names.  Also holds pointers to the heads
- * of the attribute-holding component and net structures.
- */
-/* -------------------------------------------------------------------- */
-struct st_sheet_data {
-};
-
 
 
 /* -------------------------------------------------------------------- */

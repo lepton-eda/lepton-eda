@@ -54,8 +54,6 @@
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
-            attrib_sheet_data_new
-
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
             attrib_table_set_attrib_value
@@ -131,9 +129,6 @@
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
 (define-lff x_dialog_unimplemented_feature void '())
-
-;;; s_sheet_data.c
-(define-lff attrib_sheet_data_new '* '())
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))
