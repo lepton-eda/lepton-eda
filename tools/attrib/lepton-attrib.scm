@@ -227,6 +227,12 @@
   (set! %net-table *table))
 
 
+(define (pin-table *sheet-data)
+  (attrib_sheet_data_get_pin_table *sheet-data))
+
+(define (set-pin-table! *sheet-data *table)
+  (attrib_sheet_data_set_pin_table *sheet-data *table))
+
 ;;; Initialize liblepton library.
 (init-liblepton)
 
@@ -953,7 +959,7 @@ failure."
                            (glist-data *local-attrib-list)))
                          (*table-value
                           (attrib_table_get_attrib_value
-                           (attrib_sheet_data_get_pin_table *sheet-data) row i))
+                           (pin-table *sheet-data) row i))
                          (new-attrib-value
                           (if (not (null-pointer? *table-value))
                               (pointer->string *table-value)
@@ -1199,7 +1205,7 @@ failure."
         (*gtk-sheet (attrib_get_sheet 2))
         (*row-list (sheet-pin-list))
         (*column-list (sheet-pin-attrib-list))
-        (*table (attrib_sheet_data_get_pin_table *sheet-data)))
+        (*table (pin-table *sheet-data)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1963,8 +1969,7 @@ failure."
     (cond
      ((= page-id 0) (component-table))
      ((= page-id 1) (net-table))
-     ((= page-id 2)
-      (attrib_sheet_data_get_pin_table *sheet-data))
+     ((= page-id 2) (pin-table *sheet-data))
      (else #f)))
 
   (when (and *table
@@ -2453,7 +2458,7 @@ failure."
     (attrib_get_sheet 0))
   (define component-count (sheet-component-count))
   (define component-attrib-count (sheet-component-attrib-count))
-  (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
+  (define *pin-table (pin-table *sheet-data))
   (define (pin-sheet)
     (attrib_get_sheet 2))
   (define pin-count (sheet-pin-count))
@@ -2605,7 +2610,7 @@ Please check your design.")))
   (set-net-table! %null-pointer)
 
   ;; We will malloc and fill out the pin table later.
-  (attrib_sheet_data_set_pin_table *sheet-data %null-pointer)
+  (set-pin-table! *sheet-data %null-pointer)
 
   *sheet-data)
 
@@ -2988,8 +2993,7 @@ Please check your design.")))
 ;;; Process *OBJECTS and add attribs of pin ones to the pin table.
 (define (objects->pin-table *objects)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *pin-table
-    (attrib_sheet_data_get_pin_table *sheet-data))
+  (define *pin-table (pin-table *sheet-data))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -3142,9 +3146,9 @@ Please check your design.")))
                                     (sheet-component-attrib-count)))
   (set-net-table! (make-table (sheet-net-count)
                               (sheet-net-attrib-count)))
-  (attrib_sheet_data_set_pin_table
-   *sheet-data
-   (make-table (sheet-pin-count) (sheet-pin-attrib-count)))
+  (set-pin-table! *sheet-data
+                  (make-table (sheet-pin-count)
+                              (sheet-pin-attrib-count)))
 
   ;; Must iterate over all pages in design.
   (for-each
