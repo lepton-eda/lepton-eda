@@ -642,7 +642,6 @@ failure."
 (define (update-component-attribs *toplevel
                                   *object
                                   *new-component-attrib-pair-list)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; To remove dead attribs from an object, we need to form a
   ;; complete list of unique attribs by taking the union of the
   ;; new attribs from the sheet data, and the old attribs living
@@ -844,7 +843,6 @@ failure."
 
 
 (define (update-design-components *toplevel *page)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list, as objects can be deleted from the
   ;; list during iteration over the list.
   (define *copy-list (g_list_copy (lepton_page_objects *page)))
@@ -913,7 +911,6 @@ failure."
 ;;;   pin table on this row.
 ;;; - Return list of name=value pairs found.
 (define (pin->pin-attrib-list *refdes *pin)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *pinnumber
     (lepton_attrib_search_object_attribs_by_name
      *pin
@@ -1062,7 +1059,6 @@ failure."
 
 
 (define (update-design-pins *toplevel *page)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list in case objects are deleted from the
   ;; list during its iteration.
   (define *copy-list (g_list_copy (lepton_page_objects *page)))
@@ -1171,7 +1167,6 @@ failure."
 ;;; from the cells, and places them back into tables.  This is the
 ;;; first step in saving out a project.
 (define (spreadsheet-data->tables)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
   (let ((rows-number (sheet-component-count))
         (columns-number (sheet-component-attrib-count))
@@ -1329,7 +1324,6 @@ failure."
 
 ;;; Export design components to CSV for external processing.
 (define (export-components)
-  (define *sheet-data (attrib_get_sheet_data))
   (define rows-number (sheet-component-count))
   (define columns-number (sheet-component-attrib-count))
   (define *component-table (component-table))
@@ -1567,7 +1561,6 @@ failure."
 ;;; attributes that have some predefined 'weight' and go first or
 ;;; last, all other attributes are sorted in alphabetical order.
 (define (sort-component-attrib-list)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *ls (sheet-component-attrib-list))
 
   (set-sheet-component-attrib-list!
@@ -1765,8 +1758,6 @@ failure."
 
 ;;; Adds a new attribute NAME to the component sheet.
 (define (add-attrib-column name)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Only component sheet is supported yet.
   (when (zero? (notebook-current-page-id))
     ;; Eventually, I want to just resize the table to accomodate
@@ -1829,7 +1820,6 @@ failure."
 
 
 (define (delete-component-attrib-column *sheet num)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Get name (label) of the column to delete from the gtk sheet.
   (define *attrib-name
     (g_strdup (gtk_sheet_column_button_get_label *sheet num)))
@@ -1950,7 +1940,6 @@ failure."
 ;;; by VISIBLE and SHOW.  The cell is identified by the index of
 ;;; spreadsheet notebook tab PAGE-ID and (ROW, COLUMN).
 (define (set-cell-attrib-visibility page-id row column visible show)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *table
     (cond
      ((= page-id 0) (component-table))
@@ -2281,7 +2270,6 @@ failure."
 ;;; Creates and initializes the GtkSheet widget, which is the
 ;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *notebook (attrib_get_notebook))
 
   ;; Create three new sheets.
@@ -2444,7 +2432,6 @@ failure."
 
 ;;; Adds all items to the top level window.
 (define (add-items)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *window (attrib_get_window))
 
   (define *component-table (component-table))
@@ -2592,28 +2579,9 @@ Please check your design.")))
   (gtk_widget_show_all *window))
 
 
-;;; Creates and returns an initialised but empty SHEET_DATA
-;;; instance.
-(define (make-sheet-data)
-  (define *sheet-data (attrib_sheet_data_new))
-
-  ;; We will malloc and fill out the component table later.
-  (set-component-table! %null-pointer)
-
-  ;; We will malloc and fill out the net table later.
-  (set-net-table! %null-pointer)
-
-  ;; We will malloc and fill out the pin table later.
-  (set-pin-table! %null-pointer)
-
-  *sheet-data)
-
-
 ;;; Adds the list of component refdeses by running through
 ;;; the list of *OBJECTS.
 (define (add-components *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2636,8 +2604,6 @@ Please check your design.")))
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
 (define (add-component-attribs *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2698,8 +2664,6 @@ Please check your design.")))
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
 (define (add-pins *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2761,8 +2725,6 @@ Please check your design.")))
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
 (define (add-pin-attribs *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2818,7 +2780,6 @@ Please check your design.")))
 ;;; Process *OBJECTS and add attribs of component ones to the
 ;;; component table.
 (define (objects->component-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *component-table (component-table))
 
   ;; Iterate through all objects found on page.
@@ -2919,7 +2880,6 @@ Please check your design.")))
 
 ;;; Process *OBJECTS and add attribs of net ones to the net table.
 (define (objects->net-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *net-table (net-table))
 
   ;; Iterate through all objects found on page.
@@ -2986,7 +2946,6 @@ Please check your design.")))
 
 ;;; Process *OBJECTS and add attribs of pin ones to the pin table.
 (define (objects->pin-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *pin-table (pin-table))
 
   ;; Iterate through all objects found on page.
@@ -3094,7 +3053,6 @@ Please check your design.")))
 
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
-  (define *sheet-data (make-sheet-data))
   (define *pages
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
@@ -3104,9 +3062,6 @@ Please check your design.")))
 
   ;; Initialize GTK window.
   (init-window)
-
-  ;; Initialize main sheet data structure.
-  (attrib_set_sheet_data *sheet-data)
 
   (for-each
    (lambda (*page)
