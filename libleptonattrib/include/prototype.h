@@ -12,12 +12,6 @@ attrib_get_notebook ();
 void
 attrib_set_notebook (GtkWidget* widget);
 
-SHEET_DATA*
-attrib_get_sheet_data ();
-
-void
-attrib_set_sheet_data (SHEET_DATA *sheet_data);
-
 GtkSheet*
 attrib_get_sheet (int i);
 
