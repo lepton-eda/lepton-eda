@@ -63,8 +63,6 @@
             x_dialog_unimplemented_feature
 
             attrib_sheet_data_new
-            attrib_sheet_data_get_pin_table
-            attrib_sheet_data_set_pin_table
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -152,8 +150,6 @@
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
-(define-lff attrib_sheet_data_get_pin_table '* '(*))
-(define-lff attrib_sheet_data_set_pin_table void '(* *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))

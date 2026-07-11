@@ -70,7 +70,6 @@ typedef struct st_main_window MAIN_WINDOW;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  TABLE **pin_table;                          /*!< points to 2d array of pin attribs */
 };
 
 
