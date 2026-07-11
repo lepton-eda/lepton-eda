@@ -31,13 +31,6 @@ attrib_gtksheet_state_from_string (char *s);
 SHEET_DATA*
 attrib_sheet_data_new();
 
-TABLE**
-attrib_sheet_data_get_pin_table (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_table (SHEET_DATA *data,
-                                 TABLE** table);
-
 
 /* ------------- s_table.c ------------- */
 int

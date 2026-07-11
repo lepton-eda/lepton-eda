@@ -68,7 +68,6 @@ typedef struct st_table TABLE;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  TABLE **pin_table;                          /*!< points to 2d array of pin attribs */
 };
 
 
