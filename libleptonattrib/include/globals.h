@@ -82,14 +82,6 @@
 #endif
 
 
-/*------------------------------------------------------------------*/
-/*!
- * My own data structure which I made
- * a global because it was easier to deal with when handing
- * callbacks.  It is defined in structs.h
- */
-/*------------------------------------------------------------------*/
-extern SHEET_DATA *sheet_head;
 /*------------------------------------------------------------------
  * GTKsheet includes: stuff for dealing with windows.
  *------------------------------------------------------------------*/
