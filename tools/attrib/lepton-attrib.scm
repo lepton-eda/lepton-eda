@@ -399,9 +399,8 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
-;; Remove an attribute with *ATTRIB-NAME from *OBJECT in
-;; *TOPLEVEL.
-(define (remove-attrib *toplevel *object *attrib-name)
+;; Remove an attribute with *ATTRIB-NAME from *OBJECT.
+(define (remove-attrib *object *attrib-name)
   (let loop ((*attrib-ls
               (glist->list (lepton_object_get_attribs *object)
                            identity)))
@@ -428,7 +427,7 @@ failure."
                     ;; We've found the attrib.  Delete it and then
                     ;; return.
                     (let ((*active-page
-                           (lepton_toplevel_get_page_current *toplevel)))
+                           (lepton_toplevel_get_page_current (*current-toplevel))))
                       (lepton_object_delete *attrib)
                       (lepton_page_set_changed *active-page 1)
                       ;; We are done -- leave.
@@ -748,8 +747,7 @@ failure."
                 (if (and (not (null-pointer? *old-attrib-value))
                          (not new-attrib-value))
                     ;; Remove attrib from component.
-                    (remove-attrib *toplevel
-                                   *object
+                    (remove-attrib *object
                                    (string->pointer old-attrib-name))
                     ;; Four cases to consider: Case 3.
                     (if (and (null-pointer? *old-attrib-value)
@@ -1006,8 +1004,7 @@ failure."
             (if (and (not (null-pointer? *old-attrib-value))
                      (not new-attrib-value))
                 ;; Remove attrib from pin.
-                (remove-attrib *toplevel
-                               *pin
+                (remove-attrib *pin
                                (string->pointer new-attrib-name))
                 ;; Four cases to consider: Case 3: No old attrib, new one
                 ;; exists.
