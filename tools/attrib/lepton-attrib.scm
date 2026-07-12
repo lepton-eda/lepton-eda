@@ -3087,8 +3087,6 @@ Please check your design.")))
 
   (set-window! *window-widget)
 
-  (attrib_set_toplevel *toplevel)
-
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
 
