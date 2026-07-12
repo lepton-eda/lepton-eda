@@ -1259,11 +1259,6 @@ failure."
 ;;; first places all data from gtksheet into SHEET_DATA.  Then it
 ;;; loops through all pages and saves them.
 (define (save-sheet)
-  (define *toplevel (attrib_get_toplevel))
-
-  (when (null-pointer? *toplevel)
-    (error "NULL toplevel."))
-
   ;; Extract the attribs from the gtksheet widget cells, and place
   ;; them back into SHEET_DATA.
   (spreadsheet-data->tables)
@@ -1276,7 +1271,8 @@ failure."
        ;; Add all objects from page.
        (update-design *page)))
    (glist->list
-    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
+    (lepton_list_get_glist
+     (lepton_toplevel_get_pages (*current-toplevel)))
     identity))
 
   ;; Save all pages in design.
