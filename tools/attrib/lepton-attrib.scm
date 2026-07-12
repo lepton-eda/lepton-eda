@@ -76,6 +76,10 @@
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 
+;; The project and UI toplevel structure defining their data and
+;; settings.
+(define %toplevel (make-toplevel))
+
 ;;; Sorted list of all component refdeses used in design.
 (define %sheet-component-list %null-pointer)
 
@@ -3233,7 +3237,7 @@ Please check your design.")))
                            readable-files)))
             (if (null? files)
                 (exit 0)
-                (with-toplevel (make-toplevel)
+                (with-toplevel %toplevel
                  (lambda ()
                    (for-each process-gafrc* files)
                    ;; Open all files.
