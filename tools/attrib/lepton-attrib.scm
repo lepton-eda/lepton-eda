@@ -469,9 +469,9 @@ failure."
           (if (and (true? (lepton_object_is_text *attrib))
                    (not (null-pointer? (lepton_object_get_text *attrib))))
               ;; Found an attribute.
-              (let* ((*old-attrib-text
-                      (g_strdup (lepton_text_object_get_string *attrib)))
-                     (old-attrib-name (str-attrib-name *old-attrib-text)))
+              (let ((old-attrib-name
+                     (str-attrib-name
+                      (lepton_text_object_get_string *attrib))))
                 (if (and old-attrib-name
                          (string= old-attrib-name
                                   (pointer->string *attrib-name)))
@@ -480,12 +480,8 @@ failure."
                     (let ((*active-page
                            (lepton_toplevel_get_page_current (*current-toplevel))))
                       (lepton_object_delete *attrib)
-                      (lepton_page_set_changed *active-page 1)
-                      ;; We are done -- leave.
-                      (g_free *old-attrib-text))
-                    (begin
-                      (g_free *old-attrib-text)
-                      (loop (cdr *attrib-ls)))))
+                      (lepton_page_set_changed *active-page 1))
+                    (loop (cdr *attrib-ls))))
 
               (loop (cdr *attrib-ls)))))))
 
