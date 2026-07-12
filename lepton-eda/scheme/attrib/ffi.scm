@@ -45,9 +45,6 @@
             gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
 
-            attrib_get_sheet
-            attrib_set_sheet
-            attrib_get_sheets_number
             attrib_gtksheet_state_from_string
             attrib_gtksheet_state_to_string
 
@@ -78,7 +75,6 @@
             attrib_run
             attrib_window_menubar_new
             attrib_window_new
-            attrib_window_sheets_new
             attrib_window_set_menu_callback
             separator_new
             ))
@@ -120,9 +116,6 @@
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
 
 ;;; attrib.c
-(define-lff attrib_get_sheet '* (list int))
-(define-lff attrib_set_sheet void (list int '*))
-(define-lff attrib_get_sheets_number int '())
 (define-lff attrib_gtksheet_state_from_string int '(*))
 (define-lff attrib_gtksheet_state_to_string '* (list int))
 
@@ -156,6 +149,5 @@
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_menubar_new '* '(*))
 (define-lff attrib_window_new '* '(*))
-(define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff separator_new '* '())

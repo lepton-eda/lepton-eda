@@ -6,15 +6,6 @@ G_BEGIN_DECLS
 
 /* attrib.c */
 
-GtkSheet*
-attrib_get_sheet (int i);
-
-void
-attrib_set_sheet (int i,
-                  GtkSheet* sheet);
-int
-attrib_get_sheets_number ();
-
 const char*
 attrib_gtksheet_state_to_string (int val);
 
@@ -127,9 +118,6 @@ attrib_window_menubar_new (GtkWidget *window);
 
 GtkWidget*
 attrib_window_new (gpointer app);
-
-void
-attrib_window_sheets_new ();
 
 void
 attrib_window_set_menu_callback (char *name,

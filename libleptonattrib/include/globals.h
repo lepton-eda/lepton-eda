@@ -80,13 +80,4 @@
 #else
 # define N_(String) (String)
 #endif
-
-
-/*------------------------------------------------------------------
- * GTKsheet includes: stuff for dealing with windows.
- *------------------------------------------------------------------*/
-#define NUM_SHEETS 3            /* Components, Nets, and Pins */
-
-extern GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
-
 #endif
