@@ -80,6 +80,11 @@
 ;; settings.
 (define %toplevel (make-toplevel))
 
+;;; Returns the C pointer to the current toplevel instance.
+(define (*current-toplevel)
+  (toplevel->pointer (current-toplevel)))
+
+
 ;;; Sorted list of all component refdeses used in design.
 (define %sheet-component-list %null-pointer)
 
@@ -3245,8 +3250,8 @@ Please check your design.")))
                    ;; Run attribute editor.
                    (exit (if %m4-use-gtk3
                              (attrib_run (procedure->pointer void activate '(* *))
-                                         (toplevel->pointer (current-toplevel)))
-                             (let ((*toplevel (toplevel->pointer (current-toplevel))))
+                                         (*current-toplevel))
+                             (let ((*toplevel (*current-toplevel)))
                                (activate %null-pointer *toplevel)
                                (attrib_run %null-pointer *toplevel)))))))))
 
