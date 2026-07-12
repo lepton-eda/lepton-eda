@@ -76,6 +76,21 @@
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 
+(define %component-sheet #f)
+
+(define %net-sheet #f)
+
+(define %pin-sheet #f)
+
+(define (sheet num)
+  (case num
+    ((0) %component-sheet)
+    ((1) %net-sheet)
+    ((2) %pin-sheet)))
+
+(define %num-sheets 3)
+
+
 ;;; Sorted list of all component refdeses used in design.
 (define %sheet-component-list %null-pointer)
 
@@ -1170,7 +1185,7 @@ failure."
   ;; First handle component sheet.
   (let ((rows-number (sheet-component-count))
         (columns-number (sheet-component-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 0))
+        (*gtk-sheet (sheet 0))
         (*row-list (sheet-component-list))
         (*column-list (sheet-component-attrib-list))
         (*table (component-table)))
@@ -1185,7 +1200,7 @@ failure."
   ;; Next handle net sheet.
   (let ((rows-number (sheet-net-count))
         (columns-number (sheet-net-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 1))
+        (*gtk-sheet (sheet 1))
         (*row-list (sheet-net-list))
         (*column-list (sheet-net-attrib-list))
         (*table (net-table)))
@@ -1200,7 +1215,7 @@ failure."
   ;; Finally handle component pin sheet.
   (let ((rows-number (sheet-pin-count))
         (columns-number (sheet-pin-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 2))
+        (*gtk-sheet (sheet 2))
         (*row-list (sheet-pin-list))
         (*column-list (sheet-pin-attrib-list))
         (*table (pin-table)))
@@ -1429,10 +1444,10 @@ failure."
   ;; 'deactivate' callback if needed.
   (for-each
    (lambda (i)
-     (let ((*sheet (attrib_get_sheet i)))
+     (let ((*sheet (sheet i)))
        (unless (null-pointer? *sheet)
          (gtk_sheet_set_active_cell *sheet -1 -1))))
-   (iota (attrib_get_sheets_number)))
+   (iota %num-sheets))
 
   (if (sheet-changed?)
       (case (unsaved-changes-dialog *window %program-basename)
@@ -1785,9 +1800,9 @@ failure."
                        (sheet-component-attrib-count)))
 
         ;; Fill out new sheet with new stuff from gtksheet.
-        (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
+        (gtk_sheet_insert_columns (sheet 0) new-index 1)
         (add-column-labels
-         (attrib_get_sheet 0)
+         (sheet 0)
          (sheet-component-attrib-count)
          (sheet-component-attrib-list))))))
 
@@ -1865,7 +1880,7 @@ failure."
 
 
 (define (current-sheet)
-  (attrib_get_sheet (notebook-current-page-id)))
+  (sheet (notebook-current-page-id)))
 
 
 (define (gtksheet-state->symbol state)
@@ -2198,9 +2213,6 @@ failure."
 
   (init-window-widgets)
 
-  ;; Create the array of sheets.
-  (attrib_window_sheets_new)
-
   ;; Restore main window's geometry.
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
 
@@ -2282,7 +2294,7 @@ failure."
                (gtk_sheet_new component-count
                               component-attrib-count
                               (string->pointer (G_ "Components")))))
-          (attrib_set_sheet 0 *component-sheet))
+          (set! %component-sheet *component-sheet))
         (x_dialog_fatal_error
          (string->pointer
           (G_ "No components found in design.  Please check your schematic and try again!\n"))
@@ -2296,12 +2308,12 @@ failure."
                (gtk_sheet_new net-count
                               net-attrib-count
                               (string->pointer (G_ "Nets")))))
-          (attrib_set_sheet 1 *net-sheet)
+          (set! %net-sheet *net-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *net-sheet TRUE))
         (let ((*net-sheet
                (gtk_sheet_new 1 1 (string->pointer (G_ "Nets")))))
-          (attrib_set_sheet 1 *net-sheet)
+          (set! %net-sheet *net-sheet)
           (gtk_sheet_row_button_add_label *net-sheet
                                           0
                                           (string->pointer (G_ "TBD")))
@@ -2325,20 +2337,20 @@ failure."
         (let ((*pin-sheet (gtk_sheet_new pin-count
                                          pin-attrib-count
                                          (string->pointer (G_ "Pins")))))
-          (attrib_set_sheet 2 *pin-sheet)
+          (set! %pin-sheet *pin-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *pin-sheet TRUE))
         (let ((*pin-sheet
                (gtk_sheet_new 1 1 (string->pointer (G_ "Pins")))))
-          (attrib_set_sheet 2 *pin-sheet)
+          (set! %pin-sheet *pin-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *pin-sheet TRUE))))
 
 
   ;; Finally stick labels on the notebooks holding the two sheets.
   (do ((i 0 (1+ i)))
-      ((= i (attrib_get_sheets_number)))
-    (let ((*current-sheet (attrib_get_sheet i)))
+      ((= i %num-sheets))
+    (let ((*current-sheet (sheet i)))
       ;; Is this check needed?
       ;; Yes, it prevents us from segfaulting on empty nets sheet.
       (unless (null-pointer? *current-sheet)
@@ -2435,18 +2447,15 @@ failure."
   (define *window (attrib_get_window))
 
   (define *component-table (component-table))
-  (define (component-sheet)
-    (attrib_get_sheet 0))
+  (define (component-sheet) (sheet 0))
   (define component-count (sheet-component-count))
   (define component-attrib-count (sheet-component-attrib-count))
   (define *pin-table (pin-table))
-  (define (pin-sheet)
-    (attrib_get_sheet 2))
+  (define (pin-sheet) (sheet 2))
   (define pin-count (sheet-pin-count))
   (define pin-attrib-count (sheet-pin-attrib-count))
   (define *net-table (net-table))
-  (define (net-sheet)
-    (attrib_get_sheet 1))
+  (define (net-sheet) (sheet 1))
   (define net-count (sheet-net-count))
   (define net-attrib-count (sheet-net-attrib-count))
 

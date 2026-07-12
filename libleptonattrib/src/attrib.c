@@ -98,55 +98,6 @@ attrib_set_notebook (GtkWidget* widget)
 }
 
 
-/*! \brief Get a sheet by number.
- *
- *  \par Function Description
- *
- *  Returns a sheet of the \c sheets array by given number.
- *
- *  \param [in] i The number of the sheet.
- *
- *  \return The sheet.
- */
-GtkSheet*
-attrib_get_sheet (int i)
-{
-  return sheets[i];
-}
-
-
-/*! \brief Set a sheet by number.
- *
- *  \par Function Description
- *
- *  Sets a sheet with given number of the \c sheets array to \p
- *  sheet.
- *
- *  \param [in] i The number of the sheet to set.
- *  \param [in] sheet The new sheet.
- */
-void
-attrib_set_sheet (int i,
-                  GtkSheet* sheet)
-{
-  sheets[i] = sheet;
-}
-
-
-/*! \brief Get the number of sheets.
- *
- *  \par Function Description
- *
- *  Returns the number of sheets defined in the global variable
- *  #NUM_SHEETS.
- */
-int
-attrib_get_sheets_number ()
-{
-  return NUM_SHEETS;
-}
-
-
 /*! \var LeptonToplevel *toplevel
  *
  * The project and UI toplevel structure defining their data and

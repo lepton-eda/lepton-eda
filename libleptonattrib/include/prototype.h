@@ -12,15 +12,6 @@ attrib_get_notebook ();
 void
 attrib_set_notebook (GtkWidget* widget);
 
-GtkSheet*
-attrib_get_sheet (int i);
-
-void
-attrib_set_sheet (int i,
-                  GtkSheet* sheet);
-int
-attrib_get_sheets_number ();
-
 LeptonToplevel*
 attrib_get_toplevel ();
 
@@ -145,9 +136,6 @@ attrib_window_menubar_new (GtkWidget *window);
 
 GtkWidget*
 attrib_window_new (gpointer app);
-
-void
-attrib_window_sheets_new ();
 
 void
 attrib_window_set_menu_callback (char *name,

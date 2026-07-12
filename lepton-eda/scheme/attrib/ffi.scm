@@ -47,9 +47,6 @@
 
             attrib_get_notebook
             attrib_set_notebook
-            attrib_get_sheet
-            attrib_set_sheet
-            attrib_get_sheets_number
             attrib_get_toplevel
             attrib_set_toplevel
             attrib_get_window
@@ -84,7 +81,6 @@
             attrib_run
             attrib_window_menubar_new
             attrib_window_new
-            attrib_window_sheets_new
             attrib_window_set_menu_callback
             separator_new
             ))
@@ -128,9 +124,6 @@
 ;;; attrib.c
 (define-lff attrib_get_notebook '* '())
 (define-lff attrib_set_notebook void '(*))
-(define-lff attrib_get_sheet '* (list int))
-(define-lff attrib_set_sheet void (list int '*))
-(define-lff attrib_get_sheets_number int '())
 (define-lff attrib_get_toplevel '* '())
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
@@ -168,6 +161,5 @@
 (define-lff attrib_run int '(* *))
 (define-lff attrib_window_menubar_new '* '(*))
 (define-lff attrib_window_new '* '(*))
-(define-lff attrib_window_sheets_new void '())
 (define-lff attrib_window_set_menu_callback void '(* *))
 (define-lff separator_new '* '())

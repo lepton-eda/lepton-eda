@@ -72,22 +72,6 @@ separator_new ()
 }
 
 
-/*! \brief Create the array of sheets.
- *
- *  \par Function Description
- *
- *  Malloc -- but don't fill out -- space for sheets.  This
- *  basically sets up the overhead for the sheets.  The memory for
- *  the actual sheet cells is allocated later, when
- *  gtk_sheet_new() is invoked.
- */
-void
-attrib_window_sheets_new ()
-{
-  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
-}
-
-
 /*! \brief Create the menubar widget.
  *
  *  \par Function Description
