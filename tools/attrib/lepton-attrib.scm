@@ -588,8 +588,8 @@ failure."
                 (loop (glist-next *ls))))))))
 
 
-;;; Updates *OBJECT component attributes in *TOPLEVEL using the
-;;; value held in the list of name=value attribute pairs
+;;; Updates *OBJECT component attributes using the value held in
+;;; the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
 ;;;
 ;;; For each attrib string attached to the component, update it
@@ -611,8 +611,7 @@ failure."
 ;;; - If the attribs doesn't exist on *OBJECT, but is non-NULL in
 ;;;   the name=value pair, create an attrib object and add it to
 ;;;   the part on *OBJECT.
-(define (update-component-attribs *toplevel
-                                  *object
+(define (update-component-attribs *object
                                   *new-component-attrib-pair-list)
   (define *sheet-data (attrib_get_sheet_data))
   ;; To remove dead attribs from an object, we need to form a
@@ -814,7 +813,7 @@ failure."
                                           *name-value-pair)))))))))
 
 
-(define (update-design-components *toplevel *page)
+(define (update-design-components *page)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list, as objects can be deleted from the
   ;; list during iteration over the list.
@@ -850,7 +849,6 @@ failure."
                      ;; Now update attribs in toplevel using this
                      ;; list.
                      (update-component-attribs
-                      *toplevel
                       *object
                       *new-component-attrib-pair-list)
 
@@ -868,7 +866,7 @@ failure."
   (g_list_free *copy-list))
 
 
-(define (update-design-nets *toplevel *page)
+(define (update-design-nets *page)
   ;; Not implemented yet.
   #f)
 
@@ -971,7 +969,7 @@ failure."
 ;;; - If the attrib doesn't exist on pin, but is non-NULL in the
 ;;;   name=value pair, create an attrib object and add it to the
 ;;;   pin.
-(define (update-pin-attribs *toplevel *refdes *pin *pin-attrib-list)
+(define (update-pin-attribs *refdes *pin *pin-attrib-list)
   (when (null-pointer? *pin)
     (error "NULL pin."))
 
@@ -1031,7 +1029,7 @@ failure."
         (loop (glist-next *local-list))))))
 
 
-(define (update-design-pins *toplevel *page)
+(define (update-design-pins *page)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list in case objects are deleted from the
   ;; list during its iteration.
@@ -1062,7 +1060,6 @@ failure."
                        (pin->pin-attrib-list *temp-uref
                                              *component-primitive-object)))
                   (update-pin-attribs
-                   *toplevel
                    *temp-uref
                    *component-primitive-object
                    *new-pin-attrib-list))))
@@ -1085,13 +1082,13 @@ failure."
 ;;; - First find and update component attribs.
 ;;; - Then find and update net attribs.
 ;;; - Finally find and update pin attribs.
-(define (update-design *toplevel *page)
+(define (update-design *page)
   ;; First deal with all components on the page.
-  (update-design-components *toplevel *page)
+  (update-design-components *page)
   ;; Next deal with all nets on the page.
-  (update-design-nets *toplevel *page)
+  (update-design-nets *page)
   ;; Finally deal with all pins on the page.
-  (update-design-pins *toplevel *page))
+  (update-design-pins *page))
 
 
 ;;; Extracts attributes from *GTK-SHEET into *TABLE obtaining row
@@ -1277,7 +1274,7 @@ failure."
      ;; Only traverse pages which are toplevel.
      (when (zero? (lepton_page_get_page_control *page))
        ;; Add all objects from page.
-       (update-design *toplevel *page)))
+       (update-design *page)))
    (glist->list
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
     identity))
