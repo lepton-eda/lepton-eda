@@ -21,12 +21,6 @@ attrib_set_sheet (int i,
 int
 attrib_get_sheets_number ();
 
-LeptonToplevel*
-attrib_get_toplevel ();
-
-void
-attrib_set_toplevel (LeptonToplevel *toplevel);
-
 const char*
 attrib_gtksheet_state_to_string (int val);
 

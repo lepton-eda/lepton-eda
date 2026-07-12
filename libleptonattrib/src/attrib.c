@@ -144,46 +144,6 @@ attrib_get_sheets_number ()
 }
 
 
-/*! \var LeptonToplevel *toplevel
- *
- * The project and UI toplevel structure defining their data and
- * settings.
- */
-static LeptonToplevel *toplevel = NULL;
-
-
-/*! \brief Get the project toplevel.
- *
- *  \par Function Description
- *
- *  Returns the project toplevel instance embracing all data and
- *  settings of the project and program UI.
- *
- *  \return The \c LeptonToplevel instance.
- */
-LeptonToplevel*
-attrib_get_toplevel ()
-{
-  return toplevel;
-}
-
-/*! \brief Set the project toplevel.
- *
- *  \par Function Description
- *
- *  Sets the project toplevel instance to the given value.  The
- *  toplevel structure embraces all data and settings of the
- *  project and program UI.
- *
- *  \param [in] val The new \c LeptonToplevel instance value.
- */
-void
-attrib_set_toplevel (LeptonToplevel *val)
-{
-  toplevel = val;
-}
-
-
 /*! \brief Transform a \c GtkSheetState value to string.
  *
  * \par Function Description

@@ -50,8 +50,6 @@
             attrib_get_sheet_data
             attrib_set_sheet_data
             attrib_get_sheets_number
-            attrib_get_toplevel
-            attrib_set_toplevel
             attrib_gtksheet_state_from_string
             attrib_gtksheet_state_to_string
 
@@ -137,8 +135,6 @@
 (define-lff attrib_get_sheet_data '* '())
 (define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheets_number int '())
-(define-lff attrib_get_toplevel '* '())
-(define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_gtksheet_state_from_string int '(*))
 (define-lff attrib_gtksheet_state_to_string '* (list int))
 
