@@ -218,6 +218,10 @@
   (set! %sheet-changed state))
 
 
+(define (table-init-attrib-value *table i j)
+  (attrib_table_init_attrib_value *table i j))
+
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1680,7 +1684,7 @@ failure."
       ((>= i row-count))
     (do ((j 0 (1+ j)))
         ((>= j column-count))
-      (attrib_table_init_attrib_value *table i j)
+      (table-init-attrib-value *table i j)
       (attrib_table_init_row_name *table i j)
       (attrib_table_init_column_name *table i j)
       (attrib_table_set_visibility *table i j VISIBLE)
@@ -1775,7 +1779,7 @@ failure."
       ((>= i row-count))
     (do ((j old-column-count (1+ j)))
         ((>= j new-column-count))
-      (attrib_table_init_attrib_value *table i j)
+      (table-init-attrib-value *table i j)
       (attrib_table_init_row_name *table i j)
       (attrib_table_init_column_name *table i j)
       (attrib_table_set_visibility *table i j VISIBLE)
