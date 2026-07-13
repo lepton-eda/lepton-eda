@@ -224,6 +224,9 @@
 (define (table-init-row-name *table i j)
   (attrib_table_init_row_name *table i j))
 
+(define (table-init-column-name *table i j)
+  (attrib_table_init_column_name *table i j))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1688,7 +1691,7 @@ failure."
         ((>= j column-count))
       (table-init-attrib-value *table i j)
       (table-init-row-name *table i j)
-      (attrib_table_init_column_name *table i j)
+      (table-init-column-name *table i j)
       (attrib_table_set_visibility *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
@@ -1783,7 +1786,7 @@ failure."
         ((>= j new-column-count))
       (table-init-attrib-value *table i j)
       (table-init-row-name *table i j)
-      (attrib_table_init_column_name *table i j)
+      (table-init-column-name *table i j)
       (attrib_table_set_visibility *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
