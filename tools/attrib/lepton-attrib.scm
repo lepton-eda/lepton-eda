@@ -263,6 +263,9 @@
 (define (cell-visibility *table row column)
   (attrib_table_get_visibility *table row column))
 
+(define (set-cell-visibility! *table row column visibility)
+  (attrib_table_set_visibility *table row column visibility))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1721,7 +1724,7 @@ failure."
       (table-init-attrib-value *table i j)
       (table-init-row-name *table i j)
       (table-init-column-name *table i j)
-      (attrib_table_set_visibility *table i j VISIBLE)
+      (set-cell-visibility! *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
   *table)
@@ -1745,10 +1748,10 @@ failure."
     (do ((k 0 (1+ k)))
         ((>= k (1- column-count)))
       (let ((K (if (>= k column) (1+ k) k)))
-        (attrib_table_set_visibility *destination
-                                     j
-                                     k
-                                     (cell-visibility *table j K))
+        (set-cell-visibility! *destination
+                              j
+                              k
+                              (cell-visibility *table j K))
         (attrib_table_set_show_name_value
          *destination
          j
@@ -1815,7 +1818,7 @@ failure."
       (table-init-attrib-value *table i j)
       (table-init-row-name *table i j)
       (table-init-column-name *table i j)
-      (attrib_table_set_visibility *table i j VISIBLE)
+      (set-cell-visibility! *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
   *table)
@@ -2016,7 +2019,7 @@ failure."
              (not (= row -1))
              (not (= column -1)))
     ;; Question:  how to sanity check (row, column) selection?
-    (attrib_table_set_visibility *table row column visible)
+    (set-cell-visibility! *table row column visible)
     ;; Cell has been updated.
     (set-sheet-data-changed #t)
 
@@ -2906,10 +2909,10 @@ Please check your design.")))
                                                     (if attrib-value
                                                         (string->pointer attrib-value)
                                                         %null-pointer))
-                            (attrib_table_set_visibility *component-table
-                                                         row
-                                                         column
-                                                         old-visibility)
+                            (set-cell-visibility! *component-table
+                                                  row
+                                                  column
+                                                  old-visibility)
                             (attrib_table_set_show_name_value *component-table
                                                               row
                                                               column
