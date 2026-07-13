@@ -227,6 +227,9 @@
 (define (table-init-column-name *table i j)
   (attrib_table_init_column_name *table i j))
 
+(define (make-table-row column-count)
+  (attrib_table_row_new column-count))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1682,7 +1685,7 @@ failure."
       ((>= i row-count))
     (attrib_table_set_row_contents *table
                                    i
-                                   (attrib_table_row_new column-count)))
+                                   (make-table-row column-count)))
 
   ;; Now pre-load the table with NULLs
   (do ((i 0 (1+ i)))
