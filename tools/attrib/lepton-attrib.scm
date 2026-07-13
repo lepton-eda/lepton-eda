@@ -245,6 +245,9 @@
 (define (cell-attrib-value *table row column)
   (attrib_table_get_attrib_value *table row column))
 
+(define (set-cell-attrib-value! *table row column *value)
+  (attrib_table_set_attrib_value *table row column *value))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1193,7 +1196,7 @@ failure."
                   (*attrib-value
                    (gtk_sheet_cell_get_text *gtk-sheet row column)))
               ;; First handle attrib value in cell.
-              (attrib_table_set_attrib_value *table row column *attrib-value)
+              (set-cell-attrib-value! *table row column *attrib-value)
               ;; Next handle name of row (also held in table cell).
               (attrib_table_set_row_name *table row column *row-title)
               ;; Finally handle name of column.
@@ -1751,7 +1754,7 @@ failure."
          j
          k
          (g_strdup (attrib_table_get_column_name *table j K)))
-        (attrib_table_set_attrib_value
+        (set-cell-attrib-value!
          *destination
          j
          k
@@ -2889,12 +2892,12 @@ Please check your design.")))
                                                           row
                                                           column
                                                           (string->pointer name))
-                            (attrib_table_set_attrib_value *component-table
-                                                           row
-                                                           column
-                                                           (if attrib-value
-                                                               (string->pointer attrib-value)
-                                                               %null-pointer))
+                            (set-cell-attrib-value! *component-table
+                                                    row
+                                                    column
+                                                    (if attrib-value
+                                                        (string->pointer attrib-value)
+                                                        %null-pointer))
                             (attrib_table_set_visibility *component-table
                                                          row
                                                          column
@@ -2955,12 +2958,12 @@ Please check your design.")))
                                                   row
                                                   column
                                                   (string->pointer name))
-                    (attrib_table_set_attrib_value *net-table
-                                                   row
-                                                   column
-                                                   (if attrib-value
-                                                       (string->pointer attrib-value)
-                                                       %null-pointer))))
+                    (set-cell-attrib-value! *net-table
+                                            row
+                                            column
+                                            (if attrib-value
+                                                (string->pointer attrib-value)
+                                                %null-pointer))))
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
@@ -3044,12 +3047,12 @@ Please check your design.")))
                                                                  row
                                                                  column
                                                                  (string->pointer name))
-                                   (attrib_table_set_attrib_value *pin-table
-                                                                  row
-                                                                  column
-                                                                  (if attrib-value
-                                                                      (string->pointer attrib-value)
-                                                                      %null-pointer))))))
+                                   (set-cell-attrib-value! *pin-table
+                                                           row
+                                                           column
+                                                           (if attrib-value
+                                                               (string->pointer attrib-value)
+                                                               %null-pointer))))))
                          (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
