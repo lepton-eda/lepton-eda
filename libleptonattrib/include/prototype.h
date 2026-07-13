@@ -13,24 +13,6 @@ int
 attrib_gtksheet_state_from_string (char *s);
 
 /* ------------- s_table.c ------------- */
-int
-attrib_table_get_column (TABLE **table,
-                         int i,
-                         int j);
-void
-attrib_table_set_column (TABLE **table,
-                         int i,
-                         int j,
-                         int val);
-int
-attrib_table_get_row (TABLE **table,
-                      int i,
-                      int j);
-void
-attrib_table_set_row (TABLE **table,
-                      int i,
-                      int j,
-                      int val);
 void
 attrib_table_init_attrib_value (TABLE **table,
                                 int i,

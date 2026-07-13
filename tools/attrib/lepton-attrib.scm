@@ -1683,8 +1683,6 @@ failure."
       (attrib_table_init_attrib_value *table i j)
       (attrib_table_init_row_name *table i j)
       (attrib_table_init_column_name *table i j)
-      (attrib_table_set_row *table i j i)
-      (attrib_table_set_column *table i j j)
       (attrib_table_set_visibility *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
@@ -1709,9 +1707,6 @@ failure."
     (do ((k 0 (1+ k)))
         ((>= k (1- column-count)))
       (let ((K (if (>= k column) (1+ k) k)))
-
-        (attrib_table_set_row *destination j k j)
-        (attrib_table_set_column *destination j k k)
         (attrib_table_set_visibility
          *destination
          j
@@ -1783,8 +1778,6 @@ failure."
       (attrib_table_init_attrib_value *table i j)
       (attrib_table_init_row_name *table i j)
       (attrib_table_init_column_name *table i j)
-      (attrib_table_set_row *table i j i)
-      (attrib_table_set_column *table i j j)
       (attrib_table_set_visibility *table i j VISIBLE)
       (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
 
@@ -2866,14 +2859,6 @@ Please check your design.")))
                           (begin
                             ;; Is there a compelling reason for me
                             ;; to put this into a separate function?
-                            (attrib_table_set_row *component-table
-                                                  row
-                                                  column
-                                                  row)
-                            (attrib_table_set_column *component-table
-                                                     row
-                                                     column
-                                                     column)
                             (attrib_table_set_row_name *component-table
                                                        row
                                                        column
@@ -2940,14 +2925,6 @@ Please check your design.")))
                          (string-list-id (sheet-net-attrib-list)
                                          (string->pointer name))))
                     ;; Get row and column where to put this attrib.
-                    (attrib_table_set_row *net-table
-                                          row
-                                          column
-                                          row)
-                    (attrib_table_set_column *net-table
-                                             row
-                                             column
-                                             column)
                     (attrib_table_set_row_name *net-table
                                                row
                                                column
@@ -3037,14 +3014,6 @@ Please check your design.")))
                                    (format (current-error-port)
                                            (G_ "We didn't find either row or column in the lists!\n")))
                                  (begin
-                                   (attrib_table_set_row *pin-table
-                                                         row
-                                                         column
-                                                         row)
-                                   (attrib_table_set_column *pin-table
-                                                            row
-                                                            column
-                                                            column)
                                    (attrib_table_set_row_name *pin-table
                                                               row
                                                               column
