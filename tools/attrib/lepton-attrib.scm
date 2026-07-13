@@ -230,6 +230,9 @@
 (define (make-table-row column-count)
   (attrib_table_row_new column-count))
 
+(define (table-row-contents *table row)
+  (attrib_table_get_row_contents *table row))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1763,7 +1766,7 @@ failure."
 
     (do ((i 0 (1+ i)))
         ((>= i row-count))
-      (g_free (attrib_table_get_row_contents *table i)))
+      (g_free (table-row-contents *table i)))
 
     (g_free *table)))
 
@@ -1776,10 +1779,10 @@ failure."
     (attrib_table_set_row_contents
      *table
      i
-     (attrib_table_realloc_row (attrib_table_get_row_contents *table i)
+     (attrib_table_realloc_row (table-row-contents *table i)
                                new-column-count))
     ;; Die if failed to realloc new memory.
-    (when (null-pointer? (attrib_table_get_row_contents *table i))
+    (when (null-pointer? (table-row-contents *table i))
       (exit -1)))
 
   ;; Init new columns.
