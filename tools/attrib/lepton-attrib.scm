@@ -266,6 +266,9 @@
 (define (set-cell-visibility! *table row column visibility)
   (attrib_table_set_visibility *table row column visibility))
 
+(define (cell-show *table row column)
+  (attrib_table_get_show_name_value *table row column))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -820,10 +823,7 @@ failure."
                  (show-name-value
                   (if (not new-attrib-value)
                       0
-                      (attrib_table_get_show_name_value
-                       (component-table)
-                       row
-                       column))))
+                      (cell-show (component-table) row column))))
             (g_free *refdes)
 
             ;; Four cases to consider: Case 1.
@@ -1756,7 +1756,7 @@ failure."
          *destination
          j
          k
-         (attrib_table_get_show_name_value *table j K))
+         (cell-show *table j K))
 
         (set-cell-row-name!
          *destination
@@ -2576,8 +2576,7 @@ Please check your design.")))
       (lambda (j)
         (let ((*text (cell-attrib-value *component-table i j))
               (visibility (cell-visibility *component-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *component-table i j)))
+              (show-name-value (cell-show *component-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (component-sheet)
@@ -2596,8 +2595,7 @@ Please check your design.")))
       (lambda (j)
         (let ((*text (cell-attrib-value *net-table i j))
               (visibility (cell-visibility *net-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *net-table i j)))
+              (show-name-value (cell-show *net-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (net-sheet)
@@ -2616,8 +2614,7 @@ Please check your design.")))
       (lambda (j)
         (let ((*text (cell-attrib-value *pin-table i j))
               (visibility (cell-visibility *pin-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *pin-table i j)))
+              (show-name-value (cell-show *pin-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (pin-sheet)
