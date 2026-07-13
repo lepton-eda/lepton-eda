@@ -257,6 +257,10 @@
 (define (cell-row-name *table row column)
   (attrib_table_get_row_name *table row column))
 
+(define (set-cell-row-name! *table row column *value)
+  (attrib_table_set_row_name *table row column *value))
+
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1207,7 +1211,7 @@ failure."
               ;; First handle attrib value in cell.
               (set-cell-attrib-value! *table row column *attrib-value)
               ;; Next handle name of row (also held in table cell).
-              (attrib_table_set_row_name *table row column *row-title)
+              (set-cell-row-name! *table row column *row-title)
               ;; Finally handle name of column.
               (set-cell-column-name! *table row column *column-title)
 
@@ -1753,7 +1757,7 @@ failure."
          k
          (attrib_table_get_show_name_value *table j K))
 
-        (attrib_table_set_row_name
+        (set-cell-row-name!
          *destination
          j
          k
@@ -2893,10 +2897,10 @@ Please check your design.")))
                           (begin
                             ;; Is there a compelling reason for me
                             ;; to put this into a separate function?
-                            (attrib_table_set_row_name *component-table
-                                                       row
-                                                       column
-                                                       *temp-refdes)
+                            (set-cell-row-name! *component-table
+                                                row
+                                                column
+                                                *temp-refdes)
                             (set-cell-column-name! *component-table
                                                    row
                                                    column
@@ -2959,10 +2963,10 @@ Please check your design.")))
                          (string-list-id (sheet-net-attrib-list)
                                          (string->pointer name))))
                     ;; Get row and column where to put this attrib.
-                    (attrib_table_set_row_name *net-table
-                                               row
-                                               column
-                                               *temp-netname)
+                    (set-cell-row-name! *net-table
+                                        row
+                                        column
+                                        *temp-netname)
                     (set-cell-column-name! *net-table
                                            row
                                            column
@@ -3048,10 +3052,10 @@ Please check your design.")))
                                    (format (current-error-port)
                                            (G_ "We didn't find either row or column in the lists!\n")))
                                  (begin
-                                   (attrib_table_set_row_name *pin-table
-                                                              row
-                                                              column
-                                                              *row-label)
+                                   (set-cell-row-name! *pin-table
+                                                       row
+                                                       column
+                                                       *row-label)
                                    (set-cell-column-name! *pin-table
                                                           row
                                                           column
