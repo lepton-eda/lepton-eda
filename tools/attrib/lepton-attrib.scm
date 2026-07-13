@@ -233,6 +233,9 @@
 (define (table-row-contents *table row)
   (attrib_table_get_row_contents *table row))
 
+(define (set-table-row-contents! *table row *contents)
+  (attrib_table_set_row_contents *table row *contents))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1686,9 +1689,7 @@ failure."
 
   (do ((i 0 (1+ i)))
       ((>= i row-count))
-    (attrib_table_set_row_contents *table
-                                   i
-                                   (make-table-row column-count)))
+    (set-table-row-contents! *table i (make-table-row column-count)))
 
   ;; Now pre-load the table with NULLs
   (do ((i 0 (1+ i)))
@@ -1776,7 +1777,7 @@ failure."
 (define (resize-table *table row-count old-column-count new-column-count)
   (do ((i 0 (1+ i)))
       ((>= i row-count))
-    (attrib_table_set_row_contents
+    (set-table-row-contents!
      *table
      i
      (attrib_table_realloc_row (table-row-contents *table i)
