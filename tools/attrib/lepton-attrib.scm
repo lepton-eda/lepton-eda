@@ -236,6 +236,9 @@
 (define (set-table-row-contents! *table row *contents)
   (attrib_table_set_row_contents *table row *contents))
 
+(define (increase-table-row *row column-count)
+  (attrib_table_realloc_row *row column-count))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1780,8 +1783,8 @@ failure."
     (set-table-row-contents!
      *table
      i
-     (attrib_table_realloc_row (table-row-contents *table i)
-                               new-column-count))
+     (increase-table-row (table-row-contents *table i)
+                         new-column-count))
     ;; Die if failed to realloc new memory.
     (when (null-pointer? (table-row-contents *table i))
       (exit -1)))
