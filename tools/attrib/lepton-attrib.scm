@@ -251,6 +251,9 @@
 (define (cell-column-name *table row column)
   (attrib_table_get_column_name *table row column))
 
+(define (set-cell-column-name! *table row column *value)
+  (attrib_table_set_column_name *table row column *value))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1203,7 +1206,7 @@ failure."
               ;; Next handle name of row (also held in table cell).
               (attrib_table_set_row_name *table row column *row-title)
               ;; Finally handle name of column.
-              (attrib_table_set_column_name *table row column *column-title)
+              (set-cell-column-name! *table row column *column-title)
 
               ;; Get next column list item and then iterate.
               (loopc (1+ column) (glist-next *column-list-item)))))
@@ -1752,7 +1755,7 @@ failure."
          j
          k
          (g_strdup (attrib_table_get_row_name *table j K)))
-        (attrib_table_set_column_name
+        (set-cell-column-name!
          *destination
          j
          k
@@ -2891,10 +2894,10 @@ Please check your design.")))
                                                        row
                                                        column
                                                        *temp-refdes)
-                            (attrib_table_set_column_name *component-table
-                                                          row
-                                                          column
-                                                          (string->pointer name))
+                            (set-cell-column-name! *component-table
+                                                   row
+                                                   column
+                                                   (string->pointer name))
                             (set-cell-attrib-value! *component-table
                                                     row
                                                     column
@@ -2957,10 +2960,10 @@ Please check your design.")))
                                                row
                                                column
                                                *temp-netname)
-                    (attrib_table_set_column_name *net-table
-                                                  row
-                                                  column
-                                                  (string->pointer name))
+                    (set-cell-column-name! *net-table
+                                           row
+                                           column
+                                           (string->pointer name))
                     (set-cell-attrib-value! *net-table
                                             row
                                             column
@@ -3046,10 +3049,10 @@ Please check your design.")))
                                                               row
                                                               column
                                                               *row-label)
-                                   (attrib_table_set_column_name *pin-table
-                                                                 row
-                                                                 column
-                                                                 (string->pointer name))
+                                   (set-cell-column-name! *pin-table
+                                                          row
+                                                          column
+                                                          (string->pointer name))
                                    (set-cell-attrib-value! *pin-table
                                                            row
                                                            column
