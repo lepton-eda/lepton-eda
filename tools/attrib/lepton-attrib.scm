@@ -269,6 +269,10 @@
 (define (cell-show *table row column)
   (attrib_table_get_show_name_value *table row column))
 
+(define (set-cell-show! *table row column show)
+  (attrib_table_set_show_name_value *table row column show))
+
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1725,7 +1729,7 @@ failure."
       (table-init-row-name *table i j)
       (table-init-column-name *table i j)
       (set-cell-visibility! *table i j VISIBLE)
-      (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
+      (set-cell-show! *table i j SHOW_VALUE)))
 
   *table)
 
@@ -1752,11 +1756,7 @@ failure."
                               j
                               k
                               (cell-visibility *table j K))
-        (attrib_table_set_show_name_value
-         *destination
-         j
-         k
-         (cell-show *table j K))
+        (set-cell-show! *destination j k (cell-show *table j K))
 
         (set-cell-row-name!
          *destination
@@ -1819,7 +1819,7 @@ failure."
       (table-init-row-name *table i j)
       (table-init-column-name *table i j)
       (set-cell-visibility! *table i j VISIBLE)
-      (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
+      (set-cell-show! *table i j SHOW_VALUE)))
 
   *table)
 
@@ -2024,7 +2024,7 @@ failure."
     (set-sheet-data-changed #t)
 
     (unless (= show LEAVE_NAME_VALUE_ALONE)
-      (attrib_table_set_show_name_value *table row column show)
+      (set-cell-show! *table row column show)
       ;; Cell has been updated.
       (set-sheet-data-changed #t))))
 
@@ -2910,10 +2910,10 @@ Please check your design.")))
                                                   row
                                                   column
                                                   old-visibility)
-                            (attrib_table_set_show_name_value *component-table
-                                                              row
-                                                              column
-                                                              old-show-name-value)))))
+                            (set-cell-show! *component-table
+                                            row
+                                            column
+                                            old-show-name-value)))))
                   (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
