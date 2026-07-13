@@ -242,6 +242,9 @@
 (define (increase-table-row *row column-count)
   (attrib_table_realloc_row *row column-count))
 
+(define (cell-attrib-value *table row column)
+  (attrib_table_get_attrib_value *table row column))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -870,7 +873,7 @@ failure."
         (if (>= column attribs-number)
             *out-ls
             (let ((*attrib-value
-                   (attrib_table_get_attrib_value *table row column)))
+                   (cell-attrib-value *table row column)))
               ;; Pull attrib from table.  If non-null add it to
               ;; the pair list.
               (loop (1+ column)
@@ -1000,8 +1003,7 @@ failure."
                           (pointer->string
                            (glist-data *local-attrib-list)))
                          (*table-value
-                          (attrib_table_get_attrib_value
-                           (pin-table) row i))
+                          (cell-attrib-value (pin-table) row i))
                          (new-attrib-value
                           (if (not (null-pointer? *table-value))
                               (pointer->string *table-value)
@@ -1386,8 +1388,7 @@ failure."
      (id->string-list-data (sheet-component-list) id)))
 
   (define (ids->attrib-value i j)
-    (define *val
-      (attrib_table_get_attrib_value *component-table i j))
+    (define *val (cell-attrib-value *component-table i j))
     (if (null-pointer? *val)
         ""
         ;; Found a string.  Make a copy of the text, escaping any
@@ -1754,7 +1755,7 @@ failure."
          *destination
          j
          k
-         (g_strdup (attrib_table_get_attrib_value *table j K))))))
+         (g_strdup (cell-attrib-value *table j K))))))
 
   *destination)
 
@@ -1767,7 +1768,7 @@ failure."
         ((>= i row-count))
       (do ((j 0 (1+ j)))
           ((>= j column-count))
-        (g_free (attrib_table_get_attrib_value *table i j))
+        (g_free (cell-attrib-value *table i j))
         (g_free (attrib_table_get_row_name *table i j))
         (g_free (attrib_table_get_column_name *table i j))))
 
@@ -2556,8 +2557,7 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text
-               (attrib_table_get_attrib_value *component-table i j))
+        (let ((*text (cell-attrib-value *component-table i j))
               (visibility
                (attrib_table_get_visibility *component-table i j))
               (show-name-value
@@ -2578,7 +2578,7 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text (attrib_table_get_attrib_value *net-table i j))
+        (let ((*text (cell-attrib-value *net-table i j))
               (visibility
                (attrib_table_get_visibility *net-table i j))
               (show-name-value
@@ -2599,7 +2599,7 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text (attrib_table_get_attrib_value *pin-table i j))
+        (let ((*text (cell-attrib-value *pin-table i j))
               (visibility
                (attrib_table_get_visibility *pin-table i j))
               (show-name-value
