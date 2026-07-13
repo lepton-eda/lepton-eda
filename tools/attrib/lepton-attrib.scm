@@ -260,6 +260,8 @@
 (define (set-cell-row-name! *table row column *value)
   (attrib_table_set_row_name *table row column *value))
 
+(define (cell-visibility *table row column)
+  (attrib_table_get_visibility *table row column))
 
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
@@ -811,10 +813,7 @@ failure."
                  (visibility
                   (if (not new-attrib-value)
                       0
-                      (attrib_table_get_visibility
-                       (component-table)
-                       row
-                       column)))
+                      (cell-visibility (component-table) row column)))
                  (show-name-value
                   (if (not new-attrib-value)
                       0
@@ -1746,11 +1745,10 @@ failure."
     (do ((k 0 (1+ k)))
         ((>= k (1- column-count)))
       (let ((K (if (>= k column) (1+ k) k)))
-        (attrib_table_set_visibility
-         *destination
-         j
-         k
-         (attrib_table_get_visibility *table j K))
+        (attrib_table_set_visibility *destination
+                                     j
+                                     k
+                                     (cell-visibility *table j K))
         (attrib_table_set_show_name_value
          *destination
          j
@@ -2574,8 +2572,7 @@ Please check your design.")))
      (for-each
       (lambda (j)
         (let ((*text (cell-attrib-value *component-table i j))
-              (visibility
-               (attrib_table_get_visibility *component-table i j))
+              (visibility (cell-visibility *component-table i j))
               (show-name-value
                (attrib_table_get_show_name_value *component-table i j)))
           (unless (null-pointer? *text)
@@ -2595,8 +2592,7 @@ Please check your design.")))
      (for-each
       (lambda (j)
         (let ((*text (cell-attrib-value *net-table i j))
-              (visibility
-               (attrib_table_get_visibility *net-table i j))
+              (visibility (cell-visibility *net-table i j))
               (show-name-value
                (attrib_table_get_show_name_value *net-table i j)))
           (unless (null-pointer? *text)
@@ -2616,8 +2612,7 @@ Please check your design.")))
      (for-each
       (lambda (j)
         (let ((*text (cell-attrib-value *pin-table i j))
-              (visibility
-               (attrib_table_get_visibility *pin-table i j))
+              (visibility (cell-visibility *pin-table i j))
               (show-name-value
                (attrib_table_get_show_name_value *pin-table i j)))
           (unless (null-pointer? *text)
