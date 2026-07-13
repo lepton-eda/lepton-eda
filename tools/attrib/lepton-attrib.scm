@@ -254,6 +254,9 @@
 (define (set-cell-column-name! *table row column *value)
   (attrib_table_set_column_name *table row column *value))
 
+(define (cell-row-name *table row column)
+  (attrib_table_get_row_name *table row column))
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1754,7 +1757,7 @@ failure."
          *destination
          j
          k
-         (g_strdup (attrib_table_get_row_name *table j K)))
+         (g_strdup (cell-row-name *table j K)))
         (set-cell-column-name!
          *destination
          j
@@ -1778,7 +1781,7 @@ failure."
       (do ((j 0 (1+ j)))
           ((>= j column-count))
         (g_free (cell-attrib-value *table i j))
-        (g_free (attrib_table_get_row_name *table i j))
+        (g_free (cell-row-name *table i j))
         (g_free (cell-column-name *table i j))))
 
     (do ((i 0 (1+ i)))
