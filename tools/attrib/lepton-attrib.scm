@@ -218,6 +218,9 @@
   (set! %sheet-changed state))
 
 
+(define (make-row-list row-count)
+  (attrib_table_new row-count))
+
 (define (table-init-attrib-value *table i j)
   (attrib_table_init_attrib_value *table i j))
 
@@ -1688,7 +1691,7 @@ failure."
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
-  (define *table (attrib_table_new row-count))
+  (define *table (make-row-list row-count))
 
   (do ((i 0 (1+ i)))
       ((>= i row-count))
