@@ -1576,11 +1576,6 @@ failure."
 
   (list->glist *sorted-ls))
 
-;;; Sorts the component list.
-(define (sort-component-list)
-  (set-sheet-component-list!
-   (sort-attrib-list (sheet-component-list))))
-
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
 ;;; in this list are sorted as if they had a value of
@@ -3095,7 +3090,9 @@ Please check your design.")))
   (let* ((objects (append-map page-contents (active-pages)))
          (*object-ls (map object->pointer objects)))
     ;; Now add all items found to the master lists
-    (set-sheet-component-list! (add-components objects))
+    (set-sheet-component-list!
+     (sort-attrib-list (add-components objects)))
+
     (add-component-attribs *object-ls)
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
@@ -3106,8 +3103,6 @@ Please check your design.")))
     (add-pins *object-ls)
     (add-pin-attribs *object-ls))
 
-  ;; Sort the master lists.
-  (sort-component-list)
   (sort-component-attrib-list)
 
   ;; Note that this must be changed.  We need to input the
