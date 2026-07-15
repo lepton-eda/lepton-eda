@@ -2611,7 +2611,7 @@ Please check your design.")))
   (for-each
    (lambda (*object)
      ;; Only process if this is a component with attributes.
-     (unless (null-pointer? (lepton_object_get_attribs *object))
+     (unless (null? (object-attribs (pointer->object *object)))
 
        (let ((*temp-refdes (component-refdes *object)))
          ;; Now that we have refdes, store refdes and attach
