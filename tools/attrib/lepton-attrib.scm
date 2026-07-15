@@ -3083,8 +3083,8 @@ Please check your design.")))
   (set-window! *window-widget)
 
   (for-each
-   (lambda (*page)
-     (let ((*objects (lepton_page_objects *page)))
+   (lambda (page)
+     (let ((*objects (lepton_page_objects (page->pointer page))))
        ;; Now add all items found to the master lists
        (add-components *objects)
        (add-component-attribs *objects)
@@ -3097,7 +3097,7 @@ Please check your design.")))
        (add-pins *objects)
        (add-pin-attribs *objects)))
 
-   (glist->list *pages identity))
+   (active-pages))
 
   ;; Sort the master lists.
   (sort-component-list)
