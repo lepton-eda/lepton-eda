@@ -2611,8 +2611,7 @@ Please check your design.")))
   (for-each
    (lambda (*object)
      ;; Only process if this is a component with attributes.
-     (when (and (true? (lepton_object_is_component *object))
-                (not (null-pointer? (lepton_object_get_attribs *object))))
+     (unless (null-pointer? (lepton_object_get_attribs *object))
 
        (let ((*temp-refdes (component-refdes *object)))
          ;; Now that we have refdes, store refdes and attach
@@ -2621,7 +2620,8 @@ Please check your design.")))
            (set-sheet-component-list!
             (add-glist-item (sheet-component-list) *temp-refdes))
            (g_free *temp-refdes)))))
-   (map object->pointer objects)))
+   ;; Only process if this is a component with attributes.
+   (map object->pointer (filter component? objects))))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
