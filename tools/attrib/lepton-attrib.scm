@@ -362,6 +362,10 @@ failure."
    (string-trim (substring str (1+ (string-index str #\=))))))
 
 
+(define (object-with-attribs? object)
+  (not (null? (object-attribs object))))
+
+
 ;;; Attaches an attribute produced from NAME-VALUE-PAIR to
 ;;; OBJECT applying the properties VISIBILITY and SHOW-NAME-VALUE
 ;;; to the attribute.
@@ -2610,18 +2614,16 @@ Please check your design.")))
   ;; components.
   (for-each
    (lambda (*object)
-     ;; Only process if this is a component with attributes.
-     (unless (null? (object-attribs (pointer->object *object)))
-
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Now that we have refdes, store refdes and attach
-         ;; attrib list to component.
-         (unless (null-pointer? *temp-refdes)
-           (set-sheet-component-list!
-            (add-glist-item (sheet-component-list) *temp-refdes))
-           (g_free *temp-refdes)))))
+     (let ((*temp-refdes (component-refdes *object)))
+       ;; Now that we have refdes, store refdes and attach
+       ;; attrib list to component.
+       (unless (null-pointer? *temp-refdes)
+         (set-sheet-component-list!
+          (add-glist-item (sheet-component-list) *temp-refdes))
+         (g_free *temp-refdes))))
    ;; Only process if this is a component with attributes.
-   (map object->pointer (filter component? objects))))
+   (map object->pointer
+        (filter object-with-attribs? (filter component? objects)))))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
