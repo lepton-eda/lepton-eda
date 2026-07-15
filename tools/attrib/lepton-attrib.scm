@@ -2613,8 +2613,8 @@ Please check your design.")))
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (*object)
-     (let ((*temp-refdes (component-refdes *object)))
+   (lambda (object)
+     (let ((*temp-refdes (component-refdes (object->pointer object))))
        ;; Now that we have refdes, store refdes and attach
        ;; attrib list to component.
        (unless (null-pointer? *temp-refdes)
@@ -2622,8 +2622,7 @@ Please check your design.")))
           (add-glist-item (sheet-component-list) *temp-refdes))
          (g_free *temp-refdes))))
    ;; Only process if this is a component with attributes.
-   (map object->pointer
-        (filter object-with-attribs? (filter component? objects)))))
+   (filter object-with-attribs? (filter component? objects))))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
