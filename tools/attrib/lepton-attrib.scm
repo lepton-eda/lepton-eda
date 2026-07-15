@@ -2605,7 +2605,7 @@ Please check your design.")))
 
 ;;; Adds the list of component refdeses by running through
 ;;; the list of *OBJECTS.
-(define (add-components *objects)
+(define (add-components *object-ls)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2621,7 +2621,7 @@ Please check your design.")))
            (set-sheet-component-list!
             (add-glist-item (sheet-component-list) *temp-refdes))
            (g_free *temp-refdes)))))
-   (glist->list *objects identity)))
+   *object-ls))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
@@ -3086,7 +3086,7 @@ Please check your design.")))
    (lambda (page)
      (let ((*objects (lepton_page_objects (page->pointer page))))
        ;; Now add all items found to the master lists
-       (add-components *objects)
+       (add-components (glist->list *objects identity))
        (add-component-attribs *objects)
        ;; Note that this must be changed.  We need to input the
        ;; entire project before doing anything with the nets because
