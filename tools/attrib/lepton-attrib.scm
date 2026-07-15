@@ -3084,18 +3084,19 @@ Please check your design.")))
 
   (for-each
    (lambda (page)
-     (let ((*objects (lepton_page_objects (page->pointer page))))
+     (let ((*object-ls (glist->list (lepton_page_objects (page->pointer page))
+                                    identity)))
        ;; Now add all items found to the master lists
-       (add-components (glist->list *objects identity))
-       (add-component-attribs (glist->list *objects identity))
+       (add-components *object-ls)
+       (add-component-attribs *object-ls)
        ;; Note that this must be changed.  We need to input the
        ;; entire project before doing anything with the nets because
        ;; we need to first determine where they are all connected!
-       (add-nets (glist->list *objects identity))
-       (add-net-attribs (glist->list *objects identity))
+       (add-nets *object-ls)
+       (add-net-attribs *object-ls)
 
-       (add-pins (glist->list *objects identity))
-       (add-pin-attribs (glist->list *objects identity))))
+       (add-pins *object-ls)
+       (add-pin-attribs *object-ls)))
 
    (active-pages))
 
