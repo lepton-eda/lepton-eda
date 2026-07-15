@@ -2627,7 +2627,7 @@ Please check your design.")))
     (filter-map component-object-refdes objects))
 
   (let loop ((ls *refdes-ls)
-             (*gls (sheet-component-list)))
+             (*gls %null-pointer))
     (if (null? ls)
         *gls
         (loop (cdr ls)
