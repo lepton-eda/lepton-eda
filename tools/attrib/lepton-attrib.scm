@@ -2627,7 +2627,7 @@ Please check your design.")))
 ;;; Processes *OBJECTS and adds the list of component attributes
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
-(define (add-component-attribs *objects)
+(define (add-component-attribs *object-ls)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2659,7 +2659,7 @@ Please check your design.")))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
-   (glist->list *objects identity)))
+   *object-ls))
 
 
 ;;; Adds the list of nets by running through the individual cells
@@ -3087,7 +3087,7 @@ Please check your design.")))
      (let ((*objects (lepton_page_objects (page->pointer page))))
        ;; Now add all items found to the master lists
        (add-components (glist->list *objects identity))
-       (add-component-attribs *objects)
+       (add-component-attribs (glist->list *objects identity))
        ;; Note that this must be changed.  We need to input the
        ;; entire project before doing anything with the nets because
        ;; we need to first determine where they are all connected!
