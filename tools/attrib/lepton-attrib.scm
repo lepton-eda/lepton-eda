@@ -3082,22 +3082,19 @@ Please check your design.")))
 
   (set-window! *window-widget)
 
-  (for-each
-   (lambda (page)
-     (let ((*object-ls (map object->pointer (page-contents page))))
-       ;; Now add all items found to the master lists
-       (add-components *object-ls)
-       (add-component-attribs *object-ls)
-       ;; Note that this must be changed.  We need to input the
-       ;; entire project before doing anything with the nets because
-       ;; we need to first determine where they are all connected!
-       (add-nets *object-ls)
-       (add-net-attribs *object-ls)
+  (let ((*object-ls (map object->pointer
+                         (append-map page-contents (active-pages)))))
+    ;; Now add all items found to the master lists
+    (add-components *object-ls)
+    (add-component-attribs *object-ls)
+    ;; Note that this must be changed.  We need to input the
+    ;; entire project before doing anything with the nets because
+    ;; we need to first determine where they are all connected!
+    (add-nets *object-ls)
+    (add-net-attribs *object-ls)
 
-       (add-pins *object-ls)
-       (add-pin-attribs *object-ls)))
-
-   (active-pages))
+    (add-pins *object-ls)
+    (add-pin-attribs *object-ls))
 
   ;; Sort the master lists.
   (sort-component-list)
