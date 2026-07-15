@@ -273,6 +273,24 @@
   (attrib_table_set_show_name_value *table row column show))
 
 
+(define* (set-table-cell-data! *table
+                               row
+                               column
+                               *attrib-value
+                               *row-title
+                               *column-title
+                               #:key
+                               (visibility 'same)
+                               (show 'same))
+  (set-cell-attrib-value! *table row column *attrib-value)
+  (set-cell-row-name! *table row column *row-title)
+  (set-cell-column-name! *table row column *column-title)
+  (unless (eq? visibility 'same)
+    (set-cell-visibility! *table row column visibility))
+  (unless (eq? show 'same)
+    (set-cell-show! *table row column show)))
+
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -1214,12 +1232,12 @@ failure."
                   ;; Get value of attrib in cell.
                   (*attrib-value
                    (gtk_sheet_cell_get_text *gtk-sheet row column)))
-              ;; First handle attrib value in cell.
-              (set-cell-attrib-value! *table row column *attrib-value)
-              ;; Next handle name of row (also held in table cell).
-              (set-cell-row-name! *table row column *row-title)
-              ;; Finally handle name of column.
-              (set-cell-column-name! *table row column *column-title)
+              (set-table-cell-data! *table
+                                    row
+                                    column
+                                    *attrib-value
+                                    *row-title
+                                    *column-title)
 
               ;; Get next column list item and then iterate.
               (loopc (1+ column) (glist-next *column-list-item)))))
@@ -1752,27 +1770,14 @@ failure."
     (do ((k 0 (1+ k)))
         ((>= k (1- column-count)))
       (let ((K (if (>= k column) (1+ k) k)))
-        (set-cell-visibility! *destination
+        (set-table-cell-data! *destination
                               j
                               k
-                              (cell-visibility *table j K))
-        (set-cell-show! *destination j k (cell-show *table j K))
-
-        (set-cell-row-name!
-         *destination
-         j
-         k
-         (g_strdup (cell-row-name *table j K)))
-        (set-cell-column-name!
-         *destination
-         j
-         k
-         (g_strdup (cell-column-name *table j K)))
-        (set-cell-attrib-value!
-         *destination
-         j
-         k
-         (g_strdup (cell-attrib-value *table j K))))))
+                              (cell-attrib-value *table j K)
+                              (cell-row-name *table j K)
+                              (cell-column-name *table j K)
+                              #:visibility (cell-visibility *table j K)
+                              #:show (cell-show *table j K)))))
 
   *destination)
 
@@ -2889,31 +2894,16 @@ Please check your design.")))
                                     "objects->component-table(): ")
                             (format (current-error-port)
                                     (G_ "We didn't find either row or column in the lists!\n")))
-                          (begin
-                            ;; Is there a compelling reason for me
-                            ;; to put this into a separate function?
-                            (set-cell-row-name! *component-table
+                          (set-table-cell-data! *component-table
                                                 row
                                                 column
-                                                *temp-refdes)
-                            (set-cell-column-name! *component-table
-                                                   row
-                                                   column
-                                                   (string->pointer name))
-                            (set-cell-attrib-value! *component-table
-                                                    row
-                                                    column
-                                                    (if attrib-value
-                                                        (string->pointer attrib-value)
-                                                        %null-pointer))
-                            (set-cell-visibility! *component-table
-                                                  row
-                                                  column
-                                                  old-visibility)
-                            (set-cell-show! *component-table
-                                            row
-                                            column
-                                            old-show-name-value)))))
+                                                (if attrib-value
+                                                    (string->pointer attrib-value)
+                                                    %null-pointer)
+                                                *temp-refdes
+                                                (string->pointer name)
+                                                #:visibility old-visibility
+                                                #:show old-show-name-value))))
                   (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
@@ -2951,27 +2941,21 @@ Please check your design.")))
                 ;; Don't include "netname".
                 (when (and name
                            (not (string= name "netname")))
+                  ;; Get row and column where to put this attrib.
                   (let ((row
                          (string-list-id (sheet-net-list)
                                          *temp-netname))
                         (column
                          (string-list-id (sheet-net-attrib-list)
                                          (string->pointer name))))
-                    ;; Get row and column where to put this attrib.
-                    (set-cell-row-name! *net-table
-                                        row
-                                        column
-                                        *temp-netname)
-                    (set-cell-column-name! *net-table
-                                           row
-                                           column
-                                           (string->pointer name))
-                    (set-cell-attrib-value! *net-table
-                                            row
-                                            column
-                                            (if attrib-value
-                                                (string->pointer attrib-value)
-                                                %null-pointer))))
+                    (set-table-cell-data! *net-table
+                                          row
+                                          column
+                                          (if attrib-value
+                                              (string->pointer attrib-value)
+                                              %null-pointer)
+                                          *temp-netname
+                                          (string->pointer name))))
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
@@ -3046,21 +3030,15 @@ Please check your design.")))
                                            "objects->pin-table(): ")
                                    (format (current-error-port)
                                            (G_ "We didn't find either row or column in the lists!\n")))
-                                 (begin
-                                   (set-cell-row-name! *pin-table
+
+                                 (set-table-cell-data! *pin-table
                                                        row
                                                        column
-                                                       *row-label)
-                                   (set-cell-column-name! *pin-table
-                                                          row
-                                                          column
-                                                          (string->pointer name))
-                                   (set-cell-attrib-value! *pin-table
-                                                           row
-                                                           column
-                                                           (if attrib-value
-                                                               (string->pointer attrib-value)
-                                                               %null-pointer))))))
+                                                       (if attrib-value
+                                                           (string->pointer attrib-value)
+                                                           %null-pointer)
+                                                       *row-label
+                                                       (string->pointer name)))))
                          (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
