@@ -3085,8 +3085,6 @@ Please check your design.")))
   (for-each
    (lambda (*page)
      (let ((*objects (lepton_page_objects *page)))
-       (lepton_toplevel_set_page_current *toplevel *page)
-
        ;; Now add all items found to the master lists
        (add-components *objects)
        (add-component-attribs *objects)
