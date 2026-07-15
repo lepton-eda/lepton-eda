@@ -2687,7 +2687,7 @@ Please check your design.")))
 ;;;
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
-(define (add-pins *objects)
+(define (add-pins *object-ls)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2733,7 +2733,7 @@ Please check your design.")))
                     (lepton_component_object_get_basename *object))))
          (g_free *temp-refdes))))
 
-   (glist->list *objects identity)))
+   *object-ls))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
@@ -3094,7 +3094,7 @@ Please check your design.")))
        (add-nets (glist->list *objects identity))
        (add-net-attribs (glist->list *objects identity))
 
-       (add-pins *objects)
+       (add-pins (glist->list *objects identity))
        (add-pin-attribs *objects)))
 
    (active-pages))
