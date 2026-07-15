@@ -2616,14 +2616,15 @@ Please check your design.")))
                              (pointer->string *temp-refdes))))
       (g_free *temp-refdes)
       (and=> temp-refdes string->pointer)))
+  ;; Only process components with attributes.
+  (define components
+    (filter-map *refdes (filter object-with-attribs?
+                                (filter component? objects))))
   (for-each
    (lambda (*temp-refdes)
      (set-sheet-component-list!
       (add-glist-item (sheet-component-list) *temp-refdes)))
-   ;; Only process if this is a component with attributes.
-   (filter-map *refdes
-               (filter object-with-attribs?
-                       (filter component? objects)))))
+   components))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
