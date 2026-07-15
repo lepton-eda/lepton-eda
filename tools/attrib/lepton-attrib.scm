@@ -2625,11 +2625,13 @@ Please check your design.")))
   ;; Only process components with attributes.
   (define *refdes-ls
     (filter-map component-object-refdes objects))
-  (for-each
-   (lambda (*temp-refdes)
-     (set-sheet-component-list!
-      (add-glist-item (sheet-component-list) *temp-refdes)))
-   *refdes-ls))
+
+  (let loop ((ls *refdes-ls)
+             (*gls (sheet-component-list)))
+    (if (null? ls)
+        (set-sheet-component-list! *gls)
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
