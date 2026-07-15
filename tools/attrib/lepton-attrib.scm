@@ -3084,8 +3084,7 @@ Please check your design.")))
 
   (for-each
    (lambda (page)
-     (let ((*object-ls (glist->list (lepton_page_objects (page->pointer page))
-                                    identity)))
+     (let ((*object-ls (map object->pointer (page-contents page))))
        ;; Now add all items found to the master lists
        (add-components *object-ls)
        (add-component-attribs *object-ls)
