@@ -2748,7 +2748,7 @@ Please check your design.")))
 ;;; - Loop on the attribs looking for non-NULL text.
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
-(define (add-pin-attribs *objects)
+(define (add-pin-attribs *object-ls)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2797,7 +2797,7 @@ Please check your design.")))
 
            (g_free *temp-refdes)))))
 
-   (glist->list *objects identity)))
+   *object-ls))
 
 
 
@@ -3095,7 +3095,7 @@ Please check your design.")))
        (add-net-attribs (glist->list *objects identity))
 
        (add-pins (glist->list *objects identity))
-       (add-pin-attribs *objects)))
+       (add-pin-attribs (glist->list *objects identity))))
 
    (active-pages))
 
