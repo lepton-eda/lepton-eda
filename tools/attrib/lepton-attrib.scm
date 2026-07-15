@@ -2604,8 +2604,8 @@ Please check your design.")))
 
 
 ;;; Adds the list of component refdeses by running through
-;;; the list of *OBJECTS.
-(define (add-components *object-ls)
+;;; the list of OBJECTS.
+(define (add-components objects)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2621,7 +2621,7 @@ Please check your design.")))
            (set-sheet-component-list!
             (add-glist-item (sheet-component-list) *temp-refdes))
            (g_free *temp-refdes)))))
-   *object-ls))
+   (map object->pointer objects)))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
@@ -3082,10 +3082,10 @@ Please check your design.")))
 
   (set-window! *window-widget)
 
-  (let ((*object-ls (map object->pointer
-                         (append-map page-contents (active-pages)))))
+  (let* ((objects (append-map page-contents (active-pages)))
+         (*object-ls (map object->pointer objects)))
     ;; Now add all items found to the master lists
-    (add-components *object-ls)
+    (add-components objects)
     (add-component-attribs *object-ls)
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
