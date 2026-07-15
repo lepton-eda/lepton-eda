@@ -2629,7 +2629,7 @@ Please check your design.")))
   (let loop ((ls *refdes-ls)
              (*gls (sheet-component-list)))
     (if (null? ls)
-        (set-sheet-component-list! *gls)
+        *gls
         (loop (cdr ls)
               (add-glist-item *gls (car ls))))))
 
@@ -3095,7 +3095,7 @@ Please check your design.")))
   (let* ((objects (append-map page-contents (active-pages)))
          (*object-ls (map object->pointer objects)))
     ;; Now add all items found to the master lists
-    (add-components objects)
+    (set-sheet-component-list! (add-components objects))
     (add-component-attribs *object-ls)
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
