@@ -2610,19 +2610,20 @@ Please check your design.")))
 ;;; Adds the list of component refdeses by running through
 ;;; the list of OBJECTS.
 (define (add-components objects)
-  ;; Iterate through all objects found on page looking for
-  ;; components.
+  (define (*refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      (and=> temp-refdes string->pointer)))
   (for-each
-   (lambda (object)
-     (let ((*temp-refdes (component-refdes (object->pointer object))))
-       ;; Now that we have refdes, store refdes and attach
-       ;; attrib list to component.
-       (unless (null-pointer? *temp-refdes)
-         (set-sheet-component-list!
-          (add-glist-item (sheet-component-list) *temp-refdes))
-         (g_free *temp-refdes))))
+   (lambda (*temp-refdes)
+     (set-sheet-component-list!
+      (add-glist-item (sheet-component-list) *temp-refdes)))
    ;; Only process if this is a component with attributes.
-   (filter object-with-attribs? (filter component? objects))))
+   (filter-map *refdes
+               (filter object-with-attribs?
+                       (filter component? objects)))))
 
 
 ;;; Processes *OBJECTS and adds the list of component attributes
