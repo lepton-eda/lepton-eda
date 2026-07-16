@@ -2702,8 +2702,8 @@ Please check your design.")))
      ;; Now iterate through lower level objects looking
      ;; for pins.
      (for-each
-      (lambda (child-object)
-        (let ((pinnumber (pin-pinnumber child-object)))
+      (lambda (pin)
+        (let ((pinnumber (pin-pinnumber pin)))
           (if pinnumber
               (let ((*row-label
                      (string->pointer
