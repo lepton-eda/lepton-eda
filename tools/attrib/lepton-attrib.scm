@@ -2686,7 +2686,7 @@ Please check your design.")))
            (temp-pinnumber (and (not (null-pointer? *temp-pinnumber))
                                 (pointer->string *temp-pinnumber))))
       (g_free *temp-pinnumber)
-      (and=> temp-pinnumber string->pointer)))
+      temp-pinnumber))
 
   ;; Iterate through all objects found on page looking for
   ;; components.
@@ -2700,13 +2700,13 @@ Please check your design.")))
            ;; for pins.
            (for-each
             (lambda (child-object)
-              (let ((*temp-pinnumber (pin-pinnumber child-object)))
-                (if *temp-pinnumber
+              (let ((pinnumber (pin-pinnumber child-object)))
+                (if pinnumber
                     (let ((*row-label
                            (string->pointer
                             (string-append (pointer->string *temp-refdes)
                                            ":"
-                                           (pointer->string *temp-pinnumber)))))
+                                           pinnumber))))
                       (set-sheet-pin-list!
                        (add-glist-item (sheet-pin-list)
                                        *row-label)))
