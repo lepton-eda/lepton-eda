@@ -2644,7 +2644,7 @@ Please check your design.")))
      string=))
 
   (let loop ((ls name-ls)
-             (*gls (sheet-component-attrib-list)))
+             (*gls %null-pointer))
     (if (null? ls)
         *gls
         (loop (cdr ls)
