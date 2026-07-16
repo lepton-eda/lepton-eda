@@ -2689,12 +2689,11 @@ Please check your design.")))
            ;; for pins.
            (for-each
             (lambda (child-object)
-              (let* ((*child-object (object->pointer child-object))
-                     (*temp-pinnumber
-                       (lepton_attrib_search_object_attribs_by_name
-                        *child-object
-                        (string->pointer "pinnumber")
-                        0)))
+              (let ((*temp-pinnumber
+                     (lepton_attrib_search_object_attribs_by_name
+                      (object->pointer child-object)
+                      (string->pointer "pinnumber")
+                      0)))
                 (if (not (null-pointer? *temp-pinnumber))
                     (let ((*row-label
                            (string->pointer
