@@ -2622,10 +2622,10 @@ Please check your design.")))
               (add-glist-item *gls (car ls))))))
 
 
-;;; Processes OBJECTS and adds the list of component attributes
+;;; Processes COMPONENTS and adds the list of component attributes
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
-(define (add-component-attribs objects)
+(define (add-component-attribs components)
   ;; Don't include "refdes" or "slot" because they form the row
   ;; name.  Also don't include "net" per bug found by Steve W. --
   ;; 4.3.2007, SDB.
@@ -2645,7 +2645,7 @@ Please check your design.")))
                       (string->pointer name))))
    ;; Only process components with attributes.
    (filter-map ordinary-attrib-name
-               (append-map object-attribs objects))))
+               (append-map object-attribs components))))
 
 
 ;;; Adds the list of nets by running through the individual cells
