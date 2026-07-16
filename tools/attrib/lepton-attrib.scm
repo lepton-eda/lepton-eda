@@ -2603,9 +2603,8 @@ Please check your design.")))
   (gtk_widget_show_all *window))
 
 
-;;; Adds the list of component refdeses by running through
-;;; the list of OBJECTS.
-(define (add-components objects)
+;;; Returns the list of refdeses of COMPONENTS.
+(define (add-components components)
   (define (*refdes object)
     (let* ((*temp-refdes (component-refdes (object->pointer object)))
            (temp-refdes (and (not (null-pointer? *temp-refdes))
@@ -2613,15 +2612,9 @@ Please check your design.")))
       (g_free *temp-refdes)
       (and=> temp-refdes string->pointer)))
 
-  (define (component-object-refdes object)
-    (and (component-with-attribs? object)
-         (*refdes object)))
-
-  ;; Only process components with attributes.
-  (define *refdes-ls
-    (filter-map component-object-refdes objects))
-
-  (let loop ((ls *refdes-ls)
+  ;; Only process components with attributes.  Filter out
+  ;; components without refdeses.
+  (let loop ((ls (filter-map *refdes components))
              (*gls %null-pointer))
     (if (null? ls)
         *gls
@@ -3085,10 +3078,11 @@ Please check your design.")))
   (set-window! *window-widget)
 
   (let* ((objects (append-map page-contents (active-pages)))
-         (*object-ls (map object->pointer objects)))
+         (*object-ls (map object->pointer objects))
+         (components (filter component-with-attribs? objects)))
     ;; Now add all items found to the master lists
     (set-sheet-component-list!
-     (sort-attrib-list (add-components objects)))
+     (sort-attrib-list (add-components components)))
 
     (add-component-attribs objects)
     ;; Note that this must be changed.  We need to input the
