@@ -2638,8 +2638,10 @@ Please check your design.")))
 
   ;; Only process components with attributes.
   (define name-ls
-    (filter-map ordinary-attrib-name
-                (append-map object-attribs components)))
+    (delete-duplicates
+     (filter-map ordinary-attrib-name
+                 (append-map object-attribs components))
+     string=))
 
   (let loop ((ls name-ls)
              (*gls (sheet-component-attrib-list)))
