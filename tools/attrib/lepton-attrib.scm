@@ -2643,26 +2643,27 @@ Please check your design.")))
    (lambda (object)
      (let ((*object (object->pointer object)))
        (for-each
-        (lambda (*attrib)
-          (when (and (true? (lepton_object_is_text *attrib))
-                     (not (null-pointer? (lepton_object_get_text *attrib))))
-            ;; Found an attribute.
-            (let* ((*attrib-text
-                    (g_strdup (lepton_text_object_get_string *attrib)))
-                   (name (str-attrib-name *attrib-text)))
-              ;; Don't include "refdes" or "slot" because they
-              ;; form the row name.  Also don't include "net" per
-              ;; bug found by Steve W. -- 4.3.2007, SDB.
-              (when (and name
-                         (not (string= name "refdes"))
-                         (not (string= name "net"))
-                         (not (string= name "slot")))
-                (set-sheet-component-attrib-list!
-                 (add-glist-item (sheet-component-attrib-list)
-                                 (string->pointer name))))
-              (g_free *attrib-text))))
-        ;; This has a side effect.  Why?
-        (glist->list (lepton_object_get_attribs *object) identity))))
+        (lambda (attrib)
+          (let ((*attrib (object->pointer attrib)))
+            (when (and (true? (lepton_object_is_text *attrib))
+                       (not (null-pointer? (lepton_object_get_text *attrib))))
+              ;; Found an attribute.
+              (let* ((*attrib-text
+                      (g_strdup (lepton_text_object_get_string *attrib)))
+                     (name (str-attrib-name *attrib-text)))
+                ;; Don't include "refdes" or "slot" because they
+                ;; form the row name.  Also don't include "net" per
+                ;; bug found by Steve W. -- 4.3.2007, SDB.
+                (when (and name
+                           (not (string= name "refdes"))
+                           (not (string= name "net"))
+                           (not (string= name "slot")))
+                  (set-sheet-component-attrib-list!
+                   (add-glist-item (sheet-component-attrib-list)
+                                   (string->pointer name))))
+                (g_free *attrib-text)))))
+
+        (object-attribs object))))
    ;; Only process components with attributes.
    (filter component-with-attribs? objects)))
 
