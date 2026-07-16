@@ -2646,7 +2646,7 @@ Please check your design.")))
   (let loop ((ls name-ls)
              (*gls (sheet-component-attrib-list)))
     (if (null? ls)
-        (set-sheet-component-attrib-list! *gls)
+        *gls
         (loop (cdr ls)
               (add-glist-item *gls (string->pointer (car ls)))))))
 
@@ -3078,7 +3078,8 @@ Please check your design.")))
     (set-sheet-component-list!
      (sort-attrib-list (add-components components)))
 
-    (add-component-attribs components)
+    (set-sheet-component-attrib-list!
+     (add-component-attribs components))
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
