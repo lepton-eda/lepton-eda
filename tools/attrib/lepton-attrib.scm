@@ -2626,17 +2626,20 @@ Please check your design.")))
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
 (define (add-component-attribs objects)
+  ;; Don't include "refdes" or "slot" because they form the row
+  ;; name.  Also don't include "net" per bug found by Steve W. --
+  ;; 4.3.2007, SDB.
+  (define (ordinary-attrib? name)
+    (and (not (string= name "refdes"))
+         (not (string= name "net"))
+         (not (string= name "slot"))))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
    (lambda (attrib)
      (let ((name (attrib-name attrib)))
-       ;; Don't include "refdes" or "slot" because they
-       ;; form the row name.  Also don't include "net" per
-       ;; bug found by Steve W. -- 4.3.2007, SDB.
-       (when (and (not (string= name "refdes"))
-                  (not (string= name "net"))
-                  (not (string= name "slot")))
+       (when (ordinary-attrib? name)
          (set-sheet-component-attrib-list!
           (add-glist-item (sheet-component-attrib-list)
                           (string->pointer name))))))
