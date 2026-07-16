@@ -2626,11 +2626,6 @@ Please check your design.")))
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
 (define (add-component-attribs objects)
-  (define (component-attribs object)
-    (if (component? object)
-        (object-attribs object)
-        '()))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2654,7 +2649,7 @@ Please check your design.")))
                               (string->pointer name))))
            (g_free *attrib-text)))))
    ;; Only process components with attributes.
-   (append-map component-attribs objects)))
+   (append-map object-attribs objects)))
 
 
 ;;; Adds the list of nets by running through the individual cells
@@ -3084,7 +3079,7 @@ Please check your design.")))
     (set-sheet-component-list!
      (sort-attrib-list (add-components components)))
 
-    (add-component-attribs objects)
+    (add-component-attribs components)
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
