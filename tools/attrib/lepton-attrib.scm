@@ -2662,7 +2662,7 @@ Please check your design.")))
   #f)
 
 
-;;; Processes *OBJECTS and adds the list of pins.  It writes the
+;;; Processes OBJECTS and adds the list of pins.  It writes the
 ;;; label refdes:pinnumber into the global pin list.
 ;;;
 ;;; Algorithm:
@@ -2676,53 +2676,54 @@ Please check your design.")))
 ;;;
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
-(define (add-pins *object-ls)
+(define (add-pins objects)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (*object)
-     (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Make sure object component has a refdes.
-         (if (not (null-pointer? *temp-refdes))
-             ;; Now iterate through lower level objects looking
-             ;; for pins.
-             (for-each
-              (lambda (*child-object)
-                (when (true? (lepton_object_is_pin *child-object))
-                  (let ((*temp-pinnumber
-                         (lepton_attrib_search_object_attribs_by_name
-                          *child-object
-                          (string->pointer "pinnumber")
-                          0)))
-                    (if (not (null-pointer? *temp-pinnumber))
-                        (let ((*row-label
-                               (string->pointer
-                                (string-append (pointer->string *temp-refdes)
-                                               ":"
-                                               (pointer->string *temp-pinnumber)))))
-                          (set-sheet-pin-list!
-                           (add-glist-item (sheet-pin-list)
-                                           *row-label)))
-                        (begin
-                          ;; Didn't find pinnumber.  Report error
-                          ;; to log.
-                          (format (current-error-port) "add-pins():")
-                          (format (current-error-port)
-                                  (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                                  *temp-refdes)))
-                    (g_free *temp-pinnumber))))
-              (glist->list (lepton_component_object_get_contents *object)
-                           identity))
+   (lambda (object)
+     (let ((*object (object->pointer object)))
+       (when (true? (lepton_object_is_component *object))
+         (let ((*temp-refdes (component-refdes *object)))
+           ;; Make sure object component has a refdes.
+           (if (not (null-pointer? *temp-refdes))
+               ;; Now iterate through lower level objects looking
+               ;; for pins.
+               (for-each
+                (lambda (*child-object)
+                  (when (true? (lepton_object_is_pin *child-object))
+                    (let ((*temp-pinnumber
+                           (lepton_attrib_search_object_attribs_by_name
+                            *child-object
+                            (string->pointer "pinnumber")
+                            0)))
+                      (if (not (null-pointer? *temp-pinnumber))
+                          (let ((*row-label
+                                 (string->pointer
+                                  (string-append (pointer->string *temp-refdes)
+                                                 ":"
+                                                 (pointer->string *temp-pinnumber)))))
+                            (set-sheet-pin-list!
+                             (add-glist-item (sheet-pin-list)
+                                             *row-label)))
+                          (begin
+                            ;; Didn't find pinnumber.  Report error
+                            ;; to log.
+                            (format (current-error-port) "add-pins():")
+                            (format (current-error-port)
+                                    (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                                    *temp-refdes)))
+                      (g_free *temp-pinnumber))))
+                (glist->list (lepton_component_object_get_contents *object)
+                             identity))
 
-             ;; Didn't find refdes.  Report error to log.
-             (log! 'debug
-                   "add-pins(): Found component with no refdes: component basename = ~S"
-                   (pointer->string
-                    (lepton_component_object_get_basename *object))))
-         (g_free *temp-refdes))))
+               ;; Didn't find refdes.  Report error to log.
+               (log! 'debug
+                     "add-pins(): Found component with no refdes: component basename = ~S"
+                     (pointer->string
+                      (lepton_component_object_get_basename *object))))
+           (g_free *temp-refdes)))))
 
-   *object-ls))
+   objects))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
@@ -3087,7 +3088,7 @@ Please check your design.")))
     (add-nets objects)
     (add-net-attribs objects)
 
-    (add-pins *object-ls)
+    (add-pins objects)
     (add-pin-attribs *object-ls))
 
   ;; Note that this must be changed.  We need to input the
