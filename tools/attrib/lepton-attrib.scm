@@ -362,8 +362,9 @@ failure."
    (string-trim (substring str (1+ (string-index str #\=))))))
 
 
-(define (object-with-attribs? object)
-  (not (null? (object-attribs object))))
+(define (component-with-attribs? object)
+  (and (component? object)
+       (not (null? (object-attribs object)))))
 
 
 ;;; Attaches an attribute produced from NAME-VALUE-PAIR to
@@ -2613,8 +2614,7 @@ Please check your design.")))
       (and=> temp-refdes string->pointer)))
 
   (define (component-object-refdes object)
-    (and (component? object)
-         (object-with-attribs? object)
+    (and (component-with-attribs? object)
          (*refdes object)))
 
   ;; Only process components with attributes.
