@@ -2636,14 +2636,17 @@ Please check your design.")))
            (not (string= name "slot"))
            name)))
 
-  (for-each
-   (lambda (name)
-     (set-sheet-component-attrib-list!
-      (add-glist-item (sheet-component-attrib-list)
-                      (string->pointer name))))
-   ;; Only process components with attributes.
-   (filter-map ordinary-attrib-name
-               (append-map object-attribs components))))
+  ;; Only process components with attributes.
+  (define name-ls
+    (filter-map ordinary-attrib-name
+                (append-map object-attribs components)))
+
+  (let loop ((ls name-ls)
+             (*gls (sheet-component-attrib-list)))
+    (if (null? ls)
+        (set-sheet-component-attrib-list! *gls)
+        (loop (cdr ls)
+              (add-glist-item *gls (string->pointer (car ls)))))))
 
 
 ;;; Adds the list of nets by running through the individual cells
