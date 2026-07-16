@@ -2703,11 +2703,12 @@ Please check your design.")))
      ;; for pins.
      (for-each
       (lambda (pin)
-        (let ((pinnumber (pin-pinnumber pin)))
+        (let ((pinnumber (pin-pinnumber pin))
+              (component (object-component pin)))
           (if pinnumber
               (let ((*row-label
                      (string->pointer
-                      (string-append (refdes object)
+                      (string-append (refdes component)
                                      ":"
                                      pinnumber))))
                 (set-sheet-pin-list!
@@ -2719,7 +2720,7 @@ Please check your design.")))
                 (format (current-error-port) "add-pins():")
                 (format (current-error-port)
                         (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                        (refdes object))))))
+                        (refdes component))))))
       (filter pin? (component-contents object))))
 
    ;; Make sure every component object has a refdes.
