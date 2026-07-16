@@ -2699,29 +2699,28 @@ Please check your design.")))
   ;; components.
   (for-each
    (lambda (object)
-     (let* ((*object (object->pointer object)))
-       ;; Now iterate through lower level objects looking
-       ;; for pins.
-       (for-each
-        (lambda (child-object)
-          (let ((pinnumber (pin-pinnumber child-object)))
-            (if pinnumber
-                (let ((*row-label
-                       (string->pointer
-                        (string-append (refdes object)
-                                       ":"
-                                       pinnumber))))
-                  (set-sheet-pin-list!
-                   (add-glist-item (sheet-pin-list)
-                                   *row-label)))
-                (begin
-                  ;; Didn't find pinnumber.  Report error
-                  ;; to log.
-                  (format (current-error-port) "add-pins():")
-                  (format (current-error-port)
-                          (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                          (refdes object))))))
-        (filter pin? (component-contents object)))))
+     ;; Now iterate through lower level objects looking
+     ;; for pins.
+     (for-each
+      (lambda (child-object)
+        (let ((pinnumber (pin-pinnumber child-object)))
+          (if pinnumber
+              (let ((*row-label
+                     (string->pointer
+                      (string-append (refdes object)
+                                     ":"
+                                     pinnumber))))
+                (set-sheet-pin-list!
+                 (add-glist-item (sheet-pin-list)
+                                 *row-label)))
+              (begin
+                ;; Didn't find pinnumber.  Report error
+                ;; to log.
+                (format (current-error-port) "add-pins():")
+                (format (current-error-port)
+                        (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                        (refdes object))))))
+      (filter pin? (component-contents object))))
 
    ;; Make sure every component object has a refdes.
    (filter refdes objects)))
