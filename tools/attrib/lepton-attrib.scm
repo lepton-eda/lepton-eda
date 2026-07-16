@@ -2629,22 +2629,23 @@ Please check your design.")))
   ;; Don't include "refdes" or "slot" because they form the row
   ;; name.  Also don't include "net" per bug found by Steve W. --
   ;; 4.3.2007, SDB.
-  (define (ordinary-attrib? name)
-    (and (not (string= name "refdes"))
-         (not (string= name "net"))
-         (not (string= name "slot"))))
+  (define (ordinary-attrib-name attrib)
+    (let ((name (attrib-name attrib)))
+      (and (not (string= name "refdes"))
+           (not (string= name "net"))
+           (not (string= name "slot"))
+           name)))
 
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (attrib)
-     (let ((name (attrib-name attrib)))
-       (when (ordinary-attrib? name)
-         (set-sheet-component-attrib-list!
-          (add-glist-item (sheet-component-attrib-list)
-                          (string->pointer name))))))
+   (lambda (name)
+     (set-sheet-component-attrib-list!
+      (add-glist-item (sheet-component-attrib-list)
+                      (string->pointer name))))
    ;; Only process components with attributes.
-   (append-map object-attribs objects)))
+   (filter-map ordinary-attrib-name
+               (append-map object-attribs objects))))
 
 
 ;;; Adds the list of nets by running through the individual cells
