@@ -2698,33 +2698,30 @@ Please check your design.")))
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (object)
-     ;; Now iterate through lower level objects looking
-     ;; for pins.
-     (for-each
-      (lambda (pin)
-        (let ((pinnumber (pin-pinnumber pin))
-              (component (object-component pin)))
-          (if pinnumber
-              (let ((*row-label
-                     (string->pointer
-                      (string-append (refdes component)
-                                     ":"
-                                     pinnumber))))
-                (set-sheet-pin-list!
-                 (add-glist-item (sheet-pin-list)
-                                 *row-label)))
-              (begin
-                ;; Didn't find pinnumber.  Report error
-                ;; to log.
-                (format (current-error-port) "add-pins():")
-                (format (current-error-port)
-                        (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                        (refdes component))))))
-      (filter pin? (component-contents object))))
+   (lambda (pin)
+     (let ((pinnumber (pin-pinnumber pin))
+           (component (object-component pin)))
+       (if pinnumber
+           (let ((*row-label
+                  (string->pointer
+                   (string-append (refdes component)
+                                  ":"
+                                  pinnumber))))
+             (set-sheet-pin-list!
+              (add-glist-item (sheet-pin-list)
+                              *row-label)))
+           (begin
+             ;; Didn't find pinnumber.  Report error
+             ;; to log.
+             (format (current-error-port) "add-pins():")
+             (format (current-error-port)
+                     (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                     (refdes component))))))
 
-   ;; Make sure every component object has a refdes.
-   (filter refdes objects)))
+   ;; Make up a list of all pins.  Make sure every component
+   ;; object has a refdes.
+   (filter pin? (append-map component-contents
+                            (filter refdes objects)))))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
