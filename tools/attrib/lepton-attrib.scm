@@ -3079,7 +3079,8 @@ Please check your design.")))
      (sort-attrib-list (add-components components)))
 
     (set-sheet-component-attrib-list!
-     (add-component-attribs components))
+     (sort-attrib-list (add-component-attribs components)
+                       #:priority? 'yes))
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
@@ -3088,8 +3089,6 @@ Please check your design.")))
 
     (add-pins *object-ls)
     (add-pin-attribs *object-ls))
-
-  (sort-component-attrib-list)
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
