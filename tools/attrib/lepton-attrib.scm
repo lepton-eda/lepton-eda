@@ -2630,21 +2630,17 @@ Please check your design.")))
   ;; components.
   (for-each
    (lambda (attrib)
-     (let ((*attrib (object->pointer attrib)))
-       (let* ((*attrib-text
-               (g_strdup (lepton_text_object_get_string *attrib)))
-              (name (str-attrib-name *attrib-text)))
-         ;; Don't include "refdes" or "slot" because they
-         ;; form the row name.  Also don't include "net" per
-         ;; bug found by Steve W. -- 4.3.2007, SDB.
-         (when (and name
-                    (not (string= name "refdes"))
-                    (not (string= name "net"))
-                    (not (string= name "slot")))
-           (set-sheet-component-attrib-list!
-            (add-glist-item (sheet-component-attrib-list)
-                            (string->pointer name))))
-         (g_free *attrib-text))))
+     (let ((name (attrib-name attrib)))
+       ;; Don't include "refdes" or "slot" because they
+       ;; form the row name.  Also don't include "net" per
+       ;; bug found by Steve W. -- 4.3.2007, SDB.
+       (when (and name
+                  (not (string= name "refdes"))
+                  (not (string= name "net"))
+                  (not (string= name "slot")))
+         (set-sheet-component-attrib-list!
+          (add-glist-item (sheet-component-attrib-list)
+                          (string->pointer name))))))
    ;; Only process components with attributes.
    (append-map object-attribs objects)))
 
