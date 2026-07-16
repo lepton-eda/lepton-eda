@@ -2629,42 +2629,43 @@ Please check your design.")))
               (add-glist-item *gls (car ls))))))
 
 
-;;; Processes *OBJECTS and adds the list of component attributes
+;;; Processes OBJECTS and adds the list of component attributes
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
-(define (add-component-attribs *object-ls)
+(define (add-component-attribs objects)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (*object)
-     ;; Only process if this is a component with attributes.
-     (when (and (true? (lepton_object_is_component *object))
-                (not (null-pointer?
-                      (lepton_object_get_attribs *object))))
+   (lambda (object)
+     (let ((*object (object->pointer object)))
+       ;; Only process if this is a component with attributes.
+       (when (and (true? (lepton_object_is_component *object))
+                  (not (null-pointer?
+                        (lepton_object_get_attribs *object))))
 
-       ;; Iterate through all attribs found on component.
-       (for-each
-        (lambda (*attrib)
-          (when (and (true? (lepton_object_is_text *attrib))
-                     (not (null-pointer? (lepton_object_get_text *attrib))))
-            ;; Found an attribute.
-            (let* ((*attrib-text
-                    (g_strdup (lepton_text_object_get_string *attrib)))
-                   (name (str-attrib-name *attrib-text)))
-              ;; Don't include "refdes" or "slot" because they
-              ;; form the row name.  Also don't include "net" per
-              ;; bug found by Steve W. -- 4.3.2007, SDB.
-              (when (and name
-                         (not (string= name "refdes"))
-                         (not (string= name "net"))
-                         (not (string= name "slot")))
-                (set-sheet-component-attrib-list!
-                 (add-glist-item (sheet-component-attrib-list)
-                                 (string->pointer name))))
-              (g_free *attrib-text))))
-        ;; This has a side effect.  Why?
-        (glist->list (lepton_object_get_attribs *object) identity))))
-   *object-ls))
+         ;; Iterate through all attribs found on component.
+         (for-each
+          (lambda (*attrib)
+            (when (and (true? (lepton_object_is_text *attrib))
+                       (not (null-pointer? (lepton_object_get_text *attrib))))
+              ;; Found an attribute.
+              (let* ((*attrib-text
+                      (g_strdup (lepton_text_object_get_string *attrib)))
+                     (name (str-attrib-name *attrib-text)))
+                ;; Don't include "refdes" or "slot" because they
+                ;; form the row name.  Also don't include "net" per
+                ;; bug found by Steve W. -- 4.3.2007, SDB.
+                (when (and name
+                           (not (string= name "refdes"))
+                           (not (string= name "net"))
+                           (not (string= name "slot")))
+                  (set-sheet-component-attrib-list!
+                   (add-glist-item (sheet-component-attrib-list)
+                                   (string->pointer name))))
+                (g_free *attrib-text))))
+          ;; This has a side effect.  Why?
+          (glist->list (lepton_object_get_attribs *object) identity)))))
+   objects))
 
 
 ;;; Adds the list of nets by running through the individual cells
@@ -3093,7 +3094,7 @@ Please check your design.")))
     (set-sheet-component-list!
      (sort-attrib-list (add-components objects)))
 
-    (add-component-attribs *object-ls)
+    (add-component-attribs objects)
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
