@@ -2653,12 +2653,12 @@ Please check your design.")))
 
 ;;; Adds the list of nets by running through the individual cells
 ;;; and recording the names it discovers.  Not implemented yet.
-(define (add-nets *object-ls)
+(define (add-nets objects)
   #f)
 
 
 ;;; Adds net attribs.  Not implemented yet.
-(define (add-net-attribs *object-ls)
+(define (add-net-attribs objects)
   #f)
 
 
@@ -3084,8 +3084,8 @@ Please check your design.")))
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
-    (add-nets *object-ls)
-    (add-net-attribs *object-ls)
+    (add-nets objects)
+    (add-net-attribs objects)
 
     (add-pins *object-ls)
     (add-pin-attribs *object-ls))
