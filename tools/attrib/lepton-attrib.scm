@@ -2636,8 +2636,6 @@ Please check your design.")))
            (not (string= name "slot"))
            name)))
 
-  ;; Iterate through all objects found on page looking for
-  ;; components.
   (for-each
    (lambda (name)
      (set-sheet-component-attrib-list!
