@@ -2677,6 +2677,17 @@ Please check your design.")))
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
 (define (add-pins objects)
+  (define (pin-pinnumber pin)
+    (let* ((*temp-pinnumber
+            (lepton_attrib_search_object_attribs_by_name
+             (object->pointer pin)
+             (string->pointer "pinnumber")
+             0))
+           (temp-pinnumber (and (not (null-pointer? *temp-pinnumber))
+                                (pointer->string *temp-pinnumber))))
+      (g_free *temp-pinnumber)
+      (and=> temp-pinnumber string->pointer)))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2689,12 +2700,8 @@ Please check your design.")))
            ;; for pins.
            (for-each
             (lambda (child-object)
-              (let ((*temp-pinnumber
-                     (lepton_attrib_search_object_attribs_by_name
-                      (object->pointer child-object)
-                      (string->pointer "pinnumber")
-                      0)))
-                (if (not (null-pointer? *temp-pinnumber))
+              (let ((*temp-pinnumber (pin-pinnumber child-object)))
+                (if *temp-pinnumber
                     (let ((*row-label
                            (string->pointer
                             (string-append (pointer->string *temp-refdes)
@@ -2709,8 +2716,7 @@ Please check your design.")))
                       (format (current-error-port) "add-pins():")
                       (format (current-error-port)
                               (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                              *temp-refdes)))
-                (g_free *temp-pinnumber)))
+                              *temp-refdes)))))
             (filter pin? (component-contents object)))
 
            ;; Didn't find refdes.  Report error to log.
