@@ -2695,35 +2695,29 @@ Please check your design.")))
      (let* ((*object (object->pointer object))
             (*temp-refdes (component-refdes *object)))
        ;; Make sure object component has a refdes.
-       (if (not (null-pointer? *temp-refdes))
-           ;; Now iterate through lower level objects looking
-           ;; for pins.
-           (for-each
-            (lambda (child-object)
-              (let ((pinnumber (pin-pinnumber child-object)))
-                (if pinnumber
-                    (let ((*row-label
-                           (string->pointer
-                            (string-append (pointer->string *temp-refdes)
-                                           ":"
-                                           pinnumber))))
-                      (set-sheet-pin-list!
-                       (add-glist-item (sheet-pin-list)
-                                       *row-label)))
-                    (begin
-                      ;; Didn't find pinnumber.  Report error
-                      ;; to log.
-                      (format (current-error-port) "add-pins():")
-                      (format (current-error-port)
-                              (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                              *temp-refdes)))))
-            (filter pin? (component-contents object)))
-
-           ;; Didn't find refdes.  Report error to log.
-           (log! 'debug
-                 "add-pins(): Found component with no refdes: component basename = ~S"
-                 (pointer->string
-                  (lepton_component_object_get_basename *object))))
+       (unless (null-pointer? *temp-refdes)
+         ;; Now iterate through lower level objects looking
+         ;; for pins.
+         (for-each
+          (lambda (child-object)
+            (let ((pinnumber (pin-pinnumber child-object)))
+              (if pinnumber
+                  (let ((*row-label
+                         (string->pointer
+                          (string-append (pointer->string *temp-refdes)
+                                         ":"
+                                         pinnumber))))
+                    (set-sheet-pin-list!
+                     (add-glist-item (sheet-pin-list)
+                                     *row-label)))
+                  (begin
+                    ;; Didn't find pinnumber.  Report error
+                    ;; to log.
+                    (format (current-error-port) "add-pins():")
+                    (format (current-error-port)
+                            (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                            *temp-refdes)))))
+          (filter pin? (component-contents object))))
        (g_free *temp-refdes)))
 
    objects))
