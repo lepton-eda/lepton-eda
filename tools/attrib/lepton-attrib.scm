@@ -2688,32 +2688,32 @@ Please check your design.")))
            ;; Now iterate through lower level objects looking
            ;; for pins.
            (for-each
-            (lambda (*child-object)
-              (when (true? (lepton_object_is_pin *child-object))
-                (let ((*temp-pinnumber
-                       (lepton_attrib_search_object_attribs_by_name
-                        *child-object
-                        (string->pointer "pinnumber")
-                        0)))
-                  (if (not (null-pointer? *temp-pinnumber))
-                      (let ((*row-label
-                             (string->pointer
-                              (string-append (pointer->string *temp-refdes)
-                                             ":"
-                                             (pointer->string *temp-pinnumber)))))
-                        (set-sheet-pin-list!
-                         (add-glist-item (sheet-pin-list)
-                                         *row-label)))
-                      (begin
-                        ;; Didn't find pinnumber.  Report error
-                        ;; to log.
-                        (format (current-error-port) "add-pins():")
-                        (format (current-error-port)
-                                (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                                *temp-refdes)))
-                  (g_free *temp-pinnumber))))
-            (glist->list (lepton_component_object_get_contents *object)
-                         identity))
+            (lambda (child-object)
+              (let ((*child-object (object->pointer child-object)))
+               (when (true? (lepton_object_is_pin *child-object))
+                 (let ((*temp-pinnumber
+                        (lepton_attrib_search_object_attribs_by_name
+                         *child-object
+                         (string->pointer "pinnumber")
+                         0)))
+                   (if (not (null-pointer? *temp-pinnumber))
+                       (let ((*row-label
+                              (string->pointer
+                               (string-append (pointer->string *temp-refdes)
+                                              ":"
+                                              (pointer->string *temp-pinnumber)))))
+                         (set-sheet-pin-list!
+                          (add-glist-item (sheet-pin-list)
+                                          *row-label)))
+                       (begin
+                         ;; Didn't find pinnumber.  Report error
+                         ;; to log.
+                         (format (current-error-port) "add-pins():")
+                         (format (current-error-port)
+                                 (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                                 *temp-refdes)))
+                   (g_free *temp-pinnumber)))))
+            (component-contents object))
 
            ;; Didn't find refdes.  Report error to log.
            (log! 'debug
