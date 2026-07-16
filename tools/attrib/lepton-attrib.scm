@@ -2677,6 +2677,13 @@ Please check your design.")))
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
 (define (add-pins objects)
+  (define (refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      temp-refdes))
+
   (define (pin-pinnumber pin)
     (let* ((*temp-pinnumber
             (lepton_attrib_search_object_attribs_by_name
@@ -2692,35 +2699,32 @@ Please check your design.")))
   ;; components.
   (for-each
    (lambda (object)
-     (let* ((*object (object->pointer object))
-            (*temp-refdes (component-refdes *object)))
-       ;; Make sure object component has a refdes.
-       (unless (null-pointer? *temp-refdes)
-         ;; Now iterate through lower level objects looking
-         ;; for pins.
-         (for-each
-          (lambda (child-object)
-            (let ((pinnumber (pin-pinnumber child-object)))
-              (if pinnumber
-                  (let ((*row-label
-                         (string->pointer
-                          (string-append (pointer->string *temp-refdes)
-                                         ":"
-                                         pinnumber))))
-                    (set-sheet-pin-list!
-                     (add-glist-item (sheet-pin-list)
-                                     *row-label)))
-                  (begin
-                    ;; Didn't find pinnumber.  Report error
-                    ;; to log.
-                    (format (current-error-port) "add-pins():")
-                    (format (current-error-port)
-                            (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                            *temp-refdes)))))
-          (filter pin? (component-contents object))))
-       (g_free *temp-refdes)))
+     (let* ((*object (object->pointer object)))
+       ;; Now iterate through lower level objects looking
+       ;; for pins.
+       (for-each
+        (lambda (child-object)
+          (let ((pinnumber (pin-pinnumber child-object)))
+            (if pinnumber
+                (let ((*row-label
+                       (string->pointer
+                        (string-append (refdes object)
+                                       ":"
+                                       pinnumber))))
+                  (set-sheet-pin-list!
+                   (add-glist-item (sheet-pin-list)
+                                   *row-label)))
+                (begin
+                  ;; Didn't find pinnumber.  Report error
+                  ;; to log.
+                  (format (current-error-port) "add-pins():")
+                  (format (current-error-port)
+                          (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                          (refdes object))))))
+        (filter pin? (component-contents object)))))
 
-   objects))
+   ;; Make sure every component object has a refdes.
+   (filter refdes objects)))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
