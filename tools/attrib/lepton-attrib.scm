@@ -2634,8 +2634,7 @@ Please check your design.")))
        ;; Don't include "refdes" or "slot" because they
        ;; form the row name.  Also don't include "net" per
        ;; bug found by Steve W. -- 4.3.2007, SDB.
-       (when (and name
-                  (not (string= name "refdes"))
+       (when (and (not (string= name "refdes"))
                   (not (string= name "net"))
                   (not (string= name "slot")))
          (set-sheet-component-attrib-list!
