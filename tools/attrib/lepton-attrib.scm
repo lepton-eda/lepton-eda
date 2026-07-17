@@ -2713,7 +2713,7 @@ Please check your design.")))
               (add-glist-item *gls (car ls))))))
 
 
-;;; Processes *OBJECTS and adds the list of pin attributes.  It
+;;; Processes OBJECTS and adds the list of pin attributes.  It
 ;;; writes each attrib name into the global pin attrib list.
 ;;;
 ;;; Algorithm:
@@ -2725,56 +2725,57 @@ Please check your design.")))
 ;;; - Loop on the attribs looking for non-NULL text.
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
-(define (add-pin-attribs *object-ls)
+(define (add-pin-attribs objects)
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (*object)
-     (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Make sure object component has a refdes.
-         (unless (null-pointer? *temp-refdes)
-           ;; Now iterate through lower level objects looking for
-           ;; pins.
-           (for-each
-            (lambda (*child-object)
-              (when (true? (lepton_object_is_pin *child-object))
-                ;; Found a pin.  Now get attrib head and loop on
-                ;; attribs.
-                (for-each
-                 (lambda (*pin-attrib)
-                   (when (and (true? (lepton_object_is_text *pin-attrib))
-                              (not (null-pointer?
-                                    (lepton_object_get_text *pin-attrib))))
-                     ;; Found an attribute.
-                     (let* ((*attrib-text
-                             (g_strdup
-                              (lepton_text_object_get_string *pin-attrib)))
-                            (attrib-name (str-attrib-name *attrib-text))
-                            (attrib-value (str-attrib-value *attrib-text)))
-                       ;; Don't include "pinnumber" because it is
-                       ;; already in other master list.  Also
-                       ;; guard against pathalogical symbols which
-                       ;; have non-attrib text inside pins.
-                       (when (and attrib-name
-                                  (not (string= attrib-name "pinnumber"))
-                                  attrib-value)
-                         (set-sheet-pin-attrib-list!
-                          (add-glist-item
-                           (sheet-pin-attrib-list)
-                           (string->pointer attrib-name))))
+   (lambda (object)
+     (let ((*object (object->pointer object)))
+       (when (true? (lepton_object_is_component *object))
+         (let ((*temp-refdes (component-refdes *object)))
+           ;; Make sure object component has a refdes.
+           (unless (null-pointer? *temp-refdes)
+             ;; Now iterate through lower level objects looking for
+             ;; pins.
+             (for-each
+              (lambda (*child-object)
+                (when (true? (lepton_object_is_pin *child-object))
+                  ;; Found a pin.  Now get attrib head and loop on
+                  ;; attribs.
+                  (for-each
+                   (lambda (*pin-attrib)
+                     (when (and (true? (lepton_object_is_text *pin-attrib))
+                                (not (null-pointer?
+                                      (lepton_object_get_text *pin-attrib))))
+                       ;; Found an attribute.
+                       (let* ((*attrib-text
+                               (g_strdup
+                                (lepton_text_object_get_string *pin-attrib)))
+                              (attrib-name (str-attrib-name *attrib-text))
+                              (attrib-value (str-attrib-value *attrib-text)))
+                         ;; Don't include "pinnumber" because it is
+                         ;; already in other master list.  Also
+                         ;; guard against pathalogical symbols which
+                         ;; have non-attrib text inside pins.
+                         (when (and attrib-name
+                                    (not (string= attrib-name "pinnumber"))
+                                    attrib-value)
+                           (set-sheet-pin-attrib-list!
+                            (add-glist-item
+                             (sheet-pin-attrib-list)
+                             (string->pointer attrib-name))))
 
-                       (g_free *attrib-text))))
+                         (g_free *attrib-text))))
 
-                 (glist->list (lepton_object_get_attribs *child-object)
-                              identity))))
+                   (glist->list (lepton_object_get_attribs *child-object)
+                                identity))))
 
-            (glist->list (lepton_component_object_get_contents *object)
-                         identity))
+              (glist->list (lepton_component_object_get_contents *object)
+                           identity))
 
-           (g_free *temp-refdes)))))
+             (g_free *temp-refdes))))))
 
-   *object-ls))
+   objects))
 
 
 
@@ -3060,7 +3061,6 @@ Please check your design.")))
   (set-window! *window-widget)
 
   (let* ((objects (append-map page-contents (active-pages)))
-         (*object-ls (map object->pointer objects))
          (components (filter component-with-attribs? objects)))
     ;; Now add all items found to the master lists
     (set-sheet-component-list!
@@ -3076,7 +3076,7 @@ Please check your design.")))
     (add-net-attribs objects)
 
     (set-sheet-pin-list! (add-pins components))
-    (add-pin-attribs *object-ls))
+    (add-pin-attribs objects))
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
