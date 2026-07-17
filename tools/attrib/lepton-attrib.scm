@@ -2720,7 +2720,7 @@ Please check your design.")))
   (let loop ((ls *pin-name-ls)
              (*gls %null-pointer))
     (if (null? ls)
-        (set-sheet-pin-list! *gls)
+        *gls
         (loop (cdr ls)
               (add-glist-item *gls (car ls))))))
 
@@ -3087,7 +3087,7 @@ Please check your design.")))
     (add-nets objects)
     (add-net-attribs objects)
 
-    (add-pins components)
+    (set-sheet-pin-list! (add-pins components))
     (add-pin-attribs *object-ls))
 
   ;; Note that this must be changed.  We need to input the
