@@ -2754,7 +2754,7 @@ Please check your design.")))
   (let loop ((ls *attrib-name-ls)
              (*gls %null-pointer))
     (if (null? ls)
-        (set-sheet-pin-attrib-list! *gls)
+        *gls
         (loop (cdr ls)
               (add-glist-item *gls (car ls))))))
 
@@ -3057,7 +3057,7 @@ Please check your design.")))
     (add-net-attribs objects)
 
     (set-sheet-pin-list! (add-pins components))
-    (add-pin-attribs components))
+    (set-sheet-pin-attrib-list! (add-pin-attribs components)))
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
