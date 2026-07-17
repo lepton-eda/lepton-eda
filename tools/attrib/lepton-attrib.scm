@@ -2718,7 +2718,7 @@ Please check your design.")))
                                          (filter refdes objects)))))
 
   (let loop ((ls *pin-name-ls)
-             (*gls (sheet-pin-list)))
+             (*gls %null-pointer))
     (if (null? ls)
         (set-sheet-pin-list! *gls)
         (loop (cdr ls)
