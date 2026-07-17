@@ -2738,8 +2738,7 @@ Please check your design.")))
   (for-each
    (lambda (pin-attrib)
      ;; Found an attribute.
-     (let ((name (attrib-name pin-attrib))
-           (value (attrib-value pin-attrib)))
+     (let ((name (attrib-name pin-attrib)))
        ;; Don't include "pinnumber" because it is already in
        ;; the list of pin names.
        (unless (string= name "pinnumber")
