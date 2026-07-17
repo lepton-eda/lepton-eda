@@ -2736,25 +2736,23 @@ Please check your design.")))
   ;; Now iterate through lower level objects looking for
   ;; pins.
   (for-each
-   (lambda (child-object)
-     (for-each
-      (lambda (pin-attrib)
-        ;; Found an attribute.
-        (let ((name (attrib-name pin-attrib))
-              (value (attrib-value pin-attrib)))
-          ;; Don't include "pinnumber" because it is already in
-          ;; the list of pin names.
-          (unless (string= name "pinnumber")
-            (set-sheet-pin-attrib-list!
-             (add-glist-item
-              (sheet-pin-attrib-list)
-              (string->pointer name))))))
-
-      (object-attribs child-object)))
+   (lambda (pin-attrib)
+     ;; Found an attribute.
+     (let ((name (attrib-name pin-attrib))
+           (value (attrib-value pin-attrib)))
+       ;; Don't include "pinnumber" because it is already in
+       ;; the list of pin names.
+       (unless (string= name "pinnumber")
+         (set-sheet-pin-attrib-list!
+          (add-glist-item
+           (sheet-pin-attrib-list)
+           (string->pointer name))))))
 
    ;; Make sure every component object has a refdes.
-   (filter pin?
-           (append-map component-contents (filter refdes objects)))))
+   (append-map object-attribs
+               (filter pin?
+                       (append-map component-contents
+                                   (filter refdes objects))))))
 
 
 
