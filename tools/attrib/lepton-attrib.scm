@@ -2747,19 +2747,19 @@ Please check your design.")))
             (let* ((*attrib-text
                     (g_strdup
                      (lepton_text_object_get_string *pin-attrib)))
-                   (attrib-name (str-attrib-name *attrib-text))
-                   (attrib-value (str-attrib-value *attrib-text)))
+                   (name (str-attrib-name *attrib-text))
+                   (value (str-attrib-value *attrib-text)))
               ;; Don't include "pinnumber" because it is
               ;; already in other master list.  Also
               ;; guard against pathalogical symbols which
               ;; have non-attrib text inside pins.
-              (when (and attrib-name
-                         (not (string= attrib-name "pinnumber"))
-                         attrib-value)
+              (when (and name
+                         (not (string= name "pinnumber"))
+                         value)
                 (set-sheet-pin-attrib-list!
                  (add-glist-item
                   (sheet-pin-attrib-list)
-                  (string->pointer attrib-name))))
+                  (string->pointer name))))
 
               (g_free *attrib-text)))))
 
