@@ -2710,19 +2710,19 @@ Please check your design.")))
                     (refdes component))
             #f))))
 
-  ;; Iterate through all objects found on page looking for
-  ;; components.
-  (for-each
-   (lambda (*row-label)
-     (set-sheet-pin-list!
-      (add-glist-item (sheet-pin-list)
-                      *row-label)))
+  ;; Make up a list of all pins.  Make sure every component object
+  ;; has a refdes.
+  (define *pin-name-ls
+    (filter-map *pin-name
+                (filter pin? (append-map component-contents
+                                         (filter refdes objects)))))
 
-   ;; Make up a list of all pins.  Make sure every component
-   ;; object has a refdes.
-   (filter-map *pin-name
-               (filter pin? (append-map component-contents
-                                        (filter refdes objects))))))
+  (let loop ((ls *pin-name-ls)
+             (*gls (sheet-pin-list)))
+    (if (null? ls)
+        (set-sheet-pin-list! *gls)
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
