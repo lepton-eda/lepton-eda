@@ -2726,14 +2726,20 @@ Please check your design.")))
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
 (define (add-pin-attribs objects)
+  (define (refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      temp-refdes))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
    (lambda (object)
-     (let* ((*object (object->pointer object))
-            (*temp-refdes (component-refdes *object)))
+     (let* ((*object (object->pointer object)))
        ;; Make sure object component has a refdes.
-       (unless (null-pointer? *temp-refdes)
+       (when (refdes object)
          ;; Now iterate through lower level objects looking for
          ;; pins.
          (for-each
@@ -2770,9 +2776,7 @@ Please check your design.")))
                             identity))))
 
           (glist->list (lepton_component_object_get_contents *object)
-                       identity))
-
-         (g_free *temp-refdes))))
+                       identity)))))
 
    objects))
 
