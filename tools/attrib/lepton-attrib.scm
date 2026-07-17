@@ -2740,22 +2740,23 @@ Please check your design.")))
       (and (not (string= name "pinnumber"))
            (string->pointer name))))
 
-  (for-each
-   (lambda (pin-attrib)
-     (let ((*name (*attrib-name pin-attrib)))
-       (and *name
-            (set-sheet-pin-attrib-list!
-             (add-glist-item
-              (sheet-pin-attrib-list)
-              *name)))))
 
-   ;; Make sure every component object has a refdes.  Then iterate
-   ;; through lower level objects looking for pins and their
-   ;; attribs.
-   (append-map object-attribs
-               (filter pin?
-                       (append-map component-contents
-                                   (filter refdes objects))))))
+  ;; Make sure every component object has a refdes.  Then iterate
+  ;; through lower level objects looking for pins and their
+  ;; attribs.
+  (define *attrib-name-ls
+    (filter-map
+     *attrib-name
+     (append-map object-attribs
+                 (filter pin?
+                         (append-map component-contents
+                                     (filter refdes objects))))))
+  (let loop ((ls *attrib-name-ls)
+             (*gls (sheet-pin-attrib-list)))
+    (if (null? ls)
+        (set-sheet-pin-attrib-list! *gls)
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
 
