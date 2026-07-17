@@ -1602,16 +1602,6 @@ failure."
    (sort-attrib-list *ls #:priority? 'yes)))
 
 
-;;; Sorts the list of nets in alphabetical order.
-(define (sort-net-list)
-  #f)
-
-
-;;; Sorts the net attribute list in alphabetical order.
-(define (sort-net-attrib-list)
-  #f)
-
-
 ;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
 ;;; *OBJECT-LS.
 (define (add-column-labels *sheet count *object-ls)
@@ -2644,12 +2634,12 @@ Please check your design.")))
 ;;; Adds the list of nets by running through the individual cells
 ;;; and recording the names it discovers.  Not implemented yet.
 (define (add-nets objects)
-  #f)
+  %null-pointer)
 
 
 ;;; Adds net attribs.  Not implemented yet.
 (define (add-net-attribs objects)
-  #f)
+  %null-pointer)
 
 
 ;;; Processes OBJECTS and returns the GList of pin labels of the
@@ -3043,18 +3033,13 @@ Please check your design.")))
     ;; Note that this must be changed.  We need to input the
     ;; entire project before doing anything with the nets because
     ;; we need to first determine where they are all connected!
-    (add-nets objects)
-    (add-net-attribs objects)
+    (set-sheet-net-list! (sort-attrib-list (add-nets objects)))
+    (set-sheet-net-attrib-list!
+     (sort-attrib-list (add-net-attribs objects)))
 
     (set-sheet-pin-list! (sort-attrib-list (add-pins components)))
     (set-sheet-pin-attrib-list!
      (sort-attrib-list (add-pin-attribs components))))
-
-  ;; Note that this must be changed.  We need to input the
-  ;; entire project before doing anything with the nets because
-  ;; we need to first determine where they are all connected!
-  (sort-net-list)
-  (sort-net-attrib-list)
 
   ;; Create and load the tables.
   (set-component-table! (make-table (sheet-component-count)
