@@ -1553,7 +1553,9 @@ failure."
 
 
 ;;; Sorts *LS which is a double linked list and returns a new
-;;; linked list.
+;;; linked list.  When the optional PRIORITY? argument is set to
+;;; non-#f value, a set of certain attributes having some
+;;; predefined 'weight' go first or last.
 (define* (sort-attrib-list *ls #:key (priority? #f))
   (define (list->glist ls)
     (let loop ((ls ls)
@@ -1591,15 +1593,6 @@ failure."
     ("symversion" . 200)))
 
 (define %default-attrib-pos 100)
-
-;;; Sort the component attribute list.  Apart from certain
-;;; attributes that have some predefined 'weight' and go first or
-;;; last, all other attributes are sorted in alphabetical order.
-(define (sort-component-attrib-list)
-  (define *ls (sheet-component-attrib-list))
-
-  (set-sheet-component-attrib-list!
-   (sort-attrib-list *ls #:priority? 'yes)))
 
 
 ;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
@@ -1782,8 +1775,9 @@ failure."
           (*name (string->pointer name)))
 
       (set-sheet-component-attrib-list!
-       (add-glist-item (sheet-component-attrib-list) *name))
-      (sort-component-attrib-list)
+       (sort-attrib-list
+        (add-glist-item (sheet-component-attrib-list) *name)
+        #:priority? 'yes))
 
       ;; Now, determine what index the new attrib ended up at.
       ;; This is necessary to tell gtk_sheet_insert_columns
@@ -1862,10 +1856,10 @@ failure."
                        (sheet-component-attrib-count))
 
         (set-sheet-component-attrib-list!
-         (delete-glist-item (sheet-component-attrib-list)
-                            *attrib-name))
-        ;; This renumbers list also.
-        (sort-component-attrib-list)
+         (sort-attrib-list
+          (delete-glist-item (sheet-component-attrib-list)
+                             *attrib-name)
+          #:priority? 'yes))
 
         (g_free *attrib-name)
 
