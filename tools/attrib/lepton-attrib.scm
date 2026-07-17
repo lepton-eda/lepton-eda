@@ -2695,33 +2695,34 @@ Please check your design.")))
       (g_free *temp-pinnumber)
       temp-pinnumber))
 
+  (define (*pin-name pin)
+    (let ((pinnumber (pin-pinnumber pin))
+          (component (object-component pin)))
+      (if pinnumber
+          (string->pointer
+           (string-append (refdes component) ":" pinnumber))
+          (begin
+            ;; Didn't find pinnumber.  Report error
+            ;; to log.
+            (format (current-error-port) "add-pins():")
+            (format (current-error-port)
+                    (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                    (refdes component))
+            #f))))
+
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
-   (lambda (pin)
-     (let ((pinnumber (pin-pinnumber pin))
-           (component (object-component pin)))
-       (if pinnumber
-           (let ((*row-label
-                  (string->pointer
-                   (string-append (refdes component)
-                                  ":"
-                                  pinnumber))))
-             (set-sheet-pin-list!
-              (add-glist-item (sheet-pin-list)
-                              *row-label)))
-           (begin
-             ;; Didn't find pinnumber.  Report error
-             ;; to log.
-             (format (current-error-port) "add-pins():")
-             (format (current-error-port)
-                     (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                     (refdes component))))))
+   (lambda (*row-label)
+     (set-sheet-pin-list!
+      (add-glist-item (sheet-pin-list)
+                      *row-label)))
 
    ;; Make up a list of all pins.  Make sure every component
    ;; object has a refdes.
-   (filter pin? (append-map component-contents
-                            (filter refdes objects)))))
+   (filter-map *pin-name
+               (filter pin? (append-map component-contents
+                                        (filter refdes objects))))))
 
 
 ;;; Processes *OBJECTS and adds the list of pin attributes.  It
