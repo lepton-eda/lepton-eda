@@ -1612,11 +1612,6 @@ failure."
   #f)
 
 
-;;; Sorts the pin attribute list in alphabetical order.
-(define (sort-pin-attrib-list)
-  #f)
-
-
 ;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
 ;;; *OBJECT-LS.
 (define (add-column-labels *sheet count *object-ls)
@@ -3052,15 +3047,14 @@ Please check your design.")))
     (add-net-attribs objects)
 
     (set-sheet-pin-list! (sort-attrib-list (add-pins components)))
-    (set-sheet-pin-attrib-list! (add-pin-attribs components)))
+    (set-sheet-pin-attrib-list!
+     (sort-attrib-list (add-pin-attribs components))))
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
   ;; we need to first determine where they are all connected!
   (sort-net-list)
   (sort-net-attrib-list)
-
-  (sort-pin-attrib-list)
 
   ;; Create and load the tables.
   (set-component-table! (make-table (sheet-component-count)
