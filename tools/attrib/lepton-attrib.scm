@@ -2752,7 +2752,7 @@ Please check your design.")))
                          (append-map component-contents
                                      (filter refdes objects))))))
   (let loop ((ls *attrib-name-ls)
-             (*gls (sheet-pin-attrib-list)))
+             (*gls %null-pointer))
     (if (null? ls)
         (set-sheet-pin-attrib-list! *gls)
         (loop (cdr ls)
