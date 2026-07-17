@@ -2662,20 +2662,8 @@ Please check your design.")))
   #f)
 
 
-;;; Processes OBJECTS and adds the list of pins.  It writes the
-;;; label refdes:pinnumber into the global pin list.
-;;;
-;;; Algorithm:
-;;; - Loop on objects looking for components.
-;;; - When we find a component, save the refdes.
-;;; - Dive down to primitives of the component.
-;;; - Loop on the primitives looking for pins.
-;;; - When we find a pin, find the pinnumber.
-;;; - Add the pin list label as "refdes:pinnumber", and stick it
-;;;   into the global pin list.
-;;;
-;;; Since this function operates on the global pin list, it
-;;; doesn't return a value.
+;;; Processes OBJECTS and returns the GList of pin labels of the
+;;; form "refdes:pinnumber".
 (define (add-pins objects)
   (define (refdes object)
     (let* ((*temp-refdes (component-refdes (object->pointer object)))
