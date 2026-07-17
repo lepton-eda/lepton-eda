@@ -2739,29 +2739,16 @@ Please check your design.")))
    (lambda (child-object)
      (for-each
       (lambda (pin-attrib)
-        (let ((*pin-attrib (object->pointer pin-attrib)))
-          (when (and (true? (lepton_object_is_text *pin-attrib))
-                     (not (null-pointer?
-                           (lepton_object_get_text *pin-attrib))))
-            ;; Found an attribute.
-            (let* ((*attrib-text
-                    (g_strdup
-                     (lepton_text_object_get_string *pin-attrib)))
-                   (name (str-attrib-name *attrib-text))
-                   (value (str-attrib-value *attrib-text)))
-              ;; Don't include "pinnumber" because it is
-              ;; already in other master list.  Also
-              ;; guard against pathalogical symbols which
-              ;; have non-attrib text inside pins.
-              (when (and name
-                         (not (string= name "pinnumber"))
-                         value)
-                (set-sheet-pin-attrib-list!
-                 (add-glist-item
-                  (sheet-pin-attrib-list)
-                  (string->pointer name))))
-
-              (g_free *attrib-text)))))
+        ;; Found an attribute.
+        (let ((name (attrib-name pin-attrib))
+              (value (attrib-value pin-attrib)))
+          ;; Don't include "pinnumber" because it is already in
+          ;; the list of pin names.
+          (unless (string= name "pinnumber")
+            (set-sheet-pin-attrib-list!
+             (add-glist-item
+              (sheet-pin-attrib-list)
+              (string->pointer name))))))
 
       (object-attribs child-object)))
 
