@@ -1612,11 +1612,6 @@ failure."
   #f)
 
 
-;;; Sort the pin list in alphabetical order.
-(define (sort-pin-list)
-  (set-sheet-pin-list! (sort-attrib-list (sheet-pin-list))))
-
-
 ;;; Sorts the pin attribute list in alphabetical order.
 (define (sort-pin-attrib-list)
   #f)
@@ -3056,7 +3051,7 @@ Please check your design.")))
     (add-nets objects)
     (add-net-attribs objects)
 
-    (set-sheet-pin-list! (add-pins components))
+    (set-sheet-pin-list! (sort-attrib-list (add-pins components)))
     (set-sheet-pin-attrib-list! (add-pin-attribs components)))
 
   ;; Note that this must be changed.  We need to input the
@@ -3065,7 +3060,6 @@ Please check your design.")))
   (sort-net-list)
   (sort-net-attrib-list)
 
-  (sort-pin-list)
   (sort-pin-attrib-list)
 
   ;; Create and load the tables.
