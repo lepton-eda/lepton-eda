@@ -2737,9 +2737,9 @@ Please check your design.")))
   ;; pins.
   (for-each
    (lambda (child-object)
-     (let ((*child-object (object->pointer child-object)))
-       (for-each
-        (lambda (*pin-attrib)
+     (for-each
+      (lambda (pin-attrib)
+        (let ((*pin-attrib (object->pointer pin-attrib)))
           (when (and (true? (lepton_object_is_text *pin-attrib))
                      (not (null-pointer?
                            (lepton_object_get_text *pin-attrib))))
@@ -2761,10 +2761,9 @@ Please check your design.")))
                   (sheet-pin-attrib-list)
                   (string->pointer attrib-name))))
 
-              (g_free *attrib-text))))
+              (g_free *attrib-text)))))
 
-        (glist->list (lepton_object_get_attribs *child-object)
-                     identity))))
+      (object-attribs child-object)))
 
    ;; Make sure every component object has a refdes.
    (filter pin?
