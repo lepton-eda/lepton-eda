@@ -410,15 +410,11 @@ failure."
                          (show 'same))
   (let loop ((attribs (object-attribs object)))
     (if (null? attribs)
-        (begin
-          ;; If we get here, it's because we have failed to find
-          ;; the attrib on the component.  This is an error
-          ;; condition.
-          (format (current-error-port) "replace-attrib: ")
-          (format (current-error-port)
-                  (G_ "Failed to find the attrib ~S on the component.\n")
-                  new-attrib-name)
-          (exit -1))
+        ;; If we get here, it's because we have failed to find the
+        ;; attrib on the component.  This is an error condition.
+        (error "Failed to find the attrib ~S on the component."
+               new-attrib-name)
+
         (let ((attrib (car attribs)))
           (if (string= (attrib-name attrib) new-attrib-name)
               (begin
