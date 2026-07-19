@@ -63,7 +63,6 @@
 (define SHOW_VALUE 1)
 (define SHOW_NAME 2)
 
-(define LEAVE_VISIBILITY_ALONE -1)
 (define INVISIBLE 0)
 (define VISIBLE 1)
 
@@ -403,11 +402,12 @@ failure."
 ;;; replaces its value with the *NEW_ATTRIB_VALUE.  The arguments
 ;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
 ;;; properties of the found attribute.
-(define (replace-attrib *object
-                        *new-attrib-name
-                        *new-attrib-value
-                        visibility
-                        show-name-value)
+(define* (replace-attrib *object
+                         *new-attrib-name
+                         *new-attrib-value
+                         #:key
+                         (visibility 'same)
+                         (show 'same))
   (let loop ((*attrib-ls
               (glist->list (lepton_object_get_attribs *object)
                            identity)))
@@ -438,10 +438,10 @@ failure."
                                            "="
                                            (pointer->string *new-attrib-value)))))
                       (lepton_text_object_set_string *attrib *new-attrib-text)
-                      (unless (= visibility LEAVE_VISIBILITY_ALONE)
+                      (unless (eq? visibility 'same)
                         (lepton_text_object_set_visibility *attrib visibility))
-                      (unless (= show-name-value LEAVE_NAME_VALUE_ALONE)
-                        (lepton_text_object_set_show *attrib show-name-value))
+                      (unless (eq? show 'same)
+                        (lepton_text_object_set_show *attrib show))
                       ;; We are done -- leave.
                       (g_free *old-attrib-text))
                     (begin
@@ -785,8 +785,8 @@ failure."
                 (replace-attrib *object
                                 *new-attrib-name
                                 (string->pointer new-attrib-value)
-                                visibility
-                                show-name-value)
+                                #:visibility visibility
+                                #:show show-name-value)
 
                 ;; Four cases to consider: Case 2.
                 (if (and (not (null-pointer? *old-attrib-value))
@@ -1038,9 +1038,7 @@ failure."
             ;; Simply write new attrib into place of old one.
             (replace-attrib *pin
                             (string->pointer new-attrib-name)
-                            (string->pointer new-attrib-value)
-                            LEAVE_VISIBILITY_ALONE
-                            LEAVE_NAME_VALUE_ALONE)
+                            (string->pointer new-attrib-value))
             ;; Four cases to consider: Case 2: old attrib exists, new one
             ;; doesn't.
             (if (and (not (null-pointer? *old-attrib-value))
