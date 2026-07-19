@@ -408,10 +408,8 @@ failure."
                          #:key
                          (visibility 'same)
                          (show 'same))
-  (let loop ((*attrib-ls
-              (glist->list (lepton_object_get_attribs *object)
-                           identity)))
-    (if (null? *attrib-ls)
+  (let loop ((attribs (object-attribs (pointer->object *object))))
+    (if (null? attribs)
         (begin
           ;; If we get here, it's because we have failed to find
           ;; the attrib on the component.  This is an error
@@ -421,7 +419,7 @@ failure."
                   (G_ "Failed to find the attrib ~S on the component.\n")
                   (pointer->string *new-attrib-name))
           (exit -1))
-        (let ((*attrib (car *attrib-ls)))
+        (let ((*attrib (object->pointer (car attribs))))
           (if (and (true? (lepton_object_is_text *attrib))
                    (not (null-pointer? (lepton_object_get_text *attrib))))
               ;; Found an attribute.
@@ -446,8 +444,8 @@ failure."
                       (g_free *old-attrib-text))
                     (begin
                       (g_free *old-attrib-text)
-                      (loop (cdr *attrib-ls)))))
-              (loop (cdr *attrib-ls)))))))
+                      (loop (cdr attribs)))))
+              (loop (cdr attribs)))))))
 
 
 ;; Remove an attribute with *ATTRIB-NAME from *OBJECT.
