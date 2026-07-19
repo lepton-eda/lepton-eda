@@ -420,9 +420,8 @@ failure."
                   (pointer->string *new-attrib-name))
           (exit -1))
         (let* ((attrib (car attribs))
-               (*attrib (object->pointer attrib))
-               (old-attrib-name (attrib-name attrib)))
-          (if (string= old-attrib-name
+               (*attrib (object->pointer attrib)))
+          (if (string= (attrib-name attrib)
                        (pointer->string *new-attrib-name))
               (begin
                 (set-attrib-value! attrib (pointer->string *new-attrib-value))
