@@ -437,15 +437,10 @@ failure."
               (glist->list (lepton_object_get_attribs *object)
                            identity)))
     (if (null? *attrib-ls)
-        (begin
-          ;; If we get here, it's because we have failed to find
-          ;; the attrib on the component.  This is an error
-          ;; condition.
-          (format (current-error-port) "remove-attrib(): ")
-          (format (current-error-port)
-                  (G_ "Failed to find the attrib ~S on the component.\n")
-                  (pointer->string *attrib-name))
-          (exit -1))
+        ;; If we get here, it's because we have failed to find the
+        ;; attrib on the component.  This is an error condition.
+        (error-attrib-not-found (pointer->string *attrib-name))
+
         (let ((*attrib (car *attrib-ls)))
           (if (and (true? (lepton_object_is_text *attrib))
                    (not (null-pointer? (lepton_object_get_text *attrib))))
