@@ -345,7 +345,7 @@ failure."
    (else (error "Invalid text name/value visibility."))))
 
 
-(define (visibility->symbol visible?)
+(define (int->visibility visible?)
   (if (= visible? VISIBLE) #t #f))
 
 
@@ -388,7 +388,7 @@ failure."
                         0
                         name-value-pair
                         DEFAULT_TEXT_SIZE
-                        (visibility->symbol visibility)
+                        (int->visibility visibility)
                         (show-name-value->symbol show-name-value))))
         (page-append! (object-page object) attrib)
         ;; Attach the attribute to the object.
@@ -766,7 +766,7 @@ failure."
                 (replace-attrib (pointer->object *object)
                                 new-attrib-name
                                 new-attrib-value
-                                #:visibility (visibility->symbol visibility)
+                                #:visibility (int->visibility visibility)
                                 #:show show-name-value)
 
                 ;; Four cases to consider: Case 2.
