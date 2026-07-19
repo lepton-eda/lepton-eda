@@ -346,7 +346,7 @@ failure."
 
 
 (define (int->visibility visible?)
-  (if (= visible? VISIBLE) #t #f))
+  (= visible? VISIBLE))
 
 
 (define (str-attrib-name *name-value)
