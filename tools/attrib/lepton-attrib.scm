@@ -419,15 +419,16 @@ failure."
                   (G_ "Failed to find the attrib ~S on the component.\n")
                   new-attrib-name)
           (exit -1))
-        (let* ((attrib (car attribs))
-               (*attrib (object->pointer attrib)))
+        (let ((attrib (car attribs)))
           (if (string= (attrib-name attrib) new-attrib-name)
               (begin
                 (set-attrib-value! attrib new-attrib-value)
                 (unless (eq? visibility 'same)
                   (set-text-visibility! attrib visibility))
                 (unless (eq? show 'same)
-                  (lepton_text_object_set_show *attrib show)))
+                  (set-text-attribute-mode!
+                   attrib
+                   (show-name-value->symbol show))))
               (loop (cdr attribs)))))))
 
 
