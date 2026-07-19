@@ -419,16 +419,14 @@ failure."
                   (G_ "Failed to find the attrib ~S on the component.\n")
                   (pointer->string *new-attrib-name))
           (exit -1))
-        (let ((*attrib (object->pointer (car attribs))))
+        (let* ((attrib (car attribs))
+               (*attrib (object->pointer attrib)))
           (if (and (true? (lepton_object_is_text *attrib))
                    (not (null-pointer? (lepton_object_get_text *attrib))))
               ;; Found an attribute.
-              (let* ((*old-attrib-text
-                      (g_strdup (lepton_text_object_get_string *attrib)))
-                     (old-attrib-name (str-attrib-name *old-attrib-text)))
-                (if (and old-attrib-name
-                         (string= old-attrib-name
-                                  (pointer->string *new-attrib-name)))
+              (let ((old-attrib-name (attrib-name attrib)))
+                (if (string= old-attrib-name
+                             (pointer->string *new-attrib-name))
                     ;; Create attrib=value text string.
                     (let ((*new-attrib-text
                            (string->pointer
@@ -439,12 +437,8 @@ failure."
                       (unless (eq? visibility 'same)
                         (lepton_text_object_set_visibility *attrib visibility))
                       (unless (eq? show 'same)
-                        (lepton_text_object_set_show *attrib show))
-                      ;; We are done -- leave.
-                      (g_free *old-attrib-text))
-                    (begin
-                      (g_free *old-attrib-text)
-                      (loop (cdr attribs)))))
+                        (lepton_text_object_set_show *attrib show)))
+                    (loop (cdr attribs))))
               (loop (cdr attribs)))))))
 
 
