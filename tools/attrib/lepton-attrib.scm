@@ -398,6 +398,10 @@ failure."
       (error "Trying to add attrib to non-component or non-net.")))
 
 
+(define (error-attrib-not-found name)
+  (error "Failed to find the attrib ~S on the component." name))
+
+
 ;;; Searches for the instance of *NEW_ATTRIB_NAME on *OBJECT, and
 ;;; replaces its value with the *NEW_ATTRIB_VALUE.  The arguments
 ;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
@@ -412,8 +416,7 @@ failure."
     (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
         ;; attrib on the component.  This is an error condition.
-        (error "Failed to find the attrib ~S on the component."
-               new-attrib-name)
+        (error-attrib-not-found new-attrib-name)
 
         (let ((attrib (car attribs)))
           (if (string= (attrib-name attrib) new-attrib-name)
