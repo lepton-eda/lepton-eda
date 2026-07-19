@@ -420,25 +420,21 @@ failure."
                   (pointer->string *new-attrib-name))
           (exit -1))
         (let* ((attrib (car attribs))
-               (*attrib (object->pointer attrib)))
-          (if (and (true? (lepton_object_is_text *attrib))
-                   (not (null-pointer? (lepton_object_get_text *attrib))))
-              ;; Found an attribute.
-              (let ((old-attrib-name (attrib-name attrib)))
-                (if (string= old-attrib-name
-                             (pointer->string *new-attrib-name))
-                    ;; Create attrib=value text string.
-                    (let ((*new-attrib-text
-                           (string->pointer
-                            (string-append (pointer->string *new-attrib-name)
-                                           "="
-                                           (pointer->string *new-attrib-value)))))
-                      (lepton_text_object_set_string *attrib *new-attrib-text)
-                      (unless (eq? visibility 'same)
-                        (lepton_text_object_set_visibility *attrib visibility))
-                      (unless (eq? show 'same)
-                        (lepton_text_object_set_show *attrib show)))
-                    (loop (cdr attribs))))
+               (*attrib (object->pointer attrib))
+               (old-attrib-name (attrib-name attrib)))
+          (if (string= old-attrib-name
+                       (pointer->string *new-attrib-name))
+              ;; Create attrib=value text string.
+              (let ((*new-attrib-text
+                     (string->pointer
+                      (string-append (pointer->string *new-attrib-name)
+                                     "="
+                                     (pointer->string *new-attrib-value)))))
+                (lepton_text_object_set_string *attrib *new-attrib-text)
+                (unless (eq? visibility 'same)
+                  (lepton_text_object_set_visibility *attrib visibility))
+                (unless (eq? show 'same)
+                  (lepton_text_object_set_show *attrib show)))
               (loop (cdr attribs)))))))
 
 
