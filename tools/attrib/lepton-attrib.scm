@@ -402,13 +402,13 @@ failure."
 ;;; replaces its value with the *NEW_ATTRIB_VALUE.  The arguments
 ;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
 ;;; properties of the found attribute.
-(define* (replace-attrib *object
-                         *new-attrib-name
-                         *new-attrib-value
+(define* (replace-attrib object
+                         new-attrib-name
+                         new-attrib-value
                          #:key
                          (visibility 'same)
                          (show 'same))
-  (let loop ((attribs (object-attribs (pointer->object *object))))
+  (let loop ((attribs (object-attribs object)))
     (if (null? attribs)
         (begin
           ;; If we get here, it's because we have failed to find
@@ -417,14 +417,13 @@ failure."
           (format (current-error-port) "replace-attrib: ")
           (format (current-error-port)
                   (G_ "Failed to find the attrib ~S on the component.\n")
-                  (pointer->string *new-attrib-name))
+                  new-attrib-name)
           (exit -1))
         (let* ((attrib (car attribs))
                (*attrib (object->pointer attrib)))
-          (if (string= (attrib-name attrib)
-                       (pointer->string *new-attrib-name))
+          (if (string= (attrib-name attrib) new-attrib-name)
               (begin
-                (set-attrib-value! attrib (pointer->string *new-attrib-value))
+                (set-attrib-value! attrib new-attrib-value)
                 (unless (eq? visibility 'same)
                   (lepton_text_object_set_visibility *attrib visibility))
                 (unless (eq? show 'same)
@@ -764,9 +763,9 @@ failure."
                      new-attrib-value
                      (not (string-null? new-attrib-value)))
                 ;; simply write new attrib into place of old one.
-                (replace-attrib *object
-                                *new-attrib-name
-                                (string->pointer new-attrib-value)
+                (replace-attrib (pointer->object *object)
+                                new-attrib-name
+                                new-attrib-value
                                 #:visibility visibility
                                 #:show show-name-value)
 
@@ -1018,9 +1017,9 @@ failure."
                  new-attrib-value
                  (not (string-null? new-attrib-value)))
             ;; Simply write new attrib into place of old one.
-            (replace-attrib *pin
-                            (string->pointer new-attrib-name)
-                            (string->pointer new-attrib-value))
+            (replace-attrib (pointer->object *pin)
+                            new-attrib-name
+                            new-attrib-value)
             ;; Four cases to consider: Case 2: old attrib exists, new one
             ;; doesn't.
             (if (and (not (null-pointer? *old-attrib-value))
