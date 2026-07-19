@@ -425,7 +425,7 @@ failure."
               (begin
                 (set-attrib-value! attrib new-attrib-value)
                 (unless (eq? visibility 'same)
-                  (lepton_text_object_set_visibility *attrib visibility))
+                  (set-text-visibility! attrib visibility))
                 (unless (eq? show 'same)
                   (lepton_text_object_set_show *attrib show)))
               (loop (cdr attribs)))))))
@@ -766,7 +766,7 @@ failure."
                 (replace-attrib (pointer->object *object)
                                 new-attrib-name
                                 new-attrib-value
-                                #:visibility visibility
+                                #:visibility (visibility->symbol visibility)
                                 #:show show-name-value)
 
                 ;; Four cases to consider: Case 2.
