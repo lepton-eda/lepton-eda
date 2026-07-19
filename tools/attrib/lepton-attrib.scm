@@ -424,13 +424,8 @@ failure."
                (old-attrib-name (attrib-name attrib)))
           (if (string= old-attrib-name
                        (pointer->string *new-attrib-name))
-              ;; Create attrib=value text string.
-              (let ((*new-attrib-text
-                     (string->pointer
-                      (string-append (pointer->string *new-attrib-name)
-                                     "="
-                                     (pointer->string *new-attrib-value)))))
-                (lepton_text_object_set_string *attrib *new-attrib-text)
+              (begin
+                (set-attrib-value! attrib (pointer->string *new-attrib-value))
                 (unless (eq? visibility 'same)
                   (lepton_text_object_set_visibility *attrib visibility))
                 (unless (eq? show 'same)
