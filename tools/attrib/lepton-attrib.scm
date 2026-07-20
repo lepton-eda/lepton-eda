@@ -439,23 +439,18 @@ failure."
         ;; attrib on the component.  This is an error condition.
         (error-attrib-not-found name)
 
-        (let ((*attrib (object->pointer (car attribs))))
-          (if (and (true? (lepton_object_is_text *attrib))
-                   (not (null-pointer? (lepton_object_get_text *attrib))))
-              ;; Found an attribute.
-              (let ((old-attrib-name
-                     (str-attrib-name
-                      (lepton_text_object_get_string *attrib))))
-                (if (and old-attrib-name
-                         (string= old-attrib-name name))
-                    ;; We've found the attrib.  Delete it and then
-                    ;; return.
-                    (let ((*active-page
-                           (lepton_toplevel_get_page_current (*current-toplevel))))
-                      (lepton_object_delete *attrib)
-                      (lepton_page_set_changed *active-page 1))
-                    (loop (cdr attribs))))
-
+        (let* ((*attrib (object->pointer (car attribs)))
+               (old-attrib-name
+                 (str-attrib-name
+                  (lepton_text_object_get_string *attrib))))
+          (if (and old-attrib-name
+                   (string= old-attrib-name name))
+              ;; We've found the attrib.  Delete it and then
+              ;; return.
+              (let ((*active-page
+                     (lepton_toplevel_get_page_current (*current-toplevel))))
+                (lepton_object_delete *attrib)
+                (lepton_page_set_changed *active-page 1))
               (loop (cdr attribs)))))))
 
 
