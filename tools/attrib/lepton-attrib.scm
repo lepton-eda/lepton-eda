@@ -433,16 +433,13 @@ failure."
 
 ;; Remove an attribute with NAME from OBJECT.
 (define (remove-attrib object name)
-  (let loop ((*attrib-ls
-              (glist->list (lepton_object_get_attribs
-                            (object->pointer object))
-                           identity)))
-    (if (null? *attrib-ls)
+  (let loop ((attribs (object-attribs object)))
+    (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
         ;; attrib on the component.  This is an error condition.
         (error-attrib-not-found name)
 
-        (let ((*attrib (car *attrib-ls)))
+        (let ((*attrib (object->pointer (car attribs))))
           (if (and (true? (lepton_object_is_text *attrib))
                    (not (null-pointer? (lepton_object_get_text *attrib))))
               ;; Found an attribute.
@@ -457,9 +454,9 @@ failure."
                            (lepton_toplevel_get_page_current (*current-toplevel))))
                       (lepton_object_delete *attrib)
                       (lepton_page_set_changed *active-page 1))
-                    (loop (cdr *attrib-ls))))
+                    (loop (cdr attribs))))
 
-              (loop (cdr *attrib-ls)))))))
+              (loop (cdr attribs)))))))
 
 
 ;;; Returns the index of the string *STR in the list *LS.
