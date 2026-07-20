@@ -411,6 +411,9 @@ failure."
                          #:key
                          (visibility 'same)
                          (show 'same))
+  (define (name-matches? attrib)
+    (string= (attrib-name attrib) name))
+
   (define (update-attrib! attrib)
     (set-attrib-value! attrib value)
     (unless (eq? visibility 'same)
@@ -427,7 +430,7 @@ failure."
         (error-attrib-not-found name)
 
         (let ((attrib (car attribs)))
-          (if (string= (attrib-name attrib) name)
+          (if (name-matches? attrib)
               (update-attrib! attrib)
               (loop (cdr attribs)))))))
 
