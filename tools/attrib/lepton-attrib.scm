@@ -442,18 +442,14 @@ failure."
       (detach-attribs! component attrib)
       (page-remove! page attrib)))
 
-  (let loop ((attribs (object-attribs object)))
-    (if (null? attribs)
-        ;; If we get here, it's because we have failed to find the
-        ;; attrib on the component.  This is an error condition.
-        (error-attrib-not-found name)
+  (define attrib (find name-matches? (object-attribs object)))
 
-        (let ((attrib (car attribs)))
-          (if (name-matches? attrib)
-              ;; We've found the attrib.  Delete it and then
-              ;; return.
-              (remove-attrib! attrib)
-              (loop (cdr attribs)))))))
+  (if attrib
+      ;; Found the attrib.  Delete it and then return.
+      (remove-attrib! attrib)
+      ;; Failed to find the attrib on the component.  This is an
+      ;; error condition.
+      (error-attrib-not-found name)))
 
 
 ;;; Returns the index of the string *STR in the list *LS.
