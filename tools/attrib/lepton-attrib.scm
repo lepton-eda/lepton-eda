@@ -440,16 +440,15 @@ failure."
         (error-attrib-not-found name)
 
         (let* ((attrib (car attribs))
-               (*attrib (object->pointer attrib))
                (old-attrib-name (attrib-name attrib)))
           (if (and old-attrib-name
                    (string= old-attrib-name name))
               ;; We've found the attrib.  Delete it and then
               ;; return.
-              (let ((*active-page
-                     (lepton_toplevel_get_page_current (*current-toplevel))))
-                (lepton_object_delete *attrib)
-                (lepton_page_set_changed *active-page 1))
+              (let ((page (object-page attrib))
+                    (component (attrib-attachment attrib)))
+                (detach-attribs! component attrib)
+                (page-remove! page attrib))
               (loop (cdr attribs)))))))
 
 
