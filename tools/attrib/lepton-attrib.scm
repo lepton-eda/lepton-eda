@@ -423,16 +423,13 @@ failure."
        attrib
        (show-name-value->symbol show))))
 
-  (let loop ((attribs (object-attribs object)))
-    (if (null? attribs)
-        ;; If we get here, it's because we have failed to find the
-        ;; attrib on the component.  This is an error condition.
-        (error-attrib-not-found name)
+  (define attrib (find name-matches? (object-attribs object)))
 
-        (let ((attrib (car attribs)))
-          (if (name-matches? attrib)
-              (update-attrib! attrib)
-              (loop (cdr attribs)))))))
+  (if attrib
+      (update-attrib! attrib)
+      ;; Failed to find the attrib on the component.  This is an
+      ;; error condition.
+      (error-attrib-not-found name)))
 
 
 ;; Remove an attribute with NAME from OBJECT.
