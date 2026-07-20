@@ -436,6 +436,12 @@ failure."
   (define (name-matches? attrib)
     (string= (attrib-name attrib) name))
 
+  (define (remove-attrib! attrib)
+    (let ((page (object-page attrib))
+          (component (attrib-attachment attrib)))
+      (detach-attribs! component attrib)
+      (page-remove! page attrib)))
+
   (let loop ((attribs (object-attribs object)))
     (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
@@ -446,10 +452,7 @@ failure."
           (if (name-matches? attrib)
               ;; We've found the attrib.  Delete it and then
               ;; return.
-              (let ((page (object-page attrib))
-                    (component (attrib-attachment attrib)))
-                (detach-attribs! component attrib)
-                (page-remove! page attrib))
+              (remove-attrib! attrib)
               (loop (cdr attribs)))))))
 
 
