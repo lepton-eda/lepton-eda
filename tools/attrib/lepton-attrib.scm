@@ -439,10 +439,9 @@ failure."
         ;; attrib on the component.  This is an error condition.
         (error-attrib-not-found name)
 
-        (let* ((*attrib (object->pointer (car attribs)))
-               (old-attrib-name
-                 (str-attrib-name
-                  (lepton_text_object_get_string *attrib))))
+        (let* ((attrib (car attribs))
+               (*attrib (object->pointer attrib))
+               (old-attrib-name (attrib-name attrib)))
           (if (and old-attrib-name
                    (string= old-attrib-name name))
               ;; We've found the attrib.  Delete it and then
