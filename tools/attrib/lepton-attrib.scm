@@ -407,13 +407,13 @@ failure."
 ;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
 ;;; properties of the found attribute.
 (define* (replace-attrib object
-                         new-attrib-name
-                         new-attrib-value
+                         name
+                         value
                          #:key
                          (visibility 'same)
                          (show 'same))
   (define (update-attrib! attrib)
-    (set-attrib-value! attrib new-attrib-value)
+    (set-attrib-value! attrib value)
     (unless (eq? visibility 'same)
       (set-text-visibility! attrib visibility))
     (unless (eq? show 'same)
@@ -425,10 +425,10 @@ failure."
     (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
         ;; attrib on the component.  This is an error condition.
-        (error-attrib-not-found new-attrib-name)
+        (error-attrib-not-found name)
 
         (let ((attrib (car attribs)))
-          (if (string= (attrib-name attrib) new-attrib-name)
+          (if (string= (attrib-name attrib) name)
               (update-attrib! attrib)
               (loop (cdr attribs)))))))
 
