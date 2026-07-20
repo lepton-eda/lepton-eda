@@ -412,6 +412,15 @@ failure."
                          #:key
                          (visibility 'same)
                          (show 'same))
+  (define (update-attrib! attrib)
+    (set-attrib-value! attrib new-attrib-value)
+    (unless (eq? visibility 'same)
+      (set-text-visibility! attrib visibility))
+    (unless (eq? show 'same)
+      (set-text-attribute-mode!
+       attrib
+       (show-name-value->symbol show))))
+
   (let loop ((attribs (object-attribs object)))
     (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
@@ -420,14 +429,7 @@ failure."
 
         (let ((attrib (car attribs)))
           (if (string= (attrib-name attrib) new-attrib-name)
-              (begin
-                (set-attrib-value! attrib new-attrib-value)
-                (unless (eq? visibility 'same)
-                  (set-text-visibility! attrib visibility))
-                (unless (eq? show 'same)
-                  (set-text-attribute-mode!
-                   attrib
-                   (show-name-value->symbol show))))
+              (update-attrib! attrib)
               (loop (cdr attribs)))))))
 
 
