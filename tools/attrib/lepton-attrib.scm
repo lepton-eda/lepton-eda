@@ -433,16 +433,17 @@ failure."
 
 ;; Remove an attribute with NAME from OBJECT.
 (define (remove-attrib object name)
+  (define (name-matches? attrib)
+    (string= (attrib-name attrib) name))
+
   (let loop ((attribs (object-attribs object)))
     (if (null? attribs)
         ;; If we get here, it's because we have failed to find the
         ;; attrib on the component.  This is an error condition.
         (error-attrib-not-found name)
 
-        (let* ((attrib (car attribs))
-               (old-attrib-name (attrib-name attrib)))
-          (if (and old-attrib-name
-                   (string= old-attrib-name name))
+        (let ((attrib (car attribs)))
+          (if (name-matches? attrib)
               ;; We've found the attrib.  Delete it and then
               ;; return.
               (let ((page (object-page attrib))
