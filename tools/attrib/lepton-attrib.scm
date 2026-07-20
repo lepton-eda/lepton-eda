@@ -402,10 +402,9 @@ failure."
   (error "Failed to find the attrib ~S on the component." name))
 
 
-;;; Searches for the instance of *NEW_ATTRIB_NAME on *OBJECT, and
-;;; replaces its value with the *NEW_ATTRIB_VALUE.  The arguments
-;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
-;;; properties of the found attribute.
+;;; Searches for the instance of NAME on OBJECT, and replaces its
+;;; value with VALUE.  The optional arguments VISIBILITY and SHOW
+;;; set the corresponding properties of the found attribute.
 (define* (replace-attrib object
                          name
                          value
