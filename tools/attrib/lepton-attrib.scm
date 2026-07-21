@@ -1382,7 +1382,8 @@ failure."
      ((= response GTK_RESPONSE_OK)
       (let ((*entry-text
              (g_strdup (gtk_entry_get_text *attrib-entry))))
-        (unless (null-pointer? *entry-text)
+        (unless (or (null-pointer? *entry-text)
+                    (string-null? (pointer->string *entry-text)))
           (add-attrib-column *entry-text)
           (g_free *entry-text))))
      (else #f)))
