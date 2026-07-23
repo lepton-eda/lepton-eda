@@ -1295,8 +1295,8 @@ failure."
   *table)
 
 
-;;; Adds a new attribute to the component sheet.
-(define (add-attrib-column *name)
+;;; Adds a new attribute NAME to the component sheet.
+(define (add-attrib-column name)
   (define *sheet-data (attrib_get_sheet_data))
 
   ;; Only component sheet is supported yet.
@@ -1305,7 +1305,8 @@ failure."
     ;; the new attrib.  However, that is difficult.  Therefore, I
     ;; will just destroy the old table and recreate it for now.
     (let ((old-component-attrib-count
-           (attrib_sheet_data_get_component_attrib_count *sheet-data)))
+           (attrib_sheet_data_get_component_attrib_count *sheet-data))
+          (*name (string->pointer name)))
 
       (s_string_list_add_item
        (attrib_sheet_data_get_component_attrib_list *sheet-data)
@@ -1380,12 +1381,10 @@ failure."
   (let ((response (gtk_dialog_run *dialog)))
     (cond
      ((= response GTK_RESPONSE_OK)
-      (let ((*entry-text
-             (g_strdup (gtk_entry_get_text *attrib-entry))))
+      (let ((*entry-text (gtk_entry_get_text *attrib-entry)))
         (unless (or (null-pointer? *entry-text)
                     (string-null? (pointer->string *entry-text)))
-          (add-attrib-column *entry-text)
-          (g_free *entry-text))))
+          (add-attrib-column (pointer->string *entry-text)))))
      (else #f)))
 
   (gtk_widget_destroy *dialog))
