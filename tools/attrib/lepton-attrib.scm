@@ -1378,22 +1378,23 @@ failure."
 
   (gtk_widget_show_all *dialog)
 
-  (let ((response (gtk_dialog_run *dialog)))
-    (cond
-     ((= response GTK_RESPONSE_OK)
-      (let ((*entry-text (gtk_entry_get_text *attrib-entry)))
-        (unless (or (null-pointer? *entry-text)
-                    (string-null? (pointer->string *entry-text)))
-          (add-attrib-column (pointer->string *entry-text)))))
-     (else #f)))
+  (let ((result
+         (and (= (gtk_dialog_run *dialog) GTK_RESPONSE_OK)
+              (let ((*entry-text (gtk_entry_get_text *attrib-entry)))
+                (and (not (null-pointer? *entry-text))
+                     (let ((entry-text (pointer->string *entry-text)))
+                       (and (not (string-null? entry-text))
+                            entry-text)))))))
 
-  (gtk_widget_destroy *dialog))
+    (gtk_widget_destroy *dialog)
+
+    result))
 
 
 (define (add-attrib)
   ;; Check that we are on components page.
   (when (zero? (notebook-current-page-id))
-    (add-attrib-dialog)))
+    (and=> (add-attrib-dialog) add-attrib-column)))
 
 
 (define (callback-edit-add-attrib *action *parameter *data)
