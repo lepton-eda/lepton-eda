@@ -1,4 +1,4 @@
-;;; Lepton EDA Schematic Capture
+;;; Lepton EDA attribute editor
 ;;; Scheme API
 ;;; Copyright (C) 2026 Lepton EDA Contributors
 ;;;
