@@ -1339,6 +1339,14 @@ failure."
          (attrib_sheet_data_get_component_attrib_list *sheet-data))))))
 
 
+(define (gtk-entry-text *entry)
+  (let ((*entry-text (gtk_entry_get_text *entry)))
+    (and (not (null-pointer? *entry-text))
+         (let ((entry-text (pointer->string *entry-text)))
+           (and (not (string-null? entry-text))
+                entry-text)))))
+
+
 ;;; Runs the Add attribute dialog.  It asks for the name of the
 ;;; attrib column to insert and then inserts the column.
 (define (add-attrib-dialog)
@@ -1380,11 +1388,7 @@ failure."
 
   (let ((result
          (and (= (gtk_dialog_run *dialog) GTK_RESPONSE_OK)
-              (let ((*entry-text (gtk_entry_get_text *attrib-entry)))
-                (and (not (null-pointer? *entry-text))
-                     (let ((entry-text (pointer->string *entry-text)))
-                       (and (not (string-null? entry-text))
-                            entry-text)))))))
+              (gtk-entry-text *attrib-entry))))
 
     (gtk_widget_destroy *dialog)
 
