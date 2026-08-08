@@ -1963,8 +1963,9 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
-  (set-current-cell-text!
-   (gtk_sheet_get_entry_text *sheet))
+  (define *entry-text (gtk_sheet_get_entry_text *sheet))
+  (set-current-cell-text! *entry-text)
+  (g_free *entry-text)
   FALSE)
 
 (define *callback-gtksheet-activate
