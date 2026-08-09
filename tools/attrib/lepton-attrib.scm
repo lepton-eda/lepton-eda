@@ -2805,7 +2805,7 @@ Please check your design.")))
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
                            (gslist->list
-                            (x_fileselect_open (attrib_get_window))
+                            (x_fileselect_open %null-pointer)
                             pointer->string 'free)
                            readable-files)))
             (if (null? files)
