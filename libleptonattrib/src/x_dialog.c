@@ -59,48 +59,6 @@
 #include "../include/gettext.h"
 
 
-/*! \brief Unsaved data dialog
- *
- * This is the "Unsaved data -- are you sure you want to quit?" dialog
- *         box which is thrown up before the user quits.
- */
-GtkWidget*
-x_dialog_unsaved_data (GtkWidget *window)
-{
-  GtkWidget *dialog;
-  gchar *str;
-
-  const gchar* tmp1 = _("Save the changes before closing?");
-  str = g_strconcat ("<big><b>", tmp1, "</b></big>", NULL);
-
-  const gchar* tmp2 = _("If you don't save, all your changes will be permanently lost.");
-  str = g_strconcat (str, "\n\n", tmp2, NULL);
-
-  dialog = gtk_message_dialog_new (GTK_WINDOW (window),
-                                   (GtkDialogFlags) (GTK_DIALOG_MODAL |
-                                                     GTK_DIALOG_DESTROY_WITH_PARENT),
-                                     GTK_MESSAGE_WARNING,
-                                   GTK_BUTTONS_NONE, NULL);
-  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), str);
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("Close without saving"), GTK_RESPONSE_NO,
-                          _("_Cancel"),          GTK_RESPONSE_CANCEL,
-                          _("_Save"),            GTK_RESPONSE_YES,
-                          NULL);
-  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-attrib");
-
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_YES,
-                                          GTK_RESPONSE_NO,
-                                          GTK_RESPONSE_CANCEL,
-                                          -1);
-#endif
-
-  return dialog;
-}
-
 /*! \brief Unimplemented feature dialog
  *
  * This function informs the user that he has chosen an unimplemented

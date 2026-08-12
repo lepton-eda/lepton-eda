@@ -1188,9 +1188,39 @@ failure."
   (exit return-code))
 
 
+;;; Creates a new Unsaved data dialog in *WINDOW and returns it.
+;;; It is thrown up before the user quits if there are unsaved
+;;; project data.
+(define (make-unsaved-data-dialog *window)
+  (define msg1 (G_ "Save the changes before closing?"))
+  (define msg2
+    (G_ "If you don't save all your changes will be permanently lost."))
+  (define markup
+    (string-append "<big><b>" msg1 "</b></big>" "\n\n" msg2))
+
+  (define *dialog
+    (gtk_message_dialog_new *window
+                            (logior GTK_DIALOG_MODAL
+                                    GTK_DIALOG_DESTROY_WITH_PARENT)
+                            (symbol->gtk-message-type 'warning)
+                            (symbol->gtk-buttons-type 'none)
+                            %null-pointer))
+  (gtk_message_dialog_set_markup *dialog (string->pointer markup))
+  (gtk_dialog_add_buttons *dialog
+                          (string->pointer (G_ "Close without saving"))
+                          GTK_RESPONSE_NO
+                          (string->pointer (G_ "_Cancel"))
+                          GTK_RESPONSE_CANCEL
+                          (string->pointer (G_ "_Save"))
+                          GTK_RESPONSE_YES
+                          %null-pointer)
+  (gtk_window_set_title *dialog (string->pointer "lepton-attrib"))
+
+  *dialog)
+
 
 (define (unsaved-data-dialog *window)
-  (define *dialog (x_dialog_unsaved_data *window))
+  (define *dialog (make-unsaved-data-dialog *window))
 
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
 
@@ -1250,6 +1280,13 @@ failure."
                       (list '* '* int '* int '*)))))
     (force proc)))
 
+(define gtk_dialog_add_buttons_8
+  (let ((proc (delay (pointer->procedure
+                      '*
+                      (dynamic-func "gtk_dialog_add_buttons" libgtk)
+                      (list '* '* int '* int '* int '*)))))
+    (force proc)))
+
 (define gtk_dialog_add_buttons
   (case-lambda
     ((*dialog *button-text1 response1 *button-text2 response2 end)
@@ -1258,6 +1295,15 @@ failure."
                                response1
                                *button-text2
                                response2
+                               %null-pointer))
+    ((*dialog *button-text1 response1 *button-text2 response2 *button-text3 response3 end)
+     (gtk_dialog_add_buttons_8 *dialog
+                               *button-text1
+                               response1
+                               *button-text2
+                               response2
+                               *button-text3
+                               response3
                                %null-pointer))))
 
 (define gtk_dialog_new_with_buttons_8
