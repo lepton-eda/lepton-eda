@@ -1142,21 +1142,16 @@ failure."
         (when (and filename
                    (or (not (file-exists? filename))
                        (confirm-overwrite-dialog filename)))
-          ;; Check that we are on the component page.
-          (if (zero? (notebook-current-page-id))
-              ;; Only export the component table.
-              (catch 'system-error
-                (lambda ()
-                  (with-output-to-file filename export-components))
-                (lambda (key subr message args rest)
-                  (let ((msg (format #f
-                                     (G_ "Failed to save file: ~?\n")
-                                     message
-                                     args)))
-                    (log! 'warning msg)
-                    (export-error-dialog msg))))
-
-              (x_dialog_unimplemented_feature)))))
+          (catch 'system-error
+            (lambda ()
+              (with-output-to-file filename export-components))
+            (lambda (key subr message args rest)
+              (let ((msg (format #f
+                                 (G_ "Failed to save file: ~?\n")
+                                 message
+                                 args)))
+                (log! 'warning msg)
+                (export-error-dialog msg)))))))
      (else #f)))
 
   (gtk_widget_destroy *dialog))
