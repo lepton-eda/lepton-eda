@@ -71,7 +71,7 @@ x_dialog_unsaved_data (GtkWidget *window)
   gchar *str;
 
   const gchar* tmp1 = _("Save the changes before closing?");
-  str = g_strconcat (N_("<big><b>"), tmp1, N_("</b></big>"), NULL);
+  str = g_strconcat ("<big><b>", tmp1, "</b></big>", NULL);
 
   const gchar* tmp2 = _("If you don't save, all your changes will be permanently lost.");
   str = g_strconcat (str, "\n\n", tmp2, NULL);
