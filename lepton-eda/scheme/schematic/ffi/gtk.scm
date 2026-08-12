@@ -176,8 +176,6 @@
             gtk_window_present
             gtk_window_resize
 
-            GTK_DIALOG_DESTROY_WITH_PARENT
-
             ;; GDK
             GdkModifierType
 
