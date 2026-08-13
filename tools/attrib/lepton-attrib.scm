@@ -1112,8 +1112,33 @@ failure."
   (gtk_notebook_get_current_page (attrib_get_notebook)))
 
 
-(define (confirm-overwrite-dialog *filename)
-  (true? (x_dialog_confirm_overwrite *filename)))
+;;; Opens the Overwrite confirmation dialog if the file FILENAME
+;;; exists.  Returns #t if the user pressed 'Yes' to overwrite the
+;;; file, or if there is no file with that name.
+(define (confirm-overwrite-dialog filename)
+  (or (not (file-exists? filename))
+      (let ((*dialog
+             (gtk_message_dialog_new
+              %null-pointer
+              (logior GTK_DIALOG_MODAL
+                      GTK_DIALOG_DESTROY_WITH_PARENT)
+              (symbol->gtk-message-type 'question)
+              (symbol->gtk-buttons-type 'yes-no)
+              (string->pointer
+               (format #f
+                       (G_ "The selected file ~S already exists.
+
+Would you like to overwrite it?")
+                       filename)))))
+
+        (gtk_window_set_title *dialog
+                              (string->pointer (G_ "Overwrite file?")))
+        (gtk_dialog_set_default_response *dialog GTK_RESPONSE_NO)
+
+        (let ((result (gtk_dialog_run *dialog)))
+          (gtk_widget_destroy *dialog)
+
+          (eq? result GTK_RESPONSE_YES)))))
 
 
 ;;; Runs the Export file dialog.  It asks for the filename for the
@@ -1137,7 +1162,7 @@ failure."
      ((= response GTK_RESPONSE_ACCEPT)
       (let ((*filename (gtk_file_chooser_get_filename *dialog)))
         (unless (null-pointer? *filename)
-          (when (confirm-overwrite-dialog *filename)
+          (when (confirm-overwrite-dialog (pointer->string *filename))
             ;; Check that we are on the component page.
             (if (zero? (notebook-current-page-id))
                 ;; Only export the component table.

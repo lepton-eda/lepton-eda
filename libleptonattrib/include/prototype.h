@@ -300,9 +300,6 @@ u_basic_breakup_string (char *string,
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 
-gboolean
-x_dialog_confirm_overwrite (const gchar* fname);
-
 /* ------------- x_gtksheet.c ------------- */
 void x_gtksheet_set_saved();
 void x_gtksheet_init();

@@ -109,35 +109,3 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 
   exit(GPOINTER_TO_INT(return_code));
 }
-
-
-/*! \brief: If file \a fname exists, open confirmation dialog.
- *
- *  \return  Is it OK to overwrite file \a fname.
- */
-gboolean
-x_dialog_confirm_overwrite (const gchar* fname)
-{
-  if (!g_file_test (fname, G_FILE_TEST_EXISTS))
-  {
-    return TRUE;
-  }
-
-  GtkWidget* dlg = gtk_message_dialog_new(
-    NULL,
-    (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-    GTK_MESSAGE_QUESTION,
-    GTK_BUTTONS_YES_NO,
-    _("The selected file `%1$s' already exists.\n\n"
-      "Would you like to overwrite it?"),
-    fname);
-
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Overwrite file?"));
-  gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_NO);
-
-  gint res = gtk_dialog_run (GTK_DIALOG (dlg));
-  gtk_widget_destroy (dlg);
-
-  return res == GTK_RESPONSE_YES;
-
-}
