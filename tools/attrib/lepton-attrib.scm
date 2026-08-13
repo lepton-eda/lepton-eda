@@ -1112,6 +1112,10 @@ failure."
   (gtk_notebook_get_current_page (attrib_get_notebook)))
 
 
+(define (confirm-overwrite-dialog *filename)
+  (true? (x_dialog_confirm_overwrite *filename)))
+
+
 ;;; Runs the Export file dialog.  It asks for the filename for the
 ;;; CSV export file and then does the exporting.
 (define (export-file-dialog)
@@ -1133,7 +1137,7 @@ failure."
      ((= response GTK_RESPONSE_ACCEPT)
       (let ((*filename (gtk_file_chooser_get_filename *dialog)))
         (unless (null-pointer? *filename)
-          (when (true? (x_dialog_confirm_overwrite *filename))
+          (when (confirm-overwrite-dialog *filename)
             ;; Check that we are on the component page.
             (if (zero? (notebook-current-page-id))
                 ;; Only export the component table.
