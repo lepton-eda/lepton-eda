@@ -1779,7 +1779,7 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
   (gtk_about_dialog_set_program_name
    *dialog
-   (string->pointer "lepton-attrib"))
+   (string->pointer %program-basename))
 
   (gtk_about_dialog_set_comments
    *dialog
