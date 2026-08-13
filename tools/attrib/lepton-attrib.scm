@@ -1801,7 +1801,7 @@ lepton-attrib is Lepton's successor of gEDA gattrib")))
     (string->pointer
      (G_ "Copyright © 2003-2006 Stuart D. Brorson
 Copyright © 2003-2016 gEDA Contributors
-Copyright © 2017-2022 Lepton EDA Contributors")))
+Copyright © 2017-2026 Lepton EDA Contributors")))
 
    (gtk_about_dialog_set_license
     *dialog
