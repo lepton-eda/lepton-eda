@@ -302,18 +302,6 @@ x_dialog_unsaved_data ();
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 
-#ifdef ENABLE_GTK3
-void
-x_dialog_about_dialog (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data);
-#else
-void
-x_dialog_about_dialog (gpointer action,
-                       gpointer parameter,
-                       gpointer user_data);
-#endif
-
 gboolean
 x_dialog_confirm_overwrite (const gchar* fname);
 

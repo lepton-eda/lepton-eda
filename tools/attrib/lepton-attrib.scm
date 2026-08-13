@@ -1772,8 +1772,56 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 (define *callback-visibility-name-value
   (procedure->pointer void callback-visibility-name-value '(* * *)))
 
+
+;;; Runs the About dialog.
+(define (about-dialog)
+  (define *dialog (gtk_about_dialog_new))
+
+  (gtk_about_dialog_set_program_name
+   *dialog
+   (string->pointer "lepton-attrib"))
+
+  (gtk_about_dialog_set_comments
+   *dialog
+   (string->pointer
+    (G_ "Lepton Electronic Design Automation
+
+lepton-attrib is Lepton's successor of gEDA gattrib")))
+
+   (let ((version-string
+          (format #f
+                  "~A (git: ~A)"
+                  (lepton-version-ref 'dotted)
+                  (lepton-version-ref 'git7))))
+     (gtk_about_dialog_set_version *dialog
+                                   (string->pointer version-string)))
+
+   (gtk_about_dialog_set_copyright
+    *dialog
+    (string->pointer
+     (G_ "Copyright © 2003-2006 Stuart D. Brorson
+Copyright © 2003-2016 gEDA Contributors
+Copyright © 2017-2022 Lepton EDA Contributors")))
+
+   (gtk_about_dialog_set_license
+    *dialog
+    (string->pointer
+     (G_ "Lepton EDA is freely distributable under the
+GNU Public License (GPL) version 2.0 or (at your option) any later version.
+See the COPYING file for the full text of the license.")))
+
+   (gtk_about_dialog_set_website
+    *dialog
+    (string->pointer "http://github.com/lepton-eda/lepton-eda"))
+
+   (gtk_widget_show_all *dialog)
+   (gtk_dialog_run *dialog)
+
+   (gtk_widget_destroy *dialog))
+
+
 (define (callback-help-about *action *parameter *data)
-  (x_dialog_about_dialog *action *parameter *data))
+  (about-dialog))
 (define *callback-help-about
   (procedure->pointer void callback-help-about '(* * *)))
 

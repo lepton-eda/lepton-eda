@@ -153,53 +153,6 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 }
 
 
-/*! \brief The About dialog */
-#ifdef ENABLE_GTK3
-void
-x_dialog_about_dialog (GSimpleAction *action,
-                       GVariant *parameter,
-                       gpointer user_data)
-#else
-void
-x_dialog_about_dialog (gpointer action,
-                       gpointer parameter,
-                       gpointer user_data)
-#endif
-{
-  GtkWidget* dlg = gtk_about_dialog_new();
-  GtkAboutDialog* adlg = GTK_ABOUT_DIALOG (dlg);
-
-  gtk_about_dialog_set_program_name (adlg, "lepton-attrib");
-
-  gtk_about_dialog_set_comments (adlg,
-    _("Lepton Electronic Design Automation\n\n"
-      "lepton-attrib is Lepton's successor of gEDA gattrib"));
-
-  gchar* version_string = g_strdup_printf (_("%s (git: %.7s)"),
-                                           PACKAGE_DOTTED_VERSION,
-                                           PACKAGE_GIT_COMMIT);
-  gtk_about_dialog_set_version (adlg, version_string);
-
-  gtk_about_dialog_set_copyright (adlg,
-    _("Copyright © 2003-2006 Stuart D. Brorson\n"
-      "Copyright © 2003-2016 gEDA Contributors\n"
-      "Copyright © 2017-2022 Lepton EDA Contributors"));
-
-  gtk_about_dialog_set_license (adlg,
-    _("Lepton EDA is freely distributable under the\n"
-    "GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
-    "See the COPYING file for the full text of the license."));
-
-  gtk_about_dialog_set_website (adlg, "http://github.com/lepton-eda/lepton-eda");
-
-  gtk_widget_show_all (dlg);
-  gtk_dialog_run (GTK_DIALOG (dlg));
-
-  gtk_widget_destroy (dlg);
-  g_free (version_string);
-}
-
-
 /*! \brief: If file \a fname exists, open confirmation dialog.
  *
  *  \return  Is it OK to overwrite file \a fname.
