@@ -2770,6 +2770,10 @@ Please check your design.")))
   (gtk_widget_show_all *window-widget))
 
 
+(define (file-chooser-dialog *window)
+  (x_fileselect_open *window))
+
+
 ;;; Init logging.
 (init-log "attrib")
 (display-lepton-version #:print-name #t #:log #t)
@@ -2805,7 +2809,7 @@ Please check your design.")))
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
                            (gslist->list
-                            (x_fileselect_open %null-pointer)
+                            (file-chooser-dialog %null-pointer)
                             pointer->string 'free)
                            readable-files)))
             (if (null? files)
