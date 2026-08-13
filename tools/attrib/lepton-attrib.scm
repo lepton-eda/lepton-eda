@@ -1784,9 +1784,7 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (gtk_about_dialog_set_comments
    *dialog
    (string->pointer
-    (G_ "Lepton Electronic Design Automation
-
-lepton-attrib is Lepton's successor of gEDA gattrib")))
+    (G_ "Lepton Electronic Design Automation")))
 
    (let ((version-string
           (format #f
