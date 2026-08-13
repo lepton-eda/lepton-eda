@@ -1812,7 +1812,7 @@ See the COPYING file for the full text of the license.")))
 
    (gtk_about_dialog_set_website
     *dialog
-    (string->pointer "http://github.com/lepton-eda/lepton-eda"))
+    (string->pointer (lepton-version-ref 'url)))
 
    (gtk_widget_show_all *dialog)
    (gtk_dialog_run *dialog)
