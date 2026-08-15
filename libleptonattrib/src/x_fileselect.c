@@ -125,10 +125,8 @@ x_fileselect_open (GtkWidget *window,
 {
   GSList *filenames = NULL;
 
-  g_object_set (dialog,
-                /* GtkFileChooser */
-                "select-multiple", TRUE,
-                NULL);
+  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
+
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   gtk_widget_show (dialog);
