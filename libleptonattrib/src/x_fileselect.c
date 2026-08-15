@@ -125,14 +125,6 @@ x_fileselect_open (GtkWidget *window,
 {
   GSList *filenames = NULL;
 
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_ACCEPT,
-                                          GTK_RESPONSE_CANCEL,
-                                          -1);
-#endif
-
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
