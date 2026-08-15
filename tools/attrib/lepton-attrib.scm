@@ -2771,7 +2771,16 @@ Please check your design.")))
 
 
 (define (file-chooser-dialog *window)
-  (x_fileselect_open *window))
+  (define *dialog
+    (gtk_file_chooser_dialog_new (string->pointer (G_ "Open..."))
+                                 *window
+                                 (symbol->gtk-file-chooser-action 'open)
+                                 (string->pointer (G_ "_Cancel"))
+                                 GTK_RESPONSE_CANCEL
+                                 (string->pointer (G_ "_Open"))
+                                 GTK_RESPONSE_ACCEPT
+                                 %null-pointer))
+  (x_fileselect_open *window *dialog))
 
 
 ;;; Init logging.

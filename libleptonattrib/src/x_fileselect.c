@@ -115,21 +115,15 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
  * user to select at least one file to load as a new page.
  *
  * \param window The main program window.
+ * \param dialog The dialog created beforehand.
  * \returns GSList* list of files to be opened, or NULL if the
  *          user cancelled the dialog
  */
 GSList *
-x_fileselect_open (GtkWidget *window)
+x_fileselect_open (GtkWidget *window,
+                   GtkWidget *dialog)
 {
-  GtkWidget *dialog;
   GSList *filenames = NULL;
-
-  dialog = gtk_file_chooser_dialog_new (_("Open..."),
-                                        GTK_WINDOW(window),
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                        _("_Open"),   GTK_RESPONSE_ACCEPT,
-                                        NULL);
 
 #ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */

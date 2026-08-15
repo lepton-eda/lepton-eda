@@ -203,7 +203,7 @@
 (define-lff verbose_print void '(*))
 
 ;;; x_fileselect.c
-(define-lff x_fileselect_open '* '(*))
+(define-lff x_fileselect_open '* '(* *))
 
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))
