@@ -52,8 +52,6 @@
             verbose_done
             verbose_print
 
-            x_fileselect_setup_filechooser_filters
-
             x_dialog_about_dialog
             x_dialog_confirm_overwrite
             x_dialog_fatal_error
@@ -201,9 +199,6 @@
 (define-lff u_basic_breakup_string '* (list '* int int))
 (define-lff verbose_done void '())
 (define-lff verbose_print void '(*))
-
-;;; x_fileselect.c
-(define-lff x_fileselect_setup_filechooser_filters void '(*))
 
 ;;; x_dialog.c
 (define-lff x_dialog_about_dialog void '(* * *))

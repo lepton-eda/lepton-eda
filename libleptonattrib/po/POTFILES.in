@@ -8,6 +8,5 @@ libleptonattrib/src/s_sheet_data.c
 libleptonattrib/src/s_string_list.c
 libleptonattrib/src/s_table.c
 libleptonattrib/src/x_dialog.c
-libleptonattrib/src/x_fileselect.c
 libleptonattrib/src/x_gtksheet.c
 libleptonattrib/src/x_window.c

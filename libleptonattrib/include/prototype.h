@@ -329,10 +329,6 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
 int x_gtksheet_get_min_col(GtkSheet *sheet);
 int x_gtksheet_get_max_col(GtkSheet *sheet);
 
-/* ------------- x_fileselect.c ------------- */
-void
-x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser);
-
 /* ------------- x_window.c ------------- */
 int
 attrib_run (gpointer activate_callback,

@@ -2770,6 +2770,35 @@ Please check your design.")))
   (gtk_widget_show_all *window-widget))
 
 
+;;; Sets up file filters for the File chooser dialog *FILE-CHOOSER.
+(define (setup-file-chooser-filters *file-chooser)
+  ;; File filter for schematic files (*.sch).
+  (let ((*filter (gtk_file_filter_new)))
+    (gtk_file_filter_set_name *filter
+                              (string->pointer (G_ "Schematics")))
+    (gtk_file_filter_add_pattern *filter (string->pointer "*.sch"))
+    (gtk_file_chooser_add_filter *file-chooser *filter))
+  ;; File filter for symbol files (*.sym).
+  (let ((*filter (gtk_file_filter_new)))
+    (gtk_file_filter_set_name *filter
+                              (string->pointer (G_ "Symbols")))
+    (gtk_file_filter_add_pattern *filter (string->pointer "*.sym"))
+    (gtk_file_chooser_add_filter *file-chooser *filter))
+  ;; File filter for both symbol and schematic files (*.sym+*.sch).
+  (let ((*filter (gtk_file_filter_new)))
+    (gtk_file_filter_set_name *filter
+                              (string->pointer (G_ "Schematics and symbols")))
+    (gtk_file_filter_add_pattern *filter (string->pointer "*.sym"))
+    (gtk_file_filter_add_pattern *filter (string->pointer "*.sch"))
+    (gtk_file_chooser_add_filter *file-chooser *filter))
+  ;; File filter that matches any file.
+  (let ((*filter (gtk_file_filter_new)))
+    (gtk_file_filter_set_name *filter
+                              (string->pointer (G_ "All files")))
+    (gtk_file_filter_add_pattern *filter (string->pointer "*"))
+    (gtk_file_chooser_add_filter *file-chooser *filter)))
+
+
 ;;; Opens a file chooser dialog in *WINDOW and waits for the user
 ;;; to select at least one file to load as a new page.  *WINDOW is
 ;;; the main program window or NULL.  Returns a GSList list of
@@ -2788,7 +2817,7 @@ Please check your design.")))
   (gtk_file_chooser_set_select_multiple *dialog TRUE)
 
   ;; Add file filters to the dialog.
-  (x_fileselect_setup_filechooser_filters *dialog)
+  (setup-file-chooser-filters *dialog)
   (gtk_widget_show *dialog)
 
   (let ((*filenames

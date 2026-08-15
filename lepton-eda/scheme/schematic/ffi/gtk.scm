@@ -63,6 +63,7 @@
 
             gtk_events_pending
 
+            gtk_file_chooser_add_filter
             gtk_file_chooser_set_current_folder
             gtk_file_chooser_set_current_name
             gtk_file_chooser_get_filename
@@ -70,6 +71,10 @@
             gtk_file_chooser_get_filenames
             gtk_file_chooser_set_filter
             gtk_file_chooser_set_select_multiple
+
+            gtk_file_filter_add_pattern
+            gtk_file_filter_new
+            gtk_file_filter_set_name
 
             gtk_handle_box_new
 
@@ -233,6 +238,7 @@
 
 (define-lff gtk_events_pending int '())
 
+(define-lff gtk_file_chooser_add_filter void '(* *))
 (define-lff gtk_file_chooser_set_current_folder void '(* *))
 (define-lff gtk_file_chooser_set_current_name void '(* *))
 (define-lff gtk_file_chooser_get_filename '* '(*))
@@ -240,6 +246,10 @@
 (define-lff gtk_file_chooser_get_filenames '* '(*))
 (define-lff gtk_file_chooser_set_filter void '(* *))
 (define-lff gtk_file_chooser_set_select_multiple void (list '* int))
+
+(define-lff gtk_file_filter_add_pattern void '(* *))
+(define-lff gtk_file_filter_new '* '())
+(define-lff gtk_file_filter_set_name void '(* *))
 
 (define-lff gtk_handle_box_new '* '())
 
