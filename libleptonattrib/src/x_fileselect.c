@@ -79,7 +79,7 @@
  * This fcn creates and sets the file filter for the filechooser.
  * \param filechooser GtkFileChooser to set up
  */
-static void
+void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
   GtkFileFilter *filter;
@@ -106,34 +106,4 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (filechooser, filter);
 
-}
-
-
-/*! \brief Open file dialog
- *
- * This function opens a file chooser dialog and waits for the
- * user to select at least one file to load as a new page.
- *
- * \param window The main program window.
- * \param dialog The dialog created beforehand.
- * \returns GSList* list of files to be opened, or NULL if the
- *          user cancelled the dialog
- */
-GSList *
-x_fileselect_open (GtkWidget *window,
-                   GtkWidget *dialog)
-{
-  GSList *filenames = NULL;
-
-  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
-
-  /* add file filters to dialog */
-  x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
-  gtk_widget_show (dialog);
-
-  if(gtk_dialog_run (GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
-     filenames = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
-
-  gtk_widget_destroy (dialog);
-  return filenames;
 }

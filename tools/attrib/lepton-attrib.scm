@@ -2770,6 +2770,10 @@ Please check your design.")))
   (gtk_widget_show_all *window-widget))
 
 
+;;; Opens a file chooser dialog in *WINDOW and waits for the user
+;;; to select at least one file to load as a new page.  *WINDOW is
+;;; the main program window or NULL.  Returns a GSList list of
+;;; files to be opened, or NULL if the user cancelled the dialog.
 (define (file-chooser-dialog *window)
   (define *dialog
     (gtk_file_chooser_dialog_new (string->pointer (G_ "Open..."))
@@ -2780,7 +2784,19 @@ Please check your design.")))
                                  (string->pointer (G_ "_Open"))
                                  GTK_RESPONSE_ACCEPT
                                  %null-pointer))
-  (x_fileselect_open *window *dialog))
+
+  (gtk_file_chooser_set_select_multiple *dialog TRUE)
+
+  ;; Add file filters to the dialog.
+  (x_fileselect_setup_filechooser_filters *dialog)
+  (gtk_widget_show *dialog)
+
+  (let ((*filenames
+         (if (= (gtk_dialog_run *dialog) GTK_RESPONSE_ACCEPT)
+             (gtk_file_chooser_get_filenames *dialog)
+             %null-pointer)))
+    (gtk_widget_destroy *dialog)
+    *filenames))
 
 
 ;;; Init logging.
