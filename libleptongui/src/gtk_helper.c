@@ -541,6 +541,56 @@ schematic_gtk_justification_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkOrientation enum value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkOrientation enum value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The enum value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_orientation_to_string (int val)
+{
+  const char *result = "horizontal";
+
+  switch (val)
+  {
+  case GTK_ORIENTATION_HORIZONTAL: result = "horizontal"; break;
+  case GTK_ORIENTATION_VERTICAL: result = "vertical"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkOrientation enum value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkOrientation value, returns the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \returns The \c GtkOrientation enum value.
+ */
+int
+schematic_gtk_orientation_from_string (char *s)
+{
+  int result = GTK_ORIENTATION_HORIZONTAL;
+
+  if (strcmp (s, "horizontal") == 0) {result = GTK_ORIENTATION_HORIZONTAL; }
+  else if (strcmp (s, "vertical") == 0) {result = GTK_ORIENTATION_VERTICAL; }
+
+  return result;
+}
+
+
 /*! \brief Transform a \c GtkPositionType value to string.
  *
  * \par Function Description

@@ -76,6 +76,12 @@ int
 schematic_gtk_justification_from_string (char *s);
 
 const char*
+schematic_gtk_orientation_to_string (int val);
+
+int
+schematic_gtk_orientation_from_string (char *s);
+
+const char*
 schematic_gtk_position_type_to_string (int val);
 
 int
