@@ -52,6 +52,8 @@
             gtk_widget_pack_child
             schematic_gtk_justification_to_string
             schematic_gtk_justification_from_string
+            schematic_gtk_orientation_to_string
+            schematic_gtk_orientation_from_string
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
             schematic_gtk_window_position_to_string
@@ -736,6 +738,8 @@
 (define-lff gtk_widget_pack_child void '(* *))
 (define-lff schematic_gtk_justification_to_string '* (list int))
 (define-lff schematic_gtk_justification_from_string int '(*))
+(define-lff schematic_gtk_orientation_to_string '* (list int))
+(define-lff schematic_gtk_orientation_from_string int '(*))
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
 (define-lff schematic_gtk_window_position_to_string '* (list int))
