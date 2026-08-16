@@ -31,6 +31,8 @@
             symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
+            gtk-orientation->symbol
+            symbol->gtk-orientation
             gtk-policy-type->symbol
             symbol->gtk-policy-type
             GTK_POLICY_ALWAYS
@@ -94,6 +96,17 @@
 (define (symbol->gtk-message-type sym)
   "Transforms symbol SYM to corresponding GtkMessageType value."
   (gtk_string_to_message_type (string->pointer (symbol->string sym))))
+
+
+(define (gtk-orientation->symbol orientation)
+  "Transforms GtkOrientation value ORIENTATION to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_orientation_to_string orientation))))
+
+(define (symbol->gtk-orientation sym)
+  "Transforms symbol SYM to corresponding GtkOrientation value."
+  (schematic_gtk_orientation_from_string
+   (string->pointer (symbol->string sym))))
 
 
 (define (gtk-policy-type->symbol type)
