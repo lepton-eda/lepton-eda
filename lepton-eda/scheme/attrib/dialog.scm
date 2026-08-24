@@ -80,34 +80,31 @@ See the COPYING file for the full text of the license.")))
 
 
 (define (confirm-overwrite-dialog filename)
-  "Opens an Overwrite confirmation dialog if the file FILENAME
-exists.  Returns #t if the file doesn't exist without opening the
-dialog, or if the file exists and the user pressed 'Yes' to
-overwrite it.  Returns #f if the file exists, and the user pressed
-'No'."
-  (or (not (file-exists? filename))
-      (let ((*dialog
-             (gtk_message_dialog_new
-              %null-pointer
-              (logior GTK_DIALOG_MODAL
-                      GTK_DIALOG_DESTROY_WITH_PARENT)
-              (symbol->gtk-message-type 'question)
-              (symbol->gtk-buttons-type 'yes-no)
-              (string->pointer
-               (format #f
-                       (G_ "The selected file ~S already exists.
+  "Opens an Overwrite confirmation dialog for FILENAME.  Returns #t
+if the the user pressed 'Yes' to overwrite the file.  Otherwise
+returns #f."
+  (define *dialog
+    (gtk_message_dialog_new
+     %null-pointer
+     (logior GTK_DIALOG_MODAL
+             GTK_DIALOG_DESTROY_WITH_PARENT)
+     (symbol->gtk-message-type 'question)
+     (symbol->gtk-buttons-type 'yes-no)
+     (string->pointer
+      (format #f
+              (G_ "The selected file ~S already exists.
 
 Would you like to overwrite it?")
-                       filename)))))
+              filename))))
 
-        (gtk_window_set_title *dialog
-                              (string->pointer (G_ "Overwrite file?")))
-        (gtk_dialog_set_default_response *dialog GTK_RESPONSE_NO)
+  (gtk_window_set_title *dialog
+                        (string->pointer (G_ "Overwrite file?")))
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_NO)
 
-        (let ((result (gtk_dialog_run *dialog)))
-          (gtk_widget_destroy *dialog)
+  (let ((result (gtk_dialog_run *dialog)))
+    (gtk_widget_destroy *dialog)
 
-          (eq? result GTK_RESPONSE_YES)))))
+    (eq? result GTK_RESPONSE_YES)))
 
 
 ;;; Sets up file filters for the File chooser dialog *FILE-CHOOSER.

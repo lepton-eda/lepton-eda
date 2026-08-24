@@ -1140,7 +1140,8 @@ failure."
      ((= response GTK_RESPONSE_ACCEPT)
       (let ((filename (file-chooser-filename *dialog)))
         (when (and filename
-                   (confirm-overwrite-dialog filename))
+                   (or (not (file-exists? filename))
+                       (confirm-overwrite-dialog filename)))
           ;; Check that we are on the component page.
           (if (zero? (notebook-current-page-id))
               ;; Only export the component table.
