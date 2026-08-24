@@ -1126,38 +1126,43 @@ failure."
      GTK_RESPONSE_ACCEPT
      %null-pointer))
 
+  (define (file-chooser-filename *dialog)
+    (let ((*filename (gtk_file_chooser_get_filename *dialog)))
+      (and (not (null-pointer? *filename))
+           (let ((filename (pointer->string *filename)))
+             (g_free *filename)
+             filename))))
+
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_ACCEPT)
 
   (let ((response (gtk_dialog_run *dialog)))
     (cond
      ((= response GTK_RESPONSE_ACCEPT)
-      (let ((*filename (gtk_file_chooser_get_filename *dialog)))
-        (unless (null-pointer? *filename)
-          (when (confirm-overwrite-dialog (pointer->string *filename))
-            ;; Check that we are on the component page.
-            (if (zero? (notebook-current-page-id))
-                ;; Only export the component table.
-                (catch 'system-error
-                  (lambda ()
-                    (with-output-to-file (pointer->string *filename)
-                      export-components))
-                  (lambda (key subr message args rest)
-                    (let ((msg (format #f
-                                       (G_ "Failed to save file: ~?\n")
-                                       message
-                                       args)))
-                      (log! 'warning msg)
-                      (let ((*dialog (gtk_message_dialog_new %null-pointer
-                                                             GTK_DIALOG_MODAL
-                                                             (symbol->gtk-message-type 'error)
-                                                             (symbol->gtk-buttons-type 'ok)
-                                                             (string->pointer msg))))
-                        (gtk_window_set_title *dialog
-                                              (string->pointer (G_ "Export error")))
-                        (gtk_dialog_run *dialog)
-                        (gtk_widget_destroy *dialog)))))
-                (x_dialog_unimplemented_feature)))
-          (g_free *filename))))
+      (let ((filename (file-chooser-filename *dialog)))
+        (when (and filename
+                   (confirm-overwrite-dialog filename))
+          ;; Check that we are on the component page.
+          (if (zero? (notebook-current-page-id))
+              ;; Only export the component table.
+              (catch 'system-error
+                (lambda ()
+                  (with-output-to-file filename export-components))
+                (lambda (key subr message args rest)
+                  (let ((msg (format #f
+                                     (G_ "Failed to save file: ~?\n")
+                                     message
+                                     args)))
+                    (log! 'warning msg)
+                    (let ((*dialog (gtk_message_dialog_new %null-pointer
+                                                           GTK_DIALOG_MODAL
+                                                           (symbol->gtk-message-type 'error)
+                                                           (symbol->gtk-buttons-type 'ok)
+                                                           (string->pointer msg))))
+                      (gtk_window_set_title *dialog
+                                            (string->pointer (G_ "Export error")))
+                      (gtk_dialog_run *dialog)
+                      (gtk_widget_destroy *dialog)))))
+              (x_dialog_unimplemented_feature)))))
      (else #f)))
 
   (gtk_widget_destroy *dialog))
