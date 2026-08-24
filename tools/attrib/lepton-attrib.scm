@@ -1142,23 +1142,25 @@ failure."
          filename
          (or (not (file-exists? filename))
              (confirm-overwrite-dialog filename))
-         (catch 'system-error
-           (lambda ()
-             (with-output-to-file filename export-components))
-           (lambda (key subr message args rest)
-             (let ((msg (format #f
-                                (G_ "Failed to save file: ~?\n")
-                                message
-                                args)))
-               (log! 'warning msg)
-               (export-error-dialog msg)))))))
+         filename)))
 
 
 (define (export-csv)
   "Export component table info in the CSV format."
   ;; Check that we are on components page.
   (if (zero? (notebook-current-page-id))
-      (export-file-dialog)
+      (let ((filename (export-file-dialog)))
+        (and filename
+             (catch 'system-error
+               (lambda ()
+                 (with-output-to-file filename export-components))
+               (lambda (key subr message args rest)
+                 (let ((msg (format #f
+                                    (G_ "Failed to save file: ~?\n")
+                                    message
+                                    args)))
+                   (log! 'warning msg)
+                   (export-error-dialog msg))))))
       ;; We only support export of components now
       (x_dialog_unimplemented_feature)))
 
