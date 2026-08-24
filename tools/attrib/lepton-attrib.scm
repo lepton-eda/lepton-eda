@@ -1154,15 +1154,8 @@ failure."
                                      message
                                      args)))
                     (log! 'warning msg)
-                    (let ((*dialog (gtk_message_dialog_new %null-pointer
-                                                           GTK_DIALOG_MODAL
-                                                           (symbol->gtk-message-type 'error)
-                                                           (symbol->gtk-buttons-type 'ok)
-                                                           (string->pointer msg))))
-                      (gtk_window_set_title *dialog
-                                            (string->pointer (G_ "Export error")))
-                      (gtk_dialog_run *dialog)
-                      (gtk_widget_destroy *dialog)))))
+                    (export-error-dialog msg))))
+
               (x_dialog_unimplemented_feature)))))
      (else #f)))
 
