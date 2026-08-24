@@ -1135,26 +1135,23 @@ failure."
 
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_ACCEPT)
 
-  (let ((response (gtk_dialog_run *dialog)))
-    (cond
-     ((= response GTK_RESPONSE_ACCEPT)
-      (let ((filename (file-chooser-filename *dialog)))
-        (when (and filename
-                   (or (not (file-exists? filename))
-                       (confirm-overwrite-dialog filename)))
-          (catch 'system-error
-            (lambda ()
-              (with-output-to-file filename export-components))
-            (lambda (key subr message args rest)
-              (let ((msg (format #f
-                                 (G_ "Failed to save file: ~?\n")
-                                 message
-                                 args)))
-                (log! 'warning msg)
-                (export-error-dialog msg)))))))
-     (else #f)))
-
-  (gtk_widget_destroy *dialog))
+  (let ((response (gtk_dialog_run *dialog))
+        (filename (file-chooser-filename *dialog)))
+    (gtk_widget_destroy *dialog)
+    (and (= response GTK_RESPONSE_ACCEPT)
+         filename
+         (or (not (file-exists? filename))
+             (confirm-overwrite-dialog filename))
+         (catch 'system-error
+           (lambda ()
+             (with-output-to-file filename export-components))
+           (lambda (key subr message args rest)
+             (let ((msg (format #f
+                                (G_ "Failed to save file: ~?\n")
+                                message
+                                args)))
+               (log! 'warning msg)
+               (export-error-dialog msg)))))))
 
 
 (define (export-csv)
