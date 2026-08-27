@@ -1339,62 +1339,6 @@ failure."
          (attrib_sheet_data_get_component_attrib_list *sheet-data))))))
 
 
-(define (gtk-entry-text *entry)
-  (let ((*entry-text (gtk_entry_get_text *entry)))
-    (and (not (null-pointer? *entry-text))
-         (let ((entry-text (pointer->string *entry-text)))
-           (and (not (string-null? entry-text))
-                entry-text)))))
-
-
-;;; Runs the Add attribute dialog.  It asks for the name of the
-;;; attrib column to insert and then inserts the column.
-(define (add-attrib-dialog)
-  ;; Create the dialog.
-  (define *dialog (gtk_dialog_new))
-  ;; Create a text label for the dialog window.
-  (define *label
-    (gtk_label_new (string->pointer (G_ "Enter new attribute name"))))
-  ;; Create the attrib text entry area.
-  (define *attrib-entry (gtk_entry_new))
-
-  (gtk_window_set_title *dialog
-                        (string->pointer (G_"Add new attribute")))
-  (gtk_window_set_modal *dialog TRUE)
-
-  (gtk_dialog_add_button *dialog
-                         (string->pointer (G_ "_OK"))
-                         GTK_RESPONSE_OK)
-  (gtk_dialog_add_button *dialog
-                         (string->pointer (G_ "_Cancel"))
-                         GTK_RESPONSE_CANCEL)
-
-  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_OK)
-  (gtk_box_pack_start (gtk_dialog_get_content_area *dialog)
-                      *label
-                      FALSE
-                      FALSE
-                      0)
-
-  (gtk_entry_set_max_length *attrib-entry 1024)
-  (gtk_box_pack_start (gtk_dialog_get_content_area *dialog)
-                      *attrib-entry
-                      TRUE
-                      TRUE
-                      5)
-  (gtk_widget_set_size_request *dialog 260 140)
-
-  (gtk_widget_show_all *dialog)
-
-  (let ((result
-         (and (= (gtk_dialog_run *dialog) GTK_RESPONSE_OK)
-              (gtk-entry-text *attrib-entry))))
-
-    (gtk_widget_destroy *dialog)
-
-    result))
-
-
 (define (add-attrib)
   ;; Check that we are on components page.
   (when (zero? (notebook-current-page-id))
