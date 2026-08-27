@@ -1216,25 +1216,24 @@ failure."
                           %null-pointer)
   (gtk_window_set_title *dialog (string->pointer title))
 
-  *dialog)
-
-
-(define (unsaved-data-dialog *window)
-  (define *dialog
-    (make-unsaved-data-dialog *window "lepton-attrib"))
-
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
 
   (let ((response (gtk_dialog_run *dialog)))
-    (cond
-     ((= response GTK_RESPONSE_NO)
-      (quit-program 0))
-     ((= response GTK_RESPONSE_YES)
-      (save-sheet)
-      (quit-program 0))
-     (else #f)))
+    (gtk_widget_destroy *dialog)
+    response))
 
-  (gtk_widget_destroy *dialog))
+
+(define (unsaved-data-dialog *window)
+  (define response
+    (make-unsaved-data-dialog *window "lepton-attrib"))
+
+  (cond
+   ((= response GTK_RESPONSE_NO)
+    (quit-program 0))
+   ((= response GTK_RESPONSE_YES)
+    (save-sheet)
+    (quit-program 0))
+   (else #f)))
 
 
 ;;; Quit the program.  On execution, the function checks for
