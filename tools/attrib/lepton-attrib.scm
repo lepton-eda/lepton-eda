@@ -1191,7 +1191,7 @@ failure."
 ;;; Creates a new Unsaved data dialog in *WINDOW and returns it.
 ;;; It is thrown up before the user quits if there are unsaved
 ;;; project data.
-(define (make-unsaved-data-dialog *window title)
+(define (unsaved-changes-dialog *window title)
   (define msg1 (G_ "Save the changes before closing?"))
   (define msg2
     (G_ "If you don't save all your changes will be permanently lost."))
@@ -1242,7 +1242,7 @@ failure."
 
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
       (let ((response
-             (make-unsaved-data-dialog *window %program-basename)))
+             (unsaved-changes-dialog *window %program-basename)))
         (cond
          ((= response GTK_RESPONSE_NO)
           (quit-program 0))
