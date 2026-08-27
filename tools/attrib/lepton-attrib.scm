@@ -1206,15 +1206,10 @@ failure."
    (iota (attrib_get_sheets_number)))
 
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
-      (let ((response
-             (unsaved-changes-dialog *window %program-basename)))
-        (cond
-         ((= response GTK_RESPONSE_NO)
-          (quit-program 0))
-         ((= response GTK_RESPONSE_YES)
-          (save-sheet)
-          (quit-program 0))
-         (else #f)))
+      (case (unsaved-changes-dialog *window %program-basename)
+        ((quit) (quit-program 0))
+        ((save) (save-sheet) (quit-program 0))
+        (else #f))
       (quit-program 0)))
 
 

@@ -176,4 +176,8 @@ and returns the response value."
 
   (let ((response (gtk_dialog_run *dialog)))
     (gtk_widget_destroy *dialog)
-    response))
+    (cond
+     ((= response GTK_RESPONSE_NO) 'quit)
+     ((= response GTK_RESPONSE_YES) 'save)
+     ((= response GTK_RESPONSE_CANCEL) 'cancel)
+     (else #f))))
