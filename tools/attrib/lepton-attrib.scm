@@ -1242,7 +1242,7 @@ failure."
 
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
       (let ((response
-             (make-unsaved-data-dialog *window "lepton-attrib")))
+             (make-unsaved-data-dialog *window %program-basename)))
         (cond
          ((= response GTK_RESPONSE_NO)
           (quit-program 0))
