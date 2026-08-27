@@ -1191,7 +1191,7 @@ failure."
 ;;; Creates a new Unsaved data dialog in *WINDOW and returns it.
 ;;; It is thrown up before the user quits if there are unsaved
 ;;; project data.
-(define (make-unsaved-data-dialog *window)
+(define (make-unsaved-data-dialog *window title)
   (define msg1 (G_ "Save the changes before closing?"))
   (define msg2
     (G_ "If you don't save all your changes will be permanently lost."))
@@ -1214,13 +1214,14 @@ failure."
                           (string->pointer (G_ "_Save"))
                           GTK_RESPONSE_YES
                           %null-pointer)
-  (gtk_window_set_title *dialog (string->pointer "lepton-attrib"))
+  (gtk_window_set_title *dialog (string->pointer title))
 
   *dialog)
 
 
 (define (unsaved-data-dialog *window)
-  (define *dialog (make-unsaved-data-dialog *window))
+  (define *dialog
+    (make-unsaved-data-dialog *window "lepton-attrib"))
 
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
 
