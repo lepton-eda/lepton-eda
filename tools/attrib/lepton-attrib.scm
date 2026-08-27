@@ -2825,7 +2825,7 @@ Please check your design.")))
              (gtk_file_chooser_get_filenames *dialog)
              %null-pointer)))
     (gtk_widget_destroy *dialog)
-    *filenames))
+    (gslist->list *filenames pointer->string 'free)))
 
 
 ;;; Init logging.
@@ -2862,9 +2862,7 @@ Please check your design.")))
           (let ((files (if (null? readable-files)
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
-                           (gslist->list
-                            (file-chooser-dialog %null-pointer)
-                            pointer->string 'free)
+                           (file-chooser-dialog %null-pointer)
                            readable-files)))
             (if (null? files)
                 (exit 0)
