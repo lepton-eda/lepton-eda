@@ -1024,26 +1024,6 @@ failure."
   (procedure->pointer void callback-file-save '(* * *)))
 
 
-(define gtk_file_chooser_dialog_new_8
-  (let ((proc (delay (pointer->procedure
-                      '*
-                      (dynamic-func "gtk_file_chooser_dialog_new" libgtk)
-                      (list '* '* int '* int '* int '*)))))
-    (force proc)))
-
-(define gtk_file_chooser_dialog_new
-  (case-lambda
-    ((*title *parent action *button-text1 response1 *button-text2 response2 end)
-     (gtk_file_chooser_dialog_new_8 *title
-                                    *parent
-                                    action
-                                    *button-text1
-                                    response1
-                                    *button-text2
-                                    response2
-                                    %null-pointer))))
-
-
 ;;; Export design components to CSV for external processing.
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
