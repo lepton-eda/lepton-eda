@@ -32,6 +32,7 @@
             export-error-dialog
             export-file-dialog
             file-chooser-dialog
+            missing-symbol-dialog
             unsaved-changes-dialog))
 
 
@@ -219,6 +220,45 @@ dialog."
              %null-pointer)))
     (gtk_widget_destroy *dialog)
     (gslist->list *filenames pointer->string 'free)))
+
+
+(define (missing-symbol-dialog)
+  "Runs the Missing symbol dialog.  It offers the user the chance to
+close the project without saving because the program read a
+schematic with a missing symbol file.  Returns #t if the user
+pressed the button Forward to continue with the execution,
+otherwise returns #f."
+  (define message
+    (G_ "One or more components have been found with missing symbol files!
+
+This probably happened because lepton-attrib couldn't find your
+component libraries, perhaps because your gafrc files are misconfigured.
+
+Choose \"Quit\" to leave lepton-attrib and fix the problem, or
+\"Forward\" to continue working with lepton-attrib."))
+
+  ;; Create the *dialog.
+  (define *dialog
+    (gtk_message_dialog_new %null-pointer
+                            GTK_DIALOG_MODAL
+                            (symbol->gtk-message-type 'warning)
+                            (symbol->gtk-buttons-type 'none)
+                            (string->pointer message)))
+
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Quit"))
+                         GTK_RESPONSE_REJECT)
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Forward"))
+                         GTK_RESPONSE_ACCEPT)
+  (gtk_window_set_title
+   *dialog
+   (string->pointer (G_ "Missing symbol file found for component!")))
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_REJECT)
+
+  (let ((response (gtk_dialog_run *dialog)))
+    (gtk_widget_destroy *dialog)
+    (= response GTK_RESPONSE_ACCEPT)))
 
 
 ;;; The dialog is thrown up before the user quits if there are
