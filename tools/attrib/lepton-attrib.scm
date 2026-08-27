@@ -1168,27 +1168,6 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
-(define gtk_dialog_new_with_buttons_8
-  (let ((proc (delay (pointer->procedure
-                      '*
-                      (dynamic-func "gtk_dialog_new_with_buttons" libgtk)
-                      (list '* '* int '* int '* int '*)))))
-    (force proc)))
-
-(define gtk_dialog_new_with_buttons
-  (case-lambda
-    ((*title *parent flags *button-text1 response1 *button-text2 response2 end)
-     (gtk_dialog_new_with_buttons_8 *title
-                                    *parent
-                                    flags
-                                    *button-text1
-                                    response1
-                                    *button-text2
-                                    response2
-                                    %null-pointer))))
-
-
-
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
