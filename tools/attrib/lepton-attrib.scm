@@ -1570,7 +1570,9 @@ failure."
 
 ;;; Runs the Missing symbol dialog.  It offers the user the chance
 ;;; to close the project without saving because the program read a
-;;; schematic with a missing symbol file.
+;;; schematic with a missing symbol file.  Returns #t if the user
+;;; pressed the button Forward to continue with the execution,
+;;; otherwise returns #f.
 (define (missing-symbol-dialog)
   (define message
     (G_ "One or more components have been found with missing symbol files!
@@ -1602,14 +1604,8 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_REJECT)
 
   (let ((response (gtk_dialog_run *dialog)))
-    (cond
-     ;; Continue with the execution.
-     ((= response GTK_RESPONSE_ACCEPT)
-      'accept)
-     ;; Terminate.
-     (else (exit 0))))
-
-  (gtk_widget_destroy *dialog))
+    (gtk_widget_destroy *dialog)
+    (= response GTK_RESPONSE_ACCEPT)))
 
 
 (define (callback-edit-delete-attrib *action *parameter *data)
@@ -2704,7 +2700,9 @@ Please check your design.")))
   ;; Verify correctness of entire design.
   (when (design-has-missing-symbols?)
     ;; Dialog gives user option to quit.
-    (missing-symbol-dialog))
+    (unless (missing-symbol-dialog)
+      ;; Terminate.
+      (exit 0)))
 
   ;; Set the main window's title.
   (let ((page-count (length (active-pages))))
