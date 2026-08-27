@@ -1223,19 +1223,6 @@ failure."
     response))
 
 
-(define (unsaved-data-dialog *window)
-  (define response
-    (make-unsaved-data-dialog *window "lepton-attrib"))
-
-  (cond
-   ((= response GTK_RESPONSE_NO)
-    (quit-program 0))
-   ((= response GTK_RESPONSE_YES)
-    (save-sheet)
-    (quit-program 0))
-   (else #f)))
-
-
 ;;; Quit the program.  On execution, the function checks for
 ;;; unsaved changes before calling quit-program() to quit the
 ;;; program.
@@ -1254,7 +1241,15 @@ failure."
    (iota (attrib_get_sheets_number)))
 
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
-      (unsaved-data-dialog *window)
+      (let ((response
+             (make-unsaved-data-dialog *window "lepton-attrib")))
+        (cond
+         ((= response GTK_RESPONSE_NO)
+          (quit-program 0))
+         ((= response GTK_RESPONSE_YES)
+          (save-sheet)
+          (quit-program 0))
+         (else #f)))
       (quit-program 0)))
 
 
