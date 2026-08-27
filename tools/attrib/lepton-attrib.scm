@@ -1400,25 +1400,6 @@ failure."
         (s_sheet_data_set_changed *sheet-data TRUE))))
 
 
-(define (delete-attrib-dialog)
-  (define *dialog
-    (gtk_message_dialog_new
-     %null-pointer
-     GTK_DIALOG_MODAL
-     (symbol->gtk-message-type 'question)
-     (symbol->gtk-buttons-type 'yes-no)
-     (string->pointer
-      (G_ "Are you sure you want to delete this attribute?"))))
-
-  (gtk_window_set_title *dialog
-                        (string->pointer (G_ "Delete attribute")))
-  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_NO)
-
-  (let ((response (gtk_dialog_run *dialog)))
-    (gtk_widget_destroy *dialog)
-    (= response GTK_RESPONSE_YES)))
-
-
 ;;; Delete an attribute column.
 (define (delete-attrib-column)
   (define *sheet-data (attrib_get_sheet_data))

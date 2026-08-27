@@ -30,6 +30,7 @@
 
   #:export (about-dialog
             add-attrib-dialog
+            delete-attrib-dialog
             export-error-dialog
             export-file-dialog
             file-chooser-dialog
@@ -137,6 +138,27 @@ insert the column, otherwise returns #f."
     (gtk_widget_destroy *dialog)
 
     result))
+
+
+(define (delete-attrib-dialog)
+  "Runs the Delete attribute dialog.  Returns #t if the user hits the
+Yes button, otherwise returns #f."
+  (define *dialog
+    (gtk_message_dialog_new
+     %null-pointer
+     GTK_DIALOG_MODAL
+     (symbol->gtk-message-type 'question)
+     (symbol->gtk-buttons-type 'yes-no)
+     (string->pointer
+      (G_ "Are you sure you want to delete this attribute?"))))
+
+  (gtk_window_set_title *dialog
+                        (string->pointer (G_ "Delete attribute")))
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_NO)
+
+  (let ((response (gtk_dialog_run *dialog)))
+    (gtk_widget_destroy *dialog)
+    (= response GTK_RESPONSE_YES)))
 
 
 (define (confirm-overwrite-dialog filename)
