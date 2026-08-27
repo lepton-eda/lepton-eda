@@ -1188,41 +1188,6 @@ failure."
   (exit return-code))
 
 
-;;; Creates a new Unsaved data dialog in *WINDOW and returns it.
-;;; It is thrown up before the user quits if there are unsaved
-;;; project data.
-(define (unsaved-changes-dialog *window title)
-  (define msg1 (G_ "Save the changes before closing?"))
-  (define msg2
-    (G_ "If you don't save all your changes will be permanently lost."))
-  (define markup
-    (string-append "<big><b>" msg1 "</b></big>" "\n\n" msg2))
-
-  (define *dialog
-    (gtk_message_dialog_new *window
-                            (logior GTK_DIALOG_MODAL
-                                    GTK_DIALOG_DESTROY_WITH_PARENT)
-                            (symbol->gtk-message-type 'warning)
-                            (symbol->gtk-buttons-type 'none)
-                            %null-pointer))
-  (gtk_message_dialog_set_markup *dialog (string->pointer markup))
-  (gtk_dialog_add_buttons *dialog
-                          (string->pointer (G_ "Close without saving"))
-                          GTK_RESPONSE_NO
-                          (string->pointer (G_ "_Cancel"))
-                          GTK_RESPONSE_CANCEL
-                          (string->pointer (G_ "_Save"))
-                          GTK_RESPONSE_YES
-                          %null-pointer)
-  (gtk_window_set_title *dialog (string->pointer title))
-
-  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
-
-  (let ((response (gtk_dialog_run *dialog)))
-    (gtk_widget_destroy *dialog)
-    response))
-
-
 ;;; Quit the program.  On execution, the function checks for
 ;;; unsaved changes before calling quit-program() to quit the
 ;;; program.

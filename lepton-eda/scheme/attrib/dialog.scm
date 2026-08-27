@@ -29,7 +29,8 @@
   #:use-module (schematic gtk helper)
 
   #:export (about-dialog
-            file-chooser-dialog))
+            file-chooser-dialog
+            unsaved-changes-dialog))
 
 
 (define (about-dialog program-name)
@@ -137,3 +138,42 @@ dialog."
              %null-pointer)))
     (gtk_widget_destroy *dialog)
     (gslist->list *filenames pointer->string 'free)))
+
+
+;;; The dialog is thrown up before the user quits if there are
+;;; unsaved project data.
+(define (unsaved-changes-dialog *window title)
+  "Creates a new Unsaved changes dialog with TITLE in parent *WINDOW
+and returns the response value."
+  (define msg1 (G_ "Save the changes before closing?"))
+  (define msg2
+    (G_ "If you don't save all your changes will be permanently lost."))
+  (define markup
+    (string-append "<big><b>" msg1 "</b></big>" "\n\n" msg2))
+
+  (define *dialog
+    (gtk_message_dialog_new *window
+                            (logior GTK_DIALOG_MODAL
+                                    GTK_DIALOG_DESTROY_WITH_PARENT)
+                            (symbol->gtk-message-type 'warning)
+                            (symbol->gtk-buttons-type 'none)
+                            %null-pointer))
+  (gtk_message_dialog_set_markup *dialog (string->pointer markup))
+
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "Close without saving"))
+                         GTK_RESPONSE_NO)
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Cancel"))
+                         GTK_RESPONSE_CANCEL)
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Save"))
+                         GTK_RESPONSE_YES)
+
+  (gtk_window_set_title *dialog (string->pointer title))
+
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
+
+  (let ((response (gtk_dialog_run *dialog)))
+    (gtk_widget_destroy *dialog)
+    response))
