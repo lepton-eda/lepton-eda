@@ -1168,39 +1168,6 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
-(define gtk_dialog_add_buttons_6
-  (let ((proc (delay (pointer->procedure
-                      '*
-                      (dynamic-func "gtk_dialog_add_buttons" libgtk)
-                      (list '* '* int '* int '*)))))
-    (force proc)))
-
-(define gtk_dialog_add_buttons_8
-  (let ((proc (delay (pointer->procedure
-                      '*
-                      (dynamic-func "gtk_dialog_add_buttons" libgtk)
-                      (list '* '* int '* int '* int '*)))))
-    (force proc)))
-
-(define gtk_dialog_add_buttons
-  (case-lambda
-    ((*dialog *button-text1 response1 *button-text2 response2 end)
-     (gtk_dialog_add_buttons_6 *dialog
-                               *button-text1
-                               response1
-                               *button-text2
-                               response2
-                               %null-pointer))
-    ((*dialog *button-text1 response1 *button-text2 response2 *button-text3 response3 end)
-     (gtk_dialog_add_buttons_8 *dialog
-                               *button-text1
-                               response1
-                               *button-text2
-                               response2
-                               *button-text3
-                               response3
-                               %null-pointer))))
-
 (define gtk_dialog_new_with_buttons_8
   (let ((proc (delay (pointer->procedure
                       '*
