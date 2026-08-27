@@ -1363,21 +1363,23 @@ failure."
 ;;; attrib column to insert and then inserts the column.
 (define (add-attrib-dialog)
   ;; Create the dialog.
-  (define *dialog
-    (gtk_dialog_new_with_buttons
-     (string->pointer (G_"Add new attribute"))
-     %null-pointer
-     GTK_DIALOG_MODAL
-     (string->pointer (G_ "_OK"))
-     GTK_RESPONSE_OK
-     (string->pointer (G_ "_Cancel"))
-     GTK_RESPONSE_CANCEL
-     %null-pointer))
+  (define *dialog (gtk_dialog_new))
   ;; Create a text label for the dialog window.
   (define *label
     (gtk_label_new (string->pointer (G_ "Enter new attribute name"))))
   ;; Create the attrib text entry area.
   (define *attrib-entry (gtk_entry_new))
+
+  (gtk_window_set_title *dialog
+                        (string->pointer (G_"Add new attribute")))
+  (gtk_window_set_modal *dialog TRUE)
+
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_OK"))
+                         GTK_RESPONSE_OK)
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Cancel"))
+                         GTK_RESPONSE_CANCEL)
 
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_OK)
   (gtk_box_pack_start (gtk_dialog_get_content_area *dialog)
