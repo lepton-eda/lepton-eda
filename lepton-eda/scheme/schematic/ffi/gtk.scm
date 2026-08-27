@@ -169,6 +169,7 @@
             *gtk_widget_hide_on_delete
 
             gtk_window_set_default_icon_name
+            gtk_window_set_modal
             gtk_window_get_position
             gtk_window_get_size
             gtk_window_set_title
@@ -356,6 +357,7 @@
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_resize void (list '* int int))
 (define-lff gtk_window_set_default_icon_name void '(*))
+(define-lff gtk_window_set_modal void (list '* int))
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_set_title void '(* *))
