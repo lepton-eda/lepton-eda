@@ -64,6 +64,7 @@
             gtk_events_pending
 
             gtk_file_chooser_add_filter
+            gtk_file_chooser_dialog_new
             gtk_file_chooser_set_current_folder
             gtk_file_chooser_set_current_name
             gtk_file_chooser_get_filename
@@ -239,6 +240,7 @@
 (define-lff gtk_events_pending int '())
 
 (define-lff gtk_file_chooser_add_filter void '(* *))
+(define-lff gtk_file_chooser_dialog_new '* (list '* '* int '*))
 (define-lff gtk_file_chooser_set_current_folder void '(* *))
 (define-lff gtk_file_chooser_set_current_name void '(* *))
 (define-lff gtk_file_chooser_get_filename '* '(*))

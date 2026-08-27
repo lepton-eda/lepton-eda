@@ -48,4 +48,6 @@ lepton-eda/scheme/schematic/rc.scm
 lepton-eda/scheme/schematic/window/page.scm
 lepton-eda/scheme/gschem/deprecated.scm
 
+lepton-eda/scheme/attrib/dialog.scm
+
 tools/schematic/lepton-schematic.scm
