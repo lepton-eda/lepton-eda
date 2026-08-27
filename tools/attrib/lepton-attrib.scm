@@ -1112,39 +1112,6 @@ failure."
   (gtk_notebook_get_current_page (attrib_get_notebook)))
 
 
-;;; Runs the Export file dialog.  It asks for the filename for the
-;;; CSV export file and then does the exporting.
-(define (export-file-dialog)
-  (define *dialog
-    (gtk_file_chooser_dialog_new
-     (string->pointer (G_ "Export CSV"))
-     %null-pointer
-     (symbol->gtk-file-chooser-action 'save)
-     (string->pointer (G_ "_Cancel"))
-     GTK_RESPONSE_CANCEL
-     (string->pointer (G_ "_Save"))
-     GTK_RESPONSE_ACCEPT
-     %null-pointer))
-
-  (define (file-chooser-filename *dialog)
-    (let ((*filename (gtk_file_chooser_get_filename *dialog)))
-      (and (not (null-pointer? *filename))
-           (let ((filename (pointer->string *filename)))
-             (g_free *filename)
-             filename))))
-
-  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_ACCEPT)
-
-  (let ((response (gtk_dialog_run *dialog))
-        (filename (file-chooser-filename *dialog)))
-    (gtk_widget_destroy *dialog)
-    (and (= response GTK_RESPONSE_ACCEPT)
-         filename
-         (or (not (file-exists? filename))
-             (confirm-overwrite-dialog filename))
-         filename)))
-
-
 (define (export-csv)
   "Export component table info in the CSV format."
   ;; Check that we are on components page.

@@ -29,8 +29,8 @@
   #:use-module (schematic gtk helper)
 
   #:export (about-dialog
-            confirm-overwrite-dialog
             export-error-dialog
+            export-file-dialog
             file-chooser-dialog
             unsaved-changes-dialog))
 
@@ -119,6 +119,44 @@ Would you like to overwrite it?")
                           (string->pointer (G_ "Export error")))
     (gtk_dialog_run *dialog)
     (gtk_widget_destroy *dialog)))
+
+
+(define (export-file-dialog)
+  "Runs the Export CSV file dialog and returns the filename selected
+by the user.  If no filename is selected, or the user pressed the
+Cancel button, returns #f."
+  (define *dialog
+    (gtk_file_chooser_dialog_new
+     (string->pointer (G_ "Export CSV"))
+     %null-pointer
+     (symbol->gtk-file-chooser-action 'save)
+     %null-pointer))
+
+  (define (file-chooser-filename *dialog)
+    (let ((*filename (gtk_file_chooser_get_filename *dialog)))
+      (and (not (null-pointer? *filename))
+           (let ((filename (pointer->string *filename)))
+             (g_free *filename)
+             filename))))
+
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Cancel"))
+                         GTK_RESPONSE_CANCEL)
+
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Save"))
+                         GTK_RESPONSE_ACCEPT)
+
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_ACCEPT)
+
+  (let ((response (gtk_dialog_run *dialog))
+        (filename (file-chooser-filename *dialog)))
+    (gtk_widget_destroy *dialog)
+    (and (= response GTK_RESPONSE_ACCEPT)
+         filename
+         (or (not (file-exists? filename))
+             (confirm-overwrite-dialog filename))
+         filename)))
 
 
 ;;; Sets up file filters for the File chooser dialog *FILE-CHOOSER.
