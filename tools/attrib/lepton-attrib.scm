@@ -1235,6 +1235,14 @@ failure."
 (define *callback-file-quit
   (procedure->pointer void callback-file-quit '(* * *)))
 
+
+(define (callback-delete-window *widget *event *window)
+  (attrib-quit))
+
+(define *callback-delete-window
+  (procedure->pointer int callback-delete-window '(* * *)))
+
+
 (define gtk_dialog_add_buttons_6
   (let ((proc (delay (pointer->procedure
                       '*
@@ -1896,7 +1904,7 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
   (g_signal_connect *window-widget
                     (string->pointer "delete_event")
-                    *callback-file-quit
+                    *callback-delete-window
                     %null-pointer)
 
   ;; Init menu functions.
