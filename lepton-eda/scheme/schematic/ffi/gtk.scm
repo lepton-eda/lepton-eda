@@ -22,7 +22,15 @@
   #:use-module (lepton ffi)
   #:use-module (lepton m4)
 
-  #:export (gtk_accelerator_get_label
+  #:export (gtk_about_dialog_new
+            gtk_about_dialog_set_comments
+            gtk_about_dialog_set_copyright
+            gtk_about_dialog_set_license
+            gtk_about_dialog_set_program_name
+            gtk_about_dialog_set_version
+            gtk_about_dialog_set_website
+
+            gtk_accelerator_get_label
             gtk_accelerator_name
             gtk_accelerator_parse
 
@@ -193,6 +201,13 @@
 
 (define GdkModifierType uint32)
 
+(define-lff gtk_about_dialog_new '* '())
+(define-lff gtk_about_dialog_set_comments void '(* *))
+(define-lff gtk_about_dialog_set_copyright void '(* *))
+(define-lff gtk_about_dialog_set_license void '(* *))
+(define-lff gtk_about_dialog_set_program_name void '(* *))
+(define-lff gtk_about_dialog_set_version void '(* *))
+(define-lff gtk_about_dialog_set_website void '(* *))
 
 (define-lff gtk_accelerator_parse void '(* * *))
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
