@@ -1189,8 +1189,8 @@ failure."
 
 
 
-(define (unsaved-data-dialog)
-  (define *dialog (x_dialog_unsaved_data))
+(define (unsaved-data-dialog *window)
+  (define *dialog (x_dialog_unsaved_data *window))
 
   (gtk_dialog_set_default_response *dialog GTK_RESPONSE_YES)
 
@@ -1210,9 +1210,9 @@ failure."
 ;;; unsaved changes before calling quit-program() to quit the
 ;;; program.
 (define (attrib-quit)
+  (define *window (attrib_get_window))
   ;; Save main window's geometry to the cache config context.
-  (save-gtk-window-geometry (attrib_get_window)
-                            "attrib.window-geometry")
+  (save-gtk-window-geometry *window "attrib.window-geometry")
   ;; Deactivate the current cell to trigger "deactivate" signal.
   ;; This allows changing of the sheet_head->CHANGED flag in the
   ;; on_deactivate() handler function if needed.
@@ -1224,7 +1224,7 @@ failure."
    (iota (attrib_get_sheets_number)))
 
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
-      (unsaved-data-dialog)
+      (unsaved-data-dialog *window)
       (quit-program 0)))
 
 

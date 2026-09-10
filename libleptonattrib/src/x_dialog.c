@@ -65,7 +65,7 @@
  *         box which is thrown up before the user quits.
  */
 GtkWidget*
-x_dialog_unsaved_data ()
+x_dialog_unsaved_data (GtkWidget *window)
 {
   GtkWidget *dialog;
   gchar *str;

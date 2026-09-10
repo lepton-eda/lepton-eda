@@ -203,7 +203,7 @@
 (define-lff x_dialog_confirm_overwrite int '(*))
 (define-lff x_dialog_fatal_error void (list '* int))
 (define-lff x_dialog_unimplemented_feature void '())
-(define-lff x_dialog_unsaved_data '* '())
+(define-lff x_dialog_unsaved_data '* '(*))
 
 ;;; x_gtksheet.c
 (define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))

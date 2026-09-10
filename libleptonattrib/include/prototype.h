@@ -297,7 +297,7 @@ u_basic_breakup_string (char *string,
 
 /* ------------- x_dialog.c ------------- */
 GtkWidget*
-x_dialog_unsaved_data ();
+x_dialog_unsaved_data (GtkWidget *window);
 
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
