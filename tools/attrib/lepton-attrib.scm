@@ -1206,10 +1206,10 @@ failure."
   (gtk_widget_destroy *dialog))
 
 
-;;; Quit the program using the UI. On execution, the function
-;;; checks for unsaved changes before calling quit-program() to
-;;; quit the program.
-(define (callback-file-quit *action *parameter *data)
+;;; Quit the program.  On execution, the function checks for
+;;; unsaved changes before calling quit-program() to quit the
+;;; program.
+(define (attrib-quit)
   ;; Save main window's geometry to the cache config context.
   (save-gtk-window-geometry (attrib_get_window)
                             "attrib.window-geometry")
@@ -1226,6 +1226,11 @@ failure."
   (if (true? (attrib_sheet_data_get_changed (attrib_get_sheet_data)))
       (unsaved-data-dialog)
       (quit-program 0)))
+
+
+;;; Quit the program using the UI.
+(define (callback-file-quit *action *parameter *data)
+  (attrib-quit))
 
 (define *callback-file-quit
   (procedure->pointer void callback-file-quit '(* * *)))
