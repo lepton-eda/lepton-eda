@@ -109,6 +109,7 @@
             gtk_menu_shell_append
 
             gtk_message_dialog_new
+            gtk_message_dialog_set_markup
 
             gtk_notebook_append_page
             gtk_notebook_get_n_pages
@@ -290,6 +291,7 @@
 (define-lff gtk_menu_shell_append void '(* *))
 
 (define-lff gtk_message_dialog_new '* (list '* int int int '*))
+(define-lff gtk_message_dialog_set_markup void '(* *))
 
 (define-lff gtk_notebook_append_page int '(* * *))
 (define-lff gtk_notebook_get_n_pages int '(*))
