@@ -1979,6 +1979,7 @@ Choose \"Quit\" to leave lepton-attrib and fix the problem, or
 
   (unless (string= (pointer->string *entry-str) cell-str)
     (set-sheet-data-changed *sheet-data TRUE))
+  (g_free *entry-text)
   ;; TRUE => allow deactivation.
   TRUE)
 
