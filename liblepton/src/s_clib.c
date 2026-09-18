@@ -1223,11 +1223,6 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
  *  Searches the library, returning all symbols whose
  *  names match \a pattern.
  *
- *  Two search modes are available: \b CLIB_EXACT, where \a pattern is
- *  compared to the symbol name using strcmp(), and \b CLIB_GLOB,
- *  where \a pattern is assumed to be a glob pattern (see the GLib
- *  documentation for details of the glob syntax applicable).
- *
  *  \warning The #CLibSymbol instances in the \b GList returned belong
  *  to the component library, and should be considered constants; they
  *  should not be manipulated or free()'d.  On the other hand, the \b
