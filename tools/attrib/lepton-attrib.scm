@@ -1842,6 +1842,7 @@ failure."
 
   (unless (string= (pointer->string *entry-str) cell-str)
     (set-sheet-data-changed *sheet-data TRUE))
+  (g_free *entry-str)
   ;; TRUE => allow deactivation.
   TRUE)
 
