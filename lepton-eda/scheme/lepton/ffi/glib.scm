@@ -115,14 +115,16 @@
 function CONVERT-FUNC to transform foreign pointers to Scheme
 objects.  If the optional argument FREE? is #t, GSLS is freed
 after conversion with g_slist_free_full()."
-  (let loop ((gsls gsls)
+  (define g_free (dynamic-func "g_free" libglib))
+
+  (let loop ((*gsls gsls)
              (ls '()))
-    (if (null-pointer? gsls)
-        (let ((g_free (dynamic-func "g_free" libglib)))
+    (if (null-pointer? *gsls)
+        (begin
           (when free? (g_slist_free_full gsls g_free))
           (reverse ls))
-        (loop (gslist-next gsls)
-              (cons (convert-func (gslist-data gsls)) ls)))))
+        (loop (gslist-next *gsls)
+              (cons (convert-func (gslist-data *gsls)) ls)))))
 
 
 ;;; GList: doubly-linked list.
