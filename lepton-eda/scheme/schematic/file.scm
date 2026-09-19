@@ -64,11 +64,10 @@
            (*message (if (true? active_backup)
                          (f_backup_message *backup-filename stat_error)
                          %null-pointer))
-           (flags (if (false? active_backup)
-                      F_OPEN_RC
-                      (if (true? (x_fileselect_load_backup *window *message))
-                          (logior F_OPEN_RC F_OPEN_FORCE_BACKUP)
-                          F_OPEN_RC))))
+           (flags (if (and (true? active_backup)
+                           (true? (x_fileselect_load_backup *window *message)))
+                      (logior F_OPEN_RC F_OPEN_FORCE_BACKUP)
+                      F_OPEN_RC)))
       (schematic_file_open *window
                            *page
                            *filename
