@@ -43,15 +43,6 @@
             attrib_get_window
             attrib_set_window
 
-            s_attrib_get_refdes
-            s_attrib_name_in_list
-
-            s_misc_remaining_string
-            set_verbose_mode
-            u_basic_breakup_string
-            verbose_done
-            verbose_print
-
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
@@ -185,17 +176,6 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
-
-;; s_attrib.c
-(define-lff s_attrib_get_refdes '* '(*))
-(define-lff s_attrib_name_in_list int '(* *))
-
-;;; s_misc.c
-(define-lff s_misc_remaining_string '* (list '* int int))
-(define-lff set_verbose_mode void '())
-(define-lff u_basic_breakup_string '* (list '* int int))
-(define-lff verbose_done void '())
-(define-lff verbose_print void '(*))
 
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))

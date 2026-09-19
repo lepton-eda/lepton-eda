@@ -1,9 +1,6 @@
 libleptonattrib/data/lepton-attrib.desktop.in
 tools/attrib/lepton-attrib.scm
-libleptonattrib/src/globals.c
 libleptonattrib/src/listsort.c
-libleptonattrib/src/s_attrib.c
-libleptonattrib/src/s_misc.c
 libleptonattrib/src/s_sheet_data.c
 libleptonattrib/src/s_string_list.c
 libleptonattrib/src/s_table.c

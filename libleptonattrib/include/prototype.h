@@ -39,10 +39,6 @@ attrib_set_window (GtkWidget* window_widget);
 int cmp(STRING_LIST *a, STRING_LIST *b);
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
 
-/* ------------- s_attrib.c ------------- */
-int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name);
-char *s_attrib_get_refdes(LeptonObject *object);
-
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA*
 attrib_sheet_data_new();
@@ -282,18 +278,6 @@ attrib_table_new (int rows);
 
 TABLE*
 attrib_table_row_new (int columns);
-
-/* ------------- s_misc.c ------------- */
-void set_verbose_mode ();
-void verbose_print (const char *string);
-void verbose_done(void);
-void verbose_reset_index(void);
-char *s_misc_remaining_string(char *string, char delimiter, int count);
-
-char*
-u_basic_breakup_string (char *string,
-                        char delimiter,
-                        int count);
 
 /* ------------- x_dialog.c ------------- */
 

@@ -14,12 +14,6 @@ If no \fIFILE\fRs to open are specified on the command line,
 
 .SH OPTIONS
 .TP 8
-\fB-q\fR, \fB--quiet\fR
-Quiet mode. Turn off all warnings/notes/messages.
-.TP 8
-\fB-v\fR, \fB--verbose\fR
-Verbose mode.  Output all diagnostic information.
-.TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
 .TP 8

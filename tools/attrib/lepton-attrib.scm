@@ -52,7 +52,6 @@
 
 (define %program-basename (basename (car (program-arguments))))
 (define %theme-icon-name "lepton-attrib")
-(define %verbose-mode #f)
 
 
 ;;; liblepton/include/liblepton/defines.h
@@ -104,7 +103,6 @@
 Presents schematic attributes in easy-to-edit spreadsheet format.
 
 Options:
-  -v, --verbose          Verbose mode on
   -V, --version          Show version information
   -h, --help             This help menu
 
@@ -127,7 +125,6 @@ Lepton EDA homepage: ~S
 
 (define (process-gafrc* name)
   (process-gafrc "lepton-attrib" name))
-
 
 ;;; Verifies the entire design by looping through all objects in
 ;;; the design looking for missing components, that is, those
@@ -178,6 +175,18 @@ failure."
 
 (define (visibility->symbol visible?)
   (if (= visible? VISIBLE) #t #f))
+
+
+(define (str-attrib-name *name-value)
+  (define str (pointer->string *name-value))
+  (false-if-exception
+   (string-trim (string-take str (string-index str #\=)))))
+
+
+(define (str-attrib-value *name-value)
+  (define str (pointer->string *name-value))
+  (false-if-exception
+   (string-trim (substring str (1+ (string-index str #\=))))))
 
 
 ;;; Attaches an attribute produced from NAME-VALUE-PAIR to
@@ -245,12 +254,10 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name
-                      (u_basic_breakup_string *old-attrib-text
-                                              (char->integer #\=)
-                                              0)))
-                (if (string= (pointer->string *old-attrib-name)
-                             (pointer->string *new-attrib-name))
+                     (old-attrib-name (str-attrib-name *old-attrib-text)))
+                (if (and old-attrib-name
+                         (string= old-attrib-name
+                                  (pointer->string *new-attrib-name)))
                     ;; Create attrib=value text string.
                     (let ((*new-attrib-text
                            (string->pointer
@@ -263,11 +270,9 @@ failure."
                       (unless (= show-name-value LEAVE_NAME_VALUE_ALONE)
                         (lepton_text_object_set_show *attrib show-name-value))
                       ;; We are done -- leave.
-                      (g_free *old-attrib-text)
-                      (g_free *old-attrib-name))
+                      (g_free *old-attrib-text))
                     (begin
                       (g_free *old-attrib-text)
-                      (g_free *old-attrib-name)
                       (loop (cdr *attrib-ls)))))
               (loop (cdr *attrib-ls)))))))
 
@@ -294,12 +299,10 @@ failure."
               ;; Found an attribute.
               (let* ((*old-attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*old-attrib-name
-                      (u_basic_breakup_string *old-attrib-text
-                                              (char->integer #\=)
-                                              0)))
-                (if (string= (pointer->string *old-attrib-name)
-                             (pointer->string *attrib-name))
+                     (old-attrib-name (str-attrib-name *old-attrib-text)))
+                (if (and old-attrib-name
+                         (string= old-attrib-name
+                                  (pointer->string *attrib-name)))
                     ;; We've found the attrib.  Delete it and then
                     ;; return.
                     (let ((*active-page
@@ -307,11 +310,9 @@ failure."
                       (lepton_object_delete *attrib)
                       (lepton_page_set_changed *active-page 1)
                       ;; We are done -- leave.
-                      (g_free *old-attrib-text)
-                      (g_free *old-attrib-name))
+                      (g_free *old-attrib-text))
                     (begin
                       (g_free *old-attrib-text)
-                      (g_free *old-attrib-name)
                       (loop (cdr *attrib-ls)))))
 
               (loop (cdr *attrib-ls)))))))
@@ -321,7 +322,8 @@ failure."
 (define (string-list-id *ls *str)
   (let loop ((count 0)
              (*list-element *ls))
-    (if (null-pointer? *list-element)
+    (if (or (null-pointer? *str)
+            (null-pointer? *list-element))
         ;; Return code when string is not in master list.
         -1
         (if (string= (pointer->string
@@ -331,6 +333,99 @@ failure."
 
             (loop (1+ count)
                   (attrib_string_list_get_next *list-element))))))
+
+
+;;; Detects "name" in STRING_LIST.
+;;;
+;;; This function is passed a STRING_LIST of name=value pairs
+;;; *NAME-VALUE-LIST, and NAME.  Returns #t if the name is in the
+;;; STRING_LIST, otherwise it returns #f.
+(define (name-in-list? *name-value-list name)
+  (let loop ((*item *name-value-list))
+    (and (not (null-pointer? *item))
+         (let ((*name-value (attrib_string_list_get_data *item)))
+           (if (null-pointer? *name-value)
+               (loop (attrib_string_list_get_next *item))
+               (let ((found-name (str-attrib-name *name-value)))
+                 (or (and found-name
+                          (string= found-name name))
+                     (loop (attrib_string_list_get_next *item)))))))))
+
+
+
+(define (object-refdes *object)
+  ;; Try to get the refdes.
+  (define *temp-refdes
+    (lepton_attrib_search_object_attribs_by_name
+     *object
+     (string->pointer "refdes")
+     0))
+
+  (if (null-pointer? *temp-refdes)
+      ;; Check the deprecated 'uref' attribute.
+      (let ((*temp-uref
+             (lepton_attrib_search_object_attribs_by_name
+              *object
+              (string->pointer "uref")
+              0)))
+        (if (not (null-pointer? *temp-uref))
+            (begin
+              (format (current-error-port) (G_ "WARNING: "))
+              (format (current-error-port)
+                      (G_ "Found uref=~S, uref= is deprecated, please use refdes=\n")
+                      (pointer->string *temp-uref))
+              *temp-uref)
+            (begin
+              ;; Didn't find refdes.  Report error to log.
+              (log! 'debug
+                    "component-refdes(): Found non-graphical component with no refdes: component basename = ~S"
+                    (pointer->string (lepton_component_object_get_basename *object)))
+              %null-pointer)))
+
+      *temp-refdes))
+
+
+;;; Locates the refdes associated with *OBJECT.  For normal
+;;; components, the function returns a pointer to a string
+;;; containing the refdes, or NULL if no refdes is found.  If the
+;;; component is slotted, it returns a reference designator of the
+;;; form "REFDES (slot SLOT)".  If no refdes is found, it returns
+;;; NULL.
+(define (component-refdes *object)
+  (define *refdes (object-refdes *object))
+
+  (if (null-pointer? *refdes)
+      *refdes
+
+      ;; Now append .slot to refdes if part is slotted.  Find out
+      ;; if this is a multislotted component.
+      (let ((*numslots-value
+             (lepton_attrib_search_object_attribs_by_name
+              *object
+              (string->pointer "numslots")
+              0)))
+        (if (null-pointer? *numslots-value)
+            ;; Return refdes as is.
+            *refdes
+            (let* ((*slot-object (bytevector->pointer
+                                  (make-bytevector (sizeof '*)) 0))
+                   (*slot-value (lepton_slot_search *object *slot-object)))
+              ;; This is a slotted component.  Append slot number
+              ;; to refdes.  Mark component as slotted only if it
+              ;; has a "slot" attribute.
+              (if (null-pointer? *slot-value)
+                  ;; Return refdes as is.
+                  *refdes
+                  ;; The value will be freed in external
+                  ;; functions, so let's avoid double free by
+                  ;; using g_strdup() here as Scheme frees its
+                  ;; pointers automatically.
+                  (g_strdup
+                   (string->pointer
+                    (format #f
+                            (G_ "~A (slot ~A)")
+                            (pointer->string *refdes)
+                            (pointer->string *slot-value))))))))))
 
 
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
@@ -384,30 +479,24 @@ failure."
                 (not (null-pointer? (lepton_object_get_text *attrib))))
        (let* ((*old-name-value-pair
                (g_strdup (lepton_text_object_get_string *attrib)))
-              (*old-attrib-name
-               (u_basic_breakup_string *old-name-value-pair
-                                       (char->integer #\=)
-                                       0))
-              (old-attrib-name (if (null-pointer? *old-attrib-name)
-                                   ""
-                                   (pointer->string *old-attrib-name))))
+              (old-attrib-name (str-attrib-name *old-name-value-pair)))
          ;; Found a name=value attribute pair.
 
          ;; Don't put "refdes" or "slot" into list.
          ;; Don't put old name=value pair into list if a
          ;; new one is already in there.
-         (when (and (not (string= old-attrib-name "refdes"))
+         (when (and old-attrib-name
+                    (not (string= old-attrib-name "refdes"))
                     (not (string= old-attrib-name "net"))
                     (not (string= old-attrib-name "slot"))
-                    (false? (s_attrib_name_in_list
-                             *new-component-attrib-pair-list
-                             *old-attrib-name)))
+                    (not (name-in-list?
+                          *new-component-attrib-pair-list
+                          old-attrib-name)))
            (s_string_list_add_item *complete-component-attrib-list
                                    *count
                                    *old-name-value-pair))
 
-         (g_free *old-name-value-pair)
-         (g_free *old-attrib-name))))
+         (g_free *old-name-value-pair))))
    (glist->list (lepton_object_get_attribs *object) identity))
 
   ;; Now the main business of this function: updating the attribs
@@ -425,28 +514,29 @@ failure."
       (unless (null-pointer? *local-list)
         ;; Now get the old attrib name & value from
         ;; *complete-component-attrib-list and value from object.
-        (let* ((*old-attrib-name
-                (u_basic_breakup_string
-                 (attrib_string_list_get_data *local-list)
-                 (char->integer #\=)
-                 0))
+        (let* ((old-attrib-name
+                (str-attrib-name (attrib_string_list_get_data *local-list)))
                (*old-attrib-value
-                (lepton_attrib_search_attached_attribs_by_name
-                 *object
-                 *old-attrib-name
-                 0))
+                (if old-attrib-name
+                    (lepton_attrib_search_attached_attribs_by_name
+                     *object
+                     (string->pointer old-attrib-name)
+                     0)
+                    %null-pointer))
                ;; Next try to get this attrib from
                ;; *new-component-attrib-list.
+               (new-attrib-name
+                (str-attrib-name
+                 (attrib_string_list_get_data *local-list)))
                (*new-attrib-name
-                (u_basic_breakup_string
-                 (attrib_string_list_get_data *local-list)
-                 (char->integer #\=)
-                 0))
+                (if new-attrib-name
+                    (string->pointer new-attrib-name)
+                    %null-pointer))
                ;; Now get row and column where this new attrib
                ;; lives.  Then get visibility of the new attrib
                ;; stored in the component table We'll need this
                ;; later.
-               (*refdes (g_strdup (s_attrib_get_refdes *object)))
+               (*refdes (g_strdup (component-refdes *object)))
                (row (string-list-id
                      (attrib_sheet_data_get_component_list
                       *sheet-data)
@@ -455,33 +545,29 @@ failure."
                         (attrib_sheet_data_get_component_attrib_list
                          *sheet-data)
                         *new-attrib-name))
-               (*new-attrib-value
+               (new-attrib-value
                 ;; If attribute has been deleted from the sheet,
                 ;; here is where we detect that.  The attrib will
                 ;; be deleted below.
-                (if (or (= row -1)
-                        (= column -1))
-                    %null-pointer
-                    (if (true? (s_string_list_in_list
-                                *new-component-attrib-pair-list
-                                (attrib_string_list_get_data
-                                 *local-list)))
-                        (s_misc_remaining_string
-                         (attrib_string_list_get_data *local-list)
-                         (char->integer #\=)
-                         1)
-                        %null-pointer)))
+                (and (not (or (= row -1)
+                              (= column -1)))
+                     (true? (s_string_list_in_list
+                             *new-component-attrib-pair-list
+                             (attrib_string_list_get_data
+                              *local-list)))
+                     (str-attrib-value
+                      (attrib_string_list_get_data *local-list))))
                ;; We need a better place to get this info since the
                ;; TABLE can be out of date.
                (visibility
-                (if (null-pointer? *new-attrib-value)
+                (if (not new-attrib-value)
                     0
                     (attrib_table_get_visibility
                      (attrib_sheet_data_get_component_table *sheet-data)
                      row
                      column)))
                (show-name-value
-                (if (null-pointer? *new-attrib-value)
+                (if (not new-attrib-value)
                     0
                     (attrib_table_get_show_name_value
                      (attrib_sheet_data_get_component_table *sheet-data)
@@ -491,30 +577,32 @@ failure."
 
           ;; Four cases to consider: Case 1.
           (if (and (not (null-pointer? *old-attrib-value))
-                   (not (null-pointer? *new-attrib-value))
-                   (not (string-null? (pointer->string *new-attrib-value))))
+                   new-attrib-value
+                   (not (string-null? new-attrib-value)))
               ;; simply write new attrib into place of old one.
               (replace-attrib *object
                               *new-attrib-name
-                              *new-attrib-value
+                              (string->pointer new-attrib-value)
                               visibility
                               show-name-value)
 
               ;; Four cases to consider: Case 2.
               (if (and (not (null-pointer? *old-attrib-value))
-                       (null-pointer? *new-attrib-value))
+                       (not new-attrib-value))
                   ;; Remove attrib from component.
-                  (remove-attrib *toplevel *object *old-attrib-name)
+                  (remove-attrib *toplevel
+                                 *object
+                                 (string->pointer old-attrib-name))
                   ;; Four cases to consider: Case 3.
                   (if (and (null-pointer? *old-attrib-value)
-                           (not (null-pointer? *new-attrib-value))
+                           new-attrib-value
                            ;; One last sanity check, then add attrib.
-                           (not (string-null? (pointer->string *new-attrib-value))))
+                           (not (string-null? new-attrib-value)))
                       ;; Add new attrib to component.
                       (let ((name-value-pair
-                             (string-append (pointer->string *new-attrib-name)
+                             (string-append new-attrib-name
                                             "="
-                                            (pointer->string *new-attrib-value))))
+                                            new-attrib-value)))
                         (add-object-attrib (pointer->object *object)
                                            name-value-pair
                                            visibility
@@ -527,9 +615,6 @@ failure."
           ;; Toggle attribute visibility and name/value setting.
 
           ;; free everything and iterate
-          (g_free *new-attrib-name)
-          (g_free *new-attrib-value)
-          (g_free *old-attrib-name)
           (g_free *old-attrib-value)
           (loop (attrib_string_list_get_next *local-list)))))))
 
@@ -595,7 +680,7 @@ failure."
              ;; Ignore graphical components.
              (g_free *graphical)
 
-             (let ((*temp-uref (s_attrib_get_refdes *object)))
+             (let ((*temp-uref (component-refdes *object)))
                (if (not (null-pointer? *temp-uref))
                    (let ((*new-component-attrib-pair-list
                           (make-attrib-pair
@@ -758,54 +843,44 @@ failure."
     (unless (null-pointer? *local-list)
       (let* ((*new-name-value-pair
               (g_strdup (attrib_string_list_get_data *local-list)))
-             (*new-attrib-name
-              (u_basic_breakup_string *new-name-value-pair
-                                      (char->integer #\=)
-                                      0))
-             (*value (u_basic_breakup_string *new-name-value-pair
-                                             (char->integer #\=)
-                                             1))
-             (*new-attrib-value
-              (if (or (null-pointer? *value)
-                      (string-null? (pointer->string *value)))
-                  (begin
-                    (g_free *value)
-                    ;; s_misc_remaining_string() doesn't return
-                    ;; NULL for empty substring.
-                    %null-pointer)
-                  *value))
+             (new-attrib-name (str-attrib-name *new-name-value-pair))
+             (new-attrib-value (str-attrib-value *new-name-value-pair))
              (*old-attrib-value
-              (lepton_attrib_search_attached_attribs_by_name
-               *pin
-               *new-attrib-name
-               0)))
+              (if new-attrib-name
+                  (lepton_attrib_search_attached_attribs_by_name
+                   *pin
+                   (string->pointer new-attrib-name)
+                   0)
+                  %null-pointer)))
         ;; Four cases to consider: Case 1: old and new attribs exist
         (if (and (not (null-pointer? *old-attrib-value))
-                 (not (null-pointer? *new-attrib-value))
-                 (not (string-null? (pointer->string *new-attrib-value))))
+                 new-attrib-value
+                 (not (string-null? new-attrib-value)))
             ;; Simply write new attrib into place of old one.
             (replace-attrib *pin
-                            *new-attrib-name
-                            *new-attrib-value
+                            (string->pointer new-attrib-name)
+                            (string->pointer new-attrib-value)
                             LEAVE_VISIBILITY_ALONE
                             LEAVE_NAME_VALUE_ALONE)
             ;; Four cases to consider: Case 2: old attrib exists, new one
             ;; doesn't.
             (if (and (not (null-pointer? *old-attrib-value))
-                     (null-pointer? *new-attrib-value))
+                     (not new-attrib-value))
                 ;; Remove attrib from pin.
-                (remove-attrib *toplevel *pin *new-attrib-name)
+                (remove-attrib *toplevel
+                               *pin
+                               (string->pointer new-attrib-name))
                 ;; Four cases to consider: Case 3: No old attrib, new one
                 ;; exists.
                 (if (and (null-pointer? *old-attrib-value)
-                         (not (null-pointer? *new-attrib-value))
+                         new-attrib-value
                          ;; One last sanity check.
-                         (not (string-null? (pointer->string *new-attrib-value))))
+                         (not (string-null? new-attrib-value)))
                     ;; Add new attrib to pin.
                     (let ((name-value-pair
-                           (string-append (pointer->string *new-attrib-name)
+                           (string-append new-attrib-name
                                           "="
-                                          (pointer->string *new-attrib-value))))
+                                          new-attrib-value)))
                       (add-object-attrib (pointer->object *pin)
                                          name-value-pair
                                          INVISIBLE
@@ -816,8 +891,6 @@ failure."
 
         ;; Free everything and iterate.
         (g_free *new-name-value-pair)
-        (g_free *new-attrib-name)
-        (g_free *new-attrib-value)
         (g_free *old-attrib-value)
         (loop (attrib_string_list_get_next *local-list))))))
 
@@ -843,7 +916,7 @@ failure."
        ;;      refdes:pinnumber
        ;;  4.  Stick the attribs into the LeptonToplevel data
        ;;      structure.
-       (let ((*temp-uref (s_attrib_get_refdes *object)))
+       (let ((*temp-uref (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (unless (null-pointer? *temp-uref)
            (for-each
@@ -1898,9 +1971,6 @@ Please check your design.")))
 (define (add-components *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master component list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -1908,9 +1978,8 @@ Please check your design.")))
      ;; Only process if this is a component with attributes.
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer? (lepton_object_get_attribs *object))))
-       (verbose_print (string->pointer " C"))
 
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
@@ -1928,9 +1997,6 @@ Please check your design.")))
 (define (add-component-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master component attrib list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -1939,7 +2005,6 @@ Please check your design.")))
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
-       (verbose_print (string->pointer " C"))
 
        ;; Iterate through all attribs found on component.
        (for-each
@@ -1949,24 +2014,18 @@ Please check your design.")))
             ;; Found an attribute.
             (let* ((*attrib-text
                     (g_strdup (lepton_text_object_get_string *attrib)))
-                   (*attrib-name
-                    (u_basic_breakup_string *attrib-text
-                                            (char->integer #\=)
-                                            0)))
+                   (name (str-attrib-name *attrib-text)))
               ;; Don't include "refdes" or "slot" because they
               ;; form the row name.  Also don't include "net" per
               ;; bug found by Steve W. -- 4.3.2007, SDB.
-              (when (and (not (string= (pointer->string *attrib-name)
-                                       "refdes"))
-                         (not (string= (pointer->string *attrib-name)
-                                       "net"))
-                         (not (string= (pointer->string *attrib-name)
-                                       "slot")) )
+              (when (and name
+                         (not (string= name "refdes"))
+                         (not (string= name "net"))
+                         (not (string= name "slot")))
                 (s_string_list_add_item
                  (attrib_sheet_data_get_component_attrib_list *sheet-data)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
-                 *attrib-name))
-              (g_free *attrib-name)
+                 (string->pointer name)))
               (g_free *attrib-text))))
         ;; This has a side effect.  Why?
         (glist->list (lepton_object_get_attribs *object) identity))))
@@ -2001,15 +2060,12 @@ Please check your design.")))
 (define (add-pins *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master pin list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
    (lambda (*object)
      (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (if (not (null-pointer? *temp-refdes))
              ;; Now iterate through lower level objects looking
@@ -2068,15 +2124,12 @@ Please check your design.")))
 (define (add-pin-attribs *objects)
   (define *sheet-data (attrib_get_sheet_data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start master pin attrib list creation.\n")))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
    (lambda (*object)
      (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Make sure object component has a refdes.
          (unless (null-pointer? *temp-refdes)
            ;; Now iterate through lower level objects looking for
@@ -2095,27 +2148,20 @@ Please check your design.")))
                      (let* ((*attrib-text
                              (g_strdup
                               (lepton_text_object_get_string *pin-attrib)))
-                            (*attrib-name
-                             (u_basic_breakup_string *attrib-text
-                                                     (char->integer #\=)
-                                                     0))
-                            (*attrib-value (s_misc_remaining_string *attrib-text
-                                                                    (char->integer #\=)
-                                                                    1)))
+                            (attrib-name (str-attrib-name *attrib-text))
+                            (attrib-value (str-attrib-value *attrib-text)))
                        ;; Don't include "pinnumber" because it is
                        ;; already in other master list.  Also
                        ;; guard against pathalogical symbols which
                        ;; have non-attrib text inside pins.
-                       (when (and (not (string= (pointer->string *attrib-name)
-                                                "pinnumber"))
-                                  (not (null-pointer? *attrib-value)))
+                       (when (and attrib-name
+                                  (not (string= attrib-name "pinnumber"))
+                                  attrib-value)
                          (s_string_list_add_item
                           (attrib_sheet_data_get_pin_attrib_list *sheet-data)
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
-                          *attrib-name))
+                          (string->pointer attrib-name)))
 
-                       (g_free *attrib-value)
-                       (g_free *attrib-name)
                        (g_free *attrib-text))))
 
                  (glist->list (lepton_object_get_attribs *child-object)
@@ -2137,9 +2183,6 @@ Please check your design.")))
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start internal component TABLE creation\n")))
-
   ;; Iterate through all objects found on page.
   (for-each
    (lambda (*object)
@@ -2148,9 +2191,8 @@ Please check your design.")))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
        ;; Don't process part if it lacks a refdes.
-       (let ((*temp-refdes (g_strdup (s_attrib_get_refdes *object))))
+       (let ((*temp-refdes (g_strdup (component-refdes *object))))
          (when (not (null-pointer? *temp-refdes))
-           (verbose_print (string->pointer " C"))
            ;; Having found a component, we loop over all attribs
            ;; in this component, and stick them into cells in the
            ;; table.
@@ -2162,14 +2204,8 @@ Please check your design.")))
                 ;; Found an attribute.
                 (let* ((*attrib-text
                         (g_strdup (lepton_text_object_get_string *attrib)))
-                       (*attrib-name
-                        (u_basic_breakup_string *attrib-text
-                                                (char->integer #\=)
-                                                0))
-                       (*attrib-value
-                        (s_misc_remaining_string *attrib-text
-                                                 (char->integer #\=)
-                                                 1))
+                       (name (str-attrib-name *attrib-text))
+                       (attrib-value (str-attrib-value *attrib-text))
                        (old-visibility
                         (if (true? (lepton_text_object_is_visible *attrib))
                             VISIBLE
@@ -2180,12 +2216,10 @@ Please check your design.")))
                   ;; Don't include "refdes" or "slot" because they
                   ;; form the row name.  Also don't include "net"
                   ;; per bug found by Steve W.  4.3.2007 -- SDB.
-                  (when (and (not (string= (pointer->string *attrib-name)
-                                           "refdes"))
-                             (not (string= (pointer->string *attrib-name)
-                                           "net"))
-                             (not (string= (pointer->string *attrib-name)
-                                           "slot")))
+                  (when (and name
+                             (not (string= name "refdes"))
+                             (not (string= name "net"))
+                             (not (string= name "slot")))
                     ;; Get row and column where to put this
                     ;; attrib.
 
@@ -2197,7 +2231,7 @@ Please check your design.")))
                           (column
                            (string-list-id
                             (attrib_sheet_data_get_component_attrib_list *sheet-data)
-                            *attrib-name)))
+                            (string->pointer name))))
                       (if (or (= row -1)
                               (= column -1))
                           (begin
@@ -2225,11 +2259,13 @@ Please check your design.")))
                             (attrib_table_set_column_name *component-table
                                                           row
                                                           column
-                                                          *attrib-name)
+                                                          (string->pointer name))
                             (attrib_table_set_attrib_value *component-table
                                                            row
                                                            column
-                                                           *attrib-value)
+                                                           (if attrib-value
+                                                               (string->pointer attrib-value)
+                                                               %null-pointer))
                             (attrib_table_set_visibility *component-table
                                                          row
                                                          column
@@ -2238,14 +2274,10 @@ Please check your design.")))
                                                               row
                                                               column
                                                               old-show-name-value)))))
-                  (g_free *attrib-name)
-                  (g_free *attrib-text)
-                  (g_free *attrib-value))))
+                  (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 ;;; Process *OBJECTS and add attribs of net ones to the net table.
@@ -2266,7 +2298,6 @@ Please check your design.")))
                *object
                (string->pointer "netname")
                0)))
-         (verbose_print (string->pointer " N"))
 
          ;; Having found a net, we stick it into the table.
          (for-each
@@ -2277,16 +2308,11 @@ Please check your design.")))
               ;; Found an attribute.
               (let* ((*attrib-text
                       (g_strdup (lepton_text_object_get_string *attrib)))
-                     (*attrib-name
-                      (u_basic_breakup_string *attrib-text
-                                              (char->integer #\=)
-                                              0))
-                     (*attrib-value
-                      (s_misc_remaining_string *attrib-text
-                                               (char->integer #\=)
-                                               1)))
+                     (name (str-attrib-name *attrib-text))
+                     (attrib-value (str-attrib-value *attrib-text)))
                 ;; Don't include "netname".
-                (unless (string= (pointer->string *attrib-name) "netname")
+                (when (and name
+                           (not (string= name "netname")))
                   (let ((row
                          (string-list-id
                           (attrib_sheet_data_get_net_list *sheet-data)
@@ -2294,7 +2320,7 @@ Please check your design.")))
                         (column
                          (string-list-id
                           (attrib_sheet_data_get_net_attrib_list *sheet-data)
-                          *attrib-name)))
+                          (string->pointer name))))
                     ;; Get row and column where to put this attrib.
                     (attrib_table_set_row *net-table
                                           row
@@ -2311,19 +2337,17 @@ Please check your design.")))
                     (attrib_table_set_column_name *net-table
                                                   row
                                                   column
-                                                  *attrib-name)
+                                                  (string->pointer name))
                     (attrib_table_set_attrib_value *net-table
                                                    row
                                                    column
-                                                   *attrib-value)))
-                (g_free *attrib-name)
-                (g_free *attrib-text)
-                (g_free *attrib-value))))
+                                                   (if attrib-value
+                                                       (string->pointer attrib-value)
+                                                       %null-pointer))))
+                (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 ;;; Process *OBJECTS and add attribs of pin ones to the pin table.
@@ -2332,9 +2356,6 @@ Please check your design.")))
   (define *pin-table
     (attrib_sheet_data_get_pin_table *sheet-data))
 
-  (when %verbose-mode
-    (format #t (G_ "Start internal pin TABLE creation\n")))
-
   ;; Iterate through all objects found on page.
   (for-each
    (lambda (*object)
@@ -2342,7 +2363,7 @@ Please check your design.")))
      (when (and (true? (lepton_object_is_component *object))
                 (not (null-pointer?
                       (lepton_object_get_attribs *object))))
-       (let ((*temp-refdes (s_attrib_get_refdes *object)))
+       (let ((*temp-refdes (component-refdes *object)))
          ;; Don't process part if it lacks a refdes.
          (when (not (null-pointer? *temp-refdes))
            ;; Now iterate through lower level objects looking for
@@ -2371,18 +2392,12 @@ Please check your design.")))
                        (let* ((*attrib-text
                                (g_strdup
                                 (lepton_text_object_get_string *pin-attrib)))
-                              (*attrib-name
-                               (u_basic_breakup_string *attrib-text
-                                                       (char->integer #\=)
-                                                       0))
-                              (*attrib-value
-                               (s_misc_remaining_string *attrib-text
-                                                        (char->integer #\=)
-                                                        1)))
+                              (name (str-attrib-name *attrib-text))
+                              (attrib-value (str-attrib-value *attrib-text)))
 
-                         (when (and (not (string= (pointer->string *attrib-name)
-                                                  "pinnumber"))
-                                    (not (null-pointer? *attrib-value)))
+                         (when (and name
+                                    (not (string= name "pinnumber"))
+                                    attrib-value)
                            ;; Don't include "pinnumber" because it
                            ;; is already in other master list.
                            ;; Also must ensure that value is
@@ -2398,7 +2413,7 @@ Please check your design.")))
                                   (string-list-id
                                    (attrib_sheet_data_get_pin_attrib_list
                                     *sheet-data)
-                                   *attrib-name)))
+                                   (string->pointer name))))
                              ;; Sanity check.
                              (if (or (= row -1)
                                      (= column -1))
@@ -2424,14 +2439,14 @@ Please check your design.")))
                                    (attrib_table_set_column_name *pin-table
                                                                  row
                                                                  column
-                                                                 *attrib-name)
+                                                                 (string->pointer name))
                                    (attrib_table_set_attrib_value *pin-table
                                                                   row
                                                                   column
-                                                                  *attrib-value)))))
-                         (g_free *attrib-name)
-                         (g_free *attrib-text)
-                         (g_free *attrib-value))))
+                                                                  (if attrib-value
+                                                                      (string->pointer attrib-value)
+                                                                      %null-pointer))))))
+                         (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
                                  *child-object)
@@ -2444,9 +2459,7 @@ Please check your design.")))
 
          (g_free *temp-refdes))))
 
-   (glist->list *objects identity))
-
-  (verbose_done))
+   (glist->list *objects identity)))
 
 
 (define (activate *app *toplevel)
@@ -2569,23 +2582,18 @@ Please check your design.")))
 
 
 (let* ((option-spec '((help (single-char #\h))
-                      (verbose (single-char #\v))
                       (version (single-char #\V))))
 
        (options (getopt-long (program-arguments) option-spec))
        (help (option-ref options 'help #f))
        (version (option-ref options 'version #f))
-       (files (option-ref options '() '()))
-       (verbose? (option-ref options 'verbose #f)))
+       (files (option-ref options '() '())))
 
   (when help (usage))
   ;; Output version to stdout and exit, if requested.
   (when version
     (display-lepton-version #:print-name #t #:copyright #t)
     (exit 0))
-  (when verbose?
-    (set_verbose_mode)
-    (set! %verbose-mode #t))
 
   (receive (readable-files unreadable-files)
       (partition file-readable? files)
