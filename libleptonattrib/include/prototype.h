@@ -20,6 +20,9 @@ attrib_set_sheet_data (SHEET_DATA *sheet_data);
 GtkSheet*
 attrib_get_sheet (int i);
 
+void
+attrib_set_sheet (int i,
+                  GtkSheet* sheet);
 int
 attrib_get_sheets_number ();
 
@@ -158,8 +161,6 @@ attrib_sheet_data_get_changed (const SHEET_DATA* data);
 void
 attrib_sheet_data_set_changed (SHEET_DATA* data,
                                int changed);
-
-void s_sheet_data_set_changed (SHEET_DATA* data, int changed);
 
 
 /* ------------- s_string_list.c ------------- */
@@ -301,8 +302,10 @@ void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
 
 /* ------------- x_gtksheet.c ------------- */
-void x_gtksheet_set_saved();
-void x_gtksheet_init();
+void
+attrib_gtksheet_show_entry (GtkWidget *widget,
+                            gpointer data);
+
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
@@ -330,8 +333,5 @@ attrib_window_set_menu_callback (char *name,
                                  GCallback callback);
 GtkWidget*
 separator_new ();
-
-void
-x_window_set_title_changed (int changed);
 
 G_END_DECLS
