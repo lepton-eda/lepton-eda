@@ -1140,17 +1140,16 @@ the snap grid size should be set to 100")))
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
-  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (*child (open-subschematic (pointer->window *window)
-                                    filename
-                                    (pointer->page *parent)
-                                    page-control
-                                    scheme-error-handler)))
+  (let ((*child (open-subschematic (pointer->window *window)
+                                   filename
+                                   (pointer->page *parent)
+                                   page-control
+                                   scheme-error-handler)))
     (and *child
          (if (null-pointer? *child)
              ;; Launch the error dialog.
              (begin
-               (hierarchy-down-error-dialog filename *error)
+               (hierarchy-down-error-dialog filename %null-pointer)
                #f)
              ;; Open the child page.
              (begin
