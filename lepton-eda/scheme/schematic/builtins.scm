@@ -30,7 +30,6 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
-  #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
@@ -1115,46 +1114,30 @@ the snap grid size should be set to 100")))
   (undo-save-state)
   (window-set-toplevel-page! window parent))
 
-(define (hierarchy-down-error-dialog filename *error)
-  (let ((secondary-message
-         (failed-to-descend-error filename
-                                  (if (or (null-pointer? *error)
-                                          (null-pointer? (dereference-pointer *error)))
-                                      (G_ "Unknown error.")
-                                      (gerror-message (dereference-pointer *error))))))
-
-    (schematic-error-dialog (G_ "Failed to descend hierarchy.")
-                            #:secondary-text secondary-message)
-
-    (g_clear_error *error)))
 
 (define (hierarchy-down-filename filename *window *parent page-control)
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
-  (let ((*child (open-subschematic (pointer->window *window)
-                                   filename
-                                   (pointer->page *parent)
-                                   page-control)))
-    (and *child
-         (if (null-pointer? *child)
-             ;; Launch the error dialog.
-             (begin
-               (hierarchy-down-error-dialog filename %null-pointer)
-               #f)
-             ;; Open the child page.
-             (begin
-               ;; Notify window that another page became active.
-               (schematic_window_page_changed *window)
-               (if use-tabs?
-                   ;; Tabbed GUI is used.  Create a tab for every
-                   ;; subpage loaded.  Zoom will be set in
-                   ;; set-tab-page!().
-                   (*window-set-current-page! *window *child)
-                   ;; open-subschematic() does not zoom the loaded
-                   ;; page, so zoom it here.
-                   (zoom-child-page *window *parent *child))
-               *child)))))
+  (let ((child-page
+         (open-subschematic (pointer->window *window)
+                            filename
+                            (pointer->page *parent)
+                            page-control)))
+    (and child-page
+         ;; Open the child page.
+         (let ((*child (page->pointer child-page)))
+           ;; Notify window that another page became active.
+           (schematic_window_page_changed *window)
+           (if use-tabs?
+               ;; Tabbed GUI is used.  Create a tab for every
+               ;; subpage loaded.  Zoom will be set in
+               ;; set-tab-page!().
+               (*window-set-current-page! *window *child)
+               ;; open-subschematic() does not zoom the loaded
+               ;; page, so zoom it here.
+               (zoom-child-page *window *parent *child))
+           *child))))
 
 (define (hierarchy-filenames->pages filenames *window *parent)
   (let loop ((page-control 0)

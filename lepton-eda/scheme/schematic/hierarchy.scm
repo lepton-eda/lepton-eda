@@ -106,7 +106,7 @@
                        (lepton_page_set_up
                         *page
                         (lepton_page_get_pid *parent-page))
-                       *page)))
+                       (pointer->page *page))))
 
               ;; Page has been found.
               (let ((*forebear-page (get-forebear *parent-page *found-page)))
@@ -123,8 +123,7 @@
                       (unless (zero? page-control)
                         (lepton_page_set_page_control *found-page page-control))
                       (lepton_page_set_up *found-page (lepton_page_get_pid *parent-page))
-                      ;; return
-                      *found-page)))))
+                      (pointer->page *found-page))))))
         (scm-error 'missing-resource
                    #f
                    (G_ "Schematic ~S not found in source library.")

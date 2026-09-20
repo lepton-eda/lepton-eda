@@ -71,17 +71,10 @@
                 (append-map source-attribs
                             (filter component?
                                     (page-contents page)))))
-
-  (define (filename-page filename parent-page)
-    (let ((*child-page
-           (open-subschematic window filename parent-page 0)))
-      (and *child-page
-           (not (null-pointer? *child-page))
-           (pointer->page *child-page))))
-
   (define (child-pages page)
-    (map
-     (lambda (filename) (filename-page filename page))
+    (filter-map
+     (lambda (filename)
+       (open-subschematic window filename page 0))
      (page-source-filenames page)))
 
   (define (traverse-pages new-pages visited-pages)
