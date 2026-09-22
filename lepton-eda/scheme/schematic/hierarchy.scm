@@ -153,4 +153,4 @@
      *symbol-page
      (lepton_page_get_pid (page->pointer (object-page component)))))
 
-  *symbol-page)
+  (pointer->page *symbol-page))
