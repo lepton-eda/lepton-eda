@@ -130,20 +130,28 @@
             (g_free *clib-filename)
             clib-filename))))
 
-  (and filename
-       (let* ((*toplevel (schematic_window_get_toplevel *window))
-              (*filename (string->pointer (canonicalize-path filename)))
-              (*page (lepton_toplevel_search_page *toplevel *filename)))
-         (if (null-pointer? *page)
-             ;; Create a new page.
-             (let ((page (open-schematic filename)))
-               (and page
-                    (let ((*page (page->pointer page)))
-                      (schematic_hierarchy_increment_page_control_counter)
-                      (lepton_page_set_page_control
-                       *page
-                       (schematic_hierarchy_get_page_control_counter))
-                      *page)))
+  (define *symbol-page
+    (and filename
+         (let* ((*toplevel (schematic_window_get_toplevel *window))
+                (*filename (string->pointer (canonicalize-path filename)))
+                (*page (lepton_toplevel_search_page *toplevel *filename)))
+           (if (null-pointer? *page)
+               ;; Create a new page.
+               (let ((page (open-schematic filename)))
+                 (and page
+                      (let ((*page (page->pointer page)))
+                        (schematic_hierarchy_increment_page_control_counter)
+                        (lepton_page_set_page_control
+                         *page
+                         (schematic_hierarchy_get_page_control_counter))
+                        *page)))
 
-             ;; Return existing page.
-             *page))))
+               ;; Return existing page.
+               *page))))
+
+  (when *symbol-page
+    ;; Change link to parent page since we can come here from any
+    ;; parent and must come back to the same page.
+    (lepton_page_set_up *symbol-page (lepton_page_get_pid *parent)))
+
+  *symbol-page)
