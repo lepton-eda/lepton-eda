@@ -1215,6 +1215,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
+  (define window (current-window))
   (define *window (*current-window))
 
   (match (filter component? (page-selection (active-page)))
@@ -1226,9 +1227,9 @@ the snap grid size should be set to 100")))
        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
          (unless (null-pointer? *sym)
            (let* ((*parent (schematic_window_get_active_page *window))
-                  (*page (open-symbol *window *sym *parent)))
+                  (*page (open-symbol window *sym *parent)))
              (when *page
-               (window-set-toplevel-page! (current-window) (pointer->page *page))
+               (window-set-toplevel-page! window (pointer->page *page))
 
                ;; Get active page once again, it should now be the symbol
                ;; page.
