@@ -119,8 +119,9 @@
     scheme-error-handler))
 
 
-(define (open-symbol window *symbol *parent)
+(define (open-symbol window *symbol parent-page)
   (define *window (check-window window 1))
+  (define *parent (check-page parent-page 3))
   (define filename
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
       (if (null-pointer? *clib-filename)
