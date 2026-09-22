@@ -37,5 +37,6 @@
 
 
 (define (load-schematic *toplevel *page *filename flags **gerror)
-  (true?
-   (f_open *toplevel *page *filename flags **gerror)))
+  (and (true?
+        (f_open *toplevel *page *filename flags **gerror))
+       *page))
