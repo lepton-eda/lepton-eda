@@ -32,11 +32,6 @@
 
   #:export (hierarchy-down-schematic))
 
-(define (delete-page *toplevel *page)
-  (lepton_page_delete *toplevel *page)
-  #f)
-
-
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
 ;;; the currently open pages.  The function returns the found or
@@ -73,26 +68,22 @@
                                                          (string->pointer normalized-filename))))
           (if (null-pointer? *found-page)
               ;; Subschematic has not been found, let's create a new page.
-              (let* ((*new-page (lepton_page_new *toplevel
-                                                (string->pointer source-filename)))
-                     (*page
-                      (open-schematic *new-page %null-pointer)))
-                (if *page
-                    (begin
-                      (if (zero? page-control)
-                          (begin
-                            (schematic_hierarchy_increment_page_control_counter)
-                            (lepton_page_set_page_control
-                             *page
-                             (schematic_hierarchy_get_page_control_counter)))
-                          (lepton_page_set_page_control *page page-control))
+              (let ((*page (open-schematic (string->pointer source-filename)
+                                           %null-pointer)))
+                (and *page
+                     (begin
+                       (if (zero? page-control)
+                           (begin
+                             (schematic_hierarchy_increment_page_control_counter)
+                             (lepton_page_set_page_control
+                              *page
+                              (schematic_hierarchy_get_page_control_counter)))
+                           (lepton_page_set_page_control *page page-control))
 
-                      (lepton_page_set_up
-                       *page
-                       (lepton_page_get_pid *parent-page))
-                      *page)
-
-                    (delete-page *toplevel *new-page)))
+                       (lepton_page_set_up
+                        *page
+                        (lepton_page_get_pid *parent-page))
+                       *page)))
 
               ;; Page has been found.
               (let ((*forebear-page (get-forebear *parent-page *found-page)))

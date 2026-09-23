@@ -26,6 +26,8 @@
   #:use-module (lepton file)
   #:use-module (lepton gerror)
   #:use-module (lepton log)
+  #:use-module (lepton toplevel foreign)
+  #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
   #:use-module (schematic window global)
@@ -33,7 +35,7 @@
   #:export (open-schematic))
 
 
-(define (open-schematic *page **gerror)
+(define (open-schematic *filename **gerror)
   (define (gerror-error *error)
     (unless (null-pointer? *error)
       (let ((*err (dereference-pointer *error)))
@@ -43,6 +45,8 @@
             (log! 'warning "~A" message))))))
 
   (define *window (*current-window))
+  (define *toplevel (toplevel->pointer (current-toplevel)))
+  (define *page (lepton_page_new *toplevel *filename))
   (define *full-filename (lepton_page_get_filename *page))
 
   (let* ((*tmp-error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
@@ -66,8 +70,14 @@
       (when (true? active_backup)
         (g_string_free *message TRUE))
 
-      (load-schematic (lepton_page_get_toplevel *page)
-                      *page
-                      *full-filename
-                      flags
-                      **gerror))))
+      (let ((*updated-page
+             (load-schematic *toplevel
+                             *page
+                             *full-filename
+                             flags
+                             **gerror)))
+        (or *updated-page
+            ;; Loading failed.  Delete the new page.
+            (begin
+              (lepton_page_delete *toplevel *page)
+              #f))))))

@@ -1216,11 +1216,6 @@ the snap grid size should be set to 100")))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
-(define (delete-page *toplevel *page)
-  (lepton_page_delete *toplevel *page)
-  #f)
-
-
 (define (hierarchy-down-symbol *window *symbol *parent)
   (define filename
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
@@ -1238,19 +1233,15 @@ the snap grid size should be set to 100")))
               (*page (lepton_toplevel_search_page *toplevel *filename)))
          (if (null-pointer? *page)
              ;; Create a new page.
-             (let* ((*new-page (lepton_page_new *toplevel *filename))
-                    (*page (open-schematic *new-page %null-pointer)))
-
-                (if *page
+             (let ((*page (open-schematic *filename %null-pointer)))
+               (and *page
                     (begin
                       (schematic_hierarchy_increment_page_control_counter)
                       (lepton_page_set_page_control
                        *page
                        (schematic_hierarchy_get_page_control_counter))
-                      *page)
+                      *page)))
 
-                    (delete-page *toplevel *new-page))
-               *page)
              ;; Return existing page.
              *page))))
 
