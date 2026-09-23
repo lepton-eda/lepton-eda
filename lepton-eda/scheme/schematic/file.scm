@@ -43,10 +43,10 @@
             (log! 'warning "~A" message))))))
 
   (define *window (*current-window))
-  (define *filename (lepton_page_get_filename *page))
+  (define *full-filename (lepton_page_get_filename *page))
 
   (let* ((*tmp-error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (active_backup (f_has_active_autosave *filename *tmp-error))
+         (active_backup (f_has_active_autosave *full-filename *tmp-error))
          (stat_error (if (null-pointer? (dereference-pointer *tmp-error))
                          FALSE
                          TRUE)))
@@ -54,7 +54,7 @@
     (gerror-error *tmp-error)
 
     (let* ((*backup-filename (if (true? active_backup)
-                                 (f_get_autosave_filename *filename)
+                                 (f_get_autosave_filename *full-filename)
                                  %null-pointer))
            (*message (if (true? active_backup)
                          (f_backup_message *backup-filename stat_error)
@@ -68,6 +68,6 @@
 
       (load-schematic (lepton_page_get_toplevel *page)
                       *page
-                      *filename
+                      *full-filename
                       flags
                       **gerror))))
