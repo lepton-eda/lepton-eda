@@ -1081,17 +1081,7 @@ tab notebook.  Returns a C TabInfo structure."
     (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
            (*new-page (open-schematic *filename *error)))
       ;; Try to load *FILENAME.
-      (if (not *new-page)
-          ;; Loading failed.  Report the error and open a new
-          ;; blank page.
-          (let ((error-message (gerror-error-message *error)))
-            (log! 'warning "~A" error-message)
-            (schematic_dialog_load_file_error *main-window
-                                              *filename
-                                              (string->pointer error-message))
-            ;; Open and return a new blank page.
-            (window-make-untitled-page *window))
-
+      (if *new-page
           (begin
             ;; Switch to the new page.  NOTE: the call sets
             ;; the current active page of toplevel.
@@ -1104,7 +1094,18 @@ tab notebook.  Returns a C TabInfo structure."
             ;; Save current state of the page.
             (o_undo_savestate *window *new-page FALSE)
             ;; Return new page.
-            *new-page))))
+            *new-page)
+
+          ;; Loading failed.  Report the error and open a new
+          ;; blank page.
+          (let ((error-message (gerror-error-message *error)))
+            (log! 'warning "~A" error-message)
+            (schematic_dialog_load_file_error
+             *main-window
+             *filename
+             (string->pointer error-message))
+            ;; Open and return a new blank page.
+            (window-make-untitled-page *window)))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
