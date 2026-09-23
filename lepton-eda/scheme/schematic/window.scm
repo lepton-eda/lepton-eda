@@ -1077,35 +1077,34 @@ tab notebook.  Returns a C TabInfo structure."
   (define *main-window (schematic_window_get_main_window *window))
 
   (define (*make-new-page)
-    (let ((*new-page (lepton_page_new *toplevel *filename)))
-      ;; Switch to the new page.  NOTE: the call sets
-      ;; the current active page of toplevel.
-      (window-set-toplevel-page! (pointer->window *window)
-                                 (pointer->page *new-page))
-      (load-schematic-message)
-      (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
-        ;; Try to load *FILENAME.
-        (if (not (open-schematic *new-page *error))
-            (let ((error-message (gerror-error-message *error)))
-              (log! 'warning "~A" error-message)
-              (schematic_dialog_load_file_error *main-window
-                                                *filename
-                                                (string->pointer error-message))
-              ;; Loading failed.  Delete the page and open a new
-              ;; blank one.
-              (lepton_page_delete *toplevel *new-page)
-              ;; Open and return a new blank page.
-              (window-make-untitled-page *window))
+    (load-schematic-message)
+    (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+           (*new-page (open-schematic *filename *error)))
+      ;; Try to load *FILENAME.
+      (if (not *new-page)
+          ;; Loading failed.  Report the error and open a new
+          ;; blank page.
+          (let ((error-message (gerror-error-message *error)))
+            (log! 'warning "~A" error-message)
+            (schematic_dialog_load_file_error *main-window
+                                              *filename
+                                              (string->pointer error-message))
+            ;; Open and return a new blank page.
+            (window-make-untitled-page *window))
 
-            (begin
-              ;; Run hook.
-              (run-hook open-page-hook (pointer->page *new-page))
-              ;; Add page file name to the recent file list.
-              (recent_manager_add *window (lepton_page_get_filename *new-page))
-              ;; Save current state of the page.
-              (o_undo_savestate *window *new-page FALSE)
-              ;; Return new page.
-              *new-page)))))
+          (begin
+            ;; Switch to the new page.  NOTE: the call sets
+            ;; the current active page of toplevel.
+            (window-set-toplevel-page! (pointer->window *window)
+                                       (pointer->page *new-page))
+            ;; Run hook.
+            (run-hook open-page-hook (pointer->page *new-page))
+            ;; Add page file name to the recent file list.
+            (recent_manager_add *window (lepton_page_get_filename *new-page))
+            ;; Save current state of the page.
+            (o_undo_savestate *window *new-page FALSE)
+            ;; Return new page.
+            *new-page))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
@@ -1545,17 +1544,14 @@ for *PAGE page will be created and set active."
   (define (lookup-toplevel-page filename)
     (lepton_toplevel_search_page *toplevel
                                  (string->pointer filename)))
-  (define (delete-page *page)
-    (lepton_page_delete *toplevel *page)
-    %null-pointer)
 
   (define (open-new-page filename)
-    (let* ((*new-page
-            (lepton_page_new *toplevel (string->pointer filename)))
-           (success? (open-schematic *new-page **err)))
-      (if success?
-          (update-page-control-counter *new-page)
-          (delete-page *new-page))))
+    (let* ((*page (open-schematic (string->pointer filename) **err)))
+      (if *page
+          (begin
+            (update-page-control-counter *page)
+            *page)
+          %null-pointer)))
 
   (let ((source-filename (get-source-library-file filename)))
     (if source-filename
