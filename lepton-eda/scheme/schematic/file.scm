@@ -36,14 +36,14 @@
 
 
 (define (open-schematic *filename)
-  (define (get-gerror-message *error)
-    (let ((*err (dereference-pointer *error)))
+  (define (get-gerror-message **err)
+    (let ((*err (dereference-pointer **err)))
       (unless (null-pointer? *err)
         (gerror-message *err))))
 
-  (define (gerror-error-message *error)
-    (let ((msg (get-gerror-message *error)))
-      (g_clear_error *error)
+  (define (gerror-error-message **err)
+    (let ((msg (get-gerror-message **err)))
+      (g_clear_error **err)
       msg))
 
   (define (gerror-error *error)
