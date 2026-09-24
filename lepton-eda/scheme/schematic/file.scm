@@ -38,8 +38,8 @@
 (define (open-schematic *filename)
   (define (get-gerror-message **err)
     (let ((*err (dereference-pointer **err)))
-      (unless (null-pointer? *err)
-        (gerror-message *err))))
+      (and (not (null-pointer? *err))
+           (gerror-message *err))))
 
   (define (gerror-error-message **err)
     (let ((msg (get-gerror-message **err)))
@@ -92,10 +92,11 @@
             ;; Loading failed.  Report the error and delete the
             ;; new page.
             (let ((error-message (gerror-error-message **gerror)))
-              (log! 'warning "~A" error-message)
-              (schematic_dialog_load_file_error
-               *main-window
-               *filename
-               (string->pointer error-message))
+              (when error-message
+                (log! 'warning "~A" error-message)
+                (schematic_dialog_load_file_error
+                 *main-window
+                 *filename
+                 (string->pointer error-message)))
               (lepton_page_delete *toplevel *page)
               #f))))))
