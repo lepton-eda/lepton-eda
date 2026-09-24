@@ -25,6 +25,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton file)
   #:use-module (lepton gerror)
+  #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
@@ -91,12 +92,12 @@
         (or *updated-page
             ;; Loading failed.  Report the error and delete the
             ;; new page.
-            (let ((error-message (gerror-error-message **gerror)))
-              (when error-message
-                (log! 'warning "~A" error-message)
-                (schematic_dialog_load_file_error
-                 *main-window
-                 *filename
-                 (string->pointer error-message)))
+            (let ((error-message (or (gerror-error-message **gerror)
+                                     (G_ "Unknown error"))))
+              (log! 'warning "~A" error-message)
+              (schematic_dialog_load_file_error
+               *main-window
+               *filename
+               (string->pointer error-message))
               (lepton_page_delete *toplevel *page)
               #f))))))
