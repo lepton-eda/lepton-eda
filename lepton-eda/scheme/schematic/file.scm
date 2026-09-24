@@ -47,13 +47,10 @@
       (g_clear_error **err)
       msg))
 
-  (define (gerror-error *error)
-    (unless (null-pointer? *error)
-      (let ((*err (dereference-pointer *error)))
-        (unless (null-pointer? *err)
-          (let ((message (gerror-message *err)))
-            (g_clear_error *error)
-            (log! 'warning "~A" message))))))
+  (define (report-autosave-backup-error **err)
+    (let ((message (gerror-error-message **err)))
+      (and message
+           (log! 'warning "~A" message))))
 
   (define *window (*current-window))
   (define *toplevel (toplevel->pointer (current-toplevel)))
@@ -66,8 +63,7 @@
          (stat_error (if (null-pointer? (dereference-pointer *tmp-error))
                          FALSE
                          TRUE)))
-
-    (gerror-error *tmp-error)
+    (report-autosave-backup-error *tmp-error)
 
     (let* ((*backup-filename (if (true? active_backup)
                                  (f_get_autosave_filename *full-filename)
