@@ -1064,22 +1064,9 @@ tab notebook.  Returns a C TabInfo structure."
             (G_ "Loading schematic ~S")
             (pointer->string *filename))))
 
-  (define (get-gerror-message *error)
-    (let ((*err (dereference-pointer *error)))
-      (unless (null-pointer? *err)
-        (gerror-message *err))))
-
-  (define (gerror-error-message *error)
-    (let ((msg (get-gerror-message *error)))
-      (g_clear_error *error)
-      msg))
-
-  (define *main-window (schematic_window_get_main_window *window))
-
   (define (*make-new-page)
     (load-schematic-message)
-    (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-           (*new-page (open-schematic *filename *error)))
+    (let ((*new-page (open-schematic *filename)))
       ;; Try to load *FILENAME.
       (if *new-page
           (begin
@@ -1096,16 +1083,8 @@ tab notebook.  Returns a C TabInfo structure."
             ;; Return new page.
             *new-page)
 
-          ;; Loading failed.  Report the error and open a new
-          ;; blank page.
-          (let ((error-message (gerror-error-message *error)))
-            (log! 'warning "~A" error-message)
-            (schematic_dialog_load_file_error
-             *main-window
-             *filename
-             (string->pointer error-message))
-            ;; Open and return a new blank page.
-            (window-make-untitled-page *window)))))
+          ;; Loading failed.  Open a new blank page.
+          (window-make-untitled-page *window))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
@@ -1547,7 +1526,7 @@ for *PAGE page will be created and set active."
                                  (string->pointer filename)))
 
   (define (open-new-page filename)
-    (let* ((*page (open-schematic (string->pointer filename) **err)))
+    (let ((*page (open-schematic (string->pointer filename))))
       (if *page
           (begin
             (update-page-control-counter *page)

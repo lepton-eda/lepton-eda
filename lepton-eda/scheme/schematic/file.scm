@@ -35,7 +35,17 @@
   #:export (open-schematic))
 
 
-(define (open-schematic *filename **gerror)
+(define (open-schematic *filename)
+  (define (get-gerror-message *error)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (gerror-message *err))))
+
+  (define (gerror-error-message *error)
+    (let ((msg (get-gerror-message *error)))
+      (g_clear_error *error)
+      msg))
+
   (define (gerror-error *error)
     (unless (null-pointer? *error)
       (let ((*err (dereference-pointer *error)))
@@ -46,6 +56,7 @@
 
   (define *window (*current-window))
   (define *toplevel (toplevel->pointer (current-toplevel)))
+  (define *main-window (schematic_window_get_main_window *window))
   (define *page (lepton_page_new *toplevel *filename))
   (define *full-filename (lepton_page_get_filename *page))
 
@@ -70,14 +81,21 @@
       (when (true? active_backup)
         (g_string_free *message TRUE))
 
-      (let ((*updated-page
-             (load-schematic *toplevel
-                             *page
-                             *full-filename
-                             flags
-                             **gerror)))
+      (let* ((**gerror
+              (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+             (*updated-page (load-schematic *toplevel
+                                            *page
+                                            *full-filename
+                                            flags
+                                            **gerror)))
         (or *updated-page
-            ;; Loading failed.  Delete the new page.
-            (begin
+            ;; Loading failed.  Report the error and delete the
+            ;; new page.
+            (let ((error-message (gerror-error-message **gerror)))
+              (log! 'warning "~A" error-message)
+              (schematic_dialog_load_file_error
+               *main-window
+               *filename
+               (string->pointer error-message))
               (lepton_page_delete *toplevel *page)
               #f))))))
