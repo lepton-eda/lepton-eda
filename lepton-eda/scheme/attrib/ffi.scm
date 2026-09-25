@@ -25,18 +25,27 @@
 
   #:export (gtk_sheet_set_active_cell
             gtk_sheet_cell_get_text
+            gtk_sheet_column_button_add_label
             gtk_sheet_column_button_get_label
+            gtk_sheet_column_button_justify
             gtk_sheet_delete_columns
             gtk_sheet_get_active_cell
+            gtk_sheet_get_entry
+            gtk_sheet_get_entry_text
             gtk_sheet_get_selection
             gtk_sheet_insert_columns
+            gtk_sheet_new
+            gtk_sheet_row_button_add_label
+            gtk_sheet_row_button_justify
+            gtk_sheet_set_locked
             gtk_sheet_unselect_range
 
             attrib_get_notebook
             attrib_set_notebook
             attrib_get_sheet
-            attrib_set_sheet_data
+            attrib_set_sheet
             attrib_get_sheet_data
+            attrib_set_sheet_data
             attrib_get_sheets_number
             attrib_get_toplevel
             attrib_set_toplevel
@@ -46,13 +55,13 @@
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
+            attrib_gtksheet_show_entry
             x_gtksheet_add_cell_item
             x_gtksheet_add_col_labels
             x_gtksheet_add_row_labels
             x_gtksheet_set_cell_text_color
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
-            x_gtksheet_init
 
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
@@ -92,7 +101,6 @@
             attrib_sheet_data_set_pin_list
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
-            s_sheet_data_set_changed
 
             attrib_string_list_get_data
             attrib_string_list_get_next
@@ -158,19 +166,28 @@
 
 (define-lff-lib gtk_sheet_set_active_cell int (list '* int int) libgtksheet)
 (define-lff-lib gtk_sheet_cell_get_text '* (list '* int int) libgtksheet)
+(define-lff-lib gtk_sheet_column_button_add_label void (list '* int '*) libgtksheet)
 (define-lff-lib gtk_sheet_column_button_get_label '* (list '* int) libgtksheet)
+(define-lff-lib gtk_sheet_column_button_justify void (list '* int int) libgtksheet)
 (define-lff-lib gtk_sheet_delete_columns void (list '* unsigned-int unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_get_active_cell void '(* * *) libgtksheet)
+(define-lff-lib gtk_sheet_get_entry '* '(*) libgtksheet)
+(define-lff-lib gtk_sheet_get_entry_text '* '(*) libgtksheet)
 (define-lff-lib gtk_sheet_get_selection int '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_insert_columns void (list '* unsigned-int unsigned-int) libgtksheet)
+(define-lff-lib gtk_sheet_new '* (list unsigned-int unsigned-int '*) libgtksheet)
+(define-lff-lib gtk_sheet_row_button_add_label void (list '* int '*) libgtksheet)
+(define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
+(define-lff-lib gtk_sheet_set_locked void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
 
 ;;; attrib.c
 (define-lff attrib_get_notebook '* '())
 (define-lff attrib_set_notebook void '(*))
 (define-lff attrib_get_sheet '* (list int))
-(define-lff attrib_set_sheet_data void '(*))
+(define-lff attrib_set_sheet void (list int '*))
 (define-lff attrib_get_sheet_data '* '())
+(define-lff attrib_set_sheet_data void '(*))
 (define-lff attrib_get_sheets_number int '())
 (define-lff attrib_get_toplevel '* '())
 (define-lff attrib_set_toplevel void '(*))
@@ -182,13 +199,13 @@
 (define-lff x_dialog_unimplemented_feature void '())
 
 ;;; x_gtksheet.c
+(define-lff attrib_gtksheet_show_entry void '(* *))
 (define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))
 (define-lff x_gtksheet_add_col_labels void (list '* int '*))
 (define-lff x_gtksheet_add_row_labels void (list '* int '*))
 (define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
-(define-lff x_gtksheet_init void '())
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
@@ -229,7 +246,6 @@
 (define-lff attrib_sheet_data_set_pin_list void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
-(define-lff s_sheet_data_set_changed void (list '* int))
 
 ;;; s_string_list.c
 (define-lff attrib_string_list_get_data '* '(*))

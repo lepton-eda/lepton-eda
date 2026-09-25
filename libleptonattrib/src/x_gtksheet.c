@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,159 +56,6 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 #include "../include/gettext.h"
-
-static void show_entry(GtkWidget *widget, gpointer data);
-
-
-static gchar* current_cell_text = NULL;
-
-
-static gboolean
-on_activate (GtkSheet* sheet,
-             gint      row,
-             gint      column,
-             gpointer  data)
-{
-  current_cell_text = gtk_sheet_get_entry_text (sheet);
-
-  return FALSE; /* ignored */
-}
-
-
-static gboolean
-on_deactivate (GtkSheet* sheet,
-               gint      row,
-               gint      column,
-               gpointer  data)
-{
-  gchar* str = gtk_sheet_get_entry_text (sheet);
-
-  if (strcmp (str, current_cell_text) != 0)
-  {
-    s_sheet_data_set_changed (sheet_head, TRUE);
-  }
-
-  return TRUE; /* TRUE => allow deactivation */
-}
-
-
-/*! \brief Call it just after the sheet has been saved.
- *
- *  \par Function Description
- *
- *  Update the current_cell_text global variable, so that
- *  on_deactivate() handler won't mark the sheet as modified
- *  when the current cell is deactivated.
- *
- *  We need this to handle a particular use case:
- *  while editing text in a cell, instead of pressing Enter
- *  to commit the changes, the user presses Ctrl+S (Save).
- *  If we do not update current_cell_text after that, the
- *  consequent cell deactivation will mark the document as
- *  dirty, while it is, in fact, just has been saved.
- */
-void
-x_gtksheet_set_saved()
-{
-  current_cell_text = gtk_sheet_get_entry_text (sheets[0]);
-}
-
-
-/*! \brief Create the GtkSheet
- *
- * Creates and initializes the GtkSheet widget, which is the
- *         spreadsheet widget used for displaying the data.
- */
-void
-x_gtksheet_init()
-{
-  gint i;
-  const gchar *folder[]= {_("Components"),
-                          _("Nets"),
-                          _("Pins")};
-
-  /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
-
-  /* -----  Components  ----- */
-  if ((sheet_head->comp_count > 0) && (sheet_head->comp_attrib_count >0)) {
-    sheets[0] = (GtkSheet *) gtk_sheet_new((guint) sheet_head->comp_count, (guint) sheet_head->comp_attrib_count, _("Components"));
-  } else {
-    x_dialog_fatal_error(_("No components found in design.  Please check your schematic and try again!\n"), 1);
-  }
-
-
-  /* -----  Nets  ----- */
-  if ((sheet_head->net_count > 0) && (sheet_head->net_attrib_count >0)) {
-    sheets[1] = (GtkSheet *) gtk_sheet_new(sheet_head->net_count, sheet_head->net_attrib_count, _("Nets"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
-  } else {
-    sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, _("Nets"));
-    gtk_sheet_row_button_add_label(sheets[1], 0, _("TBD"));
-    gtk_sheet_row_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
-    gtk_sheet_column_button_add_label(sheets[1], 0, _("TBD"));
-    gtk_sheet_column_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
-    gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
-  }
-
-
-  /* -----  Pins  ----- */
-  if ((sheet_head->pin_count > 0) && (sheet_head->pin_attrib_count >0)) {
-    sheets[2] = (GtkSheet *) gtk_sheet_new(sheet_head->pin_count, sheet_head->pin_attrib_count, _("Pins"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);   /* disallow editing of attribs for now */
-  } else {
-    sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, _("Pins"));
-    gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);    /* disallow editing of attribs for now */
-  }
-
-
-  /* --- Finally stick labels on the notebooks holding the two sheets. --- */
-  for(i=0; i<NUM_SHEETS; i++){
-    if (sheets[i] != NULL) {  /* is this check needed?
-                               * Yes, it prevents us from segfaulting on empty nets sheet. */
-
-      GtkWidget* scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-
-      gtk_container_add( GTK_CONTAINER(scrolled_window), GTK_WIDGET(sheets[i]) );
-
-      /* First remove old notebook page.  I should probably do some checking here. */
-      if (notebook != NULL)
-        gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), i);
-
-
-      /* Then add new, updated notebook page */
-      label= gtk_label_new(folder[i]);
-
-      gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolled_window,
-                               GTK_WIDGET(label) );
-
-      gtk_widget_show( GTK_WIDGET(sheets[i]) );
-      gtk_widget_show( scrolled_window );
-      gtk_widget_show( GTK_WIDGET(notebook) );  /* show updated notebook  */
-
-
-      /*  "changed" signal raised when user changes anything in entry cell  */
-      /*  Note that the entry cell is the text entry field at the top of the
-       *  sheet's working area (like in MS E*cel).   I have removed this from
-       *  gattrib, but leave the code in just in case I want to put it back.  */
-      g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (sheets[i])),
-                        "changed", (GCallback) show_entry, NULL);
-
-
-      g_signal_connect (sheets[i],
-                        "activate",
-                        G_CALLBACK (&on_activate),
-                        NULL);
-
-      g_signal_connect (sheets[i],
-                        "deactivate",
-                        G_CALLBACK (&on_deactivate),
-                        NULL);
-
-    }
-  }
-}
-
-
 
 /*------------------------------------------------------------------*/
 /*! \brief Add row labels to GtkSheet
@@ -496,8 +343,9 @@ x_gtksheet_set_cell_text_color (GtkSheet *sheet,
  * \param widget
  * \param data
  */
-static void
-show_entry(GtkWidget *widget, gpointer data)
+void
+attrib_gtksheet_show_entry (GtkWidget *widget,
+                            gpointer data)
 {
  gchar *text;
  GtkSheet *sheet;
