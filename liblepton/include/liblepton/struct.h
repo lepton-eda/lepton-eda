@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -38,12 +38,14 @@ typedef struct st_conn LeptonConn;
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;
 
-/* Component library objects */
+/* Component library data */
+/* Component library source which may be a directory containing
+ * symbol files, a command in the system PATH that can generate
+ * the symbol data, or a Scheme function which can do likewise. */
 typedef struct _CLibSource CLibSource;
+/* The structure storing particular symbol data, namely its source
+ * as defined above and name. */
 typedef struct _CLibSymbol CLibSymbol;
-
-/* Component library search modes */
-typedef enum { CLIB_EXACT=0, CLIB_GLOB } CLibSearchMode;
 
 /* f_open() behaviour flags */
 typedef enum {
