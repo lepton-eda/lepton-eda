@@ -82,32 +82,32 @@
                       (build-filename *examples-dir* "4099.sym")
                       (build-filename *testdir* "4099.sym"))
     (test-assert
-        (string-contains <stderr>
-                         "\"device\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"footprint\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"author\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"documentation\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"description\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"numslots\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
     (test-assert
         (string-contains <stderr>
                          "\"symversion\" attribute missing."))
     (test-assert
-        (string-contains <stderr>
-                         "\"dist-license\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"dist-license\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"use-license\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"use-license\" attribute missing.")))
     (test-assert
         (not (string-contains <stderr>
                               "Note: use sym_width to adjust symbol width if texts overlap."))))
@@ -133,23 +133,23 @@
                       (build-filename *examples-dir* "AT90S8535_TQFP.sym")
                       (build-filename *testdir* "AT90S8535_TQFP.sym"))
     (test-assert
-        (string-contains <stderr>
-                         "\"device\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"footprint\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"author\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"documentation\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"description\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"numslots\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
     (test-assert
         (string-contains <stderr>
                          "\"symversion\" attribute missing."))
@@ -190,23 +190,23 @@
         (string-contains <stderr>
                          "Empty attribute \"dist-license=\" in the geda_attr section."))
     (test-assert
-        (string-contains <stderr>
-                         "\"device\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"footprint\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"author\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"documentation\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"description\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"numslots\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
     (test-assert
         (string-contains <stderr>
                          "\"symversion\" attribute missing."))
@@ -241,23 +241,23 @@
                       (build-filename *examples-dir* "test2.sym")
                       (build-filename *testdir* "test2.sym"))
     (test-assert
-        (string-contains <stderr>
-                         "\"device\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"footprint\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"author\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"documentation\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"description\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"numslots\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
     (test-assert
         (string-contains <stderr>
                          "\"symversion\" attribute missing."))
@@ -292,23 +292,23 @@
                       (build-filename *examples-dir* "test3.sym")
                       (build-filename *testdir* "test3.sym"))
     (test-assert
-        (string-contains <stderr>
-                         "\"device\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"footprint\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"author\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"documentation\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"description\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
     (test-assert
-        (string-contains <stderr>
-                         "\"numslots\" attribute missing."))
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
     (test-assert
         (string-contains <stderr>
                          "\"symversion\" attribute missing."))

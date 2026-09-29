@@ -1,4 +1,4 @@
-;;; Copyright (C) 2019-2025 Lepton EDA Contributors
+;;; Copyright (C) 2019-2026 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Werner Hoch
 ;;; Copyright (C) 2001,2002,2003,2004,2006,2007,2008 Werner Hoch <werner.ho@gmx.de>
@@ -1028,7 +1028,7 @@ which values are equal in terms of F-EQUAL?."
 
     (for-each
      (lambda (name)
-       (unless (assoc-ref name attributes)
+       (unless (assoc-ref attributes name)
          (warn-missing-attribute name)))
      single-attribute-warning)
 
