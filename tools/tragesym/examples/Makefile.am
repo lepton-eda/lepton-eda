@@ -10,7 +10,6 @@ nobase_example_DATA = \
 EXTRA_DIST = \
 	4099.src \
 	AT90S8535_TQFP.src \
-	alltest \
 	template.src \
 	template.ods \
 	test1.src \
