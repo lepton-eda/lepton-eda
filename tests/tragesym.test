@@ -47,3 +47,281 @@
   (test-assert (string-contains <stdout> "There is NO WARRANTY")))
 
 (test-end "lepton-tragesym --version")
+
+
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "tragesym-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
+(define *examples-dir*
+  (build-filename *abs-top-srcdir* "tools" "tragesym" "examples"))
+
+
+(test-begin "lepton-tragesym 4099")
+
+(test-group-with-cleanup "lepton-tragesym 4099"
+  (test-setup)
+
+  (chdir *testdir*)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-tragesym
+                      (build-filename *examples-dir* "4099.src")
+                      "4099.sym")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-run-success "diff"
+                      (build-filename *examples-dir* "4099.sym")
+                      (build-filename *testdir* "4099.sym"))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
+    (test-assert
+        (string-contains <stderr>
+                         "\"symversion\" attribute missing."))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"dist-license\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"use-license\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "Note: use sym_width to adjust symbol width if texts overlap."))))
+
+  (test-teardown))
+
+(test-end "lepton-tragesym 4099")
+
+
+(test-begin "lepton-tragesym AT90S8535_TQFP")
+
+(test-group-with-cleanup "lepton-tragesym AT90S8535_TQFP"
+  (test-setup)
+
+  (chdir *testdir*)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-tragesym
+                      (build-filename *examples-dir* "AT90S8535_TQFP.src")
+                      "AT90S8535_TQFP.sym")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-run-success "diff"
+                      (build-filename *examples-dir* "AT90S8535_TQFP.sym")
+                      (build-filename *testdir* "AT90S8535_TQFP.sym"))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
+    (test-assert
+        (string-contains <stderr>
+                         "\"symversion\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"dist-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"use-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "Note: use sym_width to adjust symbol width if texts overlap.")))
+
+  (test-teardown))
+
+(test-end "lepton-tragesym AT90S8535_TQFP")
+
+
+(test-begin "lepton-tragesym test1")
+
+(test-group-with-cleanup "lepton-tragesym test1"
+  (test-setup)
+
+  (chdir *testdir*)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-tragesym
+                      (build-filename *examples-dir* "test1.src")
+                      "test1.sym")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-run-success "diff"
+                      (build-filename *examples-dir* "test1.sym")
+                      (build-filename *testdir* "test1.sym"))
+    (test-assert
+        (string-contains <stderr>
+                         "Empty attribute \"use-license\" in the geda_attr section."))
+    (test-assert
+        (string-contains <stderr>
+                         "Empty attribute \"dist-license=\" in the geda_attr section."))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
+    (test-assert
+        (string-contains <stderr>
+                         "\"symversion\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"dist-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"use-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "Note: use sym_width to adjust symbol width if texts overlap.")))
+
+  (test-teardown))
+
+(test-end "lepton-tragesym test1")
+
+
+(test-begin "lepton-tragesym test2")
+
+(test-group-with-cleanup "lepton-tragesym test2"
+  (test-setup)
+
+  (chdir *testdir*)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-tragesym
+                      (build-filename *examples-dir* "test2.src")
+                      "test2.sym")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-run-success "diff"
+                      (build-filename *examples-dir* "test2.sym")
+                      (build-filename *testdir* "test2.sym"))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
+    (test-assert
+        (string-contains <stderr>
+                         "\"symversion\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"dist-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"use-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "Note: use sym_width to adjust symbol width if texts overlap.")))
+
+  (test-teardown))
+
+(test-end "lepton-tragesym test2")
+
+
+(test-begin "lepton-tragesym test3")
+
+(test-group-with-cleanup "lepton-tragesym test3"
+  (test-setup)
+
+  (chdir *testdir*)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-tragesym
+                      (build-filename *examples-dir* "test3.src")
+                      "test3.sym")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-run-success "diff"
+                      (build-filename *examples-dir* "test3.sym")
+                      (build-filename *testdir* "test3.sym"))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"device\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"footprint\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"author\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"documentation\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"description\" attribute missing.")))
+    (test-assert
+        (not (string-contains <stderr>
+                              "\"numslots\" attribute missing.")))
+    (test-assert
+        (string-contains <stderr>
+                         "\"symversion\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"dist-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "\"use-license\" attribute missing."))
+    (test-assert
+        (string-contains <stderr>
+                         "Note: use sym_width to adjust symbol width if texts overlap.")))
+
+  (test-teardown))
+
+(test-end "lepton-tragesym test3")
