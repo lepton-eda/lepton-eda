@@ -45,6 +45,8 @@
             g_slist_prepend
             g_slist_reverse
 
+            g_string_free
+
             ;; Mock glib functions.
 
             gslist-data
@@ -90,6 +92,7 @@
 (define-lff g_slist_prepend '* '(* *))
 (define-lff g_slist_reverse '* '(*))
 
+(define-lff g_string_free '* (list '* int))
 
 ;;; GSList: singly-linked list.
 

@@ -53,6 +53,7 @@
   #:use-module (schematic canvas)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic file)
   #:use-module (schematic dialog)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
@@ -1232,10 +1233,10 @@ the snap grid size should be set to 100")))
          (if (null-pointer? *page)
              ;; Create a new page.
              (let ((*page (lepton_page_new *toplevel *filename)))
-               (schematic_file_open *window
-                                    *page
-                                    (lepton_page_get_filename *page)
-                                    %null-pointer)
+               (open-schematic *window
+                               *page
+                               (lepton_page_get_filename *page)
+                               %null-pointer)
 
                (schematic_hierarchy_increment_page_control_counter)
                (lepton_page_set_page_control *page

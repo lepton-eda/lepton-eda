@@ -34,10 +34,6 @@ static GtkFileFilter* filter_all      = NULL;
  */
 static GtkFileFilter* filter_last_opendlg = NULL;
 
-static int
-x_fileselect_load_backup (SchematicWindow *w_current,
-                          GString *message);
-
 static void
 add_filter (GtkFileChooser* filechooser,
             GtkFileFilter** filter,
@@ -508,7 +504,7 @@ schematic_file_select_dialog_overwrite_file (GtkWidget *parent,
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
-static int
+int
 x_fileselect_load_backup (SchematicWindow *w_current,
                           GString *message)
 {
@@ -548,45 +544,6 @@ x_fileselect_load_backup (SchematicWindow *w_current,
     return FALSE;
   }
 }
-
-
-gboolean
-schematic_file_open (SchematicWindow *w_current,
-                     LeptonPage *page,
-                     const gchar *filename,
-                     GError **err)
-{
-  g_return_val_if_fail ((w_current != NULL), FALSE);
-
-  GError *tmp_err = NULL;
-  gboolean stat_error = FALSE;
-  gint flags = F_OPEN_RC;
-  gboolean active_backup = f_has_active_autosave (filename, &tmp_err);
-
-  if (tmp_err != NULL) {
-    g_warning ("%s\n", tmp_err->message);
-    g_error_free (tmp_err);
-    stat_error = TRUE;
-  }
-
-  if (active_backup) {
-    gchar *backup_filename = f_get_autosave_filename (filename);
-    GString *message = f_backup_message (backup_filename, stat_error);
-    if (x_fileselect_load_backup (w_current, message)) {
-      flags |= F_OPEN_FORCE_BACKUP;
-    }
-
-    g_string_free (message, TRUE);
-    g_free (backup_filename);
-  }
-
-  return f_open (schematic_window_get_toplevel (w_current),
-                 page,
-                 filename,
-                 flags,
-                 err);
-}
-
 
 
 /*! \brief Add a file chooser filter.
