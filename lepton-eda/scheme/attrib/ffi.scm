@@ -63,6 +63,8 @@
             x_gtksheet_get_max_col
             x_gtksheet_get_min_col
 
+            listsort
+
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
             attrib_sheet_data_set_changed
@@ -71,7 +73,6 @@
             attrib_sheet_data_get_component_attrib_counter_address
             attrib_sheet_data_get_component_attrib_list
             attrib_sheet_data_set_component_attrib_list
-            attrib_sheet_data_get_component_attrib_list_address
             attrib_sheet_data_get_component_count
             attrib_sheet_data_set_component_count
             attrib_sheet_data_get_component_counter_address
@@ -102,21 +103,14 @@
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
 
+            attrib_string_list_new
             attrib_string_list_get_data
+            attrib_string_list_set_data
             attrib_string_list_get_next
-            s_string_list_new
-            s_string_list_add_item
-            s_string_list_delete_item
-            s_string_list_duplicate_string_list
-            s_string_list_find_in_list
-            s_string_list_get_data_at_index
-            s_string_list_in_list
-            s_string_list_sort_master_comp_list
-            s_string_list_sort_master_comp_attrib_list
-            s_string_list_sort_master_net_list
-            s_string_list_sort_master_net_attrib_list
-            s_string_list_sort_master_pin_list
-            s_string_list_sort_master_pin_attrib_list
+            attrib_string_list_set_next
+            attrib_string_list_set_pos
+            attrib_string_list_get_prev
+            attrib_string_list_set_prev
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -207,6 +201,9 @@
 (define-lff x_gtksheet_get_max_col int '(*))
 (define-lff x_gtksheet_get_min_col int '(*))
 
+;;; listsort.c
+(define-lff listsort '* (list '* int int))
+
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
 (define-lff attrib_sheet_data_get_changed int '(*))
@@ -216,7 +213,6 @@
 (define-lff attrib_sheet_data_get_component_attrib_counter_address '* '(*))
 (define-lff attrib_sheet_data_get_component_attrib_list '* '(*))
 (define-lff attrib_sheet_data_set_component_attrib_list void '(* *))
-(define-lff attrib_sheet_data_get_component_attrib_list_address '* '(*))
 (define-lff attrib_sheet_data_get_component_count int '(*))
 (define-lff attrib_sheet_data_set_component_count void (list '* int))
 (define-lff attrib_sheet_data_get_component_counter_address '* '(*))
@@ -248,21 +244,14 @@
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
 
 ;;; s_string_list.c
+(define-lff attrib_string_list_new '* '())
 (define-lff attrib_string_list_get_data '* '(*))
+(define-lff attrib_string_list_set_data void '(* *))
 (define-lff attrib_string_list_get_next '* '(*))
-(define-lff s_string_list_new '* '())
-(define-lff s_string_list_add_item void '(* * *))
-(define-lff s_string_list_delete_item void '(* * *))
-(define-lff s_string_list_duplicate_string_list '* '(*))
-(define-lff s_string_list_find_in_list int '(* *))
-(define-lff s_string_list_get_data_at_index '* (list '* int))
-(define-lff s_string_list_in_list int '(* *))
-(define-lff s_string_list_sort_master_comp_list void '())
-(define-lff s_string_list_sort_master_comp_attrib_list void '())
-(define-lff s_string_list_sort_master_net_list void '())
-(define-lff s_string_list_sort_master_net_attrib_list void '())
-(define-lff s_string_list_sort_master_pin_list void '())
-(define-lff s_string_list_sort_master_pin_attrib_list void '())
+(define-lff attrib_string_list_set_next void '(* *))
+(define-lff attrib_string_list_set_pos void (list '* int))
+(define-lff attrib_string_list_get_prev '* '(*))
+(define-lff attrib_string_list_set_prev void '(* *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))

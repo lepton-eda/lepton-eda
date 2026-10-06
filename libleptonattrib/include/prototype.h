@@ -160,33 +160,33 @@ attrib_sheet_data_set_changed (SHEET_DATA* data,
 
 
 /* ------------- s_string_list.c ------------- */
+STRING_LIST*
+attrib_string_list_new ();
+
 char*
 attrib_string_list_get_data (STRING_LIST *list);
 
+void
+attrib_string_list_set_data (STRING_LIST *list,
+                             char *data);
 int
 attrib_string_list_get_pos (STRING_LIST *list);
 
+void
+attrib_string_list_set_pos (STRING_LIST *list,
+                            int pos);
 STRING_LIST*
 attrib_string_list_get_prev (STRING_LIST *list);
 
+void
+attrib_string_list_set_prev (STRING_LIST *list,
+                             STRING_LIST *item);
 STRING_LIST*
 attrib_string_list_get_next (STRING_LIST *list);
 
-STRING_LIST *s_string_list_new();
-STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list);
-void s_string_list_add_item(STRING_LIST *list, int *count, char *item);
-void s_string_list_delete_item(STRING_LIST **list, int *count, char *item);
-int s_string_list_in_list(STRING_LIST *list, char *item);
-gint s_string_list_find_in_list (STRING_LIST *list, char *item);
-gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index);
-
-void s_string_list_sort_master_comp_list();
-void s_string_list_sort_master_comp_attrib_list();
-void s_string_list_sort_master_net_list();
-void s_string_list_sort_master_net_attrib_list();
-void s_string_list_sort_master_pin_list();
-void s_string_list_sort_master_pin_attrib_list();
-
+void
+attrib_string_list_set_next (STRING_LIST *list,
+                             STRING_LIST *item);
 
 /* ------------- s_table.c ------------- */
 int

@@ -318,6 +318,16 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
+;;; Creates and returns new empty STRING_LIST *LS.
+(define (make-string-list)
+  (let ((*ls (attrib_string_list_new)))
+    (attrib_string_list_set_data *ls %null-pointer)
+    (attrib_string_list_set_next *ls %null-pointer)
+    (attrib_string_list_set_prev *ls %null-pointer)
+    (attrib_string_list_set_pos *ls -1)
+    *ls))
+
+
 ;;; Returns the index of the string *STR in the list *LS.
 (define (string-list-id *ls *str)
   (let loop ((count 0)
@@ -428,6 +438,119 @@ failure."
                             (pointer->string *slot-value))))))))))
 
 
+;;; Adds the item *DATA to STRING_LIST *LS incrementing *COUNT.
+;;; It first passes through the list to make sure that there are
+;;; no duplications.
+(define (add-string-list-item *ls *count *data)
+  (if (null-pointer? *ls)
+      (begin
+        (format (current-error-port) "add-string-list-item(): ")
+        (format (current-error-port)
+                (G_ "Tried to add to a NULL list.\n")))
+
+      ;; First check to see if list is empty.  Handle insertion of
+      ;; first item into empty list separately.  (Is this
+      ;; necessary?)
+      (if (null-pointer? (attrib_string_list_get_data *ls))
+          (begin
+            (attrib_string_list_set_data *ls (g_strdup *data))
+            (attrib_string_list_set_next *ls %null-pointer)
+            ;; This may have already been initialized.
+            (attrib_string_list_set_prev *ls %null-pointer)
+            (let* ((count-bv (pointer->bytevector *count (sizeof int)))
+                   (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+              ;; This enumerates the pos on the list.  Value is
+              ;; reset later by sorting.
+              (attrib_string_list_set_pos *ls count)
+              ;; Increment count to 1.
+              (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+
+          ;; Otherwise, loop through list looking for duplicates.
+          (let loop ((*prev *ls)
+                     (*next-ls *ls))
+               (if (null-pointer? *next-ls)
+                   ;; If we are here, it's 'cause we didn't find
+                   ;; the item pre-existing in the list.  In this
+                   ;; case, we insert it.
+
+                   ;; Allocate space for this list entry.
+                   (let ((*new-ls (attrib_string_list_new)))
+                     ;; Copy data into list.
+                     (attrib_string_list_set_data *new-ls
+                                                  (g_strdup *data))
+                     (attrib_string_list_set_next *new-ls
+                                                  %null-pointer)
+                     ;; Point this item to last entry in old list.
+                     (attrib_string_list_set_prev *new-ls *prev)
+                     ;; Make last item in old list point to this
+                     ;; one.
+                     (attrib_string_list_set_next *prev *new-ls)
+
+                     (let* ((count-bv (pointer->bytevector *count (sizeof int)))
+                            (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+                       ;; This enumerates the pos on the list.
+                       ;; Value is reset later by sorting.
+                       (attrib_string_list_set_pos *new-ls count)
+                       ;; Increment count.
+                       (bytevector-sint-set! count-bv 0 (1+ count) (native-endianness) (sizeof int))))
+                   (let ((*item (g_strdup
+                                 (attrib_string_list_get_data *next-ls))))
+                     (if (string= (pointer->string *item)
+                                  (pointer->string *data))
+                         ;; Found item already in list.  Just return.
+                         (g_free *item)
+
+                         (begin
+                           (g_free *item)
+                           (loop *next-ls
+                                 (attrib_string_list_get_next *next-ls))))))))))
+
+
+;;; Duplicates string list *LS and returns a pointer to the new,
+;;; duplicate list.
+(define (duplicate-string-list *ls)
+  (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
+  (define *new-ls (make-string-list))
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      ;; This is an empty string list.
+      *new-ls
+
+      (let loop ((*current-ls *ls))
+        (if (null-pointer? *current-ls)
+            *new-ls
+            (let ((*data (g_strdup
+                          (attrib_string_list_get_data *current-ls))))
+              (add-string-list-item *new-ls *count *data)
+              (g_free *data)
+              (loop (attrib_string_list_get_next *current-ls)))))))
+
+
+;;; Looks for item *NAME in the list *LS and returns 0 if it is
+;;; absent, 1 if present.
+(define (attrib-in-string-list? *ls *name)
+  ;; First check to see if list is empty.  If empty, return
+  ;; 0 automatically.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      0
+
+      ;; Otherwise, loop through list looking for duplicates.
+      (let loop ((*ls *ls))
+        (if (null-pointer? *ls)
+            ;; If we are here, it's 'cause we didn't find the item
+            ;; pre-existing in the list.  In this case, return 0.
+            0
+            (let ((*item (g_strdup (attrib_string_list_get_data *ls))))
+              (if (string= (pointer->string *item)
+                           (pointer->string *name))
+                  ;; Found item already in list.  Return 1.
+                  (begin
+                    (g_free *item)
+                    1)
+                  (begin
+                    (g_free *item)
+                    (loop (attrib_string_list_get_next *ls)))))))))
+
+
 ;;; Updates *OBJECT component attributes in *TOPLEVEL using the
 ;;; value held in the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
@@ -464,7 +587,7 @@ failure."
 
   ;; First duplicate the list.
   (define *complete-component-attrib-list
-    (s_string_list_duplicate_string_list *new-component-attrib-pair-list))
+    (duplicate-string-list *new-component-attrib-pair-list))
   ;; This is to fake out a function called later.
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
@@ -492,7 +615,7 @@ failure."
                     (not (name-in-list?
                           *new-component-attrib-pair-list
                           old-attrib-name)))
-           (s_string_list_add_item *complete-component-attrib-list
+           (add-string-list-item *complete-component-attrib-list
                                    *count
                                    *old-name-value-pair))
 
@@ -551,7 +674,7 @@ failure."
                 ;; be deleted below.
                 (and (not (or (= row -1)
                               (= column -1)))
-                     (true? (s_string_list_in_list
+                     (true? (attrib-in-string-list?
                              *new-component-attrib-pair-list
                              (attrib_string_list_get_data
                               *local-list)))
@@ -625,7 +748,7 @@ failure."
 ;;;
 ;;; If the row holds no attribs, it just returns NULL.
 (define (make-attrib-pair *row-name *table *row-list attribs-number)
-  (define *attrib-pair-list (s_string_list_new))
+  (define *attrib-pair-list (make-string-list))
   (define row (string-list-id *row-list *row-name))
   (define *count (bytevector->pointer (make-bytevector (sizeof int) 0)))
 
@@ -655,7 +778,7 @@ failure."
                          (string-append (pointer->string *attrib-name)
                                         "="
                                         (pointer->string *attrib-value)))))
-                  (s_string_list_add_item *attrib-pair-list
+                  (add-string-list-item *attrib-pair-list
                                           *count
                                           *name-value-pair)))
               (loop (1+ column)))))))
@@ -769,7 +892,7 @@ failure."
             ;; into new attrib list.
 
             ;; Init the new attrib list.
-            (let loop ((*new-attrib-list (s_string_list_new))
+            (let loop ((*new-attrib-list (make-string-list))
                        (i 0)
                        (*local-attrib-list
                         (attrib_sheet_data_get_pin_attrib_list *sheet-data)))
@@ -794,7 +917,7 @@ failure."
                          (*name-value-pair (string->pointer name-value-pair)))
 
                     ;; Add name=value to the new list.
-                    (s_string_list_add_item *new-attrib-list *count *name-value-pair)
+                    (add-string-list-item *new-attrib-list *count *name-value-pair)
 
                     ;; Sanity check
                     (let ((count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
@@ -1156,6 +1279,21 @@ failure."
   (procedure->pointer void callback-file-save '(* * *)))
 
 
+;;; Returns the item with the index ID from the string list *LS.
+(define (id->string-list-data *ls id)
+  ;; First check to see if list is empty.  If empty, return NULL
+  ;; automatically.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      %null-pointer
+      (let loop ((*item *ls)
+                 (i 0))
+        (if (= i id)
+            (attrib_string_list_get_data *item)
+            (if (null-pointer? *item)
+                %null-pointer
+                (loop (attrib_string_list_get_next *item) (1+ i)))))))
+
+
 ;;; Export design components to CSV for external processing.
 (define (export-components)
   (define *sheet-data (attrib_get_sheet_data))
@@ -1168,14 +1306,14 @@ failure."
 
   (define (id->attrib-name id)
     (pointer->string
-     (s_string_list_get_data_at_index
+     (id->string-list-data
       (attrib_sheet_data_get_component_attrib_list
        *sheet-data)
       id)))
 
   (define (id->component-refdes id)
     (pointer->string
-     (s_string_list_get_data_at_index
+     (id->string-list-data
       (attrib_sheet_data_get_component_list *sheet-data)
       id)))
 
@@ -1298,6 +1436,182 @@ failure."
 
 (define *callback-delete-window
   (procedure->pointer int callback-delete-window '(* * *)))
+
+
+;;; Sorts the component list and fills in the 'pos' fields of the
+;;; list items.
+(define (sort-component-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_component_list *sheet-data))
+
+  ;; Set 'pos' field of each item of the list to zero.
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item 0))
+
+  ;; Here's where we do the sort.  The sort is done using a
+  ;; function found on the web.
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (let loop ((*item *sorted-ls)
+               (i 0))
+      (unless (null-pointer? *item)
+        ;; Make sure item is not NULL.
+        (attrib_string_list_set_pos *item i)
+        (if (null-pointer? (attrib_string_list_get_next *item))
+            ;; Leave loop *before* iterating to NULL EOL marker.
+            (let loop-back ((*new-ls *item))
+              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                  (attrib_sheet_data_set_component_list *sheet-data *new-ls)
+                  (loop-back (attrib_string_list_get_prev *new-ls))))
+
+            (loop (attrib_string_list_get_next *item) (1+ i)))))))
+
+
+;;; This list overrides the alphanumeric sort.  Attribs not found
+;;; in this list are sorted as if they had a value of
+;;; %default-attrib-pos within this list, but alphanumerically
+;;; relative to each other.
+;;;
+;;; Each record has the form: '(attrib-name . position)
+(define certain-attribs
+  '(("device" . 1)
+    ("footprint" . 2)
+    ("value" . 3)
+    ("symversion" . 200)))
+
+(define %default-attrib-pos 100)
+
+;;; Sort the component attribute list.  Apart from certain
+;;; attributes that have some predefined 'weight' and go first or
+;;; last, all other attributes are sorted in alphabetical order.
+(define (sort-component-attrib-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_component_attrib_list *sheet-data))
+
+  ;; Note that this sort is TBD -- it is more than just an
+  ;; alphabetic sort 'cause we want certain attribs to go first.
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item %default-attrib-pos)
+
+    (when (not (null-pointer? (attrib_string_list_get_data *item)))
+      (let* ((name (pointer->string (attrib_string_list_get_data *item)))
+             (new-position (assoc-ref certain-attribs name)))
+        (and new-position
+             (attrib_string_list_set_pos *item new-position)))))
+
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    (attrib_sheet_data_set_component_attrib_list *sheet-data *sorted-ls)
+
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (do ((*item *sorted-ls (attrib_string_list_get_next *item))
+         (i 0 (1+ i)))
+        ((null-pointer? *item))
+      (attrib_string_list_set_pos *item i))))
+
+
+;;; Sorts the list of nets in alphabetical order.
+(define (sort-net-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_net_list *sheet-data))
+
+  ;; Do this after sorting is done.  This resets the order of the
+  ;; individual items in the list.
+  (do ((*item *ls (attrib_string_list_get_next *item))
+       (i 0 (1+ i)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item i)))
+
+
+;;; Sorts the net attribute list in alphabetical order.
+(define (sort-net-attrib-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_net_attrib_list *sheet-data))
+
+  ;; Do this after sorting is done.  This resets the order of the
+  ;; individual items in the list.
+  (do ((*item *ls (attrib_string_list_get_next *item))
+       (i 0 (1+ i)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item i)))
+
+
+;;; Sort the pin list in alphabetical order.
+(define (sort-pin-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_pin_list *sheet-data))
+
+  (do ((*item *ls (attrib_string_list_get_next *item)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item 0))
+
+  ;; Here's where we do the sort.  The sort is done using a
+  ;; function found on the web.
+  (let ((*sorted-ls (listsort *ls 0 1)))
+    ;; Do this after sorting is done.  This resets the order of
+    ;; the individual items in the list.
+    (let loop ((*item *sorted-ls)
+               (i 0))
+      ;; Make sure item is not NULL.  Leave loop *before*
+      ;; iterating to NULL EOL marker.
+      (if (null-pointer? (attrib_string_list_get_next *item))
+          (let loop-back ((*new-ls *item))
+            ;; Now go to first item in local list and reassign
+            ;; list head to new first element.
+            (if (null-pointer? (attrib_string_list_get_prev *new-ls))
+                (attrib_sheet_data_set_pin_list *sheet-data *new-ls)
+                (loop-back (attrib_string_list_get_prev *new-ls))))
+          (begin
+            (attrib_string_list_set_pos *item i)
+            (loop (attrib_string_list_get_next *item) (1+ i)))))))
+
+
+;;; Sorts the pin attribute list in alphabetical order.
+(define (sort-pin-attrib-list)
+  (define *sheet-data (attrib_get_sheet_data))
+  (define *ls (attrib_sheet_data_get_pin_attrib_list *sheet-data))
+  ;; Note that this sort is TBD -- it is more than just an
+  ;; alphabetic sort 'cause we want certain attribs to go first.
+
+  ;; Do this after sorting is done.  This resets the order of the
+  ;; individual items in the list.
+  (do ((*item *ls (attrib_string_list_get_next *item))
+       (i 0 (1+ i)))
+      ((null-pointer? *item))
+    (attrib_string_list_set_pos *item i)))
+
+
+;;; Looks for item *NAME in the list *LS, and returns the index
+;;; (-1 if absent).
+(define (string-list-item-id *ls *name)
+  ;; First check to see if list is empty.  If empty, return -1.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      -1
+
+      ;; Otherwise, loop through list looking for the item.
+      (let loop ((index 0)
+                 (*ls *ls))
+        (if (null-pointer? *ls)
+            ;; If we are here, it's 'cause we didn't find the item
+            ;; pre-existing in the list.  In this case, return -1.
+            -1
+            (let ((*item (g_strdup
+                          (attrib_string_list_get_data *ls))))
+              (if (string= (pointer->string *item)
+                           (pointer->string *name))
+
+                  (begin
+                    ;; Found item in list; return index.
+                    (g_free *item)
+                    index)
+
+                  (begin
+                    (g_free *item)
+                    (loop (1+ index)
+                          (attrib_string_list_get_next *ls)))))))))
 
 
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
@@ -1440,17 +1754,17 @@ failure."
            (attrib_sheet_data_get_component_attrib_count *sheet-data))
           (*name (string->pointer name)))
 
-      (s_string_list_add_item
+      (add-string-list-item
        (attrib_sheet_data_get_component_attrib_list *sheet-data)
        (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
        *name)
-      (s_string_list_sort_master_comp_attrib_list)
+      (sort-component-attrib-list)
 
       ;; Now, determine what index the new attrib ended up at.
       ;; This is necessary to tell gtk_sheet_insert_columns
       ;; where the data should be shifted.
       (let ((new-index
-             (s_string_list_find_in_list
+             (string-list-item-id
               (attrib_sheet_data_get_component_attrib_list *sheet-data)
               *name)))
 
@@ -1483,6 +1797,80 @@ failure."
   (procedure->pointer void callback-edit-add-attrib '(* * *)))
 
 
+;;; Deletes the item *NAME from a STRING_LIST *LS.  The function
+;;; also decrements the list counter *COUNTER.  *SHEET-DATA is
+;;; used to set the list to the new value using LIST-SETTER.
+(define (delete-string-list-item *sheet-data
+                                 list-setter
+                                 *ls
+                                 *counter
+                                 *name)
+  ;; First check to see if list is empty.  If empty, spew error
+  ;; and return.
+  (if (null-pointer? (attrib_string_list_get_data *ls))
+      (begin
+        (format (current-error-port) "delete-string-list-item(): ")
+        (format (current-error-port)
+                (G_ "Tried to remove item from empty list.\n")))
+
+      ;; Now loop through list looking for item.
+      (let loop ((*item *ls))
+        (if (null-pointer? *item)
+            ;; If we are here, it's 'cause we didn't find the
+            ;; item.  Spew error and return.
+            (begin
+              (format (current-error-port)
+                      "delete-string-list-item(): ")
+              (format (current-error-port)
+                      (G_ "Couldn't delete item ~S\n")
+                      (pointer->string *name)))
+            (let ((*trial-item (g_strdup
+                                (attrib_string_list_get_data *item))))
+              (if (string= (pointer->string *trial-item)
+                           (pointer->string *name))
+                  ;; Found item, now delete it.
+                  (let ((*prev-item (attrib_string_list_get_prev *item))
+                        (*next-item (attrib_string_list_get_next *item)))
+                    ;; Check position in list.
+                    (if (and (null-pointer? *next-item)
+                             (null-pointer? *prev-item))
+                        ;; Pathological case of one item list.
+                        (list-setter *sheet-data %null-pointer)
+                        (if (and (null-pointer? *next-item)
+                                 (not (null-pointer? *prev-item)))
+                            ;; At list's end.
+                            (attrib_string_list_set_next *prev-item
+                                                         %null-pointer)
+                            (if (and (not (null-pointer? *next-item))
+                                     (null-pointer? *prev-item))
+                                (begin
+                                  ;; At list's beginning.
+                                  (attrib_string_list_set_prev *next-item
+                                                               %null-pointer)
+                                  ;; Also need to fix pointer to
+                                  ;; list head.
+                                  (list-setter *sheet-data *next-item))
+                                (begin
+                                  ;; Normal case of element in
+                                  ;; middle of list.
+                                  (attrib_string_list_set_next *prev-item
+                                                               *next-item)
+                                  (attrib_string_list_set_prev *next-item
+                                                               *prev-item)))))
+                    ;; Free current list item.
+                    (g_free *item)
+                    ;; Decrement count.
+                    ;; Do we need to re-number the list?
+                    (let* ((count-bv (pointer->bytevector *counter (sizeof int)))
+                           (count (bytevector-sint-ref count-bv 0 (native-endianness) (sizeof int))))
+                      (bytevector-sint-set! count-bv 0 (1- count) (native-endianness) (sizeof int)))
+                    ;; Free trial item before returning.
+                    (g_free *trial-item))
+                  (begin
+                    (g_free *trial-item)
+                    (loop (attrib_string_list_get_next *item)))))))))
+
+
 (define (delete-component-attrib-column *sheet num)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Get name (label) of the column to delete from the gtk sheet.
@@ -1513,12 +1901,14 @@ failure."
          (attrib_sheet_data_get_component_count *sheet-data)
          (attrib_sheet_data_get_component_attrib_count *sheet-data))
 
-        (s_string_list_delete_item
-         (attrib_sheet_data_get_component_attrib_list_address *sheet-data)
+        (delete-string-list-item
+         *sheet-data
+         attrib_sheet_data_set_component_attrib_list
+         (attrib_sheet_data_get_component_attrib_list *sheet-data)
          (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
          *attrib-name)
         ;; This renumbers list also.
-        (s_string_list_sort_master_comp_attrib_list)
+        (sort-component-attrib-list)
 
         (g_free *attrib-name)
 
@@ -2164,23 +2554,23 @@ Please check your design.")))
 
   ;; Now we create the first cell in each master list.
   (attrib_sheet_data_set_component_list *sheet-data
-                                        (s_string_list_new))
+                                        (make-string-list))
   (attrib_sheet_data_set_component_attrib_list *sheet-data
-                                               (s_string_list_new))
+                                               (make-string-list))
   (attrib_sheet_data_set_component_count *sheet-data 0)
   (attrib_sheet_data_set_component_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_net_list *sheet-data
-                                  (s_string_list_new))
+                                  (make-string-list))
   (attrib_sheet_data_set_net_attrib_list *sheet-data
-                                         (s_string_list_new))
+                                         (make-string-list))
   (attrib_sheet_data_set_net_count *sheet-data 0)
   (attrib_sheet_data_set_net_attrib_count *sheet-data 0)
 
   (attrib_sheet_data_set_pin_list *sheet-data
-                                  (s_string_list_new))
+                                  (make-string-list))
   (attrib_sheet_data_set_pin_attrib_list *sheet-data
-                                         (s_string_list_new))
+                                         (make-string-list))
   (attrib_sheet_data_set_pin_count *sheet-data 0)
   (attrib_sheet_data_set_pin_attrib_count *sheet-data 0)
 
@@ -2206,7 +2596,7 @@ Please check your design.")))
          ;; Now that we have refdes, store refdes and attach
          ;; attrib list to component.
          (unless (null-pointer? *temp-refdes)
-           (s_string_list_add_item
+           (add-string-list-item
             (attrib_sheet_data_get_component_list *sheet-data)
             (attrib_sheet_data_get_component_counter_address *sheet-data)
             *temp-refdes)
@@ -2245,7 +2635,7 @@ Please check your design.")))
                          (not (string= name "refdes"))
                          (not (string= name "net"))
                          (not (string= name "slot")))
-                (s_string_list_add_item
+                (add-string-list-item
                  (attrib_sheet_data_get_component_attrib_list *sheet-data)
                  (attrib_sheet_data_get_component_attrib_counter_address *sheet-data)
                  (string->pointer name)))
@@ -2307,7 +2697,7 @@ Please check your design.")))
                                 (string-append (pointer->string *temp-refdes)
                                                ":"
                                                (pointer->string *temp-pinnumber)))))
-                          (s_string_list_add_item
+                          (add-string-list-item
                            (attrib_sheet_data_get_pin_list *sheet-data)
                            (attrib_sheet_data_get_pin_counter_address *sheet-data)
                            *row-label))
@@ -2380,7 +2770,7 @@ Please check your design.")))
                        (when (and attrib-name
                                   (not (string= attrib-name "pinnumber"))
                                   attrib-value)
-                         (s_string_list_add_item
+                         (add-string-list-item
                           (attrib_sheet_data_get_pin_attrib_list *sheet-data)
                           (attrib_sheet_data_get_pin_attrib_counter_address *sheet-data)
                           (string->pointer attrib-name)))
@@ -2721,17 +3111,17 @@ Please check your design.")))
    (glist->list *pages identity))
 
   ;; Sort the master lists.
-  (s_string_list_sort_master_comp_list)
-  (s_string_list_sort_master_comp_attrib_list)
+  (sort-component-list)
+  (sort-component-attrib-list)
 
   ;; Note that this must be changed.  We need to input the
   ;; entire project before doing anything with the nets because
   ;; we need to first determine where they are all connected!
-  (s_string_list_sort_master_net_list)
-  (s_string_list_sort_master_net_attrib_list)
+  (sort-net-list)
+  (sort-net-attrib-list)
 
-  (s_string_list_sort_master_pin_list)
-  (s_string_list_sort_master_pin_attrib_list)
+  (sort-pin-list)
+  (sort-pin-attrib-list)
 
   ;; Create and load the tables.
   (attrib_sheet_data_set_component_table
