@@ -37,11 +37,7 @@
 ;;; the currently open pages.  The function returns the found or
 ;;; loaded source page, or %NULL-POINTER if it could not find the
 ;;; source file.  Any issue is reported to the log.
-(define (*open-subschematic window
-                            filename
-                            parent-page
-                            page-control
-                            *error)
+(define (*open-subschematic window filename parent-page page-control)
   (define *window (check-window window 1))
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
@@ -116,10 +112,6 @@
                            scheme-error-handler)
   (catch #t
     (lambda ()
-      (*open-subschematic window
-                          filename
-                          parent-page
-                          page-control
-                          *error))
+      (*open-subschematic window filename parent-page page-control))
     ;; (lambda (key subr message args rest) ...)
     scheme-error-handler))
