@@ -1141,12 +1141,12 @@ the snap grid size should be set to 100")))
 
   (log! 'message (G_ "Searching for source ~S") filename)
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (*child (hierarchy-down-schematic (pointer->window *window)
-                                           filename
-                                           (pointer->page *parent)
-                                           page-control
-                                           *error
-                                           scheme-error-handler)))
+         (*child (open-subschematic (pointer->window *window)
+                                    filename
+                                    (pointer->page *parent)
+                                    page-control
+                                    *error
+                                    scheme-error-handler)))
     (and *child
          (if (null-pointer? *child)
              ;; Launch the error dialog.
@@ -1162,8 +1162,8 @@ the snap grid size should be set to 100")))
                    ;; subpage loaded.  Zoom will be set in
                    ;; set-tab-page!().
                    (*window-set-current-page! *window *child)
-                   ;; hierarchy-down-schematic() does not zoom
-                   ;; the loaded page, so zoom it here.
+                   ;; open-subschematic() does not zoom the loaded
+                   ;; page, so zoom it here.
                    (zoom-child-page *window *parent *child))
                *child)))))
 

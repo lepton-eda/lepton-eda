@@ -97,12 +97,12 @@
 
   (define (filename-page filename parent-page)
     (let ((*child-page
-           (hierarchy-down-schematic window
-                                     filename
-                                     parent-page
-                                     0
-                                     *error
-                                     (make-scheme-error-handler filename))))
+           (open-subschematic window
+                              filename
+                              parent-page
+                              0
+                              *error
+                              (make-scheme-error-handler filename))))
       (and *child-page
            (if (null-pointer? *child-page)
                (begin (gerror-handler filename) #f)
