@@ -1145,7 +1145,6 @@ the snap grid size should be set to 100")))
                                     filename
                                     (pointer->page *parent)
                                     page-control
-                                    *error
                                     scheme-error-handler)))
     (and *child
          (if (null-pointer? *child)

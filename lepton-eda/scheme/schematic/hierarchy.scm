@@ -108,7 +108,6 @@
                            filename
                            parent-page
                            page-control
-                           *error
                            scheme-error-handler)
   (catch #t
     (lambda ()
