@@ -1214,36 +1214,6 @@ the snap grid size should be set to 100")))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
-(define (hierarchy-down-symbol *window *symbol *parent)
-  (define filename
-    (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
-      (if (null-pointer? *clib-filename)
-          (begin
-            (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
-            #f)
-          (let ((clib-filename (pointer->string *clib-filename)))
-            (g_free *clib-filename)
-            clib-filename))))
-
-  (and filename
-       (let* ((*toplevel (schematic_window_get_toplevel *window))
-              (*filename (string->pointer (canonicalize-path filename)))
-              (*page (lepton_toplevel_search_page *toplevel *filename)))
-         (if (null-pointer? *page)
-             ;; Create a new page.
-             (let ((page (open-schematic filename)))
-               (and page
-                    (let ((*page (page->pointer page)))
-                      (schematic_hierarchy_increment_page_control_counter)
-                      (lepton_page_set_page_control
-                       *page
-                       (schematic_hierarchy_get_page_control_counter))
-                      *page)))
-
-             ;; Return existing page.
-             *page))))
-
-
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (define *window (*current-window))
 

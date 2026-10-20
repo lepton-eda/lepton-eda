@@ -21,16 +21,19 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton library)
+  #:use-module (lepton log)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi)
   #:use-module (schematic file)
   #:use-module (schematic window foreign)
 
-  #:export (open-subschematic))
+  #:export (open-subschematic
+            hierarchy-down-symbol))
 
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
@@ -114,3 +117,33 @@
       (*open-subschematic window filename parent-page page-control))
     ;; (lambda (key subr message args rest) ...)
     scheme-error-handler))
+
+
+(define (hierarchy-down-symbol *window *symbol *parent)
+  (define filename
+    (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
+      (if (null-pointer? *clib-filename)
+          (begin
+            (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+            #f)
+          (let ((clib-filename (pointer->string *clib-filename)))
+            (g_free *clib-filename)
+            clib-filename))))
+
+  (and filename
+       (let* ((*toplevel (schematic_window_get_toplevel *window))
+              (*filename (string->pointer (canonicalize-path filename)))
+              (*page (lepton_toplevel_search_page *toplevel *filename)))
+         (if (null-pointer? *page)
+             ;; Create a new page.
+             (let ((page (open-schematic filename)))
+               (and page
+                    (let ((*page (page->pointer page)))
+                      (schematic_hierarchy_increment_page_control_counter)
+                      (lepton_page_set_page_control
+                       *page
+                       (schematic_hierarchy_get_page_control_counter))
+                      *page)))
+
+             ;; Return existing page.
+             *page))))
