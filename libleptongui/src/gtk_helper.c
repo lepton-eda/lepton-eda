@@ -617,3 +617,59 @@ schematic_gtk_vbox_new (gboolean homogeneous,
   return gtk_vbox_new (homogeneous, spacing);
 #endif
 }
+
+
+/*! \brief Parse GDK color.
+ *
+ * \par Function Description
+ *
+ * The function parses color spec and returns the \c GdkColor or
+ * \c GdkRGBA instance depending on the GTK version used.
+ *
+ * \param [in] color_spec The color spec.
+ * \return The color structure.
+ */
+/*! \brief Set the text color of a cell. */
+gpointer
+schematic_gdk_color_parse (char *color_spec)
+{
+#ifdef ENABLE_GTK3
+  GdkRGBA *color = g_new (GdkRGBA, 1);
+
+  gdk_rgba_parse (color, color_spec);
+
+#else
+  GdkColor *color = g_new (GdkColor, 1);
+
+  gdk_color_parse (color_spec, color);
+
+#endif
+
+  return (gpointer) color;
+}
+
+
+/*! \brief Get widget text width.
+ *
+ *  \par Function Description
+ *
+ *  Return the width of widget text taking into account the widget
+ *  style.
+ *
+ * \return The text width.
+ */
+int
+schematic_pango_text_width (GtkWidget *widget,
+                            char *text)
+{
+  int width;
+
+  PangoLayout* layout =
+    gtk_widget_create_pango_layout (widget, text);
+
+  pango_layout_get_size (layout, &width, NULL);
+
+  g_object_unref (G_OBJECT (layout));
+
+  return width / PANGO_SCALE;
+}

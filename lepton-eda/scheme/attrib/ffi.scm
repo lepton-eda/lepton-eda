@@ -35,9 +35,13 @@
             gtk_sheet_get_selection
             gtk_sheet_insert_columns
             gtk_sheet_new
+            gtk_sheet_range_set_foreground
             gtk_sheet_row_button_add_label
             gtk_sheet_row_button_justify
+            gtk_sheet_set_cell
+            gtk_sheet_set_clip_text
             gtk_sheet_set_locked
+            gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
 
             attrib_get_notebook
@@ -51,17 +55,13 @@
             attrib_set_toplevel
             attrib_get_window
             attrib_set_window
+            attrib_gtksheet_state_from_string
+            attrib_gtksheet_state_to_string
 
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
 
             attrib_gtksheet_show_entry
-            x_gtksheet_add_cell_item
-            x_gtksheet_add_col_labels
-            x_gtksheet_add_row_labels
-            x_gtksheet_set_cell_text_color
-            x_gtksheet_get_max_col
-            x_gtksheet_get_min_col
 
             listsort
 
@@ -170,9 +170,13 @@
 (define-lff-lib gtk_sheet_get_selection int '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_insert_columns void (list '* unsigned-int unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_new '* (list unsigned-int unsigned-int '*) libgtksheet)
+(define-lff-lib gtk_sheet_range_set_foreground void '(* * *) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_add_label void (list '* int '*) libgtksheet)
 (define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
+(define-lff-lib gtk_sheet_set_cell void (list '* int int int '*) libgtksheet)
+(define-lff-lib gtk_sheet_set_clip_text void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_set_locked void (list '* int) libgtksheet)
+(define-lff-lib gtk_sheet_set_row_titles_width void (list '* unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
 
 ;;; attrib.c
@@ -187,6 +191,8 @@
 (define-lff attrib_set_toplevel void '(*))
 (define-lff attrib_get_window '* '())
 (define-lff attrib_set_window void '(*))
+(define-lff attrib_gtksheet_state_from_string int '(*))
+(define-lff attrib_gtksheet_state_to_string '* (list int))
 
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
@@ -194,12 +200,6 @@
 
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
-(define-lff x_gtksheet_add_cell_item void (list '* int int '* int int))
-(define-lff x_gtksheet_add_col_labels void (list '* int '*))
-(define-lff x_gtksheet_add_row_labels void (list '* int '*))
-(define-lff x_gtksheet_set_cell_text_color void (list '* int int int))
-(define-lff x_gtksheet_get_max_col int '(*))
-(define-lff x_gtksheet_get_min_col int '(*))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))

@@ -70,16 +70,7 @@
 ;;; liblepton/include/liblepton/text_object.h:
 (define DEFAULT_TEXT_SIZE 10)
 
-;;; libleptonattrib/include/globals.h
-(define BLACK 0)
-(define WHITE 1)
-(define RED 2)
-(define GREEN 3)
-(define BLUE 4)
-(define YELLOW 5)
-(define CYAN 6)
-(define GREY 7)
-
+(define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 ;;; Initialize liblepton library.
 (init-liblepton)
@@ -1584,6 +1575,26 @@ failure."
     (attrib_string_list_set_pos *item i)))
 
 
+;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
+;;; *OBJECT-LS.
+(define (add-column-labels *sheet count *object-ls)
+  ;; Leave if no items to add are available.
+  (unless (or (zero? count)
+              (null-pointer? *object-ls))
+    (let loop ((j 0)
+               (*item *object-ls))
+
+      (unless (or (>= j count)
+                  (null-pointer? *item))
+        (let ((*text (g_strdup (attrib_string_list_get_data *item))))
+          (gtk_sheet_column_button_add_label *sheet j *text)
+          (gtk_sheet_column_button_justify *sheet j GTK_JUSTIFY_LEFT)
+          ;; TODO: Need to resize the column width here.
+          (g_free *text)
+          (loop (1+ j)
+                (attrib_string_list_get_next *item)))))))
+
+
 ;;; Looks for item *NAME in the list *LS, and returns the index
 ;;; (-1 if absent).
 (define (string-list-item-id *ls *name)
@@ -1779,7 +1790,7 @@ failure."
 
         ;; Fill out new sheet with new stuff from gtksheet.
         (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
-        (x_gtksheet_add_col_labels
+        (add-column-labels
          (attrib_get_sheet 0)
          (attrib_sheet_data_get_component_attrib_count *sheet-data)
          (attrib_sheet_data_get_component_attrib_list *sheet-data))))))
@@ -1922,51 +1933,67 @@ failure."
         (set-sheet-data-changed *sheet-data TRUE))))
 
 
-;;; Delete an attribute column.
-(define (delete-attrib-column)
+(define (gtksheet-state->symbol state)
+  "Transforms GtkSheetState value STATE to Scheme symbol."
+  (string->symbol
+   (pointer->string (attrib_gtksheet_state_to_string state))))
+
+
+;;; Returns the index of the first column selected in the GtkSheet
+;;; *SHEET, or -1 if no column is selected.
+(define (selected-sheet-column *sheet)
+  (define state-bv (make-bytevector (sizeof int) 0))
+  (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
+
+  (let ((result (gtk_sheet_get_selection
+                 *sheet
+                 (bytevector->pointer state-bv)
+                 (bytevector->pointer range-bv))))
+    (when (false? result)
+      (error "Could not obtain sheet selection."))
+    (let* ((range-ls
+            (parse-c-struct (bytevector->pointer range-bv)
+                            (list int int int int)))
+           (start-row (first range-ls))
+           (start-column (second range-ls))
+           (end-row (third range-ls))
+           (end-column (fourth range-ls))
+           (selection-state (gtksheet-state->symbol
+                             (bytevector-sint-ref state-bv
+                                                  0
+                                                  (native-endianness)
+                                                  (sizeof int)))))
+      (and (eq? selection-state 'column)
+           (= start-column end-column)
+           (not (= start-column -1))
+           start-column))))
+
+
+;;; Runs the Delete attribute dialog.
+(define (delete-attrib)
   (define *sheet-data (attrib_get_sheet_data))
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
   (unless (null-pointer? *sheet)
-    (let ((mincol (x_gtksheet_get_min_col *sheet))
-          (maxcol (x_gtksheet_get_max_col *sheet)))
-      (unless (or (not (= mincol maxcol))
-                  (= mincol -1)
-                  (= maxcol -1))
+    (let ((column (selected-sheet-column *sheet)))
+      (when (and column
+                 (delete-attrib-dialog))
         (cond
          ;; Component sheet.
          ((= current-page-id 0)
-          (delete-component-attrib-column *sheet mincol))
+          (delete-component-attrib-column *sheet column))
          ;; Net sheet.
          ((= current-page-id 1)
           ;; Delete column on gtksheet.
-          (gtk_sheet_delete_columns *sheet mincol 1)
+          (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
           (set-sheet-data-changed *sheet-data TRUE))
          ;; Pin sheet.
          ((= current-page-id 2)
           ;; Delete column on gtksheet.
-          (gtk_sheet_delete_columns *sheet mincol 1)
+          (gtk_sheet_delete_columns *sheet column 1)
           ;; Set changed flag so user is prompted when exiting.
           (set-sheet-data-changed *sheet-data TRUE)))))))
-
-
-;; Runs the Delete attribute dialog.
-(define (delete-attrib)
-  ;; First verify that exactly one column is selected.
-  (define *sheet (attrib_get_sheet (notebook-current-page-id)))
-  (unless (null-pointer? *sheet)
-    (let ((mincol (x_gtksheet_get_min_col *sheet))
-          (maxcol (x_gtksheet_get_max_col *sheet)))
-      ;; Check improper selection.
-      (unless (or (not (= mincol maxcol))
-                  (= mincol -1)
-                  (= maxcol -1))
-        ;; Create the dialog.
-        (when (delete-attrib-dialog)
-          ;; Actually delete the attrib column.  This function
-          ;; figures out which column to delete.
-          (delete-attrib-column))))))
 
 
 (define (callback-edit-delete-attrib *action *parameter *data)
@@ -2004,6 +2031,20 @@ failure."
       (set-sheet-data-changed *sheet-data TRUE))))
 
 
+(define (set-cell-text-color *sheet i j color)
+  (define *color-spec (string->pointer (symbol->string color)))
+  (define range-bv (sint-list->bytevector (list i j i j)
+                                          (native-endianness)
+                                          (sizeof int)))
+  (define *range (bytevector->pointer range-bv))
+  (define *color (schematic_gdk_color_parse *color-spec))
+
+  ;; Set color.
+  (unless (null-pointer? *color)
+    (gtk_sheet_range_set_foreground *sheet *range *color)
+    (g_free *color)))
+
+
 (define (set-cells-attribs-visibility visible show color)
   (define current-page-id (notebook-current-page-id))
   (define *sheet (attrib_get_sheet current-page-id))
@@ -2037,12 +2078,12 @@ failure."
           ;; Set visibility of cell in sheet data.
           (set-cell-attrib-visibility current-page-id i j visible show)
           ;; Set cell in gtksheet to desired color.
-          (x_gtksheet_set_cell_text_color *sheet i j color))))))
+          (set-cell-text-color *sheet i j color))))))
 
 
 ;;; Sets the selected sheet cells to INVISIBLE.
 (define (set-cells-attribs-invisible)
-  (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE GREY))
+  (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE 'grey))
 
 
 (define (callback-visibility-invisible *action *parameter *data)
@@ -2053,7 +2094,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_NAME.
 (define (set-cells-attribs-visible-name)
-  (set-cells-attribs-visibility VISIBLE SHOW_NAME RED))
+  (set-cells-attribs-visibility VISIBLE SHOW_NAME 'red))
 
 
 (define (callback-visibility-name-only *action *parameter *data)
@@ -2064,7 +2105,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_VALUE.
 (define (set-cells-attribs-visible-value)
-  (set-cells-attribs-visibility VISIBLE SHOW_VALUE BLACK))
+  (set-cells-attribs-visibility VISIBLE SHOW_VALUE 'black))
 
 
 (define (callback-visibility-value-only *action *parameter *data)
@@ -2075,7 +2116,7 @@ failure."
 
 ;;; Sets the visibility of the selected sheet cells to SHOW_NAME_VALUE.
 (define (set-cells-attribs-visible-name-value)
-  (set-cells-attribs-visibility VISIBLE SHOW_NAME_VALUE BLUE))
+  (set-cells-attribs-visibility VISIBLE SHOW_NAME_VALUE 'blue))
 
 
 (define (callback-visibility-name-value *action *parameter *data)
@@ -2254,7 +2295,6 @@ failure."
 (define (init-gtksheet)
   (define *sheet-data (attrib_get_sheet_data))
   (define *notebook (attrib_get_notebook))
-  (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
   ;; Create three new sheets.
 
@@ -2381,6 +2421,45 @@ failure."
                             %null-pointer))))))
 
 
+;;; Adds row labels from *OBJECT-LS to GtkSheet *SHEET for COUNT
+;;; of objects.
+(define (add-row-labels *sheet count *object-ls)
+  ;; Leave if no items to add are available.
+  (unless (or (null-pointer? *object-ls)
+              (zero? count))
+    (let loop ((j 0)
+               (*item *object-ls)
+               (width 0))
+      (if (or (null-pointer? *item)
+              (>= j count))
+
+          (gtk_sheet_set_row_titles_width *sheet (+ width 8))
+
+          (let* ((*text (g_strdup (attrib_string_list_get_data *item)))
+                 (new-width (schematic_pango_text_width *sheet *text))
+                 (max-width (if (> new-width width)
+                                new-width
+                                width)))
+            (gtk_sheet_row_button_add_label *sheet j *text)
+            (gtk_sheet_row_button_justify *sheet j GTK_JUSTIFY_LEFT)
+            (g_free *text)
+            (loop (1+ j)
+                  (attrib_string_list_get_next *item)
+                  max-width))))))
+
+
+;;; Adds a cell item to the GtkSheet *SHEET at the address (I . J)
+;;; with *TEXT, VISIBILITY, and SHOW-NAME-VALUE.
+(define (add-cell-item *sheet i j *text visibility show-name-value)
+  (gtk_sheet_set_cell *sheet i j GTK_JUSTIFY_LEFT *text)
+  (set-cell-text-color *sheet i j (if (= visibility INVISIBLE)
+                                      'grey
+                                      (cond
+                                       ((= show-name-value SHOW_NAME_VALUE) 'blue)
+                                       ((= show-name-value SHOW_NAME) 'red)
+                                       ((= show-name-value SHOW_VALUE) 'black)))))
+
+
 ;;; Adds all items to the top level window.
 (define (add-items)
   (define *sheet-data (attrib_get_sheet_data))
@@ -2431,12 +2510,16 @@ Please check your design.")))
   ;; dimensions specified in component-count etc.
   (init-gtksheet)
 
+  (gtk_sheet_set_clip_text (component-sheet) TRUE)
+  (gtk_sheet_set_clip_text (net-sheet) TRUE)
+  (gtk_sheet_set_clip_text (pin-sheet) TRUE)
+
   (when (> component-count 0)
-    (x_gtksheet_add_row_labels
+    (add-row-labels
      (component-sheet)
      component-count
      (attrib_sheet_data_get_component_list *sheet-data))
-    (x_gtksheet_add_col_labels
+    (add-column-labels
      (component-sheet)
      component-attrib-count
      (attrib_sheet_data_get_component_attrib_list *sheet-data)))
@@ -2445,28 +2528,24 @@ Please check your design.")))
   ;; 'netname') has to be implemented.
   (if (> net-count 0)
       (begin
-        (x_gtksheet_add_row_labels
+        (add-row-labels
          (net-sheet)
          net-count
          (attrib_sheet_data_get_net_list *sheet-data))
-        (x_gtksheet_add_col_labels
+        (add-column-labels
          (net-sheet)
          net-attrib-count
          (attrib_sheet_data_get_net_attrib_list *sheet-data)))
       (begin
-        (x_gtksheet_add_row_labels (net-sheet)
-                                   1
-                                   %null-pointer)
-        (x_gtksheet_add_col_labels (net-sheet)
-                                   1
-                                   %null-pointer)))
+        (add-row-labels (net-sheet) 1 %null-pointer)
+        (add-column-labels (net-sheet) 1 %null-pointer)))
 
   (when (> pin-count 0)
-    (x_gtksheet_add_row_labels
+    (add-row-labels
      (pin-sheet)
      pin-count
      (attrib_sheet_data_get_pin_list *sheet-data))
-    (x_gtksheet_add_col_labels
+    (add-column-labels
      (pin-sheet)
      pin-attrib-count
      (attrib_sheet_data_get_pin_attrib_list *sheet-data)))
@@ -2484,12 +2563,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *component-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (component-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (component-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota component-attrib-count)))
    (iota component-count))
 
@@ -2505,12 +2584,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *net-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (net-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (net-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota net-attrib-count)))
    (iota net-count))
 
@@ -2526,12 +2605,12 @@ Please check your design.")))
                (attrib_table_get_show_name_value *pin-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
-            (x_gtksheet_add_cell_item (pin-sheet)
-                                      i
-                                      j
-                                      *text
-                                      visibility
-                                      show-name-value))))
+            (add-cell-item (pin-sheet)
+                           i
+                           j
+                           *text
+                           visibility
+                           show-name-value))))
       (iota pin-attrib-count)))
    (iota pin-count))
 

@@ -103,14 +103,4 @@ extern GtkSheet **sheets;             /* These are the spreadsheet widgets thems
 extern GtkWidget *entry;
 extern GtkWidget *label;
 
-/* Used to identify colors */
-#define BLACK           0
-#define WHITE           1
-#define RED             2
-#define GREEN           3
-#define BLUE            4
-#define YELLOW          5
-#define CYAN            6
-#define GREY            7
-
 #endif

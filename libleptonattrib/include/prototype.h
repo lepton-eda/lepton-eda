@@ -38,6 +38,13 @@ attrib_get_window ();
 void
 attrib_set_window (GtkWidget* window_widget);
 
+const char*
+attrib_gtksheet_state_to_string (int val);
+
+int
+attrib_gtksheet_state_from_string (char *s);
+
+
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
@@ -289,15 +296,6 @@ void x_dialog_fatal_error(const gchar *string, gint return_code);
 void
 attrib_gtksheet_show_entry (GtkWidget *widget,
                             gpointer data);
-
-void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
-void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
-void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
-                              char *text, gint visibility, gint show_name_value);
-void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
-                                    gint color_name);
-int x_gtksheet_get_min_col(GtkSheet *sheet);
-int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_window.c ------------- */
 int
