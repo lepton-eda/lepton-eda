@@ -686,9 +686,8 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   is restored.
 
 - A new module, `(schematic hierarchy)`, has been added.
-  Currently, the module exports the function
-  `hierarchy-down-schematic()` which implements opening
-  subschematics of a component.
+  Currently, the module exports the function `open-subschematic()`
+  which implements opening subschematics of a component.
 
 - Components with multiple *source* attributes or with a *source*
   attribute having several comma delimited source filenames as a

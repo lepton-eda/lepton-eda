@@ -30,18 +30,18 @@
   #:use-module (schematic file)
   #:use-module (schematic window foreign)
 
-  #:export (hierarchy-down-schematic))
+  #:export (open-subschematic))
 
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
 ;;; the currently open pages.  The function returns the found or
 ;;; loaded source page, or %NULL-POINTER if it could not find the
 ;;; source file.  Any issue is reported to the log.
-(define (*hierarchy-down-schematic window
-                                   filename
-                                   parent-page
-                                   page-control
-                                   *error)
+(define (*open-subschematic window
+                            filename
+                            parent-page
+                            page-control
+                            *error)
   (define *window (check-window window 1))
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
@@ -108,18 +108,18 @@
                    #f))))
 
 
-(define (hierarchy-down-schematic window
-                                  filename
-                                  parent-page
-                                  page-control
-                                  *error
-                                  scheme-error-handler)
+(define (open-subschematic window
+                           filename
+                           parent-page
+                           page-control
+                           *error
+                           scheme-error-handler)
   (catch #t
     (lambda ()
-      (*hierarchy-down-schematic window
-                                 filename
-                                 parent-page
-                                 page-control
-                                 *error))
+      (*open-subschematic window
+                          filename
+                          parent-page
+                          page-control
+                          *error))
     ;; (lambda (key subr message args rest) ...)
     scheme-error-handler))
