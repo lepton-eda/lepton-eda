@@ -1226,7 +1226,7 @@ the snap grid size should be set to 100")))
        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
          (unless (null-pointer? *sym)
            (let* ((*parent (schematic_window_get_active_page *window))
-                  (*page (hierarchy-down-symbol *window *sym *parent)))
+                  (*page (open-symbol *window *sym *parent)))
              (when *page
 
                ;; Change link to parent page since we can come here

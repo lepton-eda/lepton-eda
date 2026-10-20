@@ -33,7 +33,7 @@
   #:use-module (schematic window foreign)
 
   #:export (open-subschematic
-            hierarchy-down-symbol))
+            open-symbol))
 
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
@@ -119,7 +119,7 @@
     scheme-error-handler))
 
 
-(define (hierarchy-down-symbol *window *symbol *parent)
+(define (open-symbol *window *symbol *parent)
   (define filename
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
       (if (null-pointer? *clib-filename)
