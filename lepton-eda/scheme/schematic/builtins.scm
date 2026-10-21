@@ -1216,7 +1216,7 @@ the snap grid size should be set to 100")))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
-(define (hierarchy-down-symbol *window *toplevel *symbol *parent)
+(define (hierarchy-down-symbol *window *symbol *parent)
   (define filename
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
       (if (null-pointer? *clib-filename)
@@ -1228,7 +1228,8 @@ the snap grid size should be set to 100")))
             clib-filename))))
 
   (and filename
-       (let* ((*filename (string->pointer (canonicalize-path filename)))
+       (let* ((*toplevel (schematic_window_get_toplevel *window))
+              (*filename (string->pointer (canonicalize-path filename)))
               (*page (lepton_toplevel_search_page *toplevel *filename)))
          (if (null-pointer? *page)
              ;; Create a new page.
@@ -1257,9 +1258,8 @@ the snap grid size should be set to 100")))
        (log! 'message (G_ "Searching for symbol: ~S") name)
        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
          (unless (null-pointer? *sym)
-           (let* ((*toplevel (schematic_window_get_toplevel *window))
-                  (*parent (schematic_window_get_active_page *window))
-                  (*page (hierarchy-down-symbol *window *toplevel *sym *parent)))
+           (let* ((*parent (schematic_window_get_active_page *window))
+                  (*page (hierarchy-down-symbol *window *sym *parent)))
              (when *page
 
                ;; Change link to parent page since we can come here
