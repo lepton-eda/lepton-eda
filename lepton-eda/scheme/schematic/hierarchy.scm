@@ -123,11 +123,11 @@
 (define (open-symbol window component parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
-  (define filename (component-filename component))
+  (define *toplevel (schematic_window_get_toplevel *window))
+  (define filename (canonicalize-path (component-filename component)))
   (define *symbol-page
     (if filename
-        (let* ((*toplevel (schematic_window_get_toplevel *window))
-               (*filename (string->pointer (canonicalize-path filename)))
+        (let* ((*filename (string->pointer filename))
                (*page (lepton_toplevel_search_page *toplevel *filename)))
           (if (null-pointer? *page)
               ;; Create a new page.
