@@ -26,6 +26,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton library)
   #:use-module (lepton log)
+  #:use-module (lepton object)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi)
@@ -119,9 +120,10 @@
     scheme-error-handler))
 
 
-(define (open-symbol window filename parent-page)
+(define (open-symbol window component parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
+  (define filename (component-basename component))
   (define *symbol
     (begin
       (log! 'message (G_ "Searching for symbol: ~S") filename)
