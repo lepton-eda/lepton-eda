@@ -71,10 +71,7 @@
               ;; Subschematic has not been found, let's create a new page.
               (let ((*new-page (lepton_page_new *toplevel
                                                 (string->pointer source-filename))))
-                (open-schematic *window
-                                *new-page
-                                (lepton_page_get_filename *new-page)
-                                %null-pointer)
+                (open-schematic *window *new-page %null-pointer)
                 (if (zero? page-control)
                     (begin
                       (schematic_hierarchy_increment_page_control_counter)
