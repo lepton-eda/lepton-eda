@@ -123,7 +123,9 @@
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
   (define *symbol
-    (s_clib_get_symbol_by_name (string->pointer filename)))
+    (begin
+      (log! 'message (G_ "Searching for symbol: ~S") filename)
+      (s_clib_get_symbol_by_name (string->pointer filename))))
   (define source-path
     (and (not (null-pointer? *symbol))
          (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
