@@ -1222,13 +1222,13 @@ the snap grid size should be set to 100")))
     ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
     ((component)
      ;; Get pointer to the first selected component.
-     (let ((name (component-basename component)))
+     (let ((name (component-basename component))
+           (parent (pointer->page
+                    (schematic_window_get_active_page *window))))
        (log! 'message (G_ "Searching for symbol: ~S") name)
        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
          (unless (null-pointer? *sym)
-           (let* ((*parent (schematic_window_get_active_page *window))
-                  (parent (pointer->page *parent))
-                  (*page (open-symbol window *sym parent)))
+           (let ((*page (open-symbol window *sym parent)))
              (when *page
                (window-set-toplevel-page! window (pointer->page *page))
 
