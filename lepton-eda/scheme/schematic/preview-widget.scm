@@ -27,6 +27,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton file)
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -97,11 +98,11 @@ buffer should be displayed, the widget displays the error message."
                 ;; Open up file in current page.
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
                        (result
-                        (f_open *toplevel
-                                *page
-                                *preview_filename
-                                (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
-                                *error)))
+                        (load-schematic *toplevel
+                                        *page
+                                        *preview_filename
+                                        (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
+                                        *error)))
                   (when (false? result)
                     (report-gerror *error *page))))
               (unless (null-pointer? *preview_buffer)
