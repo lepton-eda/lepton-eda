@@ -32,7 +32,7 @@
   #:export (open-schematic))
 
 
-(define (open-schematic *window *page *filename **gerror)
+(define (open-schematic *window *page **gerror)
   (define (gerror-error *error)
     (unless (null-pointer? *error)
       (let ((*err (dereference-pointer *error)))
@@ -40,6 +40,8 @@
           (let ((message (gerror-message *err)))
             (g_clear_error *error)
             (log! 'warning "~A" message))))))
+
+  (define *filename (lepton_page_get_filename *page))
 
   (when (null-pointer? *window)
     (error "NULL window"))
