@@ -1225,7 +1225,6 @@ the snap grid size should be set to 100")))
      (let ((name (component-basename component))
            (parent (pointer->page
                     (schematic_window_get_active_page *window))))
-       (log! 'message (G_ "Searching for symbol: ~S") name)
        (let ((*page (open-symbol window name parent)))
          (when *page
            (window-set-toplevel-page! window (pointer->page *page))
