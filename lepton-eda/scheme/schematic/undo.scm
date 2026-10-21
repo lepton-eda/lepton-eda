@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2017-2025 Lepton EDA Contributors
+;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   #:use-module (lepton ffi undo)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
+  #:use-module (lepton file)
   #:use-module (lepton log)
 
   #:use-module (schematic action-mode)
@@ -256,11 +257,11 @@ success, #f on failure."
               ;; F_OPEN_RESTORE_CWD: go back from temporary
               ;; directory, so that local config files can be
               ;; read.
-              (f_open (schematic_window_get_toplevel *window)
-                      *page
-                      (lepton_undo_get_filename *undo-to-do)
-                      F_OPEN_RESTORE_CWD
-                      %null-pointer)
+              (load-schematic (schematic_window_get_toplevel *window)
+                              *page
+                              (lepton_undo_get_filename *undo-to-do)
+                              F_OPEN_RESTORE_CWD
+                              %null-pointer)
 
               ;; Otherwise objects are restored from memory.
               (when (and (eq? (undo-type window) 'memory)
