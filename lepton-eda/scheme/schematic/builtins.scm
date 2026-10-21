@@ -1232,7 +1232,7 @@ the snap grid size should be set to 100")))
          (*window-set-current-page! *window
                                     (schematic_window_get_active_page *window))
 
-         ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+         ;; open-symbol() will not zoom the loaded page.
          ;; Tabbed GUI: zoom is set in set-tab-page!().
          (unless (true? (x_tabs_enabled))
            (schematic_canvas_zoom_extents
