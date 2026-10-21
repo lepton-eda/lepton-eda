@@ -123,36 +123,28 @@
 (define (open-symbol window component parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
-  (define filename
-    (begin
-      (log! 'message
-            (G_ "Searching for symbol: ~S")
-            (component-basename component))
-      (component-filename component)))
-  (define source-path
-    (or filename
+  (define filename (component-filename component))
+  (define *symbol-page
+    (if filename
+        (let* ((*toplevel (schematic_window_get_toplevel *window))
+               (*filename (string->pointer (canonicalize-path filename)))
+               (*page (lepton_toplevel_search_page *toplevel *filename)))
+          (if (null-pointer? *page)
+              ;; Create a new page.
+              (let ((page (open-schematic filename)))
+                (and page
+                     (let ((*page (page->pointer page)))
+                       (schematic_hierarchy_increment_page_control_counter)
+                       (lepton_page_set_page_control
+                        *page
+                        (schematic_hierarchy_get_page_control_counter))
+                       *page)))
+
+              ;; Return existing page.
+              *page))
         (begin
           (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
           #f)))
-
-  (define *symbol-page
-    (and source-path
-         (let* ((*toplevel (schematic_window_get_toplevel *window))
-                (*filename (string->pointer (canonicalize-path source-path)))
-                (*page (lepton_toplevel_search_page *toplevel *filename)))
-           (if (null-pointer? *page)
-               ;; Create a new page.
-               (let ((page (open-schematic source-path)))
-                 (and page
-                      (let ((*page (page->pointer page)))
-                        (schematic_hierarchy_increment_page_control_counter)
-                        (lepton_page_set_page_control
-                         *page
-                         (schematic_hierarchy_get_page_control_counter))
-                        *page)))
-
-               ;; Return existing page.
-               *page))))
 
   (when *symbol-page
     ;; Change link to parent page since we can come here from any
