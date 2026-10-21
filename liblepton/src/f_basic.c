@@ -206,9 +206,6 @@ f_open (LeptonToplevel *toplevel,
   gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
 
-  /* has the head been freed yet? */
-  /* probably not hack LeptonPage */
-
   /* Cache the cwd so we can restore it later. */
   if (flags & F_OPEN_RESTORE_CWD) {
     saved_cwd = g_get_current_dir();
