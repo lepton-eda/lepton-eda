@@ -123,21 +123,17 @@
 (define (open-symbol window component parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
-  (define filename (component-basename component))
-  (define *symbol
+  (define filename
     (begin
-      (log! 'message (G_ "Searching for symbol: ~S") filename)
-      (s_clib_get_symbol_by_name (string->pointer filename))))
+      (log! 'message
+            (G_ "Searching for symbol: ~S")
+            (component-basename component))
+      (component-filename component)))
   (define source-path
-    (and (not (null-pointer? *symbol))
-         (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
-           (if (null-pointer? *clib-filename)
-               (begin
-                 (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
-                 #f)
-               (let ((clib-filename (pointer->string *clib-filename)))
-                 (g_free *clib-filename)
-                 clib-filename)))))
+    (or filename
+        (begin
+          (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+          #f)))
 
   (define *symbol-page
     (and source-path
