@@ -123,7 +123,6 @@
 
 (define (open-symbol window component)
   (define *window (check-window window 1))
-  (define *parent (page->pointer (object-page component)))
   (define *toplevel (schematic_window_get_toplevel *window))
   (define filename (canonicalize-path (component-filename component)))
   (define *symbol-page
@@ -150,6 +149,8 @@
   (when *symbol-page
     ;; Change link to parent page since we can come here from any
     ;; parent and must come back to the same page.
-    (lepton_page_set_up *symbol-page (lepton_page_get_pid *parent)))
+    (lepton_page_set_up
+     *symbol-page
+     (lepton_page_get_pid (page->pointer (object-page component)))))
 
   *symbol-page)
