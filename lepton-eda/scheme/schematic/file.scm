@@ -65,7 +65,7 @@
       (when (true? active_backup)
         (g_string_free *message TRUE))
 
-      (load-schematic (schematic_window_get_toplevel *window)
+      (load-schematic (lepton_page_get_toplevel *page)
                       *page
                       *filename
                       flags
