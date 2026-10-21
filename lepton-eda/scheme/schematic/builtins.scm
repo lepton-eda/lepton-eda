@@ -1226,25 +1226,23 @@ the snap grid size should be set to 100")))
            (parent (pointer->page
                     (schematic_window_get_active_page *window))))
        (log! 'message (G_ "Searching for symbol: ~S") name)
-       (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
-         (unless (null-pointer? *sym)
-           (let ((*page (open-symbol window *sym parent)))
-             (when *page
-               (window-set-toplevel-page! window (pointer->page *page))
+       (let ((*page (open-symbol window name parent)))
+         (when *page
+           (window-set-toplevel-page! window (pointer->page *page))
 
-               ;; Get active page once again, it should now be the symbol
-               ;; page.
-               (*window-set-current-page! *window
-                                          (schematic_window_get_active_page *window))
+           ;; Get active page once again, it should now be the symbol
+           ;; page.
+           (*window-set-current-page! *window
+                                      (schematic_window_get_active_page *window))
 
-               ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-               ;; Tabbed GUI: zoom is set in set-tab-page!().
-               (unless (true? (x_tabs_enabled))
-                 (schematic_canvas_zoom_extents
-                  (schematic_window_get_current_canvas *window)
-                  %null-pointer))
+           ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+           ;; Tabbed GUI: zoom is set in set-tab-page!().
+           (unless (true? (x_tabs_enabled))
+             (schematic_canvas_zoom_extents
+              (schematic_window_get_current_canvas *window)
+              %null-pointer))
 
-               (undo-save-state)))))))
+           (undo-save-state)))))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 

@@ -119,18 +119,21 @@
     scheme-error-handler))
 
 
-(define (open-symbol window *symbol parent-page)
+(define (open-symbol window filename parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
+  (define *symbol
+    (s_clib_get_symbol_by_name (string->pointer filename)))
   (define source-path
-    (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
-      (if (null-pointer? *clib-filename)
-          (begin
-            (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
-            #f)
-          (let ((clib-filename (pointer->string *clib-filename)))
-            (g_free *clib-filename)
-            clib-filename))))
+    (and (not (null-pointer? *symbol))
+         (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
+           (if (null-pointer? *clib-filename)
+               (begin
+                 (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+                 #f)
+               (let ((clib-filename (pointer->string *clib-filename)))
+                 (g_free *clib-filename)
+                 clib-filename)))))
 
   (define *symbol-page
     (and source-path
