@@ -28,6 +28,7 @@
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
   #:use-module (schematic ffi)
   #:use-module (schematic file)
@@ -120,9 +121,9 @@
     scheme-error-handler))
 
 
-(define (open-symbol window component parent-page)
+(define (open-symbol window component)
   (define *window (check-window window 1))
-  (define *parent (check-page parent-page 3))
+  (define *parent (page->pointer (object-page component)))
   (define *toplevel (schematic_window_get_toplevel *window))
   (define filename (canonicalize-path (component-filename component)))
   (define *symbol-page
