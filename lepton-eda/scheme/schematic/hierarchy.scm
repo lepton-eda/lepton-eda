@@ -122,7 +122,7 @@
 (define (open-symbol window *symbol parent-page)
   (define *window (check-window window 1))
   (define *parent (check-page parent-page 3))
-  (define filename
+  (define source-path
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
       (if (null-pointer? *clib-filename)
           (begin
@@ -133,13 +133,13 @@
             clib-filename))))
 
   (define *symbol-page
-    (and filename
+    (and source-path
          (let* ((*toplevel (schematic_window_get_toplevel *window))
-                (*filename (string->pointer (canonicalize-path filename)))
+                (*filename (string->pointer (canonicalize-path source-path)))
                 (*page (lepton_toplevel_search_page *toplevel *filename)))
            (if (null-pointer? *page)
                ;; Create a new page.
-               (let ((page (open-schematic filename)))
+               (let ((page (open-schematic source-path)))
                  (and page
                       (let ((*page (page->pointer page)))
                         (schematic_hierarchy_increment_page_control_counter)
