@@ -1217,14 +1217,13 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (define window (current-window))
   (define *window (*current-window))
+  (define parent (active-page))
 
-  (match (filter component? (page-selection (active-page)))
+  (match (filter component? (page-selection parent))
     ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
     ((component)
      ;; Get pointer to the first selected component.
-     (let ((name (component-basename component))
-           (parent (pointer->page
-                    (schematic_window_get_active_page *window))))
+     (let ((name (component-basename component)))
        (let ((*page (open-symbol window name parent)))
          (when *page
            (window-set-toplevel-page! window (pointer->page *page))
