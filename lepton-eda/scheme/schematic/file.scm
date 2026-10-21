@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton file)
   #:use-module (lepton gerror)
   #:use-module (lepton log)
 
@@ -71,8 +72,8 @@
       (when (true? active_backup)
         (g_string_free *message TRUE))
 
-      (f_open (schematic_window_get_toplevel *window)
-              *page
-              *filename
-              flags
-              **gerror))))
+      (load-schematic (schematic_window_get_toplevel *window)
+                      *page
+                      *filename
+                      flags
+                      **gerror))))
