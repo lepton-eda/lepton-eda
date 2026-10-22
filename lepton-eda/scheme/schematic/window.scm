@@ -1065,16 +1065,16 @@ tab notebook.  Returns a C TabInfo structure."
 
   (define (*make-new-page)
     (load-schematic-message)
-    (let ((*new-page (open-schematic filename)))
+    (let ((new-page (open-schematic filename)))
       ;; Try to load *FILENAME.
-      (if *new-page
-          (begin
+      (if new-page
+          (let ((*new-page (page->pointer new-page)))
             ;; Switch to the new page.  NOTE: the call sets
             ;; the current active page of toplevel.
             (window-set-toplevel-page! (pointer->window *window)
-                                       (pointer->page *new-page))
+                                       new-page)
             ;; Run hook.
-            (run-hook open-page-hook (pointer->page *new-page))
+            (run-hook open-page-hook new-page)
             ;; Add page file name to the recent file list.
             (recent_manager_add *window (lepton_page_get_filename *new-page))
             ;; Save current state of the page.
@@ -1525,9 +1525,9 @@ for *PAGE page will be created and set active."
                                  (string->pointer filename)))
 
   (define (open-new-page filename)
-    (let ((*page (open-schematic filename)))
-      (if *page
-          (begin
+    (let ((page (open-schematic filename)))
+      (if page
+          (let ((*page (page->pointer page)))
             (update-page-control-counter *page)
             *page)
           %null-pointer)))
