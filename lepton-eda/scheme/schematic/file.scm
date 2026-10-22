@@ -108,6 +108,8 @@
 
 
 (define (open-schematic filename)
+  "Opens file FILENAME and returns schematic page.  On errors,
+reports them to log and raises a dialog window with error message."
   (catch #t
     (lambda () (*open-schematic filename))
     (lambda (key subr message args rest)
