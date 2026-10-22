@@ -245,17 +245,22 @@ Run `~A --help' for more information.\n")
 
   (map get-absolute-filename filename-list))
 
-(define (main app file-list)
+(define (main app)
   ;; Create a new window and associated LeptonToplevel object.
   (define window (make-schematic-window app (lepton_toplevel_new)))
 
   (define *window (window->pointer window))
 
+  ;; Return the new window.
+  *window)
+
+
+(define (startup *window file-list)
   ;; Current directory.
   (define cwd (getcwd))
 
   (define (open-page filename)
-    (window-open-page! window filename))
+    (window-open-page! (pointer->window *window) filename))
 
   ;; Open up log window on startup if requested in config.
   (open-log-window *window)
@@ -265,10 +270,7 @@ Run `~A --help' for more information.\n")
                                   (get-absolute-filenames file-list cwd)))))
 
     ;; Update the window to show the current page:
-    (window-set-current-page! window (last pages)))
-
-  ;; Return the new window.
-  *window)
+    (window-set-current-page! (pointer->window *window) (last pages))))
 
 
 ;;; Init logging.
@@ -315,11 +317,13 @@ Run `~A --help' for more information.\n")
 (define (activate app user-data)
   (let* ((schematics (parse-commandline))
          ;; Foreign pointer to w_current.
-         (window (main app schematics)))
+         (*window (main app)))
 
-    ;; Evaluate post load expression in the dynamic context of the
-    ;; new window.
-    (with-window window (eval-post-load-expr!))))
+    (with-window *window
+      (startup *window schematics)
+      ;; Evaluate post load expression in the dynamic context of
+      ;; the new window.
+      (eval-post-load-expr!))))
 
 ;;; Setup custom GDK event handler.
 (set-default-gdk-event-handler)
