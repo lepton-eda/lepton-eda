@@ -874,6 +874,13 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   the more sophisticated and pretty well tested Scheme function
   `expand-env-variables()` from the module `(lepton os)`.
 
+
+### Changes in `lepton-tragesym`:
+
+- Fixed a bug which caused the program output false errors about
+  missing attributes.
+
+
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
 
