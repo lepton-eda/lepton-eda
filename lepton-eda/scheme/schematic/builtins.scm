@@ -1234,7 +1234,7 @@ the snap grid size should be set to 100")))
          (if (null-pointer? *page)
              ;; Create a new page.
              (let ((*page (lepton_page_new *toplevel *filename)))
-               (open-schematic *window *page %null-pointer)
+               (open-schematic *page %null-pointer)
 
                (schematic_hierarchy_increment_page_control_counter)
                (lepton_page_set_page_control *page
