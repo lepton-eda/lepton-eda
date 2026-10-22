@@ -68,9 +68,9 @@
                                                          (string->pointer normalized-filename))))
           (if (null-pointer? *found-page)
               ;; Subschematic has not been found, let's create a new page.
-              (let ((*page (open-schematic source-filename)))
-                (and *page
-                     (begin
+              (let ((page (open-schematic source-filename)))
+                (and page
+                     (let ((*page (page->pointer page)))
                        (if (zero? page-control)
                            (begin
                              (schematic_hierarchy_increment_page_control_counter)
