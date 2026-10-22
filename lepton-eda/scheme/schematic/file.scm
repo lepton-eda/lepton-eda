@@ -17,6 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic file)
+  #:use-module (ice-9 format)
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
@@ -37,7 +38,15 @@
   #:export (open-schematic))
 
 
-(define (open-schematic filename)
+(define (report-error error-message *main-window *filename)
+  (log! 'warning "~A" error-message)
+  (schematic_dialog_load_file_error
+   *main-window
+   *filename
+   (string->pointer error-message)))
+
+
+(define (*open-schematic filename)
   (define (get-gerror-message **err)
     (let ((*err (dereference-pointer **err)))
       (and (not (null-pointer? *err))
@@ -93,10 +102,17 @@
             ;; new page.
             (let ((error-message (or (gerror-error-message **gerror)
                                      (G_ "Unknown error"))))
-              (log! 'warning "~A" error-message)
-              (schematic_dialog_load_file_error
-               *main-window
-               *filename
-               (string->pointer error-message))
+              (report-error error-message *main-window *filename)
               (lepton_page_delete *toplevel *page)
               #f))))))
+
+
+(define (open-schematic filename)
+  (catch #t
+    (lambda () (*open-schematic filename))
+    (lambda (key subr message args rest)
+      (let ((error-message (format #f "~?" message args)))
+        (report-error error-message
+                      (schematic_window_get_main_window (*current-window))
+                      (string->pointer filename)))
+      #f)))
