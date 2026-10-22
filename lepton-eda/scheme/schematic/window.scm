@@ -1058,15 +1058,15 @@ tab notebook.  Returns a C TabInfo structure."
 (define (window-open-file! *window *filename)
   (define *toplevel (schematic_window_get_toplevel *window))
   (define quiet-mode? (true? (get_quiet_mode)))
+  (define filename (and (not (null-pointer? *filename))
+                        (pointer->string *filename)))
   (define (load-schematic-message)
     (unless quiet-mode?
-      (log! 'message
-            (G_ "Loading schematic ~S")
-            (pointer->string *filename))))
+      (log! 'message (G_ "Loading schematic ~S") filename)))
 
   (define (*make-new-page)
     (load-schematic-message)
-    (let ((*new-page (open-schematic *filename)))
+    (let ((*new-page (open-schematic filename)))
       ;; Try to load *FILENAME.
       (if *new-page
           (begin
@@ -1526,7 +1526,7 @@ for *PAGE page will be created and set active."
                                  (string->pointer filename)))
 
   (define (open-new-page filename)
-    (let ((*page (open-schematic (string->pointer filename))))
+    (let ((*page (open-schematic filename)))
       (if *page
           (begin
             (update-page-control-counter *page)

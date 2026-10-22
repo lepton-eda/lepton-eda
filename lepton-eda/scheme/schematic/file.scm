@@ -36,7 +36,7 @@
   #:export (open-schematic))
 
 
-(define (open-schematic *filename)
+(define (open-schematic filename)
   (define (get-gerror-message **err)
     (let ((*err (dereference-pointer **err)))
       (and (not (null-pointer? *err))
@@ -55,6 +55,7 @@
   (define *window (*current-window))
   (define *toplevel (toplevel->pointer (current-toplevel)))
   (define *main-window (schematic_window_get_main_window *window))
+  (define *filename (string->pointer filename))
   (define *page (lepton_page_new *toplevel *filename))
   (define *full-filename (lepton_page_get_filename *page))
 
