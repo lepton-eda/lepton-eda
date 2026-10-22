@@ -28,11 +28,12 @@
   #:use-module (lepton log)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic window global)
 
   #:export (open-schematic))
 
 
-(define (open-schematic *window *page **gerror)
+(define (open-schematic *page **gerror)
   (define (gerror-error *error)
     (unless (null-pointer? *error)
       (let ((*err (dereference-pointer *error)))
@@ -41,10 +42,8 @@
             (g_clear_error *error)
             (log! 'warning "~A" message))))))
 
+  (define *window (*current-window))
   (define *filename (lepton_page_get_filename *page))
-
-  (when (null-pointer? *window)
-    (error "NULL window"))
 
   (let* ((*tmp-error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
          (active_backup (f_has_active_autosave *filename *tmp-error))
