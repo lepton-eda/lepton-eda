@@ -1702,7 +1702,14 @@ for *PAGE page will be created and set active."
 
   (let ((close?
          (case (gtk-response->symbol response)
-           ((ok) (true? (search-text window)))
+           ;; After a long series of C calls, GC, non-local exits,
+           ;; why should Scheme know compiling the code that the
+           ;; window variable here means the current window we're
+           ;; working in?  We have to make sure the calls for
+           ;; current-window() work in this maybe-thread as in the
+           ;; end, we have to call for open-schematic() which
+           ;; wants it.  That's why with-window() is here.
+           ((ok) (true? (with-window *window (search-text window))))
            ((cancel delete-event) #t)
            (else (log! 'warning "find-text(): strange-signal ~A" response)
                  #f))))
