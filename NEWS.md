@@ -465,6 +465,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A new module, `(schematic tabs)`, has been added.  It contains
   functions dealing with tabs in **lepton-schematic** GUI.
 
+- A new module, `(schematic event)`, has been added.  It contains
+  functions for getting main info on GDK events.
+
 - A new module, `(schematic event handler)`, has been added.
   Along with a new hook, `gdk-event-hook`, exported in the module
   `(schematic hook)`, it allows to customize processing GDK events
@@ -516,6 +519,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   - `save-gtk-window-geometry()`
   - `restore-gtk-window-geometry()`
   Please see docstrings of the functions for more.
+
+- A new module, `(schematic buffer)`, has been introduced.  It
+  exports procedures for dealing with objects in copy-paste
+  buffers.
+
 
 ### Changes in `lepton-schematic`:
 
@@ -716,6 +724,29 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
     `true`, no drawing action is cancelled.
   - Any carried out action is cancelled when the setting is
     `false`.
+
+- Paste operation does no longer change clipboard contents.  Only
+  cut and copy operations do.
+
+- The number of paste buffers is now 10 and the user can cut,
+  copy, and paste to/from any of them by prefixing the usual
+  commands `Ctrl-X`, `Ctrl-C`, and `Ctrl-V` with a numerical
+  prefix from 1 to 9.  Zero prefix is not used as it means the
+  same that the keystroke without prefix does, that is, works with
+  clipboard buffer.
+
+- Paste action now reports if there is no visible objects to
+  insert.  Previously, if the user selected a hidden text object
+  in the "hidden text enabled" mode, and then tried to insert it
+  afterwards when the hidden text was disabled, that is, there
+  were no visible objects to insert, it used to report wrong
+  message "Empty buffer" while the buffer contained only hidden
+  text objects.  This has been fixed by outputting a slightly more
+  meaningful message in such cases.
+
+- Support for pasting objects by clicking on menu item `Ctrl-V`
+  has been revamped.
+
 
 ### Changes in `lepton-attrib`
 - A long standing bug, program crashes on changing cell visibility
