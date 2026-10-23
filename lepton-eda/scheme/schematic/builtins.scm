@@ -1228,8 +1228,7 @@ the snap grid size should be set to 100")))
 
          ;; Get active page once again, it should now be the symbol
          ;; page.
-         (*window-set-current-page! *window
-                                    (schematic_window_get_active_page *window))
+         (window-set-current-page! window (active-page))
 
          ;; open-symbol() will not zoom the loaded page.
          ;; Tabbed GUI: zoom is set in set-tab-page!().
