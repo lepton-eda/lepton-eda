@@ -27,6 +27,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton file)
   #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -47,13 +48,6 @@
 
 
 (define %over-zoom-factor 0.1)
-
-
-;;; Flags defined in struct.h.
-(define F_OPEN_RC 1)
-(define F_OPEN_CHECK_BACKUP 2)
-(define F_OPEN_FORCE_BACKUP 4)
-(define F_OPEN_RESTORE_CWD 8)
 
 
 (define (update-preview *preview *user-data)
@@ -96,13 +90,13 @@ buffer should be displayed, the widget displays the error message."
               (unless (null-pointer? *preview_filename)
                 ;; Open up file in current page.
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-                       (result
-                        (f_open *toplevel
-                                *page
-                                *preview_filename
-                                (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
-                                *error)))
-                  (when (false? result)
+                       (success?
+                        (load-schematic *toplevel
+                                        *page
+                                        *preview_filename
+                                        (logior F_OPEN_RC F_OPEN_RESTORE_CWD)
+                                        *error)))
+                  (unless success?
                     (report-gerror *error *page))))
               (unless (null-pointer? *preview_buffer)
                 (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))

@@ -43,6 +43,7 @@
   #:use-module (schematic hierarchy)
   #:use-module (schematic selection)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
   #:use-module (schematic window page)
 
   #:export (autonumber-dialog))
@@ -600,13 +601,14 @@
 ;;; gets the autonumber dialog response ID and either starts
 ;;; autonumbering or destroys the dialog.
 (define (autonumber-response *widget response *autotext)
-  (if (eq? (gtk-response->symbol response) 'accept)
-      ;; Triggering the apply button will call the autonumber
-      ;; action functions.
-      (start-autonumbering *autotext)
-      ;; Close the dialog if the close button is pressed or the
-      ;; user closes the dialog window.
-      (destroy-autonumber-dialog! *autotext)))
+  (with-window (schematic_autonumber_get_autotext_window *autotext)
+    (if (eq? (gtk-response->symbol response) 'accept)
+        ;; Triggering the apply button will call the autonumber
+        ;; action functions.
+        (start-autonumbering *autotext)
+        ;; Close the dialog if the close button is pressed or the
+        ;; user closes the dialog window.
+        (destroy-autonumber-dialog! *autotext))))
 
 ;;; Response callback for the autonumber text dialog.
 (define *autonumber-response-callback

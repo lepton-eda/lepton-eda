@@ -1058,54 +1058,32 @@ tab notebook.  Returns a C TabInfo structure."
 (define (window-open-file! *window *filename)
   (define *toplevel (schematic_window_get_toplevel *window))
   (define quiet-mode? (true? (get_quiet_mode)))
+  (define filename (pointer->string *filename))
   (define (load-schematic-message)
     (unless quiet-mode?
-      (log! 'message
-            (G_ "Loading schematic ~S")
-            (pointer->string *filename))))
-
-  (define (get-gerror-message *error)
-    (let ((*err (dereference-pointer *error)))
-      (unless (null-pointer? *err)
-        (gerror-message *err))))
-
-  (define (gerror-error-message *error)
-    (let ((msg (get-gerror-message *error)))
-      (g_clear_error *error)
-      msg))
-
-  (define *main-window (schematic_window_get_main_window *window))
+      (log! 'message (G_ "Loading schematic ~S") filename)))
 
   (define (*make-new-page)
-    (let ((*new-page (lepton_page_new *toplevel *filename)))
-      ;; Switch to the new page.  NOTE: the call sets
-      ;; the current active page of toplevel.
-      (window-set-toplevel-page! (pointer->window *window)
-                                 (pointer->page *new-page))
-      (load-schematic-message)
-      (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
-        ;; Try to load *FILENAME.
-        (if (false? (open-schematic *window *new-page *filename *error))
-            (let ((error-message (gerror-error-message *error)))
-              (log! 'warning "~A" error-message)
-              (schematic_dialog_load_file_error *main-window
-                                                *filename
-                                                (string->pointer error-message))
-              ;; Loading failed.  Delete the page and open a new
-              ;; blank one.
-              (lepton_page_delete *toplevel *new-page)
-              ;; Open and return a new blank page.
-              (window-make-untitled-page *window))
+    (load-schematic-message)
+    (let ((new-page (open-schematic filename)))
+      ;; Try to load *FILENAME.
+      (if new-page
+          (let ((*new-page (page->pointer new-page)))
+            ;; Switch to the new page.  NOTE: the call sets
+            ;; the current active page of toplevel.
+            (window-set-toplevel-page! (pointer->window *window)
+                                       new-page)
+            ;; Run hook.
+            (run-hook open-page-hook new-page)
+            ;; Add page file name to the recent file list.
+            (recent_manager_add *window (lepton_page_get_filename *new-page))
+            ;; Save current state of the page.
+            (o_undo_savestate *window *new-page FALSE)
+            ;; Return new page.
+            *new-page)
 
-            (begin
-              ;; Run hook.
-              (run-hook open-page-hook (pointer->page *new-page))
-              ;; Add page file name to the recent file list.
-              (recent_manager_add *window (lepton_page_get_filename *new-page))
-              ;; Save current state of the page.
-              (o_undo_savestate *window *new-page FALSE)
-              ;; Return new page.
-              *new-page)))))
+          ;; Loading failed.  Open a new blank page.
+          (window-make-untitled-page *window))))
 
   (when (null-pointer? *toplevel)
     (error "NULL toplevel."))
@@ -1545,21 +1523,14 @@ for *PAGE page will be created and set active."
   (define (lookup-toplevel-page filename)
     (lepton_toplevel_search_page *toplevel
                                  (string->pointer filename)))
-  (define (delete-page *page)
-    (lepton_page_delete *toplevel *page)
-    %null-pointer)
 
   (define (open-new-page filename)
-    (let* ((*new-page
-            (lepton_page_new *toplevel (string->pointer filename)))
-           (success? (true? (open-schematic
-                             *window
-                             *new-page
-                             (lepton_page_get_filename *new-page)
-                             **err))))
-      (if success?
-          (update-page-control-counter *new-page)
-          (delete-page *new-page))))
+    (let ((page (open-schematic filename)))
+      (if page
+          (let ((*page (page->pointer page)))
+            (update-page-control-counter *page)
+            *page)
+          %null-pointer)))
 
   (let ((source-filename (get-source-library-file filename)))
     (if source-filename
@@ -1705,7 +1676,14 @@ for *PAGE page will be created and set active."
 
   (let ((close?
          (case (gtk-response->symbol response)
-           ((ok) (true? (search-text window)))
+           ;; After a long series of C calls, GC, non-local exits,
+           ;; why should Scheme know compiling the code that the
+           ;; window variable here means the current window we're
+           ;; working in?  We have to make sure the calls for
+           ;; current-window() work in this maybe-thread as in the
+           ;; end, we have to call for open-schematic() which
+           ;; wants it.  That's why with-window() is here.
+           ((ok) (true? (with-window *window (search-text window))))
            ((cancel delete-event) #t)
            (else (log! 'warning "find-text(): strange-signal ~A" response)
                  #f))))

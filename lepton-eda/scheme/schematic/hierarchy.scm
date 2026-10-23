@@ -32,7 +32,6 @@
 
   #:export (hierarchy-down-schematic))
 
-
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
 ;;; the currently open pages.  The function returns the found or
@@ -69,21 +68,21 @@
                                                          (string->pointer normalized-filename))))
           (if (null-pointer? *found-page)
               ;; Subschematic has not been found, let's create a new page.
-              (let ((*new-page (lepton_page_new *toplevel
-                                                (string->pointer source-filename))))
-                (open-schematic *window
-                                *new-page
-                                (lepton_page_get_filename *new-page)
-                                %null-pointer)
-                (if (zero? page-control)
-                    (begin
-                      (schematic_hierarchy_increment_page_control_counter)
-                      (lepton_page_set_page_control *new-page
-                                                    (schematic_hierarchy_get_page_control_counter)))
-                    (lepton_page_set_page_control *new-page page-control))
+              (let ((page (open-schematic source-filename)))
+                (and page
+                     (let ((*page (page->pointer page)))
+                       (if (zero? page-control)
+                           (begin
+                             (schematic_hierarchy_increment_page_control_counter)
+                             (lepton_page_set_page_control
+                              *page
+                              (schematic_hierarchy_get_page_control_counter)))
+                           (lepton_page_set_page_control *page page-control))
 
-                (lepton_page_set_up *new-page (lepton_page_get_pid *parent-page))
-                *new-page)
+                       (lepton_page_set_up
+                        *page
+                        (lepton_page_get_pid *parent-page))
+                       *page)))
 
               ;; Page has been found.
               (let ((*forebear-page (get-forebear *parent-page *found-page)))
