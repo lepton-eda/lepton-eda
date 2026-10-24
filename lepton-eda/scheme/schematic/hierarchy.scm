@@ -135,6 +135,15 @@
                       (G_ "Schematic ~S not found in source library.")))))
 
 
+(define (component->page component page-name)
+  (let ((page (make-page page-name)))
+    (apply page-append!
+           page
+           (map copy-object (component-contents component)))
+    (set-page-dirty! page #f)
+    page))
+
+
 (define (open-symbol component)
   (define filename
     (begin
@@ -158,12 +167,7 @@
         (if generated-filename
             ;; For generated components, create a new page and
             ;; copy the component contents to it.
-            (let ((page (make-page generated-filename)))
-              (apply page-append!
-                     page
-                     (map copy-object (component-contents component)))
-              (set-page-dirty! page #f)
-              page)
+            (component->page component generated-filename)
             ;; Component has not been found.
             (report-error (component-basename component)
                           (G_ "Symbol cannot be loaded.")))))
