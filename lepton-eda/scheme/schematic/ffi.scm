@@ -843,7 +843,7 @@
 (define-lff schematic_canvas_redraw void '(* * *))
 (define-lff schematic_canvas_SCREENabs int (list '* int))
 (define-lff schematic_canvas_SCREENtoWORLD void (list '* int int '* '*))
-(define-lff schematic_canvas_setup_drawing_area void '(*))
+(define-lff schematic_canvas_setup_drawing_area '* '(*))
 (define-lff schematic_canvas_setup_drawing_area_events void (list '* int))
 (define-lff schematic_canvas_WORLDabs int (list '* int))
 (define-lff schematic_canvas_zoom_extents void '(* *))
