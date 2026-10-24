@@ -1182,9 +1182,6 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
-  (define window (current-window))
-  (define *window (*current-window))
-
   (match (filter component? (page-selection (active-page)))
     ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
     ((component)
@@ -1192,13 +1189,13 @@ the snap grid size should be set to 100")))
      (let ((page (open-symbol component)))
        (when page
          ;; Display the found symbol page.
-         (window-set-current-page! window page)
+         (window-set-current-page! (current-window) page)
 
          ;; open-symbol() will not zoom the loaded page.
          ;; Tabbed GUI: zoom is set in set-tab-page!().
          (unless (true? (x_tabs_enabled))
            (schematic_canvas_zoom_extents
-            (schematic_window_get_current_canvas *window)
+            (schematic_window_get_current_canvas (*current-window))
             %null-pointer))
 
          (undo-save-state))))
