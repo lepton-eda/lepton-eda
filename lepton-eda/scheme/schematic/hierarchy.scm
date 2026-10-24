@@ -147,9 +147,8 @@
 
               ;; Return existing page.
               *page))
-        (begin
-          (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
-          #f)))
+        (report-error (component-basename component)
+                      (G_ "Symbol is not a real file. It cannot be loaded."))))
 
   (when *symbol-page
     ;; Change link to parent page since we can come here from any
