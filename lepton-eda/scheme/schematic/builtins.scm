@@ -1191,11 +1191,8 @@ the snap grid size should be set to 100")))
      ;; Get pointer to the first selected component.
      (let ((page (open-symbol window component)))
        (when page
-         (window-set-toplevel-page! window page)
-
-         ;; Get active page once again, it should now be the symbol
-         ;; page.
-         (window-set-current-page! window (active-page))
+         ;; Display the found symbol page.
+         (window-set-current-page! window page)
 
          ;; open-symbol() will not zoom the loaded page.
          ;; Tabbed GUI: zoom is set in set-tab-page!().
