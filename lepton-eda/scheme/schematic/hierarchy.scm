@@ -139,7 +139,12 @@
   (define filename
     (begin
       (check-object component 1)
-      (canonicalize-path (component-filename component))))
+      (false-if-exception
+       (canonicalize-path (component-filename component)))))
+  ;; If a component has no filename but has a basename, it's
+  ;; probably a symbol generated using one of the functions
+  ;; component-library-command() or component-library-funcs().
+  (define generated-filename (component-basename component))
   (define symbol-page
     (if filename
         (let ((page (find (lambda (x)
@@ -149,9 +154,18 @@
           (or page
               ;; ... or create a new one.
               (increment-page-control-counter (open-schematic filename))))
-        ;; Component has not been found.
-        (report-error (component-basename component)
-                      (G_ "Symbol is not a real file. It cannot be loaded."))))
+        ;; Maybe the symbol is a generated one?
+        (if generated-filename
+            ;; For generated components, create a new page and
+            ;; copy the component contents to it.
+            (let ((page (make-page generated-filename)))
+              (apply page-append!
+                     page
+                     (map copy-object (component-contents component)))
+              page)
+            ;; Component has not been found.
+            (report-error (component-basename component)
+                          (G_ "Symbol cannot be loaded.")))))
 
   (and symbol-page
        (begin
