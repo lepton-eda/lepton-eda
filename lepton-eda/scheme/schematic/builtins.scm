@@ -1129,22 +1129,13 @@ the snap grid size should be set to 100")))
     (g_clear_error *error)))
 
 (define (hierarchy-down-filename filename *window *parent page-control)
-  (define (scheme-error-handler key subr message args rest)
-    (let ((secondary-message
-           (failed-to-descend-error filename (format #f "~?" message args))))
-
-      (schematic-error-dialog (G_ "Failed to descend hierarchy.")
-                              #:secondary-text secondary-message))
-    #f)
-
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
   (let ((*child (open-subschematic (pointer->window *window)
                                    filename
                                    (pointer->page *parent)
-                                   page-control
-                                   scheme-error-handler)))
+                                   page-control)))
     (and *child
          (if (null-pointer? *child)
              ;; Launch the error dialog.

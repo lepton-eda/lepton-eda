@@ -53,14 +53,6 @@
 ;;; in WINDOW and returns a flat list of pages that are below
 ;;; PAGE.
 (define (hierarchy-traverse-pages window page)
-  (define (make-scheme-error-handler filename)
-    (lambda (key subr message args rest)
-      (log! 'message
-            (G_ "Failed to descend hierarchy into ~S: ~A")
-            filename
-            (format #f "~?" message args))
-      #f))
-
   (define (split-attrib-value object)
     (string-split (attrib-value object) #\,))
 
@@ -82,11 +74,7 @@
 
   (define (filename-page filename parent-page)
     (let ((*child-page
-           (open-subschematic window
-                              filename
-                              parent-page
-                              0
-                              (make-scheme-error-handler filename))))
+           (open-subschematic window filename parent-page 0)))
       (and *child-page
            (not (null-pointer? *child-page))
            (pointer->page *child-page))))
