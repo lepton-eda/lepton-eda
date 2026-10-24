@@ -22,6 +22,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
@@ -135,11 +136,18 @@
                       (G_ "Schematic ~S not found in source library.")))))
 
 
+(define (copy-object* object page)
+  (and (not (and (attribute? object) (attrib-attachment object)))
+       (let ((O (copy-object object))
+             (A (map copy-object (object-attribs object))))
+         (apply page-append! page O A)
+         (apply attach-attribs! O A))))
+
+
 (define (component->page component page-name)
   (let ((page (make-page page-name)))
-    (apply page-append!
-           page
-           (map copy-object (component-contents component)))
+    (map (lambda (object) (copy-object* object page))
+         (component-contents component))
     (set-page-dirty! page #f)
     page))
 
