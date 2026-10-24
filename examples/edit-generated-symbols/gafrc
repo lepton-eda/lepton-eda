@@ -1,0 +1,4 @@
+(reset-component-library)
+(component-library "./sym")
+(source-library  ".")
+(primitive-load "scm-component.scm")
