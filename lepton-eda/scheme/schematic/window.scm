@@ -1909,6 +1909,7 @@ for *PAGE page will be created and set active."
 ;;; Creates and returns a schematic drawing area widget as known as
 ;;; canvas.  Associates it with *PAGE, adds it to the scrolled
 ;;; container *SCROLLED, focuses, and shows.
+;;; NOTE: This function is used only for GUI without tabs.
 (define (make-drawing-area *scrolled *page)
   (when (null-pointer? *scrolled)
     (error "NULL scrolled widget."))
@@ -1944,6 +1945,7 @@ for *PAGE page will be created and set active."
 ;;; Creates and returns a scrolled canvas widget in the working area
 ;;; *WORK-BOX of *WINDOW This function is used when tabs are disabled.
 ;;; The page of the canvas is set to the active page of the window.
+;;; NOTE: This function is used only for GUI without tabs.
 (define (make-canvas *window *work-box)
   (when (null-pointer? *window)
     (error "NULL window."))
