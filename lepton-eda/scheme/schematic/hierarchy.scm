@@ -40,24 +40,22 @@
             open-symbol))
 
 
-(define (make-scheme-error-handler filename)
+(define (report-error filename message)
   (define descend-message
     (format #f (G_ "Failed to descend hierarchy into ~S") filename))
   (define ref-message
     (G_ "The lepton-schematic log may contain more information."))
   (define dialog-title (G_ "Failed to descend hierarchy."))
 
-  (lambda (key subr message args rest)
-    (let ((formatted-message (format #f "~?" message args)))
-      (log! 'message "~A: ~A" descend-message formatted-message)
-      (schematic-error-dialog dialog-title
-                              #:secondary-text
-                              (format #f
-                                      "~A:\n~A\n\n~A"
-                                      descend-message
-                                      formatted-message
-                                      ref-message)))
-    #f))
+  (log! 'message "~A: ~A" descend-message message)
+  (schematic-error-dialog dialog-title
+                          #:secondary-text
+                          (format #f
+                                  "~A:\n~A\n\n~A"
+                                  descend-message
+                                  message
+                                  ref-message))
+  #f)
 
 
 ;;; The function searches for an associated source file referred
@@ -65,7 +63,7 @@
 ;;; the currently open pages.  The function returns the found or
 ;;; loaded source page, or %NULL-POINTER if it could not find the
 ;;; source file.  Any issue is reported to the log.
-(define (*open-subschematic window filename parent-page page-control)
+(define (open-subschematic window filename parent-page page-control)
   (define *window (check-window window 1))
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
@@ -113,30 +111,19 @@
                 (if (and (not (null-pointer? *forebear-page))
                          (= (lepton_page_get_pid *found-page)
                             (lepton_page_get_pid *forebear-page)))
-                    (scm-error 'hierarchy-loop
-                               #f
-                               (G_ "Hierarchy contains a circular dependency.")
-                               '()
-                               #f)
+                    (report-error
+                     filename
+                     (G_ "Hierarchy contains a circular dependency."))
+
                     (begin
                       (lepton_toplevel_goto_page *toplevel *found-page)
                       (unless (zero? page-control)
                         (lepton_page_set_page_control *found-page page-control))
                       (lepton_page_set_up *found-page (lepton_page_get_pid *parent-page))
                       (pointer->page *found-page))))))
-        (scm-error 'missing-resource
-                   #f
-                   (G_ "Schematic ~S not found in source library.")
-                   (list filename)
-                   #f))))
 
-
-(define (open-subschematic window filename parent-page page-control)
-  (catch #t
-    (lambda ()
-      (*open-subschematic window filename parent-page page-control))
-    ;; (lambda (key subr message args rest) ...)
-    (make-scheme-error-handler filename)))
+        (report-error filename
+                      (G_ "Schematic ~S not found in source library.")))))
 
 
 (define (open-symbol window component)
