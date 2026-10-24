@@ -162,6 +162,7 @@
               (apply page-append!
                      page
                      (map copy-object (component-contents component)))
+              (set-page-dirty! page #f)
               page)
             ;; Component has not been found.
             (report-error (component-basename component)
