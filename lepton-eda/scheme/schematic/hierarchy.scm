@@ -18,6 +18,7 @@
 
 
 (define-module (schematic hierarchy)
+  #:use-module (ice-9 format)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
@@ -30,12 +31,34 @@
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
 
+  #:use-module (schematic dialog)
   #:use-module (schematic ffi)
   #:use-module (schematic file)
   #:use-module (schematic window foreign)
 
   #:export (open-subschematic
             open-symbol))
+
+
+(define (make-scheme-error-handler filename)
+  (define descend-message
+    (format #f (G_ "Failed to descend hierarchy into ~S") filename))
+  (define ref-message
+    (G_ "The lepton-schematic log may contain more information."))
+  (define dialog-title (G_ "Failed to descend hierarchy."))
+
+  (lambda (key subr message args rest)
+    (let ((formatted-message (format #f "~?" message args)))
+      (log! 'message "~A: ~A" descend-message formatted-message)
+      (schematic-error-dialog dialog-title
+                              #:secondary-text
+                              (format #f
+                                      "~A:\n~A\n\n~A"
+                                      descend-message
+                                      formatted-message
+                                      ref-message)))
+    #f))
+
 
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
@@ -109,16 +132,12 @@
                    #f))))
 
 
-(define (open-subschematic window
-                           filename
-                           parent-page
-                           page-control
-                           scheme-error-handler)
+(define (open-subschematic window filename parent-page page-control)
   (catch #t
     (lambda ()
       (*open-subschematic window filename parent-page page-control))
     ;; (lambda (key subr message args rest) ...)
-    scheme-error-handler))
+    (make-scheme-error-handler filename)))
 
 
 (define (open-symbol window component)
