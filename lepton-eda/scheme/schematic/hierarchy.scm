@@ -130,7 +130,7 @@
   (define *window (check-window window 1))
   (define *toplevel (schematic_window_get_toplevel *window))
   (define filename (canonicalize-path (component-filename component)))
-  (define *symbol-page
+  (define symbol-page
     (if filename
         (let* ((*filename (string->pointer filename))
                (*page (lepton_toplevel_search_page *toplevel *filename)))
@@ -142,19 +142,20 @@
                        (schematic_hierarchy_increment_page_control_counter)
                        (lepton_page_set_page_control
                         *page
-                        (schematic_hierarchy_get_page_control_counter))
-                       *page)))
+                        (schematic_hierarchy_get_page_control_counter)))
+                     page))
 
               ;; Return existing page.
-              *page))
+              (pointer->page *page)))
         (report-error (component-basename component)
                       (G_ "Symbol is not a real file. It cannot be loaded."))))
 
-  (when *symbol-page
-    ;; Change link to parent page since we can come here from any
-    ;; parent and must come back to the same page.
-    (lepton_page_set_up
-     *symbol-page
-     (lepton_page_get_pid (page->pointer (object-page component)))))
+  (and symbol-page
+       (begin
+         ;; Change link to parent page since we can come here from
+         ;; any parent and must come back to the same page.
+         (lepton_page_set_up
+          (page->pointer symbol-page)
+          (lepton_page_get_pid (page->pointer (object-page component)))))
 
-  (pointer->page *symbol-page))
+       symbol-page))
