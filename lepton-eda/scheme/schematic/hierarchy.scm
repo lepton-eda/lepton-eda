@@ -28,6 +28,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton library)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -135,7 +136,10 @@
 
 
 (define (open-symbol component)
-  (define filename (canonicalize-path (component-filename component)))
+  (define filename
+    (begin
+      (check-object component 1)
+      (canonicalize-path (component-filename component))))
   (define symbol-page
     (if filename
         (let ((page (find (lambda (x)
