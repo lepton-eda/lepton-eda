@@ -53,21 +53,6 @@
 ;;; in WINDOW and returns a flat list of pages that are below
 ;;; PAGE.
 (define (hierarchy-traverse-pages window page)
-  (define *error
-    (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-
-  (define (gerror-handler filename)
-    (let ((error-message
-           (if (or (null-pointer? *error)
-                   (null-pointer? (dereference-pointer *error)))
-               (G_ "Unknown error.")
-               (gerror-message (dereference-pointer *error)))))
-      (log! 'message
-            (G_ "Failed to descend hierarchy into ~S: ~A")
-            filename
-            error-message)
-      (g_clear_error *error)))
-
   (define (make-scheme-error-handler filename)
     (lambda (key subr message args rest)
       (log! 'message
@@ -103,9 +88,8 @@
                               0
                               (make-scheme-error-handler filename))))
       (and *child-page
-           (if (null-pointer? *child-page)
-               (begin (gerror-handler filename) #f)
-               (pointer->page *child-page)))))
+           (not (null-pointer? *child-page))
+           (pointer->page *child-page))))
 
   (define (child-pages page)
     (map
