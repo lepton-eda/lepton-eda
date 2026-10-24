@@ -1189,7 +1189,7 @@ the snap grid size should be set to 100")))
     ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
     ((component)
      ;; Get pointer to the first selected component.
-     (let ((page (open-symbol window component)))
+     (let ((page (open-symbol component)))
        (when page
          ;; Display the found symbol page.
          (window-set-current-page! window page)

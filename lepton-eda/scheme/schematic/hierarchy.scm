@@ -127,7 +127,7 @@
                       (G_ "Schematic ~S not found in source library.")))))
 
 
-(define (open-symbol window component)
+(define (open-symbol component)
   (define filename (canonicalize-path (component-filename component)))
   (define symbol-page
     (if filename
