@@ -19,6 +19,7 @@
 
 (define-module (schematic hierarchy)
   #:use-module (ice-9 format)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
@@ -127,15 +128,15 @@
 
 
 (define (open-symbol window component)
-  (define *window (check-window window 1))
-  (define *toplevel (schematic_window_get_toplevel *window))
   (define filename (canonicalize-path (component-filename component)))
   (define symbol-page
     (if filename
-        (let* ((*filename (string->pointer filename))
-               (*page (lepton_toplevel_search_page *toplevel *filename)))
-          (if (null-pointer? *page)
-              ;; Create a new page.
+        (let ((page (find (lambda (x)
+                            (string= (page-filename x) filename))
+                          (active-pages))))
+          ;; Either return an existing page for the component...
+          (or page
+              ;; ... or create a new one.
               (let ((page (open-schematic filename)))
                 (and page
                      (let ((*page (page->pointer page)))
@@ -143,10 +144,7 @@
                        (lepton_page_set_page_control
                         *page
                         (schematic_hierarchy_get_page_control_counter)))
-                     page))
-
-              ;; Return existing page.
-              (pointer->page *page)))
+                     page))))
         ;; Component has not been found.
         (report-error (component-basename component)
                       (G_ "Symbol is not a real file. It cannot be loaded."))))
