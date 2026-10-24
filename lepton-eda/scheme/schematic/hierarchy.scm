@@ -147,6 +147,7 @@
 
               ;; Return existing page.
               (pointer->page *page)))
+        ;; Component has not been found.
         (report-error (component-basename component)
                       (G_ "Symbol is not a real file. It cannot be loaded."))))
 
