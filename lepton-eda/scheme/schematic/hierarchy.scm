@@ -59,6 +59,17 @@
   #f)
 
 
+;;; Increments page control counter of PAGE and returns the page.
+(define (increment-page-control-counter page)
+  (and page
+       (let ((*page (page->pointer page)))
+         (schematic_hierarchy_increment_page_control_counter)
+         (lepton_page_set_page_control
+          *page
+          (schematic_hierarchy_get_page_control_counter)))
+       page))
+
+
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
 ;;; the currently open pages.  The function returns the found or
@@ -95,11 +106,7 @@
                 (and page
                      (let ((*page (page->pointer page)))
                        (if (zero? page-control)
-                           (begin
-                             (schematic_hierarchy_increment_page_control_counter)
-                             (lepton_page_set_page_control
-                              *page
-                              (schematic_hierarchy_get_page_control_counter)))
+                           (increment-page-control-counter page)
                            (lepton_page_set_page_control *page page-control))
 
                        (lepton_page_set_up
@@ -137,14 +144,7 @@
           ;; Either return an existing page for the component...
           (or page
               ;; ... or create a new one.
-              (let ((page (open-schematic filename)))
-                (and page
-                     (let ((*page (page->pointer page)))
-                       (schematic_hierarchy_increment_page_control_counter)
-                       (lepton_page_set_page_control
-                        *page
-                        (schematic_hierarchy_get_page_control_counter)))
-                     page))))
+              (increment-page-control-counter (open-schematic filename))))
         ;; Component has not been found.
         (report-error (component-basename component)
                       (G_ "Symbol is not a real file. It cannot be loaded."))))
