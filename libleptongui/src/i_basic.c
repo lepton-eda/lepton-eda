@@ -100,6 +100,7 @@ i_status_string (SchematicWindow *w_current)
     case ROTATEMODE : return _("Rotate Mode");
     case GRIPS      : return _("Modify Mode");
     case ZOOMBOX    : return _("Zoom Box");
+    case STROKEMODE : return _("Stroke Mode");
   }
   g_assert_not_reached();
   return ""; /* should not happen */

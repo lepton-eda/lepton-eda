@@ -56,6 +56,7 @@ schematic_action_mode_from_string (char *s)
   else if (strcmp (s, "pan-mode") == 0) {result = PAN; }
   else if (strcmp (s, "mirror-mode") == 0) {result = MIRRORMODE; }
   else if (strcmp (s, "rotate-mode") == 0) {result = ROTATEMODE; }
+  else if (strcmp (s, "stroke-mode") == 0) {result = STROKEMODE; }
 
   return result;
 }
@@ -98,6 +99,7 @@ schematic_action_mode_to_string (SchematicActionMode mode)
   case PAN: result = "pan-mode"; break;
   case MIRRORMODE: result = "mirror-mode"; break;
   case ROTATEMODE: result = "rotate-mode"; break;
+  case STROKEMODE: result = "stroke-mode"; break;
   default: break;
   }
 

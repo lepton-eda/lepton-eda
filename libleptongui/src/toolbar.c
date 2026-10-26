@@ -335,6 +335,7 @@ schematic_toolbar_update (GtkWidget *toolbar,
     case(ZOOMBOX): /*! \todo */
     case(PASTEMODE): /*! \todo */
     case(GRIPS): /*! \todo */
+    case(STROKEMODE): /*! \todo */
     default: name = "Select"; break;
   }
 
