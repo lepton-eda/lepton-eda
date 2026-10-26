@@ -907,6 +907,10 @@ schematic_rotation_combo_set_angle (GtkWidget *widget,
 
 /* x_stroke.c */
 void
+schematic_stroke_draw_point (SchematicWindow *w_current,
+                             int x,
+                             int y);
+void
 x_stroke_init (void);
 
 void

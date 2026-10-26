@@ -21,6 +21,53 @@
 
 #include "schematic.h"
 
+
+/*! \brief Draws a point for the stroke.
+ *  \par Function Description
+ *
+ *  Draws a point for a stroke on the canvas.
+ *
+ *  \param [in] w_current The SchematicWindow object.
+ *  \param [in] x The X coord of the point.
+ *  \param [in] Y The X coord of the point.
+ */
+void
+schematic_stroke_draw_point (SchematicWindow *w_current,
+                             int x,
+                             int y)
+{
+  cairo_matrix_t user_to_device_matrix;
+  double x0, y0;
+  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
+  g_return_if_fail (view != NULL);
+  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
+  g_return_if_fail (geometry != NULL);
+
+  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(view)));
+  LeptonColor *color = x_color_lookup (STROKE_COLOR);
+  cairo_set_source_rgba (cr,
+                         lepton_color_get_red_double (color),
+                         lepton_color_get_green_double (color),
+                         lepton_color_get_blue_double (color),
+                         lepton_color_get_alpha_double (color));
+
+  cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (geometry));
+  x0 = x;
+  y0 = y;
+  cairo_device_to_user (cr, &x0, &y0);
+  cairo_get_matrix (cr, &user_to_device_matrix);
+  cairo_save (cr);
+  cairo_identity_matrix (cr);
+
+  cairo_matrix_transform_point (&user_to_device_matrix, &x0, &y0);
+
+  cairo_rectangle (cr, x0, y0, 1, 1);
+  cairo_fill (cr);
+  cairo_restore (cr);
+  cairo_destroy (cr);
+}
+
+
 #ifdef HAVE_LIBSTROKE
 
 /* libstroke seems to not have C++ support declarations so we add
@@ -85,8 +132,6 @@ x_stroke_free (void)
  *  This function adds the point (<B>x</B>,<B>y</B>) as a new point in
  *  the stroke.
  *
- * The footprint is updated and the new point is drawn on the drawing area.
- *
  *  \param [in] w_current The SchematicWindow object.
  *  \param [in] x        The X coord of the new point.
  *  \param [in] Y        The X coord of the new point.
@@ -96,13 +141,6 @@ x_stroke_record (SchematicWindow *w_current,
                  gint x,
                  gint y)
 {
-  cairo_matrix_t user_to_device_matrix;
-  double x0, y0;
-  SchematicCanvas *view = schematic_window_get_current_canvas (w_current);
-  g_return_if_fail (view != NULL);
-  SchematicViewport *geometry = schematic_canvas_get_viewport (view);
-  g_return_if_fail (geometry != NULL);
-
   g_assert (stroke_points != NULL);
 
   stroke_record (x, y);
@@ -112,28 +150,7 @@ x_stroke_record (SchematicWindow *w_current,
 
     g_array_append_val (stroke_points, point);
 
-    cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(view)));
-    LeptonColor *color = x_color_lookup (STROKE_COLOR);
-    cairo_set_source_rgba (cr,
-                           lepton_color_get_red_double (color),
-                           lepton_color_get_green_double (color),
-                           lepton_color_get_blue_double (color),
-                           lepton_color_get_alpha_double (color));
-
-    cairo_set_matrix (cr, schematic_viewport_get_world_to_screen_matrix (geometry));
-    x0 = x;
-    y0 = y;
-    cairo_device_to_user (cr, &x0, &y0);
-    cairo_get_matrix (cr, &user_to_device_matrix);
-    cairo_save (cr);
-    cairo_identity_matrix (cr);
-
-    cairo_matrix_transform_point (&user_to_device_matrix, &x0, &y0);
-
-    cairo_rectangle (cr, x0, y0, 1, 1);
-    cairo_fill (cr);
-    cairo_restore (cr);
-    cairo_destroy (cr);
+    schematic_stroke_draw_point (w_current, x, y);
   }
 
 }
