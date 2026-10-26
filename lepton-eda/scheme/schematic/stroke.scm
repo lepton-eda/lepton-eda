@@ -46,6 +46,8 @@
 (define %libstroke-initialized #f)
 
 
+;;; Init the libstroke library once.  If it is absent, log a
+;;; message about it.
 (define (init-libstroke)
   (if libstroke
       (stroke_init)
@@ -53,20 +55,24 @@
   (set! %libstroke-initialized #t))
 
 
-;;; Records a new point with the coords (X . Y) for the stroke.
 (define (record-stroke point)
+  "Records new POINT for the stroke.  The point is a pair of the
+form (X . Y).  If libstroke is missing, does nothing and returns
+#f.  When running for the first time, initializes the library and,
+if it is missing, logs a message about it."
   (unless %libstroke-initialized
     (init-libstroke))
   (and libstroke
        (stroke_record (car point) (cdr point))))
 
 
-;;; Translates the stroke input into a string and returns a string
-;;; consisting of numbers if the stroke has been successfully
-;;; translated, or #f if libstroke failed to transform the stroke.
-;;; The stroke sequence is to be evaluated in Scheme code into a
-;;; possible action by the Guile procedure eval-stroke().
 (define (translate-stroke)
+  "Translates the stroke input into a string and returns a string
+consisting of numbers if the stroke has been successfully
+translated, or #f if libstroke failed to transform the stroke. The
+stroke sequence is to be evaluated in Scheme code into a possible
+action by the Guile procedure eval-stroke().  If libstroke is
+missing, does nothing and returns #f."
   (define *bv (bytevector->pointer (make-bytevector (sizeof '*) 0) 0))
 
   (and libstroke
