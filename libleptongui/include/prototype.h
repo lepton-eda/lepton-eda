@@ -904,12 +904,6 @@ void
 schematic_stroke_draw_point (SchematicWindow *w_current,
                              int x,
                              int y);
-void
-schematic_stroke_invalidate_rect (SchematicWindow *w_current,
-                                  int min_x,
-                                  int min_y,
-                                  int max_x,
-                                  int max_y);
 
 /* x_window.c */
 GtkWidget*

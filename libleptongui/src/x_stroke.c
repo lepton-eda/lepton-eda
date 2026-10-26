@@ -66,25 +66,3 @@ schematic_stroke_draw_point (SchematicWindow *w_current,
   cairo_restore (cr);
   cairo_destroy (cr);
 }
-
-
-/*! \brief Invalidate the rectangle with stroke points
- *  \par Function Description
- *
- *  Erases the mouse footprint produced when inputting a stroke.
- *
- *  \param [in] w_current The SchematicWindow object.
- */
-void
-schematic_stroke_invalidate_rect (SchematicWindow *w_current,
-                                  int min_x,
-                                  int min_y,
-                                  int max_x,
-                                  int max_y)
-{
-  schematic_draw_invalidate_rect (w_current,
-                                  min_x,
-                                  min_y,
-                                  max_x + 1,
-                                  max_y + 1);
-}
