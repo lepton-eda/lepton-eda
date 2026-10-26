@@ -54,11 +54,11 @@
 
 
 ;;; Records a new point with the coords (X . Y) for the stroke.
-(define (record-stroke x y)
+(define (record-stroke point)
   (unless %libstroke-initialized
     (init-libstroke))
   (and libstroke
-       (stroke_record x y)))
+       (stroke_record (car point) (cdr point))))
 
 
 ;;; Translates the stroke input into a string and returns a string
