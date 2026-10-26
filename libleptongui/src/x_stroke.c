@@ -22,6 +22,22 @@
 #include "schematic.h"
 
 
+/*
+ * <B>stroke_points</B> is an array of points for the stroke
+ * footprints. The points of the stroke are displayed over the display
+ * area of the main window. They have to be erased when the stroke is
+ * translated and the sequence evaluated.
+ *
+ * Its size will never exceed <B>STROKE_MAX_POINTS</B> (the limit in
+ * number of points of a stroke provided by libstroke).
+ */
+typedef struct {
+  gint x, y;
+} StrokePoint;
+
+static GArray *stroke_points = NULL;
+
+
 /*! \brief Draws a point for the stroke.
  *  \par Function Description
  *
@@ -68,6 +84,51 @@ schematic_stroke_draw_point (SchematicWindow *w_current,
 }
 
 
+/*! \brief Invalidate the rectangle with stroke points
+ *  \par Function Description
+ *
+ *  Erases the mouse footprint produced when inputting a stroke.
+ *
+ *  \param [in] w_current The SchematicWindow object.
+ */
+void
+schematic_stroke_invalidate_rect (SchematicWindow *w_current)
+{
+  StrokePoint *point;
+  int min_x, min_y, max_x, max_y;
+  guint i;
+
+  g_assert (stroke_points != NULL);
+
+  if (stroke_points->len == 0)
+  {
+    return;
+  }
+
+  point = &g_array_index (stroke_points, StrokePoint, 0);
+  min_x = max_x = point->x;
+  min_y = max_y = point->y;
+
+  for (i = 1; i < stroke_points->len; i++)
+  {
+    point = &g_array_index (stroke_points, StrokePoint, i);
+    min_x = MIN (min_x, point->x);
+    min_y = MIN (min_y, point->y);
+    max_x = MAX (max_x, point->x);
+    max_y = MAX (max_y, point->y);
+  }
+
+  schematic_draw_invalidate_rect (w_current,
+                                  min_x,
+                                  min_y,
+                                  max_x + 1,
+                                  max_y + 1);
+
+  /* resets length of array */
+  stroke_points->len = 0;
+}
+
+
 #ifdef HAVE_LIBSTROKE
 
 /* libstroke seems to not have C++ support declarations so we add
@@ -75,21 +136,6 @@ schematic_stroke_draw_point (SchematicWindow *w_current,
 G_BEGIN_DECLS
 #include <stroke.h>
 G_END_DECLS
-
-/*
- * <B>stroke_points</B> is an array of points for the stroke
- * footprints. The points of the stroke are displayed over the display
- * area of the main window. They have to be erased when the stroke is
- * translated and the sequence evaluated.
- *
- * Its size will never exceed <B>STROKE_MAX_POINTS</B> (the limit in
- * number of points of a stroke provided by libstroke).
- */
-typedef struct {
-  gint x, y;
-} StrokePoint;
-
-static GArray *stroke_points = NULL;
 
 
 /*! \brief Initializes the stroke interface.
@@ -151,13 +197,13 @@ x_stroke_record (gint x,
 
 }
 
+
 /*! \brief Translates the stroke.
  *  \par Function Description
  *  This function transforms the stroke input so far into a string.
  *
  *  The stroke sequence is to be evaluated in Scheme code into a
- *  possible action by the Guile procedure <B>eval-stroke<B>. The
- *  mouse footprint is erased in this function.
+ *  possible action by the Guile procedure <B>eval-stroke<B>.
  *
  *  It returns a string consisting of numbers if the stroke has
  *  been successfully translated, or NULL if libstroke failed to
@@ -171,35 +217,6 @@ char*
 x_stroke_translate_and_execute (SchematicWindow *w_current)
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
-  StrokePoint *point;
-  int min_x, min_y, max_x, max_y;
-  guint i;
-
-  g_assert (stroke_points != NULL);
-
-  if (stroke_points->len == 0)
-    return NULL;
-
-  point = &g_array_index (stroke_points, StrokePoint, 0);
-  min_x = max_x = point->x;
-  min_y = max_y = point->y;
-
-  for (i = 1; i < stroke_points->len; i++) {
-    point = &g_array_index (stroke_points, StrokePoint, i);
-    min_x = MIN (min_x, point->x);
-    min_y = MIN (min_y, point->y);
-    max_x = MAX (max_x, point->x);
-    max_y = MAX (max_y, point->y);
-  }
-
-  schematic_draw_invalidate_rect (w_current,
-                                  min_x,
-                                  min_y,
-                                  max_x + 1,
-                                  max_y + 1);
-
-  /* resets length of array */
-  stroke_points->len = 0;
 
   /* Return translated stroke. */
   if (stroke_trans ((char*)&sequence)) {

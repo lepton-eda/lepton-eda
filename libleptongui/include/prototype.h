@@ -911,6 +911,9 @@ schematic_stroke_draw_point (SchematicWindow *w_current,
                              int x,
                              int y);
 void
+schematic_stroke_invalidate_rect (SchematicWindow *w_current);
+
+void
 x_stroke_init (void);
 
 void
