@@ -73,6 +73,7 @@
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic rc)
+  #:use-module (schematic stroke)
   #:use-module (schematic tabs)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
@@ -243,7 +244,6 @@
       (config-save! (cache-config-context))
       (s_clib_free)
       (s_attrib_free)
-      (x_stroke_free)
       (undo-cleanup-backup-files!)
 
       ;; Check whether the main loop is running.
@@ -561,15 +561,20 @@ zooming."
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
                  (schematic_event_set_doing_stroke FALSE)
-                 (let ((*str (x_stroke_translate_and_execute)))
-                   ;; When libbstroke is not defined, e.g. for
-                   ;; GTK3 port, the above function returns #f.
-                   (when (and *str
-                              (not (null-pointer? *str)))
-                     (let ((str (pointer->string *str)))
-                       (g_free *str)
-                       (with-window *window
-                         (eval-stroke str)))))
+                 ;; When libbstroke is not defined, e.g. for
+                 ;; GTK3 port, the above function returns #f.
+                 (with-window
+                  *window
+                  (match (stroke-size)
+                    (((min-x . min-y) . (max-x . max-y))
+                     (schematic_stroke_invalidate_rect
+                      *window
+                      min-x
+                      min-y
+                      max-x
+                      max-y))
+                    (_ #f))
+                  (eval-stroke (translate-stroke)))
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
@@ -820,7 +825,7 @@ zooming."
           (let ((int-x (inexact->exact (round window-x)))
                 (int-y (inexact->exact (round window-y))))
             (begin
-              (x_stroke_record int-x int-y)
+              (record-stroke int-x int-y)
               (schematic_stroke_draw_point *window int-x int-y))
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))

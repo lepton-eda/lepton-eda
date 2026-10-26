@@ -19,13 +19,18 @@
 
 (define-module (schematic stroke)
   #:use-module (system foreign)
+  #:use-module (rnrs bytevectors)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
 
   #:use-module (schematic ffi)
 
-  #:export (init-libstroke))
+  #:export (init-libstroke
+            record-stroke
+            translate-stroke
+            stroke-size))
 
 
 (define libstroke (false-if-exception (dynamic-link "libstroke")))
@@ -43,9 +48,40 @@
 (define STROKE_MAX_POINTS 10000)
 
 
+(define %points '())
+
+
 (define (init-libstroke)
   (if libstroke
-      (begin
-        (stroke_init)
-        (x_stroke_init))
+      (stroke_init)
       (log! 'message (G_ "No libstroke found."))))
+
+
+;;; Records a new point with the coords (X . Y) for the stroke.
+(define (record-stroke x y)
+  (stroke_record x y)
+  (when (< (length %points) STROKE_MAX_POINTS)
+    (set! %points (cons (cons x y) %points))))
+
+
+(define (stroke-size)
+  (and (> (length %points) 0)
+       (let ((x (map car %points))
+             (y (map cdr %points)))
+         (cons (cons (apply min x) (apply min y))
+               (cons (apply max x) (apply max y))))))
+
+
+;;; Translates the stroke input into a string and returns a string
+;;; consisting of numbers if the stroke has been successfully
+;;; translated, or #f if libstroke failed to transform the stroke.
+;;; The stroke sequence is to be evaluated in Scheme code into a
+;;; possible action by the Guile procedure eval-stroke().
+(define (translate-stroke)
+  (define *bv (bytevector->pointer (make-bytevector (sizeof '*) 0) 0))
+
+  ;; Return translated stroke.
+  (let ((result (stroke_trans *bv)))
+    (set! %points '())
+    (and (true? result)
+         (pointer->string *bv))))
