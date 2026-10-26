@@ -819,7 +819,9 @@ zooming."
       (if (true? (schematic_event_get_doing_stroke))
           (let ((int-x (inexact->exact (round window-x)))
                 (int-y (inexact->exact (round window-y))))
-            (x_stroke_record *window int-x int-y)
+            (begin
+              (x_stroke_record int-x int-y)
+              (schematic_stroke_draw_point *window int-x int-y))
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))
               FALSE

@@ -1488,9 +1488,9 @@
          (let ((proc (delay (pointer->procedure '* (force func) '(*)))))
            ((force proc) *window)))))
 
-(define (x_stroke_record *window x y)
+(define (x_stroke_record x y)
   (let ((func (delay (false-if-exception (dynamic-func "x_stroke_record"
                                                        libleptongui)))))
     (and (force func)
-         (let ((proc (delay (pointer->procedure void (force func) (list '* int int)))))
-           ((force proc) *window x y)))))
+         (let ((proc (delay (pointer->procedure void (force func) (list int int)))))
+           ((force proc) x y)))))
