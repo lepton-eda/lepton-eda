@@ -22,22 +22,6 @@
 #include "schematic.h"
 
 
-/*
- * <B>stroke_points</B> is an array of points for the stroke
- * footprints. The points of the stroke are displayed over the display
- * area of the main window. They have to be erased when the stroke is
- * translated and the sequence evaluated.
- *
- * Its size will never exceed <B>STROKE_MAX_POINTS</B> (the limit in
- * number of points of a stroke provided by libstroke).
- */
-typedef struct {
-  gint x, y;
-} StrokePoint;
-
-static GArray *stroke_points = NULL;
-
-
 /*! \brief Draws a point for the stroke.
  *  \par Function Description
  *
@@ -92,40 +76,17 @@ schematic_stroke_draw_point (SchematicWindow *w_current,
  *  \param [in] w_current The SchematicWindow object.
  */
 void
-schematic_stroke_invalidate_rect (SchematicWindow *w_current)
+schematic_stroke_invalidate_rect (SchematicWindow *w_current,
+                                  int min_x,
+                                  int min_y,
+                                  int max_x,
+                                  int max_y)
 {
-  StrokePoint *point;
-  int min_x, min_y, max_x, max_y;
-  guint i;
-
-  g_assert (stroke_points != NULL);
-
-  if (stroke_points->len == 0)
-  {
-    return;
-  }
-
-  point = &g_array_index (stroke_points, StrokePoint, 0);
-  min_x = max_x = point->x;
-  min_y = max_y = point->y;
-
-  for (i = 1; i < stroke_points->len; i++)
-  {
-    point = &g_array_index (stroke_points, StrokePoint, i);
-    min_x = MIN (min_x, point->x);
-    min_y = MIN (min_y, point->y);
-    max_x = MAX (max_x, point->x);
-    max_y = MAX (max_y, point->y);
-  }
-
   schematic_draw_invalidate_rect (w_current,
                                   min_x,
                                   min_y,
                                   max_x + 1,
                                   max_y + 1);
-
-  /* resets length of array */
-  stroke_points->len = 0;
 }
 
 
@@ -136,91 +97,5 @@ schematic_stroke_invalidate_rect (SchematicWindow *w_current)
 G_BEGIN_DECLS
 #include <stroke.h>
 G_END_DECLS
-
-
-/*! \brief Initializes the stroke interface.
- *  \par Function Description
- *  This is the initialization function for the stroke interface. It
- *  initializes the libstroke library and prepare an array of points
- *  for the mouse footprints.
- *
- *  This function has to be called only once at application
- *  initialization before any use of the stroke interface.
- */
-void
-x_stroke_init (void)
-{
-  g_return_if_fail (stroke_points == NULL);
-
-  stroke_points = g_array_new (FALSE,
-                               FALSE,
-                               sizeof (StrokePoint));
-}
-
-/*! \brief Frees memory of the stroke interface.
- *  \par Function Description
- *  This function frees the memory used for the mouse footprint
- *  points. It terminates the use of the stroke interface.
- */
-void
-x_stroke_free (void)
-{
-  g_return_if_fail (stroke_points != NULL);
-
-  g_array_free (stroke_points, TRUE);
-  stroke_points = NULL;
-}
-
-/*! \brief Records a new point for the stroke.
- *  \par Function Description
- *  This function adds the point (<B>x</B>,<B>y</B>) as a new point in
- *  the stroke.
- *
- *  \param [in] x        The X coord of the new point.
- *  \param [in] Y        The X coord of the new point.
- */
-void
-x_stroke_record (gint x,
-                 gint y)
-{
-  g_assert (stroke_points != NULL);
-
-  stroke_record (x, y);
-
-  if (stroke_points->len < STROKE_MAX_POINTS) {
-    StrokePoint point = { x, y };
-
-    g_array_append_val (stroke_points, point);
-  }
-
-}
-
-
-/*! \brief Translates the stroke.
- *  \par Function Description
- *  This function transforms the stroke input so far into a string.
- *
- *  The stroke sequence is to be evaluated in Scheme code into a
- *  possible action by the Guile procedure <B>eval-stroke<B>.
- *
- *  It returns a string consisting of numbers if the stroke has
- *  been successfully translated, or NULL if libstroke failed to
- *  transform the stroke.  The user must g_free the returned
- *  string.
- *
- *  \param [in] w_current The SchematicWindow object.
- *  \returns A string representing the stroke, or NULL.
- */
-char*
-x_stroke_translate_and_execute ()
-{
-  gchar sequence[STROKE_MAX_SEQUENCE];
-
-  /* Return translated stroke. */
-  if (stroke_trans ((char*)&sequence)) {
-    return g_strdup_printf ("%s", sequence);
-  }
-  return NULL;
-}
 
 #endif /* HAVE_LIBSTROKE */

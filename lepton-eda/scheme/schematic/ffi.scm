@@ -258,10 +258,6 @@
 
             schematic_stroke_draw_point
             schematic_stroke_invalidate_rect
-            x_stroke_init
-            x_stroke_free
-            x_stroke_record
-            x_stroke_translate_and_execute
 
             schematic_find_text_state_find
             schematic_find_text_state_new
@@ -1450,36 +1446,4 @@
 
 ;;; x_stroke.c
 (define-lff schematic_stroke_draw_point void (list '* int int))
-(define-lff schematic_stroke_invalidate_rect void '(*))
-
-
-;;; This is a special case: the function may be not defined in C
-;;; if libstroke was not found on the configure stage.
-(define (x_stroke_init)
-  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_init"
-                                                       libleptongui)))))
-    (and (force func)
-         (let ((proc (delay (pointer->procedure void (force func) '()))))
-           ((force proc))))))
-
-;;; The same as above.
-(define (x_stroke_free)
-  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_free"
-                                                       libleptongui)))))
-    (and (force func)
-         (let ((proc (delay (pointer->procedure void (force func) '()))))
-           ((force proc))))))
-
-(define (x_stroke_translate_and_execute)
-  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_translate_and_execute"
-                                                       libleptongui)))))
-    (and (force func)
-         (let ((proc (delay (pointer->procedure '* (force func) '()))))
-           ((force proc))))))
-
-(define (x_stroke_record x y)
-  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_record"
-                                                       libleptongui)))))
-    (and (force func)
-         (let ((proc (delay (pointer->procedure void (force func) (list int int)))))
-           ((force proc) x y)))))
+(define-lff schematic_stroke_invalidate_rect void (list '* int int int int))
