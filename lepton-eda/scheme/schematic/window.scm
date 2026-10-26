@@ -560,9 +560,7 @@ zooming."
                      (_ FALSE))))
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
-                 (schematic_event_set_doing_stroke FALSE)
-                 ;; When libbstroke is not defined, e.g. for
-                 ;; GTK3 port, the above function returns #f.
+                 (set-action-mode! 'select-mode #:window window)
                  (with-window
                   *window
                   (match (stroke-size)
@@ -747,7 +745,7 @@ zooming."
                          ((@ (schematic action) &repeat-last-action)))
 
                         ((= middle-button MOUSEBTN_DO_STROKE)
-                         (schematic_event_set_doing_stroke TRUE))
+                         (set-action-mode! 'stroke-mode #:window window))
 
                         ((= middle-button MOUSEBTN_DO_PAN)
                          (schematic_canvas_pan_start *canvas
@@ -821,7 +819,7 @@ zooming."
           (window-y (cdr window-coords)))
       (window-save-modifiers *window *event)
 
-      (if (true? (schematic_event_get_doing_stroke))
+      (if (eq? current-action-mode 'stroke-mode)
           (let ((int-x (inexact->exact (round window-x)))
                 (int-y (inexact->exact (round window-y))))
             (begin

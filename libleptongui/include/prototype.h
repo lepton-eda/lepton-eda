@@ -663,12 +663,6 @@ schematic_dialog_load_file_error (GtkWidget *main_window,
                                   const gchar *filename,
                                   char *error_message);
 /* x_event.c */
-gboolean
-schematic_event_get_doing_stroke ();
-
-void
-schematic_event_set_doing_stroke (gboolean val);
-
 gint
 schematic_event_shift_mask ();
 

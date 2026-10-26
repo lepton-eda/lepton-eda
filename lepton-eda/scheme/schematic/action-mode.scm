@@ -78,6 +78,7 @@ instead of the current one."
     pin-mode
     rotate-mode
     select-mode
+    stroke-mode
     text-mode
     zoom-box-mode))
 
