@@ -132,13 +132,11 @@ x_stroke_free (void)
  *  This function adds the point (<B>x</B>,<B>y</B>) as a new point in
  *  the stroke.
  *
- *  \param [in] w_current The SchematicWindow object.
  *  \param [in] x        The X coord of the new point.
  *  \param [in] Y        The X coord of the new point.
  */
 void
-x_stroke_record (SchematicWindow *w_current,
-                 gint x,
+x_stroke_record (gint x,
                  gint y)
 {
   g_assert (stroke_points != NULL);
@@ -149,8 +147,6 @@ x_stroke_record (SchematicWindow *w_current,
     StrokePoint point = { x, y };
 
     g_array_append_val (stroke_points, point);
-
-    schematic_stroke_draw_point (w_current, x, y);
   }
 
 }

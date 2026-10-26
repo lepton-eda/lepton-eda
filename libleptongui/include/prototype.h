@@ -917,8 +917,7 @@ void
 x_stroke_free (void);
 
 void
-x_stroke_record (SchematicWindow *w_current,
-                 gint x,
+x_stroke_record (gint x,
                  gint y);
 char*
 x_stroke_translate_and_execute (SchematicWindow *w_current);
