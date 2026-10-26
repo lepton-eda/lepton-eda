@@ -258,6 +258,7 @@
 
             x_show_uri
 
+            schematic_stroke_draw_point
             x_stroke_init
             x_stroke_free
             x_stroke_record
@@ -1450,6 +1451,8 @@
 ;;; x_basic.c
 (define-lff x_basic_warp_cursor void (list '* int int))
 
+
+(define-lff schematic_stroke_draw_point void (list '* int int))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
