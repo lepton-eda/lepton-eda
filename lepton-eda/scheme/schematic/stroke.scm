@@ -26,6 +26,7 @@
   #:use-module (lepton log)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic dialog)
 
   #:export (record-stroke
             translate-stroke))
@@ -49,9 +50,12 @@
 ;;; Init the libstroke library once.  If it is absent, log a
 ;;; message about it.
 (define (init-libstroke)
+  (define no-libstroke-message (G_ "No libstroke found."))
   (if libstroke
       (stroke_init)
-      (log! 'message (G_ "No libstroke found.")))
+      (begin
+        (log! 'message no-libstroke-message)
+        (schematic-message-dialog no-libstroke-message)))
   (set! %libstroke-initialized #t))
 
 
