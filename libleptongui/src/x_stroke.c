@@ -214,7 +214,7 @@ x_stroke_record (gint x,
  *  \returns A string representing the stroke, or NULL.
  */
 char*
-x_stroke_translate_and_execute (SchematicWindow *w_current)
+x_stroke_translate_and_execute ()
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
 

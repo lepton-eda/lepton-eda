@@ -561,7 +561,7 @@ zooming."
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
                  (schematic_event_set_doing_stroke FALSE)
-                 (let ((*str (x_stroke_translate_and_execute *window)))
+                 (let ((*str (x_stroke_translate_and_execute)))
                    ;; When libbstroke is not defined, e.g. for
                    ;; GTK3 port, the above function returns #f.
                    (when (and *str

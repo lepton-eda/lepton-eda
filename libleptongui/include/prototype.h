@@ -923,7 +923,7 @@ void
 x_stroke_record (gint x,
                  gint y);
 char*
-x_stroke_translate_and_execute (SchematicWindow *w_current);
+x_stroke_translate_and_execute ();
 
 /* x_window.c */
 GtkWidget*
