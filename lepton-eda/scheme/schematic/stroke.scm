@@ -29,8 +29,7 @@
 
   #:export (init-libstroke
             record-stroke
-            translate-stroke
-            stroke-size))
+            translate-stroke))
 
 
 (define libstroke (false-if-exception (dynamic-link "libstroke")))
@@ -44,13 +43,6 @@
   (and libstroke
        (pointer->procedure void (dynamic-func "stroke_record" libstroke) (list int int))))
 
-;;; Largest number of points allowed to be sampled.
-(define STROKE_MAX_POINTS 10000)
-
-
-(define %points '())
-
-
 (define (init-libstroke)
   (if libstroke
       (stroke_init)
@@ -59,17 +51,7 @@
 
 ;;; Records a new point with the coords (X . Y) for the stroke.
 (define (record-stroke x y)
-  (stroke_record x y)
-  (when (< (length %points) STROKE_MAX_POINTS)
-    (set! %points (cons (cons x y) %points))))
-
-
-(define (stroke-size)
-  (and (> (length %points) 0)
-       (let ((x (map car %points))
-             (y (map cdr %points)))
-         (cons (cons (apply min x) (apply min y))
-               (cons (apply max x) (apply max y))))))
+  (stroke_record x y))
 
 
 ;;; Translates the stroke input into a string and returns a string
@@ -82,6 +64,5 @@
 
   ;; Return translated stroke.
   (let ((result (stroke_trans *bv)))
-    (set! %points '())
     (and (true? result)
          (pointer->string *bv))))
