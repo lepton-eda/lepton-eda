@@ -27,8 +27,7 @@
 
   #:use-module (schematic ffi)
 
-  #:export (init-libstroke
-            record-stroke
+  #:export (record-stroke
             translate-stroke))
 
 
@@ -43,15 +42,23 @@
   (and libstroke
        (pointer->procedure void (dynamic-func "stroke_record" libstroke) (list int int))))
 
+
+(define %libstroke-initialized #f)
+
+
 (define (init-libstroke)
   (if libstroke
       (stroke_init)
-      (log! 'message (G_ "No libstroke found."))))
+      (log! 'message (G_ "No libstroke found.")))
+  (set! %libstroke-initialized #t))
 
 
 ;;; Records a new point with the coords (X . Y) for the stroke.
 (define (record-stroke x y)
-  (stroke_record x y))
+  (unless %libstroke-initialized
+    (init-libstroke))
+  (and libstroke
+       (stroke_record x y)))
 
 
 ;;; Translates the stroke input into a string and returns a string
@@ -62,7 +69,8 @@
 (define (translate-stroke)
   (define *bv (bytevector->pointer (make-bytevector (sizeof '*) 0) 0))
 
-  ;; Return translated stroke.
-  (let ((result (stroke_trans *bv)))
-    (and (true? result)
-         (pointer->string *bv))))
+  (and libstroke
+       ;; Return translated stroke.
+       (let ((result (stroke_trans *bv)))
+         (and (true? result)
+              (pointer->string *bv)))))
