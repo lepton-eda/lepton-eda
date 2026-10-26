@@ -257,7 +257,6 @@
             x_show_uri
 
             schematic_stroke_draw_point
-            schematic_stroke_invalidate_rect
 
             schematic_find_text_state_find
             schematic_find_text_state_new
@@ -1442,4 +1441,3 @@
 
 ;;; x_stroke.c
 (define-lff schematic_stroke_draw_point void (list '* int int))
-(define-lff schematic_stroke_invalidate_rect void (list '* int int int int))

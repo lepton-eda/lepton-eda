@@ -561,18 +561,9 @@ zooming."
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
                  (set-action-mode! 'select-mode #:window window)
-                 (with-window
-                  *window
-                  (match (stroke-size)
-                    (((min-x . min-y) . (max-x . max-y))
-                     (schematic_stroke_invalidate_rect
-                      *window
-                      min-x
-                      min-y
-                      max-x
-                      max-y))
-                    (_ #f))
-                  (eval-stroke (translate-stroke)))
+                 (invalidate-canvas (window-canvas window))
+                 (with-window *window
+                   (eval-stroke (translate-stroke)))
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
