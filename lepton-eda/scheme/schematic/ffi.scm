@@ -257,6 +257,7 @@
             x_show_uri
 
             schematic_stroke_draw_point
+            schematic_stroke_invalidate_rect
             x_stroke_init
             x_stroke_free
             x_stroke_record
@@ -1463,6 +1464,8 @@
        (pointer->procedure void (dynamic-func "stroke_record" libstroke) (list int int))))
 
 (define-lff schematic_stroke_draw_point void (list '* int int))
+(define-lff schematic_stroke_invalidate_rect void '(*))
+
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
