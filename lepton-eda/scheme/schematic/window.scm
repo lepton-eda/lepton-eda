@@ -73,6 +73,7 @@
   #:use-module (schematic menu)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic rc)
+  #:use-module (schematic stroke)
   #:use-module (schematic tabs)
   #:use-module (schematic toolbar)
   #:use-module (schematic undo)
@@ -243,7 +244,6 @@
       (config-save! (cache-config-context))
       (s_clib_free)
       (s_attrib_free)
-      (x_stroke_free)
       (undo-cleanup-backup-files!)
 
       ;; Check whether the main loop is running.
@@ -560,16 +560,10 @@ zooming."
                      (_ FALSE))))
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
-                 (schematic_event_set_doing_stroke FALSE)
-                 (let ((*str (x_stroke_translate_and_execute *window)))
-                   ;; When libbstroke is not defined, e.g. for
-                   ;; GTK3 port, the above function returns #f.
-                   (when (and *str
-                              (not (null-pointer? *str)))
-                     (let ((str (pointer->string *str)))
-                       (g_free *str)
-                       (with-window *window
-                         (eval-stroke str)))))
+                 (set-action-mode! 'select-mode #:window window)
+                 (invalidate-canvas (window-canvas window))
+                 (with-window *window
+                   (eval-stroke (translate-stroke)))
                  FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
@@ -742,7 +736,7 @@ zooming."
                          ((@ (schematic action) &repeat-last-action)))
 
                         ((= middle-button MOUSEBTN_DO_STROKE)
-                         (schematic_event_set_doing_stroke TRUE))
+                         (set-action-mode! 'stroke-mode #:window window))
 
                         ((= middle-button MOUSEBTN_DO_PAN)
                          (schematic_canvas_pan_start *canvas
@@ -816,10 +810,12 @@ zooming."
           (window-y (cdr window-coords)))
       (window-save-modifiers *window *event)
 
-      (if (true? (schematic_event_get_doing_stroke))
+      (if (eq? current-action-mode 'stroke-mode)
           (let ((int-x (inexact->exact (round window-x)))
                 (int-y (inexact->exact (round window-y))))
-            (x_stroke_record *window int-x int-y)
+            (begin
+              (record-stroke (cons int-x int-y))
+              (schematic_stroke_draw_point *window int-x int-y))
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))
               FALSE

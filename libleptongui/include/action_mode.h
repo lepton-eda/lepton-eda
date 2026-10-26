@@ -53,6 +53,7 @@ enum _SchematicActionMode {
   PAN,
   MIRRORMODE,
   ROTATEMODE,
+  STROKEMODE,
 };
 
 typedef enum _SchematicActionMode SchematicActionMode;

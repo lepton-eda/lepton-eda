@@ -309,8 +309,6 @@ Run `~A --help' for more information.\n")
 ;;; Enable rendering of placeholders.
 (set_render_placeholders)
 
-;;; Init libstroke.
-(x_stroke_init)
 
 (define (activate app user-data)
   (let* ((schematics (parse-commandline))

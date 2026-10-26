@@ -663,12 +663,6 @@ schematic_dialog_load_file_error (GtkWidget *main_window,
                                   const gchar *filename,
                                   char *error_message);
 /* x_event.c */
-gboolean
-schematic_event_get_doing_stroke ();
-
-void
-schematic_event_set_doing_stroke (gboolean val);
-
 gint
 schematic_event_shift_mask ();
 
@@ -904,20 +898,6 @@ schematic_rotation_combo_get_angle (GtkWidget *widget);
 void
 schematic_rotation_combo_set_angle (GtkWidget *widget,
                                     int angle);
-
-/* x_stroke.c */
-void
-x_stroke_init (void);
-
-void
-x_stroke_free (void);
-
-void
-x_stroke_record (SchematicWindow *w_current,
-                 gint x,
-                 gint y);
-char*
-x_stroke_translate_and_execute (SchematicWindow *w_current);
 
 /* x_window.c */
 GtkWidget*

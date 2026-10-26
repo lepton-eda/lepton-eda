@@ -1076,6 +1076,7 @@ schematic_draw_clear (SchematicWindow *w_current)
     case(TEXTMODE):
     case(GRIPS):
     case(ZOOMBOX):
+    case(STROKEMODE):
       /* it is possible to cancel in the middle of a place,
        * so lets be sure to clean up the place_list structure */
 
