@@ -197,6 +197,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/repl.scm \
 	schematic/selection.scm \
 	schematic/sellock.scm \
+	schematic/stroke.scm \
 	schematic/symbol/check.scm \
 	schematic/tabs.scm \
 	schematic/toolbar.scm \
