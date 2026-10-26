@@ -1484,12 +1484,12 @@
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
 
-(define (x_stroke_translate_and_execute *window)
+(define (x_stroke_translate_and_execute)
   (let ((func (delay (false-if-exception (dynamic-func "x_stroke_translate_and_execute"
                                                        libleptongui)))))
     (and (force func)
-         (let ((proc (delay (pointer->procedure '* (force func) '(*)))))
-           ((force proc) *window)))))
+         (let ((proc (delay (pointer->procedure '* (force func) '()))))
+           ((force proc))))))
 
 (define (x_stroke_record x y)
   (let ((func (delay (false-if-exception (dynamic-func "x_stroke_record"
