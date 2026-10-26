@@ -1448,6 +1448,20 @@
 (define-lff x_basic_warp_cursor void (list '* int int))
 
 
+;;; Largest number of points allowed to be sampled.
+(define STROKE_MAX_POINTS 10000)
+
+(define libstroke (false-if-exception (dynamic-link "libstroke")))
+(define stroke_init
+  (and libstroke
+       (pointer->procedure void (dynamic-func "stroke_init" libstroke) '())))
+(define stroke_trans
+  (and libstroke
+       (pointer->procedure int (dynamic-func "stroke_trans" libstroke) '(*))))
+(define stroke_record
+  (and libstroke
+       (pointer->procedure void (dynamic-func "stroke_record" libstroke) (list int int))))
+
 (define-lff schematic_stroke_draw_point void (list '* int int))
 
 ;;; This is a special case: the function may be not defined in C
