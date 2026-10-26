@@ -88,14 +88,3 @@ schematic_stroke_invalidate_rect (SchematicWindow *w_current,
                                   max_x + 1,
                                   max_y + 1);
 }
-
-
-#ifdef HAVE_LIBSTROKE
-
-/* libstroke seems to not have C++ support declarations so we add
-   them explicitly here */
-G_BEGIN_DECLS
-#include <stroke.h>
-G_END_DECLS
-
-#endif /* HAVE_LIBSTROKE */
