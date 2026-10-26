@@ -152,8 +152,6 @@ x_stroke_init (void)
 {
   g_return_if_fail (stroke_points == NULL);
 
-  stroke_init ();
-
   stroke_points = g_array_new (FALSE,
                                FALSE,
                                sizeof (StrokePoint));
