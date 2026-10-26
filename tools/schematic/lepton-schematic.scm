@@ -39,7 +39,6 @@
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
-             (schematic stroke)
              (schematic undo)
              (schematic window foreign)
              (schematic window))
@@ -310,8 +309,6 @@ Run `~A --help' for more information.\n")
 ;;; Enable rendering of placeholders.
 (set_render_placeholders)
 
-;;; Init libstroke.
-(init-libstroke)
 
 (define (activate app user-data)
   (let* ((schematics (parse-commandline))
