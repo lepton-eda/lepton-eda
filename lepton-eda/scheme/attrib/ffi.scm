@@ -40,6 +40,7 @@
             gtk_sheet_row_button_justify
             gtk_sheet_set_cell
             gtk_sheet_set_clip_text
+            gtk_sheet_set_entry_text
             gtk_sheet_set_locked
             gtk_sheet_set_row_titles_width
             gtk_sheet_unselect_range
@@ -60,8 +61,6 @@
 
             x_dialog_fatal_error
             x_dialog_unimplemented_feature
-
-            attrib_gtksheet_show_entry
 
             listsort
 
@@ -175,6 +174,7 @@
 (define-lff-lib gtk_sheet_row_button_justify void (list '* int int) libgtksheet)
 (define-lff-lib gtk_sheet_set_cell void (list '* int int int '*) libgtksheet)
 (define-lff-lib gtk_sheet_set_clip_text void (list '* int) libgtksheet)
+(define-lff-lib gtk_sheet_set_entry_text void '(* *) libgtksheet)
 (define-lff-lib gtk_sheet_set_locked void (list '* int) libgtksheet)
 (define-lff-lib gtk_sheet_set_row_titles_width void (list '* unsigned-int) libgtksheet)
 (define-lff-lib gtk_sheet_unselect_range void '(*) libgtksheet)
@@ -197,9 +197,6 @@
 ;;; x_dialog.c
 (define-lff x_dialog_fatal_error void (list '* int))
 (define-lff x_dialog_unimplemented_feature void '())
-
-;;; x_gtksheet.c
-(define-lff attrib_gtksheet_show_entry void '(* *))
 
 ;;; listsort.c
 (define-lff listsort '* (list '* int int))

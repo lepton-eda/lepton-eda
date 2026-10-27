@@ -157,6 +157,7 @@
 
             gtk_widget_destroy
             gtk_widget_grab_focus
+            gtk_widget_has_focus
             gtk_widget_hide
             gtk_widget_set_can_focus
             gtk_widget_set_sensitive
@@ -342,6 +343,7 @@
 (define-lff gtk_toggle_button_set_active void (list '* int))
 
 (define-lff gtk_widget_destroy void '(*))
+(define-lff gtk_widget_has_focus int '(*))
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_set_can_focus void (list '* int))

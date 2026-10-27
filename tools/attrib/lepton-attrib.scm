@@ -2081,6 +2081,16 @@ failure."
           (set-cell-text-color *sheet i j color))))))
 
 
+;;; The main program entry.
+(define %main-entry #f)
+
+(define (set-main-entry! *entry)
+  (set! %main-entry *entry))
+
+(define (main-entry)
+  %main-entry)
+
+
 ;;; Sets the selected sheet cells to INVISIBLE.
 (define (set-cells-attribs-invisible)
   (set-cells-attribs-visibility INVISIBLE LEAVE_NAME_VALUE_ALONE 'grey))
@@ -2196,11 +2206,18 @@ failure."
     (string->pointer
      (format #f "~?" format-name-value (list string-name-value))))
 
+  (define *entry (gtk_entry_new))
+
+  (set-main-entry! *entry)
+
   (gtk_container_set_border_width *main-vbox 1)
   (gtk_container_add *window-widget *main-vbox)
 
   ;; Add menu bar.
   (gtk_box_pack_start *main-vbox *menubar FALSE TRUE 0)
+
+  ;; Add entry.
+  (gtk_box_pack_start *main-vbox *entry FALSE TRUE 0)
 
   ;; Init notebook widget.
   (gtk_notebook_set_tab_pos *notebook
@@ -2260,7 +2277,7 @@ failure."
 
 (define (callback-gtksheet-activate *sheet row column *user-data)
   (define *entry-text (gtk_sheet_get_entry_text *sheet))
-  (set-current-cell-text! *entry-text)
+  (gtk_entry_set_text (main-entry) *entry-text)
   (g_free *entry-text)
   FALSE)
 
@@ -2283,11 +2300,42 @@ failure."
   (procedure->pointer int callback-gtksheet-deactivate (list '* int int '*)))
 
 
-(define (callback-gtksheet-entry-changed *entry *user-data)
-  (attrib_gtksheet_show_entry *entry %null-pointer))
+;;; Compare two C strings
+(define (*string= *s1 *s2)
+  (or (and (null-pointer? *s1) (null-pointer? *s2))
+      (and (not (null-pointer? *s1))
+           (not (null-pointer? *s2))
+           (string= (pointer->string *s1) (pointer->string *s2)))))
 
-(define *callback-gtksheet-entry-changed
-  (procedure->pointer void callback-gtksheet-entry-changed '(* *)))
+
+;;; Update text entry box on sheet cell contents change.
+(define (callback-gtksheet-changed *sheet row column *user-data)
+  (define *sheet-entry (gtk_sheet_get_entry *sheet))
+  (define *main-entry (main-entry))
+
+  (when (and (true? (gtk_widget_has_focus *sheet-entry))
+             (not (null-pointer? *main-entry)))
+    (let ((*entry-text (gtk_entry_get_text *main-entry))
+          (*sheet-entry-text (gtk_entry_get_text *sheet-entry)))
+      (unless (*string= *entry-text *sheet-entry-text)
+        (gtk_entry_set_text *main-entry *sheet-entry-text)))))
+
+(define *callback-gtksheet-changed
+  (procedure->pointer void callback-gtksheet-changed (list '* int int '*)))
+
+
+(define (callback-entry-changed *entry *user-data)
+  (define current-page-id (notebook-current-page-id))
+  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet-entry (gtk_sheet_get_entry *sheet))
+  (unless (null-pointer? *sheet-entry)
+    (let ((*entry-text (gtk_entry_get_text *entry))
+          (*sheet-entry-text (gtk_entry_get_text *sheet-entry)))
+      (unless (*string= *entry-text *sheet-entry-text)
+        (gtk_sheet_set_entry_text *sheet *entry-text)))))
+
+(define *callback-entry-changed
+  (procedure->pointer void callback-entry-changed '(* *)))
 
 
 ;;; Creates and initializes the GtkSheet widget, which is the
@@ -2405,9 +2453,9 @@ failure."
           ;; working area (like in MS E*cel).  This has been
           ;; removed from the program, but the code is left in
           ;; just in case we want to put it back.
-          (g_signal_connect (gtk_sheet_get_entry *current-sheet)
+          (g_signal_connect *current-sheet
                             (string->pointer "changed")
-                            *callback-gtksheet-entry-changed
+                            *callback-gtksheet-changed
                             %null-pointer)
 
           (g_signal_connect *current-sheet
@@ -2509,6 +2557,12 @@ Please check your design.")))
   ;; Initialize the gtksheet.  This creates a new gtksheet having
   ;; dimensions specified in component-count etc.
   (init-gtksheet)
+
+  (let ((*main-entry (main-entry)))
+    (g_signal_connect *main-entry
+                      (string->pointer "changed")
+                      *callback-entry-changed
+                      %null-pointer))
 
   (gtk_sheet_set_clip_text (component-sheet) TRUE)
   (gtk_sheet_set_clip_text (net-sheet) TRUE)
