@@ -63,8 +63,6 @@
 
             attrib_gtksheet_show_entry
 
-            listsort
-
             attrib_sheet_data_new
             attrib_sheet_data_get_changed
             attrib_sheet_data_set_changed
@@ -108,6 +106,7 @@
             attrib_string_list_set_data
             attrib_string_list_get_next
             attrib_string_list_set_next
+            attrib_string_list_get_pos
             attrib_string_list_set_pos
             attrib_string_list_get_prev
             attrib_string_list_set_prev
@@ -201,9 +200,6 @@
 ;;; x_gtksheet.c
 (define-lff attrib_gtksheet_show_entry void '(* *))
 
-;;; listsort.c
-(define-lff listsort '* (list '* int int))
-
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
 (define-lff attrib_sheet_data_get_changed int '(*))
@@ -249,6 +245,7 @@
 (define-lff attrib_string_list_set_data void '(* *))
 (define-lff attrib_string_list_get_next '* '(*))
 (define-lff attrib_string_list_set_next void '(* *))
+(define-lff attrib_string_list_get_pos int '(*))
 (define-lff attrib_string_list_set_pos void (list '* int))
 (define-lff attrib_string_list_get_prev '* '(*))
 (define-lff attrib_string_list_set_prev void '(* *))

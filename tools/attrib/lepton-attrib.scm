@@ -22,6 +22,7 @@
              (ice-9 receive)
              (rnrs bytevectors)
              (srfi srfi-1)
+             (srfi srfi-11)
              (system foreign)
 
              (lepton attrib)
@@ -41,6 +42,8 @@
              (lepton toplevel foreign)
              (lepton toplevel)
              (lepton version)
+
+             (netlist attrib compare)
 
              (schematic ffi gtk)
              (schematic gtk geometry)
@@ -1429,6 +1432,58 @@ failure."
   (procedure->pointer int callback-delete-window '(* * *)))
 
 
+(define (string-list<? *a *b)
+  (define *string-a (attrib_string_list_get_data *a))
+  (define *string-b (attrib_string_list_get_data *b))
+  (define pos-a (attrib_string_list_get_pos *a))
+  (define pos-b (attrib_string_list_get_pos *b))
+
+  (when (or (null-pointer? *string-a)
+            (null-pointer? *string-b))
+    (error "NULL string."))
+
+  (if (= pos-a pos-b)
+      (refdes<? (pointer->string *string-a)
+                (pointer->string *string-b))
+      (< pos-a pos-b)))
+
+
+;;; Sorts *LS which is a double linked list and returns a new
+;;; linked list.
+(define (sort-attrib-list *ls)
+  (define (maintain-interlinks ls)
+    (unless (null? ls)
+      ;; Add prev link for the first item.
+      (attrib_string_list_set_prev (car ls) %null-pointer)
+      (let loop ((ls ls))
+        (unless (null? ls)
+          (let ((*item (car ls))
+                (tail-ls (cdr ls)))
+            (if (null? tail-ls)
+                ;; Add next link for the last item.
+                (attrib_string_list_set_next *item %null-pointer)
+                ;; Add both links for an ordinary item.
+                (let ((*next-item (car tail-ls)))
+                  (attrib_string_list_set_next *item *next-item)
+                  (attrib_string_list_set_prev *next-item *item)
+                  (loop tail-ls))))))))
+  (define *out-ls
+    (let loop ((*item *ls)
+               (*pointer-ls '()))
+      (if (null-pointer? *item)
+          *pointer-ls
+          (loop (attrib_string_list_get_next *item)
+                (cons *item *pointer-ls)))))
+
+  (define *sorted-ls
+    (sort-list *out-ls string-list<?))
+
+  (maintain-interlinks *sorted-ls)
+
+  (if (null? *sorted-ls)
+      %null-pointer
+      (car *sorted-ls)))
+
 ;;; Sorts the component list and fills in the 'pos' fields of the
 ;;; list items.
 (define (sort-component-list)
@@ -1440,24 +1495,8 @@ failure."
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  ;; Here's where we do the sort.  The sort is done using a
-  ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls 0 1)))
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (let loop ((*item *sorted-ls)
-               (i 0))
-      (unless (null-pointer? *item)
-        ;; Make sure item is not NULL.
-        (attrib_string_list_set_pos *item i)
-        (if (null-pointer? (attrib_string_list_get_next *item))
-            ;; Leave loop *before* iterating to NULL EOL marker.
-            (let loop-back ((*new-ls *item))
-              (if (null-pointer? (attrib_string_list_get_prev *new-ls))
-                  (attrib_sheet_data_set_component_list *sheet-data *new-ls)
-                  (loop-back (attrib_string_list_get_prev *new-ls))))
-
-            (loop (attrib_string_list_get_next *item) (1+ i)))))))
+  (attrib_sheet_data_set_component_list *sheet-data
+                                        (sort-attrib-list *ls)))
 
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
@@ -1493,15 +1532,8 @@ failure."
         (and new-position
              (attrib_string_list_set_pos *item new-position)))))
 
-  (let ((*sorted-ls (listsort *ls 0 1)))
-    (attrib_sheet_data_set_component_attrib_list *sheet-data *sorted-ls)
-
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (do ((*item *sorted-ls (attrib_string_list_get_next *item))
-         (i 0 (1+ i)))
-        ((null-pointer? *item))
-      (attrib_string_list_set_pos *item i))))
+  (attrib_sheet_data_set_component_attrib_list *sheet-data
+                                               (sort-attrib-list *ls)))
 
 
 ;;; Sorts the list of nets in alphabetical order.
@@ -1539,25 +1571,8 @@ failure."
       ((null-pointer? *item))
     (attrib_string_list_set_pos *item 0))
 
-  ;; Here's where we do the sort.  The sort is done using a
-  ;; function found on the web.
-  (let ((*sorted-ls (listsort *ls 0 1)))
-    ;; Do this after sorting is done.  This resets the order of
-    ;; the individual items in the list.
-    (let loop ((*item *sorted-ls)
-               (i 0))
-      ;; Make sure item is not NULL.  Leave loop *before*
-      ;; iterating to NULL EOL marker.
-      (if (null-pointer? (attrib_string_list_get_next *item))
-          (let loop-back ((*new-ls *item))
-            ;; Now go to first item in local list and reassign
-            ;; list head to new first element.
-            (if (null-pointer? (attrib_string_list_get_prev *new-ls))
-                (attrib_sheet_data_set_pin_list *sheet-data *new-ls)
-                (loop-back (attrib_string_list_get_prev *new-ls))))
-          (begin
-            (attrib_string_list_set_pos *item i)
-            (loop (attrib_string_list_get_next *item) (1+ i)))))))
+  (attrib_sheet_data_set_pin_list *sheet-data
+                                  (sort-attrib-list *ls)))
 
 
 ;;; Sorts the pin attribute list in alphabetical order.
