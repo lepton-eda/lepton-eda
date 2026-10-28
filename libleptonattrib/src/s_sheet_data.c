@@ -121,23 +121,6 @@ attrib_sheet_data_set_component_attrib_list (SHEET_DATA *data,
 }
 
 
-/*! \brief Get the address of component attrib list of sheet
- *  data.
- *
- *  \par Function Description
- *
- *  Returns the address of component attrib list of given sheet
- *  data instance.
- *
- *  \return The address.
- */
-STRING_LIST**
-attrib_sheet_data_get_component_attrib_list_address (SHEET_DATA *data)
-{
-  return &(data->master_comp_attrib_list_head);
-}
-
-
 /*! \brief Get the net list of sheet data.
  *
  *  \par Function Description
