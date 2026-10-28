@@ -61,9 +61,6 @@ attrib_sheet_data_get_component_attrib_list (SHEET_DATA *data);
 void
 attrib_sheet_data_set_component_attrib_list (SHEET_DATA *data,
                                              STRING_LIST *list);
-STRING_LIST**
-attrib_sheet_data_get_component_attrib_list_address (SHEET_DATA *data);
-
 STRING_LIST*
 attrib_sheet_data_get_net_list (SHEET_DATA *data);
 
