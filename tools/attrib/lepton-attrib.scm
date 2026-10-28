@@ -1584,28 +1584,12 @@ failure."
 
 ;;; Sorts the list of nets in alphabetical order.
 (define (sort-net-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (attrib_sheet_data_get_net_list *sheet-data))
-
-  ;; Do this after sorting is done.  This resets the order of the
-  ;; individual items in the list.
-  (do ((*item *ls (attrib_string_list_get_next *item))
-       (i 0 (1+ i)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item i)))
+  #f)
 
 
 ;;; Sorts the net attribute list in alphabetical order.
 (define (sort-net-attrib-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (attrib_sheet_data_get_net_attrib_list *sheet-data))
-
-  ;; Do this after sorting is done.  This resets the order of the
-  ;; individual items in the list.
-  (do ((*item *ls (attrib_string_list_get_next *item))
-       (i 0 (1+ i)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item i)))
+  #f)
 
 
 ;;; Sort the pin list in alphabetical order.
