@@ -1607,17 +1607,7 @@ failure."
 
 ;;; Sorts the pin attribute list in alphabetical order.
 (define (sort-pin-attrib-list)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *ls (attrib_sheet_data_get_pin_attrib_list *sheet-data))
-  ;; Note that this sort is TBD -- it is more than just an
-  ;; alphabetic sort 'cause we want certain attribs to go first.
-
-  ;; Do this after sorting is done.  This resets the order of the
-  ;; individual items in the list.
-  (do ((*item *ls (attrib_string_list_get_next *item))
-       (i 0 (1+ i)))
-      ((null-pointer? *item))
-    (attrib_string_list_set_pos *item i)))
+  #f)
 
 
 ;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
