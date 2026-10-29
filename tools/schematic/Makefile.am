@@ -30,7 +30,6 @@ if ENABLE_GUILD
 lepton-schematic.go: lepton-schematic
 	$(AM_V_GEN) \
 	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
-	LIBLEPTONGUI="${abs_top_builddir}/libleptongui/src/libleptongui" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
