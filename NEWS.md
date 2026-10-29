@@ -57,6 +57,20 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   the file *lepton-stroke.m4*.  C code is no longer dependent on
   `libstroke` in any way.
 
+- The environment variables **LIBLEPTON**, **LIBLEPTONGUI**, and
+  **LIBLEPTONATTRIB** are no longer used in the code.  Previously,
+  they used to define alternative library paths to use in test
+  suites, which is no longer needed.
+
+- On the build stage, along with programs with conventional names,
+  the programs suitable for running from the local build directory
+  are generated.  They have the same names but with *-noinst*
+  suffix appended.  For example, the user can run
+  **./tools/schematic/lepton-schematic-noinst** from the build
+  directory without installation.  The *noinst* programs use
+  the libraries built locally and load Scheme code from the source
+  and build directories instead of system installation directories.
+
 
 ### Changes in `liblepton`:
 
