@@ -1491,8 +1491,8 @@ for *PAGE page will be created and set active."
 ;;; or NULL if an error occured.  Any errors are returned in
 ;;; GError **ERR.  It has to be NULL to disable error reporting.
 ;;;
-;;; The function implements hierarchy-down-schematic(), but
-;;; without changing variables related to the UI:
+;;; The function implements open-subschematic(), but without
+;;; changing variables related to the UI:
 ;;;
 ;;; - Ensures a duplicate page is not loaded
 ;;; - Does not change the current page

@@ -30,7 +30,6 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
-  #:use-module (lepton gerror)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
@@ -1092,13 +1091,6 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; Hierarchy actions
 
-(define (failed-to-descend-error filename message)
-  (log! 'message (G_ "Failed to descend into ~S: ~A") filename message)
-  (format #f (G_ "Failed to descend hierarchy into ~S:\n~A\n\n~A")
-             filename
-             message
-             (G_ "The lepton-schematic log may contain more information.")))
-
 (define (source-attrib? attrib)
   (string= (attrib-name attrib) "source"))
 
@@ -1115,57 +1107,30 @@ the snap grid size should be set to 100")))
   (undo-save-state)
   (window-set-toplevel-page! window parent))
 
-(define (hierarchy-down-error-dialog filename *error)
-  (let ((secondary-message
-         (failed-to-descend-error filename
-                                  (if (or (null-pointer? *error)
-                                          (null-pointer? (dereference-pointer *error)))
-                                      (G_ "Unknown error.")
-                                      (gerror-message (dereference-pointer *error))))))
-
-    (schematic-error-dialog (G_ "Failed to descend hierarchy.")
-                            #:secondary-text secondary-message)
-
-    (g_clear_error *error)))
 
 (define (hierarchy-down-filename filename *window *parent page-control)
-  (define (scheme-error-handler key subr message args rest)
-    (let ((secondary-message
-           (failed-to-descend-error filename (format #f "~?" message args))))
-
-      (schematic-error-dialog (G_ "Failed to descend hierarchy.")
-                              #:secondary-text secondary-message))
-    #f)
-
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
-  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (*child (hierarchy-down-schematic (pointer->window *window)
-                                           filename
-                                           (pointer->page *parent)
-                                           page-control
-                                           *error
-                                           scheme-error-handler)))
-    (and *child
-         (if (null-pointer? *child)
-             ;; Launch the error dialog.
-             (begin
-               (hierarchy-down-error-dialog filename *error)
-               #f)
-             ;; Open the child page.
-             (begin
-               ;; Notify window that another page became active.
-               (schematic_window_page_changed *window)
-               (if use-tabs?
-                   ;; Tabbed GUI is used.  Create a tab for every
-                   ;; subpage loaded.  Zoom will be set in
-                   ;; set-tab-page!().
-                   (*window-set-current-page! *window *child)
-                   ;; hierarchy-down-schematic() does not zoom
-                   ;; the loaded page, so zoom it here.
-                   (zoom-child-page *window *parent *child))
-               *child)))))
+  (let ((child-page
+         (open-subschematic (pointer->window *window)
+                            filename
+                            (pointer->page *parent)
+                            page-control)))
+    (and child-page
+         ;; Open the child page.
+         (let ((*child (page->pointer child-page)))
+           ;; Notify window that another page became active.
+           (schematic_window_page_changed *window)
+           (if use-tabs?
+               ;; Tabbed GUI is used.  Create a tab for every
+               ;; subpage loaded.  Zoom will be set in
+               ;; set-tab-page!().
+               (*window-set-current-page! *window *child)
+               ;; open-subschematic() does not zoom the loaded
+               ;; page, so zoom it here.
+               (zoom-child-page *window *parent *child))
+           *child))))
 
 (define (hierarchy-filenames->pages filenames *window *parent)
   (let loop ((page-control 0)
@@ -1216,70 +1181,24 @@ the snap grid size should be set to 100")))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
-(define (hierarchy-down-symbol *window *symbol *parent)
-  (define filename
-    (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
-      (if (null-pointer? *clib-filename)
-          (begin
-            (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
-            #f)
-          (let ((clib-filename (pointer->string *clib-filename)))
-            (g_free *clib-filename)
-            clib-filename))))
-
-  (and filename
-       (let* ((*toplevel (schematic_window_get_toplevel *window))
-              (*filename (string->pointer (canonicalize-path filename)))
-              (*page (lepton_toplevel_search_page *toplevel *filename)))
-         (if (null-pointer? *page)
-             ;; Create a new page.
-             (let ((page (open-schematic filename)))
-               (and page
-                    (let ((*page (page->pointer page)))
-                      (schematic_hierarchy_increment_page_control_counter)
-                      (lepton_page_set_page_control
-                       *page
-                       (schematic_hierarchy_get_page_control_counter))
-                      *page)))
-
-             ;; Return existing page.
-             *page))))
-
-
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
-  (define *window (*current-window))
-
   (match (filter component? (page-selection (active-page)))
     ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
     ((component)
      ;; Get pointer to the first selected component.
-     (let ((name (component-basename component)))
-       (log! 'message (G_ "Searching for symbol: ~S") name)
-       (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
-         (unless (null-pointer? *sym)
-           (let* ((*parent (schematic_window_get_active_page *window))
-                  (*page (hierarchy-down-symbol *window *sym *parent)))
-             (when *page
+     (let ((page (open-symbol component)))
+       (when page
+         ;; Display the found symbol page.
+         (window-set-current-page! (current-window) page)
 
-               ;; Change link to parent page since we can come here
-               ;; from any parent and must come back to the same page.
-               (lepton_page_set_up *page (lepton_page_get_pid *parent))
+         ;; open-symbol() will not zoom the loaded page.
+         ;; Tabbed GUI: zoom is set in set-tab-page!().
+         (unless (true? (x_tabs_enabled))
+           (schematic_canvas_zoom_extents
+            (schematic_window_get_current_canvas (*current-window))
+            %null-pointer))
 
-               (window-set-toplevel-page! (current-window) (pointer->page *page))
-
-               ;; Get active page once again, it should now be the symbol
-               ;; page.
-               (*window-set-current-page! *window
-                                          (schematic_window_get_active_page *window))
-
-               ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-               ;; Tabbed GUI: zoom is set in set-tab-page!().
-               (unless (true? (x_tabs_enabled))
-                 (schematic_canvas_zoom_extents
-                  (schematic_window_get_current_canvas *window)
-                  %null-pointer))
-
-               (undo-save-state)))))))
+         (undo-save-state))))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 

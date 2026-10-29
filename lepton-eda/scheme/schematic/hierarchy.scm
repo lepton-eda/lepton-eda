@@ -18,30 +18,65 @@
 
 
 (define-module (schematic hierarchy)
+  #:use-module (ice-9 format)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton library)
+  #:use-module (lepton log)
+  #:use-module (lepton object foreign)
+  #:use-module (lepton object)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
 
+  #:use-module (schematic dialog)
   #:use-module (schematic ffi)
   #:use-module (schematic file)
   #:use-module (schematic window foreign)
 
-  #:export (hierarchy-down-schematic))
+  #:export (open-subschematic
+            open-symbol))
+
+
+(define (report-error filename message)
+  (define descend-message
+    (format #f (G_ "Failed to descend hierarchy into ~S") filename))
+  (define ref-message
+    (G_ "The lepton-schematic log may contain more information."))
+  (define dialog-title (G_ "Failed to descend hierarchy."))
+
+  (log! 'message "~A: ~A" descend-message message)
+  (schematic-error-dialog dialog-title
+                          #:secondary-text
+                          (format #f
+                                  "~A:\n~A\n\n~A"
+                                  descend-message
+                                  message
+                                  ref-message))
+  #f)
+
+
+;;; Increments page control counter of PAGE and returns the page.
+(define (increment-page-control-counter page)
+  (and page
+       (let ((*page (page->pointer page)))
+         (schematic_hierarchy_increment_page_control_counter)
+         (lepton_page_set_page_control
+          *page
+          (schematic_hierarchy_get_page_control_counter)))
+       page))
+
 
 ;;; The function searches for an associated source file referred
 ;;; by FILENAME and loads it if it is not already in the list of
 ;;; the currently open pages.  The function returns the found or
 ;;; loaded source page, or %NULL-POINTER if it could not find the
 ;;; source file.  Any issue is reported to the log.
-(define (*hierarchy-down-schematic window
-                                   filename
-                                   parent-page
-                                   page-control
-                                   *error)
+(define (open-subschematic window filename parent-page page-control)
   (define *window (check-window window 1))
   (define *filename (and (check-string filename 2)
                          (string->pointer filename)))
@@ -72,54 +107,58 @@
                 (and page
                      (let ((*page (page->pointer page)))
                        (if (zero? page-control)
-                           (begin
-                             (schematic_hierarchy_increment_page_control_counter)
-                             (lepton_page_set_page_control
-                              *page
-                              (schematic_hierarchy_get_page_control_counter)))
+                           (increment-page-control-counter page)
                            (lepton_page_set_page_control *page page-control))
 
                        (lepton_page_set_up
                         *page
                         (lepton_page_get_pid *parent-page))
-                       *page)))
+                       (pointer->page *page))))
 
               ;; Page has been found.
               (let ((*forebear-page (get-forebear *parent-page *found-page)))
                 (if (and (not (null-pointer? *forebear-page))
                          (= (lepton_page_get_pid *found-page)
                             (lepton_page_get_pid *forebear-page)))
-                    (scm-error 'hierarchy-loop
-                               #f
-                               (G_ "Hierarchy contains a circular dependency.")
-                               '()
-                               #f)
+                    (report-error
+                     filename
+                     (G_ "Hierarchy contains a circular dependency."))
+
                     (begin
                       (lepton_toplevel_goto_page *toplevel *found-page)
                       (unless (zero? page-control)
                         (lepton_page_set_page_control *found-page page-control))
                       (lepton_page_set_up *found-page (lepton_page_get_pid *parent-page))
-                      ;; return
-                      *found-page)))))
-        (scm-error 'missing-resource
-                   #f
-                   (G_ "Schematic ~S not found in source library.")
-                   (list filename)
-                   #f))))
+                      (pointer->page *found-page))))))
+
+        (report-error filename
+                      (G_ "Schematic ~S not found in source library.")))))
 
 
-(define (hierarchy-down-schematic window
-                                  filename
-                                  parent-page
-                                  page-control
-                                  *error
-                                  scheme-error-handler)
-  (catch #t
-    (lambda ()
-      (*hierarchy-down-schematic window
-                                 filename
-                                 parent-page
-                                 page-control
-                                 *error))
-    ;; (lambda (key subr message args rest) ...)
-    scheme-error-handler))
+(define (open-symbol component)
+  (define filename
+    (begin
+      (check-object component 1)
+      (canonicalize-path (component-filename component))))
+  (define symbol-page
+    (if filename
+        (let ((page (find (lambda (x)
+                            (string= (page-filename x) filename))
+                          (active-pages))))
+          ;; Either return an existing page for the component...
+          (or page
+              ;; ... or create a new one.
+              (increment-page-control-counter (open-schematic filename))))
+        ;; Component has not been found.
+        (report-error (component-basename component)
+                      (G_ "Symbol is not a real file. It cannot be loaded."))))
+
+  (and symbol-page
+       (begin
+         ;; Change link to parent page since we can come here from
+         ;; any parent and must come back to the same page.
+         (lepton_page_set_up
+          (page->pointer symbol-page)
+          (lepton_page_get_pid (page->pointer (object-page component)))))
+
+       symbol-page))

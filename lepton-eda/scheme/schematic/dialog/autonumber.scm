@@ -53,29 +53,6 @@
 ;;; in WINDOW and returns a flat list of pages that are below
 ;;; PAGE.
 (define (hierarchy-traverse-pages window page)
-  (define *error
-    (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-
-  (define (gerror-handler filename)
-    (let ((error-message
-           (if (or (null-pointer? *error)
-                   (null-pointer? (dereference-pointer *error)))
-               (G_ "Unknown error.")
-               (gerror-message (dereference-pointer *error)))))
-      (log! 'message
-            (G_ "Failed to descend hierarchy into ~S: ~A")
-            filename
-            error-message)
-      (g_clear_error *error)))
-
-  (define (make-scheme-error-handler filename)
-    (lambda (key subr message args rest)
-      (log! 'message
-            (G_ "Failed to descend hierarchy into ~S: ~A")
-            filename
-            (format #f "~?" message args))
-      #f))
-
   (define (split-attrib-value object)
     (string-split (attrib-value object) #\,))
 
@@ -94,23 +71,10 @@
                 (append-map source-attribs
                             (filter component?
                                     (page-contents page)))))
-
-  (define (filename-page filename parent-page)
-    (let ((*child-page
-           (hierarchy-down-schematic window
-                                     filename
-                                     parent-page
-                                     0
-                                     *error
-                                     (make-scheme-error-handler filename))))
-      (and *child-page
-           (if (null-pointer? *child-page)
-               (begin (gerror-handler filename) #f)
-               (pointer->page *child-page)))))
-
   (define (child-pages page)
-    (map
-     (lambda (filename) (filename-page filename page))
+    (filter-map
+     (lambda (filename)
+       (open-subschematic window filename page 0))
      (page-source-filenames page)))
 
   (define (traverse-pages new-pages visited-pages)
