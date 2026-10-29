@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; Copyright (C) 2021-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@
        (string-join
         (list %m4-builddir "liblepton" "src" "liblepton")
         file-name-separator-string)
-       (or (getenv "LIBLEPTON") %liblepton))))
+       %liblepton)))
 
 (define libleptongui
   (dynamic-link
