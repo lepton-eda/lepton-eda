@@ -686,9 +686,6 @@
             x_basic_warp_cursor
             ))
 
-(define libleptongui
-  (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
-
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
 (define-syntax-rule (define-lff arg ...)

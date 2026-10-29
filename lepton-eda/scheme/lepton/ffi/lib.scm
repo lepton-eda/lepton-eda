@@ -24,8 +24,8 @@
             libglib
             libgobject
             liblepton
-            %libleptonattrib
-            %libleptongui))
+            libleptongui
+            %libleptonattrib))
 
 (define (ldconfig-check-libname libname)
   (and (string= (major-version) "3")
@@ -82,4 +82,16 @@
                             "liblepton"
                             "src"
                             "liblepton")
+                      file-name-separator-string)))))
+
+(define libleptongui
+  (or (false-if-exception
+       (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
+      ;; In case we're running tools without installation.
+      (false-if-exception
+       (dynamic-link (string-join
+                      (list %m4-builddir
+                            "libleptongui"
+                            "src"
+                            "libleptongui")
                       file-name-separator-string)))))
