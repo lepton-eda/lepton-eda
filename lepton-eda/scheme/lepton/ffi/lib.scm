@@ -90,4 +90,4 @@
        (string-join
         (list %m4-builddir "libleptongui" "src" "libleptongui")
         file-name-separator-string)
-       (or (getenv "LIBLEPTONGUI") %libleptongui))))
+       %libleptongui)))
