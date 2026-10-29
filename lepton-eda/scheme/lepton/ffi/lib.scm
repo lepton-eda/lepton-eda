@@ -72,26 +72,22 @@
 
 (define libgtk (dynamic-link %libgtk))
 
+(define local-run? (not (not %m4-builddir)))
+
 (define liblepton
-  (or (false-if-exception
-       (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
-      ;; In case we're running tools without installation.
-      (false-if-exception
-       (dynamic-link (string-join
-                      (list %m4-builddir
-                            "liblepton"
-                            "src"
-                            "liblepton")
-                      file-name-separator-string)))))
+  (dynamic-link
+   (if local-run?
+       ;; In case we're running tools without installation.
+       (string-join
+        (list %m4-builddir "liblepton" "src" "liblepton")
+        file-name-separator-string)
+       (or (getenv "LIBLEPTON") %liblepton))))
 
 (define libleptongui
-  (or (false-if-exception
-       (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
-      ;; In case we're running tools without installation.
-      (false-if-exception
-       (dynamic-link (string-join
-                      (list %m4-builddir
-                            "libleptongui"
-                            "src"
-                            "libleptongui")
-                      file-name-separator-string)))))
+  (dynamic-link
+   (if local-run?
+       ;; In case we're running tools without installation.
+       (string-join
+        (list %m4-builddir "libleptongui" "src" "libleptongui")
+        file-name-separator-string)
+       (or (getenv "LIBLEPTONGUI") %libleptongui))))
