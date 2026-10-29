@@ -73,4 +73,13 @@
 (define libgtk (dynamic-link %libgtk))
 
 (define liblepton
-  (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
+  (or (false-if-exception
+       (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
+      ;; In case we're running tools without installation.
+      (false-if-exception
+       (dynamic-link (string-join
+                      (list %m4-builddir
+                            "liblepton"
+                            "src"
+                            "liblepton")
+                      file-name-separator-string)))))

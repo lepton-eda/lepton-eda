@@ -375,6 +375,7 @@ lepton/m4.scm: Makefile
 	echo '(define-public %m4-libleptonattrib-major $(LIBLEPTONATTRIB_MAJOR))' >> $@.new && \
 	echo '(define-public %m4-libleptongui-major $(LIBLEPTONGUI_MAJOR))' >> $@.new && \
 	echo '(define-public %m4-liblepton-gettext-domain "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
+	echo '(define-public %m4-builddir "$(abs_top_builddir)")' >> $@.new && \
 	echo '(define-public %ldconfig-libglib "$(LIBGLIB)")' >> $@.new && \
 	echo '(define-public %ldconfig-libgobject "$(LIBGOBJECT)")' >> $@.new && \
 	echo '(define-public %ldconfig-libgtk2 "$(LIBGTK2)")' >> $@.new && \
