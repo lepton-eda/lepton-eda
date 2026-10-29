@@ -242,6 +242,7 @@ nobase_dist_scmdata_DATA = \
 	symcheck/report.scm
 
 nobase_scmdata_DATA = lepton/m4.scm
+noinst_DATA = lepton/m4-local.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -404,7 +405,8 @@ CLEANFILES = \
 	lepton/m4-local.scm \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
-	$(nobase_scmdata_DATA)
+	$(nobase_scmdata_DATA) \
+	$(noinst_DATA)
 
 # To check it all thoroughly, you could add:
 # -Wformat -- to test issues with the built-in format() function.
