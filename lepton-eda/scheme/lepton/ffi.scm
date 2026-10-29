@@ -406,12 +406,12 @@
 
             o_selection_remove
 
+            o_read
             o_read_buffer
 
-            f_backup_message
             f_get_autosave_filename
             f_has_active_autosave
-            f_open
+            f_process_error
             f_save
 
             lepton_coord_snap))
@@ -798,13 +798,13 @@
 (define-lff o_selection_remove void '(* *))
 
 ;;; a_basic.c
+(define-lff o_read '* '(* * *))
 (define-lff o_read_buffer '* (list '* '* '* int '* '*))
 
 ;;; f_basic.c
-(define-lff f_backup_message '* (list '* int))
 (define-lff f_get_autosave_filename '* '(*))
 (define-lff f_has_active_autosave int '(* *))
-(define-lff f_open int (list '* '* '* int '*))
+(define-lff f_process_error void '(*))
 (define-lff f_save int '(* * *))
 
 ;;; g_basic.c

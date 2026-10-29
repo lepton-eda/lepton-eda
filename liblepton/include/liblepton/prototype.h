@@ -20,12 +20,10 @@ o_read (LeptonPage *page,
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
-int
-f_open (LeptonToplevel *toplevel,
-        LeptonPage *page,
-        const gchar *filename,
-        const gint flags,
-        GError **err);
+
+void
+f_process_error (GError *err);
+
 int
 f_save (LeptonPage *page,
         const char *filename,
@@ -33,10 +31,6 @@ f_save (LeptonPage *page,
 
 gchar *f_normalize_filename (const gchar *filename, GError **error) G_GNUC_WARN_UNUSED_RESULT;
 char *follow_symlinks (const gchar *filename, GError **error);
-
-GString*
-f_backup_message (gchar *backup_filename,
-                  gboolean stat_error);
 
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
