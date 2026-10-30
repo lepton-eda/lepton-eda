@@ -25,13 +25,26 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
 
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
 
   #:export (attrib-edit-dialog))
 
 
+;;; Response function for the Attribute add/edit dialog.
 (define (response *widget response *window)
-  (attribute_edit_dialog_response *widget response *window))
+  (case (gtk-response->symbol response)
+    ((apply)
+     (attrib_edit_dialog_ok %null-pointer *window))
+    ((reject delete-event)
+     (let ((*attrib-edit-widget
+            (schematic_window_get_attrib_edit_widget *window)))
+       (gtk_grab_remove *attrib-edit-widget)
+       (gtk_widget_destroy *attrib-edit-widget)
+       (schematic_window_set_attrib_edit_widget *window
+                                                %null-pointer)))
+    (else #f)))
 
 (define *response
   (procedure->pointer void response (list '* int '*)))

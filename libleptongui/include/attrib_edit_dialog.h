@@ -36,10 +36,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel);
-void
-attribute_edit_dialog_response (GtkWidget *w,
-                                gint response,
-                                SchematicWindow *w_current);
 GtkWidget*
 schematic_attrib_edit_dialog_new (SchematicWindow *w_current);
 

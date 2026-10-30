@@ -262,35 +262,6 @@ attrib_edit_dialog_ok (GtkWidget * w,
   g_free(newtext);
 }
 
-/*! \brief Response function for the attribute add/edit dialog
- *  \par Function Description
- *  This function catches the user response for the add and edit
- *  attribute dialog.
- */
-void
-attribute_edit_dialog_response (GtkWidget *w,
-                                gint response,
-                                SchematicWindow *w_current)
-{
-  GtkWidget *aewindow;
-
-  switch(response) {
-  case GTK_RESPONSE_APPLY:
-    attrib_edit_dialog_ok(NULL, w_current);
-    break;
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    aewindow = schematic_window_get_attrib_edit_widget (w_current);
-    gtk_grab_remove (aewindow);
-    gtk_widget_destroy (aewindow);
-    schematic_window_set_attrib_edit_widget (w_current, NULL);
-    break;
-  default:
-    printf("attrib_edit_dialog_response(): strange signal %d\n", response);
-  }
-  /* clean up */
-}
-
 
 /*! \brief Create a new attribute add/edit dialog widget
  *  \par Function Description
