@@ -1294,7 +1294,7 @@
 ;;; Shortcut for the long option which allows us preserving of
 ;;; some environment variables when running lepton-cli under sudo.
 (define --preserve-env
-  "--preserve-env=LIBLEPTON,GUILE_AUTO_COMPILE,GUILE_LOAD_PATH,GUILE_LOAD_COMPILED_PATH,LEPTON_INHIBIT_RC_FILES")
+  "--preserve-env=GUILE_AUTO_COMPILE,GUILE_LOAD_PATH,GUILE_LOAD_COMPILED_PATH,LEPTON_INHIBIT_RC_FILES")
 
 ;;; Tests for system config usually require superuser permissions,
 ;;; so most of them are disabled by default.  Set the environment
