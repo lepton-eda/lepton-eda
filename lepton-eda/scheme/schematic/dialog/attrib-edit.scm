@@ -41,7 +41,7 @@
 (define (response *widget response *window)
   (case (gtk-response->symbol response)
     ((apply)
-     (ok-handler %null-pointer *window))
+     (ok-handler *widget *window))
     ((reject delete-event)
      (gtk_grab_remove *widget)
      (gtk_widget_destroy *widget)
