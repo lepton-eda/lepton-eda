@@ -50,7 +50,6 @@ if ENABLE_GUILD
 
 lepton-config.go: lepton-config
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -59,7 +58,6 @@ lepton-config.go: lepton-config
 
 lepton-export.go: lepton-export
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -68,7 +66,6 @@ lepton-export.go: lepton-export
 
 lepton-shell.go: lepton-shell
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -77,7 +74,6 @@ lepton-shell.go: lepton-shell
 
 lepton-cli.go: lepton-cli
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
