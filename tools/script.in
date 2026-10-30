@@ -102,12 +102,6 @@ is not supported for your OS, sorry.\n")
                                     %m4-package-name
                                     "scheme")
                               file-name-separator-string))
-                (%liblepton
-                 (string-join (list %m4-abs-top-builddir
-                                    "liblepton"
-                                    "src"
-                                    "liblepton")
-                              file-name-separator-string))
                 (%libleptonattrib
                  (string-join (list %m4-abs-top-builddir
                                     "libleptonattrib"
