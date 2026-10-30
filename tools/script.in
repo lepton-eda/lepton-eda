@@ -122,8 +122,6 @@ is not supported for your OS, sorry.\n")
             ;; Load an only built module (lepton m4).
             (add-to-load-path %lepton-scheme-builddir)
             ;; Set paths to the libs in the build directory.
-            (putenv "LIBLEPTON")
-            (setenv "LIBLEPTON" %liblepton)
             (putenv "LIBLEPTONATTRIB")
             (setenv "LIBLEPTONATTRIB" %libleptonattrib)
             ;; Define directories for configuration and data files.
