@@ -21,7 +21,8 @@
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi lff)
 
-  #:export (g_object_set_data
+  #:export (g_object_get_data
+            g_object_set_data
             g_object_unref
             g_signal_connect))
 
@@ -33,6 +34,7 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libgobject))
 
+(define-lff g_object_get_data '* '(* *))
 (define-lff g_object_set_data void '(* * *))
 (define-lff g_object_unref void '(*))
 

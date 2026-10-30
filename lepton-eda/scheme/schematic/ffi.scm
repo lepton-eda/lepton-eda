@@ -65,6 +65,7 @@
             major_changed_dialog
             schematic_dialog_load_file_error
             schematic_dialog_new_empty
+            x_dialog_validate_attribute
 
             schematic_execute_script
 
@@ -1159,6 +1160,7 @@
 (define-lff major_changed_dialog void '(*))
 (define-lff schematic_dialog_load_file_error void '(* * *))
 (define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
+(define-lff x_dialog_validate_attribute int '(* *))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))
@@ -1280,7 +1282,7 @@
 
 ;;; attrib_edit_dialog.c
 (define-lff attrib_edit_dialog void (list '* '* '* int int))
-(define-lff attrib_edit_dialog_ok void '(* *))
+(define-lff attrib_edit_dialog_ok void (list '* '* '* int int))
 (define-lff schematic_attrib_edit_dialog_new '* '(*))
 
 ;;; autonumber_dialog.c
