@@ -54,12 +54,6 @@
 ;;;   Must be present once if several tests are done in one
 ;;;   script. It should output some summary.
 
-
-;;; Set location of liblepton library.
-(setenv "LIBLEPTON"
-        (string-join '(".." ".." "liblepton" "src" "liblepton")
-                     file-name-separator-string))
-
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (ice-9 getopt-long)
