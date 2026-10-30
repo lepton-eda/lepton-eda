@@ -23,10 +23,18 @@
   #:use-module (lepton ffi)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
 
   #:use-module (schematic ffi)
 
   #:export (attrib-edit-dialog))
+
+
+(define (response *widget response *window)
+  (attribute_edit_dialog_response *widget response *window))
+
+(define *response
+  (procedure->pointer void response (list '* int '*)))
 
 
 (define (attrib-edit-dialog *window *attrib invocation-flag)
@@ -53,6 +61,12 @@ FROM_KEY (1)."
     (let ((*selection-list (lepton_list_get_glist
                             (schematic_window_get_selection_list *window)))
           (*attrib-edit-dialog (schematic_attrib_edit_dialog_new *window)))
+
+      (g_signal_connect *attrib-edit-dialog
+                        (string->pointer "response")
+                        *response
+                        *window)
+
       (attrib_edit_dialog *window
                           *attrib-edit-dialog
                           *attrib
