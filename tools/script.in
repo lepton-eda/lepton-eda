@@ -77,8 +77,7 @@ exec @GUILE@ -s "$0" "$@"
       (format (current-error-port)
               "Running the program without installation
 is not supported for your OS, sorry.\n")
-      (if (and run-installed-program?
-               (not (getenv "LIBLEPTON")))
+      (if run-installed-program?
           (let ((%lepton-scheme-dir
                  (string-append %m4-lepton-data-dir
                                 file-name-separator-string
