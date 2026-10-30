@@ -58,20 +58,19 @@
   (define *newtext (string->pointer newtext))
 
   (when (true? (x_dialog_validate_attribute *widget *newtext))
-    (let* ((visibility
-            (if (true? (gtk_toggle_button_get_active *visibility-button))
-                VISIBLE
-                INVISIBLE))
-           (option-index (gtk_combo_box_get_active *show-options))
-           (show-mode
-            (case option-index
-              ((0) SHOW_VALUE)
-              ((1) SHOW_NAME)
-              ((2) SHOW_NAME_VALUE)
-              (else
-               (format (current-error-port)
-                       (G_ "Got invalid show option defaulting to show both\n"))
-               SHOW_NAME_VALUE))))
+    (let ((visibility
+           (if (true? (gtk_toggle_button_get_active *visibility-button))
+               VISIBLE
+               INVISIBLE))
+          (show-mode
+           (case (gtk_combo_box_get_active *show-options)
+             ((0) SHOW_VALUE)
+             ((1) SHOW_NAME)
+             ((2) SHOW_NAME_VALUE)
+             (else
+              (format (current-error-port)
+                      (G_ "Got invalid show option defaulting to show both\n"))
+              SHOW_NAME_VALUE))))
 
       (attrib_edit_dialog_ok *widget *window *newtext visibility show-mode))))
 
