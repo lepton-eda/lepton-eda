@@ -32,11 +32,16 @@
   #:export (attrib-edit-dialog))
 
 
+;;; Handle the OK response of the Attribute add/edit dialog.
+(define (ok-handler *widget *window)
+  (attrib_edit_dialog_ok *widget *window))
+
+
 ;;; Response function for the Attribute add/edit dialog.
 (define (response *widget response *window)
   (case (gtk-response->symbol response)
     ((apply)
-     (attrib_edit_dialog_ok %null-pointer *window))
+     (ok-handler %null-pointer *window))
     ((reject delete-event)
      (gtk_grab_remove *widget)
      (gtk_widget_destroy *widget)
