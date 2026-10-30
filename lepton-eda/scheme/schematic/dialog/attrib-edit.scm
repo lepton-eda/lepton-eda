@@ -38,12 +38,10 @@
     ((apply)
      (attrib_edit_dialog_ok %null-pointer *window))
     ((reject delete-event)
-     (let ((*attrib-edit-widget
-            (schematic_window_get_attrib_edit_widget *window)))
-       (gtk_grab_remove *attrib-edit-widget)
-       (gtk_widget_destroy *attrib-edit-widget)
-       (schematic_window_set_attrib_edit_widget *window
-                                                %null-pointer)))
+     (gtk_grab_remove *widget)
+     (gtk_widget_destroy *widget)
+     (schematic_window_set_attrib_edit_widget *window
+                                              %null-pointer))
     (else #f)))
 
 (define *response
@@ -55,7 +53,7 @@
 INVOCATION-FLAG must be an integer set to a value defined in
 libleptongui/include/schematic_defines.h, namely FROM_MENU (0) or
 FROM_KEY (1)."
-  (define *attrib-edit-widget
+  (define *widget
     (schematic_window_get_attrib_edit_widget *window))
 
   (define (get-number-of-not-attached-objects *selection-list)
@@ -70,7 +68,7 @@ FROM_KEY (1)."
                       count))))))
 
   ;; Return if the widget has already been created.
-  (when (null-pointer? *attrib-edit-widget)
+  (when (null-pointer? *widget)
     (let ((*selection-list (lepton_list_get_glist
                             (schematic_window_get_selection_list *window)))
           (*attrib-edit-dialog (schematic_attrib_edit_dialog_new *window)))
