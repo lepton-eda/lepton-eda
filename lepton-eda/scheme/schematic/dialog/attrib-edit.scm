@@ -72,7 +72,10 @@
                       (G_ "Got invalid show option defaulting to show both\n"))
               SHOW_NAME_VALUE))))
 
-      (attrib_edit_dialog_ok *widget *window *newtext visibility show-mode))))
+      (attrib_edit_dialog_ok *widget *window *newtext visibility show-mode)
+      (gtk_grab_remove *widget)
+      (gtk_widget_destroy *widget)
+      (schematic_window_set_attrib_edit_widget *window %null-pointer))))
 
 
 ;;; Response function for the Attribute add/edit dialog.

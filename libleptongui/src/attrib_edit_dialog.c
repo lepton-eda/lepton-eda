@@ -202,9 +202,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
     schematic_window_active_page_changed (w_current);
     o_undo_savestate_old (w_current);
   }
-  gtk_grab_remove (aewindow);
-  gtk_widget_destroy (aewindow);
-  schematic_window_set_attrib_edit_widget (w_current, NULL);
 }
 
 
