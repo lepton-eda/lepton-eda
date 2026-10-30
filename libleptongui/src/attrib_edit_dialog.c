@@ -40,7 +40,7 @@
  *
  */
 void
-attrib_edit_dialog_ok (GtkWidget * w,
+attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current)
 {
   const char *value, *label;
@@ -59,9 +59,6 @@ attrib_edit_dialog_ok (GtkWidget * w,
   int nsel=0, addto=0, replace=0, addmask=0;
   int option_index;
   gint wx, wy;
-
-  GtkWidget *aewindow =
-    schematic_window_get_attrib_edit_widget (w_current);
 
   value_entry =
     GTK_ENTRY (g_object_get_data (G_OBJECT (aewindow),

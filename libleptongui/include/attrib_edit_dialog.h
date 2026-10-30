@@ -28,7 +28,7 @@
 G_BEGIN_DECLS
 
 void
-attrib_edit_dialog_ok (GtkWidget *w,
+attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current);
 void
 attrib_edit_dialog (SchematicWindow *w_current,
