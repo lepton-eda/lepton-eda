@@ -86,6 +86,8 @@
             gtk_file_filter_new
             gtk_file_filter_set_name
 
+            gtk_grab_remove
+
             gtk_handle_box_new
 
             gtk_icon_theme_append_search_path
@@ -271,6 +273,8 @@
 (define-lff gtk_file_filter_add_pattern void '(* *))
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
+
+(define-lff gtk_grab_remove void '(*))
 
 (define-lff gtk_handle_box_new '* '())
 

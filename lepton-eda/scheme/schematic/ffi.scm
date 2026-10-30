@@ -195,7 +195,7 @@
             x_menu_attach_recent_files_submenu
 
             attrib_edit_dialog
-            attribute_edit_dialog_response
+            attrib_edit_dialog_ok
             schematic_attrib_edit_dialog_new
 
             schematic_autonumber_new
@@ -515,6 +515,7 @@
             schematic_window_set_keyaccel_string_source_id
             schematic_window_get_arc_edit_widget
             schematic_window_get_attrib_edit_widget
+            schematic_window_set_attrib_edit_widget
             schematic_window_get_compselect_widget
             schematic_window_set_compselect_widget
             schematic_window_get_coord_widget
@@ -955,6 +956,7 @@
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_get_arc_edit_widget '* '(*))
 (define-lff schematic_window_get_attrib_edit_widget '* '(*))
+(define-lff schematic_window_set_attrib_edit_widget void '(* *))
 (define-lff schematic_window_get_compselect_widget '* '(*))
 (define-lff schematic_window_set_compselect_widget void '(* *))
 (define-lff schematic_window_get_coord_widget '* '(*))
@@ -1278,7 +1280,7 @@
 
 ;;; attrib_edit_dialog.c
 (define-lff attrib_edit_dialog void (list '* '* '* int int))
-(define-lff attribute_edit_dialog_response void (list '* int '*))
+(define-lff attrib_edit_dialog_ok void '(* *))
 (define-lff schematic_attrib_edit_dialog_new '* '(*))
 
 ;;; autonumber_dialog.c
