@@ -72,7 +72,24 @@
                       (G_ "Got invalid show option defaulting to show both\n"))
               SHOW_NAME_VALUE))))
 
-      (attrib_edit_dialog_ok *widget *window *newtext visibility show-mode)
+
+      (let ((*attrib
+             (g_object_get_data *widget (string->pointer "attrib"))))
+        (if (null-pointer? *attrib)
+            (attrib_edit_dialog_ok *widget
+                                   *window
+                                   *newtext
+                                   visibility
+                                   show-mode)
+            (begin
+              (o_text_change *window
+                             *attrib
+                             *newtext
+                             visibility
+                             show-mode)
+              (schematic_window_active_page_changed *window)
+              (o_undo_savestate_old *window))))
+
       (gtk_grab_remove *widget)
       (gtk_widget_destroy *widget)
       (schematic_window_set_attrib_edit_widget *window %null-pointer))))

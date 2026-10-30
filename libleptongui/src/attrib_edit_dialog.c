@@ -48,7 +48,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
 {
   GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
   GtkWidget *overwritebutton;
-  LeptonObject *attribptr;
   LeptonObject *object;
   GList *s_current = NULL;
   LeptonObject *a_current;
@@ -57,10 +56,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   int nsel=0, addto=0, replace=0, addmask=0;
   gint wx, wy;
 
-  attribptr =
-    (LeptonObject*) g_object_get_data (G_OBJECT (aewindow), "attrib");
-  if (!attribptr)
-  {
     s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
     while (s_current != NULL) {
       object = (LeptonObject *)s_current->data;
@@ -197,11 +192,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
       schematic_window_active_page_changed (w_current);
       o_undo_savestate_old (w_current);
     }
-  } else {
-    o_text_change(w_current, attribptr, newtext, vis, show);
-    schematic_window_active_page_changed (w_current);
-    o_undo_savestate_old (w_current);
-  }
 }
 
 

@@ -92,6 +92,8 @@
             o_attrib_deselect_invisible
             o_attrib_select_invisible
 
+            o_text_change
+
             schematic_draw_clear
             *schematic_draw_invalidate_object
             schematic_draw_invalidate_object_list
@@ -742,6 +744,9 @@
 (define-lff o_attrib_add_selected void '(* * *))
 (define-lff o_attrib_deselect_invisible void '(* * *))
 (define-lff o_attrib_select_invisible void '(* * *))
+
+;;; o_text.c
+(define-lff o_text_change void (list '* '* '* int int))
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
