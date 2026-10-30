@@ -37,7 +37,6 @@ if ENABLE_GUILD
 
 lepton-update.go: lepton-update
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
