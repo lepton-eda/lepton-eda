@@ -327,11 +327,11 @@ schematic_attrib_edit_dialog_new (SchematicWindow *w_current)
  */
 void
 attrib_edit_dialog (SchematicWindow *w_current,
+                    GtkWidget *aewindow,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
-  GtkWidget *aewindow;
   GtkWidget *vbox, *label;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
@@ -352,8 +352,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   char *val = NULL;
   LeptonObject *attrib = NULL;
   gint wx, wy;
-
-  aewindow = schematic_attrib_edit_dialog_new (w_current);
 
   g_signal_connect (G_OBJECT (aewindow), "response",
                     G_CALLBACK (attribute_edit_dialog_response),

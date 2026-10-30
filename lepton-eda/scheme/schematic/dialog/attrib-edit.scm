@@ -51,8 +51,10 @@ FROM_KEY (1)."
   ;; Return if the widget has already been created.
   (when (null-pointer? *attrib-edit-widget)
     (let ((*selection-list (lepton_list_get_glist
-                            (schematic_window_get_selection_list *window))))
+                            (schematic_window_get_selection_list *window)))
+          (*attrib-edit-dialog (schematic_attrib_edit_dialog_new *window)))
       (attrib_edit_dialog *window
+                          *attrib-edit-dialog
                           *attrib
                           invocation-flag
                           (get-number-of-not-attached-objects *selection-list)))))
