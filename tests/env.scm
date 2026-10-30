@@ -162,15 +162,6 @@
 (define *abs-top-builddir* (getenv "abs_top_builddir"))
 (define *abs-top-srcdir* (getenv "abs_top_srcdir"))
 
-(define *liblepton*
-        (build-filename *abs-top-builddir*
-                        "liblepton"
-                        "src"
-                        "liblepton"))
-
-;;; For FreeBSD, where non-existing variables are not set by
-;;; setenv() without putenv().
-(putenv (string-append "LIBLEPTON" "=" *liblepton*))
 
 (define %src-scheme-dir%
   (build-filename *abs-top-srcdir* "lepton-eda" "scheme"))
