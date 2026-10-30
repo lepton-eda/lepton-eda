@@ -24,6 +24,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton gettext)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -31,10 +32,48 @@
 
   #:export (attrib-edit-dialog))
 
+;;; liblepton/include/liblepton/defines.h
+(define SHOW_NAME_VALUE 0)
+(define SHOW_VALUE 1)
+(define SHOW_NAME 2)
+(define INVISIBLE 0)
+(define VISIBLE 1)
+
 
 ;;; Handle the OK response of the Attribute add/edit dialog.
 (define (ok-handler *widget *window)
-  (attrib_edit_dialog_ok *widget *window))
+  (define *value-entry
+    (g_object_get_data *widget (string->pointer "value_entry")))
+  (define *name-entry
+    (g_object_get_data *widget (string->pointer "attrib_combo_entry")))
+  (define *visibility-button
+    (g_object_get_data *widget (string->pointer "visbutton")))
+  (define *show-options
+    (g_object_get_data *widget (string->pointer "show_options")))
+  (define *value (gtk_entry_get_text *value-entry))
+  (define *label (gtk_entry_get_text *name-entry))
+  (define value (if (null-pointer? *value) "" (pointer->string *value)))
+  (define label (if (null-pointer? *label) "" (pointer->string *label)))
+  (define newtext (string-append label "=" value))
+  (define *newtext (string->pointer newtext))
+
+  (when (true? (x_dialog_validate_attribute *widget *newtext))
+    (let* ((visibility
+            (if (true? (gtk_toggle_button_get_active *visibility-button))
+                VISIBLE
+                INVISIBLE))
+           (option-index (gtk_combo_box_get_active *show-options))
+           (show-mode
+            (case option-index
+              ((0) SHOW_VALUE)
+              ((1) SHOW_NAME)
+              ((2) SHOW_NAME_VALUE)
+              (else
+               (format (current-error-port)
+                       (G_ "Got invalid show option defaulting to show both\n"))
+               SHOW_NAME_VALUE))))
+
+      (attrib_edit_dialog_ok *widget *window *newtext visibility show-mode))))
 
 
 ;;; Response function for the Attribute add/edit dialog.

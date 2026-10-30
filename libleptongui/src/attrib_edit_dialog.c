@@ -41,12 +41,11 @@
  */
 void
 attrib_edit_dialog_ok (GtkWidget *aewindow,
-                       SchematicWindow *w_current)
+                       SchematicWindow *w_current,
+                       char *newtext,
+                       int vis,
+                       int show)
 {
-  const char *value, *label;
-  char *newtext;
-  GtkEntry *value_entry, *name_entry;
-  GtkWidget *visbutton, *show_options;
   GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
   GtkWidget *overwritebutton;
   LeptonObject *attribptr;
@@ -54,59 +53,9 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   GList *s_current = NULL;
   LeptonObject *a_current;
   GList *a_iter;
-  int vis, show;
   int invocation_flag;
   int nsel=0, addto=0, replace=0, addmask=0;
-  int option_index;
   gint wx, wy;
-
-  value_entry =
-    GTK_ENTRY (g_object_get_data (G_OBJECT (aewindow),
-                                  "value_entry"));
-  name_entry =
-    GTK_ENTRY (g_object_get_data (G_OBJECT (aewindow),
-                                  "attrib_combo_entry"));
-  visbutton =
-    GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                   "visbutton"));
-  show_options =
-    GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                   "show_options"));
-
-  value = gtk_entry_get_text(value_entry);
-  label = gtk_entry_get_text(name_entry);
-  newtext = g_strconcat (label, "=", value, NULL);
-
-  if (!x_dialog_validate_attribute (GTK_WINDOW (aewindow), newtext))
-  {
-    g_free(newtext);
-    return;
-  }
-
-  if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
-  vis = VISIBLE;
-  else
-  vis = INVISIBLE;
-
-  option_index = gtk_combo_box_get_active (GTK_COMBO_BOX (show_options));
-  switch(option_index) {
-    case(0):
-      show = SHOW_VALUE;
-      break;
-
-    case(1):
-      show = SHOW_NAME;
-      break;
-
-    case(2):
-      show = SHOW_NAME_VALUE;
-      break;
-
-    default:
-      fprintf(stderr, _("Got invalid show option; defaulting to show both\n"));
-      show = SHOW_NAME_VALUE;
-      break;
-  }
 
   attribptr =
     (LeptonObject*) g_object_get_data (G_OBJECT (aewindow), "attrib");
@@ -256,7 +205,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   gtk_grab_remove (aewindow);
   gtk_widget_destroy (aewindow);
   schematic_window_set_attrib_edit_widget (w_current, NULL);
-  g_free(newtext);
 }
 
 
