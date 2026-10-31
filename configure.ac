@@ -251,32 +251,60 @@ AX_LIBLEPTONGUI([5:0:0])
 #####################################################################
 
 AC_CONFIG_FILES([tools/schematic/lepton-schematic.in:tools/script.in:tools/schematic/lepton-schematic.scm])
+AC_CONFIG_FILES([tools/schematic/lepton-schematic-noinst:tools/script-noinst.in:tools/schematic/lepton-schematic.scm],
+                [chmod +x tools/schematic/lepton-schematic-noinst])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-cli.in:tools/script.in:tools/cli/scheme/lepton-cli.scm])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-cli-noinst:tools/script-noinst.in:tools/cli/scheme/lepton-cli.scm],
+                [chmod +x tools/cli/scheme/lepton-cli-noinst])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-config.in:tools/script.in:tools/cli/scheme/lepton-config.scm])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-config-noinst:tools/script-noinst.in:tools/cli/scheme/lepton-config.scm],
+                [chmod +x tools/cli/scheme/lepton-config-noinst])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-export.in:tools/script.in:tools/cli/scheme/lepton-export.scm])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-export-noinst:tools/script-noinst.in:tools/cli/scheme/lepton-export.scm],
+                [chmod +x tools/cli/scheme/lepton-export-noinst])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-shell.in:tools/script.in:tools/cli/scheme/lepton-shell.scm])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-shell-noinst:tools/script-noinst.in:tools/cli/scheme/lepton-shell.scm],
+                [chmod +x tools/cli/scheme/lepton-shell-noinst])
 
 AC_CONFIG_FILES([tools/archive/lepton-archive.in:tools/script.in:tools/archive/lepton-archive.scm])
+AC_CONFIG_FILES([tools/archive/lepton-archive-noinst:tools/script-noinst.in:tools/archive/lepton-archive.scm],
+                [chmod +x tools/archive/lepton-archive-noinst])
 
 AC_CONFIG_FILES([tools/attrib/lepton-attrib.in:tools/script.in:tools/attrib/lepton-attrib.scm])
+AC_CONFIG_FILES([tools/attrib/lepton-attrib-noinst:tools/script-noinst.in:tools/attrib/lepton-attrib.scm],
+                [chmod +x tools/attrib/lepton-attrib-noinst])
 
 AC_CONFIG_FILES([tools/embed/lepton-embed.in:tools/script.in:tools/embed/lepton-embed.scm])
+AC_CONFIG_FILES([tools/embed/lepton-embed-noinst:tools/script-noinst.in:tools/embed/lepton-embed.scm],
+                [chmod +x tools/embed/lepton-embed-noinst])
 
 AC_CONFIG_FILES([tools/netlist/lepton-netlist.in:tools/script.in:tools/netlist/lepton-netlist.scm])
+AC_CONFIG_FILES([tools/netlist/lepton-netlist-noinst:tools/script-noinst.in:tools/netlist/lepton-netlist.scm],
+                [chmod +x tools/netlist/lepton-netlist-noinst])
 
 AC_CONFIG_FILES([tools/sch2pcb/lepton-sch2pcb.in:tools/script.in:tools/sch2pcb/lepton-sch2pcb.scm])
+AC_CONFIG_FILES([tools/sch2pcb/lepton-sch2pcb-noinst:tools/script-noinst.in:tools/sch2pcb/lepton-sch2pcb.scm],
+                [chmod +x tools/sch2pcb/lepton-sch2pcb-noinst])
 
 AC_CONFIG_FILES([tools/symcheck/lepton-symcheck.in:tools/script.in:tools/symcheck/lepton-symcheck.scm])
+AC_CONFIG_FILES([tools/symcheck/lepton-symcheck-noinst:tools/script-noinst.in:tools/symcheck/lepton-symcheck.scm],
+                [chmod +x tools/symcheck/lepton-symcheck-noinst])
 
 AC_CONFIG_FILES([tools/tragesym/lepton-tragesym.in:tools/script.in:tools/tragesym/lepton-tragesym.scm])
+AC_CONFIG_FILES([tools/tragesym/lepton-tragesym-noinst:tools/script-noinst.in:tools/tragesym/lepton-tragesym.scm],
+                [chmod +x tools/tragesym/lepton-tragesym-noinst])
 
 AC_CONFIG_FILES([tools/upcfg/lepton-upcfg.in:tools/script.in:tools/upcfg/lepton-upcfg.scm])
+AC_CONFIG_FILES([tools/upcfg/lepton-upcfg-noinst:tools/script-noinst.in:tools/upcfg/lepton-upcfg.scm],
+                [chmod +x tools/upcfg/lepton-upcfg-noinst])
 
 AC_CONFIG_FILES([tools/update/lepton-update.in:tools/script.in:tools/update/lepton-update.scm])
+AC_CONFIG_FILES([tools/update/lepton-update-noinst:tools/script-noinst.in:tools/update/lepton-update.scm],
+                [chmod +x tools/update/lepton-update-noinst])
 
 AC_CONFIG_FILES([Makefile
 
