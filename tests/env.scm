@@ -228,7 +228,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "sch2pcb"
-                  "lepton-sch2pcb"))
+                  "lepton-sch2pcb-noinst"))
 
 (define lepton-symcheck
   (build-filename *abs-top-builddir*
