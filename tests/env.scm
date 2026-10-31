@@ -182,7 +182,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "archive"
-                  "lepton-archive"))
+                  "lepton-archive-noinst"))
 
 (define lepton-cli
   (build-filename *abs-top-builddir*
