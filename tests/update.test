@@ -10,7 +10,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "update"
-                  "lepton-update"))
+                  "lepton-update-noinst"))
 
 
 (test-begin "update-utility")
