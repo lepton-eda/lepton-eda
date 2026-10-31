@@ -2,7 +2,7 @@
 ;; Lepton EDA
 ;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2025 Lepton EDA Contributors
+;; Copyright (C) 2019-2026 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -60,7 +60,7 @@
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-upcfg [OPTIONS] | FILE
+Usage: ~A [OPTIONS] | FILE
 
 Lepton EDA configuration upgrade utility.
 Converts geda*.conf configuration files
@@ -87,6 +87,7 @@ Options:
 Report bugs at <~a>
 Lepton EDA homepage: <~a>
 "
+    (basename (car (program-arguments)))
     ( lepton-version-ref 'bugs )
     ( lepton-version-ref 'url )
   )
