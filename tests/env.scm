@@ -202,7 +202,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "embed"
-                  "lepton-embed"))
+                  "lepton-embed-noinst"))
 
 (define lepton-export
   (build-filename *abs-top-builddir*
