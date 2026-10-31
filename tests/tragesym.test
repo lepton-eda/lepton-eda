@@ -2,7 +2,8 @@
 
 (load-from-path "env.scm")
 
-(define help-string "lepton-tragesym INPUT-FILE OUTPUT-FILE")
+(define help-string
+  (string-append (basename lepton-tragesym) " INPUT-FILE OUTPUT-FILE"))
 
 
 (test-begin "lepton-tragesym -h")

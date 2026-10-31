@@ -240,7 +240,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "tragesym"
-                  "lepton-tragesym"))
+                  "lepton-tragesym-noinst"))
 
 (define lepton-upcfg
   (build-filename *abs-top-builddir*
