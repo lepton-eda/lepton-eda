@@ -209,7 +209,7 @@
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-export"))
+                  "lepton-export-noinst"))
 
 (define lepton-netlist
   (build-filename *abs-top-builddir*
