@@ -234,7 +234,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "symcheck"
-                  "lepton-symcheck"))
+                  "lepton-symcheck-noinst"))
 
 (define lepton-tragesym
   (build-filename *abs-top-builddir*
