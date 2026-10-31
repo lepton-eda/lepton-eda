@@ -189,7 +189,7 @@
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-cli"))
+                  "lepton-cli-noinst"))
 
 (define lepton-config
   (build-filename *abs-top-builddir*

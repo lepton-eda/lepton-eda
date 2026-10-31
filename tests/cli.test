@@ -18,9 +18,15 @@
   (system* "rm" "-rf" *testdir*))
 
 
-(define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
+(define help-string
+  (string-append "Usage: "
+                 (basename lepton-cli)
+                 " [OPTION...] COMMAND [ARGS ...]"))
 
-(define run-help-string "Run `lepton-cli --help' for more information.")
+(define run-help-string
+  (string-append "Run `"
+                 (basename lepton-cli)
+                 " --help' for more information."))
 
 
 ;;; Test lepton-cli without args.
