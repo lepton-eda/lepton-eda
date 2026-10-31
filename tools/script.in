@@ -8,86 +8,27 @@ exec @GUILE@ -s "$0" "$@"
 ;;; module load paths we need before compilation, thus eliminating
 ;;; warnings on loading the modules afterwards.
 (eval-when (expand load eval)
-  (define %m4-package-name "@PACKAGE_TARNAME@")
-  (define %m4-abs-top-srcdir "@abs_top_srcdir@")
-  (define %m4-abs-top-builddir "@abs_top_builddir@")
   (define %m4-lepton-data-dir "@leptondatadir@")
 
-  ;; Check if the current process has been started from the
-  ;; installation directory defined by autoconf, not from the
-  ;; build directory.  The file m4-local.scm must exist only in
-  ;; the build directory.
-  (define run-installed-program?
-    (not (file-exists?
-          (string-join (list %m4-abs-top-builddir
-                             "lepton-eda"
-                             "scheme"
-                             "lepton"
-                             "m4-local.scm")
-                       file-name-separator-string))))
-
   (define %bitmap-directory
-    (if run-installed-program?
-        (string-append %m4-lepton-data-dir
-                       file-name-separator-string
-                       "bitmap")
-        (string-join (list %m4-abs-top-srcdir
-                           "libleptongui"
-                           "bitmap")
-                     file-name-separator-string)))
+    (string-append %m4-lepton-data-dir
+                   file-name-separator-string
+                   "bitmap"))
 
-  (if run-installed-program?
-      ;; Run program from the installation directory.
-      (let ((%lepton-scheme-dir
-             (string-append %m4-lepton-data-dir
-                            file-name-separator-string
-                            "scheme"))
-            (%lepton-ccache-dir
-             (string-append %m4-lepton-data-dir
-                            file-name-separator-string
-                            "ccache")))
-        ;; Add directory with Scheme modules to %load-path.
-        (add-to-load-path %lepton-scheme-dir)
-        ;; Load compiled code only when the program is
-        ;; installed.
-        (set! %load-compiled-path (cons %lepton-ccache-dir
-                                        %load-compiled-path)))
+  (define %lepton-scheme-dir
+    (string-append %m4-lepton-data-dir
+                   file-name-separator-string
+                   "scheme"))
 
-      ;; Run program from the build directory.
-      (let ((%lepton-scheme-srcdir
-             (string-join (list %m4-abs-top-srcdir
-                                %m4-package-name
-                                "scheme")
-                          file-name-separator-string))
-            (%lepton-scheme-builddir
-             (string-join (list %m4-abs-top-builddir
-                                %m4-package-name
-                                "scheme")
-                          file-name-separator-string))
-)
-        ;; Add directories with Scheme modules to %load-path.
-        ;; Load all modules but (lepton m4) from their source
-        ;; directory.
-        (add-to-load-path %lepton-scheme-srcdir)
-        ;; Load an only built module (lepton m4).
-        (add-to-load-path %lepton-scheme-builddir)
+  (define %lepton-ccache-dir
+   (string-append %m4-lepton-data-dir
+                  file-name-separator-string
+                  "ccache"))
 
-        ;; Define directories for configuration and data files.
-        (let ((current-xdg-data-dirs (getenv "XDG_DATA_DIRS")))
-          (putenv "XDG_DATA_DIRS")
-          (setenv "XDG_DATA_DIRS"
-                  (if current-xdg-data-dirs
-                      (string-append %m4-abs-top-srcdir
-                                     ":"
-                                     current-xdg-data-dirs)
-                      %m4-abs-top-srcdir)))
-        (let ((current-xdg-config-dirs (getenv "XDG_CONFIG_DIRS")))
-          (putenv "XDG_CONFIG_DIRS")
-          (setenv "XDG_CONFIG_DIRS"
-                  (if current-xdg-config-dirs
-                      (string-append %m4-abs-top-srcdir
-                                     ":"
-                                     current-xdg-config-dirs)
-                      %m4-abs-top-srcdir))))))
+  ;; Add directory with Scheme modules to %load-path.
+  (add-to-load-path %lepton-scheme-dir)
+  ;; Add directory with compiled code to %load-compiled-path.
+  (set! %load-compiled-path (cons %lepton-ccache-dir
+                                  %load-compiled-path)))
 
 (use-modules (lepton m4))

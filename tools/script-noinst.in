@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+exec @GUILE@ -s "$0" "$@"
+!#
+
+;;; The eval-when() macro allows to suppress compilation warnings
+;;; on not defined variables because it evaluates the code on the
+;;; expand stage before compilation.  This allows us to get Scheme
+;;; module load paths we need before compilation, thus eliminating
+;;; warnings on loading the modules afterwards.
+(eval-when (expand load eval)
+  (define %m4-package-name "@PACKAGE_TARNAME@")
+  (define %m4-abs-top-srcdir "@abs_top_srcdir@")
+  (define %m4-abs-top-builddir "@abs_top_builddir@")
+
+  (define %bitmap-directory
+    (string-join (list %m4-abs-top-srcdir
+                       "libleptongui"
+                       "bitmap")
+                 file-name-separator-string))
+
+  (define %lepton-scheme-srcdir
+    (string-join (list %m4-abs-top-srcdir
+                       %m4-package-name
+                       "scheme")
+                 file-name-separator-string))
+
+  (define %lepton-scheme-builddir
+    (string-join (list %m4-abs-top-builddir
+                       %m4-package-name
+                       "scheme")
+                 file-name-separator-string))
+
+  ;; Add directories with Scheme modules to %load-path.
+  ;; Load all modules but (lepton m4) from their source
+  ;; directory.
+  (add-to-load-path %lepton-scheme-srcdir)
+  ;; Load an only built module (lepton m4).
+  (add-to-load-path %lepton-scheme-builddir)
+
+  ;; Define directories for configuration and data files.
+  (let ((current-xdg-data-dirs (getenv "XDG_DATA_DIRS")))
+    (putenv "XDG_DATA_DIRS")
+    (setenv "XDG_DATA_DIRS"
+            (if current-xdg-data-dirs
+                (string-append %m4-abs-top-srcdir
+                               ":"
+                               current-xdg-data-dirs)
+                %m4-abs-top-srcdir)))
+  (let ((current-xdg-config-dirs (getenv "XDG_CONFIG_DIRS")))
+    (putenv "XDG_CONFIG_DIRS")
+    (setenv "XDG_CONFIG_DIRS"
+            (if current-xdg-config-dirs
+                (string-append %m4-abs-top-srcdir
+                               ":"
+                               current-xdg-config-dirs)
+                %m4-abs-top-srcdir))))
+
+(use-modules (lepton m4))
