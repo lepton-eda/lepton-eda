@@ -28,8 +28,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-netlist: lepton-netlist.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-netlist
