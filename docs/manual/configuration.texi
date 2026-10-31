@@ -439,7 +439,7 @@ favorite text editor.
 @end menu
 
 @node lepton-schematic configuration, lepton-netlist configuration, Configuration of Lepton tools, Configuration of Lepton tools
-@subsection @command{Configuration of lepton-schematic}
+@subsection Configuration of @command{lepton-schematic}
 @cindex lepton-schematic configuration
 
 @menu
@@ -1387,7 +1387,7 @@ here, too.
 
 
 @node lepton-netlist configuration, lepton-cli configuration, lepton-schematic configuration, Configuration of Lepton tools
-@subsection @command{Configuration of lepton-netlist}
+@subsection Configuration of @command{lepton-netlist}
 @cindex lepton-netlist configuration
 
 @menu
@@ -1525,7 +1525,7 @@ Separator string used to form mangled @attr{net} attribute names.
 
 
 @node lepton-cli configuration,  , lepton-netlist configuration, Configuration of Lepton tools
-@subsection @command{Configuration of lepton-cli}
+@subsection Configuration of @command{lepton-cli}
 @cindex lepton-cli configuration
 
 The following settings control the behaviour of @command{lepton-cli}
