@@ -2,7 +2,7 @@
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2025 Lepton EDA Contributors
+;; Copyright (C) 2019-2026 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -68,7 +68,7 @@
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-embed -e | -u [OPTIONS] FILE ...
+Usage: ~A -e | -u [OPTIONS] FILE ...
 
 Lepton EDA schematic components and pictures embedding/unembedding utility.
 
@@ -84,6 +84,7 @@ Options:
 Report bugs at <~a>
 Lepton EDA homepage: <~a>
 "
+    (basename (car (program-arguments)))
     ( lepton-version 'bugs )
     ( lepton-version 'url )
   )
