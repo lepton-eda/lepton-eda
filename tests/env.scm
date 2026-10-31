@@ -246,7 +246,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "upcfg"
-                  "lepton-upcfg"))
+                  "lepton-upcfg-noinst"))
 
 (putenv (string-append "LEPTON_CONFIG" "=" lepton-config))
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
