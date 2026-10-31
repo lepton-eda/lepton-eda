@@ -215,7 +215,7 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "netlist"
-                  "lepton-netlist"))
+                  "lepton-netlist-noinst"))
 
 (define lepton-shell
   (build-filename *abs-top-builddir*
