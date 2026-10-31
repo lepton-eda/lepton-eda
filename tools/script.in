@@ -13,8 +13,6 @@ exec @GUILE@ -s "$0" "$@"
   (define %m4-abs-top-builddir "@abs_top_builddir@")
   (define %m4-lepton-data-dir "@leptondatadir@")
 
-  (define %program-name (car (program-arguments)))
-
   ;; Check if the current process has been started from the
   ;; installation directory defined by autoconf, not from the
   ;; build directory.  The file m4-local.scm must exist only in
