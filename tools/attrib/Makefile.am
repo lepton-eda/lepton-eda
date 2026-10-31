@@ -18,8 +18,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-attrib: lepton-attrib.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-attrib

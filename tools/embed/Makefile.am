@@ -22,8 +22,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-embed: lepton-embed.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-embed

@@ -26,8 +26,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-symcheck: lepton-symcheck.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-symcheck

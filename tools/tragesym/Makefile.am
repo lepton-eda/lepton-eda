@@ -26,8 +26,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-tragesym: lepton-tragesym.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-tragesym
