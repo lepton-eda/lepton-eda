@@ -116,6 +116,7 @@ Installation
 * Out-of-source build::
 * Configure options::
 * Hardcode library names for Guile::
+* Run Lepton tools without installation::
 
 Configuration system
 

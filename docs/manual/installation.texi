@@ -41,6 +41,7 @@ sudo ldconfig
 * Out-of-source build::
 * Configure options::
 * Hardcode library names for Guile::
+* Run Lepton tools without installation::
 @end menu
 
 
@@ -329,7 +330,7 @@ in all directories where @file{*.dox} files are residing.
 
 @end table
 
-@node Hardcode library names for Guile,  , Configure options, Installation
+@node Hardcode library names for Guile, Run Lepton tools without installation, Configure options, Installation
 @section Hardcode library names for Guile
 @cindex hardcode library names
 @cindex USE_LDCONFIG
@@ -368,4 +369,24 @@ follows:
 
 @example
 ./configure USE_LDCONFIG=/sbin/ldconfig
+@end example
+
+
+@node Run Lepton tools without installation,  , Hardcode library names for Guile, Installation
+@section Run Lepton tools without installation
+@cindex run without installation
+@cindex noinst
+
+You can run Lepton tools without actually installing them on your
+system.  To do it, just build the tools omitting the @code{make
+install} stage as described in the previous sections.  Then you can
+find the tools in the subdirectories of the @samp{./tools} directory
+of the project named the same as original tools but with the suffix
+@samp{-noinst} appended.  For example, if your current working
+directory is the root directory of the Lepton repository, and assuming
+you've built the project @emph{out-of-source} in the @samp{./build}
+directory, you can launch @command{lepton-schematic} as follows:
+
+@example
+./build/tools/schematic/lepton-schematic-noinst examples/gTAG/gTAG.sch
 @end example
