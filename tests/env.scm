@@ -196,7 +196,7 @@
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-config"))
+                  "lepton-config-noinst"))
 
 (define lepton-embed
   (build-filename *abs-top-builddir*
