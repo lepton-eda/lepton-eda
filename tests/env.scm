@@ -222,7 +222,7 @@
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-shell"))
+                  "lepton-shell-noinst"))
 
 (define lepton-sch2pcb
   (build-filename *abs-top-builddir*
