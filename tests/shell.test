@@ -2,7 +2,9 @@
 
 (load-from-path "env.scm")
 
-
+(define help-string (string-append "Run `"
+                                   (basename lepton-shell)
+                                   " --help' for more information."))
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "shell-tmp"))
 
@@ -163,7 +165,7 @@
   (test-equal "" <stdout>)
   (test-assert (string-contains <stderr> "require"))
   (test-assert (string-contains <stderr> "argument"))
-  (test-assert (string-contains <stderr> "Run `lepton-shell --help' for more information.")))
+  (test-assert (string-contains <stderr> help-string)))
 
 (test-end "lepton-cli shell -c")
 
@@ -188,7 +190,7 @@
   (test-equal "" <stdout>)
   (test-assert (string-contains <stderr> "require"))
   (test-assert (string-contains <stderr> "argument"))
-  (test-assert (string-contains <stderr> "Run `lepton-shell --help' for more information.")))
+  (test-assert (string-contains <stderr> help-string)))
 
 (test-end "lepton-cli shell -s")
 

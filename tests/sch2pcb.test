@@ -529,9 +529,21 @@
                       "-v"
                       one.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o one.cmd two.sch one.sch"))
-    (test-assert (string-contains <stdout> "lepton-netlist -g PCB -o one.net two.sch one.sch"))
-    (test-assert (string-contains <stdout> "lepton-netlist -g gsch2pcb -o one.pcb -m gnet-gsch2pcb-tmp.scm two.sch one.sch")))
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g pcbpins -o one.cmd two.sch one.sch")))
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g PCB -o one.net two.sch one.sch")))
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g gsch2pcb -o one.pcb -m gnet-gsch2pcb-tmp.scm two.sch one.sch"))))
 
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
@@ -540,8 +552,15 @@
                       "-v"
                       one.sch)
     (test-eq EXIT_FAILURE <status>)
-    (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o two.cmd -x two.sch one.sch"))
-    (test-assert (string-contains <stderr> "lepton-netlist: no such option: -x")))
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g pcbpins -o two.cmd -x two.sch one.sch")))
+    (test-assert
+        (string-contains
+         <stderr>
+         (string-append lepton-netlist ": no such option: -x"))))
   (test-teardown))
 
 (test-end)
@@ -1027,8 +1046,11 @@
                       (string-append "--backend-cmd" "=" "geda")
                       one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.cmd one.sch two.sch")))
-
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g geda -o one.cmd one.sch two.sch"))))
   (test-teardown))
 
 (test-end)
@@ -1044,8 +1066,11 @@
                       (string-append "--backend-net" "=" "geda")
                       one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.net one.sch two.sch")))
-
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append lepton-netlist
+                        " -g geda -o one.net one.sch two.sch"))))
   (test-teardown))
 
 (test-end)
@@ -1061,7 +1086,12 @@
                       (string-append "--backend-pcb" "=" "geda")
                       one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch")))
+    (test-assert
+        (string-contains
+         <stdout>
+         (string-append
+          lepton-netlist
+          " -g geda -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch"))))
 
   (test-teardown))
 
@@ -2044,8 +2074,18 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-sch2pcb "-v" project)
       (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "lepton-netlist -g partslist1 -o one.partslist1 one.sch two.sch"))
-      (test-assert (string-contains <stdout> "lepton-netlist -g partslist3 -o board.parts one.sch two.sch")))
+      (test-assert
+          (string-contains
+           <stdout>
+           (string-append
+            lepton-netlist
+            " -g partslist1 -o one.partslist1 one.sch two.sch")))
+      (test-assert
+          (string-contains
+           <stdout>
+           (string-append
+            lepton-netlist
+            " -g partslist3 -o board.parts one.sch two.sch"))))
     ;; Check that new files have been created.
     (test-assert (file-exists? "one.partslist1")))
 
@@ -2105,9 +2145,24 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-sch2pcb "-v" project)
       (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "lepton-netlist -g partslist1 -o one.cmd one.sch two.sch"))
-      (test-assert (string-contains <stdout> "lepton-netlist -g partslist2 -o one.net one.sch two.sch"))
-      (test-assert (string-contains <stdout> "lepton-netlist -g partslist3 -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch"))))
+      (test-assert
+          (string-contains
+           <stdout>
+           (string-append
+            lepton-netlist
+            " -g partslist1 -o one.cmd one.sch two.sch")))
+      (test-assert
+          (string-contains
+           <stdout>
+           (string-append
+            lepton-netlist
+            " -g partslist2 -o one.net one.sch two.sch")))
+      (test-assert
+          (string-contains
+           <stdout>
+           (string-append
+            lepton-netlist
+            " -g partslist3 -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch")))))
 
   (test-teardown))
 

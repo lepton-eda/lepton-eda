@@ -18,8 +18,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-attrib: lepton-attrib.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-attrib
@@ -29,7 +28,6 @@ if ENABLE_GUILD
 
 lepton-attrib.go: lepton-attrib
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

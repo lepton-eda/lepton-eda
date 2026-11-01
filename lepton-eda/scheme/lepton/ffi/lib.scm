@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; Copyright (C) 2021-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
             libglib
             libgobject
             liblepton
-            %libleptonattrib
-            %libleptongui))
+            libleptongui
+            libleptonattrib))
 
 (define (ldconfig-check-libname libname)
   (and (string= (major-version) "3")
@@ -72,5 +72,31 @@
 
 (define libgtk (dynamic-link %libgtk))
 
+(define local-run? (not (not %m4-builddir)))
+
 (define liblepton
-  (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
+  (dynamic-link
+   (if local-run?
+       ;; In case we're running tools without installation.
+       (string-join
+        (list %m4-builddir "liblepton" "src" "liblepton")
+        file-name-separator-string)
+       %liblepton)))
+
+(define libleptongui
+  (dynamic-link
+   (if local-run?
+       ;; In case we're running tools without installation.
+       (string-join
+        (list %m4-builddir "libleptongui" "src" "libleptongui")
+        file-name-separator-string)
+       %libleptongui)))
+
+(define libleptonattrib
+  (dynamic-link
+   (if local-run?
+       ;; In case we're running tools without installation.
+       (string-join
+        (list %m4-builddir "libleptonattrib" "src" "libleptonattrib")
+        file-name-separator-string)
+       %libleptonattrib)))

@@ -2,8 +2,10 @@
 
 (load-from-path "env.scm")
 
-(define help-string "Usage: lepton-embed -e | -u [OPTIONS] FILE ...")
-
+(define help-string
+  (string-append "Usage: "
+                 (basename lepton-embed)
+                 " -e | -u [OPTIONS] FILE ..."))
 
 (test-begin "lepton-embed -h")
 

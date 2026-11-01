@@ -22,8 +22,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-upcfg: lepton-upcfg.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-upcfg
@@ -33,7 +32,6 @@ if ENABLE_GUILD
 
 lepton-upcfg.go: lepton-upcfg
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

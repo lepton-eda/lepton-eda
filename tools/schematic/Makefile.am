@@ -18,8 +18,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-schematic: lepton-schematic.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-schematic
@@ -29,8 +28,6 @@ if ENABLE_GUILD
 
 lepton-schematic.go: lepton-schematic
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
-	LIBLEPTONGUI="${abs_top_builddir}/libleptongui/src/libleptongui" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

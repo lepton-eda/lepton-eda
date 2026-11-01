@@ -2,7 +2,8 @@
 
 (load-from-path "env.scm")
 
-(define help-string "Usage: lepton-upcfg [OPTIONS] | FILE")
+(define help-string
+  (string-append "Usage: " (basename lepton-upcfg) " [OPTIONS] | FILE"))
 
 
 (test-begin "lepton-upcfg -h")

@@ -162,15 +162,6 @@
 (define *abs-top-builddir* (getenv "abs_top_builddir"))
 (define *abs-top-srcdir* (getenv "abs_top_srcdir"))
 
-(define *liblepton*
-        (build-filename *abs-top-builddir*
-                        "liblepton"
-                        "src"
-                        "liblepton"))
-
-;;; For FreeBSD, where non-existing variables are not set by
-;;; setenv() without putenv().
-(putenv (string-append "LIBLEPTON" "=" *liblepton*))
 
 (define %src-scheme-dir%
   (build-filename *abs-top-srcdir* "lepton-eda" "scheme"))
@@ -191,71 +182,71 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "archive"
-                  "lepton-archive"))
+                  "lepton-archive-noinst"))
 
 (define lepton-cli
   (build-filename *abs-top-builddir*
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-cli"))
+                  "lepton-cli-noinst"))
 
 (define lepton-config
   (build-filename *abs-top-builddir*
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-config"))
+                  "lepton-config-noinst"))
 
 (define lepton-embed
   (build-filename *abs-top-builddir*
                   "tools"
                   "embed"
-                  "lepton-embed"))
+                  "lepton-embed-noinst"))
 
 (define lepton-export
   (build-filename *abs-top-builddir*
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-export"))
+                  "lepton-export-noinst"))
 
 (define lepton-netlist
   (build-filename *abs-top-builddir*
                   "tools"
                   "netlist"
-                  "lepton-netlist"))
+                  "lepton-netlist-noinst"))
 
 (define lepton-shell
   (build-filename *abs-top-builddir*
                   "tools"
                   "cli"
                   "scheme"
-                  "lepton-shell"))
+                  "lepton-shell-noinst"))
 
 (define lepton-sch2pcb
   (build-filename *abs-top-builddir*
                   "tools"
                   "sch2pcb"
-                  "lepton-sch2pcb"))
+                  "lepton-sch2pcb-noinst"))
 
 (define lepton-symcheck
   (build-filename *abs-top-builddir*
                   "tools"
                   "symcheck"
-                  "lepton-symcheck"))
+                  "lepton-symcheck-noinst"))
 
 (define lepton-tragesym
   (build-filename *abs-top-builddir*
                   "tools"
                   "tragesym"
-                  "lepton-tragesym"))
+                  "lepton-tragesym-noinst"))
 
 (define lepton-upcfg
   (build-filename *abs-top-builddir*
                   "tools"
                   "upcfg"
-                  "lepton-upcfg"))
+                  "lepton-upcfg-noinst"))
 
 (putenv (string-append "LEPTON_CONFIG" "=" lepton-config))
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))

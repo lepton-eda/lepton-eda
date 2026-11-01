@@ -22,8 +22,7 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-embed: lepton-embed.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-embed
@@ -33,7 +32,6 @@ if ENABLE_GUILD
 
 lepton-embed.go: lepton-embed
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

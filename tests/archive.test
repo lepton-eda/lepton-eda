@@ -2,8 +2,9 @@
 
 (load-from-path "env.scm")
 
-(define help-string "Usage: lepton-archive [OPTION...] FILES...")
-
+(define help-string (string-append "Usage: "
+                                   (basename lepton-archive)
+                                   " [OPTION...] FILES..."))
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "archive-tmp"))
 

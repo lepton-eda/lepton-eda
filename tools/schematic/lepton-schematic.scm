@@ -27,7 +27,6 @@
              (lepton gettext)
              (lepton init)
              (lepton log)
-             (lepton m4)
              (lepton os)
              (lepton object foreign)
              (lepton page foreign)

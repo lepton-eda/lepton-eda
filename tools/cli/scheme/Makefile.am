@@ -22,23 +22,19 @@ GUILE_WARNINGS = \
 	-Wunsupported-warning
 
 lepton-cli: lepton-cli.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 lepton-config: lepton-config.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 lepton-export: lepton-export.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 lepton-shell: lepton-shell.in
-	sed -e 's|@leptonbindir[@]|$(bindir)|g' \
-	-e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
+	sed -e 's|@leptondatadir[@]|$(LEPTONDATADIR)|g' $< > $@ \
 	&& chmod +x $@
 
 CLEANFILES = lepton-cli lepton-config lepton-export lepton-shell
@@ -50,7 +46,6 @@ if ENABLE_GUILD
 
 lepton-config.go: lepton-config
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -59,7 +54,6 @@ lepton-config.go: lepton-config
 
 lepton-export.go: lepton-export
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -68,7 +62,6 @@ lepton-export.go: lepton-export
 
 lepton-shell.go: lepton-shell
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \
@@ -77,7 +70,6 @@ lepton-shell.go: lepton-shell
 
 lepton-cli.go: lepton-cli
 	$(AM_V_GEN) \
-	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
 	$(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/lepton-eda/scheme \

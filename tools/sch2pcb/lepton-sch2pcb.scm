@@ -28,7 +28,6 @@
              (lepton ffi sch2pcb)
              (lepton file-system)
              (lepton gettext)
-             (lepton m4)
              (lepton os)
              (lepton srfi-37)
              (lepton version)

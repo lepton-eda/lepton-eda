@@ -143,9 +143,6 @@
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
-(define libleptonattrib
-  (dynamic-link (or (getenv "LIBLEPTONATTRIB") %libleptonattrib)))
-
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... libleptonattrib))
 
