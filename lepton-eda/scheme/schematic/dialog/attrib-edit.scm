@@ -40,6 +40,14 @@
 (define VISIBLE 1)
 
 
+(define (add-new-attrib! *widget *window *newtext visibility show-mode)
+  (schematic_attrib_edit_dialog_add_attrib *widget
+                                           *window
+                                           *newtext
+                                           visibility
+                                           show-mode))
+
+
 ;;; Handle the OK response of the Attribute add/edit dialog.
 (define (ok-handler *widget *window)
   (define *value-entry
@@ -88,11 +96,11 @@
                                              *newtext
                                              visibility
                                              show-mode)
-                      (schematic_attrib_edit_dialog_add_attrib *widget
-                                                               *window
-                                                               *newtext
-                                                               visibility
-                                                               show-mode))
+                      (add-new-attrib! *widget
+                                       *window
+                                       *newtext
+                                       visibility
+                                       show-mode))
                   (let ((*object (car ls)))
                     (loop (if (null-pointer? (lepton_object_get_attached_to *object))
                               (1+ number-of-unattached-objects)
