@@ -100,8 +100,7 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        char *newtext,
                        int vis,
-                       int show,
-                       int nsel)
+                       int show)
 {
   GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
   GtkWidget *overwritebutton;
@@ -112,7 +111,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   int addto=0, replace=0, addmask=0;
 
     s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
-    if (nsel > 1) {
 
       addtoallbutton =
         GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
@@ -187,15 +185,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
         s_current = g_list_next (s_current);
       }
       o_undo_savestate_old (w_current);
-    }
-    else
-    {
-      schematic_attrib_edit_dialog_add_attrib (aewindow,
-                                               w_current,
-                                               newtext,
-                                               vis,
-                                               show);
-    }
 }
 
 

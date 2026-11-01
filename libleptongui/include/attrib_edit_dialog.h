@@ -32,8 +32,7 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        char *newtext,
                        int vis,
-                       int show,
-                       int nsel);
+                       int show);
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,

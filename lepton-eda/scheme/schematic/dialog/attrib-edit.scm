@@ -82,12 +82,17 @@
                              (schematic_window_get_selection_list *window))
                             identity)))
               (if (null? ls)
-                  (attrib_edit_dialog_ok *widget
-                                         *window
-                                         *newtext
-                                         visibility
-                                         show-mode
-                                         number-of-unattached-objects)
+                  (if (> number-of-unattached-objects 1)
+                      (attrib_edit_dialog_ok *widget
+                                             *window
+                                             *newtext
+                                             visibility
+                                             show-mode)
+                      (schematic_attrib_edit_dialog_add_attrib *widget
+                                                               *window
+                                                               *newtext
+                                                               visibility
+                                                               show-mode))
                   (let ((*object (car ls)))
                     (loop (if (null-pointer? (lepton_object_get_attached_to *object))
                               (1+ number-of-unattached-objects)
