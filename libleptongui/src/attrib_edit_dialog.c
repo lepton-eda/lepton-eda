@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        char *newtext,
                        int vis,
-                       int show)
+                       int show,
+                       int nsel)
 {
   GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
   GtkWidget *overwritebutton;
@@ -53,22 +54,9 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   LeptonObject *a_current;
   GList *a_iter;
   int invocation_flag;
-  int nsel=0, addto=0, replace=0, addmask=0;
+  int addto=0, replace=0, addmask=0;
   gint wx, wy;
 
-    s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
-    while (s_current != NULL) {
-      object = (LeptonObject *)s_current->data;
-      if (object == NULL) {
-        fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
-        exit(-1);
-      }
-      if (!lepton_object_get_attached_to (object))
-      {
-        nsel++;
-      }
-      s_current = g_list_next(s_current);
-    }
     s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
     if (nsel > 1) {
 

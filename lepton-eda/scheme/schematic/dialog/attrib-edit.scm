@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2024 Lepton EDA Contributors
+;;; Copyright (C) 2024-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -76,11 +76,23 @@
       (let ((*attrib
              (g_object_get_data *widget (string->pointer "attrib"))))
         (if (null-pointer? *attrib)
-            (attrib_edit_dialog_ok *widget
-                                   *window
-                                   *newtext
-                                   visibility
-                                   show-mode)
+            (let loop ((number-of-unattached-objects 0)
+                       (ls (glist->list
+                            (lepton_list_get_glist
+                             (schematic_window_get_selection_list *window))
+                            identity)))
+              (if (null? ls)
+                  (attrib_edit_dialog_ok *widget
+                                         *window
+                                         *newtext
+                                         visibility
+                                         show-mode
+                                         number-of-unattached-objects)
+                  (let ((*object (car ls)))
+                    (loop (if (null-pointer? (lepton_object_get_attached_to *object))
+                              (1+ number-of-unattached-objects)
+                              number-of-unattached-objects)
+                          (cdr ls)))))
             (begin
               (o_text_change *window
                              *attrib
